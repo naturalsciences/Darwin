@@ -1584,7 +1584,8 @@ create table :dbname.specimens
         constraint specimens_host_specimen_fk foreign key (host_specimen_ref) references :dbname.specimens(id),
         constraint specimens_acquisition_category_chk check (acquisition_category in ('expedition', 'donation', 'gift', 'loan', 'rent', 'buy', 'stolen')),
         constraint specimens_identification_qual_chk check (identification_qual in ('aff.', 'prox.', 'cf.', '?', 'incerteae sedis', 'sp.')),
-        constraint specimens_category_chk check (category in ('physical', 'observation', 'figurate'))
+        constraint specimens_category_chk check (category in ('physical', 'observation', 'figurate')),
+	constraint specimens_minmax_chk CHECK (specimen_count_min <= specimen_count_max)
        );
 comment on table :dbname.specimens is 'Specimens or batch of specimens stored in collection';
 comment on column :dbname.specimens.id is 'Unique identifier of a specimen or batch of specimens';
@@ -1657,7 +1658,8 @@ create table :dbname.specimen_individuals
         specimen_individuals_count_max integer default 1 not null,
         constraint specimen_individuals_pk primary key (id),
         constraint specimen_individuals_unq unique (specimen_ref, type, sex, stage, state, social_status, rock_form),
-        constraint specimen_individuals_specimens_fk foreign key (specimen_ref) references :dbname.specimens(id)
+        constraint specimen_individuals_specimens_fk foreign key (specimen_ref) references :dbname.specimens(id),
+        constraint specimen_individuals_minmax_chk CHECK (specimen_individuals_count_min <= specimen_individuals_count_max)
        );
 comment on table :dbname.specimen_individuals is 'Stores characterized individudals from a specimen batch';
 comment on column :dbname.specimen_individuals.id is 'Unique identifier of a specimen individual';
@@ -1692,7 +1694,8 @@ create table :dbname.specimen_parts
         specimen_part_count_min integer default 1 not null,
         specimen_part_count_max integer default 1 not null,
         constraint specimen_parts_pk primary key (id),
-        constraint specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references :dbname.specimen_individuals(id)
+        constraint specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references :dbname.specimen_individuals(id),
+        constraint specimen_parts_minmax_chk CHECK (specimen_part_count_min <= specimen_part_count_max)
        );
 comment on table :dbname.specimen_parts is 'List of individuals or parts of individuals stored in conservatories';
 comment on column :dbname.specimen_parts.id is 'Unique identifier of a specimen part/individual';
