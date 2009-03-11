@@ -18,4 +18,5 @@ dropuser -q $dbname
 createuser -l -i -q -S -R -D -P -E $dbname
 psql -q -d $dbname -v dbname=$dbname -f createschema.sql
 psql -q -h $netaddr -d $dbname -v dbname=$dbname -U $dbname -W -f createdomains.sql
+psql -q -h $netaddr -d $dbname -v dbname=$dbname -U $dbname -W -f createtypes.sql
 psql -q -h $netaddr -d $dbname -v dbname=$dbname -U $dbname -W -f createtables.sql
