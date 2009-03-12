@@ -32,7 +32,7 @@ create table catalogue_relationships
         table_ref integer not null,
         record_id_1 integer not null,
         record_id_2 integer not null,
-        relationship_type varchar default 'parent of' not null,
+        relationship_type relationship_types default 'is child of' not null,
         defined_by_ordered_ids_list integer[],
         constraint unq_catalogue_relationships unique (table_ref, relationship_type, record_id_1, record_id_2),
         constraint fk_catalogue_rel_table_list foreign key (table_ref) references table_list(id)
@@ -50,7 +50,7 @@ create table template_table_record_ref
        );
 create table catalogue_authors
        (
-        author_type varchar default 'main author' not null,
+        author_type catalogues_authors_types default 'main' not null,
         authors_ordered_ids_list integer[] not null,
         defined_by_ordred_ids_list integer[],
         constraint unq_catalogue_authors unique (table_ref, author_type, record_id),
@@ -60,7 +60,7 @@ inherits (template_table_record_ref);
 comment on table catalogue_authors is 'List of authors of catalogues units - Taxonomy, Chronostratigraphy,...';
 comment on column catalogue_authors.table_ref is 'Identifier of table the units come from - id field of table_list table';
 comment on column catalogue_authors.record_id is 'Identifier of record concerned in table concerned';
-comment on column catalogue_authors.author_type is 'Type of "author" associated to the catalogue unit: Main author, Secondary author, Expert, Corrector,... - default value is main author';
+comment on column catalogue_authors.author_type is 'Type of "author" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
 comment on column catalogue_authors.authors_ordered_ids_list is 'Array of "authors" identifiers - List of authors associated to the unit concerned - Identifiers are id fields from people table';
 comment on column catalogue_authors.defined_by_ordred_ids_list is 'Array of persons having defined this catalogue authors entry - id fields from people table';
 create table catalogue_levels
@@ -103,21 +103,16 @@ comment on column possible_upper_levels.level_upper_ref is 'Reference of authori
 create table comments
        (
         table_ref integer not null,
-        field_ref integer,
-        field_ref_unified integer not null,
         record_id integer not null,
         notion_concerned varchar not null,
         comment text not null,
         comment_ts tsvector not null,
         comment_language_full_text full_text_language, 
-        constraint unq_comments unique (table_ref, field_ref_unified, record_id, notion_concerned),
-        constraint fk_comments_table_list foreign key (table_ref) references table_list(id),
-        constraint fk_comments_field_list foreign key (field_ref) references field_list(id)
+        constraint unq_comments unique (table_ref, record_id, notion_concerned),
+        constraint fk_comments_table_list foreign key (table_ref) references table_list(id)
        );
 comment on table comments is 'Comments associated to a record of a given table (and maybe a given field) on a given subject';
 comment on column comments.table_ref is 'Reference of table a comment is posted for - id field of table_list table';
-comment on column comments.field_ref is 'Reference of field a comment is posted for - id field of field_list table';
-comment on column comments.field_ref_unified is 'Used for unique indexation - If no field_ref has been provided than field_ref_unified takes a dummy value, otherwise takes value from field_ref field';
 comment on column comments.record_id is 'Identifier of the record concerned';
 comment on column comments.notion_concerned is 'Notion concerned by comment';
 comment on column comments.comment is 'Comment';
@@ -564,7 +559,7 @@ comment on column template_people_users_addr_common.zip_code is 'zip code';
 comment on column template_people_users_addr_common.country is 'Country';
 create table people_relationships
        (
-        relationship_type relationship_types default 'belongs to' not null,
+        relationship_type people_relationship_types default 'belongs to' not null,
         person_1_ref integer not null,
         person_2_ref integer not null,
         person_title varchar,
@@ -588,6 +583,7 @@ comment on column people_relationships.activity_period is 'Main person activity 
 comment on column people_relationships.path is 'Hierarchical path of the organization structure';
 create table people_comm
        (
+        tag varchar[] not null,
         constraint pk_people_comm primary key (id),
         constraint unq_people_comm unique (comm_type, person_user_ref, entry),
         constraint fk_people_comm_people foreign key (person_user_ref) references people(id) on delete cascade
@@ -599,8 +595,10 @@ comment on column people_comm.person_user_ref is 'Reference of person - id field
 comment on column people_comm.comm_type is 'Type of communication table concerned: phone or e-mail';
 comment on column people_comm.entry is 'Communication entry';
 comment on column people_comm.comm_type is 'Type of communication table concerned: address, phone or e-mail';
+comment on column people_comm.tag is 'Array of descriptive tags: internet, tel, fax, pager, public, private,...';
 create table people_addresses
        (
+        tag varchar[] not null,
         address_parts_ts tsvector not null,
         constraint pk_people_addresses primary key (id),
         constraint unq_people_addresses unique (person_user_ref, entry, locality, country),
@@ -619,19 +617,10 @@ comment on column people_addresses.country is 'Country';
 comment on column people_addresses.region is 'Region';
 comment on column people_addresses.zip_code is 'Zip code';
 comment on column people_addresses.comm_type is 'Type of communication table concerned: address, phone or e-mail';
-create table comm_addr_tags
-       (
-        tag varchar[] not null,
-        constraint unq_comm_addr_tags unique (table_ref, record_id),
-        constraint fk_comm_addr_tags_table_list foreign key (table_ref) references table_list (id)
-       )
-inherits (template_table_record_ref);
-comment on table comm_addr_tags is 'Tags associated to a communication entry of person/user';
-comment on column comm_addr_tags.table_ref is 'Reference of communication table concerned - id field of table_list table';
-comment on column comm_addr_tags.record_id is 'Record identifier of communication mean concerned';
-comment on column comm_addr_tags.tag is 'Array of tags associated to the communication entry to describe it';
+comment on column people_addresses.tag is 'Array of descriptive tags: home, work,...';
 create table users_comm
        (
+        tag varchar[] not null,
         constraint pk_users_comm primary key (id),
         constraint unq_users_comm unique (comm_type, person_user_ref, entry),
         constraint fk_users_comm_users foreign key (person_user_ref) references users(id) on delete cascade
@@ -643,8 +632,10 @@ comment on column users_comm.person_user_ref is 'Reference of user - id field of
 comment on column users_comm.comm_type is 'Type of communication table concerned: phone or e-mail';
 comment on column users_comm.entry is 'Communication entry';
 comment on column users_comm.comm_type is 'Type of communication table concerned: address, phone or e-mail';
+comment on column users_comm.tag is 'Array of descriptive tags: internet, tel, fax, pager, public, private,...';
 create table users_addresses
        (
+        tag varchar[] not null,
         address_parts_ts tsvector not null,
         constraint pk_users_addresses primary key (id),
         constraint unq_users_addresses unique (person_user_ref, entry, locality, country),
@@ -666,6 +657,7 @@ comment on column users_addresses.organization_unit is 'When a physical user is 
 comment on column users_addresses.person_user_role is 'User role in the organization referenced';
 comment on column users_addresses.activity_period is 'Main user activity period or user activity period in the organization referenced';
 comment on column users_addresses.comm_type is 'Type of communication table concerned: address, phone or e-mail';
+comment on column users_addresses.tag is 'Array of descriptive tags: home, work,...';
 create table users_login_infos
        (
         user_ref integer not null,
@@ -1594,13 +1586,12 @@ comment on column specimens.station_visible is 'Flag telling if the sampling loc
 comment on column specimens.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 create table template_specimen_codes
        (
-        code_category varchar default 'main' not null,
+        code_category code_categories default 'main' not null,
         code_prefix varchar,
         code integer,
         code_suffix varchar,
         full_code_indexed varchar not null,
-        code_date timestamp,
-        constraint chk_chk_template_specimen_codes check (code_category in ('main', 'secondary', 'temporary', 'mn/mp', 'ig', 'db'))
+        code_date timestamp
        );
 comment on table template_specimen_codes is 'Template used to construct the specimen codes tables';
 comment on column template_specimen_codes.code_category is 'Category of code: main, secondary, temporary,...';
@@ -1628,14 +1619,14 @@ create table specimen_individuals
        (
         id serial not null,
         specimen_ref integer not null,
-        type varchar default 'specimen' not null,
-        type_group varchar,
-        type_search varchar,
-        sex varchar default 'undefined' not null,
-        stage varchar default 'undefined' not null,
-        state varchar default 'not applicable' not null,
-        social_status varchar default 'not applicable' not null,
-        rock_form varchar default 'not applicable' not null,
+        type types_list default 'specimen' not null,
+        type_group types_group_list,
+        type_search types_search_list,
+        sex sexes default 'undefined' not null,
+        stage stages default 'undefined' not null,
+        state specimens_states default 'not applicable' not null,
+        social_status socials_status default 'not applicable' not null,
+        rock_form rock_forms default 'not applicable' not null,
         specimen_individuals_count_min integer default 1 not null,
         specimen_individuals_count_max integer default 1 not null,
         constraint pk_specimen_individuals primary key (id),
@@ -1660,7 +1651,8 @@ create table specimen_parts
        (
         id serial not null,
         specimen_individual_ref integer not null,
-        specimen_part varchar default 'specimen' not null,
+        specimen_part specimens_parts default 'specimen' not null,
+        complete boolean default true not null,
         building varchar,
         floor varchar,
         room varchar,
@@ -1668,9 +1660,9 @@ create table specimen_parts
         shelf varchar,
         container varchar,
         sub_container varchar,
-        container_type varchar,
-        sub_container_type varchar,
-        storage varchar default 'dry' not null,
+        container_type container_types default 'container' not null,
+        sub_container_type container_types default 'container' not null,
+        storage storages default 'dry' not null,
         surnumerary boolean default false not null,
         specimen_status varchar default 'good state' not null,
         specimen_part_count_min integer default 1 not null,
@@ -1740,54 +1732,25 @@ comment on table associated_multimedia is 'List of all associated multimedia to 
 comment on column associated_multimedia.table_ref is 'Reference of table concerned - id field of table_list table';
 comment on column associated_multimedia.record_id is 'Identifier of record concerned';
 comment on column associated_multimedia.multimedia_ref is 'Reference of multimedia object concerned - id field of multimedia table';
-create table specimen_accompanying_minerals
+create table specimens_accompanying
        (
+        type accompanying_types default 'secondary' not null,
         specimen_ref integer not null,
-        mineral_ref integer not null,
-        type varchar default 'secondary' not null,
-        quantity real,
-        unit varchar default '%' not null,
-        defined_by_ordered_ids_list integer[],
-        remarks text,
-        remarks_ts tsvector,
-        constraint unq_specimen_accompanying_minerals unique (specimen_ref, mineral_ref),
-        constraint fk_specimen_accompanying_minerals_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
-        constraint fk_specimen_accompanying_minerals_mineralogy foreign key (mineral_ref) references mineralogy(id),
-        constraint chk_chk_specimen_accompanying_minerals_type check (type in ('main', 'secondary', 'trace'))
-       );
-comment on table specimen_accompanying_minerals is 'For rock or minerals specimens, will list all the accompanying minerals found';
-comment on column specimen_accompanying_minerals.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
-comment on column specimen_accompanying_minerals.mineral_ref is 'Reference of accompanying mineral - id field of mineralogy table';
-comment on column specimen_accompanying_minerals.type is 'Type of mineral: main or secondary';
-comment on column specimen_accompanying_minerals.quantity is 'Quantity of mineral';
-comment on column specimen_accompanying_minerals.unit is 'Unit used for quantity of mineral presence';
-comment on column specimen_accompanying_minerals.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying minerals';
-comment on column specimen_accompanying_minerals.remarks is 'Descriptive remarks';
-comment on column specimen_accompanying_minerals.remarks_ts is 'tsvector form of remarks field - used for full text search with to_tsvector function';
-create table fossiles
-       (
-        specimen_ref integer not null,
-        taxon_ref integer not null,
-        type varchar default 'secondary' not null,
+        taxon_ref integer default 0 not null,
+        mineral_ref integer default 0 not null,
         form varchar,
         quantity real,
         unit varchar default '%' not null,
         defined_by_ordered_ids_list integer[],
-        remarks text,
-        remarks_ts tsvector,
-        constraint unq_fossiles unique (specimen_ref, taxon_ref),
-        constraint fk_fossiles_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
-        constraint fk_fossiles_taxa foreign key (taxon_ref) references taxa(id),
-        constraint chk_chkfossiles_type check (type in ('main', 'secondary', 'trace'))
+        constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
+        constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
+        constraint fk_specimens_accompanying_mineralogy foreign key (mineral_ref) references mineralogy(id),
+        constraint fk_specimens_accompanying_taxa foreign key (taxon_ref) references taxa(id)
        );
-comment on table fossiles is 'For paleontological specimens, will list all the accompanying taxa found';
-comment on column fossiles.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
-comment on column fossiles.taxon_ref is 'Reference of accompanying taxa - id field of taxa table';
-comment on column fossiles.type is 'Type of taxon: main or secondary';
-comment on column fossiles.form is 'Form of accompanying fossile/taxon in the rock: aggregates, circles, colony,...';
-comment on column fossiles.quantity is 'Quantity of taxon';
-comment on column fossiles.unit is 'Unit used for quantity of taxon presence';
-comment on column fossiles.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying taxa';
-comment on column fossiles.remarks is 'Descriptive remarks';
-comment on column fossiles.remarks_ts is 'tsvector form of remarks field - used for full text search with to_tsvector function';
-
+comment on table specimens_accompanying is 'For rock or minerals specimens, will list all the accompanying minerals found';
+comment on column specimens_accompanying.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
+comment on column specimens_accompanying.mineral_ref is 'Reference of accompanying mineral - id field of mineralogy table';
+comment on column specimens_accompanying.type is 'Type of mineral: main or secondary';
+comment on column specimens_accompanying.quantity is 'Quantity of mineral';
+comment on column specimens_accompanying.unit is 'Unit used for quantity of mineral presence';
+comment on column specimens_accompanying.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying minerals';
