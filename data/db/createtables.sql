@@ -717,6 +717,7 @@ create table collections
         code varchar not null,
         name varchar not null,
         institution_ref integer not null,
+        main_manager_ref integer not null,
         parent_collection_ref integer,
         path varchar not null,
         constraint pk_collections primary key (id),
@@ -741,7 +742,6 @@ comment on column template_collections_users.collection_ref is 'Reference of col
 comment on column template_collections_users.user_ref is 'Reference of user - id field of users table';
 create table collections_admin
        (
-        main_mgr boolean default true not null,
         constraint unq_collections_admin unique (collection_ref, user_ref),
         constraint fk_collections_admin_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint fk_collections_admin_users foreign key (user_ref) references users(id) on delete cascade
@@ -750,7 +750,6 @@ inherits (template_collections_users);
 comment on table collections_admin is 'Stores the list of collections administrators';
 comment on column collections_admin.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_admin.user_ref is 'Reference of user - id field of users table';
-comment on column collections_admin.main_mgr is 'Flag telling if the user selected is the main manager of collection introduced';
 create table collections_rights
        (
         rights smallint default 1 not null,
