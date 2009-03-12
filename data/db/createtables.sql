@@ -77,18 +77,6 @@ comment on column catalogue_levels.id is 'Unique identifier of a hierarchical un
 comment on column catalogue_levels.level_type is 'Type of unit the levels is applicable to - contained in a predifined list: taxonomy, chronostratigraphy,...';
 comment on column catalogue_levels.level_name is 'Name given to level concerned';
 comment on column catalogue_levels.optional_level is 'Tells if the level is optional';
-create table levels_translations
-       (
-        level_id integer not null,
-        study_domain study_domains default 'zoology' not null,
-        level_name varchar not null,
-        constraint unq_levels_translations unique (level_id, study_domain),
-        constraint fk_levels_translations_catalogue_levels foreign key (level_id) references catalogue_levels(id) on delete cascade
-       );
-comment on table levels_translations is 'Translations of levels - Only the levels translated for the domain concerned are usable in the interface - works as a filter';
-comment on column levels_translations.level_id is 'Reference of the level concerned - comes from id field of catalogue_levels table';
-comment on column levels_translations.study_domain is 'Study domain: Zoology, Botany, Lithology,... - used to filter the available levels in the interface. ie.: In Botany some levels are used that are not available in Zoology';
-comment on column levels_translations.level_name is 'Level name in english';
 create table possible_upper_levels
        (
         level_ref integer not null,
@@ -338,14 +326,14 @@ create table template_people
         family_name varchar not null,
         family_name_indexed varchar not null,
         given_name varchar,
-        given_name_indexed varchar not null,
+        given_name_indexed varchar default '/' not null,
         additional_names varchar,
         birth_date_day date_day,
-        birth_date_day_indexed smallint not null,
+        birth_date_day_indexed smallint default 0 not null,
         birth_date_month date_month,
-        birth_date_month_indexed smallint not null,
+        birth_date_month_indexed smallint default 0 not null,
         birth_date_year date_year,
-        birth_date_year_indexed smallint not null,
+        birth_date_year_indexed smallint default 0 not null,
         birth_date date,
         gender genders,
         sort_string varchar(36) not null
@@ -385,11 +373,11 @@ create table people
        (
         db_people_type integer default 1 not null,
         end_date_day date_day,
-        end_date_day_indexed smallint not null,
+        end_date_day_indexed smallint default 0 not null,
         end_date_month date_month,
-        end_date_month_indexed smallint not null,
+        end_date_month_indexed smallint default 0 not null,
         end_date_year date_year,
-        end_date_year_indexed smallint not null,
+        end_date_year_indexed smallint default 0 not null,
         end_date date,
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed)
@@ -483,13 +471,8 @@ create table multimedia
         is_digital boolean default true not null,
         type multimedia_types default 'image' not null,
         title varchar not null,
-        title_ts tsvector not null,
         title_indexed varchar not null,
-        title_full_text full_text_language,
         subject varchar default '/' not null,
-        subject_ts tsvector not null,
-        subject_indexed varchar default '/' not null,
-        subject_full_text full_text_language,
         coverage coverages default 'temporal' not null,
         code varchar,
         code_indexed varchar not null,
@@ -497,6 +480,8 @@ create table multimedia
         copyright varchar,
         license varchar,
         uri varchar,
+        descriptive_ts tsvector not null,
+        descriptive_full_text_language full_text_language,
         creation_date date,
         publication_date date,
         constraint pk_multimedia primary key (id),
@@ -507,13 +492,8 @@ comment on column multimedia.id is 'Unique identifier of a multimedia object';
 comment on column multimedia.is_digital is 'Flag telling if the object is digital (true) or physical (false)';
 comment on column multimedia.type is 'Main multimedia object type: image, sound, video,...';
 comment on column multimedia.title is 'Object title';
-comment on column multimedia.title_ts is 'tsvector version of title field';
 comment on column multimedia.title_indexed is 'Indexed form of title field';
-comment on column multimedia.title_full_text is 'title field transformed for a full text search with the to_tsvector function';
 comment on column multimedia.subject is 'Multimedia object subject (as required by Dublin Core...)';
-comment on column multimedia.subject_ts is 'tsvector version of subject field';
-comment on column multimedia.subject_indexed is 'Indexed form of subject field';
-comment on column multimedia.subject_full_text is 'subject field transformed for a full text search with the to_tsvector function';
 comment on column multimedia.coverage is 'Coverage of multimedia object: spatial or temporal (as required by Dublin Core...)';
 comment on column multimedia.code is 'Code given to a multimedia object';
 comment on column multimedia.code_indexed is 'Indexed form of code field';
