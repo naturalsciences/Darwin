@@ -324,7 +324,7 @@ comment on column expeditions.expedition_to_date is 'When all three to date fiel
 create table template_people
        (
         id serial not null,
-        type boolean default true not null,
+        is_physical boolean default true not null,
         sub_type varchar,
         public_class public_classes default 'public' not null,
         formated_name varchar not null,
@@ -351,7 +351,7 @@ create table template_people
        );
 comment on table template_people is 'Template table used to describe user/people tables';
 comment on column template_people.id is 'Unique identifier of a user/person';
-comment on column template_people.type is 'Type of user/person: physical or moral - true is physical, false is moral';
+comment on column template_people.is_physical is 'Type of user/person: physical or moral - true is physical, false is moral';
 comment on column template_people.sub_type is 'Used for moral user/persons: precise nature - public institution, asbl, sprl, sa,...';
 comment on column template_people.public_class is 'Tells public nature of user/person information - public is default value';
 comment on column template_people.formated_name is 'Complete user/person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
@@ -399,7 +399,7 @@ create table people
 inherits (template_people);
 comment on table people is 'All physical and moral persons used in the application are here stored';
 comment on column people.id is 'Unique identifier of a person';
-comment on column people.type is 'Type of person: physical or moral - true is physical, false is moral';
+comment on column people.is_physical is 'Type of person: physical or moral - true is physical, false is moral';
 comment on column people.sub_type is 'Used for moral persons: precise nature - public institution, asbl, sprl, sa,...';
 comment on column people.public_class is 'Tells public nature of person information - public is default value';
 comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
@@ -439,7 +439,7 @@ create table users
 inherits (template_people);
 comment on table users is 'List all application users';
 comment on column users.id is 'Unique identifier of a user';
-comment on column users.type is 'Type of user: physical or moral - true is physical, false is moral';
+comment on column users.is_physical is 'Type of user: physical or moral - true is physical, false is moral';
 comment on column users.sub_type is 'Used for moral users: precise nature - public institution, asbl, sprl, sa,...';
 comment on column users.public_class is 'Tells public nature of user information - public is default value';
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
