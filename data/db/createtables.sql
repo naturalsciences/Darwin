@@ -223,32 +223,45 @@ comment on column catalogue_properties.property_method_indexed is 'Indexed versi
 comment on column catalogue_properties.property_tool is 'Tool used to collect property value';
 comment on column catalogue_properties.property_tool_indexed is 'Indexed version of property_tool field - if null, takes a generic replacement value';
 comment on column catalogue_properties.defined_by_ordered_ids_list is 'Array of identifiers of persons having defined this property - array of id field from people table';
-create table identifications_expertises
+create table identifications
        (
         notion_concerned notions_concerned not null,
         notion_date timestamp,
-        persons_ordered_ids_list integer[] not null,
+        identifiers_ordered_ids_list integer[] not null,
         value_defined varchar,
-        value_defined_ts tsvector,
         value_defined_indexed varchar not null,
+        value_defined_ts tsvector,
         determination_status varchar,
         defined_by_ordered_ids_list integer[],
         order_by integer default 1 not null,
-        constraint unq_identifications_expertises unique (table_ref, record_id, notion_concerned, value_defined_indexed),
-        constraint fk_identifications_expertises_table_list foreign key (table_ref) references table_list(id)
+        constraint unq_identifications unique (table_ref, record_id, notion_concerned, value_defined_indexed),
+        constraint fk_identifications_table_list foreign key (table_ref) references table_list(id)
        )
 inherits (template_table_record_ref);
-comment on table identifications_expertises is 'History of identifications and expertises';
-comment on column identifications_expertises.table_ref is 'Reference of table an identification/expertise is introduced for';
-comment on column identifications_expertises.record_id is 'Id of record concerned by an identification/expertise entry';
-comment on column identifications_expertises.notion_concerned is 'Type of entry: Identification, expertise or preparation';
-comment on column identifications_expertises.notion_date is 'Date of identification/expertise or preparation';
-comment on column identifications_expertises.persons_ordered_ids_list is 'Array of who made the identifications/expertises/preparations - array of id field from people table';
-comment on column identifications_expertises.value_defined is 'When making identification, stores the value resulting of this identification';
-comment on column identifications_expertises.value_defined_ts is 'tsvector form of value_defined field';
-comment on column identifications_expertises.value_defined_indexed is 'Indexed form of value_defined field';
-comment on column identifications_expertises.determination_status is 'Status of identification - can either be a percentage of certainty or a code describing the identification step in the process';
-comment on column identifications_expertises.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
+comment on table identifications is 'History of identifications';
+comment on column identifications.table_ref is 'Reference of table an identification is introduced for';
+comment on column identifications.record_id is 'Id of record concerned by an identification entry';
+comment on column identifications.notion_concerned is 'Type of entry: Identification on a specific concern';
+comment on column identifications.notion_date is 'Date of identification or preparation';
+comment on column identifications.persons_ordered_ids_list is 'Array of who made the identifications - array of id field from people table';
+comment on column identifications.value_defined is 'When making identification, stores the value resulting of this identification';
+comment on column identifications.value_defined_ts is 'tsvector form of value_defined field';
+comment on column identifications.value_defined_indexed is 'Indexed form of value_defined field';
+comment on column identifications.determination_status is 'Status of identification - can either be a percentage of certainty or a code describing the identification step in the process';
+comment on column identifications.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
+create table expertises
+       (
+        expert_ref integer not null,
+        defined_by_ordered_ids_list integer[],
+        order_by integer default 1 not null,
+        constraint unq_expertises unique (table_ref, record_id, expert_ref),
+        constraint fk_expertises_table_list foreign key (table_ref) references table_list(id)
+       )
+inherits (template_table_record_ref);
+comment on table expertises is 'History of expertises';
+comment on column expertises.table_ref is 'Reference of table an expertise is introduced for';
+comment on column expertises.record_id is 'Id of record concerned by an expertise entry';
+comment on column expertises.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
 create table class_vernacular_names
        (
         id serial not null,
@@ -328,17 +341,14 @@ create table template_people
         given_name_indexed varchar not null,
         additional_names varchar,
         birth_date_day date_day,
-        birth_date_day_indexed date_day not null,
+        birth_date_day_indexed smallint not null,
         birth_date_month date_month,
-        birth_date_month_indexed date_month not null,
+        birth_date_month_indexed smallint not null,
         birth_date_year date_year,
-        birth_date_year_indexed date_year not null,
+        birth_date_year_indexed smallint not null,
         birth_date date,
         gender genders,
-        sort_string varchar(36) not null,
-        note text,
-        note_ts tsvector,
-        note_language_full_text full_text_language
+        sort_string varchar(36) not null
        );
 comment on table template_people is 'Template table used to describe user/people tables';
 comment on column template_people.id is 'Unique identifier of a user/person';
@@ -363,9 +373,6 @@ comment on column template_people.birth_date_year_indexed is 'Indexed form of bi
 comment on column template_people.birth_date is 'Birth/Creation date composed from the three birth/creation date fields: birth_date_day, birth_date_month, birth_date_year';
 comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
 comment on column template_people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
-comment on column template_people.note is 'General added notes';
-comment on column template_people.note_ts is 'tsvector form of note field';
-comment on column template_people.note_language_full_text is 'Language used by full text to_tsvector function';
 create table template_people_languages
        (
         language_country varchar default 'eng_GB' not null,
@@ -378,11 +385,11 @@ create table people
        (
         db_people_type integer default 1 not null,
         end_date_day date_day,
-        end_date_day_indexed date_day not null,
+        end_date_day_indexed smallint not null,
         end_date_month date_month,
-        end_date_month_indexed date_month not null,
+        end_date_month_indexed smallint not null,
         end_date_year date_year,
-        end_date_year_indexed date_year not null,
+        end_date_year_indexed smallint not null,
         end_date date,
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed)
@@ -411,8 +418,6 @@ comment on column people.birth_date_year_indexed is 'Indexed form of birth_date_
 comment on column people.birth_date is 'Birth/Creation date composed from the three birth/creation date fields: birth_date_day, birth_date_month, birth_date_year';
 comment on column people.gender is 'For physical persons give the gender: M or F';
 comment on column people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
-comment on column people.note is 'General added notes';
-comment on column people.note_ts is 'tsvector form of note field';
 comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector,...';
 comment on column people.end_date_day is 'End date day';
 comment on column people.end_date_day_indexed is 'Indexed form of end date day';
@@ -421,7 +426,6 @@ comment on column people.end_date_month_indexed is 'Indexed form of end date mon
 comment on column people.end_date_year is 'End date year';
 comment on column people.end_date_year_indexed is 'Indexed form of end date year';
 comment on column people.end_date is 'End date composed from the three end date fields: end_date_day, end_date_month, end_date_year';
-comment on column people.note_language_full_text is 'Language used by to_tsvector full text search function';
 create table users
        (
         constraint pk_users primary key (id),
@@ -451,9 +455,6 @@ comment on column users.birth_date_year_indexed is 'Indexed form of birth_date_y
 comment on column users.birth_date is 'Birth/Creation date composed from the three birth/creation date fields: birth_date_day, birth_date_month, birth_date_year';
 comment on column users.gender is 'For physical users give the gender: M or F';
 comment on column users.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
-comment on column users.note is 'General added notes';
-comment on column users.note_ts is 'tsvector form of note field';
-comment on column users.note_language_full_text is 'Language used by to_tsvector full text search function';
 create table people_languages
        (
         people_ref integer not null,
