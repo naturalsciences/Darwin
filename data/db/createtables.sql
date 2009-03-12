@@ -243,7 +243,7 @@ comment on column identifications.table_ref is 'Reference of table an identifica
 comment on column identifications.record_id is 'Id of record concerned by an identification entry';
 comment on column identifications.notion_concerned is 'Type of entry: Identification on a specific concern';
 comment on column identifications.notion_date is 'Date of identification or preparation';
-comment on column identifications.persons_ordered_ids_list is 'Array of who made the identifications - array of id field from people table';
+comment on column identifications.identifiers_ordered_ids_list is 'Array of who made the identifications - array of id field from people table';
 comment on column identifications.value_defined is 'When making identification, stores the value resulting of this identification';
 comment on column identifications.value_defined_ts is 'tsvector form of value_defined field';
 comment on column identifications.value_defined_indexed is 'Indexed form of value_defined field';
