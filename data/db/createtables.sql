@@ -173,8 +173,6 @@ comment on table gtu is 'Location or sampling units - GeoTemporalUnits';
 comment on column gtu.id is 'Unique identifier of a location or sampling unit';
 comment on column gtu.code is 'Code given - for sampling units - takes id if none defined';
 comment on column gtu.parent_ref is 'Recursive reference to a parent location-sampling unit - id field of gtu table itself';
-comment on column gtu.date_from is 'In temporal scale, start of location or sampling unit existence';
-comment on column gtu.date_to is 'In temporal scale, stop of location or sampling unit existence';
 create table catalogue_properties
        (
         property_type varchar not null,
@@ -229,17 +227,14 @@ create table identifications_expertises
        (
         notion_concerned notions_concerned not null,
         notion_date timestamp,
-        notion_date_indexed timestamp not null,
         persons_ordered_ids_list integer[] not null,
         value_defined varchar,
         value_defined_ts tsvector,
         value_defined_indexed varchar not null,
         determination_status varchar,
-        comment_diagnostic text,
-        comment_diagnostic_ts tsvector,
-        language_full_text full_text_language,
         defined_by_ordered_ids_list integer[],
-        constraint unq_identifications_expertises unique (table_ref, record_id, notion_concerned, notion_date_indexed, value_defined_indexed),
+        order_by integer default 1 not null,
+        constraint unq_identifications_expertises unique (table_ref, record_id, notion_concerned, value_defined_indexed),
         constraint fk_identifications_expertises_table_list foreign key (table_ref) references table_list(id)
        )
 inherits (template_table_record_ref);
@@ -248,15 +243,11 @@ comment on column identifications_expertises.table_ref is 'Reference of table an
 comment on column identifications_expertises.record_id is 'Id of record concerned by an identification/expertise entry';
 comment on column identifications_expertises.notion_concerned is 'Type of entry: Identification, expertise or preparation';
 comment on column identifications_expertises.notion_date is 'Date of identification/expertise or preparation';
-comment on column identifications_expertises.notion_date_indexed is 'Indexed form of identification/expertise/preparation date - if null, takes a generic replacement value';
 comment on column identifications_expertises.persons_ordered_ids_list is 'Array of who made the identifications/expertises/preparations - array of id field from people table';
 comment on column identifications_expertises.value_defined is 'When making identification, stores the value resulting of this identification';
 comment on column identifications_expertises.value_defined_ts is 'tsvector form of value_defined field';
 comment on column identifications_expertises.value_defined_indexed is 'Indexed form of value_defined field';
 comment on column identifications_expertises.determination_status is 'Status of identification - can either be a percentage of certainty or a code describing the identification step in the process';
-comment on column identifications_expertises.comment_diagnostic is 'Complementary comments or the diagnostic that conducted to this identification';
-comment on column identifications_expertises.comment_diagnostic_ts is 'tsvector version of comment_diagnostic field';
-comment on column identifications_expertises.language_full_text is 'Associated language to language/country definition, used by full text search to_tsvector function';
 comment on column identifications_expertises.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
 create table class_vernacular_names
        (
@@ -394,7 +385,7 @@ create table people
         end_date_year_indexed date_year not null,
         end_date date,
         constraint pk_people primary key (id),
-        constraint unq_people unique (type, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed)
+        constraint unq_people unique (is_physical, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed)
        )
 inherits (template_people);
 comment on table people is 'All physical and moral persons used in the application are here stored';
@@ -434,7 +425,7 @@ comment on column people.note_language_full_text is 'Language used by to_tsvecto
 create table users
        (
         constraint pk_users primary key (id),
-        constraint unq_users unique (type, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed)
+        constraint unq_users unique (is_physical, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed)
        )
 inherits (template_people);
 comment on table users is 'List all application users';
