@@ -723,7 +723,8 @@ create table collections
         constraint pk_collections primary key (id),
         constraint fk_collections_institutions foreign key (institution_ref) references people(id),
         constraint fk_collections_collections foreign key (parent_collection_ref) references collections(id) on delete cascade,
-        constraint unq_collections unique (path)
+        constraint fk_collections_users foreign key (main_manager_ref) references users(id),
+        constraint unq_collections unique (institution_ref, path)
        );
 comment on table collections is 'List of all collections encoded in DaRWIN 2';
 comment on column collections.id is 'Unique identifier of a collection';
