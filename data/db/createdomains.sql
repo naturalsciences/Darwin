@@ -4,6 +4,15 @@ create domain genders as char(1)
 create domain full_text_language as varchar default 'simple' not null
        constraint full_text_language_chk
                   check (VALUE in ('danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian', 'italian', 'norwegian', 'portuguese', 'romanian', 'russian', 'spanish', 'swedish', 'turkish', 'simple'));
+create domain date_seconds as smallint
+       constraint date_seconds_chk
+                  check (VALUE between 0 and 59);
+create domain date_minutes as smallint
+       constraint date_minutes_chk
+                  check (VALUE between 0 and 59);
+create domain date_hours as smallint
+       constraint date_hours_chk
+                  check (VALUE between 0 and 23);
 create domain date_day as smallint
        constraint date_day_chk
                   check (VALUE between 1 and 31);
