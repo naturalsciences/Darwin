@@ -320,13 +320,10 @@ create table template_people
         sub_type varchar,
         public_class public_classes default 'public' not null,
         formated_name varchar not null,
-        formated_name_ts tsvector not null,
         formated_name_indexed varchar not null,
-        formated_name_language_full_text full_text_language,
+        formated_name_ts tsvector not null,
         family_name varchar not null,
-        family_name_indexed varchar not null,
         given_name varchar,
-        given_name_indexed varchar default '/' not null,
         additional_names varchar,
         birth_date_day date_day,
         birth_date_day_indexed smallint default 0 not null,
@@ -346,11 +343,8 @@ comment on column template_people.public_class is 'Tells public nature of user/p
 comment on column template_people.formated_name is 'Complete user/person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column template_people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column template_people.formated_name_indexed is 'Indexed form of formated_name field';
-comment on column template_people.formated_name_language_full_text is 'Name formated to fit a full text search with a to_tsvector indexation';
 comment on column template_people.family_name is 'Family name for physical user/persons and Organisation name for moral user/persons';
-comment on column template_people.family_name_indexed is 'Indexed form of family_name field';
 comment on column template_people.given_name is 'User/person''s given name - usually first name';
-comment on column template_people.given_name_indexed is 'Indexed form of given_name field';
 comment on column template_people.additional_names is 'Any additional names given to user/person';
 comment on column template_people.birth_date_day is 'Day of birth/creation';
 comment on column template_people.birth_date_day_indexed is 'Indexed form of birth_date_day field';
@@ -364,7 +358,8 @@ comment on column template_people.sort_string is 'String used for sorting - comp
 create table template_people_languages
        (
         language_country varchar default 'eng_GB' not null,
-        mother boolean default true not null
+        mother boolean default true not null,
+        prefered_language boolean default false not null
        );
 comment on table template_people_languages is 'Template supporting users/people languages table definition';
 comment on column template_people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
@@ -391,11 +386,8 @@ comment on column people.public_class is 'Tells public nature of person informat
 comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column people.formated_name_indexed is 'Indexed form of formated_name field';
-comment on column people.formated_name_language_full_text is 'Name formated to fit a full text search with a to_tsvector indexation';
 comment on column people.family_name is 'Family name for physical persons and Organisation name for moral persons';
-comment on column people.family_name_indexed is 'Indexed form of family_name field';
 comment on column people.given_name is 'User/person''s given name - usually first name';
-comment on column people.given_name_indexed is 'Indexed form of given_name field';
 comment on column people.additional_names is 'Any additional names given to person';
 comment on column people.birth_date_day is 'Day of birth/creation';
 comment on column people.birth_date_day_indexed is 'Indexed form of birth_date_day field';
@@ -428,11 +420,8 @@ comment on column users.public_class is 'Tells public nature of user information
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
-comment on column users.formated_name_language_full_text is 'Name formated to fit a full text search with a to_tsvector indexation';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
-comment on column users.family_name_indexed is 'Indexed form of family_name field';
 comment on column users.given_name is 'User/user''s given name - usually first name';
-comment on column users.given_name_indexed is 'Indexed form of given_name field';
 comment on column users.additional_names is 'Any additional names given to user';
 comment on column users.birth_date_day is 'Day of birth/creation';
 comment on column users.birth_date_day_indexed is 'Indexed form of birth_date_day field';
@@ -474,8 +463,6 @@ create table multimedia
         title_indexed varchar not null,
         subject varchar default '/' not null,
         coverage coverages default 'temporal' not null,
-        code varchar,
-        code_indexed varchar not null,
         apercu_path varchar,
         copyright varchar,
         license varchar,
@@ -485,7 +472,7 @@ create table multimedia
         creation_date date,
         publication_date date,
         constraint pk_multimedia primary key (id),
-        constraint unq_multimedia unique (is_digital, type, title_indexed, code_indexed)
+        constraint unq_multimedia unique (is_digital, type, title_indexed)
        );
 comment on table multimedia is 'Stores all multimedia objects encoded in DaRWIN 2.0';
 comment on column multimedia.id is 'Unique identifier of a multimedia object';
@@ -495,8 +482,6 @@ comment on column multimedia.title is 'Object title';
 comment on column multimedia.title_indexed is 'Indexed form of title field';
 comment on column multimedia.subject is 'Multimedia object subject (as required by Dublin Core...)';
 comment on column multimedia.coverage is 'Coverage of multimedia object: spatial or temporal (as required by Dublin Core...)';
-comment on column multimedia.code is 'Code given to a multimedia object';
-comment on column multimedia.code_indexed is 'Indexed form of code field';
 comment on column multimedia.apercu_path is 'URI path to the thumbnail illustrating the object';
 comment on column multimedia.copyright is 'Copyright notice';
 comment on column multimedia.license is 'License notice';
@@ -547,12 +532,10 @@ create table people_relationships
         person_1_ref integer not null,
         person_2_ref integer not null,
         person_title varchar,
-        logo_ref integer,
         path varchar,
         constraint unq_people_relationships unique (relationship_type, person_1_ref, person_2_ref),
         constraint fk_people_relationships_people_01 foreign key (person_1_ref) references people(id) on delete cascade,
-        constraint fk_people_relationships_people_02 foreign key (person_2_ref) references people(id),
-        constraint fk_people_relationships_multimedia foreign key (logo_ref) references multimedia(id)
+        constraint fk_people_relationships_people_02 foreign key (person_2_ref) references people(id)
        )
 inherits (template_people_users_rel_common);
 comment on table people_relationships is 'Relationships between people - mainly between physical person and moral person: relationship of dependancy';
@@ -562,7 +545,6 @@ comment on column people_relationships.person_2_ref is 'Reference of person pute
 comment on column people_relationships.organization_unit is 'When a physical person is in relationship with a moral one, indicates the department or unit the person is related to';
 comment on column people_relationships.person_title is 'Person title';
 comment on column people_relationships.person_user_role is 'Person role in the organization referenced';
-comment on column people_relationships.logo_ref is 'Reference of a multimedia object containing the logo of organization, department, section or role of a person in such structure';
 comment on column people_relationships.activity_period is 'Main person activity period or person activity period in the organization referenced';
 comment on column people_relationships.path is 'Hierarchical path of the organization structure';
 create table people_comm
@@ -891,7 +873,7 @@ create table my_saved_searches
        (
         user_ref integer not null,
         name varchar default 'default' not null,
-        search_criterias varchar[] not null,
+        search_criterias varchar not null,
         favorite boolean default false not null,
         modification_date_time update_date_time,
         visible_fields_in_result varchar[] not null,
@@ -901,7 +883,7 @@ create table my_saved_searches
 comment on table my_saved_searches is 'Stores user''s saved searches but also (by default) the last search done';
 comment on column my_saved_searches.user_ref is 'Reference of user having saved a search';
 comment on column my_saved_searches.name is 'Name given by user to his/her saved search';
-comment on column my_saved_searches.search_criterias is 'Array of criterias and values passed to search engine';
+comment on column my_saved_searches.search_criterias is 'String field containing the serialization of search criterias';
 comment on column my_saved_searches.favorite is 'Flag telling if saved search concerned is one of the favorites or not';
 comment on column my_saved_searches.modification_date_time is 'Last modification or entry date and time';
 comment on column my_saved_searches.visible_fields_in_result is 'Array of fields that were set visible in the result table at the time the search was saved';
@@ -913,6 +895,7 @@ create table my_preferences
         order_by smallint default 1 not null,
         col_num smallint default 1 not null,
         mandatory boolean default false not null,
+        visible boolean default true not null,
         opened boolean default true not null,
         color varchar default '#5BAABD' not null,
         icon_ref integer,
@@ -928,6 +911,7 @@ comment on column my_preferences.group_name is 'Customizable page element name';
 comment on column my_preferences.order_by is 'Absolute order by between page element name';
 comment on column my_preferences.col_num is 'Column number - tells in which column the page element concerned is';
 comment on column my_preferences.mandatory is 'Flag telling if the page element can be closed or not';
+comment on column my_preferences.visible is 'Flag telling if the page element is on the board or in the widget chooser';
 comment on column my_preferences.opened is 'Flag telling if the page element is opened by default or not';
 comment on column my_preferences.color is 'Color given to page element by user';
 comment on column my_preferences.icon_ref is 'Reference of multimedia icon to be used before page element title';
@@ -1568,7 +1552,7 @@ comment on column specimens.specimen_count_max is 'Maximum number of individuals
 comment on column specimens.multimedia_visible is 'Flag telling if the multimedia attached to this specimen can be visible or not';
 comment on column specimens.station_visible is 'Flag telling if the sampling location can be visible or must be hidden for the specimen encoded';
 comment on column specimens.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
-create table template_specimen_codes
+create table template_codes
        (
         code_category code_categories default 'main' not null,
         code_prefix varchar,
@@ -1577,20 +1561,20 @@ create table template_specimen_codes
         full_code_indexed varchar not null,
         code_date timestamp
        );
-comment on table template_specimen_codes is 'Template used to construct the specimen codes tables';
-comment on column template_specimen_codes.code_category is 'Category of code: main, secondary, temporary,...';
-comment on column template_specimen_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
-comment on column template_specimen_codes.code is 'Numerical part of code';
-comment on column template_specimen_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
-comment on column template_specimen_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
-comment on column template_specimen_codes.code_date is 'Date of code creation';
+comment on table template_codes is 'Template used to construct the specimen codes tables';
+comment on column template_codes.code_category is 'Category of code: main, secondary, temporary,...';
+comment on column template_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
+comment on column template_codes.code is 'Numerical part of code';
+comment on column template_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
+comment on column template_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
+comment on column template_codes.code_date is 'Date of code creation';
 create table specimens_codes
        (
         specimen_ref integer not null,
         constraint unq_specimens_codes unique (specimen_ref, code_category, full_code_indexed),
         constraint fk_specimens_codes_specimens foreign key (specimen_ref) references specimens(id) on delete cascade
        )
-inherits (template_specimen_codes);
+inherits (template_codes);
 comment on table specimens_codes is 'List of codes associated to a specimen';
 comment on column specimens_codes.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
 comment on column specimens_codes.code_category is 'Category of code: main, secondary, temporary,...';
@@ -1599,6 +1583,21 @@ comment on column specimens_codes.code is 'Numerical part of code';
 comment on column specimens_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
 comment on column specimens_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
 comment on column specimens_codes.code_date is 'Date of code creation';
+create table multimedia_codes
+       (
+        multimedia_ref integer not null,
+        constraint unq_multimedia_codes unique (multimedia_ref, code_category, full_code_indexed),
+        constraint fk_multimedia_codes_multimedia foreign key (multimedia_ref) references multimedia(id) on delete cascade
+       )
+inherits (template_codes);
+comment on table multimedia_codes is 'List of codes associated to a specimen';
+comment on column multimedia_codes.multimedia_ref is 'Reference of a multimedia object concerned - id field of multimedia table';
+comment on column multimedia_codes.code_category is 'Category of code: main, secondary, temporary,...';
+comment on column multimedia_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
+comment on column multimedia_codes.code is 'Numerical part of code';
+comment on column multimedia_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
+comment on column multimedia_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
+comment on column multimedia_codes.code_date is 'Date of code creation';
 create table specimen_individuals
        (
         id serial not null,
@@ -1679,7 +1678,7 @@ create table specimen_parts_codes
         constraint unq_specimen_parts_codes unique (specimen_part_ref, code_category, full_code_indexed),
         constraint fk_specimen_parts_codes_specimen_parts foreign key (specimen_part_ref) references specimen_parts(id) on delete cascade
        )
-inherits (template_specimen_codes);
+inherits (template_codes);
 comment on table specimen_parts_codes is 'List of codes given to specimen parts/individuals';
 comment on column specimen_parts_codes.specimen_part_ref is 'Reference of specimen part concerned - id field of specimen_parts table';
 comment on column specimen_parts_codes.code_category is 'Category of code: main, secondary, temporary,...';
