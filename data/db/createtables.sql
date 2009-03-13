@@ -1,3 +1,4 @@
+\set log_error_verbosity terse
 create table template_tablefields_common
        (
         id serial not null,
