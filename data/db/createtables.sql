@@ -934,17 +934,15 @@ comment on column my_saved_specimens.favorite is 'Flag telling the selection is 
 comment on column my_saved_specimens.modification_date_time is 'Last update date and time';
 create table template_classifications
        (
-        id serial not null,
         name varchar not null,
         name_indexed varchar not null,
         description_year smallint,
         description_year_compl char(2),
-        level_ref integer not null,
+        level_ref integer,
         status status default 'valid' not null,
         path varchar default '/' not null
        );
 comment on table template_classifications is 'Template table used to construct every common data in each classifications tables (taxonomy, chronostratigraphy, lithostratigraphy,...)';
-comment on column template_classifications.id is 'Unique identifier of a classification unit';
 comment on column template_classifications.name is 'Classification unit name';
 comment on column template_classifications.name_indexed is 'Indexed form of name field';
 comment on column template_classifications.description_year is 'Year of description';
@@ -953,6 +951,7 @@ comment on column template_classifications.level_ref is 'Reference of classifica
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
 create table taxa
        (
+        id serial not null,
         domain_ref classifications_ids,
         domain_indexed classifications_names,
         kingdom_ref classifications_ids,
@@ -1255,6 +1254,7 @@ comment on column people_taxonomic_names.taxonomic_top_ref is 'Reference of the 
 comment on column people_taxonomic_names.person_name is 'Person name for the group concerned';
 create table chronostratigraphy
        (
+        id serial not null,
         eon_ref classifications_ids,
         eon_indexed classifications_names,
         era_ref classifications_ids,
@@ -1319,6 +1319,7 @@ comment on column chronostratigraphy.lower_bound is 'Lower age boundary in years
 comment on column chronostratigraphy.upper_bound is 'Upper age boundary in years';
 create table lithostratigraphy
        (
+        id serial not null,
         group_ref classifications_ids,
         group_indexed classifications_names,
         formation_ref classifications_ids,
@@ -1364,6 +1365,7 @@ comment on column lithostratigraphy.sub_level_2_ref is 'Reference of sub level t
 comment on column lithostratigraphy.sub_level_2_indexed is 'Indexed name of sub level the current unit depends of';
 create table mineralogy
        (
+        id serial not null,
         code varchar not null,
         classification mineralogy_classifications default 'strunz' not null,
         formule varchar,
@@ -1414,6 +1416,7 @@ comment on column mineralogy.unit_variety_ref is 'Reference of sub level the cur
 comment on column mineralogy.unit_variety_indexed is 'Indexed name of sub level the current unit depends of';
 create table lithology
        (
+        id serial not null,
         constraint pk_lithology primary key (id),
         constraint unq_lithology unique (path, name_indexed),
         constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
