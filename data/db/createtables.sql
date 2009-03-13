@@ -679,6 +679,8 @@ create table collections
         main_manager_ref integer not null,
         parent_collection_ref integer,
         path varchar not null,
+        code_auto_increment boolean default false not null,
+        code_part_code_auto_copy boolean default false not null,
         constraint pk_collections primary key (id),
         constraint fk_collections_institutions foreign key (institution_ref) references people(id),
         constraint fk_collections_collections foreign key (parent_collection_ref) references collections(id) on delete cascade,
