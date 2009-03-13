@@ -492,13 +492,11 @@ create table template_people_users_comm_common
        (
         id serial not null,
         person_user_ref integer not null,
-        comm_type comm_types default 'address' not null,
         entry varchar not null
        );
 comment on table template_people_users_comm_common is 'Template table used to construct people communication tables (tel and e-mail)';
 comment on column template_people_users_comm_common.id is 'Unique identifier of a person/user communication entry';
 comment on column template_people_users_comm_common.person_user_ref is 'Reference of person/user - id field of people/users table';
-comment on column template_people_users_comm_common.comm_type is 'Type of communication table concerned: address, phone or e-mail';
 comment on column template_people_users_comm_common.entry is 'Communication entry';
 create table template_people_users_rel_common
        (
@@ -517,7 +515,8 @@ create table template_people_users_addr_common
         locality varchar not null,
         region varchar,
         zip_code varchar,
-        country varchar not null
+        country varchar not null,
+        address_parts_ts tsvector not null
        );
 comment on table template_people_users_addr_common is 'Template table used to construct addresses tables for people/users';
 comment on column template_people_users_addr_common.po_box is 'PO Box';
@@ -549,6 +548,7 @@ comment on column people_relationships.activity_period is 'Main person activity 
 comment on column people_relationships.path is 'Hierarchical path of the organization structure';
 create table people_comm
        (
+        comm_type comm_types default 'phone/fax' not null,
         tag varchar[] not null,
         constraint pk_people_comm primary key (id),
         constraint unq_people_comm unique (comm_type, person_user_ref, entry),
@@ -565,7 +565,6 @@ comment on column people_comm.tag is 'Array of descriptive tags: internet, tel, 
 create table people_addresses
        (
         tag varchar[] not null,
-        address_parts_ts tsvector not null,
         constraint pk_people_addresses primary key (id),
         constraint unq_people_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_people_addresses_people foreign key (person_user_ref) references people(id) on delete cascade
@@ -582,10 +581,10 @@ comment on column people_addresses.locality is 'Locality';
 comment on column people_addresses.country is 'Country';
 comment on column people_addresses.region is 'Region';
 comment on column people_addresses.zip_code is 'Zip code';
-comment on column people_addresses.comm_type is 'Type of communication table concerned: address, phone or e-mail';
 comment on column people_addresses.tag is 'Array of descriptive tags: home, work,...';
 create table users_comm
        (
+        comm_type comm_types default 'phone/fax' not null,
         tag varchar[] not null,
         constraint pk_users_comm primary key (id),
         constraint unq_users_comm unique (comm_type, person_user_ref, entry),
@@ -602,7 +601,6 @@ comment on column users_comm.tag is 'Array of descriptive tags: internet, tel, f
 create table users_addresses
        (
         tag varchar[] not null,
-        address_parts_ts tsvector not null,
         constraint pk_users_addresses primary key (id),
         constraint unq_users_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_users_addresses_users foreign key (person_user_ref) references users(id) on delete cascade
@@ -622,7 +620,6 @@ comment on column users_addresses.zip_code is 'Zip code';
 comment on column users_addresses.organization_unit is 'When a physical user is in relationship with a moral one, indicates the department or unit the user is related to';
 comment on column users_addresses.person_user_role is 'User role in the organization referenced';
 comment on column users_addresses.activity_period is 'Main user activity period or user activity period in the organization referenced';
-comment on column users_addresses.comm_type is 'Type of communication table concerned: address, phone or e-mail';
 comment on column users_addresses.tag is 'Array of descriptive tags: home, work,...';
 create table users_login_infos
        (
@@ -830,7 +827,7 @@ comment on column users_tracking.table_ref is 'Reference of table concerned - id
 comment on column users_tracking.record_id is 'ID of record concerned';
 comment on column users_tracking.id is 'Unique identifier of a table track entry';
 comment on column users_tracking.user_ref is 'Reference of user having made an action - id field of users table';
-comment on column users_tracking.action is 'Action done on table record';
+comment on column users_tracking.action is 'Action done on table record: insert, update, delete';
 comment on column users_tracking.modification_date_time is 'Track date and time';
 create table users_tracking_records
        (
@@ -941,8 +938,7 @@ create table template_classifications
         description_year_compl char(2),
         level_ref integer not null,
         status status default 'valid' not null,
-        full_hierarchy_path varchar not null,
-        partial_hierarchy_path varchar not null
+        path varchar default '/' not null
        );
 comment on table template_classifications is 'Template table used to construct every common data in each classifications tables (taxonomy, chronostratigraphy, lithostratigraphy,...)';
 comment on column template_classifications.id is 'Unique identifier of a classification unit';
@@ -952,8 +948,6 @@ comment on column template_classifications.description_year is 'Year of descript
 comment on column template_classifications.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column template_classifications.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column template_classifications.full_hierarchy_path is 'Hierarchy path composed of parents ids and unit name - used for unique indexation';
-comment on column template_classifications.partial_hierarchy_path is 'Partial hierarchy path composed of non 0 parents ids -> reflexion of real hierarchy path for treeview ease of construction';
 create table taxa
        (
         domain_ref classifications_ids,
@@ -1067,7 +1061,7 @@ create table taxa
         chimera_hybrid_pos varchar default 'none' not null,
         extinct boolean default false not null,
         constraint pk_taxa primary key (id),
-        constraint unq_taxa unique (full_hierarchy_path),
+        constraint unq_taxa unique (path, name_indexed),
         constraint fk_taxa_catalogue_levels_fk foreign key (level_ref) references catalogue_levels(id),
         constraint fk_taxa_taxa_domain foreign key (domain_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_kingdom_taxa foreign key (kingdom_ref) references taxa(id) on delete cascade,
@@ -1133,8 +1127,6 @@ comment on column taxa.description_year is 'Year of description';
 comment on column taxa.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column taxa.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column taxa.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column taxa.full_hierarchy_path is 'Hierarchy path composed of parents ids and unit name - used for unique indexation';
-comment on column taxa.partial_hierarchy_path is 'Partial hierarchy path composed of non 0 parents ids -> reflexion of real hierarchy path for treeview ease of construction';
 comment on column taxa.domain_ref is 'Reference of domain the current taxa depends of - id field of taxa table - recursive reference';
 comment on column taxa.domain_indexed is 'Indexed name of domain the current taxa depends of';
 comment on column taxa.kingdom_ref is 'Reference of kingdom the current taxa depends of - id field of taxa table - recursive reference';
@@ -1281,7 +1273,7 @@ create table chronostratigraphy
         lower_bound numeric,
         upper_bound numeric,
         constraint pk_chronostratigraphy primary key (id),
-        constraint unq_chronostratigraphy unique (full_hierarchy_path),
+        constraint unq_chronostratigraphy unique (path, name_indexed),
         constraint fk_chronostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
         constraint fk_chronostratigraphy_eon_chronostratigraphy foreign key (eon_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_era_chronostratigraphy foreign key (era_ref) references chronostratigraphy(id) on delete cascade,
@@ -1302,8 +1294,6 @@ comment on column chronostratigraphy.description_year is 'Year of description';
 comment on column chronostratigraphy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column chronostratigraphy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column chronostratigraphy.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column chronostratigraphy.full_hierarchy_path is 'Hierarchy path composed of parents ids and unit name - used for unique indexation';
-comment on column chronostratigraphy.partial_hierarchy_path is 'Partial hierarchy path composed of non 0 parents ids -> reflexion of real hierarchy path for treeview ease of construction';
 comment on column chronostratigraphy.eon_ref is 'Reference of eon the current unit depends of - id field of chronostratigraphy table - recursive reference';
 comment on column chronostratigraphy.eon_indexed is 'Indexed name of eon the current unit depends of';
 comment on column chronostratigraphy.era_ref is 'Reference of era the current unit depends of - id field of chronostratigraphy table - recursive reference';
@@ -1339,7 +1329,7 @@ create table lithostratigraphy
         sub_level_2_ref classifications_ids,
         sub_level_2_indexed classifications_names,
         constraint pk_lithostratigraphy primary key (id),
-        constraint unq_lithostratigraphy unique (full_hierarchy_path),
+        constraint unq_lithostratigraphy unique (path, name_indexed),
         constraint fk_lithostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
         constraint fk_lithostratigraphy_group_lithostratigraphy foreign key (group_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_formation_lithostratigraphy foreign key (formation_ref) references lithostratigraphy(id) on delete cascade,
@@ -1357,8 +1347,6 @@ comment on column lithostratigraphy.description_year is 'Year of description';
 comment on column lithostratigraphy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column lithostratigraphy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithostratigraphy.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column lithostratigraphy.full_hierarchy_path is 'Hierarchy path composed of parents ids and unit name - used for unique indexation';
-comment on column lithostratigraphy.partial_hierarchy_path is 'Partial hierarchy path composed of non 0 parents ids -> reflexion of real hierarchy path for treeview ease of construction';
 comment on column lithostratigraphy.group_ref is 'Reference of group the current unit depends of - id field of lithostratigraphy table - recursive reference';
 comment on column lithostratigraphy.group_indexed is 'Indexed name of group the current unit depends of';
 comment on column lithostratigraphy.formation_ref is 'Reference of formation the current unit depends of - id field of lithostratigraphy table - recursive reference';
@@ -1389,7 +1377,7 @@ create table mineralogy
         unit_variety_ref classifications_ids,
         unit_variety_indexed classifications_names,
         constraint pk_mineralogy primary key (id),
-        constraint unq_mineralogy unique (full_hierarchy_path),
+        constraint unq_mineralogy unique (path, name_indexed),
         constraint fk_mineralogy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
         constraint fk_mineralogy_unit_class_mineralogy foreign key (unit_class_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_division_mineralogy foreign key (unit_division_ref) references mineralogy(id) on delete cascade,
@@ -1406,8 +1394,6 @@ comment on column mineralogy.description_year is 'Year of description';
 comment on column mineralogy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column mineralogy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column mineralogy.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column mineralogy.full_hierarchy_path is 'Hierarchy path composed of parents ids and unit name - used for unique indexation';
-comment on column mineralogy.partial_hierarchy_path is 'Partial hierarchy path composed of non 0 parents ids -> reflexion of real hierarchy path for treeview ease of construction';
 comment on column mineralogy.code is 'Classification code given to mineral - in classification chosen - Strunz by default';
 comment on column mineralogy.classification is 'Classification system used to describe mineral: strunz, dana,...';
 comment on column mineralogy.formule is 'Chemical formulation';
@@ -1426,7 +1412,7 @@ comment on column mineralogy.unit_variety_indexed is 'Indexed name of sub level 
 create table lithology
        (
         constraint pk_lithology primary key (id),
-        constraint unq_lithology unique (full_hierarchy_path),
+        constraint unq_lithology unique (path, name_indexed),
         constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
        )
 inherits (template_classifications);
@@ -1438,18 +1424,18 @@ comment on column lithology.description_year is 'Year of description';
 comment on column lithology.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column lithology.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithology.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column lithology.full_hierarchy_path is 'Hierarchy path composed of parents ids and unit name - used for unique indexation';
-comment on column lithology.partial_hierarchy_path is 'Partial hierarchy path composed of non 0 parents ids -> reflexion of real hierarchy path for treeview ease of construction';
 create table habitats
        (
         id serial not null,
         code varchar not null,
+        code_indexed varchar default '/' not null,
         description varchar not null,
         description_ts tsvector not null,
         description_language_full_text full_text_language, 
         habitat_system habitat_systems default 'eunis' not null,
+        path varchar default '/' not null,
         constraint pk_habitats primary key (id),
-        constraint unq_habitats unique (code, habitat_system)
+        constraint unq_habitats unique (path, code_indexed, habitat_system)
        );
 comment on table habitats is 'Habitats classifications';
 comment on column habitats.id is 'Unique identifier of a habitat';
@@ -1527,7 +1513,8 @@ create table specimens
         constraint fk_specimens_ident_taxa foreign key (identification_taxon_ref) references taxa(id) on delete set default,
         constraint fk_specimens_host_taxa foreign key (host_taxon_ref) references taxa(id) on delete set default,
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
-	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max)
+	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max),
+	constraint chk_chk_specimens_min check (specimen_count_min >= 0)
        );
 comment on table specimens is 'Specimens or batch of specimens stored in collection';
 comment on column specimens.id is 'Unique identifier of a specimen or batch of specimens';
@@ -1538,7 +1525,7 @@ comment on column specimens.litho_ref is 'When encoding a rock, mineral or paleo
 comment on column specimens.chrono_ref is 'When encoding a rock, mineral or paleontologic specimen, contains the reference of chronostratigraphic unit the specimen have been found into - id field of chronostratigraphy table';
 comment on column specimens.taxon_ref is 'When encoding a ''living'' specimen, contains the reference of the taxon unit defining the specimen - id field of taxa table';
 comment on column specimens.identification_qual is 'Qualifier of taxonomic definition: sp., prox. aff., cf., ...';
-comment on column specimens.identification_taxon_ref is 'When taxonomic qualifier specified - can contain the reference of the taxon the qualifier targetsi - id field of taxa table';
+comment on column specimens.identification_taxon_ref is 'When taxonomic qualifier specified - can contain the reference of the taxon the qualifier targets - id field of taxa table';
 comment on column specimens.host_relationship is 'When current specimen encoded is in a host relationship with an other specimen or taxon, this field contains the type of relationship between them: symbiosis, parasitism, saprophytism,...';
 comment on column specimens.host_specimen_ref is 'When current specimen encoded is in a host relationship with an other specimen, this field contains reference of the host specimen - recursive reference';
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
@@ -1615,7 +1602,8 @@ create table specimen_individuals
         constraint pk_specimen_individuals primary key (id),
         constraint unq_specimen_individuals unique (specimen_ref, type, sex, stage, state, social_status, rock_form),
         constraint fk_specimen_individuals_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
-        constraint chk_chk_specimen_individuals_minmax check (specimen_individuals_count_min <= specimen_individuals_count_max)
+        constraint chk_chk_specimen_individuals_minmax check (specimen_individuals_count_min <= specimen_individuals_count_max),
+	constraint chk_chk_specimens_individuals_min check (specimen_individuals_count_min >= 0)
        );
 comment on table specimen_individuals is 'Stores characterized individudals from a specimen batch';
 comment on column specimen_individuals.id is 'Unique identifier of a specimen individual';
@@ -1652,7 +1640,8 @@ create table specimen_parts
         specimen_part_count_max integer default 1 not null,
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
-        constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max)
+        constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
+	constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
 comment on table specimen_parts is 'List of individuals or parts of individuals stored in conservatories';
 comment on column specimen_parts.id is 'Unique identifier of a specimen part/individual';
@@ -1695,7 +1684,8 @@ create table specimen_parts_insurances
         insurer_ref integer,
         constraint unq_specimen_parts_insurances unique (specimen_part_ref, insurance_year),
         constraint fk_specimen_parts_insurances_specimen_parts foreign key (specimen_part_ref) references specimen_parts(id) on delete cascade,
-        constraint fk_specimen_parts_insurances_people foreign key (insurer_ref) references people(id)
+        constraint fk_specimen_parts_insurances_people foreign key (insurer_ref) references people(id),
+        constraint chk_chk_specimen_parts_insurances check (insurance_value >= 0)
        );
 comment on table specimen_parts_insurances is 'List of insurances values for given specimen parts/individuals';
 comment on column specimen_parts_insurances.specimen_part_ref is 'Reference of specimen part/individual concerned - id field of specimen_parts table';
