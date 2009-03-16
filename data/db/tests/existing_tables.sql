@@ -1,3 +1,5 @@
+\unset ECHO
+\i unit_launch.sql
 -- Plan the tests.
 SELECT plan(72);
 
@@ -74,3 +76,5 @@ SELECT has_table('specimen_parts_codes','specimen_parts_codes exists');
 SELECT has_table('specimen_parts_insurances','specimen_parts_insurances exists');
 SELECT has_table('associated_multimedia','associated_multimedia exists');
 SELECT has_table('specimens_accompanying','specimens_accompanying exists');
+
+ROLLBACK;
