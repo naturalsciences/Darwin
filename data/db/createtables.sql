@@ -143,7 +143,7 @@ create table gtu
        (
         id serial not null,
         code varchar not null,
-        parent_ref integer not null,
+        parent_ref integer,
         gtu_from_date_seconds date_seconds,
         gtu_from_date_minutes date_minutes,
         gtu_from_date_hours date_hours,

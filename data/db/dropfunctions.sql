@@ -1,1 +1,1 @@
-
+DROP FUNCTION fct_clr_incrementMainCode;
