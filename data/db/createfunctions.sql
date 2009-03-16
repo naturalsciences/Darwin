@@ -61,3 +61,13 @@ BEGIN
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_cpy_idToCode() RETURNS trigger
+AS $$
+BEGIN
+	IF NEW.code is null THEN
+		NEW.code := NEW.id;
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;

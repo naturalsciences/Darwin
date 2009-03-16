@@ -1,2 +1,3 @@
 DROP TRIGGER tgr_clr_incrementMainCode_specimens;
 DROP TRIGGER trg_cpy_specimensMainCode_specimenPartCode;
+DROP TRIGGER trg_cpy_idToCode_gtu;
