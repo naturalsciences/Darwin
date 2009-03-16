@@ -49,6 +49,9 @@ create table template_table_record_ref
         table_ref integer not null,
         record_id integer not null
        );
+comment on table template_table_record_ref is 'Template called to add table_ref and record_id fields in multiple ''tracking'' tables';
+comment on column template_table_record_ref.table_ref is 'Reference of table concerned - id field of table_list table';
+comment on column template_table_record_ref.record_id is 'Id of record concerned';
 create table catalogue_authors
        (
         author_type catalogues_authors_types default 'main' not null,
@@ -162,6 +165,18 @@ comment on table gtu is 'Location or sampling units - GeoTemporalUnits';
 comment on column gtu.id is 'Unique identifier of a location or sampling unit';
 comment on column gtu.code is 'Code given - for sampling units - takes id if none defined';
 comment on column gtu.parent_ref is 'Recursive reference to a parent location-sampling unit - id field of gtu table itself';
+comment on column gtu.gtu_from_date_seconds is 'Seconds part of gtu from date';
+comment on column gtu.gtu_from_date_minutes is 'Minutes part of gtu from date';
+comment on column gtu.gtu_from_date_hours is 'Hours part of gtu from date';
+comment on column gtu.gtu_from_date_day is 'Days part of gtu from date';
+comment on column gtu.gtu_from_date_month is 'Months part of gtu from date';
+comment on column gtu.gtu_from_date_year is 'Years part of gtu from date';
+comment on column gtu.gtu_to_date_seconds is 'Seconds part of gtu to date';
+comment on column gtu.gtu_to_date_minutes is 'Minutes part of gtu to date';
+comment on column gtu.gtu_to_date_hours is 'Hours part of gtu to date';
+comment on column gtu.gtu_to_date_day is 'Days part of gtu to date';
+comment on column gtu.gtu_to_date_month is 'Months part of gtu to date';
+comment on column gtu.gtu_to_date_year is 'Years part of gtu to date';
 create table catalogue_properties
        (
         property_type varchar not null,
@@ -238,6 +253,7 @@ comment on column identifications.value_defined_ts is 'tsvector form of value_de
 comment on column identifications.value_defined_indexed is 'Indexed form of value_defined field';
 comment on column identifications.determination_status is 'Status of identification - can either be a percentage of certainty or a code describing the identification step in the process';
 comment on column identifications.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
+comment on column identifications.order_by is 'Integer used to order the identifications when no date entered';
 create table expertises
        (
         expert_ref integer not null,
@@ -251,6 +267,8 @@ comment on table expertises is 'History of expertises';
 comment on column expertises.table_ref is 'Reference of table an expertise is introduced for';
 comment on column expertises.record_id is 'Id of record concerned by an expertise entry';
 comment on column expertises.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
+comment on column expertises.expert_ref is 'Reference of expert - id field of people table';
+comment on column expertises.order_by is 'Integer used to order the experts';
 create table class_vernacular_names
        (
         id serial not null,
@@ -365,6 +383,7 @@ create table template_people_languages
 comment on table template_people_languages is 'Template supporting users/people languages table definition';
 comment on column template_people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column template_people_languages.mother is 'Flag telling if its mother language or not';
+comment on column template_people_languages.prefered_language is 'Flag telling which language is prefered in communications';
 create table people
        (
         db_people_type integer default 1 not null,
@@ -444,6 +463,7 @@ comment on table people_languages is 'Languages spoken by a given person';
 comment on column people_languages.people_ref is 'Reference of person - id field of people table';
 comment on column people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column people_languages.mother is 'Flag telling if its mother language or not';
+comment on column people_languages.prefered_language is 'Flag telling which language is prefered in communications';
 create table users_languages
        (
         user_ref integer not null,
@@ -455,6 +475,7 @@ comment on table users_languages is 'Languages spoken by a given user';
 comment on column users_languages.user_ref is 'Reference of user - id field of users table';
 comment on column users_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column users_languages.mother is 'Flag telling if its mother language or not';
+comment on column users_languages.prefered_language is 'Flag telling which language is prefered in communications';
 create table multimedia
        (
         id serial not null,
@@ -489,6 +510,8 @@ comment on column multimedia.license is 'License notice';
 comment on column multimedia.uri is 'URI of object if digital';
 comment on column multimedia.creation_date is 'Object creation date';
 comment on column multimedia.publication_date is 'Object publication date';
+comment on column multimedia.descriptive_ts is 'tsvector form of title and subject fields together';
+comment on column multimedia.descriptive_full_text_language is 'Language used for descriptive_ts tsvector field composition';
 create table template_people_users_comm_common
        (
         id serial not null,
@@ -526,6 +549,7 @@ comment on column template_people_users_addr_common.locality is 'Locality';
 comment on column template_people_users_addr_common.region is 'Region';
 comment on column template_people_users_addr_common.zip_code is 'zip code';
 comment on column template_people_users_addr_common.country is 'Country';
+comment on column template_people_users_addr_common.address_parts_ts is 'tsvector field containing vectorized form of all addresses fields: country, region, locality, extended address,...';
 create table people_relationships
        (
         relationship_type people_relationship_types default 'belongs to' not null,
@@ -695,6 +719,9 @@ comment on column collections.name is 'Collection name';
 comment on column collections.institution_ref is 'Reference of institution current collection belongs to - id field of people table';
 comment on column collections.parent_collection_ref is 'Recursive reference to collection table itself to represent collection parenty/hierarchy';
 comment on column collections.path is 'Descriptive path for collection hierarchy, each level separated by a /';
+comment on column collections.main_manager_ref is 'Reference of collection main manager - id field of users table';
+comment on column collections.code_auto_increment is 'Flag telling if the numerical part of a code has to be incremented or not';
+comment on column collections.code_part_code_auto_copy is 'Flag telling if the whole specimen code has to be copied for a part, when inserting a new one';
 create table template_collections_users
        (
         collection_ref integer default 0 not null,
@@ -869,6 +896,7 @@ comment on column collection_maintenance.action_observation is 'Action or observ
 comment on column collection_maintenance.description is 'Complementary description';
 comment on column collection_maintenance.description_ts is 'tsvector form of description field';
 comment on column collection_maintenance.language_full_text is 'Language used by to_tsvector full text search function';
+comment on column collection_maintenance.modification_date_time is 'Last update date/time';
 create table my_saved_searches
        (
         user_ref integer not null,
@@ -949,6 +977,7 @@ comment on column template_classifications.description_year is 'Year of descript
 comment on column template_classifications.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column template_classifications.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
+comment on column template_classifications.path is 'Hierarchy path (/ for root)';
 create table taxa
        (
         id serial not null,
@@ -1239,6 +1268,7 @@ comment on column taxa.abberans_ref is 'Reference of abberans the current taxa d
 comment on column taxa.abberans_indexed is 'Indexed name of abberans the current taxa depends of';
 comment on column taxa.chimera_hybrid_pos is 'Chimera or Hybrid informations';
 comment on column taxa.extinct is 'Tells if taxa is extinct or not';
+comment on column taxa.path is 'Hierarchy path (/ for root)';
 create table people_taxonomic_names
        (
         person_ref integer not null,
@@ -1317,6 +1347,7 @@ comment on column chronostratigraphy.sub_level_2_ref is 'Reference of sub level 
 comment on column chronostratigraphy.sub_level_2_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column chronostratigraphy.lower_bound is 'Lower age boundary in years';
 comment on column chronostratigraphy.upper_bound is 'Upper age boundary in years';
+comment on column chronostratigraphy.path is 'Hierarchy path (/ for root)';
 create table lithostratigraphy
        (
         id serial not null,
@@ -1363,6 +1394,7 @@ comment on column lithostratigraphy.sub_level_1_ref is 'Reference of sub level t
 comment on column lithostratigraphy.sub_level_1_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column lithostratigraphy.sub_level_2_ref is 'Reference of sub level the current unit depends of - id field of lithostratigraphy table - recursive reference';
 comment on column lithostratigraphy.sub_level_2_indexed is 'Indexed name of sub level the current unit depends of';
+comment on column lithostratigraphy.path is 'Hierarchy path (/ for root)';
 create table mineralogy
        (
         id serial not null,
@@ -1414,6 +1446,7 @@ comment on column mineralogy.unit_group_ref is 'Reference of group the current u
 comment on column mineralogy.unit_group_indexed is 'Indexed name of group the current unit depends of';
 comment on column mineralogy.unit_variety_ref is 'Reference of sub level the current unit depends of - id field of mineralogy table - recursive reference';
 comment on column mineralogy.unit_variety_indexed is 'Indexed name of sub level the current unit depends of';
+comment on column mineralogy.path is 'Hierarchy path (/ for root)';
 create table lithology
        (
         id serial not null,
@@ -1430,6 +1463,7 @@ comment on column lithology.description_year is 'Year of description';
 comment on column lithology.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column lithology.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithology.status is 'Validitiy status: valid, invalid, in discussion';
+comment on column lithology.path is 'Hierarchy path (/ for root)';
 create table habitats
        (
         id serial not null,
@@ -1446,10 +1480,12 @@ create table habitats
 comment on table habitats is 'Habitats classifications';
 comment on column habitats.id is 'Unique identifier of a habitat';
 comment on column habitats.code is 'Code given to this habitat in the classification encoded';
+comment on column habitats.code_indexed is 'Indexed form of code field';
 comment on column habitats.description is 'General description of the habitat';
 comment on column habitats.description_ts is 'Indexed form of description field ready to be used with to_tsvector full text search function';
 comment on column habitats.description_language_full_text is 'Language used to compose the description_ts tsvector field';
 comment on column habitats.habitat_system is 'System used to describe habitat encoded';
+comment on column habitats.path is 'Hierarchy path (/ for root)';
 create table multimedia_keywords
        (
         object_ref integer not null,
@@ -1545,6 +1581,9 @@ comment on column specimens.specimen_count_max is 'Maximum number of individuals
 comment on column specimens.multimedia_visible is 'Flag telling if the multimedia attached to this specimen can be visible or not';
 comment on column specimens.station_visible is 'Flag telling if the sampling location can be visible or must be hidden for the specimen encoded';
 comment on column specimens.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
+comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
+comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
+comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxa table';
 create table template_codes
        (
         code_category code_categories default 'main' not null,
@@ -1667,6 +1706,7 @@ comment on column specimen_parts.surnumerary is 'Tells if this part/individual h
 comment on column specimen_parts.specimen_status is 'Specimen status: good state, lost, damaged,...';
 comment on column specimen_parts.specimen_part_count_min is 'Minimum number of parts/individuals';
 comment on column specimen_parts.specimen_part_count_max is 'Maximum number of parts/individuals';
+comment on column specimen_parts.complete is 'Flag telling if part/specimen is complete or not';
 create table specimen_parts_codes
        (
         specimen_part_ref integer not null,
@@ -1726,10 +1766,12 @@ create table specimens_accompanying
         constraint fk_specimens_accompanying_mineralogy foreign key (mineral_ref) references mineralogy(id),
         constraint fk_specimens_accompanying_taxa foreign key (taxon_ref) references taxa(id)
        );
-comment on table specimens_accompanying is 'For rock or minerals specimens, will list all the accompanying minerals found';
+comment on table specimens_accompanying is 'List all the objects/specimens accompanying the current specimen';
 comment on column specimens_accompanying.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
-comment on column specimens_accompanying.mineral_ref is 'Reference of accompanying mineral - id field of mineralogy table';
-comment on column specimens_accompanying.type is 'Type of mineral: main or secondary';
-comment on column specimens_accompanying.quantity is 'Quantity of mineral';
-comment on column specimens_accompanying.unit is 'Unit used for quantity of mineral presence';
-comment on column specimens_accompanying.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying minerals';
+comment on column specimens_accompanying.mineral_ref is 'Reference of accompanying mineral (if it''s an inhert unit accompanying - id field of mineralogy table';
+comment on column specimens_accompanying.type is 'Type of accompanying specimen: main or secondary';
+comment on column specimens_accompanying.quantity is 'Quantity of accompanying specimens';
+comment on column specimens_accompanying.unit is 'Unit used for quantity of accompanying specimen presence';
+comment on column specimens_accompanying.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying specimen';
+comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxa table';
+comment on column specimens_accompanying.form is 'Form of accompanying specimen presence: colony, aggregate, isolated,...';
