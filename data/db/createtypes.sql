@@ -1,4 +1,4 @@
-create type level_types as enum ('taxonomy', 'chronostratigraphy', 'lithostratigraphy', 'lithology', 'mineralogy', 'all');
+create type level_types as enum ('taxonomy', 'chronostratigraphy', 'lithostratigraphy', 'lithology', 'mineralogy');
 create type notions_concerned as enum ('Taxonomic identification', 'Stratigraphic identification', 'Lithologic identification', 'Mineralogic identification', 'Expertise', 'Preparation');
 create type public_classes as enum ('public', 'private');
 create type coverages as enum ('temporal', 'spatial');
