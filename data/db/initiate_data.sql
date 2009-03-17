@@ -272,5 +272,3 @@ INSERT INTO lithostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO chronostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO mineralogy (id, name, name_indexed, code) VALUES (0, '', '', 0);
 INSERT INTO taxa (id, name, name_indexed) VALUES (0, '', '');
-insert into table_list (name) (select tablename from pg_tables where schemaname = 'darwin2' order by tablename);
-insert into field_list (table_ref, name) (select tlist.id as table_ref, cols.column_name as name from information_schema.columns as cols inner join table_list as tlist on cols.table_name = tlist.name where table_catalog = 'darwin2' order by tlist.id, cols.ordinal_position);
