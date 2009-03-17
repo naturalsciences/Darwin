@@ -8,14 +8,14 @@
 --
 -- http://pgtap.projects.postgresql.org/
 
--- $Id: pgtap.sql.in 4480 2009-02-02 21:26:17Z david $
+-- $Id: pgtap.sql.in 4549 2009-02-21 01:36:20Z david $
 -- ## CREATE SCHEMA TAPSCHEMA;
 -- ## SET search_path TO TAPSCHEMA, public;
 
--- CREATE OR REPLACE FUNCTION pg_typeof("any")
--- RETURNS regtype
--- AS '$libdir/pgtap'
-----  LANGUAGE C STABLE;
+--CREATE OR REPLACE FUNCTION pg_typeof("any")
+--RETURNS regtype
+--AS '$libdir/pgtap'
+--LANGUAGE C STABLE;
 
 CREATE OR REPLACE FUNCTION pg_version()
 RETURNS text AS 'SELECT current_setting(''server_version'')'
@@ -24,7 +24,7 @@ LANGUAGE SQL IMMUTABLE;
 CREATE OR REPLACE FUNCTION pg_version_num()
 RETURNS integer AS $$
     SELECT s.a[1]::int * 10000
-           + COALESCE(substring(s.a[2] FROM '[[:digit:]]+')::int, 0)
+           + COALESCE(substring(s.a[2] FROM '[[:digit:]]+')::int, 0) * 100
            + COALESCE(substring(s.a[3] FROM '[[:digit:]]+')::int, 0)
       FROM (
           SELECT string_to_array(current_setting('server_version'), '.') AS a
@@ -36,7 +36,7 @@ RETURNS TEXT AS 'SELECT ''linux''::text;'
 LANGUAGE SQL IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION pgtap_version()
-RETURNS NUMERIC AS 'SELECT 0.16;'
+RETURNS NUMERIC AS 'SELECT 0.19;'
 LANGUAGE SQL IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION plan( integer )
@@ -476,25 +476,25 @@ RETURNS TEXT AS $$
     SELECT _unalike( $1 !~~* $2, $1, $2, NULL );
 $$ LANGUAGE SQL;
 
--- CREATE OR REPLACE FUNCTION cmp_ok (anyelement, text, anyelement, text)
--- RETURNS TEXT AS $$
--- DECLARE
+--CREATE OR REPLACE FUNCTION cmp_ok (anyelement, text, anyelement, text)
+--RETURNS TEXT AS $$
+--DECLARE
 --    have   ALIAS FOR $1;
 --    op     ALIAS FOR $2;
 --    want   ALIAS FOR $3;
 --    descr  ALIAS FOR $4;
 --    result BOOLEAN;
 --    output TEXT;
--- BEGIN
+--BEGIN
 --    EXECUTE 'SELECT ' ||
---           COALESCE(quote_literal( have ), 'NULL') || '::' || pg_typeof(have) || ' '
+--            COALESCE(quote_literal( have ), 'NULL') || '::' || pg_typeof(have) || ' '
 --            || op || ' ' ||
 --            COALESCE(quote_literal( want ), 'NULL') || '::' || pg_typeof(want)
 --       INTO result;
 --    output := ok( COALESCE(result, FALSE), descr );
 --    RETURN output || CASE result WHEN TRUE THEN '' ELSE E'\n' || diag(
 --           '    ' || COALESCE( quote_literal(have), 'NULL' ) ||
---          E'\n        ' || op ||
+--           E'\n        ' || op ||
 --           E'\n    ' || COALESCE( quote_literal(want), 'NULL' )
 --    ) END;
 --END;
@@ -526,6 +526,14 @@ RETURNS TEXT AS $$
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION todo ( why text, how_many int )
+RETURNS SETOF BOOLEAN AS $$
+BEGIN
+    PERFORM _add('todo', COALESCE(how_many, 1), COALESCE(why, ''));
+    RETURN;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION todo ( how_many int, why text )
 RETURNS SETOF BOOLEAN AS $$
 BEGIN
     PERFORM _add('todo', COALESCE(how_many, 1), COALESCE(why, ''));
@@ -798,7 +806,7 @@ $$ LANGUAGE SQL;
 -- has_table( table )
 CREATE OR REPLACE FUNCTION has_table ( NAME )
 RETURNS TEXT AS $$
-    SELECT has_table( $1, 'Table ' || $1 || ' should exist' );
+    SELECT has_table( $1, 'Table ' || quote_ident($1) || ' should exist' );
 $$ LANGUAGE SQL;
 
 -- hasnt_table( schema, table, description )
@@ -816,7 +824,7 @@ $$ LANGUAGE SQL;
 -- hasnt_table( table )
 CREATE OR REPLACE FUNCTION hasnt_table ( NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_table( $1, 'Table ' || $1 || ' should not exist' );
+    SELECT hasnt_table( $1, 'Table ' || quote_ident($1) || ' should not exist' );
 $$ LANGUAGE SQL;
 
 -- has_view( schema, view, description )
@@ -834,7 +842,7 @@ $$ LANGUAGE SQL;
 -- has_view( view )
 CREATE OR REPLACE FUNCTION has_view ( NAME )
 RETURNS TEXT AS $$
-    SELECT has_view( $1, 'View ' || $1 || ' should exist' );
+    SELECT has_view( $1, 'View ' || quote_ident($1) || ' should exist' );
 $$ LANGUAGE SQL;
 
 -- hasnt_view( schema, view, description )
@@ -852,7 +860,43 @@ $$ LANGUAGE SQL;
 -- hasnt_view( view )
 CREATE OR REPLACE FUNCTION hasnt_view ( NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_view( $1, 'View ' || $1 || ' should not exist' );
+    SELECT hasnt_view( $1, 'View ' || quote_ident($1) || ' should not exist' );
+$$ LANGUAGE SQL;
+
+-- has_sequence( schema, sequence, description )
+CREATE OR REPLACE FUNCTION has_sequence ( NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( _rexists( 'S', $1, $2 ), $3 );
+$$ LANGUAGE SQL;
+
+-- has_sequence( sequence, description )
+CREATE OR REPLACE FUNCTION has_sequence ( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( _rexists( 'S', $1 ), $2 );
+$$ LANGUAGE SQL;
+
+-- has_sequence( sequence )
+CREATE OR REPLACE FUNCTION has_sequence ( NAME )
+RETURNS TEXT AS $$
+    SELECT has_sequence( $1, 'Sequence ' || quote_ident($1) || ' should exist' );
+$$ LANGUAGE SQL;
+
+-- hasnt_sequence( schema, sequence, description )
+CREATE OR REPLACE FUNCTION hasnt_sequence ( NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( NOT _rexists( 'S', $1, $2 ), $3 );
+$$ LANGUAGE SQL;
+
+-- hasnt_sequence( sequence, description )
+CREATE OR REPLACE FUNCTION hasnt_sequence ( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( NOT _rexists( 'S', $1 ), $2 );
+$$ LANGUAGE SQL;
+
+-- hasnt_sequence( sequence )
+CREATE OR REPLACE FUNCTION hasnt_sequence ( NAME )
+RETURNS TEXT AS $$
+    SELECT hasnt_sequence( $1, 'Sequence ' || quote_ident($1) || ' should not exist' );
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION _cexists ( NAME, NAME, NAME )
@@ -899,7 +943,7 @@ $$ LANGUAGE SQL;
 -- has_column( table, column )
 CREATE OR REPLACE FUNCTION has_column ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT has_column( $1, $2, 'Column ' || $1 || '(' || $2 || ') should exist' );
+    SELECT has_column( $1, $2, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should exist' );
 $$ LANGUAGE SQL;
 
 -- hasnt_column( schema, table, column, description )
@@ -917,13 +961,18 @@ $$ LANGUAGE SQL;
 -- hasnt_column( table, column )
 CREATE OR REPLACE FUNCTION hasnt_column ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_column( $1, $2, 'Column ' || $1 || '(' || $2 || ') should not exist' );
+    SELECT hasnt_column( $1, $2, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should not exist' );
 $$ LANGUAGE SQL;
 
 -- _col_is_null( schema, table, column, desc, null )
 CREATE OR REPLACE FUNCTION _col_is_null ( NAME, NAME, NAME, TEXT, bool )
 RETURNS TEXT AS $$
-    SELECT ok(
+BEGIN
+    IF NOT _cexists( $1, $2, $3 ) THEN
+        RETURN fail( $4 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || '.' || quote_ident($3) || ' does not exist' );
+    END IF;
+    RETURN ok(
         EXISTS(
             SELECT true
               FROM pg_catalog.pg_namespace n, pg_catalog.pg_class c, pg_catalog.pg_attribute a
@@ -931,18 +980,24 @@ RETURNS TEXT AS $$
                AND c.oid = a.attrelid
                AND n.nspname = $1
                AND c.relname = $2
-               AND a.attnum > 0
+               AND a.attnum  > 0
                AND NOT a.attisdropped
-               AND a.attname = LOWER($3)
+               AND a.attname    = $3
                AND a.attnotnull = $5
         ), $4
     );
-$$ LANGUAGE SQL;
+END;
+$$ LANGUAGE plpgsql;
 
 -- _col_is_null( table, column, desc, null )
 CREATE OR REPLACE FUNCTION _col_is_null ( NAME, NAME, TEXT, bool )
 RETURNS TEXT AS $$
-    SELECT ok(
+BEGIN
+    IF NOT _cexists( $1, $2 ) THEN
+        RETURN fail( $3 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || ' does not exist' );
+    END IF;
+    RETURN ok(
         EXISTS(
             SELECT true
               FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a
@@ -951,11 +1006,12 @@ RETURNS TEXT AS $$
                AND c.relname = $1
                AND a.attnum > 0
                AND NOT a.attisdropped
-               AND a.attname = LOWER($2)
+               AND a.attname    = $2
                AND a.attnotnull = $4
         ), $3
     );
-$$ LANGUAGE SQL;
+END;
+$$ LANGUAGE plpgsql;
 
 -- col_not_null( schema, table, column, description )
 CREATE OR REPLACE FUNCTION col_not_null ( NAME, NAME, NAME, TEXT )
@@ -972,7 +1028,7 @@ $$ LANGUAGE SQL;
 -- col_not_null( table, column )
 CREATE OR REPLACE FUNCTION col_not_null ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT _col_is_null( $1, $2, 'Column ' || $1 || '(' || $2 || ') should be NOT NULL', true );
+    SELECT _col_is_null( $1, $2, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should be NOT NULL', true );
 $$ LANGUAGE SQL;
 
 -- col_is_null( schema, table, column, description )
@@ -990,7 +1046,7 @@ $$ LANGUAGE SQL;
 -- col_is_null( table, column )
 CREATE OR REPLACE FUNCTION col_is_null ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT _col_is_null( $1, $2, 'Column ' || $1 || '(' || $2 || ') should allow NULL', false );
+    SELECT _col_is_null( $1, $2, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should allow NULL', false );
 $$ LANGUAGE SQL;
 
 -- col_type_is( schema, table, column, type, description )
@@ -1001,25 +1057,33 @@ DECLARE
 BEGIN
     -- Get the data type.
     IF $1 IS NULL THEN
+        IF NOT _cexists( $2, $3 ) THEN
+            RETURN fail( $5 ) || E'\n'
+            || diag ('   Column ' || quote_ident($2) || '.' || quote_ident($3) || ' does not exist' );
+        END IF;
+
         SELECT pg_catalog.format_type(a.atttypid, a.atttypmod) into actual_type
           FROM pg_catalog.pg_attribute a, pg_catalog.pg_class c
          WHERE a.attrelid = c.oid
            AND pg_table_is_visible(c.oid)
-           AND pg_type_is_visible(a.atttypid)
+           AND CASE WHEN attisdropped THEN false ELSE pg_type_is_visible(a.atttypid) END
            AND c.relname = $2
            AND attnum > 0
-           AND NOT attisdropped
            AND a.attname = $3;
     ELSE
+        IF NOT _cexists( $1, $2, $3 ) THEN
+            RETURN fail( $5 ) || E'\n'
+            || diag ('   Column ' || quote_ident($1) || '.' || quote_ident($2) || '.' || quote_ident($3) || ' does not exist' );
+        END IF;
+
         SELECT pg_catalog.format_type(a.atttypid, a.atttypmod) into actual_type
           FROM pg_catalog.pg_namespace n, pg_catalog.pg_class c, pg_catalog.pg_attribute a
          WHERE n.oid = c.relnamespace
-           AND pg_type_is_visible(a.atttypid)
+           AND CASE WHEN attisdropped THEN false ELSE pg_type_is_visible(a.atttypid) END
            AND c.oid = a.attrelid
            AND n.nspname = $1
            AND c.relname = $2
            AND attnum > 0
-           AND NOT attisdropped
            AND a.attname = $3;
     END IF;
 
@@ -1045,69 +1109,222 @@ $$ LANGUAGE SQL;
 -- col_type_is( table, column, type )
 CREATE OR REPLACE FUNCTION col_type_is ( NAME, NAME, TEXT )
 RETURNS TEXT AS $$
-    SELECT col_type_is( $1, $2, $3, 'Column ' || $1 || '(' || $2 || ') should be type ' || $3 );
+    SELECT col_type_is( $1, $2, $3, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should be type ' || $3 );
 $$ LANGUAGE SQL;
 
-CREATE OR REPLACE FUNCTION _def_is( TEXT, anyelement, TEXT )
+CREATE OR REPLACE FUNCTION _has_def ( NAME, NAME, NAME )
+RETURNS boolean AS $$
+    SELECT a.atthasdef
+      FROM pg_catalog.pg_namespace n
+      JOIN pg_catalog.pg_class c ON n.oid = c.relnamespace
+      JOIN pg_catalog.pg_attribute a ON c.oid = a.attrelid
+     WHERE n.nspname = $1
+       AND c.relname = $2
+       AND a.attnum > 0
+       AND NOT a.attisdropped
+       AND a.attname = LOWER($3)
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION _has_def ( NAME, NAME )
+RETURNS boolean AS $$
+    SELECT a.atthasdef
+      FROM pg_catalog.pg_class c
+      JOIN pg_catalog.pg_attribute a ON c.oid = a.attrelid
+     WHERE c.relname = $1
+       AND a.attnum > 0
+       AND NOT a.attisdropped
+       AND a.attname = LOWER($2)
+$$ LANGUAGE sql;
+
+-- col_has_default( schema, table, column, description )
+CREATE OR REPLACE FUNCTION col_has_default ( NAME, NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+BEGIN
+    IF NOT _cexists( $1, $2, $3 ) THEN
+        RETURN fail( $4 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || '.' || quote_ident($3) || ' does not exist' );
+    END IF;
+    RETURN ok( _has_def( $1, $2, $3 ), $4 );
+END
+$$ LANGUAGE plpgsql;
+
+-- col_has_default( table, column, description )
+CREATE OR REPLACE FUNCTION col_has_default ( NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+BEGIN
+    IF NOT _cexists( $1, $2 ) THEN
+        RETURN fail( $3 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || ' does not exist' );
+    END IF;
+    RETURN ok( _has_def( $1, $2 ), $3 );
+END;
+$$ LANGUAGE plpgsql;
+
+-- col_has_default( table, column )
+CREATE OR REPLACE FUNCTION col_has_default ( NAME, NAME )
+RETURNS TEXT AS $$
+    SELECT col_has_default( $1, $2, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should have a default' );
+$$ LANGUAGE SQL;
+
+-- col_hasnt_default( schema, table, column, description )
+CREATE OR REPLACE FUNCTION col_hasnt_default ( NAME, NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+BEGIN
+    IF NOT _cexists( $1, $2, $3 ) THEN
+        RETURN fail( $4 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || '.' || quote_ident($3) || ' does not exist' );
+    END IF;
+    RETURN ok( NOT _has_def( $1, $2, $3 ), $4 );
+END;
+$$ LANGUAGE plpgsql;
+
+-- col_hasnt_default( table, column, description )
+CREATE OR REPLACE FUNCTION col_hasnt_default ( NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+BEGIN
+    IF NOT _cexists( $1, $2 ) THEN
+        RETURN fail( $3 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || ' does not exist' );
+    END IF;
+    RETURN ok( NOT _has_def( $1, $2 ), $3 );
+END;
+$$ LANGUAGE plpgsql;
+
+-- col_hasnt_default( table, column )
+CREATE OR REPLACE FUNCTION col_hasnt_default ( NAME, NAME )
+RETURNS TEXT AS $$
+    SELECT col_hasnt_default( $1, $2, 'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should not have a default' );
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION _def_is( TEXT, TEXT, anyelement, TEXT )
 RETURNS TEXT AS $$
 DECLARE
     thing text;
 BEGIN
     IF $1 ~ '^[^'']+[(]' THEN
         -- It's a functional default.
-        RETURN is( $1, $2, $3 );
+        RETURN is( $1, $3, $4 );
     END IF;
-    EXECUTE 'SELECT is(' || COALESCE($1, 'NULL::text') || ', ' || quote_literal($2) || ', ' || quote_literal($3) || ')'
-      INTO thing;
+
+    EXECUTE 'SELECT is(' 
+             || COALESCE($1, 'NULL' || '::' || $2) || '::' || $2 || ', '
+             || COALESCE(quote_literal($3), 'NULL') || '::' || $2 || ', '
+             || COALESCE(quote_literal($4), 'NULL')
+    || ')' INTO thing;
     RETURN thing;
 END;
 $$ LANGUAGE plpgsql;
 
+-- _cdi( schema, table, column, default, description )
+CREATE OR REPLACE FUNCTION _cdi ( NAME, NAME, NAME, anyelement, TEXT )
+RETURNS TEXT AS $$
+BEGIN
+    IF NOT _cexists( $1, $2, $3 ) THEN
+        RETURN fail( $5 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || '.' || quote_ident($3) || ' does not exist' );
+    END IF;
+
+    IF NOT _has_def( $1, $2, $3 ) THEN
+        RETURN fail( $5 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || '.' || quote_ident($3) || ' has no default' );
+    END IF;
+
+    RETURN _def_is(
+        pg_catalog.pg_get_expr(d.adbin, d.adrelid),
+        pg_catalog.format_type(a.atttypid, a.atttypmod),
+        $4, $5
+    )
+      FROM pg_catalog.pg_namespace n, pg_catalog.pg_class c, pg_catalog.pg_attribute a,
+           pg_catalog.pg_attrdef d
+     WHERE n.oid = c.relnamespace
+       AND c.oid = a.attrelid
+       AND a.atthasdef
+       AND a.attrelid = d.adrelid
+       AND a.attnum = d.adnum
+       AND n.nspname = $1
+       AND c.relname = $2
+       AND a.attnum > 0
+       AND NOT a.attisdropped
+       AND a.attname = $3;
+END;
+$$ LANGUAGE plpgsql;
+
+-- _cdi( table, column, default, description )
+CREATE OR REPLACE FUNCTION _cdi ( NAME, NAME, anyelement, TEXT )
+RETURNS TEXT AS $$
+BEGIN
+    IF NOT _cexists( $1, $2 ) THEN
+        RETURN fail( $4 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || ' does not exist' );
+    END IF;
+
+    IF NOT _has_def( $1, $2 ) THEN
+        RETURN fail( $4 ) || E'\n'
+            || diag ('    Column ' || quote_ident($1) || '.' || quote_ident($2) || ' has no default' );
+    END IF;
+
+    RETURN _def_is(
+        pg_catalog.pg_get_expr(d.adbin, d.adrelid),
+        pg_catalog.format_type(a.atttypid, a.atttypmod),
+        $3, $4
+    )
+      FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a, pg_catalog.pg_attrdef d
+     WHERE c.oid = a.attrelid
+       AND pg_table_is_visible(c.oid)
+       AND a.atthasdef
+       AND a.attrelid = d.adrelid
+       AND a.attnum = d.adnum
+       AND c.relname = $1
+       AND a.attnum > 0
+       AND NOT a.attisdropped
+       AND a.attname = $2;
+END;
+$$ LANGUAGE plpgsql;
+
+-- _cdi( table, column, default )
+CREATE OR REPLACE FUNCTION _cdi ( NAME, NAME, anyelement )
+RETURNS TEXT AS $$
+    SELECT col_default_is(
+        $1, $2, $3,
+        'Column ' || quote_ident($1) || '.' || quote_ident($2) || ' should default to ' 
+        || COALESCE( quote_literal($3), 'NULL')
+    );
+$$ LANGUAGE sql;
+
 -- col_default_is( schema, table, column, default, description )
 CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, NAME, anyelement, TEXT )
 RETURNS TEXT AS $$
-    SELECT _def_is((
-        SELECT pg_catalog.pg_get_expr(d.adbin, d.adrelid)
-          FROM pg_catalog.pg_namespace n, pg_catalog.pg_class c, pg_catalog.pg_attribute a,
-               pg_catalog.pg_attrdef d
-         WHERE n.oid = c.relnamespace
-           AND c.oid = a.attrelid
-           AND a.atthasdef
-           AND a.attrelid = d.adrelid
-           AND a.attnum = d.adnum
-           AND n.nspname = $1
-           AND c.relname = $2
-           AND a.attnum > 0
-           AND NOT a.attisdropped
-           AND a.attname = $3
-     ), $4, $5 );
+    SELECT _cdi( $1, $2, $3, $4, $5 );
+$$ LANGUAGE sql;
+
+-- col_default_is( schema, table, column, default, description )
+CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, NAME, TEXT, TEXT )
+RETURNS TEXT AS $$
+    SELECT _cdi( $1, $2, $3, $4, $5 );
 $$ LANGUAGE sql;
 
 -- col_default_is( table, column, default, description )
 CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, anyelement, TEXT )
 RETURNS TEXT AS $$
-    SELECT _def_is((
-        SELECT pg_catalog.pg_get_expr(d.adbin, d.adrelid)
-          FROM pg_catalog.pg_class c, pg_catalog.pg_attribute a, pg_catalog.pg_attrdef d
-         WHERE c.oid = a.attrelid
-           AND pg_table_is_visible(c.oid)
-           AND a.atthasdef
-           AND a.attrelid = d.adrelid
-           AND a.attnum = d.adnum
-           AND c.relname = $1
-           AND a.attnum > 0
-           AND NOT a.attisdropped
-           AND a.attname = $2
-    ), $3, $4 );
+    SELECT _cdi( $1, $2, $3, $4 );
+$$ LANGUAGE sql;
+
+-- col_default_is( table, column, default, description )
+CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, TEXT, TEXT )
+RETURNS TEXT AS $$
+    SELECT _cdi( $1, $2, $3, $4 );
 $$ LANGUAGE sql;
 
 -- col_default_is( table, column, default )
-CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, TEXT )
+CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, anyelement )
 RETURNS TEXT AS $$
-    SELECT col_default_is(
-        $1, $2, $3,
-        'Column ' || $1 || '(' || $2 || ') should default to ' || quote_literal($3)
-    );
+    SELECT _cdi( $1, $2, $3 );
+$$ LANGUAGE sql;
+
+-- col_default_is( table, column, default::text )
+CREATE OR REPLACE FUNCTION col_default_is ( NAME, NAME, text )
+RETURNS TEXT AS $$
+    SELECT _cdi( $1, $2, $3 );
 $$ LANGUAGE sql;
 
 -- _hasc( schema, table, constraint_type )
@@ -1155,7 +1372,7 @@ $$ LANGUAGE sql;
 -- has_pk( table )
 CREATE OR REPLACE FUNCTION has_pk ( NAME )
 RETURNS TEXT AS $$
-    SELECT has_pk( $1, 'Table ' || $1 || ' should have a primary key' );
+    SELECT has_pk( $1, 'Table ' || quote_ident($1) || ' should have a primary key' );
 $$ LANGUAGE sql;
 
 -- hasnt_pk( schema, table, description )
@@ -1173,7 +1390,7 @@ $$ LANGUAGE sql;
 -- hasnt_pk( table )
 CREATE OR REPLACE FUNCTION hasnt_pk ( NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_pk( $1, 'Table ' || $1 || ' should not have a primary key' );
+    SELECT hasnt_pk( $1, 'Table ' || quote_ident($1) || ' should not have a primary key' );
 $$ LANGUAGE sql;
 
 -- _ckeys( schema, table, constraint_type )
@@ -1203,6 +1420,15 @@ RETURNS NAME[] AS $$
          AND x.contype = $2
     );
 $$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION _ident_array_to_string( name[], text )
+RETURNS text AS $$
+    SELECT array_to_string(ARRAY(
+        SELECT quote_ident($1[i])
+          FROM generate_series(1, array_upper($1, 1)) s(i)
+         ORDER BY i
+    ), $2);
+$$ LANGUAGE SQL immutable;
 
 -- Borrowed from newsysviews: http://pgfoundry.org/projects/newsysviews/
 CREATE OR REPLACE FUNCTION _pg_sv_column_array( OID, SMALLINT[] )
@@ -1312,7 +1538,7 @@ $$ LANGUAGE sql;
 -- col_is_pk( table, column[] )
 CREATE OR REPLACE FUNCTION col_is_pk ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT col_is_pk( $1, $2, 'Columns ' || $1 || '(' || array_to_string($2, ', ') || ') should be a primary key' );
+    SELECT col_is_pk( $1, $2, 'Columns ' || quote_ident($1) || '(' || _ident_array_to_string($2, ', ') || ') should be a primary key' );
 $$ LANGUAGE sql;
 
 -- col_is_pk( schema, table, column, description )
@@ -1330,7 +1556,7 @@ $$ LANGUAGE sql;
 -- col_is_pk( table, column )
 CREATE OR REPLACE FUNCTION col_is_pk ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT col_is_pk( $1, $2, 'Column ' || $1 || '(' || $2 || ') should be a primary key' );
+    SELECT col_is_pk( $1, $2, 'Column ' || quote_ident($1) || '(' || quote_ident($2) || ') should be a primary key' );
 $$ LANGUAGE sql;
 
 -- col_isnt_pk( schema, table, column, description )
@@ -1348,7 +1574,7 @@ $$ LANGUAGE sql;
 -- col_isnt_pk( table, column[] )
 CREATE OR REPLACE FUNCTION col_isnt_pk ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT col_isnt_pk( $1, $2, 'Columns ' || $1 || '(' || array_to_string($2, ', ') || ') should not be a primary key' );
+    SELECT col_isnt_pk( $1, $2, 'Columns ' || quote_ident($1) || '(' || _ident_array_to_string($2, ', ') || ') should not be a primary key' );
 $$ LANGUAGE sql;
 
 -- col_isnt_pk( schema, table, column, description )
@@ -1366,7 +1592,7 @@ $$ LANGUAGE sql;
 -- col_isnt_pk( table, column )
 CREATE OR REPLACE FUNCTION col_isnt_pk ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT col_isnt_pk( $1, $2, 'Column ' || $1 || '(' || $2 || ') should not be a primary key' );
+    SELECT col_isnt_pk( $1, $2, 'Column ' || quote_ident($1) || '(' || quote_ident($2) || ') should not be a primary key' );
 $$ LANGUAGE sql;
 
 -- has_fk( schema, table, description )
@@ -1384,7 +1610,7 @@ $$ LANGUAGE sql;
 -- has_fk( table )
 CREATE OR REPLACE FUNCTION has_fk ( NAME )
 RETURNS TEXT AS $$
-    SELECT has_fk( $1, 'Table ' || $1 || ' should have a foreign key constraint' );
+    SELECT has_fk( $1, 'Table ' || quote_ident($1) || ' should have a foreign key constraint' );
 $$ LANGUAGE sql;
 
 -- hasnt_fk( schema, table, description )
@@ -1402,7 +1628,7 @@ $$ LANGUAGE sql;
 -- hasnt_fk( table )
 CREATE OR REPLACE FUNCTION hasnt_fk ( NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_fk( $1, 'Table ' || $1 || ' should not have a foreign key constraint' );
+    SELECT hasnt_fk( $1, 'Table ' || quote_ident($1) || ' should not have a foreign key constraint' );
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION _fkexists ( NAME, NAME, NAME[] )
@@ -1410,9 +1636,9 @@ RETURNS BOOLEAN AS $$
     SELECT EXISTS(
         SELECT TRUE
            FROM pg_all_foreign_keys
-          WHERE fk_schema_name = $1
-            AND fk_table_name  = $2
-            AND fk_columns     = $3
+          WHERE fk_schema_name    = $1
+            AND quote_ident(fk_table_name)     = quote_ident($2)
+            AND fk_columns = $3
     );
 $$ LANGUAGE SQL;
 
@@ -1421,8 +1647,8 @@ RETURNS BOOLEAN AS $$
     SELECT EXISTS(
         SELECT TRUE
            FROM pg_all_foreign_keys
-          WHERE fk_table_name  = $1
-            AND fk_columns     = $2
+          WHERE quote_ident(fk_table_name)     = quote_ident($1)
+            AND fk_columns = $2
     );
 $$ LANGUAGE SQL;
 
@@ -1430,7 +1656,7 @@ $$ LANGUAGE SQL;
 CREATE OR REPLACE FUNCTION col_is_fk ( NAME, NAME, NAME[], TEXT )
 RETURNS TEXT AS $$
 DECLARE
-    names text[][];
+    names text[];
 BEGIN
     IF _fkexists($1, $2, $3) THEN
         RETURN pass( $4 );
@@ -1438,7 +1664,7 @@ BEGIN
 
     -- Try to show the columns.
     SELECT ARRAY(
-        SELECT fk_columns::text
+        SELECT _ident_array_to_string(fk_columns, ', ')
           FROM pg_all_foreign_keys
          WHERE fk_schema_name = $1
            AND fk_table_name  = $2
@@ -1447,14 +1673,14 @@ BEGIN
 
     IF NAMES[1] IS NOT NULL THEN
         RETURN fail($4) || E'\n' || diag(
-            '    Table ' || $1 || '.' || $2 || E' has foreign key constraints on these columns:\n        '
-            || array_to_string( names, E'\n        ' )
+            '    Table ' || quote_ident($1) || '.' || quote_ident($2) || E' has foreign key constraints on these columns:\n        '
+            ||  array_to_string( names, E'\n        ' )
         );
     END IF;
 
     -- No FKs in this table.
     RETURN fail($4) || E'\n' || diag(
-        '    Table ' || $1 || '.' || $2 || ' has no foreign key columns'
+        '    Table ' || quote_ident($1) || '.' || quote_ident($2) || ' has no foreign key columns'
     );
 END;
 $$ LANGUAGE plpgsql;
@@ -1463,7 +1689,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION col_is_fk ( NAME, NAME[], TEXT )
 RETURNS TEXT AS $$
 DECLARE
-    names text[][];
+    names text[];
 BEGIN
     IF _fkexists($1, $2) THEN
         RETURN pass( $3 );
@@ -1471,7 +1697,7 @@ BEGIN
 
     -- Try to show the columns.
     SELECT ARRAY(
-        SELECT fk_columns::text
+        SELECT _ident_array_to_string(fk_columns, ', ')
           FROM pg_all_foreign_keys
          WHERE fk_table_name  = $1
          ORDER BY fk_columns
@@ -1479,14 +1705,14 @@ BEGIN
 
     IF NAMES[1] IS NOT NULL THEN
         RETURN fail($3) || E'\n' || diag(
-            '    Table ' || $1 || E' has foreign key constraints on these columns:\n        '
+            '    Table ' || quote_ident($1) || E' has foreign key constraints on these columns:\n        '
             || array_to_string( names, E'\n        ' )
         );
     END IF;
 
     -- No FKs in this table.
     RETURN fail($3) || E'\n' || diag(
-        '    Table ' || $1 || ' has no foreign key columns'
+        '    Table ' || quote_ident($1) || ' has no foreign key columns'
     );
 END;
 $$ LANGUAGE plpgsql;
@@ -1494,7 +1720,7 @@ $$ LANGUAGE plpgsql;
 -- col_is_fk( table, column[] )
 CREATE OR REPLACE FUNCTION col_is_fk ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT col_is_fk( $1, $2, 'Columns ' || $1 || '(' || array_to_string($2, ', ') || ') should be a foreign key' );
+    SELECT col_is_fk( $1, $2, 'Columns ' || quote_ident($1) || '(' || _ident_array_to_string($2, ', ') || ') should be a foreign key' );
 $$ LANGUAGE sql;
 
 -- col_is_fk( schema, table, column, description )
@@ -1512,7 +1738,7 @@ $$ LANGUAGE sql;
 -- col_is_fk( table, column )
 CREATE OR REPLACE FUNCTION col_is_fk ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT col_is_fk( $1, $2, 'Column ' || $1 || '(' || $2 || ') should be a foreign key' );
+    SELECT col_is_fk( $1, $2, 'Column ' || quote_ident($1) || '(' || quote_ident($2) || ') should be a foreign key' );
 $$ LANGUAGE sql;
 
 -- col_isnt_fk( schema, table, column, description )
@@ -1530,7 +1756,7 @@ $$ LANGUAGE SQL;
 -- col_isnt_fk( table, column[] )
 CREATE OR REPLACE FUNCTION col_isnt_fk ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT col_isnt_fk( $1, $2, 'Columns ' || $1 || '(' || array_to_string($2, ', ') || ') should not be a foreign key' );
+    SELECT col_isnt_fk( $1, $2, 'Columns ' || quote_ident($1) || '(' || _ident_array_to_string($2, ', ') || ') should not be a foreign key' );
 $$ LANGUAGE sql;
 
 -- col_isnt_fk( schema, table, column, description )
@@ -1548,7 +1774,7 @@ $$ LANGUAGE sql;
 -- col_isnt_fk( table, column )
 CREATE OR REPLACE FUNCTION col_isnt_fk ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT col_isnt_fk( $1, $2, 'Column ' || $1 || '(' || $2 || ') should not be a foreign key' );
+    SELECT col_isnt_fk( $1, $2, 'Column ' || quote_ident($1) || '(' || quote_ident($2) || ') should not be a foreign key' );
 $$ LANGUAGE sql;
 
 -- has_unique( schema, table, description )
@@ -1566,7 +1792,7 @@ $$ LANGUAGE sql;
 -- has_unique( table )
 CREATE OR REPLACE FUNCTION has_unique ( TEXT )
 RETURNS TEXT AS $$
-    SELECT has_unique( $1, 'Table ' || $1 || ' should have a unique constraint' );
+    SELECT has_unique( $1, 'Table ' || quote_ident($1) || ' should have a unique constraint' );
 $$ LANGUAGE sql;
 
 -- col_is_unique( schema, table, column, description )
@@ -1584,7 +1810,7 @@ $$ LANGUAGE sql;
 -- col_is_unique( table, column[] )
 CREATE OR REPLACE FUNCTION col_is_unique ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT col_is_unique( $1, $2, 'Columns ' || $1 || '(' || array_to_string($2, ', ') || ') should have a unique constraint' );
+    SELECT col_is_unique( $1, $2, 'Columns ' || quote_ident($1) || '(' || _ident_array_to_string($2, ', ') || ') should have a unique constraint' );
 $$ LANGUAGE sql;
 
 -- col_is_unique( schema, table, column, description )
@@ -1602,7 +1828,7 @@ $$ LANGUAGE sql;
 -- col_is_unique( table, column )
 CREATE OR REPLACE FUNCTION col_is_unique ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT col_is_unique( $1, $2, 'Column ' || $1 || '(' || $2 || ') should have a unique constraint' );
+    SELECT col_is_unique( $1, $2, 'Column ' || quote_ident($1) || '(' || quote_ident($2) || ') should have a unique constraint' );
 $$ LANGUAGE sql;
 
 -- has_check( schema, table, description )
@@ -1620,7 +1846,7 @@ $$ LANGUAGE sql;
 -- has_check( table )
 CREATE OR REPLACE FUNCTION has_check ( NAME )
 RETURNS TEXT AS $$
-    SELECT has_check( $1, 'Table ' || $1 || ' should have a check constraint' );
+    SELECT has_check( $1, 'Table ' || quote_ident($1) || ' should have a check constraint' );
 $$ LANGUAGE sql;
 
 -- col_has_check( schema, table, column, description )
@@ -1638,7 +1864,7 @@ $$ LANGUAGE sql;
 -- col_has_check( table, column[] )
 CREATE OR REPLACE FUNCTION col_has_check ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT col_has_check( $1, $2, 'Columns ' || $1 || '(' || array_to_string($2, ', ') || ') should have a check constraint' );
+    SELECT col_has_check( $1, $2, 'Columns ' || quote_ident($1) || '(' || _ident_array_to_string($2, ', ') || ') should have a check constraint' );
 $$ LANGUAGE sql;
 
 -- col_has_check( schema, table, column, description )
@@ -1656,7 +1882,7 @@ $$ LANGUAGE sql;
 -- col_has_check( table, column )
 CREATE OR REPLACE FUNCTION col_has_check ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT col_has_check( $1, $2, 'Column ' || $1 || '(' || $2 || ') should have a check constraint' );
+    SELECT col_has_check( $1, $2, 'Column ' || quote_ident($1) || '(' || quote_ident($2) || ') should have a check constraint' );
 $$ LANGUAGE sql;
 
 -- fk_ok( fk_schema, fk_table, fk_column[], pk_schema, pk_table, pk_column[], description )
@@ -1669,19 +1895,19 @@ DECLARE
 BEGIN
     SELECT pk_schema_name, pk_table_name, pk_columns
       FROM pg_all_foreign_keys
-     WHERE fk_schema_name = $1
-       AND fk_table_name  = $2
-       AND fk_columns     = $3
+      WHERE fk_schema_name = $1
+        AND fk_table_name  = $2
+        AND fk_columns     = $3
       INTO sch, tab, cols;
 
     RETURN is(
         -- have
-        $1 || '.' || $2 || '(' || array_to_string( $3, ', ' )
-        || ') REFERENCES ' || COALESCE ( sch || '.' || tab || '(' || array_to_string( cols, ', ' ) || ')', 'NOTHING' ),
+        quote_ident($1) || '.' || quote_ident($2) || '(' || _ident_array_to_string( $3, ', ' )
+        || ') REFERENCES ' || COALESCE ( sch || '.' || tab || '(' || _ident_array_to_string( cols, ', ' ) || ')', 'NOTHING' ),
         -- want
-        $1 || '.' || $2 || '(' || array_to_string( $3, ', ' )
+        quote_ident($1) || '.' || quote_ident($2) || '(' || _ident_array_to_string( $3, ', ' )
         || ') REFERENCES ' ||
-        $4 || '.' || $5 || '(' || array_to_string( $6, ', ' ) || ')',
+        $4 || '.' || $5 || '(' || _ident_array_to_string( $6, ', ' ) || ')',
         $7
     );
 END;
@@ -1696,18 +1922,18 @@ DECLARE
 BEGIN
     SELECT pk_table_name, pk_columns
       FROM pg_all_foreign_keys
-     WHERE fk_table_name  = $1
-       AND fk_columns     = $2
+      WHERE fk_table_name = $1
+        AND fk_columns    = $2
       INTO tab, cols;
 
     RETURN is(
         -- have
-        $1 || '(' || array_to_string( $2, ', ' )
-        || ') REFERENCES ' || COALESCE( tab || '(' || array_to_string( cols, ', ' ) || ')', 'NOTHING'),
+        $1 || '(' || _ident_array_to_string( $2, ', ' )
+        || ') REFERENCES ' || COALESCE( tab || '(' || _ident_array_to_string( cols, ', ' ) || ')', 'NOTHING'),
         -- want
-        $1 || '(' || array_to_string( $2, ', ' )
+        $1 || '(' || _ident_array_to_string( $2, ', ' )
         || ') REFERENCES ' ||
-        $3 || '(' || array_to_string( $4, ', ' ) || ')',
+        $3 || '(' || _ident_array_to_string( $4, ', ' ) || ')',
         $5
     );
 END;
@@ -1717,9 +1943,9 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fk_ok ( NAME, NAME, NAME[], NAME, NAME, NAME[] )
 RETURNS TEXT AS $$
     SELECT fk_ok( $1, $2, $3, $4, $5, $6,
-        $1 || '.' || $2 || '(' || array_to_string( $3, ', ' )
+        quote_ident($1) || '.' || quote_ident($2) || '(' || _ident_array_to_string( $3, ', ' )
         || ') should reference ' ||
-        $4 || '.' || $5 || '(' || array_to_string( $6, ', ' ) || ')'
+        $4 || '.' || $5 || '(' || _ident_array_to_string( $6, ', ' ) || ')'
     );
 $$ LANGUAGE sql;
 
@@ -1727,9 +1953,9 @@ $$ LANGUAGE sql;
 CREATE OR REPLACE FUNCTION fk_ok ( NAME, NAME[], NAME, NAME[] )
 RETURNS TEXT AS $$
     SELECT fk_ok( $1, $2, $3, $4,
-        $1 || '(' || array_to_string( $2, ', ' )
+        $1 || '(' || _ident_array_to_string( $2, ', ' )
         || ') should reference ' ||
-        $3 || '(' || array_to_string( $4, ', ' ) || ')'
+        $3 || '(' || _ident_array_to_string( $4, ', ' ) || ')'
     );
 $$ LANGUAGE sql;
 
@@ -1775,7 +2001,7 @@ $$ LANGUAGE SQL;
 -- can_ok( schema, func_name, args[] )
 CREATE OR REPLACE FUNCTION can_ok( NAME, NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT can_ok( $1, $2, $3, 'Function ' || $1 || '.' || $2 || '(' ||
+    SELECT can_ok( $1, $2, $3, 'Function ' || quote_ident($1) || '.' || quote_ident($2) || '(' ||
     array_to_string($3, ', ') || ') should exist' );
 $$ LANGUAGE sql;
 
@@ -1796,7 +2022,7 @@ $$ LANGUAGE SQL;
 -- can_ok( schema, func_name )
 CREATE OR REPLACE FUNCTION can_ok( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT can_ok( $1, $2, 'Function ' || $1 || '.' || $2 || '() should exist' );
+    SELECT can_ok( $1, $2, 'Function ' || quote_ident($1) || '.' || quote_ident($2) || '() should exist' );
 $$ LANGUAGE sql;
 
 -- can_ok( func_name, args[], description )
@@ -1816,7 +2042,7 @@ $$ LANGUAGE SQL;
 -- can_ok( func_name, args[] )
 CREATE OR REPLACE FUNCTION can_ok( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT can_ok( $1, $2, 'Function ' || $1 || '(' ||
+    SELECT can_ok( $1, $2, 'Function ' || quote_ident($1) || '(' ||
     array_to_string($2, ', ') || ') should exist' );
 $$ LANGUAGE sql;
 
@@ -1836,41 +2062,45 @@ $$ LANGUAGE sql;
 -- can_ok( func_name )
 CREATE OR REPLACE FUNCTION can_ok( NAME )
 RETURNS TEXT AS $$
-    SELECT can_ok( $1, 'Function ' || $1 || '() should exist' );
+    SELECT can_ok( $1, 'Function ' || quote_ident($1) || '() should exist' );
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION _pg_sv_type_array( OID[] )
 RETURNS NAME[] AS $$
-SELECT ARRAY(
-SELECT t.typname
-FROM pg_catalog.pg_type t
-JOIN generate_series(1, array_upper($1, 1)) s(i) ON (t.oid = $1[i])
-ORDER BY i
-)
+    SELECT ARRAY(
+        SELECT t.typname
+          FROM pg_catalog.pg_type t
+          JOIN generate_series(1, array_upper($1, 1)) s(i) ON (t.oid = $1[i])
+         ORDER BY i
+    )
 $$ LANGUAGE SQL stable;
 
 -- can( schema, func_names[], description )
 CREATE OR REPLACE FUNCTION can ( NAME, NAME[], TEXT )
 RETURNS TEXT AS $$
 DECLARE
-    missing name[];
+    missing text[];
 BEGIN
     SELECT ARRAY(
-        SELECT $2[i]
+        SELECT quote_ident($2[i])
           FROM generate_series(1, array_upper($2, 1)) s(i)
           LEFT JOIN pg_catalog.pg_proc p
-            ON ($2[i] = p.proname)
-          LEFT JOIN pg_catalog.pg_namespace n
-            ON p.pronamespace = n.oid AND n.nspname = 'pg_catalog'
-          WHERE p.oid IS NULL
-          ORDER BY s.i
+            ON p.proname = $2[i]
+           AND p.pronamespace = (
+                   SELECT oid
+                     FROM pg_catalog.pg_namespace
+                    WHERE nspname = $1
+         )
+         WHERE p.oid IS NULL
+         GROUP BY $2[i], s.i
+         ORDER BY MIN(s.i)
     ) INTO missing;
     IF missing[1] IS NULL THEN
         RETURN ok( true, $3 );
     END IF;
     RETURN ok( false, $3 ) || E'\n' || diag(
-        '    ' || $1 || '.' ||
-        array_to_string( missing, E'() missing\n    ' || $1 || '.') ||
+        '    ' || quote_ident($1) || '.' ||
+        array_to_string( missing, E'() missing\n    ' || quote_ident($1) || '.') ||
         '() missing'
     );
 END;
@@ -1879,22 +2109,23 @@ $$ LANGUAGE plpgsql;
 -- can( schema, func_names[] )
 CREATE OR REPLACE FUNCTION can ( NAME, NAME[] )
 RETURNS TEXT AS $$
-    SELECT can( $1, $2, 'Schema ' || $1 || ' can' );
+    SELECT can( $1, $2, 'Schema ' || quote_ident($1) || ' can' );
 $$ LANGUAGE sql;
 
 -- can( func_names[], description )
 CREATE OR REPLACE FUNCTION can ( NAME[], TEXT )
 RETURNS TEXT AS $$
 DECLARE
-    missing name[];
+    missing text[];
 BEGIN
     SELECT ARRAY(
-        SELECT $1[i]
+        SELECT quote_ident($1[i])
           FROM generate_series(1, array_upper($1, 1)) s(i)
           LEFT JOIN pg_catalog.pg_proc p
-            ON ($1[i] = p.proname AND pg_catalog.pg_function_is_visible(p.oid))
-          WHERE p.oid IS NULL
-          ORDER BY s.i
+            ON $1[i] = p.proname
+           AND pg_catalog.pg_function_is_visible(p.oid)
+         WHERE p.oid IS NULL
+         ORDER BY s.i
     ) INTO missing;
     IF missing[1] IS NULL THEN
         RETURN ok( true, $2 );
@@ -1910,7 +2141,7 @@ $$ LANGUAGE plpgsql;
 -- can( func_names[] )
 CREATE OR REPLACE FUNCTION can ( NAME[] )
 RETURNS TEXT AS $$
-    SELECT can( $1, 'Schema ' || array_to_string(current_schemas(true), ' or ') || ' can' );
+    SELECT can( $1, 'Schema ' || _ident_array_to_string(current_schemas(true), ' or ') || ' can' );
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION _ikeys( NAME, NAME, NAME)
@@ -1977,12 +2208,12 @@ BEGIN
 
     IF index_cols IS NULL OR index_cols = '{}'::name[] THEN
         RETURN ok( false, $5 ) || E'\n'
-            || diag( 'Index "' || $3 || '" ON ' || $1 || '.' || $2 || ' not found');
+            || diag( 'Index ' || quote_ident($3) || ' ON ' || quote_ident($1) || '.' || quote_ident($2) || ' not found');
     END IF;
 
     RETURN is(
-        '"' || $3 || '" ON ' || $1 || '.' || $2 || '(' || array_to_string( index_cols, ', ' ) || ')',
-        '"' || $3 || '" ON ' || $1 || '.' || $2 || '(' || array_to_string( $4, ', ' ) || ')',
+        quote_ident($3) || ' ON ' || quote_ident($1) || '.' || quote_ident($2) || '(' || _ident_array_to_string( index_cols, ', ' ) || ')',
+        quote_ident($3) || ' ON ' || quote_ident($1) || '.' || quote_ident($2) || '(' || _ident_array_to_string( $4, ', ' ) || ')',
         $5
     );
 END;
@@ -1991,7 +2222,7 @@ $$ LANGUAGE plpgsql;
 -- has_index( schema, table, index, columns[] )
 CREATE OR REPLACE FUNCTION has_index ( NAME, NAME, NAME, NAME[] )
 RETURNS TEXT AS $$
-   SELECT has_index( $1, $2, $3, $4, 'Index "' || $3 || '" should exist' );
+   SELECT has_index( $1, $2, $3, $4, 'Index ' || quote_ident($3) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- has_index( schema, table, index, column/expression, description )
@@ -2010,12 +2241,12 @@ BEGIN
 
     IF expr IS NULL THEN
         RETURN ok( false, $5 ) || E'\n'
-            || diag( 'Index "' || $3 || '" ON ' || $1 || '.' || $2 || ' not found');
+            || diag( 'Index ' || quote_ident($3) || ' ON ' || quote_ident($1) || '.' || quote_ident($2) || ' not found');
     END IF;
 
     RETURN is(
-        '"' || $3 || '" ON ' || $1 || '.' || $2 || '(' || expr || ')',
-        '"' || $3 || '" ON ' || $1 || '.' || $2 || '(' || LOWER($4)   || ')',
+        quote_ident($3) || ' ON ' || quote_ident($1) || '.' || quote_ident($2) || '(' || expr || ')',
+        quote_ident($3) || ' ON ' || quote_ident($1) || '.' || quote_ident($2) || '(' || $4 || ')',
         $5
     );
 END;
@@ -2024,7 +2255,7 @@ $$ LANGUAGE plpgsql;
 -- has_index( schema, table, index, columns/expression )
 CREATE OR REPLACE FUNCTION has_index ( NAME, NAME, NAME, NAME )
 RETURNS TEXT AS $$
-   SELECT has_index( $1, $2, $3, $4, 'Index "' || $3 || '" should exist' );
+   SELECT has_index( $1, $2, $3, $4, 'Index ' || quote_ident($3) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- has_index( table, index, columns[], description )
@@ -2037,12 +2268,12 @@ BEGIN
 
     IF index_cols IS NULL OR index_cols = '{}'::name[] THEN
         RETURN ok( false, $4 ) || E'\n'
-            || diag( 'Index "' || $2 || '" ON ' || $1 || ' not found');
+            || diag( 'Index ' || quote_ident($2) || ' ON ' || quote_ident($1) || ' not found');
     END IF;
 
     RETURN is(
-        '"' || $2 || '" ON ' || $1 || '(' || array_to_string( index_cols, ', ' ) || ')',
-        '"' || $2 || '" ON ' || $1 || '(' || array_to_string( $3, ', ' ) || ')',
+        quote_ident($2) || ' ON ' || quote_ident($1) || '(' || _ident_array_to_string( index_cols, ', ' ) || ')',
+        quote_ident($2) || ' ON ' || quote_ident($1) || '(' || _ident_array_to_string( $3, ', ' ) || ')',
         $4
     );
 END;
@@ -2051,13 +2282,17 @@ $$ LANGUAGE plpgsql;
 -- has_index( table, index, columns[], description )
 CREATE OR REPLACE FUNCTION has_index ( NAME, NAME, NAME[] )
 RETURNS TEXT AS $$
-   SELECT has_index( $1, $2, $3, 'Index "' || $2 || '" should exist' );
+   SELECT has_index( $1, $2, $3, 'Index ' || quote_ident($2) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- _is_schema( schema )
 CREATE OR REPLACE FUNCTION _is_schema( NAME )
 returns boolean AS $$
-    SELECT EXISTS( SELECT true FROM pg_catalog.pg_namespace WHERE nspname = LOWER($1) );
+    SELECT EXISTS(
+        SELECT true
+          FROM pg_catalog.pg_namespace
+          WHERE nspname = $1
+    );
 $$ LANGUAGE sql;
 
 -- _has_index( schema, table, index )
@@ -2097,27 +2332,27 @@ BEGIN
     IF _is_schema( $1 ) THEN
         -- Looking for an index within a schema.
         have_expr := _iexpr($1, $2, $3);
-        want_expr := lower($4);
-        descr := 'Index "' || $3 || '" should exist';
-        idx   := $3;
-        tab   := $1 || '.' || $2;
+        want_expr := $4;
+        descr     := 'Index ' || quote_ident($3) || ' should exist';
+        idx       := $3;
+        tab       := quote_ident($1) || '.' || quote_ident($2);
     ELSE
         -- Looking for an index without a schema spec.
         have_expr := _iexpr($1, $2);
-        want_expr := lower($3);
-        descr := $4;
-        idx   := $2;
-        tab   := $1;
+        want_expr := $3;
+        descr     := $4;
+        idx       := $2;
+        tab       := quote_ident($1);
     END IF;
 
     IF have_expr IS NULL THEN
         RETURN ok( false, descr ) || E'\n'
-            || diag( 'Index "' || idx || '" ON ' || tab || ' not found');
+            || diag( 'Index ' || idx || ' ON ' || tab || ' not found');
     END IF;
 
     RETURN is(
-        '"' || idx || '" ON ' || tab || '(' || have_expr || ')',
-        '"' || idx || '" ON ' || tab || '(' || want_expr || ')',
+        quote_ident(idx) || ' ON ' || tab || '(' || have_expr || ')',
+        quote_ident(idx) || ' ON ' || tab || '(' || want_expr || ')',
         descr
     );
 END;
@@ -2130,10 +2365,10 @@ RETURNS TEXT AS $$
 BEGIN
    IF _is_schema($1) THEN
        -- ( schema, table, index )
-       RETURN ok( _has_index( $1, $2, $3 ), 'Index "' || $3 || '" should exist' );
+       RETURN ok( _has_index( $1, $2, $3 ), 'Index ' || quote_ident($3) || ' should exist' );
    ELSE
        -- ( table, index, column/expression )
-       RETURN has_index( $1, $2, $3, 'Index "' || $2 || '" should exist' );
+       RETURN has_index( $1, $2, $3, 'Index ' || quote_ident($2) || ' should exist' );
    END IF;
 END;
 $$ LANGUAGE plpgsql;
@@ -2150,7 +2385,7 @@ $$ LANGUAGE sql;
 -- has_index( table, index )
 CREATE OR REPLACE FUNCTION has_index ( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT ok( _has_index( $1, $2 ), 'Index "' || $2 || '" should exist' );
+    SELECT ok( _has_index( $1, $2 ), 'Index ' || quote_ident($2) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- index_is_unique( schema, table, index, description )
@@ -2178,7 +2413,7 @@ CREATE OR REPLACE FUNCTION index_is_unique ( NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT index_is_unique(
         $1, $2, $3,
-        'Index "' || $3 || '" should be unique'
+        'Index ' || quote_ident($3) || ' should be unique'
     );
 $$ LANGUAGE sql;
 
@@ -2199,7 +2434,7 @@ BEGIN
 
       RETURN ok(
           COALESCE(res, false),
-          'Index "' || $2 || '" should be unique'
+          'Index ' || quote_ident($2) || ' should be unique'
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2220,7 +2455,7 @@ BEGIN
 
       RETURN ok(
           COALESCE(res, false),
-          'Index "' || $1 || '" should be unique'
+          'Index ' || quote_ident($1) || ' should be unique'
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2250,7 +2485,7 @@ CREATE OR REPLACE FUNCTION index_is_primary ( NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT index_is_primary(
         $1, $2, $3,
-        'Index "' || $3 || '" should be on a primary key'
+        'Index ' || quote_ident($3) || ' should be on a primary key'
     );
 $$ LANGUAGE sql;
 
@@ -2265,13 +2500,13 @@ BEGIN
       JOIN pg_catalog.pg_class ct ON (ct.oid = x.indrelid)
       JOIN pg_catalog.pg_class ci ON (ci.oid = x.indexrelid)
      WHERE ct.relname = $1
-       AND ci.relname = $2 
+       AND ci.relname = $2
        AND pg_catalog.pg_table_is_visible(ct.oid)
      INTO res;
 
       RETURN ok(
           COALESCE(res, false),
-          'Index "' || $2 || '" should be on a primary key'
+          'Index ' || quote_ident($2) || ' should be on a primary key'
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2292,7 +2527,7 @@ BEGIN
 
       RETURN ok(
           COALESCE(res, false),
-          'Index "' || $1 || '" should be on a primary key'
+          'Index ' || quote_ident($1) || ' should be on a primary key'
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2322,8 +2557,8 @@ CREATE OR REPLACE FUNCTION is_clustered ( NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT is_clustered(
         $1, $2, $3,
-        'Table ' || $1 || '.' || $2 ||
-        ' should be clustered on index "' || $3 || '"'
+        'Table ' || quote_ident($1) || '.' || quote_ident($2) ||
+        ' should be clustered on index ' || quote_ident($3)
     );
 $$ LANGUAGE sql;
 
@@ -2343,7 +2578,7 @@ BEGIN
 
       RETURN ok(
           COALESCE(res, false),
-          'Table ' || $1 || ' should be clustered on index "' || $2 || '"'
+          'Table ' || quote_ident($1) || ' should be clustered on index ' || quote_ident($2)
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2362,7 +2597,7 @@ BEGIN
 
       RETURN ok(
           COALESCE(res, false),
-          'Table should be clustered on index "' || $1 || '"'
+          'Table should be clustered on index ' || quote_ident($1)
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2393,7 +2628,7 @@ CREATE OR REPLACE FUNCTION index_is_type ( NAME, NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT index_is_type(
         $1, $2, $3, $4,
-        'Index ' || $3 || ' should be a ' || $4 || ' index'
+        'Index ' || quote_ident($3) || ' should be a ' || quote_ident($4) || ' index'
     );
 $$ LANGUAGE SQL;
 
@@ -2415,7 +2650,7 @@ BEGIN
       return is(
           aname,
           LOWER($3)::name,
-          'Index ' || $2 || ' should be a ' || $3 || ' index'
+          'Index ' || quote_ident($2) || ' should be a ' || quote_ident($3) || ' index'
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2436,7 +2671,7 @@ BEGIN
       return is(
           aname,
           LOWER($3)::name,
-          'Index ' || $1 || ' should be a ' || $2 || ' index'
+          'Index ' || quote_ident($1) || ' should be a ' || quote_ident($2) || ' index'
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2465,7 +2700,7 @@ CREATE OR REPLACE FUNCTION has_trigger ( NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT has_trigger(
         $1, $2, $3,
-        'Table ' || $1 || '.' || $2 || ' should have trigger ' || $3
+        'Table ' || quote_ident($1) || '.' || quote_ident($2) || ' should have trigger ' || quote_ident($3)
     );
 $$ LANGUAGE sql;
 
@@ -2485,7 +2720,7 @@ BEGIN
 
       RETURN ok(
           COALESCE(res, false),
-          'Table ' || $1 || ' should have trigger ' || $2
+          'Table ' || quote_ident($1) || ' should have trigger ' || quote_ident($2)
       );
 END;
 $$ LANGUAGE plpgsql;
@@ -2496,7 +2731,7 @@ RETURNS TEXT AS $$
 DECLARE
     pname text;
 BEGIN
-    SELECT ni.nspname || '.' || p.proname
+    SELECT quote_ident(ni.nspname) || '.' || quote_ident(p.proname)
       FROM pg_catalog.pg_trigger t
       JOIN pg_catalog.pg_class ct ON (ct.oid = t.tgrelid)
       JOIN pg_catalog.pg_namespace nt ON (nt.oid = ct.relnamespace)
@@ -2507,7 +2742,7 @@ BEGIN
        AND t.tgname   = $3
       INTO pname;
 
-    RETURN is( pname, $4 || '.' || $5, $6 );
+    RETURN is( pname, quote_ident($4) || '.' || quote_ident($5), $6 );
 END;
 $$ LANGUAGE plpgsql;
 
@@ -2516,7 +2751,7 @@ CREATE OR REPLACE FUNCTION trigger_is ( NAME, NAME, NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT trigger_is(
         $1, $2, $3, $4, $5,
-        'Trigger ' || $3 || ' should call ' || $4 || '.' || $5 || '()'
+        'Trigger ' || quote_ident($3) || ' should call ' || quote_ident($4) || '.' || quote_ident($5) || '()'
     );
 $$ LANGUAGE sql;
 
@@ -2544,18 +2779,18 @@ CREATE OR REPLACE FUNCTION trigger_is ( NAME, NAME, NAME )
 RETURNS TEXT AS $$
     SELECT trigger_is(
         $1, $2, $3,
-        'Trigger ' || $2 || ' should call ' || $3 || '()'
+        'Trigger ' || quote_ident($2) || ' should call ' || quote_ident($3) || '()'
     );
 $$ LANGUAGE sql;
 
--- has_schema( schema, desscription )
+-- has_schema( schema, description )
 CREATE OR REPLACE FUNCTION has_schema( NAME, TEXT )
 RETURNS TEXT AS $$
     SELECT ok(
         EXISTS(
             SELECT true
-              FROM pg_catalog.pg_namespace n
-             WHERE LOWER(n.nspname) = LOWER($1)
+              FROM pg_catalog.pg_namespace
+             WHERE nspname = $1
         ), $2
     );
 $$ LANGUAGE sql;
@@ -2563,17 +2798,17 @@ $$ LANGUAGE sql;
 -- has_schema( schema )
 CREATE OR REPLACE FUNCTION has_schema( NAME )
 RETURNS TEXT AS $$
-    SELECT has_schema( $1, 'Schema ' || $1 || ' should exist' );
+    SELECT has_schema( $1, 'Schema ' || quote_ident($1) || ' should exist' );
 $$ LANGUAGE sql;
 
--- hasnt_schema( schema, desscription )
+-- hasnt_schema( schema, description )
 CREATE OR REPLACE FUNCTION hasnt_schema( NAME, TEXT )
 RETURNS TEXT AS $$
     SELECT ok(
         NOT EXISTS(
             SELECT true
-              FROM pg_catalog.pg_namespace n
-             WHERE LOWER(n.nspname) = LOWER($1)
+              FROM pg_catalog.pg_namespace
+             WHERE nspname = $1
         ), $2
     );
 $$ LANGUAGE sql;
@@ -2581,7 +2816,56 @@ $$ LANGUAGE sql;
 -- hasnt_schema( schema )
 CREATE OR REPLACE FUNCTION hasnt_schema( NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_schema( $1, 'Schema ' || $1 || ' should not exist' );
+    SELECT hasnt_schema( $1, 'Schema ' || quote_ident($1) || ' should not exist' );
+$$ LANGUAGE sql;
+
+-- has_tablespace( tablespace, location, description )
+CREATE OR REPLACE FUNCTION has_tablespace( NAME, TEXT, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok(
+        EXISTS(
+            SELECT true
+              FROM pg_catalog.pg_tablespace
+             WHERE spcname = $1
+               AND spclocation = $2
+        ), $3
+    );
+$$ LANGUAGE sql;
+
+-- has_tablespace( tablespace, description )
+CREATE OR REPLACE FUNCTION has_tablespace( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok(
+        EXISTS(
+            SELECT true
+              FROM pg_catalog.pg_tablespace
+             WHERE spcname = $1
+        ), $2
+    );
+$$ LANGUAGE sql;
+
+-- has_tablespace( tablespace )
+CREATE OR REPLACE FUNCTION has_tablespace( NAME )
+RETURNS TEXT AS $$
+    SELECT has_tablespace( $1, 'Tablespace ' || quote_ident($1) || ' should exist' );
+$$ LANGUAGE sql;
+
+-- hasnt_tablespace( tablespace, description )
+CREATE OR REPLACE FUNCTION hasnt_tablespace( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok(
+        NOT EXISTS(
+            SELECT true
+              FROM pg_catalog.pg_tablespace
+             WHERE spcname = $1
+        ), $2
+    );
+$$ LANGUAGE sql;
+
+-- hasnt_tablespace( tablespace )
+CREATE OR REPLACE FUNCTION hasnt_tablespace( NAME )
+RETURNS TEXT AS $$
+    SELECT hasnt_tablespace( $1, 'Tablespace ' || quote_ident($1) || ' should not exist' );
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION _has_type( NAME, NAME, CHAR[] )
@@ -2618,7 +2902,7 @@ $$ LANGUAGE sql;
 -- has_type( schema, type )
 CREATE OR REPLACE FUNCTION has_type( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT has_type( $1, $2, 'Type ' || $1 || '.' || $2 || ' should exist' );
+    SELECT has_type( $1, $2, 'Type ' || quote_ident($1) || '.' || quote_ident($2) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- has_type( type, description )
@@ -2630,7 +2914,7 @@ $$ LANGUAGE sql;
 -- has_type( type )
 CREATE OR REPLACE FUNCTION has_type( NAME )
 RETURNS TEXT AS $$
-    SELECT ok( _has_type( $1, NULL ), ('Type ' || $1 || ' should exist')::text );
+    SELECT ok( _has_type( $1, NULL ), ('Type ' || quote_ident($1) || ' should exist')::text );
 $$ LANGUAGE sql;
 
 -- hasnt_type( schema, type, description )
@@ -2642,7 +2926,7 @@ $$ LANGUAGE sql;
 -- hasnt_type( schema, type )
 CREATE OR REPLACE FUNCTION hasnt_type( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_type( $1, $2, 'Type ' || $1 || '.' || $2 || ' should not exist' );
+    SELECT hasnt_type( $1, $2, 'Type ' || quote_ident($1) || '.' || quote_ident($2) || ' should not exist' );
 $$ LANGUAGE sql;
 
 -- hasnt_type( type, description )
@@ -2654,7 +2938,7 @@ $$ LANGUAGE sql;
 -- hasnt_type( type )
 CREATE OR REPLACE FUNCTION hasnt_type( NAME )
 RETURNS TEXT AS $$
-    SELECT ok( NOT _has_type( $1, NULL ), ('Type ' || $1 || ' should not exist')::text );
+    SELECT ok( NOT _has_type( $1, NULL ), ('Type ' || quote_ident($1) || ' should not exist')::text );
 $$ LANGUAGE sql;
 
 -- has_domain( schema, domain, description )
@@ -2666,7 +2950,7 @@ $$ LANGUAGE sql;
 -- has_domain( schema, domain )
 CREATE OR REPLACE FUNCTION has_domain( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT has_domain( $1, $2, 'Domain ' || $1 || '.' || $2 || ' should exist' );
+    SELECT has_domain( $1, $2, 'Domain ' || quote_ident($1) || '.' || quote_ident($2) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- has_domain( domain, description )
@@ -2678,7 +2962,7 @@ $$ LANGUAGE sql;
 -- has_domain( domain )
 CREATE OR REPLACE FUNCTION has_domain( NAME )
 RETURNS TEXT AS $$
-    SELECT ok( _has_type( $1, ARRAY['d'] ), ('Domain ' || $1 || ' should exist')::text );
+    SELECT ok( _has_type( $1, ARRAY['d'] ), ('Domain ' || quote_ident($1) || ' should exist')::text );
 $$ LANGUAGE sql;
 
 -- hasnt_domain( schema, domain, description )
@@ -2690,7 +2974,7 @@ $$ LANGUAGE sql;
 -- hasnt_domain( schema, domain )
 CREATE OR REPLACE FUNCTION hasnt_domain( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_domain( $1, $2, 'Domain ' || $1 || '.' || $2 || ' should not exist' );
+    SELECT hasnt_domain( $1, $2, 'Domain ' || quote_ident($1) || '.' || quote_ident($2) || ' should not exist' );
 $$ LANGUAGE sql;
 
 -- hasnt_domain( domain, description )
@@ -2702,7 +2986,7 @@ $$ LANGUAGE sql;
 -- hasnt_domain( domain )
 CREATE OR REPLACE FUNCTION hasnt_domain( NAME )
 RETURNS TEXT AS $$
-    SELECT ok( NOT _has_type( $1, ARRAY['d'] ), ('Domain ' || $1 || ' should not exist')::text );
+    SELECT ok( NOT _has_type( $1, ARRAY['d'] ), ('Domain ' || quote_ident($1) || ' should not exist')::text );
 $$ LANGUAGE sql;
 
 -- has_enum( schema, enum, description )
@@ -2714,7 +2998,7 @@ $$ LANGUAGE sql;
 -- has_enum( schema, enum )
 CREATE OR REPLACE FUNCTION has_enum( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT has_enum( $1, $2, 'Enum ' || $1 || '.' || $2 || ' should exist' );
+    SELECT has_enum( $1, $2, 'Enum ' || quote_ident($1) || '.' || quote_ident($2) || ' should exist' );
 $$ LANGUAGE sql;
 
 -- has_enum( enum, description )
@@ -2726,7 +3010,7 @@ $$ LANGUAGE sql;
 -- has_enum( enum )
 CREATE OR REPLACE FUNCTION has_enum( NAME )
 RETURNS TEXT AS $$
-    SELECT ok( _has_type( $1, ARRAY['e'] ), ('Enum ' || $1 || ' should exist')::text );
+    SELECT ok( _has_type( $1, ARRAY['e'] ), ('Enum ' || quote_ident($1) || ' should exist')::text );
 $$ LANGUAGE sql;
 
 -- hasnt_enum( schema, enum, description )
@@ -2738,7 +3022,7 @@ $$ LANGUAGE sql;
 -- hasnt_enum( schema, enum )
 CREATE OR REPLACE FUNCTION hasnt_enum( NAME, NAME )
 RETURNS TEXT AS $$
-    SELECT hasnt_enum( $1, $2, 'Enum ' || $1 || '.' || $2 || ' should not exist' );
+    SELECT hasnt_enum( $1, $2, 'Enum ' || quote_ident($1) || '.' || quote_ident($2) || ' should not exist' );
 $$ LANGUAGE sql;
 
 -- hasnt_enum( enum, description )
@@ -2750,7 +3034,7 @@ $$ LANGUAGE sql;
 -- hasnt_enum( enum )
 CREATE OR REPLACE FUNCTION hasnt_enum( NAME )
 RETURNS TEXT AS $$
-    SELECT ok( NOT _has_type( $1, ARRAY['e'] ), ('Enum ' || $1 || ' should not exist')::text );
+    SELECT ok( NOT _has_type( $1, ARRAY['e'] ), ('Enum ' || quote_ident($1) || ' should not exist')::text );
 $$ LANGUAGE sql;
 
 -- enum_has_labels( schema, enum, labels, desc )
@@ -2778,7 +3062,7 @@ CREATE OR REPLACE FUNCTION enum_has_labels( NAME, NAME, NAME[] )
 RETURNS TEXT AS $$
     SELECT enum_has_labels(
         $1, $2, $3,
-        'Enum ' || $1 || '.' || $2 || ' should have labels (' || array_to_string( $3, ', ' ) || ')'
+        'Enum ' || quote_ident($1) || '.' || quote_ident($2) || ' should have labels (' || array_to_string( $3, ', ' ) || ')'
     );
 $$ LANGUAGE sql;
 
@@ -2806,9 +3090,197 @@ CREATE OR REPLACE FUNCTION enum_has_labels( NAME, NAME[] )
 RETURNS TEXT AS $$
     SELECT enum_has_labels(
         $1, $2,
-        'Enum ' || $1 || ' should have labels (' || array_to_string( $2, ', ' ) || ')'
+        'Enum ' || quote_ident($1) || ' should have labels (' || array_to_string( $2, ', ' ) || ')'
     );
 $$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION _has_role( NAME )
+RETURNS BOOLEAN AS $$
+    SELECT EXISTS(
+        SELECT true
+          FROM pg_catalog.pg_roles
+         WHERE rolname = $1
+    );
+$$ LANGUAGE sql STRICT;
+
+-- has_role( role, desc )
+CREATE OR REPLACE FUNCTION has_role( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( _has_role($1), $2 );
+$$ LANGUAGE sql;
+
+-- has_role( role )
+CREATE OR REPLACE FUNCTION has_role( NAME )
+RETURNS TEXT AS $$
+    SELECT ok( _has_role($1), 'Role ' || quote_ident($1) || ' should exist' );
+$$ LANGUAGE sql;
+
+-- hasnt_role( role, desc )
+CREATE OR REPLACE FUNCTION hasnt_role( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( NOT _has_role($1), $2 );
+$$ LANGUAGE sql;
+
+-- hasnt_role( role )
+CREATE OR REPLACE FUNCTION hasnt_role( NAME )
+RETURNS TEXT AS $$
+    SELECT ok( NOT _has_role($1), 'Role ' || quote_ident($1) || ' should not exist' );
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION _is_super( NAME )
+RETURNS BOOLEAN AS $$
+    SELECT usesuper
+      FROM pg_catalog.pg_user
+     WHERE usename = $1
+$$ LANGUAGE sql STRICT;
+
+-- has_user( user, desc )
+CREATE OR REPLACE FUNCTION has_user( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( _is_super($1) IS NOT NULL, $2 );
+$$ LANGUAGE sql;
+
+-- has_user( user )
+CREATE OR REPLACE FUNCTION has_user( NAME )
+RETURNS TEXT AS $$
+    SELECT ok( _is_super( $1 ) IS NOT NULL, 'User ' || quote_ident($1) || ' should exist');
+$$ LANGUAGE sql;
+
+-- hasnt_user( user, desc )
+CREATE OR REPLACE FUNCTION hasnt_user( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( _is_super($1) IS NULL, $2 );
+$$ LANGUAGE sql;
+
+-- hasnt_user( user )
+CREATE OR REPLACE FUNCTION hasnt_user( NAME )
+RETURNS TEXT AS $$
+    SELECT ok( _is_super( $1 ) IS NULL, 'User ' || quote_ident($1) || ' should not exist');
+$$ LANGUAGE sql;
+
+-- is_superuser( user, desc )
+CREATE OR REPLACE FUNCTION is_superuser( NAME, TEXT )
+RETURNS TEXT AS $$
+DECLARE
+    is_super boolean := _is_super($1);
+BEGIN
+    IF is_super IS NULL THEN
+        RETURN fail( $2 ) || E'\n' || diag( '    User ' || quote_ident($1) || ' does not exist') ;
+    END IF;
+    RETURN ok( is_super, $2 );
+END;
+$$ LANGUAGE plpgsql;
+
+-- is_superuser( user )
+CREATE OR REPLACE FUNCTION is_superuser( NAME )
+RETURNS TEXT AS $$
+    SELECT is_superuser( $1, 'User ' || quote_ident($1) || ' should be a super user' );
+$$ LANGUAGE sql;
+
+-- isnt_superuser( user, desc )
+CREATE OR REPLACE FUNCTION isnt_superuser( NAME, TEXT )
+RETURNS TEXT AS $$
+DECLARE
+    is_super boolean := _is_super($1);
+BEGIN
+    IF is_super IS NULL THEN
+        RETURN fail( $2 ) || E'\n' || diag( '    User ' || quote_ident($1) || ' does not exist') ;
+    END IF;
+    RETURN ok( NOT is_super, $2 );
+END;
+$$ LANGUAGE plpgsql;
+
+-- isnt_superuser( user )
+CREATE OR REPLACE FUNCTION isnt_superuser( NAME )
+RETURNS TEXT AS $$
+    SELECT isnt_superuser( $1, 'User ' || quote_ident($1) || ' should not be a super user' );
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION _has_group( NAME )
+RETURNS BOOLEAN AS $$
+    SELECT EXISTS(
+        SELECT true
+          FROM pg_catalog.pg_group
+         WHERE groname = $1
+    );
+$$ LANGUAGE sql STRICT;
+
+-- has_group( group, desc )
+CREATE OR REPLACE FUNCTION has_group( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( _has_group($1), $2 );
+$$ LANGUAGE sql;
+
+-- has_group( group )
+CREATE OR REPLACE FUNCTION has_group( NAME )
+RETURNS TEXT AS $$
+    SELECT ok( _has_group($1), 'Group ' || quote_ident($1) || ' should exist' );
+$$ LANGUAGE sql;
+
+-- hasnt_group( group, desc )
+CREATE OR REPLACE FUNCTION hasnt_group( NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT ok( NOT _has_group($1), $2 );
+$$ LANGUAGE sql;
+
+-- hasnt_group( group )
+CREATE OR REPLACE FUNCTION hasnt_group( NAME )
+RETURNS TEXT AS $$
+    SELECT ok( NOT _has_group($1), 'Group ' || quote_ident($1) || ' should not exist' );
+$$ LANGUAGE sql;
+
+CREATE OR REPLACE FUNCTION _grolist ( NAME )
+RETURNS oid[] AS $$
+    SELECT grolist FROM pg_catalog.pg_group WHERE groname = $1;
+$$ LANGUAGE sql;
+
+-- is_member_of( group, user[], desc )
+CREATE OR REPLACE FUNCTION is_member_of( NAME, NAME[], TEXT )
+RETURNS TEXT AS $$
+DECLARE
+    missing text[];
+BEGIN
+    IF NOT _has_group($1) THEN
+        RETURN fail( $3 ) || E'\n' || diag (
+            '    Group ' || quote_ident($1) || ' does not exist'
+        );
+    END IF;
+
+    SELECT ARRAY(
+        SELECT quote_ident($2[i])
+          FROM generate_series(1, array_upper($2, 1)) s(i)
+          LEFT JOIN pg_catalog.pg_user ON usename = $2[i]
+         WHERE usesysid IS NULL
+            OR usesysid <> ANY ( _grolist($1) )
+         ORDER BY s.i
+    ) INTO missing;
+    IF missing[1] IS NULL THEN
+        RETURN ok( true, $3 );
+    END IF;
+    RETURN ok( false, $3 ) || E'\n' || diag(
+        '    Users missing from the ' || quote_ident($1) || E' group:\n        ' ||
+        array_to_string( missing, E'\n        ')
+    );
+END;
+$$ LANGUAGE plpgsql;
+
+-- is_member_of( group, user, desc )
+CREATE OR REPLACE FUNCTION is_member_of( NAME, NAME, TEXT )
+RETURNS TEXT AS $$
+    SELECT is_member_of( $1, ARRAY[$2], $3 ); 
+$$ LANGUAGE SQL;
+
+-- is_member_of( group, user[] )
+CREATE OR REPLACE FUNCTION is_member_of( NAME, NAME[] )
+RETURNS TEXT AS $$
+    SELECT is_member_of( $1, $2, 'Should have members of group ' || quote_ident($1) ); 
+$$ LANGUAGE SQL;
+
+-- is_member_of( group, user )
+CREATE OR REPLACE FUNCTION is_member_of( NAME, NAME )
+RETURNS TEXT AS $$
+    SELECT is_member_of( $1, ARRAY[$2] );
+$$ LANGUAGE SQL;
 
 -- check_test( test_output, pass, name, description, diag )
 CREATE OR REPLACE FUNCTION check_test( TEXT, BOOLEAN, TEXT, TEXT, TEXT )
