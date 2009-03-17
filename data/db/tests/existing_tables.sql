@@ -1,12 +1,9 @@
 \unset ECHO
 \i unit_launch.sql
 -- Plan the tests.
-SELECT plan(72);
+SELECT plan(69);
 
 -- Run the tests.
-SELECT has_table('template_tablefields_common','template_tablefields_common exists');
-SELECT has_table('table_list','table_list exists');
-SELECT has_table('field_list','field_list exists');
 SELECT has_table('catalogue_relationships','catalogue_relationships exists');
 SELECT has_table('template_table_record_ref','template_table_record_ref exists');
 SELECT has_table('catalogue_authors','catalogue_authors exists');
