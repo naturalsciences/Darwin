@@ -17,7 +17,7 @@ psql -q -v dbpath=\'$dbpath\' -v dbnameS=\'$dbname\' -v dbname=$dbname -f create
 dropuser -q $dbname
 createuser -l -i -q -S -R -D -P -E $dbname
 psql -q -d $dbname -v dbname=$dbname -f createschema.sql
-psql -q -h $netaddr -d $dbname -U $dbname -W -f createdomains.sql
-psql -q -h $netaddr -d $dbname -U $dbname -W -f createtypes.sql
-psql -q -h $netaddr -d $dbname -U $dbname -W -f createtables.sql
-psql -q -h $netaddr -d $dbname -U $dbname -W -f initiate_data.sql
+psql -q -h $netaddr -d $dbname -U $dbname -f createdomains.sql
+psql -q -h $netaddr -d $dbname -U $dbname -f createtypes.sql
+psql -q -h $netaddr -d $dbname -U $dbname -f createtables.sql
+psql -q -h $netaddr -d $dbname -U $dbname -f initiate_data.sql
