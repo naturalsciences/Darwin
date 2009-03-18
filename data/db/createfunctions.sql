@@ -71,3 +71,34 @@ BEGIN
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE, table_prefix varchar) returns boolean
+as $$
+DECLARE
+	response boolean default false;
+	prefix varchar default coalesce(table_prefix, 'people');
+        tabl varchar default prefix || '_languages';
+	tableExist boolean default false;
+BEGIN
+	select count(*)::integer::boolean into tableExist from pg_tables where schemaname = 'darwin2' and tablename = tabl;
+	IF tableExist THEN
+	        IF prefered THEN
+			EXECUTE 'select not count(*)::integer::boolean from ' || quote_ident(tabl) || ' where ' || quote_ident(prefix || '_ref') || ' = ' || $1 || ' and prefered_language = ' || $2 INTO response;
+		ELSE
+			response := true;
+		END IF;
+	END IF;
+	return response;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE) returns boolean
+as $$
+DECLARE
+        response boolean default false;
+BEGIN
+	response := fct_chk_one_pref_language(person, prefered, 'people');
+	return response;
+END;
+$$ LANGUAGE plpgsql;
+

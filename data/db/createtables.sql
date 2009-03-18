@@ -340,7 +340,7 @@ comment on column template_people.gender is 'For physical user/persons give the 
 comment on column template_people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 create table template_people_languages
        (
-        language_country varchar default 'eng_GB' not null,
+        language_country varchar default 'en_gb' not null,
         mother boolean default true not null,
         prefered_language boolean default false not null
        );
@@ -430,13 +430,13 @@ comment on column people_languages.mother is 'Flag telling if its mother languag
 comment on column people_languages.prefered_language is 'Flag telling which language is prefered in communications';
 create table users_languages
        (
-        user_ref integer not null,
-        constraint unq_users_languages unique (user_ref, language_country),
-        constraint fk_users_languages_people foreign key (user_ref) references users(id) on delete cascade
+        users_ref integer not null,
+        constraint unq_users_languages unique (users_ref, language_country),
+        constraint fk_users_languages_people foreign key (users_ref) references users(id) on delete cascade
        )
 inherits (template_people_languages);
 comment on table users_languages is 'Languages spoken by a given user';
-comment on column users_languages.user_ref is 'Reference of user - id field of users table';
+comment on column users_languages.users_ref is 'Reference of user - id field of users table';
 comment on column users_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column users_languages.mother is 'Flag telling if its mother language or not';
 comment on column users_languages.prefered_language is 'Flag telling which language is prefered in communications';
