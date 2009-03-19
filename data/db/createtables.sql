@@ -41,6 +41,7 @@ create table catalogue_levels
         id serial not null,
         level_type level_types not null,
         level_name varchar not null,
+        level_sys_name varchar not null,
         optional_level boolean default false not null,
         constraint pk_catalogue_levels primary key (id),
         constraint unq_catalogue_levels unique (level_type, level_name)
@@ -49,6 +50,7 @@ comment on table catalogue_levels is 'List of hierarchical units levels - organi
 comment on column catalogue_levels.id is 'Unique identifier of a hierarchical unit level';
 comment on column catalogue_levels.level_type is 'Type of unit the levels is applicable to - contained in a predifined list: taxonomy, chronostratigraphy,...';
 comment on column catalogue_levels.level_name is 'Name given to level concerned';
+comment on column catalogue_levels.level_name is 'Name given to level concerned in the system. i.e.: cohort zoology will be writen in system as cohort_zoology';
 comment on column catalogue_levels.optional_level is 'Tells if the level is optional';
 create table possible_upper_levels
        (
@@ -922,7 +924,8 @@ create table template_classifications
         description_year_compl char(2),
         level_ref integer,
         status status default 'valid' not null,
-        path varchar default '/' not null
+        path varchar default '/' not null,
+	parent_ref integer default 0 not null
        );
 comment on table template_classifications is 'Template table used to construct every common data in each classifications tables (taxonomy, chronostratigraphy, lithostratigraphy,...)';
 comment on column template_classifications.name is 'Classification unit name';
@@ -932,6 +935,7 @@ comment on column template_classifications.description_year_compl is 'Complement
 comment on column template_classifications.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column template_classifications.path is 'Hierarchy path (/ for root)';
+comment on column template_classifications.parent_ref is 'Id of parent - id field from table itself';
 create table taxa
        (
         id serial not null,
@@ -1223,6 +1227,7 @@ comment on column taxa.abberans_indexed is 'Indexed name of abberans the current
 comment on column taxa.chimera_hybrid_pos is 'Chimera or Hybrid informations';
 comment on column taxa.extinct is 'Tells if taxa is extinct or not';
 comment on column taxa.path is 'Hierarchy path (/ for root)';
+comment on column taxa.parent_ref is 'Id of parent - id field from table itself';
 create table people_taxonomic_names
        (
         person_ref integer not null,
@@ -1302,6 +1307,7 @@ comment on column chronostratigraphy.sub_level_2_indexed is 'Indexed name of sub
 comment on column chronostratigraphy.lower_bound is 'Lower age boundary in years';
 comment on column chronostratigraphy.upper_bound is 'Upper age boundary in years';
 comment on column chronostratigraphy.path is 'Hierarchy path (/ for root)';
+comment on column chronostratigraphy.parent_ref is 'Id of parent - id field from table itself';
 create table lithostratigraphy
        (
         id serial not null,
@@ -1349,6 +1355,7 @@ comment on column lithostratigraphy.sub_level_1_indexed is 'Indexed name of sub 
 comment on column lithostratigraphy.sub_level_2_ref is 'Reference of sub level the current unit depends of - id field of lithostratigraphy table - recursive reference';
 comment on column lithostratigraphy.sub_level_2_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column lithostratigraphy.path is 'Hierarchy path (/ for root)';
+comment on column lithostratigraphy.parent_ref is 'Id of parent - id field from table itself';
 create table mineralogy
        (
         id serial not null,
@@ -1401,6 +1408,7 @@ comment on column mineralogy.unit_group_indexed is 'Indexed name of group the cu
 comment on column mineralogy.unit_variety_ref is 'Reference of sub level the current unit depends of - id field of mineralogy table - recursive reference';
 comment on column mineralogy.unit_variety_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column mineralogy.path is 'Hierarchy path (/ for root)';
+comment on column mineralogy.parent_ref is 'Id of parent - id field from table itself';
 create table lithology
        (
         id serial not null,
@@ -1418,6 +1426,7 @@ comment on column lithology.description_year_compl is 'Complement to year of des
 comment on column lithology.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithology.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column lithology.path is 'Hierarchy path (/ for root)';
+comment on column lithology.parent_ref is 'Id of parent - id field from table itself';
 create table habitats
        (
         id serial not null,

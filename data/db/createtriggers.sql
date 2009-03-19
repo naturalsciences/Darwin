@@ -9,6 +9,14 @@ CREATE TRIGGER trg_cpy_specimensMainCode_specimenPartCode AFTER INSERT
 CREATE TRIGGER trg_cpy_idToCode_gtu BEFORE INSERT OR UPDATE
 	ON gtu FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_idToCode();
+
+-- BEGIN HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
+
+CREATE TRIGGER trg_cpy_001_hierarchy_from_parents_chronostratigraphy BEFORE INSERT
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
+
+-- END HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
 	
 -- BEGIN FULLTOINDEX
 CREATE TRIGGER trg_cpy_fullToIndex_catalogueproperties BEFORE INSERT OR UPDATE

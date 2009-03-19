@@ -24,4 +24,4 @@ create domain date_year as smallint
                   check (VALUE between 1500 and 2100);
 create domain update_date_time as timestamp default now() not null;
 create domain classifications_ids as integer default 0 not null;
-create domain classifications_names as varchar default '/' not null;
+create domain classifications_names as varchar default '' not null;

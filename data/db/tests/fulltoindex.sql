@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(35);
+SELECT plan(37);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -24,8 +24,11 @@ SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHER
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_method_indexed');
 SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_tool_indexed');
 
-INSERT INTO chronostratigraphy (id, name ) VALUES (1,'ÉLo Wÿorléds');
+INSERT INTO chronostratigraphy (id, name, level_ref ) VALUES (1,'ÉLo Wÿorléds', 1);
+--INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'ÉLoWÿ', 2, 1);
 SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM chronostratigraphy WHERE id=1),'FulltoIndex on chronostratigraphy');
+SELECT ok( 0 = (SELECT eon_ref FROM chronostratigraphy WHERE id=1),'Eon reference of default chronostratigraphic unit: 0');
+SELECT ok( '' = (SELECT eon_indexed FROM chronostratigraphy WHERE id=1),'Eon name of default chronostratigraphic unit: ''''');
 
 INSERT INTO expeditions (id, name,name_ts ) VALUES (1,'ÉLo Wÿorléds',to_tsvector('ÉLo Wÿorléds'));
 SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM expeditions WHERE id=1),'FulltoIndex on expeditions');
