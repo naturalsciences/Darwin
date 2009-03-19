@@ -102,3 +102,112 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION fullToIndex(to_indexed varchar) RETURNS varchar STRICT
+AS $$
+DECLARE
+	temp_string varchar;
+BEGIN
+    -- Investigate https://launchpad.net/postgresql-unaccent
+    temp_string := REPLACE(to_indexed, 'Œ', 'oe');
+    temp_string := REPLACE(temp_string, 'Ӕ', 'ae');
+    temp_string := REPLACE(temp_string, 'œ', 'oe');
+    temp_string := REPLACE(temp_string, 'æ', 'ae');
+    temp_string := TRANSLATE(temp_string,'Ð','d');
+	temp_string := LOWER(
+				public.to_ascii(
+					CONVERT_TO(temp_string, 'iso-8859-15'),
+					'iso-8859-15')
+				);
+	--Remove ALL none alphanumerical char
+	temp_string := regexp_replace(temp_string,'[^[:alnum:]]','', 'g');
+	return substring(temp_string from 0 for 40);
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_cpy_fullToIndex() RETURNS trigger
+AS $$
+BEGIN
+
+	IF TG_TABLE_NAME = 'catalogue_properties' THEN
+		NEW.property_tool_indexed := COALESCE(fullToIndex(NEW.property_tool),'');
+		NEW.property_sub_type_indexed := COALESCE(fullToIndex(NEW.property_sub_type),'');
+		NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
+	END IF;
+	
+	IF TG_TABLE_NAME = 'chronostratigraphy' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'expeditions' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+		
+	IF TG_TABLE_NAME = 'habitats' THEN
+		NEW.code_indexed := fullToIndex(NEW.code);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'identifications' THEN
+		NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
+	END IF;
+	
+	IF TG_TABLE_NAME = 'lithology' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'lithostratigraphy' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'mineralogy' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+		NEW.formule_indexed := fullToIndex(NEW.formule);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'multimedia' THEN
+		NEW.title_indexed := fullToIndex(NEW.title);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'multimedia_keywords' THEN
+		NEW.keyword_indexed := fullToIndex(NEW.keyword);
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'people' THEN
+		NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'multimedia_codes' THEN
+		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+	END IF;
+		
+	IF TG_TABLE_NAME = 'specimen_parts_codes' THEN
+		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+	END IF;
+	
+	IF TG_TABLE_NAME = 'specimens_codes' THEN
+		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+	END IF;
+	
+	IF TG_TABLE_NAME = 'tag_groups' THEN
+		NEW.group_name_indexed := fullToIndex(NEW.group_name);
+	END IF;	
+
+	IF TG_TABLE_NAME = 'tags' THEN
+		NEW.label_indexed := fullToIndex(NEW.label);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'taxa' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'users' THEN
+		NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'vernacular_names' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;	
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
