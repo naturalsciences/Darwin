@@ -983,14 +983,14 @@ create table taxa
         sub_legion_indexed classifications_names,
         infra_legion_ref classifications_ids,
         infra_legion_indexed classifications_names,
-        super_cohort_zool_ref classifications_ids,
-        super_cohort_zool_indexed classifications_names,
-        cohort_zool_ref classifications_ids,
-        cohort_zool_indexed classifications_names,
-        sub_cohort_zool_ref classifications_ids,
-        sub_cohort_zool_indexed classifications_names,
-        infra_cohort_zool_ref classifications_ids,
-        infra_cohort_zool_indexed classifications_names,
+        super_cohort_zoology_ref classifications_ids,
+        super_cohort_zoology_indexed classifications_names,
+        cohort_zoology_ref classifications_ids,
+        cohort_zoology_indexed classifications_names,
+        sub_cohort_zoology_ref classifications_ids,
+        sub_cohort_zoology_indexed classifications_names,
+        infra_cohort_zoology_ref classifications_ids,
+        infra_cohort_zoology_indexed classifications_names,
         super_order_ref classifications_ids,
         super_order_indexed classifications_names,
         order_ref classifications_ids,
@@ -999,10 +999,10 @@ create table taxa
         sub_order_indexed classifications_names,
         infra_order_ref classifications_ids,
         infra_order_indexed classifications_names,
-        section_zool_ref classifications_ids,
-        section_zool_indexed classifications_names,
-        sub_section_zool_ref classifications_ids,
-        sub_section_zool_indexed classifications_names,
+        section_zoology_ref classifications_ids,
+        section_zoology_indexed classifications_names,
+        sub_section_zoology_ref classifications_ids,
+        sub_section_zoology_indexed classifications_names,
         super_family_ref classifications_ids,
         super_family_indexed classifications_names,
         family_ref classifications_ids,
@@ -1074,16 +1074,16 @@ create table taxa
         constraint fk_taxa_legion_taxa foreign key (legion_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_sub_legion_taxa foreign key (sub_legion_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_infra_legion_taxa foreign key (infra_legion_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_cohort_zool_taxa foreign key (super_cohort_zool_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_cohort_zool_taxa foreign key (cohort_zool_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_cohort_zool_taxa foreign key (sub_cohort_zool_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_cohort_zool_taxa foreign key (infra_cohort_zool_ref) references taxa(id) on delete cascade,
+        constraint fk_taxa_super_cohort_zoology_taxa foreign key (super_cohort_zoology_ref) references taxa(id) on delete cascade,
+        constraint fk_taxa_cohort_zoology_taxa foreign key (cohort_zoology_ref) references taxa(id) on delete cascade,
+        constraint fk_taxa_sub_cohort_zoology_taxa foreign key (sub_cohort_zoology_ref) references taxa(id) on delete cascade,
+        constraint fk_taxa_infra_cohort_zoology_taxa foreign key (infra_cohort_zoology_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_super_order_taxa foreign key (super_order_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_order_taxa foreign key (order_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_sub_order_taxa foreign key (sub_order_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_infra_order_taxa foreign key (infra_order_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_section_zool_taxa foreign key (section_zool_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_section_zool_taxa foreign key (sub_section_zool_ref) references taxa(id) on delete cascade,
+        constraint fk_taxa_section_zoology_taxa foreign key (section_zoology_ref) references taxa(id) on delete cascade,
+        constraint fk_taxa_sub_section_zoology_taxa foreign key (sub_section_zoology_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_super_family_taxa foreign key (super_family_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_family_taxa foreign key (family_ref) references taxa(id) on delete cascade,
         constraint fk_taxa_sub_family_taxa foreign key (sub_family_ref) references taxa(id) on delete cascade,
@@ -1160,14 +1160,14 @@ comment on column taxa.sub_legion_ref is 'Reference of sub legion the current ta
 comment on column taxa.sub_legion_indexed is 'Indexed name of sub legion the current taxa depends of';
 comment on column taxa.infra_legion_ref is 'Reference of infra legion the current taxa depends of - id field of taxa table - recursive reference';
 comment on column taxa.infra_legion_indexed is 'Indexed name of infra legion the current taxa depends of';
-comment on column taxa.super_cohort_zool_ref is 'Reference of super cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_cohort_zool_indexed is 'Indexed name of super cohort zool the current taxa depends of';
-comment on column taxa.cohort_zool_ref is 'Reference of cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.cohort_zool_indexed is 'Indexed name of cohort zool the current taxa depends of';
-comment on column taxa.sub_cohort_zool_ref is 'Reference of sub cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_cohort_zool_indexed is 'Indexed name of sub cohort zool the current taxa depends of';
-comment on column taxa.infra_cohort_zool_ref is 'Reference of infra cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_cohort_zool_indexed is 'Indexed name of infra cohort zool the current taxa depends of';
+comment on column taxa.super_cohort_zoology_ref is 'Reference of super cohort zool the current taxa depends of - id field of taxa table - recursive reference';
+comment on column taxa.super_cohort_zoology_indexed is 'Indexed name of super cohort zool the current taxa depends of';
+comment on column taxa.cohort_zoology_ref is 'Reference of cohort zool the current taxa depends of - id field of taxa table - recursive reference';
+comment on column taxa.cohort_zoology_indexed is 'Indexed name of cohort zool the current taxa depends of';
+comment on column taxa.sub_cohort_zoology_ref is 'Reference of sub cohort zool the current taxa depends of - id field of taxa table - recursive reference';
+comment on column taxa.sub_cohort_zoology_indexed is 'Indexed name of sub cohort zool the current taxa depends of';
+comment on column taxa.infra_cohort_zoology_ref is 'Reference of infra cohort zool the current taxa depends of - id field of taxa table - recursive reference';
+comment on column taxa.infra_cohort_zoology_indexed is 'Indexed name of infra cohort zool the current taxa depends of';
 comment on column taxa.super_order_ref is 'Reference of super order the current taxa depends of - id field of taxa table - recursive reference';
 comment on column taxa.super_order_indexed is 'Indexed name of super order the current taxa depends of';
 comment on column taxa.order_ref is 'Reference of order the current taxa depends of - id field of taxa table - recursive reference';
@@ -1176,10 +1176,10 @@ comment on column taxa.sub_order_ref is 'Reference of sub order the current taxa
 comment on column taxa.sub_order_indexed is 'Indexed name of sub order the current taxa depends of';
 comment on column taxa.infra_order_ref is 'Reference of infra order the current taxa depends of - id field of taxa table - recursive reference';
 comment on column taxa.infra_order_indexed is 'Indexed name of infra order the current taxa depends of';
-comment on column taxa.section_zool_ref is 'Reference of section zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.section_zool_indexed is 'Indexed name of section zool the current taxa depends of';
-comment on column taxa.sub_section_zool_ref is 'Reference of sub section zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_section_zool_indexed is 'Indexed name of sub section zool the current taxa depends of';
+comment on column taxa.section_zoology_ref is 'Reference of section zool the current taxa depends of - id field of taxa table - recursive reference';
+comment on column taxa.section_zoology_indexed is 'Indexed name of section zool the current taxa depends of';
+comment on column taxa.sub_section_zoology_ref is 'Reference of sub section zool the current taxa depends of - id field of taxa table - recursive reference';
+comment on column taxa.sub_section_zoology_indexed is 'Indexed name of sub section zool the current taxa depends of';
 comment on column taxa.super_family_ref is 'Reference of super family the current taxa depends of - id field of taxa table - recursive reference';
 comment on column taxa.super_family_indexed is 'Indexed name of super family the current taxa depends of';
 comment on column taxa.family_ref is 'Reference of family the current taxa depends of - id field of taxa table - recursive reference';

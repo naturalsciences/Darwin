@@ -12,7 +12,7 @@ CREATE TRIGGER trg_cpy_idToCode_gtu BEFORE INSERT OR UPDATE
 
 -- BEGIN HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
 
-CREATE TRIGGER trg_cpy_001_hierarchy_from_parents_chronostratigraphy BEFORE INSERT
+CREATE TRIGGER trg_cpy_hierarchy_from_parents_chronostratigraphy BEFORE INSERT
 	ON chronostratigraphy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
