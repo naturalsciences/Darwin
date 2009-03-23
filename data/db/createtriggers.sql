@@ -20,6 +20,10 @@ CREATE TRIGGER trg_cpy_hierarchy_from_parents_lithostratigraphy BEFORE INSERT
 	ON lithostratigraphy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
+CREATE TRIGGER trg_cpy_hierarchy_from_parents_mineralogy BEFORE INSERT
+	ON mineralogy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
+
 -- END HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
 	
 -- BEGIN FULLTOINDEX

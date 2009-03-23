@@ -68,11 +68,11 @@ insert into catalogue_levels (id, level_type, level_name, level_sys_name, option
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (67, 'lithostratigraphy', 'layer', 'layer', false);
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (68, 'lithostratigraphy', 'sub level 1', 'sub_level_1', true);
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (69, 'lithostratigraphy', 'sub level 2', 'sub_level_2', true);
-insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (70, 'mineralogy', 'class', 'class', false);
-insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (71, 'mineralogy', 'division', 'division', false);
-insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (72, 'mineralogy', 'family', 'family', false);
-insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (73, 'mineralogy', 'group', 'group', false);
-insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (74, 'mineralogy', 'variety', 'variety', false);
+insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (70, 'mineralogy', 'class', 'unit_class', false);
+insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (71, 'mineralogy', 'division', 'unit_division', false);
+insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (72, 'mineralogy', 'family', 'unit_family', false);
+insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (73, 'mineralogy', 'group', 'unit_group', false);
+insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (74, 'mineralogy', 'variety', 'unit_variety', false);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (2, 1);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (3, 2);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (4, 2);

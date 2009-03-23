@@ -361,65 +361,65 @@ BEGIN
 	ELSIF table_name = 'mineralogy' THEN
 		SELECT 
 			CASE
-				WHEN level_sys_name = 'class' THEN
+				WHEN level_sys_name = 'unit_class' THEN
 					id
 				ELSE
-					pm.class_ref
-			END AS class_ref,
+					pm.unit_class_ref
+			END AS unit_class_ref,
 			CASE
-				WHEN level_sys_name = 'class' THEN
+				WHEN level_sys_name = 'unit_class' THEN
 					name_indexed
 				ELSE
-					pm.class_indexed
-			END AS class_indexed,
+					pm.unit_class_indexed
+			END AS unit_class_indexed,
 			CASE
-				WHEN level_sys_name = 'division' THEN
+				WHEN level_sys_name = 'unit_division' THEN
 					id
 				ELSE
-					pm.division_ref
-			END AS division_ref,
+					pm.unit_division_ref
+			END AS unit_division_ref,
 			CASE
-				WHEN level_sys_name = 'division' THEN
+				WHEN level_sys_name = 'unit_division' THEN
 					name_indexed
 				ELSE
-					pm.division_indexed
-			END AS division_indexed,
+					pm.unit_division_indexed
+			END AS unit_division_indexed,
 			CASE
-				WHEN level_sys_name = 'family' THEN
+				WHEN level_sys_name = 'unit_family' THEN
 					id
 				ELSE
-					pm.family_ref
-			END AS family_ref,
+					pm.unit_family_ref
+			END AS unit_family_ref,
 			CASE
-				WHEN level_sys_name = 'family' THEN
+				WHEN level_sys_name = 'unit_family' THEN
 					name_indexed
 				ELSE
-					pm.family_indexed
-			END AS family_indexed,
+					pm.unit_family_indexed
+			END AS unit_family_indexed,
 			CASE
-				WHEN level_sys_name = 'group' THEN
+				WHEN level_sys_name = 'unit_group' THEN
 					id
 				ELSE
-					pm.group_ref
-			END AS group_ref,
+					pm.unit_group_ref
+			END AS unit_group_ref,
 			CASE
-				WHEN level_sys_name = 'group' THEN
+				WHEN level_sys_name = 'unit_group' THEN
 					name_indexed
 				ELSE
-					pm.group_indexed
-			END AS group_indexed,
+					pm.unit_group_indexed
+			END AS unit_group_indexed,
 			CASE
-				WHEN level_sys_name = 'variety' THEN
+				WHEN level_sys_name = 'unit_variety' THEN
 					id
 				ELSE
-					pm.variety_ref
-			END AS variety_ref,
+					pm.unit_variety_ref
+			END AS unit_variety_ref,
 			CASE
-				WHEN level_sys_name = 'variety' THEN
+				WHEN level_sys_name = 'unit_variety' THEN
 					name_indexed
 				ELSE
-					pm.variety_indexed
-			END AS variety_indexed
+					pm.unit_variety_indexed
+			END AS unit_variety_indexed
 		INTO 
 			result
 		FROM mineralogy AS pm
@@ -1318,76 +1318,76 @@ BEGIN
 	ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 		SELECT 
 			CASE
-				WHEN level_sys_name = 'class' THEN
+				WHEN level_sys_name = 'unit_class' THEN
 					NEW.id
 				ELSE
-					pm.class_ref
-			END AS class_ref,
+					pm.unit_class_ref
+			END AS unit_class_ref,
 			CASE
-				WHEN level_sys_name = 'class' THEN
+				WHEN level_sys_name = 'unit_class' THEN
 					NEW.name_indexed
 				ELSE
-					pm.class_indexed
-			END AS class_indexed,
+					pm.unit_class_indexed
+			END AS unit_class_indexed,
 			CASE
-				WHEN level_sys_name = 'division' THEN
+				WHEN level_sys_name = 'unit_division' THEN
 					NEW.id
 				ELSE
-					pm.division_ref
-			END AS division_ref,
+					pm.unit_division_ref
+			END AS unit_division_ref,
 			CASE
-				WHEN level_sys_name = 'division' THEN
+				WHEN level_sys_name = 'unit_division' THEN
 					NEW.name_indexed
 				ELSE
-					pm.division_indexed
-			END AS division_indexed,
+					pm.unit_division_indexed
+			END AS unit_division_indexed,
 			CASE
-				WHEN level_sys_name = 'family' THEN
+				WHEN level_sys_name = 'unit_family' THEN
 					NEW.id
 				ELSE
-					pm.family_ref
-			END AS family_ref,
+					pm.unit_family_ref
+			END AS unit_family_ref,
 			CASE
-				WHEN level_sys_name = 'family' THEN
+				WHEN level_sys_name = 'unit_family' THEN
 					NEW.name_indexed
 				ELSE
-					pm.family_indexed
-			END AS family_indexed,
+					pm.unit_family_indexed
+			END AS unit_family_indexed,
 			CASE
-				WHEN level_sys_name = 'group' THEN
+				WHEN level_sys_name = 'unit_group' THEN
 					NEW.id
 				ELSE
-					pm.group_ref
-			END AS group_ref,
+					pm.unit_group_ref
+			END AS unit_group_ref,
 			CASE
-				WHEN level_sys_name = 'group' THEN
+				WHEN level_sys_name = 'unit_group' THEN
 					NEW.name_indexed
 				ELSE
-					pm.group_indexed
-			END AS group_indexed,
+					pm.unit_group_indexed
+			END AS unit_group_indexed,
 			CASE
-				WHEN level_sys_name = 'variety' THEN
+				WHEN level_sys_name = 'unit_variety' THEN
 					NEW.id
 				ELSE
-					pm.variety_ref
-			END AS variety_ref,
+					pm.unit_variety_ref
+			END AS unit_variety_ref,
 			CASE
-				WHEN level_sys_name = 'variety' THEN
+				WHEN level_sys_name = 'unit_variety' THEN
 					NEW.name_indexed
 				ELSE
-					pm.variety_indexed
-			END AS variety_indexed
+					pm.unit_variety_indexed
+			END AS unit_variety_indexed
 		INTO 
-			NEW.class_ref,
-			NEW.class_indexed,
-			NEW.division_ref,
-			NEW.division_indexed,
-			NEW.family_ref,
-			NEW.family_indexed,
-			NEW.group_ref,
-			NEW.group_indexed,
-			NEW.variety_ref,
-			NEW.variety_indexed
+			NEW.unit_class_ref,
+			NEW.unit_class_indexed,
+			NEW.unit_division_ref,
+			NEW.unit_division_indexed,
+			NEW.unit_family_ref,
+			NEW.unit_family_indexed,
+			NEW.unit_group_ref,
+			NEW.unit_group_indexed,
+			NEW.unit_variety_ref,
+			NEW.unit_variety_indexed
 		FROM mineralogy AS pm
 		WHERE pm.id = NEW.parent_ref;
 	ELSIF TG_TABLE_NAME = 'taxa' THEN

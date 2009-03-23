@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(78);
+SELECT plan(88);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -146,6 +146,24 @@ SELECT ok( 5 = (SELECT sub_level_1_ref FROM lithostratigraphy WHERE id=5),'Sub l
 SELECT ok( 'mealonyeobd' = (SELECT sub_level_1_indexed FROM lithostratigraphy WHERE id=5),'Sub level 1 name of chronostratigraphic unit N°5: mealonyeobd');
 SELECT ok( 6 = (SELECT sub_level_2_ref FROM lithostratigraphy WHERE id=6),'Sub level 2 reference of chronostratigraphic unit N°6: 6');
 SELECT ok( 'mealonyeobf' = (SELECT sub_level_2_indexed FROM lithostratigraphy WHERE id=6),'Sub level 2 name of chronostratigraphic unit N°6: mealonyeobf');
+
+SELECT diag('Copy Hierarchy from parent Trigger: Mineralogy');
+
+
+INSERT INTO mineralogy (id, name, code, level_ref, parent_ref) VALUES (2, 'ALé bou/ caiéoui', 1, 71, 1);
+INSERT INTO mineralogy (id, name, code, level_ref, parent_ref) VALUES (3, 'BLé bou/ caiéoui', 2, 72, 2);
+INSERT INTO mineralogy (id, name, code, level_ref, parent_ref) VALUES (4, 'CLé bou/ caiéoui', 3, 73, 3);
+INSERT INTO mineralogy (id, name, code, level_ref, parent_ref) VALUES (5, 'DLé bou/ caiéoui', 4, 74, 4);
+SELECT ok( 1 = (SELECT unit_class_ref FROM mineralogy WHERE id = 2), 'Class reference of mineralogic unit N°2: 1');
+SELECT ok( 'leboucaieoui' = (SELECT unit_class_indexed FROM mineralogy WHERE id=2),'Class name of mineralogic unit N°2: leboucaieoui');
+SELECT ok( 2 = (SELECT unit_division_ref FROM mineralogy WHERE id = 2), 'Division reference of mineralogic unit N°2: 2');
+SELECT ok( 'aleboucaieoui' = (SELECT unit_division_indexed FROM mineralogy WHERE id=2),'Division name of mineralogic unit N°2: aleboucaieoui');
+SELECT ok( 3 = (SELECT unit_family_ref FROM mineralogy WHERE id = 3), 'Family reference of mineralogic unit N°3: 3');
+SELECT ok( 'bleboucaieoui' = (SELECT unit_family_indexed FROM mineralogy WHERE id=3),'Family name of mineralogic unit N°3: bleboucaieoui');
+SELECT ok( 4 = (SELECT unit_group_ref FROM mineralogy WHERE id = 4), 'Group reference of mineralogic unit N°4: 4');
+SELECT ok( 'cleboucaieoui' = (SELECT unit_group_indexed FROM mineralogy WHERE id=4),'Group name of mineralogic unit N°4: cleboucaieoui');
+SELECT ok( 5 = (SELECT unit_variety_ref FROM mineralogy WHERE id = 5), 'Variety reference of mineralogic unit N°5: 5');
+SELECT ok( 'dleboucaieoui' = (SELECT unit_variety_indexed FROM mineralogy WHERE id=5),'Variety name of mineralogic unit N°5: dleboucaieoui');
 
 SELECT diag('FulltoIndex Dates Trigger');
 
