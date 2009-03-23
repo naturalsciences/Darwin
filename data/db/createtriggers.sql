@@ -63,10 +63,6 @@ CREATE TRIGGER trg_cpy_fullToIndex_multimediakeywords BEFORE INSERT OR UPDATE
 	ON multimedia_keywords FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
-CREATE TRIGGER trg_cpy_fullToIndex_people BEFORE INSERT OR UPDATE
-	ON people FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndex();
-
 CREATE TRIGGER trg_cpy_fullToIndex_specimenpartscodes BEFORE INSERT OR UPDATE
 	ON specimen_parts_codes FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
@@ -87,12 +83,26 @@ CREATE TRIGGER trg_cpy_fullToIndex_taxa BEFORE INSERT OR UPDATE
 	ON taxa FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
-CREATE TRIGGER trg_cpy_fullToIndex_users BEFORE INSERT OR UPDATE
-	ON users FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndex();
-
 CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
+	
+--FULLTOINDEX DATES
 
+CREATE TRIGGER trg_cpy_fullToIndexDates_people BEFORE INSERT OR UPDATE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
+	
+CREATE TRIGGER trg_cpy_fullToIndexDates_users BEFORE INSERT OR UPDATE
+	ON users FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
+	
+CREATE TRIGGER trg_cpy_fullToIndexDates_catalogueproperties BEFORE INSERT OR UPDATE
+	ON catalogue_properties FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
 -- END FULLTOINDEX
+
+
+CREATE TRIGGER trg_clr_specialstatus_specimenindividuals BEFORE INSERT OR UPDATE
+	ON specimen_individuals FOR EACH ROW
+	EXECUTE PROCEDURE fct_clr_specialstatus();

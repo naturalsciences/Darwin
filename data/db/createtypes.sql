@@ -23,8 +23,8 @@ create type code_categories as enum ('main', 'secondary', 'temporary', 'mn/mp', 
 create type accompanying_types as enum ('secondary', 'trace');
 create type catalogues_authors_types as enum ('main', 'emendatus', 'mutatis characteribus', 'in', 'ex', 'sensu', 'not sensu');
 create type types_list as enum ('specimen', 'type', 'subtype', 'allotype', 'cotype', 'genotype', 'holotype', 'hypotype', 'lectotype', 'locotype', 'neallotype', 'neotype', 'paralectotype', 'paratype', 'plastotype', 'plesiotype', 'syntype', 'topotype', 'type in litteris');
-create type types_group_list as enum ('specimen', 'type', 'subtype', 'allotype', 'genotype', 'holotype', 'hypotype', 'lectotype', 'locotype', 'neallotype', 'neotype', 'paralectotype', 'paratype', 'plastotype', 'plesiotype', 'syntype', 'topotype', 'type in litteris');
-create type types_search_list as enum ('type', 'holotype', 'lectotype', 'paratype', 'paralectotype');
+create type types_group_list as enum ('','specimen', 'type', 'subtype', 'allotype', 'genotype', 'holotype', 'hypotype', 'lectotype', 'locotype', 'neallotype', 'neotype', 'paralectotype', 'paratype', 'plastotype', 'plesiotype', 'syntype', 'topotype', 'type in litteris');
+create type types_search_list as enum ('','neotype','type', 'holotype', 'lectotype', 'paratype', 'paralectotype');
 create type sexes as enum ('undefined', 'unknown', 'not applicable', 'not stated', 'male', 'female', 'mixed');
 create type stages as enum ('undefined', 'unknown', 'not stated', 'adult', 'caterpillar', 'chick', 'deutonymph', 'egg', 'embryo', 'ex larva', 'ex pupa', 'f.g.', 'foetus', 'hypope', 'juvenile', 'larva', 'mixed', 'nymph', 'polype', 'protonymph', 'pullus', 'pupa', 'subadult', 'tadpole', 'tritonymph', 'neonatus', 'premature');
 create type specimens_states as enum ('not applicable');

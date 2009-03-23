@@ -1,6 +1,10 @@
 \unset ECHO
 \i unit_launch.sql
+<<<<<<< TREE
 SELECT plan(39);
+=======
+SELECT plan(46);
+>>>>>>> MERGE-SOURCE
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -12,14 +16,17 @@ SELECT ok( 'aeoeaeoe' = fullToIndex('æ œ Ӕ Œ'),'ligature ae-oe');
 SELECT ok( 'sfdfdfggdfklmfklmgfdndgndgnfnnfnfngndfg' = fullToIndex('sfdfdfggdfklmfklmgfd,ndgndgnfnnfnfngndfgndgfndfnvbvloùsdop osdf,n'),'More than 40 chars');
 SELECT ok( fullToIndex(null) is null,'With null argument');
 
+
 SELECT diag('FulltoIndex Trigger');
 
-INSERT INTO catalogue_properties (table_name, record_id, property_type, date_from_indexed, date_to_indexed, property_unit, property_min, property_min_unified ) VALUES ('taxa',0,'Ph',NOW(),NOW(), 'm','{7}','{7}');
+
+
+INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, property_min, property_min_unified ) VALUES ('taxa',0,'Ph', 'm','{7}','{7}');
 SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_sub_type_indexed');
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_method_indexed');
 SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_tool_indexed');
 
-INSERT INTO catalogue_properties (table_name, record_id, property_type, date_from_indexed, date_to_indexed, property_unit, property_min, property_min_unified, property_tool_indexed, property_method_indexed, property_sub_type_indexed ) VALUES ('taxa',0,'Temperature',NOW(),NOW(), 'degC','{42}','{42}', 'ham ér', 'cra hé', 'Lambert 72');
+INSERT INTO catalogue_properties (table_name, record_id, property_type, date_from, date_to, property_unit, property_min, property_min_unified, property_tool_indexed, property_method_indexed, property_sub_type_indexed ) VALUES ('taxa',0,'Temperature',NOW(),NOW(), 'degC','{42}','{42}', 'ham ér', 'cra hé', 'Lambert 72');
 SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_sub_type_indexed');
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_method_indexed');
 SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_tool_indexed');
@@ -58,10 +65,13 @@ SELECT ok( 'lamernware' = (SELECT keyword_indexed FROM multimedia_keywords WHERE
 INSERT INTO multimedia_codes (code_prefix,code, multimedia_ref) VALUES ('12é-MOL7385',6847,1);
 SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM multimedia_codes WHERE multimedia_ref=1),'FulltoIndex on multimedia_codes');
 
+<<<<<<< TREE
 insert into people (id, is_physical, formated_name, formated_name_ts, family_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, sort_string, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed ) VALUES
 (3, true, 'The Expert',to_tsvector('The Expert'),  'The Expert', 0, 0, 0, 'theexpert', 0, 0,0 );
 SELECT ok( 'theexpert' = (SELECT formated_name_indexed FROM people WHERE id=3),'FulltoIndex on people');
 
+=======
+>>>>>>> MERGE-SOURCE
 
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
 INSERT INTO specimens_codes (code_prefix,code, specimen_ref) VALUES ('12é-MOL7385',6847,1);
@@ -90,14 +100,18 @@ SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'Fu
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 SELECT ok( 'mealeisgubularis' = (SELECT name_indexed FROM taxa WHERE id=1),'FulltoIndex on taxa name');
 
+<<<<<<< TREE
 insert into users (id, is_physical, formated_name,formated_name_ts, family_name, given_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, gender, sort_string) VALUES (3, true, 'Bill Maréchal', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', 0, 0, 0, 'M', 'billmarechal');
 
 SELECT ok( 'billmarechal' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
 
+=======
+>>>>>>> MERGE-SOURCE
 INSERT INTO class_vernacular_names (table_name, record_id, id, community) VALUES ('taxa',0,1,'testlang');
 INSERT INTO vernacular_names (vernacular_class_ref, name, name_ts) VALUES (1,'Éléphant!',to_tsvector('Éléphant'));
 SELECT ok( 'elephant' = (SELECT name_indexed FROM vernacular_names WHERE vernacular_class_ref=1),'FulltoIndex on vernacular_names');
 
+<<<<<<< TREE
 SELECT diag('Copy Hierarchy from parent Trigger');
 
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'ÉLoWÿ', 56, 1);
@@ -114,5 +128,26 @@ SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=2
 
 
 
+=======
+
+SELECT diag('FulltoIndex Dates Trigger');
+SELECT ok( 0 = (SELECT birth_date_day_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
+SELECT ok( 0 = (SELECT birth_date_month_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
+SELECT ok( 0 = (SELECT birth_date_year_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
+
+SELECT ok( 0 = (SELECT birth_date_day_indexed FROM people WHERE id=2),'DateIndexed on people birth_date_day_indexed');
+SELECT ok( 0 = (SELECT birth_date_month_indexed FROM people WHERE id=2),'DateIndexed on people birth_date_day_indexed');
+SELECT ok( 0 = (SELECT birth_date_year_indexed FROM people WHERE id=2),'DateIndexed on people birth_date_day_indexed');
+SELECT ok( 0 = (SELECT end_date_day_indexed FROM people WHERE id=2),'DateIndexed on people end_date_day_indexed');
+SELECT ok( 0 = (SELECT end_date_month_indexed FROM people WHERE id=2),'DateIndexed on people end_date_month_indexed');
+SELECT ok( 0 = (SELECT end_date_year_indexed FROM people WHERE id=2),'DateIndexed on people end_date_year_indexed');
+
+SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' = (SELECT date_from_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Ph'),'DateIndexed on catalogue_properties date_from_indexed');
+SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' = (SELECT date_to_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Ph'),'DateIndexed on catalogue_properties date_to_indexed');
+
+SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' != (SELECT date_from_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'DateIndex on catalogue_properties not touch if  not null (from)');
+SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' != (SELECT date_to_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'DateIndex on catalogue_properties not touch if  not null (to)');
+
+>>>>>>> MERGE-SOURCE
 SELECT * FROM finish();
 ROLLBACK;

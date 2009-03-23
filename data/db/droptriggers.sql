@@ -1,6 +1,7 @@
 DROP TRIGGER tgr_clr_incrementMainCode_specimens;
 DROP TRIGGER trg_cpy_specimensMainCode_specimenPartCode;
 DROP TRIGGER trg_cpy_idToCode_gtu;
+
 DROP TRIGGER trg_cpy_fullToIndex_lithology;
 DROP TRIGGER trg_cpy_fullToIndex_catalogueproperties;
 DROP TRIGGER trg_cpy_fullToIndex_chronostratigraphy;
@@ -12,11 +13,15 @@ DROP TRIGGER trg_cpy_fullToIndex_mineralogy;
 DROP TRIGGER trg_cpy_fullToIndex_multimedia;
 DROP TRIGGER trg_cpy_fullToIndex_multimediacodes;
 DROP TRIGGER trg_cpy_fullToIndex_multimediakeywords;
-DROP TRIGGER trg_cpy_fullToIndex_people;
 DROP TRIGGER trg_cpy_fullToIndex_specimenpartscodes;
 DROP TRIGGER trg_cpy_fullToIndex_specimenscodes;
 DROP TRIGGER trg_cpy_fullToIndex_taggroups;
 DROP TRIGGER trg_cpy_fullToIndex_tags;
 DROP TRIGGER trg_cpy_fullToIndex_taxa;
-DROP TRIGGER trg_cpy_fullToIndex_users;
 DROP TRIGGER trg_cpy_fullToIndex_vernacularnames;
+
+DROP TRIGGER trg_cpy_fullToIndexDates_people;
+DROP TRIGGER trg_cpy_fullToIndexDates_users;
+DROP TRIGGER trg_cpy_fullToIndexDates_catalogueproperties;
+
+DROP TRIGGER trg_clr_specialstatus_specimenindividual

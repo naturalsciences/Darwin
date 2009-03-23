@@ -1,3 +1,8 @@
+/***
+* Trigger Function fct_clr_incrementMainCode
+* Automaticaly add a incremented "main" code for a specimen
+* When the collection of the specimen has the flag must_be_incremented
+*/
 CREATE OR REPLACE FUNCTION fct_clr_incrementMainCode() RETURNS trigger
 as $$
 DECLARE
@@ -23,16 +28,19 @@ BEGIN
 		END IF;
 		
 		last_line.code := last_line.code+1;
-		
-		-- FIXME: Remove Code indexed ==> Trigger!
-		INSERT INTO specimens_codes (specimen_ref, code_category, code_prefix, code, full_code_indexed, code_suffix)
-			VALUES (NEW.id, 'main', last_line.code_prefix, last_line.code, 'main'||COALESCE(last_line.code_prefix,'')||last_line.code||COALESCE(last_line.code_suffix,'') , last_line.code_suffix );
+		INSERT INTO specimens_codes (specimen_ref, code_category, code_prefix, code, code_suffix)
+			VALUES (NEW.id, 'main', last_line.code_prefix, last_line.code, last_line.code_suffix );
 	END IF;
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 
+/***
+* Trigger Function fct_cpy_specimensMainCode
+* Automaticaly copy the "main" code from the specimen to the specimen parts
+* When the collection of the specimen has the flag code_part_code_auto_copy
+*/
 CREATE OR REPLACE FUNCTION fct_cpy_specimensMainCode() RETURNS trigger
 as $$
 DECLARE
@@ -53,15 +61,18 @@ BEGIN
 				ORDER BY specimens_codes.code DESC
 					LIMIT 1;
 		IF FOUND THEN
-			-- FIXME: Remove Code indexed ==> Trigger!
-			INSERT INTO specimen_parts_codes (specimen_part_ref, code_category, code_prefix, code, full_code_indexed, code_suffix)
-					VALUES (NEW.id, 'main', spec_code.code_prefix, spec_code.code, 'main'||COALESCE(spec_code.code_prefix,'')||spec_code.code||COALESCE(spec_code.code_suffix,'') , spec_code.code_suffix );
+			INSERT INTO specimen_parts_codes (specimen_part_ref, code_category, code_prefix, code, code_suffix)
+					VALUES (NEW.id, 'main', spec_code.code_prefix, spec_code.code , spec_code.code_suffix );
 		END IF;
 	END IF;
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
+/***
+* Trigger Function fct_cpy_idToCode
+* Automaticaly copy the code form the id if the code is null
+*/
 CREATE OR REPLACE FUNCTION fct_cpy_idToCode() RETURNS trigger
 AS $$
 BEGIN
@@ -72,6 +83,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/***
+* Function fct_chk_one_pref_language
+* Check if there is only ONE prefered language for a user
+*/
 CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE, table_prefix varchar) returns boolean
 as $$
 DECLARE
@@ -92,6 +107,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/***
+* Trigger Function fct_chk_one_pref_language
+* Trigger that call the fct_chk_one_pref_language fct
+*/
 CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE) returns boolean
 as $$
 DECLARE
@@ -103,6 +122,10 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+/***
+* Function fullToIndex
+* Remove all the accents special chars from a string
+*/
 CREATE OR REPLACE FUNCTION fullToIndex(to_indexed varchar) RETURNS varchar STRICT
 AS $$
 DECLARE
@@ -125,6 +148,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+<<<<<<< TREE
 CREATE OR REPLACE FUNCTION fct_get_hierarchy_from_parents(table_name varchar, id integer) RETURNS RECORD
 AS $$
 DECLARE
@@ -2147,6 +2171,12 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql;
 
+=======
+/***
+* Trigger function fct_cpy_fullToIndex
+* Call the fulltoIndex function for different tables
+*/
+>>>>>>> MERGE-SOURCE
 CREATE OR REPLACE FUNCTION fct_cpy_fullToIndex() RETURNS trigger
 AS $$
 DECLARE
@@ -2155,6 +2185,7 @@ DECLARE
 	oldCode varchar;
 	oldCodeSuffix varchar;
 BEGIN
+<<<<<<< TREE
 	IF TG_OP = 'UPDATE' THEN
 		IF TG_TABLE_NAME = 'catalogue_properties' THEN
 			oldValue := OLD.property_tool;
@@ -2316,6 +2347,242 @@ BEGIN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		END IF;	
 	END IF;
+=======
+
+	IF TG_TABLE_NAME = 'catalogue_properties' THEN
+		NEW.property_tool_indexed := COALESCE(fullToIndex(NEW.property_tool),'');
+		NEW.property_sub_type_indexed := COALESCE(fullToIndex(NEW.property_sub_type),'');
+		NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
+	END IF;
+	
+	IF TG_TABLE_NAME = 'chronostratigraphy' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'expeditions' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+		
+	IF TG_TABLE_NAME = 'habitats' THEN
+		NEW.code_indexed := fullToIndex(NEW.code);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'identifications' THEN
+		NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
+	END IF;
+	
+	IF TG_TABLE_NAME = 'lithology' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'lithostratigraphy' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'mineralogy' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+		NEW.formule_indexed := fullToIndex(NEW.formule);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'multimedia' THEN
+		NEW.title_indexed := fullToIndex(NEW.title);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'multimedia_keywords' THEN
+		NEW.keyword_indexed := fullToIndex(NEW.keyword);
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'multimedia_codes' THEN
+		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+	END IF;
+		
+	IF TG_TABLE_NAME = 'specimen_parts_codes' THEN
+		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+	END IF;
+	
+	IF TG_TABLE_NAME = 'specimens_codes' THEN
+		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+	END IF;
+	
+	IF TG_TABLE_NAME = 'tag_groups' THEN
+		NEW.group_name_indexed := fullToIndex(NEW.group_name);
+	END IF;	
+
+	IF TG_TABLE_NAME = 'tags' THEN
+		NEW.label_indexed := fullToIndex(NEW.label);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'taxa' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;
+	
+	IF TG_TABLE_NAME = 'vernacular_names' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);
+	END IF;	
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+/***
+* Trigger function fct_cpy_fullToIndexDates
+* Copy date to date_indexed
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_fullToIndexDates() RETURNS trigger
+AS $$
+BEGIN
+	IF TG_TABLE_NAME = 'catalogue_properties' THEN
+		NEW.date_from_indexed := COALESCE(NEW.date_from, TIMESTAMP '4700-01-01 00:00:00+02BC');
+		NEW.date_to_indexed := COALESCE(NEW.date_to, TIMESTAMP '4700-01-01 00:00:00+02BC');
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'people' THEN
+		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
+		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
+		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
+		NEW.end_date_day_indexed := COALESCE(NEW.end_date_day,0);
+		NEW.end_date_month_indexed := COALESCE(NEW.end_date_month,0);
+		NEW.end_date_year_indexed := COALESCE(NEW.end_date_year,0);
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'users' THEN
+		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
+		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
+		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
+	END IF;
+	
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+/***
+* function fct_chk_collectionsInstitutionIsMoral
+* Check if an institution referenced in collections is moral
+* return Boolean
+*/
+CREATE OR REPLACE FUNCTION fct_chk_PeopleIsMoral(people_ref people.id%TYPE) RETURNS boolean
+AS $$
+DECLARE
+	is_physical boolean;
+BEGIN
+	SELECT NOT people.is_physical INTO is_physical FROM people WHERE people.id=people_ref;
+	return is_physical;
+END;
+$$ LANGUAGE plpgsql;
+
+/***
+* fct_clr_specialstatus
+* Check the type(special status) on specimen_individuals and update the search and group type
+* to be conform to the std
+*/
+CREATE OR REPLACE FUNCTION fct_clr_specialstatus() RETURNS TRIGGER
+AS $$
+BEGIN
+
+	-- IF Type not changed
+	IF TG_OP = 'UPDATE' THEN
+		IF OLD.type = NEW.type THEN
+			RETURN NEW;
+		END IF;
+	END IF;
+	
+	IF NEW.type = 'specimen' THEN
+		NEW.type_search := '';
+		NEW.type_group := '';
+	END IF;
+	
+	IF NEW.type = 'type' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'type';
+	END IF;	
+	
+	IF NEW.type = 'subtype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'type';
+	END IF;
+
+	IF NEW.type = 'allotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'allotype';
+	END IF;
+
+	IF NEW.type = 'cotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'syntype';
+	END IF;
+
+	IF NEW.type = 'genotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'type';
+	END IF;
+
+	IF NEW.type = 'holotype' THEN
+		NEW.type_search := 'holotype';
+		NEW.type_group := 'holotype';
+	END IF;
+
+	IF NEW.type = 'hypotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'hypotype';
+	END IF;
+
+	IF NEW.type = 'lectotype' THEN
+		NEW.type_search := 'lectotype';
+		NEW.type_group := 'lectotype';
+	END IF;
+
+	IF NEW.type = 'locotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'locotype';
+	END IF;
+
+	IF NEW.type = 'neallotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'type';
+	END IF;
+
+	IF NEW.type = 'neotype' THEN
+		NEW.type_search := 'neotype';
+		NEW.type_group := 'neotype';
+	END IF;
+	
+	IF NEW.type = 'paralectotype' THEN
+		NEW.type_search := 'paralectotype';
+		NEW.type_group := 'paralectotype';
+	END IF;
+
+	IF NEW.type = 'paratype' THEN
+		NEW.type_search := 'paratype';
+		NEW.type_group := 'paratype';
+	END IF;
+
+	IF NEW.type = 'plastotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'plastotype';
+	END IF;
+	
+	IF NEW.type = 'plesiotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'plesiotype';
+	END IF;
+
+	IF NEW.type = 'syntype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'syntype';
+	END IF;
+		
+	IF NEW.type = 'topotype' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'topotype';
+	END IF;
+	
+	IF NEW.type = 'type in litteris' THEN
+		NEW.type_search := 'type';
+		NEW.type_group := 'type in litteris';
+	END IF;
+	
+>>>>>>> MERGE-SOURCE
 	RETURN NEW;
 EXCEPTION
 	WHEN RAISE_EXCEPTION THEN
