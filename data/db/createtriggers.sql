@@ -16,6 +16,10 @@ CREATE TRIGGER trg_cpy_hierarchy_from_parents_chronostratigraphy BEFORE INSERT
 	ON chronostratigraphy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
+CREATE TRIGGER trg_cpy_hierarchy_from_parents_lithostratigraphy BEFORE INSERT
+	ON lithostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
+
 -- END HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
 	
 -- BEGIN FULLTOINDEX
@@ -106,3 +110,24 @@ CREATE TRIGGER trg_cpy_fullToIndexDates_catalogueproperties BEFORE INSERT OR UPD
 CREATE TRIGGER trg_clr_specialstatus_specimenindividuals BEFORE INSERT OR UPDATE
 	ON specimen_individuals FOR EACH ROW
 	EXECUTE PROCEDURE fct_clr_specialstatus();
+	
+
+CREATE TRIGGER trg_cpy_composedate_users BEFORE INSERT OR UPDATE
+	ON users FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_composedate();
+
+CREATE TRIGGER trg_cpy_composedate_people BEFORE INSERT OR UPDATE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_composedate();
+
+CREATE TRIGGER trg_cpy_composedate_expeditions BEFORE INSERT OR UPDATE
+	ON expeditions FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_composedate();
+
+CREATE TRIGGER trg_cpy_composedate_specimens BEFORE INSERT OR UPDATE
+	ON specimens FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_composedate();
+
+CREATE TRIGGER trg_cpy_composedate_gtu BEFORE INSERT OR UPDATE
+	ON gtu FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_composedate();

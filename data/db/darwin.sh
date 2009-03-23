@@ -13,7 +13,7 @@ createlang -d template1 plpythonu
 if [ "${1:-'null'}" == "-d" ]; then
   psql -q -v dbname=$dbname -f dropdb.sql
 fi
-psql -q -v dbpath=\'$dbpath\' -v dbnameS=\'$dbname\' -v dbname=$dbname -f createdb.sql
+psql -q -v dbpath=\'$dbpath\' -v dbname=\'$dbname\' -v dbname=$dbname -f createdb.sql
 dropuser -q $dbname
 createuser -l -i -q -S -R -D -P -E $dbname
 psql -q -d $dbname -v dbname=$dbname -f createschema.sql

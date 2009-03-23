@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(56);
+SELECT plan(78);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -89,13 +89,13 @@ SELECT ok( 'mealeisgubularis' = (SELECT name_indexed FROM taxa WHERE id=1),'Full
 
 insert into users (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, gender, sort_string) VALUES (3, true, 'Bill Maréchal', 'marechalbill', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', 0, 0, 0, 'M', 'billmarechal');
 
-SELECT ok( 'billmarechal' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
+SELECT ok( 'marechalbill' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
 
 INSERT INTO class_vernacular_names (table_name, record_id, id, community) VALUES ('taxa',0,1,'testlang');
 INSERT INTO vernacular_names (vernacular_class_ref, name, name_ts) VALUES (1,'Éléphant!',to_tsvector('Éléphant'));
 SELECT ok( 'elephant' = (SELECT name_indexed FROM vernacular_names WHERE vernacular_class_ref=1),'FulltoIndex on vernacular_names');
 
-SELECT diag('Copy Hierarchy from parent Trigger');
+SELECT diag('Copy Hierarchy from parent Trigger: Chronostratigraphy');
 
 
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'ÉLoWÿ', 56, 1);
@@ -104,19 +104,48 @@ INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'CÉ
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (5, 'DÉLoWÿ', 59, 4);
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (6, 'EÉLoWÿ', 60, 5);
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (7, 'FÉLoWÿ', 61, 6);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (8, 'GÉLoWÿ', 62, 7);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (9, 'HÉLoWÿ', 63, 8);
 
 SELECT ok( 1 = (SELECT eon_ref FROM chronostratigraphy WHERE id=2),'Eon reference of chronostratigraphic unit N°2: 1');
 SELECT ok( 'elowyorleds' = (SELECT eon_indexed FROM chronostratigraphy WHERE id=2),'Eon name of chronostratigraphic unit N°2: elowyorleds');
 SELECT ok( 2 = (SELECT era_ref FROM chronostratigraphy WHERE id=2),'Era reference of chronostratigraphic unit N°2: 2');
 SELECT ok( 'elowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id=2),'Era name of chronostratigraphic unit N°2: elowy');
+SELECT ok( 3 = (SELECT sub_era_ref FROM chronostratigraphy WHERE id=3),'Sub-Era reference of chronostratigraphic unit N°3: 3');
+SELECT ok( 'belowy' = (SELECT sub_era_indexed FROM chronostratigraphy WHERE id=3),'Sub-Era name of chronostratigraphic unit N°3: belowy');
+SELECT ok( 4 = (SELECT system_ref FROM chronostratigraphy WHERE id=4),'System reference of chronostratigraphic unit N°4: 4');
+SELECT ok( 'celowy' = (SELECT system_indexed FROM chronostratigraphy WHERE id=4),'System name of chronostratigraphic unit N°4: celowy');
+SELECT ok( 5 = (SELECT serie_ref FROM chronostratigraphy WHERE id=5),'Serie reference of chronostratigraphic unit N°5: 5');
+SELECT ok( 'delowy' = (SELECT serie_indexed FROM chronostratigraphy WHERE id=5),'Serie name of chronostratigraphic unit N°5: delowy');
+SELECT ok( 6 = (SELECT stage_ref FROM chronostratigraphy WHERE id=6),'Stage reference of chronostratigraphic unit N°6: 6');
+SELECT ok( 'eelowy' = (SELECT stage_indexed FROM chronostratigraphy WHERE id=6),'Stage name of chronostratigraphic unit N°6: eelowy');
+SELECT ok( 7 = (SELECT sub_stage_ref FROM chronostratigraphy WHERE id=7),'Sub-Stage reference of chronostratigraphic unit N°7: 7');
+SELECT ok( 'felowy' = (SELECT sub_stage_indexed FROM chronostratigraphy WHERE id=7),'Sub-Stage name of chronostratigraphic unit N°7: felowy');
+SELECT ok( 8 = (SELECT sub_level_1_ref FROM chronostratigraphy WHERE id=8),'Sub level 1 reference of chronostratigraphic unit N°8: 8');
+SELECT ok( 'gelowy' = (SELECT sub_level_1_indexed FROM chronostratigraphy WHERE id=8),'Sub level 1 name of chronostratigraphic unit N°8: gelowy');
+SELECT ok( 9 = (SELECT sub_level_2_ref FROM chronostratigraphy WHERE id=9),'Sub level 2 reference of chronostratigraphic unit N°9: 9');
+SELECT ok( 'helowy' = (SELECT sub_level_2_indexed FROM chronostratigraphy WHERE id=9),'Sub level 2 name of chronostratigraphic unit N°9: helowy');
 
-/*
-INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (2, '-nÿeø@ß€', 65, 1);
+SELECT diag('Copy Hierarchy from parent Trigger: Lithostratigraphy');
+
+
+INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'Méalo-nÿeø@ß€A', 65, 1);
+INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (3, 'Méalo-nÿeø@ß€B', 66, 2);
+INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'Méalo-nÿeø@ß€C', 67, 3);
+INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (5, 'Méalo-nÿeø@ß€D', 68, 4);
+INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (6, 'Méalo-nÿeø@ß€F', 69, 5);
 SELECT ok( 1 = (SELECT group_ref FROM lithostratigraphy WHERE id = 2), 'Group reference of lithostratigraphic unit N°2: 1');
-SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=2),'Group name of lithostratigraphic unit N°2: mealonyeob');
-SELECT ok( 2 = (SELECT group_ref FROM lithostratigraphy WHERE id = 2), 'Group reference of lithostratigraphic unit N°2: 1');
-SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=2),'Group name of lithostratigraphic unit N°2: mealonyeob');
-*/
+SELECT ok( 'mealonyeob' = (SELECT group_indexed FROM lithostratigraphy WHERE id=2),'Group name of lithostratigraphic unit N°2: mealonyeob');
+SELECT ok( 2 = (SELECT formation_ref FROM lithostratigraphy WHERE id = 2), 'Formation reference of lithostratigraphic unit N°2: 2');
+SELECT ok( 'mealonyeoba' = (SELECT formation_indexed FROM lithostratigraphy WHERE id=2),'Formation name of lithostratigraphic unit N°2: mealonyeoba');
+SELECT ok( 3 = (SELECT member_ref FROM lithostratigraphy WHERE id = 3), 'Member reference of lithostratigraphic unit N°3: 3');
+SELECT ok( 'mealonyeobb' = (SELECT member_indexed FROM lithostratigraphy WHERE id=3),'Member name of lithostratigraphic unit N°3: mealonyeobb');
+SELECT ok( 4 = (SELECT layer_ref FROM lithostratigraphy WHERE id = 4), 'Layer reference of lithostratigraphic unit N°4: 4');
+SELECT ok( 'mealonyeobc' = (SELECT layer_indexed FROM lithostratigraphy WHERE id=4),'Layer name of lithostratigraphic unit N°4: mealonyeobc');
+SELECT ok( 5 = (SELECT sub_level_1_ref FROM lithostratigraphy WHERE id=5),'Sub level 1 reference of chronostratigraphic unit N°5: 5');
+SELECT ok( 'mealonyeobd' = (SELECT sub_level_1_indexed FROM lithostratigraphy WHERE id=5),'Sub level 1 name of chronostratigraphic unit N°5: mealonyeobd');
+SELECT ok( 6 = (SELECT sub_level_2_ref FROM lithostratigraphy WHERE id=6),'Sub level 2 reference of chronostratigraphic unit N°6: 6');
+SELECT ok( 'mealonyeobf' = (SELECT sub_level_2_indexed FROM lithostratigraphy WHERE id=6),'Sub level 2 name of chronostratigraphic unit N°6: mealonyeobf');
 
 SELECT diag('FulltoIndex Dates Trigger');
 

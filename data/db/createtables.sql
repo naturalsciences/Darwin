@@ -1498,6 +1498,7 @@ create table specimens
         acquisition_date_day date_day,
         acquisition_date_month date_month,
         acquisition_date_year date_year,
+        acquisition_date date,
         collecting_method varchar,
         collecting_tool varchar,
         specimen_count_min integer default 1 not null,
@@ -1537,6 +1538,7 @@ comment on column specimens.acquisition_category is 'Describe how the specimen w
 comment on column specimens.acquisition_date_day is 'Day of specimen acquisition';
 comment on column specimens.acquisition_date_month is 'Month of specimen acquisition';
 comment on column specimens.acquisition_date_year is 'Year of specimen acquisition';
+comment on column specimens.acquisition_date is 'Date Composed (if possible) of the acquisition';
 comment on column specimens.collecting_method is 'Collecting method used to collect the specimen';
 comment on column specimens.collecting_tool is 'Collecting tool used to collect the specimen';
 comment on column specimens.specimen_count_min is 'Minimum number of individuals in batch';

@@ -1,27 +1,26 @@
-DROP TRIGGER tgr_clr_incrementMainCode_specimens;
-DROP TRIGGER trg_cpy_specimensMainCode_specimenPartCode;
-DROP TRIGGER trg_cpy_idToCode_gtu;
+DROP TRIGGER IF EXISTS tgr_clr_incrementMainCode_specimens ON specimens CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_specimensMainCode_specimenPartCode ON specimen_parts_codes CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_idToCode_gtu ON gtu CASCADE;
 
-DROP TRIGGER trg_cpy_fullToIndex_lithology;
-DROP TRIGGER trg_cpy_fullToIndex_catalogueproperties;
-DROP TRIGGER trg_cpy_fullToIndex_chronostratigraphy;
-DROP TRIGGER trg_cpy_fullToIndex_expeditions;
-DROP TRIGGER trg_cpy_fullToIndex_expeditions;
-DROP TRIGGER trg_cpy_fullToIndex_identifications;
-DROP TRIGGER trg_cpy_fullToIndex_lithostratigraphy;
-DROP TRIGGER trg_cpy_fullToIndex_mineralogy;
-DROP TRIGGER trg_cpy_fullToIndex_multimedia;
-DROP TRIGGER trg_cpy_fullToIndex_multimediacodes;
-DROP TRIGGER trg_cpy_fullToIndex_multimediakeywords;
-DROP TRIGGER trg_cpy_fullToIndex_specimenpartscodes;
-DROP TRIGGER trg_cpy_fullToIndex_specimenscodes;
-DROP TRIGGER trg_cpy_fullToIndex_taggroups;
-DROP TRIGGER trg_cpy_fullToIndex_tags;
-DROP TRIGGER trg_cpy_fullToIndex_taxa;
-DROP TRIGGER trg_cpy_fullToIndex_vernacularnames;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_lithology ON lithology CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_catalogueproperties ON catalogue_properties CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_chronostratigraphy ON chronostratigraphy  CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_expeditions ON expeditions CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_identifications ON identifications CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_lithostratigraphy ON lithostratigraphy CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_mineralogy ON mineralogy CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimedia ON multimedia CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimediacodes ON multimedia_codes CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimediakeywords ON multimedia_keywords CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_specimenpartscodes ON specimen_parts_codes CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_specimenscodes ON specimens_codes CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taggroups ON tag_groups CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_tags ON tags CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxa CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_vernacularnames ON vernacular_names CASCADE;
 
-DROP TRIGGER trg_cpy_fullToIndexDates_people;
-DROP TRIGGER trg_cpy_fullToIndexDates_users;
-DROP TRIGGER trg_cpy_fullToIndexDates_catalogueproperties;
+DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividual ON specimen_individual CASCADE;
 
-DROP TRIGGER trg_clr_specialstatus_specimenindividual
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndexDates_people ON people CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndexDates_users ON users CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndexDates_catalogueproperties ON catalogue_properties CASCADE;
