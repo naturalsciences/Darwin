@@ -1,10 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-<<<<<<< TREE
-SELECT plan(39);
-=======
 SELECT plan(46);
->>>>>>> MERGE-SOURCE
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -65,13 +61,9 @@ SELECT ok( 'lamernware' = (SELECT keyword_indexed FROM multimedia_keywords WHERE
 INSERT INTO multimedia_codes (code_prefix,code, multimedia_ref) VALUES ('12é-MOL7385',6847,1);
 SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM multimedia_codes WHERE multimedia_ref=1),'FulltoIndex on multimedia_codes');
 
-<<<<<<< TREE
 insert into people (id, is_physical, formated_name, formated_name_ts, family_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, sort_string, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed ) VALUES
 (3, true, 'The Expert',to_tsvector('The Expert'),  'The Expert', 0, 0, 0, 'theexpert', 0, 0,0 );
 SELECT ok( 'theexpert' = (SELECT formated_name_indexed FROM people WHERE id=3),'FulltoIndex on people');
-
-=======
->>>>>>> MERGE-SOURCE
 
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
 INSERT INTO specimens_codes (code_prefix,code, specimen_ref) VALUES ('12é-MOL7385',6847,1);
@@ -100,18 +92,14 @@ SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'Fu
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 SELECT ok( 'mealeisgubularis' = (SELECT name_indexed FROM taxa WHERE id=1),'FulltoIndex on taxa name');
 
-<<<<<<< TREE
 insert into users (id, is_physical, formated_name,formated_name_ts, family_name, given_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, gender, sort_string) VALUES (3, true, 'Bill Maréchal', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', 0, 0, 0, 'M', 'billmarechal');
 
 SELECT ok( 'billmarechal' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
 
-=======
->>>>>>> MERGE-SOURCE
 INSERT INTO class_vernacular_names (table_name, record_id, id, community) VALUES ('taxa',0,1,'testlang');
 INSERT INTO vernacular_names (vernacular_class_ref, name, name_ts) VALUES (1,'Éléphant!',to_tsvector('Éléphant'));
 SELECT ok( 'elephant' = (SELECT name_indexed FROM vernacular_names WHERE vernacular_class_ref=1),'FulltoIndex on vernacular_names');
 
-<<<<<<< TREE
 SELECT diag('Copy Hierarchy from parent Trigger');
 
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'ÉLoWÿ', 56, 1);
@@ -127,8 +115,6 @@ SELECT ok( 2 = (SELECT group_ref FROM lithostratigraphy WHERE id = 2), 'Group re
 SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=2),'Group name of lithostratigraphic unit N°2: mealonyeob');
 
 
-
-=======
 
 SELECT diag('FulltoIndex Dates Trigger');
 SELECT ok( 0 = (SELECT birth_date_day_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
@@ -148,6 +134,5 @@ SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' = (SELECT date_to_indexed FROM c
 SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' != (SELECT date_from_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'DateIndex on catalogue_properties not touch if  not null (from)');
 SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' != (SELECT date_to_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'DateIndex on catalogue_properties not touch if  not null (to)');
 
->>>>>>> MERGE-SOURCE
 SELECT * FROM finish();
 ROLLBACK;

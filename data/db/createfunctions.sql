@@ -148,7 +148,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-<<<<<<< TREE
 CREATE OR REPLACE FUNCTION fct_get_hierarchy_from_parents(table_name varchar, id integer) RETURNS RECORD
 AS $$
 DECLARE
@@ -2171,12 +2170,10 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql;
 
-=======
 /***
 * Trigger function fct_cpy_fullToIndex
 * Call the fulltoIndex function for different tables
 */
->>>>>>> MERGE-SOURCE
 CREATE OR REPLACE FUNCTION fct_cpy_fullToIndex() RETURNS trigger
 AS $$
 DECLARE
@@ -2185,7 +2182,6 @@ DECLARE
 	oldCode varchar;
 	oldCodeSuffix varchar;
 BEGIN
-<<<<<<< TREE
 	IF TG_OP = 'UPDATE' THEN
 		IF TG_TABLE_NAME = 'catalogue_properties' THEN
 			oldValue := OLD.property_tool;
@@ -2347,78 +2343,6 @@ BEGIN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		END IF;	
 	END IF;
-=======
-
-	IF TG_TABLE_NAME = 'catalogue_properties' THEN
-		NEW.property_tool_indexed := COALESCE(fullToIndex(NEW.property_tool),'');
-		NEW.property_sub_type_indexed := COALESCE(fullToIndex(NEW.property_sub_type),'');
-		NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
-	END IF;
-	
-	IF TG_TABLE_NAME = 'chronostratigraphy' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'expeditions' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-	END IF;
-		
-	IF TG_TABLE_NAME = 'habitats' THEN
-		NEW.code_indexed := fullToIndex(NEW.code);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'identifications' THEN
-		NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
-	END IF;
-	
-	IF TG_TABLE_NAME = 'lithology' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'lithostratigraphy' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'mineralogy' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-		NEW.formule_indexed := fullToIndex(NEW.formule);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'multimedia' THEN
-		NEW.title_indexed := fullToIndex(NEW.title);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'multimedia_keywords' THEN
-		NEW.keyword_indexed := fullToIndex(NEW.keyword);
-	END IF;	
-	
-	IF TG_TABLE_NAME = 'multimedia_codes' THEN
-		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
-	END IF;
-		
-	IF TG_TABLE_NAME = 'specimen_parts_codes' THEN
-		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
-	END IF;
-	
-	IF TG_TABLE_NAME = 'specimens_codes' THEN
-		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
-	END IF;
-	
-	IF TG_TABLE_NAME = 'tag_groups' THEN
-		NEW.group_name_indexed := fullToIndex(NEW.group_name);
-	END IF;	
-
-	IF TG_TABLE_NAME = 'tags' THEN
-		NEW.label_indexed := fullToIndex(NEW.label);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'taxa' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-	END IF;
-	
-	IF TG_TABLE_NAME = 'vernacular_names' THEN
-		NEW.name_indexed := fullToIndex(NEW.name);
-	END IF;	
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -2582,7 +2506,6 @@ BEGIN
 		NEW.type_group := 'type in litteris';
 	END IF;
 	
->>>>>>> MERGE-SOURCE
 	RETURN NEW;
 EXCEPTION
 	WHEN RAISE_EXCEPTION THEN
