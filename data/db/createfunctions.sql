@@ -148,6 +148,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/***
+* Trigger function fct_cpy_hierarchy_from_parents
+* Version of function used to check what's coming from parents and what's coming from unit passed itself
+*/
 CREATE OR REPLACE FUNCTION fct_get_hierarchy_from_parents(table_name varchar, id integer) RETURNS RECORD
 AS $$
 DECLARE
@@ -1079,6 +1083,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/***
+* Trigger function fct_cpy_hierarchy_from_parents
+* Version of function used to check what's coming from parents and what's coming from unit passed itself
+*/
 CREATE OR REPLACE FUNCTION fct_cpy_hierarchy_from_parents() RETURNS trigger
 AS $$
 DECLARE
@@ -2148,6 +2156,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/***
+* Trigger function fct_cpy_cascade_children_indexed_names
+* Update the corresponding givenlevel_indexed and givenlevel_ref of related children when name of a catalogue unit have been updated
+*/
 CREATE OR REPLACE FUNCTION fct_cpy_cascade_children_indexed_names (table_name varchar, new_level_ref template_classifications.level_ref%TYPE, new_name_indexed template_classifications.name_indexed%TYPE, new_id integer) RETURNS boolean
 AS $$
 DECLARE

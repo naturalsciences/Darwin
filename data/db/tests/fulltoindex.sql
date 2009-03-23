@@ -16,7 +16,6 @@ SELECT ok( fullToIndex(null) is null,'With null argument');
 SELECT diag('FulltoIndex Trigger');
 
 
-
 INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, property_min, property_min_unified ) VALUES ('taxa',0,'Ph', 'm','{7}','{7}');
 SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_sub_type_indexed');
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_method_indexed');
@@ -32,7 +31,6 @@ SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM chronostratigraphy WHERE id
 
 INSERT INTO expeditions (id, name,name_ts ) VALUES (1,'ÉLo Wÿorléds',to_tsvector('ÉLo Wÿorléds'));
 SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM expeditions WHERE id=1),'FulltoIndex on expeditions');
-
 
 INSERT INTO habitats (id, code, description, description_ts) VALUES (1,'Lé Hâbitôt','',to_tsvector(''));
 SELECT ok( 'lehabitot' = (SELECT code_indexed FROM habitats WHERE id=1),'FulltoIndex on habitats');
@@ -72,7 +70,6 @@ SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM specimens_codes WHE
 INSERT INTO specimens_codes (code_category, code_prefix, code, specimen_ref) VALUES ('secondary','éà',null,1);
 SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimens_codes WHERE specimen_ref=1 AND code_category='secondary'),'FulltoIndex on specimens_codes with null(bis)');
 
-
 INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (1,1,'holotype');
 INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (1, 1, 'head');
 INSERT INTO specimen_parts_codes (code_prefix,code, specimen_part_ref) VALUES ('12é-MOL7385',6847,1);
@@ -81,13 +78,11 @@ SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM specimen_parts_code
 INSERT INTO specimen_parts_codes (code_category, code_prefix, code, specimen_part_ref) VALUES ('secondary','éà',null,1);
 SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimen_parts_codes WHERE specimen_part_ref=1 AND code_category='secondary'),'FulltoIndex on specimen_parts_codes');
 
-
 INSERT INTO tags (id, label) VALUES (1,'La ''mèr'' Nwàre') ;
 SELECT ok( 'lamernware' = (SELECT label_indexed FROM tags WHERE id=1),'FulltoIndex on tags');
 
 INSERT INTO tag_groups (id, tag_ref,group_name) VALUES (1, 1, 'Rév#ers');
 SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'FulltoIndex on tags_groups');
-
 
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 SELECT ok( 'mealeisgubularis' = (SELECT name_indexed FROM taxa WHERE id=1),'FulltoIndex on taxa name');
@@ -102,21 +97,30 @@ SELECT ok( 'elephant' = (SELECT name_indexed FROM vernacular_names WHERE vernacu
 
 SELECT diag('Copy Hierarchy from parent Trigger');
 
+
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'ÉLoWÿ', 56, 1);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (3, 'BÉLoWÿ', 57, 2);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'CÉLoWÿ', 58, 3);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (5, 'DÉLoWÿ', 59, 4);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (6, 'EÉLoWÿ', 60, 5);
+INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (7, 'FÉLoWÿ', 61, 6);
+
 SELECT ok( 1 = (SELECT eon_ref FROM chronostratigraphy WHERE id=2),'Eon reference of chronostratigraphic unit N°2: 1');
 SELECT ok( 'elowyorleds' = (SELECT eon_indexed FROM chronostratigraphy WHERE id=2),'Eon name of chronostratigraphic unit N°2: elowyorleds');
 SELECT ok( 2 = (SELECT era_ref FROM chronostratigraphy WHERE id=2),'Era reference of chronostratigraphic unit N°2: 2');
 SELECT ok( 'elowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id=2),'Era name of chronostratigraphic unit N°2: elowy');
 
+/*
 INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (2, '-nÿeø@ß€', 65, 1);
 SELECT ok( 1 = (SELECT group_ref FROM lithostratigraphy WHERE id = 2), 'Group reference of lithostratigraphic unit N°2: 1');
 SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=2),'Group name of lithostratigraphic unit N°2: mealonyeob');
 SELECT ok( 2 = (SELECT group_ref FROM lithostratigraphy WHERE id = 2), 'Group reference of lithostratigraphic unit N°2: 1');
 SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=2),'Group name of lithostratigraphic unit N°2: mealonyeob');
-
-
+*/
 
 SELECT diag('FulltoIndex Dates Trigger');
+
+
 SELECT ok( 0 = (SELECT birth_date_day_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
 SELECT ok( 0 = (SELECT birth_date_month_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
 SELECT ok( 0 = (SELECT birth_date_year_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
