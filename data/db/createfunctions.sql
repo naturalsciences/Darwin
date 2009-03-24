@@ -2502,7 +2502,7 @@ Compose A timestamp with default value
 -1 or null for hour, minute or second will take 0
 0 or null for day, month or year will take 1
 */
-CREATE FUNCTION fct_compose_timestamp(day integer, month integer, year integer, hour integer, minute integer, second integer) RETURNS timestamp
+CREATE OR REPLACE FUNCTION fct_compose_timestamp(day integer, month integer, year integer, hour integer, minute integer, second integer) RETURNS timestamp
 AS $$
 DECLARE
 	nday integer;
@@ -2561,9 +2561,30 @@ $$ LANGUAGE plpgsql;
 fct_compose_date
 Compose a date with default value call compose_timestamp
 */
-CREATE FUNCTION fct_compose_date(day integer, month integer, year integer) RETURNS date
+CREATE OR REPLACE FUNCTION fct_compose_date(day integer, month integer, year integer) RETURNS date
 AS $$
 BEGIN
 	RETURN fct_compose_timestamp(day, month, year, null, null, null)::date;
+END;
+$$ LANGUAGE plpgsql;
+
+/**
+* fct_clear_referencedRecord
+* Clear referenced record id for a table on delete record
+*/
+CREATE OR REPLACE FUNCTION fct_clear_referencedRecord() RETURNS TRIGGER
+AS $$
+BEGIN
+	DELETE FROM catalogue_authors WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM comments WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM catalogue_properties WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM identifications WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM expertises WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM class_vernacular_names WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM record_visibilities WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM users_workflow WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM collection_maintenance WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM associated_multimedia WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	
 END;
 $$ LANGUAGE plpgsql;

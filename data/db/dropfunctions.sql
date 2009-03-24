@@ -10,3 +10,8 @@ DROP FUNCTION IF EXISTS fullToIndex(to_indexed varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_PeopleIsMoral(people_ref people.id%TYPE) CASCADE;
 DROP FUNCTION IF EXISTS fct_clr_specialstatus() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_fullToIndexDates() CASCADE;
+
+DROP FUNCTION IF EXISTS fct_compose_date CASCADE;
+DROP FUNCTION IF EXISTS fct_compose_timestamp CASCADE;
+
+DROP FUNCTION IF EXISTS fct_clear_referencedRecord CASCADE;
