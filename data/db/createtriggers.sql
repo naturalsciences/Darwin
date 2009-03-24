@@ -29,6 +29,14 @@ CREATE TRIGGER trg_cpy_hierarchy_from_parents_taxa BEFORE INSERT
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
 -- END HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
+
+-- BEGIN HIERARCHICAL UNITS CATALOGUE IMPACT CHILDREN
+
+CREATE TRIGGER trg_cpy_name_updt_impact_children_chronostratigraphy BEFORE UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
+
+-- END HIERARCHYCAL UNITS CATALOGUE IMPACT CHILDREN
 	
 -- BEGIN FULLTOINDEX
 CREATE TRIGGER trg_cpy_fullToIndex_catalogueproperties BEFORE INSERT OR UPDATE

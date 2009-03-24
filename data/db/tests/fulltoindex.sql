@@ -132,6 +132,10 @@ SELECT ok( 'gelowy' = (SELECT sub_level_1_indexed FROM chronostratigraphy WHERE 
 SELECT ok( 9 = (SELECT sub_level_2_ref FROM chronostratigraphy WHERE id=9),'Sub level 2 reference of chronostratigraphic unit N°9: 9');
 SELECT ok( 'helowy' = (SELECT sub_level_2_indexed FROM chronostratigraphy WHERE id=9),'Sub level 2 name of chronostratigraphic unit N°9: helowy');
 
+SELECT diag('Impact name update on children Trigger: Chronostratigraphy');
+
+/*UPDATE chronostratigraphy SET name = 'IÉLoWÿ'*/
+
 SELECT diag('Copy Hierarchy from parent Trigger: Lithostratigraphy');
 
 

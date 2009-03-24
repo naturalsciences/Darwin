@@ -2557,6 +2557,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/**
+*fct_cpy_name_updt_impact_children
+*When name of a unit is updated, impact the <given-level>_indexed field of related children.
+*/
+
+CREATE OR REPLACE FUNCTION fct_cpy_name_updt_impact_children() RETURNS trigger
+AS $$
+BEGIN
+	IF NEW.name_indexed <> OLD.name_indexed THEN
+		IF NOT fct_cpy_cacade_children_indexed_names (TG_TABLE_NAME::varchar, NEW.level_ref, NEW.name_indexed, NEW.id) THEN
+			RAISE EXCEPTION 'Impossible to impact children names';
+		END IF;
+	END IF;
+	RETURN NEW;
+EXCEPTION
+	WHEN OTHERS THEN
+		RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
 /* 
 fct_compose_date
 Compose a date with default value call compose_timestamp
