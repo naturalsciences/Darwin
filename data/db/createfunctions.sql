@@ -2280,7 +2280,8 @@ BEGIN
 			oldCodePrefix := OLD.code_prefix;
 			oldCode := OLD.code;
 			oldCodeSuffix := OLD.code_suffix;
-			IF NEW.code <> oldCode OR NEW.code_prefix <> oldCodePrefix OR NEW.code_suffix <> oldCodeSuffix THEN
+			--WARNING 	oldCode varchar;
+			IF NEW.code <> oldCode::integer OR NEW.code_prefix <> oldCodePrefix OR NEW.code_suffix <> oldCodeSuffix THEN
 				NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
 			END IF;
 		ELSIF TG_TABLE_NAME = 'tag_groups' THEN
@@ -2360,36 +2361,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-/***
-* Trigger function fct_cpy_fullToIndexDates
-* Copy date to date_indexed
-*/
-CREATE OR REPLACE FUNCTION fct_cpy_fullToIndexDates() RETURNS trigger
-AS $$
-BEGIN
-	IF TG_TABLE_NAME = 'catalogue_properties' THEN
-		NEW.date_from_indexed := COALESCE(NEW.date_from, TIMESTAMP '4700-01-01 00:00:00+02BC');
-		NEW.date_to_indexed := COALESCE(NEW.date_to, TIMESTAMP '4700-01-01 00:00:00+02BC');
-	END IF;	
-	
-	IF TG_TABLE_NAME = 'people' THEN
-		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
-		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
-		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
-		NEW.end_date_day_indexed := COALESCE(NEW.end_date_day,0);
-		NEW.end_date_month_indexed := COALESCE(NEW.end_date_month,0);
-		NEW.end_date_year_indexed := COALESCE(NEW.end_date_year,0);
-	END IF;	
-	
-	IF TG_TABLE_NAME = 'users' THEN
-		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
-		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
-		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
-	END IF;
-	
-	RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
 
 /***
@@ -2562,9 +2533,42 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+/***
+* Trigger function fct_cpy_fullToIndexDates
+* Copy date to date_indexed
+*/
+/*
+CREATE OR REPLACE FUNCTION fct_cpy_fullToIndexDates() RETURNS trigger
+AS $$
+BEGIN
+	IF TG_TABLE_NAME = 'catalogue_properties' THEN
+		NEW.date_from_indexed := COALESCE(NEW.date_from, TIMESTAMP '4700-01-01 00:00:00+02BC');
+		NEW.date_to_indexed := COALESCE(NEW.date_to, TIMESTAMP '4700-01-01 00:00:00+02BC');
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'people' THEN
+		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
+		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
+		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
+		NEW.end_date_day_indexed := COALESCE(NEW.end_date_day,0);
+		NEW.end_date_month_indexed := COALESCE(NEW.end_date_month,0);
+		NEW.end_date_year_indexed := COALESCE(NEW.end_date_year,0);
+	END IF;	
+	
+	IF TG_TABLE_NAME = 'users' THEN
+		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
+		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
+		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
+	END IF;
+	
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;*/
+
 CREATE FUNCTION fct_cpy_composedate() RETURNS TRIGGER
 AS $$
 BEGIN
+/*
 IF TG_OP = 'INSERT' THEN 
 	
 		IF TG_TABLE_NAME = 'users' THEN
@@ -2627,6 +2631,7 @@ IF TG_OP = 'INSERT' THEN
 			END IF;
 		END IF;
 	END IF;
+	*/
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

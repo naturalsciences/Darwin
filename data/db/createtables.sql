@@ -114,19 +114,9 @@ create table gtu
         id serial not null,
         code varchar not null,
         parent_ref integer,
-        gtu_from_date_seconds date_seconds,
-        gtu_from_date_minutes date_minutes,
-        gtu_from_date_hours date_hours,
-        gtu_from_date_day date_day,
-        gtu_from_date_month date_month,
-        gtu_from_date_year date_year,
+        gtu_from_date_mask integer,
         gtu_from_date timestamp,
-        gtu_to_date_seconds date_seconds,
-        gtu_to_date_minutes date_minutes,
-        gtu_to_date_hours date_hours,
-        gtu_to_date_day date_day,
-        gtu_to_date_month date_month,
-        gtu_to_date_year date_year,
+        gtu_to_date_mask integer,
         gtu_to_date timestamp,
         constraint pk_gtu primary key (id),
         constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
@@ -135,27 +125,19 @@ comment on table gtu is 'Location or sampling units - GeoTemporalUnits';
 comment on column gtu.id is 'Unique identifier of a location or sampling unit';
 comment on column gtu.code is 'Code given - for sampling units - takes id if none defined';
 comment on column gtu.parent_ref is 'Recursive reference to a parent location-sampling unit - id field of gtu table itself';
-comment on column gtu.gtu_from_date_seconds is 'Seconds part of gtu from date';
-comment on column gtu.gtu_from_date_minutes is 'Minutes part of gtu from date';
-comment on column gtu.gtu_from_date_hours is 'Hours part of gtu from date';
-comment on column gtu.gtu_from_date_day is 'Days part of gtu from date';
-comment on column gtu.gtu_from_date_month is 'Months part of gtu from date';
-comment on column gtu.gtu_from_date_year is 'Years part of gtu from date';
-comment on column gtu.gtu_to_date_seconds is 'Seconds part of gtu to date';
-comment on column gtu.gtu_to_date_minutes is 'Minutes part of gtu to date';
-comment on column gtu.gtu_to_date_hours is 'Hours part of gtu to date';
-comment on column gtu.gtu_to_date_day is 'Days part of gtu to date';
-comment on column gtu.gtu_to_date_month is 'Months part of gtu to date';
-comment on column gtu.gtu_to_date_year is 'Years part of gtu to date';
+comment on column gtu.gtu_from_date is 'composed from date of the GTU';
+comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column gtu.gtu_to_date is 'composed to date of the GTU';
 create table catalogue_properties
        (
         property_type varchar not null,
         property_sub_type varchar,
         property_sub_type_indexed varchar not null,
-        date_from timestamp,
-        date_from_indexed timestamp not null,
-        date_to timestamp,
-        date_to_indexed timestamp not null,
+        date_from_mask integer,
+        date_from timestamp not null,
+        date_to_mask integer,
+        date_to timestamp not null,
         property_unit varchar not null,
         property_min varchar[] not null,
         property_min_unified varchar[] not null,
@@ -169,7 +151,7 @@ create table catalogue_properties
         property_tool varchar,
         property_tool_indexed varchar not null,
         defined_by_ordered_ids_list integer[],
-        constraint unq_catalogue_properties unique (table_name, record_id, property_type, property_sub_type_indexed, date_from_indexed, date_to_indexed, property_method_indexed, property_tool_indexed)
+        constraint unq_catalogue_properties unique (table_name, record_id, property_type, property_sub_type_indexed, date_from, date_to, property_method_indexed, property_tool_indexed)
        )
 inherits (template_table_record_ref);
 comment on table catalogue_properties is 'All properties or all measurements describing an object in darwin are stored in this table';
@@ -178,10 +160,10 @@ comment on column catalogue_properties.record_id is 'Identifier of record a prop
 comment on column catalogue_properties.property_type is 'Type-Category of property - Latitude, Longitude, Ph, Height, Weight, Color, Temperature, Wind direction,...';
 comment on column catalogue_properties.property_sub_type is 'Sub type or sub category of property: For Latitudes and Longitudes, precise which type of lat/long it is like Lambert 72, Lambert 92, UTM,...';
 comment on column catalogue_properties.property_sub_type_indexed is 'Indexed form of Sub type of property - if subtype is null, takes a generic replacement value';
-comment on column catalogue_properties.date_from is 'For a range of measurements, give the measurement start';
-comment on column catalogue_properties.date_from_indexed is 'Indexed form of date_from field - if null, takes a generic replacement value';
-comment on column catalogue_properties.date_to is 'For a range of measurements, give the measurement stop date/time';
-comment on column catalogue_properties.date_to_indexed is 'Indexed form of date_to field - if null, takes a generic replacement value';
+comment on column catalogue_properties.date_from is 'For a range of measurements, give the measurement start - if null, takes a generic replacement value';
+comment on column catalogue_properties.date_from_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column catalogue_properties.date_to is 'For a range of measurements, give the measurement stop date/time - if null, takes a generic replacement value';
+comment on column catalogue_properties.date_to_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column catalogue_properties.property_unit is 'Unit used for property value introduced';
 comment on column catalogue_properties.property_min is 'Array of one or more value(s) for the property type and subtype selected - in case of range of values store the minimum value or the mean minimum value - in case of range of all values, stores the whole range';
 comment on column catalogue_properties.property_min_unified is 'Unified version of property_min value(s) -> means that the value(s) is/are converted into a common unit allowing comparisons';
@@ -274,13 +256,9 @@ create table expeditions
 	name_ts tsvector not null,
         name_indexed varchar not null,
         name_language_full_text full_text_language,
-        expedition_from_date_day date_day,
-        expedition_from_date_month date_month,
-        expedition_from_date_year date_year,
+        expedition_from_date_mask integer,
         expedition_from_date date,
-        expedition_to_date_day date_day,
-        expedition_to_date_month date_month,
-        expedition_to_date_year date_year,
+        expedition_to_date_mask integer,
         expedition_to_date date,
         constraint pk_expeditions primary key (id)
        );
@@ -290,14 +268,11 @@ comment on column expeditions.name is 'Expedition name';
 comment on column expeditions.name_ts is 'tsvector version of name field';
 comment on column expeditions.name_indexed is 'Indexed form of expedition name';
 comment on column expeditions.name_language_full_text is 'Language associated to language/country reference used by full text search to_tsvector function';
-comment on column expeditions.expedition_from_date_day is 'Start day';
-comment on column expeditions.expedition_from_date_month is 'Start month';
-comment on column expeditions.expedition_from_date_year is 'Start year';
-comment on column expeditions.expedition_to_date_day is 'End day';
-comment on column expeditions.expedition_to_date_month is 'End month';
-comment on column expeditions.expedition_to_date_year is 'End year';
-comment on column expeditions.expedition_from_date is 'When all three from date fields are filled, this field contains the full date composition - will help for dates comparisons';
-comment on column expeditions.expedition_to_date is 'When all three to date fields are filled, this field contains the full date composition - will help for dates comparisons';
+comment on column expeditions.expedition_from_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
+comment on column expeditions.expedition_from_date is 'Start date of the expedition';
+comment on column expeditions.expedition_to_date is 'End date of the expedition';
+comment on column expeditions.expedition_to_date_mask is  'Contains the Mask flag to know wich part of the date is effectively known';
+
 create table template_people
        (
         id serial not null,
@@ -310,12 +285,7 @@ create table template_people
         family_name varchar not null,
         given_name varchar,
         additional_names varchar,
-        birth_date_day date_day,
-        birth_date_day_indexed smallint default 0 not null,
-        birth_date_month date_month,
-        birth_date_month_indexed smallint default 0 not null,
-        birth_date_year date_year,
-        birth_date_year_indexed smallint default 0 not null,
+        birth_date_mask integer,
         birth_date date,
         gender genders,
         sort_string varchar(36) not null
@@ -331,13 +301,8 @@ comment on column template_people.formated_name_indexed is 'Indexed form of form
 comment on column template_people.family_name is 'Family name for physical user/persons and Organisation name for moral user/persons';
 comment on column template_people.given_name is 'User/person''s given name - usually first name';
 comment on column template_people.additional_names is 'Any additional names given to user/person';
-comment on column template_people.birth_date_day is 'Day of birth/creation';
-comment on column template_people.birth_date_day_indexed is 'Indexed form of birth_date_day field';
-comment on column template_people.birth_date_month is 'Month of birth/creation';
-comment on column template_people.birth_date_month_indexed is 'Indexed form of birth_date_month field';
-comment on column template_people.birth_date_year is 'Year of birth/creation';
-comment on column template_people.birth_date_year_indexed is 'Indexed form of birth_date_year field';
-comment on column template_people.birth_date is 'Birth/Creation date composed from the three birth/creation date fields: birth_date_day, birth_date_month, birth_date_year';
+comment on column template_people.birth_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
+comment on column template_people.birth_date is 'Birth/Creation date composed';
 comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
 comment on column template_people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 create table template_people_languages
@@ -353,15 +318,10 @@ comment on column template_people_languages.prefered_language is 'Flag telling w
 create table people
        (
         db_people_type integer default 1 not null,
-        end_date_day date_day,
-        end_date_day_indexed smallint default 0 not null,
-        end_date_month date_month,
-        end_date_month_indexed smallint default 0 not null,
-        end_date_year date_year,
-        end_date_year_indexed smallint default 0 not null,
-        end_date date,
+        end_date_mask integer,
+        end_date date not null,
         constraint pk_people primary key (id),
-        constraint unq_people unique (is_physical, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed)
+        constraint unq_people unique (is_physical, formated_name_indexed, birth_date, end_date)
        )
 inherits (template_people);
 comment on table people is 'All physical and moral persons used in the application are here stored';
@@ -375,27 +335,17 @@ comment on column people.formated_name_indexed is 'Indexed form of formated_name
 comment on column people.family_name is 'Family name for physical persons and Organisation name for moral persons';
 comment on column people.given_name is 'User/person''s given name - usually first name';
 comment on column people.additional_names is 'Any additional names given to person';
-comment on column people.birth_date_day is 'Day of birth/creation';
-comment on column people.birth_date_day_indexed is 'Indexed form of birth_date_day field';
-comment on column people.birth_date_month is 'Month of birth/creation';
-comment on column people.birth_date_month_indexed is 'Indexed form of birth_date_month field';
-comment on column people.birth_date_year is 'Year of birth/creation';
-comment on column people.birth_date_year_indexed is 'Indexed form of birth_date_year field';
-comment on column people.birth_date is 'Birth/Creation date composed from the three birth/creation date fields: birth_date_day, birth_date_month, birth_date_year';
+comment on column people.birth_date is 'Day of birth/creation';
+comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column people.gender is 'For physical persons give the gender: M or F';
 comment on column people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector,...';
-comment on column people.end_date_day is 'End date day';
-comment on column people.end_date_day_indexed is 'Indexed form of end date day';
-comment on column people.end_date_month is 'End date month';
-comment on column people.end_date_month_indexed is 'Indexed form of end date month';
-comment on column people.end_date_year is 'End date year';
-comment on column people.end_date_year_indexed is 'Indexed form of end date year';
-comment on column people.end_date is 'End date composed from the three end date fields: end_date_day, end_date_month, end_date_year';
+comment on column people.end_date is 'End date';
+comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 create table users
        (
         constraint pk_users primary key (id),
-        constraint unq_users unique (is_physical, formated_name_indexed, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed)
+        constraint unq_users unique (is_physical, formated_name_indexed, birth_date)
        )
 inherits (template_people);
 comment on table users is 'List all application users';
@@ -409,13 +359,8 @@ comment on column users.formated_name_indexed is 'Indexed form of formated_name 
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
 comment on column users.given_name is 'User/user''s given name - usually first name';
 comment on column users.additional_names is 'Any additional names given to user';
-comment on column users.birth_date_day is 'Day of birth/creation';
-comment on column users.birth_date_day_indexed is 'Indexed form of birth_date_day field';
-comment on column users.birth_date_month is 'Month of birth/creation';
-comment on column users.birth_date_month_indexed is 'Indexed form of birth_date_month field';
-comment on column users.birth_date_year is 'Year of birth/creation';
-comment on column users.birth_date_year_indexed is 'Indexed form of birth_date_year field';
-comment on column users.birth_date is 'Birth/Creation date composed from the three birth/creation date fields: birth_date_day, birth_date_month, birth_date_year';
+comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column users.birth_date is 'Birth/Creation date composed';
 comment on column users.gender is 'For physical users give the gender: M or F';
 comment on column users.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 create table people_languages
@@ -1495,9 +1440,7 @@ create table specimens
         host_specimen_ref integer,
         host_relationship varchar,
         acquisition_category acquisition_categories default 'expedition' not null,
-        acquisition_date_day date_day,
-        acquisition_date_month date_month,
-        acquisition_date_year date_year,
+        acquisition_date_mask integer,
         acquisition_date date,
         collecting_method varchar,
         collecting_tool varchar,
@@ -1535,9 +1478,7 @@ comment on column specimens.identification_taxon_ref is 'When taxonomic qualifie
 comment on column specimens.host_relationship is 'When current specimen encoded is in a host relationship with an other specimen or taxon, this field contains the type of relationship between them: symbiosis, parasitism, saprophytism,...';
 comment on column specimens.host_specimen_ref is 'When current specimen encoded is in a host relationship with an other specimen, this field contains reference of the host specimen - recursive reference';
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
-comment on column specimens.acquisition_date_day is 'Day of specimen acquisition';
-comment on column specimens.acquisition_date_month is 'Month of specimen acquisition';
-comment on column specimens.acquisition_date_year is 'Year of specimen acquisition';
+comment on column specimens.acquisition_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column specimens.acquisition_date is 'Date Composed (if possible) of the acquisition';
 comment on column specimens.collecting_method is 'Collecting method used to collect the specimen';
 comment on column specimens.collecting_tool is 'Collecting tool used to collect the specimen';

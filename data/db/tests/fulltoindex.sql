@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(88);
+SELECT plan(75);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -16,7 +16,8 @@ SELECT ok( fullToIndex(null) is null,'With null argument');
 SELECT diag('FulltoIndex Trigger');
 
 
-INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, property_min, property_min_unified ) VALUES ('taxa',0,'Ph', 'm','{7}','{7}');
+
+INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, property_min, property_min_unified, date_from, date_to) VALUES ('taxa',0,'Ph', 'm','{7}','{7}',TIMESTAMP '0001-01-01 00:00:00', TIMESTAMP '0001-01-01 00:00:00');
 SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_sub_type_indexed');
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_method_indexed');
 SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_tool_indexed');
@@ -31,6 +32,7 @@ SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM chronostratigraphy WHERE id
 
 INSERT INTO expeditions (id, name,name_ts ) VALUES (1,'ÉLo Wÿorléds',to_tsvector('ÉLo Wÿorléds'));
 SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM expeditions WHERE id=1),'FulltoIndex on expeditions');
+
 
 INSERT INTO habitats (id, code, description, description_ts) VALUES (1,'Lé Hâbitôt','',to_tsvector(''));
 SELECT ok( 'lehabitot' = (SELECT code_indexed FROM habitats WHERE id=1),'FulltoIndex on habitats');
@@ -59,8 +61,8 @@ SELECT ok( 'lamernware' = (SELECT keyword_indexed FROM multimedia_keywords WHERE
 INSERT INTO multimedia_codes (code_prefix,code, multimedia_ref) VALUES ('12é-MOL7385',6847,1);
 SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM multimedia_codes WHERE multimedia_ref=1),'FulltoIndex on multimedia_codes');
 
-insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, sort_string, end_date_day_indexed, end_date_month_indexed, end_date_year_indexed ) VALUES
-(3, true, 'The Expert', 'theexpert', to_tsvector('The Expert'),  'The Expert', 0, 0, 0, 'theexpert', 0, 0,0 );
+insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, birth_date, sort_string, end_date ) VALUES
+(3, true, 'The Expert', 'theexpert', to_tsvector('The Expert'),  'The Expert', '0001-01-01', 'theexpert', DATE '0001-01-01');
 SELECT ok( 'theexpert' = (SELECT formated_name_indexed FROM people WHERE id=3),'FulltoIndex on people');
 
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
@@ -70,6 +72,7 @@ SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM specimens_codes WHE
 INSERT INTO specimens_codes (code_category, code_prefix, code, specimen_ref) VALUES ('secondary','éà',null,1);
 SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimens_codes WHERE specimen_ref=1 AND code_category='secondary'),'FulltoIndex on specimens_codes with null(bis)');
 
+
 INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (1,1,'holotype');
 INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (1, 1, 'head');
 INSERT INTO specimen_parts_codes (code_prefix,code, specimen_part_ref) VALUES ('12é-MOL7385',6847,1);
@@ -78,16 +81,18 @@ SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM specimen_parts_code
 INSERT INTO specimen_parts_codes (code_category, code_prefix, code, specimen_part_ref) VALUES ('secondary','éà',null,1);
 SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimen_parts_codes WHERE specimen_part_ref=1 AND code_category='secondary'),'FulltoIndex on specimen_parts_codes');
 
+
 INSERT INTO tags (id, label) VALUES (1,'La ''mèr'' Nwàre') ;
 SELECT ok( 'lamernware' = (SELECT label_indexed FROM tags WHERE id=1),'FulltoIndex on tags');
 
 INSERT INTO tag_groups (id, tag_ref,group_name) VALUES (1, 1, 'Rév#ers');
 SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'FulltoIndex on tags_groups');
 
+
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 SELECT ok( 'mealeisgubularis' = (SELECT name_indexed FROM taxa WHERE id=1),'FulltoIndex on taxa name');
 
-insert into users (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date_day_indexed, birth_date_month_indexed, birth_date_year_indexed, gender, sort_string) VALUES (3, true, 'Bill Maréchal', 'marechalbill', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', 0, 0, 0, 'M', 'billmarechal');
+insert into users (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, sort_string) VALUES (3, true, 'Bill Maréchal', 'marechalbill', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', NOW(), 'M', 'billmarechal');
 
 SELECT ok( 'marechalbill' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
 
@@ -123,6 +128,7 @@ SELECT ok( 7 = (SELECT sub_stage_ref FROM chronostratigraphy WHERE id=7),'Sub-St
 SELECT ok( 'felowy' = (SELECT sub_stage_indexed FROM chronostratigraphy WHERE id=7),'Sub-Stage name of chronostratigraphic unit N°7: felowy');
 SELECT ok( 8 = (SELECT sub_level_1_ref FROM chronostratigraphy WHERE id=8),'Sub level 1 reference of chronostratigraphic unit N°8: 8');
 SELECT ok( 'gelowy' = (SELECT sub_level_1_indexed FROM chronostratigraphy WHERE id=8),'Sub level 1 name of chronostratigraphic unit N°8: gelowy');
+
 SELECT ok( 9 = (SELECT sub_level_2_ref FROM chronostratigraphy WHERE id=9),'Sub level 2 reference of chronostratigraphic unit N°9: 9');
 SELECT ok( 'helowy' = (SELECT sub_level_2_indexed FROM chronostratigraphy WHERE id=9),'Sub level 2 name of chronostratigraphic unit N°9: helowy');
 
@@ -164,26 +170,6 @@ SELECT ok( 4 = (SELECT unit_group_ref FROM mineralogy WHERE id = 4), 'Group refe
 SELECT ok( 'cleboucaieoui' = (SELECT unit_group_indexed FROM mineralogy WHERE id=4),'Group name of mineralogic unit N°4: cleboucaieoui');
 SELECT ok( 5 = (SELECT unit_variety_ref FROM mineralogy WHERE id = 5), 'Variety reference of mineralogic unit N°5: 5');
 SELECT ok( 'dleboucaieoui' = (SELECT unit_variety_indexed FROM mineralogy WHERE id=5),'Variety name of mineralogic unit N°5: dleboucaieoui');
-
-SELECT diag('FulltoIndex Dates Trigger');
-
-
-SELECT ok( 0 = (SELECT birth_date_day_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
-SELECT ok( 0 = (SELECT birth_date_month_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
-SELECT ok( 0 = (SELECT birth_date_year_indexed FROM users WHERE id=2),'DateIndexed on user birth_date_day_indexed');
-
-SELECT ok( 0 = (SELECT birth_date_day_indexed FROM people WHERE id=2),'DateIndexed on people birth_date_day_indexed');
-SELECT ok( 0 = (SELECT birth_date_month_indexed FROM people WHERE id=2),'DateIndexed on people birth_date_day_indexed');
-SELECT ok( 0 = (SELECT birth_date_year_indexed FROM people WHERE id=2),'DateIndexed on people birth_date_day_indexed');
-SELECT ok( 0 = (SELECT end_date_day_indexed FROM people WHERE id=2),'DateIndexed on people end_date_day_indexed');
-SELECT ok( 0 = (SELECT end_date_month_indexed FROM people WHERE id=2),'DateIndexed on people end_date_month_indexed');
-SELECT ok( 0 = (SELECT end_date_year_indexed FROM people WHERE id=2),'DateIndexed on people end_date_year_indexed');
-
-SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' = (SELECT date_from_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Ph'),'DateIndexed on catalogue_properties date_from_indexed');
-SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' = (SELECT date_to_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Ph'),'DateIndexed on catalogue_properties date_to_indexed');
-
-SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' != (SELECT date_from_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'DateIndex on catalogue_properties not touch if  not null (from)');
-SELECT ok( TIMESTAMP '4700-01-01 00:00:00+02BC' != (SELECT date_to_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'DateIndex on catalogue_properties not touch if  not null (to)');
 
 SELECT * FROM finish();
 ROLLBACK;

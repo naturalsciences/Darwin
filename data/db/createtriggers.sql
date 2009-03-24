@@ -97,17 +97,17 @@ CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
 	
 --FULLTOINDEX DATES
 
-CREATE TRIGGER trg_cpy_fullToIndexDates_people BEFORE INSERT OR UPDATE
-	ON people FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
-	
-CREATE TRIGGER trg_cpy_fullToIndexDates_users BEFORE INSERT OR UPDATE
-	ON users FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
-	
-CREATE TRIGGER trg_cpy_fullToIndexDates_catalogueproperties BEFORE INSERT OR UPDATE
-	ON catalogue_properties FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
+-- CREATE TRIGGER trg_cpy_fullToIndexDates_people BEFORE INSERT OR UPDATE
+-- 	ON people FOR EACH ROW
+-- 	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
+-- 	
+-- CREATE TRIGGER trg_cpy_fullToIndexDates_users BEFORE INSERT OR UPDATE
+-- 	ON users FOR EACH ROW
+-- 	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
+-- 	
+-- CREATE TRIGGER trg_cpy_fullToIndexDates_catalogueproperties BEFORE INSERT OR UPDATE
+-- 	ON catalogue_properties FOR EACH ROW
+-- 	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
 -- END FULLTOINDEX
 
 
