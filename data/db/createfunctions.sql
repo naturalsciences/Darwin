@@ -2124,7 +2124,7 @@ BEGIN
 			NEW.genus_ref,
 			NEW.genus_indexed,
 			NEW.sub_genus_ref,
-			NEW.sub_genus_ref,
+			NEW.sub_genus_indexed,
 			NEW.section_botany_ref,
 			NEW.section_botany_indexed,
 			NEW.sub_section_botany_ref,
