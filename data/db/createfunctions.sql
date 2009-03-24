@@ -2172,7 +2172,8 @@ BEGIN
 		EXECUTE 'UPDATE ' || 
 			quote_ident(table_name) || 
 			' SET ' || quote_ident(level_prefix || '_indexed') || ' = ' || quote_literal(new_name_indexed) || 
-			' WHERE ' || quote_ident(level_prefix || '_ref') || ' = ' || new_id ;
+			' WHERE ' || quote_ident(level_prefix || '_ref') || ' = ' || new_id || 
+			'   AND ' || quote_ident('id') || ' <> ' || new_id ;
 		response := true;
 	END IF;
 	return response;
@@ -2564,16 +2565,175 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION fct_cpy_name_updt_impact_children() RETURNS trigger
 AS $$
+DECLARE
+	level_prefix catalogue_levels.level_sys_name%TYPE;
 BEGIN
 	IF NEW.name_indexed <> OLD.name_indexed THEN
-		IF NOT fct_cpy_cacade_children_indexed_names (TG_TABLE_NAME::varchar, NEW.level_ref, NEW.name_indexed, NEW.id) THEN
+		IF TG_TABLE_NAME = 'chronostratigraphy' THEN
+			SELECT
+				CASE
+					WHEN level_sys_name = 'eon' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.eon_indexed
+				END as eon_indexed,
+				CASE
+                                        WHEN level_sys_name = 'era' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.era_indexed
+                                END as era_indexed,
+				CASE
+                                        WHEN level_sys_name = 'sub_era' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.sub_era_indexed
+                                END as sub_era_indexed,
+				CASE
+                                        WHEN level_sys_name = 'system' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.system_indexed
+                                END as system_indexed,
+				CASE
+                                        WHEN level_sys_name = 'serie' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.serie_indexed
+                                END as serie_indexed,
+				CASE
+                                        WHEN level_sys_name = 'stage' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.stage_indexed
+                                END as stage_indexed,
+				CASE
+                                        WHEN level_sys_name = 'sub_stage' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.sub_stage_indexed
+                                END as sub_stage_indexed,
+				CASE
+                                        WHEN level_sys_name = 'sub_level_1' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.sub_level_1_indexed
+                                END as sub_level_1_indexed,
+				CASE
+                                        WHEN level_sys_name = 'sub_level_2' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.sub_level_2_indexed
+                                END as sub_level_2_indexed
+			INTO
+				NEW.eon_indexed,
+				NEW.era_indexed,
+				NEW.sub_era_indexed,
+				NEW.system_indexed,
+				NEW.serie_indexed,
+				NEW.stage_indexed,
+				NEW.sub_stage_indexed,
+				NEW.sub_level_1_indexed,
+				NEW.sub_level_2_indexed
+			FROM catalogue_levels as cl 
+			WHERE cl.id = NEW.level_ref;
+		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
+			SELECT
+				CASE
+					WHEN level_sys_name = 'group' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.group_indexed
+				END as group_indexed,
+				CASE
+                                        WHEN level_sys_name = 'formation' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.formation_indexed
+                                END as formation_indexed,
+				CASE
+                                        WHEN level_sys_name = 'member' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.member_indexed
+                                END as member_indexed,
+				CASE
+                                        WHEN level_sys_name = 'layer' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.layer_indexed
+                                END as layer_indexed,
+				CASE
+                                        WHEN level_sys_name = 'sub_level_1' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.sub_level_1_indexed
+                                END as sub_level_1_indexed,
+				CASE
+                                        WHEN level_sys_name = 'sub_level_2' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.sub_level_2_indexed
+                                END as sub_level_2_indexed
+			INTO
+				NEW.group_indexed,
+				NEW.formation_indexed,
+				NEW.member_indexed,
+				NEW.layer_indexed,
+				NEW.sub_level_1_indexed,
+				NEW.sub_level_2_indexed
+			FROM catalogue_levels
+			WHERE id = NEW.level_ref;
+		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+			SELECT
+				CASE
+					WHEN level_sys_name = 'unit_class' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.unit_class_indexed
+				END as unit_class_indexed,
+				CASE
+                                        WHEN level_sys_name = 'unit_division' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.unit_division_indexed
+                                END as unit_division_indexed,
+				CASE
+                                        WHEN level_sys_name = 'unit_family' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.unit_family_indexed
+                                END as unit_family_indexed,
+				CASE
+                                        WHEN level_sys_name = 'unit_group' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.unit_group_indexed
+                                END as unit_group_indexed,
+				CASE
+                                        WHEN level_sys_name = 'unit_variety' THEN
+                                                NEW.name_indexed
+                                        ELSE
+                                                NEW.unit_variety_indexed
+                                END as unit_variety_indexed
+			INTO
+				NEW.unit_class_indexed,
+				NEW.unit_division_indexed,
+				NEW.unit_family_indexed,
+				NEW.unit_group_indexed,
+				NEW.unit_variety_indexed
+			FROM catalogue_levels
+			WHERE id = NEW.level_ref;
+		END IF;
+		IF NOT fct_cpy_cascade_children_indexed_names (TG_TABLE_NAME::varchar, NEW.level_ref::integer, NEW.name_indexed::varchar, NEW.id::integer) THEN
 			RAISE EXCEPTION 'Impossible to impact children names';
 		END IF;
 	END IF;
 	RETURN NEW;
-EXCEPTION
+/*EXCEPTION
 	WHEN OTHERS THEN
 		RETURN OLD;
+*/
 END;
 $$ LANGUAGE plpgsql;
 

@@ -36,6 +36,14 @@ CREATE TRIGGER trg_cpy_name_updt_impact_children_chronostratigraphy BEFORE UPDAT
 	ON chronostratigraphy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
 
+CREATE TRIGGER trg_cpy_name_updt_impact_children_lithostratigraphy BEFORE UPDATE
+	ON lithostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
+
+CREATE TRIGGER trg_cpy_name_updt_impact_children_mineralogy BEFORE UPDATE
+	ON mineralogy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
+
 -- END HIERARCHYCAL UNITS CATALOGUE IMPACT CHILDREN
 	
 -- BEGIN FULLTOINDEX
