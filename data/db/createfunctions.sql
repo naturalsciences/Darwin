@@ -2496,142 +2496,74 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql;
 
-
-CREATE FUNCTION fct_compose_date(day integer,month integer,year integer) RETURNS date
-AS $$
-DECLARE
-	comp_date date;
-BEGIN
-	IF day IS NOT NULL AND month IS NOT NULL AND year IS NOT NULL AND
-		day != 0 AND month !=0 AND year !=0  THEN
-			comp_date := to_date(''||year||'-'||month||'-'||day, 'YYYY-MM-DD');
-			
-			IF EXTRACT('MONTH' FROM comp_date) = month THEN
-				RETURN comp_date;
-			END IF;
-	END IF;
-	RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
-
-CREATE FUNCTION fct_compose_timestamp(day integer,month integer,year integer,hour integer, minute integer,second integer) RETURNS timestamp
-AS $$
-DECLARE
-	comp_date timestamp;
-BEGIN
-	IF day IS NOT NULL AND month IS NOT NULL AND year IS NOT NULL AND
-		day != 0 AND month !=0 AND year !=0  THEN
-			comp_date := to_timestamp(''||year||'-'||month||'-'||day, 'YYYY-MM-DD');
-			
-			IF EXTRACT('MONTH' FROM comp_date) = month THEN
-				RETURN comp_date;
-			END IF;
-	END IF;
-	RETURN NULL;
-END;
-$$ LANGUAGE plpgsql;
-
-
-/***
-* Trigger function fct_cpy_fullToIndexDates
-* Copy date to date_indexed
+/**
+fct_compose_timestamp
+Compose A timestamp with default value
+-1 or null for hour, minute or second will take 0
+0 or null for day, month or year will take 1
 */
-/*
-CREATE OR REPLACE FUNCTION fct_cpy_fullToIndexDates() RETURNS trigger
+CREATE FUNCTION fct_compose_timestamp(day integer, month integer, year integer, hour integer, minute integer, second integer) RETURNS timestamp
 AS $$
+DECLARE
+	nday integer;
+	nmonth integer;
+	nyear integer;
+	nhour integer;
+	nminute integer;
+	nsecond integer;
+	stamp_string varchar default '';
 BEGIN
-	IF TG_TABLE_NAME = 'catalogue_properties' THEN
-		NEW.date_from_indexed := COALESCE(NEW.date_from, TIMESTAMP '4700-01-01 00:00:00+02BC');
-		NEW.date_to_indexed := COALESCE(NEW.date_to, TIMESTAMP '4700-01-01 00:00:00+02BC');
-	END IF;	
-	
-	IF TG_TABLE_NAME = 'people' THEN
-		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
-		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
-		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
-		NEW.end_date_day_indexed := COALESCE(NEW.end_date_day,0);
-		NEW.end_date_month_indexed := COALESCE(NEW.end_date_month,0);
-		NEW.end_date_year_indexed := COALESCE(NEW.end_date_year,0);
-	END IF;	
-	
-	IF TG_TABLE_NAME = 'users' THEN
-		NEW.birth_date_day_indexed := COALESCE(NEW.birth_date_day,0);
-		NEW.birth_date_month_indexed := COALESCE(NEW.birth_date_month,0);
-		NEW.birth_date_year_indexed := COALESCE(NEW.birth_date_year,0);
-	END IF;
-	
-	RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;*/
 
-CREATE FUNCTION fct_cpy_composedate() RETURNS TRIGGER
+	IF day = 0 OR day IS NULL THEN
+		nday := 1;
+	ELSE
+		nday := day;
+	END IF;
+
+	IF month = 0 OR month IS NULL THEN
+		nmonth := 1;
+	ELSE
+		nmonth := month;
+	END IF;
+	
+	IF year = 0 OR year IS NULL THEN
+		nyear := 1;
+	ELSE
+		nyear := year;
+	END IF;
+			
+	IF hour = -1 OR hour IS NULL THEN
+		nhour := 0;
+	ELSE
+		nhour := hour;
+	END IF;
+
+	IF minute = -1 OR minute IS NULL THEN
+		nminute := 0;
+	ELSE
+		nminute := day;
+	END IF;
+
+	IF second = -1 OR second IS NULL THEN
+		nsecond := 0;
+	ELSE
+		nsecond := second;
+	END IF;
+	
+	stamp_string := ''|| to_char(nyear,'0000') ||'-'|| nmonth ||'-'|| nday || ' ' ||
+			to_char(nhour,'FM00') ||':'|| to_char(nminute,'FM00') ||':'|| to_char(nsecond,'FM00');
+	
+	RETURN stamp_string::TIMESTAMP;
+END;
+$$ LANGUAGE plpgsql;
+
+/* 
+fct_compose_date
+Compose a date with default value call compose_timestamp
+*/
+CREATE FUNCTION fct_compose_date(day integer, month integer, year integer) RETURNS date
 AS $$
 BEGIN
-/*
-IF TG_OP = 'INSERT' THEN 
-	
-		IF TG_TABLE_NAME = 'users' THEN
-			NEW.birth_date := fct_compose_date(NEW.birth_date_day, NEW.birth_date_month, NEW.birth_date_year);
-			
-		ELSIF TG_TABLE_NAME = 'people' THEN
-			NEW.birth_date := fct_compose_date(NEW.birth_date_day, NEW.birth_date_month, NEW.birth_date_year);
-			NEW.end_date := fct_compose_date(NEW.end_date_day, NEW.end_date_month, NEW.end_date_year);
-			
-		ELSIF TG_TABLE_NAME = 'expeditions' THEN
-			NEW.expedition_from_date := fct_compose_date(NEW.expedition_from_date_day, NEW.expedition_from_date_month, NEW.expedition_from_date_year);
-			NEW.expedition_to_date := fct_compose_date(NEW.expedition_to_date_day, NEW.expedition_to_date_month, NEW.expedition_to_date_year);
-			
-		ELSIF TG_TABLE_NAME = 'specimens' THEN
-			NEW.acquisition_date := fct_compose_date(NEW.acquisition_date_day, NEW.acquisition_date_month, NEW.acquisition_date_year);
-			
-		ELSIF TG_TABLE_NAME = 'gtu' THEN
-			NEW.gtu_from_date := fct_compose_timestamp(NEW.gtu_from_date_day, NEW.gtu_from_date_month, NEW.gtu_from_date_year, NEW.gtu_from_date_hours, NEW.gtu_from_date_minutes, NEW.gtu_from_date_seconds);
-			NEW.gtu_to_date := fct_compose_timestamp(NEW.gtu_to_date_day, NEW.gtu_to_date_month, NEW.gtu_to_date_year, NEW.gtu_to_date_hours, NEW.gtu_to_date_minutes, NEW.gtu_to_date_seconds);
-			
-		END IF;
-		
-	ELSIF TG_OP = 'UPDATE' THEN 
-	
-		IF TG_TABLE_NAME = 'users' THEN
-			IF NEW.birth_date_day != OLD.birth_date_day OR NEW.birth_date_month != OLD.birth_date_month OR NEW.birth_date_year != OLD.birth_date_year THEN
-				NEW.birth_date := fct_compose_date(NEW.birth_date_day, NEW.birth_date_month, NEW.birth_date_year);
-			END IF;
-			
-		ELSIF TG_TABLE_NAME = 'people' THEN
-			IF NEW.birth_date_day != OLD.birth_date_day OR NEW.birth_date_month != OLD.birth_date_month OR NEW.birth_date_year != OLD.birth_date_year THEN
-				NEW.birth_date := fct_compose_date(NEW.birth_date_day, NEW.birth_date_month, NEW.birth_date_year);
-			END IF;
-			
-			IF NEW.end_date_day != OLD.end_date_day OR NEW.end_date_month != OLD.end_date_month OR NEW.end_date_year != OLD.end_date_year THEN
-				NEW.end_date := fct_compose_date(NEW.end_date_day, NEW.end_date_month, NEW.end_date_year);
-			END IF;
-			
-		ELSIF TG_TABLE_NAME = 'expeditions' THEN
-			IF NEW.expedition_from_date_day != OLD.expedition_from_date_day OR NEW.expedition_from_date_month != OLD.expedition_from_date_month OR NEW.expedition_from_date_year != OLD.expedition_from_date_year THEN
-				NEW.expedition_from_date := fct_compose_date(NEW.expedition_from_date_day, NEW.expedition_from_date_month, NEW.expedition_from_date_year);
-			END IF;
-			
-			IF NEW.expedition_to_date_day != OLD.expedition_to_date_day OR NEW.expedition_to_date_month != OLD.expedition_to_date_month OR NEW.expedition_to_date_year != OLD.expedition_to_date_year THEN
-				NEW.expedition_to_date := fct_compose_date(NEW.expedition_to_date_day, NEW.expedition_to_date_month, NEW.expedition_to_date_year);
-			END IF;
-			
-		ELSIF TG_TABLE_NAME = 'specimens' THEN
-			IF NEW.acquisition_date_day != OLD.acquisition_date_day OR NEW.acquisition_date_month != OLD.acquisition_date_month OR NEW.acquisition_date_year != OLD.acquisition_date_year THEN
-				NEW.acquisition_date := fct_compose_date(NEW.acquisition_date_day, NEW.acquisition_date_month, NEW.acquisition_date_year);
-			END IF;
-			
-		ELSIF TG_TABLE_NAME = 'gtu' THEN
-			IF NEW.gtu_from_date_day != OLD.gtu_from_date_day OR NEW.gtu_from_date_month != OLD.gtu_from_date_month OR NEW.gtu_from_date_year != OLD.gtu_from_date_year OR  NEW.gtu_from_date_hours != OLD.gtu_from_date_hours OR NEW.gtu_from_date_minutes != OLD.gtu_from_date_minutes OR NEW.gtu_from_date_seconds != OLD.gtu_from_date_seconds THEN
-				NEW.gtu_from_date := fct_compose_timestamp(NEW.gtu_from_date_day, NEW.gtu_from_date_month, NEW.gtu_from_date_year, NEW.gtu_from_date_hours, NEW.gtu_from_date_minutes, NEW.gtu_from_date_seconds);
-			END IF;
-			
-			IF NEW.gtu_to_date_day != OLD.gtu_to_date_day OR NEW.gtu_to_date_month != OLD.gtu_to_date_month OR NEW.gtu_to_date_year != OLD.gtu_to_date_year OR  NEW.gtu_to_date_hours != OLD.gtu_to_date_hours OR NEW.gtu_to_date_minutes != OLD.gtu_to_date_minutes OR NEW.gtu_to_date_seconds != OLD.gtu_to_date_seconds THEN
-				NEW.gtu_to_date := fct_compose_timestamp(NEW.gtu_to_date_day, NEW.gtu_to_date_month, NEW.gtu_to_date_year, NEW.gtu_to_date_hours, NEW.gtu_to_date_minutes, NEW.gtu_to_date_seconds);
-			END IF;
-		END IF;
-	END IF;
-	*/
-	RETURN NEW;
+	RETURN fct_compose_timestamp(day, month, year, null, null, null)::date;
 END;
 $$ LANGUAGE plpgsql;

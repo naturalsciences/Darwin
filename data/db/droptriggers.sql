@@ -20,7 +20,3 @@ DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxa CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_vernacularnames ON vernacular_names CASCADE;
 
 DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividual ON specimen_individual CASCADE;
-
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndexDates_people ON people CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndexDates_users ON users CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndexDates_catalogueproperties ON catalogue_properties CASCADE;

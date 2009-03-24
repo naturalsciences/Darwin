@@ -95,43 +95,8 @@ CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 	
---FULLTOINDEX DATES
-
--- CREATE TRIGGER trg_cpy_fullToIndexDates_people BEFORE INSERT OR UPDATE
--- 	ON people FOR EACH ROW
--- 	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
--- 	
--- CREATE TRIGGER trg_cpy_fullToIndexDates_users BEFORE INSERT OR UPDATE
--- 	ON users FOR EACH ROW
--- 	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
--- 	
--- CREATE TRIGGER trg_cpy_fullToIndexDates_catalogueproperties BEFORE INSERT OR UPDATE
--- 	ON catalogue_properties FOR EACH ROW
--- 	EXECUTE PROCEDURE fct_cpy_fullToIndexDates();
--- END FULLTOINDEX
-
 
 CREATE TRIGGER trg_clr_specialstatus_specimenindividuals BEFORE INSERT OR UPDATE
 	ON specimen_individuals FOR EACH ROW
 	EXECUTE PROCEDURE fct_clr_specialstatus();
 	
-
-CREATE TRIGGER trg_cpy_composedate_users BEFORE INSERT OR UPDATE
-	ON users FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_composedate();
-
-CREATE TRIGGER trg_cpy_composedate_people BEFORE INSERT OR UPDATE
-	ON people FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_composedate();
-
-CREATE TRIGGER trg_cpy_composedate_expeditions BEFORE INSERT OR UPDATE
-	ON expeditions FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_composedate();
-
-CREATE TRIGGER trg_cpy_composedate_specimens BEFORE INSERT OR UPDATE
-	ON specimens FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_composedate();
-
-CREATE TRIGGER trg_cpy_composedate_gtu BEFORE INSERT OR UPDATE
-	ON gtu FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_composedate();
