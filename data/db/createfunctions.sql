@@ -3149,6 +3149,6 @@ BEGIN
 	DELETE FROM users_workflow WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM collection_maintenance WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM associated_multimedia WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	
+	RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
