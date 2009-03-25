@@ -3200,3 +3200,28 @@ BEGIN
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+/**
+* fct_chk_possible_upper_levels
+* When inserting or updating a hierarchical unit, checks, considering parent level, that unit level is ok (depending on definitions given in possible_upper_levels_table)
+*/
+CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level (table_name varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) RETURNS boolean
+AS $$
+DECLARE
+	response boolean default false;
+BEGIN
+	IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70)) THEN
+		response := true;
+	ELSE
+		EXECUTE 'select count(*)::integer::boolean ' ||
+			'from possible_upper_levels ' ||
+			'where level_ref = ' || new_level_ref || 
+			'  and level_upper_ref = (select level_ref from ' || quote_ident(table_name) || ' where id = ' || new_parent_ref || ')'
+		INTO response;
+	END IF;
+	RETURN response;
+EXCEPTION
+	WHEN OTHERS THEN
+		RETURN response;
+END;
+$$ LANGUAGE plpgsql;
