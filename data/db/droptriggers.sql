@@ -27,7 +27,7 @@ DROP TRIGGER trg_clr_referenceRecord_catalogueauthors ON catalogue_authors;
 DROP TRIGGER trg_clr_referenceRecord_gtu ON gtu;
 DROP TRIGGER trg_clr_referenceRecord_catalogueproperties ON catalogue_properties;
 DROP TRIGGER trg_clr_referenceRecord_identifications ON identifications;
-DROP TRIGGER trg_clr_referenceRecord_expertises ON expertises;
+--DROP TRIGGER trg_clr_referenceRecord_expertises ON expertises;
 DROP TRIGGER trg_clr_referenceRecord_vernacularnames ON vernacular_names;
 DROP TRIGGER trg_clr_referenceRecord_expeditions ON expeditions;
 DROP TRIGGER trg_clr_referenceRecord_people ON people;
@@ -48,3 +48,5 @@ DROP TRIGGER trg_clr_referenceRecord_specimens ON specimens;
 DROP TRIGGER trg_clr_referenceRecord_specimenindividuals ON specimen_individuals;
 DROP TRIGGER trg_clr_referenceRecord_specimenparts ON specimen_parts;
 DROP TRIGGER trg_clr_referenceRecord_specimensaccompanying ON specimens_accompanying;
+
+CREATE TRIGGER trg_clear_referencedPeople ON people;

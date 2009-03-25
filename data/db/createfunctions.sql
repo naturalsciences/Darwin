@@ -3152,3 +3152,51 @@ BEGIN
 	RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_remove_array_elem(IN in_array anyarray, IN elem anyelement,OUT out_array anyarray)
+AS $$
+BEGIN
+	SELECT array(select s FROM fct_explode_array (in_array)  as s WHERE s != elem) INTO out_array;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_explode_array(in_array anyarray) returns setof anyelement as
+$$
+    select ($1)[s] from generate_series(1,array_upper($1, 1)) as s;
+$$
+LANGUAGE sql immutable;
+
+/**
+* fct_clear_referencedPeople
+* Clear referenced people id for a table on delete record
+*/
+CREATE OR REPLACE FUNCTION fct_clear_referencedPeople() RETURNS TRIGGER
+AS $$
+BEGIN
+	UPDATE catalogue_relationships SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
+		
+	UPDATE catalogue_authors SET authors_ordered_ids_list = fct_remove_array_elem(authors_ordered_ids_list,OLD.id),
+		defined_by_ordered_ids_list =  fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE authors_ordered_ids_list @> ARRAY[OLD.id] OR defined_by_ordered_ids_list @> ARRAY[OLD.id];
+	
+	UPDATE catalogue_properties SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
+	
+	UPDATE identifications SET identifiers_ordered_ids_list = fct_remove_array_elem(identifiers_ordered_ids_list,OLD.id),
+		defined_by_ordered_ids_list =  fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE identifiers_ordered_ids_list @> ARRAY[OLD.id] OR defined_by_ordered_ids_list @> ARRAY[OLD.id];
+	
+	UPDATE expertises SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];		
+	
+	UPDATE class_vernacular_names SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];	
+	
+	UPDATE specimens_accompanying SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
+		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
+
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;

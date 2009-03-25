@@ -26,7 +26,7 @@ create table catalogue_authors
        (
         author_type catalogues_authors_types default 'main' not null,
         authors_ordered_ids_list integer[] not null,
-        defined_by_ordred_ids_list integer[],
+        defined_by_ordered_ids_list integer[],
         constraint unq_catalogue_authors unique (table_name, author_type, record_id)
        )
 inherits (template_table_record_ref);
@@ -35,7 +35,7 @@ comment on column catalogue_authors.table_name is 'Identifier of table the units
 comment on column catalogue_authors.record_id is 'Identifier of record concerned in table concerned';
 comment on column catalogue_authors.author_type is 'Type of "author" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
 comment on column catalogue_authors.authors_ordered_ids_list is 'Array of "authors" identifiers - List of authors associated to the unit concerned - Identifiers are id fields from people table';
-comment on column catalogue_authors.defined_by_ordred_ids_list is 'Array of persons having defined this catalogue authors entry - id fields from people table';
+comment on column catalogue_authors.defined_by_ordered_ids_list is 'Array of persons having defined this catalogue authors entry - id fields from people table';
 create table catalogue_levels
        (
         id serial not null,

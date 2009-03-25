@@ -162,9 +162,9 @@ CREATE TRIGGER trg_clr_referenceRecord_identifications AFTER DELETE
 	ON identifications FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
-CREATE TRIGGER trg_clr_referenceRecord_expertises AFTER DELETE 
-	ON expertises FOR EACH ROW
-	EXECUTE PROCEDURE fct_clear_referencedRecord();
+-- CREATE TRIGGER trg_clr_referenceRecord_expertises AFTER DELETE 
+-- 	ON expertises FOR EACH ROW
+-- 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 CREATE TRIGGER trg_clr_referenceRecord_vernacularnames AFTER DELETE 
 	ON vernacular_names FOR EACH ROW
@@ -245,3 +245,7 @@ CREATE TRIGGER trg_clr_referenceRecord_specimenparts AFTER DELETE
 CREATE TRIGGER trg_clr_referenceRecord_specimensaccompanying AFTER DELETE 
 	ON specimens_accompanying FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();	
+
+CREATE TRIGGER trg_clear_referencedPeople AFTER DELETE 
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_clear_referencedPeople();
