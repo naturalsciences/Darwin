@@ -28,6 +28,12 @@ CREATE TRIGGER trg_cpy_hierarchy_from_parents_taxa BEFORE INSERT
 	ON taxa FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
+/*
+CREATE TRIGGER trg_cpy_hierarchy_from_parents_lithology BEFORE INSERT
+	ON lithology FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
+*/
+
 -- END HIERARCHYCAL UNITS CATALOGUE COPY FROM PARENT
 
 -- BEGIN HIERARCHICAL UNITS CATALOGUE IMPACT CHILDREN
@@ -43,6 +49,16 @@ CREATE TRIGGER trg_cpy_name_updt_impact_children_lithostratigraphy BEFORE UPDATE
 CREATE TRIGGER trg_cpy_name_updt_impact_children_mineralogy BEFORE UPDATE
 	ON mineralogy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
+
+CREATE TRIGGER trg_cpy_name_updt_impact_children_taxa BEFORE UPDATE
+	ON taxa FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
+
+/*
+CREATE TRIGGER trg_cpy_name_updt_impact_children_lithology BEFORE UPDATE
+	ON lithology FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
+*/
 
 -- END HIERARCHYCAL UNITS CATALOGUE IMPACT CHILDREN
 	
