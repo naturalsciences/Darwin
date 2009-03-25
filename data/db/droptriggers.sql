@@ -49,4 +49,4 @@ DROP TRIGGER trg_clr_referenceRecord_specimenindividuals ON specimen_individuals
 DROP TRIGGER trg_clr_referenceRecord_specimenparts ON specimen_parts;
 DROP TRIGGER trg_clr_referenceRecord_specimensaccompanying ON specimens_accompanying;
 
-CREATE TRIGGER trg_clear_referencedPeople ON people;
+DROP TRIGGER trg_clear_referencedPeople ON people;

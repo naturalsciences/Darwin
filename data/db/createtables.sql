@@ -239,7 +239,7 @@ create table vernacular_names
         name varchar not null,
         name_ts tsvector not null,
         name_indexed varchar not null,
-        language_country_full_text full_text_language,
+        country_language_full_text full_text_language,
         constraint unq_vernacular_names unique (vernacular_class_ref, name_indexed),
         constraint fk_vernacular_class_class_vernacular_names foreign key (vernacular_class_ref) references class_vernacular_names(id) on delete cascade
        );
@@ -248,7 +248,7 @@ comment on column vernacular_names.vernacular_class_ref is 'Identifier of a unit
 comment on column vernacular_names.name is 'Vernacular name';
 comment on column vernacular_names.name_ts is 'tsvector version of name field';
 comment on column vernacular_names.name_indexed is 'Indexed form of vernacular name';
-comment on column vernacular_names.language_country_full_text is 'Language used by full text search to_tsvector function';
+comment on column vernacular_names.country_language_full_text is 'Language used by full text search to_tsvector function';
 create table expeditions
        (
         id serial not null,
@@ -401,7 +401,7 @@ create table multimedia
         license varchar,
         uri varchar,
         descriptive_ts tsvector not null,
-        descriptive_full_text_language full_text_language,
+        descriptive_language_full_text full_text_language,
         creation_date date,
         publication_date date,
         constraint pk_multimedia primary key (id),
@@ -422,7 +422,7 @@ comment on column multimedia.uri is 'URI of object if digital';
 comment on column multimedia.creation_date is 'Object creation date';
 comment on column multimedia.publication_date is 'Object publication date';
 comment on column multimedia.descriptive_ts is 'tsvector form of title and subject fields together';
-comment on column multimedia.descriptive_full_text_language is 'Language used for descriptive_ts tsvector field composition';
+comment on column multimedia.descriptive_language_full_text is 'Language used for descriptive_ts tsvector field composition';
 create table template_people_users_comm_common
        (
         id serial not null,

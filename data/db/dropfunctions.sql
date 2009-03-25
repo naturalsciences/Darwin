@@ -11,11 +11,11 @@ DROP FUNCTION IF EXISTS fct_chk_PeopleIsMoral(people_ref people.id%TYPE) CASCADE
 DROP FUNCTION IF EXISTS fct_clr_specialstatus() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_fullToIndexDates() CASCADE;
 
-DROP FUNCTION IF EXISTS fct_compose_date CASCADE;
-DROP FUNCTION IF EXISTS fct_compose_timestamp CASCADE;
+DROP FUNCTION IF EXISTS fct_compose_date() CASCADE;
+DROP FUNCTION IF EXISTS fct_compose_timestamp() CASCADE;
 
-DROP FUNCTION IF EXISTS fct_clear_referencedRecord CASCADE;
-DROP FUNCTION IF EXISTS fct_clear_referencedPeople CASCADE;
+DROP FUNCTION IF EXISTS fct_clear_referencedRecord() CASCADE;
+DROP FUNCTION IF EXISTS fct_clear_referencedPeople() CASCADE;
 
 DROP FUNCTION IF EXISTS fct_remove_array_elem(IN in_array anyarray, IN elem anyelement,OUT out_array anyarray) CASCADE;
 DROP FUNCTION IF EXISTS fct_explode_array(in_array anyarray) CASCADE;
