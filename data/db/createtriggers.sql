@@ -60,8 +60,16 @@ CREATE TRIGGER trg_cpy_name_updt_impact_children_lithology BEFORE UPDATE
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
 */
 
--- END HIERARCHYCAL UNITS CATALOGUE IMPACT CHILDREN
+-- END HIERARCHICAL UNITS CATALOGUE IMPACT CHILDREN
 	
+--- BEGIN HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
+
+CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_chronostratigraphy BEFORE UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
+
+--- END HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
+
 -- BEGIN FULLTOINDEX
 CREATE TRIGGER trg_cpy_fullToIndex_catalogueproperties BEFORE INSERT OR UPDATE
 	ON catalogue_properties FOR EACH ROW

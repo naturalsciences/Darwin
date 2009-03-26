@@ -3341,3 +3341,188 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+/**
+* fct_cpy_update_levels_or_parent_cascade
+* Test that new level and new parent definitions of a unit fits rules of "possible_upper_levels"
+* If level updated, test that direct children can still be attached to unit updated
+* If all tests passed, update hierarchical structure of unit updated and of all children related
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_update_levels_or_parent_cascade() RETURNS TRIGGER
+AS $$
+DECLARE
+	level_sys_name catalogue_levels.level_sys_name%TYPE;
+	children_ready boolean default false;
+BEGIN
+	IF NEW.level_ref <> OLD.level_ref OR NEW.parent_ref <> OLD.parent_ref THEN
+		IF NOT fct_chk_possible_upper_level(TG_TABLE_NAME::varchar, NEW.parent_ref::integer, NEW.level_ref::integer, NEW.id::integer) THEN
+			RAISE EXCEPTION 'The modification of level and/or parent reference is not allowed, because unit modified won''t follow the rules of possible upper level attachement';
+		END IF;
+		IF NEW.level_ref <> OLD.level_ref THEN
+			SELECT cl.level_sys_name INTO level_sys_name FROM catalogue_levels AS cl WHERE cl.id = NEW.level_ref;
+			EXECUTE 'SELECT (SELECT COUNT(*) FROM (SELECT DISTINCT tab1.level_ref ' ||
+				'			       FROM ' || quote_ident(TG_TABLE_NAME::varchar) || ' AS tab1 ' ||
+				'			       WHERE tab1.level_ref IN (' || 
+				'							SELECT pul1.level_ref ' ||
+				'							FROM possible_upper_levels AS pul1 ' ||
+				'							WHERE pul1.level_upper_ref = ' || OLD.level_ref ||
+				'						       ) ' ||
+				'				 AND parent_ref = ' || OLD.id ||
+				'			      ) AS c1' ||
+				'	) ' ||
+				' = ' ||
+				'	(SELECT COUNT(*) FROM (SELECT DISTINCT pul2.level_ref ' ||
+				'			       FROM possible_upper_levels AS pul2 ' ||
+				'			       WHERE pul2.level_upper_ref = ' || NEW.level_ref || ' ' ||
+				'				 AND pul2.level_ref IN (SELECT DISTINCT tab2.level_ref ' || 
+				'							FROM ' || quote_ident(TG_TABLE_NAME::varchar) || ' AS tab2 ' ||
+				'							WHERE tab2.level_ref IN (' ||
+				'										 SELECT pul3.level_ref ' ||
+				'										 FROM possible_upper_levels AS pul3 ' ||
+				'										 WHERE pul3.level_upper_ref = ' || OLD.level_ref ||
+				'										) ' ||
+				'							AND parent_ref = ' || OLD.id ||
+				'						       ) ' ||
+				'			      ) as c2 ' ||
+				'	) '
+			INTO children_ready;
+			IF NOT children_ready THEN
+				RAISE EXCEPTION 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.';
+			END IF;
+			IF TG_TABLE_NAME = 'chronostratigraphy' THEN
+				SELECT
+					CASE 
+						WHEN level_sys_name = 'eon' THEN
+							NEW.eon_ref
+						ELSE
+							pc.eon_ref
+					END AS eon_ref,
+					CASE
+                                                WHEN level_sys_name = 'eon' THEN
+                                                        NEW.eon_indexed
+                                                ELSE
+                                                        pc.eon_indexed
+                                        END AS eon_indexed,
+					CASE 
+						WHEN level_sys_name = 'era' THEN
+							NEW.era_ref
+						ELSE
+							pc.era_ref
+					END AS era_ref,
+					CASE
+                                                WHEN level_sys_name = 'era' THEN
+                                                        NEW.era_indexed
+                                                ELSE
+                                                        pc.era_indexed
+                                        END AS era_indexed,
+					CASE 
+						WHEN level_sys_name = 'sub_era' THEN
+							NEW.sub_era_ref
+						ELSE
+							pc.sub_era_ref
+					END AS sub_era_ref,
+					CASE
+                                                WHEN level_sys_name = 'sub_era' THEN
+                                                        NEW.sub_era_indexed
+                                                ELSE
+                                                        pc.sub_era_indexed
+                                        END AS sub_era_indexed,
+					CASE 
+						WHEN level_sys_name = 'system' THEN
+							NEW.system_ref
+						ELSE
+							pc.system_ref
+					END AS system_ref,
+					CASE
+                                                WHEN level_sys_name = 'system' THEN
+                                                        NEW.system_indexed
+                                                ELSE
+                                                        pc.system_indexed
+                                        END AS system_indexed,
+					CASE 
+						WHEN level_sys_name = 'serie' THEN
+							NEW.serie_ref
+						ELSE
+							pc.serie_ref
+					END AS serie_ref,
+					CASE
+                                                WHEN level_sys_name = 'serie' THEN
+                                                        NEW.serie_indexed
+                                                ELSE
+                                                        pc.serie_indexed
+                                        END AS serie_indexed,
+					CASE 
+						WHEN level_sys_name = 'stage' THEN
+							NEW.stage_ref
+						ELSE
+							pc.stage_ref
+					END AS stage_ref,
+					CASE
+                                                WHEN level_sys_name = 'stage' THEN
+                                                        NEW.stage_indexed
+                                                ELSE
+                                                        pc.stage_indexed
+                                        END AS stage_indexed,
+					CASE 
+						WHEN level_sys_name = 'sub_stage' THEN
+							NEW.sub_stage_ref
+						ELSE
+							pc.sub_stage_ref
+					END AS sub_stage_ref,
+					CASE
+                                                WHEN level_sys_name = 'sub_stage' THEN
+                                                        NEW.sub_stage_indexed
+                                                ELSE
+                                                        pc.sub_stage_indexed
+                                        END AS sub_stage_indexed,
+					CASE 
+						WHEN level_sys_name = 'sub_level_1' THEN
+							NEW.sub_level_1_ref
+						ELSE
+							pc.sub_level_1_ref
+					END AS sub_level_1_ref,
+					CASE
+                                                WHEN level_sys_name = 'sub_level_1' THEN
+                                                        NEW.sub_level_1_indexed
+                                                ELSE
+                                                        pc.sub_level_1_indexed
+                                        END AS sub_level_1_indexed,
+					CASE 
+						WHEN level_sys_name = 'sub_level_2' THEN
+							NEW.sub_level_2_ref
+						ELSE
+							pc.sub_level_2_ref
+					END AS sub_level_2_ref,
+					CASE
+                                                WHEN level_sys_name = 'sub_level_2' THEN
+                                                        NEW.sub_level_2_indexed
+                                                ELSE
+                                                        pc.sub_level_2_indexed
+                                        END AS sub_level_2_indexed
+				INTO
+					NEW.eon_ref,
+					NEW.eon_indexed,
+					NEW.era_ref,
+					NEW.era_indexed,
+					NEW.sub_era_ref,
+					NEW.sub_era_indexed,
+					NEW.system_ref,
+					NEW.system_indexed,
+					NEW.serie_ref,
+					NEW.serie_indexed,
+					NEW.stage_ref,
+					NEW.stage_indexed,
+					NEW.sub_stage_ref,
+					NEW.sub_stage_indexed,
+					NEW.sub_level_1_ref,
+					NEW.sub_level_1_indexed,
+					NEW.sub_level_2_ref,
+					NEW.sub_level_2_indexed
+				FROM chronostratigraphy AS pc
+				WHERE id = NEW.parent_ref;
+			END IF;
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
