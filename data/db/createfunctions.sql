@@ -3201,6 +3201,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+/**
+fct_cpy_toFullText
+Copy the Full_text version of some fields
+Use language if av. or 'simple' if not
+*/
 CREATE OR REPLACE FUNCTION fct_cpy_toFullText() RETURNS TRIGGER
 AS
 $$
@@ -3293,3 +3298,46 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql;
 
+/**
+fct_cas_userType
+Copy the new dbuser type if it's changed
+users_login_infos db_user_type
+*/
+CREATE OR REPLACE FUNCTION fct_cas_userType() RETURNS TRIGGER
+AS $$
+DECLARE
+	still_mgr boolean;
+BEGIN
+
+	IF NEW.db_user_type = OLD.db_user_type THEN
+		RETURN NEW;
+	END IF;
+	
+	/** Copy to other fields **/
+	UPDATE record_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.user_ref;
+	UPDATE collections_fields_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.user_ref;
+	UPDATE users_coll_rights_asked SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.user_ref;
+	
+	
+	/** IF REVOKE ***/
+	IF NEW.db_user_type < OLD.db_user_type THEN
+		/*Each number of this suite represent a right on the collection: 1 for read, 2 for insert, 4 for update and 8 for delete*/
+		/*db user type 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,*/
+		IF OLD.db_user_type >= 4 THEN
+			/** If retrograde from collection_man, remove all collection administrated **/
+			SELECT count(*) != 0 INTO still_mgr FROM collections WHERE main_manager_ref = NEW.user_ref;
+			IF still_mgr THEN
+				RAISE EXCEPTION 'Still Manager in some Collections.';
+			END IF;
+			DELETE FROM collections_admin WHERE user_ref = NEW.user_ref;
+		END IF;
+		
+		IF OLD.db_user_type >= 2 AND NEW.db_user_type = 1 THEN
+			/** If retrograde to register , remove write/insert/update rights**/
+			UPDATE collections_rights SET rights=1 WHERE user_ref=NEW.user_ref;
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;

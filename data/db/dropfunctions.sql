@@ -19,3 +19,5 @@ DROP FUNCTION IF EXISTS fct_clear_referencedPeople() CASCADE;
 
 DROP FUNCTION IF EXISTS fct_remove_array_elem(IN in_array anyarray, IN elem anyelement,OUT out_array anyarray) CASCADE;
 DROP FUNCTION IF EXISTS fct_explode_array(in_array anyarray) CASCADE;
+
+DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
