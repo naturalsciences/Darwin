@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(882);
+SELECT plan(886);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -30,12 +30,13 @@ SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE re
 INSERT INTO chronostratigraphy (id, name, level_ref ) VALUES (1,'ÉLo Wÿorléds', 55);
 SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM chronostratigraphy WHERE id=1),'FulltoIndex on chronostratigraphy');
 
-INSERT INTO expeditions (id, name,name_ts ) VALUES (1,'ÉLo Wÿorléds',to_tsvector('ÉLo Wÿorléds'));
+INSERT INTO expeditions (id, name ) VALUES (1,'ÉLo Wÿorléds');
 SELECT ok( 'elowyorleds' = (SELECT name_indexed FROM expeditions WHERE id=1),'FulltoIndex on expeditions');
+SELECT ok( to_tsvector('simple','ÉLo Wÿorléds') = (SELECT name_ts FROM expeditions WHERE id=1),'To TextSearch expeditions');
 
-
-INSERT INTO habitats (id, code, description, description_ts) VALUES (1,'Lé Hâbitôt','',to_tsvector(''));
+INSERT INTO habitats (id, code, description) VALUES (1,'Lé Hâbitôt','Lé Hâbitôt');
 SELECT ok( 'lehabitot' = (SELECT code_indexed FROM habitats WHERE id=1),'FulltoIndex on habitats');
+SELECT ok ( to_tsvector('simple','Lé Hâbitôt') = (SELECT description_ts FROM habitats WHERE id=1),'full text on habitats');
 
 INSERT INTO identifications (table_name, record_id, notion_concerned, identifiers_ordered_ids_list, value_defined) VALUES ('taxa', 0, 'Expertise' ,'{}', 'Jé #spéè!');
 SELECT ok( 'jespee' = (SELECT value_defined_indexed FROM identifications WHERE record_id=0),'FulltoIndex on identifications');
@@ -52,8 +53,9 @@ SELECT ok( 'mealonyeob' = (SELECT name_indexed FROM lithostratigraphy WHERE id=1
 INSERT INTO mineralogy (id, name, code, level_ref) VALUES (1, 'Lé bou/ caiéoui', 0, 70);
 SELECT ok( 'leboucaieoui' = (SELECT name_indexed FROM mineralogy WHERE id=1),'FulltoIndex on mineralogy');
 
-INSERT INTO multimedia (id, title, descriptive_ts) VALUES (1, 'À L''énorme Tické!', to_tsvector('À L''énorme Tické!'));
+INSERT INTO multimedia (id, title) VALUES (1, 'À L''énorme Tické!');
 SELECT ok( 'alenormeticke' = (SELECT title_indexed FROM multimedia WHERE id=1),'FulltoIndex on multimedia');
+SELECT ok( to_tsvector('simple','À L''énorme Tické!') = (SELECT descriptive_ts FROM multimedia WHERE id=1),'fulltext on multimedia');
 
 INSERT INTO multimedia_keywords (object_ref,keyword) VALUES (1,'La ''mèr'' Nwàre') ;
 SELECT ok( 'lamernware' = (SELECT keyword_indexed FROM multimedia_keywords WHERE object_ref=1),'FulltoIndex on multimedia_keywords');
@@ -97,8 +99,9 @@ insert into users (id, is_physical, formated_name, formated_name_indexed, format
 SELECT ok( 'marechalbill' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
 
 INSERT INTO class_vernacular_names (table_name, record_id, id, community) VALUES ('taxa',0,1,'testlang');
-INSERT INTO vernacular_names (vernacular_class_ref, name, name_ts) VALUES (1,'Éléphant!',to_tsvector('Éléphant'));
+INSERT INTO vernacular_names (vernacular_class_ref, name) VALUES (1,'Éléphant!');
 SELECT ok( 'elephant' = (SELECT name_indexed FROM vernacular_names WHERE vernacular_class_ref=1),'FulltoIndex on vernacular_names');
+SELECT ok ( to_tsvector('simple','Éléphant') = (SELECT name_ts FROM vernacular_names WHERE vernacular_class_ref=1),'Full TEXT on vernacular_names');
 
 SELECT diag('Copy Hierarchy from parent Trigger: Chronostratigraphy');
 

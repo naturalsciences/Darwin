@@ -3201,6 +3201,73 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION fct_cpy_toFullText() RETURNS TRIGGER
+AS
+$$
+BEGIN
+	IF TG_OP = 'INSERT' THEN
+		IF TG_TABLE_NAME = 'comments' THEN
+			NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
+		ELSEIF TG_TABLE_NAME = 'identifications' THEN
+			NEW.value_defined_ts := to_tsvector(NEW.value_defined);
+		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
+			NEW.address_parts_ts := to_tsvector(NEW.address_parts);
+		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
+			NEW.address_parts_ts := to_tsvector(NEW.address_parts);
+		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
+			NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
+		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
+			NEW.description_ts := to_tsvector(NEW.language_full_text::regconfig,NEW.description);
+		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
+			NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
+		ELSEIF TG_TABLE_NAME = 'habitats' THEN
+			NEW.description_ts := to_tsvector(NEW.description_language_full_text::regconfig, NEW.description);
+		ELSEIF TG_TABLE_NAME = 'vernacular_names' THEN
+			NEW.name_ts := to_tsvector(NEW.country_language_full_text::regconfig, NEW.name);
+		END IF;
+	ELSE
+		IF TG_TABLE_NAME = 'comments' THEN
+			IF OLD.comment != NEW.comment OR OLD.comment_language_full_text != NEW.comment_language_full_text THEN
+				NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'identifications' THEN
+			IF OLD.value_defined != NEW.value_defined THEN 
+				NEW.value_defined_ts := to_tsvector(NEW.value_defined);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
+			IF OLD.address_parts != NEW.address_parts THEN
+				NEW.address_parts_ts := to_tsvector(NEW.address_parts);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
+			IF OLD.address_parts != NEW.address_parts THEN
+				NEW.address_parts_ts := to_tsvector(NEW.address_parts);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
+			IF OLD.title != NEW.title OR  OLD.subject != NEW.subject OR OLD.descriptive_language_full_text != NEW.descriptive_language_full_text THEN
+				NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
+			IF OLD.description != NEW.description OR OLD.language_full_text != NEW.language_full_text THEN
+				NEW.description_ts := to_tsvector(NEW.language_full_text::regconfig, NEW.description);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
+			IF OLD.name != NEW.name OR OLD.name_language_full_text != NEW.name_language_full_text THEN
+				NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'habitats' THEN
+			IF OLD.description != NEW.descriptiont OR OLD.description_language_full_text != NEW.description_language_full_text THEN
+				NEW.description_ts := to_tsvector(NEW.description_language_full_text::regconfig, NEW.description);
+			END IF;
+		ELSEIF TG_TABLE_NAME = 'vernacular_names' THEN
+			IF OLD.name != NEW.name OR OLD.country_language_full_text != NEW.country_language_full_text THEN
+				NEW.name_ts := to_tsvector(NEW.country_language_full_text::regconfig, NEW.name);
+			END IF;
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 /**
 * fct_chk_possible_upper_levels
 * When inserting or updating a hierarchical unit, checks, considering parent level, that unit level is ok (depending on definitions given in possible_upper_levels_table)
@@ -3225,3 +3292,4 @@ EXCEPTION
 		RETURN response;
 END;
 $$ LANGUAGE plpgsql;
+

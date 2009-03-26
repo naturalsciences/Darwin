@@ -50,3 +50,14 @@ DROP TRIGGER trg_clr_referenceRecord_specimenparts ON specimen_parts;
 DROP TRIGGER trg_clr_referenceRecord_specimensaccompanying ON specimens_accompanying;
 
 DROP TRIGGER trg_clear_referencedPeople ON people;
+
+DROP TRIGGER trg_cpy_toFullText_comments ON comments;
+DROP TRIGGER trg_cpy_toFullText_identifications ON identifications;
+DROP TRIGGER trg_cpy_toFullText_peopleaddresses ON people_addresses;
+DROP TRIGGER trg_cpy_toFullText_usersaddresses ON users_addresses;
+DROP TRIGGER trg_cpy_toFullText_multimedia ON multimedia;
+DROP TRIGGER trg_cpy_toFullText_collectionmaintenance ON collection_maintenance;
+DROP TRIGGER trg_cpy_toFullText_expeditions ON expeditions;
+DROP TRIGGER trg_cpy_toFullText_habitats ON habitats;
+DROP TRIGGER trg_cpy_toFullText_vernacularnames ON vernacular_names;
+	

@@ -249,3 +249,40 @@ CREATE TRIGGER trg_clr_referenceRecord_specimensaccompanying AFTER DELETE
 CREATE TRIGGER trg_clear_referencedPeople AFTER DELETE 
 	ON people FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedPeople();
+	
+/**** BEGIN _TS *****/
+CREATE TRIGGER trg_cpy_toFullText_comments BEFORE INSERT OR UPDATE
+	ON comments FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_identifications BEFORE INSERT OR UPDATE
+	ON identifications FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_peopleaddresses BEFORE INSERT OR UPDATE
+	ON people_addresses FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_usersaddresses BEFORE INSERT OR UPDATE
+	ON users_addresses FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_multimedia BEFORE INSERT OR UPDATE
+	ON multimedia FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_collectionmaintenance BEFORE INSERT OR UPDATE
+	ON collection_maintenance FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_expeditions BEFORE INSERT OR UPDATE
+	ON expeditions FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+	
+CREATE TRIGGER trg_cpy_toFullText_habitats BEFORE INSERT OR UPDATE
+	ON habitats FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+
+CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
+	ON vernacular_names FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
