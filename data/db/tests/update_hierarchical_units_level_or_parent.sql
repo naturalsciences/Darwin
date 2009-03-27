@@ -14,10 +14,8 @@ SELECT lives_ok('UPDATE chronostratigraphy SET level_ref = 57, parent_ref = 3 WH
 SELECT ok(3 = (SELECT era_ref FROM chronostratigraphy WHERE id = 2), 'New era_ref of unit 2 : 3');
 SELECT ok('kelowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id = 2), 'New era_ref of unit 2 : kelowy');
 
-/*
 SELECT ok(2 = (SELECT sub_era_ref FROM chronostratigraphy WHERE id = 2), 'sub_era_ref of unit 2 : 2');
 SELECT ok('elowy' = (SELECT sub_era_indexed FROM chronostratigraphy WHERE id = 2), 'sub_era_ref of unit 2 : elowy');
-*/
 
 SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 58 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
 

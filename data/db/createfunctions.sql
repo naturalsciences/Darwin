@@ -3343,6 +3343,41 @@ $$
 LANGUAGE plpgsql;
 
 /**
+* fct_cpy_update_children_when_parent_updated
+* Update all related children, when parent_ref or level_ref of parent have been updated
+*/
+
+CREATE OR REPLACE FUNCTION fct_cpy_update_children_when_parent_updated (table_name varchar, parent_id integer, parent_old_level_sys_name catalogue_levels.level_sys_name%TYPE, parent_new_level_sys_name catalogue_levels.level_sys_name%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed varchar[]) RETURNS BOOLEAN
+AS $$
+DECLARE
+	response boolean default true;
+BEGIN
+	IF table_name = 'chronostratigraphy' THEN
+		/*
+		EXECUTE 'UPDATE chronostratigraphy ' ||
+			'SET eon_ref = ' || parent_hierarchy_ref[1] || ', ' ||
+			'    eon_indexed = ' || parent_hierarchy_indexed[1] || ' ' ||
+			'WHERE id <> ' || parent_id || ' ' ||
+			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
+		*/
+	ELSIF table_name = 'lithostratigraphy' THEN
+		
+	ELSIF table_name = 'lithology' THEN
+		
+	ELSIF table_name = 'mineralogy' THEN
+		
+	ELSIF table_name = 'taxa' THEN
+		
+	END IF;
+	return response;
+EXCEPTION
+	WHEN OTHERS THEN
+		response := false;
+		return response;
+END;
+$$ LANGUAGE plpgsql;
+
+/**
 * fct_cpy_update_levels_or_parent_cascade
 * Test that new level and new parent definitions of a unit fits rules of "possible_upper_levels"
 * If level updated, test that direct children can still be attached to unit updated
@@ -3351,15 +3386,19 @@ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_cpy_update_levels_or_parent_cascade() RETURNS TRIGGER
 AS $$
 DECLARE
-	level_sys_name catalogue_levels.level_sys_name%TYPE;
+	level_sys_name_new catalogue_levels.level_sys_name%TYPE;
+	level_sys_name_old catalogue_levels.level_sys_name%TYPE;
 	children_ready boolean default false;
+	hierarchy_ref integer[];
+	hierarchy_indexed varchar[];
 BEGIN
 	IF NEW.level_ref <> OLD.level_ref OR NEW.parent_ref <> OLD.parent_ref THEN
 		IF NOT fct_chk_possible_upper_level(TG_TABLE_NAME::varchar, NEW.parent_ref::integer, NEW.level_ref::integer, NEW.id::integer) THEN
 			RAISE EXCEPTION 'The modification of level and/or parent reference is not allowed, because unit modified won''t follow the rules of possible upper level attachement';
 		END IF;
+		SELECT cl.level_sys_name INTO level_sys_name_new FROM catalogue_levels AS cl WHERE cl.id = NEW.level_ref;
+		SELECT cl.level_sys_name INTO level_sys_name_old FROM catalogue_levels AS cl WHERE cl.id = OLD.level_ref;
 		IF NEW.level_ref <> OLD.level_ref THEN
-			SELECT cl.level_sys_name INTO level_sys_name FROM catalogue_levels AS cl WHERE cl.id = NEW.level_ref;
 			EXECUTE 'SELECT (SELECT COUNT(*) FROM (SELECT DISTINCT tab1.level_ref ' ||
 				'			       FROM ' || quote_ident(TG_TABLE_NAME::varchar) || ' AS tab1 ' ||
 				'			       WHERE tab1.level_ref IN (' || 
@@ -3392,110 +3431,110 @@ BEGIN
 			IF TG_TABLE_NAME = 'chronostratigraphy' THEN
 				SELECT
 					CASE 
-						WHEN level_sys_name = 'eon' THEN
-							NEW.eon_ref
+						WHEN level_sys_name_new = 'eon' THEN
+							NEW.id
 						ELSE
 							pc.eon_ref
 					END AS eon_ref,
 					CASE
-                                                WHEN level_sys_name = 'eon' THEN
-                                                        NEW.eon_indexed
+                                                WHEN level_sys_name_new = 'eon' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.eon_indexed
                                         END AS eon_indexed,
 					CASE 
-						WHEN level_sys_name = 'era' THEN
-							NEW.era_ref
+						WHEN level_sys_name_new = 'era' THEN
+							NEW.id
 						ELSE
 							pc.era_ref
 					END AS era_ref,
 					CASE
-                                                WHEN level_sys_name = 'era' THEN
-                                                        NEW.era_indexed
+                                                WHEN level_sys_name_new = 'era' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.era_indexed
                                         END AS era_indexed,
 					CASE 
-						WHEN level_sys_name = 'sub_era' THEN
-							NEW.sub_era_ref
+						WHEN level_sys_name_new = 'sub_era' THEN
+							NEW.id
 						ELSE
 							pc.sub_era_ref
 					END AS sub_era_ref,
 					CASE
-                                                WHEN level_sys_name = 'sub_era' THEN
-                                                        NEW.sub_era_indexed
+                                                WHEN level_sys_name_new = 'sub_era' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.sub_era_indexed
                                         END AS sub_era_indexed,
 					CASE 
-						WHEN level_sys_name = 'system' THEN
-							NEW.system_ref
+						WHEN level_sys_name_new = 'system' THEN
+							NEW.id
 						ELSE
 							pc.system_ref
 					END AS system_ref,
 					CASE
-                                                WHEN level_sys_name = 'system' THEN
-                                                        NEW.system_indexed
+                                                WHEN level_sys_name_new = 'system' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.system_indexed
                                         END AS system_indexed,
 					CASE 
-						WHEN level_sys_name = 'serie' THEN
-							NEW.serie_ref
+						WHEN level_sys_name_new = 'serie' THEN
+							NEW.id
 						ELSE
 							pc.serie_ref
 					END AS serie_ref,
 					CASE
-                                                WHEN level_sys_name = 'serie' THEN
-                                                        NEW.serie_indexed
+                                                WHEN level_sys_name_new = 'serie' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.serie_indexed
                                         END AS serie_indexed,
 					CASE 
-						WHEN level_sys_name = 'stage' THEN
-							NEW.stage_ref
+						WHEN level_sys_name_new = 'stage' THEN
+							NEW.id
 						ELSE
 							pc.stage_ref
 					END AS stage_ref,
 					CASE
-                                                WHEN level_sys_name = 'stage' THEN
-                                                        NEW.stage_indexed
+                                                WHEN level_sys_name_new = 'stage' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.stage_indexed
                                         END AS stage_indexed,
 					CASE 
-						WHEN level_sys_name = 'sub_stage' THEN
-							NEW.sub_stage_ref
+						WHEN level_sys_name_new = 'sub_stage' THEN
+							NEW.id
 						ELSE
 							pc.sub_stage_ref
 					END AS sub_stage_ref,
 					CASE
-                                                WHEN level_sys_name = 'sub_stage' THEN
-                                                        NEW.sub_stage_indexed
+                                                WHEN level_sys_name_new = 'sub_stage' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.sub_stage_indexed
                                         END AS sub_stage_indexed,
 					CASE 
-						WHEN level_sys_name = 'sub_level_1' THEN
-							NEW.sub_level_1_ref
+						WHEN level_sys_name_new = 'sub_level_1' THEN
+							NEW.id
 						ELSE
 							pc.sub_level_1_ref
 					END AS sub_level_1_ref,
 					CASE
-                                                WHEN level_sys_name = 'sub_level_1' THEN
-                                                        NEW.sub_level_1_indexed
+                                                WHEN level_sys_name_new = 'sub_level_1' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.sub_level_1_indexed
                                         END AS sub_level_1_indexed,
 					CASE 
-						WHEN level_sys_name = 'sub_level_2' THEN
-							NEW.sub_level_2_ref
+						WHEN level_sys_name_new = 'sub_level_2' THEN
+							NEW.id
 						ELSE
 							pc.sub_level_2_ref
 					END AS sub_level_2_ref,
 					CASE
-                                                WHEN level_sys_name = 'sub_level_2' THEN
-                                                        NEW.sub_level_2_indexed
+                                                WHEN level_sys_name_new = 'sub_level_2' THEN
+                                                        NEW.name_indexed
                                                 ELSE
                                                         pc.sub_level_2_indexed
                                         END AS sub_level_2_indexed
@@ -3520,6 +3559,11 @@ BEGIN
 					NEW.sub_level_2_indexed
 				FROM chronostratigraphy AS pc
 				WHERE id = NEW.parent_ref;
+			END IF;
+			hierarchy_ref := ARRAY[NEW.eon_ref::integer, NEW.era_ref::integer, NEW.sub_era_ref::integer, NEW.system_ref::integer, NEW.serie_ref::integer, NEW.stage_ref::integer, NEW.sub_stage_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
+			hierarchy_indexed := ARRAY[NEW.eon_indexed::varchar, NEW.era_indexed::varchar, NEW.sub_era_indexed::varchar, NEW.system_indexed::varchar, NEW.serie_indexed::varchar, NEW.stage_indexed::varchar, NEW.sub_stage_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
+			IF NOT fct_cpy_update_children_when_parent_updated (TG_TABLE_NAME::varchar, NEW.id::integer, level_sys_name_old, level_sys_name_new, hierarchy_ref, hierarchy_indexed) THEN
+				RAISE EXCEPTION 'Impossible to update children ! Update of parent_ref and/or level_ref of current unit aborted !';
 			END IF;
 		END IF;
 	END IF;
