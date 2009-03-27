@@ -12,9 +12,9 @@ INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'KÉ
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 2, 57, 3)), 'Move unit 3 (of level 58 (system)) to level 57 (sub era) allowed -> parent is an era !');
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 4, 57, 3)), 'Move unit 3 (of level 58 (system)) to level 57 (sub era) and parent 4 (era) allowed !');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 2, 59, 3)), 'Move unit 3 (of level 58 (system)) to level 59 (serie) not allowed -> parent is an era !');
-SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 59 WHERE id = 3', 23514);
+SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 59 WHERE id = 3', 'The modification of level and/or parent reference is not allowed, because unit modified won''t follow the rules of possible upper level attachement');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 1, 58, 3)), 'Move unit 3 to parent unit 1 (eon) not allowed -> A sub-era cannot be linked to an eon !');
-SELECT throws_ok('UPDATE chronostratigraphy SET parent_ref = 1 WHERE id = 3', 23514);
+SELECT throws_ok('UPDATE chronostratigraphy SET parent_ref = 1 WHERE id = 3', 'The modification of level and/or parent reference is not allowed, because unit modified won''t follow the rules of possible upper level attachement');
 
 SELECT diag('Lithostratigraphy level/parent update tests');
 
