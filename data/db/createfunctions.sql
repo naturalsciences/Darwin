@@ -2166,7 +2166,6 @@ DECLARE
 	level_prefix catalogue_levels.level_sys_name%TYPE;
 	response boolean default false;
 BEGIN
-
 	SELECT level_sys_name INTO level_prefix FROM catalogue_levels WHERE id = new_level_ref;
 	IF level_prefix IS NOT NULL THEN
 		EXECUTE 'UPDATE ' || 
@@ -3353,13 +3352,44 @@ DECLARE
 	response boolean default true;
 BEGIN
 	IF table_name = 'chronostratigraphy' THEN
-		/*
 		EXECUTE 'UPDATE chronostratigraphy ' ||
-			'SET eon_ref = ' || parent_hierarchy_ref[1] || ', ' ||
-			'    eon_indexed = ' || parent_hierarchy_indexed[1] || ' ' ||
+			'SET eon_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
+			'    eon_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    era_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''eon'' THEN coalesce(era_ref,0) ' ||
+			'                   ELSE ' || coalesce(parent_hierarchy_ref[2], 0) || ' END, ' ||
+			'    era_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''eon'' THEN coalesce(era_indexed,'''') ' ||
+			'                       ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) || ' END, ' ||
+			'    sub_era_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'') THEN coalesce(sub_era_ref,0) ' ||
+			'                       ELSE ' || coalesce(parent_hierarchy_ref[3], 0) || ' END, ' ||
+			'    sub_era_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'') THEN coalesce(sub_era_indexed,'''') ' ||
+			'                           ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) || ' END, ' ||
+			'    system_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'') THEN coalesce(system_ref,0) ' ||
+			'                      ELSE ' || coalesce(parent_hierarchy_ref[4], 0) || ' END, ' ||
+			'    system_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'') THEN coalesce(system_indexed,'''') ' ||
+			'                      ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) || ' END, ' ||
+			'    serie_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'') THEN coalesce(serie_ref,0) ' ||
+			'                     ELSE ' || coalesce(parent_hierarchy_ref[5], 0) || ' END, ' ||
+			'    serie_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'') THEN coalesce(serie_indexed,'''') ' ||
+			'                         ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) || ' END, ' ||
+			'    stage_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'') THEN coalesce(stage_ref,0) ' ||
+			'                     ELSE ' || coalesce(parent_hierarchy_ref[6], 0) || ' END, ' ||
+			'    stage_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'') THEN coalesce(stage_indexed,'''') ' ||
+			'                         ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[6], '')) || ' END, ' ||
+			'    sub_stage_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'', ''stage'') THEN coalesce(sub_stage_ref,0) ' ||
+			'                         ELSE '  || coalesce(parent_hierarchy_ref[7], 0) || ' END, ' ||
+			'    sub_stage_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'', ''stage'') THEN coalesce(sub_stage_indexed,'''') ' ||
+			'                             ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[7], '')) || ' END, ' ||
+			'    sub_level_1_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'', ''stage'', ''sub_stage'') THEN coalesce(sub_level_1_ref,0) ' ||
+			'                           ELSE ' || coalesce(parent_hierarchy_ref[8], 0) || ' END, ' ||
+			'    sub_level_1_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'', ''stage'', ''sub_stage'') THEN coalesce(sub_level_1_indexed,'''') ' ||
+			'                               ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[8], '')) || ' END, ' ||
+			'    sub_level_2_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'', ''stage'', ''sub_stage'', ''sub_level_1'') THEN coalesce(sub_level_2_ref,0) ' ||
+			'                           ELSE ' || coalesce(parent_hierarchy_ref[9], 0) || ' END, ' ||
+			'    sub_level_2_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''eon'', ''era'', ''sub_era'', ''system'', ''serie'', ''stage'', ''sub_stage'', ''sub_level_1'') THEN coalesce(sub_level_2_indexed,'''') ' ||
+			'                               ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[9], '')) || ' END ' ||
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
-		*/
+		response := true;
 	ELSIF table_name = 'lithostratigraphy' THEN
 		
 	ELSIF table_name = 'lithology' THEN
@@ -3370,10 +3400,6 @@ BEGIN
 		
 	END IF;
 	return response;
-EXCEPTION
-	WHEN OTHERS THEN
-		response := false;
-		return response;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -3570,3 +3596,5 @@ BEGIN
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+/*
+*/

@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(6);
+SELECT plan(14);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -16,6 +16,15 @@ SELECT ok('kelowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id = 2), 
 
 SELECT ok(2 = (SELECT sub_era_ref FROM chronostratigraphy WHERE id = 2), 'sub_era_ref of unit 2 : 2');
 SELECT ok('elowy' = (SELECT sub_era_indexed FROM chronostratigraphy WHERE id = 2), 'sub_era_ref of unit 2 : elowy');
+
+SELECT ok(3 = (SELECT era_ref FROM chronostratigraphy WHERE id = 4), 'New era_ref of unit 4 : 3');
+SELECT ok('kelowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id = 4), 'New era_ref of unit 4 : kelowy');
+SELECT ok(2 = (SELECT sub_era_ref FROM chronostratigraphy WHERE id = 4), 'sub_era_ref of unit 4 : 2');
+SELECT ok('elowy' = (SELECT sub_era_indexed FROM chronostratigraphy WHERE id = 4), 'sub_era_ref of unit 4 : elowy');
+SELECT ok(4 = (SELECT system_ref FROM chronostratigraphy WHERE id = 4), 'sub_era_ref of unit 4 : 4');
+SELECT ok('belowy' = (SELECT system_indexed FROM chronostratigraphy WHERE id = 4), 'sub_era_ref of unit 4 : belowy');
+SELECT ok(0 = (SELECT serie_ref FROM chronostratigraphy WHERE id = 4), 'sub_era_ref of unit 4 : 0');
+SELECT ok('' = (SELECT serie_indexed FROM chronostratigraphy WHERE id = 4), 'sub_era_ref of unit 4 : ''''');
 
 SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 58 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
 
