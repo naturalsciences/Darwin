@@ -3389,12 +3389,71 @@ BEGIN
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
 	ELSIF table_name = 'lithostratigraphy' THEN
-		
-	ELSIF table_name = 'lithology' THEN
-		
+		EXECUTE 'UPDATE lithostratigraphy ' ||
+			'SET group_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
+			'    group_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    formation_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''group'' THEN coalesce(formation_ref,0) ' ||
+			'                   ELSE ' || coalesce(parent_hierarchy_ref[2], 0) || ' END, ' ||
+			'    formation_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''group'' THEN coalesce(formation_indexed,'''') ' ||
+			'                       ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) || ' END, ' ||
+			'    member_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'') THEN coalesce(member_ref,0) ' ||
+			'                       ELSE ' || coalesce(parent_hierarchy_ref[3], 0) || ' END, ' ||
+			'    member_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'') THEN coalesce(member_indexed,'''') ' ||
+			'                           ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) || ' END, ' ||
+			'    layer_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'', ''member'') THEN coalesce(layer_ref,0) ' ||
+			'                      ELSE ' || coalesce(parent_hierarchy_ref[4], 0) || ' END, ' ||
+			'    layer_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'', ''member'') THEN coalesce(layer_indexed,'''') ' ||
+			'                      ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) || ' END, ' ||
+			'    sub_level_1_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'', ''member'', ''layer'') THEN coalesce(sub_level_1_ref,0) ' ||
+			'                           ELSE ' || coalesce(parent_hierarchy_ref[5], 0) || ' END, ' ||
+			'    sub_level_1_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'', ''member'', ''layer'') THEN coalesce(sub_level_1_indexed,'''') ' ||
+			'                               ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) || ' END, ' ||
+			'    sub_level_2_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'', ''member'', ''layer'', ''sub_level_1'') THEN coalesce(sub_level_2_ref,0) ' ||
+			'                           ELSE ' || coalesce(parent_hierarchy_ref[6], 0) || ' END, ' ||
+			'    sub_level_2_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''group'', ''formation'', ''member'', ''layer'', ''sub_level_1'') THEN coalesce(sub_level_2_indexed,'''') ' ||
+			'                               ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[6], '')) || ' END ' ||
+			'WHERE id <> ' || parent_id || ' ' ||
+			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
+		response := true;
 	ELSIF table_name = 'mineralogy' THEN
-		
+		EXECUTE 'UPDATE mineralogy ' ||
+			'SET unit_class_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
+			'    unit_class_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    unit_division_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''unit_class'' THEN coalesce(unit_division_ref,0) ' ||
+			'                   ELSE ' || coalesce(parent_hierarchy_ref[2], 0) || ' END, ' ||
+			'    unit_division_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''unit_class'' THEN coalesce(unit_division_indexed,'''') ' ||
+			'                       ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) || ' END, ' ||
+			'    unit_family_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''unit_class'', ''unit_division'') THEN coalesce(unit_family_ref,0) ' ||
+			'                       ELSE ' || coalesce(parent_hierarchy_ref[3], 0) || ' END, ' ||
+			'    unit_family_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''unit_class'', ''unit_division'') THEN coalesce(unit_family_indexed,'''') ' ||
+			'                           ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) || ' END, ' ||
+			'    unit_group_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''unit_class'', ''unit_division'', ''unit_family'') THEN coalesce(unit_group_ref,0) ' ||
+			'                      ELSE ' || coalesce(parent_hierarchy_ref[4], 0) || ' END, ' ||
+			'    unit_group_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''unit_class'', ''unit_division'', ''unit_family'') THEN coalesce(unit_group_indexed,'''') ' ||
+			'                      ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) || ' END, ' ||
+			'    unit_variety_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''unit_class'', ''unit_division'', ''unit_family'', ''unit_group'') THEN coalesce(unit_variety_ref,0) ' ||
+			'                           ELSE ' || coalesce(parent_hierarchy_ref[5], 0) || ' END, ' ||
+			'    unit_variety_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''unit_class'', ''unit_division'', ''unit_family'', ''unit_group'') THEN coalesce(unit_variety_indexed,'''') ' ||
+			'                               ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) || ' END ' ||
+			'WHERE id <> ' || parent_id || ' ' ||
+			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
+		response := true;
 	ELSIF table_name = 'taxa' THEN
+		EXECUTE 'UPDATE taxa ' ||
+			'SET domain_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
+			'    domain_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    kingdom_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''domain'' THEN coalesce(kingdom_ref, 0) ' ||
+			'			ELSE ' || coalesce(parent_hierarchy_ref[2], 0) || ' END, ' ||
+			'    kingdom_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' = ''domain'' THEN coalesce(kingdom_indexed, '''') ' ||
+			'			    ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) || ' END, ' ||
+			'    super_phylum_ref = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''domain'', ''kingdom'') THEN coalesce(super_phylum_ref, 0) ' ||
+			'			     ELSE ' || coalesce(parent_hierarchy_ref[3], 0) || ' END, ' ||
+			'    super_phylum_indexed = CASE WHEN ' || quote_literal(parent_new_level_sys_name) || ' IN (''domain'', ''kingdom'') THEN coalesce(super_phylum_indexed, '''') ' ||
+			'				 ELSE ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) || ' END ' ||
+			'WHERE id <> ' || parent_id || ' ' ||
+			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
+		response := true;
+	ELSIF table_name = 'lithology' THEN
 		
 	END IF;
 	return response;
@@ -3582,10 +3641,941 @@ BEGIN
 					NEW.sub_level_2_ref,
 					NEW.sub_level_2_indexed
 				FROM chronostratigraphy AS pc
-				WHERE id = NEW.parent_ref;
+				WHERE pc.id = NEW.parent_ref;
+				hierarchy_ref := ARRAY[NEW.eon_ref::integer, NEW.era_ref::integer, NEW.sub_era_ref::integer, NEW.system_ref::integer, NEW.serie_ref::integer, NEW.stage_ref::integer, NEW.sub_stage_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
+				hierarchy_indexed := ARRAY[NEW.eon_indexed::varchar, NEW.era_indexed::varchar, NEW.sub_era_indexed::varchar, NEW.system_indexed::varchar, NEW.serie_indexed::varchar, NEW.stage_indexed::varchar, NEW.sub_stage_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
+			ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
+				SELECT
+					CASE
+						WHEN level_sys_name_new = 'group' THEN
+							NEW.id
+						ELSE
+							pl.group_ref
+					END as group_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'group' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.group_indexed
+                                        END as group_indexed,
+					CASE
+						WHEN level_sys_name_new = 'formation' THEN
+							NEW.id
+						ELSE
+							pl.formation_ref
+					END as formation_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'formation' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.formation_indexed
+                                        END as formation_indexed,
+					CASE
+						WHEN level_sys_name_new = 'member' THEN
+							NEW.id
+						ELSE
+							pl.member_ref
+					END as member_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'member' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.member_indexed
+                                        END as member_indexed,
+					CASE
+						WHEN level_sys_name_new = 'layer' THEN
+							NEW.id
+						ELSE
+							pl.layer_ref
+					END as layer_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'layer' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.layer_indexed
+                                        END as layer_indexed,
+					CASE
+						WHEN level_sys_name_new = 'sub_level_1' THEN
+							NEW.id
+						ELSE
+							pl.sub_level_1_ref
+					END as sub_level_1_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_level_1' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.sub_level_1_indexed
+                                        END as sub_level_1_indexed,
+					CASE
+						WHEN level_sys_name_new = 'sub_level_2' THEN
+							NEW.id
+						ELSE
+							pl.sub_level_2_ref
+					END as sub_level_2_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_level_2' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.sub_level_2_indexed
+                                        END as sub_level_2_indexed
+				INTO
+					NEW.group_ref,
+					NEW.group_indexed,
+					NEW.formation_ref,
+					NEW.formation_indexed,
+					NEW.member_ref,
+					NEW.member_indexed,
+					NEW.layer_ref,
+					NEW.layer_indexed,
+					NEW.sub_level_1_ref,
+					NEW.sub_level_1_indexed,
+					NEW.sub_level_2_ref,
+					NEW.sub_level_2_indexed
+				FROM lithostratigraphy AS pl
+				WHERE pl.id = NEW.parent_ref;
+				hierarchy_ref := ARRAY[NEW.group_ref::integer, NEW.formation_ref::integer, NEW.member_ref::integer, NEW.layer_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
+				hierarchy_indexed := ARRAY[NEW.group_indexed::varchar, NEW.formation_indexed::varchar, NEW.member_indexed::varchar, NEW.layer_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
+			ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+				SELECT
+					CASE
+						WHEN level_sys_name_new = 'unit_class' THEN
+							NEW.id
+						ELSE
+							pm.unit_class_ref
+					END as unit_class_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_class' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pm.unit_class_indexed
+                                        END as unit_class_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_division' THEN
+							NEW.id
+						ELSE
+							pm.unit_division_ref
+					END as unit_division_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_division' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pm.unit_division_indexed
+                                        END as unit_division_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_family' THEN
+							NEW.id
+						ELSE
+							pm.unit_family_ref
+					END as unit_family_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_family' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pm.unit_family_indexed
+                                        END as unit_family_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_group' THEN
+							NEW.id
+						ELSE
+							pm.unit_group_ref
+					END as unit_group_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_group' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pm.unit_group_indexed
+                                        END as unit_group_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_variety' THEN
+							NEW.id
+						ELSE
+							pm.unit_variety_ref
+					END as unit_variety_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_variety' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pm.unit_variety_indexed
+                                        END as unit_variety_indexed
+				INTO
+					NEW.unit_class_ref,
+					NEW.unit_class_indexed,
+					NEW.unit_division_ref,
+					NEW.unit_division_indexed,
+					NEW.unit_family_ref,
+					NEW.unit_family_indexed,
+					NEW.unit_group_ref,
+					NEW.unit_group_indexed,
+					NEW.unit_variety_ref,
+					NEW.unit_variety_indexed
+				FROM mineralogy AS pm
+				WHERE pm.id = NEW.parent_ref;
+				hierarchy_ref := ARRAY[NEW.unit_class_ref::integer, NEW.unit_division_ref::integer, NEW.unit_family_ref::integer, NEW.unit_group_ref::integer, NEW.unit_variety_ref::integer];
+				hierarchy_indexed := ARRAY[NEW.unit_class_indexed::varchar, NEW.unit_division_indexed::varchar, NEW.unit_family_indexed::varchar, NEW.unit_group_indexed::varchar, NEW.unit_variety_indexed::varchar];
+			ELSIF TG_TABLE_NAME = 'taxa' THEN
+				SELECT
+					CASE
+						WHEN level_sys_name_new = 'domain' THEN
+							NEW.id
+						ELSE
+							pt.domain_ref
+					END as domain_ref,
+					CASE
+						WHEN level_sys_name_new = 'domain' THEN
+							NEW.name_indexed
+						ELSE
+							pt.domain_indexed
+					END as domain_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'kingdom' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.kingdom_ref
+                                        END as kingdom_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'kingdom' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.kingdom_indexed
+                                        END as kingdom_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_phylum' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_phylum_ref
+                                        END as super_phylum_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_phylum' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_phylum_indexed
+                                        END as super_phylum_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'phylum' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.phylum_ref
+                                        END as phylum_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'phylum' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.phylum_indexed
+                                        END as phylum_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_phylum' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_phylum_ref
+                                        END as sub_phylum_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_phylum' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_phylum_indexed
+                                        END as sub_phylum_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_phylum' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_phylum_ref
+                                        END as infra_phylum_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_phylum' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_phylum_indexed
+                                        END as infra_phylum_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_cohort_botany' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_cohort_botany_ref
+                                        END as super_cohort_botany_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_cohort_botany' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_cohort_botany_indexed
+                                        END as super_cohort_botany_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'cohort_botany' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.cohort_botany_ref
+                                        END as cohort_botany_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'cohort_botany' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.cohort_botany_indexed
+                                        END as cohort_botany_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_cohort_botany' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_cohort_botany_ref
+                                        END as sub_cohort_botany_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_cohort_botany' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_cohort_botany_indexed
+                                        END as sub_cohort_botany_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_cohort_botany' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_cohort_botany_ref
+                                        END as infra_cohort_botany_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_cohort_botany' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_cohort_botany_indexed
+                                        END as infra_cohort_botany_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_class' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_class_ref
+                                        END as super_class_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_class' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_class_indexed
+                                        END as super_class_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'class' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.class_ref
+                                        END as class_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'class' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.class_indexed
+                                        END as class_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_class' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_class_ref
+                                        END as sub_class_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_class' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_class_indexed
+                                        END as sub_class_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_class' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_class_ref
+                                        END as infra_class_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_class' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_class_indexed
+                                        END as infra_class_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_division' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_division_ref
+                                        END as super_division_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_division' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_division_indexed
+                                        END as super_division_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'division' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.division_ref
+                                        END as division_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'division' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.division_indexed
+                                        END as division_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_division' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_division_ref
+                                        END as sub_division_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_division' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_division_indexed
+                                        END as sub_division_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_division' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_division_ref
+                                        END as infra_division_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_division' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_division_indexed
+                                        END as infra_division_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_legion' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_legion_ref
+                                        END as super_legion_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_legion' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_legion_indexed
+                                        END as super_legion_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'legion' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.legion_ref
+                                        END as legion_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'legion' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.legion_indexed
+                                        END as legion_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_legion' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_legion_ref
+                                        END as sub_legion_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_legion' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_legion_indexed
+                                        END as sub_legion_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_legion' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_legion_ref
+                                        END as infra_legion_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_legion' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_legion_indexed
+                                        END as infra_legion_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_cohort_zoology' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_cohort_zoology_ref
+                                        END as super_cohort_zoology_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_cohort_zoology' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_cohort_zoology_indexed
+                                        END as super_cohort_zoology_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'cohort_zoology' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.cohort_zoology_ref
+                                        END as cohort_zoology_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'cohort_zoology' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.cohort_zoology_indexed
+                                        END as cohort_zoology_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_cohort_zoology' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_cohort_zoology_ref
+                                        END as sub_cohort_zoology_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_cohort_zoology' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_cohort_zoology_indexed
+                                        END as sub_cohort_zoology_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_cohort_zoology' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_cohort_zoology_ref
+                                        END as infra_cohort_zoology_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_cohort_zoology' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_cohort_zoology_indexed
+                                        END as infra_cohort_zoology_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_order' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_order_ref
+                                        END as super_order_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_order' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_order_indexed
+                                        END as super_order_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'order' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.order_ref
+                                        END as order_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'order' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.order_indexed
+                                        END as order_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_order' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_order_ref
+                                        END as sub_order_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_order' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_order_indexed
+                                        END as sub_order_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_order' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_order_ref
+                                        END as infra_order_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_order' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_order_indexed
+                                        END as infra_order_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'section_zoology' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.section_zoology_ref
+                                        END as section_zoology_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'section_zoology' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.section_zoology_indexed
+                                        END as section_zoology_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_section_zoology' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_section_zoology_ref
+                                        END as sub_section_zoology_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_section_zoology' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_section_zoology_indexed
+                                        END as sub_section_zoology_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_family' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_family_ref
+                                        END as super_family_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_family' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_family_indexed
+                                        END as super_family_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'family' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.family_ref
+                                        END as family_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'family' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.family_indexed
+                                        END as family_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_family' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_family_ref
+                                        END as sub_family_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_family' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_family_indexed
+                                        END as sub_family_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_family' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_family_ref
+                                        END as infra_family_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_family' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_family_indexed
+                                        END as infra_family_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_tribe' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_tribe_ref
+                                        END as super_tribe_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_tribe' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_tribe_indexed
+                                        END as super_tribe_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'tribe' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.tribe_ref
+                                        END as tribe_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'tribe' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.tribe_indexed
+                                        END as tribe_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_tribe' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_tribe_ref
+                                        END as sub_tribe_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_tribe' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_tribe_indexed
+                                        END as sub_tribe_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'infra_tribe' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.infra_tribe_ref
+                                        END as infra_tribe_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'infra_tribe' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.infra_tribe_indexed
+                                        END as infra_tribe_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'genus' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.genus_ref
+                                        END as genus_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'genus' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.genus_indexed
+                                        END as genus_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_genus' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_genus_ref
+                                        END as sub_genus_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_genus' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_genus_indexed
+                                        END as sub_genus_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'section_botany' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.section_botany_ref
+                                        END as section_botany_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'section_botany' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.section_botany_indexed
+                                        END as section_botany_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_section_botany' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_section_botany_ref
+                                        END as sub_section_botany_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_section_botany' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_section_botany_indexed
+                                        END as sub_section_botany_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'serie' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.serie_ref
+                                        END as serie_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'serie' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.serie_indexed
+                                        END as serie_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_serie' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_serie_ref
+                                        END as sub_serie_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_serie' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_serie_indexed
+                                        END as sub_serie_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'super_species' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.super_species_ref
+                                        END as super_species_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'super_species' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.super_species_indexed
+                                        END as super_species_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'species' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.species_ref
+                                        END as species_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'species' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.species_indexed
+                                        END as species_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_species' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_species_ref
+                                        END as sub_species_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_species' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_species_indexed
+                                        END as sub_species_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'variety' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.variety_ref
+                                        END as variety_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'variety' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.variety_indexed
+                                        END as variety_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_variety' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_variety_ref
+                                        END as sub_variety_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_variety' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_variety_indexed
+                                        END as sub_variety_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'form' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.form_ref
+                                        END as form_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'form' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.form_indexed
+                                        END as form_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'sub_form' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.sub_form_ref
+                                        END as sub_form_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'sub_form' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.sub_form_indexed
+                                        END as sub_form_indexed,
+					CASE
+                                                WHEN level_sys_name_new = 'abberans' THEN
+                                                        NEW.id
+                                                ELSE
+                                                        pt.abberans_ref
+                                        END as abberans_ref,
+                                        CASE
+                                                WHEN level_sys_name_new = 'abberans' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pt.abberans_indexed
+                                        END as abberans_indexed
+				INTO
+					NEW.domain_ref,
+					NEW.domain_indexed,
+					NEW.kingdom_ref,
+					NEW.kingdom_indexed,
+					NEW.super_phylum_ref,
+					NEW.super_phylum_indexed,
+					NEW.phylum_ref,
+					NEW.phylum_indexed,
+					NEW.sub_phylum_ref,
+					NEW.sub_phylum_indexed,
+					NEW.infra_phylum_ref,
+					NEW.infra_phylum_indexed,
+					NEW.super_cohort_botany_ref,
+					NEW.super_cohort_botany_indexed,
+					NEW.cohort_botany_ref,
+					NEW.cohort_botany_indexed,
+					NEW.sub_cohort_botany_ref,
+					NEW.sub_cohort_botany_indexed,
+					NEW.infra_cohort_botany_ref,
+					NEW.infra_cohort_botany_indexed,
+					NEW.super_class_ref,
+					NEW.super_class_indexed,
+					NEW.class_ref,
+					NEW.class_indexed,
+					NEW.sub_class_ref,
+					NEW.sub_class_indexed,
+					NEW.infra_class_ref,
+					NEW.infra_class_indexed,
+					NEW.super_division_ref,
+					NEW.super_division_indexed,
+					NEW.division_ref,
+					NEW.division_indexed,
+					NEW.sub_division_ref,
+					NEW.sub_division_indexed,
+					NEW.infra_division_ref,
+					NEW.infra_division_indexed,
+					NEW.super_legion_ref,
+					NEW.super_legion_indexed,
+					NEW.legion_ref,
+					NEW.legion_indexed,
+					NEW.sub_legion_ref,
+					NEW.sub_legion_indexed,
+					NEW.infra_legion_ref,
+					NEW.infra_legion_indexed,
+					NEW.super_cohort_zoology_ref,
+					NEW.super_cohort_zoology_indexed,
+					NEW.cohort_zoology_ref,
+					NEW.cohort_zoology_indexed,
+					NEW.sub_cohort_zoology_ref,
+					NEW.sub_cohort_zoology_indexed,
+					NEW.infra_cohort_zoology_ref,
+					NEW.infra_cohort_zoology_indexed,
+					NEW.super_order_ref,
+					NEW.super_order_indexed,
+					NEW.order_ref,
+					NEW.order_indexed,
+					NEW.sub_order_ref,
+					NEW.sub_order_indexed,
+					NEW.infra_order_ref,
+					NEW.infra_order_indexed,
+					NEW.section_zoology_ref,
+					NEW.section_zoology_indexed,
+					NEW.sub_section_zoology_ref,
+					NEW.sub_section_zoology_indexed,
+					NEW.super_family_ref,
+					NEW.super_family_indexed,
+					NEW.family_ref,
+					NEW.family_indexed,
+					NEW.sub_family_ref,
+					NEW.sub_family_indexed,
+					NEW.infra_family_ref,
+					NEW.infra_family_indexed,
+					NEW.super_tribe_ref,
+					NEW.super_tribe_indexed,
+					NEW.tribe_ref,
+					NEW.tribe_indexed,
+					NEW.sub_tribe_ref,
+					NEW.sub_tribe_indexed,
+					NEW.infra_tribe_ref,
+					NEW.infra_tribe_indexed,
+					NEW.genus_ref,
+					NEW.genus_indexed,
+					NEW.sub_genus_ref,
+					NEW.sub_genus_indexed,
+					NEW.section_botany_ref,
+					NEW.section_botany_indexed,
+					NEW.sub_section_botany_ref,
+					NEW.sub_section_botany_indexed,
+					NEW.serie_ref,
+					NEW.serie_indexed,
+					NEW.sub_serie_ref,
+					NEW.sub_serie_indexed,
+					NEW.super_species_ref,
+					NEW.super_species_indexed,
+					NEW.species_ref,
+					NEW.species_indexed,
+					NEW.sub_species_ref,
+					NEW.sub_species_indexed,
+					NEW.variety_ref,
+					NEW.variety_indexed,
+					NEW.sub_variety_ref,
+					NEW.sub_variety_indexed,
+					NEW.form_ref,
+					NEW.form_indexed,
+					NEW.sub_form_ref,
+					NEW.sub_form_indexed,
+					NEW.abberans_ref,
+					NEW.abberans_indexed
+				FROM taxa AS pt
+				WHERE pt.id = NEW.parent_ref;
+				hierarchy_ref := ARRAY[NEW.domain_ref::integer, NEW.kingdom_ref::integer, NEW.super_phylum_ref::integer, NEW.phylum_ref::integer, NEW.sub_phylum_ref::integer, NEW.infra_phylum_ref::integer, NEW.super_cohort_botany_ref::integer, NEW.cohort_botany_ref::integer, NEW.sub_cohort_botany_ref::integer, NEW.infra_cohort_botany_ref::integer, NEW.super_class_ref::integer, NEW.class_ref::integer, NEW.sub_class_ref::integer, NEW.infra_class_ref::integer, NEW.super_division_ref::integer, NEW.division_ref::integer, NEW.sub_division_ref::integer, NEW.infra_division_ref::integer, NEW.super_legion_ref::integer, NEW.legion_ref::integer, NEW.sub_legion_ref::integer, NEW.infra_legion_ref::integer, NEW.super_cohort_zoology_ref::integer, NEW.cohort_zoology_ref::integer, NEW.sub_cohort_zoology_ref::integer, NEW.infra_cohort_zoology_ref::integer, NEW.super_order_ref::integer, NEW.order_ref::integer, NEW.sub_order_ref::integer, NEW.infra_order_ref::integer, NEW.section_zoology_ref::integer, NEW.sub_section_zoology_ref::integer, NEW.super_family_ref::integer, NEW.family_ref::integer, NEW.sub_family_ref::integer, NEW.infra_family_ref::integer, NEW.super_tribe_ref::integer, NEW.tribe_ref::integer, NEW.sub_tribe_ref::integer, NEW.infra_tribe_ref::integer, NEW.genus_ref::integer, NEW.sub_genus_ref::integer, NEW.section_botany_ref::integer, NEW.sub_section_botany_ref::integer, NEW.serie_ref::integer, NEW.sub_serie_ref::integer, NEW.super_species_ref::integer, NEW.species_ref::integer, NEW.sub_species_ref::integer, NEW.variety_ref::integer, NEW.sub_variety_ref::integer, NEW.form_ref::integer, NEW.sub_form_ref::integer, NEW.abberans_ref::integer];
+				hierarchy_indexed := ARRAY[NEW.domain_indexed::varchar, NEW.kingdom_indexed::varchar, NEW.super_phylum_indexed::varchar, NEW.phylum_indexed::varchar, NEW.sub_phylum_indexed::varchar, NEW.infra_phylum_indexed::varchar, NEW.super_cohort_botany_indexed::varchar, NEW.cohort_botany_indexed::varchar, NEW.sub_cohort_botany_indexed::varchar, NEW.infra_cohort_botany_indexed::varchar, NEW.super_class_indexed::varchar, NEW.class_indexed::varchar, NEW.sub_class_indexed::varchar, NEW.infra_class_indexed::varchar, NEW.super_division_indexed::varchar, NEW.division_indexed::varchar, NEW.sub_division_indexed::varchar, NEW.infra_division_indexed::varchar, NEW.super_legion_indexed::varchar, NEW.legion_indexed::varchar, NEW.sub_legion_indexed::varchar, NEW.infra_legion_indexed::varchar, NEW.super_cohort_zoology_indexed::varchar, NEW.cohort_zoology_indexed::varchar, NEW.sub_cohort_zoology_indexed::varchar, NEW.infra_cohort_zoology_indexed::varchar, NEW.super_order_indexed::varchar, NEW.order_indexed::varchar, NEW.sub_order_indexed::varchar, NEW.infra_order_indexed::varchar, NEW.section_zoology_indexed::varchar, NEW.sub_section_zoology_indexed::varchar, NEW.super_family_indexed::varchar, NEW.family_indexed::varchar, NEW.sub_family_indexed::varchar, NEW.infra_family_indexed::varchar, NEW.super_tribe_indexed::varchar, NEW.tribe_indexed::varchar, NEW.sub_tribe_indexed::varchar, NEW.infra_tribe_indexed::varchar, NEW.genus_indexed::varchar, NEW.sub_genus_indexed::varchar, NEW.section_botany_indexed::varchar, NEW.sub_section_botany_indexed::varchar, NEW.serie_indexed::varchar, NEW.sub_serie_indexed::varchar, NEW.super_species_indexed::varchar, NEW.species_indexed::varchar, NEW.sub_species_indexed::varchar, NEW.variety_indexed::varchar, NEW.sub_variety_indexed::varchar, NEW.form_indexed::varchar, NEW.sub_form_indexed::varchar, NEW.abberans_indexed::varchar];
 			END IF;
-			hierarchy_ref := ARRAY[NEW.eon_ref::integer, NEW.era_ref::integer, NEW.sub_era_ref::integer, NEW.system_ref::integer, NEW.serie_ref::integer, NEW.stage_ref::integer, NEW.sub_stage_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
-			hierarchy_indexed := ARRAY[NEW.eon_indexed::varchar, NEW.era_indexed::varchar, NEW.sub_era_indexed::varchar, NEW.system_indexed::varchar, NEW.serie_indexed::varchar, NEW.stage_indexed::varchar, NEW.sub_stage_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
 			IF NOT fct_cpy_update_children_when_parent_updated (TG_TABLE_NAME::varchar, NEW.id::integer, level_sys_name_old, level_sys_name_new, hierarchy_ref, hierarchy_indexed) THEN
 				RAISE EXCEPTION 'Impossible to update children ! Update of parent_ref and/or level_ref of current unit aborted !';
 			END IF;

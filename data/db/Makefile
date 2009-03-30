@@ -20,10 +20,10 @@ install-db:
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createdomains.sql
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createtypes.sql
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createtables.sql
+	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f initiate_data.sql
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createfunctions.sql
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createtriggers.sql
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f addchecks.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f initiate_data.sql
 
 drop-db:
 	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f droptriggers.sql

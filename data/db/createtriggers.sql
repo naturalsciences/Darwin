@@ -68,6 +68,24 @@ CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_chronostratigraphy BEFORE
 	ON chronostratigraphy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
 
+CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_lithostratigraphy BEFORE UPDATE
+	ON lithostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
+
+CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy BEFORE UPDATE
+	ON mineralogy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
+
+CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa BEFORE UPDATE
+	ON taxa FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
+
+/*
+CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology BEFORE UPDATE
+	ON lithology FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
+*/
+
 --- END HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
 
 -- BEGIN FULLTOINDEX
