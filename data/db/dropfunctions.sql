@@ -22,3 +22,6 @@ DROP FUNCTION IF EXISTS fct_explode_array(in_array anyarray) CASCADE;
 
 DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_AreAuthors() CASCADE;
+
+DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
+DROP FUNCTION IF EXISTS fct_clr_title() CASCADE;

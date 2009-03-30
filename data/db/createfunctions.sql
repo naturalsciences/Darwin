@@ -4654,3 +4654,51 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_clr_title() RETURNS TRIGGER
+AS $$
+BEGIN
+	IF NEW.is_physical THEN
+		IF TG_OP ='UPDATE' THEN
+			IF OLD.gender != NEW.gender THEN
+				IF ( NEW.gender='M' AND NEW.title='Mrs') OR ( NEW.gender='F' AND NEW.title='Mr') THEN
+					NEW.title='';
+				END IF;
+			END IF;
+		END IF;
+		
+		IF NEW.title is NULL OR NEW.title = '' THEN
+			IF NEW.gender = 'M' THEN
+				NEW.title := 'Mr';
+			ELSE
+				NEW.title := 'Mrs';
+			END IF;
+		END IF;
+	ELSE
+		NEW.title := '';
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_cpy_FormattedName() RETURNS TRIGGER
+AS $$
+BEGIN
+	IF TG_OP ='UPDATE' THEN
+		IF NEW.family_name = OLD.family_name AND NEW.given_name = OLD.given_name AND NEW.title = OLD.title THEN
+			RETURN NEW;
+		END IF;
+	END IF;
+	
+	IF NEW.is_physical THEN
+		NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'') || ' (' || NEW.title || ')';
+	ELSE
+		NEW.formated_name := NEW.family_name;
+	END IF;
+	NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+	NEW.formated_name_ts := to_tsvector(NEW.formated_name);
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;

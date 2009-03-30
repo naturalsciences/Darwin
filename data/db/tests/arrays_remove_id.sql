@@ -9,8 +9,8 @@ UPDATE people SET db_people_type = 6 WHERE id=2;
 UPDATE people SET db_people_type = 6 WHERE id=1;
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 
-insert into people (id, db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, sort_string,end_date) VALUES (3,6, true, 'sdf', 'doesfdjohn', to_tsvector('sd'), 'qsd', 'qsd', DATE 'June 20, 1989', 'M', 'doejqsdohn',DATE 'January 1, 0000');
-insert into people (id,db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, sort_string,end_date) VALUES (4,6, true, 'Doe Jsssohn', 'sssss', to_tsvector('Doe qsdqsd'), 'Dssoe', 'Johdn', DATE 'June 20, 1979', 'M', 'doejqdohn',DATE 'January 1, 0000');
+insert into people (id, db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date) VALUES (3,6, true, 'sdf', 'doesfdjohn', to_tsvector('sd'), 'qsd', 'qsd', DATE 'June 20, 1989', 'M',DATE 'January 1, 0000');
+insert into people (id,db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date) VALUES (4,6, true, 'Doe Jsssohn', 'sssss', to_tsvector('Doe qsdqsd'), 'Dssoe', 'Johdn', DATE 'June 20, 1979', 'M', DATE 'January 1, 0000');
 
 INSERT INTO expertises (table_name, record_id, expert_ref, defined_by_ordered_ids_list) VALUES ('taxa', 0, 2, array[1,5,4,3,2]);
 SELECT ok(array[1,5,4,3,2] = (SELECT defined_by_ordered_ids_list FROM expertises),'Check if the array is well defined');
@@ -22,7 +22,7 @@ DELETE FROM expertises WHERE  table_name='taxa' AND record_id=0;
 
 SELECT diag('Auto');
 
-insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, sort_string,end_date) VALUES (5, true, 'Doe John', 'doejohn', to_tsvector('Doe John'), 'Doe', 'John', DATE 'June 20, 1979', 'M', 'doejohn',DATE 'January 1, 0000');
+insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date) VALUES (5, true, 'Doe John', 'doejohn', to_tsvector('Doe John'), 'Doe', 'John', DATE 'June 20, 1979', 'M', DATE 'January 1, 0000');
 
 INSERT INTO catalogue_relationships (table_name, record_id_1, record_id_2, defined_by_ordered_ids_list)
 	VALUES ('taxa', 0, 1, ARRAY[1,2,3]);

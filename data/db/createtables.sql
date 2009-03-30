@@ -281,13 +281,13 @@ create table template_people
         formated_name varchar not null,
         formated_name_indexed varchar not null,
         formated_name_ts tsvector not null,
+		title varchar not null DEFAULT '',
         family_name varchar not null,
         given_name varchar,
         additional_names varchar,
         birth_date_mask integer,
         birth_date date,
-        gender genders,
-        sort_string varchar(36) not null
+        gender genders
        );
 comment on table template_people is 'Template table used to describe user/people tables';
 comment on column template_people.id is 'Unique identifier of a user/person';
@@ -298,12 +298,12 @@ comment on column template_people.formated_name is 'Complete user/person formate
 comment on column template_people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column template_people.formated_name_indexed is 'Indexed form of formated_name field';
 comment on column template_people.family_name is 'Family name for physical user/persons and Organisation name for moral user/persons';
+comment on column template_people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column template_people.given_name is 'User/person''s given name - usually first name';
 comment on column template_people.additional_names is 'Any additional names given to user/person';
 comment on column template_people.birth_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
 comment on column template_people.birth_date is 'Birth/Creation date composed';
 comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
-comment on column template_people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 create table template_people_languages
        (
         language_country varchar default 'en_gb' not null,
@@ -320,7 +320,7 @@ create table people
         end_date_mask integer,
         end_date date not null,
         constraint pk_people primary key (id),
-        constraint unq_people unique (is_physical, formated_name_indexed, birth_date, end_date)
+        constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
        )
 inherits (template_people);
 comment on table people is 'All physical and moral persons used in the application are here stored';
@@ -331,20 +331,20 @@ comment on column people.public_class is 'Tells public nature of person informat
 comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column people.formated_name_indexed is 'Indexed form of formated_name field';
+comment on column people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column people.family_name is 'Family name for physical persons and Organisation name for moral persons';
 comment on column people.given_name is 'User/person''s given name - usually first name';
 comment on column people.additional_names is 'Any additional names given to person';
 comment on column people.birth_date is 'Day of birth/creation';
 comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column people.gender is 'For physical persons give the gender: M or F';
-comment on column people.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector,...';
 comment on column people.end_date is 'End date';
 comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 create table users
        (
         constraint pk_users primary key (id),
-        constraint unq_users unique (is_physical, formated_name_indexed, birth_date)
+        constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date)
        )
 inherits (template_people);
 comment on table users is 'List all application users';
@@ -356,12 +356,12 @@ comment on column users.formated_name is 'Complete user formated name (with hono
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
+comment on column users.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column users.given_name is 'User/user''s given name - usually first name';
 comment on column users.additional_names is 'Any additional names given to user';
 comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column users.birth_date is 'Birth/Creation date composed';
 comment on column users.gender is 'For physical users give the gender: M or F';
-comment on column users.sort_string is 'String used for sorting - composed from family_name_indexed and given_name_indexed fields';
 create table people_languages
        (
         people_ref integer not null,

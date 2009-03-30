@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(886);
+SELECT plan(884);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -63,9 +63,8 @@ SELECT ok( 'lamernware' = (SELECT keyword_indexed FROM multimedia_keywords WHERE
 INSERT INTO multimedia_codes (code_prefix,code, multimedia_ref) VALUES ('12é-MOL7385',6847,1);
 SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM multimedia_codes WHERE multimedia_ref=1),'FulltoIndex on multimedia_codes');
 
-insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, birth_date, sort_string, end_date ) VALUES
-(3, true, 'The Expert', 'theexpert', to_tsvector('The Expert'),  'The Expert', '0001-01-01', 'theexpert', DATE '0001-01-01');
-SELECT ok( 'theexpert' = (SELECT formated_name_indexed FROM people WHERE id=3),'FulltoIndex on people');
+insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, birth_date, end_date ) VALUES
+(3, true, 'The Expert', 'theexpert', to_tsvector('The Expert'),  'The Expert', '0001-01-01', DATE '0001-01-01');
 
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
 INSERT INTO specimens_codes (code_prefix,code, specimen_ref) VALUES ('12é-MOL7385',6847,1);
@@ -94,9 +93,7 @@ SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'Fu
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 SELECT ok( 'mealeisgubularis' = (SELECT name_indexed FROM taxa WHERE id=1),'FulltoIndex on taxa name');
 
-insert into users (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, sort_string) VALUES (3, true, 'Bill Maréchal', 'marechalbill', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', NOW(), 'M', 'billmarechal');
-
-SELECT ok( 'marechalbill' = (SELECT formated_name_indexed FROM users WHERE id=3),'FulltoIndex on user');
+insert into users (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender) VALUES (3, true, 'Bill Maréchal', 'marechalbill', to_tsvector('Maréchal Bill'), 'Maréchal', 'Bill', NOW(), 'M');
 
 INSERT INTO class_vernacular_names (table_name, record_id, id, community) VALUES ('taxa',0,1,'testlang');
 INSERT INTO vernacular_names (vernacular_class_ref, name) VALUES (1,'Éléphant!');

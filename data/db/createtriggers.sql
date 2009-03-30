@@ -321,6 +321,23 @@ CREATE TRIGGER trg_chk_peopleType AFTER UPDATE
 	ON people FOR EACH ROW
 	EXECUTE PROCEDURE fct_chk_peopleType();
 	
-CREATE TRIGGER fct_chk_AreAuthors AFTER INSERT OR UPDATE
+CREATE TRIGGER trg_chk_AreAuthors AFTER INSERT OR UPDATE
 	ON catalogue_authors FOR EACH ROW
 	EXECUTE PROCEDURE fct_chk_AreAuthors();
+	
+
+CREATE TRIGGER trg_clr_title BEFORE INSERT OR UPDATE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_clr_title();
+
+CREATE TRIGGER trg_clr_title BEFORE INSERT OR UPDATE
+	ON users FOR EACH ROW
+	EXECUTE PROCEDURE fct_clr_title();
+	
+CREATE TRIGGER trg_cpy_FormattedName BEFORE INSERT OR UPDATE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_FormattedName();
+
+CREATE TRIGGER trg_cpy_FormattedName BEFORE INSERT OR UPDATE
+	ON users FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_FormattedName();
