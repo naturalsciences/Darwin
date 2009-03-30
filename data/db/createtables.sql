@@ -19,7 +19,7 @@ create table template_table_record_ref
         table_name varchar not null,
         record_id integer not null
        );
-comment on table template_table_record_ref is 'Template called to add table_name and record_id fields in multiple ''tracking'' tables';
+comment on table template_table_record_ref is 'Template called to add table_name and record_id fields';
 comment on column template_table_record_ref.table_name is 'Reference of table concerned - id field of table_list table';
 comment on column template_table_record_ref.record_id is 'Id of record concerned';
 create table catalogue_authors
@@ -65,14 +65,13 @@ comment on column possible_upper_levels.level_ref is 'Reference of current level
 comment on column possible_upper_levels.level_upper_ref is 'Reference of authorized parent level';
 create table comments
        (
-        table_name varchar not null,
-        record_id integer not null,
         notion_concerned varchar not null,
         comment text not null,
         comment_ts tsvector not null,
         comment_language_full_text full_text_language, 
         constraint unq_comments unique (table_name, record_id, notion_concerned)
-       );
+       )
+       inherits (template_table_record_ref);
 comment on table comments is 'Comments associated to a record of a given table (and maybe a given field) on a given subject';
 comment on column comments.table_name is 'Reference of table a comment is posted for - id field of table_list table';
 comment on column comments.record_id is 'Identifier of the record concerned';
@@ -1173,19 +1172,22 @@ comment on column taxa.chimera_hybrid_pos is 'Chimera or Hybrid informations';
 comment on column taxa.extinct is 'Tells if taxa is extinct or not';
 comment on column taxa.path is 'Hierarchy path (/ for root)';
 comment on column taxa.parent_ref is 'Id of parent - id field from table itself';
-create table people_taxonomic_names
+create table people_aliases
        (
         person_ref integer not null,
-        taxonomic_top_ref integer default 0 not null,
+        collection_ref integer default 0,
         person_name varchar not null,
-        constraint unq_people_taxonomic_names unique (person_ref, taxonomic_top_ref, person_name),
-        constraint fk_people_taxonomic_names_taxa foreign key (taxonomic_top_ref) references taxa(id) on delete cascade,
-        constraint fk_people_taxonomic_names_people foreign key (person_ref) references people(id) on delete cascade
-       );
-comment on table people_taxonomic_names is 'Name translation depending on taxonomic top group studied: in botany, Liné will be written L. and in zoology, Liné will be written Linaeus';
-comment on column people_taxonomic_names.person_ref is 'Reference of the person concerned - id field of people table';
-comment on column people_taxonomic_names.taxonomic_top_ref is 'Reference of the top taxonomic group concerned - id field of taxa table';
-comment on column people_taxonomic_names.person_name is 'Person name for the group concerned';
+        constraint unq_people_aliases unique (table_name, record_id, person_ref, collection_ref, person_name),
+        constraint fk_people_aliases_collection foreign key (collection_ref) references collections(id) on delete cascade,
+        constraint fk_people_aliases_names_people foreign key (person_ref) references people(id) on delete cascade
+       )
+       inherits (template_table_record_ref);
+comment on table people_aliases is 'Name translation depending on taxonomic top group studied: in botany, Liné will be written L. and in zoology, Liné will be written Linaeus';
+comment on column people_aliases.table_name is 'Reference of the catalogue table';
+comment on column people_aliases.record_id is 'Identifier of record concerned : 1st level';
+comment on column people_aliases.person_ref is 'Reference of the person concerned - id field of people table';
+comment on column people_aliases.collection_ref is 'Reference the collection where the alias apply';
+comment on column people_aliases.person_name is 'Person name for the group concerned';
 create table chronostratigraphy
        (
         id serial not null,
@@ -1646,12 +1648,11 @@ comment on column specimen_parts_insurances.insurance_value is 'Insurance value'
 comment on column specimen_parts_insurances.insurer_ref is 'Reference of the insurance firm an insurance have been subscripted at';
 create table associated_multimedia
        (
-        table_name varchar not null,
-        record_id integer not null,
         multimedia_ref integer not null,
         constraint unq_associated_multimedia unique (multimedia_ref, table_name, record_id),
         constraint fk_associated_multimedia_multimedia foreign key (multimedia_ref) references multimedia(id) on delete cascade
-       );
+       )
+       inherits (template_table_record_ref);
 comment on table associated_multimedia is 'List of all associated multimedia to an element of DaRWIN 2 application: specimen, catalogue unit';
 comment on column associated_multimedia.table_name is 'Reference of table concerned - id field of table_list table';
 comment on column associated_multimedia.record_id is 'Identifier of record concerned';

@@ -298,3 +298,11 @@ CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_cas_userType_userslogininfos AFTER UPDATE
 	ON users_login_infos FOR EACH ROW
 	EXECUTE PROCEDURE fct_cas_userType();
+
+CREATE TRIGGER trg_chk_peopleType AFTER UPDATE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_chk_peopleType();
+	
+CREATE TRIGGER fct_chk_AreAuthors AFTER INSERT OR UPDATE
+	ON catalogue_authors FOR EACH ROW
+	EXECUTE PROCEDURE fct_chk_AreAuthors();

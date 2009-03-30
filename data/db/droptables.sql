@@ -51,7 +51,7 @@ DROP TABLE  IF EXISTS my_preferences CASCADE;
 DROP TABLE  IF EXISTS my_saved_specimens CASCADE;
 DROP TABLE  IF EXISTS template_classifications CASCADE;
 DROP TABLE  IF EXISTS taxa CASCADE;
-DROP TABLE  IF EXISTS people_taxonomic_names CASCADE;
+DROP TABLE  IF EXISTS people_aliases CASCADE;
 DROP TABLE  IF EXISTS chronostratigraphy CASCADE;
 DROP TABLE  IF EXISTS lithostratigraphy CASCADE;
 DROP TABLE  IF EXISTS mineralogy CASCADE;

@@ -2360,9 +2360,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
-
-
 /***
 * function fct_chk_collectionsInstitutionIsMoral
 * Check if an institution referenced in collections is moral
@@ -3148,6 +3145,7 @@ BEGIN
 	DELETE FROM users_workflow WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM collection_maintenance WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM associated_multimedia WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM people_aliases WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
@@ -3596,5 +3594,73 @@ BEGIN
 	RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-/*
+
+/**
+* fct_chk_peopleType
+* When removing author flag for a people, check if he is not referenced as author in a catalogue
 */
+CREATE OR REPLACE FUNCTION fct_chk_peopleType() RETURNS TRIGGER
+AS $$
+DECLARE
+	still_referenced boolean;
+BEGIN
+	/** AUTHOR FLAG IS 2 **/
+	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
+		SELECT count(*) INTO still_referenced FROM catalogue_authors WHERE authors_ordered_ids_list @> ARRAY[NEW.id];
+		IF still_referenced THEN
+			RAISE EXCEPTION 'Author still used as author.';
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+/**
+	fct_chk_authorAliasLevel
+	Check if a domain is a frist level domain
+*/
+CREATE OR REPLACE FUNCTION fct_chk_Is_FirstLevel(table_name people_aliases.table_name%TYPE, record_id  people_aliases.record_id%TYPE) RETURNS boolean
+AS $$
+DECLARE
+	is_ok boolean;
+BEGIN
+	IF table_name IS NULL OR record_id IS NULL THEN
+		RETURN TRUE;
+	END IF;
+	EXECUTE 'SELECT parent_ref=0 FROM ' || quote_ident(table_name) || ' WHERE id=' || quote_literal(record_id::varchar) INTO is_ok;
+	RETURN is_ok;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_chk_AreAuthors() RETURNS TRIGGER
+AS $$
+DECLARE
+	are_not_author boolean;
+BEGIN
+	IF TG_OP ='UPDATE' THEN
+		IF OLD.authors_ordered_ids_list = NEW.authors_ordered_ids_list THEN 
+			RETURN NEW;
+		END IF;
+	END IF;
+
+ 	SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id IN( SELECT * from  fct_explode_array(NEW.authors_ordered_ids_list));
+	IF are_not_author THEN
+		RAISE EXCEPTION 'Author must be defined as author.';
+	END IF;		
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_chk_ReferencedRecord(table_name varchar,record_id integer) RETURNS boolean
+AS $$
+DECLARE
+	rec_exists boolean;
+BEGIN
+ 	EXECUTE 'SELECT count(id)>0 FROM ' || quote_ident(table_name) || ' WHERE id=' || quote_literal(record_id::varchar) INTO rec_exists;
+	RETURN rec_exists;
+END;
+$$
+LANGUAGE plpgsql;

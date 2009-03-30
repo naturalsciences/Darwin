@@ -21,3 +21,4 @@ DROP FUNCTION IF EXISTS fct_remove_array_elem(IN in_array anyarray, IN elem anye
 DROP FUNCTION IF EXISTS fct_explode_array(in_array anyarray) CASCADE;
 
 DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_AreAuthors() CASCADE;
