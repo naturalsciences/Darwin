@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(52);
+SELECT plan(55);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -89,6 +89,28 @@ SELECT ok(4 = (SELECT unit_group_ref FROM mineralogy WHERE id = 4), 'New unit_gr
 SELECT ok('mealonyeobc' = (SELECT unit_group_indexed FROM mineralogy WHERE id = 4), 'New unit_group_ref of unit 4: mealonyeobc');
 
 SELECT throws_ok('UPDATE mineralogy SET level_ref = 71, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
+
+SELECT diag('Taxonomy level/parent update tests');
+
+INSERT INTO taxa (id, name, level_ref) VALUES (1, 'TOP', 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (2, 'A', 2, 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (3, 'AA', 4, 2);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (4, 'AAA', 12, 3);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (5, 'AAAA', 28, 4);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (6, 'AAAAA', 34, 5);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (7, 'AAAAAA', 41, 6);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (8, 'AAAAAAA', 42, 7);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (9, 'AAAAAAAA', 48, 8);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (10, 'AAAAAAAAA', 49, 9);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (11, 'B', 2, 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (12, 'C', 2, 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (13, 'CA', 4, 12);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (14, 'AAAAAAAB', 48, 7);
+
+SELECT lives_ok('UPDATE taxa SET parent_ref = 11 WHERE id = 3', 'Unit 3 moved from parent unit 2 to parent unit 11');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 3), 'New kingdom_ref of unit 3: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 3), 'New kingdom_indexed of unit 3: b');
+
 
 SELECT * FROM finish();
 ROLLBACK;
