@@ -69,4 +69,5 @@ DROP TRIGGER trg_clr_title ON people;
 DROP TRIGGER trg_clr_title ON users;
 DROP TRIGGER trg_cpy_FormattedName ON people;
 DROP TRIGGER trg_cpy_FormattedName ON users;
-	
+
+DROP TRIGGER trg_clr_SavedSpecimense ON specimens;

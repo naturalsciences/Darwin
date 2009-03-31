@@ -1,7 +1,7 @@
 -- Testing the copy code for GTU
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(3);
+SELECT plan(5);
 
 SELECT diag('Clear Referenced record with record_id and table_name');
 
@@ -17,6 +17,17 @@ DELETE FROM taxa where id=1;
 SELECT ok ( 1 = (SELECT count(*) from comments),'Verify if the record is well deleted');
 SELECT ok ( 0 = (SELECT record_id from comments),'the deleted record is the right one');
 
--- Finish the tests and clean up.
+
+INSERT INTO specimens (id, collection_ref) VALUES (1,1);
+INSERT INTO specimens (id, collection_ref) VALUES (2,2);
+
+INSERT INTO my_saved_specimens (user_ref, name, specimen_ids) VALUES (1,'Ma liste',ARRAY[1,2]);
+
+DELETE FROM specimens WHERE id=2;
+SELECT ok ( ARRAY[1] = (SELECT specimen_ids from my_saved_specimens),'specimens_ids has a specimen less');
+DELETE FROM specimens WHERE id=1;
+SELECT ok ( '{}'::int[] = (SELECT specimen_ids from my_saved_specimens),'specimens_ids has no specimens more');
+
+
 SELECT * FROM finish();
 ROLLBACK;

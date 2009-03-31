@@ -4886,3 +4886,17 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+/*
+fct_clr_SavedSpecimens
+Remove specimen in saved specimen.
+*/
+CREATE OR REPLACE FUNCTION fct_clr_SavedSpecimens() RETURNS TRIGGER
+As $$
+BEGIN
+	UPDATE my_saved_specimens SET specimen_ids = fct_remove_array_elem(specimen_ids,OLD.id)
+		WHERE specimen_ids @> ARRAY[OLD.id];
+	RETURN OLD;
+END;
+$$
+LANGUAGE plpgsql;

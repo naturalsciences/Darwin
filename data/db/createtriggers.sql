@@ -341,3 +341,7 @@ CREATE TRIGGER trg_cpy_FormattedName BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_cpy_FormattedName BEFORE INSERT OR UPDATE
 	ON users FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_FormattedName();
+
+CREATE TRIGGER trg_clr_SavedSpecimense AFTER DELETE
+	ON specimens FOR EACH ROW
+	EXECUTE PROCEDURE fct_clr_SavedSpecimens();
