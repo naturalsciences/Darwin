@@ -4,7 +4,81 @@ DB_USER = darwin2
 DB_NAME = darwin2
 TEST_CMD = pg_prove
 PSQL = /usr/bin/psql
+PARAM_PSQL = $(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME)
+PRIV_PSQL = $(PSQL) -q -v dbname=$(DB_NAME)
+PRIV_PSQL_DB = $(PRIV_PSQL) -d $(DB_NAME)
+
 PG_PROVE = /usr/lib/postgresql/8.3/bin/pg_prove
+#CLUSTER_NAME = darwin
+#CLUSTER_PATH = /var/lib/postgresql/8.3/$(CLUSTER_NAME)
+CLUSTER_PATH = $(shell pg_lsclusters -h | awk '{print $$6}' )
+TB_SPACE_DIR = $(CLUSTER_PATH)/$(DB_NAME)
+
+help: help-target help-param
+help-target:
+	@echo ""
+	@echo "Darwin 2 Install Script :"
+	@echo "========================="
+	@echo ""
+	@echo "Possible targets :"
+	@echo "------------------"
+	@echo ""
+	@echo "help"
+	@echo "   Display this help message"
+	@echo ""
+	@echo "install-all"
+	@echo "   install all the database.(must be run in privileged account) Execute targets  create-db, create-user, create-schema, install-db"
+	@echo ""
+	@echo "install-db"
+	@echo "   install the darwin db into the $db_user schema : create types, tables, functions and indexes"
+	@echo ""
+	@echo "create-test-schema"
+	@echo "    Create the schema for the unit tests"
+	@echo ""
+	@echo "test"
+	@echo "   Unit test the database installation in a schema 'unittest'"
+	@echo ""
+	@echo "create-schema"
+	@echo "   Create the schema for the install of the db "
+	@echo ""
+	@echo "create-db"
+	@echo "   create an new postgresql db and the tablespace associated for darwin"
+	@echo ""
+	@echo "create-user"
+	@echo "   create a default user to access only the darwin schema and db"
+	@echo ""	
+	@echo "uninstall-db"
+	@echo "   remove the tables,function... from darwin. WARNING! This action can remove ALL your data"
+	@echo ""	
+	@echo "drop-db"
+	@echo "   remove the darwin database. WARNING! This action can remove ALL your data"
+	@echo ""	
+	@echo ""
+	@echo "Targets 'install-all', 'create-db', 'create-schema' and 'create-user' must be run into a privileged account (often 'postgres')"
+	@echo "other targets can be run into the account created by 'create-user' "
+help-param:	
+	@echo ""
+	@echo "Env Parameters :"
+	@echo "---------------"
+	@echo ""
+	@echo "HOST (Default: 127.0.0.1)"
+	@echo "   host for the connection to the database"
+	@echo ""
+	@echo "DB_USER (Default: darwin2)"
+	@echo "   usernam for the connection to the database"
+	@echo ""
+	@echo "DB_NAME (Default: darwin2)"
+	@echo "   database name to be created or to be used (depends of the target)"
+	@echo ""
+	@echo "PORT (Default: 5432)"
+	@echo "   Port for the connection to the database"
+	@echo ""
+	@echo "CLUSTER_PATH (Default: first line  returned by pg_lsclusters. [/var/lib/postgresql/8.3/main] on debian)"
+	@echo "   The path where to create the tablespace"
+	@echo ""
+	@echo "Other advanced parameters are available in the makefile"	
+	@echo ""
+
 test:
 ifeq ($(TEST_CMD),pg_prove)
 	$(PG_PROVE) -h $(HOST) -U $(DB_USER) $(TESTS)
@@ -17,18 +91,46 @@ endif
 
 install-db:
 	
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createdomains.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createtypes.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createtables.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f initiate_data.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createfunctions.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f createtriggers.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f addchecks.sql
+	$(PARAM_PSQL) -f createdomains.sql
+	$(PARAM_PSQL) -f createtypes.sql
+	$(PARAM_PSQL) -f createtables.sql
+	$(PARAM_PSQL) -f initiate_data.sql
+	$(PARAM_PSQL) -f createfunctions.sql
+	$(PARAM_PSQL) -f createtriggers.sql
+	$(PARAM_PSQL) -f addchecks.sql
 
-drop-db:
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f droptriggers.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f dropfunctions.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f droptables.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f droptypes.sql
-	$(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME) -f dropdomains.sql
+install-all: create-db create-user create-schema install-db
 
+uninstall-db:
+	$(PARAM_PSQL) -f droptriggers.sql
+	$(PARAM_PSQL) -f dropfunctions.sql
+	$(PARAM_PSQL) -f droptables.sql
+	$(PARAM_PSQL) -f droptypes.sql
+	$(PARAM_PSQL) -f dropdomains.sql
+
+create-schema:
+	$(PRIV_PSQL_DB) -f createschema.sql
+	
+create-test-schema:
+	$(PRIV_PSQL_DB) -f create_testschema.sql
+	
+create-db:
+	-mkdir $(TB_SPACE_DIR)
+	-createlang -d template1 plpgsql
+	#-createlang -d template1 plpythonu
+	$(PRIV_PSQL) -v dbpath=\'$(TB_SPACE_DIR)\' -f createdb.sql
+#TODO:Should be moved to another target
+	$(PRIV_PSQL_DB) -f lib/accent.sql
+
+create-user:
+	-createuser -l -i -q -S -R -D -P -E $(DB_USER)
+
+drop-db: 
+	$(PRIV_PSQL_DB) -f dropdb.sql
+	
+love:
+	@echo "Send Your Thanks to : collections@naturalsciences.be"
+	@echo "And chocolates or postcards to : "
+	@echo "   DBTeam - Service ICT"
+	@echo "   29 Rue Vautier,"
+	@echo "   1000 Brussels Belgium"
