@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(55);
+SELECT plan(149);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -58,7 +58,7 @@ SELECT ok(4 = (SELECT layer_ref FROM lithostratigraphy WHERE id = 4), 'New layer
 SELECT ok('mealonyeobc' = (SELECT layer_indexed FROM lithostratigraphy WHERE id = 4), 'New layer_ref of unit 4: mealonyeobc');
 
 SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 65, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
-
+/*
 SELECT diag('Mineralogy level/parent update tests');
 
 INSERT INTO mineralogy (id,name, code, level_ref) VALUES (1, 'Méalo-nÿeø@ß€', 'A', 70);
@@ -105,12 +105,135 @@ INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (10, 'AAAAAAAAA', 49, 
 INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (11, 'B', 2, 1);
 INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (12, 'C', 2, 1);
 INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (13, 'CA', 4, 12);
-INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (14, 'AAAAAAAB', 48, 7);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (14, 'AAAAAB', 41, 6);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (15, 'AAAAABA', 48, 14);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (16, 'AAAAABAA', 49, 15);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (17, 'D', 2, 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (18, 'DA', 4, 17);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (19, 'DAA', 12, 18);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (20, 'E', 2, 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (21, 'EA', 4, 20);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (22, 'EAA', 12, 21);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (23, 'EAAA', 28, 22);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (24, 'F', 2, 1);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (25, 'FA', 4, 24);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (26, 'FAA', 12, 25);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (27, 'FAAA', 28, 26);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (28, 'FAAAA', 34, 27);
+INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (29, 'FAAAAA', 41, 28);
+
+
 
 SELECT lives_ok('UPDATE taxa SET parent_ref = 11 WHERE id = 3', 'Unit 3 moved from parent unit 2 to parent unit 11');
 SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 3), 'New kingdom_ref of unit 3: 11');
 SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 3), 'New kingdom_indexed of unit 3: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 4), 'New kingdom_ref of unit 4: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 4), 'New kingdom_indexed of unit 4: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 5), 'New kingdom_ref of unit 5: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 5), 'New kingdom_indexed of unit 5: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 6), 'New kingdom_ref of unit 6: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 6), 'New kingdom_indexed of unit 6: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 7), 'New kingdom_ref of unit 7: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 7), 'New kingdom_indexed of unit 7: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 8), 'New kingdom_ref of unit 8: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 8), 'New kingdom_indexed of unit 8: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 9), 'New kingdom_ref of unit 9: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 9), 'New kingdom_indexed of unit 9: b');
+SELECT ok(11 = (SELECT kingdom_ref FROM taxa WHERE id = 10), 'New kingdom_ref of unit 10: 11');
+SELECT ok('b' = (SELECT kingdom_indexed FROM taxa WHERE id = 10), 'New kingdom_indexed of unit 10: b');
+
+SELECT lives_ok('UPDATE taxa SET parent_ref = 13 WHERE id = 4', 'Unit 4 moved from parent unit 3 to parent unit 13');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 4), 'New kingdom_ref of unit 4: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 4), 'New kingdom_indexed of unit 4: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 4), 'New phylum_ref of unit 4: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 4), 'New phylum_indexed of unit 4: ca');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 5), 'New kingdom_ref of unit 5: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 5), 'New kingdom_indexed of unit 5: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 5), 'New phylum_ref of unit 5: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 5), 'New phylum_indexed of unit 5: ca');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 6), 'New kingdom_ref of unit 6: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 6), 'New kingdom_indexed of unit 6: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 6), 'New phylum_ref of unit 6: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 6), 'New phylum_indexed of unit 6: ca');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 7), 'New kingdom_ref of unit 7: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 7), 'New kingdom_indexed of unit 7: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 7), 'New phylum_ref of unit 7: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 7), 'New phylum_indexed of unit 7: ca');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 8), 'New kingdom_ref of unit 8: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 8), 'New kingdom_indexed of unit 8: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 8), 'New phylum_ref of unit 8: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 8), 'New phylum_indexed of unit 8: ca');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 9), 'New kingdom_ref of unit 9: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 9), 'New kingdom_indexed of unit 9: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 9), 'New phylum_ref of unit 9: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 9), 'New phylum_indexed of unit 9: ca');
+SELECT ok(12 = (SELECT kingdom_ref FROM taxa WHERE id = 10), 'New kingdom_ref of unit 10: 12');
+SELECT ok('c' = (SELECT kingdom_indexed FROM taxa WHERE id = 10), 'New kingdom_indexed of unit 10: c');
+SELECT ok(13 = (SELECT phylum_ref FROM taxa WHERE id = 10), 'New phylum_ref of unit 10: 13');
+SELECT ok('ca' = (SELECT phylum_indexed FROM taxa WHERE id = 10), 'New phylum_indexed of unit 10: ca');
+
+SELECT lives_ok('UPDATE taxa SET parent_ref = 19 WHERE id = 5', 'Unit 5 moved from parent unit 4 to parent unit 19');
+SELECT ok(17 = (SELECT kingdom_ref FROM taxa WHERE id = 5), 'New kingdom_ref of unit 5: 17');
+SELECT ok('d' = (SELECT kingdom_indexed FROM taxa WHERE id = 5), 'New kingdom_indexed of unit 5: d');
+SELECT ok(18 = (SELECT phylum_ref FROM taxa WHERE id = 5), 'New phylum_ref of unit 5: 18');
+SELECT ok('da' = (SELECT phylum_indexed FROM taxa WHERE id = 5), 'New phylum_indexed of unit 5: da');
+SELECT ok(19 = (SELECT class_ref FROM taxa WHERE id = 5), 'New class_ref of unit 5: 18');
+SELECT ok('daa' = (SELECT class_indexed FROM taxa WHERE id = 5), 'New class_indexed of unit 5: daa');
+SELECT ok(17 = (SELECT kingdom_ref FROM taxa WHERE id = 6), 'New kingdom_ref of unit 6: 17');
+SELECT ok('d' = (SELECT kingdom_indexed FROM taxa WHERE id = 6), 'New kingdom_indexed of unit 6: d');
+SELECT ok(18 = (SELECT phylum_ref FROM taxa WHERE id = 6), 'New phylum_ref of unit 6: 18');
+SELECT ok('da' = (SELECT phylum_indexed FROM taxa WHERE id = 6), 'New phylum_indexed of unit 6: da');
+SELECT ok(19 = (SELECT class_ref FROM taxa WHERE id = 6), 'New class_ref of unit 6: 18');
+SELECT ok('daa' = (SELECT class_indexed FROM taxa WHERE id = 6), 'New class_indexed of unit 6: daa');
+SELECT ok(17 = (SELECT kingdom_ref FROM taxa WHERE id = 7), 'New kingdom_ref of unit 7: 17');
+SELECT ok('d' = (SELECT kingdom_indexed FROM taxa WHERE id = 7), 'New kingdom_indexed of unit 7: d');
+SELECT ok(18 = (SELECT phylum_ref FROM taxa WHERE id = 7), 'New phylum_ref of unit 7: 18');
+SELECT ok('da' = (SELECT phylum_indexed FROM taxa WHERE id = 7), 'New phylum_indexed of unit 7: da');
+SELECT ok(19 = (SELECT class_ref FROM taxa WHERE id = 7), 'New class_ref of unit 7: 18');
+SELECT ok('daa' = (SELECT class_indexed FROM taxa WHERE id = 7), 'New class_indexed of unit 7: daa');
+SELECT ok(17 = (SELECT kingdom_ref FROM taxa WHERE id = 8), 'New kingdom_ref of unit 8: 17');
+SELECT ok('d' = (SELECT kingdom_indexed FROM taxa WHERE id = 8), 'New kingdom_indexed of unit 8: d');
+SELECT ok(18 = (SELECT phylum_ref FROM taxa WHERE id = 8), 'New phylum_ref of unit 8: 18');
+SELECT ok('da' = (SELECT phylum_indexed FROM taxa WHERE id = 8), 'New phylum_indexed of unit 8: da');
+SELECT ok(19 = (SELECT class_ref FROM taxa WHERE id = 8), 'New class_ref of unit 8: 18');
+SELECT ok('daa' = (SELECT class_indexed FROM taxa WHERE id = 8), 'New class_indexed of unit 8: daa');
+SELECT ok(17 = (SELECT kingdom_ref FROM taxa WHERE id = 9), 'New kingdom_ref of unit 9: 17');
+SELECT ok('d' = (SELECT kingdom_indexed FROM taxa WHERE id = 9), 'New kingdom_indexed of unit 9: d');
+SELECT ok(18 = (SELECT phylum_ref FROM taxa WHERE id = 9), 'New phylum_ref of unit 9: 18');
+SELECT ok('da' = (SELECT phylum_indexed FROM taxa WHERE id = 9), 'New phylum_indexed of unit 9: da');
+SELECT ok(19 = (SELECT class_ref FROM taxa WHERE id = 9), 'New class_ref of unit 9: 18');
+SELECT ok('daa' = (SELECT class_indexed FROM taxa WHERE id = 9), 'New class_indexed of unit 9: daa');
+SELECT ok(17 = (SELECT kingdom_ref FROM taxa WHERE id = 10), 'New kingdom_ref of unit 10: 17');
+SELECT ok('d' = (SELECT kingdom_indexed FROM taxa WHERE id = 10), 'New kingdom_indexed of unit 10: d');
+SELECT ok(18 = (SELECT phylum_ref FROM taxa WHERE id = 10), 'New phylum_ref of unit 10: 18');
+SELECT ok('da' = (SELECT phylum_indexed FROM taxa WHERE id = 10), 'New phylum_indexed of unit 10: da');
+SELECT ok(19 = (SELECT class_ref FROM taxa WHERE id = 10), 'New class_ref of unit 10: 18');
+SELECT ok('daa' = (SELECT class_indexed FROM taxa WHERE id = 10), 'New class_indexed of unit 10: daa');
+
+SELECT lives_ok('UPDATE taxa SET parent_ref = 23 WHERE id = 6', 'Unit 6 moved from parent unit 5 to parent unit 23');
+SELECT ok(20 = (SELECT kingdom_ref FROM taxa WHERE id = 6), 'New kingdom_ref of unit 6: 20');
+SELECT ok('e' = (SELECT kingdom_indexed FROM taxa WHERE id = 6), 'New kingdom_indexed of unit 6: e');
+SELECT ok(21 = (SELECT phylum_ref FROM taxa WHERE id = 6), 'New phylum_ref of unit 6: 18');
+SELECT ok('ea' = (SELECT phylum_indexed FROM taxa WHERE id = 6), 'New phylum_indexed of unit 6: ea');
+SELECT ok(22 = (SELECT class_ref FROM taxa WHERE id = 6), 'New class_ref of unit 6: 18');
+SELECT ok('eaa' = (SELECT class_indexed FROM taxa WHERE id = 6), 'New class_indexed of unit 6: eaa');
+SELECT ok(23 = (SELECT order_ref FROM taxa WHERE id = 6), 'New class_ref of unit 6: 18');
+SELECT ok('eaaa' = (SELECT order_indexed FROM taxa WHERE id = 6), 'New class_indexed of unit 6: eaaa');
 
 
+SELECT ok(8 = (SELECT sub_genus_ref FROM taxa WHERE id = 9), 'New sub_genus_ref of unit 9: 8');
+SELECT ok('aaaaaaa' = (SELECT sub_genus_indexed FROM taxa WHERE id = 9), 'New sub_genus_indexed of unit 9: aaaaaaa');
+SELECT genus_ref FROM taxa where id = 8;
+SELECT genus_indexed FROM taxa where id = 8;
+SELECT sub_genus_ref FROM taxa WHERE id = 8;
+SELECT sub_genus_indexed FROM taxa WHERE id = 8;
+SELECT lives_ok('UPDATE taxa SET level_ref = 41, parent_ref = 6 WHERE id = 8', 'Unit 8 moved from parent unit 7 to parent unit 6 and changed from level 42 (sub_genus) to level 41 (genus)');
+SELECT genus_ref FROM taxa where id = 8;
+SELECT genus_indexed FROM taxa where id = 8;
+SELECT sub_genus_ref FROM taxa WHERE id = 8;
+SELECT sub_genus_indexed FROM taxa WHERE id = 8;
+SELECT ok(0 = (SELECT sub_genus_ref FROM taxa WHERE id = 9), 'New sub_genus_ref of unit 9: 0');
+SELECT ok('' = (SELECT sub_genus_indexed FROM taxa WHERE id = 9), 'New sub_genus_indexed of unit 9: ''''');
+*/
 SELECT * FROM finish();
 ROLLBACK;
