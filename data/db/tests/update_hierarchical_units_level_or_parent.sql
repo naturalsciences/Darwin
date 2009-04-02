@@ -58,7 +58,7 @@ SELECT ok(4 = (SELECT layer_ref FROM lithostratigraphy WHERE id = 4), 'New layer
 SELECT ok('mealonyeobc' = (SELECT layer_indexed FROM lithostratigraphy WHERE id = 4), 'New layer_ref of unit 4: mealonyeobc');
 
 SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 65, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
-/*
+
 SELECT diag('Mineralogy level/parent update tests');
 
 INSERT INTO mineralogy (id,name, code, level_ref) VALUES (1, 'Méalo-nÿeø@ß€', 'A', 70);
@@ -89,7 +89,7 @@ SELECT ok(4 = (SELECT unit_group_ref FROM mineralogy WHERE id = 4), 'New unit_gr
 SELECT ok('mealonyeobc' = (SELECT unit_group_indexed FROM mineralogy WHERE id = 4), 'New unit_group_ref of unit 4: mealonyeobc');
 
 SELECT throws_ok('UPDATE mineralogy SET level_ref = 71, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
-
+/*
 SELECT diag('Taxonomy level/parent update tests');
 
 INSERT INTO taxa (id, name, level_ref) VALUES (1, 'TOP', 1);

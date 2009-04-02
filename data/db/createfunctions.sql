@@ -3475,6 +3475,38 @@ BEGIN
 		EXECUTE 'UPDATE mineralogy ' ||
 			'SET unit_class_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    unit_class_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    unit_division_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                   WHEN level_ref > ' || levels[2] || ' THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                   ELSE coalesce(unit_division_ref,0) ' ||
+			'              END, ' ||
+			'    unit_division_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                       WHEN level_ref > ' || levels[2] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                       ELSE coalesce(unit_division_indexed, '''') ' ||
+			'                  END, ' ||
+			'    unit_family_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
+			'                       WHEN level_ref > ' || levels[3] || ' THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
+			'                       ELSE coalesce(unit_family_ref,0) ' ||
+			'                  END, ' ||
+			'    unit_family_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
+			'                           WHEN level_ref > ' || levels[3] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
+			'                           ELSE coalesce(unit_family_indexed, '''') ' ||
+			'                      END, ' ||
+			'    unit_group_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
+			'                   WHEN level_ref > ' || levels[4] || ' THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
+			'                   ELSE coalesce(unit_group_ref,0) ' ||
+			'              END, ' ||
+			'    unit_group_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
+			'                   WHEN level_ref > ' || levels[4] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
+			'                   ELSE coalesce(unit_group_indexed, '''') ' ||
+			'              END, ' ||
+			'    unit_variety_ref = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
+			'                   WHEN level_ref > ' || levels[5] || ' THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
+			'                   ELSE coalesce(unit_variety_ref,0) ' ||
+			'              END, ' ||
+			'    unit_variety_indexed = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
+			'                   WHEN level_ref > ' || levels[5] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
+			'                   ELSE coalesce(unit_variety_indexed, '''') ' ||
+			'              END ' ||
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;

@@ -23,9 +23,9 @@ SET client_min_messages TO warning; -- notice;
 \i createtypes.sql
 \i createdomains.sql
 \i createtables.sql
+\i initiate_data.sql
 \i createfunctions.sql
 \i createtriggers.sql
 \i addchecks.sql
-\i initiate_data.sql
 -- Load Fixtures data
 \i tests_fixtures.sql
