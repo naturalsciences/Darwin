@@ -424,7 +424,7 @@ BEGIN
 			result
 		FROM mineralogy AS pm
 		WHERE pm.id = parent_ref;
-	ELSIF table_name = 'taxa' THEN
+	ELSIF table_name = 'taxonomy' THEN
 		SELECT
 			CASE
 				WHEN level_sys_name = 'domain' THEN
@@ -1076,7 +1076,7 @@ BEGIN
 			END AS abberans_indexed
 		INTO 
 			result
-		FROM taxa AS pt
+		FROM taxonomy AS pt
 		WHERE pt.id = parent_ref;
 	END IF;
 	RETURN result;
@@ -1390,7 +1390,7 @@ BEGIN
 			NEW.unit_variety_indexed
 		FROM mineralogy AS pm
 		WHERE pm.id = NEW.parent_ref;
-	ELSIF TG_TABLE_NAME = 'taxa' THEN
+	ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 		SELECT
 			CASE
 				WHEN level_sys_name = 'domain' THEN
@@ -2149,7 +2149,7 @@ BEGIN
 			NEW.sub_form_indexed,
 			NEW.abberans_ref,
 			NEW.abberans_indexed
-		FROM taxa AS pt
+		FROM taxonomy AS pt
 		WHERE pt.id = NEW.parent_ref;
 	END IF;
 	RETURN NEW;
@@ -2294,7 +2294,7 @@ BEGIN
 			IF NEW.label <> oldValue THEN
 				NEW.label_indexed := fullToIndex(NEW.label);
 			END IF;
-		ELSIF TG_TABLE_NAME = 'taxa' THEN
+		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
 				NEW.name_indexed := fullToIndex(NEW.name);
@@ -2346,7 +2346,7 @@ BEGIN
 			NEW.group_name_indexed := fullToIndex(NEW.group_name);
 		ELSIF TG_TABLE_NAME = 'tags' THEN
 			NEW.label_indexed := fullToIndex(NEW.label);
-		ELSIF TG_TABLE_NAME = 'taxa' THEN
+		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
@@ -2720,7 +2720,7 @@ BEGIN
 				NEW.unit_variety_indexed
 			FROM catalogue_levels
 			WHERE id = NEW.level_ref;
-		ELSIF TG_TABLE_NAME = 'taxa' THEN
+		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			SELECT
 				CASE
 					WHEN level_sys_name = 'domain' THEN
@@ -3510,10 +3510,434 @@ BEGIN
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
-	ELSIF table_name = 'taxa' THEN
-		EXECUTE 'UPDATE taxa ' ||
+	ELSIF table_name = 'taxonomy' THEN
+		EXECUTE 'UPDATE taxonomy ' ||
 			'SET domain_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    domain_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    kingdom_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                   WHEN level_ref > ' || levels[2] || ' THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                   ELSE coalesce(kingdom_ref,0) ' ||
+			'              END, ' ||
+			'    kingdom_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                       WHEN level_ref > ' || levels[2] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                       ELSE coalesce(kingdom_indexed, '''') ' ||
+			'                  END, ' ||
+			'    super_phylum_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
+			'                       WHEN level_ref > ' || levels[3] || ' THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
+			'                       ELSE coalesce(super_phylum_ref,0) ' ||
+			'                  END, ' ||
+			'    super_phylum_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
+			'                           WHEN level_ref > ' || levels[3] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
+			'                           ELSE coalesce(super_phylum_indexed, '''') ' ||
+			'                      END, ' ||
+			'    phylum_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
+			'                   WHEN level_ref > ' || levels[4] || ' THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
+			'                   ELSE coalesce(phylum_ref,0) ' ||
+			'              END, ' ||
+			'    phylum_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
+			'                   WHEN level_ref > ' || levels[4] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
+			'                   ELSE coalesce(phylum_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_phylum_ref = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
+			'                   WHEN level_ref > ' || levels[5] || ' THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
+			'                   ELSE coalesce(sub_phylum_ref,0) ' ||
+			'              END, ' ||
+			'    sub_phylum_indexed = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
+			'                   WHEN level_ref > ' || levels[5] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
+			'                   ELSE coalesce(sub_phylum_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_phylum_ref = CASE WHEN ' || levels[6] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[6], 0) ||
+			'                   WHEN level_ref > ' || levels[6] || ' THEN ' || coalesce(parent_hierarchy_ref[6], 0) ||
+			'                   ELSE coalesce(infra_phylum_ref,0) ' ||
+			'              END, ' ||
+			'    infra_phylum_indexed = CASE WHEN ' || levels[6] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[6], '')) ||
+			'                   WHEN level_ref > ' || levels[6] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[6], '')) ||
+			'                   ELSE coalesce(infra_phylum_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_cohort_botany_ref = CASE WHEN ' || levels[7] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[7], 0) ||
+			'                   WHEN level_ref > ' || levels[7] || ' THEN ' || coalesce(parent_hierarchy_ref[7], 0) ||
+			'                   ELSE coalesce(super_cohort_botany_ref,0) ' ||
+			'              END, ' ||
+			'    super_cohort_botany_indexed = CASE WHEN ' || levels[7] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[7], '')) ||
+			'                   WHEN level_ref > ' || levels[7] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[7], '')) ||
+			'                   ELSE coalesce(super_cohort_botany_indexed, '''') ' ||
+			'              END, ' ||
+			'    cohort_botany_ref = CASE WHEN ' || levels[8] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[8], 0) ||
+			'                   WHEN level_ref > ' || levels[8] || ' THEN ' || coalesce(parent_hierarchy_ref[8], 0) ||
+			'                   ELSE coalesce(cohort_botany_ref,0) ' ||
+			'              END, ' ||
+			'    cohort_botany_indexed = CASE WHEN ' || levels[8] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[8], '')) ||
+			'                   WHEN level_ref > ' || levels[8] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[8], '')) ||
+			'                   ELSE coalesce(cohort_botany_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_cohort_botany_ref = CASE WHEN ' || levels[9] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[9], 0) ||
+			'                   WHEN level_ref > ' || levels[9] || ' THEN ' || coalesce(parent_hierarchy_ref[9], 0) ||
+			'                   ELSE coalesce(sub_cohort_botany_ref,0) ' ||
+			'              END, ' ||
+			'    sub_cohort_botany_indexed = CASE WHEN ' || levels[9] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[9], '')) ||
+			'                   WHEN level_ref > ' || levels[9] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[9], '')) ||
+			'                   ELSE coalesce(sub_cohort_botany_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_cohort_botany_ref = CASE WHEN ' || levels[10] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[10], 0) ||
+			'                   WHEN level_ref > ' || levels[10] || ' THEN ' || coalesce(parent_hierarchy_ref[10], 0) ||
+			'                   ELSE coalesce(infra_cohort_botany_ref,0) ' ||
+			'              END, ' ||
+			'    infra_cohort_botany_indexed = CASE WHEN ' || levels[10] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[10], '')) ||
+			'                   WHEN level_ref > ' || levels[10] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[10], '')) ||
+			'                   ELSE coalesce(infra_cohort_botany_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_class_ref = CASE WHEN ' || levels[11] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[11], 0) ||
+			'                   WHEN level_ref > ' || levels[11] || ' THEN ' || coalesce(parent_hierarchy_ref[11], 0) ||
+			'                   ELSE coalesce(super_class_ref,0) ' ||
+			'              END, ' ||
+			'    super_class_indexed = CASE WHEN ' || levels[11] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[11], '')) ||
+			'                   WHEN level_ref > ' || levels[11] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[11], '')) ||
+			'                   ELSE coalesce(super_class_indexed, '''') ' ||
+			'              END, ' ||
+			'    class_ref = CASE WHEN ' || levels[12] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[12], 0) ||
+			'                   WHEN level_ref > ' || levels[12] || ' THEN ' || coalesce(parent_hierarchy_ref[12], 0) ||
+			'                   ELSE coalesce(class_ref,0) ' ||
+			'              END, ' ||
+			'    class_indexed = CASE WHEN ' || levels[12] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[12], '')) ||
+			'                   WHEN level_ref > ' || levels[12] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[12], '')) ||
+			'                   ELSE coalesce(class_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_class_ref = CASE WHEN ' || levels[13] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[13], 0) ||
+			'                   WHEN level_ref > ' || levels[13] || ' THEN ' || coalesce(parent_hierarchy_ref[13], 0) ||
+			'                   ELSE coalesce(sub_class_ref,0) ' ||
+			'              END, ' ||
+			'    sub_class_indexed = CASE WHEN ' || levels[13] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[13], '')) ||
+			'                   WHEN level_ref > ' || levels[13] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[13], '')) ||
+			'                   ELSE coalesce(sub_class_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_class_ref = CASE WHEN ' || levels[14] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[14], 0) ||
+			'                   WHEN level_ref > ' || levels[14] || ' THEN ' || coalesce(parent_hierarchy_ref[14], 0) ||
+			'                   ELSE coalesce(infra_class_ref,0) ' ||
+			'              END, ' ||
+			'    infra_class_indexed = CASE WHEN ' || levels[14] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[14], '')) ||
+			'                   WHEN level_ref > ' || levels[14] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[14], '')) ||
+			'                   ELSE coalesce(infra_class_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_division_ref = CASE WHEN ' || levels[15] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[15], 0) ||
+			'                   WHEN level_ref > ' || levels[15] || ' THEN ' || coalesce(parent_hierarchy_ref[15], 0) ||
+			'                   ELSE coalesce(super_division_ref,0) ' ||
+			'              END, ' ||
+			'    super_division_indexed = CASE WHEN ' || levels[15] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[15], '')) ||
+			'                   WHEN level_ref > ' || levels[15] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[15], '')) ||
+			'                   ELSE coalesce(super_division_indexed, '''') ' ||
+			'              END, ' ||
+			'    division_ref = CASE WHEN ' || levels[16] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[16], 0) ||
+			'                   WHEN level_ref > ' || levels[16] || ' THEN ' || coalesce(parent_hierarchy_ref[16], 0) ||
+			'                   ELSE coalesce(division_ref,0) ' ||
+			'              END, ' ||
+			'    division_indexed = CASE WHEN ' || levels[16] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[16], '')) ||
+			'                   WHEN level_ref > ' || levels[16] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[16], '')) ||
+			'                   ELSE coalesce(division_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_division_ref = CASE WHEN ' || levels[17] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[17], 0) ||
+			'                   WHEN level_ref > ' || levels[17] || ' THEN ' || coalesce(parent_hierarchy_ref[17], 0) ||
+			'                   ELSE coalesce(sub_division_ref,0) ' ||
+			'              END, ' ||
+			'    sub_division_indexed = CASE WHEN ' || levels[17] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[17], '')) ||
+			'                   WHEN level_ref > ' || levels[17] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[17], '')) ||
+			'                   ELSE coalesce(sub_division_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_division_ref = CASE WHEN ' || levels[18] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[18], 0) ||
+			'                   WHEN level_ref > ' || levels[18] || ' THEN ' || coalesce(parent_hierarchy_ref[18], 0) ||
+			'                   ELSE coalesce(infra_division_ref,0) ' ||
+			'              END, ' ||
+			'    infra_division_indexed = CASE WHEN ' || levels[18] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[18], '')) ||
+			'                   WHEN level_ref > ' || levels[18] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[18], '')) ||
+			'                   ELSE coalesce(infra_division_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_legion_ref = CASE WHEN ' || levels[19] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[19], 0) ||
+			'                   WHEN level_ref > ' || levels[19] || ' THEN ' || coalesce(parent_hierarchy_ref[19], 0) ||
+			'                   ELSE coalesce(super_legion_ref,0) ' ||
+			'              END, ' ||
+			'    super_legion_indexed = CASE WHEN ' || levels[19] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[19], '')) ||
+			'                   WHEN level_ref > ' || levels[19] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[19], '')) ||
+			'                   ELSE coalesce(super_legion_indexed, '''') ' ||
+			'              END, ' ||
+			'    legion_ref = CASE WHEN ' || levels[20] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[20], 0) ||
+			'                   WHEN level_ref > ' || levels[20] || ' THEN ' || coalesce(parent_hierarchy_ref[20], 0) ||
+			'                   ELSE coalesce(legion_ref,0) ' ||
+			'              END, ' ||
+			'    legion_indexed = CASE WHEN ' || levels[20] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[20], '')) ||
+			'                   WHEN level_ref > ' || levels[20] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[20], '')) ||
+			'                   ELSE coalesce(legion_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_legion_ref = CASE WHEN ' || levels[21] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[21], 0) ||
+			'                   WHEN level_ref > ' || levels[21] || ' THEN ' || coalesce(parent_hierarchy_ref[21], 0) ||
+			'                   ELSE coalesce(sub_legion_ref,0) ' ||
+			'              END, ' ||
+			'    sub_legion_indexed = CASE WHEN ' || levels[21] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[21], '')) ||
+			'                   WHEN level_ref > ' || levels[21] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[21], '')) ||
+			'                   ELSE coalesce(sub_legion_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_legion_ref = CASE WHEN ' || levels[22] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[22], 0) ||
+			'                   WHEN level_ref > ' || levels[22] || ' THEN ' || coalesce(parent_hierarchy_ref[22], 0) ||
+			'                   ELSE coalesce(infra_legion_ref,0) ' ||
+			'              END, ' ||
+			'    infra_legion_indexed = CASE WHEN ' || levels[22] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[22], '')) ||
+			'                   WHEN level_ref > ' || levels[22] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[22], '')) ||
+			'                   ELSE coalesce(infra_legion_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_cohort_zoology_ref = CASE WHEN ' || levels[23] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[23], 0) ||
+			'                   WHEN level_ref > ' || levels[23] || ' THEN ' || coalesce(parent_hierarchy_ref[23], 0) ||
+			'                   ELSE coalesce(super_cohort_zoology_ref,0) ' ||
+			'              END, ' ||
+			'    super_cohort_zoology_indexed = CASE WHEN ' || levels[23] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[23], '')) ||
+			'                   WHEN level_ref > ' || levels[23] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[23], '')) ||
+			'                   ELSE coalesce(super_cohort_zoology_indexed, '''') ' ||
+			'              END, ' ||
+			'    cohort_zoology_ref = CASE WHEN ' || levels[24] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[24], 0) ||
+			'                   WHEN level_ref > ' || levels[24] || ' THEN ' || coalesce(parent_hierarchy_ref[24], 0) ||
+			'                   ELSE coalesce(cohort_zoology_ref,0) ' ||
+			'              END, ' ||
+			'    cohort_zoology_indexed = CASE WHEN ' || levels[24] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[24], '')) ||
+			'                   WHEN level_ref > ' || levels[24] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[24], '')) ||
+			'                   ELSE coalesce(cohort_zoology_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_cohort_zoology_ref = CASE WHEN ' || levels[25] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[25], 0) ||
+			'                   WHEN level_ref > ' || levels[25] || ' THEN ' || coalesce(parent_hierarchy_ref[25], 0) ||
+			'                   ELSE coalesce(sub_cohort_zoology_ref,0) ' ||
+			'              END, ' ||
+			'    sub_cohort_zoology_indexed = CASE WHEN ' || levels[25] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[25], '')) ||
+			'                   WHEN level_ref > ' || levels[25] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[25], '')) ||
+			'                   ELSE coalesce(sub_cohort_zoology_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_cohort_zoology_ref = CASE WHEN ' || levels[26] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[26], 0) ||
+			'                   WHEN level_ref > ' || levels[26] || ' THEN ' || coalesce(parent_hierarchy_ref[26], 0) ||
+			'                   ELSE coalesce(infra_cohort_zoology_ref,0) ' ||
+			'              END, ' ||
+			'    infra_cohort_zoology_indexed = CASE WHEN ' || levels[26] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[26], '')) ||
+			'                   WHEN level_ref > ' || levels[26] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[26], '')) ||
+			'                   ELSE coalesce(infra_cohort_zoology_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_order_ref = CASE WHEN ' || levels[27] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[27], 0) ||
+			'                   WHEN level_ref > ' || levels[27] || ' THEN ' || coalesce(parent_hierarchy_ref[27], 0) ||
+			'                   ELSE coalesce(super_order_ref,0) ' ||
+			'              END, ' ||
+			'    super_order_indexed = CASE WHEN ' || levels[27] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[27], '')) ||
+			'                   WHEN level_ref > ' || levels[27] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[27], '')) ||
+			'                   ELSE coalesce(super_order_indexed, '''') ' ||
+			'              END, ' ||
+			'    order_ref = CASE WHEN ' || levels[28] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[28], 0) ||
+			'                   WHEN level_ref > ' || levels[28] || ' THEN ' || coalesce(parent_hierarchy_ref[28], 0) ||
+			'                   ELSE coalesce(order_ref,0) ' ||
+			'              END, ' ||
+			'    order_indexed = CASE WHEN ' || levels[28] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[28], '')) ||
+			'                   WHEN level_ref > ' || levels[28] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[28], '')) ||
+			'                   ELSE coalesce(order_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_order_ref = CASE WHEN ' || levels[29] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[29], 0) ||
+			'                   WHEN level_ref > ' || levels[29] || ' THEN ' || coalesce(parent_hierarchy_ref[29], 0) ||
+			'                   ELSE coalesce(sub_order_ref,0) ' ||
+			'              END, ' ||
+			'    sub_order_indexed = CASE WHEN ' || levels[29] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[29], '')) ||
+			'                   WHEN level_ref > ' || levels[29] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[29], '')) ||
+			'                   ELSE coalesce(sub_order_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_order_ref = CASE WHEN ' || levels[30] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[30], 0) ||
+			'                   WHEN level_ref > ' || levels[30] || ' THEN ' || coalesce(parent_hierarchy_ref[30], 0) ||
+			'                   ELSE coalesce(infra_order_ref,0) ' ||
+			'              END, ' ||
+			'    infra_order_indexed = CASE WHEN ' || levels[30] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[30], '')) ||
+			'                   WHEN level_ref > ' || levels[30] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[30], '')) ||
+			'                   ELSE coalesce(infra_order_indexed, '''') ' ||
+			'              END, ' ||
+			'    section_zoology_ref = CASE WHEN ' || levels[31] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[31], 0) ||
+			'                   WHEN level_ref > ' || levels[31] || ' THEN ' || coalesce(parent_hierarchy_ref[31], 0) ||
+			'                   ELSE coalesce(section_zoology_ref,0) ' ||
+			'              END, ' ||
+			'    section_zoology_indexed = CASE WHEN ' || levels[31] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[31], '')) ||
+			'                   WHEN level_ref > ' || levels[31] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[31], '')) ||
+			'                   ELSE coalesce(section_zoology_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_section_zoology_ref = CASE WHEN ' || levels[32] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[32], 0) ||
+			'                   WHEN level_ref > ' || levels[32] || ' THEN ' || coalesce(parent_hierarchy_ref[32], 0) ||
+			'                   ELSE coalesce(sub_section_zoology_ref,0) ' ||
+			'              END, ' ||
+			'    sub_section_zoology_indexed = CASE WHEN ' || levels[32] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[32], '')) ||
+			'                   WHEN level_ref > ' || levels[32] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[32], '')) ||
+			'                   ELSE coalesce(sub_section_zoology_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_family_ref = CASE WHEN ' || levels[33] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[33], 0) ||
+			'                   WHEN level_ref > ' || levels[33] || ' THEN ' || coalesce(parent_hierarchy_ref[33], 0) ||
+			'                   ELSE coalesce(super_family_ref,0) ' ||
+			'              END, ' ||
+			'    super_family_indexed = CASE WHEN ' || levels[33] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[33], '')) ||
+			'                   WHEN level_ref > ' || levels[33] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[33], '')) ||
+			'                   ELSE coalesce(super_family_indexed, '''') ' ||
+			'              END, ' ||
+			'    family_ref = CASE WHEN ' || levels[34] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[34], 0) ||
+			'                   WHEN level_ref > ' || levels[34] || ' THEN ' || coalesce(parent_hierarchy_ref[34], 0) ||
+			'                   ELSE coalesce(family_ref,0) ' ||
+			'              END, ' ||
+			'    family_indexed = CASE WHEN ' || levels[34] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[34], '')) ||
+			'                   WHEN level_ref > ' || levels[34] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[34], '')) ||
+			'                   ELSE coalesce(family_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_family_ref = CASE WHEN ' || levels[35] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[35], 0) ||
+			'                   WHEN level_ref > ' || levels[35] || ' THEN ' || coalesce(parent_hierarchy_ref[35], 0) ||
+			'                   ELSE coalesce(sub_family_ref,0) ' ||
+			'              END, ' ||
+			'    sub_family_indexed = CASE WHEN ' || levels[35] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[35], '')) ||
+			'                   WHEN level_ref > ' || levels[35] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[35], '')) ||
+			'                   ELSE coalesce(sub_family_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_family_ref = CASE WHEN ' || levels[36] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[36], 0) ||
+			'                   WHEN level_ref > ' || levels[36] || ' THEN ' || coalesce(parent_hierarchy_ref[36], 0) ||
+			'                   ELSE coalesce(infra_family_ref,0) ' ||
+			'              END, ' ||
+			'    infra_family_indexed = CASE WHEN ' || levels[36] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[36], '')) ||
+			'                   WHEN level_ref > ' || levels[36] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[36], '')) ||
+			'                   ELSE coalesce(infra_family_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_tribe_ref = CASE WHEN ' || levels[37] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[37], 0) ||
+			'                   WHEN level_ref > ' || levels[37] || ' THEN ' || coalesce(parent_hierarchy_ref[37], 0) ||
+			'                   ELSE coalesce(super_tribe_ref,0) ' ||
+			'              END, ' ||
+			'    super_tribe_indexed = CASE WHEN ' || levels[37] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[37], '')) ||
+			'                   WHEN level_ref > ' || levels[37] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[37], '')) ||
+			'                   ELSE coalesce(super_tribe_indexed, '''') ' ||
+			'              END, ' ||
+			'    tribe_ref = CASE WHEN ' || levels[38] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[38], 0) ||
+			'                   WHEN level_ref > ' || levels[38] || ' THEN ' || coalesce(parent_hierarchy_ref[38], 0) ||
+			'                   ELSE coalesce(tribe_ref,0) ' ||
+			'              END, ' ||
+			'    tribe_indexed = CASE WHEN ' || levels[38] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[38], '')) ||
+			'                   WHEN level_ref > ' || levels[38] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[38], '')) ||
+			'                   ELSE coalesce(tribe_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_tribe_ref = CASE WHEN ' || levels[39] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[39], 0) ||
+			'                   WHEN level_ref > ' || levels[39] || ' THEN ' || coalesce(parent_hierarchy_ref[39], 0) ||
+			'                   ELSE coalesce(sub_tribe_ref,0) ' ||
+			'              END, ' ||
+			'    sub_tribe_indexed = CASE WHEN ' || levels[39] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[39], '')) ||
+			'                   WHEN level_ref > ' || levels[39] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[39], '')) ||
+			'                   ELSE coalesce(sub_tribe_indexed, '''') ' ||
+			'              END, ' ||
+			'    infra_tribe_ref = CASE WHEN ' || levels[40] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[40], 0) ||
+			'                   WHEN level_ref > ' || levels[40] || ' THEN ' || coalesce(parent_hierarchy_ref[40], 0) ||
+			'                   ELSE coalesce(infra_tribe_ref,0) ' ||
+			'              END, ' ||
+			'    infra_tribe_indexed = CASE WHEN ' || levels[40] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[40], '')) ||
+			'                   WHEN level_ref > ' || levels[40] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[40], '')) ||
+			'                   ELSE coalesce(infra_tribe_indexed, '''') ' ||
+			'              END, ' ||
+			'    genus_ref = CASE WHEN ' || levels[41] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[41], 0) ||
+			'                   WHEN level_ref > ' || levels[41] || ' THEN ' || coalesce(parent_hierarchy_ref[41], 0) ||
+			'                   ELSE coalesce(genus_ref,0) ' ||
+			'              END, ' ||
+			'    genus_indexed = CASE WHEN ' || levels[41] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[41], '')) ||
+			'                   WHEN level_ref > ' || levels[41] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[41], '')) ||
+			'                   ELSE coalesce(genus_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_genus_ref = CASE WHEN ' || levels[42] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[42], 0) ||
+			'                   WHEN level_ref > ' || levels[42] || ' THEN ' || coalesce(parent_hierarchy_ref[42], 0) ||
+			'                   ELSE coalesce(sub_genus_ref,0) ' ||
+			'              END, ' ||
+			'    sub_genus_indexed = CASE WHEN ' || levels[42] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[42], '')) ||
+			'                   WHEN level_ref > ' || levels[42] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[42], '')) ||
+			'                   ELSE coalesce(sub_genus_indexed, '''') ' ||
+			'              END, ' ||
+			'    section_botany_ref = CASE WHEN ' || levels[43] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[43], 0) ||
+			'                   WHEN level_ref > ' || levels[43] || ' THEN ' || coalesce(parent_hierarchy_ref[43], 0) ||
+			'                   ELSE coalesce(section_botany_ref,0) ' ||
+			'              END, ' ||
+			'    section_botany_indexed = CASE WHEN ' || levels[43] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[43], '')) ||
+			'                   WHEN level_ref > ' || levels[43] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[43], '')) ||
+			'                   ELSE coalesce(section_botany_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_section_botany_ref = CASE WHEN ' || levels[44] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[44], 0) ||
+			'                   WHEN level_ref > ' || levels[44] || ' THEN ' || coalesce(parent_hierarchy_ref[44], 0) ||
+			'                   ELSE coalesce(sub_section_botany_ref,0) ' ||
+			'              END, ' ||
+			'    sub_section_botany_indexed = CASE WHEN ' || levels[44] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[44], '')) ||
+			'                   WHEN level_ref > ' || levels[44] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[44], '')) ||
+			'                   ELSE coalesce(sub_section_botany_indexed, '''') ' ||
+			'              END, ' ||
+			'    serie_ref = CASE WHEN ' || levels[45] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[45], 0) ||
+			'                   WHEN level_ref > ' || levels[45] || ' THEN ' || coalesce(parent_hierarchy_ref[45], 0) ||
+			'                   ELSE coalesce(serie_ref,0) ' ||
+			'              END, ' ||
+			'    serie_indexed = CASE WHEN ' || levels[45] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[45], '')) ||
+			'                   WHEN level_ref > ' || levels[45] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[45], '')) ||
+			'                   ELSE coalesce(serie_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_serie_ref = CASE WHEN ' || levels[46] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[46], 0) ||
+			'                   WHEN level_ref > ' || levels[46] || ' THEN ' || coalesce(parent_hierarchy_ref[46], 0) ||
+			'                   ELSE coalesce(sub_serie_ref,0) ' ||
+			'              END, ' ||
+			'    sub_serie_indexed = CASE WHEN ' || levels[46] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[46], '')) ||
+			'                   WHEN level_ref > ' || levels[46] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[46], '')) ||
+			'                   ELSE coalesce(sub_serie_indexed, '''') ' ||
+			'              END, ' ||
+			'    super_species_ref = CASE WHEN ' || levels[47] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[47], 0) ||
+			'                   WHEN level_ref > ' || levels[47] || ' THEN ' || coalesce(parent_hierarchy_ref[47], 0) ||
+			'                   ELSE coalesce(super_species_ref,0) ' ||
+			'              END, ' ||
+			'    super_species_indexed = CASE WHEN ' || levels[47] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[47], '')) ||
+			'                   WHEN level_ref > ' || levels[47] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[47], '')) ||
+			'                   ELSE coalesce(super_species_indexed, '''') ' ||
+			'              END, ' ||
+			'    species_ref = CASE WHEN ' || levels[48] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[48], 0) ||
+			'                   WHEN level_ref > ' || levels[48] || ' THEN ' || coalesce(parent_hierarchy_ref[48], 0) ||
+			'                   ELSE coalesce(species_ref,0) ' ||
+			'              END, ' ||
+			'    species_indexed = CASE WHEN ' || levels[48] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[48], '')) ||
+			'                   WHEN level_ref > ' || levels[48] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[48], '')) ||
+			'                   ELSE coalesce(species_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_species_ref = CASE WHEN ' || levels[49] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[49], 0) ||
+			'                   WHEN level_ref > ' || levels[49] || ' THEN ' || coalesce(parent_hierarchy_ref[49], 0) ||
+			'                   ELSE coalesce(sub_species_ref,0) ' ||
+			'              END, ' ||
+			'    sub_species_indexed = CASE WHEN ' || levels[49] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[49], '')) ||
+			'                   WHEN level_ref > ' || levels[49] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[49], '')) ||
+			'                   ELSE coalesce(sub_species_indexed, '''') ' ||
+			'              END, ' ||
+			'    variety_ref = CASE WHEN ' || levels[50] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[50], 0) ||
+			'                   WHEN level_ref > ' || levels[50] || ' THEN ' || coalesce(parent_hierarchy_ref[50], 0) ||
+			'                   ELSE coalesce(variety_ref,0) ' ||
+			'              END, ' ||
+			'    variety_indexed = CASE WHEN ' || levels[50] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[50], '')) ||
+			'                   WHEN level_ref > ' || levels[50] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[50], '')) ||
+			'                   ELSE coalesce(variety_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_variety_ref = CASE WHEN ' || levels[51] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[51], 0) ||
+			'                   WHEN level_ref > ' || levels[51] || ' THEN ' || coalesce(parent_hierarchy_ref[51], 0) ||
+			'                   ELSE coalesce(sub_variety_ref,0) ' ||
+			'              END, ' ||
+			'    sub_variety_indexed = CASE WHEN ' || levels[51] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[51], '')) ||
+			'                   WHEN level_ref > ' || levels[51] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[51], '')) ||
+			'                   ELSE coalesce(sub_variety_indexed, '''') ' ||
+			'              END, ' ||
+			'    form_ref = CASE WHEN ' || levels[52] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[52], 0) ||
+			'                   WHEN level_ref > ' || levels[52] || ' THEN ' || coalesce(parent_hierarchy_ref[52], 0) ||
+			'                   ELSE coalesce(form_ref,0) ' ||
+			'              END, ' ||
+			'    form_indexed = CASE WHEN ' || levels[52] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[52], '')) ||
+			'                   WHEN level_ref > ' || levels[52] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[52], '')) ||
+			'                   ELSE coalesce(form_indexed, '''') ' ||
+			'              END, ' ||
+			'    sub_form_ref = CASE WHEN ' || levels[53] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[53], 0) ||
+			'                   WHEN level_ref > ' || levels[53] || ' THEN ' || coalesce(parent_hierarchy_ref[53], 0) ||
+			'                   ELSE coalesce(sub_form_ref,0) ' ||
+			'              END, ' ||
+			'    sub_form_indexed = CASE WHEN ' || levels[53] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[53], '')) ||
+			'                   WHEN level_ref > ' || levels[53] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[53], '')) ||
+			'                   ELSE coalesce(sub_form_indexed, '''') ' ||
+			'              END, ' ||
+			'    abberans_ref = CASE WHEN ' || levels[54] || ' <= ' || parent_new_level || ' THEN ' || coalesce(parent_hierarchy_ref[54], 0) ||
+			'                   WHEN level_ref > ' || levels[54] || ' THEN ' || coalesce(parent_hierarchy_ref[54], 0) ||
+			'                   ELSE coalesce(abberans_ref,0) ' ||
+			'              END, ' ||
+			'    abberans_indexed = CASE WHEN ' || levels[54] || ' <= ' || parent_new_level || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[54], '')) ||
+			'                   WHEN level_ref > ' || levels[54] || ' THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[54], '')) ||
+			'                   ELSE coalesce(abberans_indexed, '''') ' ||
+			'              END ' ||
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
@@ -3875,7 +4299,7 @@ BEGIN
 				WHERE pm.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.unit_class_ref::integer, NEW.unit_division_ref::integer, NEW.unit_family_ref::integer, NEW.unit_group_ref::integer, NEW.unit_variety_ref::integer];
 				hierarchy_indexed := ARRAY[NEW.unit_class_indexed::varchar, NEW.unit_division_indexed::varchar, NEW.unit_family_indexed::varchar, NEW.unit_group_indexed::varchar, NEW.unit_variety_indexed::varchar];
-			ELSIF TG_TABLE_NAME = 'taxa' THEN
+			ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 				SELECT
 					CASE
 						WHEN level_sys_name_new = 'domain' THEN
@@ -4634,7 +5058,7 @@ BEGIN
 					NEW.sub_form_indexed,
 					NEW.abberans_ref,
 					NEW.abberans_indexed
-				FROM taxa AS pt
+				FROM taxonomy AS pt
 				WHERE pt.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.domain_ref::integer, NEW.kingdom_ref::integer, NEW.super_phylum_ref::integer, NEW.phylum_ref::integer, NEW.sub_phylum_ref::integer, NEW.infra_phylum_ref::integer, NEW.super_cohort_botany_ref::integer, NEW.cohort_botany_ref::integer, NEW.sub_cohort_botany_ref::integer, NEW.infra_cohort_botany_ref::integer, NEW.super_class_ref::integer, NEW.class_ref::integer, NEW.sub_class_ref::integer, NEW.infra_class_ref::integer, NEW.super_division_ref::integer, NEW.division_ref::integer, NEW.sub_division_ref::integer, NEW.infra_division_ref::integer, NEW.super_legion_ref::integer, NEW.legion_ref::integer, NEW.sub_legion_ref::integer, NEW.infra_legion_ref::integer, NEW.super_cohort_zoology_ref::integer, NEW.cohort_zoology_ref::integer, NEW.sub_cohort_zoology_ref::integer, NEW.infra_cohort_zoology_ref::integer, NEW.super_order_ref::integer, NEW.order_ref::integer, NEW.sub_order_ref::integer, NEW.infra_order_ref::integer, NEW.section_zoology_ref::integer, NEW.sub_section_zoology_ref::integer, NEW.super_family_ref::integer, NEW.family_ref::integer, NEW.sub_family_ref::integer, NEW.infra_family_ref::integer, NEW.super_tribe_ref::integer, NEW.tribe_ref::integer, NEW.sub_tribe_ref::integer, NEW.infra_tribe_ref::integer, NEW.genus_ref::integer, NEW.sub_genus_ref::integer, NEW.section_botany_ref::integer, NEW.sub_section_botany_ref::integer, NEW.serie_ref::integer, NEW.sub_serie_ref::integer, NEW.super_species_ref::integer, NEW.species_ref::integer, NEW.sub_species_ref::integer, NEW.variety_ref::integer, NEW.sub_variety_ref::integer, NEW.form_ref::integer, NEW.sub_form_ref::integer, NEW.abberans_ref::integer];
 				hierarchy_indexed := ARRAY[NEW.domain_indexed::varchar, NEW.kingdom_indexed::varchar, NEW.super_phylum_indexed::varchar, NEW.phylum_indexed::varchar, NEW.sub_phylum_indexed::varchar, NEW.infra_phylum_indexed::varchar, NEW.super_cohort_botany_indexed::varchar, NEW.cohort_botany_indexed::varchar, NEW.sub_cohort_botany_indexed::varchar, NEW.infra_cohort_botany_indexed::varchar, NEW.super_class_indexed::varchar, NEW.class_indexed::varchar, NEW.sub_class_indexed::varchar, NEW.infra_class_indexed::varchar, NEW.super_division_indexed::varchar, NEW.division_indexed::varchar, NEW.sub_division_indexed::varchar, NEW.infra_division_indexed::varchar, NEW.super_legion_indexed::varchar, NEW.legion_indexed::varchar, NEW.sub_legion_indexed::varchar, NEW.infra_legion_indexed::varchar, NEW.super_cohort_zoology_indexed::varchar, NEW.cohort_zoology_indexed::varchar, NEW.sub_cohort_zoology_indexed::varchar, NEW.infra_cohort_zoology_indexed::varchar, NEW.super_order_indexed::varchar, NEW.order_indexed::varchar, NEW.sub_order_indexed::varchar, NEW.infra_order_indexed::varchar, NEW.section_zoology_indexed::varchar, NEW.sub_section_zoology_indexed::varchar, NEW.super_family_indexed::varchar, NEW.family_indexed::varchar, NEW.sub_family_indexed::varchar, NEW.infra_family_indexed::varchar, NEW.super_tribe_indexed::varchar, NEW.tribe_indexed::varchar, NEW.sub_tribe_indexed::varchar, NEW.infra_tribe_indexed::varchar, NEW.genus_indexed::varchar, NEW.sub_genus_indexed::varchar, NEW.section_botany_indexed::varchar, NEW.sub_section_botany_indexed::varchar, NEW.serie_indexed::varchar, NEW.sub_serie_indexed::varchar, NEW.super_species_indexed::varchar, NEW.species_indexed::varchar, NEW.sub_species_indexed::varchar, NEW.variety_indexed::varchar, NEW.sub_variety_indexed::varchar, NEW.form_indexed::varchar, NEW.sub_form_indexed::varchar, NEW.abberans_indexed::varchar];

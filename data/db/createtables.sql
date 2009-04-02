@@ -880,7 +880,7 @@ comment on column template_classifications.level_ref is 'Reference of classifica
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column template_classifications.path is 'Hierarchy path (/ for root)';
 comment on column template_classifications.parent_ref is 'Id of parent - id field from table itself';
-create table taxa
+create table taxonomy
        (
         id serial not null,
         domain_ref classifications_ids,
@@ -993,185 +993,185 @@ create table taxa
         abberans_indexed classifications_names,
         chimera_hybrid_pos varchar default 'none' not null,
         extinct boolean default false not null,
-        constraint pk_taxa primary key (id),
-        constraint unq_taxa unique (path, name_indexed),
-        constraint fk_taxa_catalogue_levels_fk foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_taxa_taxa_domain foreign key (domain_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_kingdom_taxa foreign key (kingdom_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_phylum_taxa foreign key (super_phylum_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_phylum_taxa foreign key (phylum_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_phylum_taxa foreign key (sub_phylum_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_phylum_taxa foreign key (infra_phylum_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_cohort_botany_taxa foreign key (super_cohort_botany_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_cohort_botany_taxa foreign key (cohort_botany_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_cohort_botany_taxa foreign key (sub_cohort_botany_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_cohort_botany_taxa foreign key (infra_cohort_botany_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_class_taxa foreign key (super_class_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_class_taxa foreign key (class_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_class_taxa foreign key (sub_class_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_class_taxa foreign key (infra_class_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_division_taxa foreign key (super_division_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_division_taxa foreign key (division_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_division_taxa foreign key (sub_division_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_division_taxa foreign key (infra_division_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_legion_taxa foreign key (super_legion_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_legion_taxa foreign key (legion_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_legion_taxa foreign key (sub_legion_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_legion_taxa foreign key (infra_legion_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_cohort_zoology_taxa foreign key (super_cohort_zoology_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_cohort_zoology_taxa foreign key (cohort_zoology_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_cohort_zoology_taxa foreign key (sub_cohort_zoology_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_cohort_zoology_taxa foreign key (infra_cohort_zoology_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_order_taxa foreign key (super_order_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_order_taxa foreign key (order_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_order_taxa foreign key (sub_order_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_order_taxa foreign key (infra_order_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_section_zoology_taxa foreign key (section_zoology_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_section_zoology_taxa foreign key (sub_section_zoology_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_family_taxa foreign key (super_family_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_family_taxa foreign key (family_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_family_taxa foreign key (sub_family_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_family_taxa foreign key (infra_family_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_tribe_taxa foreign key (super_tribe_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_tribe_taxa foreign key (tribe_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_tribe_taxa foreign key (sub_tribe_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_infra_tribe_taxa foreign key (infra_tribe_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_genus_taxa foreign key (genus_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_genus_taxa foreign key (sub_genus_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_section_botany_taxa foreign key (section_botany_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_section_botany_taxa foreign key (sub_section_botany_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_serie_taxa foreign key (serie_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_serie_taxa foreign key (sub_serie_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_super_species_taxa foreign key (super_species_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_species_taxa foreign key (species_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_species_taxa foreign key (sub_species_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_variety_taxa foreign key (variety_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_variety_taxa foreign key (sub_variety_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_form_taxa foreign key (form_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_sub_form_taxa foreign key (sub_form_ref) references taxa(id) on delete cascade,
-        constraint fk_taxa_abberans_taxa foreign key (abberans_ref) references taxa(id) on delete cascade
+        constraint pk_taxonomy primary key (id),
+        constraint unq_taxonomy unique (path, name_indexed),
+        constraint fk_taxonomy_catalogue_levels_fk foreign key (level_ref) references catalogue_levels(id),
+        constraint fk_taxonomy_taxonomy_domain foreign key (domain_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_kingdom_taxonomy foreign key (kingdom_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_phylum_taxonomy foreign key (super_phylum_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_phylum_taxonomy foreign key (phylum_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_phylum_taxonomy foreign key (sub_phylum_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_phylum_taxonomy foreign key (infra_phylum_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_cohort_botany_taxonomy foreign key (super_cohort_botany_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_cohort_botany_taxonomy foreign key (cohort_botany_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_cohort_botany_taxonomy foreign key (sub_cohort_botany_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_cohort_botany_taxonomy foreign key (infra_cohort_botany_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_class_taxonomy foreign key (super_class_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_class_taxonomy foreign key (class_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_class_taxonomy foreign key (sub_class_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_class_taxonomy foreign key (infra_class_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_division_taxonomy foreign key (super_division_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_division_taxonomy foreign key (division_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_division_taxonomy foreign key (sub_division_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_division_taxonomy foreign key (infra_division_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_legion_taxonomy foreign key (super_legion_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_legion_taxonomy foreign key (legion_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_legion_taxonomy foreign key (sub_legion_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_legion_taxonomy foreign key (infra_legion_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_cohort_zoology_taxonomy foreign key (super_cohort_zoology_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_cohort_zoology_taxonomy foreign key (cohort_zoology_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_cohort_zoology_taxonomy foreign key (sub_cohort_zoology_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_cohort_zoology_taxonomy foreign key (infra_cohort_zoology_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_order_taxonomy foreign key (super_order_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_order_taxonomy foreign key (order_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_order_taxonomy foreign key (sub_order_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_order_taxonomy foreign key (infra_order_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_section_zoology_taxonomy foreign key (section_zoology_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_section_zoology_taxonomy foreign key (sub_section_zoology_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_family_taxonomy foreign key (super_family_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_family_taxonomy foreign key (family_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_family_taxonomy foreign key (sub_family_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_family_taxonomy foreign key (infra_family_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_tribe_taxonomy foreign key (super_tribe_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_tribe_taxonomy foreign key (tribe_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_tribe_taxonomy foreign key (sub_tribe_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_infra_tribe_taxonomy foreign key (infra_tribe_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_genus_taxonomy foreign key (genus_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_genus_taxonomy foreign key (sub_genus_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_section_botany_taxonomy foreign key (section_botany_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_section_botany_taxonomy foreign key (sub_section_botany_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_serie_taxonomy foreign key (serie_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_serie_taxonomy foreign key (sub_serie_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_super_species_taxonomy foreign key (super_species_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_species_taxonomy foreign key (species_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_species_taxonomy foreign key (sub_species_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_variety_taxonomy foreign key (variety_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_variety_taxonomy foreign key (sub_variety_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_form_taxonomy foreign key (form_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_sub_form_taxonomy foreign key (sub_form_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_abberans_taxonomy foreign key (abberans_ref) references taxonomy(id) on delete cascade
        )
 inherits (template_classifications);
-comment on table taxa is 'Taxonomic classification table';
-comment on column taxa.id is 'Unique identifier of a classification unit';
-comment on column taxa.name is 'Classification unit name';
-comment on column taxa.name_indexed is 'Indexed form of name field';
-comment on column taxa.description_year is 'Year of description';
-comment on column taxa.description_year_compl is 'Complement to year of description: a, b, c, ...';
-comment on column taxa.level_ref is 'Reference of classification level the unit is encoded in';
-comment on column taxa.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column taxa.domain_ref is 'Reference of domain the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.domain_indexed is 'Indexed name of domain the current taxa depends of';
-comment on column taxa.kingdom_ref is 'Reference of kingdom the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.kingdom_indexed is 'Indexed name of kingdom the current taxa depends of';
-comment on column taxa.super_phylum_ref is 'Reference of super_phylum the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_phylum_indexed is 'Indexed name of super_phylum the current taxa depends of';
-comment on column taxa.phylum_ref is 'Reference of phylum the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.phylum_indexed is 'Indexed name of phylum the current taxa depends of';
-comment on column taxa.sub_phylum_ref is 'Reference of sub phylum the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_phylum_indexed is 'Indexed name of sub phylum the current taxa depends of';
-comment on column taxa.infra_phylum_ref is 'Reference of infra phylum the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_phylum_indexed is 'Indexed name of infra phylum the current taxa depends of';
-comment on column taxa.super_cohort_botany_ref is 'Reference of super cohort botany the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_cohort_botany_indexed is 'Indexed name of super cohort botany the current taxa depends of';
-comment on column taxa.cohort_botany_ref is 'Reference of cohort botany the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.cohort_botany_indexed is 'Indexed name of cohort botany the current taxa depends of';
-comment on column taxa.sub_cohort_botany_ref is 'Reference of sub cohort botany the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_cohort_botany_indexed is 'Indexed name of sub cohort botany the current taxa depends of';
-comment on column taxa.infra_cohort_botany_ref is 'Reference of infra cohort botany the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_cohort_botany_indexed is 'Indexed name of infra cohort botany the current taxa depends of';
-comment on column taxa.super_class_ref is 'Reference of super class the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_class_indexed is 'Indexed name of super class the current taxa depends of';
-comment on column taxa.class_ref is 'Reference of class the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.class_indexed is 'Indexed name of class the current taxa depends of';
-comment on column taxa.sub_class_ref is 'Reference of sub class the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_class_indexed is 'Indexed name of sub class the current taxa depends of';
-comment on column taxa.infra_class_ref is 'Reference of infra class the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_class_indexed is 'Indexed name of infra class the current taxa depends of';
-comment on column taxa.super_division_ref is 'Reference of super division the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_division_indexed is 'Indexed name of super division the current taxa depends of';
-comment on column taxa.division_ref is 'Reference of division the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.division_indexed is 'Indexed name of division the current taxa depends of';
-comment on column taxa.sub_division_ref is 'Reference of sub division the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_division_indexed is 'Indexed name of sub division the current taxa depends of';
-comment on column taxa.infra_division_ref is 'Reference of infra division the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_division_indexed is 'Indexed name of infra division the current taxa depends of';
-comment on column taxa.super_legion_ref is 'Reference of super legion the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_legion_indexed is 'Indexed name of super legion the current taxa depends of';
-comment on column taxa.legion_ref is 'Reference of legion the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.legion_indexed is 'Indexed name of legion the current taxa depends of';
-comment on column taxa.sub_legion_ref is 'Reference of sub legion the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_legion_indexed is 'Indexed name of sub legion the current taxa depends of';
-comment on column taxa.infra_legion_ref is 'Reference of infra legion the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_legion_indexed is 'Indexed name of infra legion the current taxa depends of';
-comment on column taxa.super_cohort_zoology_ref is 'Reference of super cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_cohort_zoology_indexed is 'Indexed name of super cohort zool the current taxa depends of';
-comment on column taxa.cohort_zoology_ref is 'Reference of cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.cohort_zoology_indexed is 'Indexed name of cohort zool the current taxa depends of';
-comment on column taxa.sub_cohort_zoology_ref is 'Reference of sub cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_cohort_zoology_indexed is 'Indexed name of sub cohort zool the current taxa depends of';
-comment on column taxa.infra_cohort_zoology_ref is 'Reference of infra cohort zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_cohort_zoology_indexed is 'Indexed name of infra cohort zool the current taxa depends of';
-comment on column taxa.super_order_ref is 'Reference of super order the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_order_indexed is 'Indexed name of super order the current taxa depends of';
-comment on column taxa.order_ref is 'Reference of order the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.order_indexed is 'Indexed name of order the current taxa depends of';
-comment on column taxa.sub_order_ref is 'Reference of sub order the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_order_indexed is 'Indexed name of sub order the current taxa depends of';
-comment on column taxa.infra_order_ref is 'Reference of infra order the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_order_indexed is 'Indexed name of infra order the current taxa depends of';
-comment on column taxa.section_zoology_ref is 'Reference of section zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.section_zoology_indexed is 'Indexed name of section zool the current taxa depends of';
-comment on column taxa.sub_section_zoology_ref is 'Reference of sub section zool the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_section_zoology_indexed is 'Indexed name of sub section zool the current taxa depends of';
-comment on column taxa.super_family_ref is 'Reference of super family the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_family_indexed is 'Indexed name of super family the current taxa depends of';
-comment on column taxa.family_ref is 'Reference of family the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.family_indexed is 'Indexed name of family the current taxa depends of';
-comment on column taxa.sub_family_ref is 'Reference of sub family the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_family_indexed is 'Indexed name of sub family the current taxa depends of';
-comment on column taxa.infra_family_ref is 'Reference of infra family the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_family_indexed is 'Indexed name of infra family the current taxa depends of';
-comment on column taxa.super_tribe_ref is 'Reference of super tribe the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_tribe_indexed is 'Indexed name of super tribe the current taxa depends of';
-comment on column taxa.tribe_ref is 'Reference of tribe the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.tribe_indexed is 'Indexed name of tribe the current taxa depends of';
-comment on column taxa.sub_tribe_ref is 'Reference of sub tribe the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_tribe_indexed is 'Indexed name of sub tribe the current taxa depends of';
-comment on column taxa.infra_tribe_ref is 'Reference of infra tribe the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.infra_tribe_indexed is 'Indexed name of infra tribe the current taxa depends of';
-comment on column taxa.genus_ref is 'Reference of genus the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.genus_indexed is 'Indexed name of genus the current taxa depends of';
-comment on column taxa.sub_genus_ref is 'Reference of sub genus the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_genus_indexed is 'Indexed name of sub genus the current taxa depends of';
-comment on column taxa.section_botany_ref is 'Reference of section botany the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.section_botany_indexed is 'Indexed name of section botany the current taxa depends of';
-comment on column taxa.sub_section_botany_ref is 'Reference of sub section botany the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_section_botany_indexed is 'Indexed name of sub section botany the current taxa depends of';
-comment on column taxa.serie_ref is 'Reference of series the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.serie_indexed is 'Indexed name of series the current taxa depends of';
-comment on column taxa.sub_serie_ref is 'Reference of sub series the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_serie_indexed is 'Indexed name of sub series the current taxa depends of';
-comment on column taxa.super_species_ref is 'Reference of super species the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.super_species_indexed is 'Indexed name of super species the current taxa depends of';
-comment on column taxa.species_ref is 'Reference of species the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.species_indexed is 'Indexed name of species the current taxa depends of';
-comment on column taxa.sub_species_ref is 'Reference of sub species the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_species_indexed is 'Indexed name of sub species the current taxa depends of';
-comment on column taxa.variety_ref is 'Reference of variety the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.variety_indexed is 'Indexed name of variety the current taxa depends of';
-comment on column taxa.sub_variety_ref is 'Reference of sub variety the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_variety_indexed is 'Indexed name of sub variety the current taxa depends of';
-comment on column taxa.form_ref is 'Reference of form the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.form_indexed is 'Indexed name of form the current taxa depends of';
-comment on column taxa.sub_form_ref is 'Reference of sub form the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.sub_form_indexed is 'Indexed name of sub form the current taxa depends of';
-comment on column taxa.abberans_ref is 'Reference of abberans the current taxa depends of - id field of taxa table - recursive reference';
-comment on column taxa.abberans_indexed is 'Indexed name of abberans the current taxa depends of';
-comment on column taxa.chimera_hybrid_pos is 'Chimera or Hybrid informations';
-comment on column taxa.extinct is 'Tells if taxa is extinct or not';
-comment on column taxa.path is 'Hierarchy path (/ for root)';
-comment on column taxa.parent_ref is 'Id of parent - id field from table itself';
+comment on table taxonomy is 'Taxonomic classification table';
+comment on column taxonomy.id is 'Unique identifier of a classification unit';
+comment on column taxonomy.name is 'Classification unit name';
+comment on column taxonomy.name_indexed is 'Indexed form of name field';
+comment on column taxonomy.description_year is 'Year of description';
+comment on column taxonomy.description_year_compl is 'Complement to year of description: a, b, c, ...';
+comment on column taxonomy.level_ref is 'Reference of classification level the unit is encoded in';
+comment on column taxonomy.status is 'Validitiy status: valid, invalid, in discussion';
+comment on column taxonomy.domain_ref is 'Reference of domain the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.domain_indexed is 'Indexed name of domain the current taxonomy depends of';
+comment on column taxonomy.kingdom_ref is 'Reference of kingdom the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.kingdom_indexed is 'Indexed name of kingdom the current taxonomy depends of';
+comment on column taxonomy.super_phylum_ref is 'Reference of super_phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_phylum_indexed is 'Indexed name of super_phylum the current taxonomy depends of';
+comment on column taxonomy.phylum_ref is 'Reference of phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.phylum_indexed is 'Indexed name of phylum the current taxonomy depends of';
+comment on column taxonomy.sub_phylum_ref is 'Reference of sub phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_phylum_indexed is 'Indexed name of sub phylum the current taxonomy depends of';
+comment on column taxonomy.infra_phylum_ref is 'Reference of infra phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_phylum_indexed is 'Indexed name of infra phylum the current taxonomy depends of';
+comment on column taxonomy.super_cohort_botany_ref is 'Reference of super cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_cohort_botany_indexed is 'Indexed name of super cohort botany the current taxonomy depends of';
+comment on column taxonomy.cohort_botany_ref is 'Reference of cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.cohort_botany_indexed is 'Indexed name of cohort botany the current taxonomy depends of';
+comment on column taxonomy.sub_cohort_botany_ref is 'Reference of sub cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_cohort_botany_indexed is 'Indexed name of sub cohort botany the current taxonomy depends of';
+comment on column taxonomy.infra_cohort_botany_ref is 'Reference of infra cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_cohort_botany_indexed is 'Indexed name of infra cohort botany the current taxonomy depends of';
+comment on column taxonomy.super_class_ref is 'Reference of super class the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_class_indexed is 'Indexed name of super class the current taxonomy depends of';
+comment on column taxonomy.class_ref is 'Reference of class the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.class_indexed is 'Indexed name of class the current taxonomy depends of';
+comment on column taxonomy.sub_class_ref is 'Reference of sub class the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_class_indexed is 'Indexed name of sub class the current taxonomy depends of';
+comment on column taxonomy.infra_class_ref is 'Reference of infra class the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_class_indexed is 'Indexed name of infra class the current taxonomy depends of';
+comment on column taxonomy.super_division_ref is 'Reference of super division the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_division_indexed is 'Indexed name of super division the current taxonomy depends of';
+comment on column taxonomy.division_ref is 'Reference of division the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.division_indexed is 'Indexed name of division the current taxonomy depends of';
+comment on column taxonomy.sub_division_ref is 'Reference of sub division the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_division_indexed is 'Indexed name of sub division the current taxonomy depends of';
+comment on column taxonomy.infra_division_ref is 'Reference of infra division the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_division_indexed is 'Indexed name of infra division the current taxonomy depends of';
+comment on column taxonomy.super_legion_ref is 'Reference of super legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_legion_indexed is 'Indexed name of super legion the current taxonomy depends of';
+comment on column taxonomy.legion_ref is 'Reference of legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.legion_indexed is 'Indexed name of legion the current taxonomy depends of';
+comment on column taxonomy.sub_legion_ref is 'Reference of sub legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_legion_indexed is 'Indexed name of sub legion the current taxonomy depends of';
+comment on column taxonomy.infra_legion_ref is 'Reference of infra legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_legion_indexed is 'Indexed name of infra legion the current taxonomy depends of';
+comment on column taxonomy.super_cohort_zoology_ref is 'Reference of super cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_cohort_zoology_indexed is 'Indexed name of super cohort zool the current taxonomy depends of';
+comment on column taxonomy.cohort_zoology_ref is 'Reference of cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.cohort_zoology_indexed is 'Indexed name of cohort zool the current taxonomy depends of';
+comment on column taxonomy.sub_cohort_zoology_ref is 'Reference of sub cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_cohort_zoology_indexed is 'Indexed name of sub cohort zool the current taxonomy depends of';
+comment on column taxonomy.infra_cohort_zoology_ref is 'Reference of infra cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_cohort_zoology_indexed is 'Indexed name of infra cohort zool the current taxonomy depends of';
+comment on column taxonomy.super_order_ref is 'Reference of super order the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_order_indexed is 'Indexed name of super order the current taxonomy depends of';
+comment on column taxonomy.order_ref is 'Reference of order the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.order_indexed is 'Indexed name of order the current taxonomy depends of';
+comment on column taxonomy.sub_order_ref is 'Reference of sub order the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_order_indexed is 'Indexed name of sub order the current taxonomy depends of';
+comment on column taxonomy.infra_order_ref is 'Reference of infra order the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_order_indexed is 'Indexed name of infra order the current taxonomy depends of';
+comment on column taxonomy.section_zoology_ref is 'Reference of section zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.section_zoology_indexed is 'Indexed name of section zool the current taxonomy depends of';
+comment on column taxonomy.sub_section_zoology_ref is 'Reference of sub section zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_section_zoology_indexed is 'Indexed name of sub section zool the current taxonomy depends of';
+comment on column taxonomy.super_family_ref is 'Reference of super family the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_family_indexed is 'Indexed name of super family the current taxonomy depends of';
+comment on column taxonomy.family_ref is 'Reference of family the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.family_indexed is 'Indexed name of family the current taxonomy depends of';
+comment on column taxonomy.sub_family_ref is 'Reference of sub family the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_family_indexed is 'Indexed name of sub family the current taxonomy depends of';
+comment on column taxonomy.infra_family_ref is 'Reference of infra family the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_family_indexed is 'Indexed name of infra family the current taxonomy depends of';
+comment on column taxonomy.super_tribe_ref is 'Reference of super tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_tribe_indexed is 'Indexed name of super tribe the current taxonomy depends of';
+comment on column taxonomy.tribe_ref is 'Reference of tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.tribe_indexed is 'Indexed name of tribe the current taxonomy depends of';
+comment on column taxonomy.sub_tribe_ref is 'Reference of sub tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_tribe_indexed is 'Indexed name of sub tribe the current taxonomy depends of';
+comment on column taxonomy.infra_tribe_ref is 'Reference of infra tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.infra_tribe_indexed is 'Indexed name of infra tribe the current taxonomy depends of';
+comment on column taxonomy.genus_ref is 'Reference of genus the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.genus_indexed is 'Indexed name of genus the current taxonomy depends of';
+comment on column taxonomy.sub_genus_ref is 'Reference of sub genus the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_genus_indexed is 'Indexed name of sub genus the current taxonomy depends of';
+comment on column taxonomy.section_botany_ref is 'Reference of section botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.section_botany_indexed is 'Indexed name of section botany the current taxonomy depends of';
+comment on column taxonomy.sub_section_botany_ref is 'Reference of sub section botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_section_botany_indexed is 'Indexed name of sub section botany the current taxonomy depends of';
+comment on column taxonomy.serie_ref is 'Reference of series the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.serie_indexed is 'Indexed name of series the current taxonomy depends of';
+comment on column taxonomy.sub_serie_ref is 'Reference of sub series the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_serie_indexed is 'Indexed name of sub series the current taxonomy depends of';
+comment on column taxonomy.super_species_ref is 'Reference of super species the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.super_species_indexed is 'Indexed name of super species the current taxonomy depends of';
+comment on column taxonomy.species_ref is 'Reference of species the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.species_indexed is 'Indexed name of species the current taxonomy depends of';
+comment on column taxonomy.sub_species_ref is 'Reference of sub species the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_species_indexed is 'Indexed name of sub species the current taxonomy depends of';
+comment on column taxonomy.variety_ref is 'Reference of variety the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.variety_indexed is 'Indexed name of variety the current taxonomy depends of';
+comment on column taxonomy.sub_variety_ref is 'Reference of sub variety the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_variety_indexed is 'Indexed name of sub variety the current taxonomy depends of';
+comment on column taxonomy.form_ref is 'Reference of form the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.form_indexed is 'Indexed name of form the current taxonomy depends of';
+comment on column taxonomy.sub_form_ref is 'Reference of sub form the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.sub_form_indexed is 'Indexed name of sub form the current taxonomy depends of';
+comment on column taxonomy.abberans_ref is 'Reference of abberans the current taxonomy depends of - id field of taxonomy table - recursive reference';
+comment on column taxonomy.abberans_indexed is 'Indexed name of abberans the current taxonomy depends of';
+comment on column taxonomy.chimera_hybrid_pos is 'Chimera or Hybrid informations';
+comment on column taxonomy.extinct is 'Tells if taxonomy is extinct or not';
+comment on column taxonomy.path is 'Hierarchy path (/ for root)';
+comment on column taxonomy.parent_ref is 'Id of parent - id field from table itself';
 create table people_aliases
        (
         person_ref integer not null,
@@ -1415,12 +1415,12 @@ create table soortenregister
         habitat_ref integer default 0 not null,
         date_from date,
         date_to date,
-        constraint fk_soortenregister_taxa foreign key (taxa_ref) references taxa(id) on delete cascade,
+        constraint fk_soortenregister_taxonomy foreign key (taxa_ref) references taxonomy(id) on delete cascade,
         constraint fk_soortenregister_gtu foreign key (gtu_ref) references gtu(id) on delete cascade,
         constraint fk_soortenregister_habitats foreign key (habitat_ref) references habitats(id) on delete cascade
        );
 comment on table soortenregister is 'Species register table - Indicates the presence of a certain species in a certain habitat at a given place from time to time';
-comment on column soortenregister.taxa_ref is 'Reference of taxon concerned - id field of taxa table';
+comment on column soortenregister.taxa_ref is 'Reference of taxon concerned - id field of taxonomy table';
 comment on column soortenregister.gtu_ref is 'Reference of gtu concerned - id field of gtu table';
 comment on column soortenregister.habitat_ref is 'Reference of habitat concerned - id field of habitats table';
 comment on column soortenregister.date_from is 'From date association definition';
@@ -1456,13 +1456,13 @@ create table specimens
         constraint unq_specimens unique (category, collection_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, identification_taxon_ref, host_taxon_ref),
         constraint fk_specimens_gtu foreign key (gtu_ref) references gtu(id) on delete set default,
         constraint fk_specimens_collections foreign key (collection_ref) references collections(id) on delete set default,
-        constraint fk_specimens_taxa foreign key (taxon_ref) references taxa(id) on delete set default,
+        constraint fk_specimens_taxonomy foreign key (taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_lithostratigraphy foreign key (litho_ref) references lithostratigraphy(id) on delete set default,
         constraint fk_specimens_lithology foreign key (lithology_ref) references lithology(id) on delete set default,
         constraint fk_specimens_mineralogy foreign key (mineral_ref) references mineralogy(id) on delete set default,
         constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id) on delete set default,
-        constraint fk_specimens_ident_taxa foreign key (identification_taxon_ref) references taxa(id) on delete set default,
-        constraint fk_specimens_host_taxa foreign key (host_taxon_ref) references taxa(id) on delete set default,
+        constraint fk_specimens_ident_taxonomy foreign key (identification_taxon_ref) references taxonomy(id) on delete set default,
+        constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
 	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max),
 	constraint chk_chk_specimens_min check (specimen_count_min >= 0)
@@ -1474,9 +1474,9 @@ comment on column specimens.expedition_ref is 'When acquisition category is expe
 comment on column specimens.gtu_ref is 'Reference of the sampling location the specimen is coming from - id field of gtu table';
 comment on column specimens.litho_ref is 'When encoding a rock, mineral or paleontologic specimen, contains the reference of lithostratigraphic unit the specimen have been found into - id field of lithostratigraphy table';
 comment on column specimens.chrono_ref is 'When encoding a rock, mineral or paleontologic specimen, contains the reference of chronostratigraphic unit the specimen have been found into - id field of chronostratigraphy table';
-comment on column specimens.taxon_ref is 'When encoding a ''living'' specimen, contains the reference of the taxon unit defining the specimen - id field of taxa table';
+comment on column specimens.taxon_ref is 'When encoding a ''living'' specimen, contains the reference of the taxon unit defining the specimen - id field of taxonomy table';
 comment on column specimens.identification_qual is 'Qualifier of taxonomic definition: sp., prox. aff., cf., ...';
-comment on column specimens.identification_taxon_ref is 'When taxonomic qualifier specified - can contain the reference of the taxon the qualifier targets - id field of taxa table';
+comment on column specimens.identification_taxon_ref is 'When taxonomic qualifier specified - can contain the reference of the taxon the qualifier targets - id field of taxonomy table';
 comment on column specimens.host_relationship is 'When current specimen encoded is in a host relationship with an other specimen or taxon, this field contains the type of relationship between them: symbiosis, parasitism, saprophytism,...';
 comment on column specimens.host_specimen_ref is 'When current specimen encoded is in a host relationship with an other specimen, this field contains reference of the host specimen - recursive reference';
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
@@ -1491,7 +1491,7 @@ comment on column specimens.station_visible is 'Flag telling if the sampling loc
 comment on column specimens.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
 comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
-comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxa table';
+comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxonomy table';
 create table template_codes
        (
         code_category code_categories default 'main' not null,
@@ -1670,7 +1670,7 @@ create table specimens_accompanying
         constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
         constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint fk_specimens_accompanying_mineralogy foreign key (mineral_ref) references mineralogy(id),
-        constraint fk_specimens_accompanying_taxa foreign key (taxon_ref) references taxa(id)
+        constraint fk_specimens_accompanying_taxonomy foreign key (taxon_ref) references taxonomy(id)
        );
 comment on table specimens_accompanying is 'List all the objects/specimens accompanying the current specimen';
 comment on column specimens_accompanying.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
@@ -1679,5 +1679,5 @@ comment on column specimens_accompanying.type is 'Type of accompanying specimen:
 comment on column specimens_accompanying.quantity is 'Quantity of accompanying specimens';
 comment on column specimens_accompanying.unit is 'Unit used for quantity of accompanying specimen presence';
 comment on column specimens_accompanying.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying specimen';
-comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxa table';
+comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxonomy table';
 comment on column specimens_accompanying.form is 'Form of accompanying specimen presence: colony, aggregate, isolated,...';

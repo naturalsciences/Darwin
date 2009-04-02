@@ -271,4 +271,4 @@ INSERT INTO lithology (id, name, name_indexed) VALUES (0,'', '');
 INSERT INTO lithostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO chronostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO mineralogy (id, name, name_indexed, code) VALUES (0, '', '', 0);
-INSERT INTO taxa (id, name, name_indexed) VALUES (0, '', '');
+INSERT INTO taxonomy (id, name, name_indexed) VALUES (0, '', '');

@@ -25,7 +25,7 @@ CREATE TRIGGER trg_cpy_hierarchy_from_parents_mineralogy BEFORE INSERT
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
 CREATE TRIGGER trg_cpy_hierarchy_from_parents_taxa BEFORE INSERT
-	ON taxa FOR EACH ROW
+	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
 /*
@@ -51,7 +51,7 @@ CREATE TRIGGER trg_cpy_name_updt_impact_children_mineralogy BEFORE UPDATE
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
 
 CREATE TRIGGER trg_cpy_name_updt_impact_children_taxa BEFORE UPDATE
-	ON taxa FOR EACH ROW
+	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
 
 /*
@@ -77,7 +77,7 @@ CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy BEFORE UPDATE
 	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
 
 CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa BEFORE UPDATE
-	ON taxa FOR EACH ROW
+	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
 
 /*
@@ -150,7 +150,7 @@ CREATE TRIGGER trg_cpy_fullToIndex_tags BEFORE INSERT OR UPDATE
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
 CREATE TRIGGER trg_cpy_fullToIndex_taxa BEFORE INSERT OR UPDATE
-	ON taxa FOR EACH ROW
+	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
 CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
@@ -229,7 +229,7 @@ CREATE TRIGGER trg_clr_referenceRecord_mysavedsearches AFTER DELETE
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 CREATE TRIGGER trg_clr_referenceRecord_taxa AFTER DELETE 
-	ON taxa FOR EACH ROW
+	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 CREATE TRIGGER trg_clr_referenceRecord_chronostratigraphy AFTER DELETE 

@@ -54,7 +54,7 @@ SELECT has_table('my_saved_searches','my_saved_searches exists');
 SELECT has_table('my_preferences','my_preferences exists');
 SELECT has_table('my_saved_specimens','my_saved_specimens exists');
 SELECT has_table('template_classifications','template_classifications exists');
-SELECT has_table('taxa','taxa exists');
+SELECT has_table('taxonomy','taxonomy exists');
 SELECT has_table('people_aliases','people_aliases exists');
 SELECT has_table('chronostratigraphy','chronostratigraphy exists');
 SELECT has_table('lithostratigraphy','lithostratigraphy exists');

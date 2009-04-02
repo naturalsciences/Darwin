@@ -44,24 +44,24 @@ SELECT throws_ok('UPDATE mineralogy SET parent_ref = 1 WHERE id = 3', 'P0001');
 
 SELECT diag('Taxonomy level/parent update tests');
 
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref) VALUES (1, ''Méàleis Gùbularis&'', 1)', 'Insertion of unit 1 with level domain (1) linked to unit 0 (without any level) allowed !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (2, ''AMéàleis Gùbularis&'', 2, 1)', 'Insertion of unit 2 with level kingdom (2) linked to unit 1 with level domain (1) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (3, ''BMéàleis Gùbularis&'', 4, 2)', 'Insertion of unit 3 with level phylum (4) linked to unit 2 with level kingdom (2) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (4, ''CMéàleis Gùbularis&'', 12, 3)', 'Insertion of unit 4 with level class (12) linked to unit 3 with level phylum (4) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (5, ''DMéàleis Gùbularis&'', 28, 4)', 'Insertion of unit 5 with level order (28) linked to unit 4 with level class (12) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (6, ''EMéàleis Gùbularis&'', 34, 5)', 'Insertion of unit 6 with level family (34) linked to unit 5 with level order (28) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (7, ''FMéàleis Gùbularis&'', 41, 6)', 'Insertion of unit 7 with level genus (41) linked to unit 6 with level family (34) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (8, ''GMéàleis Gùbularis&'', 42, 7)', 'Insertion of unit 8 with level sub genus (42) linked to unit 7 with level genus (41) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (9, ''HMéàleis Gùbularis&'', 48, 8)', 'Insertion of unit 9 with level species (48) linked to unit 8 with level sub genus (42) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (10, ''IMéàleis Gùbularis&'', 49, 9)', 'Insertion of unit 10 with level sub species (49) linked to unit 9 with level species (48) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (11, ''TMéàleis Gùbularis&'', 12, 3)', 'Insertion of unit 11 with level class (12) linked to unit 3 with level phylum (4) is OK !');
-SELECT lives_ok('INSERT INTO taxa (id, name, level_ref, parent_ref) VALUES (12, ''SMéàleis Gùbularis&'', 48, 7)', 'Insertion of unit 12 with level species (48) linked to unit 7 with level genus (42) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref) VALUES (1, ''Méàleis Gùbularis&'', 1)', 'Insertion of unit 1 with level domain (1) linked to unit 0 (without any level) allowed !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (2, ''AMéàleis Gùbularis&'', 2, 1)', 'Insertion of unit 2 with level kingdom (2) linked to unit 1 with level domain (1) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (3, ''BMéàleis Gùbularis&'', 4, 2)', 'Insertion of unit 3 with level phylum (4) linked to unit 2 with level kingdom (2) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (4, ''CMéàleis Gùbularis&'', 12, 3)', 'Insertion of unit 4 with level class (12) linked to unit 3 with level phylum (4) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (5, ''DMéàleis Gùbularis&'', 28, 4)', 'Insertion of unit 5 with level order (28) linked to unit 4 with level class (12) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (6, ''EMéàleis Gùbularis&'', 34, 5)', 'Insertion of unit 6 with level family (34) linked to unit 5 with level order (28) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (7, ''FMéàleis Gùbularis&'', 41, 6)', 'Insertion of unit 7 with level genus (41) linked to unit 6 with level family (34) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (8, ''GMéàleis Gùbularis&'', 42, 7)', 'Insertion of unit 8 with level sub genus (42) linked to unit 7 with level genus (41) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (9, ''HMéàleis Gùbularis&'', 48, 8)', 'Insertion of unit 9 with level species (48) linked to unit 8 with level sub genus (42) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (10, ''IMéàleis Gùbularis&'', 49, 9)', 'Insertion of unit 10 with level sub species (49) linked to unit 9 with level species (48) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (11, ''TMéàleis Gùbularis&'', 12, 3)', 'Insertion of unit 11 with level class (12) linked to unit 3 with level phylum (4) is OK !');
+SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (12, ''SMéàleis Gùbularis&'', 48, 7)', 'Insertion of unit 12 with level species (48) linked to unit 7 with level genus (42) is OK !');
 
-SELECT ok(true = (SELECT fct_chk_possible_upper_level('taxa', 7, 45, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 45 (serie) allowed ! -> parent is a genus');
-SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxa', 7, 41, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 41 (genus) not allowed -> parent is a genus itself !');
-SELECT throws_ok('UPDATE taxa SET level_ref = 41 WHERE id = 8', 'P0001');
-SELECT lives_ok('UPDATE taxa SET parent_ref = 11 WHERE id = 5', 'Change parent of unit 5 (with level order (24)) from parent 4 to parent 11 (both class levels (12)) -> OK!');
-SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxa', 7, 49, 12)), 'Move unit 12 (of level 48 (species)) to level 49 (sub species) NO allowed ! -> a sub species cannot be attached to a genus directly !');
+SELECT ok(true = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 45, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 45 (serie) allowed ! -> parent is a genus');
+SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 41, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 41 (genus) not allowed -> parent is a genus itself !');
+SELECT throws_ok('UPDATE taxonomy SET level_ref = 41 WHERE id = 8', 'P0001');
+SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 5', 'Change parent of unit 5 (with level order (24)) from parent 4 to parent 11 (both class levels (12)) -> OK!');
+SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 49, 12)), 'Move unit 12 (of level 48 (species)) to level 49 (sub species) NO allowed ! -> a sub species cannot be attached to a genus directly !');
 
 
 SELECT * FROM finish();

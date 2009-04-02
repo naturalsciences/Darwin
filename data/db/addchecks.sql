@@ -7,7 +7,7 @@ alter table mineralogy add constraint chk_chk_possible_upper_level_mineralogy ch
 /*
 alter table lithology add constraint chk_chk_possible_upper_level_lithology check (fct_chk_possible_upper_level('lithology', parent_ref, level_ref, id));
 */
-alter table taxa add constraint chk_chk_possible_upper_level_taxa check (fct_chk_possible_upper_level('taxa', parent_ref, level_ref, id));
+alter table taxonomy add constraint chk_chk_possible_upper_level_taxa check (fct_chk_possible_upper_level('taxonomy', parent_ref, level_ref, id));
 alter table people_aliases add constraint fct_chk_Is_FirstLevel check (fct_chk_Is_FirstLevel(table_name,record_id));
 
 

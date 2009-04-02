@@ -18,7 +18,7 @@ SELECT ok(0 = (SELECT count(*) FROM collections_admin WHERE user_ref=2),'Removed
 
 
 INSERT INTO record_visibilities (table_name, record_id, db_user_type, user_ref, visible)
- 	VALUES ('taxa', 0, 2, 2, true);
+ 	VALUES ('taxonomy', 0, 2, 2, true);
 INSERT INTO collections_fields_visibilities (collection_ref, user_ref, field_group_name, db_user_type, visible)
 	VALUES (1, 2, 'taxonomic_name', 2, false);
 INSERT INTO users_coll_rights_asked (collection_ref, user_ref, field_group_name, db_user_type, searchable, visible, motivation, asking_date_time)
