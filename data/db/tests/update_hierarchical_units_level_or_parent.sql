@@ -1,7 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-/*SELECT plan(149);*/
-SELECT plan(52);
+SELECT plan(149);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -124,8 +123,9 @@ INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (28, 'FAAAA', 34, 
 INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (29, 'FAAAAA', 41, 28);
 
 
-/*
-SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 3', 'Unit 3 moved from parent unit 2 to parent unit 11');
+
+SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 3', 'Unit 3 (phylum) moved from parent unit 2 to parent unit 11');
+
 SELECT ok(11 = (SELECT kingdom_ref FROM taxonomy WHERE id = 3), 'New kingdom_ref of unit 3: 11');
 SELECT ok('b' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 3), 'New kingdom_indexed of unit 3: b');
 SELECT ok(11 = (SELECT kingdom_ref FROM taxonomy WHERE id = 4), 'New kingdom_ref of unit 4: 11');
@@ -143,7 +143,7 @@ SELECT ok('b' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 9), 'New kingdo
 SELECT ok(11 = (SELECT kingdom_ref FROM taxonomy WHERE id = 10), 'New kingdom_ref of unit 10: 11');
 SELECT ok('b' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 10), 'New kingdom_indexed of unit 10: b');
 
-SELECT lives_ok('UPDATE taxonomy SET parent_ref = 13 WHERE id = 4', 'Unit 4 moved from parent unit 3 to parent unit 13');
+SELECT lives_ok('UPDATE taxonomy SET parent_ref = 13 WHERE id = 4', 'Unit 4 (class) moved from parent unit 3 to parent unit 13');
 SELECT ok(12 = (SELECT kingdom_ref FROM taxonomy WHERE id = 4), 'New kingdom_ref of unit 4: 12');
 SELECT ok('c' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 4), 'New kingdom_indexed of unit 4: c');
 SELECT ok(13 = (SELECT phylum_ref FROM taxonomy WHERE id = 4), 'New phylum_ref of unit 4: 13');
@@ -220,21 +220,12 @@ SELECT ok(22 = (SELECT class_ref FROM taxonomy WHERE id = 6), 'New class_ref of 
 SELECT ok('eaa' = (SELECT class_indexed FROM taxonomy WHERE id = 6), 'New class_indexed of unit 6: eaa');
 SELECT ok(23 = (SELECT order_ref FROM taxonomy WHERE id = 6), 'New class_ref of unit 6: 18');
 SELECT ok('eaaa' = (SELECT order_indexed FROM taxonomy WHERE id = 6), 'New class_indexed of unit 6: eaaa');
-
-
 SELECT ok(8 = (SELECT sub_genus_ref FROM taxonomy WHERE id = 9), 'New sub_genus_ref of unit 9: 8');
 SELECT ok('aaaaaaa' = (SELECT sub_genus_indexed FROM taxonomy WHERE id = 9), 'New sub_genus_indexed of unit 9: aaaaaaa');
-SELECT genus_ref FROM taxonomy where id = 8;
-SELECT genus_indexed FROM taxonomy where id = 8;
-SELECT sub_genus_ref FROM taxonomy WHERE id = 8;
-SELECT sub_genus_indexed FROM taxonomy WHERE id = 8;
+
 SELECT lives_ok('UPDATE taxonomy SET level_ref = 41, parent_ref = 6 WHERE id = 8', 'Unit 8 moved from parent unit 7 to parent unit 6 and changed from level 42 (sub_genus) to level 41 (genus)');
-SELECT genus_ref FROM taxonomy where id = 8;
-SELECT genus_indexed FROM taxonomy where id = 8;
-SELECT sub_genus_ref FROM taxonomy WHERE id = 8;
-SELECT sub_genus_indexed FROM taxonomy WHERE id = 8;
 SELECT ok(0 = (SELECT sub_genus_ref FROM taxonomy WHERE id = 9), 'New sub_genus_ref of unit 9: 0');
 SELECT ok('' = (SELECT sub_genus_indexed FROM taxonomy WHERE id = 9), 'New sub_genus_indexed of unit 9: ''''');
-*/
+
 SELECT * FROM finish();
 ROLLBACK;
