@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(194);
+SELECT plan(257);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -267,6 +267,18 @@ SELECT ok(30 = (SELECT serie_ref FROm taxonomy WHERE id = 30), 'New serie_ref of
 SELECT ok('serie' = (SELECT serie_indexed FROM taxonomy WHERE id = 30), 'New serie_indexed of unit 30: serie');
 SELECT ok(0 = (SELECT species_ref FROM taxonomy WHERE id = 30), 'New species_ref of unit 30: 0');
 SELECT ok('' = (SELECT species_indexed FROM taxonomy WHERE id = 30), 'New species_indexed of unit 30: ''''');
+SELECT ok(33 = (SELECT genus_ref FROM taxonomy WHERE id = 30), 'New genus_ref of unit 30: 33');
+SELECT ok('genusdub' = (SELECT genus_indexed FROm taxonomy WHERE id = 30), 'New genus_indexed of unit 30: genusdub');
+SELECT ok(29 = (SELECT sub_genus_ref FROM taxonomy WHERE id = 30), 'New sub_genus_ref of unit 30: 29');
+SELECT ok('neosubgenus' = (SELECT sub_genus_indexed FROM taxonomy WHERE id = 30), 'New sub_genus_indexed of unit 30: neosubgenus');
+SELECT ok(0 = (SELECT section_botany_ref FROM taxonomy WHERE id = 30), 'New section_botany_ref of unit 30: 0');
+SELECT ok('' = (SELECT section_botany_indexed FROM taxonomy WHERE id = 30), 'New section_botany_indexed of unit 30: ''''');
+SELECT ok(0 = (SELECT sub_section_botany_ref FROM taxonomy WHERE id = 30), 'New sub_section_botany_ref of unit 30: 0');
+SELECT ok('' = (SELECT sub_section_botany_indexed FROM taxonomy WHERE id = 30), 'New sub_section_botany_indexed of unit 30: ''''');
+SELECT ok(30 = (SELECT serie_ref FROm taxonomy WHERE id = 30), 'New serie_ref of unit 30: 30');
+SELECT ok('serie' = (SELECT serie_indexed FROM taxonomy WHERE id = 30), 'New serie_indexed of unit 30: serie');
+SELECT ok(0 = (SELECT super_species_ref FROM taxonomy WHERE id = 30), 'New super_species_ref of unit 30: 31');
+SELECT ok('' = (SELECT super_species_indexed FROM taxonomy WHERE id = 30), 'New super_species_indexed of unit 30: superspecies');
 SELECT ok(33 = (SELECT genus_ref FROM taxonomy WHERE id = 32), 'New genus_ref of unit 32: 33');
 SELECT ok('genusdub' = (SELECT genus_indexed FROm taxonomy WHERE id = 32), 'New genus_indexed of unit 32: genusdub');
 SELECT ok(29 = (SELECT sub_genus_ref FROM taxonomy WHERE id = 32), 'New sub_genus_ref of unit 32: 29');
@@ -277,8 +289,73 @@ SELECT ok(0 = (SELECT sub_section_botany_ref FROM taxonomy WHERE id = 32), 'New 
 SELECT ok('' = (SELECT sub_section_botany_indexed FROM taxonomy WHERE id = 32), 'New sub_section_botany_indexed of unit 32: ''''');
 SELECT ok(30 = (SELECT serie_ref FROm taxonomy WHERE id = 32), 'New serie_ref of unit 32: 30');
 SELECT ok('serie' = (SELECT serie_indexed FROM taxonomy WHERE id = 32), 'New serie_indexed of unit 32: serie');
-SELECT ok(31 = (SELECT super_species_ref FROM taxonomy WHERE id = 32), 'New sub_species_ref of unit 32: 31');
-SELECT ok('superspecies' = (SELECT super_species_indexed FROM taxonomy WHERE id = 32), 'New species_indexed of unit 32: superspecies');
+SELECT ok(31 = (SELECT super_species_ref FROM taxonomy WHERE id = 32), 'New super_species_ref of unit 32: 31');
+SELECT ok('superspecies' = (SELECT super_species_indexed FROM taxonomy WHERE id = 32), 'New super_species_indexed of unit 32: superspecies');
+SELECT ok(32 = (SELECT species_ref FROM taxonomy WHERE id = 32), 'New species_ref of unit 32: 32');
+SELECT ok('species' = (SELECT species_indexed FROM taxonomy WHERE id = 32), 'New species_indexed of unit 32: species');
+
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (34, 'THEDOMAIN', 1, 0);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (35, 'THEKINGDOM', 2, 34);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (36, 'THESUPERPHYL', 3, 35);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (37, 'THEPHYLUM', 4, 36);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (38, 'THESUBPHYLUM', 5, 37);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (39, 'THECOHORTBOTANY', 8, 38);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (40, 'THESUBCOHORTBOTANY', 9, 39);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (41, 'THESUPERCLASS', 11, 40);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (42, 'THECLASS', 12, 41);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (43, 'THESECPHYLUM', 4, 36);
+
+SELECT lives_ok('UPDATE taxonomy SET level_ref = 5, parent_ref = 43 WHERE id = 40', 'Unit 40 moved from parent unit 39 to parent unit 43 and changed from level 9 (sub_cohort_botany) to level 5 (sub_phylum)');
+
+SELECT ok(34 = (SELECT domain_ref FROM taxonomy WHERE id = 40), 'New domain_ref of unit 40: 34');
+SELECT ok('thedomain' = (SELECT domain_indexed FROM taxonomy WHERE id = 40), 'New domain_indexed of unit 40: thedomain');
+SELECT ok(35 = (SELECT kingdom_ref FROM taxonomy WHERE id = 40), 'New kingdom_ref of unit 40: 35');
+SELECT ok('thekingdom' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 40), 'New kingdom_indexed of unit 40: thekingdom');
+SELECT ok(36 = (SELECT super_phylum_ref FROM taxonomy WHERE id = 40), 'New super_phylum_ref of unit 40: 36');
+SELECT ok('thesuperphyl' = (SELECT super_phylum_indexed FROM taxonomy WHERE id = 40), 'New super_phylum_indexed of unit 40: thesuperphyl');
+SELECT ok(43 = (SELECT phylum_ref FROM taxonomy WHERE id = 40), 'New phylum_ref of unit 40: 43');
+SELECT ok('thesecphylum' = (SELECT phylum_indexed FROM taxonomy WHERE id = 40), 'New phylum_indexed of unit 40: thesecphylum');
+SELECT ok(40 = (SELECT sub_phylum_ref FROM taxonomy WHERE id = 40), 'New sub_phylum_ref of unit 40: 40');
+SELECT ok('thesubcohortbotany' = (SELECT sub_phylum_indexed FROM taxonomy WHERE id = 40), 'New sub_phylum_indexed of unit 40: thesubcohortbotany');
+SELECT ok(0 = (SELECT super_class_ref FROM taxonomy WHERE id = 40), 'New super_class_ref of unit 40: 0');
+SELECT ok('' = (SELECT super_class_indexed FROM taxonomy WHERE id = 40), 'New super_class_indexed of unit 40: '''' ');
+SELECT ok(34 = (SELECT domain_ref FROM taxonomy WHERE id = 41), 'New domain_ref of unit 41: 34');
+SELECT ok('thedomain' = (SELECT domain_indexed FROM taxonomy WHERE id = 41), 'New domain_indexed of unit 41: thedomain');
+SELECT ok(35 = (SELECT kingdom_ref FROM taxonomy WHERE id = 41), 'New kingdom_ref of unit 41: 35');
+SELECT ok('thekingdom' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 41), 'New kingdom_indexed of unit 41: thekingdom');
+SELECT ok(36 = (SELECT super_phylum_ref FROM taxonomy WHERE id = 41), 'New super_phylum_ref of unit 41: 36');
+SELECT ok('thesuperphyl' = (SELECT super_phylum_indexed FROM taxonomy WHERE id = 41), 'New super_phylum_indexed of unit 41: thesuperphyl');
+SELECT ok(43 = (SELECT phylum_ref FROM taxonomy WHERE id = 41), 'New phylum_ref of unit 41: 43');
+SELECT ok('thesecphylum' = (SELECT phylum_indexed FROM taxonomy WHERE id = 41), 'New phylum_indexed of unit 41: thesecphylum');
+SELECT ok(40 = (SELECT sub_phylum_ref FROM taxonomy WHERE id = 41), 'New sub_phylum_ref of unit 41: 40');
+SELECT ok('thesubcohortbotany' = (SELECT sub_phylum_indexed FROM taxonomy WHERE id = 41), 'New sub_phylum_indexed of unit 41: thesubcohortbotany');
+SELECT ok(0 = (SELECT cohort_botany_ref FROM taxonomy WHERE id = 41), 'New cohort_botany_ref of unit 41: 0');
+SELECT ok('' = (SELECT cohort_botany_indexed FROM taxonomy WHERE id = 41), 'New cohort_botany_indexed of unit 41: '''' ');
+SELECT ok(0 = (SELECT sub_cohort_botany_ref FROM taxonomy WHERE id = 41), 'New sub_cohort_botany_ref of unit 41: 0');
+SELECT ok('' = (SELECT sub_cohort_botany_indexed FROM taxonomy WHERE id = 41), 'New sub_cohort_botany_indexed of unit 41: '''' ');
+SELECT ok(41 = (SELECT super_class_ref FROM taxonomy WHERE id = 41), 'New super_class_ref of unit 41: 41');
+SELECT ok('thesuperclass' = (SELECT super_class_indexed FROM taxonomy WHERE id = 41), 'New super_class_indexed of unit 41: thesuperclass ');
+SELECT ok(0 = (SELECT class_ref FROM taxonomy WHERE id = 41), 'New class_ref of unit 41: 0');
+SELECT ok('' = (SELECT class_indexed FROM taxonomy WHERE id = 41), 'New class_indexed of unit 41: '''' ');
+SELECT ok(34 = (SELECT domain_ref FROM taxonomy WHERE id = 42), 'New domain_ref of unit 42: 34');
+SELECT ok('thedomain' = (SELECT domain_indexed FROM taxonomy WHERE id = 42), 'New domain_indexed of unit 42: thedomain');
+SELECT ok(35 = (SELECT kingdom_ref FROM taxonomy WHERE id = 42), 'New kingdom_ref of unit 42: 35');
+SELECT ok('thekingdom' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 42), 'New kingdom_indexed of unit 42: thekingdom');
+SELECT ok(36 = (SELECT super_phylum_ref FROM taxonomy WHERE id = 42), 'New super_phylum_ref of unit 42: 36');
+SELECT ok('thesuperphyl' = (SELECT super_phylum_indexed FROM taxonomy WHERE id = 42), 'New super_phylum_indexed of unit 42: thesuperphyl');
+SELECT ok(43 = (SELECT phylum_ref FROM taxonomy WHERE id = 42), 'New phylum_ref of unit 42: 43');
+SELECT ok('thesecphylum' = (SELECT phylum_indexed FROM taxonomy WHERE id = 42), 'New phylum_indexed of unit 42: thesecphylum');
+SELECT ok(40 = (SELECT sub_phylum_ref FROM taxonomy WHERE id = 42), 'New sub_phylum_ref of unit 42: 40');
+SELECT ok('thesubcohortbotany' = (SELECT sub_phylum_indexed FROM taxonomy WHERE id = 42), 'New sub_phylum_indexed of unit 42: thesubcohortbotany');
+SELECT ok(0 = (SELECT cohort_botany_ref FROM taxonomy WHERE id = 42), 'New cohort_botany_ref of unit 42: 0');
+SELECT ok('' = (SELECT cohort_botany_indexed FROM taxonomy WHERE id = 42), 'New cohort_botany_indexed of unit 42: '''' ');
+SELECT ok(0 = (SELECT sub_cohort_botany_ref FROM taxonomy WHERE id = 42), 'New sub_cohort_botany_ref of unit 42: 0');
+SELECT ok('' = (SELECT sub_cohort_botany_indexed FROM taxonomy WHERE id = 42), 'New sub_cohort_botany_indexed of unit 42: '''' ');
+SELECT ok(41 = (SELECT super_class_ref FROM taxonomy WHERE id = 42), 'New super_class_ref of unit 42: 41');
+SELECT ok('thesuperclass' = (SELECT super_class_indexed FROM taxonomy WHERE id = 42), 'New super_class_indexed of unit 42: thesuperclass ');
+SELECT ok(42 = (SELECT class_ref FROM taxonomy WHERE id = 42), 'New class_ref of unit 42: 42');
+SELECT ok('theclass' = (SELECT class_indexed FROM taxonomy WHERE id = 42), 'New class_indexed of unit 42: theclass ');
+
 
 SELECT * FROM finish();
 ROLLBACK;
