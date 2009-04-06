@@ -1,10 +1,11 @@
 create type level_types as enum ('taxonomy', 'chronostratigraphy', 'lithostratigraphy', 'lithology', 'mineralogy');
+create type collection_types as enum ('physical', 'observations', 'mix');
 create type notions_concerned as enum ('Taxonomic identification', 'Stratigraphic identification', 'Lithologic identification', 'Mineralogic identification', 'Expertise', 'Preparation');
 create type public_classes as enum ('public', 'private');
 create type coverages as enum ('temporal', 'spatial');
 create type multimedia_types as enum ('image', 'sound', 'video', 'sculpture');
 create type comm_types as enum ('phone/fax', 'e-mail');
-create type relationship_types as enum ('is child of', 'is synonym of', 'points to current name', 'is composed by recombination of');
+create type relationship_types as enum ('is synonym of', 'points to current name', 'is composed by recombination of');
 create type people_relationship_types as enum ('belongs to', 'is department of', 'is section of', 'works for');
 create type login_types as enum ('local', 'shibbolet', 'openID', 'ldap', 'kerberos');
 create type people_multimedia_categories as enum ('avatar', 'spelled name', 'url');

@@ -22,6 +22,7 @@ psql -q -d $dbname -v dbname=$dbname -f lib/accent.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createdomains.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createtypes.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createtables.sql
+psql -q -h $netaddr -d $dbname -U $dbname -f createindexes.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f initiate_data.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createfunctions.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createtriggers.sql

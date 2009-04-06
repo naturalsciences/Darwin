@@ -94,6 +94,7 @@ install-db:
 	$(PARAM_PSQL) -f createdomains.sql
 	$(PARAM_PSQL) -f createtypes.sql
 	$(PARAM_PSQL) -f createtables.sql
+	$(PARAM_PSQL) -f createindexes.sql
 	$(PARAM_PSQL) -f initiate_data.sql
 	$(PARAM_PSQL) -f createfunctions.sql
 	$(PARAM_PSQL) -f createtriggers.sql
@@ -104,6 +105,7 @@ install-all: create-db create-user create-schema install-db
 uninstall-db:
 	$(PARAM_PSQL) -f droptriggers.sql
 	$(PARAM_PSQL) -f dropfunctions.sql
+	$(PARAM_PSQL) -f dropindexed.sql
 	$(PARAM_PSQL) -f droptables.sql
 	$(PARAM_PSQL) -f droptypes.sql
 	$(PARAM_PSQL) -f dropdomains.sql

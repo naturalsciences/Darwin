@@ -4,7 +4,7 @@ create table catalogue_relationships
         table_name varchar not null,
         record_id_1 integer not null,
         record_id_2 integer not null,
-        relationship_type relationship_types default 'is child of' not null,
+        relationship_type relationship_types default 'is synonym of' not null,
         defined_by_ordered_ids_list integer[],
         constraint unq_catalogue_relationships unique (table_name, relationship_type, record_id_1, record_id_2)
        );
@@ -281,7 +281,7 @@ create table template_people
         formated_name varchar not null,
         formated_name_indexed varchar not null,
         formated_name_ts tsvector not null,
-		title varchar not null DEFAULT '',
+	title varchar not null DEFAULT '',
         family_name varchar not null,
         given_name varchar,
         additional_names varchar,
@@ -608,6 +608,7 @@ comment on column users_multimedia.category is 'Object catégory: avatar, spelle
 create table collections
        (
         id serial not null,
+	collection_type collection_types default 'mix' not null,
         code varchar not null,
         name varchar not null,
         institution_ref integer not null,
@@ -624,6 +625,7 @@ create table collections
        );
 comment on table collections is 'List of all collections encoded in DaRWIN 2';
 comment on column collections.id is 'Unique identifier of a collection';
+comment on column collections.collection_type is 'Type of collection: physical for a collection of only physical objects, observations for a collection of only observations, mix for any kind of entry catalogued in collection';
 comment on column collections.code is 'Code given to collection';
 comment on column collections.name is 'Collection name';
 comment on column collections.institution_ref is 'Reference of institution current collection belongs to - id field of people table';
@@ -995,8 +997,9 @@ create table taxonomy
         extinct boolean default false not null,
         constraint pk_taxonomy primary key (id),
         constraint unq_taxonomy unique (path, name_indexed),
-        constraint fk_taxonomy_catalogue_levels_fk foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_taxonomy_taxonomy_domain foreign key (domain_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+	constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_domain_taxonomy foreign key (domain_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_kingdom_taxonomy foreign key (kingdom_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_super_phylum_taxonomy foreign key (super_phylum_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_phylum_taxonomy foreign key (phylum_ref) references taxonomy(id) on delete cascade,
@@ -1214,6 +1217,7 @@ create table chronostratigraphy
         constraint pk_chronostratigraphy primary key (id),
         constraint unq_chronostratigraphy unique (path, name_indexed),
         constraint fk_chronostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+	constraint fk_chronostratigraphy_parent_ref_chronostratigraphy foreign key (parent_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_eon_chronostratigraphy foreign key (eon_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_era_chronostratigraphy foreign key (era_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_sub_era_chronostratigraphy foreign key (sub_era_ref) references chronostratigraphy(id) on delete cascade,
@@ -1273,6 +1277,7 @@ create table lithostratigraphy
         constraint pk_lithostratigraphy primary key (id),
         constraint unq_lithostratigraphy unique (path, name_indexed),
         constraint fk_lithostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+	constraint fk_lithostratigraphy_parent_ref_lithostratigraphy foreign key (parent_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_group_lithostratigraphy foreign key (group_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_formation_lithostratigraphy foreign key (formation_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_member_lithostratigraphy foreign key (member_ref) references lithostratigraphy(id) on delete cascade,
@@ -1324,6 +1329,7 @@ create table mineralogy
         constraint pk_mineralogy primary key (id),
         constraint unq_mineralogy unique (path, name_indexed),
         constraint fk_mineralogy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+	constraint fk_mineralogy_parent_ref_mineralogy foreign key (parent_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_class_mineralogy foreign key (unit_class_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_division_mineralogy foreign key (unit_division_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_family_mineralogy foreign key (unit_family_ref) references mineralogy(id) on delete cascade,
@@ -1361,6 +1367,7 @@ create table lithology
         id serial not null,
         constraint pk_lithology primary key (id),
         constraint unq_lithology unique (path, name_indexed),
+	constraint fk_lithology_parent_ref_lithology foreign key (parent_ref) references lithology(id) on delete cascade,
         constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
        )
 inherits (template_classifications);
