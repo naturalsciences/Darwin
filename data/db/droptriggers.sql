@@ -71,3 +71,25 @@ DROP TRIGGER trg_cpy_FormattedName ON people;
 DROP TRIGGER trg_cpy_FormattedName ON users;
 
 DROP TRIGGER trg_clr_SavedSpecimense ON specimens;
+
+/*** Copy Hierarchy from parents triggers ***/
+
+DROP TRIGGER trg_cpy_hierarchy_from_parents_chronostratigraphy ON chronostratigraphy;
+DROP TRIGGER trg_cpy_hierarchy_from_parents_lithostratigraphy ON lithostratigraphy;
+DROP TRIGGER trg_cpy_hierarchy_from_parents_mineralogy ON mineralogy;
+DROP TRIGGER trg_cpy_hierarchy_from_parents_taxa ON taxonomy;
+--DROP TRIGGER trg_cpy_hierarchy_from_parents_lithology ON lithology;
+
+/*** Cascade of name update of a unit on all reference of this unit in children triggers ***/
+DROP TRIGGER trg_cpy_name_updt_impact_children_chronostratigraphy ON chronostratigraphy;
+DROP TRIGGER trg_cpy_name_updt_impact_children_lithostratigraphy ON lithostratigraphy;
+DROP TRIGGER trg_cpy_name_updt_impact_children_mineralogy ON mineralogy;
+DROP TRIGGER trg_cpy_name_updt_impact_children_taxa ON taxonomy;
+-- DROP TRIGGER trg_cpy_name_updt_impact_children_lithology ON lithology;
+
+/*** Cascade of level or parent_ref update of a unit on all children units triggers  ***/
+DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_chronostratigraphy ON chronostratigraphy;
+DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithostratigraphy ON lithostratigraphy;
+DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy ON mineralogy;
+DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa ON taxonomy;
+-- DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology ON lithology;
