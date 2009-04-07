@@ -88,6 +88,31 @@ CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology BEFORE UPDATE
 
 --- END HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
 
+--- BEGIN CONSTRUCTION OF HIERARCHY PATH
+
+CREATE TRIGGER trg_cpy_update_path_chronostratigraphy BEFORE INSERT OR UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_path();
+
+CREATE TRIGGER trg_cpy_update_path_lithostratigraphy BEFORE INSERT OR UPDATE
+	ON lithostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_path();
+
+CREATE TRIGGER trg_cpy_update_path_mineralogy BEFORE INSERT OR UPDATE
+	ON mineralogy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_path();
+
+CREATE TRIGGER trg_cpy_update_path_taxonomy BEFORE INSERT OR UPDATE
+	ON taxonomy FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_path();
+
+/*
+CREATE TRIGGER trg_cpy_update_path_lithology BEFORE INSERT OR UPDATE
+	ON lithology FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_update_path();
+*/
+--- END CONSTRUCTION OF HIERARCHY PATH
+
 -- BEGIN FULLTOINDEX
 CREATE TRIGGER trg_cpy_fullToIndex_catalogueproperties BEFORE INSERT OR UPDATE
 	ON catalogue_properties FOR EACH ROW

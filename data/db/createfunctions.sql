@@ -5623,3 +5623,114 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+/*
+fct_cpy_update_path
+When insertion of a new hierarchical unit is done, construct automatically the path of this unit.
+When <levels_structures>_ref of a unit are updated, the path have to be reconstructed
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_update_path() RETURNS TRIGGER
+AS $$
+DECLARE
+	booContinue boolean default true;
+BEGIN
+	IF TG_OP = 'UPDATE' THEN
+		IF TG_TABLE_NAME = 'chronostratigraphy' THEN
+			booContinue := 	((OLD.eon_ref <> NEW.eon_ref) OR (OLD.era_ref <> NEW.era_ref) OR (OLD.sub_era_ref <> NEW.sub_era_ref) OR (OLD.system_ref <> NEW.system_ref) OR (OLD.serie_ref <> NEW.serie_ref) OR (OLD.stage_ref <> NEW.stage_ref) OR (OLD.sub_stage_ref <> NEW.sub_stage_ref) OR (OLD.sub_level_1_ref <> NEW.sub_level_1_ref) OR (OLD.sub_level_2_ref <> NEW.sub_level_2_ref));
+		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
+			booContinue := 	((OLD.group_ref <> NEW.group_ref) OR (OLD.formation_ref <> NEW.formation_ref) OR (OLD.member_ref <> NEW.member_ref) OR (OLD.layer_ref <> NEW.layer_ref) OR (OLD.sub_level_1_ref <> NEW.sub_level_1_ref) OR (OLD.sub_level_2_ref <> NEW.sub_level_2_ref));
+		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+			booContinue := 	((OLD.unit_class_ref <> NEW.unit_class_ref) OR (OLD.unit_division_ref <> NEW.unit_division_ref) OR (OLD.unit_family_ref <> NEW.unit_family_ref) OR (OLD.unit_group_ref <> NEW.unit_group_ref) OR (OLD.unit_variety_ref <> NEW.unit_variety_ref));
+		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
+			booContinue := 	((OLD.domain_ref <> NEW.domain_ref) OR (OLD.kingdom_ref <> NEW.kingdom_ref) OR 
+					 (OLD.super_phylum_ref <> NEW.super_phylum_ref) OR (OLD.phylum_ref <> NEW.phylum_ref) OR (OLD.sub_phylum_ref <> NEW.sub_phylum_ref) OR (OLD.infra_phylum_ref <> NEW.infra_phylum_ref) OR
+					 (OLD.super_cohort_botany_ref <> NEW.super_cohort_botany_ref) OR (OLD.cohort_botany_ref <> NEW.cohort_botany_ref) OR (OLD.sub_cohort_botany_ref <> NEW.sub_cohort_botany_ref) OR (OLD.infra_cohort_botany_ref <> NEW.infra_cohort_botany_ref) OR
+					 (OLD.super_class_ref <> NEW.super_class_ref) OR (OLD.class_ref <> NEW.class_ref) OR (OLD.sub_class_ref <> NEW.sub_class_ref) OR (OLD.infra_class_ref <> NEW.infra_class_ref) OR
+					 (OLD.super_division_ref <> NEW.super_division_ref) OR (OLD.division_ref <> NEW.division_ref) OR (OLD.sub_division_ref <> NEW.sub_division_ref) OR (OLD.infra_division_ref <> NEW.infra_division_ref) OR
+					 (OLD.super_legion_ref <> NEW.super_legion_ref) OR (OLD.legion_ref <> NEW.legion_ref) OR (OLD.sub_legion_ref <> NEW.sub_legion_ref) OR (OLD.infra_legion_ref <> NEW.infra_legion_ref) OR
+					 (OLD.super_cohort_zoology_ref <> NEW.super_cohort_zoology_ref) OR (OLD.cohort_zoology_ref <> NEW.cohort_zoology_ref) OR (OLD.sub_cohort_zoology_ref <> NEW.sub_cohort_zoology_ref) OR (OLD.infra_cohort_zoology_ref <> NEW.infra_cohort_zoology_ref) OR
+					 (OLD.super_order_ref <> NEW.super_order_ref) OR (OLD.order_ref <> NEW.order_ref) OR (OLD.sub_order_ref <> NEW.sub_order_ref) OR (OLD.infra_order_ref <> NEW.infra_order_ref) OR
+					 (OLD.section_zoology_ref <> NEW.section_zoology_ref) OR (OLD.sub_section_zoology_ref <> NEW.sub_section_zoology_ref) OR
+					 (OLD.super_family_ref <> NEW.super_family_ref) OR (OLD.family_ref <> NEW.family_ref) OR (OLD.sub_family_ref <> NEW.sub_family_ref) OR (OLD.infra_family_ref <> NEW.infra_family_ref) OR
+					 (OLD.super_tribe_ref <> NEW.super_tribe_ref) OR (OLD.tribe_ref <> NEW.tribe_ref) OR (OLD.sub_tribe_ref <> NEW.sub_tribe_ref) OR (OLD.infra_tribe_ref <> NEW.infra_tribe_ref) OR
+					 (OLD.genus_ref <> NEW.genus_ref) OR (OLD.sub_genus_ref <> NEW.sub_genus_ref) OR
+					 (OLD.section_botany_ref <> NEW.section_botany_ref) OR (OLD.sub_section_botany_ref <> NEW.sub_section_botany_ref) OR
+					 (OLD.serie_ref <> NEW.serie_ref) OR (OLD.sub_serie_ref <> NEW.sub_serie_ref) OR
+					 (OLD.super_species_ref <> NEW.super_species_ref) OR (OLD.species_ref <> NEW.species_ref) OR (OLD.sub_species_ref <> NEW.sub_species_ref) OR
+					 (OLD.variety_ref <> NEW.variety_ref) OR (OLD.sub_variety_ref <> NEW.sub_variety_ref) OR
+					 (OLD.form_ref <> NEW.form_ref) OR (OLD.sub_form_ref <> NEW.sub_form_ref) OR
+					 (OLD.abberans_ref <> NEW.abberans_ref)
+					);
+		ELSIF TG_TABLE_NAME = 'lithology' THEN
+			
+		END IF;
+	END IF;
+	IF booContinue THEN
+		IF TG_TABLE_NAME = 'chronostratigraphy' THEN
+			SELECT replace(replace('/' || NEW.eon_ref::varchar || '/' || NEW.era_ref::varchar || '/' || NEW.sub_era_ref::varchar || '/' || 
+						     NEW.system_ref::varchar || '/' || NEW.serie_ref::varchar || '/' || NEW.stage_ref::varchar || '/' || 
+						     NEW.sub_stage_ref::varchar || '/' || NEW.sub_level_1_ref::varchar || '/' || 
+						     NEW.sub_level_2_ref::varchar || '/',
+						     '/0',
+						     ''
+						    ),
+					      '/' || NEW.id::varchar || '/',
+					      '/'
+					     )
+			INTO NEW.path;
+		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
+			SELECT replace(replace('/' || NEW.group_ref::varchar || '/' || NEW.formation_ref::varchar || '/' || NEW.member_ref::varchar || 
+						     '/' || NEW.layer_ref::varchar || '/' || 
+						     NEW.sub_level_1_ref::varchar || '/' || NEW.sub_level_2_ref::varchar || '/',
+						     '/0',
+						     ''
+						    ),
+					      '/' || NEW.id::varchar || '/',
+					      '/'
+					     )
+			INTO NEW.path;
+		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+			SELECT replace(replace('/' || NEW.unit_class_ref::varchar || '/' || NEW.unit_division_ref::varchar || '/' || 
+						     NEW.unit_family_ref::varchar || '/' || NEW.unit_group_ref::varchar || '/' || 
+						     NEW.unit_variety_ref::varchar || '/',
+						     '/0',
+						     ''
+						    ),
+					      '/' || NEW.id::varchar || '/',
+					      '/'
+					     )
+			INTO NEW.path;
+		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
+			SELECT replace(replace('/' || NEW.domain_ref::varchar || '/' || NEW.kingdom_ref::varchar || '/' || 
+						     NEW.super_phylum_ref::varchar || '/' || NEW.phylum_ref::varchar || '/' || NEW.sub_phylum_ref::varchar || '/' || NEW.infra_phylum_ref::varchar || '/' ||
+						     NEW.super_cohort_botany_ref::varchar || '/' || NEW.cohort_botany_ref::varchar || '/' || NEW.sub_cohort_botany_ref::varchar || '/' || NEW.infra_cohort_botany_ref::varchar || '/' ||
+						     NEW.super_class_ref::varchar || '/' || NEW.class_ref::varchar || '/' || NEW.sub_class_ref::varchar || '/' || NEW.infra_class_ref::varchar || '/' ||
+						     NEW.super_division_ref::varchar || '/' || NEW.division_ref::varchar || '/' || NEW.sub_division_ref::varchar || '/' || NEW.infra_division_ref::varchar || '/' ||
+						     NEW.super_legion_ref::varchar || '/' || NEW.legion_ref::varchar || '/' || NEW.sub_legion_ref::varchar || '/' || NEW.infra_legion_ref::varchar || '/' ||
+						     NEW.super_cohort_zoology_ref::varchar || '/' || NEW.cohort_zoology_ref::varchar || '/' || NEW.sub_cohort_zoology_ref::varchar || '/' || NEW.infra_cohort_zoology_ref::varchar || '/' ||
+						     NEW.super_order_ref::varchar || '/' || NEW.order_ref::varchar || '/' || NEW.sub_order_ref::varchar || '/' || NEW.infra_order_ref::varchar || '/' ||
+						     NEW.section_zoology_ref::varchar || '/' || NEW.sub_section_zoology_ref::varchar || '/' ||
+						     NEW.super_family_ref::varchar || '/' || NEW.family_ref::varchar || '/' || NEW.sub_family_ref::varchar || '/' || NEW.infra_family_ref::varchar || '/' ||
+						     NEW.super_tribe_ref::varchar || '/' || NEW.tribe_ref::varchar || '/' || NEW.sub_tribe_ref::varchar || '/' || NEW.infra_tribe_ref::varchar || '/' ||
+						     NEW.genus_ref::varchar || '/' || NEW.sub_genus_ref::varchar || '/' ||
+						     NEW.section_botany_ref::varchar || '/' || NEW.sub_section_botany_ref::varchar || '/' ||
+						     NEW.serie_ref::varchar || '/' || NEW.sub_serie_ref::varchar || '/' ||
+						     NEW.super_species_ref::varchar || '/' || NEW.species_ref::varchar || '/' || NEW.sub_species_ref::varchar || '/' ||
+						     NEW.variety_ref::varchar || '/' || NEW.sub_variety_ref::varchar || '/' ||
+						     NEW.form_ref::varchar || '/' || NEW.sub_form_ref::varchar || '/' ||
+						     NEW.abberans_ref::varchar || '/',
+						     '/0',
+						     ''
+						    ),
+					      '/' || NEW.id::varchar || '/',
+					      '/'
+					     )
+			INTO NEW.path;
+		ELSIF TG_TABLE_NAME = 'lithology' THEN
+			
+		END IF;
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;

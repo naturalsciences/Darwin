@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(257);
+SELECT plan(299);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -9,13 +9,18 @@ INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (2, 'ÉL
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (3, 'KÉLoWÿ', 56, 1);
 INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'BÉLoWÿ', 58, 2);
 
+SELECT ok('/' = (SELECT path FROM chronostratigraphy WHERE id = 1), 'Path of unit 1: /');
+SELECT ok('/1/' = (SELECT path FROM chronostratigraphy WHERE id = 2), 'Path of unit 2: /1/');
+SELECT ok('/1/' = (SELECT path FROM chronostratigraphy WHERE id = 3), 'Path of unit 3: /1/');
+SELECT ok('/1/2/' = (SELECT path FROM chronostratigraphy WHERE id = 4), 'Path of unit 4: /1/2/');
+
 SELECT lives_ok('UPDATE chronostratigraphy SET level_ref = 57, parent_ref = 3 WHERE id = 2', 'Level of unit 2 have been changed from 56 (era) to 57 (sub era) and attached to a new era - unit 3 -> allowed because direct children (unit 4 of system level) is attachable to a sub-era');
 
 SELECT ok(3 = (SELECT era_ref FROM chronostratigraphy WHERE id = 2), 'New era_ref of unit 2 : 3');
 SELECT ok('kelowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id = 2), 'New era_indexed of unit 2 : kelowy');
-
 SELECT ok(2 = (SELECT sub_era_ref FROM chronostratigraphy WHERE id = 2), 'New sub_era_ref of unit 2 : 2');
 SELECT ok('elowy' = (SELECT sub_era_indexed FROM chronostratigraphy WHERE id = 2), 'New sub_era_indexed of unit 2 : elowy');
+SELECT ok('/1/3/' = (SELECT path FROM chronostratigraphy WHERE id = 2), 'Path of unit 2: /1/3/');
 
 SELECT ok(3 = (SELECT era_ref FROM chronostratigraphy WHERE id = 4), 'New era_ref of unit 4 : 3');
 SELECT ok('kelowy' = (SELECT era_indexed FROM chronostratigraphy WHERE id = 4), 'New era_indexed of unit 4 : kelowy');
@@ -25,6 +30,7 @@ SELECT ok(4 = (SELECT system_ref FROM chronostratigraphy WHERE id = 4), 'New sys
 SELECT ok('belowy' = (SELECT system_indexed FROM chronostratigraphy WHERE id = 4), 'New system_indexed of unit 4 : belowy');
 SELECT ok(0 = (SELECT serie_ref FROM chronostratigraphy WHERE id = 4), 'New serie_ref of unit 4 : 0');
 SELECT ok('' = (SELECT serie_indexed FROM chronostratigraphy WHERE id = 4), 'New serie_indexed of unit 4 : ''''');
+SELECT ok('/1/3/2/' = (SELECT path FROM chronostratigraphy WHERE id = 4), 'Path of unit 4: /1/3/2/');
 
 SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 58 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
 
@@ -34,6 +40,11 @@ INSERT INTO lithostratigraphy (id,name, level_ref) VALUES (1, 'Méalo-nÿeø@ß�
 INSERT INTO lithostratigraphy (id,name, level_ref, parent_ref) VALUES (2, 'Méalo-nÿeø@ß€A', 65, 1);
 INSERT INTO lithostratigraphy (id,name, level_ref, parent_ref) VALUES (3, 'Méalo-nÿeø@ß€B', 65, 1);
 INSERT INTO lithostratigraphy (id,name, level_ref, parent_ref) VALUES (4, 'Méalo-nÿeø@ß€C', 66, 3);
+
+SELECT ok('/' = (SELECT path FROM lithostratigraphy WHERE id = 1), 'Path of unit 1: /');
+SELECT ok('/1/' = (SELECT path FROM lithostratigraphy WHERE id = 2), 'Path of unit 2: /1/');
+SELECT ok('/1/' = (SELECT path FROM lithostratigraphy WHERE id = 3), 'Path of unit 3: /1/');
+SELECT ok('/1/3/' = (SELECT path FROM lithostratigraphy WHERE id = 4), 'Path of unit 4: /1/3/');
 
 SELECT lives_ok('UPDATE lithostratigraphy SET level_ref = 66, parent_ref = 3 WHERE id = 2', 'Level of unit 2 have been changed from 65 (formation) to 66 (member) and attached to a new formation - unit 3 -> allowed because no children attached yet');
 
@@ -45,6 +56,7 @@ SELECT ok(2 = (SELECT member_ref FROM lithostratigraphy WHERE id = 2), 'New memb
 SELECT ok('mealonyeoba' = (SELECT member_indexed FROM lithostratigraphy WHERE id = 2), 'New member_indexed of unit 2: mealonyeoba');
 SELECT ok(0 = (SELECT layer_ref FROM lithostratigraphy WHERE id = 2), 'New layer_ref of unit 2: 0');
 SELECT ok('' = (SELECT layer_indexed FROM lithostratigraphy WHERE id = 2), 'New layer_ref of unit 2: ''''');
+SELECT ok('/1/3/' = (SELECT path FROM lithostratigraphy WHERE id = 2), 'Path of unit 2: /1/3/');
 
 SELECT lives_ok('UPDATE lithostratigraphy SET level_ref = 67, parent_ref = 2 WHERE id = 4', 'Level of unit 4 have been changed from 66 (member) to 67 (layer) and attached to a new member - unit 2 -> allowed because no children attached yet');
 
@@ -56,6 +68,7 @@ SELECT ok(2 = (SELECT member_ref FROM lithostratigraphy WHERE id = 4), 'New memb
 SELECT ok('mealonyeoba' = (SELECT member_indexed FROM lithostratigraphy WHERE id = 4), 'New member_indexed of unit 4: mealonyeoba');
 SELECT ok(4 = (SELECT layer_ref FROM lithostratigraphy WHERE id = 4), 'New layer_ref of unit 4: 4');
 SELECT ok('mealonyeobc' = (SELECT layer_indexed FROM lithostratigraphy WHERE id = 4), 'New layer_ref of unit 4: mealonyeobc');
+SELECT ok('/1/3/2/' = (SELECT path FROM lithostratigraphy WHERE id = 4), 'Path of unit 4: /1/3/2/');
 
 SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 65, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
 
@@ -65,6 +78,11 @@ INSERT INTO mineralogy (id,name, code, level_ref) VALUES (1, 'Méalo-nÿeø@ß�
 INSERT INTO mineralogy (id,name, code, level_ref, parent_ref) VALUES (2, 'Méalo-nÿeø@ß€A', 'AA', 71, 1);
 INSERT INTO mineralogy (id,name, code, level_ref, parent_ref) VALUES (3, 'Méalo-nÿeø@ß€B', 'B', 71, 1);
 INSERT INTO mineralogy (id,name, code, level_ref, parent_ref) VALUES (4, 'Méalo-nÿeø@ß€C', 'C', 72, 3);
+
+SELECT ok('/' = (SELECT path FROM mineralogy WHERE id = 1), 'Path of unit 1: /');
+SELECT ok('/1/' = (SELECT path FROM mineralogy WHERE id = 2), 'Path of unit 2: /1/');
+SELECT ok('/1/' = (SELECT path FROM mineralogy WHERE id = 3), 'Path of unit 3: /1/');
+SELECT ok('/1/3/' = (SELECT path FROM mineralogy WHERE id = 4), 'Path of unit 4: /1/3/');
 
 SELECT lives_ok('UPDATE mineralogy SET level_ref = 72, parent_ref = 3 WHERE id = 2', 'Level of unit 2 have been changed from 71 (unit_division) to 72 (unit_family) and attached to a new unit_division - unit 3 -> allowed because no children attached yet');
 
@@ -76,6 +94,7 @@ SELECT ok(2 = (SELECT unit_family_ref FROM mineralogy WHERE id = 2), 'New unit_f
 SELECT ok('mealonyeoba' = (SELECT unit_family_indexed FROM mineralogy WHERE id = 2), 'New unit_family_indexed of unit 2: mealonyeoba');
 SELECT ok(0 = (SELECT unit_group_ref FROM mineralogy WHERE id = 2), 'New unit_group_ref of unit 2: 0');
 SELECT ok('' = (SELECT unit_group_indexed FROM mineralogy WHERE id = 2), 'New unit_group_ref of unit 2: ''''');
+SELECT ok('/1/3/' = (SELECT path FROM mineralogy WHERE id = 2), 'Path of unit 2: /1/3/');
 
 SELECT lives_ok('UPDATE mineralogy SET level_ref = 73, parent_ref = 2 WHERE id = 4', 'Level of unit 4 have been changed from 72 (unit_family) to 73 (unit_group) and attached to a new unit_family - unit 2 -> allowed because no children attached yet');
 
@@ -87,6 +106,7 @@ SELECT ok(2 = (SELECT unit_family_ref FROM mineralogy WHERE id = 4), 'New unit_f
 SELECT ok('mealonyeoba' = (SELECT unit_family_indexed FROM mineralogy WHERE id = 4), 'New unit_family_indexed of unit 4: mealonyeoba');
 SELECT ok(4 = (SELECT unit_group_ref FROM mineralogy WHERE id = 4), 'New unit_group_ref of unit 4: 4');
 SELECT ok('mealonyeobc' = (SELECT unit_group_indexed FROM mineralogy WHERE id = 4), 'New unit_group_ref of unit 4: mealonyeobc');
+SELECT ok('/1/3/2/' = (SELECT path FROM mineralogy WHERE id = 4), 'Path of unit 4: /1/3/2/');
 
 SELECT throws_ok('UPDATE mineralogy SET level_ref = 71, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
 
@@ -126,6 +146,17 @@ INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (31, 'SUPERSPECIES
 INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (32, 'SPECIES', 48, 31);
 INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (33, 'GENUSDUB', 41, 25);
 
+SELECT ok('/' = (SELECT path FROM taxonomy WHERE id = 1), 'Path of unit 1: /');
+SELECT ok('/1/' = (SELECT path FROM taxonomy WHERE id = 2), 'Path of unit 2: /1/');
+SELECT ok('/1/2/' = (SELECT path FROM taxonomy WHERE id = 3), 'Path of unit 3: /1/2/');
+SELECT ok('/1/2/3/' = (SELECT path FROM taxonomy WHERE id = 4), 'Path of unit 4: /1/2/3/');
+SELECT ok('/1/2/3/4/' = (SELECT path FROM taxonomy WHERE id = 5), 'Path of unit 5: /1/2/3/4/');
+SELECT ok('/1/2/3/4/5/' = (SELECT path FROM taxonomy WHERE id = 6), 'Path of unit 6: /1/2/3/4/5/');
+SELECT ok('/1/2/3/4/5/6/' = (SELECT path FROM taxonomy WHERE id = 7), 'Path of unit 7: /1/2/3/4/5/6/');
+SELECT ok('/1/2/3/4/5/6/7/' = (SELECT path FROM taxonomy WHERE id = 8), 'Path of unit 8: /1/2/3/4/5/6/7/');
+SELECT ok('/1/2/3/4/5/6/7/8/' = (SELECT path FROM taxonomy WHERE id = 9), 'Path of unit 9: /1/2/3/4/5/6/7/8/');
+SELECT ok('/1/2/3/4/5/6/7/8/9/' = (SELECT path FROM taxonomy WHERE id = 10), 'Path of unit 10: /1/2/3/4/5/6/7/8/9/');
+
 SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 3', 'Unit 3 (phylum) moved from parent unit 2 to parent unit 11');
 
 SELECT ok(11 = (SELECT kingdom_ref FROM taxonomy WHERE id = 3), 'New kingdom_ref of unit 3: 11');
@@ -150,6 +181,16 @@ SELECT ok(11 = (SELECT kingdom_ref FROM taxonomy WHERE id = 10), 'New kingdom_re
 SELECT ok('b' = (SELECT kingdom_indexed FROM taxonomy WHERE id = 10), 'New kingdom_indexed of unit 10: b');
 SELECT ok(3 = (SELECT phylum_ref FROM taxonomy WHERE id = 10), 'New phylum_ref of unit 10: 3');
 SELECT ok('aa' = (SELECT phylum_indexed FROM taxonomy WHERE id = 10), 'New phylum_indexed of unit 10: aa');
+
+SELECT ok('/1/' = (SELECT path FROM taxonomy WHERE id = 11), 'Path of unit 11: /1/');
+SELECT ok('/1/11/' = (SELECT path FROM taxonomy WHERE id = 3), 'Path of unit 3: /1/11/');
+SELECT ok('/1/11/3/' = (SELECT path FROM taxonomy WHERE id = 4), 'Path of unit 4: /1/11/3/');
+SELECT ok('/1/11/3/4/' = (SELECT path FROM taxonomy WHERE id = 5), 'Path of unit 5: /1/11/3/4/');
+SELECT ok('/1/11/3/4/5/' = (SELECT path FROM taxonomy WHERE id = 6), 'Path of unit 6: /1/11/3/4/5/');
+SELECT ok('/1/11/3/4/5/6/' = (SELECT path FROM taxonomy WHERE id = 7), 'Path of unit 7: /1/11/3/4/5/6/');
+SELECT ok('/1/11/3/4/5/6/7/' = (SELECT path FROM taxonomy WHERE id = 8), 'Path of unit 8: /1/11/3/4/5/6/7/');
+SELECT ok('/1/11/3/4/5/6/7/8/' = (SELECT path FROM taxonomy WHERE id = 9), 'Path of unit 9: /1/11/3/4/5/6/7/8/');
+SELECT ok('/1/11/3/4/5/6/7/8/9/' = (SELECT path FROM taxonomy WHERE id = 10), 'Path of unit 10: /1/11/3/4/5/6/7/8/9/');
 
 SELECT lives_ok('UPDATE taxonomy SET parent_ref = 13 WHERE id = 4', 'Unit 4 (class) moved from parent unit 3 to parent unit 13');
 
@@ -293,6 +334,12 @@ SELECT ok(31 = (SELECT super_species_ref FROM taxonomy WHERE id = 32), 'New supe
 SELECT ok('superspecies' = (SELECT super_species_indexed FROM taxonomy WHERE id = 32), 'New super_species_indexed of unit 32: superspecies');
 SELECT ok(32 = (SELECT species_ref FROM taxonomy WHERE id = 32), 'New species_ref of unit 32: 32');
 SELECT ok('species' = (SELECT species_indexed FROM taxonomy WHERE id = 32), 'New species_indexed of unit 32: species');
+
+SELECT ok('/1/21/22/23/24/25/' = (SELECT path FROm taxonomy WHERE id = 33), 'Path of unit 33: /1/21/22/23/24/25/');
+SELECT ok('/1/21/22/23/24/25/33/' = (SELECT path from taxonomy WHERE id = 29), 'Path of unit 29: /1/21/22/23/24/25/33/');
+SELECT ok('/1/21/22/23/24/25/33/29/' = (SELECT path from taxonomy WHERE id = 30), 'Path of unit 30: /1/21/22/23/24/25/33/29/');
+SELECT ok('/1/21/22/23/24/25/33/29/30/' = (SELECT path from taxonomy WHERE id = 31), 'Path of unit 31: /1/21/22/23/24/25/33/29/30/');
+SELECT ok('/1/21/22/23/24/25/33/29/30/31/' = (SELECT path from taxonomy WHERE id = 32), 'Path of unit 32: /1/21/22/23/24/25/33/29/30/31/');
 
 INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (34, 'THEDOMAIN', 1, 0);
 INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (35, 'THEKINGDOM', 2, 34);
