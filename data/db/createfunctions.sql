@@ -2289,6 +2289,10 @@ BEGIN
 			IF NEW.group_name <> oldValue THEN
 				NEW.group_name_indexed := fullToIndex(NEW.group_name);
 			END IF;
+			oldValue := OLD.sub_group_name;
+			IF NEW.sub_group_name <> oldValue THEN
+				NEW.sub_group_name_indexed := fullToIndex(NEW.sub_group_name);
+			END IF;
 		ELSIF TG_TABLE_NAME = 'tags' THEN
 			oldValue := OLD.label;
 			IF NEW.label <> oldValue THEN
@@ -2344,6 +2348,7 @@ BEGIN
 			NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
 		ELSIF TG_TABLE_NAME = 'tag_groups' THEN
 			NEW.group_name_indexed := fullToIndex(NEW.group_name);
+			NEW.sub_group_name_indexed := fullToIndex(NEW.sub_group_name);
 		ELSIF TG_TABLE_NAME = 'tags' THEN
 			NEW.label_indexed := fullToIndex(NEW.label);
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN

@@ -5,6 +5,7 @@ if [ "${1:-'null'}" == "-d" ]; then
 else
   dbname=${1:-'darwin2'}
 fi
+importuser='darwin1'
 clusterpath='/var/lib/postgresql/8.3/darwin/'
 dbpath=$clusterpath$dbname
 mkdir $dbpath
@@ -15,9 +16,12 @@ if [ "${1:-'null'}" == "-d" ]; then
 fi
 psql -q -v dbpath=\'$dbpath\' -v dbname=$dbname -f createdb.sql
 dropuser -q $dbname
+dropuser -q $importuser
 createuser -l -i -q -S -R -D -P -E $dbname
+createuser -l -i -q -S -R -D -P -E $importuser
 psql -q -d $dbname -v dbname=$dbname -f createschema.sql
 psql -q -d $dbname -v dbname=$dbname -f create_testschema.sql
+psql -q -d $dbname -v importuser=$importuser -f create_darwin1_schema.sql
 psql -q -d $dbname -v dbname=$dbname -f lib/accent.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createdomains.sql
 psql -q -h $netaddr -d $dbname -U $dbname -f createtypes.sql

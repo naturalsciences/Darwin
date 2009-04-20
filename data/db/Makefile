@@ -1,11 +1,12 @@
 TESTS = $(wildcard tests/*.sql)
 HOST = 127.0.0.1
 DB_USER = darwin2
+DB_IMPORT_USER = darwin1
 DB_NAME = darwin2
 TEST_CMD = pg_prove
 PSQL = /usr/bin/psql
 PARAM_PSQL = $(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME)
-PRIV_PSQL = $(PSQL) -q -v dbname=$(DB_NAME)
+PRIV_PSQL = $(PSQL) -q -v dbname=$(DB_NAME) -v importuser=$(DB_IMPORT_USER)
 PRIV_PSQL_DB = $(PRIV_PSQL) -d $(DB_NAME)
 
 PG_PROVE = /usr/lib/postgresql/8.3/bin/pg_prove
@@ -116,6 +117,9 @@ create-schema:
 create-test-schema:
 	$(PRIV_PSQL_DB) -f create_testschema.sql
 	
+create-darwin1-schema:
+	$(PRIV_PSQL_DB) -f create_darwin1_schema.sql
+	
 create-db:
 	-mkdir $(TB_SPACE_DIR)
 	-createlang -d template1 plpgsql
@@ -126,6 +130,9 @@ create-db:
 
 create-user:
 	-createuser -l -i -q -S -R -D -P -E $(DB_USER)
+
+create-user-darwin1:
+	-createuser -l -i -q -S -R -D -P -E $(DB_IMPORT_USER)
 
 drop-db: 
 	$(PRIV_PSQL_DB) -f dropdb.sql
