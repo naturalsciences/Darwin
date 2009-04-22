@@ -33,28 +33,52 @@ INSERT INTO tag_groups (group_name, sub_group_name, tag_ref)
 	      ) inner join tags on fullToIndex(loc_full_name) = label_indexed
 	 WHERE lower(lsc_name) not in ('country', 'province')
 	);
-INSERT INTO gtu (id)
-	(SELECT DISTINCT ON (loc_indexed) id FROM
-		(SELECT loc_id_ctn as id, fullToIndex(loc_full_name) as loc_indexed
-		 FROM tbl_locations left join tbl_location_children_parents on loc_id_ctn = lcp_children_id_nr
-		 WHERE lcp_children_id_nr is null
-		) as first_selection
-	);
-INSERT INTO gtu (id, parent_ref)
-	(SELECT DISTINCT ON (loc_indexed) id, parent_id FROM
-		(SELECT loc_id_ctn as id, child_locs.lcp_parent_id_nr as parent_id, fullToIndex(loc_full_name) as loc_indexed
-		 FROM tbl_locations inner join tbl_location_children_parents as child_locs on loc_id_ctn = child_locs.lcp_children_id_nr
-		 WHERE child_locs.lcp_parent_id_nr IN (select id from gtu)
-		) as first_selection
-	);
-INSERT INTO gtu (id, parent_ref)
-	(SELECT DISTINCT ON (loc_indexed) id, parent_id FROM
-		(SELECT loc_id_ctn as id, child_locs.lcp_parent_id_nr as parent_id, fullToIndex(loc_full_name) as loc_indexed
-		 FROM tbl_locations inner join tbl_location_children_parents as child_locs on loc_id_ctn = child_locs.lcp_children_id_nr
-		 WHERE child_locs.lcp_parent_id_nr IN (select id from gtu)
-		   AND loc_id_ctn NOT IN (select id from gtu)
-		) as first_selection
-	);
+CREATE OR REPLACE FUNCTION fct_cpy_gtu_d1_to_d2 () RETURNS integer
+AS $$
+DECLARE
+	recordsInserted integer := 0;
+	buffer integer;
+BEGIN
+	INSERT INTO gtu (id)
+        	(SELECT DISTINCT ON (loc_indexed) id FROM
+                	(SELECT loc_id_ctn as id, fullToIndex(loc_full_name) as loc_indexed
+	                 FROM tbl_locations left join tbl_location_children_parents on loc_id_ctn = lcp_children_id_nr
+        	         WHERE lcp_children_id_nr is null
+                	) as first_selection
+	        );
+	IF FOUND THEN
+		GET DIAGNOSTICS recordsInserted = ROW_COUNT;
+		INSERT INTO gtu (id, parent_ref)
+        		(SELECT DISTINCT ON (loc_indexed) id, parent_id FROM
+                		(SELECT loc_id_ctn as id, child_locs.lcp_parent_id_nr as parent_id, fullToIndex(loc_full_name) as loc_indexed
+		                 FROM tbl_locations inner join tbl_location_children_parents as child_locs on loc_id_ctn = child_locs.lcp_children_id_nr
+        		         WHERE child_locs.lcp_parent_id_nr IN (select id from gtu)
+                		) as first_selection
+		        );
+		IF FOUND THEN
+			WHILE FOUND LOOP
+				GET DIAGNOSTICS buffer = ROW_COUNT;
+				recordsInserted := buffer + recordsInserted;
+				INSERT INTO gtu (id, parent_ref)
+				(SELECT DISTINCT ON (loc_indexed) id, parent_id FROM
+			                (SELECT loc_id_ctn as id, child_locs.lcp_parent_id_nr as parent_id, fullToIndex(loc_full_name) as loc_indexed
+			                 FROM tbl_locations inner join tbl_location_children_parents as child_locs on loc_id_ctn = child_locs.lcp_children_id_nr
+			                 WHERE child_locs.lcp_parent_id_nr IN (select id from gtu)
+			                   AND loc_id_ctn NOT IN (select id from gtu)
+			                ) as first_selection
+			        );
+			END LOOP;
+		END IF;
+	END IF;
+	return recordsInserted;
+EXCEPTION
+	WHEN OTHERS THEN ROLLBACK;
+	recordsInserted := 0;
+	RETURN recordsInserted;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT 'INSERT 0 ' || fct_cpy_gtu_d1_to_d2();
 ROLLBACK;
 /*COMMIT;*/
 END TRANSACTION;
