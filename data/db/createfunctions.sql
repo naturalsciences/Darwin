@@ -146,7 +146,7 @@ BEGIN
 	temp_string := regexp_replace(temp_string,'[^[:alnum:]]','', 'g');
 	return substring(temp_string from 0 for 40);
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql IMMUTABLE;
 
 /***
 * Trigger function fct_cpy_hierarchy_from_parents
@@ -3161,7 +3161,7 @@ BEGIN
 	SELECT array(select s FROM fct_explode_array (in_array)  as s WHERE s != elem) INTO out_array;
 END;
 $$
-LANGUAGE plpgsql;
+LANGUAGE plpgsql immutable;
 
 CREATE OR REPLACE FUNCTION fct_explode_array(in_array anyarray) returns setof anyelement as
 $$
