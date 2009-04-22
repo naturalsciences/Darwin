@@ -3218,9 +3218,17 @@ BEGIN
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
 			NEW.value_defined_ts := to_tsvector(NEW.value_defined);
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
-			NEW.address_parts_ts := to_tsvector(NEW.address_parts);
+			NEW.address_parts_ts := to_tsvector(
+							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
+							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
+							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
+					);
 		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
-			NEW.address_parts_ts := to_tsvector(NEW.address_parts);
+			NEW.address_parts_ts := to_tsvector(
+							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
+							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
+							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
+					);
 		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
 			NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
 		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
@@ -3242,13 +3250,17 @@ BEGIN
 				NEW.value_defined_ts := to_tsvector(NEW.value_defined);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
-			IF OLD.address_parts != NEW.address_parts THEN
-				NEW.address_parts_ts := to_tsvector(NEW.address_parts);
-			END IF;
+				NEW.address_parts_ts := to_tsvector(
+							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
+							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
+							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
+					);
 		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
-			IF OLD.address_parts != NEW.address_parts THEN
-				NEW.address_parts_ts := to_tsvector(NEW.address_parts);
-			END IF;
+				NEW.address_parts_ts := to_tsvector(
+							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
+							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
+							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
+					);
 		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
 			IF OLD.title != NEW.title OR  OLD.subject != NEW.subject OR OLD.descriptive_language_full_text != NEW.descriptive_language_full_text THEN
 				NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
