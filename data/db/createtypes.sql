@@ -3,7 +3,7 @@ create type collection_types as enum ('physical', 'observations', 'mix');
 create type notions_concerned as enum ('Taxonomic identification', 'Stratigraphic identification', 'Lithologic identification', 'Mineralogic identification', 'Expertise', 'Preparation');
 create type public_classes as enum ('public', 'private');
 create type coverages as enum ('temporal', 'spatial');
-create type multimedia_types as enum ('image', 'sound', 'video', 'sculpture');
+create type multimedia_types as enum ('image', 'sound', 'video', 'sculpture','webpage');
 create type comm_types as enum ('phone/fax', 'e-mail');
 create type relationship_types as enum ('is synonym of', 'points to current name', 'is composed by recombination of');
 create type people_relationship_types as enum ('belongs to', 'is department of', 'is section of', 'works for');

@@ -106,7 +106,7 @@ install-all: create-db create-user create-schema install-db
 uninstall-db:
 	$(PARAM_PSQL) -f droptriggers.sql
 	$(PARAM_PSQL) -f dropfunctions.sql
-	$(PARAM_PSQL) -f dropindexed.sql
+	$(PARAM_PSQL) -f dropindexes.sql
 	$(PARAM_PSQL) -f droptables.sql
 	$(PARAM_PSQL) -f droptypes.sql
 	$(PARAM_PSQL) -f dropdomains.sql

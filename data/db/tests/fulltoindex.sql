@@ -86,7 +86,7 @@ SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimen_parts_codes WHERE spec
 INSERT INTO tags (id, label) VALUES (1,'La ''mèr'' Nwàre') ;
 SELECT ok( 'lamernware' = (SELECT label_indexed FROM tags WHERE id=1),'FulltoIndex on tags');
 
-INSERT INTO tag_groups (id, tag_ref,group_name) VALUES (1, 1, 'Rév#ers');
+INSERT INTO tag_groups (id, tag_ref,group_name,sub_group_name) VALUES (1, 1, 'Rév#ers','');
 SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'FulltoIndex on tags_groups');
 
 

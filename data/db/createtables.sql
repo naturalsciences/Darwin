@@ -117,10 +117,10 @@ create table gtu
         id serial not null,
         code varchar not null,
         parent_ref integer,
-        gtu_from_date_mask integer,
-        gtu_from_date timestamp,
-        gtu_to_date_mask integer,
-        gtu_to_date timestamp,
+        gtu_from_date_mask integer DEFAULT 0,
+        gtu_from_date timestamp DEFAULT '01/01/4713BC',
+        gtu_to_date_mask integer DEFAULT 0,
+        gtu_to_date timestamp DEFAULT '01/01/4713BC',
         constraint pk_gtu primary key (id),
         constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
        );
@@ -148,10 +148,10 @@ create table catalogue_properties
         property_type varchar not null,
         property_sub_type varchar,
         property_sub_type_indexed varchar not null,
-        date_from_mask integer,
-        date_from timestamp not null,
-        date_to_mask integer,
-        date_to timestamp not null,
+        date_from_mask integer DEFAULT 0,
+        date_from timestamp not null DEFAULT '01/01/4713BC',
+        date_to_mask integer DEFAULT 0,
+        date_to timestamp not null  DEFAULT '01/01/4713BC',
         property_unit varchar not null,
         property_min varchar[] not null,
         property_min_unified varchar[] not null,
@@ -270,10 +270,10 @@ create table expeditions
 	name_ts tsvector not null,
         name_indexed varchar not null,
         name_language_full_text full_text_language,
-        expedition_from_date_mask integer,
-        expedition_from_date date,
-        expedition_to_date_mask integer,
-        expedition_to_date date,
+        expedition_from_date_mask integer DEFAULT 0,
+        expedition_from_date date DEFAULT '01/01/4713BC',
+        expedition_to_date_mask integer DEFAULT 0,
+        expedition_to_date date  DEFAULT '01/01/4713BC',
         constraint pk_expeditions primary key (id)
        );
 comment on table expeditions is 'List of expeditions made to collect specimens';
@@ -300,8 +300,8 @@ create table template_people
         family_name varchar not null,
         given_name varchar,
         additional_names varchar,
-        birth_date_mask integer,
-        birth_date date,
+        birth_date_mask integer  not null DEFAULT 0,
+        birth_date date not null DEFAULT '01/01/4713BC',
         gender genders
        );
 comment on table template_people is 'Template table used to describe user/people tables';
@@ -332,8 +332,8 @@ comment on column template_people_languages.prefered_language is 'Flag telling w
 create table people
        (
         db_people_type integer default 1 not null,
-        end_date_mask integer,
-        end_date date not null,
+        end_date_mask integer  not null DEFAULT 0,
+        end_date date not null DEFAULT '01/01/4713BC',
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
        )
@@ -353,7 +353,7 @@ comment on column people.additional_names is 'Any additional names given to pers
 comment on column people.birth_date is 'Day of birth/creation';
 comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column people.gender is 'For physical persons give the gender: M or F';
-comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector,...';
+comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector, 32 preparator, 64 photographer...';
 comment on column people.end_date is 'End date';
 comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 create table users
@@ -1464,8 +1464,8 @@ create table specimens
         host_specimen_ref integer,
         host_relationship varchar,
         acquisition_category acquisition_categories default 'expedition' not null,
-        acquisition_date_mask integer,
-        acquisition_date date,
+        acquisition_date_mask integer DEFAULT 0,
+        acquisition_date date  DEFAULT '01/01/4713BC',
         collecting_method varchar,
         collecting_tool varchar,
         specimen_count_min integer default 1 not null,
