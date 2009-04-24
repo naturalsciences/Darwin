@@ -36,3 +36,5 @@ DROP FUNCTION IF EXISTS fct_chk_possible_upper_level (table_name varchar, new_pa
 DROP FUNCTION IF EXISTS fct_cpy_update_children_when_parent_updated (table_name varchar, parent_id integer, parent_old_level template_classifications.level_ref%TYPE, parent_new_level template_classifications.level_ref%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed varchar[]) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_update_levels_or_parent_cascade() CASCADE;
 
+DROP FUNCTION IF EXISTS fct_trk_log_table() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_multimedia_path() CASCADE;

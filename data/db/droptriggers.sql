@@ -93,3 +93,4 @@ DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithostratigraphy ON lithos
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy ON mineralogy;
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa ON taxonomy;
 -- DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology ON lithology;
+DROP TRIGGER trg_cpy_multimedia_path ON multimedia;

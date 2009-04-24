@@ -358,6 +358,7 @@ comment on column people.end_date is 'End date';
 comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 create table users
        (
+        db_user_type smallint default 1 not null,
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date)
        )
@@ -368,6 +369,7 @@ comment on column users.is_physical is 'Type of user: physical or moral - true i
 comment on column users.sub_type is 'Used for moral users: precise nature - public institution, asbl, sprl, sa,...';
 comment on column users.public_class is 'Tells public nature of user information - public is default value';
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
+comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
@@ -406,6 +408,7 @@ create table multimedia
         id serial not null,
         is_digital boolean default true not null,
         type multimedia_types default 'image' not null,
+	sub_type varchar,
         title varchar not null,
         title_indexed varchar not null,
         subject varchar default '/' not null,
@@ -418,8 +421,11 @@ create table multimedia
         descriptive_language_full_text full_text_language,
         creation_date date,
         publication_date date,
+        parent_ref integer,
+        path varchar DEFAULT '/' NOT NULL,
+        mime_type varchar,
         constraint pk_multimedia primary key (id),
-        constraint unq_multimedia unique (is_digital, type, title_indexed)
+	constraint fk_multimedia_parent_ref_multimedia foreign key (parent_ref) references multimedia(id) on delete cascade
        );
 comment on table multimedia is 'Stores all multimedia objects encoded in DaRWIN 2.0';
 comment on column multimedia.id is 'Unique identifier of a multimedia object';
@@ -437,6 +443,9 @@ comment on column multimedia.creation_date is 'Object creation date';
 comment on column multimedia.publication_date is 'Object publication date';
 comment on column multimedia.descriptive_ts is 'tsvector form of title and subject fields together';
 comment on column multimedia.descriptive_language_full_text is 'Language used for descriptive_ts tsvector field composition';
+comment on column multimedia.parent_ref is 'Reference of a parent multimedia. Such as an Article of a publication';
+comment on column multimedia.path is 'Path of parent of the object (automaticaly filled)';
+comment on column multimedia.mime_type is 'Mime/Type of the linked digital object';
 create table template_people_users_comm_common
        (
         id serial not null,
@@ -578,7 +587,6 @@ create table users_login_infos
         user_name varchar,
         password varchar,
         system_id varchar,
-        db_user_type smallint default 1 not null,
         constraint unq_users_login_infos unique (user_ref, login_type),
         constraint fk_users_login_infos_users foreign key (user_ref) references users(id) on delete cascade
        );
@@ -588,7 +596,6 @@ comment on column users_login_infos.login_type is 'Type of identification system
 comment on column users_login_infos.user_name is 'For some system (local, ldap, kerberos,...) provides the username (encrypted form)';
 comment on column users_login_infos.password is 'For some system (local, ldap, kerberos,...) provides the password (encrypted form)';
 comment on column users_login_infos.system_id is 'For some system (shibbolet, openID,...) provides the user id';
-comment on column users_login_infos.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
 create table template_people_users_multimedia
        (
         person_user_ref integer not null,

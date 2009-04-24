@@ -370,3 +370,11 @@ CREATE TRIGGER trg_cpy_FormattedName BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_clr_SavedSpecimense AFTER DELETE
 	ON specimens FOR EACH ROW
 	EXECUTE PROCEDURE fct_clr_SavedSpecimens();
+
+CREATE TRIGGER trg_cpy_multimedia_path BEFORE INSERT OR UPDATE
+	ON multimedia FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_multimedia_path();
+
+CREATE TRIGGER trg_trk_log_table AFTER INSERT OR UPDATE OR  DELETE
+	ON taxonomy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();

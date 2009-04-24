@@ -5751,3 +5751,78 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_cpy_multimedia_path() RETURNS TRIGGER
+AS $$
+BEGIN
+	IF TG_OP = 'INSERT' THEN
+		IF NEW.parent_ref IS NULL THEN
+			NEW.path ='/';
+		ELSE
+			SELECT path || id || '/' INTO NEW.path FROM multimedia WHERE
+				id=NEW.parent_ref;
+		END IF;
+	ELSE
+		IF OLD.parent_ref = NEW.parent_ref THEN
+			RETURN NEW;
+		ELSEIF NEW.parent_ref IS NULL THEN
+			NEW.path ='/';
+		ELSE
+			-- Change current path
+			SELECT path || id || '/' INTO NEW.path FROM multimedia WHERE
+				id=NEW.parent_ref;
+		END IF;
+		-- Change children's path
+		UPDATE multimedia SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+	END IF;
+	RETURN NEW;
+END;
+$$
+language plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_trk_log_table() RETURNS TRIGGER
+AS $$
+DECLARE 
+	user_id integer;
+	trk_id bigint;
+	tbl_row RECORD;
+BEGIN
+
+	SELECT COALESCE(current_setting('darwin.userid')::int,0) INTO user_id;
+	
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+		IF TG_OP = 'INSERT' THEN
+			INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
+				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert'::tracking_actions, now()) RETURNING id into trk_id;
+		ELSE
+			INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
+				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update'::tracking_actions, now()) RETURNING id into trk_id;
+		END IF;
+
+/*		FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE table_name = TG_TABLE_NAME::text AND user_ref=user_id
+		LOOP
+			SELECT array(SELECT ROW(NEW.*) from taxonomy) as s ;
+			-- http://www.nabble.com/array-variables-td20477110.html
+			/*EXECUTE 'INSERT INTO users_tracking_records VALUES (' || quote_literal(trk_id) || ' , ' ||
+						quote_literal(tbl_row.field_name) || ' , ' ||
+						' ''{ OLD.'|| tbl_row.field_name || '}' || ''',' ||
+						' ''{NEW.'|| tbl_row.field_name || '}'  || ''' )';
+		END LOOP;*/
+		RETURN NEW;
+		/*EXECUTE 'INSERT INTO users_tracking_records 
+			(SELECT trk_id,
+					field_name,
+					NEW.'brol',
+					old.'', 
+				FROM users_tables_fields_tracked 
+					WHERE table_name =TG_TABLE_NAME::text
+						AND user_ref=user_id)';*/
+	ELSE
+		INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
+ 			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete'::tracking_actions, now());
+	END IF;
+	RETURN NULL;
+END;
+$$
+LANGUAGE plpgsql;
