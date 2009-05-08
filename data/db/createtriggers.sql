@@ -378,3 +378,11 @@ CREATE TRIGGER trg_cpy_multimedia_path BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_trk_log_table AFTER INSERT OR UPDATE OR  DELETE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_trk_log_table();
+
+/*
+** Trigger aimed at calculating unified values
+*/
+
+CREATE TRIGGER trg_cpy_unified_values BEFORE INSERT OR UPDATE
+	ON catalogue_properties FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_unified_values();

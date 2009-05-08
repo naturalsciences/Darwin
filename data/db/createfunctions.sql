@@ -2208,6 +2208,10 @@ BEGIN
 			IF NEW.property_method <> oldValue THEN
 				NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
 			END IF;
+			oldValue := OLD.property_qualifier;
+			IF NEW.property_qualifier <> oldValue THEN
+				NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
+			END IF;
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
@@ -2319,6 +2323,7 @@ BEGIN
 			NEW.property_tool_indexed := COALESCE(fullToIndex(NEW.property_tool),'');
 			NEW.property_sub_type_indexed := COALESCE(fullToIndex(NEW.property_sub_type),'');
 			NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
+			NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'expeditions' THEN
@@ -5826,3 +5831,279 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
+
+/*
+** fct_cpy_length_conversion
+** Convert length into unified version (m - meter)
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_length_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
+language SQL STABLE
+AS 
+$$
+	SELECT  CASE
+			WHEN $2 = 'dm' THEN
+				($1)*10^(-1)
+			WHEN $2 = 'ft' THEN	
+				($1)*3.048*10^(-1)
+			WHEN $2 = 'P' THEN
+				($1)*3.24839385*10^(-1)
+			WHEN $2 = 'yd' THEN
+				($1)*9.144*10^(-1)
+			WHEN $2 = 'cm' THEN
+				($1)*10^(-2)
+			WHEN $2 = 'in' THEN
+				($1)*2.54*10^(-2)
+			WHEN $2 = 'mm' THEN
+				($1)*10^(-3)
+			WHEN $2 = 'pica' THEN
+				($1)*4.233333*10^(-3)
+			WHEN $2 = 'p' THEN
+				($1)*27.069949*10^(-3)
+			WHEN $2 = 'mom' THEN
+				($1)*10^(-4)
+			WHEN $2 IN ('pt', 'point') THEN
+				($1)*3.527778*10^(-4)
+			WHEN $2 = 'mil' THEN
+				($1)*2.54*10^(-5)
+			WHEN $2 IN ('µm', 'µ') THEN
+				($1)*10^(-6)
+			WHEN $2 = 'twp' THEN
+				($1)*17.639*10^(-6)
+			WHEN $2 = 'cal' THEN
+				($1)*254*10^(-6)
+			WHEN $2 = 'nm' THEN
+				($1)*10^(-9)
+			WHEN $2 = 'Å' THEN
+				($1)*10^(-10)
+			WHEN $2 = 'pm' THEN
+				($1)*10^(-12)
+			WHEN $2 IN ('fm', 'fermi') THEN
+				($1)*10^(-15)
+			WHEN $2 = 'am' THEN
+				($1)*10^(-18)
+			WHEN $2 = 'zm' THEN
+				($1)*10^(-21)
+			WHEN $2 = 'ym' THEN
+				($1)*10^(-24)
+			WHEN $2 = 'fathom' THEN
+				($1)*1.828804
+			WHEN $2 = 'rd' THEN
+				($1)*5.02921
+			WHEN $2 = 'dam' THEN
+				($1)*10
+			WHEN $2 = 'ch' THEN
+				($1)*20.11684
+			WHEN $2 = 'arp' THEN
+				($1)*58.471089295
+			WHEN $2 IN ('hm', 'K') THEN
+				($1)*10^2
+			WHEN $2 = 'fur' THEN
+				($1)*201.168
+			WHEN $2 = 'km' THEN
+				($1)*10^3
+			WHEN $2 = 'mi' THEN
+				($1)*1.609344*10^3
+			WHEN $2 = 'nautical mi' THEN
+				($1)*1.852*10^3
+			WHEN $2 IN ('lieue', 'league') THEN
+				($1)*4.828032*10^3
+			WHEN $2 = 'mam' THEN
+				($1)*10^4
+			WHEN $2 = 'Mm' THEN
+				($1)*10^6
+			WHEN $2 = 'Gm' THEN
+				($1)*10^9
+			WHEN $2 = 'ua' THEN
+				($1)*1.495979*10^11
+			WHEN $2 = 'Tm' THEN
+				($1)*10^12
+			WHEN $2 = 'Pm' THEN
+				($1)*10^15
+			WHEN $2 = 'pc' THEN
+				($1)*3.085678*10^16
+			WHEN $2 IN ('ly', 'l.y.') THEN
+				($1)*9.4607304725808*10^15
+			WHEN $2 = 'Em' THEN
+				($1)*10^18
+			WHEN $2 = 'Zm' THEN
+				($1)*10^21
+			WHEN $2 = 'Ym' THEN
+				($1)*10^24
+			ELSE
+				$1
+		END::real;
+$$;
+/*
+** fct_cpy_temperature_conversion
+** Convert temperatures into unified version (K - Kelvin)
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_temperature_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
+language SQL STABLE
+AS
+$$
+	SELECT  CASE
+			WHEN $2 = '°C' THEN
+				($1)+273.15
+			WHEN $2 = '°F' THEN
+				(($1)+459.67)/1.8
+			WHEN $2 = '°Ra' THEN
+				($1)/1.8
+			WHEN $2 in ('°Ré', '°r') THEN
+				(($1)*5/4)+273.15
+			WHEN $2 = '°N' THEN
+				(($1)+273.15)*0.33
+			WHEN $2 = '°Rø' THEN
+				(((($1)-7.5)*40)/21)+273.15
+			WHEN $2 = '°De' THEN
+				373.15-(($1)*2/3)
+			ELSE
+				$1
+		END::real;
+$$;
+
+/*
+** fct_cpy_time_conversion
+** Convert time values into unified one (s - second)
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_time_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
+language SQL STABLE
+AS
+$$
+	SELECT  CASE
+			WHEN $2 = 'ns' THEN
+				($1)*10^(-9)
+			WHEN $2 = 'shake' THEN
+				($1)*10^(-8)
+			WHEN $2 = 'µs' THEN
+				($1)*10^(-6)
+			WHEN $2 = 'ms' THEN
+				($1)*10^(-3)
+			WHEN $2 = 'cs' THEN
+				($1)*10^(-2)
+			WHEN $2 = 't' THEN
+				($1)/60
+			WHEN $2 = 'ds' THEN
+				($1)*10^(-1)
+			WHEN $2 = 'min' THEN
+				60*($1)
+			WHEN $2 = 'h' THEN
+				3600*($1)
+			WHEN $2 IN ('d', 'j') THEN
+				86400*($1)
+			WHEN $2 IN ('y', 'year') THEN
+				($1)*3.1536*10^7
+			ELSE
+				$1
+		END::real;
+$$;
+
+/*
+** fct_cpy_speed_conversion
+** Convert windspeed values into unified one (m/s).
+** If no unit or wrong unit provided value entered is returned so.
+** If array of values is empty, empty array of values returned
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_speed_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
+language SQL STABLE
+AS
+$$
+	SELECT  CASE
+			WHEN $2 = 'Kt' THEN
+				($1)*0.51444444444444
+			WHEN $2 = 'Beaufort' THEN
+				CASE
+					WHEN $1 = 0 THEN
+						0.13888888888888
+					WHEN $1 = 1 THEN
+						3*0.27777777777778
+					WHEN $1 = 2 THEN
+						8*0.27777777777778
+					WHEN $1 = 3 THEN
+						15*0.27777777777778
+					WHEN $1 = 4 THEN
+						23.5*0.27777777777778
+					WHEN $1 = 5 THEN
+						33*0.27777777777778
+					WHEN $1 = 6 THEN
+						44*0.27777777777778
+					WHEN $1 = 7 THEN
+						55.5*0.27777777777778
+					WHEN $1 = 8 THEN
+						68*0.27777777777778
+					WHEN $1 = 9 THEN
+						81.5*0.27777777777778
+					WHEN $1 = 10 THEN
+						95.5*0.27777777777778
+					WHEN $1 = 11 THEN
+						110*0.27777777777778
+					ELSE
+						120*0.27777777777778
+				END
+			ELSE
+				CASE
+					WHEN strpos($2, '/') > 0 THEN
+						fct_cpy_length_conversion($1, substr($2, 0, strpos($2, '/')))/fct_cpy_time_conversion(1, substr($2, strpos($2, '/')+1))
+					ELSE
+						NULL
+				END
+		END::real;
+$$;
+
+/*
+** fct_cpy_unified_values
+** Used as a trigger in catalogue_properties table to transform values into unified common value
+** Case by case function
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_unified_values () RETURNS TRIGGER
+language plpgsql
+AS
+$$
+BEGIN
+	IF NEW.property_sub_type_indexed = 'speed' THEN
+		IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
+			SELECT array(select fct_cpy_speed_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
+		END IF;
+		IF NEW.property_max is not null THEN
+			SELECT array(select fct_cpy_speed_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
+		END IF;
+		IF NEW.property_accuracy is not null THEN
+			SELECT array(select fct_cpy_speed_conversion(s::real, NEW.property_accuracy_unit) FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
+		END IF;
+	ELSIF NEW.property_sub_type_indexed = 'temperature' THEN
+		IF NEW.property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
+			IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
+				SELECT array(select fct_cpy_temperature_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
+			END IF;
+			IF NEW.property_max is not null THEN
+				SELECT array(select fct_cpy_temperature_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
+			END IF;
+		END IF;
+		IF NEW.property_accuracy_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
+			IF NEW.property_accuracy is not null THEN
+				SELECT array(select fct_cpy_temperature_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
+			END IF;
+		END IF;
+	ELSIF NEW.property_sub_type_indexed = 'length' THEN
+		IF NEW.property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur') THEN
+			IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
+				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
+			END IF;
+			IF NEW.property_max is not null THEN
+				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
+			END IF;
+		END IF;
+		IF NEW.property_accuracy_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur') THEN
+			IF NEW.property_accuracy is not null THEN
+				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
+			END IF;
+		END IF;
+	ELSE
+		IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
+			NEW.property_min_unified := NEW.property_min;
+		END IF;
+		NEW.property_max_unified := NEW.property_max;
+		NEW.property_accuracy_unified := NEW.property_accuracy;
+	END IF;
+	RETURN NEW;
+END;
+$$;

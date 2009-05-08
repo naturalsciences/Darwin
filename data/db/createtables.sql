@@ -148,13 +148,15 @@ create table catalogue_properties
         property_type varchar not null,
         property_sub_type varchar,
         property_sub_type_indexed varchar not null,
+	property_qualifier varchar,
+	property_qualifier_indexed varchar not null,
         date_from_mask integer DEFAULT 0,
         date_from timestamp not null DEFAULT '01/01/4713BC',
         date_to_mask integer DEFAULT 0,
         date_to timestamp not null  DEFAULT '01/01/4713BC',
         property_unit varchar not null,
         property_min varchar[] not null,
-        property_min_unified varchar[] not null,
+        property_min_unified varchar[] default ARRAY[''::varchar] not null,
         property_max varchar[],
         property_max_unified varchar[],
         property_accuracy_unit varchar,
@@ -165,7 +167,7 @@ create table catalogue_properties
         property_tool varchar,
         property_tool_indexed varchar not null,
         defined_by_ordered_ids_list integer[],
-        constraint unq_catalogue_properties unique (table_name, record_id, property_type, property_sub_type_indexed, date_from, date_to, property_method_indexed, property_tool_indexed)
+        constraint unq_catalogue_properties unique (table_name, record_id, property_type, property_sub_type_indexed, property_qualifier_indexed, date_from, date_to, property_method_indexed, property_tool_indexed)
        )
 inherits (template_table_record_ref);
 comment on table catalogue_properties is 'All properties or all measurements describing an object in darwin are stored in this table';
