@@ -61,7 +61,7 @@ DROP TRIGGER trg_cpy_toFullText_expeditions ON expeditions;
 DROP TRIGGER trg_cpy_toFullText_habitats ON habitats;
 DROP TRIGGER trg_cpy_toFullText_vernacularnames ON vernacular_names;
 	
-DROP TRIGGER trg_cas_userType_userslogininfos ON users_login_infos;
+DROP TRIGGER trg_cas_userType_users ON users;
 DROP TRIGGER trg_chk_peopleType ON people;
 DROP TRIGGER trg_chk_AreAuthors ON catalogue_authors;
 

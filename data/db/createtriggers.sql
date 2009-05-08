@@ -338,8 +338,8 @@ CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();
 
-CREATE TRIGGER trg_cas_userType_userslogininfos AFTER UPDATE
-	ON users_login_infos FOR EACH ROW
+CREATE TRIGGER trg_cas_userType_users AFTER UPDATE
+	ON users FOR EACH ROW
 	EXECUTE PROCEDURE fct_cas_userType();
 
 CREATE TRIGGER trg_chk_peopleType AFTER UPDATE

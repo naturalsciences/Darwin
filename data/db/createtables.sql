@@ -410,7 +410,7 @@ create table multimedia
         id serial not null,
         is_digital boolean default true not null,
         type multimedia_types default 'image' not null,
-	sub_type varchar,
+        sub_type varchar,
         title varchar not null,
         title_indexed varchar not null,
         subject varchar default '/' not null,
@@ -421,8 +421,12 @@ create table multimedia
         uri varchar,
         descriptive_ts tsvector not null,
         descriptive_language_full_text full_text_language,
-        creation_date date,
-        publication_date date,
+        creation_date date NOT NULL DEFAULT '01/01/4713BC',
+        creation_date_mask integer NOT NULL DEFAULT 0,
+        publication_date_from date DEFAULT '01/01/4713BC',
+        publication_date_from_mask integer DEFAULT 0,
+        publication_date_to date NOT NULL DEFAULT '01/01/4713BC',
+        publication_date_to_mask integer NOT NULL DEFAULT 0,
         parent_ref integer,
         path varchar DEFAULT '/' NOT NULL,
         mime_type varchar,
@@ -589,6 +593,7 @@ create table users_login_infos
         user_name varchar,
         password varchar,
         system_id varchar,
+        last_seen timestamp,
         constraint unq_users_login_infos unique (user_ref, login_type),
         constraint fk_users_login_infos_users foreign key (user_ref) references users(id) on delete cascade
        );
@@ -598,6 +603,7 @@ comment on column users_login_infos.login_type is 'Type of identification system
 comment on column users_login_infos.user_name is 'For some system (local, ldap, kerberos,...) provides the username (encrypted form)';
 comment on column users_login_infos.password is 'For some system (local, ldap, kerberos,...) provides the password (encrypted form)';
 comment on column users_login_infos.system_id is 'For some system (shibbolet, openID,...) provides the user id';
+comment on column users_login_infos.last_seen is 'Last time the user has logged in.';
 create table template_people_users_multimedia
        (
         person_user_ref integer not null,

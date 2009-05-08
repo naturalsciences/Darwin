@@ -2344,7 +2344,7 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'multimedia_keywords' THEN
 			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'people' THEN
-			NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+			NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 		ELSIF TG_TABLE_NAME = 'multimedia_codes' THEN
 			NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
 		ELSIF TG_TABLE_NAME = 'specimen_parts_codes' THEN
@@ -2359,7 +2359,7 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'users' THEN
-			NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+			NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
@@ -3320,7 +3320,7 @@ $$ LANGUAGE plpgsql;
 /**
 fct_cas_userType
 Copy the new dbuser type if it's changed
-users_login_infos db_user_type
+users db_user_type
 */
 CREATE OR REPLACE FUNCTION fct_cas_userType() RETURNS TRIGGER
 AS $$
@@ -3333,9 +3333,9 @@ BEGIN
 	END IF;
 	
 	/** Copy to other fields **/
-	UPDATE record_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.user_ref;
-	UPDATE collections_fields_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.user_ref;
-	UPDATE users_coll_rights_asked SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.user_ref;
+	UPDATE record_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.id;
+	UPDATE collections_fields_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.id;
+	UPDATE users_coll_rights_asked SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.id;
 	
 	
 	/** IF REVOKE ***/
@@ -3344,16 +3344,16 @@ BEGIN
 		/*db user type 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,*/
 		IF OLD.db_user_type >= 4 THEN
 			/** If retrograde from collection_man, remove all collection administrated **/
-			SELECT count(*) != 0 INTO still_mgr FROM collections WHERE main_manager_ref = NEW.user_ref;
+			SELECT count(*) != 0 INTO still_mgr FROM collections WHERE main_manager_ref = NEW.id;
 			IF still_mgr THEN
 				RAISE EXCEPTION 'Still Manager in some Collections.';
 			END IF;
-			DELETE FROM collections_admin WHERE user_ref = NEW.user_ref;
+			DELETE FROM collections_admin WHERE user_ref = NEW.id;
 		END IF;
 		
 		IF OLD.db_user_type >= 2 AND NEW.db_user_type = 1 THEN
 			/** If retrograde to register , remove write/insert/update rights**/
-			UPDATE collections_rights SET rights=1 WHERE user_ref=NEW.user_ref;
+			UPDATE collections_rights SET rights=1 WHERE user_ref=NEW.id;
 		END IF;
 	END IF;
 	RETURN NEW;
@@ -5764,17 +5764,17 @@ BEGIN
 		IF NEW.parent_ref IS NULL THEN
 			NEW.path ='/';
 		ELSE
-			SELECT path || id || '/' INTO NEW.path FROM multimedia WHERE
+			SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
 				id=NEW.parent_ref;
 		END IF;
 	ELSE
-		IF OLD.parent_ref = NEW.parent_ref THEN
-			RETURN NEW;
-		ELSEIF NEW.parent_ref IS NULL THEN
+		IF NEW.parent_ref IS NULL THEN
 			NEW.path ='/';
+		ELSEIF COALESCE(OLD.parent_ref,0) = COALESCE(NEW.parent_ref,0) THEN
+			RETURN NEW;
 		ELSE
 			-- Change current path
-			SELECT path || id || '/' INTO NEW.path FROM multimedia WHERE
+			SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
 				id=NEW.parent_ref;
 		END IF;
 		-- Change children's path

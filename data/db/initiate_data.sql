@@ -272,3 +272,4 @@ INSERT INTO lithostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO chronostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO mineralogy (id, name, name_indexed, code) VALUES (0, '', '', 0);
 INSERT INTO taxonomy (id, name, name_indexed) VALUES (0, '', '');
+INSERT INTO users (id, formated_name, formated_name_indexed,formated_name_ts, family_name) VALUES (0,'','',to_tsvector(''),'');
