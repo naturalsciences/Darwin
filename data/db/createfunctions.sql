@@ -5885,6 +5885,8 @@ $$
 				($1)*10^(-21)
 			WHEN $2 = 'ym' THEN
 				($1)*10^(-24)
+			WHEN $2 IN ('brasse', 'vadem') THEN
+				($1)*1.8288
 			WHEN $2 = 'fathom' THEN
 				($1)*1.828804
 			WHEN $2 = 'rd' THEN
@@ -6084,7 +6086,7 @@ BEGIN
 			END IF;
 		END IF;
 	ELSIF NEW.property_sub_type_indexed = 'length' THEN
-		IF NEW.property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur') THEN
+		IF NEW.property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
 			IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
 				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
 			END IF;
@@ -6092,7 +6094,7 @@ BEGIN
 				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
 			END IF;
 		END IF;
-		IF NEW.property_accuracy_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur') THEN
+		IF NEW.property_accuracy_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
 			IF NEW.property_accuracy is not null THEN
 				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
 			END IF;
