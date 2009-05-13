@@ -137,6 +137,8 @@ BEGIN
     temp_string := REPLACE(temp_string, 'œ', 'oe');
     temp_string := REPLACE(temp_string, 'æ', 'ae');
     temp_string := TRANSLATE(temp_string,'Ð','d');
+    temp_string := TRANSLATE(temp_string,'ó','o');
+    temp_string := TRANSLATE(temp_string,'ę','e');
 	temp_string := LOWER(
 				public.to_ascii(
 					CONVERT_TO(temp_string, 'iso-8859-15'),
