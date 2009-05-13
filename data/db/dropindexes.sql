@@ -21,7 +21,7 @@ DROP INDEX IF EXISTS idx_users_multimedia_person_user_ref;
 DROP INDEX IF EXISTS idx_users_multimedia_object_ref;
 DROP INDEX IF EXISTS idx_collections_institution_ref;
 DROP INDEX IF EXISTS idx_collections_main_manager_ref;
-DROP INDEX IF EXISTS idx_collections_parent_collection_ref;
+DROP INDEX IF EXISTS idx_collections_parent_ref;
 DROP INDEX IF EXISTS idx_collections_admin_collection_ref;
 DROP INDEX IF EXISTS idx_collections_admin_user_ref;
 DROP INDEX IF EXISTS idx_collections_rights_collection_ref;

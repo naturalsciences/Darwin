@@ -446,7 +446,8 @@ comment on column multimedia.copyright is 'Copyright notice';
 comment on column multimedia.license is 'License notice';
 comment on column multimedia.uri is 'URI of object if digital';
 comment on column multimedia.creation_date is 'Object creation date';
-comment on column multimedia.publication_date is 'Object publication date';
+comment on column multimedia.publication_date_from is 'Object publication date from';
+comment on column multimedia.publication_date_to is 'Object publication date to';
 comment on column multimedia.descriptive_ts is 'tsvector form of title and subject fields together';
 comment on column multimedia.descriptive_language_full_text is 'Language used for descriptive_ts tsvector field composition';
 comment on column multimedia.parent_ref is 'Reference of a parent multimedia. Such as an Article of a publication';
@@ -643,13 +644,13 @@ create table collections
         name varchar not null,
         institution_ref integer not null,
         main_manager_ref integer not null,
-        parent_collection_ref integer,
+        parent_ref integer,
         path varchar not null,
         code_auto_increment boolean default false not null,
         code_part_code_auto_copy boolean default false not null,
         constraint pk_collections primary key (id),
         constraint fk_collections_institutions foreign key (institution_ref) references people(id),
-        constraint fk_collections_collections foreign key (parent_collection_ref) references collections(id) on delete cascade,
+        constraint fk_collections_collections foreign key (parent_ref) references collections(id) on delete cascade,
         constraint fk_collections_users foreign key (main_manager_ref) references users(id),
         constraint unq_collections unique (institution_ref, path, code)
        );
@@ -659,7 +660,7 @@ comment on column collections.collection_type is 'Type of collection: physical f
 comment on column collections.code is 'Code given to collection';
 comment on column collections.name is 'Collection name';
 comment on column collections.institution_ref is 'Reference of institution current collection belongs to - id field of people table';
-comment on column collections.parent_collection_ref is 'Recursive reference to collection table itself to represent collection parenty/hierarchy';
+comment on column collections.parent_ref is 'Recursive reference to collection table itself to represent collection parenty/hierarchy';
 comment on column collections.path is 'Descriptive path for collection hierarchy, each level separated by a /';
 comment on column collections.main_manager_ref is 'Reference of collection main manager - id field of users table';
 comment on column collections.code_auto_increment is 'Flag telling if the numerical part of a code has to be incremented or not';

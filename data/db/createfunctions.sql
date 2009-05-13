@@ -86,18 +86,19 @@ $$ LANGUAGE plpgsql;
 /***
 * Function fct_chk_one_pref_language
 * Check if there is only ONE prefered language for a user
+* Return false if there is already a prefered language false otherwise
 */
 CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE, table_prefix varchar) returns boolean
 as $$
 DECLARE
 	response boolean default false;
 	prefix varchar default coalesce(table_prefix, 'people');
-        tabl varchar default prefix || '_languages';
+	tabl varchar default prefix || '_languages';
 	tableExist boolean default false;
 BEGIN
-	select count(*)::integer::boolean into tableExist from pg_tables where schemaname = 'darwin2' and tablename = tabl;
+	select count(*)::integer::boolean into tableExist from pg_tables where schemaname not in ('pg_catalog','information_schema') and tablename = tabl;
 	IF tableExist THEN
-	        IF prefered THEN
+		IF prefered THEN
 			EXECUTE 'select not count(*)::integer::boolean from ' || quote_ident(tabl) || ' where ' || quote_ident(prefix || '_ref') || ' = ' || $1 || ' and prefered_language = ' || $2 INTO response;
 		ELSE
 			response := true;
@@ -5759,15 +5760,20 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_cpy_multimedia_path() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION fct_cpy_path() RETURNS TRIGGER
 AS $$
 BEGIN
 	IF TG_OP = 'INSERT' THEN
 		IF NEW.parent_ref IS NULL THEN
 			NEW.path ='/';
 		ELSE
-			SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
-				id=NEW.parent_ref;
+			IF TG_TABLE_NAME::text = 'multimedia' THEN
+				SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
+					id=NEW.parent_ref;
+			ELSE
+				SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
+					id=NEW.parent_ref;
+			END IF;
 		END IF;
 	ELSE
 		IF NEW.parent_ref IS NULL THEN
@@ -5776,11 +5782,20 @@ BEGIN
 			RETURN NEW;
 		ELSE
 			-- Change current path
-			SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
-				id=NEW.parent_ref;
+			IF TG_TABLE_NAME::text = 'multimedia' THEN
+				SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
+					id=NEW.parent_ref;
+			ELSE
+				SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
+					id=NEW.parent_ref;
+			END IF;
 		END IF;
 		-- Change children's path
-		UPDATE multimedia SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+		IF TG_TABLE_NAME::text = 'multimedia' THEN
+			UPDATE multimedia SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+		ELSE
+			UPDATE collections SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+		END IF;
 	END IF;
 	RETURN NEW;
 END;

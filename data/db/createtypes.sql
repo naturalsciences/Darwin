@@ -1,6 +1,6 @@
 create type level_types as enum ('taxonomy', 'chronostratigraphy', 'lithostratigraphy', 'lithology', 'mineralogy');
 create type collection_types as enum ('physical', 'observations', 'mix');
-create type notions_concerned as enum ('Taxonomic identification', 'Stratigraphic identification', 'Lithologic identification', 'Mineralogic identification', 'Expertise', 'Preparation');
+create type notions_concerned as enum ('Taxonomic identification', 'Stratigraphic identification', 'Lithologic identification', 'Mineralogic identification', 'Expertise', 'Preparation','Bibliography');
 create type public_classes as enum ('public', 'private');
 create type coverages as enum ('temporal', 'spatial');
 create type multimedia_types as enum ('image', 'sound', 'video', 'sculpture','text');
@@ -20,7 +20,7 @@ create type habitat_systems as enum ('eunis', 'corine');
 create type acquisition_categories as enum ('expedition', 'donation', 'gift', 'loan', 'rent', 'buy', 'stolen');
 create type ident_qualifiers as enum ('aff.', 'prox.', 'cf.', '?', 'incerteae sedis', 'sp.');
 create type specimen_categories as enum ('physical', 'observation', 'figurate');
-create type code_categories as enum ('main', 'secondary', 'temporary', 'mn/mp', 'ig', 'db');
+create type code_categories as enum ('main', 'secondary', 'temporary', 'mn/mp', 'ig', 'db','barcode');
 create type accompanying_types as enum ('secondary', 'trace');
 create type catalogues_authors_types as enum ('main', 'emendatus', 'mutatis characteribus', 'in', 'ex', 'sensu', 'not sensu');
 create type types_list as enum ('specimen', 'type', 'subtype', 'allotype', 'cotype', 'genotype', 'holotype', 'hypotype', 'lectotype', 'locotype', 'neallotype', 'neotype', 'paralectotype', 'paratype', 'plastotype', 'plesiotype', 'syntype', 'topotype', 'type in litteris');
