@@ -22,7 +22,8 @@ create type ident_qualifiers as enum ('aff.', 'prox.', 'cf.', '?', 'incerteae se
 create type specimen_categories as enum ('physical', 'observation', 'figurate');
 create type code_categories as enum ('main', 'secondary', 'temporary', 'mn/mp', 'ig', 'db','barcode');
 create type accompanying_types as enum ('secondary', 'trace');
-create type catalogues_authors_types as enum ('main', 'emendatus', 'mutatis characteribus', 'in', 'ex', 'sensu', 'not sensu');
+create type people_types as enum ('authors', 'collectors', 'members of expedition', '');
+create type people_sub_types as enum ('main', 'emendatus', 'mutatis characteribus', 'in', 'ex', 'sensu', 'not sensu','');
 create type types_list as enum ('specimen', 'type', 'subtype', 'allotype', 'cotype', 'genotype', 'holotype', 'hypotype', 'lectotype', 'locotype', 'neallotype', 'neotype', 'paralectotype', 'paratype', 'plastotype', 'plesiotype', 'syntype', 'topotype', 'type in litteris');
 create type types_group_list as enum ('','specimen', 'type', 'subtype', 'allotype', 'genotype', 'holotype', 'hypotype', 'lectotype', 'locotype', 'neallotype', 'neotype', 'paralectotype', 'paratype', 'plastotype', 'plesiotype', 'syntype', 'topotype', 'type in litteris');
 create type types_search_list as enum ('','neotype','type', 'holotype', 'lectotype', 'paratype', 'paralectotype');

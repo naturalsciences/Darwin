@@ -6,7 +6,7 @@ SELECT plan(69);
 -- Run the tests.
 SELECT has_table('catalogue_relationships','catalogue_relationships exists');
 SELECT has_table('template_table_record_ref','template_table_record_ref exists');
-SELECT has_table('catalogue_authors','catalogue_authors exists');
+SELECT has_table('catalogue_people','catalogue_people exists');
 SELECT has_table('catalogue_levels','catalogue_levels exists');
 SELECT has_table('possible_upper_levels','possible_upper_levels exists');
 SELECT has_table('comments','comments exists');

@@ -287,12 +287,12 @@ CREATE INDEX CONCURRENTLY idx_users_workflow_user_status on users_workflow(user_
 CREATE INDEX CONCURRENTLY idx_my_preferences_user_category on my_preferences(user_ref, category);
 CREATE INDEX CONCURRENTLY idx_collections_collection_type on collections(collection_type);
 
-/*** GiST Indexes created for array manipulations ***/
+/*** @TODO: GiST Indexes created for array manipulations ***/
 
 -- !!! Additional modules will have to be installed if this functionality is needed !!!
 
 
-/*** Additional BTree Indexes created to fasten application ***/
+/*** @TODO:Additional BTree Indexes created to fasten application ***/
 
 
 

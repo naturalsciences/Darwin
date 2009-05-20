@@ -3148,7 +3148,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_clear_referencedRecord() RETURNS TRIGGER
 AS $$
 BEGIN
-	DELETE FROM catalogue_authors WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM catalogue_people WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM comments WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM catalogue_properties WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM identifications WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
@@ -3187,9 +3187,9 @@ BEGIN
 	UPDATE catalogue_relationships SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
 		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
 		
-	UPDATE catalogue_authors SET authors_ordered_ids_list = fct_remove_array_elem(authors_ordered_ids_list,OLD.id),
+	UPDATE catalogue_people SET people_ordered_ids_list = fct_remove_array_elem(people_ordered_ids_list,OLD.id),
 		defined_by_ordered_ids_list =  fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE authors_ordered_ids_list @> ARRAY[OLD.id] OR defined_by_ordered_ids_list @> ARRAY[OLD.id];
+		WHERE people_ordered_ids_list @> ARRAY[OLD.id] OR defined_by_ordered_ids_list @> ARRAY[OLD.id];
 	
 	UPDATE catalogue_properties SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
 		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
@@ -5528,7 +5528,7 @@ DECLARE
 BEGIN
 	/** AUTHOR FLAG IS 2 **/
 	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
-		SELECT count(*) INTO still_referenced FROM catalogue_authors WHERE authors_ordered_ids_list @> ARRAY[NEW.id];
+		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ordered_ids_list @> ARRAY[NEW.id];
 		IF still_referenced THEN
 			RAISE EXCEPTION 'Author still used as author.';
 		END IF;
@@ -5561,16 +5561,21 @@ AS $$
 DECLARE
 	are_not_author boolean;
 BEGIN
-	IF TG_OP ='UPDATE' THEN
-		IF OLD.authors_ordered_ids_list = NEW.authors_ordered_ids_list THEN 
-			RETURN NEW;
+	IF NEW.people_type = 'authors' THEN
+	
+		IF TG_OP ='UPDATE' THEN
+			IF OLD.people_ordered_ids_list = NEW.people_ordered_ids_list THEN 
+				RETURN NEW;
+			END IF;
 		END IF;
+	
+		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id IN( SELECT * from  fct_explode_array(NEW.people_ordered_ids_list));
+		
+		IF are_not_author THEN
+			RAISE EXCEPTION 'Author must be defined as author.';
+		END IF;
+		
 	END IF;
-
- 	SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id IN( SELECT * from  fct_explode_array(NEW.authors_ordered_ids_list));
-	IF are_not_author THEN
-		RAISE EXCEPTION 'Author must be defined as author.';
-	END IF;		
 	RETURN NEW;
 END;
 $$

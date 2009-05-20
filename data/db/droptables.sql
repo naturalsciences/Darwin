@@ -2,7 +2,7 @@
 
 DROP TABLE  IF EXISTS catalogue_relationships CASCADE;
 DROP TABLE  IF EXISTS template_table_record_ref CASCADE;
-DROP TABLE  IF EXISTS catalogue_authors CASCADE;
+DROP TABLE  IF EXISTS catalogue_people CASCADE;
 DROP TABLE  IF EXISTS catalogue_levels CASCADE;
 DROP TABLE  IF EXISTS possible_upper_levels CASCADE;
 DROP TABLE  IF EXISTS comments CASCADE;

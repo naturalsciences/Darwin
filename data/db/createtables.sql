@@ -22,20 +22,22 @@ create table template_table_record_ref
 comment on table template_table_record_ref is 'Template called to add table_name and record_id fields';
 comment on column template_table_record_ref.table_name is 'Reference of table concerned - id field of table_list table';
 comment on column template_table_record_ref.record_id is 'Id of record concerned';
-create table catalogue_authors
+create table catalogue_people 
        (
-        author_type catalogues_authors_types default 'main' not null,
-        authors_ordered_ids_list integer[] not null,
+		people_type people_types default 'authors' not null,
+        people_sub_type people_sub_types default '' not null,
+        people_ordered_ids_list  integer[] not null,
         defined_by_ordered_ids_list integer[],
-        constraint unq_catalogue_authors unique (table_name, author_type, record_id)
+        constraint unq_catalogue_people unique (table_name, people_type, people_sub_type, record_id)
        )
 inherits (template_table_record_ref);
-comment on table catalogue_authors is 'List of authors of catalogues units - Taxonomy, Chronostratigraphy,...';
-comment on column catalogue_authors.table_name is 'Identifier of table the units come from - id field of table_list table';
-comment on column catalogue_authors.record_id is 'Identifier of record concerned in table concerned';
-comment on column catalogue_authors.author_type is 'Type of "author" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
-comment on column catalogue_authors.authors_ordered_ids_list is 'Array of "authors" identifiers - List of authors associated to the unit concerned - Identifiers are id fields from people table';
-comment on column catalogue_authors.defined_by_ordered_ids_list is 'Array of persons having defined this catalogue authors entry - id fields from people table';
+comment on table catalogue_people is 'List of people of catalogues units - Taxonomy, Chronostratigraphy,...';
+comment on column catalogue_people.table_name is 'Identifier of table the units come from - id field of table_list table';
+comment on column catalogue_people.record_id is 'Identifier of record concerned in table concerned';
+comment on column catalogue_people.people_type is 'Type of "people" associated to the catalogue unit: authors, collectors, ...';
+comment on column catalogue_people.people_sub_type is 'Type of "people" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
+comment on column catalogue_people.people_ordered_ids_list  is 'Array of "people" identifiers - List of authors associated to the unit concerned - Identifiers are id fields from people table';
+comment on column catalogue_people.defined_by_ordered_ids_list is 'Array of persons having defined this catalogue people entry - id fields from people table';
 create table catalogue_levels
        (
         id serial not null,

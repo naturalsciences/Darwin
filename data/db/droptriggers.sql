@@ -23,7 +23,7 @@ DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividual ON specimen_indi
 
 /*** REPERCUTION record_id ****/
 DROP TRIGGER trg_clr_referenceRecord_cataloguerelationships ON catalogue_relationships;
-DROP TRIGGER trg_clr_referenceRecord_catalogueauthors ON catalogue_authors;
+DROP TRIGGER trg_clr_referenceRecord_catalogueauthors ON catalogue_people;
 DROP TRIGGER trg_clr_referenceRecord_gtu ON gtu;
 DROP TRIGGER trg_clr_referenceRecord_catalogueproperties ON catalogue_properties;
 DROP TRIGGER trg_clr_referenceRecord_identifications ON identifications;
@@ -63,7 +63,7 @@ DROP TRIGGER trg_cpy_toFullText_vernacularnames ON vernacular_names;
 	
 DROP TRIGGER trg_cas_userType_users ON users;
 DROP TRIGGER trg_chk_peopleType ON people;
-DROP TRIGGER trg_chk_AreAuthors ON catalogue_authors;
+DROP TRIGGER trg_chk_AreAuthors ON catalogue_people;
 
 DROP TRIGGER trg_clr_title ON people;
 DROP TRIGGER trg_clr_title ON users;

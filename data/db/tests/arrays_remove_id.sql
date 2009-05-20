@@ -27,7 +27,7 @@ insert into people (id, is_physical, formated_name, formated_name_indexed, forma
 INSERT INTO catalogue_relationships (table_name, record_id_1, record_id_2, defined_by_ordered_ids_list)
 	VALUES ('taxonomy', 0, 1, ARRAY[1,2,3]);
 	
-INSERT INTO catalogue_authors (table_name, record_id, authors_ordered_ids_list, defined_by_ordered_ids_list) 
+INSERT INTO catalogue_people (table_name, record_id, people_ordered_ids_list, defined_by_ordered_ids_list) 
 	VALUES ('taxonomy', 0, ARRAY[1,2,3], ARRAY[5,6]);
 	
 INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, property_min, property_min_unified, date_from, date_to, defined_by_ordered_ids_list)
@@ -49,8 +49,8 @@ INSERT INTO specimens_accompanying (specimen_ref, taxon_ref, mineral_ref, define
 DELETE FROM people WHERE id=2;
 
 SELECT ok(array[1,3] = (SELECT defined_by_ordered_ids_list FROM catalogue_relationships), ' On Catalogue_relationship');
-SELECT ok(array[1,3] = (SELECT authors_ordered_ids_list FROM catalogue_authors), ' On catalogue_authors (author list)');
-SELECT ok(array[5,6] = (SELECT defined_by_ordered_ids_list FROM catalogue_authors), ' On catalogue_authors (author list ONLY)');
+SELECT ok(array[1,3] = (SELECT people_ordered_ids_list FROM catalogue_people), ' On catalogue_people (author list)');
+SELECT ok(array[5,6] = (SELECT defined_by_ordered_ids_list FROM catalogue_people), ' On catalogue_people (author list ONLY)');
 
 SELECT ok(array[1,3] = (SELECT defined_by_ordered_ids_list FROM catalogue_properties), ' On catalogue_properties');
 SELECT ok(array[1,5,4,3] = (SELECT defined_by_ordered_ids_list FROM expertises), ' On expertises');
@@ -65,8 +65,8 @@ DELETE FROM people WHERE id=5;
 
 
 SELECT ok(array[1,3] = (SELECT defined_by_ordered_ids_list FROM catalogue_relationships), ' On Catalogue_relationship');
-SELECT ok(array[1,3] = (SELECT authors_ordered_ids_list FROM catalogue_authors), ' On catalogue_authors (author list)');
-SELECT ok(array[6] = (SELECT defined_by_ordered_ids_list FROM catalogue_authors), ' On catalogue_authors (author list ONLY)');
+SELECT ok(array[1,3] = (SELECT people_ordered_ids_list FROM catalogue_people), ' On catalogue_people (author list)');
+SELECT ok(array[6] = (SELECT defined_by_ordered_ids_list FROM catalogue_people), ' On catalogue_people (author list ONLY)');
 
 SELECT ok(array[1,3] = (SELECT defined_by_ordered_ids_list FROM catalogue_properties), ' On catalogue_properties');
 SELECT ok(array[1,4,3] = (SELECT defined_by_ordered_ids_list FROM expertises), ' On expertises');

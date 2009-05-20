@@ -197,8 +197,8 @@ CREATE TRIGGER trg_clr_referenceRecord_cataloguerelationships AFTER DELETE
 	ON catalogue_relationships FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
-CREATE TRIGGER trg_clr_referenceRecord_catalogueauthors AFTER DELETE 
-	ON catalogue_authors FOR EACH ROW
+CREATE TRIGGER trg_clr_referenceRecord_cataloguepeople AFTER DELETE 
+	ON catalogue_people FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 CREATE TRIGGER trg_clr_referenceRecord_gtu AFTER DELETE 
@@ -347,7 +347,7 @@ CREATE TRIGGER trg_chk_peopleType AFTER UPDATE
 	EXECUTE PROCEDURE fct_chk_peopleType();
 	
 CREATE TRIGGER trg_chk_AreAuthors AFTER INSERT OR UPDATE
-	ON catalogue_authors FOR EACH ROW
+	ON catalogue_people FOR EACH ROW
 	EXECUTE PROCEDURE fct_chk_AreAuthors();
 	
 
