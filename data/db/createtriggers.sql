@@ -28,11 +28,9 @@ CREATE TRIGGER trg_cpy_hierarchy_from_parents_taxa BEFORE INSERT
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
 
-/*
 CREATE TRIGGER trg_cpy_hierarchy_from_parents_lithology BEFORE INSERT
 	ON lithology FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
-*/
 
 -- END HIERARCHICAL UNITS CATALOGUE COPY FROM PARENT
 
@@ -54,11 +52,9 @@ CREATE TRIGGER trg_cpy_name_updt_impact_children_taxa BEFORE UPDATE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
 
-/*
 CREATE TRIGGER trg_cpy_name_updt_impact_children_lithology BEFORE UPDATE
 	ON lithology FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
-*/
 
 -- END HIERARCHICAL UNITS CATALOGUE IMPACT CHILDREN
 	
@@ -80,11 +76,9 @@ CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa BEFORE UPDATE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
 
-/*
 CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology BEFORE UPDATE
 	ON lithology FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
-*/
 
 --- END HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
 
@@ -106,11 +100,10 @@ CREATE TRIGGER trg_cpy_update_path_taxonomy BEFORE INSERT OR UPDATE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_update_path();
 
-/*
 CREATE TRIGGER trg_cpy_update_path_lithology BEFORE INSERT OR UPDATE
 	ON lithology FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_update_path();
-*/
+
 --- END CONSTRUCTION OF HIERARCHY PATH
 
 -- BEGIN FULLTOINDEX

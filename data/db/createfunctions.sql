@@ -360,7 +360,59 @@ BEGIN
 		FROM lithostratigraphy AS pl
 		WHERE pl.id = parent_ref;
 	ELSIF table_name = 'lithology' THEN
-		
+		SELECT 
+			CASE
+				WHEN level_sys_name = 'unit_main_group' THEN
+					id
+				ELSE
+					pl.unit_main_group_ref
+			END AS unit_main_group_ref,
+			CASE
+				WHEN level_sys_name = 'unit_main_group' THEN
+					id
+				ELSE
+					pl.unit_main_group_indexed
+			END AS unit_main_group_indexed,
+			CASE
+				WHEN level_sys_name = 'unit_group' THEN
+					id
+				ELSE
+					pl.unit_group_ref
+			END AS unit_group_ref,
+			CASE
+				WHEN level_sys_name = 'unit_group' THEN
+					id
+				ELSE
+					pl.unit_group_indexed
+			END AS unit_group_indexed,
+			CASE
+				WHEN level_sys_name = 'unit_sub_group' THEN
+					id
+				ELSE
+					pl.unit_sub_group_ref
+			END AS unit_sub_group_ref,
+			CASE
+				WHEN level_sys_name = 'unit_sub_group' THEN
+					id
+				ELSE
+					pl.unit_sub_group_indexed
+			END AS unit_sub_group_indexed,
+			CASE
+				WHEN level_sys_name = 'unit_rock' THEN
+					id
+				ELSE
+					pl.unit_rock_ref
+			END AS unit_rock_ref,
+			CASE
+				WHEN level_sys_name = 'unit_rock' THEN
+					id
+				ELSE
+					pl.unit_rock_indexed
+			END AS unit_rock_indexed
+		INTO 
+			result
+		FROM lithology AS pl
+		WHERE pl.id = parent_ref;
 	ELSIF table_name = 'mineralogy' THEN
 		SELECT 
 			CASE
@@ -1317,7 +1369,66 @@ BEGIN
 		FROM lithostratigraphy AS pl
 		WHERE pl.id = NEW.parent_ref;
 	ELSIF TG_TABLE_NAME = 'lithology' THEN
-		
+		SELECT 
+			CASE
+				WHEN level_sys_name = 'unit_main_group' THEN
+					NEW.id
+				ELSE
+					pl.unit_main_group_ref
+			END AS unit_main_group_ref,
+			CASE
+				WHEN level_sys_name = 'unit_main_group' THEN
+					NEW.name_indexed
+				ELSE
+					pl.unit_main_group_indexed
+			END AS unit_main_group_indexed,
+			CASE
+				WHEN level_sys_name = 'unit_group' THEN
+					NEW.id
+				ELSE
+					pl.unit_group_ref
+			END AS unit_group_ref,
+			CASE
+				WHEN level_sys_name = 'unit_group' THEN
+					NEW.name_indexed
+				ELSE
+					pl.unit_group_indexed
+			END AS unit_group_indexed,
+			CASE
+				WHEN level_sys_name = 'unit_sub_group' THEN
+					NEW.id
+				ELSE
+					pl.unit_sub_group_ref
+			END AS unit_sub_group_ref,
+			CASE
+				WHEN level_sys_name = 'unit_sub_group' THEN
+					NEW.name_indexed
+				ELSE
+					pl.unit_sub_group_indexed
+			END AS unit_sub_group_indexed,
+			CASE
+				WHEN level_sys_name = 'unit_rock' THEN
+					NEW.id
+				ELSE
+					pl.unit_rock_ref
+			END AS unit_rock_ref,
+			CASE
+				WHEN level_sys_name = 'unit_rock' THEN
+					NEW.name_indexed
+				ELSE
+					pl.unit_rock_indexed
+			END AS unit_rock_indexed
+		INTO 
+			NEW.unit_main_group_ref,
+			NEW.unit_main_group_indexed,
+			NEW.unit_group_ref,
+			NEW.unit_group_indexed,
+			NEW.unit_sub_group_ref,
+			NEW.unit_sub_group_indexed,
+			NEW.unit_rock_ref,
+			NEW.unit_rock_indexed
+		FROM lithology AS pl
+		WHERE pl.id = NEW.parent_ref;
 	ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 		SELECT 
 			CASE
@@ -3117,6 +3228,38 @@ BEGIN
 			FROM catalogue_levels
 			WHERE id = NEW.level_ref;
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
+			SELECT
+				CASE
+					WHEN level_sys_name = 'unit_main_group' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.unit_main_group_indexed
+				END as unit_main_group_indexed,
+				CASE
+					WHEN level_sys_name = 'unit_group' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.unit_group_indexed
+				END as unit_group_indexed,
+				CASE
+					WHEN level_sys_name = 'unit_sub_group' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.unit_sub_group_indexed
+				END as unit_sub_group_indexed,
+				CASE
+					WHEN level_sys_name = 'unit_rock' THEN
+						NEW.name_indexed
+					ELSE
+						NEW.unit_rock_indexed
+				END as unit_rock_indexed
+			INTO
+				NEW.unit_main_group_indexed,
+				NEW.unit_group_indexed,
+				NEW.unit_sub_group_indexed,
+				NEW.unit_rock_indexed
+			FROM catalogue_levels
+			WHERE id = NEW.level_ref;
 		END IF;
 		IF NOT fct_cpy_cascade_children_indexed_names (TG_TABLE_NAME::varchar, NEW.level_ref::integer, NEW.name_indexed::varchar, NEW.id::integer) THEN
 			RAISE EXCEPTION 'Impossible to impact children names';
@@ -3304,7 +3447,7 @@ AS $$
 DECLARE
 	response boolean default false;
 BEGIN
-	IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70)) THEN
+	IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70, 75)) THEN
 		response := true;
 	ELSE
 		EXECUTE 'select count(*)::integer::boolean ' ||
@@ -4388,7 +4531,54 @@ BEGIN
 			'  AND c.' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
 	ELSIF table_name = 'lithology' THEN
-		
+		EXECUTE 'UPDATE lithology AS c ' ||
+			'SET unit_main_group_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
+			'    unit_main_group_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
+			'    unit_group_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
+			'                              ELSE (SELECT pt.unit_group_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
+			'                         END ' ||
+			'                         ELSE coalesce(unit_group_ref,0) ' ||
+			'                    END, ' ||
+			'    unit_group_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
+			'                                  ELSE (SELECT pt.unit_group_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
+			'                             END ' ||
+			'                             ELSE coalesce(unit_group_indexed, '''') ' ||
+			'                        END, ' ||
+			'    unit_sub_group_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
+			'                              ELSE (SELECT pt.unit_sub_group_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
+			'                         END ' ||
+			'                         ELSE coalesce(unit_sub_group_ref,0) ' ||
+			'                    END, ' ||
+			'    unit_sub_group_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
+			'                                  ELSE (SELECT pt.unit_sub_group_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
+			'                             END ' ||
+			'                             ELSE coalesce(unit_sub_group_indexed, '''') ' ||
+			'                        END, ' ||
+			'    unit_rock_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
+			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
+			'                              ELSE (SELECT pt.unit_rock_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
+			'                         END ' ||
+			'                         ELSE coalesce(unit_rock_ref,0) ' ||
+			'                    END, ' ||
+			'    unit_rock_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
+			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
+			'                                  ELSE (SELECT pt.unit_rock_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
+			'                             END ' ||
+			'                             ELSE coalesce(unit_rock_indexed, '''') ' ||
+			'                        END ' ||
+			'WHERE id <> ' || parent_id || ' ' ||
+			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
+		response := true;
 	END IF;
 	return response;
 END;
@@ -4668,6 +4858,69 @@ BEGIN
 				WHERE pl.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.group_ref::integer, NEW.formation_ref::integer, NEW.member_ref::integer, NEW.layer_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
 				hierarchy_indexed := ARRAY[NEW.group_indexed::varchar, NEW.formation_indexed::varchar, NEW.member_indexed::varchar, NEW.layer_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
+			ELSIF TG_TABLE_NAME = 'lithology' THEN
+				SELECT
+					CASE
+						WHEN level_sys_name_new = 'unit_main_group' THEN
+							NEW.id
+						ELSE
+							pl.unit_main_group_ref
+					END as unit_main_group_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_main_group' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.unit_main_group_indexed
+                                        END as unit_main_group_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_group' THEN
+							NEW.id
+						ELSE
+							pl.unit_group_ref
+					END as unit_group_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_group' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.unit_group_indexed
+                                        END as unit_group_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_sub_group' THEN
+							NEW.id
+						ELSE
+							pl.unit_sub_group_ref
+					END as unit_sub_group_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_sub_group' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.unit_sub_group_indexed
+                                        END as unit_sub_group_indexed,
+					CASE
+						WHEN level_sys_name_new = 'unit_rock' THEN
+							NEW.id
+						ELSE
+							pl.unit_rock_ref
+					END as unit_rock_ref,
+					CASE
+                                                WHEN level_sys_name_new = 'unit_rock' THEN
+                                                        NEW.name_indexed
+                                                ELSE
+                                                        pl.unit_rock_indexed
+                                        END as unit_rock_indexed
+				INTO
+					NEW.unit_main_group_ref,
+					NEW.unit_main_group_indexed,
+					NEW.unit_group_ref,
+					NEW.unit_group_indexed,
+					NEW.unit_sub_group_ref,
+					NEW.unit_sub_group_indexed,
+					NEW.unit_rock_ref,
+					NEW.unit_rock_indexed,
+				FROM lithology AS pl
+				WHERE pl.id = NEW.parent_ref;
+				hierarchy_ref := ARRAY[NEW.unit_main_group_ref::integer, NEW.unit_group_ref::integer, NEW.unit_sub_group_ref::integer, NEW.unit_rock_ref::integer];
+				hierarchy_indexed := ARRAY[NEW.unit_main_group_indexed::varchar, NEW.unit_group_indexed::varchar, NEW.unit_sub_group_indexed::varchar, NEW.unit_rock_indexed::varchar];
 			ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 				SELECT
 					CASE
@@ -5669,6 +5922,8 @@ BEGIN
 			booContinue := 	((OLD.eon_ref <> NEW.eon_ref) OR (OLD.era_ref <> NEW.era_ref) OR (OLD.sub_era_ref <> NEW.sub_era_ref) OR (OLD.system_ref <> NEW.system_ref) OR (OLD.serie_ref <> NEW.serie_ref) OR (OLD.stage_ref <> NEW.stage_ref) OR (OLD.sub_stage_ref <> NEW.sub_stage_ref) OR (OLD.sub_level_1_ref <> NEW.sub_level_1_ref) OR (OLD.sub_level_2_ref <> NEW.sub_level_2_ref));
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
 			booContinue := 	((OLD.group_ref <> NEW.group_ref) OR (OLD.formation_ref <> NEW.formation_ref) OR (OLD.member_ref <> NEW.member_ref) OR (OLD.layer_ref <> NEW.layer_ref) OR (OLD.sub_level_1_ref <> NEW.sub_level_1_ref) OR (OLD.sub_level_2_ref <> NEW.sub_level_2_ref));
+		ELSIF TG_TABLE_NAME = 'lithology' THEN
+			booContinue := 	((OLD.unit_main_group_ref <> NEW.unit_main_group_ref) OR (OLD.unit_group_ref <> NEW.unit_group_ref) OR (OLD.unit_sub_group_ref <> NEW.unit_sub_group_ref) OR (OLD.unit_rock_ref <> NEW.unit_rock_ref));
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 			booContinue := 	((OLD.unit_class_ref <> NEW.unit_class_ref) OR (OLD.unit_division_ref <> NEW.unit_division_ref) OR (OLD.unit_family_ref <> NEW.unit_family_ref) OR (OLD.unit_group_ref <> NEW.unit_group_ref) OR (OLD.unit_variety_ref <> NEW.unit_variety_ref));
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
@@ -5691,8 +5946,6 @@ BEGIN
 					 (OLD.form_ref <> NEW.form_ref) OR (OLD.sub_form_ref <> NEW.sub_form_ref) OR
 					 (OLD.abberans_ref <> NEW.abberans_ref)
 					);
-		ELSIF TG_TABLE_NAME = 'lithology' THEN
-			
 		END IF;
 	END IF;
 	IF booContinue THEN
@@ -5730,6 +5983,16 @@ BEGIN
 					      '/'
 					     )
 			INTO NEW.path;
+		ELSIF TG_TABLE_NAME = 'lithology' THEN
+			SELECT replace(replace('/' || NEW.unit_main_group_ref::varchar || '/' || NEW.unit_group_ref::varchar || '/' || NEW.unit_sub_group_ref::varchar || 
+						     '/' || NEW.unit_rock_ref::varchar || '/',
+						     '/0',
+						     ''
+						    ),
+					      '/' || NEW.id::varchar || '/',
+					      '/'
+					     )
+			INTO NEW.path;
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			SELECT replace(replace('/' || NEW.domain_ref::varchar || '/' || NEW.kingdom_ref::varchar || '/' || 
 						     NEW.super_phylum_ref::varchar || '/' || NEW.phylum_ref::varchar || '/' || NEW.sub_phylum_ref::varchar || '/' || NEW.infra_phylum_ref::varchar || '/' ||
@@ -5756,8 +6019,6 @@ BEGIN
 					      '/'
 					     )
 			INTO NEW.path;
-		ELSIF TG_TABLE_NAME = 'lithology' THEN
-			
 		END IF;
 	END IF;
 	RETURN NEW;

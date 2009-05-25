@@ -1398,13 +1398,25 @@ comment on column mineralogy.parent_ref is 'Id of parent - id field from table i
 create table lithology
        (
         id serial not null,
+        unit_main_group_ref classifications_ids,
+        unit_main_group_indexed classifications_names,
+        unit_group_ref classifications_ids,
+        unit_group_indexed classifications_names,
+        unit_sub_group_ref classifications_ids,
+        unit_sub_group_indexed classifications_names,
+        unit_rock_ref classifications_ids,
+        unit_rock_indexed classifications_names,
         constraint pk_lithology primary key (id),
         constraint unq_lithology unique (path, name_indexed),
 	constraint fk_lithology_parent_ref_lithology foreign key (parent_ref) references lithology(id) on delete cascade,
-        constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
+        constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+	constraint fk_lithology_unit_main_group_ref_lithology foreign key (unit_main_group_ref) references lithology(id) on delete cascade,
+	constraint fk_lithology_unit_group_ref_lithology foreign key (unit_group_ref) references lithology(id) on delete cascade,
+	constraint fk_lithology_unit_sub_group_ref_lithology foreign key (unit_sub_group_ref) references lithology(id) on delete cascade,
+	constraint fk_lithology_unit_rock_ref_lithology foreign key (unit_rock_ref) references lithology(id) on delete cascade
        )
 inherits (template_classifications);
-comment on table lithology is 'List of mineralogic units';
+comment on table lithology is 'List of lithologic units';
 comment on column lithology.id is 'Unique identifier of a classification unit';
 comment on column lithology.name is 'Classification unit name';
 comment on column lithology.name_indexed is 'Indexed form of name field';
@@ -1414,6 +1426,14 @@ comment on column lithology.level_ref is 'Reference of classification level the 
 comment on column lithology.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column lithology.path is 'Hierarchy path (/ for root)';
 comment on column lithology.parent_ref is 'Id of parent - id field from table itself';
+comment on column lithology.unit_main_group_ref is 'Reference of main group the current unit depends of - id field of lithology table - recursive reference';
+comment on column lithology.unit_main_group_indexed is 'Indexed name of main group the current unit depends of';
+comment on column lithology.unit_group_ref is 'Reference of group the current unit depends of - id field of lithology table - recursive reference';
+comment on column lithology.unit_group_indexed is 'Indexed name of group the current unit depends of';
+comment on column lithology.unit_sub_group_ref is 'Reference of sub group the current unit depends of - id field of lithology table - recursive reference';
+comment on column lithology.unit_sub_group_indexed is 'Indexed name of sub group the current unit depends of';
+comment on column lithology.unit_rock_ref is 'Reference of rock the current unit depends of - id field of lithology table - recursive reference';
+comment on column lithology.unit_rock_indexed is 'Indexed name of rock the current unit depends of';
 create table habitats
        (
         id serial not null,

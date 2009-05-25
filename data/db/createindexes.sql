@@ -123,6 +123,10 @@ CREATE INDEX CONCURRENTLY idx_mineralogy_unit_group_ref on mineralogy(unit_group
 CREATE INDEX CONCURRENTLY idx_mineralogy_unit_variety_ref on mineralogy(unit_variety_ref);
 CREATE INDEX CONCURRENTLY idx_lithology_level_ref on lithology(level_ref);
 CREATE INDEX CONCURRENTLY idx_lithology_parent_ref on lithology(parent_ref);
+CREATE INDEX CONCURRENTLY idx_lithology_unit_main_group_ref on lithology(unit_main_group_ref);
+CREATE INDEX CONCURRENTLY idx_lithology_unit_group_ref on lithology(unit_group_ref);
+CREATE INDEX CONCURRENTLY idx_lithology_unit_sub_group_ref on lithology(unit_sub_group_ref);
+CREATE INDEX CONCURRENTLY idx_lithology_unit_rock_ref on lithology(unit_rock_ref);
 CREATE INDEX CONCURRENTLY idx_people_aliases_collection_ref on people_aliases(collection_ref);
 CREATE INDEX CONCURRENTLY idx_people_aliases_person_ref on people_aliases(person_ref);
 CREATE INDEX CONCURRENTLY idx_multimedia_keywords_object_ref on multimedia_keywords(object_ref);
@@ -251,6 +255,10 @@ CREATE INDEX CONCURRENTLY idx_mineralogy_unit_family_indexed on mineralogy(unit_
 CREATE INDEX CONCURRENTLY idx_mineralogy_unit_group_indexed on mineralogy(unit_group_indexed) WHERE unit_group_indexed <> '';
 CREATE INDEX CONCURRENTLY idx_mineralogy_unit_variety_indexed on mineralogy(unit_variety_indexed) WHERE unit_variety_indexed <> '';
 CREATE INDEX CONCURRENTLY idx_lithology_naming on lithology(level_ref, name_indexed);
+CREATE INDEX CONCURRENTLY idx_lithology_unit_main_group_indexed on lithology(unit_main_group_indexed) WHERE unit_main_group_indexed <> '';
+CREATE INDEX CONCURRENTLY idx_lithology_unit_group_indexed on lithology(unit_group_indexed) WHERE unit_group_indexed <> '';
+CREATE INDEX CONCURRENTLY idx_lithology_unit_sub_group_indexed on lithology(unit_sub_group_indexed) WHERE unit_sub_group_indexed <> '';
+CREATE INDEX CONCURRENTLY idx_lithology_unit_rock_indexed on lithology(unit_rock_indexed) WHERE unit_rock_indexed <> '';
 CREATE INDEX CONCURRENTLY idx_multimedia_keywords_keyword_indexed on multimedia_keywords(keyword_indexed);
 CREATE INDEX CONCURRENTLY idx_specimens_codes_code_prefix on specimens_codes(code_prefix) WHERE NOT code_prefix IS NULL;
 CREATE INDEX CONCURRENTLY idx_specimens_codes_code_suffix on specimens_codes(code_suffix) WHERE NOT code_suffix IS NULL;
