@@ -18,7 +18,7 @@ create type mineralogy_classifications as enum ('strunz', 'dana');
 create type cristal_systems as enum ('isometric', 'tetragonal', 'hexagonal', 'orthorhombic', 'trigonal', 'triclinic', 'monoclinic');
 create type habitat_systems as enum ('eunis', 'corine');
 create type acquisition_categories as enum ('expedition', 'donation', 'gift', 'loan', 'rent', 'buy', 'stolen');
-create type ident_qualifiers as enum ('aff.', 'prox.', 'cf.', '?', 'incerteae sedis', 'sp.');
+create type ident_qualifiers as enum ('aff.', 'prox.', 'cf.', '?', 'incerteae sedis');
 create type specimen_categories as enum ('physical', 'observation', 'figurate');
 create type code_categories as enum ('main', 'secondary', 'temporary', 'mn/mp', 'ig', 'db','barcode');
 create type accompanying_types as enum ('secondary', 'trace');

@@ -1477,6 +1477,7 @@ create table specimens
         lithology_ref integer default 0 not null,
         mineral_ref integer default 0 not null,
         identification_qual ident_qualifiers,
+        sp varchar,
         identification_taxon_ref integer default 0 not null,
         host_taxon_ref integer default 0 not null,
         host_specimen_ref integer,
