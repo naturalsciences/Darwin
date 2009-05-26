@@ -75,7 +75,7 @@ insert into catalogue_levels (id, level_type, level_name, level_sys_name, option
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (74, 'mineralogy', 'variety', 'unit_variety', false);
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (75, 'lithology', 'main group', 'unit_main_group', false);
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (76, 'lithology', 'group', 'unit_group', false);
-insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (77, 'lithology', 'sub group', 'unit_sub_group', false);
+insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (77, 'lithology', 'sub group', 'unit_sub_group', true);
 insert into catalogue_levels (id, level_type, level_name, level_sys_name, optional_level) values (78, 'lithology', 'rock', 'unit_rock', false);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (2, 1);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (3, 2);
@@ -272,6 +272,7 @@ insert into possible_upper_levels (level_ref, level_upper_ref) values (73, 72);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (74, 73);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (76, 75);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (77, 76);
+insert into possible_upper_levels (level_ref, level_upper_ref) values (78, 76);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (78, 77);
 INSERT INTO gtu (id, code) VALUES (0,0);
 INSERT INTO lithostratigraphy (id, name, name_indexed) VALUES (0, '', '');

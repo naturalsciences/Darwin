@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(50);
+SELECT plan(49);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -37,8 +37,8 @@ SELECT lives_ok('INSERT INTO lithology (id, name, level_ref, parent_ref) VALUES 
 INSERT INTO lithology (id, name, level_ref, parent_ref) VALUES (4, 'KÉLoWÿ', 76, 1);
 
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('lithology', 4, 77, 3)), 'Move unit 3 (of level 77 (sub-group)) to parent 4 (group) allowed !');
-SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithology', 2, 78, 3)), 'Move unit 3 (of level 77 (sub-group)) to level 78 (rock) not allowed -> parent is a group !');
-SELECT throws_ok('UPDATE lithology SET level_ref = 78 WHERE id = 3', 'P0001');
+SELECT ok(true = (SELECT fct_chk_possible_upper_level('lithology', 2, 78, 3)), 'Move unit 3 (of level 77 (sub-group)) to level 78 (rock) allowed !');
+/*SELECT throws_ok('UPDATE lithology SET level_ref = 78 WHERE id = 3', 'P0001');*/
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithology', 1, 77, 3)), 'Move unit 3 to parent unit 1 (main group) not allowed -> A sub-group cannot be linked to a main group !');
 SELECT throws_ok('UPDATE lithology SET parent_ref = 1 WHERE id = 3', 'P0001');
 

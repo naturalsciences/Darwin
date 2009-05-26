@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(332);
+SELECT plan(334);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -108,7 +108,10 @@ SELECT ok(4 = (SELECT unit_rock_ref FROM lithology WHERE id = 4), 'New unit_rock
 SELECT ok('mealonyeobc' = (SELECT unit_rock_indexed FROM lithology WHERE id = 4), 'New unit_rock_ref of unit 4: mealonyeobc');
 SELECT ok('/1/3/2/' = (SELECT path FROM lithology WHERE id = 4), 'Path of unit 4: /1/3/2/');
 
-SELECT throws_ok('UPDATE lithology SET level_ref = 76, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
+SELECT lives_ok('UPDATE lithology SET level_ref = 76, parent_ref = 1 WHERE id = 2', 'Update of unit 2 have been changed from 77 (unit_sub_group) to 76 (unit_group) and attached tto a new unit main group - unit 1 -> allowed even if unit rock with id 4 is related to it - a rock can be directly linked to a unit group.');
+
+SELECT ok('/1/' = (SELECT path FROM lithology WHERE id = 2), 'Path of unit 2: /1/');
+SELECT ok('/1/2/' = (SELECT path FROM lithology WHERE id = 4), 'Path of unit 4: /1/2/');
 
 SELECT diag('Mineralogy level/parent update tests');
 

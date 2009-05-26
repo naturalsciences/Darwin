@@ -4548,30 +4548,30 @@ BEGIN
 			'                             END ' ||
 			'                             ELSE coalesce(unit_group_indexed, '''') ' ||
 			'                        END, ' ||
-			'    unit_sub_group_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
-			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
-			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
+			'    unit_sub_group_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
+			'                         WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN 0 ' ||
 			'                              ELSE (SELECT pt.unit_sub_group_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(unit_sub_group_ref,0) ' ||
 			'                    END, ' ||
-			'    unit_sub_group_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
-			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
-			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
+			'    unit_sub_group_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
+			'                             WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN '''' ' ||
 			'                                  ELSE (SELECT pt.unit_sub_group_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
 			'                             ELSE coalesce(unit_sub_group_indexed, '''') ' ||
 			'                        END, ' ||
-			'    unit_rock_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
-			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
-			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
+			'    unit_rock_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
+			'                         WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN 0 ' ||
 			'                              ELSE (SELECT pt.unit_rock_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(unit_rock_ref,0) ' ||
 			'                    END, ' ||
-			'    unit_rock_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
-			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
-			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
+			'    unit_rock_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
+			'                             WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN '''' ' ||
 			'                                  ELSE (SELECT pt.unit_rock_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
 			'                             ELSE coalesce(unit_rock_indexed, '''') ' ||
