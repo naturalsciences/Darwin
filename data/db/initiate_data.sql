@@ -274,7 +274,6 @@ insert into possible_upper_levels (level_ref, level_upper_ref) values (76, 75);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (77, 76);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (78, 77);
 INSERT INTO gtu (id, code) VALUES (0,0);
-INSERT INTO lithology (id, name, name_indexed) VALUES (0,'', '');
 INSERT INTO lithostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO chronostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO mineralogy (id, name, name_indexed, code) VALUES (0, '', '', 0);

@@ -1,5 +1,5 @@
 DROP TRIGGER IF EXISTS tgr_clr_incrementMainCode_specimens ON specimens CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_specimensMainCode_specimenPartCode ON specimen_parts_codes CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_specimensMainCode_specimenPartCode ON specimen_parts CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_idToCode_gtu ON gtu CASCADE;
 
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_lithology ON lithology CASCADE;
@@ -16,14 +16,14 @@ DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_specimenpartscodes ON specimen_parts_
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_specimenscodes ON specimens_codes CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taggroups ON tag_groups CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_tags ON tags CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxa CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxonomy CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_vernacularnames ON vernacular_names CASCADE;
 
-DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividual ON specimen_individual CASCADE;
+DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividuals ON specimen_individuals CASCADE;
 
 /*** REPERCUTION record_id ****/
 DROP TRIGGER trg_clr_referenceRecord_cataloguerelationships ON catalogue_relationships;
-DROP TRIGGER trg_clr_referenceRecord_catalogueauthors ON catalogue_people;
+DROP TRIGGER trg_clr_referenceRecord_cataloguepeople ON catalogue_people;
 DROP TRIGGER trg_clr_referenceRecord_gtu ON gtu;
 DROP TRIGGER trg_clr_referenceRecord_catalogueproperties ON catalogue_properties;
 DROP TRIGGER trg_clr_referenceRecord_identifications ON identifications;
@@ -37,7 +37,7 @@ DROP TRIGGER trg_clr_referenceRecord_peoplerelationships ON people_relationships
 DROP TRIGGER trg_clr_referenceRecord_collections ON collections;
 DROP TRIGGER trg_clr_referenceRecord_userscollrightsasked ON users_coll_rights_asked;
 DROP TRIGGER trg_clr_referenceRecord_mysavedsearches ON collection_maintenance;
-DROP TRIGGER trg_clr_referenceRecord_taxa ON taxa;
+DROP TRIGGER trg_clr_referenceRecord_taxa ON taxonomy;
 DROP TRIGGER trg_clr_referenceRecord_chronostratigraphy ON chronostratigraphy;
 DROP TRIGGER trg_clr_referenceRecord_lithostratigraphy ON lithostratigraphy;
 DROP TRIGGER trg_clr_referenceRecord_mineralogy ON mineralogy;
@@ -78,20 +78,27 @@ DROP TRIGGER trg_cpy_hierarchy_from_parents_chronostratigraphy ON chronostratigr
 DROP TRIGGER trg_cpy_hierarchy_from_parents_lithostratigraphy ON lithostratigraphy;
 DROP TRIGGER trg_cpy_hierarchy_from_parents_mineralogy ON mineralogy;
 DROP TRIGGER trg_cpy_hierarchy_from_parents_taxa ON taxonomy;
---DROP TRIGGER trg_cpy_hierarchy_from_parents_lithology ON lithology;
+DROP TRIGGER trg_cpy_hierarchy_from_parents_lithology ON lithology;
 
 /*** Cascade of name update of a unit on all reference of this unit in children triggers ***/
 DROP TRIGGER trg_cpy_name_updt_impact_children_chronostratigraphy ON chronostratigraphy;
 DROP TRIGGER trg_cpy_name_updt_impact_children_lithostratigraphy ON lithostratigraphy;
 DROP TRIGGER trg_cpy_name_updt_impact_children_mineralogy ON mineralogy;
 DROP TRIGGER trg_cpy_name_updt_impact_children_taxa ON taxonomy;
--- DROP TRIGGER trg_cpy_name_updt_impact_children_lithology ON lithology;
+DROP TRIGGER trg_cpy_name_updt_impact_children_lithology ON lithology;
 
 /*** Cascade of level or parent_ref update of a unit on all children units triggers  ***/
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_chronostratigraphy ON chronostratigraphy;
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithostratigraphy ON lithostratigraphy;
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy ON mineralogy;
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa ON taxonomy;
--- DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology ON lithology;
+DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology ON lithology;
 DROP TRIGGER trg_cpy_path ON multimedia;
 DROP TRIGGER trg_cpy_path ON collections;
+
+/*** Hierarchical path update for catalogues ***/
+DROP TRIGGER trg_cpy_update_path_chronostratigraphy ON chronostratigraphy;
+DROP TRIGGER trg_cpy_update_path_lithostratigraphy ON lithostratigraphy;
+DROP TRIGGER trg_cpy_update_path_mineralogy ON mineralogy;
+DROP TRIGGER trg_cpy_update_path_taxonomy ON taxonomy;
+DROP TRIGGER trg_cpy_update_path_lithology ON lithology;

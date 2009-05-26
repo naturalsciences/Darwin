@@ -4916,7 +4916,7 @@ BEGIN
 					NEW.unit_sub_group_ref,
 					NEW.unit_sub_group_indexed,
 					NEW.unit_rock_ref,
-					NEW.unit_rock_indexed,
+					NEW.unit_rock_indexed
 				FROM lithology AS pl
 				WHERE pl.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.unit_main_group_ref::integer, NEW.unit_group_ref::integer, NEW.unit_sub_group_ref::integer, NEW.unit_rock_ref::integer];
