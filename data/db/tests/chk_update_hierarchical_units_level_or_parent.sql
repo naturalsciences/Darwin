@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(42);
+SELECT plan(50);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -28,6 +28,19 @@ SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithostratigraphy', 2, 6
 SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 67 WHERE id = 3', 'P0001');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithostratigraphy', 1, 66, 3)), 'Move unit 3 to parent unit 1 (group) not allowed -> A member cannot be linked to a group !');
 SELECT throws_ok('UPDATE lithostratigraphy SET parent_ref = 1 WHERE id = 3', 'P0001');
+
+SELECT diag('Lithology level/parent update tests');
+
+SELECT lives_ok('INSERT INTO lithology (id, name, level_ref ) VALUES (1,''ÉLo Wÿorléds'', 75)', 'Insertion of unit 1 with level main group (75) linked to unit 0 (without any level) allowed !');
+SELECT lives_ok('INSERT INTO lithology (id, name, level_ref, parent_ref) VALUES (2, ''ÉLoWÿ'', 76, 1)', 'Insertion of unit 2 with level group (76) linked to unit 1 with level main group (75) OK');
+SELECT lives_ok('INSERT INTO lithology (id, name, level_ref, parent_ref) VALUES (3, ''BÉLoWÿ'', 77, 2)', 'Insertion of unit 3 with level sub-group (77) linked to unit 2 with level group (76) OK');
+INSERT INTO lithology (id, name, level_ref, parent_ref) VALUES (4, 'KÉLoWÿ', 76, 1);
+
+SELECT ok(true = (SELECT fct_chk_possible_upper_level('lithology', 4, 77, 3)), 'Move unit 3 (of level 77 (sub-group)) to parent 4 (group) allowed !');
+SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithology', 2, 78, 3)), 'Move unit 3 (of level 77 (sub-group)) to level 78 (rock) not allowed -> parent is a group !');
+SELECT throws_ok('UPDATE lithology SET level_ref = 78 WHERE id = 3', 'P0001');
+SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithology', 1, 77, 3)), 'Move unit 3 to parent unit 1 (main group) not allowed -> A sub-group cannot be linked to a main group !');
+SELECT throws_ok('UPDATE lithology SET parent_ref = 1 WHERE id = 3', 'P0001');
 
 SELECT diag('Mineralogy level/parent update tests');
 

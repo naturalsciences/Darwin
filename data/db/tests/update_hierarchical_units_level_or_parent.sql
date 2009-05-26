@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(307);
+SELECT plan(332);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -71,6 +71,44 @@ SELECT ok('mealonyeobc' = (SELECT layer_indexed FROM lithostratigraphy WHERE id 
 SELECT ok('/1/3/2/' = (SELECT path FROM lithostratigraphy WHERE id = 4), 'Path of unit 4: /1/3/2/');
 
 SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 65, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
+
+SELECT diag('Lithology level/parent update tests');
+
+INSERT INTO lithology (id,name, level_ref) VALUES (1, 'Méalo-nÿeø@ß€', 75);
+INSERT INTO lithology (id,name, level_ref, parent_ref) VALUES (2, 'Méalo-nÿeø@ß€A', 76, 1);
+INSERT INTO lithology (id,name, level_ref, parent_ref) VALUES (3, 'Méalo-nÿeø@ß€B', 76, 1);
+INSERT INTO lithology (id,name, level_ref, parent_ref) VALUES (4, 'Méalo-nÿeø@ß€C', 77, 3);
+
+SELECT ok('/' = (SELECT path FROM lithology WHERE id = 1), 'Path of unit 1: /');
+SELECT ok('/1/' = (SELECT path FROM lithology WHERE id = 2), 'Path of unit 2: /1/');
+SELECT ok('/1/' = (SELECT path FROM lithology WHERE id = 3), 'Path of unit 3: /1/');
+SELECT ok('/1/3/' = (SELECT path FROM lithology WHERE id = 4), 'Path of unit 4: /1/3/');
+
+SELECT lives_ok('UPDATE lithology SET level_ref = 77, parent_ref = 3 WHERE id = 2', 'Level of unit 2 have been changed from 76 (unit_group) to 77 (unit_sub_group) and attached to a new unit_group - unit 3 -> allowed because no children attached yet');
+
+SELECT ok(1 = (SELECT unit_main_group_ref FROM lithology WHERE id = 2), 'New unit_main_group_ref of unit 2: 1');
+SELECT ok('mealonyeob' = (SELECT unit_main_group_indexed FROM lithology WHERE id = 2), 'New unit_main_group_indexed of unit 2: mealonyeob');
+SELECT ok(3 = (SELECT unit_group_ref FROM lithology WHERE id = 2), 'New unit_group_ref of unit 2: 3');
+SELECT ok('mealonyeobb' = (SELECT unit_group_indexed FROM lithology WHERE id = 2), 'New unit_group_indexed of unit 2: mealonyeobb');
+SELECT ok(2 = (SELECT unit_sub_group_ref FROM lithology WHERE id = 2), 'New unit_sub_group_ref of unit 2: 2');
+SELECT ok('mealonyeoba' = (SELECT unit_sub_group_indexed FROM lithology WHERE id = 2), 'New unit_sub_group_indexed of unit 2: mealonyeoba');
+SELECT ok(0 = (SELECT unit_rock_ref FROM lithology WHERE id = 2), 'New unit_rock_ref of unit 2: 0');
+SELECT ok('' = (SELECT unit_rock_indexed FROM lithology WHERE id = 2), 'New unit_rock_ref of unit 2: ''''');
+SELECT ok('/1/3/' = (SELECT path FROM lithology WHERE id = 2), 'Path of unit 2: /1/3/');
+
+SELECT lives_ok('UPDATE lithology SET level_ref = 78, parent_ref = 2 WHERE id = 4', 'Level of unit 4 have been changed from 77 (unit_sub_group) to 78 (unit_rock) and attached to a new unit_sub_group - unit 2 -> allowed because no children attached yet');
+
+SELECT ok(1 = (SELECT unit_main_group_ref FROM lithology WHERE id = 4), 'New unit_main_group_ref of unit 4: 1');
+SELECT ok('mealonyeob' = (SELECT unit_main_group_indexed FROM lithology WHERE id = 4), 'New unit_main_group_indexed of unit 2: mealonyeob');
+SELECT ok(3 = (SELECT unit_group_ref FROM lithology WHERE id = 4), 'New unit_group_ref of unit 4: 3');
+SELECT ok('mealonyeobb' = (SELECT unit_group_indexed FROM lithology WHERE id = 4), 'New unit_group_indexed of unit 4: mealonyeobb');
+SELECT ok(2 = (SELECT unit_sub_group_ref FROM lithology WHERE id = 4), 'New unit_sub_group_ref of unit 4: 2');
+SELECT ok('mealonyeoba' = (SELECT unit_sub_group_indexed FROM lithology WHERE id = 4), 'New unit_sub_group_indexed of unit 4: mealonyeoba');
+SELECT ok(4 = (SELECT unit_rock_ref FROM lithology WHERE id = 4), 'New unit_rock_ref of unit 4: 4');
+SELECT ok('mealonyeobc' = (SELECT unit_rock_indexed FROM lithology WHERE id = 4), 'New unit_rock_ref of unit 4: mealonyeobc');
+SELECT ok('/1/3/2/' = (SELECT path FROM lithology WHERE id = 4), 'Path of unit 4: /1/3/2/');
+
+SELECT throws_ok('UPDATE lithology SET level_ref = 76, parent_ref = 1 WHERE id = 2', 'Update of unit level break "possible_upper_levels" rule of direct children related. No modification of level for current unit allowed.');
 
 SELECT diag('Mineralogy level/parent update tests');
 
