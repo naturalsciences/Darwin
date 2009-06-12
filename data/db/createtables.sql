@@ -373,7 +373,7 @@ comment on column users.is_physical is 'Type of user: physical or moral - true i
 comment on column users.sub_type is 'Used for moral users: precise nature - public institution, asbl, sprl, sa,...';
 comment on column users.public_class is 'Tells public nature of user information - public is default value';
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
-comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
+comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
@@ -712,7 +712,7 @@ comment on table collections_fields_visibilities is 'This table tells which grou
 comment on column collections_fields_visibilities.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_fields_visibilities.user_ref is 'Reference of user - id field of users table';
 comment on column collections_fields_visibilities.field_group_name is 'Group of fields name';
-comment on column collections_fields_visibilities.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
+comment on column collections_fields_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
 comment on column collections_fields_visibilities.searchable is 'Flag telling if the field group is searchable - meaning these fields will appear as search criterias in the search form';
 comment on column collections_fields_visibilities.visible is 'Flag telling if the field group is visible - meaning these fields will be displayable in the result table';
 create table users_coll_rights_asked
@@ -741,7 +741,7 @@ comment on column users_coll_rights_asked.asking_date_time is 'Telling when righ
 comment on column users_coll_rights_asked.with_sub_collections is 'Rights are asked on a single collection or on this collection with all the sub-collections included ?';
 create table record_visibilities
        (
-        db_user_type smallint default 1 not null,
+        db_user_type smallint default 0 not null,
         user_ref integer default 0 not null,
         visible boolean default true not null,
         constraint unq_record_visibilities unique (table_name, record_id, user_ref, db_user_type),
@@ -750,7 +750,7 @@ create table record_visibilities
 inherits (template_table_record_ref);
 comment on table record_visibilities is 'Manage visibility of records for all DaRWIN 2 tables - visibility per user type and/or specific user';
 comment on column record_visibilities.user_ref is 'Reference of user - id field of users table';
-comment on column record_visibilities.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
+comment on column record_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
 comment on column record_visibilities.table_name is 'Reference of table concerned - id field of table_list table';
 comment on column record_visibilities.record_id is 'ID of record a visibility is defined for';
 comment on column record_visibilities.visible is 'Flag telling if record is visible or not';
