@@ -1553,7 +1553,8 @@ comment on column specimens.category is 'Type of specimen encoded: a physical ob
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
 comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
 comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxonomy table';
-create table template_codes
+
+create table codes
        (
         code_category code_categories default 'main' not null,
         code_prefix varchar,
@@ -1561,44 +1562,19 @@ create table template_codes
         code_suffix varchar,
         full_code_indexed varchar not null,
         code_date timestamp
-       );
-comment on table template_codes is 'Template used to construct the specimen codes tables';
-comment on column template_codes.code_category is 'Category of code: main, secondary, temporary,...';
-comment on column template_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
-comment on column template_codes.code is 'Numerical part of code';
-comment on column template_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
-comment on column template_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
-comment on column template_codes.code_date is 'Date of code creation';
-create table specimens_codes
-       (
-        specimen_ref integer not null,
-        constraint unq_specimens_codes unique (specimen_ref, code_category, full_code_indexed),
-        constraint fk_specimens_codes_specimens foreign key (specimen_ref) references specimens(id) on delete cascade
        )
-inherits (template_codes);
-comment on table specimens_codes is 'List of codes associated to a specimen';
-comment on column specimens_codes.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
-comment on column specimens_codes.code_category is 'Category of code: main, secondary, temporary,...';
-comment on column specimens_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
-comment on column specimens_codes.code is 'Numerical part of code';
-comment on column specimens_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
-comment on column specimens_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
-comment on column specimens_codes.code_date is 'Date of code creation';
-create table multimedia_codes
-       (
-        multimedia_ref integer not null,
-        constraint unq_multimedia_codes unique (multimedia_ref, code_category, full_code_indexed),
-        constraint fk_multimedia_codes_multimedia foreign key (multimedia_ref) references multimedia(id) on delete cascade
-       )
-inherits (template_codes);
-comment on table multimedia_codes is 'List of codes associated to a specimen';
-comment on column multimedia_codes.multimedia_ref is 'Reference of a multimedia object concerned - id field of multimedia table';
-comment on column multimedia_codes.code_category is 'Category of code: main, secondary, temporary,...';
-comment on column multimedia_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
-comment on column multimedia_codes.code is 'Numerical part of code';
-comment on column multimedia_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
-comment on column multimedia_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
-comment on column multimedia_codes.code_date is 'Date of code creation';
+inherits (template_table_record_ref);
+
+comment on table codes is 'Template used to construct the specimen codes tables';
+comment on column codes.code_category is 'Category of code: main, secondary, temporary,...';
+comment on column codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
+comment on column codes.code is 'Numerical part of code';
+comment on column codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
+comment on column codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
+comment on column codes.code_date is 'Date of code creation';
+comment on column codes.table_name is 'Reference name of table concerned';
+comment on column codes.record_id is 'Identifier of record concerned';
+
 create table specimen_individuals
        (
         id serial not null,
@@ -1617,7 +1593,7 @@ create table specimen_individuals
         constraint unq_specimen_individuals unique (specimen_ref, type, sex, stage, state, social_status, rock_form),
         constraint fk_specimen_individuals_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint chk_chk_specimen_individuals_minmax check (specimen_individuals_count_min <= specimen_individuals_count_max),
-	constraint chk_chk_specimens_individuals_min check (specimen_individuals_count_min >= 0)
+        constraint chk_chk_specimens_individuals_min check (specimen_individuals_count_min >= 0)
        );
 comment on table specimen_individuals is 'Stores characterized individudals from a specimen batch';
 comment on column specimen_individuals.id is 'Unique identifier of a specimen individual';
@@ -1676,21 +1652,7 @@ comment on column specimen_parts.specimen_status is 'Specimen status: good state
 comment on column specimen_parts.specimen_part_count_min is 'Minimum number of parts/individuals';
 comment on column specimen_parts.specimen_part_count_max is 'Maximum number of parts/individuals';
 comment on column specimen_parts.complete is 'Flag telling if part/specimen is complete or not';
-create table specimen_parts_codes
-       (
-        specimen_part_ref integer not null,
-        constraint unq_specimen_parts_codes unique (specimen_part_ref, code_category, full_code_indexed),
-        constraint fk_specimen_parts_codes_specimen_parts foreign key (specimen_part_ref) references specimen_parts(id) on delete cascade
-       )
-inherits (template_codes);
-comment on table specimen_parts_codes is 'List of codes given to specimen parts/individuals';
-comment on column specimen_parts_codes.specimen_part_ref is 'Reference of specimen part concerned - id field of specimen_parts table';
-comment on column specimen_parts_codes.code_category is 'Category of code: main, secondary, temporary,...';
-comment on column specimen_parts_codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
-comment on column specimen_parts_codes.code is 'Numerical part of code';
-comment on column specimen_parts_codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
-comment on column specimen_parts_codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
-comment on column specimen_parts_codes.code_date is 'Date of code creation';
+
 create table specimen_parts_insurances
        (
         specimen_part_ref integer not null,

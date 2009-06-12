@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(884);
+SELECT plan(880);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -60,27 +60,17 @@ SELECT ok( to_tsvector('simple','À L''énorme Tické!') = (SELECT descriptive_t
 INSERT INTO multimedia_keywords (object_ref,keyword) VALUES (1,'La ''mèr'' Nwàre') ;
 SELECT ok( 'lamernware' = (SELECT keyword_indexed FROM multimedia_keywords WHERE object_ref=1),'FulltoIndex on multimedia_keywords');
 
-INSERT INTO multimedia_codes (code_prefix,code, multimedia_ref) VALUES ('12é-MOL7385',6847,1);
-SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM multimedia_codes WHERE multimedia_ref=1),'FulltoIndex on multimedia_codes');
+INSERT INTO codes (table_name, record_id, code_prefix, code) VALUES ('multimedia',1, '12é-MOL7385',6847);
+SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM codes WHERE record_id = 1 AND table_name = 'multimedia' ),'FulltoIndex on multimedia_codes');
 
 insert into people (id, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, birth_date, end_date ) VALUES
 (3, true, 'The Expert', 'theexpert', to_tsvector('The Expert'),  'The Expert', '0001-01-01', DATE '0001-01-01');
 
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
-INSERT INTO specimens_codes (code_prefix,code, specimen_ref) VALUES ('12é-MOL7385',6847,1);
-SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM specimens_codes WHERE specimen_ref=1),'FulltoIndex on specimens_codes');
-
-INSERT INTO specimens_codes (code_category, code_prefix, code, specimen_ref) VALUES ('secondary','éà',null,1);
-SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimens_codes WHERE specimen_ref=1 AND code_category='secondary'),'FulltoIndex on specimens_codes with null(bis)');
 
 
 INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (1,1,'holotype');
 INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (1, 1, 'head');
-INSERT INTO specimen_parts_codes (code_prefix,code, specimen_part_ref) VALUES ('12é-MOL7385',6847,1);
-SELECT ok( '12emol73856847' = (SELECT full_code_indexed FROM specimen_parts_codes WHERE specimen_part_ref=1),'FulltoIndex on specimen_parts_codes');
-
-INSERT INTO specimen_parts_codes (code_category, code_prefix, code, specimen_part_ref) VALUES ('secondary','éà',null,1);
-SELECT ok( 'ea' = (SELECT full_code_indexed FROM specimen_parts_codes WHERE specimen_part_ref=1 AND code_category='secondary'),'FulltoIndex on specimen_parts_codes');
 
 
 INSERT INTO tags (id, label) VALUES (1,'La ''mèr'' Nwàre') ;

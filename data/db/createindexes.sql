@@ -144,11 +144,8 @@ CREATE INDEX CONCURRENTLY idx_specimens_mineral_ref on specimens(mineral_ref) WH
 CREATE INDEX CONCURRENTLY idx_specimens_identification_taxon_ref on specimens(identification_taxon_ref) WHERE identification_taxon_ref <> 0;
 CREATE INDEX CONCURRENTLY idx_specimens_host_taxon_ref on specimens(host_taxon_ref) WHERE host_taxon_ref <> 0;
 CREATE INDEX CONCURRENTLY idx_specimens_host_specimen_ref on specimens(host_specimen_ref);
-CREATE INDEX CONCURRENTLY idx_specimens_codes_specimen_ref on specimens_codes(specimen_ref);
-CREATE INDEX CONCURRENTLY idx_multimedia_codes_multimedia_ref on multimedia_codes(multimedia_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_individuals_specimen_ref on specimen_individuals(specimen_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_specimen_individual_ref on specimen_parts(specimen_individual_ref);
-CREATE INDEX CONCURRENTLY idx_specimen_parts_codes_specimen_part_ref on specimen_parts_codes(specimen_part_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_insurances_specimen_part_ref on specimen_parts_insurances(specimen_part_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_insurances_insurer_ref on specimen_parts_insurances(insurer_ref);
 CREATE INDEX CONCURRENTLY idx_associated_multimedia_multimedia_ref on associated_multimedia(multimedia_ref);
@@ -260,15 +257,9 @@ CREATE INDEX CONCURRENTLY idx_lithology_unit_group_indexed on lithology(unit_gro
 CREATE INDEX CONCURRENTLY idx_lithology_unit_sub_group_indexed on lithology(unit_sub_group_indexed) WHERE unit_sub_group_indexed <> '';
 CREATE INDEX CONCURRENTLY idx_lithology_unit_rock_indexed on lithology(unit_rock_indexed) WHERE unit_rock_indexed <> '';
 CREATE INDEX CONCURRENTLY idx_multimedia_keywords_keyword_indexed on multimedia_keywords(keyword_indexed);
-CREATE INDEX CONCURRENTLY idx_specimens_codes_code_prefix on specimens_codes(code_prefix) WHERE NOT code_prefix IS NULL;
-CREATE INDEX CONCURRENTLY idx_specimens_codes_code_suffix on specimens_codes(code_suffix) WHERE NOT code_suffix IS NULL;
-CREATE INDEX CONCURRENTLY idx_specimens_codes_code on specimens_codes(code) WHERE NOT code IS NULL;
-CREATE INDEX CONCURRENTLY idx_multimedia_codes_code_prefix on multimedia_codes(code_prefix) WHERE NOT code_prefix IS NULL;
-CREATE INDEX CONCURRENTLY idx_multimedia_codes_code_suffix on multimedia_codes(code_suffix) WHERE NOT code_suffix IS NULL;
-CREATE INDEX CONCURRENTLY idx_multimedia_codes_code on multimedia_codes(code) WHERE NOT code IS NULL;
-CREATE INDEX CONCURRENTLY idx_specimen_parts_codes_code_prefix on specimen_parts_codes(code_prefix) WHERE NOT code_prefix IS NULL;
-CREATE INDEX CONCURRENTLY idx_specimen_parts_codes_code_suffix on specimen_parts_codes(code_suffix) WHERE NOT code_suffix IS NULL;
-CREATE INDEX CONCURRENTLY idx_specimen_parts_codes_code on specimen_parts_codes(code) WHERE NOT code IS NULL;
+CREATE INDEX CONCURRENTLY idx_codes_code_prefix on codes(code_prefix) WHERE NOT code_prefix IS NULL;
+CREATE INDEX CONCURRENTLY idx_codes_code_suffix on codes(code_suffix) WHERE NOT code_suffix IS NULL;
+CREATE INDEX CONCURRENTLY idx_codes_code on codes(code) WHERE NOT code IS NULL;
 
 /*** BTree Indexes used on non indexed fields for search purposes ***/
 

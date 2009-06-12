@@ -10,10 +10,8 @@ DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_identifications ON identifications CA
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_lithostratigraphy ON lithostratigraphy CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_mineralogy ON mineralogy CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimedia ON multimedia CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimediacodes ON multimedia_codes CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_codes ON codes CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimediakeywords ON multimedia_keywords CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_specimenpartscodes ON specimen_parts_codes CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_specimenscodes ON specimens_codes CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taggroups ON tag_groups CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_tags ON tags CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxonomy CASCADE;

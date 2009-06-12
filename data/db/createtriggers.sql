@@ -143,20 +143,12 @@ CREATE TRIGGER trg_cpy_fullToIndex_multimedia BEFORE INSERT OR UPDATE
 	ON multimedia FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
-CREATE TRIGGER trg_cpy_fullToIndex_multimediacodes BEFORE INSERT OR UPDATE
-	ON multimedia_codes FOR EACH ROW
+CREATE TRIGGER trg_cpy_fullToIndex_codes BEFORE INSERT OR UPDATE
+	ON codes FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
 CREATE TRIGGER trg_cpy_fullToIndex_multimediakeywords BEFORE INSERT OR UPDATE
 	ON multimedia_keywords FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndex();
-
-CREATE TRIGGER trg_cpy_fullToIndex_specimenpartscodes BEFORE INSERT OR UPDATE
-	ON specimen_parts_codes FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndex();
-
-CREATE TRIGGER trg_cpy_fullToIndex_specimenscodes BEFORE INSERT OR UPDATE
-	ON specimens_codes FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
 CREATE TRIGGER trg_cpy_fullToIndex_taggroups BEFORE INSERT OR UPDATE

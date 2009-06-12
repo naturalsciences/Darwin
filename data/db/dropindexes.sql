@@ -144,11 +144,8 @@ DROP INDEX IF EXISTS idx_specimens_mineral_ref;
 DROP INDEX IF EXISTS idx_specimens_identification_taxon_ref;
 DROP INDEX IF EXISTS idx_specimens_host_taxon_ref;
 DROP INDEX IF EXISTS idx_specimens_host_specimen_ref;
-DROP INDEX IF EXISTS idx_specimens_codes_specimen_ref;
-DROP INDEX IF EXISTS idx_multimedia_codes_multimedia_ref;
 DROP INDEX IF EXISTS idx_specimen_individuals_specimen_ref;
 DROP INDEX IF EXISTS idx_specimen_parts_specimen_individual_ref;
-DROP INDEX IF EXISTS idx_specimen_parts_codes_specimen_part_ref;
 DROP INDEX IF EXISTS idx_specimen_parts_insurances_specimen_part_ref;
 DROP INDEX IF EXISTS idx_specimen_parts_insurances_insurer_ref;
 DROP INDEX IF EXISTS idx_associated_multimedia_multimedia_ref;
@@ -260,15 +257,9 @@ DROP INDEX IF EXISTS idx_lithology_unit_group_indexed;
 DROP INDEX IF EXISTS idx_lithology_unit_sub_group_indexed;
 DROP INDEX IF EXISTS idx_lithology_unit_rock_indexed;
 DROP INDEX IF EXISTS idx_multimedia_keywords_keyword_indexed;
-DROP INDEX IF EXISTS idx_specimens_codes_code_prefix;
-DROP INDEX IF EXISTS idx_specimens_codes_code_suffix;
-DROP INDEX IF EXISTS idx_specimens_codes_code;
-DROP INDEX IF EXISTS idx_multimedia_codes_code_prefix;
-DROP INDEX IF EXISTS idx_multimedia_codes_code_suffix;
-DROP INDEX IF EXISTS idx_multimedia_codes_code;
-DROP INDEX IF EXISTS idx_specimen_parts_codes_code_prefix;
-DROP INDEX IF EXISTS idx_specimen_parts_codes_code_suffix;
-DROP INDEX IF EXISTS idx_specimen_parts_codes_code;
+DROP INDEX IF EXISTS idx_codes_code_prefix;
+DROP INDEX IF EXISTS idx_codes_code_suffix;
+DROP INDEX IF EXISTS idx_codes_code;
 
 /*** BTree Indexes used on non indexed fields for search purposes ***/
 
