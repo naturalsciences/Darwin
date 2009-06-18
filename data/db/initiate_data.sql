@@ -280,4 +280,7 @@ INSERT INTO chronostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO mineralogy (id, name, name_indexed, code) VALUES (0, '', '', 0);
 INSERT INTO lithology (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO taxonomy (id, name, name_indexed) VALUES (0, '', '');
+INSERT INTO taxonomy (id, name, name_indexed, level_ref, status, description_year) VALUES (-3, 'Archaea', 'archaea', 1, 'valid', 1990);
+INSERT INTO taxonomy (id, name, name_indexed, level_ref, status, description_year) VALUES (-2, 'Bacteria', 'bacteria', 1, 'valid', 1990);
+INSERT INTO taxonomy (id, name, name_indexed, level_ref, status, description_year) VALUES (-1, 'Eucaryota', 'eucaryota', 1, 'valid', 1990);
 INSERT INTO users (id, formated_name, formated_name_indexed,formated_name_ts, family_name) VALUES (0,'','',to_tsvector(''),'');
