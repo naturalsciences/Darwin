@@ -6066,10 +6066,10 @@ BEGIN
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		IF TG_OP = 'INSERT' THEN
 			INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
-				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert'::tracking_actions, now()) RETURNING id into trk_id;
+				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert', now()) RETURNING id into trk_id;
 		ELSE
 			INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
-				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update'::tracking_actions, now()) RETURNING id into trk_id;
+				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update', now()) RETURNING id into trk_id;
 		END IF;
 
 /*		FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE table_name = TG_TABLE_NAME::text AND user_ref=user_id
@@ -6092,7 +6092,7 @@ BEGIN
 						AND user_ref=user_id)';*/
 	ELSE
 		INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
- 			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete'::tracking_actions, now());
+ 			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete', now());
 	END IF;
 	RETURN NULL;
 END;

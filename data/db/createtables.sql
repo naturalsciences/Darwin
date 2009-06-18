@@ -4,7 +4,7 @@ create table catalogue_relationships
         table_name varchar not null,
         record_id_1 integer not null,
         record_id_2 integer not null,
-        relationship_type relationship_types default 'is synonym of' not null,
+        relationship_type varchar default 'is synonym of' not null,
         defined_by_ordered_ids_list integer[],
         constraint unq_catalogue_relationships unique (table_name, relationship_type, record_id_1, record_id_2)
        );
@@ -24,8 +24,8 @@ comment on column template_table_record_ref.table_name is 'Reference of table co
 comment on column template_table_record_ref.record_id is 'Id of record concerned';
 create table catalogue_people 
        (
-		people_type people_types default 'authors' not null,
-        people_sub_type people_sub_types default '' not null,
+		people_type varchar default 'authors' not null,
+        people_sub_type varchar default '' not null,
         people_ordered_ids_list  integer[] not null,
         defined_by_ordered_ids_list integer[],
         constraint unq_catalogue_people unique (table_name, people_type, people_sub_type, record_id)
@@ -41,7 +41,7 @@ comment on column catalogue_people.defined_by_ordered_ids_list is 'Array of pers
 create table catalogue_levels
        (
         id serial not null,
-        level_type level_types not null,
+        level_type varchar not null,
         level_name varchar not null,
         level_sys_name varchar not null,
         optional_level boolean default false not null,
@@ -198,7 +198,7 @@ comment on column catalogue_properties.property_tool_indexed is 'Indexed version
 comment on column catalogue_properties.defined_by_ordered_ids_list is 'Array of identifiers of persons having defined this property - array of id field from people table';
 create table identifications
        (
-        notion_concerned notions_concerned not null,
+        notion_concerned varchar not null,
         notion_date timestamp,
         identifiers_ordered_ids_list integer[] not null,
         value_defined varchar,
@@ -300,7 +300,7 @@ create table template_people
         formated_name varchar not null,
         formated_name_indexed varchar not null,
         formated_name_ts tsvector not null,
-	title varchar not null DEFAULT '',
+        title varchar not null DEFAULT '',
         family_name varchar not null,
         given_name varchar,
         additional_names varchar,
@@ -411,7 +411,7 @@ create table multimedia
        (
         id serial not null,
         is_digital boolean default true not null,
-        type multimedia_types default 'image' not null,
+        type varchar default 'image' not null,
         sub_type varchar,
         title varchar not null,
         title_indexed varchar not null,
@@ -495,7 +495,7 @@ comment on column template_people_users_addr_common.country is 'Country';
 comment on column template_people_users_addr_common.address_parts_ts is 'tsvector field containing vectorized form of all addresses fields: country, region, locality, extended address,...';
 create table people_relationships
        (
-        relationship_type people_relationship_types default 'belongs to' not null,
+        relationship_type varchar default 'belongs to' not null,
         person_1_ref integer not null,
         person_2_ref integer not null,
         person_title varchar,
@@ -516,7 +516,7 @@ comment on column people_relationships.activity_period is 'Main person activity 
 comment on column people_relationships.path is 'Hierarchical path of the organization structure';
 create table people_comm
        (
-        comm_type comm_types default 'phone/fax' not null,
+        comm_type varchar default 'phone/fax' not null,
         tag varchar[] not null,
         constraint pk_people_comm primary key (id),
         constraint unq_people_comm unique (comm_type, person_user_ref, entry),
@@ -552,7 +552,7 @@ comment on column people_addresses.zip_code is 'Zip code';
 comment on column people_addresses.tag is 'Array of descriptive tags: home, work,...';
 create table users_comm
        (
-        comm_type comm_types default 'phone/fax' not null,
+        comm_type varchar default 'phone/fax' not null,
         tag varchar[] not null,
         constraint pk_users_comm primary key (id),
         constraint unq_users_comm unique (comm_type, person_user_ref, entry),
@@ -592,7 +592,7 @@ comment on column users_addresses.tag is 'Array of descriptive tags: home, work,
 create table users_login_infos
        (
         user_ref integer not null,
-        login_type login_types default 'local' not null,
+        login_type varchar default 'local' not null,
         user_name varchar,
         password varchar,
         system_id varchar,
@@ -611,7 +611,7 @@ create table template_people_users_multimedia
        (
         person_user_ref integer not null,
         object_ref integer not null,
-        category people_multimedia_categories default 'avatar' not null,
+        category varchar default 'avatar' not null,
         constraint fk_template_people_users_multimedia foreign key (object_ref) references multimedia(id) on delete cascade
        );
 comment on table template_people_users_multimedia is 'Template table used to construct people/users associated multimedia table';
@@ -641,7 +641,7 @@ comment on column users_multimedia.category is 'Object catégory: avatar, spelle
 create table collections
        (
         id serial not null,
-	collection_type collection_types default 'mix' not null,
+        collection_type varchar default 'mix' not null,
         code varchar not null,
         name varchar not null,
         institution_ref integer not null,
@@ -757,7 +757,7 @@ comment on column record_visibilities.visible is 'Flag telling if record is visi
 create table users_workflow
        (
         user_ref integer not null,
-        status workflow_status default 'to check' not null,
+        status varchar default 'to check' not null,
         modification_date_time update_date_time,
         comment varchar,
         constraint fk_users_workflow_users foreign key (user_ref) references users(id) on delete cascade
@@ -784,7 +784,7 @@ create table users_tracking
        (
         id bigserial not null,
         user_ref integer not null,
-        action tracking_actions default 'insert' not null,
+        action varchar default 'insert' not null,
         modification_date_time update_date_time,
         constraint pk_users_tracking_pk primary key (id),
         constraint fk_users_tracking_users foreign key (user_ref) references users(id)
@@ -813,7 +813,7 @@ comment on column users_tracking_records.new_value is 'New value when an update 
 create table collection_maintenance
        (
         user_ref integer not null,
-        category maintenance_categories default 'action' not null,
+        category varchar default 'action' not null,
         action_observation varchar not null,
         description varchar,
         description_ts tsvector,
@@ -853,7 +853,7 @@ comment on column my_saved_searches.visible_fields_in_result is 'Array of fields
 create table my_preferences
        (
         user_ref integer not null,
-        category pref_categories default 'board_widget' not null,
+        category varchar default 'board_widget' not null,
         group_name varchar not null,
         order_by smallint default 1 not null,
         col_num smallint default 1 not null,
@@ -902,7 +902,7 @@ create table template_classifications
         description_year smallint,
         description_year_compl char(2),
         level_ref integer,
-        status status default 'valid' not null,
+        status varchar default 'valid' not null,
         path varchar default '/' not null,
 	parent_ref integer default 0 not null
        );
@@ -1345,10 +1345,10 @@ create table mineralogy
        (
         id serial not null,
         code varchar not null,
-        classification mineralogy_classifications default 'strunz' not null,
+        classification varchar default 'strunz' not null,
         formule varchar,
         formule_indexed varchar,
-        cristal_system cristal_systems,
+        cristal_system varchar,
         unit_class_ref classifications_ids,
         unit_class_indexed classifications_names,
         unit_division_ref classifications_ids,
@@ -1442,7 +1442,7 @@ create table habitats
         description varchar not null,
         description_ts tsvector not null,
         description_language_full_text full_text_language, 
-        habitat_system habitat_systems default 'eunis' not null,
+        habitat_system varchar default 'eunis' not null,
         path varchar default '/' not null,
         constraint pk_habitats primary key (id),
         constraint unq_habitats unique (path, code_indexed, habitat_system)
@@ -1496,13 +1496,13 @@ create table specimens
         chrono_ref integer default 0 not null,
         lithology_ref integer default 0 not null,
         mineral_ref integer default 0 not null,
-        identification_qual ident_qualifiers,
+        identification_qual varchar,
         sp varchar,
         identification_taxon_ref integer default 0 not null,
         host_taxon_ref integer default 0 not null,
         host_specimen_ref integer,
         host_relationship varchar,
-        acquisition_category acquisition_categories default 'expedition' not null,
+        acquisition_category varchar default 'expedition' not null,
         acquisition_date_mask integer DEFAULT 0,
         acquisition_date date  DEFAULT '01/01/4713BC',
         collecting_method varchar,
@@ -1511,7 +1511,7 @@ create table specimens
         specimen_count_max integer default 1 not null,
         station_visible boolean default true not null,
         multimedia_visible boolean default true not null,
-        category specimen_categories default 'physical' not null,
+        category varchar default 'physical' not null,
         constraint pk_specimens primary key (id),
         constraint specimens_expeditions_fk foreign key (expedition_ref) references expeditions(id),
         constraint unq_specimens unique (category, collection_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, identification_taxon_ref, host_taxon_ref),
@@ -1556,7 +1556,7 @@ comment on column specimens.host_taxon_ref is 'Reference of taxon definition def
 
 create table codes
        (
-        code_category code_categories default 'main' not null,
+        code_category varchar default 'main' not null,
         code_prefix varchar,
         code integer,
         code_suffix varchar,
@@ -1579,14 +1579,14 @@ create table specimen_individuals
        (
         id serial not null,
         specimen_ref integer not null,
-        type types_list default 'specimen' not null,
-        type_group types_group_list,
-        type_search types_search_list,
-        sex sexes default 'undefined' not null,
-        stage stages default 'undefined' not null,
-        state specimens_states default 'not applicable' not null,
-        social_status socials_status default 'not applicable' not null,
-        rock_form rock_forms default 'not applicable' not null,
+        type varchar default 'specimen' not null,
+        type_group varchar,
+        type_search varchar,
+        sex varchar default 'undefined' not null,
+        stage varchar default 'undefined' not null,
+        state varchar default 'not applicable' not null,
+        social_status varchar default 'not applicable' not null,
+        rock_form varchar default 'not applicable' not null,
         specimen_individuals_count_min integer default 1 not null,
         specimen_individuals_count_max integer default 1 not null,
         constraint pk_specimen_individuals primary key (id),
@@ -1612,7 +1612,7 @@ create table specimen_parts
        (
         id serial not null,
         specimen_individual_ref integer not null,
-        specimen_part specimens_parts default 'specimen' not null,
+        specimen_part varchar default 'specimen' not null,
         complete boolean default true not null,
         building varchar,
         floor varchar,
@@ -1621,9 +1621,9 @@ create table specimen_parts
         shelf varchar,
         container varchar,
         sub_container varchar,
-        container_type container_types default 'container' not null,
-        sub_container_type container_types default 'container' not null,
-        storage storages default 'dry' not null,
+        container_type varchar default 'container' not null,
+        sub_container_type varchar default 'container' not null,
+        storage varchar default 'dry' not null,
         surnumerary boolean default false not null,
         specimen_status varchar default 'good state' not null,
         specimen_part_count_min integer default 1 not null,
@@ -1682,7 +1682,7 @@ comment on column associated_multimedia.record_id is 'Identifier of record conce
 comment on column associated_multimedia.multimedia_ref is 'Reference of multimedia object concerned - id field of multimedia table';
 create table specimens_accompanying
        (
-        type accompanying_types default 'secondary' not null,
+        type varchar default 'secondary' not null,
         specimen_ref integer not null,
         taxon_ref integer default 0 not null,
         mineral_ref integer default 0 not null,
