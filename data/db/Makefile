@@ -14,6 +14,7 @@ PG_PROVE = /usr/lib/postgresql/8.3/bin/pg_prove
 #CLUSTER_PATH = /var/lib/postgresql/8.3/$(CLUSTER_NAME)
 CLUSTER_PATH = $(shell pg_lsclusters -h | awk '{print $$6}' )
 TB_SPACE_DIR = $(CLUSTER_PATH)/$(DB_NAME)
+PASSWD = ''
 
 help: help-target help-param
 help-target:
@@ -129,7 +130,11 @@ create-db:
 	$(PRIV_PSQL_DB) -f lib/accent.sql
 
 create-user:
+ifeq ($(PASSWD),'')
 	-createuser -l -i -q -S -R -D -P -E $(DB_USER)
+else
+	$(PRIV_PSQL_DB) -c "CREATE ROLE $(DB_USER) ENCRYPTED PASSWORD '$(PASSWD)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
+endif
 
 create-user-darwin1:
 	-createuser -l -i -q -S -R -D -P -E $(DB_IMPORT_USER)
