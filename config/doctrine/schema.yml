@@ -1,0 +1,773 @@
+People:
+    columns:
+        id: { type: integer, primary: true }
+        is_physical: { type: boolean, notnull: true}
+        sub_type: { type: string }
+        public_class: { type: enum, values: ['public','private'] },
+        formated_name: { type: string, notnull: true},
+        formated_name_indexed: { type: string}
+        formated_name_ts: { type: string}
+        title: { type: string, notnull: true}
+        family_name: { type: string, notnull: true}
+        given_name: { type: string}
+        additional_names: { type: string}
+        birth_date_mask: { type: integer, notnull: true, default:0}
+        birth_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        gender: { type: enum, values: ['M','F'] }
+        db_people_type:  { type: integer, notnull: true}
+        end_date_mask:  { type: integer, notnull: true, default:0}
+        end_date: { type: date,notnull: true, default: '01/01/4713BC'}
+
+CatalogueRelationships:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id_1: { type: integer, notnull: true}
+        record_id_2: { type: integer, notnull: true}
+        relationship_type: { type: integer, notnull: true, default: is synonym of }
+
+CataloguePeople:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        table_name: { type: string, notnull: true}
+        record_id: { type: string, notnull: true}
+        people_type: {  type: string, notnull: true , default: authors }
+        people_sub_type: {  type: string, notnull: true }
+        order_by: { type: integer, notnull: true, default: 1}
+        people_ref: { type: integer, notnull: true}
+
+CatalogueLevels:
+    columns:
+        id: { type: integer, primary: true }
+        level_type: {  type: string, notnull: true}
+        level_name: {  type: string, notnull: true}
+        level_sys_name: {  type: string, notnull: true}
+        optional_level: { type: boolean, notnull: true, default: false}
+
+PossibleUpperLevels:
+    columns:
+        level_ref: { type: integer, notnull: true}
+        level_upper_ref: { type: integer, notnull: true}
+
+Comments:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        notion_concerned: { type: string, notnull: true}
+        comment: { type: string, notnull: true}
+        comment_ts: { type: string}
+        comment_language_full_text: { type: string}
+
+Tags:
+    columns:
+        id: { type: integer, primary: true }
+        label: { type: string, notnull: true}
+        label_indexed: { type: string, notnull: true}
+
+TagGroups:
+    columns:
+        id: { type: integer, primary: true }
+        tag_ref:  { type: integer, notnull: true }
+        group_name: {type: string, notnull: true}
+        group_name_indexed: { type: string }
+        sub_group_name:  { type: string, notnull: true }
+        sub_group_name_indexed: {type: string}
+        color: {type: string, default: '#FFFFFF' }
+Gtu:
+    columns:
+        id: { type: integer, primary: true }
+        code: {type: string, notnull: true}
+        parent_ref:  {type: integer, notnull: true}
+        gtu_from_date_mask: { type: integer, notnull: true, default:0}
+        gtu_from_date: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        gtu_to_date_mask: { type: integer, notnull: true, default:0}
+        gtu_to_date: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+
+GtuTags:
+    columns:
+        tag_group_ref: { type: integer, notnull:true}
+        gtu_ref: { type: integer, notnull:true}
+
+CatalogueProperties:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        property_type: {type: string, notnull: true}
+        property_sub_type: {type: string}
+        property_sub_type_indexed: {type: string}
+        property_qualifier: {type: string}
+        property_qualifier_indexed: {type: string}
+        date_from_mask: { type: integer, notnull: true, default:0}
+        date_from timestamp: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        date_to_mask: { type: integer, notnull: true, default:0}
+        date_to timestamp: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        property_unit: {type: string, notnull: true}
+        property_accuracy_unit: {type: string}
+        property_method: {type: string}
+        property_method_indexed: {type: string}
+        property_tool: {type: string, notnull: true}
+        property_tool_indexed: {type: string}
+
+PropertiesValues:
+    columns:
+        id: { type: integer, primary: true }
+        property_ref: { type: integer}
+        property_min: {type: string, notnull: true}
+        property_min_unified: {type: string}
+        property_max: {type: string}
+        property_max_unified: {type: string}
+        property_accuracy: {type: float}
+        property_accuracy_unified: {type: float}
+
+Identifications:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        notion_concerned: { type: string, notnull: true}
+        notion_date: { type: timestamp}
+        value_defined:  { type: string}
+        value_defined_indexed: { type: string}
+        value_defined_ts: { type: string}
+        determination_status: { type: string}
+        order_by: { type: integer, notnull: true, default: 1}
+
+ClassVernacularNames:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        community: { type: string, notnull: true}
+
+VernacularNames:
+    columns:
+        vernacular_class_ref: { type: integer, primary: true }
+        name:  { type: string, notnull: true}
+        name_ts:  { type: string}
+        country_language_full_text:  { type: string}
+
+Expeditions:
+    columns:
+        id: { type: integer, primary: true }
+        name:  { type: string, notnull: true}
+        name_ts:  { type: string}
+        name_indexed:  { type: string}
+        name_language_full_text:  { type: string}
+        expedition_from_date_mask: { type: integer, notnull: true, default:0}
+        expedition_from_date: { type: date, default: '01/01/4713BC'}
+        expedition_to_date_mask: { type: integer, notnull: true, default:0}
+        expedition_to_date: { type: date, default: '01/01/4713BC'}
+
+Users:
+    columns:
+        id: { type: integer, primary: true }
+        is_physical: { type: boolean, notnull: true}
+        sub_type: { type: string }
+        public_class: { type: enum, values: ['public','private'] },
+        formated_name: { type: string, notnull: true},
+        formated_name_indexed: { type: string}
+        formated_name_ts: { type: string}
+        title: { type: string, notnull: true}
+        family_name: { type: string, notnull: true}
+        given_name: { type: string}
+        additional_names: { type: string}
+        birth_date_mask: { type: integer, notnull: true, default:0}
+        birth_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        gender: { type: enum, values: ['M','F'] }
+        db_user_type: { type: integer, notnull: true, default: 1}
+
+PeopleLanguages:
+    columns:
+        people_ref: { type: integer, notnull: true}
+        language_country: { type: string, notnull: true, default: en_gb}
+        mother: { type: boolean, notnull: true, default: true}
+        prefered_language: { type: boolean, notnull: true, default: false}
+
+UsersLanguages:
+    columns:
+        users_ref: { type: integer, notnull: true}
+        language_country: { type: string, notnull: true, default: en_gb}
+        mother: { type: boolean, notnull: true, default: true}
+        prefered_language: { type: boolean, notnull: true, default: false}
+
+Multimedia:
+    columns:
+        id: { type: integer, primary: true }
+        is_digital: { type: boolean, notnull: true }
+        type: { type: string, notnull: true, default: image }
+        sub_type: { type: string }
+        title: { type: string, notnull: true }
+        title_indexed: { type: string }
+        subject: { type: string, notnull: true, default: '/' }
+        coverage:   { type: string, notnull: true, default: temporal }
+        apercu_path: { type: string }
+        copyright: { type: string }
+        license: { type: string }
+        uri: { type: string }
+        descriptive_ts: { type: string }
+        descriptive_language_full_text: { type: string }
+        creation_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        creation_date_mask: { type: integer, notnull: true, default:0}
+        publication_date_from: { type: date, notnull: true, default: '01/01/4713BC'}
+        publication_date_from_mask: { type: integer, notnull: true, default:0}
+        publication_date_to: { type: date, notnull: true, default: '01/01/4713BC'}
+        publication_date_to_mask: { type: integer, notnull: true, default:0}
+        parent_ref: { type: integer }
+        path: { type: string, notnull: true, default: '/' }
+        mime_type: { type: string }
+
+PeopleRelationships:
+    columns:
+        relationship_type: { type: string, notnull: true, default: 'belongs to' }
+        person_1_ref: { type: integer, notnull: true}
+        person_2_ref: { type: integer, notnull: true}
+        person_title: { type: string }
+        path: { type: string }
+        organization_unit: { type: string }
+        person_user_role: { type: string }
+        activity_period: { type: string }
+
+PeopleComm:
+    columns:
+        id: { type: integer, primary: true }
+        person_user_ref: { type: integer, notnull: true}
+        comm_type: { type: string, notnull: true, default: 'phone/fax' }
+        tag: { type: string, notnull: true}
+        organization_unit: { type: string }
+        person_user_role: { type: string }
+        activity_period: { type: string }
+
+PeopleAddresses:
+       columns:
+        id: { type: integer, primary: true }
+        person_user_ref: { type: integer, notnull: true}
+        tag: { type: string, notnull: true}
+        organization_unit: { type: string }
+        person_user_role: { type: string }
+        activity_period: { type: string }
+        po_box: { type: string }
+        extended_address: { type: string }
+        locality: { type: string, notnull:true }
+        region: { type: string }
+        zip_code: { type: string }
+        country: { type: string, notnull:true }
+        address_parts_ts: { type: string }
+
+UsersComm:
+    columns:
+        id: { type: integer, primary: true }
+        person_user_ref: { type: integer, notnull: true}
+        comm_type: { type: string, notnull: true, default: 'phone/fax' }
+        tag: { type: string, notnull: true}
+        organization_unit: { type: string }
+        person_user_role: { type: string }
+        activity_period: { type: string }
+
+UsersAddresses:
+    columns:
+        id: { type: integer, primary: true }
+        person_user_ref: { type: integer, notnull: true}
+        tag: { type: string, notnull: true}
+        organization_unit: { type: string }
+        person_user_role: { type: string }
+        activity_period: { type: string }
+        po_box: { type: string }
+        extended_address: { type: string }
+        locality: { type: string, notnull:true }
+        region: { type: string }
+        zip_code: { type: string }
+        country: { type: string, notnull:true }
+        address_parts_ts: { type: string }
+
+UsersLoginInfos:
+    columns:
+        user_ref: { type: integer, notnull: true}
+        login_type: { type: string, notnull: true, default: local}
+        user_name: { type: string }
+        password: { type: string }
+        system_id: { type: string }
+        last_seen: { type: timestamp }
+
+PeopleMultimedia:
+    columns:
+        person_user_ref: { type: integer, notnull: true}
+        object_ref: { type: integer, notnull: true}
+        category: { type: string, notnull: true, default: avatar}
+
+UsersMultimedia:
+    columns:
+        person_user_ref: { type: integer, notnull: true}
+        object_ref: { type: integer, notnull: true}
+        category: { type: string, notnull: true, default: avatar}
+
+Collections:
+    columns:
+        id: { type: integer, primary: true }
+        collection_type: { type: string, notnull: true, default: mix}
+        code: { type: string, notnull: true}
+        name: { type: string, notnull: true}
+        institution_ref: { type: integer, notnull: true}
+        main_manager_ref: { type: integer, notnull: true}
+        parent_ref: { type: integer}
+        path: { type: string, notnull: true, default: '/'}
+        code_auto_increment: { type: boolean, notnull: true, default: false}
+        code_part_code_auto_copy: { type: boolean, notnull: true, default: false}
+
+CollectionsAdmin:
+    columns:
+        collection_ref: { type: integer, notnull: true, default:0 }
+        user_ref: { type: integer, notnull: true, default:0 }
+
+CollectionsRights:
+    columns:
+        collection_ref: { type: integer, notnull: true, default:0 }
+        user_ref: { type: integer, notnull: true, default:0 }
+        rights: { type: integer, notnull: true, default:1 }
+
+CollectionsFieldsVisibilities:
+    columns:
+        collection_ref: { type: integer, notnull: true, default:0 }
+        user_ref: { type: integer, notnull: true, default:0 }
+        field_group_name: { type: string, notnull: true }
+        db_user_type: { type: integer, notnull: true, default:1 }
+        searchable: { type: boolean, notnull: true, default: true}
+        visible: { type: boolean, notnull: true, default: true}
+
+UsersCollRightsAsked:
+    columns:
+        collection_ref: { type: integer, notnull: true, default:0 }
+        user_ref: { type: integer, notnull: true, default:0 }
+        field_group_name: { type: string, notnull: true }
+        db_user_type: { type: integer, notnull: true }
+        searchable: { type: boolean, notnull: true, default: true}
+        visible: { type: boolean, notnull: true, default: true}
+        motivation: { type: string, notnull: true }
+        asking_date_time: { type: timestamp, notnull: true }
+        with_sub_collections: { type: boolean, notnull: true, default: true}
+
+RecordVisibilities:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        db_user_type: { type: integer, notnull: true, default:0 }
+        user_ref: { type: integer, notnull: true, default:0 }
+        visible: { type: boolean, notnull: true, default: true}
+
+UsersWorkflow:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        user_ref: { type: integer, notnull: true}
+        status: { type: string, notnull: true, default: to check}
+        modification_date_time: { type: timestamp, notnull: true }
+        comment: { type: string }
+
+UsersTablesFieldsTracked:
+    columns:
+        table_name: { type: string, notnull: true}
+        field_name: { type: string, notnull: true}
+        user_ref: { type: integer, notnull: true}
+
+UsersTracking:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true},
+        user_ref: { type: integer, notnull: true}
+        action: { type: string, notnull: true, default: insert}
+        modification_date_time: { type: timestamp, notnull: true }
+
+#MAY BE MODIFIED
+UsersTrackingRecords:
+    columns:
+        tracking_ref: { type: integer, notnull: true},
+        field_name: { type: string, notnull: true}
+        old_value: {type: string}
+        new_value: {type: string}
+
+CollectionMaintenance:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        user_ref: { type: integer, notnull: true},
+        category: { type: string, notnull: true, default: action}
+        action_observation: { type: string, notnull: true}
+        description: { type: string }
+        description_ts: { type: string }
+        language_full_text: { type: string }
+        modification_date_time: { type: timestamp, notnull: true }
+
+MySavedSearches:
+    columns:
+        user_ref: { type: integer, notnull: true},
+        name: { type: string, notnull: true, default: default}
+        search_criterias: { type: string, notnull: true}
+        favorite: { type: boolean, notnull: true, default: false}
+        modification_date_time: { type: timestamp, notnull: true }
+        visible_fields_in_result: { type: string, notnull: true}
+
+MyPreferences:
+    columns:
+        user_ref: { type: integer, notnull: true},
+        category: { type: string, notnull: true, default: board_widget}
+        group_name: { type: string, notnull: true}
+        order_by: { type: integer, notnull: true, default:1 }
+        col_num: { type: integer, notnull: true, default:1 }
+        mandatory: { type: boolean, notnull: true, default: false}
+        visible: { type: boolean, notnull: true, default: true}
+        opened: { type: boolean, notnull: true, default: true}
+        color: { type: string, default:'#5BAABD'}
+        icon_ref: { type: integer}
+        title_perso: { type: string}
+
+MySavedSpecimens:
+    columns:
+        user_ref: { type: integer, notnull: true},
+        name: { type: string, notnull: true}
+        specimen_ids: { type: string, notnull: true}
+        favorite: { type: boolean, notnull: true, default: false}
+        modification_date_time: { type: timestamp, notnull: true }
+Taxonomy:
+    columns:
+        id: { type: integer, primary: true }
+        name: { type: string, notnull: true}
+        name_indexed: { type: string}
+        description_year: { type: integer }
+        description_year_compl: { type: string(2)}
+        level_ref: { type: integer}
+        status: { type: string, notnull: true, default: valid}
+        path: { type: string, notnull: true, default: '/'}
+        parent_ref: { type: integer, notnull: true, default: 0}
+        domain_ref: { type: integer, notnull: true, default: 0}
+        domain_indexed: { type: string, notnull: true, default: ''}
+        kingdom_ref: { type: integer, notnull: true, default: 0}
+        kingdom_indexed: { type: string, notnull: true, default: ''}
+        super_phylum_ref: { type: integer, notnull: true, default: 0}
+        super_phylum_indexed: { type: string, notnull: true, default: ''}
+        phylum_ref: { type: integer, notnull: true, default: 0}
+        phylum_indexed: { type: string, notnull: true, default: ''}
+        sub_phylum_ref: { type: integer, notnull: true, default: 0}
+        sub_phylum_indexed: { type: string, notnull: true, default: ''}
+        infra_phylum_ref: { type: integer, notnull: true, default: 0}
+        infra_phylum_indexed: { type: string, notnull: true, default: ''}
+        super_cohort_botany_ref: { type: integer, notnull: true, default: 0}
+        super_cohort_botany_indexed: { type: string, notnull: true, default: ''}
+        cohort_botany_ref: { type: integer, notnull: true, default: 0}
+        cohort_botany_indexed: { type: string, notnull: true, default: ''}
+        sub_cohort_botany_ref: { type: integer, notnull: true, default: 0}
+        sub_cohort_botany_indexed: { type: string, notnull: true, default: ''}
+        infra_cohort_botany_ref: { type: integer, notnull: true, default: 0}
+        infra_cohort_botany_indexed: { type: string, notnull: true, default: ''}
+        super_class_ref: { type: integer, notnull: true, default: 0}
+        super_class_indexed: { type: string, notnull: true, default: ''}
+        class_ref: { type: integer, notnull: true, default: 0}
+        class_indexed: { type: string, notnull: true, default: ''}
+        sub_class_ref: { type: integer, notnull: true, default: 0}
+        sub_class_indexed: { type: string, notnull: true, default: ''}
+        infra_class_ref: { type: integer, notnull: true, default: 0}
+        infra_class_indexed: { type: string, notnull: true, default: ''}
+        super_division_ref: { type: integer, notnull: true, default: 0}
+        super_division_indexed: { type: string, notnull: true, default: ''}
+        division_ref: { type: integer, notnull: true, default: 0}
+        division_indexed: { type: string, notnull: true, default: ''}
+        sub_division_ref: { type: integer, notnull: true, default: 0}
+        sub_division_indexed: { type: string, notnull: true, default: ''}
+        infra_division_ref: { type: integer, notnull: true, default: 0}
+        infra_division_indexed: { type: string, notnull: true, default: ''}
+        super_legion_ref: { type: integer, notnull: true, default: 0}
+        super_legion_indexed: { type: string, notnull: true, default: ''}
+        legion_ref: { type: integer, notnull: true, default: 0}
+        legion_indexed: { type: string, notnull: true, default: ''}
+        sub_legion_ref: { type: integer, notnull: true, default: 0}
+        sub_legion_indexed: { type: string, notnull: true, default: ''}
+        infra_legion_ref: { type: integer, notnull: true, default: 0}
+        infra_legion_indexed: { type: string, notnull: true, default: ''}
+        super_cohort_zoology_ref: { type: integer, notnull: true, default: 0}
+        super_cohort_zoology_indexed: { type: string, notnull: true, default: ''}
+        cohort_zoology_ref: { type: integer, notnull: true, default: 0}
+        cohort_zoology_indexed: { type: string, notnull: true, default: ''}
+        sub_cohort_zoology_ref: { type: integer, notnull: true, default: 0}
+        sub_cohort_zoology_indexed: { type: string, notnull: true, default: ''}
+        infra_cohort_zoology_ref: { type: integer, notnull: true, default: 0}
+        infra_cohort_zoology_indexed: { type: string, notnull: true, default: ''}
+        super_order_ref: { type: integer, notnull: true, default: 0}
+        super_order_indexed: { type: string, notnull: true, default: ''}
+        order_ref: { type: integer, notnull: true, default: 0}
+        order_indexed: { type: string, notnull: true, default: ''}
+        sub_order_ref: { type: integer, notnull: true, default: 0}
+        sub_order_indexed: { type: string, notnull: true, default: ''}
+        infra_order_ref: { type: integer, notnull: true, default: 0}
+        infra_order_indexed: { type: string, notnull: true, default: ''}
+        section_zoology_ref: { type: integer, notnull: true, default: 0}
+        section_zoology_indexed: { type: string, notnull: true, default: ''}
+        sub_section_zoology_ref: { type: integer, notnull: true, default: 0}
+        sub_section_zoology_indexed: { type: string, notnull: true, default: ''}
+        super_family_ref: { type: integer, notnull: true, default: 0}
+        super_family_indexed: { type: string, notnull: true, default: ''}
+        family_ref: { type: integer, notnull: true, default: 0}
+        family_indexed: { type: string, notnull: true, default: ''}
+        sub_family_ref: { type: integer, notnull: true, default: 0}
+        sub_family_indexed: { type: string, notnull: true, default: ''}
+        infra_family_ref: { type: integer, notnull: true, default: 0}
+        infra_family_indexed: { type: string, notnull: true, default: ''}
+        super_tribe_ref: { type: integer, notnull: true, default: 0}
+        super_tribe_indexed: { type: string, notnull: true, default: ''}
+        tribe_ref: { type: integer, notnull: true, default: 0}
+        tribe_indexed: { type: string, notnull: true, default: ''}
+        sub_tribe_ref: { type: integer, notnull: true, default: 0}
+        sub_tribe_indexed: { type: string, notnull: true, default: ''}
+        infra_tribe_ref: { type: integer, notnull: true, default: 0}
+        infra_tribe_indexed: { type: string, notnull: true, default: ''}
+        genus_ref: { type: integer, notnull: true, default: 0}
+        genus_indexed: { type: string, notnull: true, default: ''}
+        sub_genus_ref: { type: integer, notnull: true, default: 0}
+        sub_genus_indexed: { type: string, notnull: true, default: ''}
+        section_botany_ref: { type: integer, notnull: true, default: 0}
+        section_botany_indexed: { type: string, notnull: true, default: ''}
+        sub_section_botany_ref: { type: integer, notnull: true, default: 0}
+        sub_section_botany_indexed: { type: string, notnull: true, default: ''}
+        serie_ref: { type: integer, notnull: true, default: 0}
+        serie_indexed: { type: string, notnull: true, default: ''}
+        sub_serie_ref: { type: integer, notnull: true, default: 0}
+        sub_serie_indexed: { type: string, notnull: true, default: ''}
+        super_species_ref: { type: integer, notnull: true, default: 0}
+        super_species_indexed: { type: string, notnull: true, default: ''}
+        species_ref: { type: integer, notnull: true, default: 0}
+        species_indexed: { type: string, notnull: true, default: ''}
+        sub_species_ref: { type: integer, notnull: true, default: 0}
+        sub_species_indexed: { type: string, notnull: true, default: ''}
+        variety_ref: { type: integer, notnull: true, default: 0}
+        variety_indexed: { type: string, notnull: true, default: ''}
+        sub_variety_ref: { type: integer, notnull: true, default: 0}
+        sub_variety_indexed: { type: string, notnull: true, default: ''}
+        form_ref: { type: integer, notnull: true, default: 0}
+        form_indexed: { type: string, notnull: true, default: ''}
+        sub_form_ref: { type: integer, notnull: true, default: 0}
+        sub_form_indexed: { type: string, notnull: true, default: ''}
+        abberans_ref: { type: integer, notnull: true, default: 0}
+        abberans_indexed: { type: string, notnull: true, default: ''}
+        chimera_hybrid_pos: { type: string, notnull: true, default: none}
+        extinct: { type: boolean, notnull: true, default: false}
+
+PeopleAliases:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        person_ref: { type: integer, notnull: true }
+        collection_ref: { type: integer, notnull: true, default: 0}
+        person_name: { type: string, notnull: true}
+
+Chronostratigraphy:
+    columns:
+        id: { type: integer, primary: true }
+        name: { type: string, notnull: true}
+        name_indexed: { type: string}
+        description_year: { type: integer }
+        description_year_compl: { type: string(2)}
+        level_ref: { type: integer}
+        status: { type: string, notnull: true, default: valid}
+        path: { type: string, notnull: true, default: '/'}
+        parent_ref: { type: integer, notnull: true, default: 0}
+        eon_ref: { type: integer, notnull: true, default: 0}
+        eon_indexed: { type: string, notnull: true, default: ''}
+        era_ref: { type: integer, notnull: true, default: 0}
+        era_indexed: { type: string, notnull: true, default: ''}
+        sub_era_ref: { type: integer, notnull: true, default: 0}
+        sub_era_indexed: { type: string, notnull: true, default: ''}
+        system_ref: { type: integer, notnull: true, default: 0}
+        system_indexed: { type: string, notnull: true, default: ''}
+        serie_ref: { type: integer, notnull: true, default: 0}
+        serie_indexed: { type: string, notnull: true, default: ''}
+        stage_ref: { type: integer, notnull: true, default: 0}
+        stage_indexed: { type: string, notnull: true, default: ''}
+        sub_stage_ref: { type: integer, notnull: true, default: 0}
+        sub_stage_indexed: { type: string, notnull: true, default: ''}
+        sub_level_1_ref: { type: integer, notnull: true, default: 0}
+        sub_level_1_indexed: { type: string, notnull: true, default: ''}
+        sub_level_2_ref: { type: integer, notnull: true, default: 0}
+        sub_level_2_indexed: { type: string, notnull: true, default: ''}
+        lower_bound: { type: integer}
+        upper_bound: { type: integer}
+
+Lithostratigraphy:
+    columns:
+        id: { type: integer, primary: true }
+        name: { type: string, notnull: true}
+        name_indexed: { type: string}
+        description_year: { type: integer }
+        description_year_compl: { type: string(2)}
+        level_ref: { type: integer}
+        status: { type: string, notnull: true, default: valid}
+        path: { type: string, notnull: true, default: '/'}
+        parent_ref: { type: integer, notnull: true, default: 0}
+        group_ref: { type: integer, notnull: true, default: 0}
+        group_indexed: { type: string, notnull: true, default: ''}
+        formation_ref: { type: integer, notnull: true, default: 0}
+        formation_indexed: { type: string, notnull: true, default: ''}
+        member_ref: { type: integer, notnull: true, default: 0}
+        member_indexed: { type: string, notnull: true, default: ''}
+        layer_ref: { type: integer, notnull: true, default: 0}
+        layer_indexed: { type: string, notnull: true, default: ''}
+        sub_level_1_ref: { type: integer, notnull: true, default: 0}
+        sub_level_1_indexed: { type: string, notnull: true, default: ''}
+        sub_level_2_ref: { type: integer, notnull: true, default: 0}
+        sub_level_2_indexed: { type: string, notnull: true, default: ''}
+
+Mineralogy:
+    columns:
+        id: { type: integer, primary: true }
+        name: { type: string, notnull: true}
+        name_indexed: { type: string}
+        description_year: { type: integer }
+        description_year_compl: { type: string(2)}
+        level_ref: { type: integer}
+        status: { type: string, notnull: true, default: valid}
+        path: { type: string, notnull: true, default: '/'}
+        parent_ref: { type: integer, notnull: true, default: 0}
+        code: { type: string, notnull: true}
+        classification: { type: string, notnull: true, default: strunz}
+        formule: { type: string }
+        formule_indexed: { type: string }
+        cristal_system: { type: string }
+        unit_class_ref: { type: integer, notnull: true, default: 0}
+        unit_class_indexed: { type: string, notnull: true, default: ''}
+        unit_division_ref: { type: integer, notnull: true, default: 0}
+        unit_division_indexed: { type: string, notnull: true, default: ''}
+        unit_family_ref: { type: integer, notnull: true, default: 0}
+        unit_family_indexed: { type: string, notnull: true, default: ''}
+        unit_group_ref: { type: integer, notnull: true, default: 0}
+        unit_group_indexed: { type: string, notnull: true, default: ''}
+        unit_variety_ref: { type: integer, notnull: true, default: 0}
+        unit_variety_indexed: { type: string, notnull: true, default: ''}
+
+Lithology:
+    columns:
+        id: { type: integer, primary: true }
+        name: { type: string, notnull: true}
+        name_indexed: { type: string}
+        description_year: { type: integer }
+        description_year_compl: { type: string(2)}
+        level_ref: { type: integer}
+        status: { type: string, notnull: true, default: valid}
+        path: { type: string, notnull: true, default: '/'}
+        parent_ref: { type: integer, notnull: true, default: 0}
+        unit_main_group_ref: { type: integer, notnull: true, default: 0}
+        unit_main_group_indexed: { type: string, notnull: true, default: ''}
+        unit_group_ref: { type: integer, notnull: true, default: 0}
+        unit_group_indexed: { type: string, notnull: true, default: ''}
+        unit_sub_group_ref: { type: integer, notnull: true, default: 0}
+        unit_sub_group_indexed: { type: string, notnull: true, default: ''}
+        unit_rock_ref: { type: integer, notnull: true, default: 0}
+        unit_rock_indexed: { type: string, notnull: true, default: ''}
+
+Habitats:
+    columns:
+        id: { type: integer, primary: true }
+        name: { type: string, notnull: true}
+        path: { type: string, notnull: true, default: '/'}
+        code: { type: string, notnull: true}
+        code_indexed: { type: string, default: '/'}
+        description: { type: string, notnull: true}
+        description_ts: { type: string}
+        description_language_full_text: { type: string}
+        habitat_system: { type: string, notnull: true, default: eunis}
+
+MultimediaKeywords:
+    columns:
+        object_ref: { type: integer, notnull: true }
+        keyword: { type: string, notnull: true}
+        keyword_indexed: { type: string }
+
+Soortenregister:
+    columns:
+        taxa_ref: { type: integer, notnull: true, default: 0}
+        gtu_ref: { type: integer, notnull: true, default: 0}
+        habitat_ref: { type: integer, notnull: true, default: 0}
+        date_from: { type: date }
+        date_to: { type: date }
+
+Specimens:
+    columns:
+        id: { type: integer, primary: true },
+        collection_ref: { type: integer, notnull: true }
+        expedition_ref: { type: integer}
+        gtu_ref: { type: integer, notnull: true, default: 0}
+        taxon_ref: { type: integer, notnull: true, default: 0}
+        litho_ref: { type: integer, notnull: true, default: 0}
+        chrono_ref: { type: integer, notnull: true, default: 0}
+        lithology_ref: { type: integer, notnull: true, default: 0}
+        mineral_ref: { type: integer, notnull: true, default: 0}
+        identification_qual: { type: string}
+        sp: { type: string}
+        identification_taxon_ref: { type: integer, notnull: true, default: 0}
+        host_taxon_ref: { type: integer, notnull: true, default: 0}
+        host_specimen_ref: { type: integer}
+        host_relationship: { type: string}
+        acquisition_category: { type: string, notnull: true, default: expedition}
+        acquisition_date_mask: { type: integer, notnull: true, default:0}
+        acquisition_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        collecting_method: { type: string}
+        collecting_tool: { type: string}
+        specimen_count_min: { type: integer, notnull: true, default: 1}
+        specimen_count_max: { type: integer, notnull: true, default: 1}
+        station_visible: { type: boolean, notnull: true, default: true}
+        multimedia_visible: { type: boolean, notnull: true, default: true}
+        category: { type: string, notnull: true, default: physical}
+
+Codes:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        code_category: { type: string, notnull: true, default: main}
+        code_prefix: { type: string}
+        code: { type: integer}
+        code_suffix: { type: string}
+        full_code_indexed: { type: string}
+        code_date: { type: timestamp}
+
+SpecimenIndividuals:
+    columns:
+        id: { type: integer, primary: true },
+        specimen_ref: { type: integer, notnull: true }
+        type: { type: string, notnull: true, default: specimen}
+        type_group: { type: string}
+        type_search: { type: string}
+        sex: { type: string, notnull: true, default: undefined}
+        stage: { type: string, notnull: true, default: undefined}
+        stat: { type: string, notnull: true, default: 'not applicable'}
+        social_status: { type: string, notnull: true, default: 'not applicable'}
+        rock_form: { type: string, notnull: true, default: 'not applicable'}
+        specimen_individuals_count_min: { type: integer, notnull: true, default:1}
+        specimen_individuals_count_max: { type: integer, notnull: true, default:1}
+
+SpecimenPartsInsurances:
+    columns:
+        specimen_part_ref: { type: integer, notnull: true }
+        insurance_year: { type: integer }
+        insurance_value: { type: integer, notnull: true }
+        insurer_ref: { type: integer}
+
+AssociatedMultimedia:
+    columns:
+        id: { type: integer, primary: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        multimedia_ref: { type: integer, notnull: true }
+
+SpecimensAccompanying:
+    columns:
+        type: { type: string, notnull: true, default: secondary}
+        specimen_ref: { type: integer, notnull: true}
+        taxon_ref: { type: integer, notnull: true, default:0}
+        mineral_ref: { type: integer, notnull: true, default:0}
+        form: { type: string}
+        quantity: { type: float}
+        unit: { type: string, notnull: true, default: '%'}
