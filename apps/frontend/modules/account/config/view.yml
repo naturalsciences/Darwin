@@ -1,0 +1,4 @@
+loginSuccess:
+  layout:  not_logged
+submitSuccess:
+  layout:  not_logged

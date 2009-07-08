@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<xliff version="1.0">
+    <file original="global" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit>
+                <source>Username</source>
+                <target>Nom d'utilisateur</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Password</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+            <trans-unit>
+                <source>Log in</source>
+                <target>S'authentifier</target>
+            </trans-unit>
+            <trans-unit>
+                <source>This application require a authentication.
+    Please Log in with your username and password.</source>
+                <target>Cette application nécessite une authentication.
+                   Merci d'entrer votre nom d'utilisateur et mot de passe</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

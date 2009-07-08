@@ -1,0 +1,4 @@
+login:
+  is_secure:  off
+submit:
+  is_secure:  off

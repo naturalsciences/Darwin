@@ -4,7 +4,7 @@ People:
         is_physical: { type: boolean, notnull: true}
         sub_type: { type: string }
         public_class: { type: enum, values: ['public','private'] },
-        formated_name: { type: string, notnull: true},
+        formated_name: { type: string},
         formated_name_indexed: { type: string}
         formated_name_ts: { type: string}
         title: { type: string, notnull: true}
@@ -16,7 +16,7 @@ People:
         gender: { type: enum, values: ['M','F'] }
         db_people_type:  { type: integer, notnull: true}
         end_date_mask:  { type: integer, notnull: true, default:0}
-        end_date: { type: date,notnull: true, default: '01/01/4713BC'}
+        end_date: { type: date, notnull: true, default: '01/01/4713BC'}
 
 CatalogueRelationships:
     columns:
@@ -204,7 +204,7 @@ Users:
         is_physical: { type: boolean, notnull: true}
         sub_type: { type: string }
         public_class: { type: enum, values: ['public','private'] },
-        formated_name: { type: string, notnull: true},
+        formated_name: { type: string},
         formated_name_indexed: { type: string}
         formated_name_ts: { type: string}
         title: { type: string, notnull: true}
@@ -212,7 +212,7 @@ Users:
         given_name: { type: string}
         additional_names: { type: string}
         birth_date_mask: { type: integer, notnull: true, default:0}
-        birth_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        birth_date: { type: date}#, notnull: true, default: '01/01/4713BC'}
         gender: { type: enum, values: ['M','F'] }
         db_user_type: { type: integer, notnull: true, default: 1}
 
@@ -359,11 +359,11 @@ UsersAddresses:
 
 UsersLoginInfos:
     columns:
-        user_ref: { type: integer, notnull: true}
+        user_ref: { type: integer, notnull: true, primary:true}
         login_type: { type: string, notnull: true, default: local}
         user_name: { type: string }
         password: { type: string }
-        system_id: { type: string }
+        system_id: { type: string, primary:true}
         last_seen: { type: timestamp }
     relations:
         Users:

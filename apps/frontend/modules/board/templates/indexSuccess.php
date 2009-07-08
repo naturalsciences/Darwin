@@ -1,0 +1,1 @@
+<?php echo link_to(__('Logout'),'account/logout');?>
