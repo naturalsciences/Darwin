@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body>
+    <?php include_partial('global/head_menu') ?>
     <?php echo $sf_content ?>
   </body>
 </html>

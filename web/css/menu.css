@@ -1,0 +1,122 @@
+
+.menu_top
+{
+	background-color: #3390A1;
+	height: 32px;
+}
+
+.menu_top .highlight
+{
+    display:none;
+}
+
+
+.sf-menu li.sfHover ul {
+	top: 32px;
+}
+.house img, .exit img
+{
+	border:0px;
+}
+
+ul.main_menu li
+{
+	display:inline;
+	width: 171px;
+	height: 32px;
+	color:white;
+	font-size:10pt; 
+/* 	font-weight:600; */
+	font-stretch: ultra-expanded;
+}
+
+ul.main_menu > li
+{
+	width: 171px;
+	border-left:1px solid white;
+}
+
+ul.main_menu > li > a[href]
+{
+	color:white;
+	text-decoration:none;
+	padding-top: 10px;
+	padding-left: 10px;
+}
+ul.main_menu > li > ul
+{
+	margin:0;padding:0;
+}
+ul.main_menu > li.house
+{
+	padding:0;
+	padding-top: 0px;
+	width: 50px;
+	text-align:center;
+	border-left:none;
+}
+
+ul.main_menu > li.house a[href]
+{
+	padding:2px;
+}
+
+
+/*** WARNING CRAP PLACEMENT :p ***/
+ul.main_menu > li.exit
+{
+	/*position:absolute;
+	right:0;*/
+	float:right;
+	padding:0;
+	width: 50px;
+	text-align:center;
+}
+ul.main_menu > li.exit a[href]
+{
+	padding-top:3px;
+}
+
+
+ul.main_menu > li > ul
+{
+	background-color:#a9d4db;
+	margin-top:3px;
+	min-width:168px;
+/* 	max-width: 300px !important; */
+}
+ul.main_menu > li > ul > li:hover
+{
+	background-color:#ebf5f5;
+}
+ul.main_menu > li > ul > li  a[href]
+{
+	color:#1f7987;
+	text-decoration:none;
+	padding-left: 10px;
+	padding-top: 8px;
+}
+
+ul.main_menu > li > ul >li > ul
+{
+	background-color:#ebf5f5;
+}
+ul.main_menu > li > ul >li > ul > li:hover
+{
+	background-color:#a9d4db;
+}
+
+ul.main_menu > li > a > .sf-sub-indicator
+{
+	display:none;
+}
+
+/** ul.main_menu > li:hover img.highlight **/
+ul.main_menu > li.sfHover img.highlight
+{
+	display:block;
+	margin-top:6px;
+	z-index: 2;
+	position:absolute;
+	left:15px;
+}
