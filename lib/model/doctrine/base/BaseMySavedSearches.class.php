@@ -8,8 +8,8 @@ abstract class BaseMySavedSearches extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('my_saved_searches');
-        $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
-        $this->hasColumn('name', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'default'));
+        $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('name', 'string', null, array('type' => 'string', 'primary' => true));
         $this->hasColumn('search_criterias', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('favorite', 'boolean', null, array('type' => 'boolean', 'notnull' => true, 'default' => false));
         $this->hasColumn('modification_date_time', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true));

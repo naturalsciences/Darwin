@@ -558,8 +558,8 @@ CollectionMaintenance:
 
 MySavedSearches:
     columns:
-        user_ref: { type: integer, notnull: true},
-        name: { type: string, notnull: true, default: default}
+        user_ref: { type: integer, notnull: true, primary: true },
+        name: { type: string, notnull: true, default: default, primary: true }
         search_criterias: { type: string, notnull: true}
         favorite: { type: boolean, notnull: true, default: false}
         modification_date_time: { type: timestamp, notnull: true }

@@ -13,3 +13,19 @@ UsersLoginInfos:
         user_ref: 1
         user_name: root
         password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
+
+MySavedSearches:
+    ss1_1:
+        user_ref: 1
+        name: All specimens encoded by me
+        search_criterias: ""
+        favorite: true
+        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
+        visible_fields_in_result: ""
+    ss1_2:
+        user_ref: 1
+        name: All Mamals
+        search_criterias: ""
+        favorite: false
+        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
+        visible_fields_in_result: ""
