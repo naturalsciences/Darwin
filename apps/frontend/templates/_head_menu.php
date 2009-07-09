@@ -34,13 +34,6 @@
             </ul>
         </li>
         <li>
-            <a href="#"><?php echo __('Loans');?></a>
-            <ul>
-                <li><a href="#">Loans waiting</a></li>
-                <li><a href="#">Loans to approve</a></li>
-            </ul>
-        </li>
-        <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
                 <li><a href="?page=encode_spec">Specimen</a></li>
