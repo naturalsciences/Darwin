@@ -8,7 +8,7 @@ abstract class BaseSpecimens extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('specimens');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('collection_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('expedition_ref', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('gtu_ref', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
@@ -25,7 +25,7 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasColumn('host_relationship', 'string', null, array('type' => 'string'));
         $this->hasColumn('acquisition_category', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'expedition'));
         $this->hasColumn('acquisition_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('acquisition_date', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('acquisition_date', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('collecting_method', 'string', null, array('type' => 'string'));
         $this->hasColumn('collecting_tool', 'string', null, array('type' => 'string'));
         $this->hasColumn('specimen_count_min', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => '1'));

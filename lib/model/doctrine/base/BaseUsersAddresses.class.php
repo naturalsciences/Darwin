@@ -8,7 +8,7 @@ abstract class BaseUsersAddresses extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('users_addresses');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('person_user_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('tag', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('organization_unit', 'string', null, array('type' => 'string'));

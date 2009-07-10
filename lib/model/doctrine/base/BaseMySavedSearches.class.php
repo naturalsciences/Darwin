@@ -18,7 +18,7 @@ abstract class BaseMySavedSearches extends sfDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('Users', array('local' => 'user_ref',
-                                     'foreign' => 'id'));
+        $this->hasOne('Users as User', array('local' => 'user_ref',
+                                             'foreign' => 'id'));
     }
 }

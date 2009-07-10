@@ -25,7 +25,7 @@ class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'given_name'            => new sfWidgetFormFilterInput(),
       'additional_names'      => new sfWidgetFormFilterInput(),
       'birth_date_mask'       => new sfWidgetFormFilterInput(),
-      'birth_date'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'birth_date'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'gender'                => new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'M', 'F' => 'F'))),
       'db_user_type'          => new sfWidgetFormFilterInput(),
     ));

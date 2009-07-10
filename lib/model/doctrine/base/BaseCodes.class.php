@@ -8,7 +8,7 @@ abstract class BaseCodes extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('codes');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('record_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('code_category', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'main'));

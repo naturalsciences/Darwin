@@ -8,7 +8,7 @@ abstract class BaseTags extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('tags');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('label', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('label_indexed', 'string', null, array('type' => 'string', 'notnull' => true));
     }

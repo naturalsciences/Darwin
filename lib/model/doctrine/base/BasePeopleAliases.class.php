@@ -8,7 +8,7 @@ abstract class BasePeopleAliases extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('people_aliases');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('record_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('person_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));

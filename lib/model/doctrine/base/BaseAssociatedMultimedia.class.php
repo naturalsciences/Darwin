@@ -8,7 +8,7 @@ abstract class BaseAssociatedMultimedia extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('associated_multimedia');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('record_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('multimedia_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));

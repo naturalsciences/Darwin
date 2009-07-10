@@ -8,7 +8,7 @@ abstract class BaseRecordVisibilities extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('record_visibilities');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('record_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('db_user_type', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));

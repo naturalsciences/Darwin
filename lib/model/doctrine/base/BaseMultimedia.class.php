@@ -8,7 +8,7 @@ abstract class BaseMultimedia extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('multimedia');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('is_digital', 'boolean', null, array('type' => 'boolean', 'notnull' => true));
         $this->hasColumn('type', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'image'));
         $this->hasColumn('sub_type', 'string', null, array('type' => 'string'));
@@ -22,11 +22,11 @@ abstract class BaseMultimedia extends sfDoctrineRecord
         $this->hasColumn('uri', 'string', null, array('type' => 'string'));
         $this->hasColumn('descriptive_ts', 'string', null, array('type' => 'string'));
         $this->hasColumn('descriptive_language_full_text', 'string', null, array('type' => 'string'));
-        $this->hasColumn('creation_date', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('creation_date', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('creation_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('publication_date_from', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('publication_date_from', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('publication_date_from_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('publication_date_to', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('publication_date_to', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('publication_date_to_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
         $this->hasColumn('parent_ref', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('path', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => '/'));

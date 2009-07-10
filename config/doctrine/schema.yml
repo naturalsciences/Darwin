@@ -1,26 +1,26 @@
 People:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, notnull: true,primary: true, autoincrement: true}
         is_physical: { type: boolean, notnull: true}
         sub_type: { type: string }
         public_class: { type: enum, values: ['public','private'] },
         formated_name: { type: string},
         formated_name_indexed: { type: string}
         formated_name_ts: { type: string}
-        title: { type: string, notnull: true}
+        title: { type: string }
         family_name: { type: string, notnull: true}
         given_name: { type: string}
         additional_names: { type: string}
         birth_date_mask: { type: integer, notnull: true, default:0}
-        birth_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        birth_date: { type: date, notnull: true, default: '0001-01-01'}
         gender: { type: enum, values: ['M','F'] }
-        db_people_type:  { type: integer, notnull: true}
+        db_people_type:  { type: integer, notnull: true, default:1}
         end_date_mask:  { type: integer, notnull: true, default:0}
-        end_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        end_date: { type: date, notnull: true, default: '0001-01-01'}
 
 CatalogueRelationships:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id_1: { type: integer, notnull: true}
         record_id_2: { type: integer, notnull: true}
@@ -29,7 +29,7 @@ CatalogueRelationships:
 
 CataloguePeople:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         people_type: {  type: string, notnull: true , default: authors }
@@ -43,7 +43,7 @@ CataloguePeople:
 
 CatalogueLevels:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         level_type: {  type: string, notnull: true}
         level_name: {  type: string, notnull: true}
         level_sys_name: {  type: string, notnull: true}
@@ -65,7 +65,7 @@ PossibleUpperLevels:
 
 Comments:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         notion_concerned: { type: string, notnull: true}
@@ -75,13 +75,13 @@ Comments:
 
 Tags:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         label: { type: string, notnull: true}
         label_indexed: { type: string, notnull: true}
 
 TagGroups:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         tag_ref:  { type: integer, notnull: true }
         group_name: {type: string, notnull: true}
         group_name_indexed: { type: string }
@@ -94,13 +94,13 @@ TagGroups:
             foreign: id
 Gtu:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         code: {type: string, notnull: true}
         parent_ref:  {type: integer, notnull: true}
         gtu_from_date_mask: { type: integer, notnull: true, default:0}
-        gtu_from_date: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        gtu_from_date: { type: timestamp, notnull: true, default: '0001-01-01'}
         gtu_to_date_mask: { type: integer, notnull: true, default:0}
-        gtu_to_date: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        gtu_to_date: { type: timestamp, notnull: true, default: '0001-01-01'}
     relations:
         Parent:
             class: Gtu
@@ -121,7 +121,7 @@ GtuTags:
 
 CatalogueProperties:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         property_type: {type: string, notnull: true}
@@ -130,9 +130,9 @@ CatalogueProperties:
         property_qualifier: {type: string}
         property_qualifier_indexed: {type: string}
         date_from_mask: { type: integer, notnull: true, default:0}
-        date_from timestamp: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        date_from timestamp: { type: timestamp, notnull: true, default: '0001-01-01'}
         date_to_mask: { type: integer, notnull: true, default:0}
-        date_to timestamp: { type: timestamp, notnull: true, default: '01/01/4713BC'}
+        date_to timestamp: { type: timestamp, notnull: true, default: '0001-01-01'}
         property_unit: {type: string, notnull: true}
         property_accuracy_unit: {type: string}
         property_method: {type: string}
@@ -142,7 +142,7 @@ CatalogueProperties:
 
 PropertiesValues:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         property_ref: { type: integer}
         property_min: {type: string, notnull: true}
         property_min_unified: {type: string}
@@ -157,7 +157,7 @@ PropertiesValues:
 
 Identifications:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         notion_concerned: { type: string, notnull: true}
@@ -170,7 +170,7 @@ Identifications:
 
 ClassVernacularNames:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         community: { type: string, notnull: true}
@@ -188,19 +188,19 @@ VernacularNames:
 
 Expeditions:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name:  { type: string, notnull: true}
         name_ts:  { type: string}
         name_indexed:  { type: string}
         name_language_full_text:  { type: string}
         expedition_from_date_mask: { type: integer, notnull: true, default:0}
-        expedition_from_date: { type: date, default: '01/01/4713BC'}
+        expedition_from_date: { type: date, default:'0001-01-01'}
         expedition_to_date_mask: { type: integer, notnull: true, default:0}
-        expedition_to_date: { type: date, default: '01/01/4713BC'}
+        expedition_to_date: { type: date, default: '0001-01-01'}
 
 Users:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true}
         is_physical: { type: boolean, notnull: true}
         sub_type: { type: string }
         public_class: { type: enum, values: ['public','private'] },
@@ -212,7 +212,7 @@ Users:
         given_name: { type: string}
         additional_names: { type: string}
         birth_date_mask: { type: integer, notnull: true, default:0}
-        birth_date: { type: date}#, notnull: true, default: '01/01/4713BC'}
+        birth_date: { type: date, notnull: true, default: '0001-01-01'}
         gender: { type: enum, values: ['M','F'] }
         db_user_type: { type: integer, notnull: true, default: 1}
 
@@ -240,7 +240,7 @@ UsersLanguages:
 
 Multimedia:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         is_digital: { type: boolean, notnull: true }
         type: { type: string, notnull: true, default: image }
         sub_type: { type: string }
@@ -254,11 +254,11 @@ Multimedia:
         uri: { type: string }
         descriptive_ts: { type: string }
         descriptive_language_full_text: { type: string }
-        creation_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        creation_date: { type: date, notnull: true, default: '0001-01-01'}
         creation_date_mask: { type: integer, notnull: true, default:0}
-        publication_date_from: { type: date, notnull: true, default: '01/01/4713BC'}
+        publication_date_from: { type: date, notnull: true, default: '0001-01-01'}
         publication_date_from_mask: { type: integer, notnull: true, default:0}
-        publication_date_to: { type: date, notnull: true, default: '01/01/4713BC'}
+        publication_date_to: { type: date, notnull: true, default: '0001-01-01'}
         publication_date_to_mask: { type: integer, notnull: true, default:0}
         parent_ref: { type: integer }
         path: { type: string, notnull: true, default: '/' }
@@ -291,7 +291,7 @@ PeopleRelationships:
 
 PeopleComm:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         comm_type: { type: string, notnull: true, default: 'phone/fax' }
         tag: { type: string, notnull: true}
@@ -305,7 +305,7 @@ PeopleComm:
 
 PeopleAddresses:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         tag: { type: string, notnull: true}
         organization_unit: { type: string }
@@ -325,7 +325,7 @@ PeopleAddresses:
 
 UsersComm:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         comm_type: { type: string, notnull: true, default: 'phone/fax' }
         tag: { type: string, notnull: true}
@@ -339,7 +339,7 @@ UsersComm:
 
 UsersAddresses:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         tag: { type: string, notnull: true}
         organization_unit: { type: string }
@@ -366,7 +366,8 @@ UsersLoginInfos:
         system_id: { type: string, primary:true}
         last_seen: { type: timestamp }
     relations:
-        Users:
+        User:
+            class: Users
             local: user_ref
             foreign: id
 
@@ -398,7 +399,7 @@ UsersMultimedia:
 
 Collections:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true}
         collection_type: { type: string, notnull: true, default: mix}
         code: { type: string, notnull: true}
         name: { type: string, notnull: true}
@@ -414,7 +415,7 @@ Collections:
             local: institution_ref
             foreign: id
         Manager:
-            class: People
+            class: Users
             local: main_manager_ref
             foreign: id
         Parent:
@@ -484,7 +485,7 @@ UsersCollRightsAsked:
 
 RecordVisibilities:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         db_user_type: { type: integer, notnull: true, default:0 }
@@ -497,7 +498,7 @@ RecordVisibilities:
 
 UsersWorkflow:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         user_ref: { type: integer, notnull: true}
@@ -521,7 +522,7 @@ UsersTablesFieldsTracked:
 
 UsersTracking:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true},
         user_ref: { type: integer, notnull: true}
@@ -542,7 +543,7 @@ UsersTrackingRecords:
 
 CollectionMaintenance:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         user_ref: { type: integer, notnull: true},
         category: { type: string, notnull: true, default: action}
@@ -565,7 +566,8 @@ MySavedSearches:
         modification_date_time: { type: timestamp, notnull: true }
         visible_fields_in_result: { type: string, notnull: true}
     relations:
-        Users:
+        User:
+            class: Users
             local: user_ref
             foreign: id
 
@@ -603,7 +605,7 @@ MySavedSpecimens:
             foreign: id
 Taxonomy:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
         description_year: { type: integer }
@@ -730,7 +732,7 @@ Taxonomy:
 
 PeopleAliases:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         person_ref: { type: integer, notnull: true }
@@ -746,7 +748,7 @@ PeopleAliases:
 
 Chronostratigraphy:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
         description_year: { type: integer }
@@ -783,7 +785,7 @@ Chronostratigraphy:
 
 Lithostratigraphy:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
         description_year: { type: integer }
@@ -812,7 +814,7 @@ Lithostratigraphy:
 
 Mineralogy:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
         description_year: { type: integer }
@@ -844,7 +846,7 @@ Mineralogy:
 
 Lithology:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
         description_year: { type: integer }
@@ -869,7 +871,7 @@ Lithology:
 
 Habitats:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         path: { type: string, notnull: true, default: '/'}
         code: { type: string, notnull: true}
@@ -909,7 +911,7 @@ Soortenregister:
 
 Specimens:
     columns:
-        id: { type: integer, primary: true },
+        id: { type: integer, primary: true, autoincrement: true },
         collection_ref: { type: integer, notnull: true }
         expedition_ref: { type: integer}
         gtu_ref: { type: integer, notnull: true, default: 0}
@@ -926,7 +928,7 @@ Specimens:
         host_relationship: { type: string}
         acquisition_category: { type: string, notnull: true, default: expedition}
         acquisition_date_mask: { type: integer, notnull: true, default:0}
-        acquisition_date: { type: date, notnull: true, default: '01/01/4713BC'}
+        acquisition_date: { type: date, notnull: true, default: '0001-01-01'}
         collecting_method: { type: string}
         collecting_tool: { type: string}
         specimen_count_min: { type: integer, notnull: true, default: 1}
@@ -971,7 +973,7 @@ Specimens:
 
 Codes:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         code_category: { type: string, notnull: true, default: main}
@@ -983,7 +985,7 @@ Codes:
 
 SpecimenIndividuals:
     columns:
-        id: { type: integer, primary: true },
+        id: { type: integer, primary: true, autoincrement: true },
         specimen_ref: { type: integer, notnull: true }
         type: { type: string, notnull: true, default: specimen}
         type_group: { type: string}
@@ -1002,7 +1004,7 @@ SpecimenIndividuals:
 
 SpecimenParts:
     columns:
-        id: { type: integer, primary: true },
+        id: { type: integer, primary: true, autoincrement: true },
         specimen_individual_ref: { type: integer, notnull: true }
         specimen_part: { type: string, notnull: true, default: specimen}
         complete: { type: boolean, notnull: true, default: true}
@@ -1035,7 +1037,7 @@ SpecimenPartsInsurances:
 
 AssociatedMultimedia:
     columns:
-        id: { type: integer, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         multimedia_ref: { type: integer, notnull: true }

@@ -8,7 +8,7 @@ abstract class BaseUsers extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('users');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('is_physical', 'boolean', null, array('type' => 'boolean', 'notnull' => true));
         $this->hasColumn('sub_type', 'string', null, array('type' => 'string'));
         $this->hasColumn('public_class', 'enum', null, array('type' => 'enum', 'values' => array(0 => 'public', 1 => 'private')));
@@ -20,7 +20,7 @@ abstract class BaseUsers extends sfDoctrineRecord
         $this->hasColumn('given_name', 'string', null, array('type' => 'string'));
         $this->hasColumn('additional_names', 'string', null, array('type' => 'string'));
         $this->hasColumn('birth_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('birth_date', 'date', null, array('type' => 'date'));
+        $this->hasColumn('birth_date', 'date', null, array('type' => 'date', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('gender', 'enum', null, array('type' => 'enum', 'values' => array(0 => 'M', 1 => 'F')));
         $this->hasColumn('db_user_type', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => '1'));
     }
@@ -41,6 +41,9 @@ abstract class BaseUsers extends sfDoctrineRecord
 
         $this->hasMany('UsersMultimedia', array('local' => 'id',
                                                 'foreign' => 'person_user_ref'));
+
+        $this->hasMany('Collections', array('local' => 'id',
+                                            'foreign' => 'main_manager_ref'));
 
         $this->hasMany('CollectionsAdmin', array('local' => 'id',
                                                  'foreign' => 'user_ref'));

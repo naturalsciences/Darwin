@@ -8,7 +8,7 @@ abstract class BasePeopleComm extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('people_comm');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('person_user_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('comm_type', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'phone/fax'));
         $this->hasColumn('tag', 'string', null, array('type' => 'string', 'notnull' => true));

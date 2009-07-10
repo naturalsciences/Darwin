@@ -8,7 +8,7 @@ abstract class BaseLithology extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('lithology');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('name_indexed', 'string', null, array('type' => 'string'));
         $this->hasColumn('description_year', 'integer', null, array('type' => 'integer'));

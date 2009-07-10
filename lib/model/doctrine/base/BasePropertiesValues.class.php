@@ -8,7 +8,7 @@ abstract class BasePropertiesValues extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('properties_values');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('property_ref', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('property_min', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('property_min_unified', 'string', null, array('type' => 'string'));

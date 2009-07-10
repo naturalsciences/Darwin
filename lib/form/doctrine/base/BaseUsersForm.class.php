@@ -42,7 +42,7 @@ class BaseUsersForm extends BaseFormDoctrine
       'given_name'            => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
       'additional_names'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
       'birth_date_mask'       => new sfValidatorInteger(),
-      'birth_date'            => new sfValidatorDate(array('required' => false)),
+      'birth_date'            => new sfValidatorDate(),
       'gender'                => new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false)),
       'db_user_type'          => new sfValidatorInteger(),
     ));

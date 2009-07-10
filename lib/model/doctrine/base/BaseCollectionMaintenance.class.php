@@ -8,7 +8,7 @@ abstract class BaseCollectionMaintenance extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('collection_maintenance');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('category', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'action'));

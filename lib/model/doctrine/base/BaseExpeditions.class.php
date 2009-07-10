@@ -8,15 +8,15 @@ abstract class BaseExpeditions extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('expeditions');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('name_ts', 'string', null, array('type' => 'string'));
         $this->hasColumn('name_indexed', 'string', null, array('type' => 'string'));
         $this->hasColumn('name_language_full_text', 'string', null, array('type' => 'string'));
         $this->hasColumn('expedition_from_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('expedition_from_date', 'date', null, array('type' => 'date', 'default' => '01/01/4713BC'));
+        $this->hasColumn('expedition_from_date', 'date', null, array('type' => 'date', 'default' => '0001-01-01'));
         $this->hasColumn('expedition_to_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('expedition_to_date', 'date', null, array('type' => 'date', 'default' => '01/01/4713BC'));
+        $this->hasColumn('expedition_to_date', 'date', null, array('type' => 'date', 'default' => '0001-01-01'));
     }
 
     public function setUp()

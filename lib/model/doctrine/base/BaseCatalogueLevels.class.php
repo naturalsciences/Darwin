@@ -8,7 +8,7 @@ abstract class BaseCatalogueLevels extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('catalogue_levels');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('level_type', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('level_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('level_sys_name', 'string', null, array('type' => 'string', 'notnull' => true));

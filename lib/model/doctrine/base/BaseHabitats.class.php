@@ -8,7 +8,7 @@ abstract class BaseHabitats extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('habitats');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('path', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => '/'));
         $this->hasColumn('code', 'string', null, array('type' => 'string', 'notnull' => true));

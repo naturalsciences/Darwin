@@ -8,7 +8,7 @@ abstract class BaseCataloguePeople extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('catalogue_people');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('record_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('people_type', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'authors'));

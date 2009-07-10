@@ -8,7 +8,7 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('catalogue_properties');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('table_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('record_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('property_type', 'string', null, array('type' => 'string', 'notnull' => true));
@@ -17,9 +17,9 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
         $this->hasColumn('property_qualifier', 'string', null, array('type' => 'string'));
         $this->hasColumn('property_qualifier_indexed', 'string', null, array('type' => 'string'));
         $this->hasColumn('date_from_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('date_from timestamp', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('date_from timestamp', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('date_to_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('date_to timestamp', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('date_to timestamp', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('property_unit', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('property_accuracy_unit', 'string', null, array('type' => 'string'));
         $this->hasColumn('property_method', 'string', null, array('type' => 'string'));

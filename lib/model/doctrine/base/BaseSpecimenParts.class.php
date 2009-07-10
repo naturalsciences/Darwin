@@ -8,7 +8,7 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('specimen_parts');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('specimen_individual_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('specimen_part', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'specimen'));
         $this->hasColumn('complete', 'boolean', null, array('type' => 'boolean', 'notnull' => true, 'default' => true));

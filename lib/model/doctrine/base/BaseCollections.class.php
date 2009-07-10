@@ -8,7 +8,7 @@ abstract class BaseCollections extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('collections');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('collection_type', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'mix'));
         $this->hasColumn('code', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('name', 'string', null, array('type' => 'string', 'notnull' => true));
@@ -25,8 +25,8 @@ abstract class BaseCollections extends sfDoctrineRecord
         $this->hasOne('People as Institution', array('local' => 'institution_ref',
                                                      'foreign' => 'id'));
 
-        $this->hasOne('People as Manager', array('local' => 'main_manager_ref',
-                                                 'foreign' => 'id'));
+        $this->hasOne('Users as Manager', array('local' => 'main_manager_ref',
+                                                'foreign' => 'id'));
 
         $this->hasOne('Collections as Parent', array('local' => 'parent_ref',
                                                      'foreign' => 'id'));

@@ -39,7 +39,7 @@ class BasePeopleForm extends BaseFormDoctrine
       'formated_name'         => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
       'formated_name_indexed' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
       'formated_name_ts'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'title'                 => new sfValidatorString(array('max_length' => 2147483647)),
+      'title'                 => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
       'family_name'           => new sfValidatorString(array('max_length' => 2147483647)),
       'given_name'            => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
       'additional_names'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),

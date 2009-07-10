@@ -8,7 +8,7 @@ abstract class BaseTagGroups extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('tag_groups');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('tag_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('group_name', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('group_name_indexed', 'string', null, array('type' => 'string'));

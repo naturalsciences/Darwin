@@ -8,13 +8,13 @@ abstract class BaseGtu extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('gtu');
-        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('id', 'integer', null, array('type' => 'integer', 'primary' => true, 'autoincrement' => true));
         $this->hasColumn('code', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('parent_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('gtu_from_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('gtu_from_date', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('gtu_from_date', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '0001-01-01'));
         $this->hasColumn('gtu_to_date_mask', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => 0));
-        $this->hasColumn('gtu_to_date', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '01/01/4713BC'));
+        $this->hasColumn('gtu_to_date', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true, 'default' => '0001-01-01'));
     }
 
     public function setUp()
