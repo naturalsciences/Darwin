@@ -585,7 +585,8 @@ MyPreferences:
         icon_ref: { type: integer}
         title_perso: { type: string}
     relations:
-        Users:
+        User:
+            class: Users
             local: user_ref
             foreign: id
         Multimedia:
@@ -594,13 +595,14 @@ MyPreferences:
 
 MySavedSpecimens:
     columns:
-        user_ref: { type: integer, notnull: true},
-        name: { type: string, notnull: true}
+        user_ref: { type: integer, notnull: true, primary: true }
+        name: { type: string, notnull: true, primary: true}
         specimen_ids: { type: string, notnull: true}
         favorite: { type: boolean, notnull: true, default: false}
         modification_date_time: { type: timestamp, notnull: true }
     relations:
-        Users:
+        User:
+            class: Users
             local: user_ref
             foreign: id
 Taxonomy:

@@ -47,3 +47,17 @@ Specimens:
         Collections: c1
         specimen_count_min: 1
         acquisition_date: '0001-01-01'
+
+MySavedSpecimens:
+    ssp1:
+        User: u1
+        name: Spec just corrected
+        specimen_ids: ""
+        favorite: false
+        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
+    ssp2:
+        User: u1
+        name: Some Awesome bugs
+        specimen_ids: ""
+        favorite: true
+        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"

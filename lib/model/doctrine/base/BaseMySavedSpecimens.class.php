@@ -8,8 +8,8 @@ abstract class BaseMySavedSpecimens extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('my_saved_specimens');
-        $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
-        $this->hasColumn('name', 'string', null, array('type' => 'string', 'notnull' => true));
+        $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('name', 'string', null, array('type' => 'string', 'primary' => true));
         $this->hasColumn('specimen_ids', 'string', null, array('type' => 'string', 'notnull' => true));
         $this->hasColumn('favorite', 'boolean', null, array('type' => 'boolean', 'notnull' => true, 'default' => false));
         $this->hasColumn('modification_date_time', 'timestamp', null, array('type' => 'timestamp', 'notnull' => true));
@@ -17,7 +17,7 @@ abstract class BaseMySavedSpecimens extends sfDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('Users', array('local' => 'user_ref',
-                                     'foreign' => 'id'));
+        $this->hasOne('Users as User', array('local' => 'user_ref',
+                                             'foreign' => 'id'));
     }
 }

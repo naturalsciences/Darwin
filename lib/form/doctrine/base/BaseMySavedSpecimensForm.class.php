@@ -12,18 +12,16 @@ class BaseMySavedSpecimensForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                     => new sfWidgetFormInputHidden(),
-      'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
-      'name'                   => new sfWidgetFormTextarea(),
+      'user_ref'               => new sfWidgetFormInputHidden(),
+      'name'                   => new sfWidgetFormInputHidden(),
       'specimen_ids'           => new sfWidgetFormTextarea(),
       'favorite'               => new sfWidgetFormInputCheckbox(),
       'modification_date_time' => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'id'                     => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'id', 'required' => false)),
-      'user_ref'               => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'name'                   => new sfValidatorString(array('max_length' => 2147483647)),
+      'user_ref'               => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'user_ref', 'required' => false)),
+      'name'                   => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'name', 'required' => false)),
       'specimen_ids'           => new sfValidatorString(array('max_length' => 2147483647)),
       'favorite'               => new sfValidatorBoolean(),
       'modification_date_time' => new sfValidatorDateTime(),
