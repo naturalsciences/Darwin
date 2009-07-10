@@ -12,6 +12,6 @@ class boardwidgetComponents extends sfComponents
 {
   public function executeSavedSearch()
   {
-    $this->searches = Doctrine::getTable('MySavedSearches')->findByUsers(1);
+    $this->searches = Doctrine::getTable('MySavedSearches')->findByUser($this->getUser()->getAttribute('db_user')->getId());
   }
 }

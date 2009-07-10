@@ -24,6 +24,7 @@ class accountActions extends sfActions
       if ($this->form->isValid())
       {
         sfContext::getInstance()->getLogger()->debug($this->form->getValue('username'));
+        $this->getUser()->setAttribute('db_user',$this->form->user);
         $this->getUser()->setAuthenticated(true);
         $this->redirect('board/index');
       }
