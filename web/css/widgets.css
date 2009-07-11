@@ -190,6 +190,6 @@ ul.saved_search_widget span
 	color:white;
 	text-align:center;
 	font-weight:bold;
-	background-image:url(img/widget_button.png);
+	background-image:url(/images/widget_button.png);
 	float:right;
 }

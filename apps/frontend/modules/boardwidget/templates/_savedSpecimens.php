@@ -1,4 +1,4 @@
-<?php slot('widget_title', 'aaaah');// __('My Saved Specimens'));  ?>
+<?php slot('widget_title',__('My Saved Specimens'));  ?>
 <ul class="saved_search_widget">
 <?php foreach($specimens as $specimens):?>
     <li>

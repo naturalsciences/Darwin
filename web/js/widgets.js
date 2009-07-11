@@ -40,7 +40,7 @@ jQuery(function(){
     
     $('.widget_collection_container a').click(function(){
         title = $(this).find('.widget_prev_title').text();
-        $.get("widget_part.html", function(msg){
+        $.get(this.href, function(msg){
             $('.board_col:first').append(msg);
             $('.board_col:first li:last .widget_title').text(title);
         });

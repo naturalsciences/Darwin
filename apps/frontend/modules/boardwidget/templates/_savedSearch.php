@@ -1,3 +1,4 @@
+<?php slot('widget_title',__('My Saved Searches'));  ?>
 <ul class="saved_search_widget">
 <?php foreach($searches as $search):?>
     <li>

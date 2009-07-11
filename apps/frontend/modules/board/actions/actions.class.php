@@ -18,4 +18,10 @@ class boardActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
   }
+
+  public function executeAddWidget(sfWebRequest $request)
+  {
+    $this->forward404unless($request->getParameter('widget',false));
+    return $this->renderPartial('boardwidget/wlayout',array('widget' => $request->getParameter('widget')));
+  }
 }
