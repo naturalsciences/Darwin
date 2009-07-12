@@ -1,5 +1,5 @@
 <?php $widget_content = get_component('boardwidget',$widget); ?>
-<li class="widget">
+<li class="widget" id="<?php echo $widget;?>">
     <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
         <?php echo image_tag('widget_box_expand_button.png', 'alt=Close');?><?php echo image_tag('widget_close.png', 'alt=Collapse');?>
     </div>

@@ -9,6 +9,7 @@ jQuery(function(){
         el.slideDown();
         $(this).parent().slideUp();
         $(this).parent().parent().find('.widget_bottom_button').slideDown();
+	$.post('/frontend_dev.php/board/changeStatus/widget/'+$(this).parent().parent().attr('id')+'/status/open' );
         return false;
     });
     
@@ -17,6 +18,7 @@ jQuery(function(){
         el.slideUp();
         $(this).parent().slideUp();
         $(this).parent().parent().find('.widget_top_button').slideDown();
+	$.post('/frontend_dev.php/board/changeStatus/widget/'+$(this).parent().parent().attr('id')+'/status/close' );
         return false;
     });
     

@@ -13,4 +13,15 @@ class MyPreferencesTable extends Doctrine_Table
 	    ->orderBy('p.col_num ASC, p.order_by ASC');
     return $q->execute();
   }
+  
+  public function changeWidgetStatus($category,$widget,$status)
+  {
+    $q = Doctrine_Query::create()
+	->update('MyPreferences p')
+	->set('p.opened', $status=="open" ? 'true' : 'false' )
+	->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
+	->andWhere('p.category = ?', $category)
+	->andWhere('p.group_name = ?',$widget);
+    return $q->execute();
+  }
 }

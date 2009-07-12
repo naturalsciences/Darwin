@@ -10,7 +10,9 @@
 	      <div class="board_spacer">&nbsp;</div>
 	      <ul class="board_col">
       <?php endif;?>
-	  <?php include_partial('boardwidget/wlayout',array('widget' => $widget->getGroupName(),'is_opened' => $widget->getOpened())) ?>
+	  <?php include_partial('boardwidget/wlayout',
+	      array('widget' => $widget->getGroupName(), 'is_opened' => $widget->getOpened())
+	  ); ?>
     <?php endforeach;?>
   </ul>
 </div>

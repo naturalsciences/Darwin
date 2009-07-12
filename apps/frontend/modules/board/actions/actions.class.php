@@ -25,4 +25,11 @@ class boardActions extends sfActions
     $this->forward404unless($request->getParameter('widget',false));
     return $this->renderPartial('boardwidget/wlayout',array('widget' => $request->getParameter('widget')));
   }
+
+  public function executeChangeStatus(sfWebRequest $request)
+  {
+    Doctrine::getTable('MyPreferences')
+      ->changeWidgetStatus('board_widget', $request->getParameter('widget'), $request->getParameter('status'));
+    return $this->renderText("ok");
+  }
 }
