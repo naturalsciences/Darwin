@@ -61,3 +61,19 @@ MySavedSpecimens:
         specimen_ids: ""
         favorite: true
         modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
+
+MyPreferences:
+    u1w1:
+        User: u1
+        col_num: 1
+        category: board_widget
+        group_name: savedSpecimens
+        order_by: 1
+        opened: false
+    u1w2:
+        User: u1
+        col_num: 1
+        category: board_widget
+        group_name: savedSearch
+        order_by: 1
+        opened: false

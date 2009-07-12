@@ -4,5 +4,13 @@
  */
 class MyPreferencesTable extends Doctrine_Table
 {
-
+  public function getBoardWidgets()
+  {
+    $q = Doctrine_Query::create()
+            ->from('MyPreferences p')
+	    ->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
+	    ->andWhere('p.category = ?', 'board_widget')
+	    ->orderBy('p.col_num ASC, p.order_by ASC');
+    return $q->execute();
+  }
 }

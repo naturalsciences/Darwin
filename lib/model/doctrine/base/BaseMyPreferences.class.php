@@ -8,9 +8,9 @@ abstract class BaseMyPreferences extends sfDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('my_preferences');
-        $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'notnull' => true));
-        $this->hasColumn('category', 'string', null, array('type' => 'string', 'notnull' => true, 'default' => 'board_widget'));
-        $this->hasColumn('group_name', 'string', null, array('type' => 'string', 'notnull' => true));
+        $this->hasColumn('user_ref', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('category', 'string', null, array('type' => 'string', 'primary' => true));
+        $this->hasColumn('group_name', 'string', null, array('type' => 'string', 'primary' => true));
         $this->hasColumn('order_by', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => '1'));
         $this->hasColumn('col_num', 'integer', null, array('type' => 'integer', 'notnull' => true, 'default' => '1'));
         $this->hasColumn('mandatory', 'boolean', null, array('type' => 'boolean', 'notnull' => true, 'default' => false));

@@ -12,10 +12,9 @@ class BaseMyPreferencesForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'          => new sfWidgetFormInputHidden(),
-      'user_ref'    => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
-      'category'    => new sfWidgetFormTextarea(),
-      'group_name'  => new sfWidgetFormTextarea(),
+      'user_ref'    => new sfWidgetFormInputHidden(),
+      'category'    => new sfWidgetFormInputHidden(),
+      'group_name'  => new sfWidgetFormInputHidden(),
       'order_by'    => new sfWidgetFormInput(),
       'col_num'     => new sfWidgetFormInput(),
       'mandatory'   => new sfWidgetFormInputCheckbox(),
@@ -27,10 +26,9 @@ class BaseMyPreferencesForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'          => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'id', 'required' => false)),
-      'user_ref'    => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'category'    => new sfValidatorString(array('max_length' => 2147483647)),
-      'group_name'  => new sfValidatorString(array('max_length' => 2147483647)),
+      'user_ref'    => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'user_ref', 'required' => false)),
+      'category'    => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'category', 'required' => false)),
+      'group_name'  => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'group_name', 'required' => false)),
       'order_by'    => new sfValidatorInteger(),
       'col_num'     => new sfValidatorInteger(),
       'mandatory'   => new sfValidatorBoolean(),

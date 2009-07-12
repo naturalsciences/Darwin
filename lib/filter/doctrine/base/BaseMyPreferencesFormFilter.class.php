@@ -14,9 +14,6 @@ class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'user_ref'    => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
-      'category'    => new sfWidgetFormFilterInput(),
-      'group_name'  => new sfWidgetFormFilterInput(),
       'order_by'    => new sfWidgetFormFilterInput(),
       'col_num'     => new sfWidgetFormFilterInput(),
       'mandatory'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
@@ -28,9 +25,6 @@ class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
-      'category'    => new sfValidatorPass(array('required' => false)),
-      'group_name'  => new sfValidatorPass(array('required' => false)),
       'order_by'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'col_num'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'mandatory'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
@@ -56,8 +50,7 @@ class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'          => 'Number',
-      'user_ref'    => 'ForeignKey',
+      'user_ref'    => 'Number',
       'category'    => 'Text',
       'group_name'  => 'Text',
       'order_by'    => 'Number',

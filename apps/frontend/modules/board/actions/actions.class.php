@@ -17,6 +17,7 @@ class boardActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+     $this->widgets = Doctrine::getTable('MyPreferences')->getBoardWidgets();
   }
 
   public function executeAddWidget(sfWebRequest $request)
