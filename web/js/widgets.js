@@ -22,8 +22,13 @@ jQuery(function(){
         return false;
     });
     
-    $(".board_col").sortable({"connectWith": ['.board_col'],"handle": '.widget_top_bar'});
-    
+    $(".board_col").sortable({"connectWith": ['.board_col'],"handle": '.widget_top_bar', "update": updatePositions});
+
+    function updatePositions()
+    {
+      col_1 = $(".board_col:first").sortable('toArray');
+      col_2 = $(".board_col:last").sortable('toArray');
+    }
     
     
     $('.widget_collection_button a').click(function(){
