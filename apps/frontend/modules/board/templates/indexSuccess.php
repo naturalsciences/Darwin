@@ -14,5 +14,10 @@
 	      array('widget' => $widget->getGroupName(), 'is_opened' => $widget->getOpened())
 	  ); ?>
     <?php endforeach;?>
+    <?php if($changed_col==false):?>
+      </ul>
+      <div class="board_spacer">&nbsp;</div>
+      <ul class="board_col">
+      <?php endif;?>
   </ul>
 </div>
