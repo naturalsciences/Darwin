@@ -76,4 +76,4 @@ MyPreferences:
         category: board_widget
         group_name: savedSearch
         order_by: 1
-        opened: false
+        opened: true
