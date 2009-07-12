@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2009-07-09T16:15:21Z" product-name="messages">
+  <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2009-07-11T00:10:28Z" product-name="messages">
     <header/>
     <body>
       <trans-unit>
@@ -59,8 +59,16 @@
         <target>Tableau de Bord</target>
       </trans-unit>
       <trans-unit id="1">
-        <source>My Saved Search</source>
+        <source>My Saved Searches</source>
         <target>Mes Recherches Sauvegardées</target>
+      </trans-unit>
+      <trans-unit id="1">
+        <source>My Saved Specimens</source>
+        <target>Mes Spécimens Sauvegardé</target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>Customise your interface !</source>
+        <target>Personnalisez votre interface !</target>
       </trans-unit>
     </body>
   </file>
