@@ -23,7 +23,7 @@ class boardActions extends sfActions
   public function executeAddWidget(sfWebRequest $request)
   {
     $this->forward404unless($request->getParameter('widget',false));
-    return $this->renderPartial('boardwidget/wlayout',array('widget' => $request->getParameter('widget')));
+    return $this->renderPartial('boardwidget/wlayout',array('widget' => $request->getParameter('widget'), 'is_opened' => true));
   }
 
   public function executeChangeStatus(sfWebRequest $request)
@@ -31,5 +31,14 @@ class boardActions extends sfActions
     Doctrine::getTable('MyPreferences')
       ->changeWidgetStatus('board_widget', $request->getParameter('widget'), $request->getParameter('status'));
     return $this->renderText("ok");
+  }
+
+  public function executeChangeOrder(sfWebRequest $request)
+  {
+    $col1 = explode(',', $request->getParameter('col1'));
+    $col2 = explode(',', $request->getParameter('col2'));
+    Doctrine::getTable('MyPreferences')
+        ->changeOrder($col1, $col2);
+    return $this->renderText(var_export($col1,true).var_export($col2,true));
   }
 }

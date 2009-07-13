@@ -1,4 +1,9 @@
 <?php slot('title', __('Dashboard'));  ?>
+<?php use_helper('Javascript') ?>
+<?php echo javascript_tag("
+var chgstatus_url='".url_for('board/changeStatus')."';
+var chgorder_url='".url_for('board/changeOrder')."';
+");?>
 <?php include_partial('boardwidget/list') ?>
 <div class="board">
   <ul class="board_col">

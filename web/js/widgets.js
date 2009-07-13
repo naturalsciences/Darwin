@@ -9,7 +9,7 @@ jQuery(function(){
         el.slideDown();
         $(this).parent().slideUp();
         $(this).parent().parent().find('.widget_bottom_button').slideDown();
-	$.post('/frontend_dev.php/board/changeStatus/widget/'+$(this).parent().parent().attr('id')+'/status/open' );
+        $.post(chgstatus_url+'/widget/'+$(this).parent().parent().attr('id')+'/status/open' );
         return false;
     });
     
@@ -18,19 +18,28 @@ jQuery(function(){
         el.slideUp();
         $(this).parent().slideUp();
         $(this).parent().parent().find('.widget_top_button').slideDown();
-	$.post('/frontend_dev.php/board/changeStatus/widget/'+$(this).parent().parent().attr('id')+'/status/close' );
+        $.post(chgstatus_url+'/widget/'+$(this).parent().parent().attr('id')+'/status/close' );
         return false;
     });
     
     $(".board_col").sortable({"connectWith": ['.board_col'],"handle": '.widget_top_bar', "update": updatePositions});
 
+    var notified_col1 = "";
+    var notified_col2 = "";
     function updatePositions()
     {
-      col_1 = $(".board_col:first").sortable('toArray');
-      col_2 = $(".board_col:last").sortable('toArray');
+      col_1 = String($(".board_col:first").sortable('toArray'));
+      col_2 = String($(".board_col:last").sortable('toArray'));
+      if(notified_col1 != col_1 || notified_col2 != col_2)
+      {
+//         console.log(notified_col1+'-----'+col_1);
+//         console.log(notified_col2+'-----'+col_2);
+        $.post(chgorder_url, { "col1": col_1, "col2": col_2 } );
+        notified_col1 = col_1;
+        notified_col2 = col_2;
+      }
     }
-    
-    
+
     $('.widget_collection_button a').click(function(){
         if($('.widget_collection_container').is(":hidden"))
         {

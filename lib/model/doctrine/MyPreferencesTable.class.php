@@ -24,4 +24,58 @@ class MyPreferencesTable extends Doctrine_Table
 	->andWhere('p.group_name = ?',$widget);
     return $q->execute();
   }
+  
+  public static function cleanElemArray($elem)
+  {
+    $n_array= array();
+    foreach($elem as $e)
+    {
+        if(preg_match('/^[A-Za-z0-9\_\-]+$/', $e))
+            $n_array[] = $e;
+    }
+    return $n_array;
+  }
+  public function changeOrder($col1, $col2)
+  {
+    $col1 = self::cleanElemArray($col1);
+    if(! empty($col1))
+    {
+        $sql = "update my_preferences SET
+        col_num = 1,
+        order_by = ( select fct_array_find('".implode(',',$col1)."',group_name::text) )
+        WHERE user_ref = ".sfContext::getInstance()->getUser()->getAttribute('db_user')->getId()."
+        AND category = 'board_widget'
+        AND group_name in ('".implode("','",$col1)."');";
+        
+        $res = $this->getConnection()->getDbh()->query($sql);
+    }
+
+    if(! empty($col2))
+    {
+        $sql = "update my_preferences SET
+        col_num = 2,
+        order_by = ( select fct_array_find('".implode(',',$col2)."',group_name::text) )
+        WHERE user_ref = ".sfContext::getInstance()->getUser()->getAttribute('db_user')->getId()."
+        AND category = 'board_widget'
+        AND group_name in ('".implode("','",$col2)."');";
+        
+        $res = $this->getConnection()->getDbh()->query($sql);
+    }
+    /*$q = Doctrine_Query::create()
+	->update('MyPreferences p')
+	->set('p.col_num','?',1)
+	->set('p.order_by',"( select fct_array_find(p.group_name,'savedSpecimens,savedSearch') ) ")//,implode(',',$col1))
+	->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
+	->andWhere('p.category = ?', "board_widget") //@TODO: could be change later
+	->andWhereIn('p.group_name',$col1)
+    ->execute();
+
+  $q = Doctrine_Query::create()
+	->update('MyPreferences p')
+	->set('p.col_num','?',2)
+	->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
+	->andWhere('p.category = ?', "board_widget") //@TODO: could be change later
+	->andWhereIn('p.group_name',$col2)
+    ->execute();*/
+  }
 }
