@@ -21,4 +21,11 @@ class boardwidgetComponents extends sfComponents
     $this->specimens = Doctrine::getTable('MySavedSpecimens')
       ->findByUser($this->getUser()->getAttribute('db_user')->getId());
   }
+  
+  public function executeAddTaxon()
+  {}
+
+  public function executeAddSpecimen()
+  {}
+  
 }

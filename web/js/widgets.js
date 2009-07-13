@@ -1,8 +1,4 @@
 jQuery(function(){
-    $('.widget_close').live('click',function(){
-        $(this).parent().parent().parent().fadeOut();
-        return false;
-    });
     
     $('.widget_top_button img').live('click',function(){
         el = $(this).parent().parent().find('.widget_content');
@@ -53,14 +49,21 @@ jQuery(function(){
         }
         return false;
     });
-    
+
     $('.widget_collection_container a').click(function(){
         title = $(this).find('.widget_prev_title').text();
         $.get(this.href, function(msg){
             $('.board_col:first').append(msg);
-            $('.board_col:first li:last .widget_title').text(title);
         });
         $(this).parent().fadeOut();
+        return false;
+    });
+
+    $('.widget_close').live('click',function(){
+        widget = $(this).parent().parent().parent();
+        $.post(chgstatus_url+'/widget/'+widget.attr('id')+'/status/hidden' );
+        $('#boardprev_'+widget.attr('id')).fadeIn();
+        widget.remove();
         return false;
     });
     

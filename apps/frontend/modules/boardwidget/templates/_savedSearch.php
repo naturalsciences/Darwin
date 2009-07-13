@@ -17,6 +17,5 @@
 <br />
 <div class="actions">
     <div class="action_button">More</div>
-        <div style="clear:right"></div>
-    </div>
+    <div style="clear:right"></div>
 </div>

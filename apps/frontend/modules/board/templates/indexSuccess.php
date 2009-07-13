@@ -4,11 +4,13 @@
 var chgstatus_url='".url_for('board/changeStatus')."';
 var chgorder_url='".url_for('board/changeOrder')."';
 ");?>
-<?php include_partial('boardwidget/list') ?>
+<?php include_partial('boardwidget/list', array('widgets' => $widgets)) ?>
 <div class="board">
   <ul class="board_col">
     <?php $changed_col=false;?>
     <?php foreach($widgets as $id => $widget):?>
+      <?php if(!$widget->getVisible()) continue;?>
+
       <?php if($changed_col==false && $widget->getColNum()==2):?>
 	    <?php $changed_col=true;?>
 	      </ul>

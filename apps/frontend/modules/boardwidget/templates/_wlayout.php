@@ -13,7 +13,8 @@
 	<div class="widget_content" <?php if(! $is_opened):?> style="display:none"<?php endif;?>>
 
         <?php echo $widget_content; ?>
-    <div class="widget_bottom_button" <?php if(! $is_opened):?> style="display:none"<?php endif;?>>
-		<?php echo image_tag('widget_box_expand_up_button.png', 'alt=Collapse');?>
 	</div>
+    <div class="widget_bottom_button" <?php if(! $is_opened):?> style="display:none"<?php endif;?>>
+        <?php echo image_tag('widget_box_expand_up_button.png', 'alt=Collapse');?>
+    </div>
 </li>

@@ -23,6 +23,11 @@ class boardActions extends sfActions
   public function executeAddWidget(sfWebRequest $request)
   {
     $this->forward404unless($request->getParameter('widget',false));
+    
+    //mark widget as visible
+    Doctrine::getTable('MyPreferences')
+      ->changeWidgetStatus('board_widget', $request->getParameter('widget'), 'visible');
+
     return $this->renderPartial('boardwidget/wlayout',array('widget' => $request->getParameter('widget'), 'is_opened' => true));
   }
 

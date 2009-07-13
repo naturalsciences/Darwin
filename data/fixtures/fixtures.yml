@@ -77,3 +77,19 @@ MyPreferences:
         group_name: savedSearch
         order_by: 1
         opened: true
+    u1w3:
+        User: u1
+        col_num: 1
+        category: board_widget
+        group_name: addSpecimen
+        order_by: 1
+        opened: true
+        visible: false
+    u1w4:
+        User: u1
+        col_num: 1
+        category: board_widget
+        group_name: addTaxon
+        order_by: 1
+        opened: true
+        visible: false
