@@ -41,22 +41,20 @@ class MyPreferencesTable extends Doctrine_Table
   
   public function changeOrder($col1, $col2)
   {
-    $q = Doctrine_Query::create()
-	->update('MyPreferences p')
-	->set('p.col_num','?',1)
-	->set('p.order_by',"( select fct_array_find(?,group_name) ) ",implode(",",$col1))
-	->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
-	->andWhere('p.category = ?', "board_widget") //@TODO: could be change later
-	->andWhereIn('p.group_name',$col1)
-	->execute();
+    $this->updateWidgetsOrder($col1, 1, 'board_widget');
+    $this->updateWidgetsOrder($col2, 2, 'board_widget');
+  }
 
+  public function updateWidgetsOrder($widget_array, $col_num, $category)
+  {
     $q = Doctrine_Query::create()
 	->update('MyPreferences p')
-	->set('p.col_num','?',2)
-	->set('p.order_by',"( select fct_array_find(?,group_name) ) ",implode(",",$col2))
+	->set('p.col_num','?',$col_num)
+	->set('p.order_by',"( select fct_array_find(?,group_name) ) ",implode(",",$widget_array))
 	->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
-	->andWhere('p.category = ?', "board_widget") //@TODO: could be change later
-	->andWhereIn('p.group_name',$col2)
+	->andWhere('p.category = ?', $category)
+	->andWhereIn('p.group_name',$widget_array)
 	->execute();
   }
+
 }
