@@ -17,7 +17,9 @@ class boardActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-     $this->widgets = Doctrine::getTable('MyPreferences')->getBoardWidgets();
+     $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->getBoardWidgets();
   }
 
   public function executeAddWidget(sfWebRequest $request)
@@ -26,6 +28,7 @@ class boardActions extends sfActions
     
     //mark widget as visible
     Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->changeWidgetStatus('board_widget', $request->getParameter('widget'), 'visible');
 
     return $this->renderPartial('boardwidget/wlayout',array('widget' => $request->getParameter('widget'), 'is_opened' => true));
@@ -34,6 +37,7 @@ class boardActions extends sfActions
   public function executeChangeStatus(sfWebRequest $request)
   {
     Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->changeWidgetStatus('board_widget', $request->getParameter('widget'), $request->getParameter('status'));
     return $this->renderText("ok");
   }
@@ -43,7 +47,8 @@ class boardActions extends sfActions
     $col1 = explode(',', $request->getParameter('col1'));
     $col2 = explode(',', $request->getParameter('col2'));
     Doctrine::getTable('MyPreferences')
-        ->changeOrder($col1, $col2);
+      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->changeOrder($col1, $col2);
     return $this->renderText(var_export($col1,true).var_export($col2,true));
   }
 }

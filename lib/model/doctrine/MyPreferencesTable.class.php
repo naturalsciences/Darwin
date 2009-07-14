@@ -11,7 +11,12 @@ class MyPreferencesTable extends Doctrine_Table
             ->orderBy('p.col_num ASC, p.order_by ASC');
     return $this->addCategoryUser($q,'board_widget')->execute();
   }
-  
+
+  public function setUserRef($ref)
+  {
+    $this->user_ref = $ref;
+    return $this;
+  }
   public function changeWidgetStatus($category,$widget,$status)
   {
     $q = Doctrine_Query::create()
@@ -42,8 +47,12 @@ class MyPreferencesTable extends Doctrine_Table
     $this->updateWidgetsOrder($col2, 2, 'board_widget');
   }
 
-  public function addCategoryUser(Doctrine_Query $q = null,$category)
+  public function addCategoryUser(Doctrine_Query $q = null, $category)
   {
+    if (sfConfig::get('sf_logging_enabled') && !$this->user_ref)
+    {
+        sfContext::getInstance()->getLogger()->warning("No User defined with setUserRef");
+    }
     if (is_null($q))
     {
         $q = Doctrine_Query::create()
@@ -52,7 +61,7 @@ class MyPreferencesTable extends Doctrine_Table
 
     $alias = $q->getRootAlias();
 
-    $q->andWhere($alias . '.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
+    $q->andWhere($alias . '.user_ref = ?', $this->user_ref)
         ->andWhere($alias . '.category = ?', $category);
     return $q;
   }
