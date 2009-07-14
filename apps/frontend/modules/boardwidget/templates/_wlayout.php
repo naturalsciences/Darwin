@@ -5,7 +5,7 @@
     </div>
 	<div class="widget_top_bar">
 		<div class="widget_top_bar_button">
-            <?php echo image_tag('widget_refresh.png', 'alt=Refresh');?>
+            <a href="#" class="widget_refresh" ><?php echo image_tag('widget_refresh.png', 'alt=Refresh');?></a>
             <a href="#" class="widget_close" ><?php echo image_tag('widget_close.png', 'alt=Close');?></a>
 		</div>
 		<span><?php include_slot('widget_title'); ?></span>

@@ -3,6 +3,7 @@
 <?php echo javascript_tag("
 var chgstatus_url='".url_for('board/changeStatus')."';
 var chgorder_url='".url_for('board/changeOrder')."';
+var reload_url='".url_for('board/reloadContent')."';
 ");?>
 <?php include_partial('boardwidget/list', array('widgets' => $widgets)) ?>
 <div class="board">

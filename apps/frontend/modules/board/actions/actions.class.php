@@ -51,4 +51,9 @@ class boardActions extends sfActions
       ->changeOrder($col1, $col2);
     return $this->renderText(var_export($col1,true).var_export($col2,true));
   }
+
+  public function executeReloadContent(sfWebRequest $request)
+  {
+    return $this->renderComponent('boardwidget',$request->getParameter('widget'));
+  }
 }

@@ -59,6 +59,12 @@ jQuery(function(){
         return false;
     });
 
+    $('.widget_refresh').live('click',function(){
+        widget = $(this).parent().parent().parent();
+        widget.find('.widget_content').load(reload_url+'/widget/'+widget.attr('id'));
+        return false;
+    });
+
     $('.widget_close').live('click',function(){
         widget = $(this).parent().parent().parent();
         $.post(chgstatus_url+'/widget/'+widget.attr('id')+'/status/hidden' );
