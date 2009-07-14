@@ -8,10 +8,8 @@ class MyPreferencesTable extends Doctrine_Table
   {
     $q = Doctrine_Query::create()
             ->from('MyPreferences p')
-	    ->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
-	    ->andWhere('p.category = ?', 'board_widget')
-	    ->orderBy('p.col_num ASC, p.order_by ASC');
-    return $q->execute();
+            ->orderBy('p.col_num ASC, p.order_by ASC');
+    return $this->addCategoryUser($q,'board_widget')->execute();
   }
   
   public function changeWidgetStatus($category,$widget,$status)
@@ -32,17 +30,31 @@ class MyPreferencesTable extends Doctrine_Table
     {
         $q->set('p.visible', 'false');
     }
-    
-	$q->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
-	->andWhere('p.category = ?', $category)
-	->andWhere('p.group_name = ?',$widget);
+
+    $this->addCategoryUser($q,$category)
+        ->andWhere('p.group_name = ?',$widget);
     return $q->execute();
   }
-  
+
   public function changeOrder($col1, $col2)
   {
     $this->updateWidgetsOrder($col1, 1, 'board_widget');
     $this->updateWidgetsOrder($col2, 2, 'board_widget');
+  }
+
+  public function addCategoryUser(Doctrine_Query $q = null,$category)
+  {
+    if (is_null($q))
+    {
+        $q = Doctrine_Query::create()
+            ->from('MyPreferences p');
+    }
+
+    $alias = $q->getRootAlias();
+
+    $q->andWhere($alias . '.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
+        ->andWhere($alias . '.category = ?', $category);
+    return $q;
   }
 
   public function updateWidgetsOrder($widget_array, $col_num, $category)
@@ -50,11 +62,10 @@ class MyPreferencesTable extends Doctrine_Table
     $q = Doctrine_Query::create()
 	->update('MyPreferences p')
 	->set('p.col_num','?',$col_num)
-	->set('p.order_by',"( select fct_array_find(?,group_name) ) ",implode(",",$widget_array))
-	->andWhere('p.user_ref = ?', sfContext::getInstance()->getUser()->getAttribute('db_user')->getId())
-	->andWhere('p.category = ?', $category)
-	->andWhereIn('p.group_name',$widget_array)
-	->execute();
+	->set('p.order_by',"fct_array_find(?,group_name::text) ",implode(",",$widget_array))
+	->andWhereIn('p.group_name',$widget_array);
+	
+    $this->addCategoryUser($q,$category)->execute();
   }
 
 }
