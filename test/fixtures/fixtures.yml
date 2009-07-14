@@ -65,7 +65,7 @@ MySavedSpecimens:
 MyPreferences:
     u1w1:
         User: u1
-        col_num: 1
+        col_num: 2
         category: board_widget
         group_name: savedSpecimens
         order_by: 1
