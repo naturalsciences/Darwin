@@ -17,6 +17,7 @@ class MyPreferencesTable extends Doctrine_Table
     $this->user_ref = $ref;
     return $this;
   }
+
   public function changeWidgetStatus($category,$widget,$status)
   {
     $q = Doctrine_Query::create()
@@ -68,6 +69,8 @@ class MyPreferencesTable extends Doctrine_Table
 
   public function updateWidgetsOrder($widget_array, $col_num, $category)
   {
+    if(! is_array($widget_array))
+        throw new Exception ('Widgets must be an array');
     $q = Doctrine_Query::create()
 	->update('MyPreferences p')
 	->set('p.col_num','?',$col_num)
