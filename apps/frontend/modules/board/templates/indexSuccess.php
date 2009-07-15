@@ -5,7 +5,7 @@ var chgstatus_url='".url_for('board/changeStatus')."';
 var chgorder_url='".url_for('board/changeOrder')."';
 var reload_url='".url_for('board/reloadContent')."';
 ");?>
-<?php include_partial('boardwidget/list', array('widgets' => $widgets)) ?>
+<?php include_partial('boardwidget/list', array('widgets' => $widgets, 'category' => 'board')) ?>
 <div class="board">
   <ul class="board_col">
     <?php $changed_col=false;?>
@@ -18,9 +18,11 @@ var reload_url='".url_for('board/reloadContent')."';
 	      <div class="board_spacer">&nbsp;</div>
 	      <ul class="board_col">
       <?php endif;?>
-	  <?php include_partial('boardwidget/wlayout',
-	      array('widget' => $widget->getGroupName(), 'is_opened' => $widget->getOpened())
-	  ); ?>
+	  <?php include_partial('boardwidget/wlayout', array(
+        'widget' => $widget->getGroupName(),
+        'is_opened' => $widget->getOpened(),
+        'category' => 'boardwidget'
+        )); ?>
     <?php endforeach;?>
     <?php if($changed_col==false):?>
       </ul>

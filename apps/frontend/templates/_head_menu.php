@@ -36,7 +36,7 @@
         <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
-                <li><a href="?page=encode_spec">Specimen</a></li>
+                <li><?php echo link_to(__('Specimens'),'specimen/index');?></li>
                 <li>
                     <a href="#">Catalogues</a>
                     <ul>

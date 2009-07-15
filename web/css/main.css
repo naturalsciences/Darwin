@@ -4,3 +4,15 @@ body
 	font-size: 10pt;
 	font-family:sans-serif;
 }
+
+.clear
+{
+	clear:both;
+}
+
+.page
+{
+	margin-top: 30px;
+	margin-left:51px;
+	margin-right: 51px;
+}

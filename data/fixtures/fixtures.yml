@@ -63,21 +63,21 @@ MySavedSpecimens:
         modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
 
 MyPreferences:
-    u1w1:
+    u1wb1:
         User: u1
         col_num: 1
         category: board_widget
         group_name: savedSpecimens
         order_by: 1
         opened: false
-    u1w2:
+    u1wb2:
         User: u1
         col_num: 1
         category: board_widget
         group_name: savedSearch
         order_by: 1
         opened: true
-    u1w3:
+    u1wb3:
         User: u1
         col_num: 1
         category: board_widget
@@ -85,11 +85,27 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: false
-    u1w4:
+    u1wb4:
         User: u1
         col_num: 1
         category: board_widget
         group_name: addTaxon
         order_by: 1
         opened: true
+        visible: false
+    u1ws1:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: linkTaxon
+        order_by: 1
+        opened: true
+        visible: true
+    u1ws2:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: linkHabitat
+        order_by: 2
+        opened: false
         visible: false

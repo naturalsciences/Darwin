@@ -4,14 +4,15 @@
  */
 class MyPreferencesTable extends Doctrine_Table
 {
-  public function getBoardWidgets()
+
+  public function getWidgets($category)
   {
-    $q = Doctrine_Query::create()
+      $q = Doctrine_Query::create()
             ->from('MyPreferences p')
             ->orderBy('p.col_num ASC, p.order_by ASC');
-    return $this->addCategoryUser($q,'board_widget')->execute();
+    return $this->addCategoryUser($q,$category)->execute();
   }
-
+  
   public function setUserRef($ref)
   {
     $this->user_ref = $ref;
@@ -42,10 +43,10 @@ class MyPreferencesTable extends Doctrine_Table
     return $q->execute();
   }
 
-  public function changeOrder($col1, $col2)
+  public function changeOrder($category, $col1, $col2)
   {
-    $this->updateWidgetsOrder($col1, 1, 'board_widget');
-    $this->updateWidgetsOrder($col2, 2, 'board_widget');
+    $this->updateWidgetsOrder($col1, 1, $category);
+    $this->updateWidgetsOrder($col2, 2, $category);
   }
 
   public function addCategoryUser(Doctrine_Query $q = null, $category)

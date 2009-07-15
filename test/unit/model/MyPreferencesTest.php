@@ -1,13 +1,16 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(15, new lime_output_color());
+$t = new lime_test(16, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
-$t->comment('->getBoardWidgets()');
+$t->comment('->getWidgets()');
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
-        ->getBoardWidgets()),4,'Get all board widget');
+        ->getWidgets('board_widget')),4,'Get all board widget');
+$t->is(count(Doctrine::getTable('MyPreferences')
+        ->setUserRef($userEvil)
+        ->getWidgets('specimen_widget')),2,'Get all board widget');
 
 $t->comment('->changeWidgetStatus()');
 
@@ -90,7 +93,7 @@ $t->is($widgets[0]->getColNum(),2, "Is col_num set correctly");
 $t->comment('->changeOrder()');
 Doctrine::getTable('MyPreferences')
     ->setUserRef($userEvil)
-    ->changeOrder(array("savedSpecimens"), array("savedSearch"));
+    ->changeOrder('board_widget',array("savedSpecimens"), array("savedSearch"));
 
 $widgets = Doctrine::getTable('MyPreferences')
     ->setUserRef($userEvil)
