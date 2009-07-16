@@ -2,9 +2,11 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new DarwinTestFunctional(new sfBrowser());
+$browser->loadData();
 
 $browser->
+  info('1 - Not Logged Request')->
   get('/board/index')->
 
   with('request')->begin()->
