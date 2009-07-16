@@ -13,6 +13,19 @@ UsersLoginInfos:
         user_name: root
         password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
 
+UsersLanguages:
+    ul1:
+        User: u1
+        language_country: en_gb
+        mother: true
+        prefered_language: false
+
+    ul1:
+        User: u1
+        language_country: fr_be
+        mother: false
+        prefered_language: true
+
 MySavedSearches:
     ss1_1:
         User: u1

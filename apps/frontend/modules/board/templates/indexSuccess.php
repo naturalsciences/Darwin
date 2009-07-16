@@ -1,11 +1,11 @@
 <?php slot('title', __('Dashboard'));  ?>
 <?php use_helper('Javascript') ?>
 <?php echo javascript_tag("
-var chgstatus_url='".url_for('board/changeStatus')."';
-var chgorder_url='".url_for('board/changeOrder')."';
-var reload_url='".url_for('board/reloadContent')."';
+var chgstatus_url='".url_for('widgets/changeStatus?category=board')."';
+var chgorder_url='".url_for('widgets/changeOrder?category=board')."';
+var reload_url='".url_for('widgets/reloadContent?category=board')."';
 ");?>
-<?php include_partial('boardwidget/list', array('widgets' => $widgets, 'category' => 'board')) ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'board')) ?>
 <div class="board">
   <ul class="board_col">
     <?php $changed_col=false;?>
@@ -18,7 +18,7 @@ var reload_url='".url_for('board/reloadContent')."';
 	      <div class="board_spacer">&nbsp;</div>
 	      <ul class="board_col">
       <?php endif;?>
-	  <?php include_partial('boardwidget/wlayout', array(
+	  <?php include_partial('widgets/wlayout', array(
         'widget' => $widget->getGroupName(),
         'is_opened' => $widget->getOpened(),
         'category' => 'boardwidget'

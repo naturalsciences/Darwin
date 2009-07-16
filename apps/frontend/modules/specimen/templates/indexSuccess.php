@@ -1,11 +1,11 @@
 <?php slot('title', __('Add Specimens'));  ?>
 <?php use_helper('Javascript') ?>
 <?php echo javascript_tag("
-var chgstatus_url='".url_for('specimen/changeStatus')."';
-var chgorder_url='".url_for('specimen/changeOrder')."';
-var reload_url='".url_for('specimen/reloadContent')."';
+var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
+var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
+var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
 ");?>
-<?php include_partial('boardwidget/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
 
 <div class="encoding">
     <?php echo image_tag('encod_left_disable.png','id="arrow_left" class="scrollButtons left"');?>
@@ -34,7 +34,7 @@ var reload_url='".url_for('specimen/reloadContent')."';
 	      <div class="board_spacer">&nbsp;</div>
 	      <ul class="board_col">
       <?php endif;?>
-	  <?php include_partial('boardwidget/wlayout', array(
+	  <?php include_partial('widgets/wlayout', array(
             'widget' => $widget->getGroupName(),
             'is_opened' => $widget->getOpened(),
             'category' => 'specimenwidget')
