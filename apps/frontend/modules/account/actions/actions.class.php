@@ -26,6 +26,8 @@ class accountActions extends sfActions
         sfContext::getInstance()->getLogger()->debug($this->form->getValue('username'));
         $this->getUser()->setAttribute('db_user',$this->form->user);
         $this->getUser()->setAuthenticated(true);
+        $lang = Doctrine::getTable("UsersLanguages")->getPreferedLanguage($this->form->user->getId());
+        $this->getUser()->setCulture($lang->getLanguageCountry());
         $this->redirect('board/index');
       }
     }

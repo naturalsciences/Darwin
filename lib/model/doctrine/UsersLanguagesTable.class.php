@@ -4,5 +4,12 @@
  */
 class UsersLanguagesTable extends Doctrine_Table
 {
-
+    public function getPreferedLanguage($user_id)
+    {
+        $q = Doctrine_Query::create()
+            ->from('UsersLanguages ul')
+            ->addWhere('ul.prefered_language = true')
+            ->addWhere('ul.users_ref = ?', $user_id);
+        return $q->fetchOne();
+    }
 }

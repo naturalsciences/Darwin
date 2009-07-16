@@ -1,4 +1,4 @@
-<?php slot('title', __('Dashboard'));  ?>
+<?php slot('title', __('Add Specimens'));  ?>
 <?php use_helper('Javascript') ?>
 <?php echo javascript_tag("
 var chgstatus_url='".url_for('specimen/changeStatus')."';
