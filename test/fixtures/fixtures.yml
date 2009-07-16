@@ -18,13 +18,13 @@ UsersLanguages:
         User: u1
         language_country: en_gb
         mother: true
-        prefered_language: false
+        prefered_language: true
 
-    ul1:
+    ul2:
         User: u1
         language_country: fr_be
         mother: false
-        prefered_language: true
+        prefered_language: false
 
 MySavedSearches:
     ss1_1:
