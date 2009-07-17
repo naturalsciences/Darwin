@@ -81,7 +81,8 @@ MyPreferences:
         col_num: 1
         category: board_widget
         group_name: savedSpecimens
-        order_by: 1
+        order_by: 2
+        visible: true
         opened: false
     u1wb2:
         User: u1
@@ -89,6 +90,7 @@ MyPreferences:
         category: board_widget
         group_name: savedSearch
         order_by: 1
+        visible: true
         opened: true
     u1wb3:
         User: u1

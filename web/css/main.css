@@ -16,3 +16,8 @@ body
 	margin-left:51px;
 	margin-right: 51px;
 }
+
+.hidden
+{
+    display:none;
+}

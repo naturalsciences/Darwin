@@ -16,7 +16,7 @@
 		</div>
 		<span><?php include_slot('widget_title'); ?></span>
 	</div>
-	<div class="widget_content" <?php if(! $is_opened):?> style="display:none"<?php endif;?>>
+	<div class="widget_content <?php if(! $is_opened):?>hidden<?php endif;?>">
 
         <?php echo $widget_content; ?>
 	</div>
