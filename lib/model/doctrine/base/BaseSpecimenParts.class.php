@@ -23,6 +23,7 @@
  * @property string $specimen_status
  * @property integer $specimen_part_count_min
  * @property integer $specimen_part_count_max
+ * @property SpecimenIndividuals $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimenPartsInsurances
  * 
  * @package    ##PACKAGE##
@@ -114,6 +115,10 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
 
     public function setUp()
     {
+        $this->hasOne('SpecimenIndividuals', array(
+             'local' => 'specimen_individual_ref',
+             'foreign' => 'id'));
+
         $this->hasMany('SpecimenPartsInsurances', array(
              'local' => 'id',
              'foreign' => 'specimen_part_ref'));

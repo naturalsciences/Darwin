@@ -18,6 +18,7 @@
  * @property integer $specimen_individuals_count_min
  * @property integer $specimen_individuals_count_max
  * @property Specimens $Specimens
+ * @property Doctrine_Collection $SpecimenParts
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -91,5 +92,9 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
         $this->hasOne('Specimens', array(
              'local' => 'specimen_ref',
              'foreign' => 'id'));
+
+        $this->hasMany('SpecimenParts', array(
+             'local' => 'id',
+             'foreign' => 'specimen_individual_ref'));
     }
 }

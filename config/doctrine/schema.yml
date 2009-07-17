@@ -1025,6 +1025,10 @@ SpecimenParts:
         specimen_status: { type: string, notnull: true, default: 'good state'}
         specimen_part_count_min: { type: integer, notnull: true, default:1}
         specimen_part_count_max: { type: integer, notnull: true, default:1}
+    relations:
+        SpecimenIndividuals:
+            local: specimen_individual_ref
+            foreign: id
 
 SpecimenPartsInsurances:
     columns:
