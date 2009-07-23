@@ -17,12 +17,12 @@ SELECT diag('FulltoIndex Trigger');
 
 
 
-INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, property_min, property_min_unified, date_from, date_to) VALUES ('taxonomy',0,'Ph', 'm','{7}','{7}',TIMESTAMP '0001-01-01 00:00:00', TIMESTAMP '0001-01-01 00:00:00');
+INSERT INTO catalogue_properties (table_name, record_id, property_type, property_unit, date_from, date_to) VALUES ('taxonomy',0,'Ph', 'm', TIMESTAMP '0001-01-01 00:00:00', TIMESTAMP '0001-01-01 00:00:00');
 SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_sub_type_indexed');
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_method_indexed');
 SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE record_id=0),'FulltoIndex on catalogue_properties null - property_tool_indexed');
 
-INSERT INTO catalogue_properties (table_name, record_id, property_type, date_from, date_to, property_unit, property_min, property_min_unified, property_tool_indexed, property_method_indexed, property_sub_type_indexed ) VALUES ('taxonomy',0,'Temperature',NOW(),NOW(), 'degC','{42}','{42}', 'ham ér', 'cra hé', 'Lambert 72');
+INSERT INTO catalogue_properties (table_name, record_id, property_type, date_from, date_to, property_unit, property_tool_indexed, property_method_indexed, property_sub_type_indexed ) VALUES ('taxonomy',0,'Temperature',NOW(),NOW(), 'degC', 'ham ér', 'cra hé', 'Lambert 72');
 SELECT ok( '' = (SELECT property_sub_type_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_sub_type_indexed');
 SELECT ok( '' = (SELECT property_method_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_method_indexed');
 SELECT ok( '' = (SELECT property_tool_indexed FROM catalogue_properties WHERE record_id=0 AND property_type='Temperature'),'FulltoIndex on catalogue_properties null - property_tool_indexed');
@@ -38,10 +38,10 @@ INSERT INTO habitats (id, code, description) VALUES (1,'Lé Hâbitôt','Lé Hâb
 SELECT ok( 'lehabitot' = (SELECT code_indexed FROM habitats WHERE id=1),'FulltoIndex on habitats');
 SELECT ok ( to_tsvector('simple','Lé Hâbitôt') = (SELECT description_ts FROM habitats WHERE id=1),'full text on habitats');
 
-INSERT INTO identifications (table_name, record_id, notion_concerned, identifiers_ordered_ids_list, value_defined) VALUES ('taxonomy', 0, 'Expertise' ,'{}', 'Jé #spéè!');
+INSERT INTO identifications (table_name, record_id, notion_concerned, value_defined) VALUES ('taxonomy', 0, 'Expertise', 'Jé #spéè!');
 SELECT ok( 'jespee' = (SELECT value_defined_indexed FROM identifications WHERE record_id=0),'FulltoIndex on identifications');
 
-INSERT INTO identifications (table_name, record_id, notion_concerned, identifiers_ordered_ids_list, value_defined) VALUES ('taxonomy', 0, 'Taxonomic identification' ,'{}', null);
+INSERT INTO identifications (table_name, record_id, notion_concerned, value_defined) VALUES ('taxonomy', 0, 'Taxonomic identification' , null);
 SELECT ok( '' = (SELECT value_defined_indexed FROM identifications WHERE record_id=0 AND notion_concerned='Taxonomic identification'),'FulltoIndex on identifications with null');
 
 INSERT INTO lithology (id, name, level_ref) VALUES (1,'éLoow !', null);

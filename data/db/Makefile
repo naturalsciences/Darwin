@@ -117,7 +117,8 @@ create-schema:
 	
 create-test-schema:
 	$(PRIV_PSQL_DB) -f create_testschema.sql
-	
+
+#ONLY USEFULL WHEN YOU DO A MIGRATION	
 create-darwin1-schema:
 	$(PRIV_PSQL_DB) -f create_darwin1_schema.sql
 	

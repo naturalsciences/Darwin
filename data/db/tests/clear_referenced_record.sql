@@ -21,13 +21,12 @@ SELECT ok ( 0 = (SELECT record_id from comments),'the deleted record is the righ
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
 INSERT INTO specimens (id, collection_ref) VALUES (2,2);
 
-INSERT INTO my_saved_specimens (user_ref, name, specimen_ids) VALUES (1,'Ma liste',ARRAY[1,2]);
+INSERT INTO my_saved_specimens (user_ref, name, specimen_ids) VALUES (1,'Ma liste','1,2');
 
 DELETE FROM specimens WHERE id=2;
-SELECT ok ( ARRAY[1] = (SELECT specimen_ids from my_saved_specimens),'specimens_ids has a specimen less');
+SELECT ok ( '1' = (SELECT specimen_ids from my_saved_specimens),'specimens_ids has a specimen less');
 DELETE FROM specimens WHERE id=1;
-SELECT ok ( '{}'::int[] = (SELECT specimen_ids from my_saved_specimens),'specimens_ids has no specimens more');
-
+SELECT ok ( '' = (SELECT specimen_ids from my_saved_specimens),'specimens_ids has no specimens more');
 
 SELECT * FROM finish();
 ROLLBACK;

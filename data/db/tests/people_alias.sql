@@ -21,21 +21,24 @@ SELECT diag('Checking db_people_type');
 UPDATE people SET db_people_type = 6 WHERE id=2;
 UPDATE people SET db_people_type = 6 WHERE id=1;
 
-INSERT INTO catalogue_people (table_name, record_id, people_ordered_ids_list)
-	VALUES ('taxonomy', '1', ARRAY[1,2]);
+INSERT INTO catalogue_people (table_name, record_id, people_ref,order_by)
+	VALUES ('taxonomy', '1',1,0),
+            ('taxonomy', '1',2,1);
 
 SELECT throws_ok('UPDATE people SET db_people_type = 4 WHERE id=2');
 
-UPDATE catalogue_people SET people_ordered_ids_list = ARRAY[1] WHERE table_name='taxonomy' AND record_id=1;
+DELETE FROM catalogue_people WHERE table_name='taxonomy' AND record_id=1 AND people_ref=2;
 
 SELECT lives_ok('UPDATE people SET db_people_type = 4 WHERE id=2');
 
 SELECT diag('Checking IF all author are authors :)');
 
-SELECT throws_ok('UPDATE catalogue_people SET people_ordered_ids_list = ARRAY[1,2] WHERE table_name=''taxonomy'' AND record_id=1');
+SELECT throws_ok('INSERT INTO catalogue_people (table_name, record_id, people_type, order_by, people_ref)
+ VALUES (''taxonomy'', 1, ''authors'',0,2)');
 
 UPDATE people SET db_people_type = 6 WHERE id=2;
-SELECT lives_ok('UPDATE catalogue_people SET people_ordered_ids_list = ARRAY[1,2] WHERE table_name=''taxonomy'' AND record_id=1');
+SELECT lives_ok('INSERT INTO catalogue_people (table_name, record_id, people_type, order_by, people_ref)
+ VALUES (''taxonomy'', 1, ''authors'',0,2)');
 
 
 SELECT * FROM finish();

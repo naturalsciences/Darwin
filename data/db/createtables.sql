@@ -1,11 +1,80 @@
 \set log_error_verbosity terse
+create table template_people
+       (
+        is_physical boolean default true not null,
+        sub_type varchar,
+        public_class public_classes default 'public' not null,
+        formated_name varchar not null,
+        formated_name_indexed varchar not null,
+        formated_name_ts tsvector not null,
+        title varchar not null DEFAULT '',
+        family_name varchar not null,
+        given_name varchar,
+        additional_names varchar,
+        birth_date_mask integer  not null DEFAULT 0,
+        birth_date date not null DEFAULT '01/01/0001',
+        gender genders
+       );
+comment on table template_people is 'Template table used to describe user/people tables';
+comment on column template_people.is_physical is 'Type of user/person: physical or moral - true is physical, false is moral';
+comment on column template_people.sub_type is 'Used for moral user/persons: precise nature - public institution, asbl, sprl, sa,...';
+comment on column template_people.public_class is 'Tells public nature of user/person information - public is default value';
+comment on column template_people.formated_name is 'Complete user/person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
+comment on column template_people.formated_name_ts is 'tsvector form of formated_name field';
+comment on column template_people.formated_name_indexed is 'Indexed form of formated_name field';
+comment on column template_people.family_name is 'Family name for physical user/persons and Organisation name for moral user/persons';
+comment on column template_people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
+comment on column template_people.given_name is 'User/person''s given name - usually first name';
+comment on column template_people.additional_names is 'Any additional names given to user/person';
+comment on column template_people.birth_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
+comment on column template_people.birth_date is 'Birth/Creation date composed';
+comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
+create table template_people_languages
+       (
+        language_country varchar default 'en_gb' not null,
+        mother boolean default true not null,
+        prefered_language boolean default false not null
+       );
+comment on table template_people_languages is 'Template supporting users/people languages table definition';
+comment on column template_people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
+comment on column template_people_languages.mother is 'Flag telling if its mother language or not';
+comment on column template_people_languages.prefered_language is 'Flag telling which language is prefered in communications';
+CREATE sequence people_id_seq;
+create table people
+       (
+        id integer DEFAULT nextval('people_id_seq'),
+        db_people_type integer default 1 not null,
+        end_date_mask integer  not null DEFAULT 0,
+        end_date date not null DEFAULT '01/01/0001',
+        constraint pk_people primary key (id),
+        constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
+       )
+inherits (template_people);
+comment on table people is 'All physical and moral persons used in the application are here stored';
+comment on column people.id is 'Unique identifier of a person';
+comment on column people.is_physical is 'Type of person: physical or moral - true is physical, false is moral';
+comment on column people.sub_type is 'Used for moral persons: precise nature - public institution, asbl, sprl, sa,...';
+comment on column people.public_class is 'Tells public nature of person information - public is default value';
+comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
+comment on column people.formated_name_ts is 'tsvector form of formated_name field';
+comment on column people.formated_name_indexed is 'Indexed form of formated_name field';
+comment on column people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
+comment on column people.family_name is 'Family name for physical persons and Organisation name for moral persons';
+comment on column people.given_name is 'User/person''s given name - usually first name';
+comment on column people.additional_names is 'Any additional names given to person';
+comment on column people.birth_date is 'Day of birth/creation';
+comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column people.gender is 'For physical persons give the gender: M or F';
+comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector, 32 preparator, 64 photographer...';
+comment on column people.end_date is 'End date';
+comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 create table catalogue_relationships
        (
+        id serial not null,
         table_name varchar not null,
         record_id_1 integer not null,
         record_id_2 integer not null,
         relationship_type varchar default 'is synonym of' not null,
-        defined_by_ordered_ids_list integer[],
         constraint unq_catalogue_relationships unique (table_name, relationship_type, record_id_1, record_id_2)
        );
 comment on table catalogue_relationships is 'Stores the relationships between records of a table - synonymy, parenty, current name, original combination, ...';
@@ -13,7 +82,6 @@ comment on column catalogue_relationships.table_name is 'Reference of the table 
 comment on column catalogue_relationships.record_id_1 is 'Identifier of record in relation with an other one (record_id_2)';
 comment on column catalogue_relationships.record_id_2 is 'Identifier of record in relation with an other one (record_id_1)';
 comment on column catalogue_relationships.relationship_type is 'Type of relation between record 1 and record 2 - synonymy, parenty, current name, original combination, ...';
-comment on column catalogue_relationships.defined_by_ordered_ids_list is 'Array of persons identifiers (id fields of people table) having defined this relationship';
 create table template_table_record_ref
        (
         table_name varchar not null,
@@ -22,22 +90,25 @@ create table template_table_record_ref
 comment on table template_table_record_ref is 'Template called to add table_name and record_id fields';
 comment on column template_table_record_ref.table_name is 'Reference of table concerned - id field of table_list table';
 comment on column template_table_record_ref.record_id is 'Id of record concerned';
+
+CREATE sequence catalogue_people_id_seq;
 create table catalogue_people 
        (
-		people_type varchar default 'authors' not null,
+        id integer DEFAULT nextval('catalogue_people_id_seq'),
+        people_type varchar default 'authors' not null,
         people_sub_type varchar default '' not null,
-        people_ordered_ids_list  integer[] not null,
-        defined_by_ordered_ids_list integer[],
-        constraint unq_catalogue_people unique (table_name, people_type, people_sub_type, record_id)
+        order_by integer default 1 not null,
+        people_ref integer not null,
+        constraint fk_people_list_person foreign key (people_ref) references people(id) on delete cascade,
+        constraint unq_catalogue_people unique (table_name, people_type, people_sub_type, record_id, people_ref)
        )
 inherits (template_table_record_ref);
 comment on table catalogue_people is 'List of people of catalogues units - Taxonomy, Chronostratigraphy,...';
+comment on column catalogue_people.id is 'Unique identifier of record';
 comment on column catalogue_people.table_name is 'Identifier of table the units come from - id field of table_list table';
 comment on column catalogue_people.record_id is 'Identifier of record concerned in table concerned';
-comment on column catalogue_people.people_type is 'Type of "people" associated to the catalogue unit: authors, collectors, ...';
+comment on column catalogue_people.people_type is 'Type of "people" associated to the catalogue unit: authors, collectors, defined,  ...';
 comment on column catalogue_people.people_sub_type is 'Type of "people" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
-comment on column catalogue_people.people_ordered_ids_list  is 'Array of "people" identifiers - List of authors associated to the unit concerned - Identifiers are id fields from people table';
-comment on column catalogue_people.defined_by_ordered_ids_list is 'Array of persons having defined this catalogue people entry - id fields from people table';
 create table catalogue_levels
        (
         id serial not null,
@@ -65,8 +136,11 @@ create table possible_upper_levels
 comment on table possible_upper_levels is 'For each level, list all the availble parent levels';
 comment on column possible_upper_levels.level_ref is 'Reference of current level';
 comment on column possible_upper_levels.level_upper_ref is 'Reference of authorized parent level';
+
+CREATE sequence comments_id_seq;
 create table comments
        (
+        id integer DEFAULT nextval('comments_id_seq'),
         notion_concerned varchar not null,
         comment text not null,
         comment_ts tsvector not null,
@@ -99,8 +173,8 @@ create table tag_groups
         tag_ref integer not null,
         group_name varchar not null,
         group_name_indexed varchar not null,
-	sub_group_name varchar not null,
-	sub_group_name_indexed varchar not null,
+        sub_group_name varchar not null,
+        sub_group_name_indexed varchar not null,
         color varchar default '#FFFFFF' not null,
         constraint pk_tag_groups primary key (id),
         constraint fk_tag_groups_tags foreign key (tag_ref) references tags(id) on delete cascade,
@@ -120,9 +194,9 @@ create table gtu
         code varchar not null,
         parent_ref integer,
         gtu_from_date_mask integer DEFAULT 0,
-        gtu_from_date timestamp DEFAULT '01/01/4713BC',
+        gtu_from_date timestamp DEFAULT '01/01/0001',
         gtu_to_date_mask integer DEFAULT 0,
-        gtu_to_date timestamp DEFAULT '01/01/4713BC',
+        gtu_to_date timestamp DEFAULT '01/01/0001',
         constraint pk_gtu primary key (id),
         constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
        );
@@ -145,33 +219,30 @@ create table gtu_tags
 comment on table gtu_tags is 'Association of tags (grouped) and gtus';
 comment on column gtu_tags.tag_group_ref is 'Reference of group of tag associated to a given gtu - comes from tag_groups table (id field)';
 comment on column gtu_tags.gtu_ref is 'Reference of gtu - comes from gtu table (id field)';
+CREATE sequence catalogue_properties_id_seq;
 create table catalogue_properties
        (
+        id integer DEFAULT nextval('catalogue_properties_id_seq'),
         property_type varchar not null,
         property_sub_type varchar,
         property_sub_type_indexed varchar not null,
-	property_qualifier varchar,
-	property_qualifier_indexed varchar not null,
+        property_qualifier varchar,
+        property_qualifier_indexed varchar not null,
         date_from_mask integer DEFAULT 0,
-        date_from timestamp not null DEFAULT '01/01/4713BC',
+        date_from timestamp not null DEFAULT '01/01/0001',
         date_to_mask integer DEFAULT 0,
-        date_to timestamp not null  DEFAULT '01/01/4713BC',
+        date_to timestamp not null  DEFAULT '01/01/0001',
         property_unit varchar not null,
-        property_min varchar[] not null,
-        property_min_unified varchar[] default ARRAY[''::varchar] not null,
-        property_max varchar[],
-        property_max_unified varchar[],
         property_accuracy_unit varchar,
-        property_accuracy real[],
-        property_accuracy_unified real[],
         property_method varchar,
         property_method_indexed varchar not null,
         property_tool varchar,
         property_tool_indexed varchar not null,
-        defined_by_ordered_ids_list integer[],
+        constraint pk_catalogue_properties primary key (id),
         constraint unq_catalogue_properties unique (table_name, record_id, property_type, property_sub_type_indexed, property_qualifier_indexed, date_from, date_to, property_method_indexed, property_tool_indexed)
        )
 inherits (template_table_record_ref);
+
 comment on table catalogue_properties is 'All properties or all measurements describing an object in darwin are stored in this table';
 comment on column catalogue_properties.table_name is 'Identifier of the table a property is defined for - id field of table_list table';
 comment on column catalogue_properties.record_id is 'Identifier of record a property is defined for';
@@ -183,29 +254,44 @@ comment on column catalogue_properties.date_from_mask is 'Mask Flag to know wich
 comment on column catalogue_properties.date_to is 'For a range of measurements, give the measurement stop date/time - if null, takes a generic replacement value';
 comment on column catalogue_properties.date_to_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column catalogue_properties.property_unit is 'Unit used for property value introduced';
-comment on column catalogue_properties.property_min is 'Array of one or more value(s) for the property type and subtype selected - in case of range of values store the minimum value or the mean minimum value - in case of range of all values, stores the whole range';
-comment on column catalogue_properties.property_min_unified is 'Unified version of property_min value(s) -> means that the value(s) is/are converted into a common unit allowing comparisons';
-comment on column catalogue_properties.property_max is 'Array of one or more value(s) for the property type and subtype selected - in case of range of values store the maximum value or the mean maximum value - in case of range of all values, stores nothing';
-comment on column catalogue_properties.property_max_unified is 'Unified version of property_max value(s) -> means that the value(s) is/are converted into a common unit al
-lowing comparisons';
-comment on column catalogue_properties.property_accuracy_unit is 'Unit used for accuracy value(s)';
-comment on column catalogue_properties.property_accuracy is 'Accuracy of property measurement';
-comment on column catalogue_properties.property_accuracy_unified is 'Unified version of accuracy on property or sub property value -> means that the value(s) is/are converted into a common unit allowing comparisons';
 comment on column catalogue_properties.property_method is 'Method used to collect property value';
 comment on column catalogue_properties.property_method_indexed is 'Indexed version of property_method field - if null, takes a generic replacement value';
+comment on column catalogue_properties.property_accuracy_unit is 'Unit used for accuracy value(s)';
 comment on column catalogue_properties.property_tool is 'Tool used to collect property value';
 comment on column catalogue_properties.property_tool_indexed is 'Indexed version of property_tool field - if null, takes a generic replacement value';
-comment on column catalogue_properties.defined_by_ordered_ids_list is 'Array of identifiers of persons having defined this property - array of id field from people table';
+
+create table properties_values
+      (
+        id serial not null,
+        property_ref integer not null,
+        property_min varchar not null,
+        property_min_unified varchar default '' not null,
+        property_max varchar,
+        property_max_unified varchar,
+        property_accuracy real,
+        property_accuracy_unified real,
+        constraint pk_properties_values primary key (id),
+        constraint fk_properties_values_properties foreign key (property_ref) references catalogue_properties(id) on delete cascade
+      );
+comment on table properties_values is 'All properties values seen in catalogue_properties';
+comment on column properties_values.id is 'Unique identifier of a property value';
+comment on column properties_values.property_min is 'value for the property type and subtype selected - in case of range of values store the minimum value or the mean minimum value - in case of range of all values, stores the whole range';
+comment on column properties_values.property_min_unified is 'Unified version of property_min value -> means that the value is converted into a common unit allowing comparisons';
+comment on column properties_values.property_max is 'value for the property type and subtype selected - in case of range of values store the maximum value or the mean maximum value - in case of range of all values, stores nothing';
+comment on column properties_values.property_max_unified is 'Unified version of property_max value -> means that the value is converted into a common unit allowing comparisons';
+comment on column properties_values.property_accuracy is 'Accuracy of property measurement';
+comment on column properties_values.property_accuracy_unified is 'Unified version of accuracy on property or sub property value -> means that the value is converted into a common unit allowing comparisons';
+
+CREATE sequence identifications_id_seq;
 create table identifications
        (
+        id integer DEFAULT nextval('identifications_id_seq'),
         notion_concerned varchar not null,
         notion_date timestamp,
-        identifiers_ordered_ids_list integer[] not null,
         value_defined varchar,
         value_defined_indexed varchar not null,
         value_defined_ts tsvector,
         determination_status varchar,
-        defined_by_ordered_ids_list integer[],
         order_by integer default 1 not null,
         constraint unq_identifications unique (table_name, record_id, notion_concerned, value_defined_indexed)
        )
@@ -215,32 +301,16 @@ comment on column identifications.table_name is 'Reference of table an identific
 comment on column identifications.record_id is 'Id of record concerned by an identification entry';
 comment on column identifications.notion_concerned is 'Type of entry: Identification on a specific concern';
 comment on column identifications.notion_date is 'Date of identification or preparation';
-comment on column identifications.identifiers_ordered_ids_list is 'Array of who made the identifications - array of id field from people table';
 comment on column identifications.value_defined is 'When making identification, stores the value resulting of this identification';
 comment on column identifications.value_defined_ts is 'tsvector form of value_defined field';
 comment on column identifications.value_defined_indexed is 'Indexed form of value_defined field';
 comment on column identifications.determination_status is 'Status of identification - can either be a percentage of certainty or a code describing the identification step in the process';
-comment on column identifications.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
 comment on column identifications.order_by is 'Integer used to order the identifications when no date entered';
-create table expertises
-       (
-        expert_ref integer not null,
-        defined_by_ordered_ids_list integer[],
-        order_by integer default 1 not null,
-        constraint unq_expertises unique (table_name, record_id, expert_ref)
-       )
-inherits (template_table_record_ref);
-comment on table expertises is 'History of expertises';
-comment on column expertises.table_name is 'Reference of table an expertise is introduced for';
-comment on column expertises.record_id is 'Id of record concerned by an expertise entry';
-comment on column expertises.defined_by_ordered_ids_list is 'Array of persons who have defined this entry - array of id fields from people table';
-comment on column expertises.expert_ref is 'Reference of expert - id field of people table';
-comment on column expertises.order_by is 'Integer used to order the experts';
+CREATE sequence class_vernacular_names_id_seq;
 create table class_vernacular_names
        (
-        id serial not null,
+        id integer DEFAULT nextval('class_vernacular_names_id_seq'),
         community varchar not null,
-        defined_by_ordered_ids_list integer[],
         constraint pk_class_vernacular_names primary key (id),
         constraint unq_class_vernacular_names unique (table_name, record_id, community)
        )
@@ -250,7 +320,6 @@ comment on column class_vernacular_names.id is 'Unique identifier of a language 
 comment on column class_vernacular_names.table_name is 'Reference of the unit table a vernacular name for a language community has to be defined - id field of table_list table';
 comment on column class_vernacular_names.record_id is 'Identifier of record a vernacular name for a language community has to be defined';
 comment on column class_vernacular_names.community is 'Language community, a unit translation is available for';
-comment on column class_vernacular_names.defined_by_ordered_ids_list is 'Array of persons ids having defined this entry';
 create table vernacular_names
        (
         vernacular_class_ref integer not null,
@@ -275,9 +344,9 @@ create table expeditions
         name_indexed varchar not null,
         name_language_full_text full_text_language,
         expedition_from_date_mask integer DEFAULT 0,
-        expedition_from_date date DEFAULT '01/01/4713BC',
+        expedition_from_date date DEFAULT '01/01/0001',
         expedition_to_date_mask integer DEFAULT 0,
-        expedition_to_date date  DEFAULT '01/01/4713BC',
+        expedition_to_date date  DEFAULT '01/01/0001',
         constraint pk_expeditions primary key (id)
        );
 comment on table expeditions is 'List of expeditions made to collect specimens';
@@ -290,78 +359,10 @@ comment on column expeditions.expedition_from_date_mask is 'Contains the Mask fl
 comment on column expeditions.expedition_from_date is 'Start date of the expedition';
 comment on column expeditions.expedition_to_date is 'End date of the expedition';
 comment on column expeditions.expedition_to_date_mask is  'Contains the Mask flag to know wich part of the date is effectively known';
-
-create table template_people
-       (
-        id serial not null,
-        is_physical boolean default true not null,
-        sub_type varchar,
-        public_class public_classes default 'public' not null,
-        formated_name varchar not null,
-        formated_name_indexed varchar not null,
-        formated_name_ts tsvector not null,
-        title varchar not null DEFAULT '',
-        family_name varchar not null,
-        given_name varchar,
-        additional_names varchar,
-        birth_date_mask integer  not null DEFAULT 0,
-        birth_date date not null DEFAULT '01/01/4713BC',
-        gender genders
-       );
-comment on table template_people is 'Template table used to describe user/people tables';
-comment on column template_people.id is 'Unique identifier of a user/person';
-comment on column template_people.is_physical is 'Type of user/person: physical or moral - true is physical, false is moral';
-comment on column template_people.sub_type is 'Used for moral user/persons: precise nature - public institution, asbl, sprl, sa,...';
-comment on column template_people.public_class is 'Tells public nature of user/person information - public is default value';
-comment on column template_people.formated_name is 'Complete user/person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
-comment on column template_people.formated_name_ts is 'tsvector form of formated_name field';
-comment on column template_people.formated_name_indexed is 'Indexed form of formated_name field';
-comment on column template_people.family_name is 'Family name for physical user/persons and Organisation name for moral user/persons';
-comment on column template_people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
-comment on column template_people.given_name is 'User/person''s given name - usually first name';
-comment on column template_people.additional_names is 'Any additional names given to user/person';
-comment on column template_people.birth_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
-comment on column template_people.birth_date is 'Birth/Creation date composed';
-comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
-create table template_people_languages
-       (
-        language_country varchar default 'en_gb' not null,
-        mother boolean default true not null,
-        prefered_language boolean default false not null
-       );
-comment on table template_people_languages is 'Template supporting users/people languages table definition';
-comment on column template_people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
-comment on column template_people_languages.mother is 'Flag telling if its mother language or not';
-comment on column template_people_languages.prefered_language is 'Flag telling which language is prefered in communications';
-create table people
-       (
-        db_people_type integer default 1 not null,
-        end_date_mask integer  not null DEFAULT 0,
-        end_date date not null DEFAULT '01/01/4713BC',
-        constraint pk_people primary key (id),
-        constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
-       )
-inherits (template_people);
-comment on table people is 'All physical and moral persons used in the application are here stored';
-comment on column people.id is 'Unique identifier of a person';
-comment on column people.is_physical is 'Type of person: physical or moral - true is physical, false is moral';
-comment on column people.sub_type is 'Used for moral persons: precise nature - public institution, asbl, sprl, sa,...';
-comment on column people.public_class is 'Tells public nature of person information - public is default value';
-comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
-comment on column people.formated_name_ts is 'tsvector form of formated_name field';
-comment on column people.formated_name_indexed is 'Indexed form of formated_name field';
-comment on column people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
-comment on column people.family_name is 'Family name for physical persons and Organisation name for moral persons';
-comment on column people.given_name is 'User/person''s given name - usually first name';
-comment on column people.additional_names is 'Any additional names given to person';
-comment on column people.birth_date is 'Day of birth/creation';
-comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
-comment on column people.gender is 'For physical persons give the gender: M or F';
-comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector, 32 preparator, 64 photographer...';
-comment on column people.end_date is 'End date';
-comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+CREATE sequence users_id_seq;
 create table users
        (
+        id integer DEFAULT nextval('users_id_seq'),
         db_user_type smallint default 1 not null,
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date)
@@ -423,11 +424,11 @@ create table multimedia
         uri varchar,
         descriptive_ts tsvector not null,
         descriptive_language_full_text full_text_language,
-        creation_date date NOT NULL DEFAULT '01/01/4713BC',
+        creation_date date NOT NULL DEFAULT '01/01/0001',
         creation_date_mask integer NOT NULL DEFAULT 0,
-        publication_date_from date DEFAULT '01/01/4713BC',
+        publication_date_from date DEFAULT '01/01/0001',
         publication_date_from_mask integer DEFAULT 0,
-        publication_date_to date NOT NULL DEFAULT '01/01/4713BC',
+        publication_date_to date NOT NULL DEFAULT '01/01/0001',
         publication_date_to_mask integer NOT NULL DEFAULT 0,
         parent_ref integer,
         path varchar DEFAULT '/' NOT NULL,
@@ -457,12 +458,10 @@ comment on column multimedia.path is 'Path of parent of the object (automaticaly
 comment on column multimedia.mime_type is 'Mime/Type of the linked digital object';
 create table template_people_users_comm_common
        (
-        id serial not null,
         person_user_ref integer not null,
         entry varchar not null
        );
 comment on table template_people_users_comm_common is 'Template table used to construct people communication tables (tel and e-mail)';
-comment on column template_people_users_comm_common.id is 'Unique identifier of a person/user communication entry';
 comment on column template_people_users_comm_common.person_user_ref is 'Reference of person/user - id field of people/users table';
 comment on column template_people_users_comm_common.entry is 'Communication entry';
 create table template_people_users_rel_common
@@ -514,10 +513,13 @@ comment on column people_relationships.person_title is 'Person title';
 comment on column people_relationships.person_user_role is 'Person role in the organization referenced';
 comment on column people_relationships.activity_period is 'Main person activity period or person activity period in the organization referenced';
 comment on column people_relationships.path is 'Hierarchical path of the organization structure';
+
+CREATE sequence people_comm_id_seq;
 create table people_comm
        (
+        id integer DEFAULT nextval('people_comm_id_seq'),
         comm_type varchar default 'phone/fax' not null,
-        tag varchar[] not null,
+        tag varchar not null,
         constraint pk_people_comm primary key (id),
         constraint unq_people_comm unique (comm_type, person_user_ref, entry),
         constraint fk_people_comm_people foreign key (person_user_ref) references people(id) on delete cascade
@@ -529,10 +531,12 @@ comment on column people_comm.person_user_ref is 'Reference of person - id field
 comment on column people_comm.comm_type is 'Type of communication table concerned: phone or e-mail';
 comment on column people_comm.entry is 'Communication entry';
 comment on column people_comm.comm_type is 'Type of communication table concerned: address, phone or e-mail';
-comment on column people_comm.tag is 'Array of descriptive tags: internet, tel, fax, pager, public, private,...';
+comment on column people_comm.tag is 'List of descriptive tags separated by , : internet, tel, fax, pager, public, private,...';
+CREATE sequence people_addresses_id_seq;
 create table people_addresses
        (
-        tag varchar[] not null,
+        id integer DEFAULT nextval('people_addresses_id_seq'),
+        tag varchar not null,
         constraint pk_people_addresses primary key (id),
         constraint unq_people_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_people_addresses_people foreign key (person_user_ref) references people(id) on delete cascade
@@ -549,11 +553,13 @@ comment on column people_addresses.locality is 'Locality';
 comment on column people_addresses.country is 'Country';
 comment on column people_addresses.region is 'Region';
 comment on column people_addresses.zip_code is 'Zip code';
-comment on column people_addresses.tag is 'Array of descriptive tags: home, work,...';
+comment on column people_addresses.tag is 'List of descriptive tags: home, work,...';
+CREATE sequence users_comm_id_seq;
 create table users_comm
        (
+        id integer DEFAULT nextval('users_comm_id_seq'),
         comm_type varchar default 'phone/fax' not null,
-        tag varchar[] not null,
+        tag varchar not null,
         constraint pk_users_comm primary key (id),
         constraint unq_users_comm unique (comm_type, person_user_ref, entry),
         constraint fk_users_comm_users foreign key (person_user_ref) references users(id) on delete cascade
@@ -565,10 +571,12 @@ comment on column users_comm.person_user_ref is 'Reference of user - id field of
 comment on column users_comm.comm_type is 'Type of communication table concerned: phone or e-mail';
 comment on column users_comm.entry is 'Communication entry';
 comment on column users_comm.comm_type is 'Type of communication table concerned: address, phone or e-mail';
-comment on column users_comm.tag is 'Array of descriptive tags: internet, tel, fax, pager, public, private,...';
+comment on column users_comm.tag is 'List of descriptive tags: internet, tel, fax, pager, public, private,...';
+CREATE sequence users_addresses_id_seq;
 create table users_addresses
        (
-        tag varchar[] not null,
+        id integer DEFAULT nextval('users_addresses_id_seq'),
+        tag varchar not null,
         constraint pk_users_addresses primary key (id),
         constraint unq_users_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_users_addresses_users foreign key (person_user_ref) references users(id) on delete cascade
@@ -588,7 +596,7 @@ comment on column users_addresses.zip_code is 'Zip code';
 comment on column users_addresses.organization_unit is 'When a physical user is in relationship with a moral one, indicates the department or unit the user is related to';
 comment on column users_addresses.person_user_role is 'User role in the organization referenced';
 comment on column users_addresses.activity_period is 'Main user activity period or user activity period in the organization referenced';
-comment on column users_addresses.tag is 'Array of descriptive tags: home, work,...';
+comment on column users_addresses.tag is 'List of descriptive tags: home, work,...';
 create table users_login_infos
        (
         user_ref integer not null,
@@ -739,8 +747,10 @@ comment on column users_coll_rights_asked.visible is 'Flag telling if the field 
 comment on column users_coll_rights_asked.motivation is 'Motivation given by asker';
 comment on column users_coll_rights_asked.asking_date_time is 'Telling when right ask was done';
 comment on column users_coll_rights_asked.with_sub_collections is 'Rights are asked on a single collection or on this collection with all the sub-collections included ?';
+CREATE sequence record_visibilities_id_seq;
 create table record_visibilities
        (
+        id integer DEFAULT nextval('record_visibilities_id_seq'),
         db_user_type smallint default 0 not null,
         user_ref integer default 0 not null,
         visible boolean default true not null,
@@ -754,8 +764,10 @@ comment on column record_visibilities.db_user_type is 'Integer is representing a
 comment on column record_visibilities.table_name is 'Reference of table concerned - id field of table_list table';
 comment on column record_visibilities.record_id is 'ID of record a visibility is defined for';
 comment on column record_visibilities.visible is 'Flag telling if record is visible or not';
+CREATE sequence users_workflow_id_seq;
 create table users_workflow
        (
+        id integer DEFAULT nextval('users_workflow'),
         user_ref integer not null,
         status varchar default 'to check' not null,
         modification_date_time update_date_time,
@@ -780,9 +792,10 @@ create table users_tables_fields_tracked
        );
 comment on table users_tables_fields_tracked is 'List fields tracked per user';
 comment on column users_tables_fields_tracked.user_ref is 'Reference of user - id field of users table';
+CREATE sequence users_tracking_id_seq;
 create table users_tracking
        (
-        id bigserial not null,
+        id integer DEFAULT nextval('users_tracking_id_seq'),
         user_ref integer not null,
         action varchar default 'insert' not null,
         modification_date_time update_date_time,
@@ -797,12 +810,14 @@ comment on column users_tracking.id is 'Unique identifier of a table track entry
 comment on column users_tracking.user_ref is 'Reference of user having made an action - id field of users table';
 comment on column users_tracking.action is 'Action done on table record: insert, update, delete';
 comment on column users_tracking.modification_date_time is 'Track date and time';
+
+-- @TODO: to be modified or not :)
 create table users_tracking_records
        (
         tracking_ref bigint not null,
         field_name varchar not null,
-        old_value varchar[],
-        new_value varchar[],
+        old_value varchar,
+        new_value varchar,
         constraint unq_users_tracking_records unique (tracking_ref, field_name),
         constraint fk_users_tracking_records_users_tracking foreign key (tracking_ref) references users_tracking(id) on delete cascade
        );
@@ -810,8 +825,10 @@ comment on table users_tracking_records is 'Track of fields modification per rec
 comment on column users_tracking_records.tracking_ref is 'Reference of tracking entry - id field of users_tracking table';
 comment on column users_tracking_records.old_value is 'Old value when an update is done - array of values when field modified is an array';
 comment on column users_tracking_records.new_value is 'New value when an update is done - array of values when field modified is an array';
+CREATE sequence collection_maintenance_id_seq;
 create table collection_maintenance
        (
+        id integer DEFAULT nextval('collection_maintenance_id_seq'),
         user_ref integer not null,
         category varchar default 'action' not null,
         action_observation varchar not null,
@@ -839,7 +856,7 @@ create table my_saved_searches
         search_criterias varchar not null,
         favorite boolean default false not null,
         modification_date_time update_date_time,
-        visible_fields_in_result varchar[] not null,
+        visible_fields_in_result varchar not null,
         constraint unq_my_saved_searches unique (user_ref, name),
         constraint fk_my_saved_searches_users foreign key (user_ref) references users(id) on delete cascade
        );
@@ -883,7 +900,7 @@ create table my_saved_specimens
        (
         user_ref integer not null,
         name varchar not null,
-        specimen_ids integer[] not null,
+        specimen_ids varchar not null,
         favorite boolean default false not null,
         modification_date_time update_date_time,
         constraint unq_my_saved_specimens unique (user_ref, name),
@@ -892,7 +909,7 @@ create table my_saved_specimens
 comment on table my_saved_specimens is 'List of specimens selection made by users - sort of suitcases for personal selections';
 comment on column my_saved_specimens.user_ref is 'Reference of user - id field of users table';
 comment on column my_saved_specimens.name is 'Name given to this selection by user';
-comment on column my_saved_specimens.specimen_ids is 'Array of ids of all specimens selected';
+comment on column my_saved_specimens.specimen_ids is 'list of ids of all specimens selected';
 comment on column my_saved_specimens.favorite is 'Flag telling the selection is one of the favorites or not';
 comment on column my_saved_specimens.modification_date_time is 'Last update date and time';
 create table template_classifications
@@ -904,7 +921,7 @@ create table template_classifications
         level_ref integer,
         status varchar default 'valid' not null,
         path varchar default '/' not null,
-	parent_ref integer default 0 not null
+        parent_ref integer default 0 not null
        );
 comment on table template_classifications is 'Template table used to construct every common data in each classifications tables (taxonomy, chronostratigraphy, lithostratigraphy,...)';
 comment on column template_classifications.name is 'Classification unit name';
@@ -1031,7 +1048,7 @@ create table taxonomy
         constraint pk_taxonomy primary key (id),
         constraint unq_taxonomy unique (path, name_indexed, level_ref),
         constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-	constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id) on delete cascade,
+        constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_domain_taxonomy foreign key (domain_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_kingdom_taxonomy foreign key (kingdom_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_super_phylum_taxonomy foreign key (super_phylum_ref) references taxonomy(id) on delete cascade,
@@ -1208,8 +1225,10 @@ comment on column taxonomy.chimera_hybrid_pos is 'Chimera or Hybrid informations
 comment on column taxonomy.extinct is 'Tells if taxonomy is extinct or not';
 comment on column taxonomy.path is 'Hierarchy path (/ for root)';
 comment on column taxonomy.parent_ref is 'Id of parent - id field from table itself';
+CREATE sequence people_aliases_id_seq;
 create table people_aliases
        (
+        id integer DEFAULT nextval('people_aliases_id_seq'),
         person_ref integer not null,
         collection_ref integer default 0,
         person_name varchar not null,
@@ -1250,7 +1269,7 @@ create table chronostratigraphy
         constraint pk_chronostratigraphy primary key (id),
         constraint unq_chronostratigraphy unique (path, name_indexed, level_ref),
         constraint fk_chronostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-	constraint fk_chronostratigraphy_parent_ref_chronostratigraphy foreign key (parent_ref) references chronostratigraphy(id) on delete cascade,
+        constraint fk_chronostratigraphy_parent_ref_chronostratigraphy foreign key (parent_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_eon_chronostratigraphy foreign key (eon_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_era_chronostratigraphy foreign key (era_ref) references chronostratigraphy(id) on delete cascade,
         constraint fk_chronostratigraphy_sub_era_chronostratigraphy foreign key (sub_era_ref) references chronostratigraphy(id) on delete cascade,
@@ -1310,7 +1329,7 @@ create table lithostratigraphy
         constraint pk_lithostratigraphy primary key (id),
         constraint unq_lithostratigraphy unique (path, name_indexed, level_ref),
         constraint fk_lithostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-	constraint fk_lithostratigraphy_parent_ref_lithostratigraphy foreign key (parent_ref) references lithostratigraphy(id) on delete cascade,
+        constraint fk_lithostratigraphy_parent_ref_lithostratigraphy foreign key (parent_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_group_lithostratigraphy foreign key (group_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_formation_lithostratigraphy foreign key (formation_ref) references lithostratigraphy(id) on delete cascade,
         constraint fk_lithostratigraphy_member_lithostratigraphy foreign key (member_ref) references lithostratigraphy(id) on delete cascade,
@@ -1362,7 +1381,7 @@ create table mineralogy
         constraint pk_mineralogy primary key (id),
         constraint unq_mineralogy unique (path, name_indexed, level_ref),
         constraint fk_mineralogy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-	constraint fk_mineralogy_parent_ref_mineralogy foreign key (parent_ref) references mineralogy(id) on delete cascade,
+        constraint fk_mineralogy_parent_ref_mineralogy foreign key (parent_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_class_mineralogy foreign key (unit_class_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_division_mineralogy foreign key (unit_division_ref) references mineralogy(id) on delete cascade,
         constraint fk_mineralogy_unit_family_mineralogy foreign key (unit_family_ref) references mineralogy(id) on delete cascade,
@@ -1408,12 +1427,12 @@ create table lithology
         unit_rock_indexed classifications_names,
         constraint pk_lithology primary key (id),
         constraint unq_lithology unique (path, name_indexed, level_ref),
-	constraint fk_lithology_parent_ref_lithology foreign key (parent_ref) references lithology(id) on delete cascade,
+        constraint fk_lithology_parent_ref_lithology foreign key (parent_ref) references lithology(id) on delete cascade,
         constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-	constraint fk_lithology_unit_main_group_ref_lithology foreign key (unit_main_group_ref) references lithology(id) on delete cascade,
-	constraint fk_lithology_unit_group_ref_lithology foreign key (unit_group_ref) references lithology(id) on delete cascade,
-	constraint fk_lithology_unit_sub_group_ref_lithology foreign key (unit_sub_group_ref) references lithology(id) on delete cascade,
-	constraint fk_lithology_unit_rock_ref_lithology foreign key (unit_rock_ref) references lithology(id) on delete cascade
+        constraint fk_lithology_unit_main_group_ref_lithology foreign key (unit_main_group_ref) references lithology(id) on delete cascade,
+        constraint fk_lithology_unit_group_ref_lithology foreign key (unit_group_ref) references lithology(id) on delete cascade,
+        constraint fk_lithology_unit_sub_group_ref_lithology foreign key (unit_sub_group_ref) references lithology(id) on delete cascade,
+        constraint fk_lithology_unit_rock_ref_lithology foreign key (unit_rock_ref) references lithology(id) on delete cascade
        )
 inherits (template_classifications);
 comment on table lithology is 'List of lithologic units';
@@ -1504,7 +1523,7 @@ create table specimens
         host_relationship varchar,
         acquisition_category varchar default 'expedition' not null,
         acquisition_date_mask integer DEFAULT 0,
-        acquisition_date date  DEFAULT '01/01/4713BC',
+        acquisition_date date  DEFAULT '01/01/0001',
         collecting_method varchar,
         collecting_tool varchar,
         specimen_count_min integer default 1 not null,
@@ -1553,9 +1572,10 @@ comment on column specimens.category is 'Type of specimen encoded: a physical ob
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
 comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
 comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxonomy table';
-
+CREATE sequence codes_id_seq;
 create table codes
        (
+        id integer DEFAULT nextval('codes_id_seq'),
         code_category varchar default 'main' not null,
         code_prefix varchar,
         code integer,
@@ -1669,8 +1689,10 @@ comment on column specimen_parts_insurances.specimen_part_ref is 'Reference of s
 comment on column specimen_parts_insurances.insurance_year is 'Reference year for insurance subscription';
 comment on column specimen_parts_insurances.insurance_value is 'Insurance value';
 comment on column specimen_parts_insurances.insurer_ref is 'Reference of the insurance firm an insurance have been subscripted at';
+CREATE sequence associated_multimedia_id_seq;
 create table associated_multimedia
        (
+        id integer DEFAULT nextval('associated_multimedia_id_seq'),
         multimedia_ref integer not null,
         constraint unq_associated_multimedia unique (multimedia_ref, table_name, record_id),
         constraint fk_associated_multimedia_multimedia foreign key (multimedia_ref) references multimedia(id) on delete cascade
@@ -1689,7 +1711,6 @@ create table specimens_accompanying
         form varchar,
         quantity real,
         unit varchar default '%' not null,
-        defined_by_ordered_ids_list integer[],
         constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
         constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint fk_specimens_accompanying_mineralogy foreign key (mineral_ref) references mineralogy(id),
@@ -1701,6 +1722,5 @@ comment on column specimens_accompanying.mineral_ref is 'Reference of accompanyi
 comment on column specimens_accompanying.type is 'Type of accompanying specimen: main or secondary';
 comment on column specimens_accompanying.quantity is 'Quantity of accompanying specimens';
 comment on column specimens_accompanying.unit is 'Unit used for quantity of accompanying specimen presence';
-comment on column specimens_accompanying.defined_by_ordered_ids_list is 'Array of persons ids having defined these accompanying specimen';
 comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxonomy table';
 comment on column specimens_accompanying.form is 'Form of accompanying specimen presence: colony, aggregate, isolated,...';

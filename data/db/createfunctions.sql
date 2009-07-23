@@ -3278,7 +3278,6 @@ BEGIN
 	DELETE FROM comments WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM catalogue_properties WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM identifications WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM expertises WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM class_vernacular_names WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM record_visibilities WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM users_workflow WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
@@ -3304,39 +3303,19 @@ $$
 $$
 LANGUAGE sql immutable;
 
-/**
-* fct_clear_referencedPeople
-* Clear referenced people id for a table on delete record
-*/
-CREATE OR REPLACE FUNCTION fct_clear_referencedPeople() RETURNS TRIGGER
-AS $$
-BEGIN
-	UPDATE catalogue_relationships SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
-		
-	UPDATE catalogue_people SET people_ordered_ids_list = fct_remove_array_elem(people_ordered_ids_list,OLD.id),
-		defined_by_ordered_ids_list =  fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE people_ordered_ids_list @> ARRAY[OLD.id] OR defined_by_ordered_ids_list @> ARRAY[OLD.id];
-	
-	UPDATE catalogue_properties SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
-	
-	UPDATE identifications SET identifiers_ordered_ids_list = fct_remove_array_elem(identifiers_ordered_ids_list,OLD.id),
-		defined_by_ordered_ids_list =  fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE identifiers_ordered_ids_list @> ARRAY[OLD.id] OR defined_by_ordered_ids_list @> ARRAY[OLD.id];
-	
-	UPDATE expertises SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];		
-	
-	UPDATE class_vernacular_names SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];	
-	
-	UPDATE specimens_accompanying SET defined_by_ordered_ids_list = fct_remove_array_elem(defined_by_ordered_ids_list,OLD.id)
-		WHERE defined_by_ordered_ids_list @> ARRAY[OLD.id];
 
-	RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION fct_array_find(IN in_array anyarray, IN elem anyelement,OUT item_order integer)
+AS $$
+    select s from generate_series(1,array_upper($1, 1)) as s where $1[s] = $2;
+$$
+LANGUAGE sql immutable;
+
+CREATE OR REPLACE FUNCTION fct_array_find(IN in_array varchar, IN elem anyelement,OUT item_order integer)
+AS $$
+    select fct_array_find(string_to_array($1,','), $2::text);
+$$
+LANGUAGE sql immutable;
+
 
 /**
 fct_cpy_toFullText
@@ -5765,7 +5744,7 @@ DECLARE
 BEGIN
 	/** AUTHOR FLAG IS 2 **/
 	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
-		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ordered_ids_list @> ARRAY[NEW.id];
+		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='authors';
 		IF still_referenced THEN
 			RAISE EXCEPTION 'Author still used as author.';
 		END IF;
@@ -5801,12 +5780,12 @@ BEGIN
 	IF NEW.people_type = 'authors' THEN
 	
 		IF TG_OP ='UPDATE' THEN
-			IF OLD.people_ordered_ids_list = NEW.people_ordered_ids_list THEN 
+			IF OLD.people_ref = NEW.people_ref THEN 
 				RETURN NEW;
 			END IF;
 		END IF;
 	
-		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id IN( SELECT * from  fct_explode_array(NEW.people_ordered_ids_list));
+		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id=NEW.people_ref;
 		
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Author must be defined as author.';
@@ -5884,8 +5863,8 @@ Remove specimen in saved specimen.
 CREATE OR REPLACE FUNCTION fct_clr_SavedSpecimens() RETURNS TRIGGER
 As $$
 BEGIN
-	UPDATE my_saved_specimens SET specimen_ids = fct_remove_array_elem(specimen_ids,OLD.id)
-		WHERE specimen_ids @> ARRAY[OLD.id];
+	UPDATE my_saved_specimens SET specimen_ids = array_to_string(fct_remove_array_elem(string_to_array(specimen_ids,',')::integer[],OLD.id),',')
+		WHERE string_to_array(specimen_ids,',')::integer[] @> ARRAY[OLD.id];
 	RETURN OLD;
 END;
 $$
@@ -6318,6 +6297,36 @@ $$
 		END::real;
 $$;
 
+
+/*
+** convert_to_unified
+* convert the unit to the unified form
+*/
+CREATE OR REPLACE FUNCTION convert_to_unified (IN property varchar, IN property_unit varchar, IN property_type varchar) RETURNS varchar
+language plpgsql
+AS
+$$
+BEGIN 
+    IF property is NULL THEN
+        RETURN NULL;
+    END IF;
+    
+    IF property_type = 'speed' THEN
+        RETURN fct_cpy_speed_conversion(property::real, property_unit)::text;
+    END IF;
+
+    IF property_type = 'temperature' AND property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
+        RETURN fct_cpy_temperature_conversion(property::real, property_unit)::text;
+    END IF;
+    
+    IF property_type = 'length' AND property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
+        RETURN fct_cpy_length_conversion(property::real, property_unit)::text;
+    END IF;
+
+    RETURN  property;
+END;
+$$;
+
 /*
 ** fct_cpy_unified_values
 ** Used as a trigger in catalogue_properties table to transform values into unified common value
@@ -6326,53 +6335,23 @@ $$;
 CREATE OR REPLACE FUNCTION fct_cpy_unified_values () RETURNS TRIGGER
 language plpgsql
 AS
+
 $$
+DECLARE
+	property_line catalogue_properties%ROWTYPE;
 BEGIN
-	IF NEW.property_sub_type_indexed = 'speed' THEN
-		IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
-			SELECT array(select fct_cpy_speed_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
-		END IF;
-		IF NEW.property_max is not null THEN
-			SELECT array(select fct_cpy_speed_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
-		END IF;
-		IF NEW.property_accuracy is not null THEN
-			SELECT array(select fct_cpy_speed_conversion(s::real, NEW.property_accuracy_unit) FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
-		END IF;
-	ELSIF NEW.property_sub_type_indexed = 'temperature' THEN
-		IF NEW.property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
-			IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
-				SELECT array(select fct_cpy_temperature_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
-			END IF;
-			IF NEW.property_max is not null THEN
-				SELECT array(select fct_cpy_temperature_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
-			END IF;
-		END IF;
-		IF NEW.property_accuracy_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
-			IF NEW.property_accuracy is not null THEN
-				SELECT array(select fct_cpy_temperature_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
-			END IF;
-		END IF;
-	ELSIF NEW.property_sub_type_indexed = 'length' THEN
-		IF NEW.property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
-			IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
-				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_min) as s) INTO NEW.property_min_unified;
-			END IF;
-			IF NEW.property_max is not null THEN
-				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_max) as s) INTO NEW.property_max_unified;
-			END IF;
-		END IF;
-		IF NEW.property_accuracy_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
-			IF NEW.property_accuracy is not null THEN
-				SELECT array(select fct_cpy_length_conversion(s::real, NEW.property_unit)::text FROM fct_explode_array(NEW.property_accuracy) as s) INTO NEW.property_accuracy_unified;
-			END IF;
-		END IF;
-	ELSE
-		IF NEW.property_min <> ARRAY[NULL::varchar] AND NEW.property_min is not null THEN
-			NEW.property_min_unified := NEW.property_min;
-		END IF;
-		NEW.property_max_unified := NEW.property_max;
-		NEW.property_accuracy_unified := NEW.property_accuracy;
-	END IF;
+    IF TG_TABLE_NAME ='properties_values' THEN
+        SELECT * INTO property_line FROM  catalogue_properties WHERE id=NEW.property_ref;
+        NEW.property_min_unified := convert_to_unified(NEW.property_min,  property_line.property_unit, property_line.property_sub_type_indexed);
+        NEW.property_max_unified := convert_to_unified(NEW.property_max,  property_line.property_unit, property_line.property_sub_type_indexed);
+        NEW.property_accuracy_unified := convert_to_unified(NEW.property_accuracy::varchar,  property_line.property_accuracy_unit, property_line.property_sub_type_indexed)::real;
+    ELSE
+        UPDATE properties_values SET
+            property_min_unified = convert_to_unified(property_min, NEW.property_unit, NEW.property_sub_type_indexed),
+            property_max_unified = convert_to_unified(property_max,  NEW.property_unit, NEW.property_sub_type_indexed),
+            property_accuracy_unified = convert_to_unified(property_accuracy::varchar,  NEW.property_accuracy_unit, NEW.property_sub_type_indexed)::real
+            WHERE property_ref = NEW.id;
+    END IF;
 	RETURN NEW;
 END;
 $$;

@@ -11,9 +11,9 @@ SELECT lives_ok('INSERT INTO people_aliases (table_name, record_id, person_ref, 
 
 SELECT lives_ok('INSERT INTO users_tracking (table_name, record_id,user_ref, modification_date_time)
 				VALUES (''taxonomy'',69,1,NOW())');
-SELECT lives_ok('INSERT INTO catalogue_relationships (table_name, record_id_1, record_id_2, defined_by_ordered_ids_list)
-	VALUES (''taxonomy'', 0, 1, ARRAY[1,2,3])');
-SELECT throws_ok('INSERT INTO catalogue_relationships (table_name, record_id_1, record_id_2, defined_by_ordered_ids_list)
-	VALUES (''taxonomy'', 0, 69, ARRAY[1])');
+SELECT lives_ok('INSERT INTO catalogue_relationships (table_name, record_id_1, record_id_2)
+	VALUES (''taxonomy'', 0, 1)');
+SELECT throws_ok('INSERT INTO catalogue_relationships (table_name, record_id_1, record_id_2)
+	VALUES (''taxonomy'', 0, 69)');
 SELECT * FROM finish();
 ROLLBACK;

@@ -2,7 +2,7 @@
 \unset ECHO
 \i unit_launch.sql
 SELECT plan(26);
-select count(*) from people_languages;
+--select count(*) from people_languages;
 SELECT ok(fct_chk_one_pref_language(1, true), 'Table people_languages. No prefered language yet -> is ok');
 SELECT ok(fct_chk_one_pref_language(1, false), 'Table people languages. No prefered language yet -> is ok');
 SELECT ok(fct_chk_one_pref_language(1, true, 'users'), 'Table users_languages. No prefered language yet -> is ok');

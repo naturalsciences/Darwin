@@ -280,11 +280,7 @@ CREATE TRIGGER trg_clr_referenceRecord_specimenparts AFTER DELETE
 
 CREATE TRIGGER trg_clr_referenceRecord_specimensaccompanying AFTER DELETE 
 	ON specimens_accompanying FOR EACH ROW
-	EXECUTE PROCEDURE fct_clear_referencedRecord();	
-
-CREATE TRIGGER trg_clear_referencedPeople AFTER DELETE 
-	ON people FOR EACH ROW
-	EXECUTE PROCEDURE fct_clear_referencedPeople();
+	EXECUTE PROCEDURE fct_clear_referencedRecord();
 	
 /**** BEGIN _TS *****/
 CREATE TRIGGER trg_cpy_toFullText_comments BEFORE INSERT OR UPDATE
@@ -371,6 +367,10 @@ CREATE TRIGGER trg_trk_log_table AFTER INSERT OR UPDATE OR  DELETE
 /*
 ** Trigger aimed at calculating unified values
 */
+
+CREATE TRIGGER trg_cpy_unified_values BEFORE INSERT OR UPDATE
+	ON properties_values FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_unified_values();
 
 CREATE TRIGGER trg_cpy_unified_values BEFORE INSERT OR UPDATE
 	ON catalogue_properties FOR EACH ROW
