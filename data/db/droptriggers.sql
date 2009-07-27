@@ -47,7 +47,7 @@ DROP TRIGGER trg_clr_referenceRecord_specimenindividuals ON specimen_individuals
 DROP TRIGGER trg_clr_referenceRecord_specimenparts ON specimen_parts;
 DROP TRIGGER trg_clr_referenceRecord_specimensaccompanying ON specimens_accompanying;
 
-DROP TRIGGER trg_clear_referencedPeople ON people;
+--DROP TRIGGER trg_clear_referencedPeople ON people;
 
 DROP TRIGGER trg_cpy_toFullText_comments ON comments;
 DROP TRIGGER trg_cpy_toFullText_identifications ON identifications;
@@ -71,7 +71,6 @@ DROP TRIGGER trg_cpy_FormattedName ON users;
 DROP TRIGGER trg_clr_SavedSpecimense ON specimens;
 
 /*** Copy Hierarchy from parents triggers ***/
-
 DROP TRIGGER trg_cpy_hierarchy_from_parents_chronostratigraphy ON chronostratigraphy;
 DROP TRIGGER trg_cpy_hierarchy_from_parents_lithostratigraphy ON lithostratigraphy;
 DROP TRIGGER trg_cpy_hierarchy_from_parents_mineralogy ON mineralogy;
