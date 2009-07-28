@@ -111,4 +111,5 @@
  grant select on "darwin1"."tbl_batch_collector" to darwin2;
  grant select on "darwin1"."tbl_maps_authors" to darwin2;
  grant select on "darwin1"."tbl_applications" to darwin2;
+ grant update, delete, insert on "darwin1"."tbl_location_syn" to darwin2;
 

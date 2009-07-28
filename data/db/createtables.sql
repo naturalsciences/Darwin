@@ -825,7 +825,7 @@ create sequence users_workflow_id_seq;
 
 create table users_workflow
        (
-        id integer not null default nextval('users_workflow'),
+        id integer not null default nextval('users_workflow_id_seq'),
         user_ref integer not null,
         status varchar not null default 'to check',
         modification_date_time update_date_time,
