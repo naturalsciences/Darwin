@@ -292,10 +292,8 @@ create table properties_values
       (
         id integer not null default nextval('properties_values_id_seq'),
         property_ref integer not null,
-        property_min varchar not null,
-        property_min_unified varchar not null default '',
-        property_max varchar,
-        property_max_unified varchar,
+        property_value varchar not null,
+        property_value_unified varchar not null default '',
         property_accuracy real,
         property_accuracy_unified real,
         constraint pk_properties_values primary key (id),
@@ -303,10 +301,8 @@ create table properties_values
       );
 comment on table properties_values is 'All properties values seen in catalogue_properties';
 comment on column properties_values.id is 'Unique identifier of a property value';
-comment on column properties_values.property_min is 'value for the property type and subtype selected - in case of range of values store the minimum value or the mean minimum value - in case of range of all values, stores the whole range';
-comment on column properties_values.property_min_unified is 'Unified version of property_min value -> means that the value is converted into a common unit allowing comparisons';
-comment on column properties_values.property_max is 'value for the property type and subtype selected - in case of range of values store the maximum value or the mean maximum value - in case of range of all values, stores nothing';
-comment on column properties_values.property_max_unified is 'Unified version of property_max value -> means that the value is converted into a common unit allowing comparisons';
+comment on column properties_values.property_value is 'Value for the property type and subtype selected';
+comment on column properties_values.property_value_unified is 'Unified version of property_value -> means that the value is converted into a common unit allowing comparisons';
 comment on column properties_values.property_accuracy is 'Accuracy of property measurement';
 comment on column properties_values.property_accuracy_unified is 'Unified version of accuracy on property or sub property value -> means that the value is converted into a common unit allowing comparisons';
 

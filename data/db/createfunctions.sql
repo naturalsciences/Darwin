@@ -6292,7 +6292,7 @@ $$
 					WHEN strpos($2, '/') > 0 THEN
 						fct_cpy_length_conversion($1, substr($2, 0, strpos($2, '/')))/fct_cpy_time_conversion(1, substr($2, strpos($2, '/')+1))
 					ELSE
-						NULL
+						$1
 				END
 		END::real;
 $$;
@@ -6342,13 +6342,11 @@ DECLARE
 BEGIN
     IF TG_TABLE_NAME ='properties_values' THEN
         SELECT * INTO property_line FROM  catalogue_properties WHERE id=NEW.property_ref;
-        NEW.property_min_unified := convert_to_unified(NEW.property_min,  property_line.property_unit, property_line.property_sub_type_indexed);
-        NEW.property_max_unified := convert_to_unified(NEW.property_max,  property_line.property_unit, property_line.property_sub_type_indexed);
+        NEW.property_value_unified := convert_to_unified(NEW.property_value,  property_line.property_unit, property_line.property_sub_type_indexed);
         NEW.property_accuracy_unified := convert_to_unified(NEW.property_accuracy::varchar,  property_line.property_accuracy_unit, property_line.property_sub_type_indexed)::real;
     ELSE
         UPDATE properties_values SET
-            property_min_unified = convert_to_unified(property_min, NEW.property_unit, NEW.property_sub_type_indexed),
-            property_max_unified = convert_to_unified(property_max,  NEW.property_unit, NEW.property_sub_type_indexed),
+            property_value_unified = convert_to_unified(property_value, NEW.property_unit, NEW.property_sub_type_indexed),
             property_accuracy_unified = convert_to_unified(property_accuracy::varchar,  NEW.property_accuracy_unit, NEW.property_sub_type_indexed)::real
             WHERE property_ref = NEW.id;
     END IF;
