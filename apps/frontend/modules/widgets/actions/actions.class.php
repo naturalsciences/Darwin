@@ -51,7 +51,7 @@ class widgetsActions extends sfActions
 
   public function executeReloadContent(sfWebRequest $request)
   {
-    return $this->renderComponent('boardwidget',$request->getParameter('widget'));
+    return $this->renderComponent($request->getParameter('category','board').'widget',$request->getParameter('widget'));
   }
 
 }

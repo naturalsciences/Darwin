@@ -4,5 +4,17 @@
  */
 class MySavedSpecimensTable extends Doctrine_Table
 {
+  public function addUserOrder(Doctrine_Query $q = null,$user)
+  {
+    if (is_null($q))
+    {
+        $q = Doctrine_Query::create()
+            ->from('MySavedSpecimens s');
+    }
+    $alias = $q->getRootAlias();
 
+    $q->andWhere($alias . '.user_ref = ?', $user)
+        ->orderBy($alias . '.favorite DESC');
+    return $q;
+    }
 }
