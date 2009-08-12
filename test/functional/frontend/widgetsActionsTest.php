@@ -85,5 +85,80 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',2)->
     checkElement('.widget_content.hidden',1)->
+  end()->
+  
+//-----------------------
+  info('4 - ChangeOrder')->
+  get('/board/index')->
+  with('response')->begin()->
+    checkElement('.board_col:first .widget',2)->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')-> //First widget
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My Saved Specimens')->//Second widget
+  end()->
+  get('/widgets/changeOrder?category=board&col1=savedSpecimens,savedSearch&col2=')->
+  with('response')->begin()->
+    isStatusCode(200)->
+  end()->
+  get('/board/index')->
+  with('response')->begin()->
+    checkElement('.board_col:first .widget',2)->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Specimens')-> //First widget
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My Saved Searches')->//Second widget
+  end()->
+  
+  
+  info('4.1 - change everybody to the 2th col')->
+  get('/widgets/changeOrder?category=board&col2=savedSearch,savedSpecimens&col1=')-> // RE set to the previous position in col2
+  with('response')->begin()->
+    isStatusCode(200)->
+  end()->
+  get('/board/index')->
+  with('response')->begin()->
+    checkElement('.board_col:first .widget',0)->
+    checkElement('.board_col:last .widget',2)->
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Searches')-> //First widget
+    checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','My Saved Specimens')->//Second widget
+  end()->
+  
+  
+  info('4.2 - set 1 widget in each col')->
+  get('/widgets/changeOrder?category=board&col1=savedSearch&col2=savedSpecimens')-> // set only one in each col
+  with('response')->begin()->
+    isStatusCode(200)->
+  end()->
+  get('/board/index')->
+  with('response')->begin()->
+    checkElement('.board_col:first .widget',1)->
+    checkElement('.board_col:last .widget',1)->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')-> 
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Specimens')->
+  end()->
+
+
+  info('4.3 - no change when this is another category')->
+  get('/widgets/changeOrder?category=specimen&col1=savedSearch&col2=savedSpecimens')-> // set only one in each col
+  with('response')->begin()->
+    isStatusCode(200)->
+  end()->
+  get('/board/index')->
+  with('response')->begin()->
+    checkElement('.board_col:first .widget',1)->
+    checkElement('.board_col:last .widget',1)->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')-> 
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Specimens')->
+  end()->
+
+
+  info('4.4 - not represented is just not changed')->
+  get('/widgets/changeOrder?category=board&col1=savedSearch&col2=')->
+  with('response')->begin()->
+    isStatusCode(200)->
+  end()->
+  get('/board/index')->
+  with('response')->begin()->
+    checkElement('.board_col:first .widget',1)->
+    checkElement('.board_col:last .widget',1)->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')->
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Specimens')->
   end()
 ;
