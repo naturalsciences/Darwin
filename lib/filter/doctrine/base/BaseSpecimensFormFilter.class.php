@@ -30,7 +30,7 @@ class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
       'host_relationship'        => new sfWidgetFormFilterInput(),
       'acquisition_category'     => new sfWidgetFormFilterInput(),
       'acquisition_date_mask'    => new sfWidgetFormFilterInput(),
-      'acquisition_date'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'acquisition_date'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'collecting_method'        => new sfWidgetFormFilterInput(),
       'collecting_tool'          => new sfWidgetFormFilterInput(),
       'specimen_count_min'       => new sfWidgetFormFilterInput(),

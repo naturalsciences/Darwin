@@ -14,7 +14,7 @@ class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'specimen_individual_ref' => new sfWidgetFormFilterInput(),
+      'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => 'SpecimenIndividuals', 'add_empty' => true)),
       'specimen_part'           => new sfWidgetFormFilterInput(),
       'complete'                => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'building'                => new sfWidgetFormFilterInput(),
@@ -34,7 +34,7 @@ class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'specimen_individual_ref' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'SpecimenIndividuals', 'column' => 'id')),
       'specimen_part'           => new sfValidatorPass(array('required' => false)),
       'complete'                => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'building'                => new sfValidatorPass(array('required' => false)),
@@ -69,7 +69,7 @@ class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                      => 'Number',
-      'specimen_individual_ref' => 'Number',
+      'specimen_individual_ref' => 'ForeignKey',
       'specimen_part'           => 'Text',
       'complete'                => 'Boolean',
       'building'                => 'Text',

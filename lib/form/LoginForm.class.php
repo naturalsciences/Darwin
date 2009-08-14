@@ -17,7 +17,6 @@ class LoginForm extends sfForm
     ));
 
     $this->widgetSchema->setNameFormat('login[%s]');
-    $this->widgetSchema->setFormFormatterName('list');
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkPassword')))
     );

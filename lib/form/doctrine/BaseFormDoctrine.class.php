@@ -10,5 +10,6 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
 {
   public function setup()
   {
+    sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
 }

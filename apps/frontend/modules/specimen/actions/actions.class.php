@@ -21,4 +21,17 @@ class specimenActions extends sfActions
       ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->getWidgets('specimen_widget');
   }
+  
+  public function executeSubmit(sfWebRequest $request)
+  {
+    $this->form = new SpecimensForm();
+    $this->forward404Unless($request->isMethod('post'));
+    $this->form->bind($request->getParameter('specimen'));
+    if ($this->form->isValid())
+    {
+        $this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
+    }
+    //$this->forward('specimen','index');
+    return $this->renderText(  $this->form);
+  }
 }

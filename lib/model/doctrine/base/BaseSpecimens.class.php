@@ -68,32 +68,26 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('gtu_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('taxon_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('litho_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('chrono_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('lithology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('mineral_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('identification_qual', 'string', null, array(
@@ -104,12 +98,10 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('identification_taxon_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('host_taxon_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('host_specimen_ref', 'integer', null, array(
@@ -120,17 +112,14 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('acquisition_category', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
              'default' => 'expedition',
              ));
         $this->hasColumn('acquisition_date_mask', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('acquisition_date', 'date', null, array(
              'type' => 'date',
-             'notnull' => true,
              'default' => '0001-01-01',
              ));
         $this->hasColumn('collecting_method', 'string', null, array(
@@ -141,27 +130,22 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('specimen_count_min', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => '1',
              ));
         $this->hasColumn('specimen_count_max', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
              'default' => '1',
              ));
         $this->hasColumn('station_visible', 'boolean', null, array(
              'type' => 'boolean',
-             'notnull' => true,
              'default' => true,
              ));
         $this->hasColumn('multimedia_visible', 'boolean', null, array(
              'type' => 'boolean',
-             'notnull' => true,
              'default' => true,
              ));
         $this->hasColumn('category', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
              'default' => 'physical',
              ));
     }

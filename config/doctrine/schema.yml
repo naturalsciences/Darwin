@@ -917,28 +917,28 @@ Specimens:
         id: { type: integer, primary: true, autoincrement: true },
         collection_ref: { type: integer, notnull: true }
         expedition_ref: { type: integer}
-        gtu_ref: { type: integer, notnull: true, default: 0}
-        taxon_ref: { type: integer, notnull: true, default: 0}
-        litho_ref: { type: integer, notnull: true, default: 0}
-        chrono_ref: { type: integer, notnull: true, default: 0}
-        lithology_ref: { type: integer, notnull: true, default: 0}
-        mineral_ref: { type: integer, notnull: true, default: 0}
+        gtu_ref: { type: integer, default: 0}
+        taxon_ref: { type: integer, default: 0}
+        litho_ref: { type: integer, default: 0}
+        chrono_ref: { type: integer, default: 0}
+        lithology_ref: { type: integer, default: 0}
+        mineral_ref: { type: integer, default: 0}
         identification_qual: { type: string}
         sp: { type: string}
-        identification_taxon_ref: { type: integer, notnull: true, default: 0}
-        host_taxon_ref: { type: integer, notnull: true, default: 0}
+        identification_taxon_ref: { type: integer, default: 0}
+        host_taxon_ref: { type: integer, default: 0}
         host_specimen_ref: { type: integer}
         host_relationship: { type: string}
-        acquisition_category: { type: string, notnull: true, default: expedition}
-        acquisition_date_mask: { type: integer, notnull: true, default:0}
-        acquisition_date: { type: date, notnull: true, default: '0001-01-01'}
+        acquisition_category: { type: string, default: expedition}
+        acquisition_date_mask: { type: integer, default:0}
+        acquisition_date: { type: date, default: '0001-01-01'}
         collecting_method: { type: string}
         collecting_tool: { type: string}
-        specimen_count_min: { type: integer, notnull: true, default: 1}
-        specimen_count_max: { type: integer, notnull: true, default: 1}
-        station_visible: { type: boolean, notnull: true, default: true}
-        multimedia_visible: { type: boolean, notnull: true, default: true}
-        category: { type: string, notnull: true, default: physical}
+        specimen_count_min: { type: integer, default: 1}
+        specimen_count_max: { type: integer, default: 1}
+        station_visible: { type: boolean, default: true}
+        multimedia_visible: { type: boolean, default: true}
+        category: { type: string, default: physical}
     relations:
         Collections:
             local: collection_ref

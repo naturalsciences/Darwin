@@ -13,7 +13,7 @@ class BaseSpecimenPartsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                      => new sfWidgetFormInputHidden(),
-      'specimen_individual_ref' => new sfWidgetFormInput(),
+      'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => 'SpecimenIndividuals', 'add_empty' => false)),
       'specimen_part'           => new sfWidgetFormTextarea(),
       'complete'                => new sfWidgetFormInputCheckbox(),
       'building'                => new sfWidgetFormTextarea(),
@@ -34,7 +34,7 @@ class BaseSpecimenPartsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                      => new sfValidatorDoctrineChoice(array('model' => 'SpecimenParts', 'column' => 'id', 'required' => false)),
-      'specimen_individual_ref' => new sfValidatorInteger(),
+      'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('model' => 'SpecimenIndividuals')),
       'specimen_part'           => new sfValidatorString(array('max_length' => 2147483647)),
       'complete'                => new sfValidatorBoolean(),
       'building'                => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),

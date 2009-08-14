@@ -10,6 +10,23 @@
  */
 class specimenwidgetComponents extends sfComponents
 {
+
+  public function executeRefCollection()
+  {
+//     $this->collections = Doctrine::getTable('Collections')->findAll();
+    $this->form = new SpecimensForm();
+  }
+
+  public function executeAcquisitionCategory()
+  {
+    $this->form = new SpecimensForm();
+  }
+
+  public function executeSpecimenCount()
+  {
+    $this->form = new SpecimensForm();
+  }
+
   public function executeLinkTaxon()
   {}
 

@@ -124,3 +124,27 @@ MyPreferences:
         order_by: 2
         opened: false
         visible: false
+    u1ws3:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: refCollection
+        order_by: 2
+        opened: false
+        visible: false
+    u1ws4:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: acquisitionCategory
+        order_by: 2
+        opened: false
+        visible: false
+    u1ws5:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: specimenCount
+        order_by: 2
+        opened: false
+        visible: false

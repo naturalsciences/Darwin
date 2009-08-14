@@ -20,7 +20,7 @@ var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
 				<!-- the element that will be scrolled during the effect -->
 				<div class="scrollContainer">
 					<div class="panel" id="intro">
-					
+					<form action="<?php echo url_for('specimen/submit') ?>" method="POST">
 					
 					
   <ul class="board_col">
@@ -46,6 +46,7 @@ var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
       <ul class="board_col">
       <?php endif;?>
   </ul>
+  <input type="submit" value="Submit" />
                     </div>
                     <div class="panel"> <a href="#" onclick="$('#submit').trigger('click');return false;">Click here</a></div>
 					<div class="panel"> How it Works </div>
