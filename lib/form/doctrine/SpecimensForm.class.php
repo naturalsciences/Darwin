@@ -18,12 +18,17 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema->setNameFormat('specimen[%s]');
     $this->widgetSchema['collection_ref']->setOption('add_empty', true);
     $this->widgetSchema['collection_ref']->setOption('add_empty', true);
-    
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'Specimens',
       'table_method' => 'getAcquisitionsCategories',
       'method' => 'getAcquisitionCategory',
       'add_empty' => true,
     ));
+
+    $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
+        'choices'  => array('exact','imprecise'),
+        'expanded' => true,
+    ));
+    $this->setDefault('accuracy', 0);
   }
 }
