@@ -2,6 +2,7 @@ TESTS = $(wildcard tests/*.sql)
 HOST = 127.0.0.1
 DB_USER = darwin2
 DB_IMPORT_USER = darwin1
+DB_WEB_USER = cebmpad
 DB_NAME = darwin2
 TEST_CMD = pg_prove
 PSQL = /usr/bin/psql
@@ -49,6 +50,10 @@ help-target:
 	@echo "create-user"
 	@echo "   create a default user to access only the darwin schema and db"
 	@echo ""	
+	@echo ""
+	@echo "create-user-darwin1"
+	@echo "   create a darwin1 user to access only the darwin1 schema and db1. This schema is used for migration from darwin1 to darwin2"
+	@echo ""	
 	@echo "uninstall-db"
 	@echo "   remove the tables,function... from darwin. WARNING! This action can remove ALL your data"
 	@echo ""	
@@ -67,7 +72,10 @@ help-param:
 	@echo "   host for the connection to the database"
 	@echo ""
 	@echo "DB_USER (Default: darwin2)"
-	@echo "   usernam for the connection to the database"
+	@echo "   username for the connection to the database"
+	@echo ""
+	@echo "DB_IMPORT_USER (Default: darwin1)"
+	@echo "   username for the connection to the migration schema in database"
 	@echo ""
 	@echo "DB_NAME (Default: darwin2)"
 	@echo "   database name to be created or to be used (depends of the target)"
@@ -101,6 +109,7 @@ install-db:
 	$(PARAM_PSQL) -f createfunctions.sql
 	$(PARAM_PSQL) -f createtriggers.sql
 	$(PARAM_PSQL) -f addchecks.sql
+	$(PARAM_PSQL) -f grant_d2_to_web_user.sql
 
 install-all: create-db create-user create-schema install-db
 
@@ -119,9 +128,19 @@ create-test-schema:
 	$(PRIV_PSQL_DB) -f create_testschema.sql
 
 #ONLY USEFULL WHEN YOU DO A MIGRATION	
+
+create-user-darwin1:
+	-createuser -l -i -q -S -R -D -P -E $(DB_IMPORT_USER)
+
 create-darwin1-schema:
 	$(PRIV_PSQL_DB) -f create_darwin1_schema.sql
 	
+grant-d1-to-d2:
+	$(PRIV_PSQL_DB) -f grant_d1_to_d2.sql
+
+grant-d2-to-web:
+	$(PRIV_PSQL_DB) -f grant_d2_to_web_user.sql
+
 create-db:
 	-mkdir $(TB_SPACE_DIR)
 	-createlang -d template1 plpgsql
@@ -130,15 +149,17 @@ create-db:
 #TODO:Should be moved to another target
 	$(PRIV_PSQL_DB) -f lib/accent.sql
 
+create-user-web:
+	-createuser -l -i -q -S -R -D -P -E $(DB_WEB_USER)
+
 create-user:
 ifeq ($(PASSWD),'')
 	-createuser -l -i -q -S -R -D -P -E $(DB_USER)
+	-createuser -l -i -q -S -R -D -P -E $(DB_WEB_USER)
 else
 	$(PRIV_PSQL_DB) -c "CREATE ROLE $(DB_USER) ENCRYPTED PASSWORD '$(PASSWD)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
+	$(PRIV_PSQL_DB) -c "CREATE ROLE $(DB_WEB_USER) ENCRYPTED PASSWORD '$(PASSWD)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
 endif
-
-create-user-darwin1:
-	-createuser -l -i -q -S -R -D -P -E $(DB_IMPORT_USER)
 
 drop-db: 
 	$(PRIV_PSQL_DB) -f dropdb.sql
