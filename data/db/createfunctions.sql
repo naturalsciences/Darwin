@@ -5993,38 +5993,60 @@ CREATE OR REPLACE FUNCTION fct_cpy_path() RETURNS TRIGGER
 AS $$
 BEGIN
 	IF TG_OP = 'INSERT' THEN
-		IF NEW.parent_ref IS NULL THEN
-			NEW.path ='/';
-		ELSE
-			IF TG_TABLE_NAME::text = 'multimedia' THEN
-				SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
-					id=NEW.parent_ref;
-			ELSE
-				SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
-					id=NEW.parent_ref;
-			END IF;
+		IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections') THEN
+            IF NEW.parent_ref IS NULL THEN
+                NEW.path ='/';
+            ELSE
+                IF TG_TABLE_NAME::text = 'multimedia' THEN
+                    SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
+                        id=NEW.parent_ref;
+                ELSE
+                    SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
+                        id=NEW.parent_ref;
+                END IF;
+            END IF;
+		ELSIF TG_TABLE_NAME::text = 'people_relationships' THEN
+			SELECT path || NEW.person_1_ref || '/' INTO NEW.path FROM people_relationships WHERE
+				person_2_ref=NEW.person_1_ref;
+			IF NEW.path is NULL THEN
+                NEW.path = '/' || NEW.person_1_ref || '/';
+            END IF;
 		END IF;
-	ELSE
-		IF NEW.parent_ref IS NULL THEN
-			NEW.path ='/';
-		ELSEIF COALESCE(OLD.parent_ref,0) = COALESCE(NEW.parent_ref,0) THEN
-			RETURN NEW;
-		ELSE
-			-- Change current path
-			IF TG_TABLE_NAME::text = 'multimedia' THEN
-				SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
-					id=NEW.parent_ref;
-			ELSE
-				SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
-					id=NEW.parent_ref;
-			END IF;
-		END IF;
-		-- Change children's path
-		IF TG_TABLE_NAME::text = 'multimedia' THEN
-			UPDATE multimedia SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
-		ELSE
-			UPDATE collections SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
-		END IF;
+	ELSIF TG_OP = 'UPDATE' THEN
+        IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections') THEN
+            IF NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
+                IF NEW.parent_ref IS NULL THEN
+                    NEW.path ='/';
+                ELSEIF COALESCE(OLD.parent_ref,0) = COALESCE(NEW.parent_ref,0) THEN
+                    RETURN NEW;
+                ELSE
+                    -- Change current path
+                    IF TG_TABLE_NAME::text = 'multimedia' THEN
+                        SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
+                            id=NEW.parent_ref;
+                    ELSE
+                        SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
+                            id=NEW.parent_ref;
+                    END IF;
+                END IF;
+                -- Change children's path
+                IF TG_TABLE_NAME::text = 'multimedia' THEN
+                    UPDATE multimedia SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+                ELSE
+                    UPDATE collections SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+                END IF;
+            END IF;
+        ELSE
+            IF NEW.person_1_ref != OLD.person_1_ref OR NEW.person_2_ref != OLD.person_2_ref THEN
+                SELECT path ||  NEW.person_1_ref || '/' INTO NEW.path FROM people_relationships WHERE
+                    person_2_ref=NEW.person_1_ref;
+                IF NEW.path is NULL THEN
+                    NEW.path = '/' || NEW.person_1_ref || '/';
+                END IF;
+                -- AND UPDATE CHILDRENS
+               UPDATE people_relationships SET path=replace(path, OLD.path, NEW.path) WHERE person_1_ref=OLD.person_2_ref;
+            END IF;
+        END IF;
 	END IF;
 	RETURN NEW;
 END;

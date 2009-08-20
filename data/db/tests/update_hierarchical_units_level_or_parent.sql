@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(334);
+SELECT plan(339);
 
 SELECT diag('Chronostratigraphy level/parent update tests');
 
@@ -465,6 +465,33 @@ UPDATE multimedia SET parent_ref=NULL WHERE id=3;
 SELECT ok('/' = (SELECT path from multimedia WHERE id=3),'Path is set to / with null parent');
 SELECT ok('/3/' = (SELECT path from multimedia WHERE id=4), 'Childrens path is updated too');
 
+
+SELECT diag('Update people_relationships path');
+INSERT INTO people_relationships (person_1_ref, person_2_ref) VALUES (2,1);
+
+SELECT ok('/2/' = (SELECT path FROM people_relationships where person_1_ref = 2 AND person_2_ref = 1 ));
+
+DELETE FROM people_relationships where person_1_ref = 2 AND person_2_ref = 1;
+
+INSERT INTO people_relationships (person_1_ref, person_2_ref) VALUES (1,2);
+
+SELECT ok('/1/' = (SELECT path FROM people_relationships where person_1_ref = 1 AND person_2_ref = 2 ));
+
+insert into people (id, db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date)
+VALUES (3,6, true, 'sdf', 'doesfdjohn', to_tsvector('sd'), 'qsd', 'qsd', DATE 'June 20, 1989', 'M',DATE 'January 1, 0000');
+
+INSERT INTO people_relationships (person_1_ref, person_2_ref) VALUES (2,3);
+
+SELECT ok('/1/2/' = (SELECT path FROM people_relationships where person_1_ref = 2 AND person_2_ref = 3 ));
+
+insert into people (id,db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date) 
+VALUES (4,6, true, 'Doe Jsssohn', 'sssss', to_tsvector('Doe qsdqsd'), 'Dssoe', 'Johdn', DATE 'June 20, 1979', 'M', DATE 'January 1, 0000');
+--, (id,db_people_type, is_physical, formated_name, family_name, given_name, birth_date, gender) VALUES (5,6, true, 'd f', 'sssvfddss', 'f', DATE 'June 20, 1979', 'M');
+
+UPDATE people_relationships SET person_1_ref = 4 WHERE person_1_ref = 1 AND person_2_ref = 2;
+
+SELECT ok('/4/' = (SELECT path FROM people_relationships where person_1_ref = 4 AND person_2_ref = 2 ));
+SELECT ok('/4/2/' = (SELECT path FROM people_relationships where person_1_ref = 2 AND person_2_ref = 3 ));
 
 SELECT * FROM finish();
 ROLLBACK;

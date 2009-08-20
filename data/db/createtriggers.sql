@@ -222,9 +222,6 @@ CREATE TRIGGER trg_clr_referenceRecord_multimedia AFTER DELETE
 	ON multimedia FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
-CREATE TRIGGER trg_clr_referenceRecord_peoplerelationships AFTER DELETE 
-	ON people_relationships FOR EACH ROW
-	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 CREATE TRIGGER trg_clr_referenceRecord_collections AFTER DELETE 
 	ON collections FOR EACH ROW
@@ -358,6 +355,10 @@ CREATE TRIGGER trg_cpy_path BEFORE INSERT OR UPDATE
 
 CREATE TRIGGER trg_cpy_path BEFORE INSERT OR UPDATE
 	ON collections FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_path();
+	
+CREATE TRIGGER trg_cpy_path_peopleRelationships BEFORE INSERT OR UPDATE
+	ON people_relationships FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 	
 CREATE TRIGGER trg_trk_log_table AFTER INSERT OR UPDATE OR  DELETE

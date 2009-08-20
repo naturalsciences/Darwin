@@ -12,15 +12,17 @@ SELECT ok( 1 = (SELECT count(*) FROM codes WHERE code_category = 'main' AND reco
 SELECT ok( '1' = (SELECT code FROM codes WHERE code_category = 'main' AND record_id = 2 AND table_name = 'specimens'),'1st code created' );
 
 
+INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'TOP', 1);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (2, 'A', 2, 1);
 
-INSERT INTO specimens (id, collection_ref, category) VALUES (3,2,'figurate');
+INSERT INTO specimens (id, collection_ref,host_taxon_ref) VALUES (3,2,1);
 
 SELECT ok( 1 = (SELECT count(*) FROM codes WHERE code_category = 'main' AND record_id = 3 AND table_name = 'specimens'),'2e code inserted' );
 SELECT ok( '2' = (SELECT code FROM codes WHERE code_category = 'main' AND record_id = 3 AND table_name = 'specimens'),'2e code incremented' );
 
 UPDATE codes SET code_prefix='cds-', code_suffix='mol' WHERE code_category= 'main' AND table_name = 'specimens' AND record_id = 3;
 
-INSERT INTO specimens (id, collection_ref, category) VALUES (4,2,'observation');
+INSERT INTO specimens (id, collection_ref, host_taxon_ref) VALUES (4,2,2);
 SELECT ok( 'cds-' = (SELECT code_prefix FROM codes WHERE code_category = 'main'  AND table_name = 'specimens' AND record_id = 4),'prefix copied' );
 SELECT ok( 'mol' = (SELECT code_suffix FROM codes WHERE code_category = 'main'  AND table_name = 'specimens' AND record_id = 4),'suffix copied' );
 

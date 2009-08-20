@@ -1615,10 +1615,9 @@ create table specimens
         specimen_count_max integer not null default 1,
         station_visible boolean not null default true,
         multimedia_visible boolean not null default true,
-        category varchar not null default 'physical',
         constraint pk_specimens primary key (id),
         constraint specimens_expeditions_fk foreign key (expedition_ref) references expeditions(id),
-        constraint unq_specimens unique (category, collection_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, identification_taxon_ref, host_taxon_ref),
+        constraint unq_specimens unique (collection_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, identification_taxon_ref, host_taxon_ref),
         constraint fk_specimens_gtu foreign key (gtu_ref) references gtu(id) on delete set default,
         constraint fk_specimens_collections foreign key (collection_ref) references collections(id) on delete set default,
         constraint fk_specimens_taxonomy foreign key (taxon_ref) references taxonomy(id) on delete set default,
@@ -1653,7 +1652,6 @@ comment on column specimens.specimen_count_min is 'Minimum number of individuals
 comment on column specimens.specimen_count_max is 'Maximum number of individuals in batch';
 comment on column specimens.multimedia_visible is 'Flag telling if the multimedia attached to this specimen can be visible or not';
 comment on column specimens.station_visible is 'Flag telling if the sampling location can be visible or must be hidden for the specimen encoded';
-comment on column specimens.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
 comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
 comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxonomy table';
@@ -1741,6 +1739,7 @@ create table specimen_parts
         specimen_status varchar not null default 'good state',
         specimen_part_count_min integer not null default 1,
         specimen_part_count_max integer not null default 1,
+        category varchar not null default 'physical',
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
@@ -1765,6 +1764,7 @@ comment on column specimen_parts.specimen_status is 'Specimen status: good state
 comment on column specimen_parts.specimen_part_count_min is 'Minimum number of parts/individuals';
 comment on column specimen_parts.specimen_part_count_max is 'Maximum number of parts/individuals';
 comment on column specimen_parts.complete is 'Flag telling if part/specimen is complete or not';
+comment on column specimen_parts.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 
 create table specimen_parts_insurances
        (
