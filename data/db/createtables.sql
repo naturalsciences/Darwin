@@ -407,7 +407,7 @@ comment on column users.is_physical is 'Type of user: physical or moral - true i
 comment on column users.sub_type is 'Used for moral users: precise nature - public institution, asbl, sprl, sa,...';
 comment on column users.public_class is 'Tells public nature of user information - public is default value';
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
-comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
+comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';

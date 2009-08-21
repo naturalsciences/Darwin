@@ -361,9 +361,11 @@ CREATE TRIGGER trg_cpy_path_peopleRelationships BEFORE INSERT OR UPDATE
 	ON people_relationships FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 	
+/*
 CREATE TRIGGER trg_trk_log_table AFTER INSERT OR UPDATE OR  DELETE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_trk_log_table();
+*/
 
 /*
 ** Trigger aimed at calculating unified values
