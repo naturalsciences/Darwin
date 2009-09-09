@@ -889,21 +889,22 @@ create sequence collection_maintenance_id_seq;
 create table collection_maintenance
        (
         id integer not null default nextval('collection_maintenance_id_seq'),
-        user_ref integer not null,
+        people_ref integer not null,
         category varchar not null default 'action',
         action_observation varchar not null,
         description varchar,
         description_ts tsvector,
         language_full_text full_text_language,
         modification_date_time update_date_time,
-        constraint fk_collection_maintenance_users foreign key (user_ref) references users(id)
+        modification_date_mask int not null default '0',
+        constraint fk_collection_maintenance_users foreign key (people_ref) references people(id)
        )
 inherits (template_table_record_ref);
 comment on table collection_maintenance is 'History of specimen maintenance';
 comment on column collection_maintenance.id is 'Unique identifier of a specimen maintenance';
 comment on column collection_maintenance.table_name is 'Reference of table a maintenance entry has been created for';
 comment on column collection_maintenance.record_id is 'ID of record a maintenance entry has been created for';
-comment on column collection_maintenance.user_ref is 'Reference of user having done an action or an observation';
+comment on column collection_maintenance.people_ref is 'Reference of people having done an action or an observation';
 comment on column collection_maintenance.category is 'Action or Observation';
 comment on column collection_maintenance.action_observation is 'Action or observation done';
 comment on column collection_maintenance.description is 'Complementary description';
