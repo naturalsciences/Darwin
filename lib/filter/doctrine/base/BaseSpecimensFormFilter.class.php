@@ -37,7 +37,6 @@ class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
       'specimen_count_max'       => new sfWidgetFormFilterInput(),
       'station_visible'          => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'multimedia_visible'       => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'category'                 => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -64,7 +63,6 @@ class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
       'specimen_count_max'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'station_visible'          => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'multimedia_visible'       => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'category'                 => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimens_filters[%s]');
@@ -106,7 +104,6 @@ class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
       'specimen_count_max'       => 'Number',
       'station_visible'          => 'Boolean',
       'multimedia_visible'       => 'Boolean',
-      'category'                 => 'Text',
     );
   }
 }

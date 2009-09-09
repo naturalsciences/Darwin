@@ -29,7 +29,6 @@
  * @property integer $specimen_count_max
  * @property boolean $station_visible
  * @property boolean $multimedia_visible
- * @property string $category
  * @property Collections $Collections
  * @property Expeditions $Expeditions
  * @property Taxonomy $Taxonomy
@@ -143,10 +142,6 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasColumn('multimedia_visible', 'boolean', null, array(
              'type' => 'boolean',
              'default' => true,
-             ));
-        $this->hasColumn('category', 'string', null, array(
-             'type' => 'string',
-             'default' => 'physical',
              ));
     }
 

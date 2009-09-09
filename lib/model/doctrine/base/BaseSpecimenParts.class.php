@@ -23,6 +23,7 @@
  * @property string $specimen_status
  * @property integer $specimen_part_count_min
  * @property integer $specimen_part_count_max
+ * @property string $category
  * @property SpecimenIndividuals $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimenPartsInsurances
  * 
@@ -110,6 +111,10 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'default' => '1',
+             ));
+        $this->hasColumn('category', 'string', null, array(
+             'type' => 'string',
+             'default' => 'physical',
              ));
     }
 

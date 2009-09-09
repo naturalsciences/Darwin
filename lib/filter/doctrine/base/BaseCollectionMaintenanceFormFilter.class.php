@@ -15,24 +15,26 @@ class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'table_name'             => new sfWidgetFormFilterInput(),
-      'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
+      'people_ref'             => new sfWidgetFormFilterInput(),
       'category'               => new sfWidgetFormFilterInput(),
       'action_observation'     => new sfWidgetFormFilterInput(),
       'description'            => new sfWidgetFormFilterInput(),
       'description_ts'         => new sfWidgetFormFilterInput(),
       'language_full_text'     => new sfWidgetFormFilterInput(),
       'modification_date_time' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'modification_date_mask' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'table_name'             => new sfValidatorPass(array('required' => false)),
-      'user_ref'               => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
+      'people_ref'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'category'               => new sfValidatorPass(array('required' => false)),
       'action_observation'     => new sfValidatorPass(array('required' => false)),
       'description'            => new sfValidatorPass(array('required' => false)),
       'description_ts'         => new sfValidatorPass(array('required' => false)),
       'language_full_text'     => new sfValidatorPass(array('required' => false)),
       'modification_date_time' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'modification_date_mask' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('collection_maintenance_filters[%s]');
@@ -52,13 +54,14 @@ class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'                     => 'Number',
       'table_name'             => 'Text',
-      'user_ref'               => 'ForeignKey',
+      'people_ref'             => 'Number',
       'category'               => 'Text',
       'action_observation'     => 'Text',
       'description'            => 'Text',
       'description_ts'         => 'Text',
       'language_full_text'     => 'Text',
       'modification_date_time' => 'Date',
+      'modification_date_mask' => 'Number',
     );
   }
 }

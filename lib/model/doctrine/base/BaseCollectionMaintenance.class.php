@@ -7,13 +7,14 @@
  * 
  * @property integer $id
  * @property string $table_name
- * @property integer $user_ref
+ * @property integer $people_ref
  * @property string $category
  * @property string $action_observation
  * @property string $description
  * @property string $description_ts
  * @property string $language_full_text
  * @property timestamp $modification_date_time
+ * @property integer $modification_date_mask
  * @property Users $Users
  * 
  * @package    ##PACKAGE##
@@ -35,7 +36,7 @@ abstract class BaseCollectionMaintenance extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
-        $this->hasColumn('user_ref', 'integer', null, array(
+        $this->hasColumn('people_ref', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
              ));
@@ -60,6 +61,11 @@ abstract class BaseCollectionMaintenance extends sfDoctrineRecord
         $this->hasColumn('modification_date_time', 'timestamp', null, array(
              'type' => 'timestamp',
              'notnull' => true,
+             ));
+        $this->hasColumn('modification_date_mask', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              ));
     }
 

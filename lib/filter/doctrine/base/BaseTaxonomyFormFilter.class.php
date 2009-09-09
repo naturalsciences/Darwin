@@ -16,8 +16,6 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'name'                         => new sfWidgetFormFilterInput(),
       'name_indexed'                 => new sfWidgetFormFilterInput(),
-      'description_year'             => new sfWidgetFormFilterInput(),
-      'description_year_compl'       => new sfWidgetFormFilterInput(),
       'level_ref'                    => new sfWidgetFormFilterInput(),
       'status'                       => new sfWidgetFormFilterInput(),
       'path'                         => new sfWidgetFormFilterInput(),
@@ -137,8 +135,6 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'name'                         => new sfValidatorPass(array('required' => false)),
       'name_indexed'                 => new sfValidatorPass(array('required' => false)),
-      'description_year'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'description_year_compl'       => new sfValidatorPass(array('required' => false)),
       'level_ref'                    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'status'                       => new sfValidatorPass(array('required' => false)),
       'path'                         => new sfValidatorPass(array('required' => false)),
@@ -273,8 +269,6 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
       'id'                           => 'Number',
       'name'                         => 'Text',
       'name_indexed'                 => 'Text',
-      'description_year'             => 'Number',
-      'description_year_compl'       => 'Text',
       'level_ref'                    => 'Number',
       'status'                       => 'Text',
       'path'                         => 'Text',

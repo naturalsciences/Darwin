@@ -24,7 +24,7 @@ CatalogueRelationships:
         table_name: { type: string, notnull: true}
         record_id_1: { type: integer, notnull: true}
         record_id_2: { type: integer, notnull: true}
-        relationship_type: { type: integer, notnull: true, default: is synonym of }
+        relationship_type: { type: integer, notnull: true, default: recombined from }
 
 
 CataloguePeople:
@@ -546,13 +546,14 @@ CollectionMaintenance:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         table_name: { type: string, notnull: true}
-        user_ref: { type: integer, notnull: true},
+        people_ref: { type: integer, notnull: true},
         category: { type: string, notnull: true, default: action}
         action_observation: { type: string, notnull: true}
         description: { type: string }
         description_ts: { type: string }
         language_full_text: { type: string }
         modification_date_time: { type: timestamp, notnull: true }
+        modification_date_mask : { type: integer, notnull: true, default: 0}
     relations:
         Users:
             local: user_ref
@@ -611,8 +612,6 @@ Taxonomy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        description_year: { type: integer }
-        description_year_compl: { type: string(2)}
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
@@ -732,6 +731,24 @@ Taxonomy:
             class: Taxonomy
             local: parent_ref
             foreign: id
+
+ClassificationKeywords:
+    columns:
+        id: { type: integer, primary: true, autoincrement: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        keyword_type: {type: string, notnull:true, default: name}
+        keyword: {type:string, notnull:true}
+
+ClassificationSynonymies:
+    columns:
+        id: { type: integer, primary: true, autoincrement: true }
+        table_name: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        group_id: { type: integer, notnull: true}
+        group_name: {type:string, notnull:true}
+        basionym_record_id: { type: integer}
+        order_by: { type: integer, notnull: true, default:0}
 
 PeopleAliases:
     columns:
@@ -938,7 +955,6 @@ Specimens:
         specimen_count_max: { type: integer, default: 1}
         station_visible: { type: boolean, default: true}
         multimedia_visible: { type: boolean, default: true}
-        category: { type: string, default: physical}
     relations:
         Collections:
             local: collection_ref
@@ -1025,6 +1041,7 @@ SpecimenParts:
         specimen_status: { type: string, notnull: true, default: 'good state'}
         specimen_part_count_min: { type: integer, notnull: true, default:1}
         specimen_part_count_max: { type: integer, notnull: true, default:1}
+        category: { type: string, default: physical}
     relations:
         SpecimenIndividuals:
             local: specimen_individual_ref

@@ -30,6 +30,7 @@ class BaseSpecimenPartsForm extends BaseFormDoctrine
       'specimen_status'         => new sfWidgetFormTextarea(),
       'specimen_part_count_min' => new sfWidgetFormInput(),
       'specimen_part_count_max' => new sfWidgetFormInput(),
+      'category'                => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -51,6 +52,7 @@ class BaseSpecimenPartsForm extends BaseFormDoctrine
       'specimen_status'         => new sfValidatorString(array('max_length' => 2147483647)),
       'specimen_part_count_min' => new sfValidatorInteger(),
       'specimen_part_count_max' => new sfValidatorInteger(),
+      'category'                => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimen_parts[%s]');
