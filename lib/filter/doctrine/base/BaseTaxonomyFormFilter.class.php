@@ -128,7 +128,6 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
       'sub_form_indexed'             => new sfWidgetFormFilterInput(),
       'abberans_ref'                 => new sfWidgetFormFilterInput(),
       'abberans_indexed'             => new sfWidgetFormFilterInput(),
-      'chimera_hybrid_pos'           => new sfWidgetFormFilterInput(),
       'extinct'                      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
@@ -247,7 +246,6 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
       'sub_form_indexed'             => new sfValidatorPass(array('required' => false)),
       'abberans_ref'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'abberans_indexed'             => new sfValidatorPass(array('required' => false)),
-      'chimera_hybrid_pos'           => new sfValidatorPass(array('required' => false)),
       'extinct'                      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
@@ -381,7 +379,6 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
       'sub_form_indexed'             => 'Text',
       'abberans_ref'                 => 'Number',
       'abberans_indexed'             => 'Text',
-      'chimera_hybrid_pos'           => 'Text',
       'extinct'                      => 'Boolean',
     );
   }

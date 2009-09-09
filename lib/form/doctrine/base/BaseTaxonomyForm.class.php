@@ -127,7 +127,6 @@ class BaseTaxonomyForm extends BaseFormDoctrine
       'sub_form_indexed'             => new sfWidgetFormTextarea(),
       'abberans_ref'                 => new sfWidgetFormInput(),
       'abberans_indexed'             => new sfWidgetFormTextarea(),
-      'chimera_hybrid_pos'           => new sfWidgetFormTextarea(),
       'extinct'                      => new sfWidgetFormInputCheckbox(),
     ));
 
@@ -247,7 +246,6 @@ class BaseTaxonomyForm extends BaseFormDoctrine
       'sub_form_indexed'             => new sfValidatorString(array('max_length' => 2147483647)),
       'abberans_ref'                 => new sfValidatorInteger(),
       'abberans_indexed'             => new sfValidatorString(array('max_length' => 2147483647)),
-      'chimera_hybrid_pos'           => new sfValidatorString(array('max_length' => 2147483647)),
       'extinct'                      => new sfValidatorBoolean(),
     ));
 

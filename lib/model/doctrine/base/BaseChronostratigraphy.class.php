@@ -8,8 +8,6 @@
  * @property integer $id
  * @property string $name
  * @property string $name_indexed
- * @property integer $description_year
- * @property string $description_year_compl
  * @property integer $level_ref
  * @property string $status
  * @property string $path
@@ -59,13 +57,6 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('name_indexed', 'string', null, array(
              'type' => 'string',
-             ));
-        $this->hasColumn('description_year', 'integer', null, array(
-             'type' => 'integer',
-             ));
-        $this->hasColumn('description_year_compl', 'string', 2, array(
-             'type' => 'string',
-             'length' => '2',
              ));
         $this->hasColumn('level_ref', 'integer', null, array(
              'type' => 'integer',

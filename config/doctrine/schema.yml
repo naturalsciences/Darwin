@@ -724,7 +724,6 @@ Taxonomy:
         sub_form_indexed: { type: string, notnull: true, default: ''}
         abberans_ref: { type: integer, notnull: true, default: 0}
         abberans_indexed: { type: string, notnull: true, default: ''}
-        chimera_hybrid_pos: { type: string, notnull: true, default: none}
         extinct: { type: boolean, notnull: true, default: false}
     relations:
         Parent:
@@ -771,8 +770,6 @@ Chronostratigraphy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        description_year: { type: integer }
-        description_year_compl: { type: string(2)}
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
@@ -808,8 +805,6 @@ Lithostratigraphy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        description_year: { type: integer }
-        description_year_compl: { type: string(2)}
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
@@ -837,8 +832,6 @@ Mineralogy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        description_year: { type: integer }
-        description_year_compl: { type: string(2)}
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
@@ -869,8 +862,6 @@ Lithology:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        description_year: { type: integer }
-        description_year_compl: { type: string(2)}
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}

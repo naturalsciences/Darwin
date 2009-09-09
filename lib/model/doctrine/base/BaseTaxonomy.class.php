@@ -120,7 +120,6 @@
  * @property string $sub_form_indexed
  * @property integer $abberans_ref
  * @property string $abberans_indexed
- * @property string $chimera_hybrid_pos
  * @property boolean $extinct
  * @property Taxonomy $Parent
  * @property Doctrine_Collection $Taxonomy
@@ -707,11 +706,6 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'default' => '',
-             ));
-        $this->hasColumn('chimera_hybrid_pos', 'string', null, array(
-             'type' => 'string',
-             'notnull' => true,
-             'default' => 'none',
              ));
         $this->hasColumn('extinct', 'boolean', null, array(
              'type' => 'boolean',

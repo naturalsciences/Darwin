@@ -5,6 +5,19 @@ jQuery(function(){
     {
         $('#specimen_specimen_count_max').parent().hide();
     }
+    $("input[name=specimen\[accuracy]\]").click(function ()
+    {
+        if($('input#specimen_accuracy_0:checked').length)
+        {
+            $('#specimen_specimen_count_max').parent().hide();
+        }
+        else
+        {
+            $('#specimen_specimen_count_max').parent().show();
+            if($('#specimen_specimen_count_max') < $('#specimen_specimen_count_min'))
+                $('#specimen_specimen_count_max').val($('#specimen_specimen_count_min').val());
+        }
+    });
 });
 </script>
 <ul>
