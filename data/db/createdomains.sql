@@ -6,4 +6,4 @@ create domain full_text_language as varchar default 'simple' not null
                   check (VALUE in ('danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian', 'italian', 'norwegian', 'portuguese', 'romanian', 'russian', 'spanish', 'swedish', 'turkish', 'simple'));
 create domain update_date_time as timestamp default now() not null;
 create domain classifications_ids as integer default 0 not null;
-create domain classifications_names as varchar default '' not null;
+create domain classifications_names as tsvector default '' not null;

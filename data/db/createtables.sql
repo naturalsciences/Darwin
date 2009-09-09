@@ -79,14 +79,14 @@ create table catalogue_relationships
         table_name varchar not null,
         record_id_1 integer not null,
         record_id_2 integer not null,
-        relationship_type varchar not null default 'is synonym of',
+        relationship_type varchar not null default 'recombined from',
         constraint unq_catalogue_relationships unique (table_name, relationship_type, record_id_1, record_id_2)
        );
-comment on table catalogue_relationships is 'Stores the relationships between records of a table - synonymy, parenty, current name, original combination, ...';
+comment on table catalogue_relationships is 'Stores the relationships between records of a table - current name, original combination, ...';
 comment on column catalogue_relationships.table_name is 'Reference of the table a relationship is defined for - id field of table_list table';
 comment on column catalogue_relationships.record_id_1 is 'Identifier of record in relation with an other one (record_id_2)';
 comment on column catalogue_relationships.record_id_2 is 'Identifier of record in relation with an other one (record_id_1)';
-comment on column catalogue_relationships.relationship_type is 'Type of relation between record 1 and record 2 - synonymy, parenty, current name, original combination, ...';
+comment on column catalogue_relationships.relationship_type is 'Type of relation between record 1 and record 2 - current name, original combination, ...';
 create table template_table_record_ref
        (
         table_name varchar not null,
@@ -976,9 +976,7 @@ comment on column my_saved_specimens.modification_date_time is 'Last update date
 create table template_classifications
        (
         name varchar not null,
-        name_indexed varchar not null,
-        description_year smallint,
-        description_year_compl char(2),
+        name_indexed tsvector not null,
         level_ref integer,
         status varchar not null default 'valid',
         path varchar not null default '/',
@@ -987,12 +985,43 @@ create table template_classifications
 comment on table template_classifications is 'Template table used to construct every common data in each classifications tables (taxonomy, chronostratigraphy, lithostratigraphy,...)';
 comment on column template_classifications.name is 'Classification unit name';
 comment on column template_classifications.name_indexed is 'Indexed form of name field';
-comment on column template_classifications.description_year is 'Year of description';
-comment on column template_classifications.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column template_classifications.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column template_classifications.path is 'Hierarchy path (/ for root)';
 comment on column template_classifications.parent_ref is 'Id of parent - id field from table itself';
+
+create table classification_keywords
+	(
+	 keyword_type varchar not null default 'name',
+	 keyword varchar not null
+	)
+inherits (template_table_record_ref);
+
+comment on table classification_keywords is 'Help user to tag-label each part of full name in classifications';
+comment on column classification_keywords.table_name is 'Name of classifification table: taxonomy, lithology,...';
+comment on column classification_keywords.record_id is 'Id of record concerned';
+comment on column classification_keywords.keyword_type is 'Keyword type: name, year, authoritative keyword,...';
+comment on column classification_keywords.keyword is 'Keyword';
+
+create sequence classification_synonymies_id_seq;
+
+create table classification_synonymies
+	(
+	 group_id integer not null,
+	 group_name varchar not null,
+	 basionym_record_id integer,
+	 order_by integer not null default 0,
+	 constraint unq_synonym unique (table_name, record_id, group_id)
+	)
+inherits (template_table_record_ref);
+
+comment on table classification_synonymies is 'Table containing classification synonymies';
+comment on column classification_synonymies.table_name is 'Classification table concerned';
+comment on column classification_synonymies.record_id is 'Id of record placed in group as a synonym';
+comment on column classification_synonymies.group_name is 'Name of group under which synonyms are placed';
+comment on column classification_synonymies.group_id is 'Id given to group';
+comment on column classification_synonymies.order_by is 'Order by used to qualify order amongst synonyms - used mainly for senio and junior synonyms';
+comment on column classification_synonymies.basionym_record_id is 'Id of basionym if one';
 
 create sequence taxonomy_id_seq;
 
@@ -1107,11 +1136,9 @@ create table taxonomy
         sub_form_indexed classifications_names,
         abberans_ref classifications_ids,
         abberans_indexed classifications_names,
-	original_combination boolean default true not null,
-        chimera_hybrid_pos varchar default 'none' not null,
         extinct boolean default false not null,
         constraint pk_taxonomy primary key (id),
-        constraint unq_taxonomy unique (path, name_indexed, level_ref, description_year),
+        constraint unq_taxonomy unique (path, name_indexed, level_ref),
         constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
         constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id) on delete cascade,
         constraint fk_taxonomy_domain_taxonomy foreign key (domain_ref) references taxonomy(id) on delete cascade,
@@ -1174,8 +1201,6 @@ comment on table taxonomy is 'Taxonomic classification table';
 comment on column taxonomy.id is 'Unique identifier of a classification unit';
 comment on column taxonomy.name is 'Classification unit name';
 comment on column taxonomy.name_indexed is 'Indexed form of name field';
-comment on column taxonomy.description_year is 'Year of description';
-comment on column taxonomy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column taxonomy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column taxonomy.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column taxonomy.domain_ref is 'Reference of domain the current taxonomy depends of - id field of taxonomy table - recursive reference';
@@ -1286,7 +1311,6 @@ comment on column taxonomy.sub_form_ref is 'Reference of sub form the current ta
 comment on column taxonomy.sub_form_indexed is 'Indexed name of sub form the current taxonomy depends of';
 comment on column taxonomy.abberans_ref is 'Reference of abberans the current taxonomy depends of - id field of taxonomy table - recursive reference';
 comment on column taxonomy.abberans_indexed is 'Indexed name of abberans the current taxonomy depends of';
-comment on column taxonomy.chimera_hybrid_pos is 'Chimera or Hybrid informations';
 comment on column taxonomy.extinct is 'Tells if taxonomy is extinct or not';
 comment on column taxonomy.path is 'Hierarchy path (/ for root)';
 comment on column taxonomy.parent_ref is 'Id of parent - id field from table itself';
@@ -1355,8 +1379,6 @@ comment on table chronostratigraphy is 'List of chronostratigraphic units';
 comment on column chronostratigraphy.id is 'Unique identifier of a classification unit';
 comment on column chronostratigraphy.name is 'Classification unit name';
 comment on column chronostratigraphy.name_indexed is 'Indexed form of name field';
-comment on column chronostratigraphy.description_year is 'Year of description';
-comment on column chronostratigraphy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column chronostratigraphy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column chronostratigraphy.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column chronostratigraphy.eon_ref is 'Reference of eon the current unit depends of - id field of chronostratigraphy table - recursive reference';
@@ -1415,8 +1437,6 @@ comment on table lithostratigraphy is 'List of lithostratigraphic units';
 comment on column lithostratigraphy.id is 'Unique identifier of a classification unit';
 comment on column lithostratigraphy.name is 'Classification unit name';
 comment on column lithostratigraphy.name_indexed is 'Indexed form of name field';
-comment on column lithostratigraphy.description_year is 'Year of description';
-comment on column lithostratigraphy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column lithostratigraphy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithostratigraphy.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column lithostratigraphy.group_ref is 'Reference of group the current unit depends of - id field of lithostratigraphy table - recursive reference';
@@ -1469,8 +1489,6 @@ comment on table mineralogy is 'List of mineralogic units';
 comment on column mineralogy.id is 'Unique identifier of a classification unit';
 comment on column mineralogy.name is 'Classification unit name';
 comment on column mineralogy.name_indexed is 'Indexed form of name field';
-comment on column mineralogy.description_year is 'Year of description';
-comment on column mineralogy.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column mineralogy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column mineralogy.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column mineralogy.code is 'Classification code given to mineral - in classification chosen - Strunz by default';
@@ -1518,8 +1536,6 @@ comment on table lithology is 'List of lithologic units';
 comment on column lithology.id is 'Unique identifier of a classification unit';
 comment on column lithology.name is 'Classification unit name';
 comment on column lithology.name_indexed is 'Indexed form of name field';
-comment on column lithology.description_year is 'Year of description';
-comment on column lithology.description_year_compl is 'Complement to year of description: a, b, c, ...';
 comment on column lithology.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithology.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column lithology.path is 'Hierarchy path (/ for root)';
@@ -1600,9 +1616,6 @@ create table specimens
         chrono_ref integer not null default 0,
         lithology_ref integer not null default 0,
         mineral_ref integer not null default 0,
-        identification_qual varchar,
-        sp varchar,
-        identification_taxon_ref integer not null default 0,
         host_taxon_ref integer not null default 0,
         host_specimen_ref integer,
         host_relationship varchar,
@@ -1617,7 +1630,7 @@ create table specimens
         multimedia_visible boolean not null default true,
         constraint pk_specimens primary key (id),
         constraint specimens_expeditions_fk foreign key (expedition_ref) references expeditions(id),
-        constraint unq_specimens unique (collection_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, identification_taxon_ref, host_taxon_ref),
+        constraint unq_specimens unique (collection_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, host_taxon_ref),
         constraint fk_specimens_gtu foreign key (gtu_ref) references gtu(id) on delete set default,
         constraint fk_specimens_collections foreign key (collection_ref) references collections(id) on delete set default,
         constraint fk_specimens_taxonomy foreign key (taxon_ref) references taxonomy(id) on delete set default,
@@ -1625,7 +1638,6 @@ create table specimens
         constraint fk_specimens_lithology foreign key (lithology_ref) references lithology(id) on delete set default,
         constraint fk_specimens_mineralogy foreign key (mineral_ref) references mineralogy(id) on delete set default,
         constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id) on delete set default,
-        constraint fk_specimens_ident_taxonomy foreign key (identification_taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
 	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max),
@@ -1639,8 +1651,6 @@ comment on column specimens.gtu_ref is 'Reference of the sampling location the s
 comment on column specimens.litho_ref is 'When encoding a rock, mineral or paleontologic specimen, contains the reference of lithostratigraphic unit the specimen have been found into - id field of lithostratigraphy table';
 comment on column specimens.chrono_ref is 'When encoding a rock, mineral or paleontologic specimen, contains the reference of chronostratigraphic unit the specimen have been found into - id field of chronostratigraphy table';
 comment on column specimens.taxon_ref is 'When encoding a ''living'' specimen, contains the reference of the taxon unit defining the specimen - id field of taxonomy table';
-comment on column specimens.identification_qual is 'Qualifier of taxonomic definition: sp., prox. aff., cf., ...';
-comment on column specimens.identification_taxon_ref is 'When taxonomic qualifier specified - can contain the reference of the taxon the qualifier targets - id field of taxonomy table';
 comment on column specimens.host_relationship is 'When current specimen encoded is in a host relationship with an other specimen or taxon, this field contains the type of relationship between them: symbiosis, parasitism, saprophytism,...';
 comment on column specimens.host_specimen_ref is 'When current specimen encoded is in a host relationship with an other specimen, this field contains reference of the host specimen - recursive reference';
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';

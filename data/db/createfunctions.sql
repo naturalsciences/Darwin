@@ -2331,7 +2331,7 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
+				NEW.name_indexed := to_tsvector('simple', NEW.name);
 			END IF;
 		ELSIF TG_TABLE_NAME = 'expeditions' THEN
 			oldValue := OLD.name;
@@ -2351,17 +2351,17 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
+				NEW.name_indexed := to_tsvector('simple', NEW.name);
 			END IF;
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
+				NEW.name_indexed := to_tsvector('simple', NEW.name);
 			END IF;
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
+				NEW.name_indexed := to_tsvector('simple', NEW.name);
 			END IF;
 			oldValue := OLD.formule;
 			IF NEW.formule <> oldValue THEN
@@ -2406,7 +2406,7 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			oldValue := OLD.name;
 			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
+				NEW.name_indexed := to_tsvector('simple', NEW.name);
 			END IF;
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			oldValue := OLD.formated_name;
@@ -2426,7 +2426,7 @@ BEGIN
 			NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
 			NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
-			NEW.name_indexed := fullToIndex(NEW.name);
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'expeditions' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'habitats' THEN
@@ -2434,11 +2434,11 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'identifications' THEN
 			NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
-			NEW.name_indexed := fullToIndex(NEW.name);
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
-			NEW.name_indexed := fullToIndex(NEW.name);
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-			NEW.name_indexed := fullToIndex(NEW.name);
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 			NEW.formule_indexed := fullToIndex(NEW.formule);
 		ELSIF TG_TABLE_NAME = 'multimedia' THEN
 			NEW.title_indexed := fullToIndex(NEW.title);
@@ -2454,7 +2454,7 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'tags' THEN
 			NEW.label_indexed := fullToIndex(NEW.label);
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
-			NEW.name_indexed := fullToIndex(NEW.name);
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
@@ -3244,7 +3244,7 @@ BEGIN
 			FROM catalogue_levels
 			WHERE id = NEW.level_ref;
 		END IF;
-		IF NOT fct_cpy_cascade_children_indexed_names (TG_TABLE_NAME::varchar, NEW.level_ref::integer, NEW.name_indexed::varchar, NEW.id::integer) THEN
+		IF NOT fct_cpy_cascade_children_indexed_names (TG_TABLE_NAME::varchar, NEW.level_ref::integer, NEW.name_indexed::tsvector, NEW.id::integer) THEN
 			RAISE EXCEPTION 'Impossible to impact children names';
 		END IF;
 	END IF;
@@ -3279,6 +3279,8 @@ BEGIN
 	DELETE FROM catalogue_properties WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM identifications WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM class_vernacular_names WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM classification_synonymies WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM classification_keywords WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM record_visibilities WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM users_workflow WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM collection_maintenance WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
@@ -3330,15 +3332,15 @@ BEGIN
 		IF TG_TABLE_NAME = 'comments' THEN
 			NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
-			NEW.value_defined_ts := to_tsvector(NEW.value_defined);
+			NEW.value_defined_ts := to_tsvector('simple', NEW.value_defined);
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
-			NEW.address_parts_ts := to_tsvector(
+			NEW.address_parts_ts := to_tsvector('simple',
 							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
 							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
 					);
 		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
-			NEW.address_parts_ts := to_tsvector(
+			NEW.address_parts_ts := to_tsvector('simple',
 							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
 							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
@@ -3361,16 +3363,16 @@ BEGIN
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
 			IF OLD.value_defined != NEW.value_defined THEN 
-				NEW.value_defined_ts := to_tsvector(NEW.value_defined);
+				NEW.value_defined_ts := to_tsvector('simple', NEW.value_defined);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
-				NEW.address_parts_ts := to_tsvector(
+				NEW.address_parts_ts := to_tsvector('simple',
 							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
 							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
 					);
 		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
-				NEW.address_parts_ts := to_tsvector(
+				NEW.address_parts_ts := to_tsvector('simple', 
 							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
 							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
@@ -3385,7 +3387,7 @@ BEGIN
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
 			IF OLD.name != NEW.name OR OLD.name_language_full_text != NEW.name_language_full_text THEN
-				NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
+				NEW.name_ts := to_tsvector('simple', NEW.name_language_full_text::regconfig, NEW.name);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'habitats' THEN
 			IF OLD.description != NEW.descriptiont OR OLD.description_language_full_text != NEW.description_language_full_text THEN
@@ -3475,7 +3477,7 @@ LANGUAGE plpgsql;
 * Update all related children, when parent_ref or level_ref of parent have been updated
 */
 
-CREATE OR REPLACE FUNCTION fct_cpy_update_children_when_parent_updated (table_name varchar, parent_id integer, parent_old_level template_classifications.level_ref%TYPE, parent_new_level template_classifications.level_ref%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed varchar[]) RETURNS BOOLEAN
+CREATE OR REPLACE FUNCTION fct_cpy_update_children_when_parent_updated (table_name varchar, parent_id integer, parent_old_level template_classifications.level_ref%TYPE, parent_new_level template_classifications.level_ref%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed tsvector[]) RETURNS BOOLEAN
 AS $$
 DECLARE
 	response boolean default true;
@@ -4559,7 +4561,7 @@ DECLARE
 	level_sys_name_new catalogue_levels.level_sys_name%TYPE;
 	children_ready boolean default false;
 	hierarchy_ref integer[];
-	hierarchy_indexed varchar[];
+	hierarchy_indexed tsvector[];
 BEGIN
 	IF NEW.level_ref <> OLD.level_ref OR NEW.parent_ref <> OLD.parent_ref THEN
 		IF NOT fct_chk_possible_upper_level(TG_TABLE_NAME::varchar, NEW.parent_ref::integer, NEW.level_ref::integer, NEW.id::integer) THEN
@@ -4729,7 +4731,7 @@ BEGIN
 				FROM chronostratigraphy AS pc
 				WHERE pc.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.eon_ref::integer, NEW.era_ref::integer, NEW.sub_era_ref::integer, NEW.system_ref::integer, NEW.serie_ref::integer, NEW.stage_ref::integer, NEW.sub_stage_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
-				hierarchy_indexed := ARRAY[NEW.eon_indexed::varchar, NEW.era_indexed::varchar, NEW.sub_era_indexed::varchar, NEW.system_indexed::varchar, NEW.serie_indexed::varchar, NEW.stage_indexed::varchar, NEW.sub_stage_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
+				hierarchy_indexed := ARRAY[NEW.eon_indexed::tsvector, NEW.era_indexed::tsvector, NEW.sub_era_indexed::tsvector, NEW.system_indexed::tsvector, NEW.serie_indexed::tsvector, NEW.stage_indexed::tsvector, NEW.sub_stage_indexed::tsvector, NEW.sub_level_1_indexed::tsvector, NEW.sub_level_2_indexed::tsvector];
 			ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
 				SELECT
 					CASE
@@ -4820,7 +4822,7 @@ BEGIN
 				FROM lithostratigraphy AS pl
 				WHERE pl.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.group_ref::integer, NEW.formation_ref::integer, NEW.member_ref::integer, NEW.layer_ref::integer, NEW.sub_level_1_ref::integer, NEW.sub_level_2_ref::integer];
-				hierarchy_indexed := ARRAY[NEW.group_indexed::varchar, NEW.formation_indexed::varchar, NEW.member_indexed::varchar, NEW.layer_indexed::varchar, NEW.sub_level_1_indexed::varchar, NEW.sub_level_2_indexed::varchar];
+				hierarchy_indexed := ARRAY[NEW.group_indexed::tsvector, NEW.formation_indexed::tsvector, NEW.member_indexed::tsvector, NEW.layer_indexed::tsvector, NEW.sub_level_1_indexed::tsvector, NEW.sub_level_2_indexed::tsvector];
 			ELSIF TG_TABLE_NAME = 'lithology' THEN
 				SELECT
 					CASE
@@ -4883,7 +4885,7 @@ BEGIN
 				FROM lithology AS pl
 				WHERE pl.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.unit_main_group_ref::integer, NEW.unit_group_ref::integer, NEW.unit_sub_group_ref::integer, NEW.unit_rock_ref::integer];
-				hierarchy_indexed := ARRAY[NEW.unit_main_group_indexed::varchar, NEW.unit_group_indexed::varchar, NEW.unit_sub_group_indexed::varchar, NEW.unit_rock_indexed::varchar];
+				hierarchy_indexed := ARRAY[NEW.unit_main_group_indexed::tsvector, NEW.unit_group_indexed::tsvector, NEW.unit_sub_group_indexed::tsvector, NEW.unit_rock_indexed::tsvector];
 			ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 				SELECT
 					CASE
@@ -4960,7 +4962,7 @@ BEGIN
 				FROM mineralogy AS pm
 				WHERE pm.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.unit_class_ref::integer, NEW.unit_division_ref::integer, NEW.unit_family_ref::integer, NEW.unit_group_ref::integer, NEW.unit_variety_ref::integer];
-				hierarchy_indexed := ARRAY[NEW.unit_class_indexed::varchar, NEW.unit_division_indexed::varchar, NEW.unit_family_indexed::varchar, NEW.unit_group_indexed::varchar, NEW.unit_variety_indexed::varchar];
+				hierarchy_indexed := ARRAY[NEW.unit_class_indexed::tsvector, NEW.unit_division_indexed::tsvector, NEW.unit_family_indexed::tsvector, NEW.unit_group_indexed::tsvector, NEW.unit_variety_indexed::tsvector];
 			ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 				SELECT
 					CASE
@@ -5723,7 +5725,7 @@ BEGIN
 				FROM taxonomy AS pt
 				WHERE pt.id = NEW.parent_ref;
 				hierarchy_ref := ARRAY[NEW.domain_ref::integer, NEW.kingdom_ref::integer, NEW.super_phylum_ref::integer, NEW.phylum_ref::integer, NEW.sub_phylum_ref::integer, NEW.infra_phylum_ref::integer, NEW.super_cohort_botany_ref::integer, NEW.cohort_botany_ref::integer, NEW.sub_cohort_botany_ref::integer, NEW.infra_cohort_botany_ref::integer, NEW.super_class_ref::integer, NEW.class_ref::integer, NEW.sub_class_ref::integer, NEW.infra_class_ref::integer, NEW.super_division_ref::integer, NEW.division_ref::integer, NEW.sub_division_ref::integer, NEW.infra_division_ref::integer, NEW.super_legion_ref::integer, NEW.legion_ref::integer, NEW.sub_legion_ref::integer, NEW.infra_legion_ref::integer, NEW.super_cohort_zoology_ref::integer, NEW.cohort_zoology_ref::integer, NEW.sub_cohort_zoology_ref::integer, NEW.infra_cohort_zoology_ref::integer, NEW.super_order_ref::integer, NEW.order_ref::integer, NEW.sub_order_ref::integer, NEW.infra_order_ref::integer, NEW.section_zoology_ref::integer, NEW.sub_section_zoology_ref::integer, NEW.super_family_ref::integer, NEW.family_ref::integer, NEW.sub_family_ref::integer, NEW.infra_family_ref::integer, NEW.super_tribe_ref::integer, NEW.tribe_ref::integer, NEW.sub_tribe_ref::integer, NEW.infra_tribe_ref::integer, NEW.genus_ref::integer, NEW.sub_genus_ref::integer, NEW.section_botany_ref::integer, NEW.sub_section_botany_ref::integer, NEW.serie_ref::integer, NEW.sub_serie_ref::integer, NEW.super_species_ref::integer, NEW.species_ref::integer, NEW.sub_species_ref::integer, NEW.variety_ref::integer, NEW.sub_variety_ref::integer, NEW.form_ref::integer, NEW.sub_form_ref::integer, NEW.abberans_ref::integer];
-				hierarchy_indexed := ARRAY[NEW.domain_indexed::varchar, NEW.kingdom_indexed::varchar, NEW.super_phylum_indexed::varchar, NEW.phylum_indexed::varchar, NEW.sub_phylum_indexed::varchar, NEW.infra_phylum_indexed::varchar, NEW.super_cohort_botany_indexed::varchar, NEW.cohort_botany_indexed::varchar, NEW.sub_cohort_botany_indexed::varchar, NEW.infra_cohort_botany_indexed::varchar, NEW.super_class_indexed::varchar, NEW.class_indexed::varchar, NEW.sub_class_indexed::varchar, NEW.infra_class_indexed::varchar, NEW.super_division_indexed::varchar, NEW.division_indexed::varchar, NEW.sub_division_indexed::varchar, NEW.infra_division_indexed::varchar, NEW.super_legion_indexed::varchar, NEW.legion_indexed::varchar, NEW.sub_legion_indexed::varchar, NEW.infra_legion_indexed::varchar, NEW.super_cohort_zoology_indexed::varchar, NEW.cohort_zoology_indexed::varchar, NEW.sub_cohort_zoology_indexed::varchar, NEW.infra_cohort_zoology_indexed::varchar, NEW.super_order_indexed::varchar, NEW.order_indexed::varchar, NEW.sub_order_indexed::varchar, NEW.infra_order_indexed::varchar, NEW.section_zoology_indexed::varchar, NEW.sub_section_zoology_indexed::varchar, NEW.super_family_indexed::varchar, NEW.family_indexed::varchar, NEW.sub_family_indexed::varchar, NEW.infra_family_indexed::varchar, NEW.super_tribe_indexed::varchar, NEW.tribe_indexed::varchar, NEW.sub_tribe_indexed::varchar, NEW.infra_tribe_indexed::varchar, NEW.genus_indexed::varchar, NEW.sub_genus_indexed::varchar, NEW.section_botany_indexed::varchar, NEW.sub_section_botany_indexed::varchar, NEW.serie_indexed::varchar, NEW.sub_serie_indexed::varchar, NEW.super_species_indexed::varchar, NEW.species_indexed::varchar, NEW.sub_species_indexed::varchar, NEW.variety_indexed::varchar, NEW.sub_variety_indexed::varchar, NEW.form_indexed::varchar, NEW.sub_form_indexed::varchar, NEW.abberans_indexed::varchar];
+				hierarchy_indexed := ARRAY[NEW.domain_indexed::tsvector, NEW.kingdom_indexed::tsvector, NEW.super_phylum_indexed::tsvector, NEW.phylum_indexed::tsvector, NEW.sub_phylum_indexed::tsvector, NEW.infra_phylum_indexed::tsvector, NEW.super_cohort_botany_indexed::tsvector, NEW.cohort_botany_indexed::tsvector, NEW.sub_cohort_botany_indexed::tsvector, NEW.infra_cohort_botany_indexed::tsvector, NEW.super_class_indexed::tsvector, NEW.class_indexed::tsvector, NEW.sub_class_indexed::tsvector, NEW.infra_class_indexed::tsvector, NEW.super_division_indexed::tsvector, NEW.division_indexed::tsvector, NEW.sub_division_indexed::tsvector, NEW.infra_division_indexed::tsvector, NEW.super_legion_indexed::tsvector, NEW.legion_indexed::tsvector, NEW.sub_legion_indexed::tsvector, NEW.infra_legion_indexed::tsvector, NEW.super_cohort_zoology_indexed::tsvector, NEW.cohort_zoology_indexed::tsvector, NEW.sub_cohort_zoology_indexed::tsvector, NEW.infra_cohort_zoology_indexed::tsvector, NEW.super_order_indexed::tsvector, NEW.order_indexed::tsvector, NEW.sub_order_indexed::tsvector, NEW.infra_order_indexed::tsvector, NEW.section_zoology_indexed::tsvector, NEW.sub_section_zoology_indexed::tsvector, NEW.super_family_indexed::tsvector, NEW.family_indexed::tsvector, NEW.sub_family_indexed::tsvector, NEW.infra_family_indexed::tsvector, NEW.super_tribe_indexed::tsvector, NEW.tribe_indexed::tsvector, NEW.sub_tribe_indexed::tsvector, NEW.infra_tribe_indexed::tsvector, NEW.genus_indexed::tsvector, NEW.sub_genus_indexed::tsvector, NEW.section_botany_indexed::tsvector, NEW.sub_section_botany_indexed::tsvector, NEW.serie_indexed::tsvector, NEW.sub_serie_indexed::tsvector, NEW.super_species_indexed::tsvector, NEW.species_indexed::tsvector, NEW.sub_species_indexed::tsvector, NEW.variety_indexed::tsvector, NEW.sub_variety_indexed::tsvector, NEW.form_indexed::tsvector, NEW.sub_form_indexed::tsvector, NEW.abberans_indexed::tsvector];
 			END IF;
 			IF NOT fct_cpy_update_children_when_parent_updated (TG_TABLE_NAME::varchar, NEW.id::integer, OLD.level_ref::integer, NEW.level_ref::integer, hierarchy_ref, hierarchy_indexed) THEN
 				RAISE EXCEPTION 'Impossible to update children ! Update of parent_ref and/or level_ref of current unit aborted !';
@@ -5850,7 +5852,7 @@ BEGIN
 		NEW.formated_name := NEW.family_name;
 	END IF;
 	NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
-	NEW.formated_name_ts := to_tsvector(NEW.formated_name);
+	NEW.formated_name_ts := to_tsvector('simple', NEW.formated_name);
 	RETURN NEW;
 END;
 $$

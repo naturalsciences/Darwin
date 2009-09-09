@@ -73,8 +73,8 @@ SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 45, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 45 (serie) allowed ! -> parent is a genus');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 41, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 41 (genus) not allowed -> parent is a genus itself !');
 SELECT throws_ok('UPDATE taxonomy SET level_ref = 41 WHERE id = 8', 'P0001');
-SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 5', 'Change parent of unit 5 (with level order (24)) from parent 4 to parent 11 (both class levels (12)) -> OK!');
-SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 49, 12)), 'Move unit 12 (of level 48 (species)) to level 49 (sub species) NO allowed ! -> a sub species cannot be attached to a genus directly !');
+SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 5', 'Change parent of unit 5 (with level order (28)) from parent 4 to parent 11 (both class levels (12)) -> OK!');
+SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 49, 12)), 'Move unit 12 (of level 48 (species)) to level 49 (sub species) not allowed ! -> a sub species cannot be attached to a genus directly !');
 
 
 SELECT * FROM finish();
