@@ -14,9 +14,6 @@
  * @property integer $chrono_ref
  * @property integer $lithology_ref
  * @property integer $mineral_ref
- * @property string $identification_qual
- * @property string $sp
- * @property integer $identification_taxon_ref
  * @property integer $host_taxon_ref
  * @property integer $host_specimen_ref
  * @property string $host_relationship
@@ -86,16 +83,6 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              'default' => 0,
              ));
         $this->hasColumn('mineral_ref', 'integer', null, array(
-             'type' => 'integer',
-             'default' => 0,
-             ));
-        $this->hasColumn('identification_qual', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('sp', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('identification_taxon_ref', 'integer', null, array(
              'type' => 'integer',
              'default' => 0,
              ));

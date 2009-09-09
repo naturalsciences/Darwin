@@ -940,9 +940,6 @@ Specimens:
         chrono_ref: { type: integer, default: 0}
         lithology_ref: { type: integer, default: 0}
         mineral_ref: { type: integer, default: 0}
-        identification_qual: { type: string}
-        sp: { type: string}
-        identification_taxon_ref: { type: integer, default: 0}
         host_taxon_ref: { type: integer, default: 0}
         host_specimen_ref: { type: integer}
         host_relationship: { type: string}
