@@ -25,13 +25,19 @@ class specimenActions extends sfActions
   public function executeSubmit(sfWebRequest $request)
   {
     $this->form = new SpecimensForm();
-    $this->forward404Unless($request->isMethod('post'));
+//     $this->forward404Unless($request->isMethod('post'));
     $this->form->bind($request->getParameter('specimen'));
     if ($this->form->isValid())
     {
-        $this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
+        //$this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
+        return $this->renderText("ok");
     }
     //$this->forward('specimen','index');
-    return $this->renderText(  $this->form);
+    $errors = array();
+    foreach( $this->form->getErrorSchema()->getErrors() as $name => $formField )
+    {
+        $errors[$name] = $formField->getMessageFormat();
+    }
+    return $this->renderText(json_encode($errors));
   }
 }

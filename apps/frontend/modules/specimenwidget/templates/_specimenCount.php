@@ -5,7 +5,7 @@ jQuery(function(){
     {
         $('#specimen_specimen_count_max').parent().hide();
     }
-    $("input[name=specimen\[accuracy]\]").click(function ()
+    $("input[name=specimen\\[accuracy\\]]").click(function ()
     {
         if($('input#specimen_accuracy_0:checked').length)
         {

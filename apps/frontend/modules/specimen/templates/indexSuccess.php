@@ -4,6 +4,56 @@
 var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
 var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
 var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
+
+$(document).ready(function () {
+    $('form').submit(function(event)
+    {
+        event.preventDefault();
+//         console.log($('form').serialize());
+        var i = $.fn.qtip.interfaces.length; while(i--)
+        {
+            // Access current elements API
+            var api = $.fn.qtip.interfaces[i];
+            // Queue the animation so positions are updated correctly
+            if(api && api.status.rendered && !api.status.hidden) api.destroy();
+        };
+        $.post($('form').attr('action'), $('form').serialize(),retrieve_spec_result,'json');
+        return false;
+    });
+});
+
+
+function retrieve_spec_result(data)
+{
+//     console.log(data);
+    for (var key in data)
+    {
+        console.log('[name=specimen\\\\['+key+'\\\\]]');
+        $('#specimen_'+key).qtip({
+            content: data[key],
+            show: { ready: true },
+            style: { 
+                width: 200,
+                padding: 5,
+                background: '#ec9593',
+                color: 'black',
+                border: {
+                    width: 7,
+                    radius: 5,
+                    color: '#c36b70'
+                },
+                tip: 'bottomLeft',
+                name: 'dark', // Inherit the rest of the attributes from the preset dark style
+            },
+            position: {
+                corner: {
+                    target: 'topRight',
+                    tooltip: 'bottomLeft'
+                }
+            },
+        });
+    }
+}
 ");?>
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
 
@@ -46,7 +96,7 @@ var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
       <ul class="board_col">
       <?php endif;?>
   </ul>
-  <input type="submit" value="Submit" />
+  <input type="submit" value="Submit" id="submit_spec_f1"/>
                     </div>
                     <div class="panel"> <a href="#" onclick="$('#submit').trigger('click');return false;">Click here</a></div>
 					<div class="panel"> How it Works </div>
