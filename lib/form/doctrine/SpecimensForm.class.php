@@ -28,8 +28,12 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
         'choices'  => array('exact','imprecise'),
         'expanded' => true,
+
     ));
-    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array('choices' => array(0,1)));
+    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
+        'choices' => array(0,1),
+        'required' => false,
+        ));
     $this->setDefault('accuracy', 0);
 //     $this->validatorSchema->setOption('allow_extra_fields', true);
   }

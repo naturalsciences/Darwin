@@ -140,3 +140,20 @@
 {
 	overflow: hidden;
 }
+
+.error_fld
+{
+    border: 1px solid #EC9593;
+}
+.spec_error_list:empty
+{
+    display: none;
+}
+
+ul.spec_error_list
+{
+    background-color:#ec9593;
+    border: 3px solid #c36b70;
+    margin-bottom: 1em;
+    padding: 1em;
+}

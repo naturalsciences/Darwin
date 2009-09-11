@@ -34,9 +34,11 @@ class specimenActions extends sfActions
     }
     //$this->forward('specimen','index');
     $errors = array();
-    foreach( $this->form->getErrorSchema()->getErrors() as $name => $formField )
+
+    foreach ($this->form->getFormFieldSchema() as $name => $formField )
     {
-        $errors[$name] = $formField->getMessageFormat();
+        if($formField->hasError())
+            $errors[$name] = $formField->getError()->getMessage();
     }
     return $this->renderText(json_encode($errors));
   }

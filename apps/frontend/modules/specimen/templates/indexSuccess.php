@@ -10,6 +10,8 @@ $(document).ready(function () {
     {
         event.preventDefault();
 //         console.log($('form').serialize());
+        $('.error_fld').removeClass('error_fld');
+        $('.spec_error_list').empty();
         var i = $.fn.qtip.interfaces.length; while(i--)
         {
             // Access current elements API
@@ -28,7 +30,8 @@ function retrieve_spec_result(data)
 //     console.log(data);
     for (var key in data)
     {
-        console.log('[name=specimen\\\\['+key+'\\\\]]');
+        $('.spec_error_list').append('<li>'+key+' : '+data[key]+'</li>');
+        $('#specimen_'+key).addClass('error_fld');
         $('#specimen_'+key).qtip({
             content: data[key],
             show: { ready: true },
@@ -56,7 +59,6 @@ function retrieve_spec_result(data)
 }
 ");?>
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
-
 <div class="encoding">
     <?php echo image_tag('encod_left_disable.png','id="arrow_left" class="scrollButtons left"');?>
 	<div class="page">
@@ -71,7 +73,7 @@ function retrieve_spec_result(data)
 				<div class="scrollContainer">
 					<div class="panel" id="intro">
 					<form action="<?php echo url_for('specimen/submit') ?>" method="POST">
-					
+					<div><ul class="spec_error_list"></ul>
 					
   <ul class="board_col">
     <?php $changed_col=false;?>
@@ -96,7 +98,9 @@ function retrieve_spec_result(data)
       <ul class="board_col">
       <?php endif;?>
   </ul>
+  </div><br class="clear"/>
   <input type="submit" value="Submit" id="submit_spec_f1"/>
+                    </form>
                     </div>
                     <div class="panel"> <a href="#" onclick="$('#submit').trigger('click');return false;">Click here</a></div>
 					<div class="panel"> How it Works </div>
