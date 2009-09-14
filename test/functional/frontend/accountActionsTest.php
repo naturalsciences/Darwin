@@ -52,6 +52,8 @@ $browser->
   end()->
   isRedirected()->
   followRedirect()->
+  isRedirected()->
+  followRedirect()->
   with('request')->begin()->
     isParameter('module', 'board')->
     isParameter('action', 'index')->

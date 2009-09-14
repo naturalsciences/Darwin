@@ -17,6 +17,7 @@ class accountActions extends sfActions
   */
   public function executeLogin($request)
   {
+    $this->redirectIf($this->getUser()->isAuthenticated(),'board/index');
     $this->form = new LoginForm();
     if ($request->isMethod('post'))
     {
@@ -31,7 +32,8 @@ class accountActions extends sfActions
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }
-        $this->redirect('board/index');
+        $referer = $this->getRequest()->getReferer();
+        $this->redirect($referer ? $referer : 'board/index');
       }
     }
   }
