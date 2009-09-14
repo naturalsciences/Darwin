@@ -28,33 +28,39 @@ $(document).ready(function () {
 function retrieve_spec_result(data)
 {
 //     console.log(data);
-    for (var key in data)
+    if(data[0]=='ok')
+        alert('ok');
+    else
     {
-        $('.spec_error_list').append('<li>'+key+' : '+data[key]+'</li>');
-        $('#specimen_'+key).addClass('error_fld');
-        $('#specimen_'+key).qtip({
-            content: data[key],
-            show: { ready: true },
-            style: { 
-                width: 200,
-                padding: 5,
-                background: '#ec9593',
-                color: 'black',
-                border: {
-                    width: 7,
-                    radius: 5,
-                    color: '#c36b70'
+        for (var key in data)
+        {
+            $('.spec_error_list').append('<li>'+key+' : '+data[key]+'</li>');
+            $('#specimen_'+key).addClass('error_fld');
+            $('#specimen_'+key).qtip({
+                content: data[key],
+                show: { ready: true, when : { event: 'none'} },
+                hide: { when: { event: 'change' } },
+                style: { 
+                    width: 200,
+                    padding: 5,
+                    background: '#ec9593',
+                    color: 'black',
+                    border: {
+                        width: 7,
+                        radius: 5,
+                        color: '#c36b70'
+                    },
+                    tip: 'bottomLeft',
+                    name: 'dark', // Inherit the rest of the attributes from the preset dark style
                 },
-                tip: 'bottomLeft',
-                name: 'dark', // Inherit the rest of the attributes from the preset dark style
-            },
-            position: {
-                corner: {
-                    target: 'topRight',
-                    tooltip: 'bottomLeft'
-                }
-            },
-        });
+                position: {
+                    corner: {
+                        target: 'topRight',
+                        tooltip: 'bottomLeft'
+                    }
+                },
+            });
+        }
     }
 }
 ");?>

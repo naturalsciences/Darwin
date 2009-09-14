@@ -30,7 +30,7 @@ class specimenActions extends sfActions
     if ($this->form->isValid())
     {
         //$this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
-        return $this->renderText("ok");
+        return $this->renderText('{"0":"ok"}');
     }
     //$this->forward('specimen','index');
     $errors = array();

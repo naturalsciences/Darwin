@@ -12,7 +12,9 @@
             <?php if($category=='boardwidget'):?>
                 <a href="#" class="widget_refresh" ><?php echo image_tag('widget_refresh.png', 'alt=Refresh');?></a>
             <?php endif;?>
-            <a href="#" class="widget_close" ><?php echo image_tag('widget_close.png', 'alt=Close');?></a>
+            <?php if(! has_slot('widget_mandatory_'.$widget)):?>
+                <a href="#" class="widget_close" ><?php echo image_tag('widget_close.png', 'alt=Close');?></a>
+            <?php endif;?>
 		</div>
 		<span><?php include_slot('widget_title'); ?></span>
 	</div>
