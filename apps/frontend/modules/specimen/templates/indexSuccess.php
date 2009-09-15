@@ -4,6 +4,7 @@
 var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
 var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
 var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
+var tab_idx=0;
 
 $(document).ready(function () {
     $('form').submit(function(event)
@@ -29,7 +30,10 @@ function retrieve_spec_result(data)
 {
 //     console.log(data);
     if(data[0]=='ok')
-        alert('ok');
+    {
+		$('#tab_'+(tab_idx+1)).removeClass('disabled').addClass('enabled');
+		$('#arrow_right').attr('src','/images/encod_right_enable.png');
+    }
     else
     {
         for (var key in data)
