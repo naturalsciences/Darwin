@@ -2408,6 +2408,11 @@ BEGIN
 			IF NEW.name <> oldValue THEN
 				NEW.name_indexed := to_tsvector('simple', NEW.name);
 			END IF;
+		ELSIF TG_TABLE_NAME = 'classification_keywords' THEN
+			oldValue := OLD.keyword;
+			IF NEW.keyword <> oldValue THEN
+				NEW.keyword_indexed := fullToIndex(NEW.keyword);
+			END IF;
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			oldValue := OLD.formated_name;
 			IF NEW.formated_name <> oldValue THEN
@@ -2455,6 +2460,8 @@ BEGIN
 			NEW.label_indexed := fullToIndex(NEW.label);
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+		ELSIF TG_TABLE_NAME = 'classification_keywords' THEN
+			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN

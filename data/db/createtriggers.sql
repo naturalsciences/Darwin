@@ -163,6 +163,10 @@ CREATE TRIGGER trg_cpy_fullToIndex_taxa BEFORE INSERT OR UPDATE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
+CREATE TRIGGER trg_cpy_fullToIndex_classification_keywords BEFORE INSERT OR UPDATE
+        ON classification_keywords FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_fullToIndex();
+
 CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();

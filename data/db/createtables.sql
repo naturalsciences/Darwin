@@ -994,7 +994,8 @@ comment on column template_classifications.parent_ref is 'Id of parent - id fiel
 create table classification_keywords
 	(
 	 keyword_type varchar not null default 'name',
-	 keyword varchar not null
+	 keyword varchar not null,
+	 keyword_indexed varchar not null
 	)
 inherits (template_table_record_ref);
 
