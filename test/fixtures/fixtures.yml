@@ -47,8 +47,31 @@ People:
         public_class: public
         family_name: Institut Royal des Sciences Naturelles de Belgique
         birth_date: "<?php echo date('Y-m-d');?>"
- 
+
 Collections:
+    c2:
+        code: vert
+        name: Vertebrates
+        Institution: p1
+        Manager: u1
+    c3:
+        code: amp
+        name: Amphibia
+        Institution: p1
+        Manager: u1
+        Parent: c2
+    c4:
+        code: ave
+        name: Aves
+        Institution: p1
+        Manager: u1
+        Parent: c2
+    c5: 
+        code: fav
+        name: Fossile Aves
+        Institution: p1
+        Manager: u1
+        Parent: c4
     c1:
         code: mol
         name: Molusca
@@ -60,6 +83,17 @@ Specimens:
         Collections: c1
         specimen_count_min: 1
         acquisition_date: '0001-01-01'
+        acquisition_category: expedition
+    sp2:
+        Collections: c2
+        specimen_count_min: 1
+        acquisition_date: '0001-03-01'
+        acquisition_category: thievery
+    sp3:
+        Collections: c5
+        specimen_count_min: 1
+        acquisition_date: '0001-02-01'
+        acquisition_category: expedition
 
 MySavedSpecimens:
     ssp1:

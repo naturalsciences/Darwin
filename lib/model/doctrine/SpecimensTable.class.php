@@ -4,17 +4,12 @@
  */
 class SpecimensTable extends Doctrine_Table
 {
-    function getAcquisitionsCategories()
+    function getDistinctCategories()
     {
         $results = Doctrine_Query::create()->
-            from('Specimens s INDEXBY s.acquisition_category')->
-            select('DISTINCT s.acquisition_category as acquisition_category')->
-            execute();
-       /* $acquisition_categories = array();
-        foreach($results as $acquisition_cat)
-        {
-            $acquisition_categories[] = $acquisition_cat->getAcquisitionCategory();
-        }*/
+            select('DISTINCT(acquisition_category) as category')->
+            from('Specimens')->
+           execute();
         return $results;
     }
 }

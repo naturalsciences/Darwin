@@ -31,6 +31,7 @@
                         <li><a href="#">....</a></li>
                     </ul>
                 </li>
+                <li><?php echo link_to(__('Collections'),'collection/index');?></li>
             </ul>
         </li>
         <li>

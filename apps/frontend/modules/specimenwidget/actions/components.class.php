@@ -13,7 +13,6 @@ class specimenwidgetComponents extends sfComponents
 
   public function executeRefCollection()
   {
-//     $this->collections = Doctrine::getTable('Collections')->findAll();
     $this->form = new SpecimensForm();
   }
 

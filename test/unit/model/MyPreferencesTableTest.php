@@ -4,7 +4,7 @@ $t = new lime_test(16, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
-$t->comment('->getWidgets()');
+$t->info('->getWidgets()');
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
         ->getWidgets('board_widget')),4,'Get all board widget');

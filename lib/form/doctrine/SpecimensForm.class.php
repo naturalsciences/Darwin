@@ -20,8 +20,9 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['collection_ref']->setOption('add_empty', true);
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'Specimens',
-      'table_method' => 'getAcquisitionsCategories',
-      'method' => 'getAcquisitionCategory',
+      'table_method' => 'getDistinctCategories',
+      'method' => 'getCategory',
+      'key_method' => 'getCategory',
       'add_empty' => true,
     ));
 
