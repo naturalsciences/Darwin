@@ -6040,9 +6040,9 @@ BEGIN
                 END IF;
                 -- Change children's path
                 IF TG_TABLE_NAME::text = 'multimedia' THEN
-                    UPDATE multimedia SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+                    UPDATE multimedia SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
                 ELSE
-                    UPDATE collections SET path=replace(path, OLD.path, NEW.path) WHERE parent_ref=OLD.id;
+                    UPDATE collections SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
                 END IF;
             END IF;
         ELSE
@@ -6384,3 +6384,17 @@ BEGIN
 	RETURN NEW;
 END;
 $$;
+
+
+/**
+* Bloody mysql!
+*/
+CREATE OR REPLACE FUNCTION concat(text, text) RETURNS text AS $$
+    SELECT $1 || $2;
+$$ LANGUAGE 'sql';
+
+
+CREATE OR REPLACE FUNCTION concat(text, text, text) RETURNS text AS $$
+    SELECT $1 || $2 || $3;
+$$ LANGUAGE 'sql';
+
