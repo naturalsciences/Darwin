@@ -96,7 +96,7 @@
  grant select on "darwin1"."tbl_taxa_ethno_names" to darwin2;
  grant select on "darwin1"."tbl_taxa_pictures" to darwin2;
  grant select on "darwin1"."tbl_taxa_publishers" to darwin2;
- grant select on "darwin1"."tbl_taxa_synonymy" to darwin2;
+ grant select, delete on "darwin1"."tbl_taxa_synonymy" to darwin2;
  grant select on "darwin1"."tbl_litho_syn" to darwin2;
  grant select on "darwin1"."tbl_spec_type_identifiers" to darwin2;
  grant select on "darwin1"."tbl_specimen_status" to darwin2;
