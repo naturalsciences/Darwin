@@ -4,12 +4,13 @@
  */
 class CollectionsTable extends Doctrine_Table
 {
-    public function fetchList()
+    public function fetchByInstitutionList()
     {
         $q = Doctrine_Query::create()
-            ->from('Collections col')
-//             ->innerJoin('col.Manager')
-            ->select('*,CONCAT(col.path,col.id,E\'/\') as col_path_id')
+            ->from('People p')
+            ->innerJoin('p.Collections col')
+            ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
+            ->andWhere('p.is_physical = false')
             ->orderBy('col_path_id ASC');
         return $q->execute();
     }

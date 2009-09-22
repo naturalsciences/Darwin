@@ -12,7 +12,7 @@ class collectionActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->collections = Doctrine::getTable('Collections')->fetchList();
+    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
   }
 
   public function executeNew(sfWebRequest $request)

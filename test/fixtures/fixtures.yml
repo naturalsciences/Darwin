@@ -47,6 +47,11 @@ People:
         public_class: public
         family_name: Institut Royal des Sciences Naturelles de Belgique
         birth_date: "<?php echo date('Y-m-d');?>"
+    p2:
+        is_physical: false
+        public_class: public
+        family_name: UGMM
+        birth_date: "<?php echo date('Y-m-d');?>"
 
 Collections:
     c2:
@@ -75,7 +80,7 @@ Collections:
     c1:
         code: mol
         name: Molusca
-        Institution: p1
+        Institution: p2
         Manager: u1
 
 Specimens:

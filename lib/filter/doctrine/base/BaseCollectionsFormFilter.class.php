@@ -14,7 +14,7 @@ class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'collection_type'          => new sfWidgetFormFilterInput(),
+      'collection_type'          => new sfWidgetFormChoice(array('choices' => array('' => '', 'mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
       'code'                     => new sfWidgetFormFilterInput(),
       'name'                     => new sfWidgetFormFilterInput(),
       'institution_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => true)),
@@ -26,7 +26,7 @@ class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'collection_type'          => new sfValidatorPass(array('required' => false)),
+      'collection_type'          => new sfValidatorChoice(array('required' => false, 'choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
       'code'                     => new sfValidatorPass(array('required' => false)),
       'name'                     => new sfValidatorPass(array('required' => false)),
       'institution_ref'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'People', 'column' => 'id')),
@@ -53,7 +53,7 @@ class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                       => 'Number',
-      'collection_type'          => 'Text',
+      'collection_type'          => 'Enum',
       'code'                     => 'Text',
       'name'                     => 'Text',
       'institution_ref'          => 'ForeignKey',
