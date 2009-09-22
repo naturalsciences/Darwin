@@ -11,5 +11,12 @@ class CollectionsForm extends BaseCollectionsForm
 {
   public function configure()
   {
+    unset(
+        $this['path']
+    );
+//     $this->widgetSchema['collection_type'] = new sfWidgetFormInput();
+    $this->widgetSchema['code'] = new sfWidgetFormInput();
+    $this->widgetSchema['name'] = new sfWidgetFormInput();
+
   }
 }

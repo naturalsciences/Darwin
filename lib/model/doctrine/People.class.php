@@ -5,5 +5,8 @@
  */
 class People extends BasePeople
 {
-
+    public function __toString()
+    {
+        return $this->getFormatedName();
+    }
 }

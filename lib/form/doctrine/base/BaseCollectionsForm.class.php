@@ -13,7 +13,7 @@ class BaseCollectionsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                       => new sfWidgetFormInputHidden(),
-      'collection_type'          => new sfWidgetFormTextarea(),
+      'collection_type'          => new sfWidgetFormChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
       'code'                     => new sfWidgetFormTextarea(),
       'name'                     => new sfWidgetFormTextarea(),
       'institution_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
@@ -26,7 +26,7 @@ class BaseCollectionsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                       => new sfValidatorDoctrineChoice(array('model' => 'Collections', 'column' => 'id', 'required' => false)),
-      'collection_type'          => new sfValidatorString(array('max_length' => 2147483647)),
+      'collection_type'          => new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
       'code'                     => new sfValidatorString(array('max_length' => 2147483647)),
       'name'                     => new sfValidatorString(array('max_length' => 2147483647)),
       'institution_ref'          => new sfValidatorDoctrineChoice(array('model' => 'People')),

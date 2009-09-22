@@ -5,5 +5,8 @@
  */
 class Users extends BaseUsers
 {
-
+    public function __toString()
+    {
+        return $this->getFormatedName();
+    }
 }

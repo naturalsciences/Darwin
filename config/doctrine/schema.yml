@@ -401,7 +401,7 @@ UsersMultimedia:
 Collections:
     columns:
         id: { type: integer, primary: true, autoincrement: true}
-        collection_type: { type: string, notnull: true, default: mix}
+        collection_type: { type: enum, notnull: true, default: mix, values: [mix, observation, physical] }
         code: { type: string, notnull: true}
         name: { type: string, notnull: true}
         institution_ref: { type: integer, notnull: true}

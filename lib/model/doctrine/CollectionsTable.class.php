@@ -4,5 +4,13 @@
  */
 class CollectionsTable extends Doctrine_Table
 {
-
+    public function fetchList()
+    {
+        $q = Doctrine_Query::create()
+            ->from('Collections col')
+//             ->innerJoin('col.Manager')
+            ->select('*,CONCAT(col.path,col.id,E\'/\') as col_path_id')
+            ->orderBy('col_path_id ASC');
+        return $q->execute();
+    }
 }

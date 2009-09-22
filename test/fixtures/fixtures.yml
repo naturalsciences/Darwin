@@ -88,7 +88,7 @@ Specimens:
         Collections: c2
         specimen_count_min: 1
         acquisition_date: '0001-03-01'
-        acquisition_category: thievery
+        acquisition_category: theft
     sp3:
         Collections: c5
         specimen_count_min: 1

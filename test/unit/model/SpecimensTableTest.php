@@ -6,4 +6,4 @@ $t->info('getAcquisitionsCategories');
 $cat = Doctrine::getTable('Specimens')->getDistinctCategories();
 $t->is($cat->count(),2,'Number of differents categories');
 $t->is($cat[0]->getCategory(),'expedition','get the first category');
-$t->is($cat[1]->getCategory(),'thievery','get the last category');
+$t->is($cat[1]->getCategory(),'theft','get the last category');

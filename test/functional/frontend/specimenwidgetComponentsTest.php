@@ -13,5 +13,5 @@ $browser->
         checkElement('select option',3)->
         checkElement('select option:first','/^$/')->
         checkElement('select option:nth-child(2)','expedition')->
-        checkElement('select option:nth-child(3)','thievery')->
+        checkElement('select option:nth-child(3)','theft')->
     end();
