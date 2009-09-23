@@ -4,27 +4,17 @@
 var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
 var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
 var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
-var tab_idx=0;
-
 $(document).ready(function () {
     $('form').submit(function(event)
     {
         event.preventDefault();
-//         console.log($('form').serialize());
         $('.error_fld').removeClass('error_fld');
         $('.spec_error_list').empty();
-        var i = $.fn.qtip.interfaces.length; while(i--)
-        {
-            // Access current elements API
-            var api = $.fn.qtip.interfaces[i];
-            // Queue the animation so positions are updated correctly
-            if(api && api.status.rendered && !api.status.hidden) api.destroy();
-        };
+        removeAllQtip();
         $.post($('form').attr('action'), $('form').serialize(),retrieve_spec_result,'json');
         return false;
     });
 });
-
 
 function retrieve_spec_result(data)
 {
@@ -39,38 +29,18 @@ function retrieve_spec_result(data)
         for (var key in data)
         {
             $('.spec_error_list').append('<li>'+key+' : '+data[key]+'</li>');
-            $('#specimen_'+key).addClass('error_fld');
-            $('#specimen_'+key).qtip({
-                content: data[key],
-                show: { ready: true, when : { event: 'none'} },
-                hide: { when: { event: 'change' } },
-                style: { 
-                    width: 200,
-                    padding: 5,
-                    background: '#ec9593',
-                    color: 'black',
-                    border: {
-                        width: 7,
-                        radius: 5,
-                        color: '#c36b70'
-                    },
-                    tip: 'bottomLeft',
-                    name: 'dark', // Inherit the rest of the attributes from the preset dark style
-                },
-                position: {
-                    corner: {
-                        target: 'topRight',
-                        tooltip: 'bottomLeft'
-                    }
-                },
-            });
+            if(! addFormError($('#specimen_'+key), data[key]))
+            {
+                addFormError($('#specimen_'+key).closest('.widget'), data[key]);
+            }
         }
     }
 }
 ");?>
+
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
 <div class="encoding">
-    <?php echo image_tag('encod_left_disable.png','id="arrow_left" class="scrollButtons left"');?>
+    <?php echo image_tag('encod_left_disable.png','id="arrow_left" alt="Go Previous" class="scrollButtons left"');?>
 	<div class="page">
 			<ul class="tabs">
 				<li class="enabled selected" id="tab_0"> &lt; New Specimen &gt; </li>
@@ -82,7 +52,7 @@ function retrieve_spec_result(data)
 				<!-- the element that will be scrolled during the effect -->
 				<div class="scrollContainer">
 					<div class="panel" id="intro">
-					<form action="<?php echo url_for('specimen/submit') ?>" method="POST">
+					<form action="<?php echo url_for('specimen/submit') ?>" method="post">
 					<div><ul class="spec_error_list"></ul>
 					
   <ul class="board_col">
@@ -108,8 +78,10 @@ function retrieve_spec_result(data)
       <ul class="board_col">
       <?php endif;?>
   </ul>
-  </div><br class="clear"/>
-  <input type="submit" value="Submit" id="submit_spec_f1"/>
+  </div><p class="clear"/>
+    <p>
+        <input type="submit" value="Submit" id="submit_spec_f1"/>
+    </p>
                     </form>
                     </div>
                     <div class="panel"> <a href="#" onclick="$('#submit').trigger('click');return false;">Click here</a></div>
@@ -118,5 +90,5 @@ function retrieve_spec_result(data)
 			</div>
 		</div>
 	</div>
-	<?php echo image_tag('encod_right_disable.png','id="arrow_right" class="scrollButtons right"');?>
+	<?php echo image_tag('encod_right_disable.png','id="arrow_right" alt="Go next" class="scrollButtons right"');?>
 </div>

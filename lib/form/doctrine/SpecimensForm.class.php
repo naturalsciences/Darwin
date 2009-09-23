@@ -16,8 +16,7 @@ class SpecimensForm extends BaseSpecimensForm
         'expedition_ref' => 0,
     ));
     $this->widgetSchema->setNameFormat('specimen[%s]');
-    $this->widgetSchema['collection_ref']->setOption('add_empty', true);
-    $this->widgetSchema['collection_ref']->setOption('add_empty', true);
+    $this->widgetSchema['collection_ref'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'Specimens',
       'table_method' => 'getDistinctCategories',

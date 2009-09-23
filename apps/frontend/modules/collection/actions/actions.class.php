@@ -10,6 +10,13 @@
  */
 class collectionActions extends sfActions
 {
+
+  public function executeChoose(sfWebRequest $request)
+  {
+    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
+    $this->setLayout(false);
+  }
+  
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();

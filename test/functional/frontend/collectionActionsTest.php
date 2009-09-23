@@ -17,10 +17,13 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('h1', 'Collection List')->
-    checkElement('#collection_tree > ul > li',2)->
-    checkElement('#collection_tree > ul > li:first span','Vertebrates (e)')->
-    checkElement('#collection_tree > ul > li:first > ul > li',2)->
-    checkElement('#collection_tree > ul > li:first > ul > li:first span', 'Amphibia (e)')->
+    checkElement('h2:last','UGMM')->
+    checkElement('.treelist:first > ul > li',1)->
+    checkElement('.treelist:first > ul > li:first span','/Vertebrates/')->
+    checkElement('.treelist:first > ul > li:first span','/(e)/')->
+    checkElement('.treelist:first > ul > li:first > ul > li',2)->
+    checkElement('.treelist:first > ul > li:first > ul > li:first span', '/Amphibia/')->
+    checkElement('.treelist:last > ul > li',1)->
   end()->
   
   info('New')->
@@ -78,7 +81,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#collection_tree > ul > li',3)->
+    checkElement('.treelist:first > ul > li',2)->
   end()->
   
   info('Edit')->
@@ -112,7 +115,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#collection_tree > ul > li',2)->
+    checkElement('.treelist:first > ul > li',1)->
   end()->
 
 
@@ -132,6 +135,6 @@ $browser->
   
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#collection_tree > ul > li',1)->
+    checkElement('.treelist:first > ul > li',1)->
   end()
 ;

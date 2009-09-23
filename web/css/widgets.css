@@ -6,6 +6,7 @@
 .widget .widget_top_button, .widget .widget_bottom_button
 {
 	margin-left: 15px;
+	line-height:0;
 }
 
 .widget_top_bar_button
