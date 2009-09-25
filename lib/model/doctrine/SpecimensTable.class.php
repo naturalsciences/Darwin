@@ -21,6 +21,13 @@ class SpecimensTable extends Doctrine_Table
 
     static function getDistinctCategories()
     {
-        return self::$acquisition_category;
+        try{
+            $i18n_object = sfContext::getInstance()->getI18n();
+        }
+        catch( Exception $e )
+        {
+            return self::$acquisition_category;
+        }
+        return array_map(array($i18n_object, '__'), self::$acquisition_category);
     }
 }
