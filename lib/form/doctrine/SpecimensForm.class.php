@@ -26,11 +26,17 @@ class SpecimensForm extends BaseSpecimensForm
         'expanded' => true,
 
     ));
-    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
+    
+    $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),
+        'required' => true,
+        ));
+
+    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
+        'choices' => array(0,1),
         'required' => false,
         ));
-    $this->setDefault('accuracy', 0);
+    $this->setDefault('accuracy', 1);
 //     $this->validatorSchema->setOption('allow_extra_fields', true);
   }
 }

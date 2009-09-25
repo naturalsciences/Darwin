@@ -13,17 +13,17 @@ class specimenwidgetComponents extends sfComponents
 
   public function executeRefCollection()
   {
-    $this->form = new SpecimensForm();
+    $this->form = $this->options;
   }
 
   public function executeAcquisitionCategory()
   {
-    $this->form = new SpecimensForm();
+    $this->form = $this->options;
   }
 
   public function executeSpecimenCount()
   {
-    $this->form = new SpecimensForm();
+    $this->form = $this->options;
   }
 
   public function executeLinkTaxon()

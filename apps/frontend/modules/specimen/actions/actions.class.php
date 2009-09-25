@@ -20,16 +20,20 @@ class specimenActions extends sfActions
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->getWidgets('specimen_widget');
+    
+    $this->form = new SpecimensForm();
   }
 
-  public function executeEdit()
+  public function executeEdit(sfWebRequest $request)
   {
     $this->widgets = Doctrine::getTable('MyPreferences')
         ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
         ->getWidgets('specimen_widget');
     $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
-    
     $this->forward404Unless($specimen);
+    
+    $this->form = new SpecimensForm($specimen);
+    $this->setTemplate('index');
   }
 
   public function executeSubmit(sfWebRequest $request)

@@ -1,4 +1,4 @@
-<?php $widget_content = get_component($category, $widget); ?>
+<?php $widget_content = get_component($category, $widget, isset($options) ? array('options' => $options) : array() ); ?>
 <li class="widget" id="<?php echo $widget;?>">
     <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
         <?php if($category=='boardwidget'):?>

@@ -69,7 +69,9 @@ function retrieve_spec_result(data)
 	  <?php include_partial('widgets/wlayout', array(
             'widget' => $widget->getGroupName(),
             'is_opened' => $widget->getOpened(),
-            'category' => 'specimenwidget')
+            'category' => 'specimenwidget',
+            'options' => $form,
+            )
 	  ); ?>
     <?php endforeach;?>
     <?php if($changed_col==false):?>
