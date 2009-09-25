@@ -10,8 +10,12 @@ $browser->
     with('response')->begin()->
         isStatusCode(200)->
         checkElement('select',1)->
-        checkElement('select option',3)->
-        checkElement('select option:first','/^$/')->
-        checkElement('select option:nth-child(2)','expedition')->
-        checkElement('select option:nth-child(3)','theft')->
-    end();
+        checkElement('select option',12)->
+        checkElement('select option:first','Undefined')->
+    end()->
+    info('2 - CollectionRef')->
+    get('/widgets/reloadContent?widget=refCollection&category=specimen')->
+    with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('input[type="hidden"]',1)->
+    end();;

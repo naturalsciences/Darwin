@@ -19,7 +19,7 @@ $browser->
     isStatusCode(200)->
     checkElement('title','Add Specimens')->
     checkElement('.board_col',2)->
-    checkElement('.board_col:first .widget',1)->
+    checkElement('.board_col:first .widget',2)->
     checkElement('.board_col:last .widget',false)->
     checkElement('.board_col:first .widget:first .widget_top_bar span','Add New Specimen')->
   end()

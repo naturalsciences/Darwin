@@ -17,12 +17,8 @@ class SpecimensForm extends BaseSpecimensForm
     ));
     $this->widgetSchema->setNameFormat('specimen[%s]');
     $this->widgetSchema['collection_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['acquisition_category'] = new sfWidgetFormDoctrineChoice(array(
-      'model' => 'Specimens',
-      'table_method' => 'getDistinctCategories',
-      'method' => 'getCategory',
-      'key_method' => 'getCategory',
-      'add_empty' => true,
+    $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
+      'choices' =>  SpecimensTable::getDistinctCategories(),
     ));
 
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
@@ -31,7 +27,7 @@ class SpecimensForm extends BaseSpecimensForm
 
     ));
     $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
-        'choices' => array(0,1),
+        'choices' => SpecimensTable::getDistinctCategories(),
         'required' => false,
         ));
     $this->setDefault('accuracy', 0);

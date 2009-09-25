@@ -17,11 +17,21 @@ class specimenActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-     $this->widgets = Doctrine::getTable('MyPreferences')
+    $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->getWidgets('specimen_widget');
   }
-  
+
+  public function executeEdit()
+  {
+    $this->widgets = Doctrine::getTable('MyPreferences')
+        ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+        ->getWidgets('specimen_widget');
+    $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
+    
+    $this->forward404Unless($specimen);
+  }
+
   public function executeSubmit(sfWebRequest $request)
   {
     $this->form = new SpecimensForm();
@@ -30,6 +40,7 @@ class specimenActions extends sfActions
     if ($this->form->isValid())
     {
         //$this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
+        $this->form->save();
         return $this->renderText('{"0":"ok"}');
     }
     //$this->forward('specimen','index');

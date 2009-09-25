@@ -4,12 +4,23 @@
  */
 class SpecimensTable extends Doctrine_Table
 {
-    function getDistinctCategories()
+    static public $acquisition_category = array(
+        'Undefined' => 'Undefined',
+        'Donation' => 'Donation',
+        'Exchange' => 'Exchange',
+        'Internal work' => 'Internal work',
+        'Loan' => 'Loan',
+        'Mission' => 'Mission',
+        'Purchase' => 'Purchase',
+        'seizure' => 'Judicial seizure',
+        'Trip' => 'Trip',
+        'Excavation' => 'Excavation',
+        'Exploration' => 'Exploration',
+        'Collect' => 'Collect',
+        );
+
+    static function getDistinctCategories()
     {
-        $results = Doctrine_Query::create()->
-            select('DISTINCT(acquisition_category) as category')->
-            from('Specimens')->
-           execute();
-        return $results;
+        return self::$acquisition_category;
     }
 }
