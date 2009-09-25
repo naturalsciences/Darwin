@@ -4,7 +4,7 @@
  grant select on "darwin1"."tbl_stations" to darwin2;
  grant select on "darwin1"."tbl_functions" to darwin2;
  grant select on "darwin1"."tbl_taxa_experts" to darwin2;
- grant select on "darwin1"."tbl_batches_habitats" to darwin2;
+ grant select, update on "darwin1"."tbl_batches_habitats" to darwin2;
  grant select on "darwin1"."tbl_spec_grp_identifiers" to darwin2;
  grant select on "darwin1"."tbl_donator_or_seller" to darwin2;
  grant select on "darwin1"."tbl_address_telephone_numbers" to darwin2;
