@@ -10,7 +10,7 @@ $(document).ready(function () {
         show: { when: 'click' },
         position: {
             target: $(document.body), // Position it via the document body...
-                    corner: 'center' // ...at the center of the viewport
+            corner: 'center' // ...at the center of the viewport
         },
         hide: false,
         style: {
@@ -19,14 +19,14 @@ $(document).ready(function () {
         api: {
             beforeShow: function()
             {
-            // Fade in the modal "blanket" using the defined show speed
-                    addBlackScreen()
-                    $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+                // Fade in the modal "blanket" using the defined show speed
+                addBlackScreen()
+                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
             beforeHide: function()
             {
-            // Fade out the modal "blanket" using the defined hide speed
-                    $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+                // Fade out the modal "blanket" using the defined hide speed
+                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
             }
         }
     });

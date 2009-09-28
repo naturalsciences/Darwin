@@ -43,8 +43,13 @@ class specimenActions extends sfActions
     $this->form->bind($request->getParameter('specimen'));
     if ($this->form->isValid())
     {
-        //$this->redirect('contact/thankyou?'.http_build_query($this->form->getValues()));
-        $this->form->save();
+        try{
+            $this->form->save();
+        }
+        catch(Exception $e)
+        {
+            return $this->renderText(json_encode(array("" => $e->getMessage())));
+        }
         return $this->renderText('{"0":"ok"}');
     }
     //$this->forward('specimen','index');
