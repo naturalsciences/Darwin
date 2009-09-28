@@ -318,6 +318,7 @@ insert into possible_upper_levels (level_ref, level_upper_ref) values (77, 76);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (78, 76);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (78, 77);
 INSERT INTO gtu (id, code) VALUES (0,0);
+INSERT INTO expeditions (id, name, name_ts, name_indexed) VALUES (0, '', to_tsvector(''), '');
 INSERT INTO lithostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO chronostratigraphy (id, name, name_indexed) VALUES (0, '', '');
 INSERT INTO mineralogy (id, name, name_indexed, code) VALUES (0, '', '', 0);
