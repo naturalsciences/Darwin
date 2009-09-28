@@ -41,7 +41,7 @@
 	border-bottom:1px solid #c0d147;
 }
 
-.tab_box
+.panel
 {
 	margin-top:-2px;
 	border:1px solid #c0d147;
@@ -51,22 +51,22 @@
 }
 
 /**** WIDGET ENCODING ****/
-.tab_box .widget .widget_top_bar
+.panel .widget .widget_top_bar
 {
 	background-color:#C1CF56;
 }
 
-.tab_box .widget .widget_content {
+.panel .widget .widget_content {
 	background-color:#F6F6F6;
 	border:1px solid #C1CF56;
 }
 
-.tab_box .widget_content .form input
+.panel .widget_content .form input
 {
 	border:1px solid #BBBDBC;
 }
 
-.tab_box .widget_content .form input:focus
+.panel .widget_content .form input:focus
 {
 	border:1px solid #C1CF56;
 }
@@ -75,7 +75,7 @@
 {
 	line-height: 20px;
 }
-.tab_box .widget_content .form .help_ico
+.panel .widget_content .form .help_ico
 {
 	vertical-align:middle;
 }
