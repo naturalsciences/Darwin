@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function () {
-    $('.treelist li:not( li:has(ul) ) img.tree_cmd').hide();
+    $('.treelist li:not(li:has(ul)) img.tree_cmd').hide();
     $('.collapsed').click(function()
     {
         $(this).hide();

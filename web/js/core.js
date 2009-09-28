@@ -57,7 +57,8 @@ function removeAllQtip()
             // Access current elements API
         var api = $.fn.qtip.interfaces[i];
             // Queue the animation so positions are updated correctly
-        if(api && api.status.rendered && !api.status.hidden) api.destroy();
+        if(api && api.status.rendered && !api.status.hidden && !api.elements.target.is('.button'))
+            api.destroy();
     };
 }
 
