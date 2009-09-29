@@ -1564,8 +1564,10 @@ create table habitats
         description_ts tsvector not null,
         description_language_full_text full_text_language, 
         habitat_system varchar not null default 'eunis',
+	parent_ref integer,
         path varchar not null default '/',
         constraint pk_habitats primary key (id),
+	constraint fk_habitats_parent_ref foreign key (parent_ref) references habitats(id) on delete cascade,
         constraint unq_habitats unique (path, code_indexed, habitat_system)
        );
 comment on table habitats is 'Habitats classifications';
@@ -1576,6 +1578,7 @@ comment on column habitats.description is 'General description of the habitat';
 comment on column habitats.description_ts is 'Indexed form of description field ready to be used with to_tsvector full text search function';
 comment on column habitats.description_language_full_text is 'Language used to compose the description_ts tsvector field';
 comment on column habitats.habitat_system is 'System used to describe habitat encoded';
+comment on column habitats.parent_ref is 'Reference of parent habitat';
 comment on column habitats.path is 'Hierarchy path (/ for root)';
 create table multimedia_keywords
        (
