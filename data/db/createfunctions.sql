@@ -6401,6 +6401,22 @@ BEGIN
 END;
 $$;
 
+/**
+ Check That a parent is not attached twice in a path to avoid cycle
+*/
+CREATE OR REPLACE FUNCTION fct_chk_onceInPath(path varchar) RETURNS boolean
+language plpgsql
+AS
+$$
+BEGIN
+    PERFORM * FROM regexp_split_to_table(path, E'\/') as i_id WHERE i_id != '' GROUP BY i_id HAVING COUNT(*)>1;
+    IF FOUND THEN
+        RETURN FALSE;
+    END IF;
+    RETURN true;
+END;
+$$;
+
 
 /**
 * Bloody mysql!

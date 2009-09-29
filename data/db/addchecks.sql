@@ -15,3 +15,13 @@ ALTER TABLE template_table_record_ref add constraint fct_chk_ReferencedRecord_te
 ALTER TABLE users_tracking DROP CONSTRAINT fct_chk_ReferencedRecord_template_table_record_ref;
 ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_catalogue_relationships_rec1 check (fct_chk_ReferencedRecord(table_name,record_id_1));
 ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_catalogue_relationships_rec2 check (fct_chk_ReferencedRecord(table_name,record_id_2));
+
+ALTER TABLE multimedia add constraint fct_chk_onceInPath_multimedia CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE gtu add constraint fct_chk_onceInPath_gtu CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE collections add constraint fct_chk_onceInPath_collections CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE taxonomy add constraint fct_chk_onceInPath_taxonomy CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE chronostratigraphy add constraint fct_chk_onceInPath_chronostratigraphy CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE lithostratigraphy add constraint fct_chk_onceInPath_lithostratigraphy CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE mineralogy add constraint fct_chk_onceInPath_mineralogy CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE lithology add constraint fct_chk_onceInPath_lithology CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
+ALTER TABLE habitats add constraint fct_chk_onceInPath_habitats CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
