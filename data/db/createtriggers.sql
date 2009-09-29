@@ -365,8 +365,8 @@ CREATE TRIGGER trg_cpy_path_peopleRelationships BEFORE INSERT OR UPDATE
 	ON people_relationships FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 	
-CREATE TRIGGER trg_cpy_path_gtus BEFORE INSERT OR UPDATE
-	ON gtus FOR EACH ROW
+CREATE TRIGGER trg_cpy_path_gtu BEFORE INSERT OR UPDATE
+	ON gtu FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 
 /*

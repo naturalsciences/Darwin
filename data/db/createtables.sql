@@ -231,7 +231,7 @@ comment on column gtu.gtu_from_date is 'composed from date of the GTU';
 comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known';
 comment on column gtu.gtu_to_date is 'composed to date of the GTU';
-comment on column gtu.gtu_path is 'When gtus are hierarchicaly ordered, give the parenty path';
+comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
 create table gtu_tags
        (
         tag_group_ref bigint not null,
