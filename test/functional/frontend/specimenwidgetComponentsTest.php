@@ -18,4 +18,11 @@ $browser->
     with('response')->begin()->
         isStatusCode(200)->
         checkElement('input[type="hidden"]',1)->
-    end();;
+    end()->
+    get('/widgets/reloadContent?widget=tool&category=specimen')->
+    with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('#specimen_collecting_tool option',3)->
+        checkElement('#specimen_collecting_tool option:first','')->
+        checkElement('#specimen_tool_add')->
+    end();
