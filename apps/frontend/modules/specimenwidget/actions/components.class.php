@@ -40,4 +40,12 @@ class specimenwidgetComponents extends sfComponents
 
   public function executeLinkHabitat()
   {}
+
+  public function executeTool()
+  {
+    if( isset($this->options) )
+        $this->form = $this->options;
+    else
+        $this->form = new SpecimensForm();
+  }
 }

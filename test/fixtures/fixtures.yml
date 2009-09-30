@@ -89,16 +89,19 @@ Specimens:
         specimen_count_min: 1
         acquisition_date: '0001-01-01'
         acquisition_category: expedition
+        collecting_tool: Fish Net
     sp2:
         Collections: c2
         specimen_count_min: 1
         acquisition_date: '0001-03-01'
         acquisition_category: theft
+        collecting_tool: fish Pas net
     sp3:
         Collections: c5
         specimen_count_min: 1
         acquisition_date: '0001-02-01'
         acquisition_category: expedition
+        collecting_tool: Fish Net
 
 MySavedSpecimens:
     ssp1:
@@ -185,6 +188,14 @@ MyPreferences:
         col_num: 1
         category: specimen_widget
         group_name: specimenCount
+        order_by: 2
+        opened: false
+        visible: false
+    u1ws6:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: tool
         order_by: 2
         opened: false
         visible: false

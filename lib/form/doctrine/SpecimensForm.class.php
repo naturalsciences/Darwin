@@ -29,13 +29,21 @@ class SpecimensForm extends BaseSpecimensForm
     
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),
-        'required' => true,
+        'required' => false,
         ));
 
     $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
         'choices' => array(0,1),
         'required' => false,
         ));
+    $this->widgetSchema['collecting_tool'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctTools',
+        'method' => 'getTool',
+        'key_method' => 'getTool',
+        'add_empty' => true,
+    ));
+
     $this->setDefault('accuracy', 1);
 //     $this->validatorSchema->setOption('allow_extra_fields', true);
   }

@@ -30,4 +30,13 @@ class SpecimensTable extends Doctrine_Table
         }
         return array_map(array($i18n_object, '__'), self::$acquisition_category);
     }
+
+    function getDistinctTools()
+    {
+        $results = Doctrine_Query::create()->
+           select('DISTINCT(collecting_tool) as tool')->
+           from('Specimens')->
+           execute();
+        return $results;
+    }
 }
