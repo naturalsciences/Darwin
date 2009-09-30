@@ -142,7 +142,7 @@ CREATE INDEX CONCURRENTLY idx_specimens_chrono_ref on specimens(chrono_ref) WHER
 CREATE INDEX CONCURRENTLY idx_specimens_lithology_ref on specimens(lithology_ref) WHERE lithology_ref <> 0;
 CREATE INDEX CONCURRENTLY idx_specimens_mineral_ref on specimens(mineral_ref) WHERE mineral_ref <> 0;
 CREATE INDEX CONCURRENTLY idx_specimens_host_taxon_ref on specimens(host_taxon_ref) WHERE host_taxon_ref <> 0;
-CREATE INDEX CONCURRENTLY idx_specimens_host_specimen_ref on specimens(host_specimen_ref) WHERE host_specimen_ref NOT IS NULL;
+CREATE INDEX CONCURRENTLY idx_specimens_host_specimen_ref on specimens(host_specimen_ref) WHERE host_specimen_ref IS NOT NULL;
 CREATE INDEX CONCURRENTLY idx_specimen_individuals_specimen_ref on specimen_individuals(specimen_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_specimen_individual_ref on specimen_parts(specimen_individual_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_insurances_specimen_part_ref on specimen_parts_insurances(specimen_part_ref);
