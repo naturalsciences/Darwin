@@ -36,6 +36,7 @@ class SpecimensForm extends BaseSpecimensForm
         'choices' => array(0,1),
         'required' => false,
         ));
+        
     $this->widgetSchema['collecting_tool'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctTools',
@@ -44,6 +45,14 @@ class SpecimensForm extends BaseSpecimensForm
         'add_empty' => true,
     ));
 
+    $this->widgetSchema['collecting_method'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctMethods',
+        'method' => 'getMethod',
+        'key_method' => 'getMethod',
+        'add_empty' => true,
+    ));
+    
     $this->setDefault('accuracy', 1);
 //     $this->validatorSchema->setOption('allow_extra_fields', true);
   }

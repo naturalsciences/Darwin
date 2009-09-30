@@ -48,4 +48,12 @@ class specimenwidgetComponents extends sfComponents
     else
         $this->form = new SpecimensForm();
   }
+
+  public function executeMethod()
+  {
+    if( isset($this->options) )
+        $this->form = $this->options;
+    else
+        $this->form = new SpecimensForm();
+  }
 }

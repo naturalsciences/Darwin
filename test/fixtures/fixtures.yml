@@ -90,18 +90,21 @@ Specimens:
         acquisition_date: '0001-01-01'
         acquisition_category: expedition
         collecting_tool: Fish Net
+        collecting_method: Hunting
     sp2:
         Collections: c2
         specimen_count_min: 1
         acquisition_date: '0001-03-01'
         acquisition_category: theft
         collecting_tool: fish Pas net
+        collecting_method: Hunting
     sp3:
         Collections: c5
         specimen_count_min: 1
         acquisition_date: '0001-02-01'
         acquisition_category: expedition
         collecting_tool: Fish Net
+        collecting_method: Fishing
 
 MySavedSpecimens:
     ssp1:
@@ -157,7 +160,7 @@ MyPreferences:
         group_name: linkTaxon
         order_by: 1
         opened: true
-        visible: true
+        visible: false
     u1ws2:
         User: u1
         col_num: 1
@@ -172,7 +175,7 @@ MyPreferences:
         category: specimen_widget
         group_name: refCollection
         mandatory: true
-        order_by: 2
+        order_by: 1
         opened: false
         visible: true
     u1ws4:
@@ -189,13 +192,21 @@ MyPreferences:
         category: specimen_widget
         group_name: specimenCount
         order_by: 2
-        opened: false
-        visible: false
+        opened: true
+        visible: true
     u1ws6:
         User: u1
         col_num: 1
         category: specimen_widget
         group_name: tool
+        order_by: 2
+        opened: false
+        visible: false
+    u1ws7:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: method
         order_by: 2
         opened: false
         visible: false

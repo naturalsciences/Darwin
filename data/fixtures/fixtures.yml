@@ -90,18 +90,21 @@ Specimens:
         acquisition_date: '0001-01-01'
         acquisition_category: expedition
         collecting_tool: Fish Net
+        collecting_method: Hunting
     sp2:
         Collections: c2
         specimen_count_min: 1
         acquisition_date: '0001-03-01'
         acquisition_category: theft
         collecting_tool: fish Pas net
+        collecting_method: Hunting
     sp3:
         Collections: c5
         specimen_count_min: 1
         acquisition_date: '0001-02-01'
         acquisition_category: expedition
         collecting_tool: Fish Net
+        collecting_method: Fishing
 
 MySavedSpecimens:
     ssp1:
