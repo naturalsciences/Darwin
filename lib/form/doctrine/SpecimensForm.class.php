@@ -52,7 +52,13 @@ class SpecimensForm extends BaseSpecimensForm
         'key_method' => 'getMethod',
         'add_empty' => true,
     ));
-    
+
+    $this->validatorSchema->setPostValidator(
+        new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
+            array(),
+            array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
+            )
+        );
     $this->setDefault('accuracy', 1);
 //     $this->validatorSchema->setOption('allow_extra_fields', true);
   }

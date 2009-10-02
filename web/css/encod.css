@@ -150,10 +150,11 @@
     display: none;
 }
 
-ul.spec_error_list
+ul.spec_error_list, ul.error_list
 {
     background-color:#ec9593;
     border: 3px solid #c36b70;
     margin-bottom: 1em;
     padding: 1em;
 }
+

@@ -61,6 +61,7 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('expedition_ref', 'integer', null, array(
              'type' => 'integer',
+             'default' => 0,
              ));
         $this->hasColumn('gtu_ref', 'integer', null, array(
              'type' => 'integer',

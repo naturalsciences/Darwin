@@ -4,38 +4,6 @@
 var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
 var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
 var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
-$(document).ready(function () {
-    $('form').submit(function(event)
-    {
-        event.preventDefault();
-        $('.error_fld').removeClass('error_fld');
-        $('.spec_error_list').empty();
-        removeAllQtip();
-        $.post($('form').attr('action'), $('form').serialize(),retrieve_spec_result,'json');
-        return false;
-    });
-});
-
-function retrieve_spec_result(data)
-{
-//     console.log(data);
-    if(data[0]=='ok')
-    {
-		$('#tab_1').removeClass('disabled').addClass('enabled');
-		$('#arrow_right').attr('src','/images/encod_right_enable.png');
-    }
-    else
-    {
-        for (var key in data)
-        {
-            $('.spec_error_list').append('<li>'+key+' : '+data[key]+'</li>');
-            if(! addFormError($('#specimen_'+key), data[key]))
-            {
-                addFormError($('#specimen_'+key).closest('.widget'), data[key]);
-            }
-        }
-    }
-}
 ");?>
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
@@ -48,8 +16,14 @@ function retrieve_spec_result(data)
 			<li class="disabled" id="tab_2">Properties</li>
 		</ul>
  		<div class="panel" id="intro">
-            <form action="<?php echo url_for('specimen/submit') ?>" method="post">
-                <div><ul class="spec_error_list"></ul>
+            <form action="<?php echo url_for('specimen/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+                <?php //echo $form->renderHiddenFields() ?>
+                 <?php echo $form['id']->render() ?>
+                <div>
+                <ul class="spec_error_list"><?php foreach ($form->getGlobalErrors() as $name => $error): ?>
+                    <li><?php echo $error ?></li>
+                <?php endforeach; ?></ul>
+                <ul class="spec_error_list"></ul>
                 <ul class="board_col">
                     <?php $changed_col=false;?>
                     <?php foreach($widgets as $id => $widget):?>

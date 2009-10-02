@@ -924,7 +924,7 @@ Specimens:
     columns:
         id: { type: integer, primary: true, autoincrement: true },
         collection_ref: { type: integer, notnull: true }
-        expedition_ref: { type: integer}
+        expedition_ref: { type: integer,default: 0}
         gtu_ref: { type: integer, default: 0}
         taxon_ref: { type: integer, default: 0}
         litho_ref: { type: integer, default: 0}

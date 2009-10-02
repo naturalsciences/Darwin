@@ -1,3 +1,6 @@
-indexSuccess:
+newSuccess:
+  stylesheets: [widgets.css, encod.css]
+  javascripts: [jquery.ui.all.min.js, widgets.js]
+editSuccess:
   stylesheets: [widgets.css, encod.css]
   javascripts: [jquery.ui.all.min.js, widgets.js]

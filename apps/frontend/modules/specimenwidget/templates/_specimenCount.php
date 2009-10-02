@@ -14,9 +14,9 @@ jQuery(function(){
         else
         {
             $('#specimen_specimen_count_max').parent().show();
-            if($('#specimen_specimen_count_max') < $('#specimen_specimen_count_min'))
-                $('#specimen_specimen_count_max').val($('#specimen_specimen_count_min').val());
         }
+        if($('#specimen_specimen_count_max').val() < $('#specimen_specimen_count_min').val())
+            $('#specimen_specimen_count_max').val($('#specimen_specimen_count_min').val());
     });
 });
 </script>

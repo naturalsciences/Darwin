@@ -7,11 +7,11 @@ $browser->loadData()->login('root','evil');
 
 $browser->
   info('1 - Specimen screen')->
-  get('/specimen/index')->
+  get('/specimen/new')->
 
   with('request')->begin()->
     isParameter('module', 'specimen')->
-    isParameter('action', 'index')->
+    isParameter('action', 'new')->
   end()->
 
   info('1.1 - is everything ok on screen')->

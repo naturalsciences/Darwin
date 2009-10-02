@@ -37,7 +37,7 @@
         <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
-                <li><?php echo link_to(__('Specimens'),'specimen/index');?></li>
+                <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
                 <li>
                     <a href="#">Catalogues</a>
                     <ul>

@@ -10,18 +10,26 @@
  */
 class specimenActions extends sfActions
 {
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
-  public function executeIndex(sfWebRequest $request)
+
+  public function executeNew(sfWebRequest $request)
   {
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->getWidgets('specimen_widget');
-    
+
     $this->form = new SpecimensForm();
+  }
+  
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->form = new SpecimensForm();
+    $this->processForm($request, $this->form);
+
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->getWidgets('specimen_widget');
+    $this->setTemplate('new');
   }
 
   public function executeEdit(sfWebRequest $request)
@@ -30,36 +38,42 @@ class specimenActions extends sfActions
         ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
         ->getWidgets('specimen_widget');
     $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
-    $this->forward404Unless($specimen);
+    $this->forward404Unless($specimen,'Specimen not Found');
     
     $this->form = new SpecimensForm($specimen);
-    $this->setTemplate('index');
+    $this->setTemplate('new');
   }
 
-  public function executeSubmit(sfWebRequest $request)
+  public function executeUpdate(sfWebRequest $request)
   {
-    $this->form = new SpecimensForm();
-//     $this->forward404Unless($request->isMethod('post'));
-    $this->form->bind($request->getParameter('specimen'));
-    if ($this->form->isValid())
-    {
-        try{
-            $this->form->save();
-        }
-        catch(Exception $e)
-        {
-            return $this->renderText(json_encode(array("" => $e->getMessage())));
-        }
-        return $this->renderText('{"0":"ok"}');
-    }
-    //$this->forward('specimen','index');
-    $errors = array();
+      $this->widgets = Doctrine::getTable('MyPreferences')
+        ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+        ->getWidgets('specimen_widget');
 
-    foreach ($this->form->getFormFieldSchema() as $name => $formField )
+    $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
+    $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
+    $this->forward404Unless($specimen,'Specimen not Found');
+    $this->form = new SpecimensForm($specimen);
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('new');
+  }
+
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()));
+    if ($form->isValid())
     {
-        if($formField->hasError())
-            $errors[$name] = $formField->getError()->getMessage();
+      try{
+        $specimen = $form->save();
+        $this->redirect('specimen/edit?id='.$specimen->getId());
+      }
+      catch(Exception $e)
+      {
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
+      }
     }
-    return $this->renderText(json_encode($errors));
   }
 }

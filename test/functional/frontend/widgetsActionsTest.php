@@ -26,7 +26,7 @@ $browser->
 
 
   info('1.2 - the other category is still not changed')->
-  get('/specimen/index')->
+  get('/specimen/new')->
   with('response')->begin()->
     checkElement('.board_col:first .widget',2)->
     checkElement('.board_col:last .widget',false)->
