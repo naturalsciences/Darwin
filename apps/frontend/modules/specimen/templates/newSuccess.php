@@ -20,10 +20,13 @@ var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
                 <?php //echo $form->renderHiddenFields() ?>
                  <?php echo $form['id']->render() ?>
                 <div>
-                <ul class="spec_error_list"><?php foreach ($form->getGlobalErrors() as $name => $error): ?>
-                    <li><?php echo $error ?></li>
-                <?php endforeach; ?></ul>
-                <ul class="spec_error_list"></ul>
+                <?php if($form->hasGlobalErrors()):?>
+                    <ul class="spec_error_list">
+                        <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
+                            <li><?php echo $name." ".$error ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif;?>
                 <ul class="board_col">
                     <?php $changed_col=false;?>
                     <?php foreach($widgets as $id => $widget):?>

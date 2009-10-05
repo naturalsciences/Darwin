@@ -73,9 +73,15 @@ class collectionActions extends sfActions
     $form->bind($request->getParameter($form->getName()));
     if ($form->isValid())
     {
-      $collections = $form->save();
-
-      $this->redirect('collection/index');
+        try{
+            $collections = $form->save();
+            $this->redirect('collection/index');
+        }
+        catch(Exception $e)
+        {
+            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+            $form->getErrorSchema()->addError($error); 
+        }
     }
   }
 }

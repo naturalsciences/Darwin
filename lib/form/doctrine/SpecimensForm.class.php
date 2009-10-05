@@ -16,7 +16,11 @@ class SpecimensForm extends BaseSpecimensForm
         'expedition_ref' => 0,
     ));
     $this->widgetSchema->setNameFormat('specimen[%s]');
-    $this->widgetSchema['collection_ref'] = new sfWidgetFormInputHidden();
+    //$this->widgetSchema['collection_ref'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Collections',
+       'method' => 'getName',
+     ));
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
       'choices' =>  SpecimensTable::getDistinctCategories(),
     ));
