@@ -12,6 +12,19 @@ function getIdInClasses(el)
     }
 }
 
+function getElInClasses(element,prefix)
+{
+    var classes = $(element).attr("class").split(" ");
+    for ( var i = 0; i < classes.length; i++ )
+    {
+        exp = new RegExp(prefix+"(.*)",'gi');
+        var result = exp.exec(classes[i]) ;
+        if ( result )
+        {
+            return result[1];
+        }
+    }
+}
 
 function addFormError(form_el, message)
 {

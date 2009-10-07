@@ -9,6 +9,14 @@ $(document).ready(function ()
     $('.widget .widget_content:hidden .error_list:has(li)').each(function(){
         showWidgetContent($(this).closest('.widget'));
     });
+    
+    $('.spec_error_list li.hidden').each(function(){
+        console.log($(this));
+        field = getElInClasses($(this),'error_fld_');
+        console.log(field);
+        if( $('#specimen_'+field).length == 0 )
+            $(this).show();
+    });
 });
 ");?>
 
@@ -26,10 +34,13 @@ $(document).ready(function ()
                 <?php //echo $form->renderHiddenFields() ?>
                  <?php echo $form['id']->render() ?>
                 <div>
-                <?php if($form->hasGlobalErrors()):?>
+                <?php if($form->hasErrors()):?>
                     <ul class="spec_error_list">
                         <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
                             <li><?php echo $name." ".$error ?></li>
+                        <?php endforeach; ?>
+                        <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
+                            <li class="hidden error_fld_<?php echo $name;?>"><?php echo $name." ".$error ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif;?>
