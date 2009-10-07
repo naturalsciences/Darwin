@@ -4,6 +4,12 @@
 var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
 var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
 var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
+$(document).ready(function ()
+{
+    $('.widget .widget_content:hidden .error_list:has(li)').each(function(){
+        showWidgetContent($(this).closest('.widget'));
+    });
+});
 ");?>
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>

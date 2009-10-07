@@ -8,7 +8,7 @@ class MyPreferencesTable extends Doctrine_Table
   public function getWidgets($category)
   {
       $q = Doctrine_Query::create()
-            ->from('MyPreferences p')
+            ->from('MyPreferences p INDEXBY p.group_name')
             ->orderBy('p.col_num ASC, p.order_by ASC');
     return $this->addCategoryUser($q,$category)->execute();
   }

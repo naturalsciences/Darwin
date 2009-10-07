@@ -11,32 +11,32 @@
 class specimenActions extends sfActions
 {
 
-  public function executeNew(sfWebRequest $request)
+  public function loadWidgets()
   {
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
       ->getWidgets('specimen_widget');
+  }
 
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->loadWidgets();
     $this->form = new SpecimensForm();
   }
-  
+
   public function executeCreate(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($request->isMethod('post'),'You must submit your data with Post Method');
     $this->form = new SpecimensForm();
     $this->processForm($request, $this->form);
 
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
-      ->getWidgets('specimen_widget');
+    $this->loadWidgets();
     $this->setTemplate('new');
   }
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->widgets = Doctrine::getTable('MyPreferences')
-        ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
-        ->getWidgets('specimen_widget');
+    $this->loadWidgets();
     $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
     $this->forward404Unless($specimen,'Specimen not Found');
     
@@ -46,9 +46,7 @@ class specimenActions extends sfActions
 
   public function executeUpdate(sfWebRequest $request)
   {
-      $this->widgets = Doctrine::getTable('MyPreferences')
-        ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
-        ->getWidgets('specimen_widget');
+    $this->loadWidgets();
 
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
