@@ -31,16 +31,6 @@ class SpecimensForm extends BaseSpecimensForm
 
     ));
     
-    $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
-        'choices' => SpecimensTable::getDistinctCategories(),
-        'required' => false,
-        ));
-
-    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
-        'choices' => array(0,1),
-        'required' => false,
-        ));
-        
     $this->widgetSchema['collecting_tool'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctTools',
@@ -56,6 +46,18 @@ class SpecimensForm extends BaseSpecimensForm
         'key_method' => 'getMethod',
         'add_empty' => true,
     ));
+    
+    $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
+        'choices' => SpecimensTable::getDistinctCategories(),
+        'required' => false,
+        ));
+
+    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
+        'choices' => array(0,1),
+        'required' => false,
+        ));
+        
+    $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',

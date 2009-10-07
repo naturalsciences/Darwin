@@ -6,9 +6,9 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
     public function render($name, $value = null, $attributes = array(), $errors = array())
     {
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
-        $name = $this->getName($value);
+        $coll_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
-        $input .= '<div id="'.$this->generateId($name).'_name">'.$name.'</div>';
+        $input .= '<div id="'.$this->generateId($name).'_name">'.$coll_name.'</div>';
         $input .= '<div id="'.$this->generateId($name).'_button" class="button">';
         $input .= '<img class="left_part" src="/images/button_grey_left.png" alt=""/>';
         $input .= '<span class="but_text" class="button">';
@@ -34,7 +34,10 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
     
     public function getName($value)
     {
-        $object = Doctrine::getTable($this->getOption('model'))->find($value);
+        if(is_numeric($value))
+            $object = Doctrine::getTable($this->getOption('model'))->find($value);
+        else
+            return '';
         if(! $object)
             return '';
         $method = $this->getOption('method');
