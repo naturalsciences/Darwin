@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('.col_name span').click(function () {
         $('#specimen_collection_ref').val( getIdInClasses($(this).parent().parent()) );
         $('#specimen_collection_ref_name').text($(this).text());
+        $('#specimen_collection_ref_button .but_text').text('Change !');
         $('.qtip-button').click();
     });
 });

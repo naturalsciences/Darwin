@@ -12,7 +12,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $input .= '<div id="'.$this->generateId($name).'_button" class="button">';
         $input .= '<img class="left_part" src="/images/button_grey_left.png" alt=""/>';
         $input .= '<span class="but_text" class="button">';
-        if($name == '')
+        if($coll_name == '')
             $input .= __('Choose !');
         else
             $input .= __('Change !');
