@@ -334,3 +334,4 @@ INSERT INTO classification_keywords (table_name, record_id, keyword_type, keywor
 INSERT INTO classification_keywords (table_name, record_id, keyword_type, keyword, keyword_indexed) VALUES ('taxonomy', -3, 'name', 'Eucaryota', 'eucaryota');
 INSERT INTO classification_keywords (table_name, record_id, keyword_type, keyword, keyword_indexed) VALUES ('taxonomy', -3, 'year', '1990', '1990');
 INSERT INTO users (id, formated_name, formated_name_indexed,formated_name_ts, family_name) VALUES (0,'','',to_tsvector(''),'');
+INSERT INTO people (id, formated_name, formated_name_indexed,formated_name_ts, family_name) VALUES (0,'','',to_tsvector(''),'');

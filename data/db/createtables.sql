@@ -906,7 +906,7 @@ comment on table collection_maintenance is 'History of specimen maintenance';
 comment on column collection_maintenance.id is 'Unique identifier of a specimen maintenance';
 comment on column collection_maintenance.table_name is 'Reference of table a maintenance entry has been created for';
 comment on column collection_maintenance.record_id is 'ID of record a maintenance entry has been created for';
-comment on column collection_maintenance.people_ref is 'Reference of people having done an action or an observation';
+comment on column collection_maintenance.people_ref is 'Reference of person having done an action or an observation';
 comment on column collection_maintenance.category is 'Action or Observation';
 comment on column collection_maintenance.action_observation is 'Action or observation done';
 comment on column collection_maintenance.description is 'Complementary description';
