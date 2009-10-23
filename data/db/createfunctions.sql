@@ -6430,3 +6430,14 @@ CREATE OR REPLACE FUNCTION concat(text, text, text) RETURNS text AS $$
     SELECT $1 || $2 || $3;
 $$ LANGUAGE 'sql';
 
+
+/*
+** Function used for encrypting passwords using pgcrypto function
+*/
+
+CREATE OR REPLACE FUNCTION sha1(bytea) RETURNS varchar LANGUAGE plpgsql AS
+$$
+BEGIN
+	RETURN ENCODE(DIGEST($1, 'sha1'), 'hex');
+END;
+$$;
