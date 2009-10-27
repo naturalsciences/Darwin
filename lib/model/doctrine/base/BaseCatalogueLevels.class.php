@@ -11,6 +11,7 @@
  * @property string $level_sys_name
  * @property boolean $optional_level
  * @property Doctrine_Collection $PossibleUpperLevels
+ * @property Doctrine_Collection $Taxonomy
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -51,5 +52,9 @@ abstract class BaseCatalogueLevels extends sfDoctrineRecord
         $this->hasMany('PossibleUpperLevels', array(
              'local' => 'id',
              'foreign' => 'level_upper_ref'));
+
+        $this->hasMany('Taxonomy', array(
+             'local' => 'id',
+             'foreign' => 'level_ref'));
     }
 }

@@ -4,5 +4,19 @@
  */
 class CatalogueLevelsTable extends Doctrine_Table
 {
+  public function getLevelsByTypes($type, $q = null)
+  {
+    if (is_null($q))
+    {
+      $q = Doctrine_Query::create()
+	 ->from('CatalogueLevels cl');
+    }
+    $q->addWhere('cl.level_type = ?', $type);
+    return $q;
+  }
 
+  public function getLevelsForTaxo()
+  {
+    return $this->getLevelsByTypes('taxonomy')->execute();
+  }
 }

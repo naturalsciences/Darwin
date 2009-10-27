@@ -26,7 +26,7 @@
                 <li>
                     <a href="#aa">Catalogues</a>
                     <ul>
-                        <li><a href="#">Taxa</a></li>
+                        <li><?php echo link_to(__('Taxa'),'taxonomy/index');?></li>
                         <li><a href="#">Habitats</a></li>
                         <li><a href="#">....</a></li>
                     </ul>
@@ -37,11 +37,12 @@
         <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
+                <li><?php echo link_to(__('Collections'),'collection/new');?></li>
                 <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
                 <li>
                     <a href="#">Catalogues</a>
                     <ul>
-                        <li><a href="#">Taxa</a></li>
+                        <li><?php echo link_to(__('Taxa'),'taxonomy/new');?></li>
                         <li><a href="#">Habitats</a></li>
                         <li><a href="#">....</a></li>
                     </ul>

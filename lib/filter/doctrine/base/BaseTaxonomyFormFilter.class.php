@@ -16,7 +16,7 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'name'                         => new sfWidgetFormFilterInput(),
       'name_indexed'                 => new sfWidgetFormFilterInput(),
-      'level_ref'                    => new sfWidgetFormFilterInput(),
+      'level_ref'                    => new sfWidgetFormDoctrineChoice(array('model' => 'CatalogueLevels', 'add_empty' => true)),
       'status'                       => new sfWidgetFormFilterInput(),
       'path'                         => new sfWidgetFormFilterInput(),
       'parent_ref'                   => new sfWidgetFormDoctrineChoice(array('model' => 'Taxonomy', 'add_empty' => true)),
@@ -134,7 +134,7 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'name'                         => new sfValidatorPass(array('required' => false)),
       'name_indexed'                 => new sfValidatorPass(array('required' => false)),
-      'level_ref'                    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'level_ref'                    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'CatalogueLevels', 'column' => 'id')),
       'status'                       => new sfValidatorPass(array('required' => false)),
       'path'                         => new sfValidatorPass(array('required' => false)),
       'parent_ref'                   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Taxonomy', 'column' => 'id')),
@@ -267,7 +267,7 @@ class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
       'id'                           => 'Number',
       'name'                         => 'Text',
       'name_indexed'                 => 'Text',
-      'level_ref'                    => 'Number',
+      'level_ref'                    => 'ForeignKey',
       'status'                       => 'Text',
       'path'                         => 'Text',
       'parent_ref'                   => 'ForeignKey',

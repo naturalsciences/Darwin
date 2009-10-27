@@ -4,5 +4,14 @@
  */
 class TaxonomyTable extends Doctrine_Table
 {
-
+  public function getByNameLike($name,$level)
+  {
+    $q = Doctrine_Query::create()
+	 ->from('Taxonomy t')
+	 ->andWhere('name_indexed @@ to_tsquery(?) ',$name);
+    if($level)
+      $q->andWhere('level_ref = ?',$level);
+	 //->andWhere('name ~* ?',$name);
+    return $q->execute();
+  }
 }

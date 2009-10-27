@@ -5,5 +5,8 @@
  */
 class CatalogueLevels extends BaseCatalogueLevels
 {
-
+  public function __toString()
+  {
+    return $this->getLevelName();
+  }
 }

@@ -730,6 +730,11 @@ Taxonomy:
             class: Taxonomy
             local: parent_ref
             foreign: id
+        Level:
+            class: CatalogueLevels
+            local: level_ref
+            foreign: id
+            
 
 ClassificationKeywords:
     columns:

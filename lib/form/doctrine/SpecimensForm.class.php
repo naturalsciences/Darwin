@@ -28,7 +28,6 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
         'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
         'expanded' => true,
-
     ));
     
     $this->widgetSchema['collecting_tool'] = new sfWidgetFormDoctrineChoice(array(

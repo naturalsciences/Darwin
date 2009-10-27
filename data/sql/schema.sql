@@ -128,3 +128,4 @@ ALTER TABLE users_languages ADD CONSTRAINT users_languages_users_ref_users_id FO
 ALTER TABLE users_workflow ADD CONSTRAINT users_workflow_user_ref_users_id FOREIGN KEY (user_ref) REFERENCES users(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE users_tracking ADD CONSTRAINT users_tracking_user_ref_users_id FOREIGN KEY (user_ref) REFERENCES users(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
 ALTER TABLE taxonomy ADD CONSTRAINT taxonomy_parent_ref_taxonomy_id FOREIGN KEY (parent_ref) REFERENCES taxonomy(id) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE taxonomy ADD CONSTRAINT taxonomy_level_ref_catalogue_levels_id FOREIGN KEY (level_ref) REFERENCES catalogue_levels(id) NOT DEFERRABLE INITIALLY IMMEDIATE;

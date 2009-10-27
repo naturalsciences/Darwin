@@ -80,23 +80,6 @@
 	vertical-align:middle;
 }
 
-.button {
-	line-height:24px;
-	float:left;
-}
-.but_text
-{
-	background-image: url(/images/button_grey_center.png);
-	background-repeat:repeat-x;
-	vertical-align:middle;
-	float:left;
-	display:block;
-	height:24px;
-}
-.right_part,.left_part
-{
-	float:left;
-}
 
 .people_count
 {

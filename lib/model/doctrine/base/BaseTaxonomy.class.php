@@ -122,6 +122,7 @@
  * @property string $abberans_indexed
  * @property boolean $extinct
  * @property Taxonomy $Parent
+ * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Taxonomy
  * @property Doctrine_Collection $Soortenregister
  * @property Doctrine_Collection $Specimens
@@ -718,6 +719,10 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
     {
         $this->hasOne('Taxonomy as Parent', array(
              'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as Level', array(
+             'local' => 'level_ref',
              'foreign' => 'id'));
 
         $this->hasMany('Taxonomy', array(

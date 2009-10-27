@@ -79,3 +79,34 @@ form th
    margin: 0.5em;
    font-weight: bold;
 }
+
+.search_result
+{
+  margin-top: 1.5em;
+  margin-left: 2em;
+}
+
+.search_result li
+{
+  list-style: square;
+}
+
+
+.button {
+	line-height:24px;
+	float:left;
+}
+.but_text
+{
+	background-image: url(/images/button_grey_center.png);
+	background-repeat:repeat-x;
+	vertical-align:middle;
+	float:left;
+	display:block;
+	height:24px;
+}
+
+.right_part,.left_part
+{
+	float:left;
+}
