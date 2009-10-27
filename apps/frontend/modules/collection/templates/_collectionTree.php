@@ -30,7 +30,7 @@ $(document).ready(function () {
                     <?php endif;?>
                 <?php endif;?>
 
-            <li id="rid_<?php echo $col_item->getId();?>"><div class="col_name">
+            <li class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
                 <?php echo image_tag ('individual_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
                 <?php echo image_tag ('individual_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
                 <span><?php echo $col_item->getName();?>
