@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(20);
+SELECT plan(22);
 
 insert into people (id, db_people_type, is_physical,family_name, given_name, birth_date, gender,end_date)
  VALUES (3,6, true, 'Zé Doe', 'Jo-zé', DATE 'June 20, 1989', 'M', DATE 'January 1, 0000');
@@ -50,6 +50,9 @@ insert into people (id, is_physical, family_name, birth_date, end_date ) VALUES
 SELECT ok( 'The Management Unit of the North Sea Mathematical Models' = (SELECT formated_name FROM people WHERE id=10),'formated_name composed on changed name');
 SELECT ok( 'themanagementunitofthenorthseamathemati' = (SELECT formated_name_indexed FROM people WHERE id=10),'formated_name_indexed composed');
 SELECT ok( '' = (SELECT title FROM people WHERE id=10),'title is empty');
+
+SELECT ok('north' = (SELECT word FROM words where table_name = 'people' AND field_name='formated_name_ts' AND word='north'), 'North was added to word table');
+SELECT ok('models' = (SELECT word FROM words where table_name = 'people' AND field_name='formated_name_ts' AND word='models'), 'model was added to word table');
 
 UPDATE people SET title='Mr' WHERE id=10;
 

@@ -1837,3 +1837,15 @@ comment on column specimens_accompanying.quantity is 'Quantity of accompanying s
 comment on column specimens_accompanying.unit is 'Unit used for quantity of accompanying specimen presence';
 comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxonomy table';
 comment on column specimens_accompanying.form is 'Form of accompanying specimen presence: colony, aggregate, isolated,...';
+
+create table words
+  (
+    table_name varchar,
+    field_name varchar,
+    word varchar,
+    constraint uniq_words unique (table_name, field_name, word)
+  );
+comment on table words is 'List all trigram used with pg_trgm to match similarities';
+comment on column words.table_name is 'Reference of table concerned';
+comment on column words.field_name is 'Reference of field in the table';
+comment on column words.word is 'word founded';

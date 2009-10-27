@@ -6430,7 +6430,6 @@ CREATE OR REPLACE FUNCTION concat(text, text, text) RETURNS text AS $$
     SELECT $1 || $2 || $3;
 $$ LANGUAGE 'sql';
 
-
 /*
 ** Function used for encrypting passwords using pgcrypto function
 */
@@ -6438,6 +6437,203 @@ $$ LANGUAGE 'sql';
 CREATE OR REPLACE FUNCTION sha1(bytea) RETURNS varchar LANGUAGE plpgsql AS
 $$
 BEGIN
-	RETURN ENCODE(DIGEST($1, 'sha1'), 'hex');
+        RETURN ENCODE(DIGEST($1, 'sha1'), 'hex');
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION ts_stat(tsvector, OUT word text, OUT ndoc
+integer, OUT nentry integer)
+RETURNS SETOF record AS
+$$
+    SELECT ts_stat('SELECT ' || quote_literal( $1::text ) || '::tsvector');
+$$ LANGUAGE SQL RETURNS NULL ON NULL INPUT IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION fct_trg_word() RETURNS TRIGGER
+AS
+$$
+BEGIN
+
+   IF TG_TABLE_NAME ='collection_maintenance' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.description_ts != NEW.description_ts THEN
+	  PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='comments' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.comment_ts != NEW.comment_ts THEN
+	  PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='vernacular_names' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_ts != NEW.name_ts THEN
+	  PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='identifications' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.value_defined_ts != NEW.value_defined_ts THEN
+	  PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='multimedia' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.descriptive_ts != NEW.descriptive_ts THEN
+	  PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='people' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
+	  PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='people_addresses' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.address_parts_ts != NEW.address_parts_ts THEN
+	  PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='users_addresses' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.address_parts_ts != NEW.address_parts_ts THEN
+	   PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='users' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
+	  PERFORM fct_cpy_word('users','comment_ts', NEW.formated_name_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('users','comment_ts', NEW.formated_name_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='expeditions' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_ts != NEW.name_ts THEN
+	  PERFORM fct_cpy_word('expeditions','comment_ts', NEW.name_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('expeditions','comment_ts', NEW.name_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='habitats' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.description_ts != NEW.description_ts THEN
+	  PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='mineralogy' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_indexed != NEW.name_indexed THEN
+	  PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='chronostratigraphy' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_indexed != NEW.name_indexed THEN
+	  PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='lithostratigraphy' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_indexed != NEW.name_indexed THEN
+	  PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='lithology' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_indexed != NEW.name_indexed THEN
+	  PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='taxonomy' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.name_indexed != NEW.name_indexed THEN
+	  PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
+      END IF;
+
+   END IF;
+
+   RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_cpy_word(tbl_name words.table_name%TYPE, fld_name words.field_name%TYPE, word_ts tsvector) RETURNS boolean
+AS
+$$
+DECLARE
+  item varchar;
+BEGIN
+    FOR item IN SELECT word FROM ts_stat(word_ts) LOOP
+      BEGIN
+	INSERT INTO words (table_name, field_name, word) VALUES (tbl_name, fld_name, item);
+      EXCEPTION WHEN unique_violation THEN
+	    -- Just Sleep and insert the next one
+      END;
+    END LOOP;
+    RETURN true;
+END;
+$$
+LANGUAGE plpgsql;

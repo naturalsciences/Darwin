@@ -390,3 +390,66 @@ CREATE TRIGGER trg_cpy_unified_values BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_cpy_unified_values BEFORE INSERT OR UPDATE
 	ON catalogue_properties FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_unified_values();
+
+
+/**** ADDing TS words Trigger ***/
+
+CREATE TRIGGER trg_words_ts_cpy_collection_maintenance BEFORE INSERT OR UPDATE
+	ON collection_maintenance FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_comments BEFORE INSERT OR UPDATE
+	ON comments FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_vernacular_names BEFORE INSERT OR UPDATE
+	ON vernacular_names FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_identification BEFORE INSERT OR UPDATE
+	ON identifications FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_multimedia BEFORE INSERT OR UPDATE
+	ON multimedia FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_people BEFORE INSERT OR UPDATE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_people_addresses BEFORE INSERT OR UPDATE
+	ON people_addresses FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_users BEFORE INSERT OR UPDATE
+	ON users FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_expeditions BEFORE INSERT OR UPDATE
+	ON expeditions FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_habitats BEFORE INSERT OR UPDATE
+	ON habitats FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_mineralogy BEFORE INSERT OR UPDATE
+	ON mineralogy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_chronostratigraphy BEFORE INSERT OR UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_lithostratigraphy BEFORE INSERT OR UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_lithology BEFORE INSERT OR UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
+CREATE TRIGGER trg_words_ts_cpy_taxonomy BEFORE INSERT OR UPDATE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();

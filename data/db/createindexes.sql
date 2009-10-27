@@ -299,5 +299,8 @@ CREATE INDEX CONCURRENTLY idx_collections_collection_type on collections(collect
 
 /*** @TODO:Additional BTree Indexes created to fasten application ***/
 
+/*** FullText ***/
+CREATE INDEX CONCURRENTLY idx_words_trgm ON words USING gin(word gin_trgm_ops);
+CREATE INDEX CONCURRENTLY idx_words_table_field on words(table_name,field_name);
 
 
