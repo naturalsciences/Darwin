@@ -16,6 +16,6 @@
 </ul>
 <br />
 <div class="actions">
-    <div class="action_button">More</div>
+    <div class="action_button"><?php echo __("More");?></div>
     <div style="clear:right"></div>
 </div>

@@ -12,4 +12,9 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   {
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
+
+  protected function getI18N()
+  {
+     return sfContext::getInstance()->getI18N();
+  }
 }

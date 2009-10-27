@@ -4,7 +4,7 @@
 $(document).ready(function () {
     $("#specimen_collection_ref_button").qtip({
         content: {
-            title: { text : 'Choose a collection', button: 'Close' },
+            title: { text : '<?php echo __('Choose a collection');?>', button: '<?php echo __('Close');?>' },
             url: '<?php echo url_for('collection/choose');?>'
         },
         show: { when: 'click' },

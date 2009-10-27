@@ -19,5 +19,5 @@ $(document).ready(function () {
 });
 </script>
 <?php echo $form['collecting_tool']->renderRow() ?> 
-<div id="add_spec_tool"><?php echo image_tag('add_green.png', array('id'=> 'specimen_tool_add', 'alt'=>'+'));?> Add Another Tool</div>
-<div id="change_spec_tool" class="hidden"><?php echo image_tag('refresh_green.png');?> Pick a Tool in the List</div>
+<div id="add_spec_tool"><?php echo image_tag('add_green.png', array('id'=> 'specimen_tool_add', 'alt'=>'+'));?> <?php echo __('Add Another Tool');?></div>
+<div id="change_spec_tool" class="hidden"><?php echo image_tag('refresh_green.png');?> <?php echo __('Pick a Tool in the List');?></div>

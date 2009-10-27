@@ -25,9 +25,9 @@ $(document).ready(function ()
     <?php echo image_tag('encod_left_disable.png','id="arrow_left" alt="Go Previous" class="scrollButtons left"');?>
 	<div class="page">
 		<ul class="tabs">
-			<li class="enabled selected" id="tab_0"> &lt; New Specimen &gt; </li>
-			<li class="disabled" id="tab_1">Individuals</li>
-			<li class="disabled" id="tab_2">Properties</li>
+			<li class="enabled selected" id="tab_0"> <?php echo __('&lt; New Specimen &gt;');?> </li>
+			<li class="disabled" id="tab_1"><?php echo __('Individuals');?></li>
+			<li class="disabled" id="tab_2"><?php echo __('Properties');?></li>
 		</ul>
  		<div class="panel" id="intro">
             <form action="<?php echo url_for('specimen/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
@@ -37,10 +37,10 @@ $(document).ready(function ()
                 <?php if($form->hasErrors()):?>
                     <ul class="spec_error_list">
                         <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
-                            <li><?php echo $name." ".$error ?></li>
+                            <li><?php echo __($name." ".$error); ?></li>
                         <?php endforeach; ?>
                         <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
-                            <li class="hidden error_fld_<?php echo $name;?>"><?php echo $name." ".$error ?></li>
+                            <li class="hidden error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif;?>
@@ -70,11 +70,11 @@ $(document).ready(function ()
                     </div>
                     <p class="clear"/>
                     <p>
-                        <input type="submit" value="Submit" id="submit_spec_f1"/>
+                        <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>
                     </p>
                 </form>
             </div>
 		</div>
 	</div>
-	<?php echo image_tag('encod_right_disable.png','id="arrow_right" alt="Go next" class="scrollButtons right"');?>
+	<?php echo image_tag('encod_right_disable.png','id="arrow_right" alt="'.__('Go next').'" class="scrollButtons right"');?>
 </div>

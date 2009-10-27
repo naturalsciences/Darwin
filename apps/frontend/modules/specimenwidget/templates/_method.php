@@ -18,5 +18,5 @@ $(document).ready(function () {
 });
 </script>
         <?php echo $form['collecting_method']->renderRow() ?> 
-        <div id="add_spec_method"><?php echo image_tag('add_green.png', array('id'=> 'specimen_method_add', 'alt'=>'+'));?> Add Another method</div>
-        <div id="change_spec_tool" class="hidden"><?php echo image_tag('refresh_green.png');?> Pick a Method in the List</div>
+        <div id="add_spec_method"><?php echo image_tag('add_green.png', array('id'=> 'specimen_method_add', 'alt'=>'+'));?> <?php echo __('Add Another method');?></div>
+        <div id="change_spec_tool" class="hidden"><?php echo image_tag('refresh_green.png');?> <?php echo __('Pick a Method in the List');?></div>

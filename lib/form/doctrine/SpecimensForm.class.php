@@ -26,7 +26,7 @@ class SpecimensForm extends BaseSpecimensForm
     ));
 
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
-        'choices'  => array('exact','imprecise'),
+        'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
         'expanded' => true,
 
     ));

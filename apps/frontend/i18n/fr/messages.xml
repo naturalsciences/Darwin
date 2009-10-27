@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
-<xliff version="1.0">
-  <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2009-09-25T14:08:38Z" product-name="messages">
-    <header/>
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE xliff PUBLIC '-//XLIFF//DTD XLIFF//EN' 'http://www.oasis-open.org/committees/xliff/documents/xliff.dtd'>
+<xliff version="1.0" >
+  <file original="messages" product-name="messages" target-language="fr" datatype="plaintext" source-language="EN" date="2009-10-12T15:40:31Z" >
+    <header>
+      <phase-group>
+        <phase contact-name="Brice Maron" tool-id="lokalize-1.0" phase-name="approval-1" contact-email="bmaron@naturalsciences.be" process-name="approval" date="2009-10-13" />
+      </phase-group>
+      <tool tool-id="lokalize-1.0" tool-name="Lokalize" tool-version="1.0" />
+    </header>
     <body>
       <trans-unit>
         <source>Username</source>
@@ -38,73 +43,193 @@
         <source>Logout</source>
         <target>Déconnexion</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="1" >
         <source>My Profile</source>
         <target>Mon Profil</target>
       </trans-unit>
-      <trans-unit id="2">
+      <trans-unit id="2" >
         <source>Searches</source>
         <target>Recherche</target>
       </trans-unit>
-      <trans-unit id="4">
+      <trans-unit id="4" >
         <source>Add</source>
-        <target>Ajoutez</target>
+        <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="5">
+      <trans-unit id="5" >
         <source>Administration</source>
         <target>Administration</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="1" >
         <source>Dashboard</source>
         <target>Tableau de Bord</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="1" >
         <source>My Saved Searches</source>
         <target>Mes Recherches Sauvegardées</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="1" >
         <source>My Saved Specimens</source>
         <target>Mes Spécimens Sauvegardé</target>
       </trans-unit>
-      <trans-unit id="2">
+      <trans-unit id="2" >
         <source>Customise your interface !</source>
         <target>Personnalisez votre interface !</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="1" >
         <source>Specimens</source>
         <target>Spécimens</target>
       </trans-unit>
-      <trans-unit id="2">
+      <trans-unit id="2" >
         <source>Add Specimens</source>
         <target>Ajoutez un Spécimens</target>
       </trans-unit>
-      <trans-unit id="3">
+      <trans-unit id="3" >
         <source>Add New Specimen</source>
         <target>Ajoutez un Nouveau Spécimens</target>
       </trans-unit>
-      <trans-unit id="4">
+      <trans-unit id="4" >
         <source>Add New Taxon</source>
         <target>Ajoutez un Taxon</target>
       </trans-unit>
-      <trans-unit id="1">
+      <trans-unit id="1" >
         <source>Collections</source>
-        <target/>
+        <target phase-name="approval-1" state="signed-off" >Collections</target>
       </trans-unit>
-      <trans-unit id="2">
+      <trans-unit id="2" >
         <source>Acquisition</source>
-        <target/>
+        <target phase-name="approval-1" state="signed-off" >Acquisition</target>
       </trans-unit>
-      <trans-unit id="3">
+      <trans-unit id="3" >
         <source>Specimen Count</source>
-        <target/>
+        <target phase-name="approval-1" state="signed-off" >Nombre de Spécimens</target>
       </trans-unit>
-      <trans-unit id="4">
+      <trans-unit id="4" >
         <source>Collection</source>
-        <target/>
+        <target phase-name="approval-1" state="signed-off" >Collection</target>
       </trans-unit>
-      <trans-unit id="5">
-          <source>Loan</source>
-          <target>Prêt</target>
+      <trans-unit id="5" >
+        <source>Loan</source>
+        <target>Prêt</target>
+      </trans-unit>
+      <trans-unit id="1" >
+        <source>&amp;lt; New Specimen &amp;gt;</source>
+        <target phase-name="approval-1" state="signed-off" >&amp;lt; Nouveau Spécimen &amp;gt;</target>
+      </trans-unit>
+      <trans-unit id="2" >
+        <source>Individuals</source>
+        <target phase-name="approval-1" state="signed-off" >Individus</target>
+      </trans-unit>
+      <trans-unit id="3" >
+        <source>Properties</source>
+        <target phase-name="approval-1" state="signed-off" >Propriétés</target>
+      </trans-unit>
+      <trans-unit id="4" >
+        <source>Submit</source>
+        <target phase-name="approval-1" state="signed-off" >Envoyer</target>
+      </trans-unit>
+      <trans-unit id="5" >
+        <source>Go next</source>
+        <target phase-name="approval-1" state="signed-off" >Suivant</target>
+      </trans-unit>
+      <trans-unit id="6" >
+        <source>Add Another method</source>
+        <target phase-name="approval-1" state="signed-off" >Ajoutez une nouvelle méthode</target>
+      </trans-unit>
+      <trans-unit id="7" >
+        <source>Pick a Method in the List</source>
+        <target phase-name="approval-1" state="signed-off" >Choisissez une méthode dans la liste</target>
+      </trans-unit>
+      <trans-unit id="8" >
+        <source>Collecting Tool</source>
+        <target phase-name="approval-1" state="signed-off" >Outil de collecte</target>
+      </trans-unit>
+      <trans-unit id="9" >
+        <source>Add Another Tool</source>
+        <target phase-name="approval-1" state="signed-off" >Ajoutez un nouvel outil</target>
+      </trans-unit>
+      <trans-unit id="10" >
+        <source>Pick a Tool in the List</source>
+        <target phase-name="approval-1" state="signed-off" >Choisissez un outil dans la liste</target>
+      </trans-unit>
+      <trans-unit id="1" >
+        <source>(e)</source>
+        <target phase-name="approval-1" state="signed-off" >(e)</target>
+      </trans-unit>
+      <trans-unit id="2" >
+        <source>Collection List</source>
+        <target phase-name="approval-1" state="signed-off" >Liste de Collection</target>
+      </trans-unit>
+      <trans-unit id="3" >
+        <source>New</source>
+        <target phase-name="approval-1" state="signed-off" >Nouveau</target>
+      </trans-unit>
+      <trans-unit id="4" >
+        <source>Cancel</source>
+        <target phase-name="approval-1" state="signed-off" >Annuler</target>
+      </trans-unit>
+      <trans-unit id="5" >
+        <source>Are you sure?</source>
+        <target phase-name="approval-1" state="signed-off" >Êtes vous sûr?</target>
+      </trans-unit>
+      <trans-unit id="6" >
+        <source>Save</source>
+        <target phase-name="approval-1" state="signed-off" >Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="7" >
+        <source>Choose a collection</source>
+        <target phase-name="approval-1" state="signed-off" >Choisissez une collection</target>
+      </trans-unit>
+      <trans-unit id="8" >
+        <source>New Collection</source>
+        <target phase-name="approval-1" state="signed-off" >Nouvelle Collection</target>
+      </trans-unit>
+      <trans-unit id="9" >
+        <source>Edit Collection</source>
+        <target phase-name="approval-1" state="signed-off" >Éditer une Collection</target>
+      </trans-unit>
+      <trans-unit id="1" >
+        <source>Add new specimen</source>
+        <target phase-name="approval-1" state="signed-off" >Ajouter un nouveau spécimen</target>
+      </trans-unit>
+      <trans-unit id="2" >
+        <source>More</source>
+        <target phase-name="approval-1" state="signed-off" >Plus</target>
+      </trans-unit>
+      <trans-unit id="3" >
+        <source>Add new Taxon</source>
+        <target phase-name="approval-1" state="signed-off" >Ajouter un Taxon</target>
+      </trans-unit>
+      <trans-unit id="4" >
+        <source>Close</source>
+        <target phase-name="approval-1" state="signed-off" >Fermer</target>
+      </trans-unit>
+	<trans-unit id="5" >
+        <source>Choose !</source>
+        <target phase-name="approval-1" state="signed-off" >Choisir !</target>
+      </trans-unit>
+      <trans-unit id="6" >
+        <source>Change !</source>
+        <target phase-name="approval-1" state="signed-off" >Changer !</target>
+      </trans-unit>
+      <trans-unit id="7" >
+        <source>Accuracy</source>
+        <target phase-name="approval-1" state="signed-off" >Précision</target>
+      </trans-unit>
+      <trans-unit id="8" >
+        <source>exact</source>
+        <target phase-name="approval-1" state="signed-off" >exact</target>
+      </trans-unit>
+      <trans-unit id="9" >
+        <source>imprecise</source>
+        <target phase-name="approval-1" state="signed-off" >imprécis</target>
+      </trans-unit>
+      <trans-unit id="10" >
+        <source>Specimen count min</source>
+        <target phase-name="approval-1" state="signed-off" >Nombre minimum de spécimen</target>
+      </trans-unit>
+      <trans-unit id="11" >
+        <source>Specimen count max</source>
+        <target phase-name="approval-1" state="signed-off" >Nombre maximum de spécimen</target>
       </trans-unit>
     </body>
   </file>
