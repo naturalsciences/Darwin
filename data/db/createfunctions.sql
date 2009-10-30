@@ -1150,6 +1150,9 @@ DECLARE
 	level_sys_name catalogue_levels.level_sys_name%TYPE;
 BEGIN
 	SELECT cl.level_sys_name INTO level_sys_name FROM catalogue_levels as cl WHERE cl.id = NEW.level_ref;
+	IF NEW.id = 0 THEN
+		RETURN NEW;
+	END IF;
 	IF TG_TABLE_NAME = 'chronostratigraphy' THEN
 		SELECT 
 			CASE
