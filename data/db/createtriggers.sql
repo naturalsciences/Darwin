@@ -443,13 +443,13 @@ CREATE TRIGGER trg_words_ts_cpy_chronostratigraphy BEFORE INSERT OR UPDATE
 	EXECUTE PROCEDURE fct_trg_word();
 
 CREATE TRIGGER trg_words_ts_cpy_lithostratigraphy BEFORE INSERT OR UPDATE
-	ON chronostratigraphy FOR EACH ROW
+	ON lithostratigraphy FOR EACH ROW
 	EXECUTE PROCEDURE fct_trg_word();
 
 CREATE TRIGGER trg_words_ts_cpy_lithology BEFORE INSERT OR UPDATE
-	ON chronostratigraphy FOR EACH ROW
+	ON lithology FOR EACH ROW
 	EXECUTE PROCEDURE fct_trg_word();
 
 CREATE TRIGGER trg_words_ts_cpy_taxonomy BEFORE INSERT OR UPDATE
-	ON chronostratigraphy FOR EACH ROW
+	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_trg_word();
