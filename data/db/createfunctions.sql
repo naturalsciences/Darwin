@@ -5993,6 +5993,11 @@ BEGIN
 			INTO NEW.path;
 		END IF;
 	END IF;
+
+	/** PERMIT TO ADD 0 with triggers in tests **/
+	IF NEW.path IS NULL AND NEW.id < 1 THEN
+	  NEW.path := '/';
+	END IF;
 	RETURN NEW;
 END;
 $$

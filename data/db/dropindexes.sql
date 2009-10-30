@@ -293,6 +293,7 @@ DROP INDEX IF EXISTS idx_collections_collection_type;
 
 
 /*** Additional BTree Indexes created to fasten application ***/
-
+DROP INDEX IF EXISTS idx_words_trgm;
+DROP INDEX IF EXISTS idx_words_table_field;
 
 
