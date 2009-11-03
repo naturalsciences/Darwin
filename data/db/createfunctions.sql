@@ -6650,7 +6650,7 @@ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION search_words_to_query(tbl_name words.table_name%TYPE, fld_name words.field_name%TYPE, value varchar, op varchar) RETURNS tsquery AS
 $$
  
-  SELECT to_tsquery(array_to_string( array(SELECT word FROM words
+  SELECT to_tsquery('simple',array_to_string( array(SELECT word FROM words
       WHERE table_name = $1
 	AND field_name = $2
 	AND word % $3
