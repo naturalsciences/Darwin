@@ -30,7 +30,7 @@ help-target:
 	@echo "   Display this help message"
 	@echo ""
 	@echo "install-all"
-	@echo "   install all the database.(must be run in privileged account) Execute targets  create-db, create-user, create-schema, install-db"
+	@echo "   install all the database.(must be run in privileged account) Execute targets  create-db, create-user, create-schema, install-lib, install-db"
 	@echo ""
 	@echo "install-db"
 	@echo "   install the darwin db into the $db_user schema : create types, tables, functions and indexes"
@@ -46,6 +46,9 @@ help-target:
 	@echo ""
 	@echo "create-db"
 	@echo "   create an new postgresql db and the tablespace associated for darwin"
+	@echo ""
+	@echo "install-lib"
+	@echo "   install library used by darwin"
 	@echo ""
 	@echo "create-user"
 	@echo "   create a default user to access only the darwin schema and db"
@@ -111,7 +114,7 @@ install-db:
 	$(PARAM_PSQL) -f addchecks.sql
 	$(PARAM_PSQL) -f grant_d2_to_web_user.sql
 
-install-all: create-db create-user create-schema install-db
+install-all: create-db create-user create-schema install-lib install-db
 
 uninstall-db:
 	$(PARAM_PSQL) -f droptriggers.sql
@@ -146,9 +149,12 @@ create-db:
 	-createlang -d template1 plpgsql
 	#-createlang -d template1 plpythonu
 	$(PRIV_PSQL) -v dbpath=\'$(TB_SPACE_DIR)\' -f createdb.sql
-#TODO:Should be moved to another target
-	$(PRIV_PSQL_DB) -f lib/accent.sql
 
+install-lib:
+	$(PRIV_PSQL_DB) -f lib/accent.sql
+	#Make this more dynamical
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/8.3/contrib/pg_trgm.sql
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/8.3/contrib/pgcrypto.sql
 create-user-web:
 	-createuser -l -i -q -S -R -D -P -E $(DB_WEB_USER)
 

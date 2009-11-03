@@ -1615,7 +1615,7 @@ create sequence specimens_id_seq;
 create table specimens
        (
         id integer not null default nextval('specimens_id_seq'),
-        collection_ref integer not null,
+        collection_ref integer not null default 0,
         expedition_ref integer not null default 0,
         gtu_ref integer not null default 0,
         taxon_ref integer not null default 0,
