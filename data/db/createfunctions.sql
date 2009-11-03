@@ -6654,7 +6654,7 @@ $$
       WHERE table_name = $1
 	AND field_name = $2
 	AND word % $3
-	AND word like 
+	AND word ilike 
 	  CASE WHEN $4 = 'begin' THEN $3 || '%'
 	      WHEN $4 = 'end' THEN '%' || $3
 	      WHEN $4 = 'contains' THEN '%' || $3 || '%'
