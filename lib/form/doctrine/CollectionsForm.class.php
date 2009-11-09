@@ -17,6 +17,8 @@ class CollectionsForm extends BaseCollectionsForm
 //     $this->widgetSchema['collection_type'] = new sfWidgetFormInput();
     $this->widgetSchema['code'] = new sfWidgetFormInput();
     $this->widgetSchema['name'] = new sfWidgetFormInput();
-
+/* @TODO remove this line when people search will be ready */
+    $this->widgetSchema['institution_ref'] = new sfWidgetFormInput();
+/* @TODO end of line to remove */
   }
 }

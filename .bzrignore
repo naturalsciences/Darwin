@@ -1,4 +1,3 @@
-cache/frontend
-cache/project_autoload.cache
+cache/*
 log/*
 ./config/databases.yml

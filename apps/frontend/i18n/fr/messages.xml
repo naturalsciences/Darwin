@@ -231,6 +231,34 @@
         <source>Specimen count max</source>
         <target phase-name="approval-1" state="signed-off" >Nombre maximum de spécimen</target>
       </trans-unit>
+      <trans-unit>
+        <source>Expedition List</source>
+        <target phase-name="approval-1" state="signed-off" >Liste des expéditions</target>
+      </trans-unit>
+      <trans-unit>
+        <source>begins with</source>
+	<target phase-name="approval-1" state="signed-off" >commence par</target>
+      </trans-unit>
+      <trans-unit>
+        <source>contains</source>
+        <target phase-name="approval-1" state="signed-off" >contient</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Between</source>
+        <target phase-name="approval-1" state="signed-off" >Entre</target>
+      </trans-unit>
+      <trans-unit>
+        <source>and</source>
+        <target phase-name="approval-1" state="signed-off" >et</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Name</source>
+        <target phase-name="approval-1" state="signed-off" >Nom</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Search</source>
+        <target phase-name="approval-1" state="signed-off" >Rechercher</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
