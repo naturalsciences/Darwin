@@ -3,7 +3,7 @@
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new DarwinTestFunctional(new sfBrowser());
-$browser->loadData()->login('root','evil');
+$browser->loadData($configuration)->login('root','evil');
 
 $browser->
   info('1 - Specimen screen')->

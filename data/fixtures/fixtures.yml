@@ -1,3 +1,31 @@
+Taxonomy:
+    ta0:
+        id: 0
+        name: ''
+        level_ref: 1
+        status: valid
+        parent_ref: ~
+    tam1:
+        id: '-1'
+        name: Eucaryota
+        level_ref: 2
+        status: valid
+        parent_ref: ~
+    ta1:
+        name: Animalia
+        level_ref: 2
+        status: valid
+        parent_ref: '-1'
+    ta2:
+        name: Falco Peregrinus
+        level_ref: 48
+        status: valid
+        Parent: ta1
+    ta3:
+        name: Falco Peregrinus (Duchenus Brulus 1912)
+        level_ref: 49
+        status: invalid
+        Parent: ta2
 Users:
     u1:
         is_physical: true
@@ -52,6 +80,20 @@ People:
         public_class: public
         family_name: UGMM
         birth_date: "<?php echo date('Y-m-d');?>"
+    p3:
+        is_physical: true
+        public_class: private
+        title: Mr
+        family_name: Duchesne
+        given_name: Poilux
+        gender: M
+    p4:
+        is_physical: true
+        public_class: private
+        title: Mrs
+        family_name: Duchesne
+        given_name: ML
+        gender: F
 
 Collections:
     c2:
@@ -99,7 +141,7 @@ Specimens:
         collecting_tool: fish Pas net
         collecting_method: Hunting
     sp3:
-        Collections: c5
+        Collections: c3
         specimen_count_min: 1
         acquisition_date: '0001-02-01'
         acquisition_category: expedition
@@ -157,7 +199,7 @@ MyPreferences:
         User: u1
         col_num: 1
         category: specimen_widget
-        group_name: linkTaxon
+        group_name: refTaxon
         order_by: 1
         opened: true
         visible: false

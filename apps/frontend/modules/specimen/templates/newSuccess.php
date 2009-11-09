@@ -20,7 +20,7 @@ $(document).ready(function ()
 });
 ");?>
 
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen')) ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen','eid'=> (! $form->getObject()->isNew() ? $form->getObject()->getId() : null ))); ?>
 <div class="encoding">
     <?php echo image_tag('encod_left_disable.png','id="arrow_left" alt="Go Previous" class="scrollButtons left"');?>
 	<div class="page">
@@ -30,6 +30,10 @@ $(document).ready(function ()
 			<li class="disabled" id="tab_2"><?php echo __('Properties');?></li>
 		</ul>
  		<div class="panel" id="intro">
+
+            <?php include_stylesheets_for_form($form) ?>
+            <?php include_javascripts_for_form($form) ?>
+
             <form action="<?php echo url_for('specimen/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
                 <?php //echo $form->renderHiddenFields() ?>
                  <?php echo $form['id']->render() ?>
@@ -68,7 +72,7 @@ $(document).ready(function ()
                         <?php endif;?>
                         </ul>
                     </div>
-                    <p class="clear"/>
+                    <p class="clear"></p>
                     <p>
                         <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>
                     </p>
@@ -77,4 +81,3 @@ $(document).ready(function ()
 		</div>
 	</div>
 	<?php echo image_tag('encod_right_disable.png','id="arrow_right" alt="'.__('Go next').'" class="scrollButtons right"');?>
-</div>

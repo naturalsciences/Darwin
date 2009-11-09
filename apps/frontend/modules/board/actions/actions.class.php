@@ -18,7 +18,7 @@ class boardActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
      $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->getWidgets('board_widget');
   }
 }

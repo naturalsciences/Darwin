@@ -23,6 +23,8 @@ class TaxonomyForm extends BaseTaxonomyForm
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',
        'method' => 'getName',
+       'link_url' => 'taxonomy/choose',
+       'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
   }
 }

@@ -3,9 +3,8 @@
 <script language="javascript">
 $(document).ready(function () {
     $('.col_name span').click(function () {
-        $('#specimen_collection_ref').val( getIdInClasses($(this).parent().parent()) );
-        $('#specimen_collection_ref_name').text($(this).text());
-        $('#specimen_collection_ref_button .but_text').text('Change !');
+	ref_element_id = getIdInClasses($(this).parent().parent());
+	ref_element_name = $(this).text();
         $('.qtip-button').click();
     });
 });

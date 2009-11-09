@@ -14,7 +14,7 @@ class specimenActions extends sfActions
   public function loadWidgets()
   {
     $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->getWidgets('specimen_widget');
   }
 

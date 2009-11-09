@@ -615,7 +615,7 @@ Taxonomy:
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
-        parent_ref: { type: integer, notnull: true, default: 0}
+        parent_ref: { type: integer, default: null}
         domain_ref: { type: integer, notnull: true, default: 0}
         domain_indexed: { type: string, notnull: true, default: ''}
         kingdom_ref: { type: integer, notnull: true, default: 0}

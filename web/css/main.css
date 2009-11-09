@@ -22,6 +22,14 @@ body
     display:none;
 }
 
+ul.spec_error_list, ul.error_list
+{
+    background-color:#ec9593;
+    border: 3px solid #c36b70;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
 .treelist ul , .treelist ul li
 {
     margin-left: 15px;
@@ -74,7 +82,7 @@ form th
     border-bottom: 1px dashed #878988;
 }
 
-#specimen_collection_ref_name
+.ref_name
 {
    margin: 0.5em;
    font-weight: bold;
@@ -85,6 +93,7 @@ form th
   margin-top: 1.5em;
   margin-left: 2em;
 }
+
 
 .search_result li
 {
@@ -109,4 +118,48 @@ form th
 .right_part,.left_part
 {
 	float:left;
+}
+
+form#search_taxa
+{
+  margin-bottom: 1.5em;
+}
+
+.search h3,  .tree 
+{
+  display:none;
+}
+
+.search_content
+{
+  margin: 1em;
+}
+.search_content li
+{
+  list-style-type:disc;
+}
+
+.tree_content
+{
+  padding: 1em;
+  margin: 1em;
+  background-color: #ebf5f5;
+  border: 1px solid #5BAABD;
+}
+
+.tree li:hover
+{
+  background-color:#ebf5f5;
+}
+
+
+.search li
+{
+  border-bottom: 1px solid white;
+}
+.search li:hover
+{
+  background-color:#ebf5f5;
+  border-bottom: 1px solid #5BAABD;
+  cursor:pointer;
 }

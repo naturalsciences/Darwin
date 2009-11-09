@@ -140,6 +140,7 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
         $this->setTableName('taxonomy');
         $this->hasColumn('id', 'integer', null, array(
              'type' => 'integer',
+             'unsigned' => false,
              'primary' => true,
              'autoincrement' => true,
              ));
@@ -165,8 +166,6 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('domain_ref', 'integer', null, array(
              'type' => 'integer',

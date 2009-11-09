@@ -15,8 +15,16 @@ class specimenwidgetComponents extends sfComponents
   {
     if( isset($this->options) )
         $this->form = $this->options;
-    else
-        $this->form = new SpecimensForm();
+    else 
+	if(isset($this->eid) && $this->eid != null)
+	{
+	  $spec = Doctrine::getTable('Specimens')->find($this->eid);
+	  $this->form = new SpecimensForm($spec);
+	}
+	else
+	{
+	  $this->form = new SpecimensForm();
+	}
   }
 
   public function executeRefCollection()
@@ -44,8 +52,10 @@ class specimenwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
-  public function executeLinkTaxon()
-  {}
+  public function executeRefTaxon()
+  {
+    $this->defineForm();
+  }
 
   public function executeLinkHabitat()
   {}

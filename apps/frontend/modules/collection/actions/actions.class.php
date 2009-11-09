@@ -63,8 +63,18 @@ class collectionActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($collections = Doctrine::getTable('Collections')->find(array($request->getParameter('id'))), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
-    $collections->delete();
-
+    try
+    {
+      $collections->delete();
+    }
+    catch(Doctrine_Connection_Pgsql_Exception $e)
+    {
+      $this->form = new CollectionsForm($collections);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form->getErrorSchema()->addError($error); 
+      $this->setTemplate('edit');
+      return ;
+    }
     $this->redirect('collection/index');
   }
 

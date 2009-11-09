@@ -20,20 +20,21 @@ class widgetsActions extends sfActions
     $this->forward404unless($request->getParameter('widget',false));
     //mark widget as visible
     Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), 'visible');
 
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
-            'category' => $request->getParameter('category')."widget"
+            'category' => $request->getParameter('category')."widget",
+	    'eid' =>  $request->getParameter('eid',null),
         ));
   }
 
   public function executeChangeStatus(sfWebRequest $request)
   {
     Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), $request->getParameter('status'));
     return $this->renderText("ok");
   }
@@ -43,7 +44,7 @@ class widgetsActions extends sfActions
     $col1 = explode(',', $request->getParameter('col1'));
     $col2 = explode(',', $request->getParameter('col2'));
     Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user')->getId())
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeOrder($request->getParameter('category')."_widget", $col1, $col2);
     return $this->renderText(var_export($col1,true).var_export($col2,true));
   }

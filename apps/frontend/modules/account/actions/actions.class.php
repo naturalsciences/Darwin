@@ -17,23 +17,23 @@ class accountActions extends sfActions
   */
   public function executeLogin($request)
   {
-    $this->redirectIf($this->getUser()->isAuthenticated(),'board/index');
+    $this->redirectIf($this->getUser()->isAuthenticated(),'@homepage');
     $this->form = new LoginForm();
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('login'));
       if ($this->form->isValid())
       {
-        sfContext::getInstance()->getLogger()->debug($this->form->getValue('username'));
-        $this->getUser()->setAttribute('db_user',$this->form->user);
         $this->getUser()->setAuthenticated(true);
+        sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('username').' '.$this->form->user->getId() );
+        $this->getUser()->setAttribute('db_user_id',$this->form->user->getId());
         $lang = Doctrine::getTable("UsersLanguages")->getPreferedLanguage($this->form->user->getId());
         if($lang) //prevent from crashing if lang is set
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }
         $referer = $this->getRequest()->getReferer();
-        $this->redirect($referer ? $referer : 'board/index');
+        $this->redirect($referer ? $referer : '@homepage');
       }
     }
   }

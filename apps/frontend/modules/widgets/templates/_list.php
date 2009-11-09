@@ -4,7 +4,7 @@
         
             <div class="widget_preview" <?php if($widget->getVisible()) echo 'style="display:none"';?>
                 id="boardprev_<?php echo $widget->getGroupName();?>">
-            <a href="<?php echo url_for('widgets/addWidget?widget='.$widget->getGroupName()."&category=".$category);?>">
+            <a href="<?php echo url_for('widgets/addWidget?widget='.$widget->getGroupName()."&category=".$category.(isset($eid)? '&eid='.$eid :''));?>">
                 <?php echo image_tag('widged_preview_1.png','alt='.$widget->getGroupName());?>
             <span class="widget_prev_title"><?php echo $widget->getGroupName();?></span></a>
             </div>

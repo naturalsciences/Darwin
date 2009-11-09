@@ -2,8 +2,13 @@
 
 class DarwinTestFunctional extends sfTestFunctional
 {
-  public function loadData()
+  public function loadData($configuration)
   {
+
+    new sfDatabaseManager($configuration);
+
+    $conn = Doctrine_Manager::connection();
+    $conn->exec("SELECT nextval('taxonomy_id_seq')");
     Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
     return $this;
   }

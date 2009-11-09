@@ -4,14 +4,34 @@
  */
 class TaxonomyTable extends Doctrine_Table
 {
-  public function getByNameLike($name,$level)
+  public function getByNameLike($name,$level=null)
   {
+    if(trim($name) == "")
+      return null;
     $q = Doctrine_Query::create()
-	 ->from('Taxonomy t')
-	 ->andWhere('name_indexed @@ to_tsquery(?) ',$name);
+	 ->from('Taxonomy t');
+    $words = explode(" ",$name);
+    foreach($words as $word)
+    {
+	 $q->andWhere("name_indexed @@ search_words_to_query('taxonomy' , 'name_indexed', ? , 'begin') ",$word);
+    }
     if($level)
       $q->andWhere('level_ref = ?',$level);
-	 //->andWhere('name ~* ?',$name);
+    $q->limit(30);
+    return $q->execute();
+  }
+
+  public function findWithParents($id)
+  {
+    $self_taxa = Doctrine::getTable('Taxonomy')->find($id);
+    $ids = explode('/', $self_taxa->getPath().$self_taxa->getId());
+
+    array_shift($ids); //Removing the first blank element 
+
+    $q = Doctrine_Query::create()
+	 ->from('Taxonomy t')
+	 ->whereIn('id', $ids)
+	 ->orderBy('path ASC');
     return $q->execute();
   }
 }

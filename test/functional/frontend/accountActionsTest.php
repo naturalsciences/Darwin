@@ -3,7 +3,7 @@
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new DarwinTestFunctional(new sfBrowser());
-$browser->loadData();
+$browser->loadData($configuration);
 
 $browser->
   info('1 - Not Logged Request')->

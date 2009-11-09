@@ -8,15 +8,15 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $coll_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
-        $input .= '<div id="'.$this->generateId($name).'_name">'.$coll_name.'</div>';
-        $input .= '<div id="'.$this->generateId($name).'_button" class="button">';
+        $input .= '<div id="'.$this->generateId($name).'_name" class="ref_name">'.$coll_name.'</div>';
+        $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
         $input .= '<img class="left_part" src="/images/button_grey_left.png" alt=""/>';
-        $input .= '<span class="but_text" class="button">';
+        $input .= '<a class="but_text" src="'.url_for($this->getOption('link_url')).'">';
         if($coll_name == '')
             $input .= __('Choose !');
         else
             $input .= __('Change !');
-        $input .= '</span>';
+        $input .= '</a>';
         $input .= '<img class="right_part" src="/images/button_grey_right.png" alt=""/>';
         $input .= '</div><div style="clear: left;"> </div>';
 
@@ -27,11 +27,20 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
     {
         $this->addRequiredOption('model');
         $this->addOption('method', '__toString');
+
 //         $this->addOption('connection', null);
 //         $this->addOption('table_method', null);
+
+        $this->addRequiredOption('link_url');
+	$this->addRequiredOption('box_title');
         parent::configure($options, $attributes);
     }
-    
+
+    public function getJavaScripts()
+    {
+      return array('/js/button_ref.js');
+    }
+
     public function getName($value)
     {
         if(is_numeric($value))

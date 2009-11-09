@@ -16,11 +16,20 @@ class SpecimensForm extends BaseSpecimensForm
         'expedition_ref' => 0,
     ));
     $this->widgetSchema->setNameFormat('specimen[%s]');
-    //$this->widgetSchema['collection_ref'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(array(
        'model' => 'Collections',
+       'link_url' => 'collection/choose',
        'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Collection'),
      ));
+
+    $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Taxonomy',
+       'link_url' => 'taxonomy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Taxon'),
+     ));
+
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
       'choices' =>  SpecimensTable::getDistinctCategories(),
     ));
@@ -57,6 +66,7 @@ class SpecimensForm extends BaseSpecimensForm
         ));
         
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',

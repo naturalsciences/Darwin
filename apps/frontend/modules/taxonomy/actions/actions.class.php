@@ -10,6 +10,12 @@
  */
 class taxonomyActions extends sfActions
 {
+  public function executeChoose(sfWebRequest $request)
+  {
+    $this->searchForm = new SearchTaxonForm();
+    $this->setLayout(false);
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new TaxonomyForm();
@@ -25,24 +31,29 @@ class taxonomyActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->searchForm = new SearchTaxonForm();
-    $this->executeSearchResults($this->searchForm, $request);
   }
 
   public function executeSearch(sfWebRequest $request)
   {
     $this->searchForm = new SearchTaxonForm();
-    $this->executeSearchResults($this->searchForm,$request);
+    $this->searchResults($this->searchForm,$request);
+    $this->setLayout(false);
   }
 
-  private function executeSearchResults($form, $request)
+  public function executeTree(sfWebRequest $request)
+  {
+    $this->items = Doctrine::getTable('Taxonomy')->findWithParents($request->getParameter('id'));
+    $this->setLayout(false);
+  }
+  private function searchResults($form, $request)
   {
     if($request->getParameter('searchTaxon','') !== '')
     {
       $form->bind($request->getParameter('searchTaxon'));
       if ($form->isValid())
       {
-	$this->taxons = Doctrine::getTable('Taxonomy')
-	  ->getByNameLike($form->getValue('name'), $form->getValue('level'));
+ 	$this->taxons = Doctrine::getTable('Taxonomy')
+ 	  ->getByNameLike($form->getValue('name'), $form->getValue('level'));
       }
     }
 

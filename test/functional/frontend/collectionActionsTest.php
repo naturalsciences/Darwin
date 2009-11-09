@@ -3,7 +3,7 @@
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new DarwinTestFunctional(new sfBrowser());
-$browser->loadData()->login('root','evil');
+$browser->loadData($configuration)->login('root','evil');
 
 $browser->
   info('Index')->
@@ -85,7 +85,7 @@ $browser->
   end()->
   
   info('Edit')->
-  click('(e)', array(), array('position' => 1))->
+  click('(e)', array(), array('position' => 5))->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
@@ -93,14 +93,14 @@ $browser->
 
    with('response')->begin()->
     isStatusCode(200)->
-    checkElement('input[value="Vertebrates"]',1)->
+    checkElement('input[value="Paléonotologie"]')->
   end()->
   click('Save',array('collections' => 
     array(
-    'name'            => 'Vertebrates',
-    'institution_ref' => Doctrine::getTable('People')->findOneByFamilyName('Institut Royal des Sciences Naturelles de Belgique')->getId(),
+    'name'            => 'Paléonotologie',
+    'institution_ref' => Doctrine::getTable('People')->findOneByFamilyName('UGMM')->getId(),
     'collection_type' => 'mix',
-    'code'            => 'vert',
+    'code'            => 'paleo',
     'main_manager_ref'=> Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId(),
     'parent_ref'      => Doctrine::getTable('Collections')->findOneByName('Molusca')->getId(),
     'code_auto_increment' => false,
@@ -116,6 +116,8 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.treelist:first > ul > li',1)->
+    checkElement('.treelist:last > ul > li',1)->
+    checkElement('.treelist:last > ul > li > ul > li',1)->
   end()->
 
 

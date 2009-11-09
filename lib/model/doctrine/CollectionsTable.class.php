@@ -11,7 +11,7 @@ class CollectionsTable extends Doctrine_Table
             ->innerJoin('p.Collections col')
             ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->andWhere('p.is_physical = false')
-            ->orderBy('col_path_id ASC');
+            ->orderBy('p.id ASC, col_path_id ASC');
         return $q->execute();
     }
 }
