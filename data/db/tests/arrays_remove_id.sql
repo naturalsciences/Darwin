@@ -17,19 +17,19 @@ INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1
 insert into people (id, db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date) VALUES (3,6, true, 'sdf', 'doesfdjohn', to_tsvector('sd'), 'qsd', 'qsd', DATE 'June 20, 1989', 'M',DATE 'January 1, 0000');
 insert into people (id,db_people_type, is_physical, formated_name, formated_name_indexed, formated_name_ts, family_name, given_name, birth_date, gender, end_date) VALUES (4,6, true, 'Doe Jsssohn', 'sssss', to_tsvector('Doe qsdqsd'), 'Dssoe', 'Johdn', DATE 'June 20, 1979', 'M', DATE 'January 1, 0000');
 insert into people (id,db_people_type, is_physical, formated_name, family_name, given_name, birth_date, gender) VALUES (5,6, true, 'd f', 'sssvfddss', 'f', DATE 'June 20, 1979', 'M');
-INSERT INTO catalogue_people (id,table_name, record_id, people_type, order_by, people_ref) VALUES (5,'taxonomy', 0 ,'expertise', 0 , 3);
+INSERT INTO catalogue_people (id,referenced_relation, record_id, people_type, order_by, people_ref) VALUES (5,'taxonomy', 0 ,'expertise', 0 , 3);
 
-INSERT INTO catalogue_people (id,table_name, record_id,people_type,order_by, people_ref)
+INSERT INTO catalogue_people (id,referenced_relation, record_id,people_type,order_by, people_ref)
  VALUES
 (7, 'catalogue_people', 5, 'defined_by',1,5),
 (8, 'catalogue_people', 5, 'defined_by',2,4),
 (9, 'catalogue_people', 5, 'defined_by',3,3);
 
-SELECT ok(array[5,4,3] = array(SELECT people_ref FROM catalogue_people WHERE table_name = 'catalogue_people' AND record_id = 5 ORDER BY order_by),'Check if the array is well defined');
+SELECT ok(array[5,4,3] = array(SELECT people_ref FROM catalogue_people WHERE referenced_relation = 'catalogue_people' AND record_id = 5 ORDER BY order_by),'Check if the array is well defined');
 
 DELETE FROM catalogue_people WHERE id = 7;
 
-SELECT ok(array[4,3] = array(SELECT people_ref FROM catalogue_people WHERE table_name = 'catalogue_people' AND record_id = 5 ORDER BY order_by),'Check if the persone who define is deleted');
+SELECT ok(array[4,3] = array(SELECT people_ref FROM catalogue_people WHERE referenced_relation = 'catalogue_people' AND record_id = 5 ORDER BY order_by),'Check if the persone who define is deleted');
 
 
 DELETE FROM people WHERE id>2;

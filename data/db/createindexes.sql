@@ -301,6 +301,6 @@ CREATE INDEX CONCURRENTLY idx_collections_collection_type on collections(collect
 
 /*** FullText ***/
 CREATE INDEX CONCURRENTLY idx_words_trgm ON words USING gin(word gin_trgm_ops);
-CREATE INDEX CONCURRENTLY idx_words_table_field on words(table_name,field_name);
+CREATE INDEX CONCURRENTLY idx_words_table_field on words(referenced_relation,field_name);
 
 

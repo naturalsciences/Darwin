@@ -76,24 +76,24 @@ create sequence catalogue_relationships_id_seq;
 create table catalogue_relationships
        (
         id integer not null default nextval('catalogue_relationships_id_seq'),
-        table_name varchar not null,
+        referenced_relation varchar not null,
         record_id_1 integer not null,
         record_id_2 integer not null,
         relationship_type varchar not null default 'recombined from',
-        constraint unq_catalogue_relationships unique (table_name, relationship_type, record_id_1, record_id_2)
+        constraint unq_catalogue_relationships unique (referenced_relation, relationship_type, record_id_1, record_id_2)
        );
 comment on table catalogue_relationships is 'Stores the relationships between records of a table - current name, original combination, ...';
-comment on column catalogue_relationships.table_name is 'Reference of the table a relationship is defined for - id field of table_list table';
+comment on column catalogue_relationships.referenced_relation is 'Reference of the table a relationship is defined for - id field of table_list table';
 comment on column catalogue_relationships.record_id_1 is 'Identifier of record in relation with an other one (record_id_2)';
 comment on column catalogue_relationships.record_id_2 is 'Identifier of record in relation with an other one (record_id_1)';
 comment on column catalogue_relationships.relationship_type is 'Type of relation between record 1 and record 2 - current name, original combination, ...';
 create table template_table_record_ref
        (
-        table_name varchar not null,
+        referenced_relation varchar not null,
         record_id integer not null
        );
-comment on table template_table_record_ref is 'Template called to add table_name and record_id fields';
-comment on column template_table_record_ref.table_name is 'Reference of table concerned - id field of table_list table';
+comment on table template_table_record_ref is 'Template called to add referenced_relation and record_id fields';
+comment on column template_table_record_ref.referenced_relation is 'Reference of table concerned - id field of table_list table';
 comment on column template_table_record_ref.record_id is 'Id of record concerned';
 
 create sequence catalogue_people_id_seq;
@@ -106,12 +106,12 @@ create table catalogue_people
         order_by integer not null default 1,
         people_ref integer not null,
         constraint fk_people_list_person foreign key (people_ref) references people(id) on delete cascade,
-        constraint unq_catalogue_people unique (table_name, people_type, people_sub_type, record_id, people_ref)
+        constraint unq_catalogue_people unique (referenced_relation, people_type, people_sub_type, record_id, people_ref)
        )
 inherits (template_table_record_ref);
 comment on table catalogue_people is 'List of people of catalogues units - Taxonomy, Chronostratigraphy,...';
 comment on column catalogue_people.id is 'Unique identifier of record';
-comment on column catalogue_people.table_name is 'Identifier of table the units come from - id field of table_list table';
+comment on column catalogue_people.referenced_relation is 'Identifier of table the units come from - id field of table_list table';
 comment on column catalogue_people.record_id is 'Identifier of record concerned in table concerned';
 comment on column catalogue_people.people_type is 'Type of "people" associated to the catalogue unit: authors, collectors, defined,  ...';
 comment on column catalogue_people.people_sub_type is 'Type of "people" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
@@ -157,12 +157,12 @@ create table comments
         comment text not null,
         comment_ts tsvector not null,
         comment_language_full_text full_text_language, 
-        constraint unq_comments unique (table_name, record_id, notion_concerned)
+        constraint unq_comments unique (referenced_relation, record_id, notion_concerned)
        )
        inherits (template_table_record_ref);
 comment on table comments is 'Comments associated to a record of a given table (and maybe a given field) on a given subject';
 comment on column comments.id is 'Unique identifier of a comment';
-comment on column comments.table_name is 'Reference of table a comment is posted for - id field of table_list table';
+comment on column comments.referenced_relation is 'Reference of table a comment is posted for - id field of table_list table';
 comment on column comments.record_id is 'Identifier of the record concerned';
 comment on column comments.notion_concerned is 'Notion concerned by comment';
 comment on column comments.comment is 'Comment';
@@ -265,12 +265,12 @@ create table catalogue_properties
         property_tool varchar,
         property_tool_indexed varchar not null,
         constraint pk_catalogue_properties primary key (id),
-        constraint unq_catalogue_properties unique (table_name, record_id, property_type, property_sub_type_indexed, property_qualifier_indexed, date_from, date_to, property_method_indexed, property_tool_indexed)
+        constraint unq_catalogue_properties unique (referenced_relation, record_id, property_type, property_sub_type_indexed, property_qualifier_indexed, date_from, date_to, property_method_indexed, property_tool_indexed)
        )
 inherits (template_table_record_ref);
 
 comment on table catalogue_properties is 'All properties or all measurements describing an object in darwin are stored in this table';
-comment on column catalogue_properties.table_name is 'Identifier of the table a property is defined for - id field of table_list table';
+comment on column catalogue_properties.referenced_relation is 'Identifier of the table a property is defined for - id field of table_list table';
 comment on column catalogue_properties.record_id is 'Identifier of record a property is defined for';
 comment on column catalogue_properties.property_type is 'Type-Category of property - Latitude, Longitude, Ph, Height, Weight, Color, Temperature, Wind direction,...';
 comment on column catalogue_properties.property_sub_type is 'Sub type or sub category of property: For Latitudes and Longitudes, precise which type of lat/long it is like Lambert 72, Lambert 92, UTM,...';
@@ -320,12 +320,12 @@ create table identifications
         value_defined_ts tsvector,
         determination_status varchar,
         order_by integer not null default 1,
-        constraint unq_identifications unique (table_name, record_id, notion_concerned, value_defined_indexed)
+        constraint unq_identifications unique (referenced_relation, record_id, notion_concerned, value_defined_indexed)
        )
 inherits (template_table_record_ref);
 comment on table identifications is 'History of identifications';
 comment on column identifications.id is 'Unique identifier of an identification';
-comment on column identifications.table_name is 'Reference of table an identification is introduced for';
+comment on column identifications.referenced_relation is 'Reference of table an identification is introduced for';
 comment on column identifications.record_id is 'Id of record concerned by an identification entry';
 comment on column identifications.notion_concerned is 'Type of entry: Identification on a specific concern';
 comment on column identifications.notion_date is 'Date of identification or preparation';
@@ -342,12 +342,12 @@ create table class_vernacular_names
         id integer not null default nextval('class_vernacular_names_id_seq'),
         community varchar not null,
         constraint pk_class_vernacular_names primary key (id),
-        constraint unq_class_vernacular_names unique (table_name, record_id, community)
+        constraint unq_class_vernacular_names unique (referenced_relation, record_id, community)
        )
 inherits (template_table_record_ref);
 comment on table class_vernacular_names is 'Contains the language communities a unit name translation is available for';
 comment on column class_vernacular_names.id is 'Unique identifier of a language community vernacular name';
-comment on column class_vernacular_names.table_name is 'Reference of the unit table a vernacular name for a language community has to be defined - id field of table_list table';
+comment on column class_vernacular_names.referenced_relation is 'Reference of the unit table a vernacular name for a language community has to be defined - id field of table_list table';
 comment on column class_vernacular_names.record_id is 'Identifier of record a vernacular name for a language community has to be defined';
 comment on column class_vernacular_names.community is 'Language community, a unit translation is available for';
 create table vernacular_names
@@ -808,14 +808,14 @@ create table record_visibilities
         db_user_type smallint not null default 0,
         user_ref integer not null default 0,
         visible boolean not null default true,
-        constraint unq_record_visibilities unique (table_name, record_id, user_ref, db_user_type),
+        constraint unq_record_visibilities unique (referenced_relation, record_id, user_ref, db_user_type),
         constraint fk_record_visibilities_users foreign key (user_ref) references users(id) on delete cascade
        )
 inherits (template_table_record_ref);
 comment on table record_visibilities is 'Manage visibility of records for all DaRWIN 2 tables - visibility per user type and/or specific user';
 comment on column record_visibilities.user_ref is 'Reference of user - id field of users table';
 comment on column record_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
-comment on column record_visibilities.table_name is 'Reference of table concerned - id field of table_list table';
+comment on column record_visibilities.referenced_relation is 'Reference of table concerned - id field of table_list table';
 comment on column record_visibilities.record_id is 'ID of record a visibility is defined for';
 comment on column record_visibilities.visible is 'Flag telling if record is visible or not';
 
@@ -833,17 +833,17 @@ create table users_workflow
 inherits (template_table_record_ref);
 comment on table users_workflow is 'Workflow information for each record encoded';
 comment on column users_workflow.user_ref is 'Reference of user - id field of users table';
-comment on column users_workflow.table_name is 'Reference of table concerned - id field of table_list table';
+comment on column users_workflow.referenced_relation is 'Reference of table concerned - id field of table_list table';
 comment on column users_workflow.record_id is 'ID of record a workflow is defined for';
 comment on column users_workflow.status is 'Record status: to correct, to be corrected or published';
 comment on column users_workflow.modification_date_time is 'Date and time of status change - last date/time is used as actual status, but helps also to keep an history of status change';
 comment on column users_workflow.comment is 'Complementary comments';
 create table users_tables_fields_tracked
        (
-        table_name varchar not null,
+        referenced_relation varchar not null,
         field_name varchar not null,
         user_ref integer not null,
-        constraint unq_users_tables_fields_tracked unique (table_name, field_name, user_ref),
+        constraint unq_users_tables_fields_tracked unique (referenced_relation, field_name, user_ref),
         constraint fk_users_tables_fields_tracked_users foreign key (user_ref) references users(id) on delete cascade
        );
 comment on table users_tables_fields_tracked is 'List fields tracked per user';
@@ -862,7 +862,7 @@ create table users_tracking
        )
 inherits (template_table_record_ref);
 comment on table users_tracking is 'Tracking of users actions on tables';
-comment on column users_tracking.table_name is 'Reference of table concerned - id field of table_list table';
+comment on column users_tracking.referenced_relation is 'Reference of table concerned - id field of table_list table';
 comment on column users_tracking.record_id is 'ID of record concerned';
 comment on column users_tracking.id is 'Unique identifier of a table track entry';
 comment on column users_tracking.user_ref is 'Reference of user having made an action - id field of users table';
@@ -904,7 +904,7 @@ create table collection_maintenance
 inherits (template_table_record_ref);
 comment on table collection_maintenance is 'History of specimen maintenance';
 comment on column collection_maintenance.id is 'Unique identifier of a specimen maintenance';
-comment on column collection_maintenance.table_name is 'Reference of table a maintenance entry has been created for';
+comment on column collection_maintenance.referenced_relation is 'Reference of table a maintenance entry has been created for';
 comment on column collection_maintenance.record_id is 'ID of record a maintenance entry has been created for';
 comment on column collection_maintenance.people_ref is 'Reference of person having done an action or an observation';
 comment on column collection_maintenance.category is 'Action or Observation';
@@ -1002,7 +1002,7 @@ create table classification_keywords
 inherits (template_table_record_ref);
 
 comment on table classification_keywords is 'Help user to tag-label each part of full name in classifications';
-comment on column classification_keywords.table_name is 'Name of classifification table: taxonomy, lithology,...';
+comment on column classification_keywords.referenced_relation is 'Name of classifification table: taxonomy, lithology,...';
 comment on column classification_keywords.record_id is 'Id of record concerned';
 comment on column classification_keywords.keyword_type is 'Keyword type: name, year, authoritative keyword,...';
 comment on column classification_keywords.keyword is 'Keyword';
@@ -1015,12 +1015,12 @@ create table classification_synonymies
 	 group_name varchar not null,
 	 basionym_record_id integer,
 	 order_by integer not null default 0,
-	 constraint unq_synonym unique (table_name, record_id, group_id)
+	 constraint unq_synonym unique (referenced_relation, record_id, group_id)
 	)
 inherits (template_table_record_ref);
 
 comment on table classification_synonymies is 'Table containing classification synonymies';
-comment on column classification_synonymies.table_name is 'Classification table concerned';
+comment on column classification_synonymies.referenced_relation is 'Classification table concerned';
 comment on column classification_synonymies.record_id is 'Id of record placed in group as a synonym';
 comment on column classification_synonymies.group_name is 'Name of group under which synonyms are placed';
 comment on column classification_synonymies.group_id is 'Id given to group';
@@ -1327,13 +1327,13 @@ create table people_aliases
         person_ref integer not null,
         collection_ref integer default 0,
         person_name varchar not null,
-        constraint unq_people_aliases unique (table_name, record_id, person_ref, collection_ref, person_name),
+        constraint unq_people_aliases unique (referenced_relation, record_id, person_ref, collection_ref, person_name),
         constraint fk_people_aliases_collection foreign key (collection_ref) references collections(id) on delete cascade,
         constraint fk_people_aliases_names_people foreign key (person_ref) references people(id) on delete cascade
        )
        inherits (template_table_record_ref);
 comment on table people_aliases is 'Name translation depending on taxonomic top group studied: in botany, Liné will be written L. and in zoology, Liné will be written Linaeus';
-comment on column people_aliases.table_name is 'Reference of the catalogue table';
+comment on column people_aliases.referenced_relation is 'Reference of the catalogue table';
 comment on column people_aliases.record_id is 'Identifier of record concerned : 1st level';
 comment on column people_aliases.person_ref is 'Reference of the person concerned - id field of people table';
 comment on column people_aliases.collection_ref is 'Reference the collection where the alias apply';
@@ -1695,7 +1695,7 @@ comment on column codes.code is 'Numerical part of code';
 comment on column codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
 comment on column codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
 comment on column codes.code_date is 'Date of code creation';
-comment on column codes.table_name is 'Reference name of table concerned';
+comment on column codes.referenced_relation is 'Reference name of table concerned';
 comment on column codes.record_id is 'Identifier of record concerned';
 
 create sequence specimen_individuals_id_seq;
@@ -1806,13 +1806,13 @@ create table associated_multimedia
        (
         id integer not null default nextval('associated_multimedia_id_seq'),
         multimedia_ref integer not null,
-        constraint unq_associated_multimedia unique (multimedia_ref, table_name, record_id),
+        constraint unq_associated_multimedia unique (multimedia_ref, referenced_relation, record_id),
         constraint fk_associated_multimedia_multimedia foreign key (multimedia_ref) references multimedia(id) on delete cascade
        )
        inherits (template_table_record_ref);
 comment on table associated_multimedia is 'List of all associated multimedia to an element of DaRWIN 2 application: specimen, catalogue unit';
 comment on column associated_multimedia.id is 'Unique identifier of a multimedia association';
-comment on column associated_multimedia.table_name is 'Reference of table concerned - id field of table_list table';
+comment on column associated_multimedia.referenced_relation is 'Reference of table concerned - id field of table_list table';
 comment on column associated_multimedia.record_id is 'Identifier of record concerned';
 comment on column associated_multimedia.multimedia_ref is 'Reference of multimedia object concerned - id field of multimedia table';
 create table specimens_accompanying
@@ -1840,12 +1840,12 @@ comment on column specimens_accompanying.form is 'Form of accompanying specimen 
 
 create table words
   (
-    table_name varchar,
+    referenced_relation varchar,
     field_name varchar,
     word varchar,
-    constraint uniq_words unique (table_name, field_name, word)
+    constraint uniq_words unique (referenced_relation, field_name, word)
   );
 comment on table words is 'List all trigram used with pg_trgm to match similarities';
-comment on column words.table_name is 'Reference of table concerned';
+comment on column words.referenced_relation is 'Reference of table concerned';
 comment on column words.field_name is 'Reference of field in the table';
 comment on column words.word is 'word founded';

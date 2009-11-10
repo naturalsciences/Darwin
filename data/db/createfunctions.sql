@@ -11,13 +11,13 @@ DECLARE
 BEGIN
 	SELECT collections.code_auto_increment INTO must_be_incremented FROM collections WHERE collections.id = NEW.collection_ref;
 	IF must_be_incremented = true THEN
-		SELECT * INTO last_line FROM codes WHERE code_category = 'main' AND table_name = 'specimens' AND record_id = NEW.id;
+		SELECT * INTO last_line FROM codes WHERE code_category = 'main' AND referenced_relation = 'specimens' AND record_id = NEW.id;
 		IF FOUND THEN
 			RETURN NEW;
  		END IF;
  
  		SELECT codes.* into last_line FROM codes
-				INNER JOIN specimens ON codes.record_id = specimens.id AND table_name = 'specimens'
+				INNER JOIN specimens ON codes.record_id = specimens.id AND referenced_relation = 'specimens'
 				WHERE specimens.collection_ref =  NEW.collection_ref
 					AND code_category = 'main'
 					ORDER BY codes.code DESC
@@ -28,7 +28,7 @@ BEGIN
 		END IF;
 		
 		last_line.code := last_line.code+1;
-		INSERT INTO codes (table_name, record_id, code_category, code_prefix, code, code_suffix)
+		INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code, code_suffix)
 			VALUES ('specimens',NEW.id, 'main', last_line.code_prefix, last_line.code, last_line.code_suffix );
 	END IF;
 	RETURN NEW;
@@ -57,13 +57,13 @@ BEGIN
 			INNER JOIN specimens ON record_id = specimens.id
 			INNER JOIN specimen_individuals ON specimen_individuals.specimen_ref=specimens.id
 			WHERE 
-                table_name = 'specimens'
+                referenced_relation = 'specimens'
                 AND  specimen_individuals.id = NEW.specimen_individual_ref
 				AND code_category = 'main'
 				ORDER BY codes.code DESC
 					LIMIT 1;
 		IF FOUND THEN
-			INSERT INTO codes (table_name, record_id, code_category, code_prefix, code, code_suffix)
+			INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code, code_suffix)
 					VALUES ('specimen_parts',NEW.id, 'main', spec_code.code_prefix, spec_code.code , spec_code.code_suffix );
 		END IF;
 	END IF;
@@ -157,7 +157,7 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 * Trigger function fct_cpy_hierarchy_from_parents
 * Version of function used to check what's coming from parents and what's coming from unit passed itself
 */
-CREATE OR REPLACE FUNCTION fct_get_hierarchy_from_parents(table_name varchar, id integer) RETURNS RECORD
+CREATE OR REPLACE FUNCTION fct_get_hierarchy_from_parents(referenced_relation varchar, id integer) RETURNS RECORD
 AS $$
 DECLARE
 	level_sys_name catalogue_levels.level_sys_name%TYPE;
@@ -167,9 +167,9 @@ DECLARE
 	result RECORD;
 BEGIN
 
-	EXECUTE 'SELECT level_ref, name_indexed, parent_ref FROM ' || quote_ident(table_name) || ' WHERE id = ' || id INTO level_ref, name_indexed, parent_ref;
+	EXECUTE 'SELECT level_ref, name_indexed, parent_ref FROM ' || quote_ident(referenced_relation) || ' WHERE id = ' || id INTO level_ref, name_indexed, parent_ref;
 	SELECT cl.level_sys_name INTO level_sys_name FROM catalogue_levels as cl WHERE cl.id = level_ref;
-	IF table_name = 'chronostratigraphy' THEN
+	IF referenced_relation = 'chronostratigraphy' THEN
 		SELECT 
 			CASE
 				WHEN level_sys_name = 'eon' THEN
@@ -283,7 +283,7 @@ BEGIN
 			result
 		FROM chronostratigraphy AS pc
 		WHERE pc.id = parent_ref;
-	ELSIF table_name = 'lithostratigraphy' THEN
+	ELSIF referenced_relation = 'lithostratigraphy' THEN
 		SELECT 
 			CASE
 				WHEN level_sys_name = 'group' THEN
@@ -361,7 +361,7 @@ BEGIN
 			result
 		FROM lithostratigraphy AS pl
 		WHERE pl.id = parent_ref;
-	ELSIF table_name = 'lithology' THEN
+	ELSIF referenced_relation = 'lithology' THEN
 		SELECT 
 			CASE
 				WHEN level_sys_name = 'unit_main_group' THEN
@@ -415,7 +415,7 @@ BEGIN
 			result
 		FROM lithology AS pl
 		WHERE pl.id = parent_ref;
-	ELSIF table_name = 'mineralogy' THEN
+	ELSIF referenced_relation = 'mineralogy' THEN
 		SELECT 
 			CASE
 				WHEN level_sys_name = 'unit_class' THEN
@@ -481,7 +481,7 @@ BEGIN
 			result
 		FROM mineralogy AS pm
 		WHERE pm.id = parent_ref;
-	ELSIF table_name = 'taxonomy' THEN
+	ELSIF referenced_relation = 'taxonomy' THEN
 		SELECT
 			CASE
 				WHEN level_sys_name = 'domain' THEN
@@ -2279,7 +2279,7 @@ $$ LANGUAGE plpgsql;
 * Trigger function fct_cpy_cascade_children_indexed_names
 * Update the corresponding givenlevel_indexed and givenlevel_ref of related children when name of a catalogue unit have been updated
 */
-CREATE OR REPLACE FUNCTION fct_cpy_cascade_children_indexed_names (table_name varchar, new_level_ref template_classifications.level_ref%TYPE, new_name_indexed template_classifications.name_indexed%TYPE, new_id integer) RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_cpy_cascade_children_indexed_names (referenced_relation varchar, new_level_ref template_classifications.level_ref%TYPE, new_name_indexed template_classifications.name_indexed%TYPE, new_id integer) RETURNS boolean
 AS $$
 DECLARE
 	level_prefix catalogue_levels.level_sys_name%TYPE;
@@ -2288,7 +2288,7 @@ BEGIN
 	SELECT level_sys_name INTO level_prefix FROM catalogue_levels WHERE id = new_level_ref;
 	IF level_prefix IS NOT NULL THEN
 		EXECUTE 'UPDATE ' || 
-			quote_ident(table_name) || 
+			quote_ident(referenced_relation) || 
 			' SET ' || quote_ident(level_prefix || '_indexed') || ' = ' || quote_literal(new_name_indexed) || 
 			' WHERE ' || quote_ident(level_prefix || '_ref') || ' = ' || new_id || 
 			'   AND ' || quote_ident('id') || ' <> ' || new_id ;
@@ -3284,19 +3284,19 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_clear_referencedRecord() RETURNS TRIGGER
 AS $$
 BEGIN
-	DELETE FROM catalogue_people WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM comments WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM catalogue_properties WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM identifications WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM class_vernacular_names WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM classification_synonymies WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM classification_keywords WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM record_visibilities WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM users_workflow WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM collection_maintenance WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM associated_multimedia WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM people_aliases WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM codes WHERE table_name = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM catalogue_people WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM comments WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM catalogue_properties WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM identifications WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM class_vernacular_names WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM classification_synonymies WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM classification_keywords WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM record_visibilities WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM users_workflow WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM collection_maintenance WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM associated_multimedia WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM people_aliases WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM codes WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
@@ -3417,7 +3417,7 @@ $$ LANGUAGE plpgsql;
 * fct_chk_possible_upper_levels
 * When inserting or updating a hierarchical unit, checks, considering parent level, that unit level is ok (depending on definitions given in possible_upper_levels_table)
 */
-CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level (table_name varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) RETURNS boolean
 AS $$
 DECLARE
 	response boolean default false;
@@ -3428,7 +3428,7 @@ BEGIN
 		EXECUTE 'select count(*)::integer::boolean ' ||
 			'from possible_upper_levels ' ||
 			'where level_ref = ' || new_level_ref || 
-			'  and level_upper_ref = (select level_ref from ' || quote_ident(table_name) || ' where id = ' || new_parent_ref || ')'
+			'  and level_upper_ref = (select level_ref from ' || quote_ident(referenced_relation) || ' where id = ' || new_parent_ref || ')'
 		INTO response;
 	END IF;
 	RETURN response;
@@ -3487,7 +3487,7 @@ LANGUAGE plpgsql;
 * Update all related children, when parent_ref or level_ref of parent have been updated
 */
 
-CREATE OR REPLACE FUNCTION fct_cpy_update_children_when_parent_updated (table_name varchar, parent_id integer, parent_old_level template_classifications.level_ref%TYPE, parent_new_level template_classifications.level_ref%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed tsvector[]) RETURNS BOOLEAN
+CREATE OR REPLACE FUNCTION fct_cpy_update_children_when_parent_updated (referenced_relation varchar, parent_id integer, parent_old_level template_classifications.level_ref%TYPE, parent_new_level template_classifications.level_ref%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed tsvector[]) RETURNS BOOLEAN
 AS $$
 DECLARE
 	response boolean default true;
@@ -3495,9 +3495,9 @@ DECLARE
 	parent_old_level_sys_name catalogue_levels.level_sys_name%TYPE;
 	sub_genus_by_extract integer;
 BEGIN
-	EXECUTE 'SELECT ARRAY(SELECT id FROM catalogue_levels WHERE level_type = '  || quote_literal(table_name) || ' order by id)' into levels;
+	EXECUTE 'SELECT ARRAY(SELECT id FROM catalogue_levels WHERE level_type = '  || quote_literal(referenced_relation) || ' order by id)' into levels;
 	SELECT level_sys_name INTO parent_old_level_sys_name FROM catalogue_levels WHERE id = parent_old_level;
-	IF table_name = 'chronostratigraphy' THEN
+	IF referenced_relation = 'chronostratigraphy' THEN
 		EXECUTE 'UPDATE chronostratigraphy AS c ' ||
 			'SET eon_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    eon_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
@@ -3616,7 +3616,7 @@ BEGIN
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
-	ELSIF table_name = 'lithostratigraphy' THEN
+	ELSIF referenced_relation = 'lithostratigraphy' THEN
 		EXECUTE 'UPDATE lithostratigraphy AS c ' ||
 			'SET group_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    group_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
@@ -3693,7 +3693,7 @@ BEGIN
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
-	ELSIF table_name = 'mineralogy' THEN
+	ELSIF referenced_relation = 'mineralogy' THEN
 		EXECUTE 'UPDATE mineralogy AS c ' ||
 			'SET unit_class_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    unit_class_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
@@ -3756,7 +3756,7 @@ BEGIN
 			'WHERE id <> ' || parent_id || ' ' ||
 			'  AND ' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
-	ELSIF table_name = 'taxonomy' THEN
+	ELSIF referenced_relation = 'taxonomy' THEN
 		EXECUTE 'UPDATE taxonomy AS c ' ||
 			'SET domain_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    domain_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
@@ -4505,7 +4505,7 @@ BEGIN
 			'WHERE c.id <> ' || parent_id || ' ' ||
 			'  AND c.' || quote_ident(parent_old_level_sys_name::varchar || '_ref') || ' = ' || parent_id;
 		response := true;
-	ELSIF table_name = 'lithology' THEN
+	ELSIF referenced_relation = 'lithology' THEN
 		EXECUTE 'UPDATE lithology AS c ' ||
 			'SET unit_main_group_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    unit_main_group_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
@@ -5770,15 +5770,15 @@ LANGUAGE plpgsql;
 	fct_chk_authorAliasLevel
 	Check if a domain is a frist level domain
 */
-CREATE OR REPLACE FUNCTION fct_chk_Is_FirstLevel(table_name people_aliases.table_name%TYPE, record_id  people_aliases.record_id%TYPE) RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_chk_Is_FirstLevel(referenced_relation people_aliases.referenced_relation%TYPE, record_id  people_aliases.record_id%TYPE) RETURNS boolean
 AS $$
 DECLARE
 	is_ok boolean;
 BEGIN
-	IF table_name IS NULL OR record_id IS NULL THEN
+	IF referenced_relation IS NULL OR record_id IS NULL THEN
 		RETURN TRUE;
 	END IF;
-	EXECUTE 'SELECT parent_ref=0 FROM ' || quote_ident(table_name) || ' WHERE id=' || quote_literal(record_id::varchar) INTO is_ok;
+	EXECUTE 'SELECT parent_ref=0 FROM ' || quote_ident(referenced_relation) || ' WHERE id=' || quote_literal(record_id::varchar) INTO is_ok;
 	RETURN is_ok;
 END;
 $$
@@ -5809,12 +5809,12 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_chk_ReferencedRecord(table_name varchar,record_id integer) RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer) RETURNS boolean
 AS $$
 DECLARE
 	rec_exists boolean;
 BEGIN
- 	EXECUTE 'SELECT count(id)>0 FROM ' || quote_ident(table_name) || ' WHERE id=' || quote_literal(record_id::varchar) INTO rec_exists;
+ 	EXECUTE 'SELECT count(id)>0 FROM ' || quote_ident(referenced_relation) || ' WHERE id=' || quote_literal(record_id::varchar) INTO rec_exists;
 	RETURN rec_exists;
 END;
 $$
@@ -6099,14 +6099,14 @@ BEGIN
 	
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
 		IF TG_OP = 'INSERT' THEN
-			INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
+			INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
 				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert', now()) RETURNING id into trk_id;
 		ELSE
-			INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
+			INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
 				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update', now()) RETURNING id into trk_id;
 		END IF;
 
-/*		FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE table_name = TG_TABLE_NAME::text AND user_ref=user_id
+/*		FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE referenced_relation = TG_TABLE_NAME::text AND user_ref=user_id
 		LOOP
 			SELECT array(SELECT ROW(NEW.*) from taxonomy) as s ;
 			-- http://www.nabble.com/array-variables-td20477110.html
@@ -6122,10 +6122,10 @@ BEGIN
 					NEW.'brol',
 					old.'', 
 				FROM users_tables_fields_tracked 
-					WHERE table_name =TG_TABLE_NAME::text
+					WHERE referenced_relation =TG_TABLE_NAME::text
 						AND user_ref=user_id)';*/
 	ELSE
-		INSERT INTO users_tracking (table_name, record_id, user_ref, action, modification_date_time)
+		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
  			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete', now());
 	END IF;
 	RETURN NULL;
@@ -6628,7 +6628,7 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_cpy_word(tbl_name words.table_name%TYPE, fld_name words.field_name%TYPE, word_ts tsvector) RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_cpy_word(tbl_name words.referenced_relation%TYPE, fld_name words.field_name%TYPE, word_ts tsvector) RETURNS boolean
 AS
 $$
 DECLARE
@@ -6636,7 +6636,7 @@ DECLARE
 BEGIN
     FOR item IN SELECT word FROM ts_stat(word_ts) LOOP
       BEGIN
-	INSERT INTO words (table_name, field_name, word) VALUES (tbl_name, fld_name, item);
+	INSERT INTO words (referenced_relation, field_name, word) VALUES (tbl_name, fld_name, item);
       EXCEPTION WHEN unique_violation THEN
 	    -- Just Sleep and insert the next one
       END;
@@ -6647,11 +6647,11 @@ $$
 LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION search_words_to_query(tbl_name words.table_name%TYPE, fld_name words.field_name%TYPE, value varchar, op varchar) RETURNS tsquery AS
+CREATE OR REPLACE FUNCTION search_words_to_query(tbl_name words.referenced_relation%TYPE, fld_name words.field_name%TYPE, value varchar, op varchar) RETURNS tsquery AS
 $$
  
   SELECT to_tsquery('simple',array_to_string( array(SELECT word FROM words
-      WHERE table_name = $1
+      WHERE referenced_relation = $1
 	AND field_name = $2
 	AND word % $3
 	AND word ilike 

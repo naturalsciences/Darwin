@@ -3,12 +3,12 @@
 \i unit_launch.sql
 SELECT plan(5);
 
-SELECT diag('Clear Referenced record with record_id and table_name');
+SELECT diag('Clear Referenced record with record_id and referenced_relation');
 
 INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
-INSERT INTO comments (table_name, record_id, notion_concerned, comment,comment_ts)
+INSERT INTO comments (referenced_relation, record_id, notion_concerned, comment,comment_ts)
 	VALUES ('taxonomy',1,'name','Roooh c''est TOF ça',to_tsvector(''));
-INSERT INTO comments (table_name, record_id, notion_concerned, comment,comment_ts)
+INSERT INTO comments (referenced_relation, record_id, notion_concerned, comment,comment_ts)
 	VALUES ('taxonomy',0,'name','béh c''est vide...',to_tsvector(''));
 SELECT ok ( 2 = (SELECT count(*) from comments));
 

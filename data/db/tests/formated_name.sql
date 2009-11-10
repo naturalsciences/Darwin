@@ -51,8 +51,8 @@ SELECT ok( 'The Management Unit of the North Sea Mathematical Models' = (SELECT 
 SELECT ok( 'themanagementunitofthenorthseamathemati' = (SELECT formated_name_indexed FROM people WHERE id=10),'formated_name_indexed composed');
 SELECT ok( '' = (SELECT title FROM people WHERE id=10),'title is empty');
 
-SELECT ok('north' = (SELECT word FROM words where table_name = 'people' AND field_name='formated_name_ts' AND word='north'), 'North was added to word table');
-SELECT ok('models' = (SELECT word FROM words where table_name = 'people' AND field_name='formated_name_ts' AND word='models'), 'model was added to word table');
+SELECT ok('north' = (SELECT word FROM words where referenced_relation = 'people' AND field_name='formated_name_ts' AND word='north'), 'North was added to word table');
+SELECT ok('models' = (SELECT word FROM words where referenced_relation = 'people' AND field_name='formated_name_ts' AND word='models'), 'model was added to word table');
 
 UPDATE people SET title='Mr' WHERE id=10;
 

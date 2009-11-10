@@ -18,7 +18,7 @@ SELECT lives_ok('UPDATE users SET db_user_type=2 WHERE id=2','With  reference in
 SELECT ok(0 = (SELECT count(*) FROM collections_admin WHERE user_ref=2),'Removed from collections_admin');
 
 
-INSERT INTO record_visibilities (table_name, record_id, db_user_type, user_ref, visible)
+INSERT INTO record_visibilities (referenced_relation, record_id, db_user_type, user_ref, visible)
  	VALUES ('taxonomy', 0, 2, 2, true);
 INSERT INTO collections_fields_visibilities (collection_ref, user_ref, field_group_name, db_user_type, visible)
 	VALUES (1, 2, 'taxonomic_name', 2, false);
