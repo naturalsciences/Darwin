@@ -6545,20 +6545,20 @@ BEGIN
 
       IF TG_OP = 'UPDATE' THEN 
 	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
-	  PERFORM fct_cpy_word('users','comment_ts', NEW.formated_name_ts);
+	  PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
 	END IF;
       ELSE
-	PERFORM fct_cpy_word('users','comment_ts', NEW.formated_name_ts);
+	PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='expeditions' THEN
 
       IF TG_OP = 'UPDATE' THEN 
 	IF OLD.name_ts != NEW.name_ts THEN
-	  PERFORM fct_cpy_word('expeditions','comment_ts', NEW.name_ts);
+	  PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
 	END IF;
       ELSE
-	PERFORM fct_cpy_word('expeditions','comment_ts', NEW.name_ts);
+	PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='habitats' THEN
