@@ -12,19 +12,19 @@ class BaseCatalogueRelationshipsForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                => new sfWidgetFormInputHidden(),
-      'table_name'        => new sfWidgetFormTextarea(),
-      'record_id_1'       => new sfWidgetFormInput(),
-      'record_id_2'       => new sfWidgetFormInput(),
-      'relationship_type' => new sfWidgetFormInput(),
+      'id'                  => new sfWidgetFormInputHidden(),
+      'referenced_relation' => new sfWidgetFormTextarea(),
+      'record_id_1'         => new sfWidgetFormInput(),
+      'record_id_2'         => new sfWidgetFormInput(),
+      'relationship_type'   => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'                => new sfValidatorDoctrineChoice(array('model' => 'CatalogueRelationships', 'column' => 'id', 'required' => false)),
-      'table_name'        => new sfValidatorString(array('max_length' => 2147483647)),
-      'record_id_1'       => new sfValidatorInteger(),
-      'record_id_2'       => new sfValidatorInteger(),
-      'relationship_type' => new sfValidatorInteger(),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'CatalogueRelationships', 'column' => 'id', 'required' => false)),
+      'referenced_relation' => new sfValidatorString(),
+      'record_id_1'         => new sfValidatorInteger(),
+      'record_id_2'         => new sfValidatorInteger(),
+      'relationship_type'   => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('catalogue_relationships[%s]');

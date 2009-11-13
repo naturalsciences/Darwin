@@ -14,7 +14,7 @@ class BaseUsersTrackingFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'             => new sfWidgetFormFilterInput(),
+      'referenced_relation'    => new sfWidgetFormFilterInput(),
       'record_id'              => new sfWidgetFormFilterInput(),
       'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
       'action'                 => new sfWidgetFormFilterInput(),
@@ -22,7 +22,7 @@ class BaseUsersTrackingFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'table_name'             => new sfValidatorPass(array('required' => false)),
+      'referenced_relation'    => new sfValidatorPass(array('required' => false)),
       'record_id'              => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'user_ref'               => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
       'action'                 => new sfValidatorPass(array('required' => false)),
@@ -45,7 +45,7 @@ class BaseUsersTrackingFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                     => 'Number',
-      'table_name'             => 'Text',
+      'referenced_relation'    => 'Text',
       'record_id'              => 'Number',
       'user_ref'               => 'ForeignKey',
       'action'                 => 'Text',

@@ -13,7 +13,7 @@ class BaseIdentificationsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
-      'table_name'            => new sfWidgetFormTextarea(),
+      'referenced_relation'   => new sfWidgetFormTextarea(),
       'record_id'             => new sfWidgetFormInput(),
       'notion_concerned'      => new sfWidgetFormTextarea(),
       'notion_date'           => new sfWidgetFormDateTime(),
@@ -26,14 +26,14 @@ class BaseIdentificationsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                    => new sfValidatorDoctrineChoice(array('model' => 'Identifications', 'column' => 'id', 'required' => false)),
-      'table_name'            => new sfValidatorString(array('max_length' => 2147483647)),
+      'referenced_relation'   => new sfValidatorString(),
       'record_id'             => new sfValidatorInteger(),
-      'notion_concerned'      => new sfValidatorString(array('max_length' => 2147483647)),
+      'notion_concerned'      => new sfValidatorString(),
       'notion_date'           => new sfValidatorDateTime(array('required' => false)),
-      'value_defined'         => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'value_defined_indexed' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'value_defined_ts'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'determination_status'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'value_defined'         => new sfValidatorString(array('required' => false)),
+      'value_defined_indexed' => new sfValidatorString(array('required' => false)),
+      'value_defined_ts'      => new sfValidatorString(array('required' => false)),
+      'determination_status'  => new sfValidatorString(array('required' => false)),
       'order_by'              => new sfValidatorInteger(),
     ));
 

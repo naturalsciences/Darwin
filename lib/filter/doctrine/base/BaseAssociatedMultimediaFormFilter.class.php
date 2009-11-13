@@ -14,15 +14,15 @@ class BaseAssociatedMultimediaFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'     => new sfWidgetFormFilterInput(),
-      'record_id'      => new sfWidgetFormFilterInput(),
-      'multimedia_ref' => new sfWidgetFormDoctrineChoice(array('model' => 'Multimedia', 'add_empty' => true)),
+      'referenced_relation' => new sfWidgetFormFilterInput(),
+      'record_id'           => new sfWidgetFormFilterInput(),
+      'multimedia_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'Multimedia', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'table_name'     => new sfValidatorPass(array('required' => false)),
-      'record_id'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'multimedia_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Multimedia', 'column' => 'id')),
+      'referenced_relation' => new sfValidatorPass(array('required' => false)),
+      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'multimedia_ref'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Multimedia', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('associated_multimedia_filters[%s]');
@@ -40,10 +40,10 @@ class BaseAssociatedMultimediaFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'             => 'Number',
-      'table_name'     => 'Text',
-      'record_id'      => 'Number',
-      'multimedia_ref' => 'ForeignKey',
+      'id'                  => 'Number',
+      'referenced_relation' => 'Text',
+      'record_id'           => 'Number',
+      'multimedia_ref'      => 'ForeignKey',
     );
   }
 }

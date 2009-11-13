@@ -23,7 +23,7 @@ class BaseGtuForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                 => new sfValidatorDoctrineChoice(array('model' => 'Gtu', 'column' => 'id', 'required' => false)),
-      'code'               => new sfValidatorString(array('max_length' => 2147483647)),
+      'code'               => new sfValidatorString(),
       'parent_ref'         => new sfValidatorDoctrineChoice(array('model' => 'Gtu')),
       'gtu_from_date_mask' => new sfValidatorInteger(),
       'gtu_from_date'      => new sfValidatorDateTime(),

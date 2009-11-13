@@ -27,12 +27,12 @@ class BaseCollectionsForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                       => new sfValidatorDoctrineChoice(array('model' => 'Collections', 'column' => 'id', 'required' => false)),
       'collection_type'          => new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
-      'code'                     => new sfValidatorString(array('max_length' => 2147483647)),
-      'name'                     => new sfValidatorString(array('max_length' => 2147483647)),
+      'code'                     => new sfValidatorString(),
+      'name'                     => new sfValidatorString(),
       'institution_ref'          => new sfValidatorDoctrineChoice(array('model' => 'People')),
       'main_manager_ref'         => new sfValidatorDoctrineChoice(array('model' => 'Users')),
       'parent_ref'               => new sfValidatorDoctrineChoice(array('model' => 'Collections', 'required' => false)),
-      'path'                     => new sfValidatorString(array('max_length' => 2147483647)),
+      'path'                     => new sfValidatorString(),
       'code_auto_increment'      => new sfValidatorBoolean(),
       'code_part_code_auto_copy' => new sfValidatorBoolean(),
     ));

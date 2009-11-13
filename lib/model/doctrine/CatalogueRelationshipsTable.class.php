@@ -4,5 +4,21 @@
  */
 class CatalogueRelationshipsTable extends Doctrine_Table
 {
+  public function getRelationsForTable($table, $id)
+  {
+    $q = Doctrine_Query::create()
+            ->from('CatalogueRelationships r')
+	    ->andwhere('r.referenced_relation = ?', $table)
+	    ->andWhere('r.record_id_1=?', $id);
+    return $q->execute();
+  }
 
+  public function DeleteRelationsForTable($table, $id)
+  {
+    $q = Doctrine_Query::create()
+            ->delete('CatalogueRelationships r')
+	    ->andwhere('r.referenced_relation = ?', $table)
+	    ->andWhere('r.record_id_1=?', $id);
+    return $q->execute();
+  }
 }

@@ -14,19 +14,19 @@ class BaseRecordVisibilitiesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'   => new sfWidgetFormFilterInput(),
-      'record_id'    => new sfWidgetFormFilterInput(),
-      'db_user_type' => new sfWidgetFormFilterInput(),
-      'user_ref'     => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
-      'visible'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'referenced_relation' => new sfWidgetFormFilterInput(),
+      'record_id'           => new sfWidgetFormFilterInput(),
+      'db_user_type'        => new sfWidgetFormFilterInput(),
+      'user_ref'            => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
+      'visible'             => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
-      'table_name'   => new sfValidatorPass(array('required' => false)),
-      'record_id'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'db_user_type' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'user_ref'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
-      'visible'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'referenced_relation' => new sfValidatorPass(array('required' => false)),
+      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'db_user_type'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'user_ref'            => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
+      'visible'             => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('record_visibilities_filters[%s]');
@@ -44,12 +44,12 @@ class BaseRecordVisibilitiesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'           => 'Number',
-      'table_name'   => 'Text',
-      'record_id'    => 'Number',
-      'db_user_type' => 'Number',
-      'user_ref'     => 'ForeignKey',
-      'visible'      => 'Boolean',
+      'id'                  => 'Number',
+      'referenced_relation' => 'Text',
+      'record_id'           => 'Number',
+      'db_user_type'        => 'Number',
+      'user_ref'            => 'ForeignKey',
+      'visible'             => 'Boolean',
     );
   }
 }

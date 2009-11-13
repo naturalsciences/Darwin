@@ -24,11 +24,11 @@ class BaseUsersCommForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                => new sfValidatorDoctrineChoice(array('model' => 'UsersComm', 'column' => 'id', 'required' => false)),
       'person_user_ref'   => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'comm_type'         => new sfValidatorString(array('max_length' => 2147483647)),
-      'tag'               => new sfValidatorString(array('max_length' => 2147483647)),
-      'organization_unit' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'person_user_role'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'activity_period'   => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'comm_type'         => new sfValidatorString(),
+      'tag'               => new sfValidatorString(),
+      'organization_unit' => new sfValidatorString(array('required' => false)),
+      'person_user_role'  => new sfValidatorString(array('required' => false)),
+      'activity_period'   => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_comm[%s]');

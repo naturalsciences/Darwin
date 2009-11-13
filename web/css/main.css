@@ -5,6 +5,13 @@ body
 	font-family:sans-serif;
 }
 
+fieldset
+{
+  border: 1px solid gray;
+  padding: 1em;
+  margin:0.7em;
+}
+
 .clear
 {
 	clear:both;
@@ -162,4 +169,18 @@ form#search_taxa
   background-color:#ebf5f5;
   border-bottom: 1px solid #5BAABD;
   cursor:pointer;
+}
+
+
+#taxonomy_recombination_1_record_id_2_button, #taxonomy_recombination_1_record_id_2_button
+{
+  display: inline;
+  float:none;
+  margin-left: 2em;
+}
+
+#taxonomy_recombination_1_record_id_2_name, #taxonomy_recombination_2_record_id_2_name
+{
+  display: inline;
+  float:left;
 }

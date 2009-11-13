@@ -13,7 +13,7 @@ class BaseUsersTrackingForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                     => new sfWidgetFormInputHidden(),
-      'table_name'             => new sfWidgetFormTextarea(),
+      'referenced_relation'    => new sfWidgetFormTextarea(),
       'record_id'              => new sfWidgetFormInput(),
       'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
       'action'                 => new sfWidgetFormTextarea(),
@@ -22,10 +22,10 @@ class BaseUsersTrackingForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                     => new sfValidatorDoctrineChoice(array('model' => 'UsersTracking', 'column' => 'id', 'required' => false)),
-      'table_name'             => new sfValidatorString(array('max_length' => 2147483647)),
+      'referenced_relation'    => new sfValidatorString(),
       'record_id'              => new sfValidatorInteger(),
       'user_ref'               => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'action'                 => new sfValidatorString(array('max_length' => 2147483647)),
+      'action'                 => new sfValidatorString(),
       'modification_date_time' => new sfValidatorDateTime(),
     ));
 

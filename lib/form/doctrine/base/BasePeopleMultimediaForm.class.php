@@ -22,7 +22,7 @@ class BasePeopleMultimediaForm extends BaseFormDoctrine
       'id'              => new sfValidatorDoctrineChoice(array('model' => 'PeopleMultimedia', 'column' => 'id', 'required' => false)),
       'person_user_ref' => new sfValidatorDoctrineChoice(array('model' => 'People')),
       'object_ref'      => new sfValidatorDoctrineChoice(array('model' => 'Multimedia')),
-      'category'        => new sfValidatorString(array('max_length' => 2147483647)),
+      'category'        => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('people_multimedia[%s]');

@@ -12,23 +12,21 @@ class BaseCataloguePeopleForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'              => new sfWidgetFormInputHidden(),
-      'table_name'      => new sfWidgetFormTextarea(),
-      'record_id'       => new sfWidgetFormInput(),
-      'people_type'     => new sfWidgetFormTextarea(),
-      'people_sub_type' => new sfWidgetFormTextarea(),
-      'order_by'        => new sfWidgetFormInput(),
-      'people_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
+      'id'                  => new sfWidgetFormInputHidden(),
+      'referenced_relation' => new sfWidgetFormTextarea(),
+      'record_id'           => new sfWidgetFormInput(),
+      'people_type'         => new sfWidgetFormTextarea(),
+      'order_by'            => new sfWidgetFormInput(),
+      'people_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'id'              => new sfValidatorDoctrineChoice(array('model' => 'CataloguePeople', 'column' => 'id', 'required' => false)),
-      'table_name'      => new sfValidatorString(array('max_length' => 2147483647)),
-      'record_id'       => new sfValidatorInteger(),
-      'people_type'     => new sfValidatorString(array('max_length' => 2147483647)),
-      'people_sub_type' => new sfValidatorString(array('max_length' => 2147483647)),
-      'order_by'        => new sfValidatorInteger(),
-      'people_ref'      => new sfValidatorDoctrineChoice(array('model' => 'People')),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'CataloguePeople', 'column' => 'id', 'required' => false)),
+      'referenced_relation' => new sfValidatorString(),
+      'record_id'           => new sfValidatorInteger(),
+      'people_type'         => new sfValidatorString(),
+      'order_by'            => new sfValidatorInteger(),
+      'people_ref'          => new sfValidatorDoctrineChoice(array('model' => 'People')),
     ));
 
     $this->widgetSchema->setNameFormat('catalogue_people[%s]');

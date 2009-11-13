@@ -13,7 +13,7 @@ class TaxonomyTable extends Doctrine_Table
     $words = explode(" ",$name);
     foreach($words as $word)
     {
-	 $q->andWhere("name_indexed @@ search_words_to_query('taxonomy' , 'name_indexed', ? , 'begin') ",$word);
+	 $q->andWhere("name_indexed @@ search_words_to_query('taxonomy' , 'name_indexed', ? , 'contains') ",$word);
     }
     if($level)
       $q->andWhere('level_ref = ?',$level);

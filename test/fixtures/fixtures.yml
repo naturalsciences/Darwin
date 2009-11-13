@@ -17,15 +17,41 @@ Taxonomy:
         status: valid
         parent_ref: '-1'
     ta2:
+        id: 12
         name: Falco Peregrinus
         level_ref: 48
         status: valid
         Parent: ta1
     ta3:
+        id: 13
+        name: Falco Peregrinus Tunstall, 1771
+        level_ref: 49
+        status: valid
+        Parent: ta2
+    ta4:
+        id: 14
         name: Falco Peregrinus (Duchenus Brulus 1912)
         level_ref: 49
         status: invalid
         Parent: ta2
+    ta5:
+        id: 15
+        name: Falco Peregrinus recombinus
+        level_ref: 49
+        status: valid
+        Parent: ta2
+
+CatalogueRelationships:
+    catart1:
+        referenced_relation: taxonomy
+        relationship_type: current_name
+        record_id_1: 14
+        record_id_2: 13
+    catart2:
+        referenced_relation: taxonomy
+        relationship_type: recombined from
+        record_id_1: 14
+        record_id_2: 15
 Users:
     u1:
         is_physical: true

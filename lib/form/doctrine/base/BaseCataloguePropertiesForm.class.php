@@ -13,7 +13,7 @@ class BaseCataloguePropertiesForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                         => new sfWidgetFormInputHidden(),
-      'table_name'                 => new sfWidgetFormTextarea(),
+      'referenced_relation'        => new sfWidgetFormTextarea(),
       'record_id'                  => new sfWidgetFormInput(),
       'property_type'              => new sfWidgetFormTextarea(),
       'property_sub_type'          => new sfWidgetFormTextarea(),
@@ -34,23 +34,23 @@ class BaseCataloguePropertiesForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                         => new sfValidatorDoctrineChoice(array('model' => 'CatalogueProperties', 'column' => 'id', 'required' => false)),
-      'table_name'                 => new sfValidatorString(array('max_length' => 2147483647)),
+      'referenced_relation'        => new sfValidatorString(),
       'record_id'                  => new sfValidatorInteger(),
-      'property_type'              => new sfValidatorString(array('max_length' => 2147483647)),
-      'property_sub_type'          => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_sub_type_indexed'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_qualifier'         => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_qualifier_indexed' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'property_type'              => new sfValidatorString(),
+      'property_sub_type'          => new sfValidatorString(array('required' => false)),
+      'property_sub_type_indexed'  => new sfValidatorString(array('required' => false)),
+      'property_qualifier'         => new sfValidatorString(array('required' => false)),
+      'property_qualifier_indexed' => new sfValidatorString(array('required' => false)),
       'date_from_mask'             => new sfValidatorInteger(),
       'date_from timestamp'        => new sfValidatorDateTime(),
       'date_to_mask'               => new sfValidatorInteger(),
       'date_to timestamp'          => new sfValidatorDateTime(),
-      'property_unit'              => new sfValidatorString(array('max_length' => 2147483647)),
-      'property_accuracy_unit'     => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_method'            => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_method_indexed'    => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_tool'              => new sfValidatorString(array('max_length' => 2147483647)),
-      'property_tool_indexed'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'property_unit'              => new sfValidatorString(),
+      'property_accuracy_unit'     => new sfValidatorString(array('required' => false)),
+      'property_method'            => new sfValidatorString(array('required' => false)),
+      'property_method_indexed'    => new sfValidatorString(array('required' => false)),
+      'property_tool'              => new sfValidatorString(),
+      'property_tool_indexed'      => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('catalogue_properties[%s]');

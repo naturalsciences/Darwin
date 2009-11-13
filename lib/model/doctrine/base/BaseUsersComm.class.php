@@ -17,7 +17,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 5845 2009-06-09 07:36:57Z jwage $
+ * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
  */
 abstract class BaseUsersComm extends sfDoctrineRecord
 {
@@ -55,7 +55,8 @@ abstract class BaseUsersComm extends sfDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('Users', array(
+        parent::setUp();
+    $this->hasOne('Users', array(
              'local' => 'person_user_ref',
              'foreign' => 'id'));
     }

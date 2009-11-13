@@ -19,13 +19,91 @@ class taxonomyActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new TaxonomyForm();
+    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
+    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
+    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
   }
-  
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->form = new TaxonomyForm();
+    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
+    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
+    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
+    $this->processForm($request,$this->form);
+    $this->setTemplate('edit');
+  }
+    
   public function executeEdit(sfWebRequest $request)
   {
     $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
+    
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $combination = false;
+    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
+    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
+    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
+    foreach($relations as $relation)
+    {
+	$s_form = new SpecimensRelationshipsForm($relation);
+	$s_form->setDefault('enabled',true);
+
+	if($relation->getRelationshipType()=='current taxon')
+	{
+	    $this->form->embedForm('current_name', $s_form);
+	}
+	elseif($relation->getRelationshipType()=='recombined from' && ! $combination )
+	{
+	    $this->form->embedForm('recombination_1', $s_form);
+	    $combination=true;
+	}
+	else
+	{
+	  $this->form->embedForm('recombination_2', $s_form);
+	}
+    }
+  }
+
+  public function executeUpdate(sfWebRequest $request)
+  {
+    $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
+    $this->forward404Unless($taxa,'Taxa not Found');
+    $this->form = new TaxonomyForm($taxa);
+    
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $combination = false;
+
+    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
+    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
+    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
+    
+    $this->processForm($request,$this->form);
+    $this->setTemplate('edit');
+  }
+
+  public function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind( $request->getParameter($form->getName()) );
+    if ($form->isValid())
+    {
+      $conn = $form->getObject()->getTable()->getConnection();
+      try{
+	$conn->beginTransaction();
+	if(! $form->getObject()->isNew())
+	  Doctrine::getTable('CatalogueRelationships')->deleteRelationsForTable('taxonomy',$form->getObject()->getId());
+	$form->save();
+	$conn->commit();
+	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
+      }
+      catch(Exception $e)
+      {
+	$conn->rollBack();
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$form->getErrorSchema()->addError($error); 
+      }
+    }
   }
 
   public function executeIndex(sfWebRequest $request)

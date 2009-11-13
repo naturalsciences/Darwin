@@ -22,9 +22,9 @@ class BaseUsersLoginInfosForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'user_ref'   => new sfValidatorDoctrineChoice(array('model' => 'UsersLoginInfos', 'column' => 'user_ref', 'required' => false)),
-      'login_type' => new sfValidatorString(array('max_length' => 2147483647)),
-      'user_name'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'password'   => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'login_type' => new sfValidatorString(),
+      'user_name'  => new sfValidatorString(array('required' => false)),
+      'password'   => new sfValidatorString(array('required' => false)),
       'system_id'  => new sfValidatorDoctrineChoice(array('model' => 'UsersLoginInfos', 'column' => 'system_id', 'required' => false)),
       'last_seen'  => new sfValidatorDateTime(array('required' => false)),
     ));

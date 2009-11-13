@@ -14,7 +14,7 @@ class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'             => new sfWidgetFormFilterInput(),
+      'referenced_relation'    => new sfWidgetFormFilterInput(),
       'people_ref'             => new sfWidgetFormFilterInput(),
       'category'               => new sfWidgetFormFilterInput(),
       'action_observation'     => new sfWidgetFormFilterInput(),
@@ -26,7 +26,7 @@ class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'table_name'             => new sfValidatorPass(array('required' => false)),
+      'referenced_relation'    => new sfValidatorPass(array('required' => false)),
       'people_ref'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'category'               => new sfValidatorPass(array('required' => false)),
       'action_observation'     => new sfValidatorPass(array('required' => false)),
@@ -53,7 +53,7 @@ class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                     => 'Number',
-      'table_name'             => 'Text',
+      'referenced_relation'    => 'Text',
       'people_ref'             => 'Number',
       'category'               => 'Text',
       'action_observation'     => 'Text',

@@ -21,8 +21,8 @@ class BaseMultimediaKeywordsForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'              => new sfValidatorDoctrineChoice(array('model' => 'MultimediaKeywords', 'column' => 'id', 'required' => false)),
       'object_ref'      => new sfValidatorDoctrineChoice(array('model' => 'Multimedia')),
-      'keyword'         => new sfValidatorString(array('max_length' => 2147483647)),
-      'keyword_indexed' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'keyword'         => new sfValidatorString(),
+      'keyword_indexed' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('multimedia_keywords[%s]');

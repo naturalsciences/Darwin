@@ -25,14 +25,14 @@ class BaseHabitatsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                             => new sfValidatorDoctrineChoice(array('model' => 'Habitats', 'column' => 'id', 'required' => false)),
-      'name'                           => new sfValidatorString(array('max_length' => 2147483647)),
-      'path'                           => new sfValidatorString(array('max_length' => 2147483647)),
-      'code'                           => new sfValidatorString(array('max_length' => 2147483647)),
-      'code_indexed'                   => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'description'                    => new sfValidatorString(array('max_length' => 2147483647)),
-      'description_ts'                 => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'description_language_full_text' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'habitat_system'                 => new sfValidatorString(array('max_length' => 2147483647)),
+      'name'                           => new sfValidatorString(),
+      'path'                           => new sfValidatorString(),
+      'code'                           => new sfValidatorString(),
+      'code_indexed'                   => new sfValidatorString(array('required' => false)),
+      'description'                    => new sfValidatorString(),
+      'description_ts'                 => new sfValidatorString(array('required' => false)),
+      'description_language_full_text' => new sfValidatorString(array('required' => false)),
+      'habitat_system'                 => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('habitats[%s]');

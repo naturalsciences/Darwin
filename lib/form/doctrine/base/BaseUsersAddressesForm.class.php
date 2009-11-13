@@ -30,17 +30,17 @@ class BaseUsersAddressesForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                => new sfValidatorDoctrineChoice(array('model' => 'UsersAddresses', 'column' => 'id', 'required' => false)),
       'person_user_ref'   => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'tag'               => new sfValidatorString(array('max_length' => 2147483647)),
-      'organization_unit' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'person_user_role'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'activity_period'   => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'po_box'            => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'extended_address'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'locality'          => new sfValidatorString(array('max_length' => 2147483647)),
-      'region'            => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'zip_code'          => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'country'           => new sfValidatorString(array('max_length' => 2147483647)),
-      'address_parts_ts'  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'tag'               => new sfValidatorString(),
+      'organization_unit' => new sfValidatorString(array('required' => false)),
+      'person_user_role'  => new sfValidatorString(array('required' => false)),
+      'activity_period'   => new sfValidatorString(array('required' => false)),
+      'po_box'            => new sfValidatorString(array('required' => false)),
+      'extended_address'  => new sfValidatorString(array('required' => false)),
+      'locality'          => new sfValidatorString(),
+      'region'            => new sfValidatorString(array('required' => false)),
+      'zip_code'          => new sfValidatorString(array('required' => false)),
+      'country'           => new sfValidatorString(),
+      'address_parts_ts'  => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_addresses[%s]');

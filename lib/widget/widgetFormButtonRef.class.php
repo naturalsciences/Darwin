@@ -25,15 +25,15 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
     
     protected function configure($options = array(), $attributes = array())
     {
+        parent::configure($options, $attributes);
         $this->addRequiredOption('model');
         $this->addOption('method', '__toString');
 
 //         $this->addOption('connection', null);
 //         $this->addOption('table_method', null);
-
+	$this->setOption('is_hidden', false);
         $this->addRequiredOption('link_url');
 	$this->addRequiredOption('box_title');
-        parent::configure($options, $attributes);
     }
 
     public function getJavaScripts()

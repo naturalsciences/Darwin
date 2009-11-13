@@ -25,10 +25,10 @@ class BasePropertiesValuesForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                        => new sfValidatorDoctrineChoice(array('model' => 'PropertiesValues', 'column' => 'id', 'required' => false)),
       'property_ref'              => new sfValidatorDoctrineChoice(array('model' => 'CatalogueProperties', 'required' => false)),
-      'property_min'              => new sfValidatorString(array('max_length' => 2147483647)),
-      'property_min_unified'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_max'              => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'property_max_unified'      => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'property_min'              => new sfValidatorString(),
+      'property_min_unified'      => new sfValidatorString(array('required' => false)),
+      'property_max'              => new sfValidatorString(array('required' => false)),
+      'property_max_unified'      => new sfValidatorString(array('required' => false)),
       'property_accuracy'         => new sfValidatorNumber(array('required' => false)),
       'property_accuracy_unified' => new sfValidatorNumber(array('required' => false)),
     ));

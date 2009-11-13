@@ -25,10 +25,10 @@ class BaseExpeditionsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                        => new sfValidatorDoctrineChoice(array('model' => 'Expeditions', 'column' => 'id', 'required' => false)),
-      'name'                      => new sfValidatorString(array('max_length' => 2147483647)),
-      'name_ts'                   => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'name_indexed'              => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'name_language_full_text'   => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'name'                      => new sfValidatorString(),
+      'name_ts'                   => new sfValidatorString(array('required' => false)),
+      'name_indexed'              => new sfValidatorString(array('required' => false)),
+      'name_language_full_text'   => new sfValidatorString(array('required' => false)),
       'expedition_from_date_mask' => new sfValidatorInteger(),
       'expedition_from_date'      => new sfValidatorDate(array('required' => false)),
       'expedition_to_date_mask'   => new sfValidatorInteger(),

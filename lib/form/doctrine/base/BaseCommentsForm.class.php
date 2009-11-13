@@ -13,7 +13,7 @@ class BaseCommentsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                         => new sfWidgetFormInputHidden(),
-      'table_name'                 => new sfWidgetFormTextarea(),
+      'referenced_relation'        => new sfWidgetFormTextarea(),
       'record_id'                  => new sfWidgetFormInput(),
       'notion_concerned'           => new sfWidgetFormTextarea(),
       'comment'                    => new sfWidgetFormTextarea(),
@@ -23,12 +23,12 @@ class BaseCommentsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                         => new sfValidatorDoctrineChoice(array('model' => 'Comments', 'column' => 'id', 'required' => false)),
-      'table_name'                 => new sfValidatorString(array('max_length' => 2147483647)),
+      'referenced_relation'        => new sfValidatorString(),
       'record_id'                  => new sfValidatorInteger(),
-      'notion_concerned'           => new sfValidatorString(array('max_length' => 2147483647)),
-      'comment'                    => new sfValidatorString(array('max_length' => 2147483647)),
-      'comment_ts'                 => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'comment_language_full_text' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'notion_concerned'           => new sfValidatorString(),
+      'comment'                    => new sfValidatorString(),
+      'comment_ts'                 => new sfValidatorString(array('required' => false)),
+      'comment_language_full_text' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('comments[%s]');

@@ -21,9 +21,9 @@ class BaseCatalogueLevelsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'             => new sfValidatorDoctrineChoice(array('model' => 'CatalogueLevels', 'column' => 'id', 'required' => false)),
-      'level_type'     => new sfValidatorString(array('max_length' => 2147483647)),
-      'level_name'     => new sfValidatorString(array('max_length' => 2147483647)),
-      'level_sys_name' => new sfValidatorString(array('max_length' => 2147483647)),
+      'level_type'     => new sfValidatorString(),
+      'level_name'     => new sfValidatorString(),
+      'level_sys_name' => new sfValidatorString(),
       'optional_level' => new sfValidatorBoolean(),
     ));
 

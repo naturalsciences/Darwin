@@ -14,17 +14,17 @@ class BaseClassificationKeywordsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'   => new sfWidgetFormFilterInput(),
-      'record_id'    => new sfWidgetFormFilterInput(),
-      'keyword_type' => new sfWidgetFormFilterInput(),
-      'keyword'      => new sfWidgetFormFilterInput(),
+      'referenced_relation' => new sfWidgetFormFilterInput(),
+      'record_id'           => new sfWidgetFormFilterInput(),
+      'keyword_type'        => new sfWidgetFormFilterInput(),
+      'keyword'             => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'table_name'   => new sfValidatorPass(array('required' => false)),
-      'record_id'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'keyword_type' => new sfValidatorPass(array('required' => false)),
-      'keyword'      => new sfValidatorPass(array('required' => false)),
+      'referenced_relation' => new sfValidatorPass(array('required' => false)),
+      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'keyword_type'        => new sfValidatorPass(array('required' => false)),
+      'keyword'             => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('classification_keywords_filters[%s]');
@@ -42,11 +42,11 @@ class BaseClassificationKeywordsFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'           => 'Number',
-      'table_name'   => 'Text',
-      'record_id'    => 'Number',
-      'keyword_type' => 'Text',
-      'keyword'      => 'Text',
+      'id'                  => 'Number',
+      'referenced_relation' => 'Text',
+      'record_id'           => 'Number',
+      'keyword_type'        => 'Text',
+      'keyword'             => 'Text',
     );
   }
 }

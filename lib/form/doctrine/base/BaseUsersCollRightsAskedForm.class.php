@@ -28,11 +28,11 @@ class BaseUsersCollRightsAskedForm extends BaseFormDoctrine
       'id'                   => new sfValidatorDoctrineChoice(array('model' => 'UsersCollRightsAsked', 'column' => 'id', 'required' => false)),
       'collection_ref'       => new sfValidatorDoctrineChoice(array('model' => 'Collections')),
       'user_ref'             => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'field_group_name'     => new sfValidatorString(array('max_length' => 2147483647)),
+      'field_group_name'     => new sfValidatorString(),
       'db_user_type'         => new sfValidatorInteger(),
       'searchable'           => new sfValidatorBoolean(),
       'visible'              => new sfValidatorBoolean(),
-      'motivation'           => new sfValidatorString(array('max_length' => 2147483647)),
+      'motivation'           => new sfValidatorString(),
       'asking_date_time'     => new sfValidatorDateTime(),
       'with_sub_collections' => new sfValidatorBoolean(),
     ));

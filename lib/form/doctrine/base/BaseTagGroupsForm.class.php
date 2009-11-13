@@ -24,11 +24,11 @@ class BaseTagGroupsForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                     => new sfValidatorDoctrineChoice(array('model' => 'TagGroups', 'column' => 'id', 'required' => false)),
       'tag_ref'                => new sfValidatorDoctrineChoice(array('model' => 'Tags')),
-      'group_name'             => new sfValidatorString(array('max_length' => 2147483647)),
-      'group_name_indexed'     => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'sub_group_name'         => new sfValidatorString(array('max_length' => 2147483647)),
-      'sub_group_name_indexed' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'color'                  => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'group_name'             => new sfValidatorString(),
+      'group_name_indexed'     => new sfValidatorString(array('required' => false)),
+      'sub_group_name'         => new sfValidatorString(),
+      'sub_group_name_indexed' => new sfValidatorString(array('required' => false)),
+      'color'                  => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tag_groups[%s]');

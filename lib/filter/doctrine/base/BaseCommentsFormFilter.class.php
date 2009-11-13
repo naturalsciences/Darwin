@@ -14,7 +14,7 @@ class BaseCommentsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'                 => new sfWidgetFormFilterInput(),
+      'referenced_relation'        => new sfWidgetFormFilterInput(),
       'record_id'                  => new sfWidgetFormFilterInput(),
       'notion_concerned'           => new sfWidgetFormFilterInput(),
       'comment'                    => new sfWidgetFormFilterInput(),
@@ -23,7 +23,7 @@ class BaseCommentsFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'table_name'                 => new sfValidatorPass(array('required' => false)),
+      'referenced_relation'        => new sfValidatorPass(array('required' => false)),
       'record_id'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'notion_concerned'           => new sfValidatorPass(array('required' => false)),
       'comment'                    => new sfValidatorPass(array('required' => false)),
@@ -47,7 +47,7 @@ class BaseCommentsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                         => 'Number',
-      'table_name'                 => 'Text',
+      'referenced_relation'        => 'Text',
       'record_id'                  => 'Number',
       'notion_concerned'           => 'Text',
       'comment'                    => 'Text',

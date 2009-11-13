@@ -21,19 +21,19 @@ People:
 CatalogueRelationships:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id_1: { type: integer, notnull: true}
         record_id_2: { type: integer, notnull: true}
-        relationship_type: { type: integer, notnull: true, default: recombined from }
+        relationship_type: { type: string, notnull: true, default: recombined from }
 
 
 CataloguePeople:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         people_type: {  type: string, notnull: true , default: authors }
-        people_sub_type: {  type: string, notnull: true }
+#         people_sub_type: {  type: string, notnull: true }
         order_by: { type: integer, notnull: true, default: 1}
         people_ref: { type: integer, notnull: true}
     relations:
@@ -66,7 +66,7 @@ PossibleUpperLevels:
 Comments:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         notion_concerned: { type: string, notnull: true}
         comment: { type: string, notnull: true}
@@ -122,7 +122,7 @@ GtuTags:
 CatalogueProperties:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         property_type: {type: string, notnull: true}
         property_sub_type: {type: string}
@@ -158,7 +158,7 @@ PropertiesValues:
 Identifications:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         notion_concerned: { type: string, notnull: true}
         notion_date: { type: timestamp}
@@ -171,7 +171,7 @@ Identifications:
 ClassVernacularNames:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         community: { type: string, notnull: true}
 
@@ -487,7 +487,7 @@ UsersCollRightsAsked:
 RecordVisibilities:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         db_user_type: { type: integer, notnull: true, default:0 }
         user_ref: { type: integer, notnull: true, default:0 }
@@ -500,7 +500,7 @@ RecordVisibilities:
 UsersWorkflow:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         user_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: to check}
@@ -513,7 +513,7 @@ UsersWorkflow:
 
 UsersTablesFieldsTracked:
     columns:
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         field_name: { type: string, notnull: true}
         user_ref: { type: integer, notnull: true}
     relations:
@@ -524,7 +524,7 @@ UsersTablesFieldsTracked:
 UsersTracking:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true},
         user_ref: { type: integer, notnull: true}
         action: { type: string, notnull: true, default: insert}
@@ -545,7 +545,7 @@ UsersTrackingRecords:
 CollectionMaintenance:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         people_ref: { type: integer, notnull: true},
         category: { type: string, notnull: true, default: action}
         action_observation: { type: string, notnull: true}
@@ -614,116 +614,116 @@ Taxonomy:
         name_indexed: { type: string}
         level_ref: { type: integer}
         status: { type: string, notnull: true, default: valid}
-        path: { type: string, notnull: true, default: '/'}
+        path: { type: string, notnull: false, default: '/'}
         parent_ref: { type: integer, default: null}
-        domain_ref: { type: integer, notnull: true, default: 0}
-        domain_indexed: { type: string, notnull: true, default: ''}
-        kingdom_ref: { type: integer, notnull: true, default: 0}
-        kingdom_indexed: { type: string, notnull: true, default: ''}
-        super_phylum_ref: { type: integer, notnull: true, default: 0}
-        super_phylum_indexed: { type: string, notnull: true, default: ''}
-        phylum_ref: { type: integer, notnull: true, default: 0}
-        phylum_indexed: { type: string, notnull: true, default: ''}
-        sub_phylum_ref: { type: integer, notnull: true, default: 0}
-        sub_phylum_indexed: { type: string, notnull: true, default: ''}
-        infra_phylum_ref: { type: integer, notnull: true, default: 0}
-        infra_phylum_indexed: { type: string, notnull: true, default: ''}
-        super_cohort_botany_ref: { type: integer, notnull: true, default: 0}
-        super_cohort_botany_indexed: { type: string, notnull: true, default: ''}
-        cohort_botany_ref: { type: integer, notnull: true, default: 0}
-        cohort_botany_indexed: { type: string, notnull: true, default: ''}
-        sub_cohort_botany_ref: { type: integer, notnull: true, default: 0}
-        sub_cohort_botany_indexed: { type: string, notnull: true, default: ''}
-        infra_cohort_botany_ref: { type: integer, notnull: true, default: 0}
-        infra_cohort_botany_indexed: { type: string, notnull: true, default: ''}
-        super_class_ref: { type: integer, notnull: true, default: 0}
-        super_class_indexed: { type: string, notnull: true, default: ''}
-        class_ref: { type: integer, notnull: true, default: 0}
-        class_indexed: { type: string, notnull: true, default: ''}
-        sub_class_ref: { type: integer, notnull: true, default: 0}
-        sub_class_indexed: { type: string, notnull: true, default: ''}
-        infra_class_ref: { type: integer, notnull: true, default: 0}
-        infra_class_indexed: { type: string, notnull: true, default: ''}
-        super_division_ref: { type: integer, notnull: true, default: 0}
-        super_division_indexed: { type: string, notnull: true, default: ''}
-        division_ref: { type: integer, notnull: true, default: 0}
-        division_indexed: { type: string, notnull: true, default: ''}
-        sub_division_ref: { type: integer, notnull: true, default: 0}
-        sub_division_indexed: { type: string, notnull: true, default: ''}
-        infra_division_ref: { type: integer, notnull: true, default: 0}
-        infra_division_indexed: { type: string, notnull: true, default: ''}
-        super_legion_ref: { type: integer, notnull: true, default: 0}
-        super_legion_indexed: { type: string, notnull: true, default: ''}
-        legion_ref: { type: integer, notnull: true, default: 0}
-        legion_indexed: { type: string, notnull: true, default: ''}
-        sub_legion_ref: { type: integer, notnull: true, default: 0}
-        sub_legion_indexed: { type: string, notnull: true, default: ''}
-        infra_legion_ref: { type: integer, notnull: true, default: 0}
-        infra_legion_indexed: { type: string, notnull: true, default: ''}
-        super_cohort_zoology_ref: { type: integer, notnull: true, default: 0}
-        super_cohort_zoology_indexed: { type: string, notnull: true, default: ''}
-        cohort_zoology_ref: { type: integer, notnull: true, default: 0}
-        cohort_zoology_indexed: { type: string, notnull: true, default: ''}
-        sub_cohort_zoology_ref: { type: integer, notnull: true, default: 0}
-        sub_cohort_zoology_indexed: { type: string, notnull: true, default: ''}
-        infra_cohort_zoology_ref: { type: integer, notnull: true, default: 0}
-        infra_cohort_zoology_indexed: { type: string, notnull: true, default: ''}
-        super_order_ref: { type: integer, notnull: true, default: 0}
-        super_order_indexed: { type: string, notnull: true, default: ''}
-        order_ref: { type: integer, notnull: true, default: 0}
-        order_indexed: { type: string, notnull: true, default: ''}
-        sub_order_ref: { type: integer, notnull: true, default: 0}
-        sub_order_indexed: { type: string, notnull: true, default: ''}
-        infra_order_ref: { type: integer, notnull: true, default: 0}
-        infra_order_indexed: { type: string, notnull: true, default: ''}
-        section_zoology_ref: { type: integer, notnull: true, default: 0}
-        section_zoology_indexed: { type: string, notnull: true, default: ''}
-        sub_section_zoology_ref: { type: integer, notnull: true, default: 0}
-        sub_section_zoology_indexed: { type: string, notnull: true, default: ''}
-        super_family_ref: { type: integer, notnull: true, default: 0}
-        super_family_indexed: { type: string, notnull: true, default: ''}
-        family_ref: { type: integer, notnull: true, default: 0}
-        family_indexed: { type: string, notnull: true, default: ''}
-        sub_family_ref: { type: integer, notnull: true, default: 0}
-        sub_family_indexed: { type: string, notnull: true, default: ''}
-        infra_family_ref: { type: integer, notnull: true, default: 0}
-        infra_family_indexed: { type: string, notnull: true, default: ''}
-        super_tribe_ref: { type: integer, notnull: true, default: 0}
-        super_tribe_indexed: { type: string, notnull: true, default: ''}
-        tribe_ref: { type: integer, notnull: true, default: 0}
-        tribe_indexed: { type: string, notnull: true, default: ''}
-        sub_tribe_ref: { type: integer, notnull: true, default: 0}
-        sub_tribe_indexed: { type: string, notnull: true, default: ''}
-        infra_tribe_ref: { type: integer, notnull: true, default: 0}
-        infra_tribe_indexed: { type: string, notnull: true, default: ''}
-        genus_ref: { type: integer, notnull: true, default: 0}
-        genus_indexed: { type: string, notnull: true, default: ''}
-        sub_genus_ref: { type: integer, notnull: true, default: 0}
-        sub_genus_indexed: { type: string, notnull: true, default: ''}
-        section_botany_ref: { type: integer, notnull: true, default: 0}
-        section_botany_indexed: { type: string, notnull: true, default: ''}
-        sub_section_botany_ref: { type: integer, notnull: true, default: 0}
-        sub_section_botany_indexed: { type: string, notnull: true, default: ''}
-        serie_ref: { type: integer, notnull: true, default: 0}
-        serie_indexed: { type: string, notnull: true, default: ''}
-        sub_serie_ref: { type: integer, notnull: true, default: 0}
-        sub_serie_indexed: { type: string, notnull: true, default: ''}
-        super_species_ref: { type: integer, notnull: true, default: 0}
-        super_species_indexed: { type: string, notnull: true, default: ''}
-        species_ref: { type: integer, notnull: true, default: 0}
-        species_indexed: { type: string, notnull: true, default: ''}
-        sub_species_ref: { type: integer, notnull: true, default: 0}
-        sub_species_indexed: { type: string, notnull: true, default: ''}
-        variety_ref: { type: integer, notnull: true, default: 0}
-        variety_indexed: { type: string, notnull: true, default: ''}
-        sub_variety_ref: { type: integer, notnull: true, default: 0}
-        sub_variety_indexed: { type: string, notnull: true, default: ''}
-        form_ref: { type: integer, notnull: true, default: 0}
-        form_indexed: { type: string, notnull: true, default: ''}
-        sub_form_ref: { type: integer, notnull: true, default: 0}
-        sub_form_indexed: { type: string, notnull: true, default: ''}
-        abberans_ref: { type: integer, notnull: true, default: 0}
-        abberans_indexed: { type: string, notnull: true, default: ''}
+        domain_ref: { type: integer, notnull: false, default: 0}
+        domain_indexed: { type: string, notnull: false, default: ''}
+        kingdom_ref: { type: integer, notnull: false, default: 0}
+        kingdom_indexed: { type: string, notnull: false, default: ''}
+        super_phylum_ref: { type: integer, notnull: false, default: 0}
+        super_phylum_indexed: { type: string, notnull: false, default: ''}
+        phylum_ref: { type: integer, notnull: false, default: 0}
+        phylum_indexed: { type: string, notnull: false, default: ''}
+        sub_phylum_ref: { type: integer, notnull: false, default: 0}
+        sub_phylum_indexed: { type: string, notnull: false, default: ''}
+        infra_phylum_ref: { type: integer, notnull: false, default: 0}
+        infra_phylum_indexed: { type: string, notnull: false, default: ''}
+        super_cohort_botany_ref: { type: integer, notnull: false, default: 0}
+        super_cohort_botany_indexed: { type: string, notnull: false, default: ''}
+        cohort_botany_ref: { type: integer, notnull: false, default: 0}
+        cohort_botany_indexed: { type: string, notnull: false, default: ''}
+        sub_cohort_botany_ref: { type: integer, notnull: false, default: 0}
+        sub_cohort_botany_indexed: { type: string, notnull: false, default: ''}
+        infra_cohort_botany_ref: { type: integer, notnull: false, default: 0}
+        infra_cohort_botany_indexed: { type: string, notnull: false, default: ''}
+        super_class_ref: { type: integer, notnull: false, default: 0}
+        super_class_indexed: { type: string, notnull: false, default: ''}
+        class_ref: { type: integer, notnull: false, default: 0}
+        class_indexed: { type: string, notnull: false, default: ''}
+        sub_class_ref: { type: integer, notnull: false, default: 0}
+        sub_class_indexed: { type: string, notnull: false, default: ''}
+        infra_class_ref: { type: integer, notnull: false, default: 0}
+        infra_class_indexed: { type: string, notnull: false, default: ''}
+        super_division_ref: { type: integer, notnull: false, default: 0}
+        super_division_indexed: { type: string, notnull: false, default: ''}
+        division_ref: { type: integer, notnull: false, default: 0}
+        division_indexed: { type: string, notnull: false, default: ''}
+        sub_division_ref: { type: integer, notnull: false, default: 0}
+        sub_division_indexed: { type: string, notnull: false, default: ''}
+        infra_division_ref: { type: integer, notnull: false, default: 0}
+        infra_division_indexed: { type: string, notnull: false, default: ''}
+        super_legion_ref: { type: integer, notnull: false, default: 0}
+        super_legion_indexed: { type: string, notnull: false, default: ''}
+        legion_ref: { type: integer, notnull: false, default: 0}
+        legion_indexed: { type: string, notnull: false, default: ''}
+        sub_legion_ref: { type: integer, notnull: false, default: 0}
+        sub_legion_indexed: { type: string, notnull: false, default: ''}
+        infra_legion_ref: { type: integer, notnull: false, default: 0}
+        infra_legion_indexed: { type: string, notnull: false, default: ''}
+        super_cohort_zoology_ref: { type: integer, notnull: false, default: 0}
+        super_cohort_zoology_indexed: { type: string, notnull: false, default: ''}
+        cohort_zoology_ref: { type: integer, notnull: false, default: 0}
+        cohort_zoology_indexed: { type: string, notnull: false, default: ''}
+        sub_cohort_zoology_ref: { type: integer, notnull: false, default: 0}
+        sub_cohort_zoology_indexed: { type: string, notnull: false, default: ''}
+        infra_cohort_zoology_ref: { type: integer, notnull: false, default: 0}
+        infra_cohort_zoology_indexed: { type: string, notnull: false, default: ''}
+        super_order_ref: { type: integer, notnull: false, default: 0}
+        super_order_indexed: { type: string, notnull: false, default: ''}
+        order_ref: { type: integer, notnull: false, default: 0}
+        order_indexed: { type: string, notnull: false, default: ''}
+        sub_order_ref: { type: integer, notnull: false, default: 0}
+        sub_order_indexed: { type: string, notnull: false, default: ''}
+        infra_order_ref: { type: integer, notnull: false, default: 0}
+        infra_order_indexed: { type: string, notnull: false, default: ''}
+        section_zoology_ref: { type: integer, notnull: false, default: 0}
+        section_zoology_indexed: { type: string, notnull: false, default: ''}
+        sub_section_zoology_ref: { type: integer, notnull: false, default: 0}
+        sub_section_zoology_indexed: { type: string, notnull: false, default: ''}
+        super_family_ref: { type: integer, notnull: false, default: 0}
+        super_family_indexed: { type: string, notnull: false, default: ''}
+        family_ref: { type: integer, notnull: false, default: 0}
+        family_indexed: { type: string, notnull: false, default: ''}
+        sub_family_ref: { type: integer, notnull: false, default: 0}
+        sub_family_indexed: { type: string, notnull: false, default: ''}
+        infra_family_ref: { type: integer, notnull: false, default: 0}
+        infra_family_indexed: { type: string, notnull: false, default: ''}
+        super_tribe_ref: { type: integer, notnull: false, default: 0}
+        super_tribe_indexed: { type: string, notnull: false, default: ''}
+        tribe_ref: { type: integer, notnull: false, default: 0}
+        tribe_indexed: { type: string, notnull: false, default: ''}
+        sub_tribe_ref: { type: integer, notnull: false, default: 0}
+        sub_tribe_indexed: { type: string, notnull: false, default: ''}
+        infra_tribe_ref: { type: integer, notnull: false, default: 0}
+        infra_tribe_indexed: { type: string, notnull: false, default: ''}
+        genus_ref: { type: integer, notnull: false, default: 0}
+        genus_indexed: { type: string, notnull: false, default: ''}
+        sub_genus_ref: { type: integer, notnull: false, default: 0}
+        sub_genus_indexed: { type: string, notnull: false, default: ''}
+        section_botany_ref: { type: integer, notnull: false, default: 0}
+        section_botany_indexed: { type: string, notnull: false, default: ''}
+        sub_section_botany_ref: { type: integer, notnull: false, default: 0}
+        sub_section_botany_indexed: { type: string, notnull: false, default: ''}
+        serie_ref: { type: integer, notnull: false, default: 0}
+        serie_indexed: { type: string, notnull: false, default: ''}
+        sub_serie_ref: { type: integer, notnull: false, default: 0}
+        sub_serie_indexed: { type: string, notnull: false, default: ''}
+        super_species_ref: { type: integer, notnull: false, default: 0}
+        super_species_indexed: { type: string, notnull: false, default: ''}
+        species_ref: { type: integer, notnull: false, default: 0}
+        species_indexed: { type: string, notnull: false, default: ''}
+        sub_species_ref: { type: integer, notnull: false, default: 0}
+        sub_species_indexed: { type: string, notnull: false, default: ''}
+        variety_ref: { type: integer, notnull: false, default: 0}
+        variety_indexed: { type: string, notnull: false, default: ''}
+        sub_variety_ref: { type: integer, notnull: false, default: 0}
+        sub_variety_indexed: { type: string, notnull: false, default: ''}
+        form_ref: { type: integer, notnull: false, default: 0}
+        form_indexed: { type: string, notnull: false, default: ''}
+        sub_form_ref: { type: integer, notnull: false, default: 0}
+        sub_form_indexed: { type: string, notnull: false, default: ''}
+        abberans_ref: { type: integer, notnull: false, default: 0}
+        abberans_indexed: { type: string, notnull: false, default: ''}
         extinct: { type: boolean, notnull: true, default: false}
     relations:
         Parent:
@@ -739,7 +739,7 @@ Taxonomy:
 ClassificationKeywords:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         keyword_type: {type: string, notnull:true, default: name}
         keyword: {type:string, notnull:true}
@@ -747,7 +747,7 @@ ClassificationKeywords:
 ClassificationSynonymies:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         group_id: { type: integer, notnull: true}
         group_name: {type:string, notnull:true}
@@ -757,7 +757,7 @@ ClassificationSynonymies:
 PeopleAliases:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         person_ref: { type: integer, notnull: true }
         collection_ref: { type: integer, notnull: true, default: 0}
@@ -986,7 +986,7 @@ Specimens:
 Codes:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         code_category: { type: string, notnull: true, default: main}
         code_prefix: { type: string}
@@ -1055,7 +1055,7 @@ SpecimenPartsInsurances:
 AssociatedMultimedia:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        table_name: { type: string, notnull: true}
+        referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         multimedia_ref: { type: integer, notnull: true }
     relations:

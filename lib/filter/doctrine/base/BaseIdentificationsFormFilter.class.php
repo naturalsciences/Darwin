@@ -14,7 +14,7 @@ class BaseIdentificationsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'            => new sfWidgetFormFilterInput(),
+      'referenced_relation'   => new sfWidgetFormFilterInput(),
       'record_id'             => new sfWidgetFormFilterInput(),
       'notion_concerned'      => new sfWidgetFormFilterInput(),
       'notion_date'           => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
@@ -26,7 +26,7 @@ class BaseIdentificationsFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'table_name'            => new sfValidatorPass(array('required' => false)),
+      'referenced_relation'   => new sfValidatorPass(array('required' => false)),
       'record_id'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'notion_concerned'      => new sfValidatorPass(array('required' => false)),
       'notion_date'           => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
@@ -53,7 +53,7 @@ class BaseIdentificationsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                    => 'Number',
-      'table_name'            => 'Text',
+      'referenced_relation'   => 'Text',
       'record_id'             => 'Number',
       'notion_concerned'      => 'Text',
       'notion_date'           => 'Date',

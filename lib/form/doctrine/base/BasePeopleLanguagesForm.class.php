@@ -22,7 +22,7 @@ class BasePeopleLanguagesForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                => new sfValidatorDoctrineChoice(array('model' => 'PeopleLanguages', 'column' => 'id', 'required' => false)),
       'people_ref'        => new sfValidatorDoctrineChoice(array('model' => 'People')),
-      'language_country'  => new sfValidatorString(array('max_length' => 2147483647)),
+      'language_country'  => new sfValidatorString(),
       'mother'            => new sfValidatorBoolean(),
       'prefered_language' => new sfValidatorBoolean(),
     ));

@@ -14,21 +14,19 @@ class BaseCataloguePeopleFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'      => new sfWidgetFormFilterInput(),
-      'record_id'       => new sfWidgetFormFilterInput(),
-      'people_type'     => new sfWidgetFormFilterInput(),
-      'people_sub_type' => new sfWidgetFormFilterInput(),
-      'order_by'        => new sfWidgetFormFilterInput(),
-      'people_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => true)),
+      'referenced_relation' => new sfWidgetFormFilterInput(),
+      'record_id'           => new sfWidgetFormFilterInput(),
+      'people_type'         => new sfWidgetFormFilterInput(),
+      'order_by'            => new sfWidgetFormFilterInput(),
+      'people_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'table_name'      => new sfValidatorPass(array('required' => false)),
-      'record_id'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'people_type'     => new sfValidatorPass(array('required' => false)),
-      'people_sub_type' => new sfValidatorPass(array('required' => false)),
-      'order_by'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'people_ref'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'People', 'column' => 'id')),
+      'referenced_relation' => new sfValidatorPass(array('required' => false)),
+      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'people_type'         => new sfValidatorPass(array('required' => false)),
+      'order_by'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'people_ref'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'People', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('catalogue_people_filters[%s]');
@@ -46,13 +44,12 @@ class BaseCataloguePeopleFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'              => 'Number',
-      'table_name'      => 'Text',
-      'record_id'       => 'Number',
-      'people_type'     => 'Text',
-      'people_sub_type' => 'Text',
-      'order_by'        => 'Number',
-      'people_ref'      => 'ForeignKey',
+      'id'                  => 'Number',
+      'referenced_relation' => 'Text',
+      'record_id'           => 'Number',
+      'people_type'         => 'Text',
+      'order_by'            => 'Number',
+      'people_ref'          => 'ForeignKey',
     );
   }
 }

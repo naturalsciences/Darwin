@@ -23,10 +23,10 @@ class BaseMySavedSearchesForm extends BaseFormDoctrine
     $this->setValidators(array(
       'user_ref'                 => new sfValidatorDoctrineChoice(array('model' => 'MySavedSearches', 'column' => 'user_ref', 'required' => false)),
       'name'                     => new sfValidatorDoctrineChoice(array('model' => 'MySavedSearches', 'column' => 'name', 'required' => false)),
-      'search_criterias'         => new sfValidatorString(array('max_length' => 2147483647)),
+      'search_criterias'         => new sfValidatorString(),
       'favorite'                 => new sfValidatorBoolean(),
       'modification_date_time'   => new sfValidatorDateTime(),
-      'visible_fields_in_result' => new sfValidatorString(array('max_length' => 2147483647)),
+      'visible_fields_in_result' => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('my_saved_searches[%s]');

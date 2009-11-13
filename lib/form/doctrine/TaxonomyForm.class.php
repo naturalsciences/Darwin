@@ -27,4 +27,47 @@ class TaxonomyForm extends BaseTaxonomyForm
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
   }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    if (is_null($con))
+    {
+      $con = $this->getConnection();
+    }
+ 
+    if (is_null($forms))
+    {
+      $forms = $this->embeddedForms;
+    }
+ 
+    foreach ($forms as $key=>$form)
+    {
+      if ($form instanceof sfFormDoctrine)
+      {
+        // The magic start here
+      /*  $field_name  = $this->getObject()->getTable()->getTableName().'_id';
+        if($form->getObject()->contains($field_name)) {
+          $method_name = 'set'.sfInflector::camelize($field_name);
+          $form->getObject()->$method_name($this->getObject()->getId());
+        }
+*/	
+	if($form instanceof SpecimensRelationshipsForm)
+	{
+	  $form->getObject()->setReferencedRelation($this->getObject()->getTable()->getTableName());
+	  $form->getObject()->setrecord_id_1($this->getObject()->getId());
+	  if($key=='current_name')
+	    $form->getObject()->setRelationshipType('current taxon');
+	  if($form->getObject()->getrecord_id_2()==null)
+	    continue;
+	}
+        // Here it ends
+        $form->getObject()->save($con);
+        $form->saveEmbeddedForms($con);
+      }
+      else
+      {
+        $this->saveEmbeddedForms($con, $form->getEmbeddedForms());
+      }
+    }
+  }
 }

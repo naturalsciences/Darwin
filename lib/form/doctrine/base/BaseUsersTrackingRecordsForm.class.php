@@ -22,9 +22,9 @@ class BaseUsersTrackingRecordsForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'           => new sfValidatorDoctrineChoice(array('model' => 'UsersTrackingRecords', 'column' => 'id', 'required' => false)),
       'tracking_ref' => new sfValidatorInteger(),
-      'field_name'   => new sfValidatorString(array('max_length' => 2147483647)),
-      'old_value'    => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'new_value'    => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'field_name'   => new sfValidatorString(),
+      'old_value'    => new sfValidatorString(array('required' => false)),
+      'new_value'    => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_tracking_records[%s]');

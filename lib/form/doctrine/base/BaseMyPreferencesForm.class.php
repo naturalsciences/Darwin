@@ -34,9 +34,9 @@ class BaseMyPreferencesForm extends BaseFormDoctrine
       'mandatory'   => new sfValidatorBoolean(),
       'visible'     => new sfValidatorBoolean(),
       'opened'      => new sfValidatorBoolean(),
-      'color'       => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'color'       => new sfValidatorString(array('required' => false)),
       'icon_ref'    => new sfValidatorDoctrineChoice(array('model' => 'Multimedia', 'required' => false)),
-      'title_perso' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'title_perso' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('my_preferences[%s]');

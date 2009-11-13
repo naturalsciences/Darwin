@@ -22,7 +22,7 @@ class BaseMySavedSpecimensForm extends BaseFormDoctrine
     $this->setValidators(array(
       'user_ref'               => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'user_ref', 'required' => false)),
       'name'                   => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'name', 'required' => false)),
-      'specimen_ids'           => new sfValidatorString(array('max_length' => 2147483647)),
+      'specimen_ids'           => new sfValidatorString(),
       'favorite'               => new sfValidatorBoolean(),
       'modification_date_time' => new sfValidatorDateTime(),
     ));

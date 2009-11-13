@@ -12,23 +12,23 @@ class BaseClassificationSynonymiesForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                 => new sfWidgetFormInputHidden(),
-      'table_name'         => new sfWidgetFormTextarea(),
-      'record_id'          => new sfWidgetFormInput(),
-      'group_id'           => new sfWidgetFormInput(),
-      'group_name'         => new sfWidgetFormTextarea(),
-      'basionym_record_id' => new sfWidgetFormInput(),
-      'order_by'           => new sfWidgetFormInput(),
+      'id'                  => new sfWidgetFormInputHidden(),
+      'referenced_relation' => new sfWidgetFormTextarea(),
+      'record_id'           => new sfWidgetFormInput(),
+      'group_id'            => new sfWidgetFormInput(),
+      'group_name'          => new sfWidgetFormTextarea(),
+      'basionym_record_id'  => new sfWidgetFormInput(),
+      'order_by'            => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
-      'id'                 => new sfValidatorDoctrineChoice(array('model' => 'ClassificationSynonymies', 'column' => 'id', 'required' => false)),
-      'table_name'         => new sfValidatorString(array('max_length' => 2147483647)),
-      'record_id'          => new sfValidatorInteger(),
-      'group_id'           => new sfValidatorInteger(),
-      'group_name'         => new sfValidatorString(array('max_length' => 2147483647)),
-      'basionym_record_id' => new sfValidatorInteger(array('required' => false)),
-      'order_by'           => new sfValidatorInteger(),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'ClassificationSynonymies', 'column' => 'id', 'required' => false)),
+      'referenced_relation' => new sfValidatorString(),
+      'record_id'           => new sfValidatorInteger(),
+      'group_id'            => new sfValidatorInteger(),
+      'group_name'          => new sfValidatorString(),
+      'basionym_record_id'  => new sfValidatorInteger(array('required' => false)),
+      'order_by'            => new sfValidatorInteger(),
     ));
 
     $this->widgetSchema->setNameFormat('classification_synonymies[%s]');

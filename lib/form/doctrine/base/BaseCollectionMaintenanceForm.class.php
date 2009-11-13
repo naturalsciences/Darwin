@@ -13,7 +13,7 @@ class BaseCollectionMaintenanceForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                     => new sfWidgetFormInputHidden(),
-      'table_name'             => new sfWidgetFormTextarea(),
+      'referenced_relation'    => new sfWidgetFormTextarea(),
       'people_ref'             => new sfWidgetFormInput(),
       'category'               => new sfWidgetFormTextarea(),
       'action_observation'     => new sfWidgetFormTextarea(),
@@ -26,13 +26,13 @@ class BaseCollectionMaintenanceForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                     => new sfValidatorDoctrineChoice(array('model' => 'CollectionMaintenance', 'column' => 'id', 'required' => false)),
-      'table_name'             => new sfValidatorString(array('max_length' => 2147483647)),
+      'referenced_relation'    => new sfValidatorString(),
       'people_ref'             => new sfValidatorInteger(),
-      'category'               => new sfValidatorString(array('max_length' => 2147483647)),
-      'action_observation'     => new sfValidatorString(array('max_length' => 2147483647)),
-      'description'            => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'description_ts'         => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'language_full_text'     => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'category'               => new sfValidatorString(),
+      'action_observation'     => new sfValidatorString(),
+      'description'            => new sfValidatorString(array('required' => false)),
+      'description_ts'         => new sfValidatorString(array('required' => false)),
+      'language_full_text'     => new sfValidatorString(array('required' => false)),
       'modification_date_time' => new sfValidatorDateTime(),
       'modification_date_mask' => new sfValidatorInteger(),
     ));

@@ -19,8 +19,8 @@ class BaseTagsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'            => new sfValidatorDoctrineChoice(array('model' => 'Tags', 'column' => 'id', 'required' => false)),
-      'label'         => new sfValidatorString(array('max_length' => 2147483647)),
-      'label_indexed' => new sfValidatorString(array('max_length' => 2147483647)),
+      'label'         => new sfValidatorString(),
+      'label_indexed' => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('tags[%s]');

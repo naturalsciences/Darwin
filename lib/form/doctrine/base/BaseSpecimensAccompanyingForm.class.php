@@ -24,13 +24,13 @@ class BaseSpecimensAccompanyingForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'           => new sfValidatorDoctrineChoice(array('model' => 'SpecimensAccompanying', 'column' => 'id', 'required' => false)),
-      'type'         => new sfValidatorString(array('max_length' => 2147483647)),
+      'type'         => new sfValidatorString(),
       'specimen_ref' => new sfValidatorDoctrineChoice(array('model' => 'Specimens')),
       'taxon_ref'    => new sfValidatorDoctrineChoice(array('model' => 'Taxonomy')),
       'mineral_ref'  => new sfValidatorDoctrineChoice(array('model' => 'Mineralogy')),
-      'form'         => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'form'         => new sfValidatorString(array('required' => false)),
       'quantity'     => new sfValidatorNumber(array('required' => false)),
-      'unit'         => new sfValidatorString(array('max_length' => 2147483647)),
+      'unit'         => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('specimens_accompanying[%s]');

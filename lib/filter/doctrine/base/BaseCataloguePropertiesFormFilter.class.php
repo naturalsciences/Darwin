@@ -14,7 +14,7 @@ class BaseCataloguePropertiesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'                 => new sfWidgetFormFilterInput(),
+      'referenced_relation'        => new sfWidgetFormFilterInput(),
       'record_id'                  => new sfWidgetFormFilterInput(),
       'property_type'              => new sfWidgetFormFilterInput(),
       'property_sub_type'          => new sfWidgetFormFilterInput(),
@@ -34,7 +34,7 @@ class BaseCataloguePropertiesFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'table_name'                 => new sfValidatorPass(array('required' => false)),
+      'referenced_relation'        => new sfValidatorPass(array('required' => false)),
       'record_id'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'property_type'              => new sfValidatorPass(array('required' => false)),
       'property_sub_type'          => new sfValidatorPass(array('required' => false)),
@@ -69,7 +69,7 @@ class BaseCataloguePropertiesFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                         => 'Number',
-      'table_name'                 => 'Text',
+      'referenced_relation'        => 'Text',
       'record_id'                  => 'Number',
       'property_type'              => 'Text',
       'property_sub_type'          => 'Text',

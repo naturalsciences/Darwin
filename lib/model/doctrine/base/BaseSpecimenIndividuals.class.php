@@ -23,7 +23,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 5845 2009-06-09 07:36:57Z jwage $
+ * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
  */
 abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
 {
@@ -89,7 +89,8 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('Specimens', array(
+        parent::setUp();
+    $this->hasOne('Specimens', array(
              'local' => 'specimen_ref',
              'foreign' => 'id'));
 

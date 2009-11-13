@@ -14,15 +14,15 @@ class BaseUsersTablesFieldsTrackedFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name' => new sfWidgetFormFilterInput(),
-      'field_name' => new sfWidgetFormFilterInput(),
-      'user_ref'   => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
+      'referenced_relation' => new sfWidgetFormFilterInput(),
+      'field_name'          => new sfWidgetFormFilterInput(),
+      'user_ref'            => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'table_name' => new sfValidatorPass(array('required' => false)),
-      'field_name' => new sfValidatorPass(array('required' => false)),
-      'user_ref'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
+      'referenced_relation' => new sfValidatorPass(array('required' => false)),
+      'field_name'          => new sfValidatorPass(array('required' => false)),
+      'user_ref'            => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Users', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('users_tables_fields_tracked_filters[%s]');
@@ -40,10 +40,10 @@ class BaseUsersTablesFieldsTrackedFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'         => 'Number',
-      'table_name' => 'Text',
-      'field_name' => 'Text',
-      'user_ref'   => 'ForeignKey',
+      'id'                  => 'Number',
+      'referenced_relation' => 'Text',
+      'field_name'          => 'Text',
+      'user_ref'            => 'ForeignKey',
     );
   }
 }

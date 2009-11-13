@@ -42,7 +42,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 5845 2009-06-09 07:36:57Z jwage $
+ * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
  */
 abstract class BaseUsers extends sfDoctrineRecord
 {
@@ -119,7 +119,8 @@ abstract class BaseUsers extends sfDoctrineRecord
 
     public function setUp()
     {
-        $this->hasMany('UsersLanguages', array(
+        parent::setUp();
+    $this->hasMany('UsersLanguages', array(
              'local' => 'id',
              'foreign' => 'users_ref'));
 

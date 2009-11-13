@@ -131,7 +131,7 @@
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 5845 2009-06-09 07:36:57Z jwage $
+ * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
  */
 abstract class BaseTaxonomy extends sfDoctrineRecord
 {
@@ -140,7 +140,6 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
         $this->setTableName('taxonomy');
         $this->hasColumn('id', 'integer', null, array(
              'type' => 'integer',
-             'unsigned' => false,
              'primary' => true,
              'autoincrement' => true,
              ));
@@ -161,7 +160,7 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '/',
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
@@ -169,542 +168,542 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
              ));
         $this->hasColumn('domain_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('domain_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('kingdom_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('kingdom_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_phylum_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_phylum_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('phylum_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('phylum_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_phylum_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_phylum_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_phylum_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_phylum_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_cohort_botany_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_cohort_botany_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('cohort_botany_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('cohort_botany_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_cohort_botany_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_cohort_botany_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_cohort_botany_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_cohort_botany_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_class_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_class_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('class_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('class_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_class_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_class_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_class_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_class_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_division_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_division_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('division_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('division_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_division_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_division_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_division_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_division_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_legion_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_legion_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('legion_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('legion_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_legion_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_legion_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_legion_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_legion_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_cohort_zoology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_cohort_zoology_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('cohort_zoology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('cohort_zoology_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_cohort_zoology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_cohort_zoology_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_cohort_zoology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_cohort_zoology_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_order_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_order_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('order_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('order_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_order_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_order_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_order_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_order_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('section_zoology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('section_zoology_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_section_zoology_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_section_zoology_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_family_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_family_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('family_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('family_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_family_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_family_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_family_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_family_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_tribe_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_tribe_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('tribe_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('tribe_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_tribe_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_tribe_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('infra_tribe_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('infra_tribe_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('genus_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('genus_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_genus_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_genus_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('section_botany_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('section_botany_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_section_botany_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_section_botany_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('serie_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('serie_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_serie_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_serie_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('super_species_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('super_species_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('species_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('species_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_species_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_species_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('variety_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('variety_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_variety_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_variety_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('form_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('form_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_form_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_form_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('abberans_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('abberans_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('extinct', 'boolean', null, array(
@@ -716,7 +715,8 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('Taxonomy as Parent', array(
+        parent::setUp();
+    $this->hasOne('Taxonomy as Parent', array(
              'local' => 'parent_ref',
              'foreign' => 'id'));
 

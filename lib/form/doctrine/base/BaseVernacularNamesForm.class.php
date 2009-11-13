@@ -20,9 +20,9 @@ class BaseVernacularNamesForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'vernacular_class_ref'       => new sfValidatorDoctrineChoice(array('model' => 'VernacularNames', 'column' => 'vernacular_class_ref', 'required' => false)),
-      'name'                       => new sfValidatorString(array('max_length' => 2147483647)),
-      'name_ts'                    => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
-      'country_language_full_text' => new sfValidatorString(array('max_length' => 2147483647, 'required' => false)),
+      'name'                       => new sfValidatorString(),
+      'name_ts'                    => new sfValidatorString(array('required' => false)),
+      'country_language_full_text' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('vernacular_names[%s]');

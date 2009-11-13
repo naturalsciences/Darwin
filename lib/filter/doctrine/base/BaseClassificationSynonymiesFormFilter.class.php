@@ -14,21 +14,21 @@ class BaseClassificationSynonymiesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'table_name'         => new sfWidgetFormFilterInput(),
-      'record_id'          => new sfWidgetFormFilterInput(),
-      'group_id'           => new sfWidgetFormFilterInput(),
-      'group_name'         => new sfWidgetFormFilterInput(),
-      'basionym_record_id' => new sfWidgetFormFilterInput(),
-      'order_by'           => new sfWidgetFormFilterInput(),
+      'referenced_relation' => new sfWidgetFormFilterInput(),
+      'record_id'           => new sfWidgetFormFilterInput(),
+      'group_id'            => new sfWidgetFormFilterInput(),
+      'group_name'          => new sfWidgetFormFilterInput(),
+      'basionym_record_id'  => new sfWidgetFormFilterInput(),
+      'order_by'            => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'table_name'         => new sfValidatorPass(array('required' => false)),
-      'record_id'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'group_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'group_name'         => new sfValidatorPass(array('required' => false)),
-      'basionym_record_id' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'order_by'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'referenced_relation' => new sfValidatorPass(array('required' => false)),
+      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'group_id'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'group_name'          => new sfValidatorPass(array('required' => false)),
+      'basionym_record_id'  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'order_by'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('classification_synonymies_filters[%s]');
@@ -46,13 +46,13 @@ class BaseClassificationSynonymiesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'                 => 'Number',
-      'table_name'         => 'Text',
-      'record_id'          => 'Number',
-      'group_id'           => 'Number',
-      'group_name'         => 'Text',
-      'basionym_record_id' => 'Number',
-      'order_by'           => 'Number',
+      'id'                  => 'Number',
+      'referenced_relation' => 'Text',
+      'record_id'           => 'Number',
+      'group_id'            => 'Number',
+      'group_name'          => 'Text',
+      'basionym_record_id'  => 'Number',
+      'order_by'            => 'Number',
     );
   }
 }
