@@ -30,7 +30,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('ul > li',2)->
+    checkElement('ul > li',4)->
     checkElement('li:first','Falco Peregrinus')->
   end()->
 
@@ -50,7 +50,7 @@ $browser->
   
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('ul > li',3)->
+    checkElement('ul > li',2)->
     checkElement('li:first','/Animalia/')->
     checkElement('li:last','/Duchenus/')->
   end()
