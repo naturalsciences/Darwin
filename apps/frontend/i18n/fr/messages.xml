@@ -244,6 +244,10 @@
         <target phase-name="approval-1" state="signed-off" >contient</target>
       </trans-unit>
       <trans-unit>
+	      <source>ends by</source>
+	      <target phase-name="approval-1" state="signed-off" >se termine par</target>
+      </trans-unit>
+      <trans-unit>
         <source>Between</source>
         <target phase-name="approval-1" state="signed-off" >Entre</target>
       </trans-unit>

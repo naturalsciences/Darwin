@@ -16,18 +16,26 @@ class expeditionActions extends sfActions
     
     if ($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('searchExpedition'));
-      if ($this->form->isValid())
-      {
-      }
-
+      $this->searchResults($this->form,$request);
     }
 
     /*$this->expeditions_list = Doctrine::getTable('Expeditions')
       ->createQuery('a')
       ->execute();*/
   }
+  private function searchResults($form, $request)
+  {
+    if($request->getParameter('searchExpedition','') !== '')
+    {
+      $form->bind($request->getParameter('searchExpedition'));
+      if ($form->isValid())
+      {
+        $this->expeditions = Doctrine::getTable('Expeditions')
+        ->getExpLike($form->getValue('name'), $form->getValue('date_from'));
+      }
+    }
 
+  }
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new ExpeditionsForm();

@@ -5,7 +5,6 @@
   <table>
     <thead>
       <tr>
-        <th>&nbsp;</th>
         <th><?php echo $form['name']->renderLabel() ?></th>
         <th><?php echo __('Between'); ?></th>
         <th><?php echo __('and'); ?></th>
@@ -16,17 +15,13 @@
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
         <td>
-          <?php echo $form['name_options'] ?>
-          &nbsp;
-        </td>
-        <td>
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
           &nbsp;
         </td>
         <td>
-          <?php echo $form['date_range']->renderError() ?>
-          <?php echo $form['date_range'] ?>
+          <?php echo $form['date_from']->renderError() ?>
+          <?php echo $form['date_from'] ?>
           &nbsp;
         </td>
         <td>

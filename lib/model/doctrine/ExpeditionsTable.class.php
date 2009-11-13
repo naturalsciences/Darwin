@@ -4,5 +4,22 @@
  */
 class ExpeditionsTable extends Doctrine_Table
 {
-
+  public function getExpLike($name=null,$date_from=null)
+  {
+/*    if(trim($name) == "")
+      return null;*/
+    $q = Doctrine_Query::create()
+         ->from('Expeditions e');
+    if (trim($name) != ""):
+      $words = explode(" ",$name);
+      foreach($words as $word)
+      {
+        $q->andWhere("name_ts @@ search_words_to_query('expeditions' , 'name_ts', ? , 'contains') ",$word);
+      }
+      /*if($level)
+        $q->andWhere('level_ref = ?',$level);*/
+    endif;
+    $q->limit(30);
+    return $q->execute();
+  }
 }
