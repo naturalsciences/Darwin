@@ -9,6 +9,7 @@ PSQL = /usr/bin/psql
 PARAM_PSQL = $(PSQL) -q -h $(HOST) -U $(DB_USER) -d $(DB_NAME)
 PRIV_PSQL = $(PSQL) -q -v dbname=$(DB_NAME) -v importuser=$(DB_IMPORT_USER)
 PRIV_PSQL_DB = $(PRIV_PSQL) -d $(DB_NAME)
+PG_VER = 8.4
 
 PG_PROVE = /usr/lib/postgresql/8.3/bin/pg_prove
 #CLUSTER_NAME = darwin
@@ -133,7 +134,7 @@ create-test-schema:
 #ONLY USEFULL WHEN YOU DO A MIGRATION	
 
 create-user-darwin1:
-	-createuser -l -i -q -S -R -D -P -E $(DB_IMPORT_USER)
+	-createuser -l -i -S -R -D -P -E $(DB_IMPORT_USER)
 
 create-darwin1-schema:
 	$(PRIV_PSQL_DB) -f create_darwin1_schema.sql
@@ -153,15 +154,15 @@ create-db:
 install-lib:
 	$(PRIV_PSQL_DB) -f lib/accent.sql
 	#Make this more dynamical
-	$(PRIV_PSQL_DB) -f /usr/share/postgresql/8.3/contrib/pg_trgm.sql
-	$(PRIV_PSQL_DB) -f /usr/share/postgresql/8.3/contrib/pgcrypto.sql
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pg_trgm.sql
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pgcrypto.sql
 create-user-web:
-	-createuser -l -i -q -S -R -D -P -E $(DB_WEB_USER)
+	-createuser -l -i -S -R -D -P -E $(DB_WEB_USER)
 
 create-user:
 ifeq ($(PASSWD),'')
-	-createuser -l -i -q -S -R -D -P -E $(DB_USER)
-	-createuser -l -i -q -S -R -D -P -E $(DB_WEB_USER)
+	-createuser -l -i -S -R -D -P -E $(DB_USER)
+	-createuser -l -i -S -R -D -P -E $(DB_WEB_USER)
 else
 	$(PRIV_PSQL_DB) -c "CREATE ROLE $(DB_USER) ENCRYPTED PASSWORD '$(PASSWD)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
 	$(PRIV_PSQL_DB) -c "CREATE ROLE $(DB_WEB_USER) ENCRYPTED PASSWORD '$(PASSWD)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
