@@ -6110,7 +6110,7 @@ BEGIN
 		LOOP
 			SELECT array(SELECT ROW(NEW.*) from taxonomy) as s ;
 			-- http://www.nabble.com/array-variables-td20477110.html
-			/*EXECUTE 'INSERT INTO users_tracking_records VALUES (' || quote_literal(trk_id) || ' , ' ||
+			EXECUTE 'INSERT INTO users_tracking_records VALUES (' || quote_literal(trk_id) || ' , ' ||
 						quote_literal(tbl_row.field_name) || ' , ' ||
 						' ''{ OLD.'|| tbl_row.field_name || '}' || ''',' ||
 						' ''{NEW.'|| tbl_row.field_name || '}'  || ''' )';
@@ -6453,7 +6453,7 @@ CREATE OR REPLACE FUNCTION ts_stat(tsvector, OUT word text, OUT ndoc
 integer, OUT nentry integer)
 RETURNS SETOF record AS
 $$
-    SELECT ts_stat('SELECT ' || quote_literal( $1::text ) || '::tsvector');
+    SELECT ts_stat('SELECT ' || quote_literal( $1::text ) || '::tsvector') WHERE $1 != to_tsvector('');
 $$ LANGUAGE SQL RETURNS NULL ON NULL INPUT IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION fct_trg_word() RETURNS TRIGGER
