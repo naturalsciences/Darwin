@@ -6,7 +6,7 @@ $(document).ready(function () {
     $(this).qtip({
         content: {
             title: { text : $(this).parent().attr('title'), button: 'X' },
-            url: $(this).attr('src')
+            url: $(this).attr('href')
         },
         show: { when: 'click', ready: true },
         position: {

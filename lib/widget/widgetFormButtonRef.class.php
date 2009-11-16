@@ -8,24 +8,33 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $coll_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
-        $input .= '<div id="'.$this->generateId($name).'_name" class="ref_name">'.$coll_name.'</div>';
+	$input .= $this->renderContentTag('div',$this->escapeOnce($coll_name), array(
+	   'id' => $this->generateId($name)."_name",
+	   'class' => "ref_name",
+	));
+
 	if($this->getOption('nullable'))
 	{
-	  $input .= '<img class="ref_clear';
+	  $options = array(
+	    'src' => '/images/widget_help_close.png',
+	    'class' => 'ref_clear'
+	  );
+
 	  if($coll_name == '')
-	    $input .= ' hidden';
-	  $input .= '" src="/images/widget_help_close.png"/>';
+	    $options['class'] .= ' hidden';
+	  $input .= $this->renderTag('img',$options);
 	}
-        $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
-        $input .= '<img class="left_part" src="/images/button_grey_left.png" alt=""/>';
-        $input .= '<a class="but_text" src="'.url_for($this->getOption('link_url')).'">';
-        if($coll_name == '')
-            $input .= __('Choose !');
-        else
-            $input .= __('Change !');
-        $input .= '</a>';
-        $input .= '<img class="right_part" src="/images/button_grey_right.png" alt=""/>';
-        $input .= '</div><div style="clear: left;"> </div>';
+	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
+	$input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
+
+	$input .= link_to( $coll_name=='' ? __('Choose !') : __('Change !'),
+	    $this->getOption('link_url'),
+	    array('class' => 'but_text' )
+	); 
+
+	$input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
+        $input .= '</div>';
+	$input .= $this->renderContentTag('div','&nbsp;',array('class' => 'clear'));
 
         return $input;
     }

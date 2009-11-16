@@ -35,9 +35,9 @@ $(document).ready(function ()
             <?php include_javascripts_for_form($form) ?>
 
             <form action="<?php echo url_for('specimen/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+                <div>
                 <?php //echo $form->renderHiddenFields() ?>
                  <?php echo $form['id']->render() ?>
-                <div>
                 <?php if($form->hasErrors()):?>
                     <ul class="spec_error_list">
                         <?php foreach ($form->getGlobalErrors() as $name => $error): ?>

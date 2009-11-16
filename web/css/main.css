@@ -129,7 +129,11 @@ form th
 	display:block;
 	height:24px;
 }
-
+a.but_text
+{
+  text-decoration:none;
+  color:black;
+}
 .right_part,.left_part
 {
 	float:left;
@@ -190,6 +194,11 @@ form#search_taxa
 label[for=taxonomy_current_name_record_id_2]
 {
   float:left;
+}
+
+.recombination .clear, .renamed .clear
+{
+  display:none;
 }
 
 table td
