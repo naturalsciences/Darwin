@@ -35,9 +35,10 @@ $(document).ready(function () {
 	    {	
 		if(ref_element_id != null && ref_element_name != null)
 		{
-		  parent_el = $(this.elements.target).parent().prev('.ref_name');
+		  parent_el = $(this.elements.target).parent().prevAll('.ref_name');
 		  parent_el.text(ref_element_name);
 		  parent_el.prev().val(ref_element_id);
+		  $(this.elements.target).parent().prevAll('.ref_clear').show();
 		  $(this.elements.target).text('Change !');
 		}
 		$(this.elements.target).qtip("destroy");
@@ -45,5 +46,13 @@ $(document).ready(function () {
         }
     });
     return false;
+  });
+
+  $('.ref_clear').live('click',function()
+  {
+    $(this).prevAll('.ref_name').text('');
+    $(this).prevAll('input').val(0);
+    $(this).next().find('.but_text').text('Choose !');
+    $(this).hide();
   });
 });

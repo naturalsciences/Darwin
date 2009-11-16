@@ -30,6 +30,7 @@ class SpecimensRelationshipsForm extends BaseCatalogueRelationshipsForm
        'model' => 'Taxonomy',
        'link_url' => 'taxonomy/choose',
        'method' => 'getName',
+       'nullable' => true,
        'box_title' => $this->getI18N()->__('Choose Taxon'),
      ));
     $this->widgetSchema['record_id_2']->setLabel(' ');

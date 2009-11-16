@@ -9,6 +9,13 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $coll_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
         $input .= '<div id="'.$this->generateId($name).'_name" class="ref_name">'.$coll_name.'</div>';
+	if($this->getOption('nullable'))
+	{
+	  $input .= '<div class="ref_clear';
+	  if($coll_name == '')
+	    $input .= ' hidden';
+	  $input .= '">Clear</div>';
+	}
         $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
         $input .= '<img class="left_part" src="/images/button_grey_left.png" alt=""/>';
         $input .= '<a class="but_text" src="'.url_for($this->getOption('link_url')).'">';
@@ -28,6 +35,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         parent::configure($options, $attributes);
         $this->addRequiredOption('model');
         $this->addOption('method', '__toString');
+	$this->addOption('nullable', false);
 
 //         $this->addOption('connection', null);
 //         $this->addOption('table_method', null);
