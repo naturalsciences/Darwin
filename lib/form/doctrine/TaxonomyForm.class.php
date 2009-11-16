@@ -44,13 +44,6 @@ class TaxonomyForm extends BaseTaxonomyForm
     {
       if ($form instanceof sfFormDoctrine)
       {
-        // The magic start here
-      /*  $field_name  = $this->getObject()->getTable()->getTableName().'_id';
-        if($form->getObject()->contains($field_name)) {
-          $method_name = 'set'.sfInflector::camelize($field_name);
-          $form->getObject()->$method_name($this->getObject()->getId());
-        }
-*/	
 	if($form instanceof SpecimensRelationshipsForm)
 	{
 	  $form->getObject()->setReferencedRelation($this->getObject()->getTable()->getTableName());

@@ -72,7 +72,7 @@
 <?php echo $form['current_name']['record_id_2']->renderLabel(__('Current Name')); ?>
 	</td>
 	<td>
-	<?php echo $form['current_name']['record_id_2'] ?></li>
+	<?php echo $form['current_name']['record_id_2'] ?>
       </td></tr>
       </table>
 </fieldset>
