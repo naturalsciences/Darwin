@@ -11,10 +11,10 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $input .= '<div id="'.$this->generateId($name).'_name" class="ref_name">'.$coll_name.'</div>';
 	if($this->getOption('nullable'))
 	{
-	  $input .= '<div class="ref_clear';
+	  $input .= '<img class="ref_clear';
 	  if($coll_name == '')
 	    $input .= ' hidden';
-	  $input .= '">Clear</div>';
+	  $input .= '" src="/images/widget_help_close.png"/>';
 	}
         $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
         $input .= '<img class="left_part" src="/images/button_grey_left.png" alt=""/>';

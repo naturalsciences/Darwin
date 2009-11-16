@@ -93,6 +93,7 @@ form th
 {
    margin: 0.5em;
    font-weight: bold;
+
 }
 
 .search_result
@@ -109,8 +110,12 @@ form th
 
 .ref_clear
 {
-/*    float: left; */
+   float: left;
+   margin-right: 2em;
+   margin-top: 0.8em;
+   vertical-align: middle;
 }
+
 .button {
 	line-height:24px;
 	float:left;
@@ -182,7 +187,16 @@ form#search_taxa
   margin-left: 2em;
 }
 
-#taxonomy_recombination_1_record_id_2_name, #taxonomy_recombination_2_record_id_2_name
+label[for=taxonomy_current_name_record_id_2]
+{
+  float:left;
+}
+
+table td
+{
+  vertical-align: middle;
+}
+#taxonomy_recombination_1_record_id_2_name, #taxonomy_recombination_2_record_id_2_name, #taxonomy_current_name_record_id_2_name
 {
   display: inline;
   float:left;

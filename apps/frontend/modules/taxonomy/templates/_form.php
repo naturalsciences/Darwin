@@ -65,12 +65,16 @@
 <fieldset>
      <legend><?php echo __('Renamed'); ?> <?php echo $form['current_name']['enabled']; ?></legend>
       <?php echo $form['current_name']['enabled']->renderError() ?>
-      <ul>
-	<li>
+      <table class="renamed">
+	<tr>
+	  <td>
 <?php echo $form['current_name']['record_id_2']->renderError() ?>
 <?php echo $form['current_name']['record_id_2']->renderLabel(__('Current Name')); ?>
+	</td>
+	<td>
 	<?php echo $form['current_name']['record_id_2'] ?></li>
-      </ul>
+      </td></tr>
+      </table>
 </fieldset>
 
 
@@ -89,9 +93,9 @@ $('#taxonomy_recombination_1_enabled').click(function ()
 });
 
 
-$('#taxonomy_current_name_enabled:not(:checked)').parent().parent().find('.#taxonomy_current_name_record_id_2').parent().hide();
+$('#taxonomy_current_name_enabled:not(:checked)').parent().parent().find('.renamed').hide();
 $('#taxonomy_current_name_enabled').click(function ()
 {
-  $('#taxonomy_current_name_record_id_2').parent().toggle();
+  $('.renamed').toggle();
 });
 </script>
