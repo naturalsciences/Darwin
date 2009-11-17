@@ -16,6 +16,24 @@ class taxonomyActions extends sfActions
     $this->setLayout(false);
   }
 
+  public function executeDelete(sfWebRequest $request)
+  {
+    $this->forward404Unless($taxa = Doctrine::getTable('Taxonomy')->find(array($request->getParameter('id'))), sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id'))));
+    try
+    {
+      $taxa->delete();
+    }
+    catch(Doctrine_Connection_Pgsql_Exception $e)
+    {
+      $this->form = new TaxonomyForm($taxa);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form->getErrorSchema()->addError($error); 
+      $this->setTemplate('edit');
+      return ;
+    }
+    $this->redirect('taxonomy/index');
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new TaxonomyForm();
@@ -97,6 +115,8 @@ class taxonomyActions extends sfActions
 	$conn->commit();
 	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
       }
+      catch(sfStopException $e)
+      { throw $e; }
       catch(Exception $e)
       {
 	$conn->rollBack();
