@@ -113,7 +113,7 @@ install-db:
 	$(PARAM_PSQL) -f createfunctions.sql
 	$(PARAM_PSQL) -f createtriggers.sql
 	$(PARAM_PSQL) -f addchecks.sql
-	$(PARAM_PSQL) -f grant_d2_to_web_user.sql
+	$(PRIV_PSQL_DB) -f grant_d2_to_web_user.sql
 
 install-all: create-db create-user create-schema install-lib install-db
 

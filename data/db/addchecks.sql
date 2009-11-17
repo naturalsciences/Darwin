@@ -13,7 +13,6 @@ alter table people_aliases add constraint fct_chk_Is_FirstLevel check (fct_chk_I
 
 
 ALTER TABLE template_table_record_ref add constraint fct_chk_ReferencedRecord_template_table_record_ref check (fct_chk_ReferencedRecord(referenced_relation,record_id));
-ALTER TABLE users_tracking DROP CONSTRAINT fct_chk_ReferencedRecord_template_table_record_ref;
 ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_catalogue_relationships_rec1 check (fct_chk_ReferencedRecord(referenced_relation,record_id_1));
 ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_catalogue_relationships_rec2 check (fct_chk_ReferencedRecord(referenced_relation,record_id_2));
 

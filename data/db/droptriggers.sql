@@ -31,7 +31,6 @@ DROP TRIGGER trg_clr_referenceRecord_expeditions ON expeditions;
 DROP TRIGGER trg_clr_referenceRecord_people ON people;
 DROP TRIGGER trg_clr_referenceRecord_users ON users;
 DROP TRIGGER trg_clr_referenceRecord_multimedia ON multimedia;
-DROP TRIGGER trg_clr_referenceRecord_peoplerelationships ON people_relationships;
 DROP TRIGGER trg_clr_referenceRecord_collections ON collections;
 DROP TRIGGER trg_clr_referenceRecord_userscollrightsasked ON users_coll_rights_asked;
 DROP TRIGGER trg_clr_referenceRecord_mysavedsearches ON collection_maintenance;
@@ -90,8 +89,6 @@ DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithostratigraphy ON lithos
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy ON mineralogy;
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa ON taxonomy;
 DROP TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology ON lithology;
-DROP TRIGGER trg_cpy_path ON multimedia;
-DROP TRIGGER trg_cpy_path ON collections;
 
 /*** Hierarchical path update for catalogues ***/
 DROP TRIGGER trg_cpy_update_path_chronostratigraphy ON chronostratigraphy;

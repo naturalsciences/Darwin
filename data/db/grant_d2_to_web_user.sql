@@ -106,5 +106,5 @@
  GRANT USAGE ON darwin2.users_tracking_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.collection_maintenance_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.classification_synonymies_id_seq TO cebmpad;
- ALTER USER cebmpad SET search_path TO darwin2, public, postgis;
+ ALTER USER cebmpad SET search_path TO darwin2, public;
 
