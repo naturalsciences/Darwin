@@ -26,8 +26,36 @@ class TaxonomyForm extends BaseTaxonomyForm
        'link_url' => 'taxonomy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
+
+
+    $this->embedForm('recombination_1', new SpecimensRelationshipsForm());
+    $this->embedForm('recombination_2', new SpecimensRelationshipsForm());
+    $this->embedForm('current_name', new SpecimensRelationshipsForm());
   }
 
+  public function loadRelationsForms($relations)
+  {
+    $combination = false;
+    foreach($relations as $relation)
+    {
+	$s_form = new SpecimensRelationshipsForm($relation);
+	$s_form->setDefault('enabled',true);
+
+	if($relation->getRelationshipType()=='current taxon')
+	{
+	    $this->embedForm('current_name', $s_form);
+	}
+	elseif($relation->getRelationshipType()=='recombined from' && ! $combination )
+	{
+	    $this->embedForm('recombination_1', $s_form);
+	    $combination=true;
+	}
+	else
+	{
+	  $this->embedForm('recombination_2', $s_form);
+	}
+    }
+  }
   public function saveEmbeddedForms($con = null, $forms = null)
   {
     if (is_null($con))

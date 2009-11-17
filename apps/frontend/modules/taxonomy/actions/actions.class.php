@@ -18,7 +18,11 @@ class taxonomyActions extends sfActions
 
   public function executeDelete(sfWebRequest $request)
   {
-    $this->forward404Unless($taxa = Doctrine::getTable('Taxonomy')->find(array($request->getParameter('id'))), sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id'))));
+    $this->forward404Unless(
+      $taxa = Doctrine::getTable('Taxonomy')->find(array($request->getParameter('id'))),
+      sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
+    );
+
     try
     {
       $taxa->delete();
@@ -37,17 +41,11 @@ class taxonomyActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new TaxonomyForm();
-    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
-    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
-    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->form = new TaxonomyForm();
-    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
-    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
-    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
     $this->processForm($request,$this->form);
     $this->setTemplate('edit');
   }
@@ -59,29 +57,7 @@ class taxonomyActions extends sfActions
     $this->form = new TaxonomyForm($taxa);
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
-    $combination = false;
-    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
-    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
-    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
-    foreach($relations as $relation)
-    {
-	$s_form = new SpecimensRelationshipsForm($relation);
-	$s_form->setDefault('enabled',true);
-
-	if($relation->getRelationshipType()=='current taxon')
-	{
-	    $this->form->embedForm('current_name', $s_form);
-	}
-	elseif($relation->getRelationshipType()=='recombined from' && ! $combination )
-	{
-	    $this->form->embedForm('recombination_1', $s_form);
-	    $combination=true;
-	}
-	else
-	{
-	  $this->form->embedForm('recombination_2', $s_form);
-	}
-    }
+    $this->form->loadRelationsForms($relations);
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -92,16 +68,30 @@ class taxonomyActions extends sfActions
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
     $combination = false;
-
-    $this->form->embedForm('recombination_1', new SpecimensRelationshipsForm());
-    $this->form->embedForm('recombination_2', new SpecimensRelationshipsForm());
-    $this->form->embedForm('current_name', new SpecimensRelationshipsForm());
-    
     $this->processForm($request,$this->form);
     $this->setTemplate('edit');
   }
 
-  public function processForm(sfWebRequest $request, sfForm $form)
+
+  public function executeIndex(sfWebRequest $request)
+  {
+    $this->searchForm = new SearchTaxonForm();
+  }
+
+  public function executeSearch(sfWebRequest $request)
+  {
+    $this->searchForm = new SearchTaxonForm();
+    $this->searchResults($this->searchForm,$request);
+    $this->setLayout(false);
+  }
+
+  public function executeTree(sfWebRequest $request)
+  {
+    $this->items = Doctrine::getTable('Taxonomy')->findWithParents($request->getParameter('id'));
+    $this->setLayout(false);
+  }
+
+  protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind( $request->getParameter($form->getName()) );
     if ($form->isValid())
@@ -126,24 +116,7 @@ class taxonomyActions extends sfActions
     }
   }
 
-  public function executeIndex(sfWebRequest $request)
-  {
-    $this->searchForm = new SearchTaxonForm();
-  }
-
-  public function executeSearch(sfWebRequest $request)
-  {
-    $this->searchForm = new SearchTaxonForm();
-    $this->searchResults($this->searchForm,$request);
-    $this->setLayout(false);
-  }
-
-  public function executeTree(sfWebRequest $request)
-  {
-    $this->items = Doctrine::getTable('Taxonomy')->findWithParents($request->getParameter('id'));
-    $this->setLayout(false);
-  }
-  private function searchResults($form, $request)
+  protected function searchResults($form, $request)
   {
     if($request->getParameter('searchTaxon','') !== '')
     {
