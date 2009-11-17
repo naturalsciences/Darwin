@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE xliff PUBLIC '-//XLIFF//DTD XLIFF//EN' 'http://www.oasis-open.org/committees/xliff/documents/xliff.dtd'>
 <xliff version="1.0" >
-  <file original="messages" product-name="messages" target-language="fr" datatype="plaintext" source-language="EN" date="2009-10-12T15:40:31Z" >
+  <file original="messages" product-name="messages" target-language="fr" datatype="plaintext" source-language="EN" date="2009-11-17T17:00:10Z" >
     <header>
       <phase-group>
         <phase contact-name="Brice Maron" tool-id="lokalize-1.0" phase-name="approval-1" contact-email="bmaron@naturalsciences.be" process-name="approval" date="2009-10-13" />
@@ -203,7 +203,7 @@
         <source>Close</source>
         <target phase-name="approval-1" state="signed-off" >Fermer</target>
       </trans-unit>
-	<trans-unit id="5" >
+      <trans-unit id="5" >
         <source>Choose !</source>
         <target phase-name="approval-1" state="signed-off" >Choisir !</target>
       </trans-unit>
@@ -237,15 +237,15 @@
       </trans-unit>
       <trans-unit>
         <source>begins with</source>
-	<target phase-name="approval-1" state="signed-off" >commence par</target>
+        <target phase-name="approval-1" state="signed-off" >commence par</target>
       </trans-unit>
       <trans-unit>
         <source>contains</source>
         <target phase-name="approval-1" state="signed-off" >contient</target>
       </trans-unit>
       <trans-unit>
-	      <source>ends by</source>
-	      <target phase-name="approval-1" state="signed-off" >se termine par</target>
+        <source>ends by</source>
+        <target phase-name="approval-1" state="signed-off" >se termine par</target>
       </trans-unit>
       <trans-unit>
         <source>Between</source>
@@ -262,6 +262,102 @@
       <trans-unit>
         <source>Search</source>
         <target phase-name="approval-1" state="signed-off" >Rechercher</target>
+      </trans-unit>
+      <trans-unit id="1" >
+        <source>Taxa</source>
+        <target phase-name="approval-1" state="signed-off" >Taxa</target>
+      </trans-unit>
+      <trans-unit id="2" >
+        <source>Add Collection</source>
+        <target phase-name="approval-1" state="signed-off" >Ajouter une Collection</target>
+      </trans-unit>
+      <trans-unit id="3" >
+        <source>No Taxa Matching</source>
+        <target phase-name="approval-1" state="signed-off" >Aucun Taxon correspondant</target>
+      </trans-unit>
+      <trans-unit id="4" >
+        <source>Search Taxonomic unit</source>
+        <target phase-name="approval-1" state="signed-off" >Chercher une unité taxonomique</target>
+      </trans-unit>
+      <trans-unit id="5" >
+        <source>Details :</source>
+        <target phase-name="approval-1" state="signed-off" >Détails :</target>
+      </trans-unit>
+      <trans-unit id="6" >
+        <source>Search Results :</source>
+        <target phase-name="approval-1" state="signed-off" >Résultats de la recherche :</target>
+      </trans-unit>
+      <trans-unit id="7" >
+        <source>Taxon Search</source>
+        <target phase-name="approval-1" state="signed-off" >Recherche de Taxon</target>
+      </trans-unit>
+      <trans-unit id="8" >
+        <source>Recombination</source>
+        <target phase-name="approval-1" state="signed-off" >Re-combinaison</target>
+      </trans-unit>
+      <trans-unit id="9" >
+        <source>Of</source>
+        <target phase-name="approval-1" state="signed-off" >De</target>
+      </trans-unit>
+      <trans-unit id="10" >
+        <source>With</source>
+        <target phase-name="approval-1" state="signed-off" >Avec</target>
+      </trans-unit>
+      <trans-unit id="11" >
+        <source>Renamed</source>
+        <target phase-name="approval-1" state="signed-off" >Renommage</target>
+      </trans-unit>
+      <trans-unit id="12" >
+        <source>Current Name</source>
+        <target phase-name="approval-1" state="signed-off" >Nom Actuel</target>
+      </trans-unit>
+      <trans-unit id="13" >
+        <source>Choose a Taxon</source>
+        <target phase-name="approval-1" state="signed-off" >Choisissez un Taxon</target>
+      </trans-unit>
+      <trans-unit id="14" >
+        <source>Add Taxonomic unit</source>
+        <target phase-name="approval-1" state="signed-off" >Ajouter une unité Taxonomique</target>
+      </trans-unit>
+      <trans-unit id="15" >
+        <source>New Taxonomic unit</source>
+        <target phase-name="approval-1" state="signed-off" >Nouvelle unité Taxonomique</target>
+      </trans-unit>
+      <trans-unit id="16" >
+        <source>Edit Taxonomic unit</source>
+        <target phase-name="approval-1" state="signed-off" >Éditer une unité Taxonomique</target>
+      </trans-unit>
+      <trans-unit id="17" >
+        <source>Taxonomy</source>
+        <target phase-name="approval-1" state="signed-off" >Taxonomie</target>
+      </trans-unit>
+      <trans-unit id="18" >
+        <source>From</source>
+        <target phase-name="approval-1" state="signed-off" >De</target>
+      </trans-unit>
+      <trans-unit id="19" >
+        <source>To</source>
+        <target phase-name="approval-1" state="signed-off" >À</target>
+      </trans-unit>
+      <trans-unit id="20" >
+        <source>No Expedition Matching</source>
+        <target phase-name="approval-1" state="signed-off" >Aucune Expédition Correspondante</target>
+      </trans-unit>
+      <trans-unit id="21" >
+        <source>Level</source>
+        <target phase-name="approval-1" state="signed-off" >Niveau</target>
+      </trans-unit>
+      <trans-unit id="22" >
+        <source>Extinct</source>
+        <target phase-name="approval-1" state="signed-off" >Éteinte</target>
+      </trans-unit>
+      <trans-unit id="23" >
+        <source>Status</source>
+        <target phase-name="approval-1" state="signed-off" >Statut</target>
+      </trans-unit>
+      <trans-unit id="23" >
+        <source>Delete</source>
+        <target phase-name="approval-1" state="signed-off" >Supprimer</target>
       </trans-unit>
     </body>
   </file>

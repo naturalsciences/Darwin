@@ -16,7 +16,7 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['level_ref']->renderLabel() ?></th>
+        <th><?php echo $form['level_ref']->renderLabel('Level') ?></th>
         <td>
           <?php echo $form['level_ref']->renderError() ?>
           <?php echo $form['level_ref'] ?>
@@ -37,7 +37,7 @@
         </td>
       </tr> 
       <tr>
-        <th><?php echo $form['parent_ref']->renderLabel() ?></th>
+        <th><?php echo $form['parent_ref']->renderLabel('Parent') ?></th>
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
           <?php echo $form['parent_ref'] ?>
@@ -80,7 +80,7 @@
 
 <?php echo $form['id']->render() ?>  &nbsp;<a href="<?php echo url_for('taxonomy/index') ?>"><?php echo __('Cancel');?></a>
 <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to('Delete', 'taxonomy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
+            &nbsp;<?php echo link_to(__('Delete'), 'taxonomy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
 <?php endif; ?>
 <input type="submit" value="<?php echo __('Save');?>" />
 </form>

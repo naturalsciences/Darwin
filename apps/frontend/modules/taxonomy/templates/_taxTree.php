@@ -34,7 +34,7 @@ $(document).ready(function () {
     <table>
     <?php echo $searchForm;?>
     </table>
-    <input type="submit" name="search" value="Search" />
+    <input type="submit" name="search" value="<?php echo __('Search');?>" />
   </form>
 
   <div class="tree">
@@ -42,7 +42,7 @@ $(document).ready(function () {
       <div class="tree_content">
       </div>
       <?php if($is_choose):?>
-	<input type="button" id="choose_taxa_button" value="Select">
+	<input type="button" id="choose_taxa_button" value="<?php echo __('Select');?>">
       <?php endif;?>
   </div>
 
