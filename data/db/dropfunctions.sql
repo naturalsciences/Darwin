@@ -53,3 +53,6 @@ DROP FUNCTION IF EXISTS fct_chk_one_pref_language(person people_languages.people
 DROP FUNCTION IF EXISTS fct_cpy_idToCode() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_specimensMainCode() CASCADE;
 DROP FUNCTION IF EXISTS fct_clr_incrementMainCode() CASCADE;
+DROP FUNCTION IF EXISTS fct_trg_word() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_onceinpath(path varchar) CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_word(tbl_name character varying, fld_name character varying, word_ts tsvector) CASCADE;
