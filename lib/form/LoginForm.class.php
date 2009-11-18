@@ -1,5 +1,5 @@
 <?php
-class LoginForm extends sfForm
+class LoginForm extends DarwinForm
 {
   public function configure()
   {
