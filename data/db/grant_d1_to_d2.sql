@@ -1,7 +1,7 @@
  grant usage on schema darwin1 to darwin2;
-
+ grant usage on schema darwin2 to darwin1;
  grant select on "darwin1"."tbl_loan_types" to darwin2;
- grant select on "darwin1"."tbl_stations" to darwin2;
+ grant select, insert, update, delete on "darwin1"."tbl_stations" to darwin2;
  grant select on "darwin1"."tbl_functions" to darwin2;
  grant select on "darwin1"."tbl_taxa_experts" to darwin2;
  grant select, update on "darwin1"."tbl_batches_habitats" to darwin2;
@@ -60,7 +60,7 @@
  grant select on "darwin1"."tbl_people_taxa_names" to darwin2;
  grant select on "darwin1"."tbl_address_e_mails" to darwin2;
  grant select on "darwin1"."tbl_location_categories" to darwin2;
- grant select on "darwin1"."tbl_locations" to darwin2;
+ grant select, insert, update, delete  on "darwin1"."tbl_locations" to darwin2;
  grant select on "darwin1"."tbl_projections" to darwin2;
  grant select on "darwin1"."tbl_location_children_parents" to darwin2;
  grant select on "darwin1"."tbl_datums" to darwin2;
@@ -70,7 +70,7 @@
  grant select on "darwin1"."tbl_collections" to darwin2;
  grant select on "darwin1"."tbl_taxonomy_systems" to darwin2;
  grant select on "darwin1"."tbl_batch_identifiers" to darwin2;
- grant select on "darwin1"."tbl_taxa" to darwin2;
+ grant select, insert, update, delete on "darwin1"."tbl_taxa" to darwin2;
  grant select on "darwin1"."tbl_table_list" to darwin2;
  grant select on "darwin1"."tbl_titles" to darwin2;
  grant select on "darwin1"."tbl_minimal_mineralogy" to darwin2;
@@ -96,7 +96,7 @@
  grant select on "darwin1"."tbl_taxa_ethno_names" to darwin2;
  grant select on "darwin1"."tbl_taxa_pictures" to darwin2;
  grant select on "darwin1"."tbl_taxa_publishers" to darwin2;
- grant select, delete on "darwin1"."tbl_taxa_synonymy" to darwin2;
+ grant select, insert, update, delete on "darwin1"."tbl_taxa_synonymy" to darwin2;
  grant select on "darwin1"."tbl_litho_syn" to darwin2;
  grant select on "darwin1"."tbl_spec_type_identifiers" to darwin2;
  grant select on "darwin1"."tbl_specimen_status" to darwin2;
@@ -111,6 +111,6 @@
  grant select on "darwin1"."tbl_batch_collector" to darwin2;
  grant select on "darwin1"."tbl_maps_authors" to darwin2;
  grant select on "darwin1"."tbl_applications" to darwin2;
- grant update, delete, insert on "darwin1"."tbl_location_syn" to darwin2;
- grant update, delete, insert on "darwin1"."tbl_taxa" to darwin2;
- grant update, delete, insert on "darwin1"."tbl_taxa_relationships" to darwin2;
+ grant select, update, delete, insert on "darwin1"."tbl_location_syn" to darwin2;
+ grant select, update, delete, insert on "darwin1"."tbl_taxa" to darwin2;
+ grant select, update, delete, insert on "darwin1"."tbl_taxa_relationships" to darwin2;

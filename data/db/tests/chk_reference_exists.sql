@@ -10,7 +10,7 @@ SELECT lives_ok('INSERT INTO people_aliases (referenced_relation, record_id, per
 	VALUES (''mineralogy'', 0, 1, null, ''Jozééé'')');
 
 SELECT lives_ok('INSERT INTO users_tracking (referenced_relation, record_id,user_ref, modification_date_time)
-				VALUES (''taxonomy'',69,1,NOW())');
+				VALUES (''taxonomy'',1,1,NOW())');
 SELECT lives_ok('INSERT INTO catalogue_relationships (referenced_relation, record_id_1, record_id_2)
 	VALUES (''taxonomy'', 0, 1)');
 SELECT throws_ok('INSERT INTO catalogue_relationships (referenced_relation, record_id_1, record_id_2)

@@ -3,7 +3,7 @@
 SELECT plan(22);
 
 insert into people (id, db_people_type, is_physical,family_name, given_name, birth_date, gender,end_date)
- VALUES (3,6, true, 'Zé Doe', 'Jo-zé', DATE 'June 20, 1989', 'M', DATE 'January 1, 0000');
+ VALUES (3,6, true, 'Zé Doe', 'Jo-zé', DATE 'June 20, 1989', 'M', DEFAULT);
 
 SELECT ok( 'Mr' = (SELECT title FROM people WHERE id=3),'Title Filled');
 SELECT ok( 'Zé Doe Jo-zé (Mr)' = (SELECT formated_name FROM people WHERE id=3),'formated_name composed');
@@ -45,7 +45,7 @@ SELECT ok( to_tsvector('simple', 'Van piéperzééél Jo-zé (Dr)') = (SELECT fo
 
 
 insert into people (id, is_physical, family_name, birth_date, end_date ) VALUES
-(10, false, 'The Management Unit of the North Sea Mathematical Models',DATE 'January 8, 1830', DATE 'January 1, 0000');
+(10, false, 'The Management Unit of the North Sea Mathematical Models',DATE 'January 8, 1830', DEFAULT);
 
 SELECT ok( 'The Management Unit of the North Sea Mathematical Models' = (SELECT formated_name FROM people WHERE id=10),'formated_name composed on changed name');
 SELECT ok( 'themanagementunitofthenorthseamathemati' = (SELECT formated_name_indexed FROM people WHERE id=10),'formated_name_indexed composed');

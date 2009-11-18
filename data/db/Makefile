@@ -11,9 +11,9 @@ PRIV_PSQL = $(PSQL) -q -v dbname=$(DB_NAME) -v importuser=$(DB_IMPORT_USER)
 PRIV_PSQL_DB = $(PRIV_PSQL) -d $(DB_NAME)
 PG_VER = 8.4
 
-PG_PROVE = /usr/lib/postgresql/8.3/bin/pg_prove
+PG_PROVE = /usr/local/bin/pg_prove
 #CLUSTER_NAME = darwin
-#CLUSTER_PATH = /var/lib/postgresql/8.3/$(CLUSTER_NAME)
+#CLUSTER_PATH = /var/lib/postgresql/$(PG_VER)/$(CLUSTER_NAME)
 CLUSTER_PATH = $(shell pg_lsclusters -h | awk '{print $$6}' )
 TB_SPACE_DIR = $(CLUSTER_PATH)/$(DB_NAME)
 PASSWD = ''
