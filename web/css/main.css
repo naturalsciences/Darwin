@@ -238,6 +238,8 @@ table td
 
 #login_page ul.form
 {
+  margin: auto;
+  width: 50%;
   margin-top:1em;
 }
 #login_page ul.form li
@@ -250,11 +252,11 @@ padding: 2px;
 }
 #login_page input[type=password]
 {
-  background: white url(http://sso.naturalsciences.be/skins/common/key.png) no-repeat 3px 3px;
+  background: white url(/images/key.png) no-repeat 3px 3px;
   padding-left: 25px;
 }
 #login_page input#login_username
 {
   padding-left: 25px;
-  background: white url(http://sso.naturalsciences.be/skins/common/user_suit.png) no-repeat 3px 3px;
+  background: white url(/images/user_suit.png) no-repeat 3px 3px;
 }

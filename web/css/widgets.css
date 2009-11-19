@@ -71,9 +71,16 @@
 	width: 48%;
 	float:left;
 /* 	padding-bottom: 100px; */
-    min-height: 250px;
+	min-height: 250px;
 }
 
+.one_col
+{
+  min-height: 25px;
+/*  border: 1px solid red; */
+  float:none;
+  width:100%;
+}
 .board_col > li
 {
 	margin-bottom: 20px;
