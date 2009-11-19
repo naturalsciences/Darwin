@@ -8,14 +8,14 @@ class SearchExpeditionForm extends DarwinForm
     $years = range(1800, date('Y'));
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
-      'date_from' => new sfWidgetFormJQueryFuzzyDate(array('culture' => $this->getCurrentCulture(), )),
+      'date_from' => new sfWidgetFormDate(array('format' => '%day%/%month%/%year%', 'years' => $years)),
     ));
     
     $this->widgetSchema->setNameFormat('searchExpedition[%s]');
 
     $this->setValidators(array(
       'name'    => new sfValidatorString(array('required' => false, 'trim' => true)),
-      'date_from'    => new sfValidatorString(array('required' => false, 'trim' => true)),
+      'date_from' => new sfValidatorPass(),
     ));
 
   }

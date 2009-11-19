@@ -1,3 +1,4 @@
 cache/*
 log/*
 ./config/databases.yml
+./web/favicon.ico
