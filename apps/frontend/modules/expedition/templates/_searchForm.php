@@ -19,11 +19,9 @@
           <?php echo $form['name'] ?>
           &nbsp;
         </td>
-        <td>
-          <?php echo $form['date_from']->renderError() ?>
-          <?php echo $form['date_from'] ?>
+	<?php echo $form['date_range']->renderError() ?>
+	<?php echo $form['date_range'] ?>
           &nbsp;
-        </td>
         <td>
           <input type="submit" value="<?php echo __('Search'); ?>" />
         </td>
