@@ -133,4 +133,22 @@
     display: none;
 }
 
+.link_catalogue
+{
+  margin-left:1em;
+}
 
+.catalogue_action_type
+{
+  font-weight:bold; 
+  display:block;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+#relation_catalogue_name
+{
+ float:left;
+ border:1px solid #C1CF56;
+  padding: 0.2em;
+}

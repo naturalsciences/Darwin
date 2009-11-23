@@ -46,56 +46,9 @@
     </tbody>
   </table>
 
-<fieldset>
-    <legend><?php echo __('Recombination'); ?> <?php echo $form['recombination_1']['enabled'] ?></legend>     
-      <?php echo $form['recombination_1']['enabled']->renderError() ?>
-      <table class="recombination">
-	<tr><td>
-<?php echo $form['recombination_1']['record_id_2']->renderError() ?>
-<?php echo $form['recombination_1']['record_id_2']->renderLabel(__('Of')); ?></td>
-	<td><?php echo $form['recombination_1']['record_id_2'] ?></td></tr>
-
-	<tr><td>
-<?php echo $form['recombination_2']['record_id_2']->renderError() ?><?php echo $form['recombination_2']['record_id_2']->renderLabel(__('With')); ?></td>
-	<td><?php echo $form['recombination_2']['record_id_2'] ?></td></tr>
-      </table>
-</fieldset>
-
-
-<fieldset>
-     <legend><?php echo __('Renamed'); ?> <?php echo $form['current_name']['enabled']; ?></legend>
-      <?php echo $form['current_name']['enabled']->renderError() ?>
-      <table class="renamed">
-	<tr>
-	  <td>
-<?php echo $form['current_name']['record_id_2']->renderError() ?>
-<?php echo $form['current_name']['record_id_2']->renderLabel(__('Current Name')); ?>
-	</td>
-	<td>
-	<?php echo $form['current_name']['record_id_2'] ?>
-      </td></tr>
-      </table>
-</fieldset>
-
-
 <?php echo $form['id']->render() ?>  &nbsp;<a href="<?php echo url_for('taxonomy/index') ?>"><?php echo __('Cancel');?></a>
 <?php if (!$form->getObject()->isNew()): ?>
             &nbsp;<?php echo link_to(__('Delete'), 'taxonomy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
 <?php endif; ?>
 <input type="submit" value="<?php echo __('Save');?>" />
 </form>
-
-<script>
-$('#taxonomy_recombination_1_enabled:not(:checked)').parent().parent().find('.recombination').hide()
-$('#taxonomy_recombination_1_enabled').click(function ()
-{
-  $('.recombination').toggle();
-});
-
-
-$('#taxonomy_current_name_enabled:not(:checked)').parent().parent().find('.renamed').hide();
-$('#taxonomy_current_name_enabled').click(function ()
-{
-  $('.renamed').toggle();
-});
-</script>

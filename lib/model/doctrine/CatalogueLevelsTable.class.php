@@ -15,7 +15,7 @@ class CatalogueLevelsTable extends Doctrine_Table
     return $q;
   }
 
-  public function getLevelsForTaxo()
+  public function getLevelsForTaxonomy()
   {
     return $this->getLevelsByTypes('taxonomy')->execute();
   }

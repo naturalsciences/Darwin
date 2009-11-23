@@ -34,14 +34,6 @@ $browser->
     checkElement('li:first','Falco Peregrinus')->
   end()->
 
- get('/taxonomy/search?searchTaxon[name]=falco&searchTaxon[level]=48')-> //species
-
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('ul > li',1)->
-    checkElement('li:first','Falco Peregrinus')->
-  end()->
-
   info('executeTree');
 $items = Doctrine::getTable('Taxonomy')->getByNameLike('duchenus');
 
@@ -58,11 +50,6 @@ $browser->
   get('/taxonomy/new/')->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('legend','/Recombination/')->
-    checkElement('legend:last','/Renamed/')->
-    checkElement('.recombination tr',2)->
-    checkElement('#taxonomy_recombination_2_record_id_2_name','')->
-    checkElement('.renamed tr',1)->
   end()->
 
   click('Save', array('taxonomy' => array(
@@ -103,10 +90,6 @@ $nitems = Doctrine::getTable('Taxonomy')->getByNameLike('savadje');
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('legend','/Recombination/')->
-    checkElement('legend:last','/Renamed/')->
-    checkElement('input[value="tchet savadje (tchantchès 1830)"]')->
-    checkElement('#taxonomy_current_name_record_id_2_name','')->
   end()->
 
   click('Save', array('taxonomy' => array(
@@ -115,9 +98,6 @@ $nitems = Doctrine::getTable('Taxonomy')->getByNameLike('savadje');
     'status' => 'valid', //Of course!
     'extinct'   => '',
     'parent_ref'=> '0',
-    'current_name' => array(
-      'record_id_2' => $items[0]->getId(),
-    ),
   )))->
 
   isRedirected()->
@@ -131,7 +111,7 @@ $nitems = Doctrine::getTable('Taxonomy')->getByNameLike('savadje');
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('input[value="tchet savadje (tchantchès 1830)"]')->
-    checkElement('#taxonomy_current_name_record_id_2_name','/Duchenus/')->
+
   end()->
 
   click('Delete')->

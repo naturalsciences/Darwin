@@ -29,7 +29,7 @@ $(document).ready(function ()
 			<li class="disabled" id="tab_1"><?php echo __('Individuals');?></li>
 			<li class="disabled" id="tab_2"><?php echo __('Properties');?></li>
 		</ul>
- 		<div class="panel" id="intro">
+ 		<div class="panel encod_screen" id="intro">
 
             <?php include_stylesheets_for_form($form) ?>
             <?php include_javascripts_for_form($form) ?>

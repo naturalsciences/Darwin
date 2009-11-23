@@ -52,7 +52,8 @@ class widgetsActions extends sfActions
 
   public function executeReloadContent(sfWebRequest $request)
   {
-    return $this->renderComponent($request->getParameter('category','board').'widget',$request->getParameter('widget'));
+    return $this->renderComponent($request->getParameter('category','board').'widget',$request->getParameter('widget'),
+    $request->getParameter('eid',null) ? array('eid' => $request->getParameter('eid')) :array() );
   }
 
 }

@@ -40,6 +40,10 @@ class taxonomyActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('catalogue_widget');
+    if(! $this->widgets) $this->widgets=array();
     $this->form = new TaxonomyForm();
   }
 
@@ -47,7 +51,7 @@ class taxonomyActions extends sfActions
   {
     $this->form = new TaxonomyForm();
     $this->processForm($request,$this->form);
-    $this->setTemplate('edit');
+    $this->setTemplate('new');
   }
     
   public function executeEdit(sfWebRequest $request)
@@ -56,8 +60,12 @@ class taxonomyActions extends sfActions
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
-    $this->form->loadRelationsForms($relations);
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('catalogue_widget');
+    if(! $this->widgets) $this->widgets=array();
+
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy','Taxonomy',$taxa->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -66,7 +74,7 @@ class taxonomyActions extends sfActions
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy','Taxonomy',$taxa->getId());
     $combination = false;
     $this->processForm($request,$this->form);
     $this->setTemplate('edit');
@@ -124,9 +132,8 @@ class taxonomyActions extends sfActions
       if ($form->isValid())
       {
  	$this->taxons = Doctrine::getTable('Taxonomy')
- 	  ->getByNameLike($form->getValue('name'), $form->getValue('level'));
+ 	  ->getByNameLike($form->getValue('name'));
       }
     }
-
   }
 }

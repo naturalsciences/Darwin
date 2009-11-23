@@ -15,14 +15,6 @@ class SpecimensRelationshipsForm extends BaseCatalogueRelationshipsForm
     unset($this['referenced_relation']);
     unset($this['record_id_1']);
     unset($this['relationship_type']);
-    $this->widgetSchema['enabled'] = new sfWidgetFormInputCheckbox();
-    /*$this->widgetSchema['relationship_type'] = new sfWidgetFormChoice(array(
-        'choices'  => $this->getRelationsTypes(),
-    ));*/
-    $this->validatorSchema['enabled'] = new sfValidatorChoice(array(
-        'choices' => array('on','off'),
-        'required' => false,
-        ));
 
     $this->validatorSchema['record_id_2'] = new sfValidatorInteger(array('required' => false,));
 
