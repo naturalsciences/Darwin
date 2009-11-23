@@ -15,10 +15,8 @@ class cataloguewidgetComponents extends sfComponents
   {
     if( isset($this->options) )
     {
-      //When restore widget on edit
-      $this->eid = $this->options->getObject()->getId();
+      $this->eid = $this->options->getObject()->getId();       //When restore widget on edit
     }
-
     if(isset($this->eid) && $this->eid != null)
     {
       //on edit
@@ -26,14 +24,16 @@ class cataloguewidgetComponents extends sfComponents
     }
   }
 
-  public function RelationRenameForm($main_form, $request, $rel_form=null)
-  {
-  
-  }
-
   public function executeRelationRecombination()
   {
-    $this->form1 = new SpecimensRelationshipsForm();
-    $this->form2 = new SpecimensRelationshipsForm();
+    if( isset($this->options) )
+    {
+      $this->eid = $this->options->getObject()->getId();       //When restore widget on edit
+    }
+    if(isset($this->eid) && $this->eid != null)
+    {
+      //on edit
+      $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 'Taxonomy', $this->eid, 'recombined from');
+    }
   }
 }

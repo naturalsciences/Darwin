@@ -1,5 +1,5 @@
 <div class="catalogue_ref"><?php echo $linkItem->getName();?></div><label class="catalogue_action_type">is renamed in :</label>
-<form method="post" action="<?php echo url_for('catalogue/SaveRelation?type=current_name&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" id="renamed">
+<form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" id="renamed">
    <input type="hidden" name="record_id_2" id="relation_catalogue_id" />
    <input type="hidden" name="relation_id" value="<?php echo $relation->getId(); ?>"/>
    <div id="relation_catalogue_name" <?php if($renamedItem->getId()==0):?> class="hidden"> <?php else: ?>> <?php echo $renamedItem->getName();?><?php endif;?></div>
@@ -12,13 +12,6 @@
 <br /><br />
   <script type="text/javascript">
   $(document).ready(function () {
-    function closeRefresh()
-    {
-        widget = $('#relationRename');
-        widget.find('.widget_content').load(reload_url+'/widget/'+widget.attr('id'));
-	$('.qtip-button').click();
-    }
-
     $('#choose_taxa_button').click(function () {
 	ref_element_id = $(this).data('taxa_id');
 	$("#relation_catalogue_name").text($(this).data('taxa_name')).show();
@@ -35,7 +28,7 @@
 	  success: function(html){
 	    if(html == "ok" )
 	    {
-	     closeRefresh();
+	     $('.qtip-button').click();
 	    }
 	    else
 	    {
@@ -52,7 +45,7 @@
 	  success: function(html){
 	    if(html == "ok" )
 	    {
-	      closeRefresh();
+	      $('.qtip-button').click();
 	    }
 	    else
 	    {

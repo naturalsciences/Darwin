@@ -15,7 +15,7 @@ class catalogueActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeRename(sfWebRequest $request)
+  public function executeRelation(sfWebRequest $request)
   {
     $tableName = $this->getTableName($request->getParameter('table'));
     $this->linkItem = Doctrine::getTable($tableName)->find($request->getParameter('id'));
@@ -60,7 +60,7 @@ class catalogueActions extends sfActions
     $r->setReferencedRelation($tableName);
     $r->setRecordId_1($ref_item);
     $r->setRecordId_2($linked_item);
-    $r->setRelationshipType($link_type);
+    $r->setRelationshipType($link_type == 'rename' ? 'current_name' : 'recombined from');
     try{
       $r->save();
     }
