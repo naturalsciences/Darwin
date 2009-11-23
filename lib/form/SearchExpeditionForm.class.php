@@ -5,18 +5,23 @@ class SearchExpeditionForm extends DarwinForm
 
   public function configure()
   {
-    $years = range(1800, date('Y'));
+    $yearsKeyVal = range(1800, date('Y'));
+    $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $this->setWidgets(array(
       'name' => new sfWidgetFormInput(),
       'date_range' => new sfWidgetFormDateRange(array(
         'from_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
-							   'image'=>'/images/calendar.gif', 
-							   'format' => '%day%/%month%/%year%', 
-							   'years' => $years, )),
+                                                           'image'=>'/images/calendar.gif', 
+                                                           'format' => '%day%/%month%/%year%', 
+                                                           'years' => $years, ),
+                                                     array('class' => 'from_date')
+                                                    ),
         'to_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
                                                          'image'=>'/images/calendar.gif', 
-							 'format' => '%day%/%month%/%year%', 
-							 'years' => $years, )),
+                                                         'format' => '%day%/%month%/%year%', 
+                                                         'years' => $years, ),
+                                                     array('class' => 'to_date')
+                                                    ),
         'template' => '<td>%from_date%</td>&nbsp;&nbsp;<td>%to_date%</td>',
         ))
     ));

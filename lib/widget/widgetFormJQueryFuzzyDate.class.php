@@ -75,7 +75,44 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
   function wfd_%s_read_linked()
   {
     
-    jQuery("#%s").val(jQuery("#%s").val() + "-" + jQuery("#%s").val() + "-" + jQuery("#%s").val());
+    var day = 1;
+    var month = 1;
+    var year = %s;
+    if (jQuery("#%s").val() != "")
+    {
+      year = jQuery("#%s").val();
+    }
+    else if (jQuery("#%s").hasClass("to_date"))
+    {
+      year = %s;
+    }
+
+    if (jQuery("#%s").val() != "")
+    {
+      month = jQuery("#%s").val();
+    }
+    else if (jQuery("#%s").hasClass("to_date"))
+    {
+      month = 12;
+    }
+    
+    if (jQuery("#%s").val() == "")
+    {
+      jQuery("#%s").val("");
+    }
+
+    var daysInMonth = 32 - new Date(year, month - 1, 32).getDate();
+
+    if ((jQuery("#%s").val() != "") && (jQuery("#%s").val() != "") && (jQuery("#%s").val() != ""))
+    {
+      day = jQuery("#%s").val();
+    }
+    else if (jQuery("#%s").hasClass("to_date"))
+    {
+      day = daysInMonth;
+    }
+
+    jQuery("#%s").val(year + "-" + month + "-" + day);
 
     return {};
   }
@@ -118,8 +155,16 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
 </script>
 EOF
       ,
-      $prefix, $id,
-      $this->generateId($name.'[year]'), $this->generateId($name.'[month]'), $this->generateId($name.'[day]'),
+      $prefix, 
+      min($this->getOption('years')),
+      $this->generateId($name.'[year]'), $this->generateId($name.'[year]'), $this->generateId($name.'[year]'),
+      max($this->getOption('years')),
+      $this->generateId($name.'[month]'), $this->generateId($name.'[month]'), $this->generateId($name.'[month]'),
+      $this->generateId($name.'[month]'), $this->generateId($name.'[day]'),
+      $this->generateId($name.'[year]'), $this->generateId($name.'[month]'), $this->generateId($name.'[day]'), 
+      $this->generateId($name.'[day]'), 
+      $this->generateId($name.'[year]'), 
+      $id,
       $prefix,
       $this->generateId($name.'[year]'), $this->generateId($name.'[month]'), $this->generateId($name.'[day]'),
       $prefix,
