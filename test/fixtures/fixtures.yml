@@ -41,6 +41,46 @@ Taxonomy:
         status: valid
         Parent: ta2
 
+Expeditions:
+    ex0:
+        id: 0
+        name: ''
+    ex1:
+        name: 'PNG77'
+        expedition_from_date: '1977-04-26'
+        expedition_from_date_mask: 7
+        expedition_to_date: '1977-06-25'
+        expedition_to_date_mask: 7
+    ex2:
+        name: 'Informatica 75'
+        expedition_from_date: '1975-02-24'
+        expedition_from_date_mask: 7
+    ex3:
+        name: 'C Noël C Noël Vive le vent divers'
+        expedition_to_date: '2002-12-24'
+        expedition_to_date_mask: 7
+    ex4:
+        name: 'Antarctica 1988'
+        expedition_from_date: '1988-04-01'
+        expedition_from_date_mask: 6
+        expedition_to_date: '1988-07-31'
+        expedition_to_date_mask: 6
+
+    ex5:
+        name: 'Pollux Expedition'
+        expedition_from_date: '2003-03-12'
+        expedition_from_date_mask: 7
+        expedition_to_date: '2005-12-31'
+        expedition_to_date_mask: 4
+
+    ex6:
+        name: 'Mister B Expe'
+        expedition_from_date: '2004-01-01'
+        expedition_from_date_mask: 4
+        expedition_to_date: '2004-12-31'
+        expedition_to_date_mask: 4
+
+
 CatalogueRelationships:
     catart1:
         referenced_relation: taxonomy

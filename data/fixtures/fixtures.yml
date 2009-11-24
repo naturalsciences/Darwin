@@ -17,15 +17,81 @@ Taxonomy:
         status: valid
         parent_ref: '-1'
     ta2:
+        id: 2
         name: Falco Peregrinus
         level_ref: 48
         status: valid
         Parent: ta1
     ta3:
+        id: 3
+        name: Falco Peregrinus Tunstall, 1771
+        level_ref: 49
+        status: valid
+        Parent: ta2
+    ta4:
+        id: 4
         name: Falco Peregrinus (Duchenus Brulus 1912)
         level_ref: 49
         status: invalid
         Parent: ta2
+    ta5:
+        id: 5
+        name: Falco Peregrinus recombinus
+        level_ref: 49
+        status: valid
+        Parent: ta2
+
+Expeditions:
+    ex0:
+        id: 0
+        name: ''
+    ex1:
+        name: 'PNG77'
+        expedition_from_date: '1977-04-26'
+        expedition_from_date_mask: 7
+        expedition_to_date: '1977-06-25'
+        expedition_to_date_mask: 7
+    ex2:
+        name: 'Informatica 75'
+        expedition_from_date: '1975-02-24'
+        expedition_from_date_mask: 7
+    ex3:
+        name: 'C Noël C Noël Vive le vent divers'
+        expedition_to_date: '2002-12-24'
+        expedition_to_date_mask: 7
+    ex4:
+        name: 'Antarctica 1988'
+        expedition_from_date: '1988-04-01'
+        expedition_from_date_mask: 6
+        expedition_to_date: '1988-07-31'
+        expedition_to_date_mask: 6
+
+    ex5:
+        name: 'Pollux Expedition'
+        expedition_from_date: '2003-03-12'
+        expedition_from_date_mask: 7
+        expedition_to_date: '2005-12-31'
+        expedition_to_date_mask: 4
+
+    ex6:
+        name: 'Mister B Expe'
+        expedition_from_date: '2004-01-01'
+        expedition_from_date_mask: 4
+        expedition_to_date: '2004-12-31'
+        expedition_to_date_mask: 4
+
+
+CatalogueRelationships:
+    catart1:
+        referenced_relation: taxonomy
+        relationship_type: current_name
+        record_id_1: 4
+        record_id_2: 3
+    catart2:
+        referenced_relation: taxonomy
+        relationship_type: recombined from
+        record_id_1: 4
+        record_id_2: 5
 Users:
     u1:
         is_physical: true
@@ -133,6 +199,7 @@ Specimens:
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Hunting
+        Taxonomy: ta3
     sp2:
         Collections: c2
         specimen_count_min: 1
@@ -140,6 +207,7 @@ Specimens:
         acquisition_category: theft
         collecting_tool: fish Pas net
         collecting_method: Hunting
+        Taxonomy: ta3
     sp3:
         Collections: c3
         specimen_count_min: 1
@@ -250,5 +318,21 @@ MyPreferences:
         category: specimen_widget
         group_name: method
         order_by: 2
+        opened: false
+        visible: false
+    u1ws8:
+        User: u1
+        col_num: 1
+        category: catalogue_widget
+        group_name: relationRename
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws9:
+        User: u1
+        col_num: 1
+        category: catalogue_widget
+        group_name: relationRecombination
+        order_by: 0
         opened: false
         visible: false
