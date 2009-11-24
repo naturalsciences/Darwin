@@ -86,38 +86,19 @@ class taxonomyActions extends sfActions
     $this->searchForm = new SearchTaxonForm();
   }
 
-  public function executeSearch(sfWebRequest $request)
-  {
-    $this->searchForm = new SearchTaxonForm();
-    $this->searchResults($this->searchForm,$request);
-    $this->setLayout(false);
-  }
-
-  public function executeTree(sfWebRequest $request)
-  {
-    $this->items = Doctrine::getTable('Taxonomy')->findWithParents($request->getParameter('id'));
-    $this->setLayout(false);
-  }
-
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind( $request->getParameter($form->getName()) );
     if ($form->isValid())
     {
-      $conn = $form->getObject()->getTable()->getConnection();
       try{
-	$conn->beginTransaction();
-	if(! $form->getObject()->isNew())
-	  Doctrine::getTable('CatalogueRelationships')->deleteRelationsForTable('taxonomy',$form->getObject()->getId());
 	$form->save();
-	$conn->commit();
 	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
       }
       catch(sfStopException $e)
       { throw $e; }
       catch(Exception $e)
       {
-	$conn->rollBack();
 	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$form->getErrorSchema()->addError($error); 
       }

@@ -12,14 +12,11 @@
         },
         hide: false,
         style: {
-            width: { min: 500, max: 1000}
+            width: { min: 500/*, max: 1000*/}
         },
         api: {
             beforeShow: function()
             {
-                // Fade in the modal "blanket" using the defined show speed
-		ref_element_id = null;
-		ref_element_name = null;
                 addBlackScreen()
                 $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },

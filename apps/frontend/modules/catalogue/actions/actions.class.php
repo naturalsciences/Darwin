@@ -78,6 +78,14 @@ class catalogueActions extends sfActions
 	  case 'taxonomy' : return 'Taxonomy';
     }
   }
+  
+  public function executeTree(sfWebRequest $request)
+  {
+    $this->items = Doctrine::getTable( $this->getTableName($request->getParameter('table')) )
+      ->findWithParents($request->getParameter('id'));
+    $this->setLayout(false);
+  }
+
   public function executeSearch(sfWebRequest $request)
   {
     $item = $request->getParameter('searchTaxon',array('') );

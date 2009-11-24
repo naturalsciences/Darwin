@@ -30,7 +30,7 @@ Taxonomy:
         Parent: ta2
     ta4:
         id: 4
-        name: Falco Peregrinus (Duchenus Brulus 1912)
+        name: Falco Peregrinus (Duchesnus Brulus 1912)
         level_ref: 49
         status: invalid
         Parent: ta2

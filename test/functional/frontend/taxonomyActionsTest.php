@@ -20,33 +20,6 @@ $browser->
     checkElement('.search')->
   end()->
 
-  info('executeSearch')->
-
-  get('/taxonomy/search?searchTaxon[name]=falco')->
-  with('request')->begin()->
-    isParameter('module', 'taxonomy')->
-    isParameter('action', 'search')->
-  end()->
-
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('ul > li',4)->
-    checkElement('li:first','Falco Peregrinus')->
-  end()->
-
-  info('executeTree');
-$items = Doctrine::getTable('Taxonomy')->getByNameLike('duchenus');
-
-$browser->
-  get('/taxonomy/tree?id='.$items[0]->getId())->
-  
-  with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('ul > li',2)->
-    checkElement('li:first','/Animalia/')->
-    checkElement('li:last','/Duchenus/')->
-  end()->
-
   get('/taxonomy/new/')->
   with('response')->begin()->
     isStatusCode(200)->

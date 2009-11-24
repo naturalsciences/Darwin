@@ -85,7 +85,7 @@
 	  $('.tree').slideUp();
 	  $('#choose_taxa_button').data('taxa_id',getIdInClasses($(this)));
 	  $('#choose_taxa_button').data('taxa_name',$(this).text());
-	  $.get('<?php echo url_for('taxonomy/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses($(this)),function (html){
+	  $.get('<?php echo url_for('catalogue/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses($(this)),function (html){
 	    $('.tree_content').html(html);
 	    $('.tree').slideDown();
 	  });

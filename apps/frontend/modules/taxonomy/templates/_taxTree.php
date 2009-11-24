@@ -8,7 +8,7 @@ $(document).ready(function () {
       $(".tree_content").html("");
       $.ajax({
 	type: "POST",
-	url: "<?php echo url_for('taxonomy/search');?>",
+	url: "<?php echo url_for('catalogue/search');?>",
 	data: $('#search_taxa').serialize(),
 	success: function(html){
 	  $(".search_content").html(html);
@@ -22,7 +22,7 @@ $(document).ready(function () {
 	$('.tree').slideUp();
 	$('#choose_taxa_button').data('taxa_id',getIdInClasses($(this)));
 	$('#choose_taxa_button').data('taxa_name',$(this).text());
-	$.get('<?php echo url_for('taxonomy/tree');?>/id/'+getIdInClasses($(this)),function (html){
+	$.get('<?php echo url_for('catalogue/tree?table=taxonomy');?>/id/'+getIdInClasses($(this)),function (html){
 	  $('.tree_content').html(html);
 	  $('.tree').slideDown();
 	});
@@ -34,6 +34,7 @@ $(document).ready(function () {
     <table>
     <?php echo $searchForm;?>
     </table>
+    <input type="hidden" name="searchTaxon[table]" value="taxonomy" />
     <input type="submit" name="search" value="<?php echo __('Search');?>" />
   </form>
 
