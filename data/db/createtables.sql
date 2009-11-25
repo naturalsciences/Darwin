@@ -26,7 +26,7 @@ comment on column template_people.family_name is 'Family name for physical user/
 comment on column template_people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column template_people.given_name is 'User/person''s given name - usually first name';
 comment on column template_people.additional_names is 'Any additional names given to user/person';
-comment on column template_people.birth_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
+comment on column template_people.birth_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column template_people.birth_date is 'Birth/Creation date composed';
 comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
 create table template_people_languages
@@ -65,11 +65,11 @@ comment on column people.family_name is 'Family name for physical persons and Or
 comment on column people.given_name is 'User/person''s given name - usually first name';
 comment on column people.additional_names is 'Any additional names given to person';
 comment on column people.birth_date is 'Day of birth/creation';
-comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column people.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column people.gender is 'For physical persons give the gender: M or F';
 comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector, 32 preparator, 64 photographer...';
 comment on column people.end_date is 'End date';
-comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 
 create sequence catalogue_relationships_id_seq;
 
@@ -228,8 +228,8 @@ comment on column gtu.id is 'Unique identifier of a location or sampling unit';
 comment on column gtu.code is 'Code given - for sampling units - takes id if none defined';
 comment on column gtu.parent_ref is 'Recursive reference to a parent location-sampling unit - id field of gtu table itself';
 comment on column gtu.gtu_from_date is 'composed from date of the GTU';
-comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the date is effectively known';
-comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
+comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column gtu.gtu_to_date is 'composed to date of the GTU';
 comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
 create table gtu_tags
@@ -278,9 +278,9 @@ comment on column catalogue_properties.property_sub_type_indexed is 'Indexed for
 comment on column catalogue_properties.property_qualifier is 'Bring a complement of information to the property sub type. i.e.: if sub type is speed, qualifier can be wave speed, wind speed, light speed,...';
 comment on column catalogue_properties.property_qualifier_indexed is 'Indexed form of property_qualifier field';
 comment on column catalogue_properties.date_from is 'For a range of measurements, give the measurement start - if null, takes a generic replacement value';
-comment on column catalogue_properties.date_from_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column catalogue_properties.date_from_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column catalogue_properties.date_to is 'For a range of measurements, give the measurement stop date/time - if null, takes a generic replacement value';
-comment on column catalogue_properties.date_to_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column catalogue_properties.date_to_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column catalogue_properties.property_unit is 'Unit used for property value introduced';
 comment on column catalogue_properties.property_method is 'Method used to collect property value';
 comment on column catalogue_properties.property_method_indexed is 'Indexed version of property_method field - if null, takes a generic replacement value';
@@ -388,10 +388,10 @@ comment on column expeditions.name is 'Expedition name';
 comment on column expeditions.name_ts is 'tsvector version of name field';
 comment on column expeditions.name_indexed is 'Indexed form of expedition name';
 comment on column expeditions.name_language_full_text is 'Language associated to language/country reference used by full text search to_tsvector function';
-comment on column expeditions.expedition_from_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known';
+comment on column expeditions.expedition_from_date_mask is 'Contains the Mask flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column expeditions.expedition_from_date is 'Start date of the expedition';
 comment on column expeditions.expedition_to_date is 'End date of the expedition';
-comment on column expeditions.expedition_to_date_mask is  'Contains the Mask flag to know wich part of the date is effectively known';
+comment on column expeditions.expedition_to_date_mask is  'Contains the Mask flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 
 create sequence users_id_seq;
 
@@ -416,7 +416,7 @@ comment on column users.family_name is 'Family name for physical users and Organ
 comment on column users.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column users.given_name is 'User/user''s given name - usually first name';
 comment on column users.additional_names is 'Any additional names given to user';
-comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column users.birth_date is 'Birth/Creation date composed';
 comment on column users.gender is 'For physical users give the gender: M or F';
 create table people_languages
@@ -1661,7 +1661,7 @@ comment on column specimens.taxon_ref is 'When encoding a ''living'' specimen, c
 comment on column specimens.host_relationship is 'When current specimen encoded is in a host relationship with an other specimen or taxon, this field contains the type of relationship between them: symbiosis, parasitism, saprophytism,...';
 comment on column specimens.host_specimen_ref is 'When current specimen encoded is in a host relationship with an other specimen, this field contains reference of the host specimen - recursive reference';
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
-comment on column specimens.acquisition_date_mask is 'Mask Flag to know wich part of the date is effectively known';
+comment on column specimens.acquisition_date_mask is 'Mask Flag to know wich part of the date is effectively known: 4 for year, 2 for month and 1 for day';
 comment on column specimens.acquisition_date is 'Date Composed (if possible) of the acquisition';
 comment on column specimens.collecting_method is 'Collecting method used to collect the specimen';
 comment on column specimens.collecting_tool is 'Collecting tool used to collect the specimen';
