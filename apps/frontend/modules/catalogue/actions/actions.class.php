@@ -10,11 +10,7 @@
  */
 class catalogueActions extends sfActions
 {
- /**
-  * Executes index action
-  *
-  * @param sfRequest $request A request object
-  */
+
   public function executeRelation(sfWebRequest $request)
   {
     $tableName = $this->getTableName($request->getParameter('table'));
@@ -23,14 +19,12 @@ class catalogueActions extends sfActions
     if(! $this->relation)
     {
       $this->relation = new CatalogueRelationships();
-      $this->renamedItem = new $tableName();
+      $this->remoteItem = new $tableName();
     }
     else
     {
-      $this->renamedItem = Doctrine::getTable($tableName)->find($this->relation->getRecordId_2());
+      $this->remoteItem = Doctrine::getTable($tableName)->find($this->relation->getRecordId_2());
     }
-
-//     $this->form = new CatalogueRelationshipsForm();
     $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
   }
   

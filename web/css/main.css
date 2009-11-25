@@ -198,6 +198,14 @@ table td
   vertical-align: middle;
 }
 
+#search_box
+{
+  display:none;
+  border: 2px solid #5BAABD;
+  padding:1em;
+  margin:1em;
+  
+}
 /******TEEEEMP LOGIN **********/
 #login_page label
 {

@@ -12,7 +12,7 @@ class taxonomyActions extends sfActions
 {
   public function executeChoose(sfWebRequest $request)
   {
-    $this->searchForm = new SearchTaxonForm();
+    $this->searchForm = new SearchCatalogueForm(array('table'=> 'taxonomy'));
     $this->setLayout(false);
   }
 
@@ -83,7 +83,7 @@ class taxonomyActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searchForm = new SearchTaxonForm();
+    $this->searchForm = new SearchCatalogueForm(array('table'=> 'taxonomy'));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
