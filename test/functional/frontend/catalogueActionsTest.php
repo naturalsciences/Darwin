@@ -30,8 +30,77 @@ $browser->
     checkElement('li:first','/Animalia/')->
     checkElement('li:last','/Duchesnus/')->
   end()->
-  info('Relation')->
+
+  info('Relation');
+
+$items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'current_name');
+
+$browser->  
+  get('/catalogue/relation?type=rename&table=taxonomy&id=4&relid='.$items[0][0])->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
+    checkElement('.catalogue_action_type','is renamed in :')->
+    checkElement('form')->
+    checkElement('#relation_catalogue_name','/Falco Peregrinus Tunstall, 1771/')->
+  end();
+
+$items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
+
+$browser->  
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[0][0])->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
+    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('form')->
+    checkElement('#relation_catalogue_name','/Falco Peregrinus recombinus/')->
+  end()->
+
+  info('SaveRelation')->
+
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4')->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
+    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('form')->
+    checkElement('#relation_catalogue_name',' ')->
+  end()->
+  
+  get('/catalogue/saveRelation?type=recombined&table=taxonomy&id=4&record_id_2=2&relation_id=')->
+  with('response')->begin()->
+    isStatusCode(200)->
+  end();
+
+  $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
+
+  $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
+ 
+  $browser->
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1][0])->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
+    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('form')->
+    checkElement('#relation_catalogue_name','/Falco Peregrinus/')->
+  end()->
+
   info('DeleteRelation')->
-  info('SaveRelation')
+
+  get('/catalogue/deleteRelation?relid='.$items[1][0])->
+  with('response')->begin()->
+    isStatusCode(200)->
+  end()->
+
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1][0])->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
+    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('form')->
+    checkElement('#relation_catalogue_name',' ')->
+  end()
 
 ;

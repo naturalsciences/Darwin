@@ -1,4 +1,9 @@
-<div class="catalogue_ref"><?php echo $linkItem->getName();?></div><label class="catalogue_action_type">is renamed in :</label>
+<div class="catalogue_ref"><?php echo $linkItem->getName();?></div>
+<?php if($sf_params->get('type')=='rename'):?>
+  <label class="catalogue_action_type"><?php echo __('is renamed in');?> :</label>
+<?php else:?>
+  <label class="catalogue_action_type"><?php echo __('is recombined into');?> :</label>
+<?php endif;?>
 <form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" id="renamed">
    <input type="hidden" name="record_id_2" id="relation_catalogue_id" />
    <input type="hidden" name="relation_id" value="<?php echo $relation->getId(); ?>"/>
