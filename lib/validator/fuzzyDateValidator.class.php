@@ -30,6 +30,7 @@ class fuzzyDateValidator extends sfValidatorDate
    *  * date_format_error:       The date format to use when displaying an error for a bad_format error (use date_format if not provided)
    *  * max:                     The maximum date allowed (as a timestamp)
    *  * min:                     The minimum date allowed (as a timestamp)
+   *  * from_date:               true if the date to validate is a begin date, false if an end date in a range
    *  * date_format_range_error: The date format to use when displaying an error for min/max (default to d/m/Y H:i:s)
    *
    * Available error codes:
@@ -37,6 +38,8 @@ class fuzzyDateValidator extends sfValidatorDate
    *  * bad_format
    *  * min
    *  * max
+   *  * year_missing
+   *  * month_missing
    *
    * @param array $options    An array of options
    * @param array $messages   An array of error messages
@@ -47,6 +50,9 @@ class fuzzyDateValidator extends sfValidatorDate
   {
     $this->addMessage('year_missing', 'Year missing.');
     $this->addMessage('month_missing', 'Month missing or remove the day.');
+
+    $this->addOption('from_date', true);
+
     parent::configure($options, $messages);
   }
 
@@ -77,32 +83,28 @@ class fuzzyDateValidator extends sfValidatorDate
       (!isset($value['day']) || !$value['day'] ? 0 : 1)
     ;
     
-    if ($empties == 3)
+    if ($empties == 0)
     {
-        throw new sfValidatorError($this, 'year_missing', array('value' => $value));
+      return $this->getEmptyValue();
+    }
+    else if ($empties <= 3)
+    {
+      throw new sfValidatorError($this, 'year_missing', array('value' => $value));
+    }
+    else if ($empties == 4)
+    {
+      $value['day'] = ($this->getOption('from_date'))?'01':'31';
+      $value['month'] = ($this->getOption('from_date'))?'01':'12';
     }
     else if ($empties == 5)
     {
-        throw new sfValidatorError($this, 'month_missing', array('value' => $value));
+      throw new sfValidatorError($this, 'month_missing', array('value' => $value));
     }
-    else if ($empties == 0)
+    else if ($empties == 6)
     {
-      return $this->getEmptyValue();
+      $value['day'] = ($this->getOption('from_date'))?'01':strval(date('d', mktime(0, 0, 0, intval($value['month'])+1, 0, intval($value['year']))));
     }
-    else
-    {
-    }
-
-/*
-    if ($empties > 0 && $empties < 3)
-    {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
-    }
-    else if (3 == $empties)
-    {
-      return $this->getEmptyValue();
-    }
-*/
+    
     if (!checkdate(intval($value['month']), intval($value['day']), intval($value['year'])))
     {
       throw new sfValidatorError($this, 'invalid', array('value' => $value));

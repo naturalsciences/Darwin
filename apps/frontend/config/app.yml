@@ -1,3 +1,4 @@
 all:
    .general:
        salt: mySecret$alt
+       yearRangeMin: 1800

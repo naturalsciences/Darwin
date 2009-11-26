@@ -248,12 +248,12 @@
         <target phase-name="approval-1" state="signed-off" >se termine par</target>
       </trans-unit>
       <trans-unit>
-        <source>Between</source>
-        <target phase-name="approval-1" state="signed-off" >Entre</target>
+        <source>Between (dd/mm/yyy)</source>
+        <target phase-name="approval-1" state="signed-off" >Entre (jj/mm/aaaa)</target>
       </trans-unit>
       <trans-unit>
-        <source>and</source>
-        <target phase-name="approval-1" state="signed-off" >et</target>
+        <source>and (dd/mm/yyy)</source>
+        <target phase-name="approval-1" state="signed-off" >et (jj/mm/aaaa)</target>
       </trans-unit>
       <trans-unit>
         <source>Name</source>

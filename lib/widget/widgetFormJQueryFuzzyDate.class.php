@@ -158,7 +158,7 @@ EOF
       $prefix, 
       min($this->getOption('years')),
       $this->generateId($name.'[year]'), $this->generateId($name.'[year]'), $this->generateId($name.'[year]'),
-      max($this->getOption('years')),
+      date('Y'),
       $this->generateId($name.'[month]'), $this->generateId($name.'[month]'), $this->generateId($name.'[month]'),
       $this->generateId($name.'[month]'), $this->generateId($name.'[day]'),
       $this->generateId($name.'[year]'), $this->generateId($name.'[month]'), $this->generateId($name.'[day]'), 
