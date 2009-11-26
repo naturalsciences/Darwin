@@ -1,4 +1,4 @@
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue','eid'=> (! $form->getObject()->isNew() ? $form->getObject()->getId() : null ))); ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_taxonomy','eid'=> (! $form->getObject()->isNew() ? $form->getObject()->getId() : null ))); ?>
 <?php slot('title', __('Edit Taxonomic unit'));  ?>
 <div class="page">
     <h1><?php echo __('Edit Taxonomic unit');?></h1>
@@ -8,9 +8,9 @@
 
 <?php use_helper('Javascript') ?>
 <?php echo javascript_tag("
-var chgstatus_url='".url_for('widgets/changeStatus?category=catalogue')."';
-var chgorder_url='".url_for('widgets/changeOrder?category=catalogue')."';
-var reload_url='".url_for('widgets/reloadContent?category=catalogue&eid='.$form->getObject()->getId())."';
+var chgstatus_url='".url_for('widgets/changeStatus?category=catalogue_taxonomy')."';
+var chgorder_url='".url_for('widgets/changeOrder?category=catalogue_taxonomy')."';
+var reload_url='".url_for('widgets/reloadContent?category=catalogue_taxonomy&eid='.$form->getObject()->getId())."';
 ");?>
  <ul class="board_col one_col encod_screen">
 <?php foreach($widgets as $id => $widget):?>
@@ -19,7 +19,7 @@ var reload_url='".url_for('widgets/reloadContent?category=catalogue&eid='.$form-
 	'widget' => $widget->getGroupName(),
 	'is_opened' => $widget->getOpened(),
 	'category' => 'cataloguewidget',
-	'options' => array('eid' => $form->getObject()->getId())
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'taxonomy')
 	)); ?>
 <?php endforeach;?>
 </ul>

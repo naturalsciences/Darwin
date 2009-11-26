@@ -13,27 +13,11 @@ class cataloguewidgetComponents extends sfComponents
 
   public function executeRelationRename()
   {
-    if( isset($this->options) )
-    {
-      $this->eid = $this->options->getObject()->getId();       //When restore widget on edit
-    }
-//     if(isset($this->eid) && $this->eid != null)
-//     {
-      //on edit
-      $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 'Taxonomy', $this->eid, 'current_name');
-//     }
+    $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table, $this->eid, 'current_name');
   }
 
   public function executeRelationRecombination()
   {
-    if( isset($this->options) )
-    {
-      $this->eid = $this->options->getObject()->getId();       //When restore widget on edit
-    }
-    if(isset($this->eid) && $this->eid != null)
-    {
-      //on edit
-      $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 'Taxonomy', $this->eid, 'recombined from');
-    }
+    $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table, $this->eid, 'recombined from');
   }
 }

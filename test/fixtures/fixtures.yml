@@ -323,7 +323,7 @@ MyPreferences:
     u1ws8:
         User: u1
         col_num: 1
-        category: catalogue_widget
+        category: catalogue_taxonomy_widget
         group_name: relationRename
         order_by: 0
         opened: false
@@ -331,7 +331,7 @@ MyPreferences:
     u1ws9:
         User: u1
         col_num: 1
-        category: catalogue_widget
+        category: catalogue_taxonomy_widget
         group_name: relationRecombination
         order_by: 0
         opened: false

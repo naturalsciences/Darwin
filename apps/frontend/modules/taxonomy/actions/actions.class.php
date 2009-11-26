@@ -40,10 +40,6 @@ class taxonomyActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_widget');
-    if(! $this->widgets) $this->widgets=array();
     $this->form = new TaxonomyForm();
   }
 
@@ -62,10 +58,10 @@ class taxonomyActions extends sfActions
     
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_widget');
+      ->getWidgets('catalogue_taxonomy_widget');
     if(! $this->widgets) $this->widgets=array();
 
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy','Taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -74,7 +70,7 @@ class taxonomyActions extends sfActions
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy','Taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
     $combination = false;
     $this->processForm($request,$this->form);
     $this->setTemplate('edit');

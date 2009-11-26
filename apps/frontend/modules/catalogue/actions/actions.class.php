@@ -13,17 +13,17 @@ class catalogueActions extends sfActions
 
   public function executeRelation(sfWebRequest $request)
   {
-    $tableName = $this->getTableName($request->getParameter('table'));
-    $this->linkItem = Doctrine::getTable($tableName)->find($request->getParameter('id'));
+    $modelName = Catalogue::getModelForTable($request->getParameter('table'));
+    $this->linkItem = Doctrine::getTable($modelName)->find($request->getParameter('id'));
     $this->relation = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relid',0));
     if(! $this->relation)
     {
       $this->relation = new CatalogueRelationships();
-      $this->remoteItem = new $tableName();
+      $this->remoteItem = new $modelName();
     }
     else
     {
-      $this->remoteItem = Doctrine::getTable($tableName)->find($this->relation->getRecordId_2());
+      $this->remoteItem = Doctrine::getTable($modelName)->find($this->relation->getRecordId_2());
     }
     $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
   }
@@ -64,18 +64,10 @@ class catalogueActions extends sfActions
     }
     return $this->renderText('ok');
   }
-
-  protected function getTableName($item)
-  {
-    switch($item)
-    {
-	  case 'taxonomy' : return 'Taxonomy';
-    }
-  }
   
   public function executeTree(sfWebRequest $request)
   {
-    $this->items = Doctrine::getTable( $this->getTableName($request->getParameter('table')) )
+    $this->items = Doctrine::getTable( Catalogue::getModelForTable($request->getParameter('table')) )
       ->findWithParents($request->getParameter('id'));
     $this->setLayout(false);
   }
@@ -95,7 +87,7 @@ class catalogueActions extends sfActions
       $form->bind($request->getParameter('searchTaxon'));
       if ($form->isValid())
       {
- 	$this->items = Doctrine::getTable( $this->getTableName($form->getValue('table')) )
+ 	$this->items = Doctrine::getTable( Catalogue::getModelForTable($form->getValue('table')) )
  	  ->getByNameLike($form->getValue('name'));
       }
     }

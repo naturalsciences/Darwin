@@ -4,8 +4,9 @@
  */
 class CatalogueRelationshipsTable extends Doctrine_Table
 {
-  public function getRelationsForTable($table, $model, $id, $type=null)
+  public function getRelationsForTable($table, $id, $type=null)
   {
+    $model = Catalogue::getModelForTable($table);
     $q = Doctrine_Query::create()
 	    ->select('r.*, t.name')
 	    ->from('CatalogueRelationships r, '.$model. ' t')

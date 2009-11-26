@@ -26,8 +26,11 @@ class widgetsActions extends sfActions
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
-            'category' => $request->getParameter('category')."widget",
-	    'options' => array('eid' =>  $request->getParameter('eid',null)),
+            'category' => $this->getComponentFromCategory($request->getParameter('category')),
+	    'options' => array(
+		'eid' =>  $request->getParameter('eid',null),
+		'table' => $this->getTableFromCategory($request->getParameter('category')),
+	      ),
         ));
   }
 
@@ -49,13 +52,29 @@ class widgetsActions extends sfActions
     return $this->renderText(var_export($col1,true).var_export($col2,true));
   }
 
+  static protected function getComponentFromCategory($category)
+  {
+    $cat_array = explode('_',$category);
+    return $cat_array[0].'widget';
+  }
+
+  static protected function getTableFromCategory($category)
+  {
+    $cat_array = explode('_',$category);
+    if(count($cat_array) == 2)
+      return $cat_array[1];
+    return null;
+  }
 
   public function executeReloadContent(sfWebRequest $request)
   {
     return $this->renderComponent(
-	$request->getParameter('category','board').'widget',
+	$this->getComponentFromCategory($request->getParameter('category')),
 	$request->getParameter('widget'),
-	array('eid' => $request->getParameter('eid',null))
+	array(
+	    'eid' =>  $request->getParameter('eid',null),
+	    'table' => $this->getTableFromCategory($request->getParameter('category')),
+	)
     );
   }
 
