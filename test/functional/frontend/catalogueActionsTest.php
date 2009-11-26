@@ -29,5 +29,9 @@ $browser->
     checkElement('ul > li',2)->
     checkElement('li:first','/Animalia/')->
     checkElement('li:last','/Duchesnus/')->
-  end()
+  end()->
+  info('Relation')->
+  info('DeleteRelation')->
+  info('SaveRelation')
+
 ;

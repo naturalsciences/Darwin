@@ -21,7 +21,8 @@ var reload_url='".url_for('widgets/reloadContent?category=board')."';
 	  <?php include_partial('widgets/wlayout', array(
         'widget' => $widget->getGroupName(),
         'is_opened' => $widget->getOpened(),
-        'category' => 'boardwidget'
+        'category' => 'boardwidget',
+	'options' => array(),
         )); ?>
     <?php endforeach;?>
     <?php if($changed_col==false):?>

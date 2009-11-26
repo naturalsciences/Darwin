@@ -62,7 +62,7 @@ $(document).ready(function ()
                             'widget' => $widget->getGroupName(),
                             'is_opened' => $widget->getOpened(),
                             'category' => 'specimenwidget',
-                            'options' => $form,
+                            'options' => array('form' => $form),
                             )); ?>
                     <?php endforeach;?>
                         <?php if($changed_col==false):?>

@@ -17,11 +17,11 @@ class cataloguewidgetComponents extends sfComponents
     {
       $this->eid = $this->options->getObject()->getId();       //When restore widget on edit
     }
-    if(isset($this->eid) && $this->eid != null)
-    {
+//     if(isset($this->eid) && $this->eid != null)
+//     {
       //on edit
       $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 'Taxonomy', $this->eid, 'current_name');
-    }
+//     }
   }
 
   public function executeRelationRecombination()

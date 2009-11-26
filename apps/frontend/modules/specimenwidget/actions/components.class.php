@@ -13,9 +13,8 @@ class specimenwidgetComponents extends sfComponents
 
   protected function defineForm()
   {
-    if( isset($this->options) )
-        $this->form = $this->options;
-    else 
+    if(! isset($this->form) )
+    {
 	if(isset($this->eid) && $this->eid != null)
 	{
 	  $spec = Doctrine::getTable('Specimens')->find($this->eid);
@@ -25,6 +24,7 @@ class specimenwidgetComponents extends sfComponents
 	{
 	  $this->form = new SpecimensForm();
 	}
+    }
   }
 
   public function executeRefCollection()

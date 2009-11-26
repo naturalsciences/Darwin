@@ -19,7 +19,7 @@ var reload_url='".url_for('widgets/reloadContent?category=catalogue&eid='.$form-
 	'widget' => $widget->getGroupName(),
 	'is_opened' => $widget->getOpened(),
 	'category' => 'cataloguewidget',
-	'options' => $form,
+	'options' => array('eid' => $form->getObject()->getId())
 	)); ?>
 <?php endforeach;?>
 </ul>

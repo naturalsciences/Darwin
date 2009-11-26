@@ -27,7 +27,7 @@ class widgetsActions extends sfActions
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
             'category' => $request->getParameter('category')."widget",
-	    'eid' =>  $request->getParameter('eid',null),
+	    'options' => array('eid' =>  $request->getParameter('eid',null)),
         ));
   }
 
@@ -52,8 +52,11 @@ class widgetsActions extends sfActions
 
   public function executeReloadContent(sfWebRequest $request)
   {
-    return $this->renderComponent($request->getParameter('category','board').'widget',$request->getParameter('widget'),
-    $request->getParameter('eid',null) ? array('eid' => $request->getParameter('eid')) :array() );
+    return $this->renderComponent(
+	$request->getParameter('category','board').'widget',
+	$request->getParameter('widget'),
+	array('eid' => $request->getParameter('eid',null))
+    );
   }
 
 }
