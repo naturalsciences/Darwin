@@ -18,8 +18,6 @@ SELECT throws_ok('INSERT INTO catalogue_relationships (referenced_relation, reco
 INSERT INTO taxonomy (id, name, level_ref) VALUES (2, 'rgerererg', 1);
 INSERT INTO taxonomy (id, name, level_ref) VALUES (3, 'sdsdfsdfg', 1);
 
-SELECT * from catalogue_relationships;
-
 SELECT throws_ok('INSERT INTO catalogue_relationships (referenced_relation, record_id_1, record_id_2, relationship_type)
 	VALUES (''taxonomy'', 0, 2, ''current_name'')');
 
