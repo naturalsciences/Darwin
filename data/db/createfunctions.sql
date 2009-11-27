@@ -6663,3 +6663,31 @@ $$
    ' | '));
 $$
 LANGUAGE SQL IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION fct_chk_nbr_in_relation(relation_type catalogue_relationships.relationship_type%TYPE, table_name catalogue_relationships.referenced_relation%TYPE, rid  catalogue_relationships.record_id_1%TYPE ) RETURNS BOOLEAN AS
+$$
+DECLARE 
+  nbr integer = 0 ;
+BEGIN
+  SELECT count(record_id_2) INTO nbr FROM catalogue_relationships WHERE
+      relationship_type = relation_type
+      AND record_id_1 = rid
+      AND referenced_relation = table_name;
+  
+  IF relation_type = 'current_name' THEN
+    IF nbr > 0 THEN
+      RETURN FALSE;
+    END IF;
+  ELSEIF relation_type = 'recombined from' THEN
+    IF nbr > 1 THEN
+      RETURN FALSE;
+    END IF;
+  ELSE
+    return TRUE;
+  END IF;
+
+  RETURN TRUE;
+END;
+$$
+LANGUAGE plpgsql;
+
