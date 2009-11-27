@@ -30,8 +30,9 @@ class expeditionActions extends sfActions
       $form->bind($request->getParameter('searchExpedition'));
       if ($form->isValid())
       {
-        $this->expeditions = Doctrine::getTable('Expeditions')
-        ->getExpLike($form->getValue('name'), $form->getValue('from_date'));
+        //var_dump($form->getValue('from_date'));
+       // $this->expeditions = Doctrine::getTable('Expeditions')
+        //->getExpLike($form->getValue('name'), $form->getValue('from_date'));
       }
     }
 

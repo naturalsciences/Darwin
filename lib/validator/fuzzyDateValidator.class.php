@@ -49,11 +49,29 @@ class fuzzyDateValidator extends sfValidatorDate
   protected function configure($options = array(), $messages = array())
   {
     $this->addMessage('year_missing', 'Year missing.');
-    $this->addMessage('month_missing', 'Month missing or remove the day.');
+    $this->addMessage('month_missing', 'Month missing or remove the day and time.');
+    $this->addMessage('day_missing', 'Day missing or remove the time.');
 
     $this->addOption('from_date', true);
 
     parent::configure($options, $messages);
+  }
+
+  /**
+   * Give a mask depending on date array entered by user
+   *
+   * @param array $value An array of date elements
+   *
+   * @return DateTime A DateTime object
+   */
+  protected function getMask($value)
+  {
+    return (!isset($value['year']) || !$value['year'] ? 0 : 32) +
+           (!isset($value['month']) || !$value['month'] ? 0 : 16) +
+           (!isset($value['day']) || !$value['day'] ? 0 : 8) +
+           (!isset($value['hour']) || !$value['hour'] ? 0 : 4) +
+           (!isset($value['minute']) || !$value['minute'] ? 0 : 2) +
+           (!isset($value['second']) || !$value['second'] ? 0 : 1);
   }
 
   /**
@@ -63,9 +81,9 @@ class fuzzyDateValidator extends sfValidatorDate
    *
    * @param  array $value  An array of date elements
    *
-   * @return int A timestamp
+   * @return int A Date/Time integer value
    */
-  protected function convertDateArrayToTimestamp($value)
+  protected function convertDateArray($value)
   {
     // all elements must be empty or a number
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
@@ -76,35 +94,48 @@ class fuzzyDateValidator extends sfValidatorDate
       }
     }
 
-    // if one date value is empty, all others must be empty too
-    $empties =
-      (!isset($value['year']) || !$value['year'] ? 0 : 4) +
-      (!isset($value['month']) || !$value['month'] ? 0 : 2) +
-      (!isset($value['day']) || !$value['day'] ? 0 : 1)
-    ;
-    
+    // Compute the date/timestamp mask
+    $empties = $this->getMask($value);
+    try {
     if ($empties == 0)
     {
-      return $this->getEmptyValue();
+      $value['year'] = ($this->getOption('from_date'))?intval($this->getOption('min')->format('Y')):intval($this->getOption('max')->format('Y'));
+      $value['month'] = ($this->getOption('from_date'))?1:12;
+      $value['day'] = ($this->getOption('from_date'))?1:31;
+      $value['hour'] = ($this->getOption('from_date'))?0:23;
+      $value['minute'] = ($this->getOption('from_date'))?0:59;
+      $value['second'] = ($this->getOption('from_date'))?0:59;
     }
-    else if ($empties <= 3)
+    else if ($empties <= 31)
     {
       throw new sfValidatorError($this, 'year_missing', array('value' => $value));
     }
-    else if ($empties == 4)
+    else if ($empties == 32)
     {
-      $value['day'] = ($this->getOption('from_date'))?'01':'31';
-      $value['month'] = ($this->getOption('from_date'))?'01':'12';
+      $value['month'] = ($this->getOption('from_date'))?1:12;
+      $value['day'] = ($this->getOption('from_date'))?1:31;
+      $value['hour'] = ($this->getOption('from_date'))?0:23;
+      $value['minute'] = ($this->getOption('from_date'))?0:59;
+      $value['second'] = ($this->getOption('from_date'))?0:59;
     }
-    else if ($empties == 5)
+    else if ($empties <= 47)
     {
       throw new sfValidatorError($this, 'month_missing', array('value' => $value));
     }
-    else if ($empties == 6)
+    else if ($empties == 48)
     {
-      $value['day'] = ($this->getOption('from_date'))?'01':strval(date('d', mktime(0, 0, 0, intval($value['month'])+1, 0, intval($value['year']))));
+      $dateVal = new DateTime(strval(intval($value['year'])).'/'.strval(intval($value['month'])+1).'/0');
+      $value['day'] = ($this->getOption('from_date'))?1:intval($dateVal->format('d'));
+      $value['hour'] = ($this->getOption('from_date'))?0:23;
+      $value['minute'] = ($this->getOption('from_date'))?0:59;
+      $value['second'] = ($this->getOption('from_date'))?0:59;
+    }
+    else if ($empties <= 55)
+    {
+      throw new sfValidatorError($this, 'day_missing', array('value' => $value));
     }
     
+
     if (!checkdate(intval($value['month']), intval($value['day']), intval($value['year'])))
     {
       throw new sfValidatorError($this, 'invalid', array('value' => $value));
@@ -123,25 +154,76 @@ class fuzzyDateValidator extends sfValidatorDate
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
 
-      $clean = mktime(
-        isset($value['hour']) ? intval($value['hour']) : 0,
-        isset($value['minute']) ? intval($value['minute']) : 0,
-        isset($value['second']) ? intval($value['second']) : 0,
-        intval($value['month']),
-        intval($value['day']),
-        intval($value['year'])
-      );
+      $clean = new DateTime(strval(intval($value['year'])).'/'.
+                            strval(intval($value['month'])).'/'.
+                            strval(intval($value['day'])).' '.
+                            strval(isset($value['hour']) ? intval($value['hour']) : 0).':'.
+                            strval(isset($value['minute']) ? intval($value['minute']) : 0).':'.
+                            strval(isset($value['second']) ? intval($value['second']) : 0)
+                           );
     }
     else
     {
-      $clean = mktime(0, 0, 0, intval($value['month']), intval($value['day']), intval($value['year']));
+      $clean = new DateTime(strval(intval($value['year'])).'/'.
+                            strval(intval($value['month'])).'/'.
+                            strval(intval($value['day'])).' 0:0:0'
+                           );
     }
-
-    if (false === $clean)
+    }
+    catch (sfValidatorError $e)
     {
-      throw new sfValidatorError($this, 'invalid', array('value' => var_export($value, true)));
+      throw $e;
+    }
+    catch (Exception $e)
+    {
+      throw new sfValidatorError($this, 'invalid', array('value' => $value));
     }
 
     return $clean;
+  }
+
+  /**
+   * @see sfValidatorBase
+   */
+  protected function doClean($value)
+  {
+    if (is_array($value))
+    {
+      $clean = $this->convertDateArray($value);
+    }
+    else if ($regex = $this->getOption('date_format'))
+    {
+      if (!preg_match($regex, $value, $match))
+      {
+        throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'date_format' => $this->getOption('date_format_error') ? $this->getOption('date_format_error') : $this->getOption('date_format')));
+      }
+
+      $clean = $this->convertDateArray($match);
+    }
+    else 
+    {
+      try 
+      {
+        $clean = new DateTime($value);
+      }
+      catch (Exception $e)
+      {
+        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      }
+    }
+
+    if ($this->hasOption('max') && $clean > $this->getOption('max'))
+    {
+      throw new sfValidatorError($this, 'max', array('value' => $value, 'max' => date($this->getOption('date_format_range_error'), $this->getOption('max'))));
+    }
+
+    if ($this->hasOption('min') && $clean < $this->getOption('min'))
+    {
+      throw new sfValidatorError($this, 'min', array('value' => $value, 'min' => date($this->getOption('date_format_range_error'), $this->getOption('min'))));
+    }
+
+    $clean = array(($this->getOption('from_date'))?'from_date':'to_date' => $clean, ($this->getOption('from_date'))?'from_date_mask':'to_date_mask' => $this->getMask($value));
+    return $clean;
+
   }
 }
