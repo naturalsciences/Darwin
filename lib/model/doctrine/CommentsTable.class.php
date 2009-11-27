@@ -4,5 +4,12 @@
  */
 class CommentsTable extends Doctrine_Table
 {
-
+  public function findForTable($table_name, $record_id)
+  {
+     $q = Doctrine_Query::create()
+	 ->from('Comments c')
+	 ->andWhere('c.referenced_relation = ?',$table_name)
+         ->andWhere('c.record_id = ?',$record_id);
+    return $q->execute();
+  }
 }

@@ -20,4 +20,9 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table, $this->eid, 'recombined from');
   }
+
+  public function executeComment()
+  {
+    $this->comments =  Doctrine::getTable('Comments')->findForTable($this->table, $this->eid);
+  }
 }
