@@ -23,7 +23,7 @@ $browser->
   click('Save', array('comments' => array(
     'referenced_relation' => 'taxonomy',
     'record_id'           => '4',
-    'notion_concerned'    => 'identification',
+    'notion_concerned'    => 'taxon life history',
     'comment'             => 'This is ok...
 There is a thing',
   )))->
@@ -35,7 +35,7 @@ There is a thing',
  $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
 
  $item = Doctrine_Query::create()->from('Comments c')->andWhere("c.referenced_relation = 'taxonomy'")
-->andWhere("c.notion_concerned = 'identification' ")
+->andWhere("c.notion_concerned = 'taxon life history' ")
 ->andWhere('c.record_id=4')->fetchOne();
 
   $browser->test()->isnt($item, null,'We add an item');
@@ -58,7 +58,7 @@ $browser->
   click('Save', array('comments' => array(
     'referenced_relation' => 'taxonomy',
     'record_id'           => '4',
-    'notion_concerned'    => 'identification',
+    'notion_concerned'    => 'taxon life history',
     'comment'             => 'This is not ok...',
   )))
   ->
@@ -92,7 +92,7 @@ $browser->
   $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
 
  $item = Doctrine_Query::create()->from('Comments c')->andWhere("c.referenced_relation = 'taxonomy'")
-->andWhere("c.notion_concerned = 'identification' ")
+->andWhere("c.notion_concerned = 'taxon life history' ")
 ->andWhere('c.record_id=4')->fetchOne();
 
   $browser->test()->is($item, null,'there is no more item');

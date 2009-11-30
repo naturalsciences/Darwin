@@ -35,7 +35,7 @@ class commentActions extends sfActions
      $this->comment->setReferencedRelation($request->getParameter('table'));
     }
      
-    $this->form = new CommentsForm($this->comment);
+    $this->form = new CommentsForm($this->comment,array('table' => $request->getParameter('table')));
     
     if($request->isMethod('post'))
     {

@@ -4,6 +4,11 @@
  */
 class CommentsTable extends Doctrine_Table
 {
+  protected static $notions = array('taxonomy' => array(
+    'taxon information' => 'taxon information',
+    'taxon life history' => 'taxon life history',
+    ),);
+
   public function findForTable($table_name, $record_id)
   {
      $q = Doctrine_Query::create()
@@ -11,5 +16,10 @@ class CommentsTable extends Doctrine_Table
 	 ->andWhere('c.referenced_relation = ?',$table_name)
          ->andWhere('c.record_id = ?',$record_id);
     return $q->execute();
+  }
+  
+  public static function getNotionsFor($table_name)
+  {
+    return self::$notions[$table_name];
   }
 }

@@ -21,7 +21,7 @@ $("#comment_form").submit(function()
       $("#delete").click(function()
       {
 	$.ajax({
-	  url: '<?php echo url_for('comment/deleteComment?id='.$form->getObject()->getId())?>',
+	  url: '<?php echo url_for('comment/delete?id='.$form->getObject()->getId())?>',
 	  success: function(html){
 	    if(html == "ok" )
 	    {

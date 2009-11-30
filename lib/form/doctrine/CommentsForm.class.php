@@ -15,8 +15,11 @@ class CommentsForm extends BaseCommentsForm
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
     unset($this['comment_ts']);
     unset($this['comment_language_full_text']); // @TODO : check this!
-    $this->widgetSchema['notion_concerned'] =  new sfWidgetFormChoice(array( // @TODO : check this too!
-      'choices' =>  array('thing'=>'thing','renaming'=>'renaming'),  
+    $this->widgetSchema['notion_concerned'] =  new sfWidgetFormChoice(array(
+      'choices' =>  CommentsTable::getNotionsFor($this->options['table']),  
+    ));
+    $this->validatorSchema['notion_concerned'] =  new sfValidatorChoice(array(
+      'choices' =>  CommentsTable::getNotionsFor($this->options['table']),  
     ));
   }
 }
