@@ -28,49 +28,6 @@ class catalogueActions extends sfActions
     $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
   }
 
-  public function executeDeleteComment(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('Comments')->find($request->getParameter('id'));
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
-  }
-
-  public function executeComment(sfWebRequest $request)
-  {
-    if($request->hasParameter('cid'))
-      $this->comment =  Doctrine::getTable('Comments')->find($request->getParameter('cid'));
-    else
-    {
-     $this->comment = new Comments();
-     $this->comment->setRecordId($request->getParameter('id'));
-     $this->comment->setReferencedRelation($request->getParameter('table'));
-    }
-     
-    $this->form = new CommentsForm($this->comment);
-    
-    if($request->isMethod('post'))
-    {
-	$this->form->bind($request->getParameter('comments'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	  }
-	  catch(Exception $e)
-	  {
-	    return $this->renderText($e->getMessage());
-	  }
-	  return $this->renderText('ok');
-	}
-    }
-  }
-
   public function executeDeleteRelation(sfWebRequest $request)
   {
     $r = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relid'));
