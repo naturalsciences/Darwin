@@ -52,8 +52,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('#delete')->
-    checkElement('textarea', 'This is ok...
-There is a thing')->
+    checkElement('textarea', '/There is a thing/')->
   end()->
   
   click('Save', array('comments' => array(
