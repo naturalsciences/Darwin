@@ -1,6 +1,21 @@
+<ul class="hidden error_list">
+  <li></li>
+</ul>
+
 <script type="text/javascript">
+    function addError(html)
+    {
+      $('.error_list li').text(html);
+      $('.error_list').show();
+    }
+    function removeError()
+    {
+	$('.error_list').hide();
+	$('.error_list li').text(' ');
+    }
 $("#comment_form").submit(function()
       {
+	removeError();
 	$.ajax({
 	  type: "POST",
 	  url: $(this).attr('action'),
@@ -12,14 +27,19 @@ $("#comment_form").submit(function()
 	    }
 	    else
 	    {
-	      alert(html);
+	      addError(html);
 	    }
+	  },
+	  error: function(xhr)
+	  {
+	    addError('Error!  Status = ' + xhr.status);
 	  }});
 	return false;
       });
 
       $("#delete").click(function()
       {
+	removeError();
 	$.ajax({
 	  url: '<?php echo url_for('comment/delete?id='.$form->getObject()->getId())?>',
 	  success: function(html){
@@ -29,8 +49,12 @@ $("#comment_form").submit(function()
 	    }
 	    else
 	    {
-	      alert(html);
+	      addError(html);
 	    }
+	  },
+	  error: function(xhr)
+	  {
+	    addError('Error!  Status = ' + xhr.status);
 	  }});
 	return false;
       });
