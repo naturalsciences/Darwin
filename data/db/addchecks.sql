@@ -17,8 +17,6 @@ ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_cata
 ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_catalogue_relationships_rec2 check (fct_chk_ReferencedRecord(referenced_relation,record_id_2));
 ALTER TABLE catalogue_relationships add constraint chk_not_related_to_self check (record_id_1 != record_id_2);
 
-ALTER TABLE catalogue_relationships add constraint chk_relation_nbr CHECK(fct_chk_nbr_in_relation(relationship_type, referenced_relation, record_id_1 ));
-
 ALTER TABLE multimedia add constraint fct_chk_onceInPath_multimedia CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
 ALTER TABLE gtu add constraint fct_chk_onceInPath_gtu CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));
 ALTER TABLE collections add constraint fct_chk_onceInPath_collections CHECK(fct_chk_onceInPath( COALESCE(path,'') || '/' || id));

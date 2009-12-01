@@ -6664,29 +6664,40 @@ $$
 $$
 LANGUAGE SQL IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION fct_chk_nbr_in_relation(relation_type catalogue_relationships.relationship_type%TYPE, table_name catalogue_relationships.referenced_relation%TYPE, rid  catalogue_relationships.record_id_1%TYPE ) RETURNS BOOLEAN AS
+CREATE OR REPLACE FUNCTION fct_nbr_in_relation() RETURNS TRIGGER
+AS
+--fct_chk_nbr_in_relation(relation_type catalogue_relationships.relationship_type%TYPE, table_name catalogue_relationships.referenced_relation%TYPE, rid  catalogue_relationships.record_id_1%TYPE ) RETURNS BOOLEAN AS
 $$
 DECLARE 
   nbr integer = 0 ;
 BEGIN
   SELECT count(record_id_2) INTO nbr FROM catalogue_relationships WHERE
-      relationship_type = relation_type
-      AND record_id_1 = rid
-      AND referenced_relation = table_name;
+      relationship_type = NEW.relationship_type
+      AND record_id_1 = NEW.record_id_1
+      AND referenced_relation = NEW.referenced_relation;
   
-  IF relation_type = 'current_name' THEN
-    IF nbr > 0 THEN
-      RETURN FALSE;
+  IF NEW.relationship_type = 'current_name' THEN
+    IF TG_OP = 'INSERT' THEN
+      IF nbr > 0 THEN
+	RAISE EXCEPTION 'Maximum number of renamed item reach';
+      END IF;
+    ELSE
+      IF nbr > 1 THEN
+	RAISE EXCEPTION 'Maximum number of renamed item reach';
+      END IF;
     END IF;
-  ELSEIF relation_type = 'recombined from' THEN
-    IF nbr > 1 THEN
-      RETURN FALSE;
+  ELSEIF NEW.relationship_type = 'recombined from' THEN
+    IF TG_OP = 'INSERT' THEN
+      IF nbr > 1 THEN
+	RAISE EXCEPTION 'Maximum number of recombined item reach';
+      END IF;
+    ELSE
+      IF nbr > 2 THEN
+	RAISE EXCEPTION 'Maximum number of recombined item reach';
+      END IF;
     END IF;
-  ELSE
-    return TRUE;
   END IF;
-
-  RETURN TRUE;
+  RETURN NEW;
 END;
 $$
 LANGUAGE plpgsql;
