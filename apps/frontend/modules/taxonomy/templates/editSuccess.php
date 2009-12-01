@@ -5,13 +5,11 @@
 
     <?php include_partial('form', array('form' => $form)); ?>
 
-
-<?php use_helper('Javascript') ?>
-<?php echo javascript_tag("
-var chgstatus_url='".url_for('widgets/changeStatus?category=catalogue_taxonomy')."';
-var chgorder_url='".url_for('widgets/changeOrder?category=catalogue_taxonomy')."';
-var reload_url='".url_for('widgets/reloadContent?category=catalogue_taxonomy&eid='.$form->getObject()->getId())."';
-");?>
+<script type="text/javascript">
+var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=catalogue_taxonomy');?>';
+var chgorder_url='<?php echo url_for('widgets/changeOrder?category=catalogue_taxonomy');?>';
+var reload_url='<?php echo url_for('widgets/reloadContent?category=catalogue_taxonomy&eid='.$form->getObject()->getId());?>';
+</script>
  <ul class="board_col one_col encod_screen">
 <?php foreach($widgets as $id => $widget):?>
   <?php if(!$widget->getVisible()) continue;?>

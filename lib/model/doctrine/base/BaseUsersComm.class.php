@@ -14,10 +14,27 @@
  * @property string $activity_period
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer   getId()                Returns the current record's "id" value
+ * @method integer   getPersonUserRef()     Returns the current record's "person_user_ref" value
+ * @method string    getCommType()          Returns the current record's "comm_type" value
+ * @method string    getTag()               Returns the current record's "tag" value
+ * @method string    getOrganizationUnit()  Returns the current record's "organization_unit" value
+ * @method string    getPersonUserRole()    Returns the current record's "person_user_role" value
+ * @method string    getActivityPeriod()    Returns the current record's "activity_period" value
+ * @method Users     getUsers()             Returns the current record's "Users" value
+ * @method UsersComm setId()                Sets the current record's "id" value
+ * @method UsersComm setPersonUserRef()     Sets the current record's "person_user_ref" value
+ * @method UsersComm setCommType()          Sets the current record's "comm_type" value
+ * @method UsersComm setTag()               Sets the current record's "tag" value
+ * @method UsersComm setOrganizationUnit()  Sets the current record's "organization_unit" value
+ * @method UsersComm setPersonUserRole()    Sets the current record's "person_user_role" value
+ * @method UsersComm setActivityPeriod()    Sets the current record's "activity_period" value
+ * @method UsersComm setUsers()             Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersComm extends sfDoctrineRecord
 {
@@ -56,7 +73,7 @@ abstract class BaseUsersComm extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users', array(
+        $this->hasOne('Users', array(
              'local' => 'person_user_ref',
              'foreign' => 'id'));
     }

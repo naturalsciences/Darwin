@@ -10,10 +10,19 @@
  * @property string $label_indexed
  * @property Doctrine_Collection $TagGroups
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()            Returns the current record's "id" value
+ * @method string              getLabel()         Returns the current record's "label" value
+ * @method string              getLabelIndexed()  Returns the current record's "label_indexed" value
+ * @method Doctrine_Collection getTagGroups()     Returns the current record's "TagGroups" collection
+ * @method Tags                setId()            Sets the current record's "id" value
+ * @method Tags                setLabel()         Sets the current record's "label" value
+ * @method Tags                setLabelIndexed()  Sets the current record's "label_indexed" value
+ * @method Tags                setTagGroups()     Sets the current record's "TagGroups" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseTags extends sfDoctrineRecord
 {
@@ -38,7 +47,7 @@ abstract class BaseTags extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('TagGroups', array(
+        $this->hasMany('TagGroups', array(
              'local' => 'id',
              'foreign' => 'tag_ref'));
     }

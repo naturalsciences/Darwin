@@ -25,10 +25,49 @@
  * @property string $property_tool_indexed
  * @property Doctrine_Collection $PropertiesValues
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                         Returns the current record's "id" value
+ * @method string              getReferencedRelation()         Returns the current record's "referenced_relation" value
+ * @method integer             getRecordId()                   Returns the current record's "record_id" value
+ * @method string              getPropertyType()               Returns the current record's "property_type" value
+ * @method string              getPropertySubType()            Returns the current record's "property_sub_type" value
+ * @method string              getPropertySubTypeIndexed()     Returns the current record's "property_sub_type_indexed" value
+ * @method string              getPropertyQualifier()          Returns the current record's "property_qualifier" value
+ * @method string              getPropertyQualifierIndexed()   Returns the current record's "property_qualifier_indexed" value
+ * @method integer             getDateFromMask()               Returns the current record's "date_from_mask" value
+ * @method timestamp           getDateFrom()                   Returns the current record's "date_from" value
+ * @method integer             getDateToMask()                 Returns the current record's "date_to_mask" value
+ * @method timestamp           getDateTo()                     Returns the current record's "date_to" value
+ * @method string              getPropertyUnit()               Returns the current record's "property_unit" value
+ * @method string              getPropertyAccuracyUnit()       Returns the current record's "property_accuracy_unit" value
+ * @method string              getPropertyMethod()             Returns the current record's "property_method" value
+ * @method string              getPropertyMethodIndexed()      Returns the current record's "property_method_indexed" value
+ * @method string              getPropertyTool()               Returns the current record's "property_tool" value
+ * @method string              getPropertyToolIndexed()        Returns the current record's "property_tool_indexed" value
+ * @method Doctrine_Collection getPropertiesValues()           Returns the current record's "PropertiesValues" collection
+ * @method CatalogueProperties setId()                         Sets the current record's "id" value
+ * @method CatalogueProperties setReferencedRelation()         Sets the current record's "referenced_relation" value
+ * @method CatalogueProperties setRecordId()                   Sets the current record's "record_id" value
+ * @method CatalogueProperties setPropertyType()               Sets the current record's "property_type" value
+ * @method CatalogueProperties setPropertySubType()            Sets the current record's "property_sub_type" value
+ * @method CatalogueProperties setPropertySubTypeIndexed()     Sets the current record's "property_sub_type_indexed" value
+ * @method CatalogueProperties setPropertyQualifier()          Sets the current record's "property_qualifier" value
+ * @method CatalogueProperties setPropertyQualifierIndexed()   Sets the current record's "property_qualifier_indexed" value
+ * @method CatalogueProperties setDateFromMask()               Sets the current record's "date_from_mask" value
+ * @method CatalogueProperties setDateFrom()                   Sets the current record's "date_from" value
+ * @method CatalogueProperties setDateToMask()                 Sets the current record's "date_to_mask" value
+ * @method CatalogueProperties setDateTo()                     Sets the current record's "date_to" value
+ * @method CatalogueProperties setPropertyUnit()               Sets the current record's "property_unit" value
+ * @method CatalogueProperties setPropertyAccuracyUnit()       Sets the current record's "property_accuracy_unit" value
+ * @method CatalogueProperties setPropertyMethod()             Sets the current record's "property_method" value
+ * @method CatalogueProperties setPropertyMethodIndexed()      Sets the current record's "property_method_indexed" value
+ * @method CatalogueProperties setPropertyTool()               Sets the current record's "property_tool" value
+ * @method CatalogueProperties setPropertyToolIndexed()        Sets the current record's "property_tool_indexed" value
+ * @method CatalogueProperties setPropertiesValues()           Sets the current record's "PropertiesValues" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCatalogueProperties extends sfDoctrineRecord
 {
@@ -109,7 +148,7 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('PropertiesValues', array(
+        $this->hasMany('PropertiesValues', array(
              'local' => 'id',
              'foreign' => 'property_ref'));
     }

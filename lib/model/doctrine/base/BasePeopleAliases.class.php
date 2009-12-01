@@ -14,10 +14,27 @@
  * @property People $People
  * @property Collections $Collections
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer       getId()                  Returns the current record's "id" value
+ * @method string        getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer       getRecordId()            Returns the current record's "record_id" value
+ * @method integer       getPersonRef()           Returns the current record's "person_ref" value
+ * @method integer       getCollectionRef()       Returns the current record's "collection_ref" value
+ * @method string        getPersonName()          Returns the current record's "person_name" value
+ * @method People        getPeople()              Returns the current record's "People" value
+ * @method Collections   getCollections()         Returns the current record's "Collections" value
+ * @method PeopleAliases setId()                  Sets the current record's "id" value
+ * @method PeopleAliases setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method PeopleAliases setRecordId()            Sets the current record's "record_id" value
+ * @method PeopleAliases setPersonRef()           Sets the current record's "person_ref" value
+ * @method PeopleAliases setCollectionRef()       Sets the current record's "collection_ref" value
+ * @method PeopleAliases setPersonName()          Sets the current record's "person_name" value
+ * @method PeopleAliases setPeople()              Sets the current record's "People" value
+ * @method PeopleAliases setCollections()         Sets the current record's "Collections" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BasePeopleAliases extends sfDoctrineRecord
 {
@@ -55,7 +72,7 @@ abstract class BasePeopleAliases extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('People', array(
+        $this->hasOne('People', array(
              'local' => 'person_ref',
              'foreign' => 'id'));
 

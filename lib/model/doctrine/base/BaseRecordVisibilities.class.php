@@ -13,10 +13,25 @@
  * @property boolean $visible
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer            getId()                  Returns the current record's "id" value
+ * @method string             getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer            getRecordId()            Returns the current record's "record_id" value
+ * @method integer            getDbUserType()          Returns the current record's "db_user_type" value
+ * @method integer            getUserRef()             Returns the current record's "user_ref" value
+ * @method boolean            getVisible()             Returns the current record's "visible" value
+ * @method Users              getUsers()               Returns the current record's "Users" value
+ * @method RecordVisibilities setId()                  Sets the current record's "id" value
+ * @method RecordVisibilities setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method RecordVisibilities setRecordId()            Sets the current record's "record_id" value
+ * @method RecordVisibilities setDbUserType()          Sets the current record's "db_user_type" value
+ * @method RecordVisibilities setUserRef()             Sets the current record's "user_ref" value
+ * @method RecordVisibilities setVisible()             Sets the current record's "visible" value
+ * @method RecordVisibilities setUsers()               Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseRecordVisibilities extends sfDoctrineRecord
 {
@@ -56,7 +71,7 @@ abstract class BaseRecordVisibilities extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users', array(
+        $this->hasOne('Users', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }

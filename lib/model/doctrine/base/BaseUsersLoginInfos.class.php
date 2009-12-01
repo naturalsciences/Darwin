@@ -13,10 +13,25 @@
  * @property timestamp $last_seen
  * @property Users $User
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getUserRef()    Returns the current record's "user_ref" value
+ * @method string          getLoginType()  Returns the current record's "login_type" value
+ * @method string          getUserName()   Returns the current record's "user_name" value
+ * @method string          getPassword()   Returns the current record's "password" value
+ * @method string          getSystemId()   Returns the current record's "system_id" value
+ * @method timestamp       getLastSeen()   Returns the current record's "last_seen" value
+ * @method Users           getUser()       Returns the current record's "User" value
+ * @method UsersLoginInfos setUserRef()    Sets the current record's "user_ref" value
+ * @method UsersLoginInfos setLoginType()  Sets the current record's "login_type" value
+ * @method UsersLoginInfos setUserName()   Sets the current record's "user_name" value
+ * @method UsersLoginInfos setPassword()   Sets the current record's "password" value
+ * @method UsersLoginInfos setSystemId()   Sets the current record's "system_id" value
+ * @method UsersLoginInfos setLastSeen()   Sets the current record's "last_seen" value
+ * @method UsersLoginInfos setUser()       Sets the current record's "User" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersLoginInfos extends sfDoctrineRecord
 {
@@ -50,7 +65,7 @@ abstract class BaseUsersLoginInfos extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users as User', array(
+        $this->hasOne('Users as User', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }

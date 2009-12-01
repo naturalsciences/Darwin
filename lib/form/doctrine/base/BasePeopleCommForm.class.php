@@ -3,17 +3,20 @@
 /**
  * PeopleComm form base class.
  *
- * @package    form
- * @subpackage people_comm
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method PeopleComm getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasePeopleCommForm extends BaseFormDoctrine
+abstract class BasePeopleCommForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
-      'person_user_ref'   => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
+      'person_user_ref'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => false)),
       'comm_type'         => new sfWidgetFormTextarea(),
       'tag'               => new sfWidgetFormTextarea(),
       'organization_unit' => new sfWidgetFormTextarea(),
@@ -22,9 +25,9 @@ class BasePeopleCommForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                => new sfValidatorDoctrineChoice(array('model' => 'PeopleComm', 'column' => 'id', 'required' => false)),
-      'person_user_ref'   => new sfValidatorDoctrineChoice(array('model' => 'People')),
-      'comm_type'         => new sfValidatorString(),
+      'id'                => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'person_user_ref'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'))),
+      'comm_type'         => new sfValidatorString(array('required' => false)),
       'tag'               => new sfValidatorString(),
       'organization_unit' => new sfValidatorString(array('required' => false)),
       'person_user_role'  => new sfValidatorString(array('required' => false)),
@@ -34,6 +37,8 @@ class BasePeopleCommForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('people_comm[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

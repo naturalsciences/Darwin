@@ -11,10 +11,21 @@
  * @property boolean $prefered_language
  * @property Users $User
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer        getUsersRef()          Returns the current record's "users_ref" value
+ * @method string         getLanguageCountry()   Returns the current record's "language_country" value
+ * @method boolean        getMother()            Returns the current record's "mother" value
+ * @method boolean        getPreferedLanguage()  Returns the current record's "prefered_language" value
+ * @method Users          getUser()              Returns the current record's "User" value
+ * @method UsersLanguages setUsersRef()          Sets the current record's "users_ref" value
+ * @method UsersLanguages setLanguageCountry()   Sets the current record's "language_country" value
+ * @method UsersLanguages setMother()            Sets the current record's "mother" value
+ * @method UsersLanguages setPreferedLanguage()  Sets the current record's "prefered_language" value
+ * @method UsersLanguages setUser()              Sets the current record's "User" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersLanguages extends sfDoctrineRecord
 {
@@ -44,7 +55,7 @@ abstract class BaseUsersLanguages extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users as User', array(
+        $this->hasOne('Users as User', array(
              'local' => 'users_ref',
              'foreign' => 'id'));
     }

@@ -11,10 +11,21 @@
  * @property Users $Users
  * @property Multimedia $Multimedia
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getPersonUserRef()   Returns the current record's "person_user_ref" value
+ * @method integer         getObjectRef()       Returns the current record's "object_ref" value
+ * @method string          getCategory()        Returns the current record's "category" value
+ * @method Users           getUsers()           Returns the current record's "Users" value
+ * @method Multimedia      getMultimedia()      Returns the current record's "Multimedia" value
+ * @method UsersMultimedia setPersonUserRef()   Sets the current record's "person_user_ref" value
+ * @method UsersMultimedia setObjectRef()       Sets the current record's "object_ref" value
+ * @method UsersMultimedia setCategory()        Sets the current record's "category" value
+ * @method UsersMultimedia setUsers()           Sets the current record's "Users" value
+ * @method UsersMultimedia setMultimedia()      Sets the current record's "Multimedia" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersMultimedia extends sfDoctrineRecord
 {
@@ -39,7 +50,7 @@ abstract class BaseUsersMultimedia extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users', array(
+        $this->hasOne('Users', array(
              'local' => 'person_user_ref',
              'foreign' => 'id'));
 

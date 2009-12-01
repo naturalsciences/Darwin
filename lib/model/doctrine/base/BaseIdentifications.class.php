@@ -16,10 +16,31 @@
  * @property string $determination_status
  * @property integer $order_by
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getId()                    Returns the current record's "id" value
+ * @method string          getReferencedRelation()    Returns the current record's "referenced_relation" value
+ * @method integer         getRecordId()              Returns the current record's "record_id" value
+ * @method string          getNotionConcerned()       Returns the current record's "notion_concerned" value
+ * @method timestamp       getNotionDate()            Returns the current record's "notion_date" value
+ * @method string          getValueDefined()          Returns the current record's "value_defined" value
+ * @method string          getValueDefinedIndexed()   Returns the current record's "value_defined_indexed" value
+ * @method string          getValueDefinedTs()        Returns the current record's "value_defined_ts" value
+ * @method string          getDeterminationStatus()   Returns the current record's "determination_status" value
+ * @method integer         getOrderBy()               Returns the current record's "order_by" value
+ * @method Identifications setId()                    Sets the current record's "id" value
+ * @method Identifications setReferencedRelation()    Sets the current record's "referenced_relation" value
+ * @method Identifications setRecordId()              Sets the current record's "record_id" value
+ * @method Identifications setNotionConcerned()       Sets the current record's "notion_concerned" value
+ * @method Identifications setNotionDate()            Sets the current record's "notion_date" value
+ * @method Identifications setValueDefined()          Sets the current record's "value_defined" value
+ * @method Identifications setValueDefinedIndexed()   Sets the current record's "value_defined_indexed" value
+ * @method Identifications setValueDefinedTs()        Sets the current record's "value_defined_ts" value
+ * @method Identifications setDeterminationStatus()   Sets the current record's "determination_status" value
+ * @method Identifications setOrderBy()               Sets the current record's "order_by" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseIdentifications extends sfDoctrineRecord
 {
@@ -61,8 +82,13 @@ abstract class BaseIdentifications extends sfDoctrineRecord
         $this->hasColumn('order_by', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+        
+    }
 }

@@ -47,7 +47,10 @@ $browser->
     'parent_ref'=> '',
   )))->
 
-  isRedirected()->
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
   followRedirect();
 
 $nitems = Doctrine::getTable('Taxonomy')->getByNameLike('savadje');
@@ -73,7 +76,10 @@ $nitems = Doctrine::getTable('Taxonomy')->getByNameLike('savadje');
     'parent_ref'=> '0',
   )))->
 
-  isRedirected()->
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
   followRedirect()->
 
   with('request')->begin()->
@@ -88,7 +94,10 @@ $nitems = Doctrine::getTable('Taxonomy')->getByNameLike('savadje');
   end()->
 
   click('Delete')->
-  isRedirected()->
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
   followRedirect()->
 
   with('request')->begin()->

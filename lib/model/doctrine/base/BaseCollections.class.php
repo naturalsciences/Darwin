@@ -26,10 +26,51 @@
  * @property Doctrine_Collection $PeopleAliases
  * @property Doctrine_Collection $Specimens
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                            Returns the current record's "id" value
+ * @method enum                getCollectionType()                Returns the current record's "collection_type" value
+ * @method string              getCode()                          Returns the current record's "code" value
+ * @method string              getName()                          Returns the current record's "name" value
+ * @method integer             getInstitutionRef()                Returns the current record's "institution_ref" value
+ * @method integer             getMainManagerRef()                Returns the current record's "main_manager_ref" value
+ * @method integer             getParentRef()                     Returns the current record's "parent_ref" value
+ * @method string              getPath()                          Returns the current record's "path" value
+ * @method boolean             getCodeAutoIncrement()             Returns the current record's "code_auto_increment" value
+ * @method boolean             getCodePartCodeAutoCopy()          Returns the current record's "code_part_code_auto_copy" value
+ * @method People              getInstitution()                   Returns the current record's "Institution" value
+ * @method Users               getManager()                       Returns the current record's "Manager" value
+ * @method Collections         getParent()                        Returns the current record's "Parent" value
+ * @method Doctrine_Collection getCollections()                   Returns the current record's "Collections" collection
+ * @method Doctrine_Collection getCollectionsAdmin()              Returns the current record's "CollectionsAdmin" collection
+ * @method Doctrine_Collection getCollectionsRights()             Returns the current record's "CollectionsRights" collection
+ * @method Doctrine_Collection getCollectionsFieldsVisibilities() Returns the current record's "CollectionsFieldsVisibilities" collection
+ * @method Doctrine_Collection getUsersCollRightsAsked()          Returns the current record's "UsersCollRightsAsked" collection
+ * @method Doctrine_Collection getPeopleAliases()                 Returns the current record's "PeopleAliases" collection
+ * @method Doctrine_Collection getSpecimens()                     Returns the current record's "Specimens" collection
+ * @method Collections         setId()                            Sets the current record's "id" value
+ * @method Collections         setCollectionType()                Sets the current record's "collection_type" value
+ * @method Collections         setCode()                          Sets the current record's "code" value
+ * @method Collections         setName()                          Sets the current record's "name" value
+ * @method Collections         setInstitutionRef()                Sets the current record's "institution_ref" value
+ * @method Collections         setMainManagerRef()                Sets the current record's "main_manager_ref" value
+ * @method Collections         setParentRef()                     Sets the current record's "parent_ref" value
+ * @method Collections         setPath()                          Sets the current record's "path" value
+ * @method Collections         setCodeAutoIncrement()             Sets the current record's "code_auto_increment" value
+ * @method Collections         setCodePartCodeAutoCopy()          Sets the current record's "code_part_code_auto_copy" value
+ * @method Collections         setInstitution()                   Sets the current record's "Institution" value
+ * @method Collections         setManager()                       Sets the current record's "Manager" value
+ * @method Collections         setParent()                        Sets the current record's "Parent" value
+ * @method Collections         setCollections()                   Sets the current record's "Collections" collection
+ * @method Collections         setCollectionsAdmin()              Sets the current record's "CollectionsAdmin" collection
+ * @method Collections         setCollectionsRights()             Sets the current record's "CollectionsRights" collection
+ * @method Collections         setCollectionsFieldsVisibilities() Sets the current record's "CollectionsFieldsVisibilities" collection
+ * @method Collections         setUsersCollRightsAsked()          Sets the current record's "UsersCollRightsAsked" collection
+ * @method Collections         setPeopleAliases()                 Sets the current record's "PeopleAliases" collection
+ * @method Collections         setSpecimens()                     Sets the current record's "Specimens" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCollections extends sfDoctrineRecord
 {
@@ -91,7 +132,7 @@ abstract class BaseCollections extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('People as Institution', array(
+        $this->hasOne('People as Institution', array(
              'local' => 'institution_ref',
              'foreign' => 'id'));
 

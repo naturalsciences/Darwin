@@ -1,10 +1,10 @@
 <?php
-class SearchCatalogueForm extends sfForm
+class SearchCatalogueForm extends BaseForm
 {
   public function configure()
   {
     $this->setWidgets(array(
-      'name'    => new sfWidgetFormInput(),
+      'name'    => new sfWidgetFormInputText(),
       'table'    => new sfWidgetFormInputHidden(),
       ));
 

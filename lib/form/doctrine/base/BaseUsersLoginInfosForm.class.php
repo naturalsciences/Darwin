@@ -3,11 +3,14 @@
 /**
  * UsersLoginInfos form base class.
  *
- * @package    form
- * @subpackage users_login_infos
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method UsersLoginInfos getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseUsersLoginInfosForm extends BaseFormDoctrine
+abstract class BaseUsersLoginInfosForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -21,17 +24,19 @@ class BaseUsersLoginInfosForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'   => new sfValidatorDoctrineChoice(array('model' => 'UsersLoginInfos', 'column' => 'user_ref', 'required' => false)),
-      'login_type' => new sfValidatorString(),
+      'user_ref'   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_ref', 'required' => false)),
+      'login_type' => new sfValidatorString(array('required' => false)),
       'user_name'  => new sfValidatorString(array('required' => false)),
       'password'   => new sfValidatorString(array('required' => false)),
-      'system_id'  => new sfValidatorDoctrineChoice(array('model' => 'UsersLoginInfos', 'column' => 'system_id', 'required' => false)),
+      'system_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'system_id', 'required' => false)),
       'last_seen'  => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_login_infos[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

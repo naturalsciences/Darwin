@@ -1,10 +1,9 @@
 <?php slot('title', __('Dashboard'));  ?>
-<?php use_helper('Javascript') ?>
-<?php echo javascript_tag("
-var chgstatus_url='".url_for('widgets/changeStatus?category=board')."';
-var chgorder_url='".url_for('widgets/changeOrder?category=board')."';
-var reload_url='".url_for('widgets/reloadContent?category=board')."';
-");?>
+<script type="text/javascript">
+var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=board');?>';
+var chgorder_url='<?php echo url_for('widgets/changeOrder?category=board');?>';
+var reload_url='<?php echo url_for('widgets/reloadContent?category=board');?>';
+</script>
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'board')) ?>
 <div class="board">
   <ul class="board_col">

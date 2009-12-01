@@ -10,10 +10,19 @@
  * @property TagGroups $TagGroups
  * @property Gtu $Gtu
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer   getTagGroupRef()   Returns the current record's "tag_group_ref" value
+ * @method integer   getGtuRef()        Returns the current record's "gtu_ref" value
+ * @method TagGroups getTagGroups()     Returns the current record's "TagGroups" value
+ * @method Gtu       getGtu()           Returns the current record's "Gtu" value
+ * @method GtuTags   setTagGroupRef()   Sets the current record's "tag_group_ref" value
+ * @method GtuTags   setGtuRef()        Sets the current record's "gtu_ref" value
+ * @method GtuTags   setTagGroups()     Sets the current record's "TagGroups" value
+ * @method GtuTags   setGtu()           Sets the current record's "Gtu" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseGtuTags extends sfDoctrineRecord
 {
@@ -33,7 +42,7 @@ abstract class BaseGtuTags extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('TagGroups', array(
+        $this->hasOne('TagGroups', array(
              'local' => 'tag_group_ref',
              'foreign' => 'id'));
 

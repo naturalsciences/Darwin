@@ -10,10 +10,19 @@
  * @property integer $record_id
  * @property string $community
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer              getId()                  Returns the current record's "id" value
+ * @method string               getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer              getRecordId()            Returns the current record's "record_id" value
+ * @method string               getCommunity()           Returns the current record's "community" value
+ * @method ClassVernacularNames setId()                  Sets the current record's "id" value
+ * @method ClassVernacularNames setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method ClassVernacularNames setRecordId()            Sets the current record's "record_id" value
+ * @method ClassVernacularNames setCommunity()           Sets the current record's "community" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseClassVernacularNames extends sfDoctrineRecord
 {
@@ -39,4 +48,9 @@ abstract class BaseClassVernacularNames extends sfDoctrineRecord
              ));
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+        
+    }
 }

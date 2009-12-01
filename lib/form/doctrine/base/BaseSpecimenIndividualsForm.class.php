@@ -3,17 +3,20 @@
 /**
  * SpecimenIndividuals form base class.
  *
- * @package    form
- * @subpackage specimen_individuals
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method SpecimenIndividuals getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseSpecimenIndividualsForm extends BaseFormDoctrine
+abstract class BaseSpecimenIndividualsForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                             => new sfWidgetFormInputHidden(),
-      'specimen_ref'                   => new sfWidgetFormDoctrineChoice(array('model' => 'Specimens', 'add_empty' => false)),
+      'specimen_ref'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimens'), 'add_empty' => false)),
       'type'                           => new sfWidgetFormTextarea(),
       'type_group'                     => new sfWidgetFormTextarea(),
       'type_search'                    => new sfWidgetFormTextarea(),
@@ -22,28 +25,30 @@ class BaseSpecimenIndividualsForm extends BaseFormDoctrine
       'stat'                           => new sfWidgetFormTextarea(),
       'social_status'                  => new sfWidgetFormTextarea(),
       'rock_form'                      => new sfWidgetFormTextarea(),
-      'specimen_individuals_count_min' => new sfWidgetFormInput(),
-      'specimen_individuals_count_max' => new sfWidgetFormInput(),
+      'specimen_individuals_count_min' => new sfWidgetFormInputText(),
+      'specimen_individuals_count_max' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'                             => new sfValidatorDoctrineChoice(array('model' => 'SpecimenIndividuals', 'column' => 'id', 'required' => false)),
-      'specimen_ref'                   => new sfValidatorDoctrineChoice(array('model' => 'Specimens')),
-      'type'                           => new sfValidatorString(),
+      'id'                             => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'specimen_ref'                   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Specimens'))),
+      'type'                           => new sfValidatorString(array('required' => false)),
       'type_group'                     => new sfValidatorString(array('required' => false)),
       'type_search'                    => new sfValidatorString(array('required' => false)),
-      'sex'                            => new sfValidatorString(),
-      'stage'                          => new sfValidatorString(),
-      'stat'                           => new sfValidatorString(),
-      'social_status'                  => new sfValidatorString(),
-      'rock_form'                      => new sfValidatorString(),
-      'specimen_individuals_count_min' => new sfValidatorInteger(),
-      'specimen_individuals_count_max' => new sfValidatorInteger(),
+      'sex'                            => new sfValidatorString(array('required' => false)),
+      'stage'                          => new sfValidatorString(array('required' => false)),
+      'stat'                           => new sfValidatorString(array('required' => false)),
+      'social_status'                  => new sfValidatorString(array('required' => false)),
+      'rock_form'                      => new sfValidatorString(array('required' => false)),
+      'specimen_individuals_count_min' => new sfValidatorInteger(array('required' => false)),
+      'specimen_individuals_count_max' => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimen_individuals[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

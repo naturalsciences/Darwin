@@ -3,11 +3,14 @@
 /**
  * Lithostratigraphy form base class.
  *
- * @package    form
- * @subpackage lithostratigraphy
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method Lithostratigraphy getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseLithostratigraphyForm extends BaseFormDoctrine
+abstract class BaseLithostratigraphyForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -15,49 +18,51 @@ class BaseLithostratigraphyForm extends BaseFormDoctrine
       'id'                  => new sfWidgetFormInputHidden(),
       'name'                => new sfWidgetFormTextarea(),
       'name_indexed'        => new sfWidgetFormTextarea(),
-      'level_ref'           => new sfWidgetFormInput(),
+      'level_ref'           => new sfWidgetFormInputText(),
       'status'              => new sfWidgetFormTextarea(),
       'path'                => new sfWidgetFormTextarea(),
-      'parent_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'Lithostratigraphy', 'add_empty' => false)),
-      'group_ref'           => new sfWidgetFormInput(),
+      'parent_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => false)),
+      'group_ref'           => new sfWidgetFormInputText(),
       'group_indexed'       => new sfWidgetFormTextarea(),
-      'formation_ref'       => new sfWidgetFormInput(),
+      'formation_ref'       => new sfWidgetFormInputText(),
       'formation_indexed'   => new sfWidgetFormTextarea(),
-      'member_ref'          => new sfWidgetFormInput(),
+      'member_ref'          => new sfWidgetFormInputText(),
       'member_indexed'      => new sfWidgetFormTextarea(),
-      'layer_ref'           => new sfWidgetFormInput(),
+      'layer_ref'           => new sfWidgetFormInputText(),
       'layer_indexed'       => new sfWidgetFormTextarea(),
-      'sub_level_1_ref'     => new sfWidgetFormInput(),
+      'sub_level_1_ref'     => new sfWidgetFormInputText(),
       'sub_level_1_indexed' => new sfWidgetFormTextarea(),
-      'sub_level_2_ref'     => new sfWidgetFormInput(),
+      'sub_level_2_ref'     => new sfWidgetFormInputText(),
       'sub_level_2_indexed' => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'Lithostratigraphy', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'name'                => new sfValidatorString(),
       'name_indexed'        => new sfValidatorString(array('required' => false)),
       'level_ref'           => new sfValidatorInteger(array('required' => false)),
-      'status'              => new sfValidatorString(),
-      'path'                => new sfValidatorString(),
-      'parent_ref'          => new sfValidatorDoctrineChoice(array('model' => 'Lithostratigraphy')),
-      'group_ref'           => new sfValidatorInteger(),
-      'group_indexed'       => new sfValidatorString(),
-      'formation_ref'       => new sfValidatorInteger(),
-      'formation_indexed'   => new sfValidatorString(),
-      'member_ref'          => new sfValidatorInteger(),
-      'member_indexed'      => new sfValidatorString(),
-      'layer_ref'           => new sfValidatorInteger(),
-      'layer_indexed'       => new sfValidatorString(),
-      'sub_level_1_ref'     => new sfValidatorInteger(),
-      'sub_level_1_indexed' => new sfValidatorString(),
-      'sub_level_2_ref'     => new sfValidatorInteger(),
-      'sub_level_2_indexed' => new sfValidatorString(),
+      'status'              => new sfValidatorString(array('required' => false)),
+      'path'                => new sfValidatorString(array('required' => false)),
+      'parent_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
+      'group_ref'           => new sfValidatorInteger(array('required' => false)),
+      'group_indexed'       => new sfValidatorString(array('required' => false)),
+      'formation_ref'       => new sfValidatorInteger(array('required' => false)),
+      'formation_indexed'   => new sfValidatorString(array('required' => false)),
+      'member_ref'          => new sfValidatorInteger(array('required' => false)),
+      'member_indexed'      => new sfValidatorString(array('required' => false)),
+      'layer_ref'           => new sfValidatorInteger(array('required' => false)),
+      'layer_indexed'       => new sfValidatorString(array('required' => false)),
+      'sub_level_1_ref'     => new sfValidatorInteger(array('required' => false)),
+      'sub_level_1_indexed' => new sfValidatorString(array('required' => false)),
+      'sub_level_2_ref'     => new sfValidatorInteger(array('required' => false)),
+      'sub_level_2_indexed' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('lithostratigraphy[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

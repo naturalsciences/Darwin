@@ -1,6 +1,6 @@
 logout:
-  is_secure:  off
+  is_secure:  false
 login:
-  is_secure:  off
+  is_secure:  false
 submit:
-  is_secure:  off
+  is_secure:  false

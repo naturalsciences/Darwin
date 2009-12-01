@@ -4,7 +4,7 @@ class LoginForm extends DarwinForm
   public function configure()
   {
     $this->setWidgets(array(
-      'username'    => new sfWidgetFormInput(),
+      'username'    => new sfWidgetFormInputText(),
       'password'   => new sfWidgetFormInputPassword(),
     ));
 

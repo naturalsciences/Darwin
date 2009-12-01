@@ -11,10 +11,21 @@
  * @property integer $insurer_ref
  * @property SpecimenParts $SpecimenParts
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer                 getSpecimenPartRef()   Returns the current record's "specimen_part_ref" value
+ * @method integer                 getInsuranceYear()     Returns the current record's "insurance_year" value
+ * @method integer                 getInsuranceValue()    Returns the current record's "insurance_value" value
+ * @method integer                 getInsurerRef()        Returns the current record's "insurer_ref" value
+ * @method SpecimenParts           getSpecimenParts()     Returns the current record's "SpecimenParts" value
+ * @method SpecimenPartsInsurances setSpecimenPartRef()   Sets the current record's "specimen_part_ref" value
+ * @method SpecimenPartsInsurances setInsuranceYear()     Sets the current record's "insurance_year" value
+ * @method SpecimenPartsInsurances setInsuranceValue()    Sets the current record's "insurance_value" value
+ * @method SpecimenPartsInsurances setInsurerRef()        Sets the current record's "insurer_ref" value
+ * @method SpecimenPartsInsurances setSpecimenParts()     Sets the current record's "SpecimenParts" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseSpecimenPartsInsurances extends sfDoctrineRecord
 {
@@ -40,7 +51,7 @@ abstract class BaseSpecimenPartsInsurances extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('SpecimenParts', array(
+        $this->hasOne('SpecimenParts', array(
              'local' => 'specimen_part_ref',
              'foreign' => 'id'));
     }

@@ -3,11 +3,14 @@
 /**
  * MySavedSpecimens form base class.
  *
- * @package    form
- * @subpackage my_saved_specimens
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method MySavedSpecimens getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseMySavedSpecimensForm extends BaseFormDoctrine
+abstract class BaseMySavedSpecimensForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -20,16 +23,18 @@ class BaseMySavedSpecimensForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'               => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'user_ref', 'required' => false)),
-      'name'                   => new sfValidatorDoctrineChoice(array('model' => 'MySavedSpecimens', 'column' => 'name', 'required' => false)),
+      'user_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_ref', 'required' => false)),
+      'name'                   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'name', 'required' => false)),
       'specimen_ids'           => new sfValidatorString(),
-      'favorite'               => new sfValidatorBoolean(),
+      'favorite'               => new sfValidatorBoolean(array('required' => false)),
       'modification_date_time' => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('my_saved_specimens[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

@@ -36,10 +36,71 @@
  * @property Doctrine_Collection $MultimediaKeywords
  * @property Doctrine_Collection $AssociatedMultimedia
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                             Returns the current record's "id" value
+ * @method boolean             getIsDigital()                      Returns the current record's "is_digital" value
+ * @method string              getType()                           Returns the current record's "type" value
+ * @method string              getSubType()                        Returns the current record's "sub_type" value
+ * @method string              getTitle()                          Returns the current record's "title" value
+ * @method string              getTitleIndexed()                   Returns the current record's "title_indexed" value
+ * @method string              getSubject()                        Returns the current record's "subject" value
+ * @method string              getCoverage()                       Returns the current record's "coverage" value
+ * @method string              getApercuPath()                     Returns the current record's "apercu_path" value
+ * @method string              getCopyright()                      Returns the current record's "copyright" value
+ * @method string              getLicense()                        Returns the current record's "license" value
+ * @method string              getUri()                            Returns the current record's "uri" value
+ * @method string              getDescriptiveTs()                  Returns the current record's "descriptive_ts" value
+ * @method string              getDescriptiveLanguageFullText()    Returns the current record's "descriptive_language_full_text" value
+ * @method date                getCreationDate()                   Returns the current record's "creation_date" value
+ * @method integer             getCreationDateMask()               Returns the current record's "creation_date_mask" value
+ * @method date                getPublicationDateFrom()            Returns the current record's "publication_date_from" value
+ * @method integer             getPublicationDateFromMask()        Returns the current record's "publication_date_from_mask" value
+ * @method date                getPublicationDateTo()              Returns the current record's "publication_date_to" value
+ * @method integer             getPublicationDateToMask()          Returns the current record's "publication_date_to_mask" value
+ * @method integer             getParentRef()                      Returns the current record's "parent_ref" value
+ * @method string              getPath()                           Returns the current record's "path" value
+ * @method string              getMimeType()                       Returns the current record's "mime_type" value
+ * @method Multimedia          getParent()                         Returns the current record's "Parent" value
+ * @method Doctrine_Collection getMultimedia()                     Returns the current record's "Multimedia" collection
+ * @method Doctrine_Collection getPeopleMultimedia()               Returns the current record's "PeopleMultimedia" collection
+ * @method Doctrine_Collection getUsersMultimedia()                Returns the current record's "UsersMultimedia" collection
+ * @method Doctrine_Collection getMyPreferences()                  Returns the current record's "MyPreferences" collection
+ * @method Doctrine_Collection getMultimediaKeywords()             Returns the current record's "MultimediaKeywords" collection
+ * @method Doctrine_Collection getAssociatedMultimedia()           Returns the current record's "AssociatedMultimedia" collection
+ * @method Multimedia          setId()                             Sets the current record's "id" value
+ * @method Multimedia          setIsDigital()                      Sets the current record's "is_digital" value
+ * @method Multimedia          setType()                           Sets the current record's "type" value
+ * @method Multimedia          setSubType()                        Sets the current record's "sub_type" value
+ * @method Multimedia          setTitle()                          Sets the current record's "title" value
+ * @method Multimedia          setTitleIndexed()                   Sets the current record's "title_indexed" value
+ * @method Multimedia          setSubject()                        Sets the current record's "subject" value
+ * @method Multimedia          setCoverage()                       Sets the current record's "coverage" value
+ * @method Multimedia          setApercuPath()                     Sets the current record's "apercu_path" value
+ * @method Multimedia          setCopyright()                      Sets the current record's "copyright" value
+ * @method Multimedia          setLicense()                        Sets the current record's "license" value
+ * @method Multimedia          setUri()                            Sets the current record's "uri" value
+ * @method Multimedia          setDescriptiveTs()                  Sets the current record's "descriptive_ts" value
+ * @method Multimedia          setDescriptiveLanguageFullText()    Sets the current record's "descriptive_language_full_text" value
+ * @method Multimedia          setCreationDate()                   Sets the current record's "creation_date" value
+ * @method Multimedia          setCreationDateMask()               Sets the current record's "creation_date_mask" value
+ * @method Multimedia          setPublicationDateFrom()            Sets the current record's "publication_date_from" value
+ * @method Multimedia          setPublicationDateFromMask()        Sets the current record's "publication_date_from_mask" value
+ * @method Multimedia          setPublicationDateTo()              Sets the current record's "publication_date_to" value
+ * @method Multimedia          setPublicationDateToMask()          Sets the current record's "publication_date_to_mask" value
+ * @method Multimedia          setParentRef()                      Sets the current record's "parent_ref" value
+ * @method Multimedia          setPath()                           Sets the current record's "path" value
+ * @method Multimedia          setMimeType()                       Sets the current record's "mime_type" value
+ * @method Multimedia          setParent()                         Sets the current record's "Parent" value
+ * @method Multimedia          setMultimedia()                     Sets the current record's "Multimedia" collection
+ * @method Multimedia          setPeopleMultimedia()               Sets the current record's "PeopleMultimedia" collection
+ * @method Multimedia          setUsersMultimedia()                Sets the current record's "UsersMultimedia" collection
+ * @method Multimedia          setMyPreferences()                  Sets the current record's "MyPreferences" collection
+ * @method Multimedia          setMultimediaKeywords()             Sets the current record's "MultimediaKeywords" collection
+ * @method Multimedia          setAssociatedMultimedia()           Sets the current record's "AssociatedMultimedia" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseMultimedia extends sfDoctrineRecord
 {
@@ -144,7 +205,7 @@ abstract class BaseMultimedia extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Multimedia as Parent', array(
+        $this->hasOne('Multimedia as Parent', array(
              'local' => 'parent_ref',
              'foreign' => 'id'));
 

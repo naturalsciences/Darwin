@@ -17,10 +17,33 @@
  * @property integer $modification_date_mask
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer               getId()                     Returns the current record's "id" value
+ * @method string                getReferencedRelation()     Returns the current record's "referenced_relation" value
+ * @method integer               getPeopleRef()              Returns the current record's "people_ref" value
+ * @method string                getCategory()               Returns the current record's "category" value
+ * @method string                getActionObservation()      Returns the current record's "action_observation" value
+ * @method string                getDescription()            Returns the current record's "description" value
+ * @method string                getDescriptionTs()          Returns the current record's "description_ts" value
+ * @method string                getLanguageFullText()       Returns the current record's "language_full_text" value
+ * @method timestamp             getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method integer               getModificationDateMask()   Returns the current record's "modification_date_mask" value
+ * @method Users                 getUsers()                  Returns the current record's "Users" value
+ * @method CollectionMaintenance setId()                     Sets the current record's "id" value
+ * @method CollectionMaintenance setReferencedRelation()     Sets the current record's "referenced_relation" value
+ * @method CollectionMaintenance setPeopleRef()              Sets the current record's "people_ref" value
+ * @method CollectionMaintenance setCategory()               Sets the current record's "category" value
+ * @method CollectionMaintenance setActionObservation()      Sets the current record's "action_observation" value
+ * @method CollectionMaintenance setDescription()            Sets the current record's "description" value
+ * @method CollectionMaintenance setDescriptionTs()          Sets the current record's "description_ts" value
+ * @method CollectionMaintenance setLanguageFullText()       Sets the current record's "language_full_text" value
+ * @method CollectionMaintenance setModificationDateTime()   Sets the current record's "modification_date_time" value
+ * @method CollectionMaintenance setModificationDateMask()   Sets the current record's "modification_date_mask" value
+ * @method CollectionMaintenance setUsers()                  Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCollectionMaintenance extends sfDoctrineRecord
 {
@@ -72,7 +95,7 @@ abstract class BaseCollectionMaintenance extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users', array(
+        $this->hasOne('Users', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }

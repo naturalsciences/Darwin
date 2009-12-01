@@ -50,10 +50,19 @@ $browser->
   with('form')->begin()->
     hasErrors(false)->
   end()->
-  isRedirected()->
+
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
   followRedirect()->
-  isRedirected()->
+
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
   followRedirect()->
+
   with('request')->begin()->
     isParameter('module', 'board')->
     isParameter('action', 'index')->
@@ -65,7 +74,9 @@ $browser->
   info('5 - Logout')->
   
   click('Exit')->
-  isRedirected()->
+  with('response')->begin()->
+    isRedirected()->
+  end()->
   followRedirect()->
   with('request')->begin()->
     isParameter('module', 'account')->

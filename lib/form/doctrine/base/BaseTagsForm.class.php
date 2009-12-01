@@ -3,11 +3,14 @@
 /**
  * Tags form base class.
  *
- * @package    form
- * @subpackage tags
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method Tags getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseTagsForm extends BaseFormDoctrine
+abstract class BaseTagsForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -18,7 +21,7 @@ class BaseTagsForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'            => new sfValidatorDoctrineChoice(array('model' => 'Tags', 'column' => 'id', 'required' => false)),
+      'id'            => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'label'         => new sfValidatorString(),
       'label_indexed' => new sfValidatorString(),
     ));
@@ -26,6 +29,8 @@ class BaseTagsForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('tags[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

@@ -1,9 +1,10 @@
 <?php slot('title', __('Add Specimens'));  ?>
-<?php use_helper('Javascript') ?>
-<?php echo javascript_tag("
-var chgstatus_url='".url_for('widgets/changeStatus?category=specimen')."';
-var chgorder_url='".url_for('widgets/changeOrder?category=specimen')."';
-var reload_url='".url_for('widgets/reloadContent?category=specimen')."';
+
+<script type="text/javascript">
+var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=specimen');?>';
+var chgorder_url='<?php echo url_for('widgets/changeOrder?category=specimen');?>';
+var reload_url='<?php echo url_for('widgets/reloadContent?category=specimen');?>';
+
 $(document).ready(function ()
 {
     $('.widget .widget_content:hidden .error_list:has(li)').each(function(){
@@ -18,7 +19,7 @@ $(document).ready(function ()
             $(this).show();
     });
 });
-");?>
+</script>
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'specimen','eid'=> (! $form->getObject()->isNew() ? $form->getObject()->getId() : null ))); ?>
 <div class="encoding">

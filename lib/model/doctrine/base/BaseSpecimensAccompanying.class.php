@@ -16,10 +16,31 @@
  * @property Taxonomy $Taxonomy
  * @property Mineralogy $Mineralogy
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method string                getType()         Returns the current record's "type" value
+ * @method integer               getSpecimenRef()  Returns the current record's "specimen_ref" value
+ * @method integer               getTaxonRef()     Returns the current record's "taxon_ref" value
+ * @method integer               getMineralRef()   Returns the current record's "mineral_ref" value
+ * @method string                getForm()         Returns the current record's "form" value
+ * @method float                 getQuantity()     Returns the current record's "quantity" value
+ * @method string                getUnit()         Returns the current record's "unit" value
+ * @method Specimens             getSpecimens()    Returns the current record's "Specimens" value
+ * @method Taxonomy              getTaxonomy()     Returns the current record's "Taxonomy" value
+ * @method Mineralogy            getMineralogy()   Returns the current record's "Mineralogy" value
+ * @method SpecimensAccompanying setType()         Sets the current record's "type" value
+ * @method SpecimensAccompanying setSpecimenRef()  Sets the current record's "specimen_ref" value
+ * @method SpecimensAccompanying setTaxonRef()     Sets the current record's "taxon_ref" value
+ * @method SpecimensAccompanying setMineralRef()   Sets the current record's "mineral_ref" value
+ * @method SpecimensAccompanying setForm()         Sets the current record's "form" value
+ * @method SpecimensAccompanying setQuantity()     Sets the current record's "quantity" value
+ * @method SpecimensAccompanying setUnit()         Sets the current record's "unit" value
+ * @method SpecimensAccompanying setSpecimens()    Sets the current record's "Specimens" value
+ * @method SpecimensAccompanying setTaxonomy()     Sets the current record's "Taxonomy" value
+ * @method SpecimensAccompanying setMineralogy()   Sets the current record's "Mineralogy" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseSpecimensAccompanying extends sfDoctrineRecord
 {
@@ -61,7 +82,7 @@ abstract class BaseSpecimensAccompanying extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Specimens', array(
+        $this->hasOne('Specimens', array(
              'local' => 'specimen_ref',
              'foreign' => 'id'));
 

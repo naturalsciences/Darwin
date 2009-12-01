@@ -10,10 +10,19 @@
  * @property Collections $Collections
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer          getCollectionRef()  Returns the current record's "collection_ref" value
+ * @method integer          getUserRef()        Returns the current record's "user_ref" value
+ * @method Collections      getCollections()    Returns the current record's "Collections" value
+ * @method Users            getUsers()          Returns the current record's "Users" value
+ * @method CollectionsAdmin setCollectionRef()  Sets the current record's "collection_ref" value
+ * @method CollectionsAdmin setUserRef()        Sets the current record's "user_ref" value
+ * @method CollectionsAdmin setCollections()    Sets the current record's "Collections" value
+ * @method CollectionsAdmin setUsers()          Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCollectionsAdmin extends sfDoctrineRecord
 {
@@ -35,7 +44,7 @@ abstract class BaseCollectionsAdmin extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Collections', array(
+        $this->hasOne('Collections', array(
              'local' => 'collection_ref',
              'foreign' => 'id'));
 

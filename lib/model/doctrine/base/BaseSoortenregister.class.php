@@ -14,10 +14,27 @@
  * @property Gtu $Gtu
  * @property Habitats $Habitats
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getTaxaRef()     Returns the current record's "taxa_ref" value
+ * @method integer         getGtuRef()      Returns the current record's "gtu_ref" value
+ * @method integer         getHabitatRef()  Returns the current record's "habitat_ref" value
+ * @method date            getDateFrom()    Returns the current record's "date_from" value
+ * @method date            getDateTo()      Returns the current record's "date_to" value
+ * @method Taxonomy        getTaxonomy()    Returns the current record's "Taxonomy" value
+ * @method Gtu             getGtu()         Returns the current record's "Gtu" value
+ * @method Habitats        getHabitats()    Returns the current record's "Habitats" value
+ * @method Soortenregister setTaxaRef()     Sets the current record's "taxa_ref" value
+ * @method Soortenregister setGtuRef()      Sets the current record's "gtu_ref" value
+ * @method Soortenregister setHabitatRef()  Sets the current record's "habitat_ref" value
+ * @method Soortenregister setDateFrom()    Sets the current record's "date_from" value
+ * @method Soortenregister setDateTo()      Sets the current record's "date_to" value
+ * @method Soortenregister setTaxonomy()    Sets the current record's "Taxonomy" value
+ * @method Soortenregister setGtu()         Sets the current record's "Gtu" value
+ * @method Soortenregister setHabitats()    Sets the current record's "Habitats" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseSoortenregister extends sfDoctrineRecord
 {
@@ -50,7 +67,7 @@ abstract class BaseSoortenregister extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Taxonomy', array(
+        $this->hasOne('Taxonomy', array(
              'local' => 'taxa_ref',
              'foreign' => 'id'));
 

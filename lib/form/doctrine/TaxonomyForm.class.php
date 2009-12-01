@@ -26,5 +26,7 @@ class TaxonomyForm extends BaseTaxonomyForm
        'link_url' => 'taxonomy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
+      $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array($this->getI18N()->__('valid'), $this->getI18N()->__('invalid'), $this->getI18N()->__('depracated')), 'required' => true));
+
   }
 }

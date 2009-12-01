@@ -3,31 +3,36 @@
 /**
  * UsersMultimedia form base class.
  *
- * @package    form
- * @subpackage users_multimedia
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method UsersMultimedia getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseUsersMultimediaForm extends BaseFormDoctrine
+abstract class BaseUsersMultimediaForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'              => new sfWidgetFormInputHidden(),
-      'person_user_ref' => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
-      'object_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'Multimedia', 'add_empty' => false)),
+      'person_user_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
+      'object_ref'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'add_empty' => false)),
       'category'        => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'              => new sfValidatorDoctrineChoice(array('model' => 'UsersMultimedia', 'column' => 'id', 'required' => false)),
-      'person_user_ref' => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'object_ref'      => new sfValidatorDoctrineChoice(array('model' => 'Multimedia')),
-      'category'        => new sfValidatorString(),
+      'id'              => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'person_user_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
+      'object_ref'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'))),
+      'category'        => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_multimedia[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

@@ -16,10 +16,31 @@
  * @property date $expedition_to_date
  * @property Doctrine_Collection $Specimens
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                        Returns the current record's "id" value
+ * @method string              getName()                      Returns the current record's "name" value
+ * @method string              getNameTs()                    Returns the current record's "name_ts" value
+ * @method string              getNameIndexed()               Returns the current record's "name_indexed" value
+ * @method string              getNameLanguageFullText()      Returns the current record's "name_language_full_text" value
+ * @method integer             getExpeditionFromDateMask()    Returns the current record's "expedition_from_date_mask" value
+ * @method date                getExpeditionFromDate()        Returns the current record's "expedition_from_date" value
+ * @method integer             getExpeditionToDateMask()      Returns the current record's "expedition_to_date_mask" value
+ * @method date                getExpeditionToDate()          Returns the current record's "expedition_to_date" value
+ * @method Doctrine_Collection getSpecimens()                 Returns the current record's "Specimens" collection
+ * @method Expeditions         setId()                        Sets the current record's "id" value
+ * @method Expeditions         setName()                      Sets the current record's "name" value
+ * @method Expeditions         setNameTs()                    Sets the current record's "name_ts" value
+ * @method Expeditions         setNameIndexed()               Sets the current record's "name_indexed" value
+ * @method Expeditions         setNameLanguageFullText()      Sets the current record's "name_language_full_text" value
+ * @method Expeditions         setExpeditionFromDateMask()    Sets the current record's "expedition_from_date_mask" value
+ * @method Expeditions         setExpeditionFromDate()        Sets the current record's "expedition_from_date" value
+ * @method Expeditions         setExpeditionToDateMask()      Sets the current record's "expedition_to_date_mask" value
+ * @method Expeditions         setExpeditionToDate()          Sets the current record's "expedition_to_date" value
+ * @method Expeditions         setSpecimens()                 Sets the current record's "Specimens" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseExpeditions extends sfDoctrineRecord
 {
@@ -67,7 +88,7 @@ abstract class BaseExpeditions extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('Specimens', array(
+        $this->hasMany('Specimens', array(
              'local' => 'id',
              'foreign' => 'expedition_ref'));
     }

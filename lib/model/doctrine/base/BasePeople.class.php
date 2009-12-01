@@ -31,10 +31,61 @@
  * @property Doctrine_Collection $Collections
  * @property Doctrine_Collection $PeopleAliases
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                    Returns the current record's "id" value
+ * @method boolean             getIsPhysical()            Returns the current record's "is_physical" value
+ * @method string              getSubType()               Returns the current record's "sub_type" value
+ * @method enum                getPublicClass()           Returns the current record's "public_class" value
+ * @method string              getFormatedName()          Returns the current record's "formated_name" value
+ * @method string              getFormatedNameIndexed()   Returns the current record's "formated_name_indexed" value
+ * @method string              getFormatedNameTs()        Returns the current record's "formated_name_ts" value
+ * @method string              getTitle()                 Returns the current record's "title" value
+ * @method string              getFamilyName()            Returns the current record's "family_name" value
+ * @method string              getGivenName()             Returns the current record's "given_name" value
+ * @method string              getAdditionalNames()       Returns the current record's "additional_names" value
+ * @method integer             getBirthDateMask()         Returns the current record's "birth_date_mask" value
+ * @method date                getBirthDate()             Returns the current record's "birth_date" value
+ * @method enum                getGender()                Returns the current record's "gender" value
+ * @method integer             getDbPeopleType()          Returns the current record's "db_people_type" value
+ * @method integer             getEndDateMask()           Returns the current record's "end_date_mask" value
+ * @method date                getEndDate()               Returns the current record's "end_date" value
+ * @method Doctrine_Collection getCataloguePeople()       Returns the current record's "CataloguePeople" collection
+ * @method Doctrine_Collection getPeopleLanguages()       Returns the current record's "PeopleLanguages" collection
+ * @method Doctrine_Collection getPeopleRelationships()   Returns the current record's "PeopleRelationships" collection
+ * @method Doctrine_Collection getPeopleComm()            Returns the current record's "PeopleComm" collection
+ * @method Doctrine_Collection getPeopleAddresses()       Returns the current record's "PeopleAddresses" collection
+ * @method Doctrine_Collection getPeopleMultimedia()      Returns the current record's "PeopleMultimedia" collection
+ * @method Doctrine_Collection getCollections()           Returns the current record's "Collections" collection
+ * @method Doctrine_Collection getPeopleAliases()         Returns the current record's "PeopleAliases" collection
+ * @method People              setId()                    Sets the current record's "id" value
+ * @method People              setIsPhysical()            Sets the current record's "is_physical" value
+ * @method People              setSubType()               Sets the current record's "sub_type" value
+ * @method People              setPublicClass()           Sets the current record's "public_class" value
+ * @method People              setFormatedName()          Sets the current record's "formated_name" value
+ * @method People              setFormatedNameIndexed()   Sets the current record's "formated_name_indexed" value
+ * @method People              setFormatedNameTs()        Sets the current record's "formated_name_ts" value
+ * @method People              setTitle()                 Sets the current record's "title" value
+ * @method People              setFamilyName()            Sets the current record's "family_name" value
+ * @method People              setGivenName()             Sets the current record's "given_name" value
+ * @method People              setAdditionalNames()       Sets the current record's "additional_names" value
+ * @method People              setBirthDateMask()         Sets the current record's "birth_date_mask" value
+ * @method People              setBirthDate()             Sets the current record's "birth_date" value
+ * @method People              setGender()                Sets the current record's "gender" value
+ * @method People              setDbPeopleType()          Sets the current record's "db_people_type" value
+ * @method People              setEndDateMask()           Sets the current record's "end_date_mask" value
+ * @method People              setEndDate()               Sets the current record's "end_date" value
+ * @method People              setCataloguePeople()       Sets the current record's "CataloguePeople" collection
+ * @method People              setPeopleLanguages()       Sets the current record's "PeopleLanguages" collection
+ * @method People              setPeopleRelationships()   Sets the current record's "PeopleRelationships" collection
+ * @method People              setPeopleComm()            Sets the current record's "PeopleComm" collection
+ * @method People              setPeopleAddresses()       Sets the current record's "PeopleAddresses" collection
+ * @method People              setPeopleMultimedia()      Sets the current record's "PeopleMultimedia" collection
+ * @method People              setCollections()           Sets the current record's "Collections" collection
+ * @method People              setPeopleAliases()         Sets the current record's "PeopleAliases" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BasePeople extends sfDoctrineRecord
 {
@@ -104,7 +155,7 @@ abstract class BasePeople extends sfDoctrineRecord
         $this->hasColumn('db_people_type', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('end_date_mask', 'integer', null, array(
              'type' => 'integer',
@@ -121,7 +172,7 @@ abstract class BasePeople extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('CataloguePeople', array(
+        $this->hasMany('CataloguePeople', array(
              'local' => 'id',
              'foreign' => 'people_ref'));
 

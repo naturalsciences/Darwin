@@ -16,10 +16,31 @@
  * @property People $People1
  * @property People $People2
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method string              getRelationshipType()  Returns the current record's "relationship_type" value
+ * @method integer             getPerson1Ref()        Returns the current record's "person_1_ref" value
+ * @method integer             getPerson2Ref()        Returns the current record's "person_2_ref" value
+ * @method string              getPersonTitle()       Returns the current record's "person_title" value
+ * @method string              getPath()              Returns the current record's "path" value
+ * @method string              getOrganizationUnit()  Returns the current record's "organization_unit" value
+ * @method string              getPersonUserRole()    Returns the current record's "person_user_role" value
+ * @method string              getActivityPeriod()    Returns the current record's "activity_period" value
+ * @method People              getPeople1()           Returns the current record's "People1" value
+ * @method People              getPeople2()           Returns the current record's "People2" value
+ * @method PeopleRelationships setRelationshipType()  Sets the current record's "relationship_type" value
+ * @method PeopleRelationships setPerson1Ref()        Sets the current record's "person_1_ref" value
+ * @method PeopleRelationships setPerson2Ref()        Sets the current record's "person_2_ref" value
+ * @method PeopleRelationships setPersonTitle()       Sets the current record's "person_title" value
+ * @method PeopleRelationships setPath()              Sets the current record's "path" value
+ * @method PeopleRelationships setOrganizationUnit()  Sets the current record's "organization_unit" value
+ * @method PeopleRelationships setPersonUserRole()    Sets the current record's "person_user_role" value
+ * @method PeopleRelationships setActivityPeriod()    Sets the current record's "activity_period" value
+ * @method PeopleRelationships setPeople1()           Sets the current record's "People1" value
+ * @method PeopleRelationships setPeople2()           Sets the current record's "People2" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BasePeopleRelationships extends sfDoctrineRecord
 {
@@ -59,7 +80,7 @@ abstract class BasePeopleRelationships extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('People as People1', array(
+        $this->hasOne('People as People1', array(
              'local' => 'person_1_ref',
              'foreign' => 'id'));
 

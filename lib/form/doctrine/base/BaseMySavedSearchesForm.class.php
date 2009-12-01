@@ -3,11 +3,14 @@
 /**
  * MySavedSearches form base class.
  *
- * @package    form
- * @subpackage my_saved_searches
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method MySavedSearches getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseMySavedSearchesForm extends BaseFormDoctrine
+abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -21,10 +24,10 @@ class BaseMySavedSearchesForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'                 => new sfValidatorDoctrineChoice(array('model' => 'MySavedSearches', 'column' => 'user_ref', 'required' => false)),
-      'name'                     => new sfValidatorDoctrineChoice(array('model' => 'MySavedSearches', 'column' => 'name', 'required' => false)),
+      'user_ref'                 => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_ref', 'required' => false)),
+      'name'                     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'name', 'required' => false)),
       'search_criterias'         => new sfValidatorString(),
-      'favorite'                 => new sfValidatorBoolean(),
+      'favorite'                 => new sfValidatorBoolean(array('required' => false)),
       'modification_date_time'   => new sfValidatorDateTime(),
       'visible_fields_in_result' => new sfValidatorString(),
     ));
@@ -32,6 +35,8 @@ class BaseMySavedSearchesForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('my_saved_searches[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

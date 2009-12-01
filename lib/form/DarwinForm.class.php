@@ -1,6 +1,6 @@
 <?php
 
-abstract class DarwinForm extends sfForm
+abstract class DarwinForm extends BaseForm
 {
   protected function getI18N()
   {

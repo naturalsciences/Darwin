@@ -27,10 +27,53 @@
  * @property SpecimenIndividuals $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimenPartsInsurances
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                      Returns the current record's "id" value
+ * @method integer             getSpecimenIndividualRef()   Returns the current record's "specimen_individual_ref" value
+ * @method string              getSpecimenPart()            Returns the current record's "specimen_part" value
+ * @method boolean             getComplete()                Returns the current record's "complete" value
+ * @method string              getBuilding()                Returns the current record's "building" value
+ * @method string              getFloor()                   Returns the current record's "floor" value
+ * @method string              getRoom()                    Returns the current record's "room" value
+ * @method string              getRow()                     Returns the current record's "row" value
+ * @method string              getShelf()                   Returns the current record's "shelf" value
+ * @method string              getContainer()               Returns the current record's "container" value
+ * @method string              getSubContainer()            Returns the current record's "sub_container" value
+ * @method string              getContainerType()           Returns the current record's "container_type" value
+ * @method string              getSubContainerType()        Returns the current record's "sub_container_type" value
+ * @method string              getStorage()                 Returns the current record's "storage" value
+ * @method boolean             getSurnumerary()             Returns the current record's "surnumerary" value
+ * @method string              getSpecimenStatus()          Returns the current record's "specimen_status" value
+ * @method integer             getSpecimenPartCountMin()    Returns the current record's "specimen_part_count_min" value
+ * @method integer             getSpecimenPartCountMax()    Returns the current record's "specimen_part_count_max" value
+ * @method string              getCategory()                Returns the current record's "category" value
+ * @method SpecimenIndividuals getSpecimenIndividuals()     Returns the current record's "SpecimenIndividuals" value
+ * @method Doctrine_Collection getSpecimenPartsInsurances() Returns the current record's "SpecimenPartsInsurances" collection
+ * @method SpecimenParts       setId()                      Sets the current record's "id" value
+ * @method SpecimenParts       setSpecimenIndividualRef()   Sets the current record's "specimen_individual_ref" value
+ * @method SpecimenParts       setSpecimenPart()            Sets the current record's "specimen_part" value
+ * @method SpecimenParts       setComplete()                Sets the current record's "complete" value
+ * @method SpecimenParts       setBuilding()                Sets the current record's "building" value
+ * @method SpecimenParts       setFloor()                   Sets the current record's "floor" value
+ * @method SpecimenParts       setRoom()                    Sets the current record's "room" value
+ * @method SpecimenParts       setRow()                     Sets the current record's "row" value
+ * @method SpecimenParts       setShelf()                   Sets the current record's "shelf" value
+ * @method SpecimenParts       setContainer()               Sets the current record's "container" value
+ * @method SpecimenParts       setSubContainer()            Sets the current record's "sub_container" value
+ * @method SpecimenParts       setContainerType()           Sets the current record's "container_type" value
+ * @method SpecimenParts       setSubContainerType()        Sets the current record's "sub_container_type" value
+ * @method SpecimenParts       setStorage()                 Sets the current record's "storage" value
+ * @method SpecimenParts       setSurnumerary()             Sets the current record's "surnumerary" value
+ * @method SpecimenParts       setSpecimenStatus()          Sets the current record's "specimen_status" value
+ * @method SpecimenParts       setSpecimenPartCountMin()    Sets the current record's "specimen_part_count_min" value
+ * @method SpecimenParts       setSpecimenPartCountMax()    Sets the current record's "specimen_part_count_max" value
+ * @method SpecimenParts       setCategory()                Sets the current record's "category" value
+ * @method SpecimenParts       setSpecimenIndividuals()     Sets the current record's "SpecimenIndividuals" value
+ * @method SpecimenParts       setSpecimenPartsInsurances() Sets the current record's "SpecimenPartsInsurances" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseSpecimenParts extends sfDoctrineRecord
 {
@@ -105,12 +148,12 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
         $this->hasColumn('specimen_part_count_min', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('specimen_part_count_max', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('category', 'string', null, array(
              'type' => 'string',
@@ -121,7 +164,7 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('SpecimenIndividuals', array(
+        $this->hasOne('SpecimenIndividuals', array(
              'local' => 'specimen_individual_ref',
              'foreign' => 'id'));
 

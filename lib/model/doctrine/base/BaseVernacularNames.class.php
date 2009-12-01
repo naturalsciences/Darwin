@@ -11,10 +11,21 @@
  * @property string $country_language_full_text
  * @property VernacularNames $VernacularNames
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getVernacularClassRef()         Returns the current record's "vernacular_class_ref" value
+ * @method string          getName()                       Returns the current record's "name" value
+ * @method string          getNameTs()                     Returns the current record's "name_ts" value
+ * @method string          getCountryLanguageFullText()    Returns the current record's "country_language_full_text" value
+ * @method VernacularNames getVernacularNames()            Returns the current record's "VernacularNames" value
+ * @method VernacularNames setVernacularClassRef()         Sets the current record's "vernacular_class_ref" value
+ * @method VernacularNames setName()                       Sets the current record's "name" value
+ * @method VernacularNames setNameTs()                     Sets the current record's "name_ts" value
+ * @method VernacularNames setCountryLanguageFullText()    Sets the current record's "country_language_full_text" value
+ * @method VernacularNames setVernacularNames()            Sets the current record's "VernacularNames" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseVernacularNames extends sfDoctrineRecord
 {
@@ -40,7 +51,7 @@ abstract class BaseVernacularNames extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('VernacularNames', array(
+        $this->hasOne('VernacularNames', array(
              'local' => 'vernacular_class_ref',
              'foreign' => 'id'));
     }

@@ -3,24 +3,27 @@
 /**
  * UsersTrackingRecords form base class.
  *
- * @package    form
- * @subpackage users_tracking_records
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method UsersTrackingRecords getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseUsersTrackingRecordsForm extends BaseFormDoctrine
+abstract class BaseUsersTrackingRecordsForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
-      'tracking_ref' => new sfWidgetFormInput(),
+      'tracking_ref' => new sfWidgetFormInputText(),
       'field_name'   => new sfWidgetFormTextarea(),
       'old_value'    => new sfWidgetFormTextarea(),
       'new_value'    => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'           => new sfValidatorDoctrineChoice(array('model' => 'UsersTrackingRecords', 'column' => 'id', 'required' => false)),
+      'id'           => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'tracking_ref' => new sfValidatorInteger(),
       'field_name'   => new sfValidatorString(),
       'old_value'    => new sfValidatorString(array('required' => false)),
@@ -30,6 +33,8 @@ class BaseUsersTrackingRecordsForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('users_tracking_records[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

@@ -9,7 +9,7 @@ class SearchExpeditionForm extends DarwinForm
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $minDate = new DateTime(strval(min($yearsKeyVal)).'/1/1 0:0:0');
     $maxDate = new DateTime(strval(max($yearsKeyVal)).'/12/31 23:59:59');
-    $this->setWidgets(array('name' => new sfWidgetFormInput(),
+    $this->setWidgets(array('name' => new sfWidgetFormInputText(),
                             'from_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
                                                                                'image'=>'/images/calendar.gif', 
                                                                                'format' => '%day%/%month%/%year%', 

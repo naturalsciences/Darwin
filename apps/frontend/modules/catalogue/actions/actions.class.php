@@ -23,7 +23,7 @@ class catalogueActions extends sfActions
     }
     else
     {
-      $this->remoteItem = Doctrine::getTable($modelName)->find($this->relation->getRecordId_2());
+      $this->remoteItem = Doctrine::getTable($modelName)->find($this->relation->getRecordId2());
     }
     $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
   }
@@ -52,8 +52,8 @@ class catalogueActions extends sfActions
     if(is_numeric($request->getParameter('relation_id')))
       $r = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relation_id'));
     $r->setReferencedRelation($tableName);
-    $r->setRecordId_1($ref_item);
-    $r->setRecordId_2($linked_item);
+    $r->setRecordId1($ref_item);
+    $r->setRecordId2($linked_item);
     $r->setRelationshipType($link_type == 'rename' ? 'current_name' : 'recombined from');
     try{
       $r->save();

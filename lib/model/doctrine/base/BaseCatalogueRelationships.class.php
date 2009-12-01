@@ -11,10 +11,21 @@
  * @property integer $record_id_2
  * @property string $relationship_type
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer                getId()                  Returns the current record's "id" value
+ * @method string                 getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer                getRecordId1()           Returns the current record's "record_id_1" value
+ * @method integer                getRecordId2()           Returns the current record's "record_id_2" value
+ * @method string                 getRelationshipType()    Returns the current record's "relationship_type" value
+ * @method CatalogueRelationships setId()                  Sets the current record's "id" value
+ * @method CatalogueRelationships setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method CatalogueRelationships setRecordId1()           Sets the current record's "record_id_1" value
+ * @method CatalogueRelationships setRecordId2()           Sets the current record's "record_id_2" value
+ * @method CatalogueRelationships setRelationshipType()    Sets the current record's "relationship_type" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCatalogueRelationships extends sfDoctrineRecord
 {
@@ -45,4 +56,9 @@ abstract class BaseCatalogueRelationships extends sfDoctrineRecord
              ));
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+        
+    }
 }

@@ -20,10 +20,39 @@
  * @property string $address_parts_ts
  * @property People $People
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getId()                Returns the current record's "id" value
+ * @method integer         getPersonUserRef()     Returns the current record's "person_user_ref" value
+ * @method string          getTag()               Returns the current record's "tag" value
+ * @method string          getOrganizationUnit()  Returns the current record's "organization_unit" value
+ * @method string          getPersonUserRole()    Returns the current record's "person_user_role" value
+ * @method string          getActivityPeriod()    Returns the current record's "activity_period" value
+ * @method string          getPoBox()             Returns the current record's "po_box" value
+ * @method string          getExtendedAddress()   Returns the current record's "extended_address" value
+ * @method string          getLocality()          Returns the current record's "locality" value
+ * @method string          getRegion()            Returns the current record's "region" value
+ * @method string          getZipCode()           Returns the current record's "zip_code" value
+ * @method string          getCountry()           Returns the current record's "country" value
+ * @method string          getAddressPartsTs()    Returns the current record's "address_parts_ts" value
+ * @method People          getPeople()            Returns the current record's "People" value
+ * @method PeopleAddresses setId()                Sets the current record's "id" value
+ * @method PeopleAddresses setPersonUserRef()     Sets the current record's "person_user_ref" value
+ * @method PeopleAddresses setTag()               Sets the current record's "tag" value
+ * @method PeopleAddresses setOrganizationUnit()  Sets the current record's "organization_unit" value
+ * @method PeopleAddresses setPersonUserRole()    Sets the current record's "person_user_role" value
+ * @method PeopleAddresses setActivityPeriod()    Sets the current record's "activity_period" value
+ * @method PeopleAddresses setPoBox()             Sets the current record's "po_box" value
+ * @method PeopleAddresses setExtendedAddress()   Sets the current record's "extended_address" value
+ * @method PeopleAddresses setLocality()          Sets the current record's "locality" value
+ * @method PeopleAddresses setRegion()            Sets the current record's "region" value
+ * @method PeopleAddresses setZipCode()           Sets the current record's "zip_code" value
+ * @method PeopleAddresses setCountry()           Sets the current record's "country" value
+ * @method PeopleAddresses setAddressPartsTs()    Sets the current record's "address_parts_ts" value
+ * @method PeopleAddresses setPeople()            Sets the current record's "People" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BasePeopleAddresses extends sfDoctrineRecord
 {
@@ -80,7 +109,7 @@ abstract class BasePeopleAddresses extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('People', array(
+        $this->hasOne('People', array(
              'local' => 'person_user_ref',
              'foreign' => 'id'));
     }

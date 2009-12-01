@@ -3,19 +3,22 @@
 /**
  * PeopleRelationships form base class.
  *
- * @package    form
- * @subpackage people_relationships
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method PeopleRelationships getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasePeopleRelationshipsForm extends BaseFormDoctrine
+abstract class BasePeopleRelationshipsForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
       'relationship_type' => new sfWidgetFormTextarea(),
-      'person_1_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
-      'person_2_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
+      'person_1_ref'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People1'), 'add_empty' => false)),
+      'person_2_ref'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People2'), 'add_empty' => false)),
       'person_title'      => new sfWidgetFormTextarea(),
       'path'              => new sfWidgetFormTextarea(),
       'organization_unit' => new sfWidgetFormTextarea(),
@@ -24,10 +27,10 @@ class BasePeopleRelationshipsForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                => new sfValidatorDoctrineChoice(array('model' => 'PeopleRelationships', 'column' => 'id', 'required' => false)),
-      'relationship_type' => new sfValidatorString(),
-      'person_1_ref'      => new sfValidatorDoctrineChoice(array('model' => 'People')),
-      'person_2_ref'      => new sfValidatorDoctrineChoice(array('model' => 'People')),
+      'id'                => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'relationship_type' => new sfValidatorString(array('required' => false)),
+      'person_1_ref'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People1'))),
+      'person_2_ref'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People2'))),
       'person_title'      => new sfValidatorString(array('required' => false)),
       'path'              => new sfValidatorString(array('required' => false)),
       'organization_unit' => new sfValidatorString(array('required' => false)),
@@ -38,6 +41,8 @@ class BasePeopleRelationshipsForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('people_relationships[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

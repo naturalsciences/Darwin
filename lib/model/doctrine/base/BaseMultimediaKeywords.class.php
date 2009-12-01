@@ -10,10 +10,19 @@
  * @property string $keyword_indexed
  * @property Multimedia $Multimedia
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer            getObjectRef()       Returns the current record's "object_ref" value
+ * @method string             getKeyword()         Returns the current record's "keyword" value
+ * @method string             getKeywordIndexed()  Returns the current record's "keyword_indexed" value
+ * @method Multimedia         getMultimedia()      Returns the current record's "Multimedia" value
+ * @method MultimediaKeywords setObjectRef()       Sets the current record's "object_ref" value
+ * @method MultimediaKeywords setKeyword()         Sets the current record's "keyword" value
+ * @method MultimediaKeywords setKeywordIndexed()  Sets the current record's "keyword_indexed" value
+ * @method MultimediaKeywords setMultimedia()      Sets the current record's "Multimedia" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseMultimediaKeywords extends sfDoctrineRecord
 {
@@ -36,7 +45,7 @@ abstract class BaseMultimediaKeywords extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Multimedia', array(
+        $this->hasOne('Multimedia', array(
              'local' => 'object_ref',
              'foreign' => 'id'));
     }

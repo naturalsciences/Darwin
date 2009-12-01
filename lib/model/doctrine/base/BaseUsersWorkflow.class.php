@@ -14,10 +14,27 @@
  * @property string $comment
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer       getId()                     Returns the current record's "id" value
+ * @method string        getReferencedRelation()     Returns the current record's "referenced_relation" value
+ * @method integer       getRecordId()               Returns the current record's "record_id" value
+ * @method integer       getUserRef()                Returns the current record's "user_ref" value
+ * @method string        getStatus()                 Returns the current record's "status" value
+ * @method timestamp     getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method string        getComment()                Returns the current record's "comment" value
+ * @method Users         getUsers()                  Returns the current record's "Users" value
+ * @method UsersWorkflow setId()                     Sets the current record's "id" value
+ * @method UsersWorkflow setReferencedRelation()     Sets the current record's "referenced_relation" value
+ * @method UsersWorkflow setRecordId()               Sets the current record's "record_id" value
+ * @method UsersWorkflow setUserRef()                Sets the current record's "user_ref" value
+ * @method UsersWorkflow setStatus()                 Sets the current record's "status" value
+ * @method UsersWorkflow setModificationDateTime()   Sets the current record's "modification_date_time" value
+ * @method UsersWorkflow setComment()                Sets the current record's "comment" value
+ * @method UsersWorkflow setUsers()                  Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersWorkflow extends sfDoctrineRecord
 {
@@ -58,7 +75,7 @@ abstract class BaseUsersWorkflow extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users', array(
+        $this->hasOne('Users', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }

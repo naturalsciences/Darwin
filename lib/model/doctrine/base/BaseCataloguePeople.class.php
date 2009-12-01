@@ -13,10 +13,25 @@
  * @property integer $people_ref
  * @property People $People
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getId()                  Returns the current record's "id" value
+ * @method string          getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer         getRecordId()            Returns the current record's "record_id" value
+ * @method string          getPeopleType()          Returns the current record's "people_type" value
+ * @method integer         getOrderBy()             Returns the current record's "order_by" value
+ * @method integer         getPeopleRef()           Returns the current record's "people_ref" value
+ * @method People          getPeople()              Returns the current record's "People" value
+ * @method CataloguePeople setId()                  Sets the current record's "id" value
+ * @method CataloguePeople setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method CataloguePeople setRecordId()            Sets the current record's "record_id" value
+ * @method CataloguePeople setPeopleType()          Sets the current record's "people_type" value
+ * @method CataloguePeople setOrderBy()             Sets the current record's "order_by" value
+ * @method CataloguePeople setPeopleRef()           Sets the current record's "people_ref" value
+ * @method CataloguePeople setPeople()              Sets the current record's "People" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCataloguePeople extends sfDoctrineRecord
 {
@@ -44,7 +59,7 @@ abstract class BaseCataloguePeople extends sfDoctrineRecord
         $this->hasColumn('order_by', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('people_ref', 'integer', null, array(
              'type' => 'integer',
@@ -55,7 +70,7 @@ abstract class BaseCataloguePeople extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('People', array(
+        $this->hasOne('People', array(
              'local' => 'people_ref',
              'foreign' => 'id'));
     }

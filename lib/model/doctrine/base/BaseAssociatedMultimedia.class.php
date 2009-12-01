@@ -11,10 +11,21 @@
  * @property integer $multimedia_ref
  * @property Multimedia $Multimedia
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer              getId()                  Returns the current record's "id" value
+ * @method string               getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer              getRecordId()            Returns the current record's "record_id" value
+ * @method integer              getMultimediaRef()       Returns the current record's "multimedia_ref" value
+ * @method Multimedia           getMultimedia()          Returns the current record's "Multimedia" value
+ * @method AssociatedMultimedia setId()                  Sets the current record's "id" value
+ * @method AssociatedMultimedia setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method AssociatedMultimedia setRecordId()            Sets the current record's "record_id" value
+ * @method AssociatedMultimedia setMultimediaRef()       Sets the current record's "multimedia_ref" value
+ * @method AssociatedMultimedia setMultimedia()          Sets the current record's "Multimedia" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseAssociatedMultimedia extends sfDoctrineRecord
 {
@@ -43,7 +54,7 @@ abstract class BaseAssociatedMultimedia extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Multimedia', array(
+        $this->hasOne('Multimedia', array(
              'local' => 'multimedia_ref',
              'foreign' => 'id'));
     }

@@ -12,10 +12,23 @@
  * @property timestamp $modification_date_time
  * @property Users $User
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer          getUserRef()                Returns the current record's "user_ref" value
+ * @method string           getName()                   Returns the current record's "name" value
+ * @method string           getSpecimenIds()            Returns the current record's "specimen_ids" value
+ * @method boolean          getFavorite()               Returns the current record's "favorite" value
+ * @method timestamp        getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method Users            getUser()                   Returns the current record's "User" value
+ * @method MySavedSpecimens setUserRef()                Sets the current record's "user_ref" value
+ * @method MySavedSpecimens setName()                   Sets the current record's "name" value
+ * @method MySavedSpecimens setSpecimenIds()            Sets the current record's "specimen_ids" value
+ * @method MySavedSpecimens setFavorite()               Sets the current record's "favorite" value
+ * @method MySavedSpecimens setModificationDateTime()   Sets the current record's "modification_date_time" value
+ * @method MySavedSpecimens setUser()                   Sets the current record's "User" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseMySavedSpecimens extends sfDoctrineRecord
 {
@@ -48,7 +61,7 @@ abstract class BaseMySavedSpecimens extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users as User', array(
+        $this->hasOne('Users as User', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }

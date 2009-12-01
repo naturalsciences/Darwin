@@ -10,10 +10,19 @@
  * @property string $old_value
  * @property string $new_value
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer              getTrackingRef()  Returns the current record's "tracking_ref" value
+ * @method string               getFieldName()    Returns the current record's "field_name" value
+ * @method string               getOldValue()     Returns the current record's "old_value" value
+ * @method string               getNewValue()     Returns the current record's "new_value" value
+ * @method UsersTrackingRecords setTrackingRef()  Sets the current record's "tracking_ref" value
+ * @method UsersTrackingRecords setFieldName()    Sets the current record's "field_name" value
+ * @method UsersTrackingRecords setOldValue()     Sets the current record's "old_value" value
+ * @method UsersTrackingRecords setNewValue()     Sets the current record's "new_value" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersTrackingRecords extends sfDoctrineRecord
 {
@@ -36,4 +45,9 @@ abstract class BaseUsersTrackingRecords extends sfDoctrineRecord
              ));
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+        
+    }
 }

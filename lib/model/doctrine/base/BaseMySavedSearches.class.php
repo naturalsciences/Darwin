@@ -13,10 +13,25 @@
  * @property string $visible_fields_in_result
  * @property Users $User
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer         getUserRef()                  Returns the current record's "user_ref" value
+ * @method string          getName()                     Returns the current record's "name" value
+ * @method string          getSearchCriterias()          Returns the current record's "search_criterias" value
+ * @method boolean         getFavorite()                 Returns the current record's "favorite" value
+ * @method timestamp       getModificationDateTime()     Returns the current record's "modification_date_time" value
+ * @method string          getVisibleFieldsInResult()    Returns the current record's "visible_fields_in_result" value
+ * @method Users           getUser()                     Returns the current record's "User" value
+ * @method MySavedSearches setUserRef()                  Sets the current record's "user_ref" value
+ * @method MySavedSearches setName()                     Sets the current record's "name" value
+ * @method MySavedSearches setSearchCriterias()          Sets the current record's "search_criterias" value
+ * @method MySavedSearches setFavorite()                 Sets the current record's "favorite" value
+ * @method MySavedSearches setModificationDateTime()     Sets the current record's "modification_date_time" value
+ * @method MySavedSearches setVisibleFieldsInResult()    Sets the current record's "visible_fields_in_result" value
+ * @method MySavedSearches setUser()                     Sets the current record's "User" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseMySavedSearches extends sfDoctrineRecord
 {
@@ -53,7 +68,7 @@ abstract class BaseMySavedSearches extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users as User', array(
+        $this->hasOne('Users as User', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }

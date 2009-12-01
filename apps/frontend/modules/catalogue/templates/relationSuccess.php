@@ -8,7 +8,7 @@
   <label class="catalogue_action_type"><?php echo __('is recombined into');?> :</label>
 <?php endif;?>
 <form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" id="renamed">
-   <input type="hidden" name="record_id_2" id="relation_catalogue_id" value="<?php echo $relation->getRecordId_2(); ?>" />
+   <input type="hidden" name="record_id_2" id="relation_catalogue_id" value="<?php echo $relation->getRecordId2(); ?>" />
    <input type="hidden" name="relation_id" value="<?php echo $relation->getId(); ?>"/>
    <div id="relation_catalogue_name" <?php if($remoteItem->getId()==0):?> class="hidden"> <?php else: ?>> <?php echo $remoteItem->getName();?><?php endif;?></div>
     <div class="clear"> </div>

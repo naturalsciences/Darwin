@@ -24,10 +24,47 @@
  * @property Doctrine_Collection $Lithology
  * @property Doctrine_Collection $Specimens
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                      Returns the current record's "id" value
+ * @method string              getName()                    Returns the current record's "name" value
+ * @method string              getNameIndexed()             Returns the current record's "name_indexed" value
+ * @method integer             getLevelRef()                Returns the current record's "level_ref" value
+ * @method string              getStatus()                  Returns the current record's "status" value
+ * @method string              getPath()                    Returns the current record's "path" value
+ * @method integer             getParentRef()               Returns the current record's "parent_ref" value
+ * @method integer             getUnitMainGroupRef()        Returns the current record's "unit_main_group_ref" value
+ * @method string              getUnitMainGroupIndexed()    Returns the current record's "unit_main_group_indexed" value
+ * @method integer             getUnitGroupRef()            Returns the current record's "unit_group_ref" value
+ * @method string              getUnitGroupIndexed()        Returns the current record's "unit_group_indexed" value
+ * @method integer             getUnitSubGroupRef()         Returns the current record's "unit_sub_group_ref" value
+ * @method string              getUnitSubGroupIndexed()     Returns the current record's "unit_sub_group_indexed" value
+ * @method integer             getUnitRockRef()             Returns the current record's "unit_rock_ref" value
+ * @method string              getUnitRockIndexed()         Returns the current record's "unit_rock_indexed" value
+ * @method Lithology           getParent()                  Returns the current record's "Parent" value
+ * @method Doctrine_Collection getLithology()               Returns the current record's "Lithology" collection
+ * @method Doctrine_Collection getSpecimens()               Returns the current record's "Specimens" collection
+ * @method Lithology           setId()                      Sets the current record's "id" value
+ * @method Lithology           setName()                    Sets the current record's "name" value
+ * @method Lithology           setNameIndexed()             Sets the current record's "name_indexed" value
+ * @method Lithology           setLevelRef()                Sets the current record's "level_ref" value
+ * @method Lithology           setStatus()                  Sets the current record's "status" value
+ * @method Lithology           setPath()                    Sets the current record's "path" value
+ * @method Lithology           setParentRef()               Sets the current record's "parent_ref" value
+ * @method Lithology           setUnitMainGroupRef()        Sets the current record's "unit_main_group_ref" value
+ * @method Lithology           setUnitMainGroupIndexed()    Sets the current record's "unit_main_group_indexed" value
+ * @method Lithology           setUnitGroupRef()            Sets the current record's "unit_group_ref" value
+ * @method Lithology           setUnitGroupIndexed()        Sets the current record's "unit_group_indexed" value
+ * @method Lithology           setUnitSubGroupRef()         Sets the current record's "unit_sub_group_ref" value
+ * @method Lithology           setUnitSubGroupIndexed()     Sets the current record's "unit_sub_group_indexed" value
+ * @method Lithology           setUnitRockRef()             Sets the current record's "unit_rock_ref" value
+ * @method Lithology           setUnitRockIndexed()         Sets the current record's "unit_rock_indexed" value
+ * @method Lithology           setParent()                  Sets the current record's "Parent" value
+ * @method Lithology           setLithology()               Sets the current record's "Lithology" collection
+ * @method Lithology           setSpecimens()               Sets the current record's "Specimens" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseLithology extends sfDoctrineRecord
 {
@@ -109,7 +146,7 @@ abstract class BaseLithology extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Lithology as Parent', array(
+        $this->hasOne('Lithology as Parent', array(
              'local' => 'parent_ref',
              'foreign' => 'id'));
 

@@ -16,10 +16,31 @@
  * @property string $habitat_system
  * @property Doctrine_Collection $Soortenregister
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                             Returns the current record's "id" value
+ * @method string              getName()                           Returns the current record's "name" value
+ * @method string              getPath()                           Returns the current record's "path" value
+ * @method string              getCode()                           Returns the current record's "code" value
+ * @method string              getCodeIndexed()                    Returns the current record's "code_indexed" value
+ * @method string              getDescription()                    Returns the current record's "description" value
+ * @method string              getDescriptionTs()                  Returns the current record's "description_ts" value
+ * @method string              getDescriptionLanguageFullText()    Returns the current record's "description_language_full_text" value
+ * @method string              getHabitatSystem()                  Returns the current record's "habitat_system" value
+ * @method Doctrine_Collection getSoortenregister()                Returns the current record's "Soortenregister" collection
+ * @method Habitats            setId()                             Sets the current record's "id" value
+ * @method Habitats            setName()                           Sets the current record's "name" value
+ * @method Habitats            setPath()                           Sets the current record's "path" value
+ * @method Habitats            setCode()                           Sets the current record's "code" value
+ * @method Habitats            setCodeIndexed()                    Sets the current record's "code_indexed" value
+ * @method Habitats            setDescription()                    Sets the current record's "description" value
+ * @method Habitats            setDescriptionTs()                  Sets the current record's "description_ts" value
+ * @method Habitats            setDescriptionLanguageFullText()    Sets the current record's "description_language_full_text" value
+ * @method Habitats            setHabitatSystem()                  Sets the current record's "habitat_system" value
+ * @method Habitats            setSoortenregister()                Sets the current record's "Soortenregister" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseHabitats extends sfDoctrineRecord
 {
@@ -68,7 +89,7 @@ abstract class BaseHabitats extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('Soortenregister', array(
+        $this->hasMany('Soortenregister', array(
              'local' => 'id',
              'foreign' => 'habitat_ref'));
     }

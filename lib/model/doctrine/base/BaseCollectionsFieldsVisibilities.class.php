@@ -14,10 +14,27 @@
  * @property Collections $Collections
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer                       getCollectionRef()    Returns the current record's "collection_ref" value
+ * @method integer                       getUserRef()          Returns the current record's "user_ref" value
+ * @method string                        getFieldGroupName()   Returns the current record's "field_group_name" value
+ * @method integer                       getDbUserType()       Returns the current record's "db_user_type" value
+ * @method boolean                       getSearchable()       Returns the current record's "searchable" value
+ * @method boolean                       getVisible()          Returns the current record's "visible" value
+ * @method Collections                   getCollections()      Returns the current record's "Collections" value
+ * @method Users                         getUsers()            Returns the current record's "Users" value
+ * @method CollectionsFieldsVisibilities setCollectionRef()    Sets the current record's "collection_ref" value
+ * @method CollectionsFieldsVisibilities setUserRef()          Sets the current record's "user_ref" value
+ * @method CollectionsFieldsVisibilities setFieldGroupName()   Sets the current record's "field_group_name" value
+ * @method CollectionsFieldsVisibilities setDbUserType()       Sets the current record's "db_user_type" value
+ * @method CollectionsFieldsVisibilities setSearchable()       Sets the current record's "searchable" value
+ * @method CollectionsFieldsVisibilities setVisible()          Sets the current record's "visible" value
+ * @method CollectionsFieldsVisibilities setCollections()      Sets the current record's "Collections" value
+ * @method CollectionsFieldsVisibilities setUsers()            Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCollectionsFieldsVisibilities extends sfDoctrineRecord
 {
@@ -41,7 +58,7 @@ abstract class BaseCollectionsFieldsVisibilities extends sfDoctrineRecord
         $this->hasColumn('db_user_type', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('searchable', 'boolean', null, array(
              'type' => 'boolean',
@@ -58,7 +75,7 @@ abstract class BaseCollectionsFieldsVisibilities extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Collections', array(
+        $this->hasOne('Collections', array(
              'local' => 'collection_ref',
              'foreign' => 'id'));
 

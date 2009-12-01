@@ -15,10 +15,29 @@
  * @property float $property_accuracy_unified
  * @property CatalogueProperties $CatalogueProperties
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                        Returns the current record's "id" value
+ * @method integer             getPropertyRef()               Returns the current record's "property_ref" value
+ * @method string              getPropertyMin()               Returns the current record's "property_min" value
+ * @method string              getPropertyMinUnified()        Returns the current record's "property_min_unified" value
+ * @method string              getPropertyMax()               Returns the current record's "property_max" value
+ * @method string              getPropertyMaxUnified()        Returns the current record's "property_max_unified" value
+ * @method float               getPropertyAccuracy()          Returns the current record's "property_accuracy" value
+ * @method float               getPropertyAccuracyUnified()   Returns the current record's "property_accuracy_unified" value
+ * @method CatalogueProperties getCatalogueProperties()       Returns the current record's "CatalogueProperties" value
+ * @method PropertiesValues    setId()                        Sets the current record's "id" value
+ * @method PropertiesValues    setPropertyRef()               Sets the current record's "property_ref" value
+ * @method PropertiesValues    setPropertyMin()               Sets the current record's "property_min" value
+ * @method PropertiesValues    setPropertyMinUnified()        Sets the current record's "property_min_unified" value
+ * @method PropertiesValues    setPropertyMax()               Sets the current record's "property_max" value
+ * @method PropertiesValues    setPropertyMaxUnified()        Sets the current record's "property_max_unified" value
+ * @method PropertiesValues    setPropertyAccuracy()          Sets the current record's "property_accuracy" value
+ * @method PropertiesValues    setPropertyAccuracyUnified()   Sets the current record's "property_accuracy_unified" value
+ * @method PropertiesValues    setCatalogueProperties()       Sets the current record's "CatalogueProperties" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BasePropertiesValues extends sfDoctrineRecord
 {
@@ -57,7 +76,7 @@ abstract class BasePropertiesValues extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('CatalogueProperties', array(
+        $this->hasOne('CatalogueProperties', array(
              'local' => 'property_ref',
              'foreign' => 'id'));
     }

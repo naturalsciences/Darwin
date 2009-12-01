@@ -3,11 +3,14 @@
 /**
  * Collections form base class.
  *
- * @package    form
- * @subpackage collections
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method Collections getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseCollectionsForm extends BaseFormDoctrine
+abstract class BaseCollectionsForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -16,30 +19,32 @@ class BaseCollectionsForm extends BaseFormDoctrine
       'collection_type'          => new sfWidgetFormChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
       'code'                     => new sfWidgetFormTextarea(),
       'name'                     => new sfWidgetFormTextarea(),
-      'institution_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
-      'main_manager_ref'         => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
-      'parent_ref'               => new sfWidgetFormDoctrineChoice(array('model' => 'Collections', 'add_empty' => true)),
+      'institution_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Institution'), 'add_empty' => false)),
+      'main_manager_ref'         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Manager'), 'add_empty' => false)),
+      'parent_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                     => new sfWidgetFormTextarea(),
       'code_auto_increment'      => new sfWidgetFormInputCheckbox(),
       'code_part_code_auto_copy' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
-      'id'                       => new sfValidatorDoctrineChoice(array('model' => 'Collections', 'column' => 'id', 'required' => false)),
-      'collection_type'          => new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'))),
+      'id'                       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'collection_type'          => new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => false)),
       'code'                     => new sfValidatorString(),
       'name'                     => new sfValidatorString(),
-      'institution_ref'          => new sfValidatorDoctrineChoice(array('model' => 'People')),
-      'main_manager_ref'         => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'parent_ref'               => new sfValidatorDoctrineChoice(array('model' => 'Collections', 'required' => false)),
-      'path'                     => new sfValidatorString(),
-      'code_auto_increment'      => new sfValidatorBoolean(),
-      'code_part_code_auto_copy' => new sfValidatorBoolean(),
+      'institution_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Institution'))),
+      'main_manager_ref'         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Manager'))),
+      'parent_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
+      'path'                     => new sfValidatorString(array('required' => false)),
+      'code_auto_increment'      => new sfValidatorBoolean(array('required' => false)),
+      'code_part_code_auto_copy' => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('collections[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

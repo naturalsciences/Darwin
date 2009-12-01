@@ -14,11 +14,12 @@ class CollectionsForm extends BaseCollectionsForm
     unset(
         $this['path']
     );
-//     $this->widgetSchema['collection_type'] = new sfWidgetFormInput();
-    $this->widgetSchema['code'] = new sfWidgetFormInput();
-    $this->widgetSchema['name'] = new sfWidgetFormInput();
+//     $this->widgetSchema['collection_type'] = new sfWidgetFormInputText();
+    $this->widgetSchema['code'] = new sfWidgetFormInputText();
+    $this->widgetSchema['name'] = new sfWidgetFormInputText();
 /* @TODO remove this line when people search will be ready */
-    $this->widgetSchema['institution_ref'] = new sfWidgetFormInput();
+    $this->widgetSchema['institution_ref'] = new sfWidgetFormInputText();
 /* @TODO end of line to remove */
+    $this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
   }
 }

@@ -3,18 +3,21 @@
 /**
  * Comments form base class.
  *
- * @package    form
- * @subpackage comments
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method Comments getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseCommentsForm extends BaseFormDoctrine
+abstract class BaseCommentsForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                         => new sfWidgetFormInputHidden(),
       'referenced_relation'        => new sfWidgetFormTextarea(),
-      'record_id'                  => new sfWidgetFormInput(),
+      'record_id'                  => new sfWidgetFormInputText(),
       'notion_concerned'           => new sfWidgetFormTextarea(),
       'comment'                    => new sfWidgetFormTextarea(),
       'comment_ts'                 => new sfWidgetFormTextarea(),
@@ -22,7 +25,7 @@ class BaseCommentsForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                         => new sfValidatorDoctrineChoice(array('model' => 'Comments', 'column' => 'id', 'required' => false)),
+      'id'                         => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'referenced_relation'        => new sfValidatorString(),
       'record_id'                  => new sfValidatorInteger(),
       'notion_concerned'           => new sfValidatorString(),
@@ -34,6 +37,8 @@ class BaseCommentsForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('comments[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

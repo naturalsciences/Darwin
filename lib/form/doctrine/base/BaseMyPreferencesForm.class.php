@@ -3,11 +3,14 @@
 /**
  * MyPreferences form base class.
  *
- * @package    form
- * @subpackage my_preferences
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method MyPreferences getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseMyPreferencesForm extends BaseFormDoctrine
+abstract class BaseMyPreferencesForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -15,33 +18,35 @@ class BaseMyPreferencesForm extends BaseFormDoctrine
       'user_ref'    => new sfWidgetFormInputHidden(),
       'category'    => new sfWidgetFormInputHidden(),
       'group_name'  => new sfWidgetFormInputHidden(),
-      'order_by'    => new sfWidgetFormInput(),
-      'col_num'     => new sfWidgetFormInput(),
+      'order_by'    => new sfWidgetFormInputText(),
+      'col_num'     => new sfWidgetFormInputText(),
       'mandatory'   => new sfWidgetFormInputCheckbox(),
       'visible'     => new sfWidgetFormInputCheckbox(),
       'opened'      => new sfWidgetFormInputCheckbox(),
       'color'       => new sfWidgetFormTextarea(),
-      'icon_ref'    => new sfWidgetFormDoctrineChoice(array('model' => 'Multimedia', 'add_empty' => true)),
+      'icon_ref'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'add_empty' => true)),
       'title_perso' => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'user_ref'    => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'user_ref', 'required' => false)),
-      'category'    => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'category', 'required' => false)),
-      'group_name'  => new sfValidatorDoctrineChoice(array('model' => 'MyPreferences', 'column' => 'group_name', 'required' => false)),
-      'order_by'    => new sfValidatorInteger(),
-      'col_num'     => new sfValidatorInteger(),
-      'mandatory'   => new sfValidatorBoolean(),
-      'visible'     => new sfValidatorBoolean(),
-      'opened'      => new sfValidatorBoolean(),
+      'user_ref'    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_ref', 'required' => false)),
+      'category'    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'category', 'required' => false)),
+      'group_name'  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'group_name', 'required' => false)),
+      'order_by'    => new sfValidatorInteger(array('required' => false)),
+      'col_num'     => new sfValidatorInteger(array('required' => false)),
+      'mandatory'   => new sfValidatorBoolean(array('required' => false)),
+      'visible'     => new sfValidatorBoolean(array('required' => false)),
+      'opened'      => new sfValidatorBoolean(array('required' => false)),
       'color'       => new sfValidatorString(array('required' => false)),
-      'icon_ref'    => new sfValidatorDoctrineChoice(array('model' => 'Multimedia', 'required' => false)),
+      'icon_ref'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'required' => false)),
       'title_perso' => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('my_preferences[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

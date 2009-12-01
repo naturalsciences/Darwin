@@ -3,11 +3,14 @@
 /**
  * UsersTablesFieldsTracked form base class.
  *
- * @package    form
- * @subpackage users_tables_fields_tracked
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method UsersTablesFieldsTracked getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseUsersTablesFieldsTrackedForm extends BaseFormDoctrine
+abstract class BaseUsersTablesFieldsTrackedForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -15,19 +18,21 @@ class BaseUsersTablesFieldsTrackedForm extends BaseFormDoctrine
       'id'                  => new sfWidgetFormInputHidden(),
       'referenced_relation' => new sfWidgetFormTextarea(),
       'field_name'          => new sfWidgetFormTextarea(),
-      'user_ref'            => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
+      'user_ref'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'UsersTablesFieldsTracked', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'referenced_relation' => new sfValidatorString(),
       'field_name'          => new sfValidatorString(),
-      'user_ref'            => new sfValidatorDoctrineChoice(array('model' => 'Users')),
+      'user_ref'            => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
     ));
 
     $this->widgetSchema->setNameFormat('users_tables_fields_tracked[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

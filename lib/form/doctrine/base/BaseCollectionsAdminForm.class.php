@@ -3,29 +3,34 @@
 /**
  * CollectionsAdmin form base class.
  *
- * @package    form
- * @subpackage collections_admin
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method CollectionsAdmin getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseCollectionsAdminForm extends BaseFormDoctrine
+abstract class BaseCollectionsAdminForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
-      'collection_ref' => new sfWidgetFormDoctrineChoice(array('model' => 'Collections', 'add_empty' => false)),
-      'user_ref'       => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
+      'collection_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'add_empty' => false)),
+      'user_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'id'             => new sfValidatorDoctrineChoice(array('model' => 'CollectionsAdmin', 'column' => 'id', 'required' => false)),
-      'collection_ref' => new sfValidatorDoctrineChoice(array('model' => 'Collections')),
-      'user_ref'       => new sfValidatorDoctrineChoice(array('model' => 'Users')),
+      'id'             => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'collection_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'required' => false)),
+      'user_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('collections_admin[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

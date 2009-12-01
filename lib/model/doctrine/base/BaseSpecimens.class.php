@@ -40,10 +40,79 @@
  * @property Doctrine_Collection $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimensAccompanying
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                    Returns the current record's "id" value
+ * @method integer             getCollectionRef()         Returns the current record's "collection_ref" value
+ * @method integer             getExpeditionRef()         Returns the current record's "expedition_ref" value
+ * @method integer             getGtuRef()                Returns the current record's "gtu_ref" value
+ * @method integer             getTaxonRef()              Returns the current record's "taxon_ref" value
+ * @method integer             getLithoRef()              Returns the current record's "litho_ref" value
+ * @method integer             getChronoRef()             Returns the current record's "chrono_ref" value
+ * @method integer             getLithologyRef()          Returns the current record's "lithology_ref" value
+ * @method integer             getMineralRef()            Returns the current record's "mineral_ref" value
+ * @method integer             getHostTaxonRef()          Returns the current record's "host_taxon_ref" value
+ * @method integer             getHostSpecimenRef()       Returns the current record's "host_specimen_ref" value
+ * @method string              getHostRelationship()      Returns the current record's "host_relationship" value
+ * @method string              getAcquisitionCategory()   Returns the current record's "acquisition_category" value
+ * @method integer             getAcquisitionDateMask()   Returns the current record's "acquisition_date_mask" value
+ * @method date                getAcquisitionDate()       Returns the current record's "acquisition_date" value
+ * @method string              getCollectingMethod()      Returns the current record's "collecting_method" value
+ * @method string              getCollectingTool()        Returns the current record's "collecting_tool" value
+ * @method integer             getSpecimenCountMin()      Returns the current record's "specimen_count_min" value
+ * @method integer             getSpecimenCountMax()      Returns the current record's "specimen_count_max" value
+ * @method boolean             getStationVisible()        Returns the current record's "station_visible" value
+ * @method boolean             getMultimediaVisible()     Returns the current record's "multimedia_visible" value
+ * @method Collections         getCollections()           Returns the current record's "Collections" value
+ * @method Expeditions         getExpeditions()           Returns the current record's "Expeditions" value
+ * @method Taxonomy            getTaxonomy()              Returns the current record's "Taxonomy" value
+ * @method Lithostratigraphy   getLithostratigraphy()     Returns the current record's "Lithostratigraphy" value
+ * @method Chronostratigraphy  getChronostratigraphy()    Returns the current record's "Chronostratigraphy" value
+ * @method Lithology           getLithology()             Returns the current record's "Lithology" value
+ * @method Mineralogy          getMineralogy()            Returns the current record's "Mineralogy" value
+ * @method Taxonomy            getIdentificationsTaxon()  Returns the current record's "IdentificationsTaxon" value
+ * @method Taxonomy            getHostTaxon()             Returns the current record's "HostTaxon" value
+ * @method Specimens           getHostSpecimen()          Returns the current record's "HostSpecimen" value
+ * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
+ * @method Doctrine_Collection getSpecimenIndividuals()   Returns the current record's "SpecimenIndividuals" collection
+ * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
+ * @method Specimens           setId()                    Sets the current record's "id" value
+ * @method Specimens           setCollectionRef()         Sets the current record's "collection_ref" value
+ * @method Specimens           setExpeditionRef()         Sets the current record's "expedition_ref" value
+ * @method Specimens           setGtuRef()                Sets the current record's "gtu_ref" value
+ * @method Specimens           setTaxonRef()              Sets the current record's "taxon_ref" value
+ * @method Specimens           setLithoRef()              Sets the current record's "litho_ref" value
+ * @method Specimens           setChronoRef()             Sets the current record's "chrono_ref" value
+ * @method Specimens           setLithologyRef()          Sets the current record's "lithology_ref" value
+ * @method Specimens           setMineralRef()            Sets the current record's "mineral_ref" value
+ * @method Specimens           setHostTaxonRef()          Sets the current record's "host_taxon_ref" value
+ * @method Specimens           setHostSpecimenRef()       Sets the current record's "host_specimen_ref" value
+ * @method Specimens           setHostRelationship()      Sets the current record's "host_relationship" value
+ * @method Specimens           setAcquisitionCategory()   Sets the current record's "acquisition_category" value
+ * @method Specimens           setAcquisitionDateMask()   Sets the current record's "acquisition_date_mask" value
+ * @method Specimens           setAcquisitionDate()       Sets the current record's "acquisition_date" value
+ * @method Specimens           setCollectingMethod()      Sets the current record's "collecting_method" value
+ * @method Specimens           setCollectingTool()        Sets the current record's "collecting_tool" value
+ * @method Specimens           setSpecimenCountMin()      Sets the current record's "specimen_count_min" value
+ * @method Specimens           setSpecimenCountMax()      Sets the current record's "specimen_count_max" value
+ * @method Specimens           setStationVisible()        Sets the current record's "station_visible" value
+ * @method Specimens           setMultimediaVisible()     Sets the current record's "multimedia_visible" value
+ * @method Specimens           setCollections()           Sets the current record's "Collections" value
+ * @method Specimens           setExpeditions()           Sets the current record's "Expeditions" value
+ * @method Specimens           setTaxonomy()              Sets the current record's "Taxonomy" value
+ * @method Specimens           setLithostratigraphy()     Sets the current record's "Lithostratigraphy" value
+ * @method Specimens           setChronostratigraphy()    Sets the current record's "Chronostratigraphy" value
+ * @method Specimens           setLithology()             Sets the current record's "Lithology" value
+ * @method Specimens           setMineralogy()            Sets the current record's "Mineralogy" value
+ * @method Specimens           setIdentificationsTaxon()  Sets the current record's "IdentificationsTaxon" value
+ * @method Specimens           setHostTaxon()             Sets the current record's "HostTaxon" value
+ * @method Specimens           setHostSpecimen()          Sets the current record's "HostSpecimen" value
+ * @method Specimens           setSpecimens()             Sets the current record's "Specimens" collection
+ * @method Specimens           setSpecimenIndividuals()   Sets the current record's "SpecimenIndividuals" collection
+ * @method Specimens           setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseSpecimens extends sfDoctrineRecord
 {
@@ -117,11 +186,11 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('specimen_count_min', 'integer', null, array(
              'type' => 'integer',
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('specimen_count_max', 'integer', null, array(
              'type' => 'integer',
-             'default' => '1',
+             'default' => 1,
              ));
         $this->hasColumn('station_visible', 'boolean', null, array(
              'type' => 'boolean',
@@ -136,7 +205,7 @@ abstract class BaseSpecimens extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Collections', array(
+        $this->hasOne('Collections', array(
              'local' => 'collection_ref',
              'foreign' => 'id'));
 

@@ -3,23 +3,26 @@
 /**
  * ClassVernacularNames form base class.
  *
- * @package    form
- * @subpackage class_vernacular_names
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method ClassVernacularNames getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseClassVernacularNamesForm extends BaseFormDoctrine
+abstract class BaseClassVernacularNamesForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                  => new sfWidgetFormInputHidden(),
       'referenced_relation' => new sfWidgetFormTextarea(),
-      'record_id'           => new sfWidgetFormInput(),
+      'record_id'           => new sfWidgetFormInputText(),
       'community'           => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'ClassVernacularNames', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'referenced_relation' => new sfValidatorString(),
       'record_id'           => new sfValidatorInteger(),
       'community'           => new sfValidatorString(),
@@ -28,6 +31,8 @@ class BaseClassVernacularNamesForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('class_vernacular_names[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

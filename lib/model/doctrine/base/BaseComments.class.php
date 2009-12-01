@@ -13,10 +13,25 @@
  * @property string $comment_ts
  * @property string $comment_language_full_text
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer  getId()                         Returns the current record's "id" value
+ * @method string   getReferencedRelation()         Returns the current record's "referenced_relation" value
+ * @method integer  getRecordId()                   Returns the current record's "record_id" value
+ * @method string   getNotionConcerned()            Returns the current record's "notion_concerned" value
+ * @method string   getComment()                    Returns the current record's "comment" value
+ * @method string   getCommentTs()                  Returns the current record's "comment_ts" value
+ * @method string   getCommentLanguageFullText()    Returns the current record's "comment_language_full_text" value
+ * @method Comments setId()                         Sets the current record's "id" value
+ * @method Comments setReferencedRelation()         Sets the current record's "referenced_relation" value
+ * @method Comments setRecordId()                   Sets the current record's "record_id" value
+ * @method Comments setNotionConcerned()            Sets the current record's "notion_concerned" value
+ * @method Comments setComment()                    Sets the current record's "comment" value
+ * @method Comments setCommentTs()                  Sets the current record's "comment_ts" value
+ * @method Comments setCommentLanguageFullText()    Sets the current record's "comment_language_full_text" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseComments extends sfDoctrineRecord
 {
@@ -52,4 +67,9 @@ abstract class BaseComments extends sfDoctrineRecord
              ));
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+        
+    }
 }

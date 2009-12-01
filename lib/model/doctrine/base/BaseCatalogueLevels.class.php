@@ -13,10 +13,25 @@
  * @property Doctrine_Collection $PossibleUpperLevels
  * @property Doctrine_Collection $Taxonomy
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                  Returns the current record's "id" value
+ * @method string              getLevelType()           Returns the current record's "level_type" value
+ * @method string              getLevelName()           Returns the current record's "level_name" value
+ * @method string              getLevelSysName()        Returns the current record's "level_sys_name" value
+ * @method boolean             getOptionalLevel()       Returns the current record's "optional_level" value
+ * @method Doctrine_Collection getPossibleUpperLevels() Returns the current record's "PossibleUpperLevels" collection
+ * @method Doctrine_Collection getTaxonomy()            Returns the current record's "Taxonomy" collection
+ * @method CatalogueLevels     setId()                  Sets the current record's "id" value
+ * @method CatalogueLevels     setLevelType()           Sets the current record's "level_type" value
+ * @method CatalogueLevels     setLevelName()           Sets the current record's "level_name" value
+ * @method CatalogueLevels     setLevelSysName()        Sets the current record's "level_sys_name" value
+ * @method CatalogueLevels     setOptionalLevel()       Sets the current record's "optional_level" value
+ * @method CatalogueLevels     setPossibleUpperLevels() Sets the current record's "PossibleUpperLevels" collection
+ * @method CatalogueLevels     setTaxonomy()            Sets the current record's "Taxonomy" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseCatalogueLevels extends sfDoctrineRecord
 {
@@ -50,7 +65,7 @@ abstract class BaseCatalogueLevels extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('PossibleUpperLevels', array(
+        $this->hasMany('PossibleUpperLevels', array(
              'local' => 'id',
              'foreign' => 'level_upper_ref'));
 

@@ -39,10 +39,77 @@
  * @property Doctrine_Collection $MyPreferences
  * @property Doctrine_Collection $MySavedSpecimens
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                            Returns the current record's "id" value
+ * @method boolean             getIsPhysical()                    Returns the current record's "is_physical" value
+ * @method string              getSubType()                       Returns the current record's "sub_type" value
+ * @method enum                getPublicClass()                   Returns the current record's "public_class" value
+ * @method string              getFormatedName()                  Returns the current record's "formated_name" value
+ * @method string              getFormatedNameIndexed()           Returns the current record's "formated_name_indexed" value
+ * @method string              getFormatedNameTs()                Returns the current record's "formated_name_ts" value
+ * @method string              getTitle()                         Returns the current record's "title" value
+ * @method string              getFamilyName()                    Returns the current record's "family_name" value
+ * @method string              getGivenName()                     Returns the current record's "given_name" value
+ * @method string              getAdditionalNames()               Returns the current record's "additional_names" value
+ * @method integer             getBirthDateMask()                 Returns the current record's "birth_date_mask" value
+ * @method date                getBirthDate()                     Returns the current record's "birth_date" value
+ * @method enum                getGender()                        Returns the current record's "gender" value
+ * @method integer             getDbUserType()                    Returns the current record's "db_user_type" value
+ * @method Doctrine_Collection getUsersLanguages()                Returns the current record's "UsersLanguages" collection
+ * @method Doctrine_Collection getUsersComm()                     Returns the current record's "UsersComm" collection
+ * @method Doctrine_Collection getUsersAddresses()                Returns the current record's "UsersAddresses" collection
+ * @method Doctrine_Collection getUsersLoginInfos()               Returns the current record's "UsersLoginInfos" collection
+ * @method Doctrine_Collection getUsersMultimedia()               Returns the current record's "UsersMultimedia" collection
+ * @method Doctrine_Collection getCollections()                   Returns the current record's "Collections" collection
+ * @method Doctrine_Collection getCollectionsAdmin()              Returns the current record's "CollectionsAdmin" collection
+ * @method Doctrine_Collection getCollectionsRights()             Returns the current record's "CollectionsRights" collection
+ * @method Doctrine_Collection getCollectionsFieldsVisibilities() Returns the current record's "CollectionsFieldsVisibilities" collection
+ * @method Doctrine_Collection getUsersCollRightsAsked()          Returns the current record's "UsersCollRightsAsked" collection
+ * @method Doctrine_Collection getRecordVisibilities()            Returns the current record's "RecordVisibilities" collection
+ * @method Doctrine_Collection getUsersWorkflow()                 Returns the current record's "UsersWorkflow" collection
+ * @method Doctrine_Collection getUsersTablesFieldsTracked()      Returns the current record's "UsersTablesFieldsTracked" collection
+ * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
+ * @method Doctrine_Collection getCollectionMaintenance()         Returns the current record's "CollectionMaintenance" collection
+ * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
+ * @method Doctrine_Collection getMyPreferences()                 Returns the current record's "MyPreferences" collection
+ * @method Doctrine_Collection getMySavedSpecimens()              Returns the current record's "MySavedSpecimens" collection
+ * @method Users               setId()                            Sets the current record's "id" value
+ * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
+ * @method Users               setSubType()                       Sets the current record's "sub_type" value
+ * @method Users               setPublicClass()                   Sets the current record's "public_class" value
+ * @method Users               setFormatedName()                  Sets the current record's "formated_name" value
+ * @method Users               setFormatedNameIndexed()           Sets the current record's "formated_name_indexed" value
+ * @method Users               setFormatedNameTs()                Sets the current record's "formated_name_ts" value
+ * @method Users               setTitle()                         Sets the current record's "title" value
+ * @method Users               setFamilyName()                    Sets the current record's "family_name" value
+ * @method Users               setGivenName()                     Sets the current record's "given_name" value
+ * @method Users               setAdditionalNames()               Sets the current record's "additional_names" value
+ * @method Users               setBirthDateMask()                 Sets the current record's "birth_date_mask" value
+ * @method Users               setBirthDate()                     Sets the current record's "birth_date" value
+ * @method Users               setGender()                        Sets the current record's "gender" value
+ * @method Users               setDbUserType()                    Sets the current record's "db_user_type" value
+ * @method Users               setUsersLanguages()                Sets the current record's "UsersLanguages" collection
+ * @method Users               setUsersComm()                     Sets the current record's "UsersComm" collection
+ * @method Users               setUsersAddresses()                Sets the current record's "UsersAddresses" collection
+ * @method Users               setUsersLoginInfos()               Sets the current record's "UsersLoginInfos" collection
+ * @method Users               setUsersMultimedia()               Sets the current record's "UsersMultimedia" collection
+ * @method Users               setCollections()                   Sets the current record's "Collections" collection
+ * @method Users               setCollectionsAdmin()              Sets the current record's "CollectionsAdmin" collection
+ * @method Users               setCollectionsRights()             Sets the current record's "CollectionsRights" collection
+ * @method Users               setCollectionsFieldsVisibilities() Sets the current record's "CollectionsFieldsVisibilities" collection
+ * @method Users               setUsersCollRightsAsked()          Sets the current record's "UsersCollRightsAsked" collection
+ * @method Users               setRecordVisibilities()            Sets the current record's "RecordVisibilities" collection
+ * @method Users               setUsersWorkflow()                 Sets the current record's "UsersWorkflow" collection
+ * @method Users               setUsersTablesFieldsTracked()      Sets the current record's "UsersTablesFieldsTracked" collection
+ * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
+ * @method Users               setCollectionMaintenance()         Sets the current record's "CollectionMaintenance" collection
+ * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
+ * @method Users               setMyPreferences()                 Sets the current record's "MyPreferences" collection
+ * @method Users               setMySavedSpecimens()              Sets the current record's "MySavedSpecimens" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsers extends sfDoctrineRecord
 {
@@ -113,14 +180,14 @@ abstract class BaseUsers extends sfDoctrineRecord
         $this->hasColumn('db_user_type', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => '1',
+             'default' => 1,
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-    $this->hasMany('UsersLanguages', array(
+        $this->hasMany('UsersLanguages', array(
              'local' => 'id',
              'foreign' => 'users_ref'));
 

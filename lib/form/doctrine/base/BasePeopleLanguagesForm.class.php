@@ -3,33 +3,38 @@
 /**
  * PeopleLanguages form base class.
  *
- * @package    form
- * @subpackage people_languages
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method PeopleLanguages getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasePeopleLanguagesForm extends BaseFormDoctrine
+abstract class BasePeopleLanguagesForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
-      'people_ref'        => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
+      'people_ref'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => false)),
       'language_country'  => new sfWidgetFormTextarea(),
       'mother'            => new sfWidgetFormInputCheckbox(),
       'prefered_language' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
-      'id'                => new sfValidatorDoctrineChoice(array('model' => 'PeopleLanguages', 'column' => 'id', 'required' => false)),
-      'people_ref'        => new sfValidatorDoctrineChoice(array('model' => 'People')),
-      'language_country'  => new sfValidatorString(),
-      'mother'            => new sfValidatorBoolean(),
-      'prefered_language' => new sfValidatorBoolean(),
+      'id'                => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'people_ref'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'))),
+      'language_country'  => new sfValidatorString(array('required' => false)),
+      'mother'            => new sfValidatorBoolean(array('required' => false)),
+      'prefered_language' => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('people_languages[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

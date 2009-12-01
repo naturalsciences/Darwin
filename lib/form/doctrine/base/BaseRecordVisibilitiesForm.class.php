@@ -3,35 +3,40 @@
 /**
  * RecordVisibilities form base class.
  *
- * @package    form
- * @subpackage record_visibilities
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method RecordVisibilities getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseRecordVisibilitiesForm extends BaseFormDoctrine
+abstract class BaseRecordVisibilitiesForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                  => new sfWidgetFormInputHidden(),
       'referenced_relation' => new sfWidgetFormTextarea(),
-      'record_id'           => new sfWidgetFormInput(),
-      'db_user_type'        => new sfWidgetFormInput(),
-      'user_ref'            => new sfWidgetFormDoctrineChoice(array('model' => 'Users', 'add_empty' => false)),
+      'record_id'           => new sfWidgetFormInputText(),
+      'db_user_type'        => new sfWidgetFormInputText(),
+      'user_ref'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
       'visible'             => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'RecordVisibilities', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'referenced_relation' => new sfValidatorString(),
       'record_id'           => new sfValidatorInteger(),
-      'db_user_type'        => new sfValidatorInteger(),
-      'user_ref'            => new sfValidatorDoctrineChoice(array('model' => 'Users')),
-      'visible'             => new sfValidatorBoolean(),
+      'db_user_type'        => new sfValidatorInteger(array('required' => false)),
+      'user_ref'            => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'required' => false)),
+      'visible'             => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('record_visibilities[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

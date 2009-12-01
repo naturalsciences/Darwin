@@ -3,11 +3,14 @@
 /**
  * Multimedia form base class.
  *
- * @package    form
- * @subpackage multimedia
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method Multimedia getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseMultimediaForm extends BaseFormDoctrine
+abstract class BaseMultimediaForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -27,45 +30,47 @@ class BaseMultimediaForm extends BaseFormDoctrine
       'descriptive_ts'                 => new sfWidgetFormTextarea(),
       'descriptive_language_full_text' => new sfWidgetFormTextarea(),
       'creation_date'                  => new sfWidgetFormDate(),
-      'creation_date_mask'             => new sfWidgetFormInput(),
+      'creation_date_mask'             => new sfWidgetFormInputText(),
       'publication_date_from'          => new sfWidgetFormDate(),
-      'publication_date_from_mask'     => new sfWidgetFormInput(),
+      'publication_date_from_mask'     => new sfWidgetFormInputText(),
       'publication_date_to'            => new sfWidgetFormDate(),
-      'publication_date_to_mask'       => new sfWidgetFormInput(),
-      'parent_ref'                     => new sfWidgetFormDoctrineChoice(array('model' => 'Multimedia', 'add_empty' => true)),
+      'publication_date_to_mask'       => new sfWidgetFormInputText(),
+      'parent_ref'                     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                           => new sfWidgetFormTextarea(),
       'mime_type'                      => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'                             => new sfValidatorDoctrineChoice(array('model' => 'Multimedia', 'column' => 'id', 'required' => false)),
+      'id'                             => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'is_digital'                     => new sfValidatorBoolean(),
-      'type'                           => new sfValidatorString(),
+      'type'                           => new sfValidatorString(array('required' => false)),
       'sub_type'                       => new sfValidatorString(array('required' => false)),
       'title'                          => new sfValidatorString(),
       'title_indexed'                  => new sfValidatorString(array('required' => false)),
-      'subject'                        => new sfValidatorString(),
-      'coverage'                       => new sfValidatorString(),
+      'subject'                        => new sfValidatorString(array('required' => false)),
+      'coverage'                       => new sfValidatorString(array('required' => false)),
       'apercu_path'                    => new sfValidatorString(array('required' => false)),
       'copyright'                      => new sfValidatorString(array('required' => false)),
       'license'                        => new sfValidatorString(array('required' => false)),
       'uri'                            => new sfValidatorString(array('required' => false)),
       'descriptive_ts'                 => new sfValidatorString(array('required' => false)),
       'descriptive_language_full_text' => new sfValidatorString(array('required' => false)),
-      'creation_date'                  => new sfValidatorDate(),
-      'creation_date_mask'             => new sfValidatorInteger(),
-      'publication_date_from'          => new sfValidatorDate(),
-      'publication_date_from_mask'     => new sfValidatorInteger(),
-      'publication_date_to'            => new sfValidatorDate(),
-      'publication_date_to_mask'       => new sfValidatorInteger(),
-      'parent_ref'                     => new sfValidatorDoctrineChoice(array('model' => 'Multimedia', 'required' => false)),
-      'path'                           => new sfValidatorString(),
+      'creation_date'                  => new sfValidatorDate(array('required' => false)),
+      'creation_date_mask'             => new sfValidatorInteger(array('required' => false)),
+      'publication_date_from'          => new sfValidatorDate(array('required' => false)),
+      'publication_date_from_mask'     => new sfValidatorInteger(array('required' => false)),
+      'publication_date_to'            => new sfValidatorDate(array('required' => false)),
+      'publication_date_to_mask'       => new sfValidatorInteger(array('required' => false)),
+      'parent_ref'                     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
+      'path'                           => new sfValidatorString(array('required' => false)),
       'mime_type'                      => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('multimedia[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

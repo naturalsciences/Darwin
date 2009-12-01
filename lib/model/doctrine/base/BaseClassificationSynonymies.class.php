@@ -13,10 +13,25 @@
  * @property integer $basionym_record_id
  * @property integer $order_by
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer                  getId()                  Returns the current record's "id" value
+ * @method string                   getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer                  getRecordId()            Returns the current record's "record_id" value
+ * @method integer                  getGroupId()             Returns the current record's "group_id" value
+ * @method string                   getGroupName()           Returns the current record's "group_name" value
+ * @method integer                  getBasionymRecordId()    Returns the current record's "basionym_record_id" value
+ * @method integer                  getOrderBy()             Returns the current record's "order_by" value
+ * @method ClassificationSynonymies setId()                  Sets the current record's "id" value
+ * @method ClassificationSynonymies setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method ClassificationSynonymies setRecordId()            Sets the current record's "record_id" value
+ * @method ClassificationSynonymies setGroupId()             Sets the current record's "group_id" value
+ * @method ClassificationSynonymies setGroupName()           Sets the current record's "group_name" value
+ * @method ClassificationSynonymies setBasionymRecordId()    Sets the current record's "basionym_record_id" value
+ * @method ClassificationSynonymies setOrderBy()             Sets the current record's "order_by" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseClassificationSynonymies extends sfDoctrineRecord
 {
@@ -54,4 +69,9 @@ abstract class BaseClassificationSynonymies extends sfDoctrineRecord
              ));
     }
 
+    public function setUp()
+    {
+        parent::setUp();
+        
+    }
 }

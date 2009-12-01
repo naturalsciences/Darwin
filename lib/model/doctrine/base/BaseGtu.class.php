@@ -17,10 +17,33 @@
  * @property Doctrine_Collection $GtuTags
  * @property Doctrine_Collection $Soortenregister
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method integer             getId()                 Returns the current record's "id" value
+ * @method string              getCode()               Returns the current record's "code" value
+ * @method integer             getParentRef()          Returns the current record's "parent_ref" value
+ * @method integer             getGtuFromDateMask()    Returns the current record's "gtu_from_date_mask" value
+ * @method timestamp           getGtuFromDate()        Returns the current record's "gtu_from_date" value
+ * @method integer             getGtuToDateMask()      Returns the current record's "gtu_to_date_mask" value
+ * @method timestamp           getGtuToDate()          Returns the current record's "gtu_to_date" value
+ * @method Gtu                 getParent()             Returns the current record's "Parent" value
+ * @method Doctrine_Collection getGtu()                Returns the current record's "Gtu" collection
+ * @method Doctrine_Collection getGtuTags()            Returns the current record's "GtuTags" collection
+ * @method Doctrine_Collection getSoortenregister()    Returns the current record's "Soortenregister" collection
+ * @method Gtu                 setId()                 Sets the current record's "id" value
+ * @method Gtu                 setCode()               Sets the current record's "code" value
+ * @method Gtu                 setParentRef()          Sets the current record's "parent_ref" value
+ * @method Gtu                 setGtuFromDateMask()    Sets the current record's "gtu_from_date_mask" value
+ * @method Gtu                 setGtuFromDate()        Sets the current record's "gtu_from_date" value
+ * @method Gtu                 setGtuToDateMask()      Sets the current record's "gtu_to_date_mask" value
+ * @method Gtu                 setGtuToDate()          Sets the current record's "gtu_to_date" value
+ * @method Gtu                 setParent()             Sets the current record's "Parent" value
+ * @method Gtu                 setGtu()                Sets the current record's "Gtu" collection
+ * @method Gtu                 setGtuTags()            Sets the current record's "GtuTags" collection
+ * @method Gtu                 setSoortenregister()    Sets the current record's "Soortenregister" collection
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseGtu extends sfDoctrineRecord
 {
@@ -65,7 +88,7 @@ abstract class BaseGtu extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Gtu as Parent', array(
+        $this->hasOne('Gtu as Parent', array(
              'local' => 'parent_ref',
              'foreign' => 'id'));
 

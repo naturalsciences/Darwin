@@ -3,11 +3,14 @@
 /**
  * People form base class.
  *
- * @package    form
- * @subpackage people
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method People getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasePeopleForm extends BaseFormDoctrine
+abstract class BasePeopleForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -23,16 +26,16 @@ class BasePeopleForm extends BaseFormDoctrine
       'family_name'           => new sfWidgetFormTextarea(),
       'given_name'            => new sfWidgetFormTextarea(),
       'additional_names'      => new sfWidgetFormTextarea(),
-      'birth_date_mask'       => new sfWidgetFormInput(),
+      'birth_date_mask'       => new sfWidgetFormInputText(),
       'birth_date'            => new sfWidgetFormDate(),
       'gender'                => new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))),
-      'db_people_type'        => new sfWidgetFormInput(),
-      'end_date_mask'         => new sfWidgetFormInput(),
+      'db_people_type'        => new sfWidgetFormInputText(),
+      'end_date_mask'         => new sfWidgetFormInputText(),
       'end_date'              => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
-      'id'                    => new sfValidatorDoctrineChoice(array('model' => 'People', 'column' => 'id', 'required' => false)),
+      'id'                    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'is_physical'           => new sfValidatorBoolean(),
       'sub_type'              => new sfValidatorString(array('required' => false)),
       'public_class'          => new sfValidatorChoice(array('choices' => array('public' => 'public', 'private' => 'private'), 'required' => false)),
@@ -43,17 +46,19 @@ class BasePeopleForm extends BaseFormDoctrine
       'family_name'           => new sfValidatorString(),
       'given_name'            => new sfValidatorString(array('required' => false)),
       'additional_names'      => new sfValidatorString(array('required' => false)),
-      'birth_date_mask'       => new sfValidatorInteger(),
-      'birth_date'            => new sfValidatorDate(),
+      'birth_date_mask'       => new sfValidatorInteger(array('required' => false)),
+      'birth_date'            => new sfValidatorDate(array('required' => false)),
       'gender'                => new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false)),
-      'db_people_type'        => new sfValidatorInteger(),
-      'end_date_mask'         => new sfValidatorInteger(),
-      'end_date'              => new sfValidatorDate(),
+      'db_people_type'        => new sfValidatorInteger(array('required' => false)),
+      'end_date_mask'         => new sfValidatorInteger(array('required' => false)),
+      'end_date'              => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('people[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

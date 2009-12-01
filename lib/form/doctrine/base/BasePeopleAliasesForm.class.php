@@ -3,35 +3,40 @@
 /**
  * PeopleAliases form base class.
  *
- * @package    form
- * @subpackage people_aliases
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method PeopleAliases getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasePeopleAliasesForm extends BaseFormDoctrine
+abstract class BasePeopleAliasesForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                  => new sfWidgetFormInputHidden(),
       'referenced_relation' => new sfWidgetFormTextarea(),
-      'record_id'           => new sfWidgetFormInput(),
-      'person_ref'          => new sfWidgetFormDoctrineChoice(array('model' => 'People', 'add_empty' => false)),
-      'collection_ref'      => new sfWidgetFormDoctrineChoice(array('model' => 'Collections', 'add_empty' => false)),
+      'record_id'           => new sfWidgetFormInputText(),
+      'person_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => false)),
+      'collection_ref'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'add_empty' => false)),
       'person_name'         => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'PeopleAliases', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'referenced_relation' => new sfValidatorString(),
       'record_id'           => new sfValidatorInteger(),
-      'person_ref'          => new sfValidatorDoctrineChoice(array('model' => 'People')),
-      'collection_ref'      => new sfValidatorDoctrineChoice(array('model' => 'Collections')),
+      'person_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'))),
+      'collection_ref'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'required' => false)),
       'person_name'         => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('people_aliases[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

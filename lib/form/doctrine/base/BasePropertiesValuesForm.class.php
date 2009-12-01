@@ -3,28 +3,31 @@
 /**
  * PropertiesValues form base class.
  *
- * @package    form
- * @subpackage properties_values
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
+ * @method PropertiesValues getObject() Returns the current form's model object
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasePropertiesValuesForm extends BaseFormDoctrine
+abstract class BasePropertiesValuesForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                        => new sfWidgetFormInputHidden(),
-      'property_ref'              => new sfWidgetFormDoctrineChoice(array('model' => 'CatalogueProperties', 'add_empty' => true)),
+      'property_ref'              => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('CatalogueProperties'), 'add_empty' => true)),
       'property_min'              => new sfWidgetFormTextarea(),
       'property_min_unified'      => new sfWidgetFormTextarea(),
       'property_max'              => new sfWidgetFormTextarea(),
       'property_max_unified'      => new sfWidgetFormTextarea(),
-      'property_accuracy'         => new sfWidgetFormInput(),
-      'property_accuracy_unified' => new sfWidgetFormInput(),
+      'property_accuracy'         => new sfWidgetFormInputText(),
+      'property_accuracy_unified' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'                        => new sfValidatorDoctrineChoice(array('model' => 'PropertiesValues', 'column' => 'id', 'required' => false)),
-      'property_ref'              => new sfValidatorDoctrineChoice(array('model' => 'CatalogueProperties', 'required' => false)),
+      'id'                        => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'property_ref'              => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('CatalogueProperties'), 'required' => false)),
       'property_min'              => new sfValidatorString(),
       'property_min_unified'      => new sfValidatorString(array('required' => false)),
       'property_max'              => new sfValidatorString(array('required' => false)),
@@ -36,6 +39,8 @@ class BasePropertiesValuesForm extends BaseFormDoctrine
     $this->widgetSchema->setNameFormat('properties_values[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
+
+    $this->setupInheritance();
 
     parent::setup();
   }

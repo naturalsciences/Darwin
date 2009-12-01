@@ -10,10 +10,19 @@
  * @property integer $user_ref
  * @property Users $Users
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6401 2009-09-24 16:12:04Z guilhermeblanco $
+ * @method string                   getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method string                   getFieldName()           Returns the current record's "field_name" value
+ * @method integer                  getUserRef()             Returns the current record's "user_ref" value
+ * @method Users                    getUsers()               Returns the current record's "Users" value
+ * @method UsersTablesFieldsTracked setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method UsersTablesFieldsTracked setFieldName()           Sets the current record's "field_name" value
+ * @method UsersTablesFieldsTracked setUserRef()             Sets the current record's "user_ref" value
+ * @method UsersTablesFieldsTracked setUsers()               Sets the current record's "Users" value
+ * 
+ * @package    darwin
+ * @subpackage model
+ * @author     DB team <collections@naturalsciences.be>
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseUsersTablesFieldsTracked extends sfDoctrineRecord
 {
@@ -37,7 +46,7 @@ abstract class BaseUsersTablesFieldsTracked extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-    $this->hasOne('Users', array(
+        $this->hasOne('Users', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
     }
