@@ -2,3 +2,4 @@ all:
    .general:
        salt: mySecret$alt
        yearRangeMin: 1800
+       yearRangeMax: <?php echo date('Y')+2; ?>

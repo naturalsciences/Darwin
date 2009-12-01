@@ -259,3 +259,38 @@ padding: 2px;
   padding-left: 25px;
   background: white url(/images/user_suit.png) no-repeat 3px 3px;
 }
+
+/*******TEMP Expeditions Results******/
+.results
+{
+  background-color:white;
+  width:60%;
+  margin-left: 1px;
+  border: 1px solid #5BAABD;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: middle;
+}
+.results thead
+{
+  background-color: #5BAABD;
+  text-align: left;
+  color: white;
+}
+.results tbody tr:hover
+{
+  background-color:#D5DEE3;
+}
+.datesNum
+{
+  text-align: right;
+}
+.edit
+{
+  text-align:center;
+}
+.results th, .results td
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}

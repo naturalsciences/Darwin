@@ -3,7 +3,7 @@
   <?php include_partial('searchForm', array('form' => $form)) ?>
   <br />
   <?php if(isset($expeditions)):?>
-    <?php include_partial('searchResults', array('expeditions' => $expeditions)) ?>
+    <?php include_partial('searchResults', array('expeditions' => $expeditions, 'is_choose' => false)) ?>
   <?php endif;?>
   <br />
   <a href="<?php echo url_for('expedition/new') ?>">New</a>

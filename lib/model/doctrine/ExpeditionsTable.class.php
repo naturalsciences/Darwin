@@ -4,10 +4,24 @@
  */
 class ExpeditionsTable extends Doctrine_Table
 {
-  public function getExpLike($name=null,$date_from=null)
+  public function getExpLike($name, $from_date, $to_date, $orderBy='name', $orderByOrder='ASC', $start=1, $numPerPage='all')
   {
-/*    if(trim($name) == "")
-      return null;*/
+    if (is_array($from_date) && isset($from_date['from_date']))
+    {
+      $from_date = $from_date['from_date'];
+    }
+    if (is_array($to_date) && isset($to_date['to_date']))
+    {
+      $to_date = $to_date['to_date'];
+    }
+    if (is_null($from_date))
+    {
+      $from_date = new DateTime(sfConfig::get('app_yearRangeMin').'/1/1 00:00:00');
+    }
+    if (is_null($to_date))
+    {
+      $to_date = new DateTime(sfConfig::get('app_yearRangeMax').'/12/31 23:59:59');
+    }
     $q = Doctrine_Query::create()
          ->from('Expeditions e');
     if (trim($name) != ""):
@@ -16,10 +30,14 @@ class ExpeditionsTable extends Doctrine_Table
       {
         $q->andWhere("name_ts @@ search_words_to_query('expeditions' , 'name_ts', ? , 'contains') ",$word);
       }
-      /*if($level)
-        $q->andWhere('level_ref = ?',$level);*/
     endif;
-    $q->limit(30);
+    $q->andWhere(" datesOverlaps(e.expedition_from_date, e.expedition_to_date,  ?, ? ) ", 
+                 array($from_date->format('d/m/Y'), $to_date->format('d/m/Y'))
+                ) 
+      ->andWhere("id > 0 ")
+      ->orderby($orderBy . ' ' . $orderByOrder)
+      ->limit($numPerPage)
+      ->offset($start);
     return $q->execute();
   }
 }

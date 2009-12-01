@@ -19,6 +19,7 @@ class fuzzyDateValidatorSchemaCompare extends sfValidatorSchemaCompare
 {
   protected function doClean($values)
   {
+    if (!isset($values[$this->getOption('left_field')]) || !isset($values[$this->getOption('right_field')]) || is_null($values[$this->getOption('left_field')]) || is_null($values[$this->getOption('right_field')])) return $values;
     $old_left_field = $values[$this->getOption('left_field')];
     $old_right_field = $values[$this->getOption('right_field')];
     $values[$this->getOption('left_field')]=$values[$this->getOption('left_field')][$this->getOption('left_field')]->format('U');

@@ -5,7 +5,7 @@ class SearchExpeditionForm extends DarwinForm
 
   public function configure()
   {
-    $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), date('Y')+2);
+    $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $minDate = new DateTime(strval(min($yearsKeyVal)).'/1/1 0:0:0');
     $maxDate = new DateTime(strval(max($yearsKeyVal)).'/12/31 23:59:59');
