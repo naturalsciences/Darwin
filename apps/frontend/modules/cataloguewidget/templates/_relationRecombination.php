@@ -7,7 +7,7 @@
     </th>
     <td>
       <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('catalogue/relation?type=recombined&table='.$table.'&id='.$eid.'&relid='.$renamed[0]) ?>"><?php echo $renamed[5]//Rec Name?></a>
-    <td>
+    </td>
   </tr>
   <?php endforeach;?>
 </table>

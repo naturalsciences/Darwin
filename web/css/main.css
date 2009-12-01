@@ -206,6 +206,10 @@ table td
   margin:1em;
   
 }
+table tr 
+{
+  text-align:left;
+}
 /******TEEEEMP LOGIN **********/
 #login_page label
 {

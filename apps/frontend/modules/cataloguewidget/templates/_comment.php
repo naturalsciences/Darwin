@@ -2,10 +2,10 @@
 <table>
   <?php foreach($comments as $comment):?>
   <tr>
-    <td><em><?php echo $comment->getNotionConcerned();?></em></td>
+    <th><?php echo $comment->getNotionConcerned();?></th>
     <td>
       <a class="link_catalogue" title="<?php echo __('Edit Comment');?>" href="<?php echo url_for('comment/comment?table='.$table.'&cid='.$comment->getId().'&id='.$eid); ?>"><?php echo $comment->getFirstChars();?></a>
-    <td>
+    </td>
   </tr>
   <?php endforeach;?>
 </table>
