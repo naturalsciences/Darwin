@@ -342,3 +342,29 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+    u1ws10:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws11:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: properties
+        order_by: 0
+        opened: true
+        visible: true
+
+Comments:
+    comment1:
+        referenced_relation: taxonomy
+        record_id: 4
+        notion_concerned: taxon information
+        comment: |
+          This is bullshit... 
+          None of this is right!
+          Ok?

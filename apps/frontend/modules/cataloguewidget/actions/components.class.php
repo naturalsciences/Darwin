@@ -25,4 +25,9 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->comments =  Doctrine::getTable('Comments')->findForTable($this->table, $this->eid);
   }
+
+  public function executeProperties()
+  {
+    $this->properties =  Doctrine::getTable('CatalogueProperties')->findForTable($this->table, $this->eid);
+  }
 }

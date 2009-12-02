@@ -14,9 +14,9 @@
  * @property string $property_qualifier
  * @property string $property_qualifier_indexed
  * @property integer $date_from_mask
- * @property timestamp $date_from timestamp
+ * @property timestamp $date_from
  * @property integer $date_to_mask
- * @property timestamp $date_to timestamp
+ * @property timestamp $date_to
  * @property string $property_unit
  * @property string $property_accuracy_unit
  * @property string $property_method
@@ -108,7 +108,7 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('date_from timestamp', 'timestamp', null, array(
+        $this->hasColumn('date_from', 'timestamp', null, array(
              'type' => 'timestamp',
              'notnull' => true,
              'default' => '0001-01-01',
@@ -118,7 +118,7 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('date_to timestamp', 'timestamp', null, array(
+        $this->hasColumn('date_to', 'timestamp', null, array(
              'type' => 'timestamp',
              'notnull' => true,
              'default' => '0001-01-01',

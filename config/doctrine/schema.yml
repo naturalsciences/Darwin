@@ -130,9 +130,9 @@ CatalogueProperties:
         property_qualifier: {type: string}
         property_qualifier_indexed: {type: string}
         date_from_mask: { type: integer, notnull: true, default:0}
-        date_from timestamp: { type: timestamp, notnull: true, default: '0001-01-01'}
+        date_from: { type: timestamp, notnull: true, default: '0001-01-01'}
         date_to_mask: { type: integer, notnull: true, default:0}
-        date_to timestamp: { type: timestamp, notnull: true, default: '0001-01-01'}
+        date_to: { type: timestamp, notnull: true, default: '0001-01-01'}
         property_unit: {type: string, notnull: true}
         property_accuracy_unit: {type: string}
         property_method: {type: string}
@@ -144,10 +144,8 @@ PropertiesValues:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         property_ref: { type: integer}
-        property_min: {type: string, notnull: true}
-        property_min_unified: {type: string}
-        property_max: {type: string}
-        property_max_unified: {type: string}
+        property_value: {type: string, notnull: true}
+        property_value_unified: {type: string}
         property_accuracy: {type: float}
         property_accuracy_unified: {type: float}
     relations:

@@ -7,29 +7,23 @@
  * 
  * @property integer $id
  * @property integer $property_ref
- * @property string $property_min
- * @property string $property_min_unified
- * @property string $property_max
- * @property string $property_max_unified
+ * @property string $property_value
+ * @property string $property_value_unified
  * @property float $property_accuracy
  * @property float $property_accuracy_unified
  * @property CatalogueProperties $CatalogueProperties
  * 
  * @method integer             getId()                        Returns the current record's "id" value
  * @method integer             getPropertyRef()               Returns the current record's "property_ref" value
- * @method string              getPropertyMin()               Returns the current record's "property_min" value
- * @method string              getPropertyMinUnified()        Returns the current record's "property_min_unified" value
- * @method string              getPropertyMax()               Returns the current record's "property_max" value
- * @method string              getPropertyMaxUnified()        Returns the current record's "property_max_unified" value
+ * @method string              getPropertyValue()             Returns the current record's "property_value" value
+ * @method string              getPropertyValueUnified()      Returns the current record's "property_value_unified" value
  * @method float               getPropertyAccuracy()          Returns the current record's "property_accuracy" value
  * @method float               getPropertyAccuracyUnified()   Returns the current record's "property_accuracy_unified" value
  * @method CatalogueProperties getCatalogueProperties()       Returns the current record's "CatalogueProperties" value
  * @method PropertiesValues    setId()                        Sets the current record's "id" value
  * @method PropertiesValues    setPropertyRef()               Sets the current record's "property_ref" value
- * @method PropertiesValues    setPropertyMin()               Sets the current record's "property_min" value
- * @method PropertiesValues    setPropertyMinUnified()        Sets the current record's "property_min_unified" value
- * @method PropertiesValues    setPropertyMax()               Sets the current record's "property_max" value
- * @method PropertiesValues    setPropertyMaxUnified()        Sets the current record's "property_max_unified" value
+ * @method PropertiesValues    setPropertyValue()             Sets the current record's "property_value" value
+ * @method PropertiesValues    setPropertyValueUnified()      Sets the current record's "property_value_unified" value
  * @method PropertiesValues    setPropertyAccuracy()          Sets the current record's "property_accuracy" value
  * @method PropertiesValues    setPropertyAccuracyUnified()   Sets the current record's "property_accuracy_unified" value
  * @method PropertiesValues    setCatalogueProperties()       Sets the current record's "CatalogueProperties" value
@@ -52,17 +46,11 @@ abstract class BasePropertiesValues extends sfDoctrineRecord
         $this->hasColumn('property_ref', 'integer', null, array(
              'type' => 'integer',
              ));
-        $this->hasColumn('property_min', 'string', null, array(
+        $this->hasColumn('property_value', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              ));
-        $this->hasColumn('property_min_unified', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('property_max', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('property_max_unified', 'string', null, array(
+        $this->hasColumn('property_value_unified', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('property_accuracy', 'float', null, array(

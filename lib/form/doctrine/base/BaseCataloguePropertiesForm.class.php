@@ -8,7 +8,7 @@
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
  */
 abstract class BaseCataloguePropertiesForm extends BaseFormDoctrine
 {
@@ -24,9 +24,9 @@ abstract class BaseCataloguePropertiesForm extends BaseFormDoctrine
       'property_qualifier'         => new sfWidgetFormTextarea(),
       'property_qualifier_indexed' => new sfWidgetFormTextarea(),
       'date_from_mask'             => new sfWidgetFormInputText(),
-      'date_from timestamp'        => new sfWidgetFormDateTime(),
+      'date_from'                  => new sfWidgetFormDateTime(),
       'date_to_mask'               => new sfWidgetFormInputText(),
-      'date_to timestamp'          => new sfWidgetFormDateTime(),
+      'date_to'                    => new sfWidgetFormDateTime(),
       'property_unit'              => new sfWidgetFormTextarea(),
       'property_accuracy_unit'     => new sfWidgetFormTextarea(),
       'property_method'            => new sfWidgetFormTextarea(),
@@ -45,9 +45,9 @@ abstract class BaseCataloguePropertiesForm extends BaseFormDoctrine
       'property_qualifier'         => new sfValidatorString(array('required' => false)),
       'property_qualifier_indexed' => new sfValidatorString(array('required' => false)),
       'date_from_mask'             => new sfValidatorInteger(array('required' => false)),
-      'date_from timestamp'        => new sfValidatorDateTime(array('required' => false)),
+      'date_from'                  => new sfValidatorDateTime(array('required' => false)),
       'date_to_mask'               => new sfValidatorInteger(array('required' => false)),
-      'date_to timestamp'          => new sfValidatorDateTime(array('required' => false)),
+      'date_to'                    => new sfValidatorDateTime(array('required' => false)),
       'property_unit'              => new sfValidatorString(),
       'property_accuracy_unit'     => new sfValidatorString(array('required' => false)),
       'property_method'            => new sfValidatorString(array('required' => false)),
