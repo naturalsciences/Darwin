@@ -189,7 +189,14 @@ class fuzzyDateValidator extends sfValidatorDate
   {
     if (is_array($value))
     {
-      $clean = $this->convertDateArray($value);
+      try
+      {
+        $clean = new FuzzyDateTime($value, FuzzyDateTime::getMaskFromDate($value), $this->getOption('from_date'), $this->getOption('with_time'));
+      }
+      catch (Exception $e)
+      {
+        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      }
     }
     else if ($regex = $this->getOption('date_format'))
     {
@@ -197,14 +204,13 @@ class fuzzyDateValidator extends sfValidatorDate
       {
         throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'date_format' => $this->getOption('date_format_error') ? $this->getOption('date_format_error') : $this->getOption('date_format')));
       }
-
-      $clean = $this->convertDateArray($match);
+      $clean = new FuzzyDateTime($match);
     }
     else 
     {
       try 
       {
-        $clean = new DateTime($value);
+        $clean = new FuzzyDateTime($value);
       }
       catch (Exception $e)
       {

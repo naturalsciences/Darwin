@@ -17,18 +17,9 @@
  */
 class FuzzyDateTime extends DateTime
 {
-
   protected static
-    $defaultYear = '0001',
-    $defaultMonth = '01',
-    $defaultMaxMonth = '12',
-    $defaultDay = '01',
-    $defaultHour = '00',
-    $defaultMaxHour = '23',
-    $defaultMinute = '00',
-    $defaultMaxMinute = '59',
-    $defaultSecond = '00',
-    $defaultMaxSecond = '59',
+    $defaultValues = array('year'=>'0001', 'month'=>'01', 'day'=>'01', 'hour'=>'00', 'minute'=>'00', 'second'=>'00'),
+    $defaultMaxValues = array('month'=>'12', 'hour'=>'23', 'minute'=>'59', 'second'=>'59'),
     $datePartsMask = array('year'=>32, 'month'=>16, 'day'=>8, 'hour'=>4, 'minute'=>2, 'second'=>1);
   protected
     $start = true,
@@ -45,12 +36,13 @@ class FuzzyDateTime extends DateTime
    * @param boolean       $start     An optional parameter to 
    *
    */ 
-  public function __construct($dateTime='now', $mask=56, $start=true)
+  public function __construct($dateTime='now', $mask=56, $start=true, $withTime=false)
   {
-    if (is_array($dateTime)) $dateTime = getDateStringFromArray($dateTime, $start);
+    if (is_array($dateTime)) $dateTime = self::getDateStringFromArray($dateTime, $start, $withTime);
     parent::__construct($dateTime);
-    $this->setStart($start);
     $this->setMask($mask);
+    $this->setStart($start);
+    $this->setWithTime($withTime);
   }
 
   public static function validateDateYearLength ($year)
@@ -87,16 +79,46 @@ class FuzzyDateTime extends DateTime
     return true;
   }
 
-  public static function getDateTimeStringFromArray(array $dateTime, $start=false, $withTime=false)
+  public static function getDateTimeStringFromArray(array $dateTime, $start=true, $withTime=false)
   {
-    if (!self::checkDateArray($dateTime)) return (self::$defaultYear).'/'.(self::$defaultMonth).'/'.(self::$defaultDay).(($withTime)?' '.(self::$defaultHour).':'.(self::$defaultMinute).':'.(self::$defaultSsecond):'');
-    $year = (!isset($dateTime['year']) || empty($dateTime['year']))?(($start)?self::$defaultYear:strval(date('Y'))):str_pad(strval($dateTime['year']), 4, '0', STR_PAD_LEFT);
-    $month = (!isset($dateTime['month']) || empty($dateTime['month']))?(($start)?self::$defaultMonth:self::$defaultMaxMonth):str_pad(strval($dateTime['month']), 2, '0', STR_PAD_LEFT);
-    $maxDaysInMonth = new DateTime(strval(($month == '12')?intval($year)+1:$year).'/'.(($month == '12')?'01':intval($month)+1).'/00');
-    $day = (!isset($dateTime['day']) || empty($dateTime['day']))?(($start)?self::$defaultDay:str_pad(strval($maxDaysInMonth->format('d')), 2, '0', STR_PAD_LEFT)):str_pad(strval($dateTime['day']), 2, '0', STR_PAD_LEFT);
-    $hour = (!isset($dateTime['hour']) || empty($dateTime['hour']))?(($start)?self::$defaultHour:self::$defaultMaxHour):str_pad(strval($dateTime['hour']), 2, '0', STR_PAD_LEFT);
-    $minute = (!isset($dateTime['minute']) || empty($dateTime['minute']))?(($start)?self::$defaultMinute:self::$defaultMaxMinute):str_pad(strval($dateTime['minute']), 2, '0', STR_PAD_LEFT);
-    $second = (!isset($dateTime['second']) || empty($dateTime['second']))?(($start)?self::$defaultSecond:self::$defaultMaxSecond):str_pad(strval($dateTime['second']), 2, '0', STR_PAD_LEFT);
+    if (!self::checkDateArray($dateTime)) return (self::$defaultValues['year']).'/'.(self::$defaultValues['month']).'/'.(self::$defaultValues['day']).(($withTime)?' '.(self::$defaultValues['hour']).':'.(self::$defaultValues['minute']).':'.(self::$defaultValues['second']):'');
+    foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
+    {
+      if ($key == 'day') $maxDaysInMonth = new DateTime(strval(($month == '12')?intval($year)+1:$year).'/'.(($month == '12')?'01':intval($month)+1).'/00');
+      if (!isset($dateTime[$key]) || empty($dateTime[$key]))
+      {
+        if ($start)
+        {
+          $$key = self::$defaultValues[$key];
+        }
+        else
+        {
+          if ($key =='year')
+          {
+            $$key = strval(date('Y'));
+          }
+          elseif ($key == 'day')
+          {
+            $$key = strval($maxDaysInMonth->format('d'));
+          }
+          else
+          {
+            $$key = self::$defaultMaxValues[$key];
+          }
+        }
+      }
+      else
+      {
+        if ($key =='year')
+        {
+          $$key = str_pad(strval($dateTime[$key]), 4, '0', STR_PAD_LEFT);
+        }
+        else
+        {
+          $$key = str_pad(strval($dateTime[$key]), 2, '0', STR_PAD_LEFT);
+        }
+      }
+    }
     $dateTime = $year.'/'.$month.'/'.$day.(($withTime)?' '.$hour.':'.$minute.':'.$second:'');
     return $dateTime;
   }
@@ -128,7 +150,7 @@ class FuzzyDateTime extends DateTime
 
   public function setMaskFromDate(array $dateTime)
   {
-    $this->mask = $this->getMaskFromDate($dateTime);
+    $this->mask = self::getMaskFromDate($dateTime);
   }
 
   public function getMask()
@@ -156,12 +178,12 @@ class FuzzyDateTime extends DateTime
     return $this->timeFormat;
   }
 
-  public function getMaskFor($key)
+  public static function getMaskFor($key)
   {
     return self::$datePartsMask[$key];
   }
   
-  public function getMaskFromDate(array $dateTime)
+  public static function getMaskFromDate(array $dateTime)
   {
     $mask = 0;
     if(self::checkDateArray($dateTime))
@@ -170,7 +192,7 @@ class FuzzyDateTime extends DateTime
       {
         if (isset($dateTime[$key]) && !empty($dateTime[$key]))
         {
-          $mask += $this->getMaskFor($key);
+          $mask += self::getMaskFor($key);
         }
         else
         {
@@ -189,6 +211,12 @@ class FuzzyDateTime extends DateTime
     return $this->format($dateFormat.(($withTime)?' '.$timeFormat:''));
   }
   
+  public function getTime($timeFormat=null)
+  {
+    $timeFormat = (is_null($timeFormat))?$this->getTimeFormat():$timeFormat;
+    return $this->format($timeFormat);
+  }
+  
   public function getDateTimeAsArray()
   {
     return array('year'=>strval($this->format('Y')), 
@@ -202,6 +230,49 @@ class FuzzyDateTime extends DateTime
   
   public function getDateMasked($tag='em')
   {
+    $firstPart = '';
+    $lastPart = '';
+    $yearAtLeast = self::$datePartsMask['year'] & $this->getMask();
+    if (!$yearAtLeast)
+    {
+      $mainPart = '<'.$tag.'>'.strval($this->getDateTime($this->getWithTime())).'</'.$tag.'>';
+    }
+    elseif (!(self::$datePartsMask['month'] & $this->getMask()))
+    {
+      $firstPart = '<'.$tag.'>'.strval($this->getDateTime(false, 'd/m/')).'</'.$tag.'>';
+      $mainPart = strval($this->getDateTime(false, 'Y'));
+    }
+    elseif (!(self::$datePartsMask['day'] & $this->getMask()))
+    {
+      $firstPart = '<'.$tag.'>'.strval($this->getDateTime(false, 'd/')).'</'.$tag.'>';
+      $mainPart = strval($this->getDateTime(false, 'm/Y'));
+    }
+    else
+    {
+      $mainPart = strval($this->getDateTime(false));
+    }
+    if ($this->getWithTime() && $yearAtLeast)
+    {
+      if (!(self::$datePartsMask['hour'] & $this->getMask()))
+      {
+        $lastPart = '<'.$tag.'> '.strval($this->getTime()).'</'.$tag.'>';
+      }
+      elseif (!(self::$datePartsMask['minute'] & $this->getMask()))
+      {
+        $mainPart .= ' '.$this->getTime('H');
+        $lastPart = '<'.$tag.'>'.strval($this->getTime(':i:s')).'</'.$tag.'>';
+      }
+      elseif (!(self::$datePartsMask['second'] & $this->getMask()))
+      {
+        $mainPart .= ' '.$this->getTime('H:i');
+        $lastPart = '<'.$tag.'>'.strval($this->getTime(':s')).'</'.$tag.'>';
+      }
+      else
+      {
+        $mainPart .= ' '.$this->getTime();
+      }
+    }
+    return $firstPart.$mainPart.$lastPart;
   }
 
   public function __ToString()

@@ -7,8 +7,8 @@ class SearchExpeditionForm extends DarwinForm
   {
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
-    $minDate = new DateTime(strval(min($yearsKeyVal)).'/1/1 0:0:0');
-    $maxDate = new DateTime(strval(max($yearsKeyVal)).'/12/31 23:59:59');
+    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal)).'/1/1 0:0:0');
+    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal)).'/12/31 23:59:59');
     $this->setWidgets(array('name' => new sfWidgetFormInputText(),
                             'from_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
                                                                                'image'=>'/images/calendar.gif', 
@@ -51,7 +51,7 @@ class SearchExpeditionForm extends DarwinForm
                                                                   ),
                               )
                         );
-    
+//@TODO remove the FuzzyDateValidatorSchemaCompare and replace by sfValidatoriSchemaCompra, from_date and to_date becoming a FuzzyDateTime Object    
     $this->validatorSchema->setPostValidator(new fuzzyDateValidatorSchemaCompare('from_date', 
                                                                                  '<=', 
                                                                                  'to_date', 
