@@ -7,8 +7,9 @@ class SearchExpeditionForm extends DarwinForm
   {
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
-    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal)).'/1/1 0:0:0');
-    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal)).'/12/31 23:59:59');
+    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal)));
+    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal)));
+    $maxDate->setStart(false);
     $this->setWidgets(array('name' => new sfWidgetFormInputText(),
                             'from_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
                                                                                'image'=>'/images/calendar.gif', 
@@ -27,8 +28,8 @@ class SearchExpeditionForm extends DarwinForm
     
     $this->widgetSchema->setNameFormat('searchExpedition[%s]');
     
-    $this->widgetSchema->setLabels(array('from_date' => 'Between (dd/mm/yyyy)',
-                                         'to_date' => 'and (dd/mm/yyyy)',
+    $this->widgetSchema->setLabels(array('from_date' => 'Between',
+                                         'to_date' => 'and',
                                         )
                                   );
 
@@ -51,13 +52,12 @@ class SearchExpeditionForm extends DarwinForm
                                                                   ),
                               )
                         );
-//@TODO remove the FuzzyDateValidatorSchemaCompare and replace by sfValidatoriSchemaCompra, from_date and to_date becoming a FuzzyDateTime Object    
-    $this->validatorSchema->setPostValidator(new fuzzyDateValidatorSchemaCompare('from_date', 
-                                                                                 '<=', 
-                                                                                 'to_date', 
-                                                                                 array('throw_global_error' => true), 
-                                                                                 array('invalid'=>'The "begin" date cannot be above the "end" date.')
-                                                                                )
+    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('from_date', 
+                                                                          '<=', 
+                                                                          'to_date', 
+                                                                          array('throw_global_error' => true), 
+                                                                          array('invalid'=>'The "begin" date cannot be above the "end" date.')
+                                                                         )
                                             );
     
   }

@@ -58,131 +58,6 @@ class fuzzyDateValidator extends sfValidatorDate
   }
 
   /**
-   * Give a mask depending on date array entered by user
-   *
-   * @param array $value An array of date elements
-   *
-   * @return DateTime A DateTime object
-   */
-  protected function getMask($value)
-  {
-    return (!isset($value['year']) || !$value['year'] ? 0 : 32) +
-           (!isset($value['month']) || !$value['month'] ? 0 : 16) +
-           (!isset($value['day']) || !$value['day'] ? 0 : 8) +
-           (!isset($value['hour']) || !$value['hour'] ? 0 : 4) +
-           (!isset($value['minute']) || !$value['minute'] ? 0 : 2) +
-           (!isset($value['second']) || !$value['second'] ? 0 : 1);
-  }
-
-  /**
-   * Converts an array representing a date to a timestamp.
-   *
-   * The array can contains the following keys: year, month, day, hour, minute, second
-   *
-   * @param  array $value  An array of date elements
-   *
-   * @return int A Date/Time integer value
-   */
-  protected function convertDateArray($value)
-  {
-    // all elements must be empty or a number
-    foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
-    {
-      if (isset($value[$key]) && !preg_match('#^\d+$#', $value[$key]) && !empty($value[$key]))
-      {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
-      }
-    }
-
-    // Compute the date/timestamp mask
-    $empties = $this->getMask($value);
-    try {
-    if ($empties == 0)
-    {
-      $value['year'] = ($this->getOption('from_date'))?intval($this->getOption('min')->format('Y')):intval($this->getOption('max')->format('Y'));
-      $value['month'] = ($this->getOption('from_date'))?1:12;
-      $value['day'] = ($this->getOption('from_date'))?1:31;
-      $value['hour'] = ($this->getOption('from_date'))?0:23;
-      $value['minute'] = ($this->getOption('from_date'))?0:59;
-      $value['second'] = ($this->getOption('from_date'))?0:59;
-    }
-    else if ($empties <= 31)
-    {
-      throw new sfValidatorError($this, 'year_missing', array('value' => $value));
-    }
-    else if ($empties == 32)
-    {
-      $value['month'] = ($this->getOption('from_date'))?1:12;
-      $value['day'] = ($this->getOption('from_date'))?1:31;
-      $value['hour'] = ($this->getOption('from_date'))?0:23;
-      $value['minute'] = ($this->getOption('from_date'))?0:59;
-      $value['second'] = ($this->getOption('from_date'))?0:59;
-    }
-    else if ($empties <= 47)
-    {
-      throw new sfValidatorError($this, 'month_missing', array('value' => $value));
-    }
-    else if ($empties == 48)
-    {
-      $dateVal = new DateTime(strval(intval($value['year'])).'/'.strval(intval($value['month'])+1).'/0');
-      $value['day'] = ($this->getOption('from_date'))?1:intval($dateVal->format('d'));
-      $value['hour'] = ($this->getOption('from_date'))?0:23;
-      $value['minute'] = ($this->getOption('from_date'))?0:59;
-      $value['second'] = ($this->getOption('from_date'))?0:59;
-    }
-    else if ($empties <= 55)
-    {
-      throw new sfValidatorError($this, 'day_missing', array('value' => $value));
-    }
-    
-
-    if (!checkdate(intval($value['month']), intval($value['day']), intval($value['year'])))
-    {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
-    }
-
-    if ($this->getOption('with_time'))
-    {
-      // if second is set, minute and hour must be set
-      // if minute is set, hour must be set
-      if (
-        $this->isValueSet($value, 'second') && (!$this->isValueSet($value, 'minute') || !$this->isValueSet($value, 'hour'))
-        ||
-        $this->isValueSet($value, 'minute') && !$this->isValueSet($value, 'hour')
-      )
-      {
-        throw new sfValidatorError($this, 'invalid', array('value' => $value));
-      }
-
-      $clean = new DateTime(strval(intval($value['year'])).'/'.
-                            strval(intval($value['month'])).'/'.
-                            strval(intval($value['day'])).' '.
-                            strval(isset($value['hour']) ? intval($value['hour']) : 0).':'.
-                            strval(isset($value['minute']) ? intval($value['minute']) : 0).':'.
-                            strval(isset($value['second']) ? intval($value['second']) : 0)
-                           );
-    }
-    else
-    {
-      $clean = new DateTime(strval(intval($value['year'])).'/'.
-                            strval(intval($value['month'])).'/'.
-                            strval(intval($value['day'])).' 0:0:0'
-                           );
-    }
-    }
-    catch (sfValidatorError $e)
-    {
-      throw $e;
-    }
-    catch (Exception $e)
-    {
-      throw new sfValidatorError($this, 'invalid', array('value' => $value));
-    }
-
-    return $clean;
-  }
-
-  /**
    * @see sfValidatorBase
    */
   protected function doClean($value)
@@ -191,7 +66,11 @@ class fuzzyDateValidator extends sfValidatorDate
     {
       try
       {
-        $clean = new FuzzyDateTime($value, FuzzyDateTime::getMaskFromDate($value), $this->getOption('from_date'), $this->getOption('with_time'));
+        $clean = new FuzzyDateTime($value, 
+                                   FuzzyDateTime::getMaskFromDate($value), 
+                                   $this->getOption('from_date'), 
+                                   $this->getOption('with_time')
+                                  );
       }
       catch (Exception $e)
       {
@@ -220,15 +99,14 @@ class fuzzyDateValidator extends sfValidatorDate
 
     if ($this->hasOption('max') && $clean > $this->getOption('max'))
     {
-      throw new sfValidatorError($this, 'max', array('value' => $value, 'max' => date($this->getOption('date_format_range_error'), $this->getOption('max'))));
+      throw new sfValidatorError($this, 'max', array('value' => $value, 'max' => $this->getOption('max')));
     }
 
     if ($this->hasOption('min') && $clean < $this->getOption('min'))
     {
-      throw new sfValidatorError($this, 'min', array('value' => $value, 'min' => date($this->getOption('date_format_range_error'), $this->getOption('min'))));
+      throw new sfValidatorError($this, 'min', array('value' => $value, 'min' => $this->getOption('min')));
     }
 
-    $clean = array(($this->getOption('from_date'))?'from_date':'to_date' => $clean, ($this->getOption('from_date'))?'from_date_mask':'to_date_mask' => $this->getMask($value));
     return $clean;
 
   }

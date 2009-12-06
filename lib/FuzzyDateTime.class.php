@@ -38,7 +38,7 @@ class FuzzyDateTime extends DateTime
    */ 
   public function __construct($dateTime='now', $mask=56, $start=true, $withTime=false)
   {
-    if (is_array($dateTime)) $dateTime = self::getDateStringFromArray($dateTime, $start, $withTime);
+    if (is_array($dateTime)) $dateTime = self::getDateTimeStringFromArray($dateTime, $start, $withTime);
     parent::__construct($dateTime);
     $this->setMask($mask);
     $this->setStart($start);
