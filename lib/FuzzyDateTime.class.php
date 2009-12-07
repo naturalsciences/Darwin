@@ -62,26 +62,17 @@ class FuzzyDateTime extends DateTime
     {
       if (isset($dateTime[$key]) && !empty($dateTime[$key]))
       {
-        if (!preg_match('#^\d+$#', $dateTime[$key]))
-        {
-          throw new Exception('All elements in the date array must be a number or an empty value !');
-        }
-        elseif ($key == 'year' && !self::validateDateYearLength($dateTime[$key]))
-        {
-          throw new Exception('Year cannot be more than 4 digit length !');
-        }
-        elseif ($key != 'year' && !self::validateDateOtherPartLength($dateTime[$key]))
-        {
-          throw new Exception('Date part other than years cannot be more than 2 digit length !');
-        }
+        if (!preg_match('#^\d+$#', $dateTime[$key])) return 'wrong_data_type';
+        if ($key == 'year' && !self::validateDateYearLength($dateTime[$key])) return 'wrong_year_length';
+        if ($key != 'year' && !self::validateDateOtherPartLength($dateTime[$key])) return 'wrong_date_part_length';
       }
     }
-    return true;
+    return '';
   }
 
   public static function getDateTimeStringFromArray(array $dateTime, $start=true, $withTime=false)
   {
-    if (!self::checkDateArray($dateTime)) return (self::$defaultValues['year']).'/'.(self::$defaultValues['month']).'/'.(self::$defaultValues['day']).(($withTime)?' '.(self::$defaultValues['hour']).':'.(self::$defaultValues['minute']).':'.(self::$defaultValues['second']):'');
+    if (!self::checkDateArray($dateTime)=='') return (self::$defaultValues['year']).'/'.(self::$defaultValues['month']).'/'.(self::$defaultValues['day']).(($withTime)?' '.(self::$defaultValues['hour']).':'.(self::$defaultValues['minute']).':'.(self::$defaultValues['second']):'');
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
       if ($key == 'day') $maxDaysInMonth = new DateTime(strval(($month == '12')?intval($year)+1:$year).'/'.(($month == '12')?'01':intval($month)+1).'/00');
@@ -185,7 +176,8 @@ class FuzzyDateTime extends DateTime
   
   public static function checkDateTimeStructure (array $dateTime)
   {
-    if (!self::checkDateArray($dateTime)) return 'wrong_date';
+    $checkDate = self::checkDateArray($dateTime);
+    if (!empty($checkDate)) return $checkDate;
     if ((!isset($dateTime['year']) || empty($dateTime['year'])) && ((isset($dateTime['month']) && !empty($dateTime['month'])) || 
                                                                     (isset($dateTime['day']) && !empty($dateTime['day'])) || 
                                                                     (isset($dateTime['hour']) && !empty($dateTime['hour'])) || 
@@ -200,7 +192,10 @@ class FuzzyDateTime extends DateTime
         ((!isset($dateTime['month']) || empty($dateTime['month'])) || 
          (!isset($dateTime['day']) || empty($dateTime['day']))
         ) &&
-        (isset($dateTime['hour']) && !empty($dateTime['hour']))
+        ((isset($dateTime['hour']) && !empty($dateTime['hour'])) ||
+         (isset($dateTime['minute']) && !empty($dateTime['minute'])) ||
+         (isset($dateTime['second']) && !empty($dateTime['second']))
+        )
        ) return 'time_without_date';
     return '';
   }
@@ -208,7 +203,7 @@ class FuzzyDateTime extends DateTime
   public static function getMaskFromDate(array $dateTime)
   {
     $mask = 0;
-    if(self::checkDateArray($dateTime))
+    if(self::checkDateArray($dateTime)=='')
     {
       foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
       {
