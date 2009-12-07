@@ -6,5 +6,7 @@
     <?php include_partial('searchResults', array('expeditions' => $expeditions, 'is_choose' => false)) ?>
   <?php endif;?>
   <br />
-  <a href="<?php echo url_for('expedition/new') ?>">New</a>
+  <div class='new_link'>
+    <a href="<?php echo url_for('expedition/new') ?>">New</a>
+  </div>
 </div>

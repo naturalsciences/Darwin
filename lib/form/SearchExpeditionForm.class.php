@@ -11,7 +11,6 @@ class SearchExpeditionForm extends DarwinForm
     $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
-//    die (sfConfig::get('app_dateLowerBound'));
     $dateUpperBound = new FuzzyDateTime(sfConfig::get('app_dateUpperBound'));
     $maxDate->setStart(false);
     $this->setWidgets(array('name' => new sfWidgetFormInputText(),

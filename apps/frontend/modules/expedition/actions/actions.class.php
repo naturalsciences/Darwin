@@ -19,9 +19,6 @@ class expeditionActions extends sfActions
       $this->searchResults($this->form,$request);
     }
 
-    /*$this->expeditions_list = Doctrine::getTable('Expeditions')
-      ->createQuery('a')
-      ->execute();*/
   }
   private function searchResults($form, $request)
   {

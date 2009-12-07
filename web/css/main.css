@@ -299,3 +299,27 @@ padding: 2px;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 }
+.new_link
+{
+  float:right;
+  margin-right:40%;
+  background: white url(/images/widget_button.png) no-repeat;
+  height:21px;
+  width:73px;
+  text-align:center;
+  font-size:small;
+}
+.new_link a
+{
+  vertical-align:middle;
+  text-decoration:none;
+  color:white;
+}
+.new_link a:hover
+{
+  text-decoration:underline;
+}
+.new_link a:visited
+{
+  color:grey;
+}
