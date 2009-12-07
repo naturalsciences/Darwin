@@ -5,55 +5,16 @@
  */
 class Expeditions extends BaseExpeditions
 {
-  protected function getExpeditionDateMasked ($expedition_date_field, $time_format='human')
-  {
-    $expedition_date_obj = new DateTime($this->_get($expedition_date_field));
-    $expedition_date = '';
-    $expedition_time = '';
-    $expedition_date_mask = $this->_get($expedition_date_field.'_mask');
-    $mask_values = array(32, 16, 8, 4, 2, 1);
-    foreach ($mask_values as $mask_value)
-    {
-      if ($value = $mask_value & $expedition_date_mask)
-      {
-         if ($value < 8)
-         {
-           $expedition_time .= ($value==4)?$expedition_date_obj->format('H').(($time_format=='human')?'h':':'):(($value==2)?$expedition_date_obj->format('i').(($time_format=='human')?' ':':'):$expedition_date_obj->format('s').(($time_format=='human')?' sec.':''));
-         }
-         else
-         {
-           $expedition_date = $expedition_date_obj->format(($value==32)?'Y':(($value==16)?'m':'d')).(!$value == 32)?'/':''.$expedition_date;
-         }
-      }
-      else
-      {
-        break;
-      }
-    }
-    $expedition_date .= (!$expedition_time=='')?' '.trim($expedition_time,':'):'';
-    return $expedition_date;
-  }
-
-  protected function getExpeditionDateFormated ($expedition_date, $expedition_date_masked)
-  {
-    $expedition_date = trim($expedition_date);
-    $expedition_date_masked = trim($expedition_date_masked);
-    if (strlen($expedition_date) == 0 || strlen($expedition_date_masked) == 0 || strlen($expedition_date) == strlen($expedition_date_masked)) return $expedition_date;
-    $maskLen = strlen($expedition_date_masked);
-    $maskedPos = strpos($expedition_date, $expedition_date_masked);
-    if ($maskedPos == 0) return $expedition_date_masked . '<em>'.substr($expedition_date, $maskLen).'</em>';
-    if ($maskedPos+$maskLen == strlen($expedition_date)) return '<em>'.substr($expedition_date, 0, $maskedPos).'</em>'.$expedition_date_masked;
-    return '<em>'.substr($expedition_date, 0, $maskedPos).'</em>'.$expedition_date_masked.'<em>'.substr($expedition_date, $maskedPos+$maskLen).'</em>';
-  }
-
   public function getExpeditionFromDateMasked ()
   {
-    return $this->getExpeditionDateMasked('expedition_from_date');
+    $dateTime = new FuzzyDateTime($this->_get('expedition_from_date'), $this->_get('expedition_from_date_mask'));
+    return $dateTime->getDateMasked();
   }
   
   public function getExpeditionToDateMasked ()
   {
-    return $this->getExpeditionDateMasked('expedition_to_date');
+    $dateTime = new FuzzyDateTime($this->_get('expedition_to_date'), $this->_get('expedition_to_date_mask'));
+    return $dateTime->getDateMasked();
   }
   
 

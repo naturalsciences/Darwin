@@ -6,22 +6,6 @@ class ExpeditionsTable extends Doctrine_Table
 {
   public function getExpLike($name, $from_date, $to_date, $orderBy='name', $orderByOrder='ASC', $start=1, $numPerPage='all')
   {
-    if (is_array($from_date) && isset($from_date['from_date']))
-    {
-      $from_date = $from_date['from_date'];
-    }
-    if (is_array($to_date) && isset($to_date['to_date']))
-    {
-      $to_date = $to_date['to_date'];
-    }
-    if (is_null($from_date))
-    {
-      $from_date = new DateTime(sfConfig::get('app_yearRangeMin').'/1/1 00:00:00');
-    }
-    if (is_null($to_date))
-    {
-      $to_date = new DateTime(sfConfig::get('app_yearRangeMax').'/12/31 23:59:59');
-    }
     $q = Doctrine_Query::create()
          ->from('Expeditions e');
     if (trim($name) != ""):
@@ -31,10 +15,25 @@ class ExpeditionsTable extends Doctrine_Table
         $q->andWhere("name_ts @@ search_words_to_query('expeditions' , 'name_ts', ? , 'contains') ",$word);
       }
     endif;
-    $q->andWhere(" datesOverlaps(e.expedition_from_date, e.expedition_to_date,  ?, ? ) ", 
-                 array($from_date->format('d/m/Y'), $to_date->format('d/m/Y'))
-                ) 
-      ->andWhere("id > 0 ")
+    if (($from_date->getMask() > 0) && ($to_date->getMask() > 0))
+    {
+      $q->andWhere(" e.expedition_from_date >= ? ", $from_date->format('d/m/Y'))
+        ->andWhere(" e.expedition_to_date <= ? ", $to_date->format('d/m/Y'));
+    }
+    elseif (($from_date->getMask() > 0) && ($to_date->getMask() == 0))
+    {
+      $q->andWhere(" ((e.expedition_from_date >= ? AND e.expedition_from_date_mask > 0) OR (e.expedition_to_date >= ? AND e.expedition_to_date_mask > 0)) ", 
+                   array($from_date->format('d/m/Y'), $from_date->format('d/m/Y'))
+                  );
+    } 
+    elseif (($from_date->getMask() == 0) && ($to_date->getMask() > 0))
+    {
+      $q->andWhere(" ((e.expedition_from_date <= ? AND e.expedition_from_date_mask > 0) OR (e.expedition_to_date <= ? AND e.expedition_to_date_mask > 0)) ", 
+                   array($to_date->format('d/m/Y'), $to_date->format('d/m/Y'))
+                  );      
+    } 
+
+    $q->andWhere("id > 0 ")
       ->orderby($orderBy . ' ' . $orderByOrder)
       ->limit($numPerPage)
       ->offset($start);

@@ -50,7 +50,7 @@ class fuzzyDateValidator extends sfValidatorDate
   {
     $this->addMessage('year_missing', 'Year missing.');
     $this->addMessage('month_missing', 'Month missing or remove the day and time.');
-    $this->addMessage('day_missing', 'Day missing or remove the time.');
+    $this->addMessage('time_without_date', 'Day missing or remove the time.');
 
     $this->addOption('from_date', true);
 
@@ -64,6 +64,15 @@ class fuzzyDateValidator extends sfValidatorDate
   {
     if (is_array($value))
     {
+      try
+      {
+        $checkDateStructure = FuzzyDateTime::checkDateTimeStructure($value);
+      }
+      catch (Exception $e)
+      {
+        throw new sfValidatorError($this, 'invalid', array('value' => $value));
+      }
+      if (!empty($checkDateStructure)) throw new sfValidatorError($this, $checkDateStructure, array('value' => $value));
       try
       {
         $clean = new FuzzyDateTime($value, 

@@ -55,6 +55,8 @@ Expeditions:
         name: 'Informatica 75'
         expedition_from_date: '1975-02-24'
         expedition_from_date_mask: 56
+        expedition_to_date: '2030-12-31'
+        expedition_to_date_mask: 0
     ex3:
         name: 'C Noël C Noël Vive le vent divers'
         expedition_to_date: '2002-12-24'
@@ -86,6 +88,13 @@ Expeditions:
         expedition_from_date_mask: 0
         expedition_to_date: '2009-12-31'
         expedition_to_date_mask: 32
+
+    ex8:
+        name: 'No date'
+        expedition_from_date: '0001-01-01'
+        expedition_from_date_mask: 0
+        expedition_to_date: '2035-12-31'
+        expedition_to_date_mask: 0
 
 CatalogueRelationships:
     catart1:

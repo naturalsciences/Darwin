@@ -3,3 +3,6 @@ all:
        salt: mySecret$alt
        yearRangeMin: 1800
        yearRangeMax: <?php echo date('Y')+2; ?>
+
+       dateUpperBound: '2038/12/31'
+       dateLowerBound: '0001/01/01'

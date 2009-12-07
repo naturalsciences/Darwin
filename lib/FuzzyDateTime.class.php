@@ -183,6 +183,28 @@ class FuzzyDateTime extends DateTime
     return self::$datePartsMask[$key];
   }
   
+  public static function checkDateTimeStructure (array $dateTime)
+  {
+    if (!self::checkDateArray($dateTime)) return 'wrong_date';
+    if ((!isset($dateTime['year']) || empty($dateTime['year'])) && ((isset($dateTime['month']) && !empty($dateTime['month'])) || 
+                                                                    (isset($dateTime['day']) && !empty($dateTime['day'])) || 
+                                                                    (isset($dateTime['hour']) && !empty($dateTime['hour'])) || 
+                                                                    (isset($dateTime['minute']) && !empty($dateTime['minute'])) || 
+                                                                    (isset($dateTime['second']) && !empty($dateTime['second']))
+                                                                   )
+       ) return 'year_missing';
+    if ((isset($dateTime['year']) && !empty($dateTime['year']) && isset($dateTime['day']) && !empty($dateTime['day'])) &&
+        (!isset($dateTime['month']) || empty($dateTime['month']))
+       ) return 'month_missing';
+    if ((isset($dateTime['year']) && !empty($dateTime['year'])) && 
+        ((!isset($dateTime['month']) || empty($dateTime['month'])) || 
+         (!isset($dateTime['day']) || empty($dateTime['day']))
+        ) &&
+        (isset($dateTime['hour']) && !empty($dateTime['hour']))
+       ) return 'time_without_date';
+    return '';
+  }
+
   public static function getMaskFromDate(array $dateTime)
   {
     $mask = 0;

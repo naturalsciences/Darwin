@@ -7,20 +7,28 @@ class SearchExpeditionForm extends DarwinForm
   {
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
-    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal)));
-    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal)));
+    $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
+    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
+    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
+    $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
+//    die (sfConfig::get('app_dateLowerBound'));
+    $dateUpperBound = new FuzzyDateTime(sfConfig::get('app_dateUpperBound'));
     $maxDate->setStart(false);
     $this->setWidgets(array('name' => new sfWidgetFormInputText(),
                             'from_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
                                                                                'image'=>'/images/calendar.gif', 
                                                                                'format' => '%day%/%month%/%year%', 
-                                                                               'years' => $years, ),
+                                                                               'years' => $years,
+                                                                               'empty_values' => $dateText,
+                                                                              ),
                                                                          array('class' => 'from_date')
                                                                         ),
                             'to_date' => new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
                                                                              'image'=>'/images/calendar.gif', 
                                                                              'format' => '%day%/%month%/%year%', 
-                                                                             'years' => $years, ),
+                                                                             'years' => $years,
+                                                                             'empty_values' => $dateText, 
+                                                                            ),
                                                                        array('class' => 'to_date')
                                                                       )
                            )
@@ -37,7 +45,8 @@ class SearchExpeditionForm extends DarwinForm
                                'from_date' => new fuzzyDateValidator(array('required' => false,
                                                                            'from_date' => true,
                                                                            'min' => $minDate,
-                                                                           'max' => $maxDate,
+                                                                           'max' => $maxDate, 
+                                                                           'empty_value' => $dateLowerBound,
                                                                           ),
                                                                      array('invalid' => 'Date provided is not valid',
                                                                           )
@@ -46,12 +55,14 @@ class SearchExpeditionForm extends DarwinForm
                                                                          'from_date' => false,
                                                                          'min' => $minDate,
                                                                          'max' => $maxDate,
+                                                                         'empty_value' => $dateUpperBound,
                                                                         ),
                                                                    array('invalid' => 'Date provided is not valid',
                                                                         )
                                                                   ),
                               )
                         );
+
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('from_date', 
                                                                           '<=', 
                                                                           'to_date', 

@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../bootstrap/unit.php');
-$t = new lime_test(75, new lime_output_color());
+$t = new lime_test(81, new lime_output_color());
 
 $t->info('FuzzyDateTime instanciation');
 $t->isa_ok(new FuzzyDateTime(), 'FuzzyDateTime', 'New creates an object of the right class');
@@ -144,3 +144,20 @@ $fdt->setMask(62);
 $t->is($fdt->getDateMasked(), '24/02/1975 13:12<em>:11</em>', 'The date displayed is well: 24/02/1975 13:12<em>:11</em>');
 $fdt->setMask(63);
 $t->is($fdt->getDateMasked(), '24/02/1975 13:12:11', 'The date displayed is well: 24/02/1975 13:12:11');
+$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), '', 'Date structure test ok');
+$testArray['year']='1975';
+$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), '', 'Date structure test ok');
+$testArray['day']='24';
+$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), 'month_missing', 'Date structure test ok');
+$testArray['year']='';
+$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), 'year_missing', 'Date structure test ok');
+$testArray['year']='1975';
+$testArray['month']='02';
+$testArray['day']='';
+$testArray['hour']='02';
+$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), 'time_without_date', 'Date structure test ok');
+$testArray['year']='0001';
+$testArray['month']='01';
+$testArray['day']='01';
+$fdt=new FuzzyDateTime($testArray);
+$t->is($fdt->format('d/m/Y'), '01/01/0001', 'Date lower bound format ok');

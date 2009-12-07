@@ -285,6 +285,11 @@ padding: 2px;
 {
   text-align: right;
 }
+.datesNum em
+{
+  color:#C1C1C1;
+  font-style:normal;
+}
 .edit
 {
   text-align:center;
