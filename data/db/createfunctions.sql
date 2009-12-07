@@ -6702,3 +6702,18 @@ END;
 $$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION datesOverlaps(start1 date, end1 date, start2 date, end2 date) RETURNS boolean LANGUAGE plpgsql
+AS
+$$
+DECLARE
+  response boolean := true;
+BEGIN
+  SELECT (start1, end1) OVERLAPS (start2, end2) INTO response;
+  return response;
+EXCEPTION
+  WHEN OTHERS THEN
+    response := false;
+    RAISE NOTICE 'Error in datesOverlaps function: %', SQLERRM;
+    return response;
+END;
+$$;
