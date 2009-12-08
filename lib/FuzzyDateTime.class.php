@@ -19,7 +19,7 @@ class FuzzyDateTime extends DateTime
 {
   protected static
     $defaultValues = array('year'=>'0001', 'month'=>'01', 'day'=>'01', 'hour'=>'00', 'minute'=>'00', 'second'=>'00'),
-    $defaultMaxValues = array('month'=>'12', 'hour'=>'23', 'minute'=>'59', 'second'=>'59'),
+    $defaultMaxValues = array('month'=>'12', 'day' => '31','hour'=>'23', 'minute'=>'59', 'second'=>'59'),
     $datePartsMask = array('year'=>32, 'month'=>16, 'day'=>8, 'hour'=>4, 'minute'=>2, 'second'=>1);
   protected
     $start = true,
@@ -72,10 +72,15 @@ class FuzzyDateTime extends DateTime
 
   public static function getDateTimeStringFromArray(array $dateTime, $start=true, $withTime=false)
   {
-    if (!self::checkDateArray($dateTime)=='') return (self::$defaultValues['year']).'/'.(self::$defaultValues['month']).'/'.(self::$defaultValues['day']).(($withTime)?' '.(self::$defaultValues['hour']).':'.(self::$defaultValues['minute']).':'.(self::$defaultValues['second']):'');
+    if (!self::checkDateArray($dateTime)=='')
+    {
+      if($start)
+	$dateTime = self::$defaultValues;
+      else
+	$dateTime = array_merge(self::$defaultMaxValues, array('year'=> sfConfig::get('app_yearUpperBound')) );
+    }
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      if ($key == 'day') $maxDaysInMonth = new DateTime(strval(($month == '12')?intval($year)+1:$year).'/'.(($month == '12')?'01':intval($month)+1).'/00');
       if (!isset($dateTime[$key]) || empty($dateTime[$key]))
       {
         if ($start)
@@ -90,7 +95,9 @@ class FuzzyDateTime extends DateTime
           }
           elseif ($key == 'day')
           {
-            $$key = strval($maxDaysInMonth->format('d'));
+	    if($key == 'day')
+	      $maxDaysInMonth = new DateTime("$year/$month/01");
+            $$key = $maxDaysInMonth->format('t');
           }
           else
           {
@@ -99,18 +106,11 @@ class FuzzyDateTime extends DateTime
         }
       }
       else
-      {
-        if ($key =='year')
-        {
-          $$key = str_pad(strval($dateTime[$key]), 4, '0', STR_PAD_LEFT);
-        }
-        else
-        {
-          $$key = str_pad(strval($dateTime[$key]), 2, '0', STR_PAD_LEFT);
-        }
+      {   
+          $$key = $dateTime[$key];
       }
     }
-    $dateTime = $year.'/'.$month.'/'.$day.(($withTime)?' '.$hour.':'.$minute.':'.$second:'');
+    $dateTime = sprintf('%04d/%02d/%02d' .($withTime?' %02d:%02d:%02d':''), $year, $month, $day, $hour, $minute, $second);
     return $dateTime;
   }
 

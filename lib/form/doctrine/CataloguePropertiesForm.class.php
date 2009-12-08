@@ -32,13 +32,15 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     $this->widgetSchema['date_from'] = new widgetFormJQueryFuzzyDate(array('culture'=>  'en',  //@TODO change
                                                                                'image'=>'/images/calendar.gif', 
                                                                                'format' => '%day%/%month%/%year%', 
-                                                                               'years' => $years, ),
+                                                                               'years' => $years,
+									       'with_time' => true ),
                                                                          array('class' => 'from_date')
                                                                         );
     $this->widgetSchema['date_to'] = new widgetFormJQueryFuzzyDate(array('culture'=> 'en',  //@TODO change
                                                                              'image'=>'/images/calendar.gif', 
                                                                              'format' => '%day%/%month%/%year%', 
-                                                                             'years' => $years, ),
+                                                                             'years' => $years,
+                                                                             'with_time' => true),
                                                                        array('class' => 'to_date')
                                                                       );
 
@@ -48,6 +50,7 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
       'min' => $minDate,
       'max' => $maxDate,
       'empty_value' => $dateLowerBound,
+      'with_time' => true
     ),
     array('invalid' => 'Invalid date "from"')
     );
@@ -58,6 +61,7 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 	'min' => $minDate,
 	'max' => $maxDate,
 	'empty_value' => $dateUpperBound,
+	'with_time' => true
     ),
     array('invalid' => 'Invalid date "to"')
     );
@@ -91,5 +95,14 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     $this->widgetSchema['property_method'] = new sfWidgetFormInput();
     $this->widgetSchema['property_tool'] = new sfWidgetFormInput();
 
+    $subForm = new sfForm();
+    for ($i = 0; $i < 2; $i++)
+    {
+      $val = new PropertiesValues();
+      $val->CatalogueProperties = $this->getObject();
+      $form = new PropertiesValuesForm($val);
+      $subForm->embedForm($i, $form);
+    }
+    $this->embedForm('newValue', $subForm);
   }
 }

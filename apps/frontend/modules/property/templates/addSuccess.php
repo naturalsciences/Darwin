@@ -81,6 +81,7 @@
     </td>
   </tr>
 </table>
+<?php echo $form['newValue'];?>
 
 <ul class="proprety_values">
   

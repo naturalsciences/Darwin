@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../bootstrap/unit.php');
-$t = new lime_test(79, new lime_output_color());
+$t = new lime_test(82, new lime_output_color());
 
 $t->info('FuzzyDateTime instanciation');
 $t->isa_ok(new FuzzyDateTime(), 'FuzzyDateTime', 'New creates an object of the right class');
@@ -171,3 +171,12 @@ $t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same')
 $testArray = array('year'=>2009, 'month'=>12, 'day'=>05, 'hour'=>'', 'minute'=>'', 'second'=>'');
 $fdt->setMask(56);
 $t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');
+
+$testArray = array('year'=>2009, 'month'=>2);
+$t->is('2009/02/28',FuzzyDateTime::getDateTimeStringFromArray($testArray, false),'Date are nicelly completed with missing day in fev');
+
+$testArray = array('year'=>2009, 'month'=>12);
+$t->is('2009/12/31',FuzzyDateTime::getDateTimeStringFromArray($testArray, false),'Date are nicelly completed  with missing day in decembre');
+
+$testArray = array('year'=>2009, 'month'=>100);
+$t->is('2038/12/31',FuzzyDateTime::getDateTimeStringFromArray($testArray, false),'Default date is set from wrong dates');

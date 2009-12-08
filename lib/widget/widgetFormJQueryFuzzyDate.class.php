@@ -39,7 +39,8 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
     $this->addOption('image', false);
     $this->addOption('config', '{}');
     $this->addOption('culture', '');
-
+    $this->addOption('with_time', false);
+    $this->addOption('with_seconds', true);
     parent::configure($options, $attributes);
 
     if ('en' == $this->getOption('culture'))
@@ -68,6 +69,16 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
       $image = sprintf(', buttonImage: "%s", buttonImageOnly: true', $this->getOption('image'));
     }
 
+    $time_str = '';
+    if($this->getOption('with_time'))
+    {
+      $widget = new sfWidgetFormTime(array(
+ 	'empty_values' => array_merge(array('hour'=>'','minute'=>'','second'=>''), $this->getOption('empty_values')),
+	'with_seconds' => $this->getOption('with_seconds')
+      ));
+      $time_str = $widget->render($name, $value, $attributes, $errors);
+    }
+    
     return parent::render($name, $value, $attributes, $errors).
            $this->renderTag('input', array('type' => 'hidden', 'size' => 10, 'id' => $id = $this->generateId($name).'_jquery_control', 'disabled' => 'disabled')).
            sprintf(<<<EOF
@@ -178,6 +189,6 @@ EOF
       $prefix, $prefix, $image, $this->getOption('culture'), $this->getOption('config'),
       $this->generateId($name.'[day]'), $this->generateId($name.'[month]'), $this->generateId($name.'[year]'),
       $prefix
-    );
+    ).$time_str;
   }
 }

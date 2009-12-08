@@ -1,3 +1,4 @@
+<?php echo $form['id'];?>
 <table>
   <tr>
     <td><?php echo $form['property_value']->renderLabel();?></td>

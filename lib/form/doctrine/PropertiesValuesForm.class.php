@@ -11,12 +11,7 @@ class PropertiesValuesForm extends BasePropertiesValuesForm
 {
   public function configure()
   {
-    unset(
-    $this['property_ref'],
-    $this['property_value_unified'],
-    $this['property_accuracy_unified']
-   );
-   $this->widgetSchema['property_ref'] = new sfWidgetFormInputHidden();
-   $this->widgetSchema['property_value'] = new sfWidgetFormInput();
+    $this->useFields(array('id', 'property_value', 'property_accuracy'));
+    $this->widgetSchema['property_value'] = new sfWidgetFormInput();
   }
 }
