@@ -10,7 +10,7 @@
  * @property integer $record_id
  * @property integer $user_ref
  * @property string $status
- * @property timestamp $modification_date_time
+ * @property string $modification_date_time
  * @property string $comment
  * @property Users $Users
  * 
@@ -19,7 +19,7 @@
  * @method integer       getRecordId()               Returns the current record's "record_id" value
  * @method integer       getUserRef()                Returns the current record's "user_ref" value
  * @method string        getStatus()                 Returns the current record's "status" value
- * @method timestamp     getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method string        getModificationDateTime()   Returns the current record's "modification_date_time" value
  * @method string        getComment()                Returns the current record's "comment" value
  * @method Users         getUsers()                  Returns the current record's "Users" value
  * @method UsersWorkflow setId()                     Sets the current record's "id" value
@@ -63,8 +63,8 @@ abstract class BaseUsersWorkflow extends sfDoctrineRecord
              'notnull' => true,
              'default' => 'to check',
              ));
-        $this->hasColumn('modification_date_time', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('modification_date_time', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              ));
         $this->hasColumn('comment', 'string', null, array(

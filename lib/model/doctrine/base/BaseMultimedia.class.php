@@ -19,11 +19,11 @@
  * @property string $uri
  * @property string $descriptive_ts
  * @property string $descriptive_language_full_text
- * @property date $creation_date
+ * @property string $creation_date
  * @property integer $creation_date_mask
- * @property date $publication_date_from
+ * @property string $publication_date_from
  * @property integer $publication_date_from_mask
- * @property date $publication_date_to
+ * @property string $publication_date_to
  * @property integer $publication_date_to_mask
  * @property integer $parent_ref
  * @property string $path
@@ -50,11 +50,11 @@
  * @method string              getUri()                            Returns the current record's "uri" value
  * @method string              getDescriptiveTs()                  Returns the current record's "descriptive_ts" value
  * @method string              getDescriptiveLanguageFullText()    Returns the current record's "descriptive_language_full_text" value
- * @method date                getCreationDate()                   Returns the current record's "creation_date" value
+ * @method string              getCreationDate()                   Returns the current record's "creation_date" value
  * @method integer             getCreationDateMask()               Returns the current record's "creation_date_mask" value
- * @method date                getPublicationDateFrom()            Returns the current record's "publication_date_from" value
+ * @method string              getPublicationDateFrom()            Returns the current record's "publication_date_from" value
  * @method integer             getPublicationDateFromMask()        Returns the current record's "publication_date_from_mask" value
- * @method date                getPublicationDateTo()              Returns the current record's "publication_date_to" value
+ * @method string              getPublicationDateTo()              Returns the current record's "publication_date_to" value
  * @method integer             getPublicationDateToMask()          Returns the current record's "publication_date_to_mask" value
  * @method integer             getParentRef()                      Returns the current record's "parent_ref" value
  * @method string              getPath()                           Returns the current record's "path" value
@@ -159,8 +159,8 @@ abstract class BaseMultimedia extends sfDoctrineRecord
         $this->hasColumn('descriptive_language_full_text', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('creation_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('creation_date', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));
@@ -169,8 +169,8 @@ abstract class BaseMultimedia extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('publication_date_from', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('publication_date_from', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));
@@ -179,8 +179,8 @@ abstract class BaseMultimedia extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('publication_date_to', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('publication_date_to', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));

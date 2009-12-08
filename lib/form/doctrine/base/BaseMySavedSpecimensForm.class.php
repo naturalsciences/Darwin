@@ -19,7 +19,7 @@ abstract class BaseMySavedSpecimensForm extends BaseFormDoctrine
       'name'                   => new sfWidgetFormInputHidden(),
       'specimen_ids'           => new sfWidgetFormTextarea(),
       'favorite'               => new sfWidgetFormInputCheckbox(),
-      'modification_date_time' => new sfWidgetFormDateTime(),
+      'modification_date_time' => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -27,7 +27,7 @@ abstract class BaseMySavedSpecimensForm extends BaseFormDoctrine
       'name'                   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'name', 'required' => false)),
       'specimen_ids'           => new sfValidatorString(),
       'favorite'               => new sfValidatorBoolean(array('required' => false)),
-      'modification_date_time' => new sfValidatorDateTime(),
+      'modification_date_time' => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('my_saved_specimens[%s]');

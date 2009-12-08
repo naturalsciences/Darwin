@@ -21,9 +21,9 @@ abstract class BaseExpeditionsForm extends BaseFormDoctrine
       'name_indexed'              => new sfWidgetFormTextarea(),
       'name_language_full_text'   => new sfWidgetFormTextarea(),
       'expedition_from_date_mask' => new sfWidgetFormInputText(),
-      'expedition_from_date'      => new sfWidgetFormDate(),
+      'expedition_from_date'      => new sfWidgetFormTextarea(),
       'expedition_to_date_mask'   => new sfWidgetFormInputText(),
-      'expedition_to_date'        => new sfWidgetFormDate(),
+      'expedition_to_date'        => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -33,9 +33,9 @@ abstract class BaseExpeditionsForm extends BaseFormDoctrine
       'name_indexed'              => new sfValidatorString(array('required' => false)),
       'name_language_full_text'   => new sfValidatorString(array('required' => false)),
       'expedition_from_date_mask' => new sfValidatorInteger(array('required' => false)),
-      'expedition_from_date'      => new sfValidatorDate(array('required' => false)),
+      'expedition_from_date'      => new sfValidatorString(array('required' => false)),
       'expedition_to_date_mask'   => new sfValidatorInteger(array('required' => false)),
-      'expedition_to_date'        => new sfValidatorDate(array('required' => false)),
+      'expedition_to_date'        => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('expeditions[%s]');

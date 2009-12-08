@@ -17,7 +17,7 @@
  * @property string $given_name
  * @property string $additional_names
  * @property integer $birth_date_mask
- * @property date $birth_date
+ * @property string $birth_date
  * @property enum $gender
  * @property integer $db_user_type
  * @property Doctrine_Collection $UsersLanguages
@@ -51,7 +51,7 @@
  * @method string              getGivenName()                     Returns the current record's "given_name" value
  * @method string              getAdditionalNames()               Returns the current record's "additional_names" value
  * @method integer             getBirthDateMask()                 Returns the current record's "birth_date_mask" value
- * @method date                getBirthDate()                     Returns the current record's "birth_date" value
+ * @method string              getBirthDate()                     Returns the current record's "birth_date" value
  * @method enum                getGender()                        Returns the current record's "gender" value
  * @method integer             getDbUserType()                    Returns the current record's "db_user_type" value
  * @method Doctrine_Collection getUsersLanguages()                Returns the current record's "UsersLanguages" collection
@@ -164,8 +164,8 @@ abstract class BaseUsers extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('birth_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('birth_date', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));

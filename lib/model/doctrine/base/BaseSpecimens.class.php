@@ -19,7 +19,7 @@
  * @property string $host_relationship
  * @property string $acquisition_category
  * @property integer $acquisition_date_mask
- * @property date $acquisition_date
+ * @property string $acquisition_date
  * @property string $collecting_method
  * @property string $collecting_tool
  * @property integer $specimen_count_min
@@ -54,7 +54,7 @@
  * @method string              getHostRelationship()      Returns the current record's "host_relationship" value
  * @method string              getAcquisitionCategory()   Returns the current record's "acquisition_category" value
  * @method integer             getAcquisitionDateMask()   Returns the current record's "acquisition_date_mask" value
- * @method date                getAcquisitionDate()       Returns the current record's "acquisition_date" value
+ * @method string              getAcquisitionDate()       Returns the current record's "acquisition_date" value
  * @method string              getCollectingMethod()      Returns the current record's "collecting_method" value
  * @method string              getCollectingTool()        Returns the current record's "collecting_tool" value
  * @method integer             getSpecimenCountMin()      Returns the current record's "specimen_count_min" value
@@ -174,8 +174,8 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              'type' => 'integer',
              'default' => 0,
              ));
-        $this->hasColumn('acquisition_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('acquisition_date', 'string', null, array(
+             'type' => 'string',
              'default' => '0001-01-01',
              ));
         $this->hasColumn('collecting_method', 'string', null, array(

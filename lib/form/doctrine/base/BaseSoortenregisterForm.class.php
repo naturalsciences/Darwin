@@ -19,8 +19,8 @@ abstract class BaseSoortenregisterForm extends BaseFormDoctrine
       'taxa_ref'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Taxonomy'), 'add_empty' => false)),
       'gtu_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => false)),
       'habitat_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Habitats'), 'add_empty' => false)),
-      'date_from'   => new sfWidgetFormDate(),
-      'date_to'     => new sfWidgetFormDate(),
+      'date_from'   => new sfWidgetFormTextarea(),
+      'date_to'     => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -28,8 +28,8 @@ abstract class BaseSoortenregisterForm extends BaseFormDoctrine
       'taxa_ref'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Taxonomy'), 'required' => false)),
       'gtu_ref'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'required' => false)),
       'habitat_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Habitats'), 'required' => false)),
-      'date_from'   => new sfValidatorDate(array('required' => false)),
-      'date_to'     => new sfValidatorDate(array('required' => false)),
+      'date_from'   => new sfValidatorString(array('required' => false)),
+      'date_to'     => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('soortenregister[%s]');

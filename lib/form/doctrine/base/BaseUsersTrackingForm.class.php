@@ -20,7 +20,7 @@ abstract class BaseUsersTrackingForm extends BaseFormDoctrine
       'record_id'              => new sfWidgetFormInputText(),
       'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
       'action'                 => new sfWidgetFormTextarea(),
-      'modification_date_time' => new sfWidgetFormDateTime(),
+      'modification_date_time' => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -29,7 +29,7 @@ abstract class BaseUsersTrackingForm extends BaseFormDoctrine
       'record_id'              => new sfValidatorInteger(),
       'user_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
       'action'                 => new sfValidatorString(array('required' => false)),
-      'modification_date_time' => new sfValidatorDateTime(),
+      'modification_date_time' => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('users_tracking[%s]');

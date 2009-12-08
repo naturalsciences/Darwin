@@ -32,12 +32,14 @@
                     </ul>
                 </li>
                 <li><?php echo link_to(__('Collections'),'collection/index');?></li>
+                <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
             </ul>
         </li>
         <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
                 <li><?php echo link_to(__('Collections'),'collection/new');?></li>
+                <li><?php echo link_to(__('Expeditions'),'expedition/new');?></li>
                 <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
                 <li>
                     <a href="#">Catalogues</a>

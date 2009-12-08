@@ -50,13 +50,23 @@ class ExpeditionsForm extends BaseExpeditionsForm
                                                                             array('invalid' => 'Date provided is not valid',
                                                                                  )
                                                                            );
-    $this->
+    $this->validatorSchema['expedition_to_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                                'from_date' => false,
+                                                                                'min' => $minDate,
+                                                                                'max' => $maxDate,
+                                                                                'empty_value' => $dateUpperBound,
+                                                                               ),
+                                                                          array('invalid' => 'Date provided is not valid',
+                                                                               )
+                                                                         );
+    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('from_date', 
+                                                                          '<=', 
+                                                                          'to_date', 
+                                                                          array('throw_global_error' => true), 
+                                                                          array('invalid'=>'The "begin" date cannot be above the "end" date.')
+                                                                         )
+                                            );
     //$this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
-  }
-
-  public function getCurrentCulture()
-  {
-    return isset($this->options['culture']) ? $this->options['culture'] : 'en';
   }
 
 }

@@ -17,11 +17,11 @@
  * @property string $given_name
  * @property string $additional_names
  * @property integer $birth_date_mask
- * @property date $birth_date
+ * @property string $birth_date
  * @property enum $gender
  * @property integer $db_people_type
  * @property integer $end_date_mask
- * @property date $end_date
+ * @property string $end_date
  * @property Doctrine_Collection $CataloguePeople
  * @property Doctrine_Collection $PeopleLanguages
  * @property Doctrine_Collection $PeopleRelationships
@@ -43,11 +43,11 @@
  * @method string              getGivenName()             Returns the current record's "given_name" value
  * @method string              getAdditionalNames()       Returns the current record's "additional_names" value
  * @method integer             getBirthDateMask()         Returns the current record's "birth_date_mask" value
- * @method date                getBirthDate()             Returns the current record's "birth_date" value
+ * @method string              getBirthDate()             Returns the current record's "birth_date" value
  * @method enum                getGender()                Returns the current record's "gender" value
  * @method integer             getDbPeopleType()          Returns the current record's "db_people_type" value
  * @method integer             getEndDateMask()           Returns the current record's "end_date_mask" value
- * @method date                getEndDate()               Returns the current record's "end_date" value
+ * @method string              getEndDate()               Returns the current record's "end_date" value
  * @method Doctrine_Collection getCataloguePeople()       Returns the current record's "CataloguePeople" collection
  * @method Doctrine_Collection getPeopleLanguages()       Returns the current record's "PeopleLanguages" collection
  * @method Doctrine_Collection getPeopleRelationships()   Returns the current record's "PeopleRelationships" collection
@@ -139,8 +139,8 @@ abstract class BasePeople extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('birth_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('birth_date', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));
@@ -162,8 +162,8 @@ abstract class BasePeople extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('end_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('end_date', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));

@@ -9,9 +9,9 @@
  * @property string $code
  * @property integer $parent_ref
  * @property integer $gtu_from_date_mask
- * @property timestamp $gtu_from_date
+ * @property string $gtu_from_date
  * @property integer $gtu_to_date_mask
- * @property timestamp $gtu_to_date
+ * @property string $gtu_to_date
  * @property Gtu $Parent
  * @property Doctrine_Collection $Gtu
  * @property Doctrine_Collection $GtuTags
@@ -21,9 +21,9 @@
  * @method string              getCode()               Returns the current record's "code" value
  * @method integer             getParentRef()          Returns the current record's "parent_ref" value
  * @method integer             getGtuFromDateMask()    Returns the current record's "gtu_from_date_mask" value
- * @method timestamp           getGtuFromDate()        Returns the current record's "gtu_from_date" value
+ * @method string              getGtuFromDate()        Returns the current record's "gtu_from_date" value
  * @method integer             getGtuToDateMask()      Returns the current record's "gtu_to_date_mask" value
- * @method timestamp           getGtuToDate()          Returns the current record's "gtu_to_date" value
+ * @method string              getGtuToDate()          Returns the current record's "gtu_to_date" value
  * @method Gtu                 getParent()             Returns the current record's "Parent" value
  * @method Doctrine_Collection getGtu()                Returns the current record's "Gtu" collection
  * @method Doctrine_Collection getGtuTags()            Returns the current record's "GtuTags" collection
@@ -68,8 +68,8 @@ abstract class BaseGtu extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('gtu_from_date', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('gtu_from_date', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));
@@ -78,8 +78,8 @@ abstract class BaseGtu extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('gtu_to_date', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('gtu_to_date', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));

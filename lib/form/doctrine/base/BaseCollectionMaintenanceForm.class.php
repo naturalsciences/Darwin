@@ -23,7 +23,7 @@ abstract class BaseCollectionMaintenanceForm extends BaseFormDoctrine
       'description'            => new sfWidgetFormTextarea(),
       'description_ts'         => new sfWidgetFormTextarea(),
       'language_full_text'     => new sfWidgetFormTextarea(),
-      'modification_date_time' => new sfWidgetFormDateTime(),
+      'modification_date_time' => new sfWidgetFormTextarea(),
       'modification_date_mask' => new sfWidgetFormInputText(),
     ));
 
@@ -36,7 +36,7 @@ abstract class BaseCollectionMaintenanceForm extends BaseFormDoctrine
       'description'            => new sfValidatorString(array('required' => false)),
       'description_ts'         => new sfValidatorString(array('required' => false)),
       'language_full_text'     => new sfValidatorString(array('required' => false)),
-      'modification_date_time' => new sfValidatorDateTime(),
+      'modification_date_time' => new sfValidatorString(),
       'modification_date_mask' => new sfValidatorInteger(array('required' => false)),
     ));
 

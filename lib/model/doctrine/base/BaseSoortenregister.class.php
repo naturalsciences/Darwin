@@ -8,8 +8,8 @@
  * @property integer $taxa_ref
  * @property integer $gtu_ref
  * @property integer $habitat_ref
- * @property date $date_from
- * @property date $date_to
+ * @property string $date_from
+ * @property string $date_to
  * @property Taxonomy $Taxonomy
  * @property Gtu $Gtu
  * @property Habitats $Habitats
@@ -17,8 +17,8 @@
  * @method integer         getTaxaRef()     Returns the current record's "taxa_ref" value
  * @method integer         getGtuRef()      Returns the current record's "gtu_ref" value
  * @method integer         getHabitatRef()  Returns the current record's "habitat_ref" value
- * @method date            getDateFrom()    Returns the current record's "date_from" value
- * @method date            getDateTo()      Returns the current record's "date_to" value
+ * @method string          getDateFrom()    Returns the current record's "date_from" value
+ * @method string          getDateTo()      Returns the current record's "date_to" value
  * @method Taxonomy        getTaxonomy()    Returns the current record's "Taxonomy" value
  * @method Gtu             getGtu()         Returns the current record's "Gtu" value
  * @method Habitats        getHabitats()    Returns the current record's "Habitats" value
@@ -56,11 +56,11 @@ abstract class BaseSoortenregister extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('date_from', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('date_from', 'string', null, array(
+             'type' => 'string',
              ));
-        $this->hasColumn('date_to', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('date_to', 'string', null, array(
+             'type' => 'string',
              ));
     }
 

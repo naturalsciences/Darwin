@@ -23,7 +23,7 @@ abstract class BaseCodesForm extends BaseFormDoctrine
       'code'                => new sfWidgetFormInputText(),
       'code_suffix'         => new sfWidgetFormTextarea(),
       'full_code_indexed'   => new sfWidgetFormTextarea(),
-      'code_date'           => new sfWidgetFormDateTime(),
+      'code_date'           => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -35,7 +35,7 @@ abstract class BaseCodesForm extends BaseFormDoctrine
       'code'                => new sfValidatorInteger(array('required' => false)),
       'code_suffix'         => new sfValidatorString(array('required' => false)),
       'full_code_indexed'   => new sfValidatorString(array('required' => false)),
-      'code_date'           => new sfValidatorDateTime(array('required' => false)),
+      'code_date'           => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('codes[%s]');

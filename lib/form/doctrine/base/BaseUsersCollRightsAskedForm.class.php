@@ -23,7 +23,7 @@ abstract class BaseUsersCollRightsAskedForm extends BaseFormDoctrine
       'searchable'           => new sfWidgetFormInputCheckbox(),
       'visible'              => new sfWidgetFormInputCheckbox(),
       'motivation'           => new sfWidgetFormTextarea(),
-      'asking_date_time'     => new sfWidgetFormDateTime(),
+      'asking_date_time'     => new sfWidgetFormTextarea(),
       'with_sub_collections' => new sfWidgetFormInputCheckbox(),
     ));
 
@@ -36,7 +36,7 @@ abstract class BaseUsersCollRightsAskedForm extends BaseFormDoctrine
       'searchable'           => new sfValidatorBoolean(array('required' => false)),
       'visible'              => new sfValidatorBoolean(array('required' => false)),
       'motivation'           => new sfValidatorString(),
-      'asking_date_time'     => new sfValidatorDateTime(),
+      'asking_date_time'     => new sfValidatorString(),
       'with_sub_collections' => new sfValidatorBoolean(array('required' => false)),
     ));
 

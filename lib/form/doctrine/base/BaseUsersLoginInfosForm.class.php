@@ -20,7 +20,7 @@ abstract class BaseUsersLoginInfosForm extends BaseFormDoctrine
       'user_name'  => new sfWidgetFormTextarea(),
       'password'   => new sfWidgetFormTextarea(),
       'system_id'  => new sfWidgetFormInputHidden(),
-      'last_seen'  => new sfWidgetFormDateTime(),
+      'last_seen'  => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -29,7 +29,7 @@ abstract class BaseUsersLoginInfosForm extends BaseFormDoctrine
       'user_name'  => new sfValidatorString(array('required' => false)),
       'password'   => new sfValidatorString(array('required' => false)),
       'system_id'  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'system_id', 'required' => false)),
-      'last_seen'  => new sfValidatorDateTime(array('required' => false)),
+      'last_seen'  => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_login_infos[%s]');

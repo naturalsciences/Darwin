@@ -27,7 +27,7 @@ abstract class BaseUsersForm extends BaseFormDoctrine
       'given_name'            => new sfWidgetFormTextarea(),
       'additional_names'      => new sfWidgetFormTextarea(),
       'birth_date_mask'       => new sfWidgetFormInputText(),
-      'birth_date'            => new sfWidgetFormDate(),
+      'birth_date'            => new sfWidgetFormTextarea(),
       'gender'                => new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))),
       'db_user_type'          => new sfWidgetFormInputText(),
     ));
@@ -45,7 +45,7 @@ abstract class BaseUsersForm extends BaseFormDoctrine
       'given_name'            => new sfValidatorString(array('required' => false)),
       'additional_names'      => new sfValidatorString(array('required' => false)),
       'birth_date_mask'       => new sfValidatorInteger(array('required' => false)),
-      'birth_date'            => new sfValidatorDate(array('required' => false)),
+      'birth_date'            => new sfValidatorString(array('required' => false)),
       'gender'                => new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false)),
       'db_user_type'          => new sfValidatorInteger(array('required' => false)),
     ));

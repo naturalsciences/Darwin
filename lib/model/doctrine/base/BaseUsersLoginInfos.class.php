@@ -10,7 +10,7 @@
  * @property string $user_name
  * @property string $password
  * @property string $system_id
- * @property timestamp $last_seen
+ * @property string $last_seen
  * @property Users $User
  * 
  * @method integer         getUserRef()    Returns the current record's "user_ref" value
@@ -18,7 +18,7 @@
  * @method string          getUserName()   Returns the current record's "user_name" value
  * @method string          getPassword()   Returns the current record's "password" value
  * @method string          getSystemId()   Returns the current record's "system_id" value
- * @method timestamp       getLastSeen()   Returns the current record's "last_seen" value
+ * @method string          getLastSeen()   Returns the current record's "last_seen" value
  * @method Users           getUser()       Returns the current record's "User" value
  * @method UsersLoginInfos setUserRef()    Sets the current record's "user_ref" value
  * @method UsersLoginInfos setLoginType()  Sets the current record's "login_type" value
@@ -57,8 +57,8 @@ abstract class BaseUsersLoginInfos extends sfDoctrineRecord
              'type' => 'string',
              'primary' => true,
              ));
-        $this->hasColumn('last_seen', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('last_seen', 'string', null, array(
+             'type' => 'string',
              ));
     }
 

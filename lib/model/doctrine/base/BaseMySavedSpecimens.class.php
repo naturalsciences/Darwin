@@ -9,14 +9,14 @@
  * @property string $name
  * @property string $specimen_ids
  * @property boolean $favorite
- * @property timestamp $modification_date_time
+ * @property string $modification_date_time
  * @property Users $User
  * 
  * @method integer          getUserRef()                Returns the current record's "user_ref" value
  * @method string           getName()                   Returns the current record's "name" value
  * @method string           getSpecimenIds()            Returns the current record's "specimen_ids" value
  * @method boolean          getFavorite()               Returns the current record's "favorite" value
- * @method timestamp        getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method string           getModificationDateTime()   Returns the current record's "modification_date_time" value
  * @method Users            getUser()                   Returns the current record's "User" value
  * @method MySavedSpecimens setUserRef()                Sets the current record's "user_ref" value
  * @method MySavedSpecimens setName()                   Sets the current record's "name" value
@@ -52,8 +52,8 @@ abstract class BaseMySavedSpecimens extends sfDoctrineRecord
              'notnull' => true,
              'default' => false,
              ));
-        $this->hasColumn('modification_date_time', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('modification_date_time', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              ));
     }

@@ -13,7 +13,7 @@
  * @property string $description
  * @property string $description_ts
  * @property string $language_full_text
- * @property timestamp $modification_date_time
+ * @property string $modification_date_time
  * @property integer $modification_date_mask
  * @property Users $Users
  * 
@@ -25,7 +25,7 @@
  * @method string                getDescription()            Returns the current record's "description" value
  * @method string                getDescriptionTs()          Returns the current record's "description_ts" value
  * @method string                getLanguageFullText()       Returns the current record's "language_full_text" value
- * @method timestamp             getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method string                getModificationDateTime()   Returns the current record's "modification_date_time" value
  * @method integer               getModificationDateMask()   Returns the current record's "modification_date_mask" value
  * @method Users                 getUsers()                  Returns the current record's "Users" value
  * @method CollectionMaintenance setId()                     Sets the current record's "id" value
@@ -81,8 +81,8 @@ abstract class BaseCollectionMaintenance extends sfDoctrineRecord
         $this->hasColumn('language_full_text', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('modification_date_time', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('modification_date_time', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              ));
         $this->hasColumn('modification_date_mask', 'integer', null, array(

@@ -28,45 +28,10 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['name_ts']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['name_ts']->renderError() ?>
-          <?php echo $form['name_ts'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['name_indexed']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['name_indexed']->renderError() ?>
-          <?php echo $form['name_indexed'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['name_language_full_text']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['name_language_full_text']->renderError() ?>
-          <?php echo $form['name_language_full_text'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['expedition_from_date_mask']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['expedition_from_date_mask']->renderError() ?>
-          <?php echo $form['expedition_from_date_mask'] ?>
-        </td>
-      </tr>
-      <tr>
         <th><?php echo $form['expedition_from_date']->renderLabel() ?></th>
         <td>
           <?php echo $form['expedition_from_date']->renderError() ?>
           <?php echo $form['expedition_from_date'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['expedition_to_date_mask']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['expedition_to_date_mask']->renderError() ?>
-          <?php echo $form['expedition_to_date_mask'] ?>
         </td>
       </tr>
       <tr>

@@ -12,7 +12,7 @@
  * @property boolean $searchable
  * @property boolean $visible
  * @property string $motivation
- * @property timestamp $asking_date_time
+ * @property string $asking_date_time
  * @property boolean $with_sub_collections
  * @property Collections $Collections
  * @property Users $Users
@@ -24,7 +24,7 @@
  * @method boolean              getSearchable()           Returns the current record's "searchable" value
  * @method boolean              getVisible()              Returns the current record's "visible" value
  * @method string               getMotivation()           Returns the current record's "motivation" value
- * @method timestamp            getAskingDateTime()       Returns the current record's "asking_date_time" value
+ * @method string               getAskingDateTime()       Returns the current record's "asking_date_time" value
  * @method boolean              getWithSubCollections()   Returns the current record's "with_sub_collections" value
  * @method Collections          getCollections()          Returns the current record's "Collections" value
  * @method Users                getUsers()                Returns the current record's "Users" value
@@ -82,8 +82,8 @@ abstract class BaseUsersCollRightsAsked extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
-        $this->hasColumn('asking_date_time', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('asking_date_time', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              ));
         $this->hasColumn('with_sub_collections', 'boolean', null, array(

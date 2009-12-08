@@ -13,26 +13,26 @@
  * @property integer $code
  * @property string $code_suffix
  * @property string $full_code_indexed
- * @property timestamp $code_date
+ * @property string $code_date
  * 
- * @method integer   getId()                  Returns the current record's "id" value
- * @method string    getReferencedRelation()  Returns the current record's "referenced_relation" value
- * @method integer   getRecordId()            Returns the current record's "record_id" value
- * @method string    getCodeCategory()        Returns the current record's "code_category" value
- * @method string    getCodePrefix()          Returns the current record's "code_prefix" value
- * @method integer   getCode()                Returns the current record's "code" value
- * @method string    getCodeSuffix()          Returns the current record's "code_suffix" value
- * @method string    getFullCodeIndexed()     Returns the current record's "full_code_indexed" value
- * @method timestamp getCodeDate()            Returns the current record's "code_date" value
- * @method Codes     setId()                  Sets the current record's "id" value
- * @method Codes     setReferencedRelation()  Sets the current record's "referenced_relation" value
- * @method Codes     setRecordId()            Sets the current record's "record_id" value
- * @method Codes     setCodeCategory()        Sets the current record's "code_category" value
- * @method Codes     setCodePrefix()          Sets the current record's "code_prefix" value
- * @method Codes     setCode()                Sets the current record's "code" value
- * @method Codes     setCodeSuffix()          Sets the current record's "code_suffix" value
- * @method Codes     setFullCodeIndexed()     Sets the current record's "full_code_indexed" value
- * @method Codes     setCodeDate()            Sets the current record's "code_date" value
+ * @method integer getId()                  Returns the current record's "id" value
+ * @method string  getReferencedRelation()  Returns the current record's "referenced_relation" value
+ * @method integer getRecordId()            Returns the current record's "record_id" value
+ * @method string  getCodeCategory()        Returns the current record's "code_category" value
+ * @method string  getCodePrefix()          Returns the current record's "code_prefix" value
+ * @method integer getCode()                Returns the current record's "code" value
+ * @method string  getCodeSuffix()          Returns the current record's "code_suffix" value
+ * @method string  getFullCodeIndexed()     Returns the current record's "full_code_indexed" value
+ * @method string  getCodeDate()            Returns the current record's "code_date" value
+ * @method Codes   setId()                  Sets the current record's "id" value
+ * @method Codes   setReferencedRelation()  Sets the current record's "referenced_relation" value
+ * @method Codes   setRecordId()            Sets the current record's "record_id" value
+ * @method Codes   setCodeCategory()        Sets the current record's "code_category" value
+ * @method Codes   setCodePrefix()          Sets the current record's "code_prefix" value
+ * @method Codes   setCode()                Sets the current record's "code" value
+ * @method Codes   setCodeSuffix()          Sets the current record's "code_suffix" value
+ * @method Codes   setFullCodeIndexed()     Sets the current record's "full_code_indexed" value
+ * @method Codes   setCodeDate()            Sets the current record's "code_date" value
  * 
  * @package    darwin
  * @subpackage model
@@ -74,8 +74,8 @@ abstract class BaseCodes extends sfDoctrineRecord
         $this->hasColumn('full_code_indexed', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('code_date', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('code_date', 'string', null, array(
+             'type' => 'string',
              ));
     }
 

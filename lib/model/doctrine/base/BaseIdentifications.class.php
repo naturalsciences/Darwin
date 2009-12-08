@@ -9,7 +9,7 @@
  * @property string $referenced_relation
  * @property integer $record_id
  * @property string $notion_concerned
- * @property timestamp $notion_date
+ * @property string $notion_date
  * @property string $value_defined
  * @property string $value_defined_indexed
  * @property string $value_defined_ts
@@ -20,7 +20,7 @@
  * @method string          getReferencedRelation()    Returns the current record's "referenced_relation" value
  * @method integer         getRecordId()              Returns the current record's "record_id" value
  * @method string          getNotionConcerned()       Returns the current record's "notion_concerned" value
- * @method timestamp       getNotionDate()            Returns the current record's "notion_date" value
+ * @method string          getNotionDate()            Returns the current record's "notion_date" value
  * @method string          getValueDefined()          Returns the current record's "value_defined" value
  * @method string          getValueDefinedIndexed()   Returns the current record's "value_defined_indexed" value
  * @method string          getValueDefinedTs()        Returns the current record's "value_defined_ts" value
@@ -64,8 +64,8 @@ abstract class BaseIdentifications extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
-        $this->hasColumn('notion_date', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('notion_date', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('value_defined', 'string', null, array(
              'type' => 'string',

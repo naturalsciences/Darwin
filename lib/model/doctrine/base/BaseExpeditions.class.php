@@ -11,9 +11,9 @@
  * @property string $name_indexed
  * @property string $name_language_full_text
  * @property integer $expedition_from_date_mask
- * @property date $expedition_from_date
+ * @property string $expedition_from_date
  * @property integer $expedition_to_date_mask
- * @property date $expedition_to_date
+ * @property string $expedition_to_date
  * @property Doctrine_Collection $Specimens
  * 
  * @method integer             getId()                        Returns the current record's "id" value
@@ -22,9 +22,9 @@
  * @method string              getNameIndexed()               Returns the current record's "name_indexed" value
  * @method string              getNameLanguageFullText()      Returns the current record's "name_language_full_text" value
  * @method integer             getExpeditionFromDateMask()    Returns the current record's "expedition_from_date_mask" value
- * @method date                getExpeditionFromDate()        Returns the current record's "expedition_from_date" value
+ * @method string              getExpeditionFromDate()        Returns the current record's "expedition_from_date" value
  * @method integer             getExpeditionToDateMask()      Returns the current record's "expedition_to_date_mask" value
- * @method date                getExpeditionToDate()          Returns the current record's "expedition_to_date" value
+ * @method string              getExpeditionToDate()          Returns the current record's "expedition_to_date" value
  * @method Doctrine_Collection getSpecimens()                 Returns the current record's "Specimens" collection
  * @method Expeditions         setId()                        Sets the current record's "id" value
  * @method Expeditions         setName()                      Sets the current record's "name" value
@@ -70,8 +70,8 @@ abstract class BaseExpeditions extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('expedition_from_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('expedition_from_date', 'string', null, array(
+             'type' => 'string',
              'default' => '0001-01-01',
              ));
         $this->hasColumn('expedition_to_date_mask', 'integer', null, array(
@@ -79,8 +79,8 @@ abstract class BaseExpeditions extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('expedition_to_date', 'date', null, array(
-             'type' => 'date',
+        $this->hasColumn('expedition_to_date', 'string', null, array(
+             'type' => 'string',
              'default' => '0001-01-01',
              ));
     }

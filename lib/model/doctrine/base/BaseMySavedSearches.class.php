@@ -9,7 +9,7 @@
  * @property string $name
  * @property string $search_criterias
  * @property boolean $favorite
- * @property timestamp $modification_date_time
+ * @property string $modification_date_time
  * @property string $visible_fields_in_result
  * @property Users $User
  * 
@@ -17,7 +17,7 @@
  * @method string          getName()                     Returns the current record's "name" value
  * @method string          getSearchCriterias()          Returns the current record's "search_criterias" value
  * @method boolean         getFavorite()                 Returns the current record's "favorite" value
- * @method timestamp       getModificationDateTime()     Returns the current record's "modification_date_time" value
+ * @method string          getModificationDateTime()     Returns the current record's "modification_date_time" value
  * @method string          getVisibleFieldsInResult()    Returns the current record's "visible_fields_in_result" value
  * @method Users           getUser()                     Returns the current record's "User" value
  * @method MySavedSearches setUserRef()                  Sets the current record's "user_ref" value
@@ -55,8 +55,8 @@ abstract class BaseMySavedSearches extends sfDoctrineRecord
              'notnull' => true,
              'default' => false,
              ));
-        $this->hasColumn('modification_date_time', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('modification_date_time', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              ));
         $this->hasColumn('visible_fields_in_result', 'string', null, array(

@@ -10,7 +10,7 @@
  * @property integer $record_id
  * @property integer $user_ref
  * @property string $action
- * @property timestamp $modification_date_time
+ * @property string $modification_date_time
  * @property Users $Users
  * 
  * @method integer       getId()                     Returns the current record's "id" value
@@ -18,7 +18,7 @@
  * @method integer       getRecordId()               Returns the current record's "record_id" value
  * @method integer       getUserRef()                Returns the current record's "user_ref" value
  * @method string        getAction()                 Returns the current record's "action" value
- * @method timestamp     getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method string        getModificationDateTime()   Returns the current record's "modification_date_time" value
  * @method Users         getUsers()                  Returns the current record's "Users" value
  * @method UsersTracking setId()                     Sets the current record's "id" value
  * @method UsersTracking setReferencedRelation()     Sets the current record's "referenced_relation" value
@@ -60,8 +60,8 @@ abstract class BaseUsersTracking extends sfDoctrineRecord
              'notnull' => true,
              'default' => 'insert',
              ));
-        $this->hasColumn('modification_date_time', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('modification_date_time', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              ));
     }

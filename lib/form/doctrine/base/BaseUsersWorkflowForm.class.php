@@ -20,7 +20,7 @@ abstract class BaseUsersWorkflowForm extends BaseFormDoctrine
       'record_id'              => new sfWidgetFormInputText(),
       'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
       'status'                 => new sfWidgetFormTextarea(),
-      'modification_date_time' => new sfWidgetFormDateTime(),
+      'modification_date_time' => new sfWidgetFormTextarea(),
       'comment'                => new sfWidgetFormTextarea(),
     ));
 
@@ -30,7 +30,7 @@ abstract class BaseUsersWorkflowForm extends BaseFormDoctrine
       'record_id'              => new sfValidatorInteger(),
       'user_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
       'status'                 => new sfValidatorString(array('required' => false)),
-      'modification_date_time' => new sfValidatorDateTime(),
+      'modification_date_time' => new sfValidatorString(),
       'comment'                => new sfValidatorString(array('required' => false)),
     ));
 

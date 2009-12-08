@@ -3,7 +3,7 @@
 
 <form action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <?php echo $form->renderGlobalErrors() ?>
-  <table>
+  <table class="search">
     <thead>
       <tr>
         <th><?php echo $form['name']->renderLabel() ?></th>
