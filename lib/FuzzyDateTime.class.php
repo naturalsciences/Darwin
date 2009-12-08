@@ -86,7 +86,7 @@ class FuzzyDateTime extends DateTime
         {
           if ($key =='year')
           {
-            $$key = strval(date('Y'));
+            $$key = sfConfig::get('app_yearUpperBound');
           }
           elseif ($key == 'day')
           {

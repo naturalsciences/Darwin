@@ -71,7 +71,7 @@ $testArray['month']='';
 $testDateTime2 = '1975/12/31 23:59:59';
 $t->is(FuzzyDateTime::getDateTimeStringFromArray($testArray,false,$fdt->getWithTime()), $testDateTime2, 'Date without months - start flag set at false: Extraction of date from array succeeded !');
 $testArray['year']='';
-$testDateTime2 = '2009/12/31 23:59:59';
+$testDateTime2 = '2038/12/31 23:59:59';
 $t->is(FuzzyDateTime::getDateTimeStringFromArray($testArray,false,$fdt->getWithTime()), $testDateTime2, 'Date without years - start flag set at false: Extraction of date from array succeeded !');
 $fdt->setStart(true);
 $testArray['year']='1975';
