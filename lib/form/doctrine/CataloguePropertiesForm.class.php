@@ -48,7 +48,9 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
       'min' => $minDate,
       'max' => $maxDate,
       'empty_value' => $dateLowerBound,
-    ));
+    ),
+    array('invalid' => 'Invalid date "from"')
+    );
 
     $this->validatorSchema['date_to'] = new fuzzyDateValidator(array(
 	'required' => false,
@@ -56,13 +58,19 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 	'min' => $minDate,
 	'max' => $maxDate,
 	'empty_value' => $dateUpperBound,
-      ));     
+    ),
+    array('invalid' => 'Invalid date "to"')
+    );
 
-     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('date_from', 
-                                                                                 '<=', 
-                                                                                 'date_to', 
-                                                                                 array('throw_global_error' => true) 
-                                                                                ));
+     $this->validatorSchema->setPostValidator(
+	new sfValidatorSchemaCompare(
+	  'date_from',
+	  '<=', 
+          'date_to', 
+          array('throw_global_error' => true),
+	  array('invalid'=>'The "from" date cannot be above the "to" date.')
+	)
+      );
 
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();

@@ -236,12 +236,12 @@ class FuzzyDateTime extends DateTime
   
   public function getDateTimeAsArray()
   {
-    return array('year'=>strval($this->format('Y')), 
-                 'month'=>strval($this->format('m')), 
-                 'day'=>strval($this->format('d')), 
-                 'hour'=>strval($this->format('H')), 
-                 'minute'=>strval($this->format('i')), 
-                 'second'=>strval($this->format('s'))
+    return array('year'=>intval($this->format('Y')), 
+                 'month'=>intval($this->format('m')), 
+                 'day'=>intval($this->format('d')), 
+                 'hour'=>intval($this->format('H')), 
+                 'minute'=>intval($this->format('i')), 
+                 'second'=>intval($this->format('s'))
                 );
   }
   

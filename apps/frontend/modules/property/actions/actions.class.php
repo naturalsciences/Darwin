@@ -12,9 +12,13 @@ class propertyActions extends sfActions
 {
   public function executeAdd(sfWebRequest $request)
   {
+    $this->property = null;
     if($request->hasParameter('rid'))
+    {
       $this->property = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('rid'));
-    else
+    }
+
+    if(! $this->property)
     {
      $this->property = new CatalogueProperties();
      $this->property->setRecordId($request->getParameter('id'));

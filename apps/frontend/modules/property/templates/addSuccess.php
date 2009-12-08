@@ -3,7 +3,7 @@
 <?php if ($sf_user->hasFlash('property')): ?>
   <div class="flash_save"><?php echo $sf_user->getFlash('property') ?></div>
 <?php endif; ?>
-<?php print_r($form->getObject()->getDateTo());?>
+
 <form action="<?php echo url_for('property/add' .  ($form->getObject()->isNew() ? '': '?rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>

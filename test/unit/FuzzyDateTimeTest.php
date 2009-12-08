@@ -39,7 +39,7 @@ $t->is(FuzzyDateTime::validateDateYearLength(10200), false, 'The year lenght is 
 $t->is(FuzzyDateTime::validateDateOtherPartLength(12), true, 'The other dates part lenght is ok');
 $t->is(FuzzyDateTime::validateDateOtherPartLength(121), false, 'The other dates part lenght is not ok');
 $fdt = new FuzzyDateTime('1975/02/24 13:12:11');
-$testArray = array('year'=>'1975', 'month'=>'02', 'day'=>'24', 'hour'=>'13', 'minute'=>'12', 'second'=>'11');
+$testArray = array('year'=>1975, 'month'=>02, 'day'=>24, 'hour'=>13, 'minute'=>12, 'second'=>11);
 $dateTimeArray = $fdt->getDateTimeAsArray();
 $testDate = '24/02/1975';
 $testDateTime = '24/02/1975 13:12:11';
@@ -164,10 +164,10 @@ $testArray = array('year'=>'', 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'',
 $fdt = new FuzzyDateTime('2009/12/05');
 $t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');
 
-$testArray = array('year'=>'2009', 'month'=>'12', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>'');
+$testArray = array('year'=>2009, 'month'=>12, 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>'');
 $fdt->setMask(48);
 $t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');
 
-$testArray = array('year'=>'2009', 'month'=>'12', 'day'=>'05', 'hour'=>'', 'minute'=>'', 'second'=>'');
+$testArray = array('year'=>2009, 'month'=>12, 'day'=>05, 'hour'=>'', 'minute'=>'', 'second'=>'');
 $fdt->setMask(56);
 $t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');
