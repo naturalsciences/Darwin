@@ -323,3 +323,11 @@ padding: 2px;
 {
   color:grey;
 }
+.flash_save
+{
+  background-color: #C1CF56;
+  color: #004A6A;
+  padding: 5px;
+  width: 80%; /** To verif **/
+  margin: 0.5em;
+}

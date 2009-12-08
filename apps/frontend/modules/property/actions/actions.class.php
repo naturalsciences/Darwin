@@ -12,29 +12,14 @@ class propertyActions extends sfActions
 {
   public function executeAdd(sfWebRequest $request)
   {
-     $this->property = new CatalogueProperties();
-     $this->property->setRecordId($request->getParameter('id'));
-     $this->property->setReferencedRelation($request->getParameter('table'));
-     $this->form = new CataloguePropertiesForm($this->property);
-  }
-
-  public function executeAddValue(sfWebRequest $request)
-  {
-    $this->form = new PropertiesValuesForm();
-  }
-  
-  public function executeSave(sfWebRequest $request)
-  {
-    /*if($request->hasParameter('cid'))
-      $this->comment =  Doctrine::getTable('Comments')->find($request->getParameter('cid'));
+    if($request->hasParameter('rid'))
+      $this->property = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('rid'));
     else
     {
      $this->property = new CatalogueProperties();
      $this->property->setRecordId($request->getParameter('id'));
      $this->property->setReferencedRelation($request->getParameter('table'));
-    }*/
-     
-    $this->property = new CatalogueProperties();
+    }
     $this->form = new CataloguePropertiesForm($this->property);
     
     if($request->isMethod('post'))
@@ -44,7 +29,7 @@ class propertyActions extends sfActions
 	{
 	  try{
 	    $this->form->save();
-	    return $this->renderText( 'oook ');//$this->form->getObject()->getId());
+	    $this->getUser()->setFlash('property', 'Your property was saved');
 	  }
 	  catch(Exception $e)
 	  {
@@ -52,10 +37,12 @@ class propertyActions extends sfActions
             $this->form->getErrorSchema()->addError($error); 
 	  }
 	}
-//         return $this->renderText($this->form->__toString());
     }
-  //$this->setLayout('default');
-    $this->setTemplate('add');
+  }
+
+  public function executeAddValue(sfWebRequest $request)
+  {
+    $this->form = new PropertiesValuesForm();
   }
 
 }

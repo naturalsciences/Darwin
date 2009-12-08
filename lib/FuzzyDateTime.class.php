@@ -245,6 +245,17 @@ class FuzzyDateTime extends DateTime
                 );
   }
   
+  public function getDateTimeMaskedAsArray()
+  {
+    $date = $this->getDateTimeAsArray();
+    foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
+    {
+        if(! (self::getMaskFor($key) & $this->getMask()) )
+	  $date[$key]='';
+    }
+    return $date;
+  }
+
   public function getDateMasked($tag='em')
   {
     $firstPart = '';

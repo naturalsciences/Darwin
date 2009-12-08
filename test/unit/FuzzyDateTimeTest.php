@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../bootstrap/unit.php');
-$t = new lime_test(81, new lime_output_color());
+$t = new lime_test(79, new lime_output_color());
 
 $t->info('FuzzyDateTime instanciation');
 $t->isa_ok(new FuzzyDateTime(), 'FuzzyDateTime', 'New creates an object of the right class');
@@ -45,10 +45,8 @@ $testDate = '24/02/1975';
 $testDateTime = '24/02/1975 13:12:11';
 $testDateTime2 = '1975/02/24 13:12:11';
 $testDateUS = '02/24/1975';
-foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
-{
-  $t->is($dateTimeArray[$key], $testArray[$key], 'Value of '.$key.' is ok: '.$testArray[$key]);
-}
+
+$t->is_deeply($dateTimeArray, $testArray, 'array is the same');
 $fdt->setWithTime(true);
 $t->is($fdt->getDateTime($fdt->getWithTime()), $testDateTime,'Get the date and time coming with the FuzzyDateTime object instanciation: ok');
 $t->is($fdt.' as string', $testDateTime.' as string', 'String conversion of FuzzyDateTime object is correct');
@@ -161,3 +159,15 @@ $testArray['month']='01';
 $testArray['day']='01';
 $fdt=new FuzzyDateTime($testArray);
 $t->is($fdt->format('d/m/Y'), '01/01/0001', 'Date lower bound format ok');
+
+$testArray = array('year'=>'', 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>'');
+$fdt = new FuzzyDateTime('2009/12/05');
+$t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');
+
+$testArray = array('year'=>'2009', 'month'=>'12', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>'');
+$fdt->setMask(48);
+$t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');
+
+$testArray = array('year'=>'2009', 'month'=>'12', 'day'=>'05', 'hour'=>'', 'minute'=>'', 'second'=>'');
+$fdt->setMask(56);
+$t->is_deeply($fdt->getDateTimeMaskedAsArray(), $testArray, 'array is the same');

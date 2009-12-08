@@ -7,12 +7,25 @@ class CatalogueProperties extends BaseCatalogueProperties
 {
   public function setDateFrom($fd)
   {
-//   echo $fd->format('Y/m/d H:i:s');
      $this->_set('date_from', $fd->format('Y/m/d H:i:s') );
+     $this->_set('date_from_mask', $fd->getMask() );
   }
+
   public function setDateTo($fd)
   {
      $this->_set('date_to', $fd->format('Y/m/d H:i:s') );
+     $this->_set('date_to_mask', $fd->getMask() );
   }
   
+  public function getDateTo()
+  {
+    $date = new FuzzyDateTime($this->_get('date_to'),$this->_get('date_to_mask'),true, true);
+    return $date->getDateTimeMaskedAsArray();
+  }
+
+  public function getDateFrom()
+  {
+    $date = new FuzzyDateTime($this->_get('date_from'),$this->_get('date_from_mask'),false, true);
+    return $date->getDateTimeMaskedAsArray();
+  }
 }
