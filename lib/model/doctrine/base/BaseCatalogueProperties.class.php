@@ -14,9 +14,9 @@
  * @property string $property_qualifier
  * @property string $property_qualifier_indexed
  * @property integer $date_from_mask
- * @property timestamp $date_from
+ * @property string $date_from
  * @property integer $date_to_mask
- * @property timestamp $date_to
+ * @property string $date_to
  * @property string $property_unit
  * @property string $property_accuracy_unit
  * @property string $property_method
@@ -34,9 +34,9 @@
  * @method string              getPropertyQualifier()          Returns the current record's "property_qualifier" value
  * @method string              getPropertyQualifierIndexed()   Returns the current record's "property_qualifier_indexed" value
  * @method integer             getDateFromMask()               Returns the current record's "date_from_mask" value
- * @method timestamp           getDateFrom()                   Returns the current record's "date_from" value
+ * @method string              getDateFrom()                   Returns the current record's "date_from" value
  * @method integer             getDateToMask()                 Returns the current record's "date_to_mask" value
- * @method timestamp           getDateTo()                     Returns the current record's "date_to" value
+ * @method string              getDateTo()                     Returns the current record's "date_to" value
  * @method string              getPropertyUnit()               Returns the current record's "property_unit" value
  * @method string              getPropertyAccuracyUnit()       Returns the current record's "property_accuracy_unit" value
  * @method string              getPropertyMethod()             Returns the current record's "property_method" value
@@ -108,8 +108,8 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('date_from', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('date_from', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
              ));
@@ -118,10 +118,10 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
-        $this->hasColumn('date_to', 'timestamp', null, array(
-             'type' => 'timestamp',
+        $this->hasColumn('date_to', 'string', null, array(
+             'type' => 'string',
              'notnull' => true,
-             'default' => '0001-01-01',
+             'default' => '2038-12-31',
              ));
         $this->hasColumn('property_unit', 'string', null, array(
              'type' => 'string',
@@ -138,7 +138,6 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
              ));
         $this->hasColumn('property_tool', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
              ));
         $this->hasColumn('property_tool_indexed', 'string', null, array(
              'type' => 'string',

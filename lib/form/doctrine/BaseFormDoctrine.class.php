@@ -17,4 +17,9 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   {
      return sfContext::getInstance()->getI18N();
   }
+
+  public function getCurrentCulture()
+  {
+    return isset($this->options['culture']) ? $this->options['culture'] : 'en';
+  }
 }

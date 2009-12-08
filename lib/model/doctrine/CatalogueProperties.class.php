@@ -5,5 +5,14 @@
  */
 class CatalogueProperties extends BaseCatalogueProperties
 {
-
+  public function setDateFrom($fd)
+  {
+//   echo $fd->format('Y/m/d H:i:s');
+     $this->_set('date_from', $fd->format('Y/m/d H:i:s') );
+  }
+  public function setDateTo($fd)
+  {
+     $this->_set('date_to', $fd->format('Y/m/d H:i:s') );
+  }
+  
 }
