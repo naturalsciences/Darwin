@@ -7,14 +7,28 @@ class CatalogueProperties extends BaseCatalogueProperties
 {
   public function setDateFrom($fd)
   {
-     $this->_set('date_from', $fd->format('Y/m/d H:i:s') );
-     $this->_set('date_from_mask', $fd->getMask() );
+     if(is_string($fd))
+     {
+	$this->_set('date_from',$fd);
+     }
+     else
+     {
+      $this->_set('date_from', $fd->format('Y/m/d H:i:s') );
+      $this->_set('date_from_mask', $fd->getMask() );
+     }
   }
 
   public function setDateTo($fd)
   {
-     $this->_set('date_to', $fd->format('Y/m/d H:i:s') );
-     $this->_set('date_to_mask', $fd->getMask() );
+     if(is_string($fd))
+     {
+	$this->_set('date_to',$fd);
+     }
+     else
+     {
+      $this->_set('date_to', $fd->format('Y/m/d H:i:s') );
+      $this->_set('date_to_mask', $fd->getMask() );
+     }
   }
   
   public function getDateTo()
