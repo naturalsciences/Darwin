@@ -23,7 +23,7 @@ class FuzzyDateTime extends DateTime
     $datePartsMask = array('year'=>32, 'month'=>16, 'day'=>8, 'hour'=>4, 'minute'=>2, 'second'=>1);
   protected
     $start = true,
-    $mask = 56,
+    $mask = 0,
     $withTime = false,
     $dateFormat = 'd/m/Y',
     $timeFormat = 'H:i:s';
@@ -36,7 +36,7 @@ class FuzzyDateTime extends DateTime
    * @param boolean       $start     An optional parameter to 
    *
    */ 
-  public function __construct($dateTime='now', $mask=56, $start=true, $withTime=false)
+  public function __construct($dateTime='now', $mask=0, $start=true, $withTime=false)
   {
     if (is_array($dateTime)) $dateTime = self::getDateTimeStringFromArray($dateTime, $start, $withTime);
     parent::__construct($dateTime);
@@ -114,7 +114,7 @@ class FuzzyDateTime extends DateTime
     return $dateTime;
   }
 
-  public function setMask($mask=56)
+  public function setMask($mask=0)
   {
     $this->mask = $mask;
   }
