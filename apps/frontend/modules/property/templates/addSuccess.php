@@ -96,6 +96,13 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
+    $('.clear_prop').live('click',function (){
+      parent = $(this).closest('li');
+      nvalue='';
+      $(parent).find('input').val(nvalue);
+      $(parent).hide();
+    });
+
     $('form#property_form').submit(function () {
       $('form#property_form input[type=submit]').attr('disabled','disabled');
       $.ajax({
