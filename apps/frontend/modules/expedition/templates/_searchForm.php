@@ -1,7 +1,42 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
+<script type="text/javascript">
+$(document).ready(function () 
+ {
+   $("#search_expedition").submit(function ()
+   {
+     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     $.ajax({
+             type: "POST",
+             url: "<?php echo url_for('expedition/search');?>",
+             data: $('#search_expedition').serialize(),
+             success: function(html){
+                                     $(".search_results_content").html(html);
+                                     $('.search_results').slideDown();
+                                    }
+            }
+           );
+     return false;
+   });
 
-<form action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+   $("a.sort").live('click',function ()
+   {
+     $.ajax({
+             type: "POST",
+             url: $(this).attr("href"),
+             data: $('#search_expedition').serialize(),
+             success: function(html){
+                                     $(".search_results_content").html(html);
+                                    }
+            }
+           );
+     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     return false;
+   });
+
+ });
+</script>
+<form id="search_expedition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <?php echo $form->renderGlobalErrors() ?>
   <table class="search">
     <thead>
@@ -37,9 +72,14 @@
           <?php echo $form['to_date']->render() ?>
         </td>
         <td>
-          <input type="submit" value="<?php echo __('Search'); ?>" />
+          <input type="submit" name="search" value="<?php echo __('Search'); ?>" />
         </td>
       </tr>
     </tbody>
   </table>
 </form>
+<br /><br />
+<div class="search_results">
+  <div class="search_results_content">
+  </div>
+</div>

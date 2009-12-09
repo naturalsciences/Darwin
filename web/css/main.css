@@ -264,11 +264,15 @@ padding: 2px;
 .search
 {
   background-color:white;
-  width:61%;
+  width:61.2%;
   margin-left: 1px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: middle;
+}
+.search_results
+{
+  padding-left:0.15em;
 }
 .results
 {
@@ -285,6 +289,27 @@ padding: 2px;
   background-color: #5BAABD;
   text-align: left;
   color: white;
+}
+.results thead a
+{
+  text-decoration:none;
+  color:white;
+}
+.results thead a:hover
+{
+  text-decoration:underline;
+}
+a span
+{
+  font-size:0.8em;
+}
+.order_sign_down
+{
+  vertical-align:middle;
+}
+.order_sign_up
+{
+  vertical-align:top;
 }
 .results tbody tr:hover
 {
@@ -311,7 +336,7 @@ padding: 2px;
 .new_link
 {
   float:right;
-  margin-right:40%;
+  margin-right:39.8%;
   background: white url(/images/widget_button.png) no-repeat;
   height:22px;
   width:74px;

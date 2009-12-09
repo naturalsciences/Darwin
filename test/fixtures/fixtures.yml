@@ -125,13 +125,13 @@ UsersLoginInfos:
 UsersLanguages:
     ul1:
         User: u1
-        language_country: en_gb
+        language_country: en
         mother: true
         prefered_language: true
 
     ul2:
         User: u1
-        language_country: fr_be
+        language_country: fr
         mother: false
         prefered_language: false
 

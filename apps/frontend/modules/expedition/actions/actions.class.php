@@ -12,29 +12,9 @@ class expeditionActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
-    
-    if ($request->isMethod('post'))
-    {
-      $this->searchResults($this->form,$request);
-    }
-
+    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
   }
-  private function searchResults($form, $request)
-  {
-    if($request->getParameter('searchExpedition','') !== '')
-    {
-      $form->bind($request->getParameter('searchExpedition'));
-      if ($form->isValid())
-      {
-        $this->expeditions = Doctrine::getTable('Expeditions')
-                             ->getExpLike($form->getValue('name'), 
-                                          $form->getValue('from_date'),
-                                          $form->getValue('to_date'));
-      }
-    }
 
-  }
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new ExpeditionsForm();
@@ -78,6 +58,33 @@ class expeditionActions extends sfActions
     $this->redirect('expedition/index');
   }
 
+  public function executeSearch(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    $this->searchResults($this->form,$request);    
+  }
+
+  protected function searchResults($form, $request)
+  {
+    if($request->getParameter('searchExpedition','') !== '')
+    {
+      $form->bind($request->getParameter('searchExpedition'));
+      if ($form->isValid())
+      {
+        $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
+        $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
+        $this->expeditions = Doctrine::getTable('Expeditions')
+                             ->getExpLike($form->getValue('name'), 
+                                          $form->getValue('from_date'),
+                                          $form->getValue('to_date'),
+                                          $this->orderBy,
+                                          $this->orderDir
+                                         );
+      }
+    }
+  }
+
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()));
@@ -88,4 +95,5 @@ class expeditionActions extends sfActions
       $this->redirect('expedition/edit?id='.$expeditions->getId());
     }
   }
+
 }
