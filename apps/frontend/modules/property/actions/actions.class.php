@@ -33,7 +33,9 @@ class propertyActions extends sfActions
 	{
 	  try{
 	    $this->form->save();
-	    $this->getUser()->setFlash('property', 'Your property was saved');
+	    $this->form->getObject()->refreshRelated();
+	    $this->form = new CataloguePropertiesForm($this->form->getObject());
+	    $this->message = 'Your property was saved';
 	  }
 	  catch(Exception $e)
 	  {
@@ -46,7 +48,15 @@ class propertyActions extends sfActions
 
   public function executeAddValue(sfWebRequest $request)
   {
-    $this->form = new PropertiesValuesForm();
+    $number = intval($request->getParameter('num'));
+    $prop = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $prop = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('id') );
+
+    $form = new CataloguePropertiesForm($prop);
+    $form->addValue($number);
+    return $this->renderPartial('prop_value',array('form' => $form['newVal'][$number]));
   }
 
 }

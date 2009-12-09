@@ -1,7 +1,7 @@
 <div id="tests">
 
-<?php if ($sf_user->hasFlash('property')): ?>
-  <div class="flash_save"><?php echo $sf_user->getFlash('property') ?></div>
+<?php if (isset($message)): ?>
+  <div class="flash_save"><?php echo $message ?></div>
 <?php endif; ?>
 
 <form action="<?php echo url_for('property/add' .  ($form->getObject()->isNew() ? '': '?rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
@@ -81,14 +81,18 @@
     </td>
   </tr>
 </table>
-<?php echo $form['newValue'];?>
+
 
 <ul class="proprety_values">
-  
+  <?php foreach($form['PropertiesValues'] as $form_value):?>
+    <li>
+      <?php include_partial('prop_value', array('form' => $form_value));?>
+    </li>
+  <?php endforeach;?>
 </ul>
   <input type="submit" />
 </form>
-<a href="<?php echo url_for('property/addValue');?>" id="add_prop_value">Add Value</a>
+<a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
 
 <script  type="text/javascript">
   $(document).ready(function () {
@@ -109,7 +113,7 @@
     $('#add_prop_value').click(function () {
 	$.ajax({
 	  type: "GET",
-	  url: $(this).attr('href'),
+	  url: $(this).attr('href')+ (0+$('.proprety_values li').length),
 	  success: function(html){
 	    $('.proprety_values').append('<li>'+html+'<li>');
 	  }

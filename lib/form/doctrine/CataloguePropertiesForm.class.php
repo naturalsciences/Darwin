@@ -95,14 +95,65 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     $this->widgetSchema['property_method'] = new sfWidgetFormInput();
     $this->widgetSchema['property_tool'] = new sfWidgetFormInput();
 
+
+    $this->embedRelation('PropertiesValues');
+    
     $subForm = new sfForm();
-    for ($i = 0; $i < 2; $i++)
-    {
+    $this->embedForm('newVal',$subForm);
+  }
+  
+  public function addValue($num)
+  {
       $val = new PropertiesValues();
       $val->CatalogueProperties = $this->getObject();
       $form = new PropertiesValuesForm($val);
-      $subForm->embedForm($i, $form);
+  
+      //Embedding the new picture in the container
+      $this->embeddedForms['newVal']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newVal', $this->embeddedForms['newVal']);
+   }
+
+    public function bind(array $taintedValues = null, array $taintedFiles = null)
+    {
+      if(isset($taintedValues['newVal']))
+      {
+	foreach($taintedValues['newVal'] as $key=>$newVal)
+	{
+	  if (!isset($this['newVal'][$key]))
+	  {
+	    $this->addValue($key);
+	  }
+	}
+      }
+      parent::bind($taintedValues, $taintedFiles);
     }
-    $this->embedForm('newValue', $subForm);
-  }
+
+    public function saveEmbeddedForms($con = null, $forms = null)
+    {
+      if (null === $forms)
+      {
+	$value = $this->getValue('newVal');
+	foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['property_value']))
+	  {
+	    unset($this->embeddedForms['newVal'][$name]);
+	  }
+	}
+
+	$value = $this->getValue('PropertiesValues');
+	foreach($this->embeddedForms['PropertiesValues']->getEmbeddedForms() as $name => $form)
+	{
+	  
+	  if (!isset($value[$name]['property_value']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['PropertiesValues'][$name]);
+	  }
+	}
+      }
+      return parent::saveEmbeddedForms($con, $forms);
+    }
+
 }
