@@ -291,6 +291,15 @@ padding: 2px;
   text-align: left;
   color: white;
 }
+.results thead a
+{
+  text-decoration:none;
+  color:white;
+}
+.results thead a:hover
+{
+  text-decoration:underline;
+}
 .results tbody tr:hover
 {
   background-color:#D5DEE3;
@@ -312,6 +321,16 @@ padding: 2px;
 {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
+}
+.order_sign_down 
+{
+  vertical-align:middle;
+  font-size:0.8em;
+}
+.order_sign_up
+{
+  vertical-align:top;
+  font-size:0.8em;
 }
 .new_link
 {
