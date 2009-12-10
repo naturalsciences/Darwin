@@ -4,7 +4,7 @@
   <tr>
     <th><?php echo $property->getPropertyType();?></th>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Properties');?>" href="<?php echo url_for('properties/edit?table='.$table.'&cid='.$property->getId().'&id='.$eid); ?>"><?php echo $property->getPropertyQualifier();?></a>
+      <a class="link_catalogue" title="<?php echo __('Edit Properties');?>" href="<?php echo url_for('property/add?table='.$table.'&rid='.$property->getId().'&id='.$eid); ?>"><?php echo $property->getPropertyQualifier();?></a>
       <ul>
 	<?php foreach($property->PropertiesValues as $value):?>
 	  <li>
@@ -21,4 +21,4 @@
 </table>
 
 <br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Properties');?>" class="link_catalogue" href="<?php echo url_for('properties/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
+<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Properties');?>" class="link_catalogue" href="<?php echo url_for('property/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
