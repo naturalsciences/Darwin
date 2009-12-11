@@ -90,12 +90,35 @@
     </li>
   <?php endforeach;?>
 </ul>
-  <input type="submit" />
-</form>
+
+<p>
 <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
+</p>
+ <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?> <input type="submit" />
+
+</form>
 
 <script  type="text/javascript">
   $(document).ready(function () {
+
+      $("#delete").click(function()
+      {
+	$.ajax({
+	  url: '<?php echo url_for('property/delete?id='.$form->getObject()->getId())?>',
+	  success: function(html){
+	    if(html == "ok" )
+	    {
+	      $('.qtip-button').click();
+	    }
+	    else
+	    {
+	      addError(html);
+	    }
+	  },
+	});
+	return false;
+      });
+
     $('.clear_prop').live('click',function (){
       parent = $(this).closest('li');
       nvalue='';

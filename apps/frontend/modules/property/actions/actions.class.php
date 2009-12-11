@@ -46,6 +46,20 @@ class propertyActions extends sfActions
     }
   }
 
+  public function executeDelete(sfWebRequest $request)
+  {
+    $r = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such Property');
+    try{
+      $r->delete();
+    }
+    catch(Exception $e)
+    {
+      return $this->renderText($e->getMessage());
+    }
+    return $this->renderText('ok');
+  }
+
   public function executeAddValue(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
