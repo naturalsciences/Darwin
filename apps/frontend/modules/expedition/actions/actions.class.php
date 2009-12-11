@@ -72,15 +72,28 @@ class expeditionActions extends sfActions
       $form->bind($request->getParameter('searchExpedition'));
       if ($form->isValid())
       {
+        $resultsPerPage = intval(sfConfig::get('app_resultsPerPage'));
+        $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
-        $this->expeditions = Doctrine::getTable('Expeditions')
-                             ->getExpLike($form->getValue('name'), 
-                                          $form->getValue('from_date'),
-                                          $form->getValue('to_date'),
-                                          $this->orderBy,
-                                          $this->orderDir
-                                         );
+        $this->currentPage = ($request->getParameter('currentPage', '') == '')?1:intval($request->getParameter('currentPage'));
+        $this->resultsPerPage = ($request->getParameter('resultsPerPage', '') == '')?$resultsPerPage:intval($request->getParameter('resultsPerPage'));;
+        $this->expePagerLayout = new Doctrine_Pager_Layout(new Doctrine_Pager(Doctrine::getTable('Expeditions')
+                                                                              ->getExpLike($form->getValue('name'), 
+                                                                                           $form->getValue('from_date'),
+                                                                                           $form->getValue('to_date'),
+                                                                                           $this->orderBy,
+                                                                                           $this->orderDir
+                                                                                          ),
+                                                                              $this->currentPage,
+                                                                              $this->resultsPerPage
+                                                                             ),
+                                                           new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
+                                                           $this->getController()->genUrl('expedition/search?orderby='.$this->orderBy.'&page=').'{%page_number}'
+                                                         );
+        $this->expePagerLayout->setTemplate('<li>:<a href="{%url}">{%page}</a></li>');
+        $this->expePagerLayout->setSelectedTemplate('<li>:[{%page}]</li>');
+        if (! $this->expePagerLayout->getPager()->getExecuted()) $this->expeditions = $this->expePagerLayout->execute();
       }
     }
   }

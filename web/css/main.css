@@ -322,6 +322,10 @@ padding: 2px;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 }
+.pager li
+{
+  display:inline;
+}
 .order_sign_down 
 {
   vertical-align:middle;

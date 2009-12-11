@@ -1,10 +1,15 @@
 <?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir)):?>
+  <div><ul class="pager"><?php $expePagerLayout->display(); ?></ul></div>
   <table class="results">
     <thead>
       <tr>
         <th>&nbsp;</th>
         <th>
-            <a class="sort" href="<?php echo url_for('expedition/search?orderby=name'.(($orderBy=='name' && $orderDir=='asc')?'&orderdir=desc':''));?>">
+            <a class="sort" href="<?php echo url_for('expedition/search?orderby=name'.
+                                                     (($orderBy=='name' && $orderDir=='asc')?'&orderdir=desc':'').
+                                                     '&currentPage='.$currentPage.
+                                                     '&resultsPerPage='.$resultsPerPage
+                                                    );?>">
             <?php echo __('Name');?>
             <?php if($orderBy=='name'):?>
               <span class="order_sign_<?php echo (($orderDir=='asc')?'down':'up');?>">&nbsp;<?php echo (($orderDir=='asc')?'&#9660;':'&#9650;');?></span>
@@ -12,7 +17,11 @@
             </a>
         </th>
         <th class="datesNum">
-            <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_from_date'.(($orderBy=='expedition_from_date' && $orderDir=='asc')?'&orderdir=desc':''));?>">
+            <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_from_date'.
+                                                     (($orderBy=='expedition_from_date' && $orderDir=='asc')?'&orderdir=desc':'').
+                                                     '&currentPage='.$currentPage.
+                                                     '&resultsPerPage='.$resultsPerPage
+                                                    );?>">
             <?php echo __('From');?>
             <?php if($orderBy=='expedition_from_date'):?>
               <span class="order_sign_<?php echo (($orderDir=='asc')?'down':'up');?>">&nbsp;<?php echo (($orderDir=='asc')?'&#9660;':'&#9650;');?></span>
@@ -20,7 +29,11 @@
             </a>
         </th>
         <th class="datesNum">
-            <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_to_date'.(($orderBy=='expedition_to_date' && $orderDir=='asc')?'&orderdir=desc':''));?>">
+            <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_to_date'.
+                                                     (($orderBy=='expedition_to_date' && $orderDir=='asc')?'&orderdir=desc':'').
+                                                     '&currentPage='.$currentPage.
+                                                     '&resultsPerPage='.$resultsPerPage
+                                                    );?>">
             <?php echo __('To');?>
             <?php if($orderBy=='expedition_to_date'):?>
               <span class="order_sign_<?php echo (($orderDir=='asc')?'down':'up');?>">&nbsp;<?php echo (($orderDir=='asc')?'&#9660;':'&#9650;');?></span>

@@ -4,9 +4,8 @@
  */
 class ExpeditionsTable extends Doctrine_Table
 {
-  public function getExpLike($name, $from_date, $to_date, $orderBy='name', $orderByOrder='asc', $start=1, $numPerPage='all')
+  public function getExpLike($name, $from_date, $to_date, $orderBy='name', $orderByOrder='asc')
   {
-//     $orderBy = (array_key_exists($orderBy, $this->getColumns()))?$orderBy:'name';
     $q = Doctrine_Query::create()
          ->from('Expeditions e');
     if (trim($name) != ""):
@@ -35,9 +34,8 @@ class ExpeditionsTable extends Doctrine_Table
     } 
 
     $q->andWhere("id > 0 ")
-      ->orderby($orderBy . ' ' . $orderByOrder)
-      ->limit($numPerPage)
-      ->offset($start);
-    return $q->execute();
+      ->orderby($orderBy . ' ' . $orderByOrder);
+    return $q;
+//    return $q->execute();
   }
 }
