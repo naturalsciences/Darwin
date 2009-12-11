@@ -1,11 +1,9 @@
 <?php 
 include(dirname(__FILE__).'/../bootstrap/unit.php');
-$t = new lime_test(82, new lime_output_color());
+$t = new lime_test(76, new lime_output_color());
 
 $t->info('FuzzyDateTime instanciation');
 $t->isa_ok(new FuzzyDateTime(), 'FuzzyDateTime', 'New creates an object of the right class');
-$t->can_ok(new FuzzyDateTime(), 'validateDateYearLength', 'Object FuzzyDateTime has a method named: validateDateYearLength');
-$t->can_ok(new FuzzyDateTime(), 'validateDateOtherPartLength', 'Object FuzzyDateTime has a method named: validateDateOtherPartLength');
 $t->can_ok(new FuzzyDateTime(), 'getDateTimeStringFromArray', 'Object FuzzyDateTime has a method named: getDateTimeStringFromArray');
 $t->can_ok(new FuzzyDateTime(), 'checkDateArray', 'Object FuzzyDateTime has a method named: checkDateArray');
 $t->can_ok(new FuzzyDateTime(), 'setMask', 'Object FuzzyDateTime has a method named: setMask');
@@ -34,10 +32,6 @@ $fdt->setStart(false);
 $t->is($fdt->getStart(), false, 'The start value is False');
 $fdt->setMask(32);
 $t->is($fdt->getMask(), 32, 'The Mask value is 32 (year)');
-$t->is(FuzzyDateTime::validateDateYearLength(1975), true, 'The year lenght is ok');
-$t->is(FuzzyDateTime::validateDateYearLength(10200), false, 'The year lenght is not ok');
-$t->is(FuzzyDateTime::validateDateOtherPartLength(12), true, 'The other dates part lenght is ok');
-$t->is(FuzzyDateTime::validateDateOtherPartLength(121), false, 'The other dates part lenght is not ok');
 $fdt = new FuzzyDateTime('1975/02/24 13:12:11');
 $testArray = array('year'=>1975, 'month'=>02, 'day'=>24, 'hour'=>13, 'minute'=>12, 'second'=>11);
 $dateTimeArray = $fdt->getDateTimeAsArray();
@@ -153,7 +147,7 @@ $testArray['year']='1975';
 $testArray['month']='02';
 $testArray['day']='';
 $testArray['hour']='02';
-$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), 'time_without_date', 'Date structure test ok');
+$t->is(FuzzyDateTime::checkDateTimeStructure($testArray), 'day_missing', 'Date structure test ok');
 $testArray['year']='0001';
 $testArray['month']='01';
 $testArray['day']='01';

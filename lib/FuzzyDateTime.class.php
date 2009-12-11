@@ -38,21 +38,33 @@ class FuzzyDateTime extends DateTime
    */ 
   public function __construct($dateTime='now', $mask=0, $start=true, $withTime=false)
   {
-    if (is_array($dateTime)) $dateTime = self::getDateTimeStringFromArray($dateTime, $start, $withTime);
+    if (is_array($dateTime))
+      $dateTime = self::getDateTimeStringFromArray($dateTime, $start, $withTime);
     parent::__construct($dateTime);
     $this->setMask($mask);
     $this->setStart($start);
     $this->setWithTime($withTime);
   }
 
-  public static function validateDateYearLength ($year)
+  public static function getDefaultMaxArray()
   {
-    return (strlen(strval($year))<=4);
+    if(!isset( self::$defaultMaxValues['year']) )
+        self::$defaultMaxValues['year'] = sfConfig::get('app_yearUpperBound');
+    return self::$defaultMaxValues;
   }
-  
-  public static function validateDateOtherPartLength ($part)
+
+  public static function getDefaultMinArray()
   {
-    return (strlen(strval($part))<=2);
+    return self::$defaultValues;
+  }
+
+  public static function validateDateField($field, $value)
+  {
+    $max_array = self::getDefaultMaxArray();
+    $min_array = self::getDefaultMinArray();
+    if(is_numeric($value) && intval($value)>= $min_array[$field] && intval($value) <= $max_array[$field])
+      return true;
+    return false;
   }
 
   public static function checkDateArray(array $dateTime)
@@ -60,11 +72,10 @@ class FuzzyDateTime extends DateTime
     // all elements must be empty or a number
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      if (isset($dateTime[$key]) && !empty($dateTime[$key]))
+      //Should we thest '' ?
+      if (isset($dateTime[$key]) && $dateTime[$key] !== '' && !self::validateDateField($key,$dateTime[$key]) )
       {
-        if (!preg_match('#^\d+$#', $dateTime[$key])) return 'wrong_data_type';
-        if ($key == 'year' && !self::validateDateYearLength($dateTime[$key])) return 'wrong_year_length';
-        if ($key != 'year' && !self::validateDateOtherPartLength($dateTime[$key])) return 'wrong_date_part_length';
+	return 'wrong_date_part_length';
       }
     }
     return '';
@@ -72,12 +83,15 @@ class FuzzyDateTime extends DateTime
 
   public static function getDateTimeStringFromArray(array $dateTime, $start=true, $withTime=false)
   {
-    if (!self::checkDateArray($dateTime)=='')
+    $min_array = self::getDefaultMinArray();
+    $max_array = self::getDefaultMaxArray();
+
+    if (!self::checkDateArray($dateTime) == '')
     {
       if($start)
-	$dateTime = self::$defaultValues;
+	$dateTime = $min_array;
       else
-	$dateTime = array_merge(self::$defaultMaxValues, array('year'=> sfConfig::get('app_yearUpperBound')) );
+	$dateTime = $max_array;
     }
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
@@ -85,23 +99,18 @@ class FuzzyDateTime extends DateTime
       {
         if ($start)
         {
-          $$key = self::$defaultValues[$key];
+          $$key = $min_array[$key];
         }
         else
         {
-          if ($key =='year')
+	  if($key == 'day')
+	  {
+	    $maxDaysInMonth = new DateTime("$year/$month/01");
+	    $$key = $maxDaysInMonth->format('t');
+	  }
+	  else
           {
-            $$key = sfConfig::get('app_yearUpperBound');
-          }
-          elseif ($key == 'day')
-          {
-	    if($key == 'day')
-	      $maxDaysInMonth = new DateTime("$year/$month/01");
-            $$key = $maxDaysInMonth->format('t');
-          }
-          else
-          {
-            $$key = self::$defaultMaxValues[$key];
+            $$key = $max_array[$key];
           }
         }
       }
@@ -173,75 +182,68 @@ class FuzzyDateTime extends DateTime
   {
     return self::$datePartsMask[$key];
   }
-  
+
   public static function checkDateTimeStructure (array $dateTime)
   {
-    $checkDate = self::checkDateArray($dateTime);
-    if (!empty($checkDate)) return $checkDate;
-    if ((!isset($dateTime['year']) || empty($dateTime['year'])) && ((isset($dateTime['month']) && !empty($dateTime['month'])) || 
-                                                                    (isset($dateTime['day']) && !empty($dateTime['day'])) || 
-                                                                    (isset($dateTime['hour']) && !empty($dateTime['hour'])) || 
-                                                                    (isset($dateTime['minute']) && !empty($dateTime['minute'])) || 
-                                                                    (isset($dateTime['second']) && !empty($dateTime['second']))
-                                                                   )
-       ) return 'year_missing';
-    if ((isset($dateTime['year']) && !empty($dateTime['year']) && isset($dateTime['day']) && !empty($dateTime['day'])) &&
-        (!isset($dateTime['month']) || empty($dateTime['month']))
-       ) return 'month_missing';
-    if ((isset($dateTime['year']) && !empty($dateTime['year'])) && 
-        ((!isset($dateTime['month']) || empty($dateTime['month'])) || 
-         (!isset($dateTime['day']) || empty($dateTime['day']))
-        ) &&
-        ((isset($dateTime['hour']) && !empty($dateTime['hour'])) ||
-         (isset($dateTime['minute']) && !empty($dateTime['minute'])) ||
-         (isset($dateTime['second']) && !empty($dateTime['second']))
-        )
-       ) return 'time_without_date';
-    return '';
+      $checkDate = self::checkDateArray($dateTime);
+      $has_an_empty = null;
+      $items = array('year', 'month', 'day', 'hour', 'minute', 'second');
+      foreach ($items as $i => $key)
+      {
+	if( isset($dateTime[$key]) && self::validateDateField($key, $dateTime[$key]) )
+	{
+	  if($has_an_empty === null)
+	    continue; //untill there is a filled value
+	  return $items[$has_an_empty].'_missing';
+	}
+	else
+	{
+	  if($has_an_empty === null) // we got en empty... if no value after that, it's ok
+	    $has_an_empty = $i;
+	}
+      }
+      return '';
   }
 
   public static function getMaskFromDate(array $dateTime)
   {
     $mask = 0;
-    if(self::checkDateArray($dateTime)=='')
+    foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
+      if (isset($dateTime[$key]) && self::validateDateField($key, $dateTime[$key]))
       {
-        if (isset($dateTime[$key]) && !empty($dateTime[$key]))
-        {
-          $mask += self::getMaskFor($key);
-        }
-        else
-        {
-          break;
-        }
+	$mask += self::getMaskFor($key);
+      }
+      else
+      {
+	break;
       }
     }
     return $mask;
   }
-  
-  public function getDateTime($withTime=null, $dateFormat = null, $timeFormat=null)
-  {
-    $withTime = (is_null($withTime))?$this->getWithTime():$withTime;
-    $dateFormat = (is_null($dateFormat))?$this->getDateFormat():$dateFormat;
-    $timeFormat = (is_null($timeFormat))?$this->getTimeFormat():$timeFormat;
-    return $this->format($dateFormat.(($withTime)?' '.$timeFormat:''));
+
+  public function getDateTime($withTime=null, $dateFormat = null, $timeFormat=null)                                                
+  {                                                                                                                                
+    $withTime = (is_null($withTime)) ? $this->getWithTime() : $withTime;                                                               
+    $dateFormat = (is_null($dateFormat)) ? $this->getDateFormat() : $dateFormat;
+    $timeFormat = (is_null($timeFormat)) ? $this->getTimeFormat() : $timeFormat;
+    return $this->format($dateFormat.(($withTime) ? ' '.$timeFormat : ''));
   }
-  
+
   public function getTime($timeFormat=null)
   {
-    $timeFormat = (is_null($timeFormat))?$this->getTimeFormat():$timeFormat;
+    $timeFormat = (is_null($timeFormat)) ? $this->getTimeFormat() : $timeFormat;
     return $this->format($timeFormat);
   }
-  
+
   public function getDateTimeAsArray()
   {
-    return array('year'=>intval($this->format('Y')), 
-                 'month'=>intval($this->format('m')), 
-                 'day'=>intval($this->format('d')), 
-                 'hour'=>intval($this->format('H')), 
-                 'minute'=>intval($this->format('i')), 
-                 'second'=>intval($this->format('s'))
+    return array('year' => intval($this->format('Y')), 
+                 'month' => intval($this->format('m')), 
+                 'day' => intval($this->format('d')), 
+                 'hour' => intval($this->format('H')), 
+                 'minute' => intval($this->format('i')), 
+                 'second' => intval($this->format('s'))
                 );
   }
   
@@ -305,7 +307,7 @@ class FuzzyDateTime extends DateTime
 
   public function __ToString()
   {
-    return strval($this->getDateTime($this->getWithTime(), $this->getDateFormat(), $this->getTimeFormat()));
+    return $this->getDateTime($this->getWithTime(), $this->getDateFormat(), $this->getTimeFormat());
   }
   
 }
