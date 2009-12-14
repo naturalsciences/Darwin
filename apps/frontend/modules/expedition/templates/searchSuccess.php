@@ -1,5 +1,24 @@
-<?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir)):?>
+<?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>
   <div>
+  <script type="text/javascript">
+  $(document).ready(function () 
+   {
+     $("#searchExpedition_rec_per_page").change(function ()
+     {
+       $.ajax({
+               type: "POST",
+               url: "<?php echo url_for('expedition/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage);?>",
+               data: $('#search_expedition').serialize(),
+               success: function(html){
+                                       $(".search_results_content").html(html);
+                                      }
+              }
+             );
+       $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+       return false;
+     });
+   });
+  </script>
     <ul class="pager">
        <li>
            <?php //var_dump($form->getValue('rec_per_page')); ?>

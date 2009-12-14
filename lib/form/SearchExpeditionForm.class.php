@@ -38,7 +38,6 @@ class SearchExpeditionForm extends DarwinForm
                                                                     ),
                            )
                      );
-//     $this->getWidget('rec_per_page')->setDefault(array('choices'=>intval(sfConfig::get('app_recPerPage'))));
     $this->setDefault('rec_per_page', strval(sfConfig::get('app_recPerPage'))); 
     $this->widgetSchema->setNameFormat('searchExpedition[%s]');
     $this->widgetSchema->setLabels(array('from_date' => 'Between',
@@ -69,7 +68,6 @@ class SearchExpeditionForm extends DarwinForm
                                'rec_per_page' => new sfValidatorChoice(array('required' => false, 'choices'=>$recPerPages, 'empty_value'=>strval(sfConfig::get('app_recPerPage')))),
                               )
                         );
-//     var_dump($recPerPages);
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('from_date', 
                                                                           '<=', 
                                                                           'to_date', 

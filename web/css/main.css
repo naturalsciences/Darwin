@@ -268,7 +268,6 @@ padding: 2px;
 .search
 {
   background-color:white;
-  width:61%;
   margin-left: 1px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -279,83 +278,128 @@ padding: 2px;
 {
   background-color:white;
   width:60%;
-  margin-left: 1px;
+  margin-left: 0.51em;
   border: 1px solid #5BAABD;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: middle;
 }
+
 .results thead
 {
   background-color: #5BAABD;
   text-align: left;
   color: white;
 }
+
 .results thead a
 {
   text-decoration:none;
   color:white;
 }
+
 .results thead a:hover
 {
   text-decoration:underline;
 }
+
 .results tbody tr:hover
 {
   background-color:#D5DEE3;
 }
+
 .datesNum
 {
   text-align: right;
 }
+
 .datesNum em
 {
   color:#C1C1C1;
   font-style:normal;
 }
+
 .edit
 {
-  text-align:center;
+  text-align:right;
 }
+
 .results th, .results td
 {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 }
+
+.pager
+{
+  margin-bottom:0.3em;
+  padding-left:0.7em;
+}
+
 .pager li
 {
   display:inline;
+  padding:0.2em;
+  font-weight:bold;
 }
+
+.pager > li:first-child, .pager .nbrRecTot
+{
+  font-weight:normal;
+}
+
+.nav_arrow
+{
+  color:#C1C1C1;
+  font-size:medium;
+}
+
+.pager a, a .nav_arrow
+{
+  color:#2C7B88;
+  text-decoration:none;
+}
+
+.pager a:hover
+{
+  text-decoration:underline;
+}
+
 .order_sign_down 
 {
   vertical-align:middle;
   font-size:0.8em;
 }
+
 .order_sign_up
 {
   vertical-align:top;
   font-size:0.8em;
 }
+
 .new_link
 {
   float:right;
-  margin-right:40%;
+  margin-right:39.3%;
   background: white url(/images/widget_button.png) no-repeat;
   height:22px;
   width:74px;
   text-align:center;
   font-size:small;
 }
+
 .new_link a
 {
   vertical-align:middle;
   text-decoration:none;
   color:white;
 }
+
 .new_link a:hover
 {
   text-decoration:underline;
 }
+
 .flash_save
 {
   background-color: #C1CF56;

@@ -49,21 +49,6 @@ $(document).ready(function ()
      return false;
    });
 
-   $("#searchExpedition_rec_per_page").live('change',function ()
-   {
-     $.ajax({
-             type: "POST",
-             url: "<?php echo url_for('expedition/search');?>",
-             data: $('#search_expedition').serialize(),
-             success: function(html){
-                                     $(".search_results_content").html(html);
-                                    }
-            }
-           );
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
-     return false;
-   });
-
  });
 </script>
 <form id="search_expedition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
