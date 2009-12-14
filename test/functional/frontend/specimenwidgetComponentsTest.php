@@ -24,7 +24,7 @@ $browser->
         isStatusCode(200)->
         checkElement('#specimen_collecting_tool option',3)->
         checkElement('#specimen_collecting_tool option:first','')->
-        checkElement('#specimen_tool_add')->
+        checkElement('.add_item_button')->
     end()->
 
     get('/widgets/reloadContent?widget=method&category=specimen')->
@@ -32,5 +32,5 @@ $browser->
         isStatusCode(200)->
         checkElement('#specimen_collecting_method option',3)->
         checkElement('#specimen_collecting_method option:first','')->
-        checkElement('#specimen_method_add')->
+        checkElement('.add_item_button')->
     end();

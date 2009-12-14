@@ -39,20 +39,24 @@ class SpecimensForm extends BaseSpecimensForm
         'expanded' => true,
     ));
     
-    $this->widgetSchema['collecting_tool'] = new sfWidgetFormDoctrineChoice(array(
+    $this->widgetSchema['collecting_tool'] = new widgetFormSelectComplete(array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctTools',
         'method' => 'getTool',
         'key_method' => 'getTool',
         'add_empty' => true,
+	'change_label' => 'Pick a tool in the list',
+	'add_label' => 'Add another tool',
     ));
 
-    $this->widgetSchema['collecting_method'] = new sfWidgetFormDoctrineChoice(array(
+    $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctMethods',
         'method' => 'getMethod',
         'key_method' => 'getMethod',
         'add_empty' => true,
+	'change_label' => 'Pick a method in the list',
+	'add_label' => 'Add another method',
     ));
     
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(

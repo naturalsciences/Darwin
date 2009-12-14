@@ -80,9 +80,17 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['property_qualifier'] = new sfWidgetFormInput();
-    $this->widgetSchema['property_type'] = new sfWidgetFormChoice(array(
-      'choices' =>  CommentsTable::getNotionsFor('taxonomy'),  //@TODO remove this! use $this->options['table']
+
+    $this->widgetSchema['property_type'] = new widgetFormSelectComplete(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctMethods',
+        'method' => 'getMethod',
+        'key_method' => 'getMethod',
+        'add_empty' => true,
+	'change_label' => 'Pick a type in the list',
+	'add_label' => 'Add another type',
     ));
+    
     $this->widgetSchema['property_sub_type'] = new sfWidgetFormChoice(array(
       'choices' =>  CommentsTable::getNotionsFor('taxonomy'),  
     ));
