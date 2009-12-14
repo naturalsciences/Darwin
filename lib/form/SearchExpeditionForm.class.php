@@ -3,7 +3,7 @@
 class SearchExpeditionForm extends DarwinForm
 {
 
-  protected static $recPerPages = array("1", "2", "5", 10, 25, 50, 75, 100);
+  protected static $recPerPages = array("1", "2", "5", "10", "25", "50", "75", "100");
 
   public function configure()
   {
@@ -34,13 +34,12 @@ class SearchExpeditionForm extends DarwinForm
                                                                        array('class' => 'to_date')
                                                                       ),
                             'rec_per_page' => new sfWidgetFormChoice(array('choices' => $recPerPages, 
-                                                                           'expanded'=>false, 
-                                                                           'default'=>strval(sfConfig::get('app_recPerPage')))
+                                                                           'expanded'=>false)
                                                                     ),
                            )
                      );
 //     $this->getWidget('rec_per_page')->setDefault(array('choices'=>intval(sfConfig::get('app_recPerPage'))));
-    $this->setDefault('rec_per_page', intval(sfConfig::get('app_recPerPage'))); 
+    $this->setDefault('rec_per_page', strval(sfConfig::get('app_recPerPage'))); 
     $this->widgetSchema->setNameFormat('searchExpedition[%s]');
     $this->widgetSchema->setLabels(array('from_date' => 'Between',
                                          'to_date' => 'and',
@@ -80,6 +79,16 @@ class SearchExpeditionForm extends DarwinForm
                                             );
     
   }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+      if(! isset($taintedValues['rec_per_page']))
+      {
+	$taintedValues['rec_per_page'] = $this['rec_per_page']->getValue();
+      }
+      parent::bind($taintedValues, $taintedFiles);
+  }
+
   public function getCurrentCulture()
   {
     return isset($this->options['culture']) ? $this->options['culture'] : 'en';
