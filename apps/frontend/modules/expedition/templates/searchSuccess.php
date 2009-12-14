@@ -1,14 +1,23 @@
 <?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir)):?>
-  <div><ul class="pager"><?php $expePagerLayout->display(); ?></ul></div>
+  <div>
+    <ul class="pager">
+       <li>
+           <?php //var_dump($form->getValue('rec_per_page')); ?>
+           <?php echo $form['rec_per_page']->renderLabel(); echo $form['rec_per_page']->render(); ?>
+       </li>
+       <?php $expePagerLayout->display(); ?>
+       <li class="nbrRecTot">
+         <span class="nbrRecTotLabel">Total:&nbsp;</span><span class="nbrRecTotValue"><?php echo $expePagerLayout->getPager()->getNumResults();?></span>
+       </li>
+    </ul>
+  </div>
   <table class="results">
     <thead>
       <tr>
-        <th>&nbsp;</th>
         <th>
             <a class="sort" href="<?php echo url_for('expedition/search?orderby=name'.
                                                      (($orderBy=='name' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                     '&currentPage='.$currentPage.
-                                                     '&resultsPerPage='.$resultsPerPage
+                                                     '&page='.$currentPage
                                                     );?>">
             <?php echo __('Name');?>
             <?php if($orderBy=='name'):?>
@@ -19,8 +28,7 @@
         <th class="datesNum">
             <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_from_date'.
                                                      (($orderBy=='expedition_from_date' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                     '&currentPage='.$currentPage.
-                                                     '&resultsPerPage='.$resultsPerPage
+                                                     '&page='.$currentPage
                                                     );?>">
             <?php echo __('From');?>
             <?php if($orderBy=='expedition_from_date'):?>
@@ -31,8 +39,7 @@
         <th class="datesNum">
             <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_to_date'.
                                                      (($orderBy=='expedition_to_date' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                     '&currentPage='.$currentPage.
-                                                     '&resultsPerPage='.$resultsPerPage
+                                                     '&page='.$currentPage
                                                     );?>">
             <?php echo __('To');?>
             <?php if($orderBy=='expedition_to_date'):?>
@@ -46,7 +53,6 @@
     <tbody>
       <?php foreach($expeditions as $expedition):?>
         <tr id="rid_<?php echo $expedition->getId(); ?>">
-          <td>&nbsp;</td>
           <td><?php echo $expedition->getName();?></td>
           <td class="datesNum"><?php echo $expedition->getExpeditionFromDateMasked();?></td>
           <td class="datesNum"><?php echo $expedition->getExpeditionToDateMasked();?></td>

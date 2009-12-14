@@ -3,10 +3,13 @@
 class SearchExpeditionForm extends DarwinForm
 {
 
+  protected static $recPerPages = array("1", "2", "5", 10, 25, 50, 75, 100);
+
   public function configure()
   {
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
+    $recPerPages = array_combine(self::$recPerPages, self::$recPerPages);
     $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
     $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
@@ -29,14 +32,19 @@ class SearchExpeditionForm extends DarwinForm
                                                                              'empty_values' => $dateText, 
                                                                             ),
                                                                        array('class' => 'to_date')
-                                                                      )
+                                                                      ),
+                            'rec_per_page' => new sfWidgetFormChoice(array('choices' => $recPerPages, 
+                                                                           'expanded'=>false, 
+                                                                           'default'=>strval(sfConfig::get('app_recPerPage')))
+                                                                    ),
                            )
                      );
-    
+//     $this->getWidget('rec_per_page')->setDefault(array('choices'=>intval(sfConfig::get('app_recPerPage'))));
+    $this->setDefault('rec_per_page', intval(sfConfig::get('app_recPerPage'))); 
     $this->widgetSchema->setNameFormat('searchExpedition[%s]');
-    
     $this->widgetSchema->setLabels(array('from_date' => 'Between',
                                          'to_date' => 'and',
+                                         'rec_per_page' => 'Records per page: ',
                                         )
                                   );
 
@@ -59,9 +67,10 @@ class SearchExpeditionForm extends DarwinForm
                                                                    array('invalid' => 'Date provided is not valid',
                                                                         )
                                                                   ),
+                               'rec_per_page' => new sfValidatorChoice(array('required' => false, 'choices'=>$recPerPages, 'empty_value'=>strval(sfConfig::get('app_recPerPage')))),
                               )
                         );
-
+//     var_dump($recPerPages);
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('from_date', 
                                                                           '<=', 
                                                                           'to_date', 

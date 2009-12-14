@@ -67,7 +67,7 @@ h1
     margin-bottom: 1em;
 }
 
-form th
+form th, form tr > td
 {
     text-align:left;
     padding: 0.5em;

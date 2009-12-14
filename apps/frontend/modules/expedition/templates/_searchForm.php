@@ -34,6 +34,36 @@ $(document).ready(function ()
      return false;
    });
 
+   $(".pager a").live('click',function ()
+   {
+     $.ajax({
+             type: "POST",
+             url: $(this).attr("href"),
+             data: $('#search_expedition').serialize(),
+             success: function(html){
+                                     $(".search_results_content").html(html);
+                                    }
+            }
+           );
+     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     return false;
+   });
+
+   $("#searchExpedition_rec_per_page").live('change',function ()
+   {
+     $.ajax({
+             type: "POST",
+             url: "<?php echo url_for('expedition/search');?>",
+             data: $('#search_expedition').serialize(),
+             success: function(html){
+                                     $(".search_results_content").html(html);
+                                    }
+            }
+           );
+     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     return false;
+   });
+
  });
 </script>
 <form id="search_expedition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
@@ -77,9 +107,9 @@ $(document).ready(function ()
       </tr>
     </tbody>
   </table>
-</form>
-<br /><br />
-<div class="search_results">
-  <div class="search_results_content">
+  <br /><br />
+  <div class="search_results">
+    <div class="search_results_content">
+    </div>
   </div>
-</div>
+</form>
