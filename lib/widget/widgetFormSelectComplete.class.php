@@ -21,7 +21,7 @@ class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
       $this->getChoices();
       $widget = '<div id="'.$this->generateId($name).'_parent">';
 
-      if( isset($this->choices[$value]))
+      if( array_key_exists($value,$this->choices))
       {
 	$widget .= $this->renderTag('input', array( 'type' => 'text', 'id' => $id = $this->generateId($name).'_input', 'class' => 'hidden'));
 	$widget .= parent::render($name, $value, $attributes, $errors);

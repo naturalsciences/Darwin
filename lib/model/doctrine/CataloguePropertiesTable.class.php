@@ -13,5 +13,40 @@ class CataloguePropertiesTable extends Doctrine_Table
          ->andWhere('p.record_id = ?',$record_id);
     return $q->execute();
   }
+
+  public function getDistinctType()
+  {
+    $results = Doctrine_Query::create()->
+      select('DISTINCT(property_type) as type')->
+      from('CatalogueProperties')->
+      execute();
+    return $results;
+  }
+
+  public function getDistinctSubType($type=null)
+  {
+    $results = Doctrine_Query::create()->
+      select('DISTINCT(property_sub_type) as sub_type')->
+      from('CatalogueProperties')->
+      execute();
+    return $results;
+  }
+
+  public function getDistinctQualifier()
+  {
+    $results = Doctrine_Query::create()->
+      select('DISTINCT(property_qualifier) as qualifier')->
+      from('CatalogueProperties')->
+      execute();
+    return $results;
+  }
   
+  public function getDistinctUnit()
+  {
+    $results = Doctrine_Query::create()->
+      select('DISTINCT(property_unit) as unit')->
+      from('CatalogueProperties')->
+      execute();
+    return $results;
+  }
 }

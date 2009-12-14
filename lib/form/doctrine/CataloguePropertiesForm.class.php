@@ -79,27 +79,56 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['property_qualifier'] = new sfWidgetFormInput();
+    $this->widgetSchema['property_qualifier'] = new widgetFormSelectComplete(array(
+        'model' => 'CatalogueProperties',
+        'table_method' => 'getDistinctQualifier',
+        'method' => 'getQualifier',
+        'key_method' => 'getQualifier',
+        'add_empty' => true,
+	'change_label' => 'Pick a qualifier in the list',
+	'add_label' => 'Add another qualifier',
+    ));
 
     $this->widgetSchema['property_type'] = new widgetFormSelectComplete(array(
-        'model' => 'Specimens',
-        'table_method' => 'getDistinctMethods',
-        'method' => 'getMethod',
-        'key_method' => 'getMethod',
+        'model' => 'CatalogueProperties',
+        'table_method' => 'getDistinctType',
+        'method' => 'getType',
+        'key_method' => 'getType',
         'add_empty' => true,
 	'change_label' => 'Pick a type in the list',
 	'add_label' => 'Add another type',
     ));
     
-    $this->widgetSchema['property_sub_type'] = new sfWidgetFormChoice(array(
-      'choices' =>  CommentsTable::getNotionsFor('taxonomy'),  
+    $this->widgetSchema['property_sub_type'] = new widgetFormSelectComplete(array(
+        'model' => 'CatalogueProperties',
+        'table_method' => 'getDistinctSubType',
+        'method' => 'getSubType',
+        'key_method' => 'getSubType',
+        'add_empty' => true,
+	'change_label' => 'Pick a sub-type in the list',
+	'add_label' => 'Add another sub-type',
     ));
-    $this->widgetSchema['property_accuracy_unit'] = new sfWidgetFormChoice(array(
-      'choices' =>  array('cm','mm','...'),  
+
+    $this->widgetSchema['property_accuracy_unit'] = new widgetFormSelectComplete(array(
+        'model' => 'CatalogueProperties',
+        'table_method' => 'getDistinctUnit',
+        'method' => 'getUnit',
+        'key_method' => 'getUnit',
+        'add_empty' => true,
+	'change_label' => 'Pick an unit in the list',
+	'add_label' => 'Add another unit',
     ));
-    $this->widgetSchema['property_unit'] = new sfWidgetFormChoice(array(
-      'choices' =>  array('cm','mm','...'),  
+
+    $this->widgetSchema['property_unit'] = new widgetFormSelectComplete(array(
+        'model' => 'CatalogueProperties',
+        'table_method' => 'getDistinctUnit',
+        'method' => 'getUnit',
+        'key_method' => 'getUnit',
+        'add_empty' => true,
+	'change_label' => 'Pick a unit in the list',
+	'add_label' => 'Add another unit',
     ));
+
     $this->widgetSchema['property_method'] = new sfWidgetFormInput();
     $this->widgetSchema['property_tool'] = new sfWidgetFormInput();
 
