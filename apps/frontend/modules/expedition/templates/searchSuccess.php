@@ -1,4 +1,4 @@
-<?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>
+<?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>
   <div>
   <script type="text/javascript">
   $(document).ready(function () 
@@ -7,7 +7,7 @@
      {
        $.ajax({
                type: "POST",
-               url: "<?php echo url_for('expedition/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage);?>",
+               url: "<?php echo url_for('expedition/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage.'&is_choose='.$is_choose);?>",
                data: $('#search_expedition').serialize(),
                success: function(html){
                                        $(".search_results_content").html(html);
@@ -21,7 +21,6 @@
   </script>
     <ul class="pager">
        <li>
-           <?php //var_dump($form->getValue('rec_per_page')); ?>
            <?php echo $form['rec_per_page']->renderLabel(); echo $form['rec_per_page']->render(); ?>
        </li>
        <?php $expePagerLayout->display(); ?>
@@ -30,13 +29,15 @@
        </li>
     </ul>
   </div>
+  <div class='is_choose_<?php echo $is_choose ?>'>
   <table class="results">
     <thead>
       <tr>
         <th>
             <a class="sort" href="<?php echo url_for('expedition/search?orderby=name'.
                                                      (($orderBy=='name' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                     '&page='.$currentPage
+                                                     '&page='.$currentPage.
+                                                     '&is_choose='.$is_choose
                                                     );?>">
             <?php echo __('Name');?>
             <?php if($orderBy=='name'):?>
@@ -47,7 +48,8 @@
         <th class="datesNum">
             <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_from_date'.
                                                      (($orderBy=='expedition_from_date' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                     '&page='.$currentPage
+                                                     '&page='.$currentPage.
+                                                     '&is_choose='.$is_choose
                                                     );?>">
             <?php echo __('From');?>
             <?php if($orderBy=='expedition_from_date'):?>
@@ -58,7 +60,8 @@
         <th class="datesNum">
             <a class="sort" href="<?php echo url_for('expedition/search?orderby=expedition_to_date'.
                                                      (($orderBy=='expedition_to_date' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                     '&page='.$currentPage
+                                                     '&page='.$currentPage.
+                                                     '&is_choose='.$is_choose
                                                     );?>">
             <?php echo __('To');?>
             <?php if($orderBy=='expedition_to_date'):?>
@@ -76,7 +79,7 @@
           <td class="datesNum"><?php echo $expedition->getExpeditionFromDateMasked();?></td>
           <td class="datesNum"><?php echo $expedition->getExpeditionToDateMasked();?></td>
           <td class="edit">
-            <?php if(! isset($is_choose)):?>
+            <?php if(! $is_choose):?>
                 <?php echo link_to(image_tag('edit.png'),'expedition/edit?id='.$expedition->getId());?>
             <?php endif;?>
           </td>
@@ -84,6 +87,7 @@
       <?php endforeach;?>
     </tbody>
   </table>
+  </div>
 <?php else:?>
   <?php echo __('No Expedition Matching');?>
 <?php endif;?>

@@ -337,17 +337,18 @@ MyPreferences:
         visible: false
     u1ws8:
         User: u1
-        col_num: 1
-        category: catalogue_taxonomy_widget
-        group_name: relationRename
-        order_by: 0
+        col_num: 2
+        category: specimen_widget
+        group_name: refExpedition
+        mandatory: false
+        order_by: 1
         opened: false
-        visible: false
+        visible: true
     u1ws9:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
-        group_name: relationRecombination
+        group_name: relationRename
         order_by: 0
         opened: false
         visible: false
@@ -355,11 +356,19 @@ MyPreferences:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
+        group_name: relationRecombination
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws11:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
         group_name: comment
         order_by: 0
         opened: false
         visible: true
-    u1ws11:
+    u1ws12:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget

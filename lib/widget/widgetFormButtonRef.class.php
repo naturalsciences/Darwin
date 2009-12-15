@@ -6,9 +6,9 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
     public function render($name, $value = null, $attributes = array(), $errors = array())
     {
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
-        $coll_name = $this->getName($value);
+        $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
-	$input .= $this->renderContentTag('div',$this->escapeOnce($coll_name), array(
+	$input .= $this->renderContentTag('div',$this->escapeOnce($obj_name), array(
 	   'id' => $this->generateId($name)."_name",
 	   'class' => "ref_name",
 	));
@@ -20,14 +20,14 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	    'class' => 'ref_clear'
 	  );
 
-	  if($coll_name == '')
+	  if($obj_name == '')
 	    $options['class'] .= ' hidden';
 	  $input .= $this->renderTag('img',$options);
 	}
 	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
 	$input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
 
-	$input .= link_to( $coll_name=='' ? __('Choose !') : __('Change !'),
+	$input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
 	    $this->getOption('link_url'),
 	    array('class' => 'but_text' )
 	); 

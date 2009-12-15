@@ -408,3 +408,8 @@ padding: 2px;
   width: 80%; /** To verif **/
   margin: 0.5em;
 }
+
+.is_choose_1 table
+{
+  width:100%;
+}

@@ -10,6 +10,12 @@
  */
 class expeditionActions extends sfActions
 {
+  public function executeChoose(sfWebRequest $request)
+  {
+    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
+    $this->setLayout(false);
+  }
+  
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
@@ -73,6 +79,7 @@ class expeditionActions extends sfActions
       if ($form->isValid())
       {
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
+        $this->is_choose = $request->getParameter('is_choose', false);
         $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
@@ -89,6 +96,7 @@ class expeditionActions extends sfActions
                                                             new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
                                                             $this->getController()->genUrl('expedition/search?orderby='.$this->orderBy.
                                                                                            '&orderdir='.$this->orderDir.
+                                                                                           '&is_choose='.$this->is_choose.
                                                                                            '&page='
                                                                                           ).'{%page_number}'
                                                           );

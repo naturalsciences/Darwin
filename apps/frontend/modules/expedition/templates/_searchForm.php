@@ -8,7 +8,7 @@ $(document).ready(function ()
      $(".search_content").html('<?php echo image_tag('loader.gif');?>');
      $.ajax({
              type: "POST",
-             url: "<?php echo url_for('expedition/search');?>",
+             url: $(this).attr('action'),
              data: $('#search_expedition').serialize(),
              success: function(html){
                                      $(".search_results_content").html(html);
@@ -51,7 +51,7 @@ $(document).ready(function ()
 
  });
 </script>
-<form id="search_expedition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<form id="search_expedition" action="<?php echo url_for('expedition/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <?php echo $form->renderGlobalErrors() ?>
   <table class="search">
     <thead>

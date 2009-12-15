@@ -36,6 +36,5 @@ class ExpeditionsTable extends Doctrine_Table
     $q->andWhere("id > 0 ")
       ->orderby($orderBy . ' ' . $orderByOrder);
     return $q;
-//    return $q->execute();
   }
 }

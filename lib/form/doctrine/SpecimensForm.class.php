@@ -23,6 +23,14 @@ class SpecimensForm extends BaseSpecimensForm
        'box_title' => $this->getI18N()->__('Choose Collection'),
      ));
 
+    $this->widgetSchema['expedition_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Expeditions',
+       'link_url' => 'expedition/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Expedition'),
+       'nullable' => true,
+     ));
+
     $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',
        'link_url' => 'taxonomy/choose',
@@ -70,6 +78,7 @@ class SpecimensForm extends BaseSpecimensForm
         ));
         
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['expedition_ref'] = new sfValidatorInteger();
     $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
 
     $this->validatorSchema->setPostValidator(
