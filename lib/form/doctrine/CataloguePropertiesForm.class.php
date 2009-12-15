@@ -78,17 +78,7 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['property_qualifier'] = new widgetFormSelectComplete(array(
-        'model' => 'CatalogueProperties',
-        'table_method' => 'getDistinctQualifier',
-        'method' => 'getQualifier',
-        'key_method' => 'getQualifier',
-        'add_empty' => true,
-	'change_label' => 'Pick a qualifier in the list',
-	'add_label' => 'Add another qualifier',
-    ));
-
+    $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    
     $this->widgetSchema['property_type'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
         'table_method' => 'getDistinctType',
@@ -101,37 +91,46 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     
     $this->widgetSchema['property_sub_type'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
-        'table_method' => 'getDistinctSubType',
-        'method' => 'getSubType',
-        'key_method' => 'getSubType',
-        'add_empty' => true,
 	'change_label' => 'Pick a sub-type in the list',
 	'add_label' => 'Add another sub-type',
     ));
+    if(! $this->getObject()->isNew())
+      $this->widgetSchema['property_sub_type']->setOption('forced_choices', Doctrine::getTable('CatalogueProperties')->getDistinctSubType($this->getObject()->getPropertyType()) );
+    else
+      $this->widgetSchema['property_sub_type']->setOption('forced_choices',array(''=>''));
+
+    $this->widgetSchema['property_qualifier'] = new widgetFormSelectComplete(array(
+        'model' => 'CatalogueProperties',
+	'change_label' => 'Pick a qualifier in the list',
+	'add_label' => 'Add another qualifier',
+    ));
+    if(! $this->getObject()->isNew())
+      $this->widgetSchema['property_qualifier']->setOption('forced_choices', Doctrine::getTable('CatalogueProperties')->getDistinctQualifier($this->getObject()->getPropertySubType()) );
+    else
+      $this->widgetSchema['property_qualifier']->setOption('forced_choices',array(''=>''));
 
     $this->widgetSchema['property_accuracy_unit'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
-        'table_method' => 'getDistinctUnit',
-        'method' => 'getUnit',
-        'key_method' => 'getUnit',
-        'add_empty' => true,
 	'change_label' => 'Pick an unit in the list',
 	'add_label' => 'Add another unit',
     ));
+    if(! $this->getObject()->isNew())
+      $this->widgetSchema['property_accuracy_unit']->setOption('forced_choices', Doctrine::getTable('CatalogueProperties')->getDistinctUnit($this->getObject()->getPropertyType()) );
+    else
+      $this->widgetSchema['property_accuracy_unit']->setOption('forced_choices', array(''=>''));
 
     $this->widgetSchema['property_unit'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
-        'table_method' => 'getDistinctUnit',
-        'method' => 'getUnit',
-        'key_method' => 'getUnit',
-        'add_empty' => true,
 	'change_label' => 'Pick a unit in the list',
-	'add_label' => 'Add another unit',
+	'add_label' => 'Add another unit'
     ));
+    if(! $this->getObject()->isNew())
+      $this->widgetSchema['property_unit']->setOption('forced_choices', Doctrine::getTable('CatalogueProperties')->getDistinctUnit($this->getObject()->getPropertyType()) );
+    else
+      $this->widgetSchema['property_unit']->setOption('forced_choices',array(''=>''));
 
     $this->widgetSchema['property_method'] = new sfWidgetFormInput();
     $this->widgetSchema['property_tool'] = new sfWidgetFormInput();
-
 
     $this->embedRelation('PropertiesValues');
     

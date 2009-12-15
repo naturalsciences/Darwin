@@ -157,3 +157,13 @@
 {
   margin-top: 1.5em;
 }
+
+.add_item_button, .change_item_button
+{
+ 
+}
+
+.add_item_button img, .change_item_button img
+{
+  margin-right: 0.5em;
+}

@@ -6,13 +6,19 @@ class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
   {
     $this->addRequiredOption('change_label');
     $this->addRequiredOption('add_label');
+    $this->addOption('forced_choices', false);
     parent::configure($options, $attributes);
   }
 
   public function getChoices()
   {
     if(! isset($this->choices))
-      $this->choices = parent::getChoices();
+    {
+      if($this->getOption('forced_choices') !== false )
+	$this->choices = $this->getOption('forced_choices');
+      else
+	$this->choices = parent::getChoices();
+    }
     return $this->choices;
   }
 

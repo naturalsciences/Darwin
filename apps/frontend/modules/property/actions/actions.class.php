@@ -34,7 +34,7 @@ class propertyActions extends sfActions
 	  try{
 	    $this->form->save();
 	    $this->form->getObject()->refreshRelated();
-	    $this->form = new CataloguePropertiesForm($this->form->getObject());
+	    $this->form = new CataloguePropertiesForm($this->form->getObject()); //Ugly refresh
 	    $this->message = 'Your property was saved';
 	  }
 	  catch(Exception $e)
@@ -58,6 +58,24 @@ class propertyActions extends sfActions
       return $this->renderText($e->getMessage());
     }
     return $this->renderText('ok');
+  }
+  
+  public function executeGetUnit(sfWebRequest $request)
+  {
+    $this->items = Doctrine::getTable('CatalogueProperties')->getDistinctUnit($request->getParameter('type'));
+    $this->setTemplate('options');
+  }
+
+  public function executeGetSubtype(sfWebRequest $request)
+  {
+    $this->items = Doctrine::getTable('CatalogueProperties')->getDistinctSubType($request->getParameter('type'));
+    $this->setTemplate('options');
+  }
+
+  public function executeGetQualifier(sfWebRequest $request)
+  {
+    $this->items = Doctrine::getTable('CatalogueProperties')->getDistinctQualifier($request->getParameter('subtype'));
+    $this->setTemplate('options');
   }
 
   public function executeAddValue(sfWebRequest $request)

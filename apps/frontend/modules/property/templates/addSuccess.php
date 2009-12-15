@@ -14,13 +14,6 @@
       </td>
   </tr>
   <tr>
-    <th><?php echo $form['property_qualifier']->renderLabel();?></th>
-    <td>
-      <?php echo $form['property_qualifier']->renderError(); ?>
-      <?php echo $form['property_qualifier'];?>
-    </td>
-  </tr>
-  <tr>
     <th><?php echo $form['property_type']->renderLabel();?></th>
     <td>
       <?php echo $form['property_type']->renderError(); ?>
@@ -32,6 +25,13 @@
     <td>
       <?php echo $form['property_sub_type']->renderError(); ?>
       <?php echo $form['property_sub_type'];?>
+    </td>
+  </tr>
+  <tr>
+    <th><?php echo $form['property_qualifier']->renderLabel();?></th>
+    <td>
+      <?php echo $form['property_qualifier']->renderError(); ?>
+      <?php echo $form['property_qualifier'];?>
     </td>
   </tr>
   <tr>
@@ -100,6 +100,24 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
+    $('#catalogue_properties_property_type').change(function() {
+      $.get("<?php echo url_for('property/getUnit');?>/type/"+$(this).val(), function (data) {
+	$("#catalogue_properties_property_unit_parent select").html(data);
+	$("#catalogue_properties_property_accuracy_unit_parent select").html(data);
+	$("#catalogue_properties_property_qualifier_parent select").html(' ');
+      });
+
+      $.get("<?php echo url_for('property/getSubtype');?>/type/"+$(this).val(), function (data) {
+	$("#catalogue_properties_property_sub_type_parent select").html(data);
+      });
+
+    });
+
+    $('#catalogue_properties_property_sub_type').change(function() {
+      $.get("<?php echo url_for('property/getQualifier');?>/subtype/"+$(this).val(), function (data) {
+	$("#catalogue_properties_property_qualifier_parent select").html(data);
+      });
+    });
 
       $("#delete").click(function()
       {

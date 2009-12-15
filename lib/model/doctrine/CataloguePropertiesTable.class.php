@@ -25,28 +25,43 @@ class CataloguePropertiesTable extends Doctrine_Table
 
   public function getDistinctSubType($type=null)
   {
-    $results = Doctrine_Query::create()->
+    $q = Doctrine_Query::create()->
       select('DISTINCT(property_sub_type) as sub_type')->
-      from('CatalogueProperties')->
-      execute();
-    return $results;
+      from('CatalogueProperties INDEXBY sub_type');
+
+    if(! is_null($type))
+      $q->addWhere('property_type = ?',$type);
+    $results = $q->fetchArray();
+    $results['']='';
+    return array_combine(array_keys($results),array_keys($results));
   }
 
-  public function getDistinctQualifier()
+  public function getDistinctQualifier($sub_type=null)
   {
-    $results = Doctrine_Query::create()->
+    $q = Doctrine_Query::create()->
       select('DISTINCT(property_qualifier) as qualifier')->
-      from('CatalogueProperties')->
-      execute();
-    return $results;
+      from('CatalogueProperties');
+
+    if(! is_null($sub_type))
+      $q->addWhere('property_sub_type = ?',$sub_type);
+    $results = $q->fetchArray();
+    $rez=array(); //@TODO: don't know why but doctrine doesnt like it otherwise
+    foreach($results as $item)
+      $rez[$item['qualifier']]=$item['qualifier'];
+    $results['']='';
+    return $rez;
   }
   
-  public function getDistinctUnit()
+  public function getDistinctUnit($type=null)
   {
-    $results = Doctrine_Query::create()->
+    $q = Doctrine_Query::create()->
       select('DISTINCT(property_unit) as unit')->
-      from('CatalogueProperties')->
-      execute();
-    return $results;
+      from('CatalogueProperties INDEXBY unit');
+
+    if(! is_null($type))
+      $q->addWhere('property_type = ?',$type);
+    $results = $q->fetchArray();
+    $results['']='';
+    return array_combine(array_keys($results),array_keys($results));
   }
 }
