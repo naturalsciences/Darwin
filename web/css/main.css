@@ -520,3 +520,41 @@ table.encoding tbody
 .add_value {
   margin-left: 430px;
 }
+
+.edit_mode
+{
+  color:#C1CF56;
+}
+
+.edition label, form img
+{
+  vertical-align:middle;
+}
+
+.edition tfoot td
+{
+  text-align:right;
+  padding-top:1.2em;
+}
+
+.edition #submit, .edition tfoot a
+{
+  border:1px solid #C1CC33;
+  background-color:#C1CF56;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding:1px;
+  color:white;
+  text-decoration: none;
+}
+
+.edition tfoot a
+{
+  padding:2px;
+  padding-top:3px;
+}
+
+.edition #submit:hover
+{
+  cursor:pointer;
+}

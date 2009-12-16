@@ -66,7 +66,6 @@ class ExpeditionsForm extends BaseExpeditionsForm
                                                                           array('invalid'=>'The "begin" date cannot be above the "end" date.')
                                                                          )
                                             );
-    //$this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
   }
 
 }
