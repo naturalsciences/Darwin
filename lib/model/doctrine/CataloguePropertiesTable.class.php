@@ -32,8 +32,7 @@ class CataloguePropertiesTable extends Doctrine_Table
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
     $results = $q->fetchArray();
-    $results['']='';
-    return array_combine(array_keys($results),array_keys($results));
+    return array_merge(array(''=>''), array_combine(array_keys($results),array_keys($results)));
   }
 
   public function getDistinctQualifier($sub_type=null)
@@ -45,10 +44,9 @@ class CataloguePropertiesTable extends Doctrine_Table
     if(! is_null($sub_type))
       $q->addWhere('property_sub_type = ?',$sub_type);
     $results = $q->fetchArray();
-    $rez=array(); //@TODO: don't know why but doctrine doesnt like it otherwise
+    $rez=array(''=>''); //@TODO: don't know why but doctrine doesnt like it otherwise
     foreach($results as $item)
       $rez[$item['qualifier']]=$item['qualifier'];
-    $results['']='';
     return $rez;
   }
   
@@ -61,7 +59,6 @@ class CataloguePropertiesTable extends Doctrine_Table
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
     $results = $q->fetchArray();
-    $results['']='';
-    return array_combine(array_keys($results),array_keys($results));
+    return array_merge(array(''=>''), array_combine(array_keys($results),array_keys($results)));
   }
 }

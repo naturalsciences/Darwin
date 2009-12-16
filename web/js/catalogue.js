@@ -12,7 +12,7 @@
         },
         hide: false,
         style: {
-            width: { min: 500/*, max: 1000*/}
+            width: { min: 600/*, max: 1000*/}
         },
         api: {
             beforeShow: function()

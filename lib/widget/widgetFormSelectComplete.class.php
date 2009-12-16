@@ -52,24 +52,24 @@ $(document).ready(function () {
     {
       parent_id = '%1\$s';
       el = $('#'+parent_id +' select');
-      el.hide();
+      el.removeClass('show').addClass('hidden');
       $('#'+parent_id +' input').attr('name', el.attr('name'))
-      $('#'+parent_id +' input').show();
+      $('#'+parent_id +' input').removeClass('hidden').addClass('show');
       el.removeAttr('name');
-      $('#'+parent_id +' .change_item_button').show();
-      $('#'+parent_id +' .add_item_button').hide();
+      $('#'+parent_id +' .change_item_button').removeClass('hidden').addClass('show');
+      $('#'+parent_id +' .add_item_button').removeClass('show').addClass('hidden');
     });
 
     $('#%1\$s .change_item_button').click(function()
     {
 	parent_id = '%1\$s';
         el = $('#'+parent_id +' input');
-	el.hide();
+	el.removeClass('show').addClass('hidden');
 	$('#'+parent_id +' select').attr('name', el.attr('name'));
-	$('#'+parent_id +' select').show();
+	$('#'+parent_id +' select').removeClass('hidden').addClass('show');
 	el.removeAttr('name');
-        $('#'+parent_id +' .add_item_button').show();
-        $('#'+parent_id +' .change_item_button').hide();
+        $('#'+parent_id +' .add_item_button').removeClass('hidden').addClass('show');
+        $('#'+parent_id +' .change_item_button').removeClass('show').addClass('hidden');
     });
 });
 </script>

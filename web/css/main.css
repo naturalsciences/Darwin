@@ -29,6 +29,11 @@ fieldset
     display:none;
 }
 
+.show
+{
+  display:block;
+}
+
 ul.spec_error_list, ul.error_list
 {
   background-color:#ec9593;
@@ -447,7 +452,7 @@ table.encoding thead
 table.encoding thead th
 {
   font-weight: normal;
-  text-align: center;
+/*   text-align: center; */
 }
 
 table.encoding tbody
@@ -459,7 +464,7 @@ table.encoding tbody
 .proprety_values
 {
   margin: 1em;
-  width:400px;
+  width:500px;
 }
 
 .proprety_values td 
@@ -468,30 +473,22 @@ table.encoding tbody
   padding:0;
 }
 
-.proprety_values input
+.proprety_values tbody input
 {
   width: 90%;
   margin-left: 2px;
-}
-.proprety_values .unit td
-{
-  padding: 0.5em;
-}
-
-.proprety_values .unit label
-{
-/*  float:left;*/
-  font-weight:bold;
-  margin-right: 0.5em;
 }
 
 #catalogue_properties_property_unit_parent, #catalogue_properties_property_accuracy_unit_parent
 {
   display:inline;
 }
-.proprety_values .unit input
+
+.proprety_values thead input, .proprety_values thead select
 {
-  width: 120px;
+  width: 100px;
+  margin-left:0.5em;
+  margin-right:0.5em;
 }
 
 .add_value
@@ -509,6 +506,17 @@ table.encoding tbody
   text-decoration:none;
   color:white;
 }
-.add_value{
-margin-left: 330px;
+
+
+.proprety_values .show , .proprety_values .add_item_button, .proprety_values .change_item_button 
+{
+   display:inline;
+}
+.proprety_values .hidden
+{
+  display:none;
+}
+
+.add_value {
+  margin-left: 430px;
 }

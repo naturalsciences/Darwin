@@ -1,4 +1,4 @@
-<div id="tests">
+<div>
 
 <?php if (isset($message)): ?>
   <div class="flash_save"><?php echo $message ?></div>
@@ -72,17 +72,12 @@
 <table class="encoding proprety_values">
   <thead>
     <tr>
-      <th>Value</th>
-      <th>Accuracy</th>
+      <th><label>Value</label> <?php echo $form['property_unit'];?></th>
+      <th><label>Accuracy</label> <?php echo $form['property_accuracy_unit'];?></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-  <tr class="unit">
-    <td><label>Unit : </label><?php echo $form['property_unit'];?></td>
-    <td><label>Unit : </label><?php echo $form['property_accuracy_unit'];?></td>
-    <td></td>
-  </tr>
   <?php foreach($form['PropertiesValues'] as $form_value):?>
     <tr>
       <?php include_partial('prop_value', array('form' => $form_value));?>

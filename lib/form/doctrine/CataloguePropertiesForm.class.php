@@ -111,8 +111,8 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 
     $this->widgetSchema['property_accuracy_unit'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
-	'change_label' => 'Pick an unit in the list',
-	'add_label' => 'Add another unit',
+	'change_label' => '',//'Pick an unit in the list',
+	'add_label' => '',//'Add another unit',
     ));
     if(! $this->getObject()->isNew())
       $this->widgetSchema['property_accuracy_unit']->setOption('forced_choices', Doctrine::getTable('CatalogueProperties')->getDistinctUnit($this->getObject()->getPropertyType()) );
@@ -121,8 +121,8 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 
     $this->widgetSchema['property_unit'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
-	'change_label' => 'Pick a unit in the list',
-	'add_label' => 'Add another unit'
+	'change_label' => '',//Pick a unit in the list',
+	'add_label' => '',//'Add another unit'
     ));
     if(! $this->getObject()->isNew())
       $this->widgetSchema['property_unit']->setOption('forced_choices', Doctrine::getTable('CatalogueProperties')->getDistinctUnit($this->getObject()->getPropertyType()) );
