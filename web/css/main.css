@@ -1,8 +1,8 @@
 body
 {
-	min-width: 968px;
-	font-size: 10pt;
-	font-family:sans-serif;
+  min-width: 968px;
+  font-size: 10pt;
+  font-family:sans-serif;
 }
 
 fieldset
@@ -14,14 +14,14 @@ fieldset
 
 .clear
 {
-	clear:both;
+  clear:both;
 }
 
 .page
 {
-	margin-top: 30px;
-	margin-left:51px;
-	margin-right: 51px;
+  margin-top: 30px;
+  margin-left:51px;
+  margin-right: 51px;
 }
 
 .hidden
@@ -31,10 +31,10 @@ fieldset
 
 ul.spec_error_list, ul.error_list
 {
-    background-color:#ec9593;
-    border: 3px solid #c36b70;
-    margin-bottom: 1em;
-    padding: 1em;
+  background-color:#ec9593;
+  border: 3px solid #c36b70;
+  margin-bottom: 1em;
+  padding: 1em;
 }
 
 .treelist ul , .treelist ul li
@@ -43,7 +43,7 @@ ul.spec_error_list, ul.error_list
 }
 .treelist li
 {
-    margin: 0.5em;
+  margin: 0.5em;
 }
 
 .treelist
@@ -51,7 +51,7 @@ ul.spec_error_list, ul.error_list
 
 .treelist li > ul
 {
-    display:none;
+  display:none;
 }
 
 .expanded
@@ -122,12 +122,12 @@ form th, form tr > td
 }
 .but_text
 {
-	background-image: url(/images/button_grey_center.png);
-	background-repeat:repeat-x;
-	vertical-align:middle;
-	float:left;
-	display:block;
-	height:24px;
+  background-image: url(/images/button_grey_center.png);
+  background-repeat:repeat-x;
+  vertical-align:middle;
+  float:left;
+  display:block;
+  height:24px;
 }
 a.but_text
 {
@@ -412,6 +412,24 @@ padding: 2px;
 .is_choose_1 table
 {
   width:100%;
+}
+
+.choose
+{
+  text-align:center;
+}
+#result_choose
+{
+  background-color:#5BAABD;
+  color:white;
+  padding-top:1px;
+  padding-bottom:1px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#result_choose:hover
+{
+  cursor:pointer;
 }
 
 .add_item_button img, .change_item_button img

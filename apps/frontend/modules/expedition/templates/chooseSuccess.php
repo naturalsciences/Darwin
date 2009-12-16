@@ -2,9 +2,9 @@
   <h1><?php echo __('Choose an expedition');?></h1>
   <script language="javascript">
     $(document).ready(function () {
-      $('.results tbody tr').click(function () {
-	  ref_element_id = getIdInClasses($(this));
-	  ref_element_name = $(this).children('td:first').text();
+      $('.results tbody tr').live('click', function () {
+          ref_element_id = getIdInClasses($(this));
+          ref_element_name = $(this).children("td:first").text();
           $('.qtip-button').click();
       });
     });

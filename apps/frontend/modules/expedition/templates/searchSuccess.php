@@ -74,13 +74,15 @@
     </thead>
     <tbody>
       <?php foreach($expeditions as $expedition):?>
-        <tr id="rid_<?php echo $expedition->getId(); ?>">
+        <tr class="rid_<?php echo $expedition->getId(); ?>">
           <td><?php echo $expedition->getName();?></td>
           <td class="datesNum"><?php echo $expedition->getExpeditionFromDateMasked();?></td>
           <td class="datesNum"><?php echo $expedition->getExpeditionToDateMasked();?></td>
-          <td class="edit">
+          <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
             <?php if(! $is_choose):?>
                 <?php echo link_to(image_tag('edit.png'),'expedition/edit?id='.$expedition->getId());?>
+            <?php else:?>
+                <div id="result_choose"><?php echo __('Choose');?></div>
             <?php endif;?>
           </td>
         </tr>
