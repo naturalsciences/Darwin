@@ -493,3 +493,22 @@ table.encoding tbody
 {
   width: 120px;
 }
+
+.add_value
+{
+  background: white url(/images/widget_button.png) no-repeat;
+  height:22px;
+  width:74px;
+  text-align:center;
+  font-size:small;
+  background: white url(/images/widget_button_green.png) no-repeat;
+}
+.add_value a
+{
+  vertical-align:middle;
+  text-decoration:none;
+  color:white;
+}
+.add_value{
+margin-left: 330px;
+}
