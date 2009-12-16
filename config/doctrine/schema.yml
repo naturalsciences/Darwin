@@ -133,7 +133,7 @@ CatalogueProperties:
         date_from: { type: string, notnull: true, default: '0001-01-01'}
         date_to_mask: { type: integer, notnull: true, default:0}
         date_to: { type: string, notnull: true, default: '2038-12-31'}
-        property_unit: {type: string, notnull: true}
+        property_unit: {type: string, default: ''}
         property_accuracy_unit: {type: string}
         property_method: {type: string}
         property_method_indexed: {type: string}

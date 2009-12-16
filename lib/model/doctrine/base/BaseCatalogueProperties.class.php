@@ -125,7 +125,7 @@ abstract class BaseCatalogueProperties extends sfDoctrineRecord
              ));
         $this->hasColumn('property_unit', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'default' => '',
              ));
         $this->hasColumn('property_accuracy_unit', 'string', null, array(
              'type' => 'string',

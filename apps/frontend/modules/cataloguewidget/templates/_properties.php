@@ -2,9 +2,13 @@
 <table>
   <?php foreach($properties as $property):?>
   <tr>
-    <th><?php echo $property->getPropertyType();?></th>
+    <th>
+	<a class="link_catalogue" title="<?php echo __('Edit Properties');?>" href="<?php echo url_for('property/add?table='.$table.'&rid='.$property->getId().'&id='.$eid); ?>">
+	  <?php echo $property->getPropertyType();?>
+	</a>
+    </th>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Properties');?>" href="<?php echo url_for('property/add?table='.$table.'&rid='.$property->getId().'&id='.$eid); ?>"><?php echo $property->getPropertyQualifier();?></a>
+      <?php echo $property->getPropertyQualifier();?>
       <ul>
 	<?php foreach($property->PropertiesValues as $value):?>
 	  <li>

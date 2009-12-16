@@ -48,7 +48,7 @@ abstract class BaseCataloguePropertiesForm extends BaseFormDoctrine
       'date_from'                  => new sfValidatorString(array('required' => false)),
       'date_to_mask'               => new sfValidatorInteger(array('required' => false)),
       'date_to'                    => new sfValidatorString(array('required' => false)),
-      'property_unit'              => new sfValidatorString(),
+      'property_unit'              => new sfValidatorString(array('required' => false)),
       'property_accuracy_unit'     => new sfValidatorString(array('required' => false)),
       'property_method'            => new sfValidatorString(array('required' => false)),
       'property_method_indexed'    => new sfValidatorString(array('required' => false)),

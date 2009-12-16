@@ -413,3 +413,65 @@ padding: 2px;
 {
   width:100%;
 }
+
+.add_item_button img, .change_item_button img
+{
+  margin-right: 0.5em;
+}
+
+table.encoding thead
+{
+  background-color: #C3CF56;
+  color:white;
+  border: 1px solid #C1CF56;
+}
+
+table.encoding thead th
+{
+  font-weight: normal;
+  text-align: center;
+}
+
+table.encoding tbody
+{
+  margin-top:6px;
+  border: 1px solid #C1CF56;
+  background-color: #F6F6F6;
+}
+.proprety_values
+{
+  margin: 1em;
+  width:400px;
+}
+
+.proprety_values td 
+{
+  margin:0;
+  padding:0;
+}
+
+.proprety_values input
+{
+  width: 90%;
+  margin-left: 2px;
+}
+.proprety_values .unit td
+{
+  padding: 0.5em;
+}
+
+.proprety_values .unit label
+{
+/*  float:left;*/
+  font-weight:bold;
+  margin-right: 0.5em;
+}
+
+#catalogue_properties_property_unit_parent, #catalogue_properties_property_accuracy_unit_parent
+{
+  display:inline;
+}
+.proprety_values .unit input
+{
+  width: 120px;
+}

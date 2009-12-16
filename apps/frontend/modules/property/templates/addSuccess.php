@@ -50,22 +50,6 @@
   </tr>
 
   <tr>
-    <th><?php echo $form['property_unit']->renderLabel();?></th>
-    <td>
-      <?php echo $form['property_unit']->renderError(); ?>
-      <?php echo $form['property_unit'];?>
-    </td>
-  </tr>
-
-  <tr>
-    <th><?php echo $form['property_accuracy_unit']->renderLabel();?></th>
-    <td>
-      <?php echo $form['property_accuracy_unit']->renderError(); ?>
-      <?php echo $form['property_accuracy_unit'];?>
-    </td>
-  </tr>
-
-  <tr>
     <th><?php echo $form['property_method']->renderLabel();?></th>
     <td>
       <?php echo $form['property_method']->renderError(); ?>
@@ -80,16 +64,32 @@
       <?php echo $form['property_tool'];?>
     </td>
   </tr>
+
+
 </table>
 
 
-<ul class="proprety_values">
+<table class="encoding proprety_values">
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Accuracy</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr class="unit">
+    <td><label>Unit : </label><?php echo $form['property_unit'];?></td>
+    <td><label>Unit : </label><?php echo $form['property_accuracy_unit'];?></td>
+    <td></td>
+  </tr>
   <?php foreach($form['PropertiesValues'] as $form_value):?>
-    <li>
+    <tr>
       <?php include_partial('prop_value', array('form' => $form_value));?>
-    </li>
+    </tr>
   <?php endforeach;?>
-</ul>
+  </tbody>
+</table>
 
 <p>
 <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
@@ -138,7 +138,7 @@
       });
 
     $('.clear_prop').live('click',function (){
-      parent = $(this).closest('li');
+      parent = $(this).closest('tr');
       nvalue='';
       $(parent).find('input').val(nvalue);
       $(parent).hide();
@@ -152,7 +152,6 @@
 	  data: $(this).serialize(),
 	  success: function(html){
 	    $('form#property_form').parent().before(html).remove();
-	    //replaceWith(html);
 	  }
       });
       return false;
@@ -161,11 +160,10 @@
     $('#add_prop_value').click(function () {
 	$.ajax({
 	  type: "GET",
-	  url: $(this).attr('href')+ (0+$('.proprety_values li').length),
+	  url: $(this).attr('href')+ (0+$('.proprety_values tbody tr').length),
 	  success: function(html){
-	    $('.proprety_values').append('<li>'+html+'<li>');
+	    $('.proprety_values tbody').append(html);
 	  }
-  
 	});
 	return false;
     });
