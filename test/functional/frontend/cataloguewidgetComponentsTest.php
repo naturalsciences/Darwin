@@ -15,7 +15,7 @@ $browser->
 	checkElement('img',0)->
     end()->
 
-    info('1 - Recombined')->
+    info('2 - Recombined')->
      get('/widgets/reloadContent?widget=relationRecombination&category=catalogue_taxonomy&eid=4')->
      with('response')->begin()->
         isStatusCode(200)->
@@ -37,4 +37,25 @@ $browser->
         isStatusCode(200)->
         checkElement('table tr',0)->
 	checkElement('img',1)->
+    end();
+
+$browser->
+    info('3 - Comment')->
+     get('/widgets/reloadContent?widget=comment&category=catalogue_taxonomy&eid=4')->
+     with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('table tr',2)->
+        checkElement('table tr:last a.link_catalogue','/taxon information/')->
+	checkElement('table tr:last td:last','/This is bullshit/')->
+    end()->
+
+    info('4 - Properties')->
+     get('/widgets/reloadContent?widget=properties&category=catalogue_taxonomy&eid=4')->
+     with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('table tbody tr',2)->
+        checkElement('table tbody tr:first td:first','/physical measurement/')->
+	checkElement('table tbody tr:first td:last','/Show 2 Values/')->
+	checkElement('table tbody tr:last td:first','/protection status/')->
+	checkElement('table tbody tr:last td:last','/Show 1 Value/')->
     end();

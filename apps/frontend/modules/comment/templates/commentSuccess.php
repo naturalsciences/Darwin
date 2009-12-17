@@ -60,6 +60,9 @@ $("#comment_form").submit(function()
       });
 </script>
 <form method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
+<?php echo $form['referenced_relation'];?>
+<?php echo $form['record_id'];?>
+<?php echo $form['id'];?>
 <table>
   <tr>
       <td colspan="2">
