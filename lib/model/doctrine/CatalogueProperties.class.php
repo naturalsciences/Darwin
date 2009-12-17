@@ -5,6 +5,11 @@
  */
 class CatalogueProperties extends BaseCatalogueProperties
 {
+  /**
+  * Set DateFrom field and mask if a fuzzyDateTime is passed
+  * @param string|fuzzyDateTime $fd a fuzzyDateTime object or a string to pass to postgres
+  * @return $this
+  */
   public function setDateFrom($fd)
   {
      if(is_string($fd))
@@ -16,8 +21,14 @@ class CatalogueProperties extends BaseCatalogueProperties
       $this->_set('date_from', $fd->format('Y/m/d H:i:s') );
       $this->_set('date_from_mask', $fd->getMask() );
      }
+     return $this;
   }
 
+  /**
+  * Set DateTo field and mask if a fuzzyDateTime is passed
+  * @param string|fuzzyDateTime $fd a fuzzyDateTime object or a string to pass to postgres
+  * @return $this
+  */
   public function setDateTo($fd)
   {
      if(is_string($fd))
@@ -29,26 +40,47 @@ class CatalogueProperties extends BaseCatalogueProperties
       $this->_set('date_to', $fd->format('Y/m/d H:i:s') );
       $this->_set('date_to_mask', $fd->getMask() );
      }
+     return $this;
   }
   
-  public function getFromDateMasked ()
+  /**
+  * Get the From date masked with tag $tag depending on the mask value
+  * @param string $tag Tag wich will be arround fuzzy values (default < em >)
+  * @return string the Date masked
+  */
+  public function getFromDateMasked($tag='em')
   {
     $dateTime = new FuzzyDateTime($this->_get('date_from'), $this->_get('date_from_mask'),true,true);
-    return $dateTime->getDateMasked();
+    return $dateTime->getDateMasked($tag);
   }
-  
-  public function getToDateMasked ()
+ 
+  /**
+  * Get the From date masked with tag $tag depending on the mask value
+  * @param string $tag Tag wich will be arround fuzzy values (default < em >)
+  * @return string the Date masked
+  */
+  public function getToDateMasked($tag='em')
   {
     $dateTime = new FuzzyDateTime($this->_get('date_to'), $this->_get('date_to_mask'),false,true);
-    return $dateTime->getDateMasked();
+    return $dateTime->getDateMasked($tag);
   }
 
+  /** 
+  * Get date To as array with masked values
+  * @return array an array of masked elements with key year,month,day,hour,minute,second
+  * @see FuzzyDateTime::getDateTimeMaskedAsArray
+  */
   public function getDateTo()
   {
     $date = new FuzzyDateTime($this->_get('date_to'),$this->_get('date_to_mask'),true, true);
     return $date->getDateTimeMaskedAsArray();
   }
 
+  /** 
+  * Get date From as array with masked values
+  * @return array an array of masked elements with key year,month,day,hour,minute,second
+  * @see FuzzyDateTime::getDateTimeMaskedAsArray
+  */
   public function getDateFrom()
   {
     $date = new FuzzyDateTime($this->_get('date_from'),$this->_get('date_from_mask'),false, true);

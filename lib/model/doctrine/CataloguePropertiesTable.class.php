@@ -4,6 +4,13 @@
  */
 class CataloguePropertiesTable extends Doctrine_Table
 {
+  /**
+  * Find a property (joined with values)
+  * for a given table and record id
+  * @param string $table_name db table name
+  * @param int $record_id id of the record
+  * @return a Doctrine_collection of results
+  */
   public function findForTable($table_name, $record_id)
   {
      $q = Doctrine_Query::create()
@@ -15,6 +22,10 @@ class CataloguePropertiesTable extends Doctrine_Table
     return $q->execute();
   }
 
+  /**
+  * Get Distincts type of properties
+  * @return array an Array of types in keys
+  */
   public function getDistinctType()
   {
     $results = Doctrine_Query::create()->
@@ -24,6 +35,12 @@ class CataloguePropertiesTable extends Doctrine_Table
     return $results;
   }
 
+  /**
+  * Get Distincts Sub Type of properties
+  * filter by type if one given
+  * @param string $type a type
+  * @return array an Array of sub-types in keys/values
+  */
   public function getDistinctSubType($type=null)
   {
     $q = Doctrine_Query::create()->
@@ -36,6 +53,12 @@ class CataloguePropertiesTable extends Doctrine_Table
     return array_merge(array(''=>''), array_combine(array_keys($results),array_keys($results)));
   }
 
+  /**
+  * Get Distincts Qualifier of properties
+  * filter by sub type if one given
+  * @param string $sub_type a type
+  * @return array an Array of Qualifier in keys/values
+  */
   public function getDistinctQualifier($sub_type=null)
   {
     $q = Doctrine_Query::create()->
@@ -51,6 +74,12 @@ class CataloguePropertiesTable extends Doctrine_Table
     return $rez;
   }
   
+  /**
+  * Get Distincts units (accuracy + normal) of properties
+  * filter by type if one given
+  * @param string $type a type
+  * @return array an Array of Qualifier in keys/values
+  */
   public function getDistinctUnit($type=null)
   {
     $q = Doctrine_Query::create()->
