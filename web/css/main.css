@@ -585,3 +585,8 @@ table.encoding tbody
 {
   cursor:pointer;
 }
+
+.error
+{
+  padding:0.5em;
+}

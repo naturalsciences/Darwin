@@ -70,14 +70,12 @@ class fuzzyDateValidator extends sfValidatorDate
       try
       {
         $checkDateStructure = FuzzyDateTime::checkDateTimeStructure($value);
-        //var_dump($checkDateStructure);
       }
       catch (Exception $e)
       {
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
       if (!empty($checkDateStructure)) throw new sfValidatorError($this, $checkDateStructure, array('value' => $value));
-//      var_dump($checkDateStructure);
       try
       {
         $clean = new FuzzyDateTime($value, 

@@ -1,21 +1,30 @@
 <?php
 
 /**
- * expedition actions.
+ * Expedition actions.
  *
  * @package    darwin
  * @subpackage expedition
+ * @category   actions
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: actions.class.php 12474 2008-10-31 10:41:27Z fabien $
  */
 class expeditionActions extends sfActions
 {
+  /**
+    * Action executed when calling the expeditions from an other screen
+    * @param sfWebRequest $request Request coming from browser
+    */ 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
+    // Initialization of the Search expedition form
+    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    // Remove surrounding layout
     $this->setLayout(false);
   }
-  
+  /**
+    * Action executed when calling the expeditions directly
+    * @param sfWebRequest $request Request coming from browser
+    */ 
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
