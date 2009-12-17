@@ -10,7 +10,8 @@ class CataloguePropertiesTable extends Doctrine_Table
 	 ->from('CatalogueProperties p')
 	 ->leftJoin('p.PropertiesValues v')
 	 ->andWhere('p.referenced_relation = ?',$table_name)
-         ->andWhere('p.record_id = ?',$record_id);
+         ->andWhere('p.record_id = ?',$record_id)
+	 ->orderBy('p.property_type ASC');
     return $q->execute();
   }
 

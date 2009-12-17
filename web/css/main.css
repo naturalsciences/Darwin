@@ -318,7 +318,7 @@ padding: 2px;
   text-align: right;
 }
 
-.datesNum em
+.datesNum em, #properties table em
 {
   color:#C1C1C1;
   font-style:normal;
@@ -477,6 +477,35 @@ table.encoding tbody
 {
   width: 90%;
   margin-left: 2px;
+}
+
+#properties table
+{
+  width:100%;
+  border: 1px solid #C1CF56;
+}
+
+#properties thead
+{
+  border-bottom: 1px solid #C1CF56;
+}
+#properties thead th
+{
+  padding: 0.3em;
+}
+#properties tbody tr:hover
+{
+  background-color: #E9EDBE;
+}
+#properties tbody tr ul
+{
+  margin-top: 0.3em;
+  list-style-type:disc;
+  margin-left:2em;
+}
+#properties td
+{
+ padding: 0.2em;
 }
 
 #catalogue_properties_property_unit_parent, #catalogue_properties_property_accuracy_unit_parent

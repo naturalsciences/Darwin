@@ -138,6 +138,11 @@
   margin-left:1em;
 }
 
+td >.link_catalogue
+{
+  margin-left:0em;
+}
+
 .catalogue_action_type
 {
   font-weight:bold; 

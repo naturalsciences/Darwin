@@ -31,6 +31,18 @@ class CatalogueProperties extends BaseCatalogueProperties
      }
   }
   
+  public function getFromDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('date_from'), $this->_get('date_from_mask'),true,true);
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getToDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('date_to'), $this->_get('date_to_mask'),false,true);
+    return $dateTime->getDateMasked();
+  }
+
   public function getDateTo()
   {
     $date = new FuzzyDateTime($this->_get('date_to'),$this->_get('date_to_mask'),true, true);
