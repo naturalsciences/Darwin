@@ -58,7 +58,16 @@ class CataloguePropertiesTable extends Doctrine_Table
 
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
-    $results = $q->fetchArray();
+    $results_unit = $q->fetchArray();
+
+    $q = Doctrine_Query::create()->
+      select('DISTINCT(property_accuracy_unit) as unit')->
+      from('CatalogueProperties INDEXBY unit');
+
+    if(! is_null($type))
+      $q->addWhere('property_type = ?',$type);
+    $results_accuracy = $q->fetchArray();
+    $results = array_merge($results_unit, $results_accuracy);
     return array_merge(array(''=>''), array_combine(array_keys($results),array_keys($results)));
   }
 }
