@@ -1,13 +1,26 @@
 <?php slot('widget_title',__('Comments'));  ?>
-<table>
+<table class="catalogue_table">
+  <thead>
+    <tr>
+      <th><?php echo __('Notion');?></th>
+      <th><?php echo __('Comment');?></th>
+    </tr>
+  </thead>
+  <tbody>
   <?php foreach($comments as $comment):?>
   <tr>
-    <th><?php echo $comment->getNotionConcerned();?></th>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Comment');?>" href="<?php echo url_for('comment/comment?table='.$table.'&cid='.$comment->getId().'&id='.$eid); ?>"><?php echo $comment->getFirstChars();?></a>
+      <a class="link_catalogue" title="<?php echo __('Edit Comment');?>" 
+	  href="<?php echo url_for('comment/comment?table='.$table.'&cid='.$comment->getId().'&id='.$eid); ?>">
+	<?php echo $comment->getNotionConcerned();?>
+      </a>
+    </td>
+    <td>
+      <?php echo $comment->getFirstChars();?>
     </td>
   </tr>
   <?php endforeach;?>
+  </tbody>
 </table>
 
 <br />

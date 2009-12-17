@@ -1,5 +1,5 @@
 <?php slot('widget_title',__('Properties'));  ?>
-<table>
+<table class="catalogue_table">
   <thead>
     <tr>
       <th><?php echo __('Type');?></th>

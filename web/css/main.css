@@ -479,31 +479,30 @@ table.encoding tbody
   margin-left: 2px;
 }
 
-#properties table
+.catalogue_table
 {
   width:100%;
-  border: 1px solid #C1CF56;
 }
 
-#properties thead
+.catalogue_table thead
 {
   border-bottom: 1px solid #C1CF56;
 }
-#properties thead th
+.catalogue_table thead th
 {
   padding: 0.3em;
 }
-#properties tbody tr:hover
+.catalogue_table tbody tr:hover
 {
   background-color: #E9EDBE;
 }
-#properties tbody tr ul
+.catalogue_table tbody tr ul
 {
   margin-top: 0.3em;
   list-style-type:disc;
   margin-left:2em;
 }
-#properties td
+.catalogue_table td
 {
  padding: 0.2em;
 }
