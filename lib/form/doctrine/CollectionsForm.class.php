@@ -14,7 +14,6 @@ class CollectionsForm extends BaseCollectionsForm
     unset(
         $this['path']
     );
-//     $this->widgetSchema['collection_type'] = new sfWidgetFormInputText();
     $this->widgetSchema['code'] = new sfWidgetFormInputText();
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
 /* @TODO remove this line when people search will be ready */

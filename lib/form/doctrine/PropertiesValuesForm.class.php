@@ -15,7 +15,5 @@ class PropertiesValuesForm extends BasePropertiesValuesForm
     $this->widgetSchema['property_value'] = new sfWidgetFormInput();
     $this->validatorSchema['property_value']->setOption('required', false);
     $this->mergePostValidator(new PropertyValidatorSchema());
-    //catalogue_properties[PropertiesValues][0]
-//      $this->widgetSchema->setNameFormat('catalogue_properties[PropertiesValues][][%s]');
   }
 }

@@ -4,7 +4,7 @@
   <div class="flash_save"><?php echo $message ?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('property/add' .  ($form->getObject()->isNew() ? '': '?rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
+<form action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>
@@ -79,9 +79,7 @@
   </thead>
   <tbody>
   <?php foreach($form['PropertiesValues'] as $form_value):?>
-    <tr>
       <?php include_partial('prop_value', array('form' => $form_value));?>
-    </tr>
   <?php endforeach;?>
   </tbody>
 </table>
@@ -90,7 +88,7 @@
   <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
   </div>
 
- <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?> <input type="submit" />
+ <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?> <input type="submit" value="<?php echo __('Save');?>" />
 
 </form>
 
