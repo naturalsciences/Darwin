@@ -1,19 +1,19 @@
 <?php
-
-/*
- * This file is part of the Darwin2 package.
- * (c) Paul-André Duchesne <Paul-Andre.Duchesne@naturalsciences.be>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 /**
- * FuzzyDateTime is an object that will contain a date and an applied mask to render the fuzzyness
+ * FuzzyDateTime is an object that will contain a date/time and an applied mask to render the fuzzyness
  *
- * @package    darwin2
+ * @package    darwin
  * @subpackage lib
- * @author     Paul-Andre Duchesne <Paul-Andre.Duchesne@naturalsciences.be>
+ * @category   object
+ * @author     DB team <collections@naturalsciences.be>
+ * @staticvar  array   $defaultValues: List of default values for each date/time part: year, month,...
+ * @staticvar  array   $defaultMaxValues: List of default max values for all date/time parts except year
+ * @staticvar  array   $datePartsMask: List of values used for the mask and telling a given part was encoded for the date/time: 32 for year, 16 for month,...
+ * @var        boolean $start: Flag used for date auto-completion when some parts are missing - if start is true, bring the first day when day is missing and if start is false, bring the last day in month,...
+ * @var        int     $mask : Total mask value - comes as a sum of all date parts mask illustrating what have been encoded
+ * @var        boolean $withTime: Flag telling if what's expected to be brought back is a date or a date/time
+ * @var        string  $dateFormat: Date format by default
+ * @var        string  $timeFormat: Time format by default
  */
 class FuzzyDateTime extends DateTime
 {
@@ -31,9 +31,14 @@ class FuzzyDateTime extends DateTime
  /**
    * Configures the current date/time object.
    *
-   * @param string/array  $dateTime  A string or an array representing a valid date/time
-   * @param integer       $mask      An integer representing a mask value - sum of each integer representing the mask part: 32 for years, 16 for months,...
-   * @param boolean       $start     An optional parameter to 
+   * @param          string/array  $dateTime  A string or an array representing a valid date/time
+   * @param          integer       $mask      An integer representing a mask value - sum of each integer representing the mask part: 32 for years, 16 for months,...
+   * @param          boolean       $start     An optional parameter to tell if the date entered is a strat or an end date
+   * @param          boolean       $withTime  An optional parameter to tell if what's stored is expected to be a date or a date and time
+   * @property-write int           $mask
+   * @property-write boolean       $start
+   * @property-write boolean       $withTime
+   * @var            string        $dateTime  if the date passed as parameter is an array, stores the conversion of this array as a string
    *
    */ 
   public function __construct($dateTime='now', $mask=0, $start=true, $withTime=false)
@@ -46,18 +51,41 @@ class FuzzyDateTime extends DateTime
     $this->setWithTime($withTime);
   }
 
+ /**
+   * Return the array of the default max values
+   *
+   * @return array self::$defaultMaxValues
+   *
+   */ 
   public static function getDefaultMaxArray()
   {
+    // If static max year value is not defined, take it from a config parameter in a config file
     if(!isset( self::$defaultMaxValues['year']) )
         self::$defaultMaxValues['year'] = sfConfig::get('app_yearUpperBound');
     return self::$defaultMaxValues;
   }
 
+ /**
+   * Return the array of the default min values
+   *
+   * @return array self::$defaultValues
+   *
+   */ 
   public static function getDefaultMinArray()
   {
     return self::$defaultValues;
   }
 
+ /**
+   * Check that a date part (year, month, day,...) is well numeric and between the min and max values
+   *
+   * @param  string  $field     Name of the date part - field to test
+   * @param  int     $value     Value to be tested
+   * @var    array   $max_array Array of max values for each date/time parts
+   * @var    array   $min_array Array of min values for each date/time parts
+   * @return boolean
+   *
+   */ 
   public static function validateDateField($field, $value)
   {
     $max_array = self::getDefaultMaxArray();
@@ -67,12 +95,18 @@ class FuzzyDateTime extends DateTime
     return false;
   }
 
+ /**
+   * Check that each part of a date array passed as parameter is ok
+   *
+   * @param  array     $dateTime  Array of date and time values to be checked
+   * @return string
+   *
+   */ 
   public static function checkDateArray(array $dateTime)
   {
     // all elements must be empty or a number
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      //Should we thest '' ?
       if (isset($dateTime[$key]) && $dateTime[$key] !== '' && !self::validateDateField($key,$dateTime[$key]) )
       {
 	return 'wrong_date_part_length';
@@ -81,18 +115,32 @@ class FuzzyDateTime extends DateTime
     return '';
   }
 
+ /**
+   * Transform a date/time array in a date/time string
+   *
+   * @param  array     $dateTime  Array of date and time values
+   * @param  boolean   $start     Tells if date/time brought is a start or end date/time: helps to compose the missing parts
+   * @param  boolean   $withTime  Tells if the string to return is a date with or without time
+   * @var    array   $max_array Array of max values for each date/time parts
+   * @var    array   $min_array Array of min values for each date/time parts
+   * @return string
+   *
+   */ 
   public static function getDateTimeStringFromArray(array $dateTime, $start=true, $withTime=false)
   {
     $min_array = self::getDefaultMinArray();
     $max_array = self::getDefaultMaxArray();
 
+    // Check each date/time array parts are ok
     if (!self::checkDateArray($dateTime) == '')
     {
+      // If not takes eather default min or max value
       if($start)
-	$dateTime = $min_array;
+        $dateTime = $min_array;
       else
-	$dateTime = $max_array;
+        $dateTime = $max_array;
     }
+    // Makes the replacement of empty parts by default values depending of it's a start or an end date/time
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
       if (!isset($dateTime[$key]) || empty($dateTime[$key]))
@@ -105,6 +153,7 @@ class FuzzyDateTime extends DateTime
         {
 	  if($key == 'day')
 	  {
+            // Compute the max days in month
 	    $maxDaysInMonth = new DateTime("$year/$month/01");
 	    $$key = $maxDaysInMonth->format('t');
 	  }
@@ -119,35 +168,79 @@ class FuzzyDateTime extends DateTime
           $$key = $dateTime[$key];
       }
     }
+    
+    // Format the string to be produced
     $dateTime = sprintf('%04d/%02d/%02d' .($withTime?' %02d:%02d:%02d':''), $year, $month, $day, $hour, $minute, $second);
     return $dateTime;
   }
 
+ /**
+   * Sets the object mask
+   *
+   * @param  int     $mask       Mask value
+   * @var    int     $this->mask Mask value to be stored as object property
+   *
+   */ 
   public function setMask($mask=0)
   {
     $this->mask = $mask;
   }
 
+ /**
+   * Sets the object start value: true if a start date/time, false if an end date/time
+   *
+   * @param  boolean   $start       start value
+   * @var    boolean   $this->start start value to be stored as object property
+   *
+   */ 
   public function setStart($start=true)
   {
     $this->start = $start;
   }
   
+ /**
+   * Sets the object withTime value: true if the object stores date and time and false if only a date
+   *
+   * @param  boolean   $withTime       with time value
+   * @var    boolean   $this->withTime with time value to be stored as object property
+   *
+   */ 
   public function setWithTime($withTime=false)
   {
     $this->withTime = $withTime;
   }
 
+ /**
+   * Sets the object date format for the date stored in object display
+   *
+   * @param  string   $dateFormat        date format value
+   * @var    string   $this->dateFormat date format value to be stored as object property
+   *
+   */ 
   public function setDateFormat($dateFormat='d/m/Y')
   {
     $this->dateFormat = $dateFormat;
   }
 
+ /**
+   * Sets the object time format for the time stored in object display
+   *
+   * @param  string   $timeFormat        time format value
+   * @var    string   $this->timeFormat time format value to be stored as object property
+   *
+   */ 
   public function setTimeFormat($timeFormat='H:i:s')
   {
     $this->timeFormat = $timeFormat;
   }
 
+ /**
+   * Sets the object mask from a date time array passed as parameter
+   *
+   * @param  array   $dateTime   The array to be parsed to determine the mask to store in object
+   * @var    int     $this->mask Mask value stored
+   *
+   */ 
   public function setMaskFromDate(array $dateTime)
   {
     $this->mask = self::getMaskFromDate($dateTime);
@@ -178,11 +271,27 @@ class FuzzyDateTime extends DateTime
     return $this->timeFormat;
   }
 
+ /**
+   * Returns the mask value corresponding to a given date/time part
+   *
+   * @param  string  $key   Date/Time part
+   * @return int
+   *
+   */ 
   public static function getMaskFor($key)
   {
     return self::$datePartsMask[$key];
   }
 
+ /**
+   * Returns the name of the empty or invalid date/time part followed by _missing
+   *
+   * @param  array      $dateTime     Array of a date/time
+   * @var    string     $checkDate    Check that each date/time parts of the date/time array are valid
+   * @var    string     $has_an_empty Contains the name of the empty element in array if one found, otherwise stay null
+   * @return string
+   *
+   */ 
   public static function checkDateTimeStructure (array $dateTime)
   {
       $checkDate = self::checkDateArray($dateTime);
@@ -198,30 +307,49 @@ class FuzzyDateTime extends DateTime
 	}
 	else
 	{
-	  if($has_an_empty === null) // we got en empty... if no value after that, it's ok
+	  if($has_an_empty === null) // we got an empty... if no value after that, it's ok
 	    $has_an_empty = $i;
 	}
       }
       return '';
   }
 
+ /**
+   * Return the mask (summed) value for a date/time array passed as parameter
+   *
+   * @param  array   $dateTime   The date/time array to be parsed to determine the associated mask (sum of each mask value defined for each parts encoded)
+   * @var    int     $mask       Mask value composed
+   * @return int     $mask
+   *
+   */ 
   public static function getMaskFromDate(array $dateTime)
   {
     $mask = 0;
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
+      // For each part found, and if part is valid, increment the mask value with the mask associated to the date part analyzed
       if (isset($dateTime[$key]) && self::validateDateField($key, $dateTime[$key]))
       {
-	$mask += self::getMaskFor($key);
+        $mask += self::getMaskFor($key);
       }
       else
       {
-	break;
+        // Stop at the time a part's missing
+        break;
       }
     }
     return $mask;
   }
 
+ /**
+   * Returns the date/time stored in object formated
+   *
+   * @param  boolean   $withTime   Should the string returned contains a time
+   * @param  string    $dateFormat Date format to be applied
+   * @param  string    $timeFormat Time format to be applied
+   * @return string    Date/Time formated
+   *
+   */ 
   public function getDateTime($withTime=null, $dateFormat = null, $timeFormat=null)                                                
   {                                                                                                                                
     $withTime = (is_null($withTime)) ? $this->getWithTime() : $withTime;                                                               
@@ -230,12 +358,25 @@ class FuzzyDateTime extends DateTime
     return $this->format($dateFormat.(($withTime) ? ' '.$timeFormat : ''));
   }
 
+ /**
+   * Returns the time stored in object formated
+   *
+   * @param  string    $timeFormat Time format to be applied
+   * @return string    Time formated
+   *
+   */ 
   public function getTime($timeFormat=null)
   {
     $timeFormat = (is_null($timeFormat)) ? $this->getTimeFormat() : $timeFormat;
     return $this->format($timeFormat);
   }
 
+ /**
+   * Returns the date/time stored in object as an array
+   *
+   * @return array
+   *
+   */ 
   public function getDateTimeAsArray()
   {
     return array('year' => intval($this->format('Y')), 
@@ -247,22 +388,43 @@ class FuzzyDateTime extends DateTime
                 );
   }
   
+ /**
+   * Returns the date/time stored in object with mask applied as a formated string
+   *
+   * @var    array  $date  The date/time stored in object as an array
+   * @return array
+   *
+   */ 
   public function getDateTimeMaskedAsArray()
   {
     $date = $this->getDateTimeAsArray();
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
+        // If no mask found for the key parsed, remove the key value from array to be returned
         if(! (self::getMaskFor($key) & $this->getMask()) )
-	  $date[$key]='';
+          $date[$key]='';
     }
     return $date;
   }
 
+ /**
+   * Returns the date/time stored in object as a string formated with a tag for each parts that should be masked (missing parts at encoding moment)
+   *
+   * @param  string  $tag         The tag that should surround the date/time part to be masked
+   * @var    string  $firstPart   Part to be defined if a day and/or a month should be masked
+   * @var    string  $lastPart    Part to be defined if a second and/or a minute and/or an hour should be masked
+   * @var    string  $mainPart    Part not masked
+   * @var    boolean $yearAtLeast Flag telling if a year has been defined at least 
+   * @return array
+   *
+   */ 
   public function getDateMasked($tag='em')
   {
     $firstPart = '';
     $lastPart = '';
     $yearAtLeast = self::$datePartsMask['year'] & $this->getMask();
+    
+    // Test each date parts to define what should be masked and what not
     if (!$yearAtLeast)
     {
       $mainPart = '<'.$tag.'>'.strval($this->getDateTime($this->getWithTime())).'</'.$tag.'>';
@@ -281,6 +443,8 @@ class FuzzyDateTime extends DateTime
     {
       $mainPart = strval($this->getDateTime(false));
     }
+    
+    // Do we have to cope with time ? If yes do the same with time as what we did with date
     if ($this->getWithTime() && $yearAtLeast)
     {
       if (!(self::$datePartsMask['hour'] & $this->getMask()))
@@ -302,9 +466,16 @@ class FuzzyDateTime extends DateTime
         $mainPart .= ' '.$this->getTime();
       }
     }
+
     return $firstPart.$mainPart.$lastPart;
   }
 
+ /**
+   * Returns the date/time stored in object as a formated string
+   *
+   * @return string
+   *
+   */ 
   public function __ToString()
   {
     return $this->getDateTime($this->getWithTime(), $this->getDateFormat(), $this->getTimeFormat());

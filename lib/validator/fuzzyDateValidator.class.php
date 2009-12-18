@@ -1,20 +1,12 @@
 <?php
-
-/*
- * This file is part of the symfony package.
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 /**
- * sfValidatorDate validates a date. It also converts the input value to a valid date.
+ * fuzzyDateValidator validates a date/time like the sfDateValidator, but consider the fuzzyness: 
+ * Only a year can be encoded, a year and a month, and so on...
+ * It also converts the input value to a valid date and produce a FuzzyDateTime object that will contain the date corrected and the associated mask
  *
- * @package    darwin2
+ * @package    darwin
  * @subpackage validator
- * @author     Paul-Andre Duchesne <Paul-Andre.Duchesne@naturalsciences.be>
- * @version    SVN: $Id: sfValidatorDate.class.php 13278 2008-11-23 15:04:24Z FabianLange $
+ * @author     DB Team <collections@naturalsciences.be>
  */
 class fuzzyDateValidator extends sfValidatorDate
 {
@@ -33,6 +25,10 @@ class fuzzyDateValidator extends sfValidatorDate
    *  * from_date:               true if the date to validate is a begin date, false if an end date in a range
    *  * date_format_range_error: The date format to use when displaying an error for min/max (default to d/m/Y H:i:s)
    *
+   * New options added for the fuzzyDateValidator:
+   *
+   *  * from_date:               A flag telling if the date entered is a from or a to date in a range of date: used to correct what is inserted
+   *
    * Available error codes:
    *
    *  * bad_format
@@ -40,10 +36,13 @@ class fuzzyDateValidator extends sfValidatorDate
    *  * max
    *  * year_missing
    *  * month_missing
+   *  * day_missing
+   *  * hour_missing
+   *  * minute_missing
+   *  * wrong_date_part_length
    *
-   * @param array $options    An array of options
-   * @param array $messages   An array of error messages
-   *
+   * @param  array         $options    An array of options
+   * @param  array         $messages   An array of error messages
    * @see sfValidatorDate
    */
   protected function configure($options = array(), $messages = array())
@@ -61,7 +60,11 @@ class fuzzyDateValidator extends sfValidatorDate
   }
 
   /**
-   * @see sfValidatorBase
+   * @param  array|string  $value      Date/Time passed as an array or a string
+   * @var    string        $checkDateStructure: Get an empty string if the date structure is correct, otherwise get the error
+   * @var    FuzzyDateTime $clean: A FuzzyDateTime object containing the date/time corrected and the associated mask
+   * @return FuzzyDateTime $clean
+   * @see    sfValidatorBase
    */
   protected function doClean($value)
   {
@@ -69,6 +72,7 @@ class fuzzyDateValidator extends sfValidatorDate
     {
       try
       {
+        // Check date time structure
         $checkDateStructure = FuzzyDateTime::checkDateTimeStructure($value);
       }
       catch (Exception $e)
@@ -89,8 +93,11 @@ class fuzzyDateValidator extends sfValidatorDate
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
     }
+
+    // In case a string date is passed, check if a date format option has been given as an option...
     else if ($regex = $this->getOption('date_format'))
     {
+      // ...and that it can be extracted from string
       if (!preg_match($regex, $value, $match))
       {
         throw new sfValidatorError($this, 'bad_format', array('value' => $value, 'date_format' => $this->getOption('date_format_error') ? $this->getOption('date_format_error') : $this->getOption('date_format')));
@@ -108,7 +115,8 @@ class fuzzyDateValidator extends sfValidatorDate
         throw new sfValidatorError($this, 'invalid', array('value' => $value));
       }
     }
-
+    
+    // Check date is between min and max values given
     if ($this->hasOption('max') && $clean > $this->getOption('max'))
     {
       throw new sfValidatorError($this, 'max', array('value' => $value, 'max' => $this->getOption('max')));
