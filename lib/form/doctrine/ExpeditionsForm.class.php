@@ -3,17 +3,34 @@
 /**
  * Expeditions form.
  *
- * @package    form
- * @subpackage expeditions
+ * @package    darwin
+ * @subpackage form
  * @author     DB team (collections@naturalsciences.be)
  *
  */
 class ExpeditionsForm extends BaseExpeditionsForm
 {
+ /**
+  * Configure the form with its widgets and validators
+  *
+  * @var   array         $yearsKeyVal    Array of years - constructed from two bound coming from configuration parameters
+  * @var   array         $years          Array of years taking keys and values from $yearsKeyVal
+  * @var   array         $dateText       Array constructed for default empty values that should be displayed in select boxes
+  * @var   FuzzyDateTime $minDate        FuzzyDateTime object instantiated to define the date lower bound
+  * @var   FuzzyDateTime $maxDate        FuzzyDateTime object instantiated to define the date upper bound
+  * @var   FuzzyDateTime $dateLowerBound FuzzyDateTime object instantiated to define the lowest date possible
+  * @var   FuzzyDateTime $dateUpperBound FuzzyDateTime object instantiated to define the upper date possible
+  *
+  */
   public function configure()
   {
 
-    unset($this['name_ts'], $this['name_indexed'], $this['name_language_full_text'], $this['expedition_from_date_mask'], $this['expedition_to_date_mask']);
+    unset($this['name_ts'], 
+          $this['name_indexed'], 
+          $this['name_language_full_text'], 
+          $this['expedition_from_date_mask'], 
+          $this['expedition_to_date_mask']
+         );
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);

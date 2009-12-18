@@ -1,10 +1,32 @@
 <?php
 
+/**
+ * Search Expedition form.
+ *
+ * @package    darwin
+ * @subpackage form
+ * @author     DB team (collections@naturalsciences.be)
+ * @staticvar  array  $recPerPages:  Array of values found in the "Nbr of records per pages" select box of the pager
+ *
+ */
 class SearchExpeditionForm extends DarwinForm
 {
 
   protected static $recPerPages = array("1", "2", "5", "10", "25", "50", "75", "100");
 
+ /**
+  * Configure the form with its widgets and validators
+  *
+  * @var   array         $yearsKeyVal    Array of years - constructed from two bound coming from configuration parameters
+  * @var   array         $years          Array of years taking keys and values from $yearsKeyVal
+  * @var   array         $recPerPages    Array of nbr. of records per pages to be displayed - with keys and values coming from self::$recPerPages
+  * @var   array         $dateText       Array constructed for default empty values that should be displayed in select boxes
+  * @var   FuzzyDateTime $minDate        FuzzyDateTime object instantiated to define the date lower bound
+  * @var   FuzzyDateTime $maxDate        FuzzyDateTime object instantiated to define the date upper bound
+  * @var   FuzzyDateTime $dateLowerBound FuzzyDateTime object instantiated to define the lowest date possible
+  * @var   FuzzyDateTime $dateUpperBound FuzzyDateTime object instantiated to define the upper date possible
+  *
+  */
   public function configure()
   {
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
@@ -78,6 +100,10 @@ class SearchExpeditionForm extends DarwinForm
     
   }
 
+ /**
+  * Surclass the bind function of the sfForm - Necessary to correctly use the empty_value in the rec_per_page select box as default value
+  *
+  */
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
       if(! isset($taintedValues['rec_per_page']))

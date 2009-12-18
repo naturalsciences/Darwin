@@ -1,22 +1,14 @@
 <?php
 
-/*
- * This file is part of the symfony package.
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 /**
- * sfWidgetFormJQueryDate represents a date widget rendered by JQuery UI.
+ * widgetFormJQueryFuzzyDate represents a fuzzy date widget rendered by JQuery UI.
  *
  * This widget needs JQuery and JQuery UI to work.
  *
- * @package    symfony
+ * @package    darwin
  * @subpackage widget
- * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfWidgetFormJQueryDate.class.php 16262 2009-03-12 14:02:33Z fabien $
+ * @author     DB team <collections@naturalsciences.be>
+ *
  */
 class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
 {
@@ -25,9 +17,11 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
    *
    * Available options:
    *
-   *  * image:   The image path to represent the widget (false by default)
-   *  * config:  A JavaScript array that configures the JQuery date widget
-   *  * culture: The user culture
+   *  * image:     The image path to represent the widget (false by default)
+   *  * config:    A JavaScript array that configures the JQuery date widget
+   *  * culture:   The user culture
+   *  * with_time: Tells if the widget has to be used with our without time select boxes 
+   *  * with_seconds: Tells if the widget has to be used with our without seconds select boxes 
    *
    * @param array $options     An array of options
    * @param array $attributes  An array of default HTML attributes
@@ -57,6 +51,7 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
    *
    * @return string An HTML tag string
    *
+   * @see sfWidgetFormJQueryDate
    * @see sfWidgetForm
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
