@@ -148,7 +148,7 @@ class expeditionActions extends sfActions
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         // Define all properties that will be either used by the data query or by the pager
         // They take their values from the request. If not present, a default value is defined
-        $this->is_choose = $request->getParameter('is_choose', false);
+        $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
         $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));

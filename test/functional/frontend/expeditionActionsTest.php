@@ -2,18 +2,15 @@
 
 include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new DarwinTestFunctional(new sfBrowser());
+$browser->loadData($configuration)->login('root','evil');
 
 $browser->
+  info('Index')->
   get('/expedition/index')->
-
-  with('request')->begin()->
-    isParameter('module', 'expedition')->
-    isParameter('action', 'index')->
-  end()->
-
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('body', '!/This is a temporary page/')->
+    checkElement('h1', 'Expedition List')->
+    checkElement('.search_expedition')->
   end()
 ;
