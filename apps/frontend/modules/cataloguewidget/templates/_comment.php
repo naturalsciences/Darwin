@@ -16,7 +16,7 @@
       </a>
     </td>
     <td>
-      <?php echo $comment->getFirstChars();?>
+      <?php echo $comment->getComment();?>
     </td>
   </tr>
   <?php endforeach;?>

@@ -5,8 +5,4 @@
  */
 class Comments extends BaseComments
 {
-  public function getFirstChars()
-  {
-    return $this->_get('comment');
-  }
 }

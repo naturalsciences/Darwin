@@ -19,7 +19,11 @@ class SpecimensTable extends Doctrine_Table
         'Collect' => 'Collect',
         );
 
-    static function getDistinctCategories()
+    /**
+    * Get differents acquisition categories
+    * @return array of key/value of acquisition categories
+    */
+    public static function getDistinctCategories()
     {
         try{
             $i18n_object = sfContext::getInstance()->getI18n();
@@ -31,6 +35,10 @@ class SpecimensTable extends Doctrine_Table
         return array_map(array($i18n_object, '__'), self::$acquisition_category);
     }
 
+    /**
+    * Get distinct tools
+    * @return Doctrine_collection with distinct "tool" as column
+    */
     public function getDistinctTools()
     {
         $results = Doctrine_Query::create()->
@@ -40,6 +48,10 @@ class SpecimensTable extends Doctrine_Table
         return $results;
     }
 
+    /**
+    * Get distinct Method
+    * @return Doctrine_collection with distinct "method" as column
+    */
     public function getDistinctMethods()
     {
         $results = Doctrine_Query::create()->

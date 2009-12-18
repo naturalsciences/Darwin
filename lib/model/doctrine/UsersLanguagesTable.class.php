@@ -4,6 +4,11 @@
  */
 class UsersLanguagesTable extends Doctrine_Table
 {
+    /**
+    * Get The prefered Language of a user
+    * @param int $user_id the id of the user
+    * @return a UsersLanguages Record or null if not found
+    */
     public function getPreferedLanguage($user_id)
     {
         $q = Doctrine_Query::create()
