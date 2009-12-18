@@ -26,6 +26,7 @@ class FuzzyDateTime extends DateTime
     $mask = 0,
     $withTime = false,
     $dateFormat = 'd/m/Y',
+    
     $timeFormat = 'H:i:s';
   
  /**
@@ -35,10 +36,6 @@ class FuzzyDateTime extends DateTime
    * @param          integer       $mask      An integer representing a mask value - sum of each integer representing the mask part: 32 for years, 16 for months,...
    * @param          boolean       $start     An optional parameter to tell if the date entered is a strat or an end date
    * @param          boolean       $withTime  An optional parameter to tell if what's stored is expected to be a date or a date and time
-   * @property-write int           $mask
-   * @property-write boolean       $start
-   * @property-write boolean       $withTime
-   * @var            string        $dateTime  if the date passed as parameter is an array, stores the conversion of this array as a string
    *
    */ 
   public function __construct($dateTime='now', $mask=0, $start=true, $withTime=false)
@@ -81,8 +78,6 @@ class FuzzyDateTime extends DateTime
    *
    * @param  string  $field     Name of the date part - field to test
    * @param  int     $value     Value to be tested
-   * @var    array   $max_array Array of max values for each date/time parts
-   * @var    array   $min_array Array of min values for each date/time parts
    * @return boolean
    *
    */ 
@@ -121,8 +116,6 @@ class FuzzyDateTime extends DateTime
    * @param  array     $dateTime  Array of date and time values
    * @param  boolean   $start     Tells if date/time brought is a start or end date/time: helps to compose the missing parts
    * @param  boolean   $withTime  Tells if the string to return is a date with or without time
-   * @var    array   $max_array Array of max values for each date/time parts
-   * @var    array   $min_array Array of min values for each date/time parts
    * @return string
    *
    */ 
@@ -178,7 +171,6 @@ class FuzzyDateTime extends DateTime
    * Sets the object mask
    *
    * @param  int     $mask       Mask value
-   * @var    int     $this->mask Mask value to be stored as object property
    *
    */ 
   public function setMask($mask=0)
@@ -190,7 +182,6 @@ class FuzzyDateTime extends DateTime
    * Sets the object start value: true if a start date/time, false if an end date/time
    *
    * @param  boolean   $start       start value
-   * @var    boolean   $this->start start value to be stored as object property
    *
    */ 
   public function setStart($start=true)
@@ -202,7 +193,6 @@ class FuzzyDateTime extends DateTime
    * Sets the object withTime value: true if the object stores date and time and false if only a date
    *
    * @param  boolean   $withTime       with time value
-   * @var    boolean   $this->withTime with time value to be stored as object property
    *
    */ 
   public function setWithTime($withTime=false)
@@ -214,7 +204,6 @@ class FuzzyDateTime extends DateTime
    * Sets the object date format for the date stored in object display
    *
    * @param  string   $dateFormat        date format value
-   * @var    string   $this->dateFormat date format value to be stored as object property
    *
    */ 
   public function setDateFormat($dateFormat='d/m/Y')
@@ -226,7 +215,6 @@ class FuzzyDateTime extends DateTime
    * Sets the object time format for the time stored in object display
    *
    * @param  string   $timeFormat        time format value
-   * @var    string   $this->timeFormat time format value to be stored as object property
    *
    */ 
   public function setTimeFormat($timeFormat='H:i:s')
@@ -238,7 +226,6 @@ class FuzzyDateTime extends DateTime
    * Sets the object mask from a date time array passed as parameter
    *
    * @param  array   $dateTime   The array to be parsed to determine the mask to store in object
-   * @var    int     $this->mask Mask value stored
    *
    */ 
   public function setMaskFromDate(array $dateTime)
@@ -287,8 +274,6 @@ class FuzzyDateTime extends DateTime
    * Returns the name of the empty or invalid date/time part followed by _missing
    *
    * @param  array      $dateTime     Array of a date/time
-   * @var    string     $checkDate    Check that each date/time parts of the date/time array are valid
-   * @var    string     $has_an_empty Contains the name of the empty element in array if one found, otherwise stay null
    * @return string
    *
    */ 
@@ -318,7 +303,6 @@ class FuzzyDateTime extends DateTime
    * Return the mask (summed) value for a date/time array passed as parameter
    *
    * @param  array   $dateTime   The date/time array to be parsed to determine the associated mask (sum of each mask value defined for each parts encoded)
-   * @var    int     $mask       Mask value composed
    * @return int     $mask
    *
    */ 
@@ -391,7 +375,6 @@ class FuzzyDateTime extends DateTime
  /**
    * Returns the date/time stored in object with mask applied as a formated string
    *
-   * @var    array  $date  The date/time stored in object as an array
    * @return array
    *
    */ 
@@ -410,11 +393,7 @@ class FuzzyDateTime extends DateTime
  /**
    * Returns the date/time stored in object as a string formated with a tag for each parts that should be masked (missing parts at encoding moment)
    *
-   * @param  string  $tag         The tag that should surround the date/time part to be masked
-   * @var    string  $firstPart   Part to be defined if a day and/or a month should be masked
-   * @var    string  $lastPart    Part to be defined if a second and/or a minute and/or an hour should be masked
-   * @var    string  $mainPart    Part not masked
-   * @var    boolean $yearAtLeast Flag telling if a year has been defined at least 
+   * @param  string  $tag         The tag that should surround the date/time part to be masked 
    * @return array
    *
    */ 

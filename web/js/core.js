@@ -94,3 +94,20 @@ function addBlackScreen()
             .hide(); // Hide it initially
     });
 }
+
+function hideForRefresh(el)
+{
+  $(el).css({position: 'relative'})
+  $(el).append('<div id="loading_screen" />')
+  $('#loading_screen').css({
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%', 
+                height: '100%',
+                opacity: 0.3,
+                backgroundColor: 'black',
+		cursor: 'wait',
+                zIndex: 10000
+            });
+}

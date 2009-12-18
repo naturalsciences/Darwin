@@ -1,4 +1,4 @@
-<div>
+<div id="property_screen">
 
 <?php if (isset($message)): ?>
   <div class="flash_save"><?php echo $message ?></div>
@@ -115,6 +115,7 @@
 
       $("#delete").click(function()
       {
+	hideForRefresh($('#property_screen'));
 	$.ajax({
 	  url: '<?php echo url_for('property/delete?id='.$form->getObject()->getId())?>',
 	  success: function(html){
@@ -140,6 +141,7 @@
 
     $('form#property_form').submit(function () {
       $('form#property_form input[type=submit]').attr('disabled','disabled');
+      hideForRefresh($('#property_screen'));
       $.ajax({
 	  type: "POST",
 	  url: $(this).attr('action'),
