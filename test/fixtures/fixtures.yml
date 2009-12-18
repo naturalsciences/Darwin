@@ -396,7 +396,7 @@ CatalogueProperties:
         date_to_mask: 0
         date_to: '0001-01-01 0:0:0'
         property_unit: cm
-        property_accuracy_unit: cm
+        property_accuracy_unit: mm
 
 PropertiesValues:
     prop1val1:

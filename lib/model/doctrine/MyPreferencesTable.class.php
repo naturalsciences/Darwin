@@ -54,6 +54,7 @@ class MyPreferencesTable extends Doctrine_Table
     if (sfConfig::get('sf_logging_enabled') && !$this->user_ref)
     {
         sfContext::getInstance()->getLogger()->warning("No User defined with setUserRef");
+	throw new Exception('No User defined for query');
     }
     if (is_null($q))
     {

@@ -1,10 +1,22 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(16, new lime_output_color());
+$t = new lime_test(18, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
+try
+{
+  Doctrine::getTable('MyPreferences')->getWidgets('board_widget');
+  $t->fail('Must throw an exception for not giving user id');
+}
+catch (Exception $e)
+{
+  $t->pass('exception caught successfully');
+}
+
 $t->info('->getWidgets()');
+$t->isnt(Doctrine::getTable('MyPreferences')->setUserRef($userEvil)->addCategoryUser(null,'board_widget'), null,'It\'s not null');
+
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
         ->getWidgets('board_widget')),4,'Get all board widget');

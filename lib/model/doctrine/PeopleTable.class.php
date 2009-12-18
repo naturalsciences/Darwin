@@ -4,12 +4,17 @@
  */
 class PeopleTable extends Doctrine_Table
 {
+  /**
+  * Search all physical people by name
+  * @param string $name a part of the formated name to look for (with ts)
+  * @return Doctrine_Collection Collection of People
+  */
   public function searchPysical($name)
   {
     $q = Doctrine_Query::create()
 	 ->from('People p')
 	->andWhere('p.is_physical = ?', true)
-	->andWhere('p.formated_name_ts @@ to_tsquery(?)',$name);
+	->andWhere('p.formated_name_ts @@ to_tsquery(\'simple\',?)',$name);
     return $q->execute();
   }
 }
