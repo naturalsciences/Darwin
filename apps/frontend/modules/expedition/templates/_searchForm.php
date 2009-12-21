@@ -87,7 +87,7 @@ $(document).ready(function ()
           <?php echo $form['to_date']->render() ?>
         </td>
         <td>
-          <input type="submit" name="search" value="<?php echo __('Search'); ?>" />
+          <input id="expedition_search" type="submit" name="search" value="<?php echo __('Search'); ?>" />
         </td>
       </tr>
     </tbody>
