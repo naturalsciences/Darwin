@@ -20,6 +20,7 @@ $browser->
     checkElement('#searchExpedition_to_date_month > option:first_element', 'mm')->
     checkElement('#searchExpedition_to_date_year > option:first_element', 'yyyy')->
     checkElement('form input[type="submit"]', 1)->
+    setField('#searchExpedition_from_date_month', '10')->
   end()->
   click('#expedition_search', 
         array('search_expedition' => array('name'=>'',
