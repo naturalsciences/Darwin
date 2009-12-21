@@ -22,18 +22,11 @@ $browser->
     checkElement('form input[type="submit"]', 1)->
     setField('#searchExpedition_from_date_month', '10')->
   end()->
-  click('#expedition_search', 
-        array('search_expedition' => array('name'=>'',
-                                           'from_date'=>array('day'=>'',
-                                                              'month'=>'10',
-                                                              'year'=>''
-                                                             )
-                                          )
-             )
-       )->
-  with('form')->
+  info('Post waiting for a "Year missing" error')->
+  post('/expedition/search?searchExpedition[from_date][month]=10')->
+  with('response')->
   begin()->
-    hasErrors(1)->
-    isError('from_date', 'Year missing.')->
-  end();
-
+    isStatusCode()->
+    checkElement('#error_list li', 1)->
+  end();  
+  
