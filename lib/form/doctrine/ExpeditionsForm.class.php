@@ -77,9 +77,9 @@ class ExpeditionsForm extends BaseExpeditionsForm
                                                                           array('invalid' => 'Date provided is not valid',
                                                                                )
                                                                          );
-    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('from_date', 
+    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('expedition_from_date', 
                                                                           '<=', 
-                                                                          'to_date', 
+                                                                          'expedition_to_date', 
                                                                           array('throw_global_error' => true), 
                                                                           array('invalid'=>'The "begin" date cannot be above the "end" date.')
                                                                          )
