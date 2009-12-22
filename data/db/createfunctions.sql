@@ -3397,7 +3397,7 @@ BEGIN
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
 			IF OLD.name != NEW.name OR OLD.name_language_full_text != NEW.name_language_full_text THEN
-				NEW.name_ts := to_tsvector('simple', NEW.name_language_full_text::regconfig, NEW.name);
+				NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'habitats' THEN
 			IF OLD.description != NEW.descriptiont OR OLD.description_language_full_text != NEW.description_language_full_text THEN
