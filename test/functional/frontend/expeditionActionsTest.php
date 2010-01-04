@@ -22,20 +22,22 @@ $browser->
     checkElement('form input[type="submit"]', 1)->
     setField('#searchExpedition_from_date_month', '10')->
   end()->
-/*
-
-  @TODO: Correct this part to test what should be displayed by the search - called or not with the is_choose option 
-  @TODO: Also testing the sort and the pager
-
   info('Post waiting for a "Year missing" error')->
-  post('/expedition/search?searchExpedition[from_date][month]=10')->
+  post('/expedition/search', array('searchExpedition'=>array('from_date'=>array('month'=>10))))->
   with('response')->
   begin()->
     isStatusCode()->
-    checkElement('#error_list li', 1)->
-  end();  
-*/
+    checkElement('.error_list li', 'Year missing.')->
+  end()->  
+  info('Post waiting for a "Month missing" error')->
+  post('/expedition/search', array('searchExpedition'=>array('from_date'=>array('day'=>2, 'year'=>1975))))->
+  with('response')->
+  begin()->
+    isStatusCode()->
+    checkElement('.error_list li', 'Month missing or remove the day and time.')->
+  end()->  
   info('Get new record')->
+  get('/expedition/index')->
   click('New')->
   with('response')->
   begin()->
