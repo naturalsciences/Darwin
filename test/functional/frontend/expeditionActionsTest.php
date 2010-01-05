@@ -36,6 +36,65 @@ $browser->
     isStatusCode()->
     checkElement('.error_list li', 'Month missing or remove the day and time.')->
   end()->  
+  info('Post waiting for the full results table and the pager')->
+  post('/expedition/search', array('is_choose'=>0, 'searchExpedition'=>array('name'=>'', 'from_date'=>'', 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    isStatusCode()->
+    checkElement('ul.pager li', 7)->
+    checkElement('ul.pager li.page_selected', '[1]')->
+    checkElement('.pager li a span.nav_arrow', 0)->
+    checkElement('ul.pager li.nbrRecTot span.nbrRecTotValue', '8')->
+    checkElement('table.results tbody tr', 8)->
+    checkElement('table.results thead th:first_element a.sort span.order_sign_down')->
+  end()->  
+  info('Click to sort on name descending...')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('name'=>'', 'from_date'=>'', 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('table.results thead th:first_element a.sort span.order_sign_up')->
+  end()->
+  info('Select a number of 5 records per pages and test existence of links in pager')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('rec_per_page'=>5, 'name'=>'', 'from_date'=>'', 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('.pager .pager_separator')->
+    checkElement('.pager li a span.nav_arrow', 2)->
+    checkElement('table.results tbody tr', 5)->
+  end()->
+  info('Select page 2')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>2, 'is_choose'=>0, 'searchExpedition'=>array('rec_per_page'=>5, 'name'=>'', 'from_date'=>'', 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('.pager .pager_separator')->
+    checkElement('ul.pager li.page_selected', '[2]')->
+    checkElement('.pager li a span.nav_arrow', 2)->
+    checkElement('table.results tbody tr', 3)->
+  end()->
+  info('Search on Expedition name "Antar" like')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('name'=>'Antar', 'from_date'=>'', 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('table.results tbody tr', 1)->
+  end()->
+  info('Search on Expedition from 2004')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('name'=>'', 'from_date'=>array('day'=>'', 'month'=>'', 'year'=>'2004'), 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('table.results tbody tr', 3)->
+  end()->
+  info('Search on Expedition from 24/12/2002')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('name'=>'', 'from_date'=>array('day'=>'24', 'month'=>'12', 'year'=>'2002'), 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('table.results tbody tr', 4)->
+  end()->
+  info('Search on Expedition from 25/12/2002')->
+  post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('name'=>'', 'from_date'=>array('day'=>'25', 'month'=>'12', 'year'=>'2002'), 'to_date'=>'')))->
+  with('response')->
+  begin()->
+    checkElement('table.results tbody tr', 3)->
+  end()->
   info('Get new record')->
   get('/expedition/index')->
   click('New')->
