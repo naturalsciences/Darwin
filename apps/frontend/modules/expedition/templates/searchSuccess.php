@@ -83,7 +83,7 @@
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png'),'expedition/edit?id='.$expedition->getId());?>
                 <?php else:?>
-                  <div id="result_choose"><?php echo __('Choose');?></div>
+                  <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
               </td>
             </tr>

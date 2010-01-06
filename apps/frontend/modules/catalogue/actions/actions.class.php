@@ -76,6 +76,7 @@ class catalogueActions extends sfActions
   {
     $item = $request->getParameter('searchTaxon',array('') );
     $this->searchForm = new SearchCatalogueForm(array(),array('table' => $item['table']));
+    $this->is_choose = $request->hasParameter('is_choose') ? true : false ;
     $this->searchResults($this->searchForm,$request);
     $this->setLayout(false);
   }

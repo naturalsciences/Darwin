@@ -149,7 +149,7 @@ form#search_taxa
   margin-bottom: 1.5em;
 }
 
-.search h3,  .tree , .search_catalogue_result
+.search h3,  .tree, .search_content
 {
   display:none;
 }
@@ -159,11 +159,15 @@ form#search_taxa
   margin:1em;
 }
 
-.search_content ul
+.search_content table
 {
   margin:-1em;
 }
 
+.search_content table tr > td
+{
+  padding: 0.2em;
+}
 #choose_taxa_button
 {
     margin-bottom: 1em;
@@ -179,12 +183,18 @@ form#search_taxa
 {
   float:left;
 }
-.tree_content
+
+.tree
 {
-  padding: 1em;
+  padding: 0.5em;
   margin: 1em;
   background-color: #ebf5f5;
   border: 1px solid #5BAABD;
+}
+
+.tree h3
+{
+  margin-bottom: 0.5em;
 }
 
 .tree li:hover
@@ -192,21 +202,19 @@ form#search_taxa
   background-color:#ebf5f5;
 }
 
-
-.search li, .search_catalogue_result li
+.search li
 {
   border-bottom: 1px solid white;
 }
-.search li:hover , .search_catalogue_result li:hover
+
+.search li:hover
 {
   background-color:#ebf5f5;
   border-bottom: 1px solid #5BAABD;
   cursor:pointer;
 }
 
-
-
-.recombination .clear, .renamed .clear
+.recombination .clear
 {
   display:none;
 }
@@ -216,7 +224,7 @@ table td
   vertical-align: middle;
 }
 
-#search_box
+.search_box
 {
   display:none;
   border: 2px solid #5BAABD;
@@ -427,7 +435,7 @@ padding: 2px;
   margin: 0.5em;
 }
 
-.is_choose_1 table
+.is_choose_1 table, table.is_choose
 {
   width:100%;
 }
@@ -436,7 +444,8 @@ padding: 2px;
 {
   text-align:center;
 }
-#result_choose
+
+.result_choose
 {
   background-color:#5BAABD;
   color:white;
@@ -445,7 +454,7 @@ padding: 2px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-#result_choose:hover
+.result_choose:hover
 {
   cursor:pointer;
 }
@@ -512,10 +521,6 @@ table.encoding tbody
   list-style:none;
 }
 
-.search_catalogue_result
-{
-  border: 1px solid #5BABBD;
-}
 
 .search_catalogue_result h3 
 {

@@ -7,24 +7,25 @@
 <?php else:?>
   <label class="catalogue_action_type"><?php echo __('is recombined into');?> :</label>
 <?php endif;?>
-<form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" id="renamed">
+<form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" class="renamed">
    <input type="hidden" name="record_id_2" id="relation_catalogue_id" value="<?php echo $relation->getRecordId2(); ?>" />
    <input type="hidden" name="relation_id" value="<?php echo $relation->getId(); ?>"/>
    <div id="relation_catalogue_name" <?php if($remoteItem->getId()==0):?> class="hidden"> <?php else: ?>> <?php echo $remoteItem->getName();?><?php endif;?></div>
     <div class="clear"> </div>
-  <button id="modify"><?php echo __('Modify');?></button>
-  <button id="delete" <?php if($remoteItem->getId()==0):?> style="display:none" <?php endif;?>><?php echo __('Delete');?></button>
-  <input class="hidden" type="submit" name="submit" id="save" value="<?php echo __('Save');?>" />
+  <button class="modify"><?php echo __('Modify');?></button>
+  <button class="delete" <?php if($remoteItem->getId()==0):?> style="display:none" <?php endif;?>><?php echo __('Delete');?></button>
+  <input class="hidden save" type="submit" name="submit" value="<?php echo __('Save');?>" />
 </form>
 
  <script type="text/javascript">
   $(document).ready(function () {
-    $('#choose_taxa_button').click(function () {
-	ref_element_id = $(this).data('taxa_id');
-	$("#relation_catalogue_name").text($(this).data('taxa_name')).show();
-	$("#relation_catalogue_id").val($(this).data('taxa_id'));
+    $('.result_choose').live('click',function () {
+	el = $(this).closest('tr');
+	$("#relation_catalogue_id").val(getIdInClasses(el));
+	$("#relation_catalogue_name").text(el.find('span.item_name').text());
+// 	$('.result_choose').die('click');
     });
-  
+
     function addError(html)
     {
       $('.error_list li').text(html);
@@ -35,13 +36,13 @@
 	$('.error_list').hide();
 	$('.error_list li').text(' ');
     }
-      $("#renamed").submit(function()
+      $(".renamed").submit(function()
       {
 	removeError();
 	$.ajax({
 	  type: "POST",
-	  url: $('#renamed').attr('action'),
-	  data: $('#renamed').serialize(),
+	  url: $('.renamed').attr('action'),
+	  data: $('.renamed').serialize(),
 	  success: function(html){
 	    if(html == "ok" )
 	    {
@@ -59,7 +60,7 @@
 	return false;
       });
 
-      $("#delete").click(function()
+      $(".delete").click(function()
       {
 	removeError();
 	$.ajax({
@@ -81,15 +82,15 @@
 	return false;
       });
 
-      $("#modify").click(function()
+      $(".modify").click(function()
       {
 	$(this).hide();
-	$("#search_box").show();
-	$("#save").show();
+	$(".search_box").show();
+	$(".save").show();
 	return false;
       });      
   }); 
   </script>
-<div id="search_box">
-  <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm)) ?>
+<div class="search_box">
+  <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm,'is_choose'=>true)) ?>
 </div>

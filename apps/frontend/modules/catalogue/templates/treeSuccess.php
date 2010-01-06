@@ -1,3 +1,4 @@
+<h3><?php echo __('Details :');?></h3>
 <ul>
 <?php foreach($items as $i=>$item):?>
   <li style="margin-left: <?php echo $i;?>em">

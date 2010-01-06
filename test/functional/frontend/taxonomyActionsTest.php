@@ -16,8 +16,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.tree')->
-    checkElement('.search_catalogue_result')->
+    checkElement('.search_content')->
   end()->
 
   get('/taxonomy/new/')->

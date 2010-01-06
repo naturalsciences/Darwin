@@ -3,27 +3,22 @@ $(document).ready(function () {
       $("#search_catalogue_form").submit(function ()
       {
 	$(".search_content").html('Searching');
-	$(".tree").slideUp();
-	$(".tree_content").html("");
+	$(".tree").slideUp().html("");
 	$.ajax({
 	  type: "POST",
-	  url: "<?php echo url_for('catalogue/search');?>",
+	  url: "<?php echo url_for('catalogue/search' . ($is_choose?'?is_choose=1' : '') );?>",
 	  data: $('#search_catalogue_form').serialize(),
 	  success: function(html){
-	    $(".search_content").html(html);
-	    $(".search_catalogue_result h3").show();
-	    $('.search_catalogue_result').slideDown();
+	    $('.search_content').html(html).slideDown();
 	  }});
 	  return false;
       });
 
-      $('.search_content ul li').live('click',function() {
+      $('.search_content tbody tr .info').live('click',function() {
 	  $('.tree').slideUp();
-	  $('#choose_taxa_button').data('taxa_id',getIdInClasses($(this)));
-	  $('#choose_taxa_button').data('taxa_name',$(this).text());
+	  item_row=$(this);
 	  $.get('<?php echo url_for('catalogue/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses($(this)),function (html){
-	    $('.tree_content').html(html);
-	    $('.tree').slideDown();
+	    item_row.find('.tree').html(html).slideDown();
 	  });
       });
 });
@@ -34,16 +29,5 @@ $(document).ready(function () {
     <input type="submit" name="search" value="<?php echo __('Search');?>" />
   </form>
 
-
-    <div class="tree">
-	<h3><?php echo __('Details :');?></h3>
-	<div class="tree_content">
-	</div>
-	<input type="button" id="choose_taxa_button" value="<?php echo __('Select');?>">
-    </div>
-
-  <div class="search_catalogue_result">
-    <h3><?php echo __('Search Results');?></h3>
-    <div class="search_content">
-    </div>
-  </div>
+<div class="search_content">
+</div>
