@@ -67,34 +67,50 @@ Expeditions:
         expedition_from_date_mask: 48
         expedition_to_date: '1988-07-31'
         expedition_to_date_mask: 48
-
     ex5:
         name: 'Pollux Expedition'
         expedition_from_date: '2003-03-12'
         expedition_from_date_mask: 56
         expedition_to_date: '2005-12-31'
         expedition_to_date_mask: 32
-
     ex6:
         name: 'Mister B Expe'
         expedition_from_date: '2004-01-01'
         expedition_from_date_mask: 32
         expedition_to_date: '2004-12-31'
         expedition_to_date_mask: 32
-
     ex7:
         name: 'Cathy Expe'
         expedition_from_date: '0001-01-01'
         expedition_from_date_mask: 0
         expedition_to_date: '2009-12-31'
         expedition_to_date_mask: 32
-
     ex8:
         name: 'No date'
         expedition_from_date: '0001-01-01'
         expedition_from_date_mask: 0
         expedition_to_date: '2035-12-31'
         expedition_to_date_mask: 0
+
+Igs:
+    ig0:
+        ig_num: '2653'
+        ig_date: '1868-06-24'
+        ig_date_mask: 56
+    ig1:
+        ig_num: '2692'
+    ig2:
+        ig_num: '21ter'
+        ig_date: '1847-07-23'
+        ig_date_mask: 56
+    ig3:
+        ig_num: '10795'
+        ig_date: '1936-03-13'
+        ig_date_mask: 56
+    ig4:
+        ig_num: '3881'
+        ig_date: '1877-01-01'
+        ig_date_mask: 32
 
 CatalogueRelationships:
     catart1:

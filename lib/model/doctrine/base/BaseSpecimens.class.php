@@ -26,6 +26,7 @@
  * @property integer $specimen_count_max
  * @property boolean $station_visible
  * @property boolean $multimedia_visible
+ * @property integer $ig_ref
  * @property Collections $Collections
  * @property Expeditions $Expeditions
  * @property Taxonomy $Taxonomy
@@ -36,6 +37,7 @@
  * @property Taxonomy $IdentificationsTaxon
  * @property Taxonomy $HostTaxon
  * @property Specimens $HostSpecimen
+ * @property Igs $Igs
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimensAccompanying
@@ -61,6 +63,7 @@
  * @method integer             getSpecimenCountMax()      Returns the current record's "specimen_count_max" value
  * @method boolean             getStationVisible()        Returns the current record's "station_visible" value
  * @method boolean             getMultimediaVisible()     Returns the current record's "multimedia_visible" value
+ * @method integer             getIgRef()                 Returns the current record's "ig_ref" value
  * @method Collections         getCollections()           Returns the current record's "Collections" value
  * @method Expeditions         getExpeditions()           Returns the current record's "Expeditions" value
  * @method Taxonomy            getTaxonomy()              Returns the current record's "Taxonomy" value
@@ -71,6 +74,7 @@
  * @method Taxonomy            getIdentificationsTaxon()  Returns the current record's "IdentificationsTaxon" value
  * @method Taxonomy            getHostTaxon()             Returns the current record's "HostTaxon" value
  * @method Specimens           getHostSpecimen()          Returns the current record's "HostSpecimen" value
+ * @method Igs                 getIgs()                   Returns the current record's "Igs" value
  * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenIndividuals()   Returns the current record's "SpecimenIndividuals" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
@@ -95,6 +99,7 @@
  * @method Specimens           setSpecimenCountMax()      Sets the current record's "specimen_count_max" value
  * @method Specimens           setStationVisible()        Sets the current record's "station_visible" value
  * @method Specimens           setMultimediaVisible()     Sets the current record's "multimedia_visible" value
+ * @method Specimens           setIgRef()                 Sets the current record's "ig_ref" value
  * @method Specimens           setCollections()           Sets the current record's "Collections" value
  * @method Specimens           setExpeditions()           Sets the current record's "Expeditions" value
  * @method Specimens           setTaxonomy()              Sets the current record's "Taxonomy" value
@@ -105,6 +110,7 @@
  * @method Specimens           setIdentificationsTaxon()  Sets the current record's "IdentificationsTaxon" value
  * @method Specimens           setHostTaxon()             Sets the current record's "HostTaxon" value
  * @method Specimens           setHostSpecimen()          Sets the current record's "HostSpecimen" value
+ * @method Specimens           setIgs()                   Sets the current record's "Igs" value
  * @method Specimens           setSpecimens()             Sets the current record's "Specimens" collection
  * @method Specimens           setSpecimenIndividuals()   Sets the current record's "SpecimenIndividuals" collection
  * @method Specimens           setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
@@ -200,6 +206,9 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              'type' => 'boolean',
              'default' => true,
              ));
+        $this->hasColumn('ig_ref', 'integer', null, array(
+             'type' => 'integer',
+             ));
     }
 
     public function setUp()
@@ -243,6 +252,10 @@ abstract class BaseSpecimens extends sfDoctrineRecord
 
         $this->hasOne('Specimens as HostSpecimen', array(
              'local' => 'host_specimen_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Igs', array(
+             'local' => 'ig_ref',
              'foreign' => 'id'));
 
         $this->hasMany('Specimens', array(

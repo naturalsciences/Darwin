@@ -30,6 +30,7 @@
  * @property Doctrine_Collection $PeopleMultimedia
  * @property Doctrine_Collection $Collections
  * @property Doctrine_Collection $PeopleAliases
+ * @property Doctrine_Collection $Insurances
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method boolean             getIsPhysical()            Returns the current record's "is_physical" value
@@ -56,6 +57,7 @@
  * @method Doctrine_Collection getPeopleMultimedia()      Returns the current record's "PeopleMultimedia" collection
  * @method Doctrine_Collection getCollections()           Returns the current record's "Collections" collection
  * @method Doctrine_Collection getPeopleAliases()         Returns the current record's "PeopleAliases" collection
+ * @method Doctrine_Collection getInsurances()            Returns the current record's "Insurances" collection
  * @method People              setId()                    Sets the current record's "id" value
  * @method People              setIsPhysical()            Sets the current record's "is_physical" value
  * @method People              setSubType()               Sets the current record's "sub_type" value
@@ -81,6 +83,7 @@
  * @method People              setPeopleMultimedia()      Sets the current record's "PeopleMultimedia" collection
  * @method People              setCollections()           Sets the current record's "Collections" collection
  * @method People              setPeopleAliases()         Sets the current record's "PeopleAliases" collection
+ * @method People              setInsurances()            Sets the current record's "Insurances" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -203,5 +206,9 @@ abstract class BasePeople extends sfDoctrineRecord
         $this->hasMany('PeopleAliases', array(
              'local' => 'id',
              'foreign' => 'person_ref'));
+
+        $this->hasMany('Insurances', array(
+             'local' => 'id',
+             'foreign' => 'insurer_ref'));
     }
 }

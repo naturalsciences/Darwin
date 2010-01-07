@@ -36,6 +36,7 @@ abstract class BaseSpecimensForm extends BaseFormDoctrine
       'specimen_count_max'    => new sfWidgetFormInputText(),
       'station_visible'       => new sfWidgetFormInputCheckbox(),
       'multimedia_visible'    => new sfWidgetFormInputCheckbox(),
+      'ig_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Igs'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -60,6 +61,7 @@ abstract class BaseSpecimensForm extends BaseFormDoctrine
       'specimen_count_max'    => new sfValidatorInteger(array('required' => false)),
       'station_visible'       => new sfValidatorBoolean(array('required' => false)),
       'multimedia_visible'    => new sfValidatorBoolean(array('required' => false)),
+      'ig_ref'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Igs'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimens[%s]');

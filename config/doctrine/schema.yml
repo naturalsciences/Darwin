@@ -923,6 +923,13 @@ Soortenregister:
             local: habitat_ref
             foreign: id
 
+Igs:
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        ig_num: { type: string, notnull: true}
+        ig_date_mask: { type: integer, notnull: true, default:0}
+        ig_date: { type: string, default:'0001-01-01'}
+
 Specimens:
     columns:
         id: { type: integer, primary: true, autoincrement: true },
@@ -946,6 +953,7 @@ Specimens:
         specimen_count_max: { type: integer, default: 1}
         station_visible: { type: boolean, default: true}
         multimedia_visible: { type: boolean, default: true}
+        ig_ref: { type: integer}
     relations:
         Collections:
             local: collection_ref
@@ -979,6 +987,10 @@ Specimens:
         HostSpecimen:
             class: Specimens
             local: host_specimen_ref
+            foreign: id
+        Igs:
+            class: Igs
+            local: ig_ref
             foreign: id
 
 Codes:
@@ -1038,17 +1050,18 @@ SpecimenParts:
             local: specimen_individual_ref
             foreign: id
 
-SpecimenPartsInsurances:
+Insurances:
     columns:
-        specimen_part_ref: { type: integer, notnull: true }
-        insurance_year: { type: integer }
-        insurance_value: { type: integer, notnull: true }
+        referenced_relation: { type: string, notnull: true}
+        record_id: { type: integer, notnull: true}
+        insurance_value: { type: integer, notnull: true}
+        insurance_currency: { type: string, notnull: true, default: 'euro'}
+        insurance_year: { type: integer}
         insurer_ref: { type: integer}
     relations:
-        SpecimenParts:
-            local: specimen_part_ref
+        People:
+            local: insurer_ref
             foreign: id
-#@TODO: INSURER_REF ???
 
 AssociatedMultimedia:
     columns:

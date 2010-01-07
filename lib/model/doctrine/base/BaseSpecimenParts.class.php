@@ -25,7 +25,6 @@
  * @property integer $specimen_part_count_max
  * @property string $category
  * @property SpecimenIndividuals $SpecimenIndividuals
- * @property Doctrine_Collection $SpecimenPartsInsurances
  * 
  * @method integer             getId()                      Returns the current record's "id" value
  * @method integer             getSpecimenIndividualRef()   Returns the current record's "specimen_individual_ref" value
@@ -47,7 +46,6 @@
  * @method integer             getSpecimenPartCountMax()    Returns the current record's "specimen_part_count_max" value
  * @method string              getCategory()                Returns the current record's "category" value
  * @method SpecimenIndividuals getSpecimenIndividuals()     Returns the current record's "SpecimenIndividuals" value
- * @method Doctrine_Collection getSpecimenPartsInsurances() Returns the current record's "SpecimenPartsInsurances" collection
  * @method SpecimenParts       setId()                      Sets the current record's "id" value
  * @method SpecimenParts       setSpecimenIndividualRef()   Sets the current record's "specimen_individual_ref" value
  * @method SpecimenParts       setSpecimenPart()            Sets the current record's "specimen_part" value
@@ -68,7 +66,6 @@
  * @method SpecimenParts       setSpecimenPartCountMax()    Sets the current record's "specimen_part_count_max" value
  * @method SpecimenParts       setCategory()                Sets the current record's "category" value
  * @method SpecimenParts       setSpecimenIndividuals()     Sets the current record's "SpecimenIndividuals" value
- * @method SpecimenParts       setSpecimenPartsInsurances() Sets the current record's "SpecimenPartsInsurances" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -167,9 +164,5 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
         $this->hasOne('SpecimenIndividuals', array(
              'local' => 'specimen_individual_ref',
              'foreign' => 'id'));
-
-        $this->hasMany('SpecimenPartsInsurances', array(
-             'local' => 'id',
-             'foreign' => 'specimen_part_ref'));
     }
 }
