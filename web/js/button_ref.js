@@ -32,8 +32,7 @@ $(document).ready(function () {
                 $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
             },
 	    onHide: function()
-	    {		console.log('--'+ref_element_name);
-
+	    {
 		if(ref_element_id != null && ref_element_name != null)
 		{
 		  parent_el = $(this.elements.target).parent().prevAll('.ref_name');

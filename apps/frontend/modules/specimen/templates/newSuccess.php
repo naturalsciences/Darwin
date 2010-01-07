@@ -45,7 +45,7 @@ $(document).ready(function ()
                             <li><?php echo __($name." ".$error); ?></li>
                         <?php endforeach; ?>
                         <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
-                            <li class="hidden error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
+                            <li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
                         <?php endforeach; ?>
                     </ul>
                 <?php endif;?>

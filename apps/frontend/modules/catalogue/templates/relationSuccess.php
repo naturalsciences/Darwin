@@ -22,7 +22,7 @@
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
 	$("#relation_catalogue_id").val(getIdInClasses(el));
-	$("#relation_catalogue_name").text(el.find('span.item_name').text());
+	$("#relation_catalogue_name").text(el.find('span.item_name').text()).show();
 // 	$('.result_choose').die('click');
     });
 

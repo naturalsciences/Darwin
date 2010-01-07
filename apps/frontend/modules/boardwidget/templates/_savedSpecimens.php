@@ -1,13 +1,13 @@
 <?php slot('widget_title',__('My Saved Specimens'));  ?>
 <ul class="saved_search_widget">
-<?php foreach($specimens as $specimens):?>
+<?php foreach($specimens as $specimen):?>
     <li>
-        <?php if($specimens->getFavorite()):?>
+        <?php if($specimen->getFavorite()):?>
             <?php echo image_tag('favorite_on.png', 'alt=Favorite class=fav_img');?>
         <?php else:?>
             <?php echo image_tag('favorite_off.png', 'alt=Favorite class=fav_img');?>
         <?php endif;?>
-        <span><?php echo $specimens->getName();?></span>
+        <span><?php echo $specimen->getName()?></span>
     </li>
 <?php endforeach;?>
 </ul>
