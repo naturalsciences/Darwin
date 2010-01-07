@@ -66,7 +66,8 @@ SELECT has_table('specimens','specimens exists');
 SELECT has_table('codes','codes exists');
 SELECT has_table('specimen_individuals','specimen_individuals exists');
 SELECT has_table('specimen_parts','specimen_parts exists');
-SELECT has_table('specimen_parts_insurances','specimen_parts_insurances exists');
+SELECT has_table('insurances', 'insurances exists');
+/*SELECT has_table('igs', 'igs exists');*/
 SELECT has_table('associated_multimedia','associated_multimedia exists');
 SELECT has_table('specimens_accompanying','specimens_accompanying exists');
 
