@@ -3297,6 +3297,7 @@ BEGIN
 	DELETE FROM associated_multimedia WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM people_aliases WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM codes WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+	DELETE FROM insurances WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;

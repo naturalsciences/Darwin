@@ -202,9 +202,9 @@ CREATE TRIGGER trg_clr_referenceRecord_identifications AFTER DELETE
 	ON identifications FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
--- CREATE TRIGGER trg_clr_referenceRecord_expertises AFTER DELETE 
--- 	ON expertises FOR EACH ROW
--- 	EXECUTE PROCEDURE fct_clear_referencedRecord();
+CREATE TRIGGER trg_clr_referenceRecord_insurances AFTER DELETE 
+ 	ON insurances FOR EACH ROW
+ 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 CREATE TRIGGER trg_clr_referenceRecord_vernacularnames AFTER DELETE 
 	ON vernacular_names FOR EACH ROW

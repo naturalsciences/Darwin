@@ -83,7 +83,7 @@ create table catalogue_relationships
         constraint unq_catalogue_relationships unique (referenced_relation, relationship_type, record_id_1, record_id_2)
        );
 comment on table catalogue_relationships is 'Stores the relationships between records of a table - current name, original combination, ...';
-comment on column catalogue_relationships.referenced_relation is 'Reference of the table a relationship is defined for - id field of table_list table';
+comment on column catalogue_relationships.referenced_relation is 'Reference of the table a relationship is defined for';
 comment on column catalogue_relationships.record_id_1 is 'Identifier of record in relation with an other one (record_id_2)';
 comment on column catalogue_relationships.record_id_2 is 'Identifier of record in relation with an other one (record_id_1)';
 comment on column catalogue_relationships.relationship_type is 'Type of relation between record 1 and record 2 - current name, original combination, ...';
@@ -93,7 +93,7 @@ create table template_table_record_ref
         record_id integer not null
        );
 comment on table template_table_record_ref is 'Template called to add referenced_relation and record_id fields';
-comment on column template_table_record_ref.referenced_relation is 'Reference of table concerned - id field of table_list table';
+comment on column template_table_record_ref.referenced_relation is 'Reference-Name of table concerned';
 comment on column template_table_record_ref.record_id is 'Id of record concerned';
 
 create sequence catalogue_people_id_seq;
@@ -111,7 +111,7 @@ create table catalogue_people
 inherits (template_table_record_ref);
 comment on table catalogue_people is 'List of people of catalogues units - Taxonomy, Chronostratigraphy,...';
 comment on column catalogue_people.id is 'Unique identifier of record';
-comment on column catalogue_people.referenced_relation is 'Identifier of table the units come from - id field of table_list table';
+comment on column catalogue_people.referenced_relation is 'Identifier-Name of table the units come from';
 comment on column catalogue_people.record_id is 'Identifier of record concerned in table concerned';
 comment on column catalogue_people.people_type is 'Type of "people" associated to the catalogue unit: authors, collectors, defined,  ...';
 comment on column catalogue_people.people_sub_type is 'Type of "people" associated to the catalogue unit: Main author, corrector, taking the sense from,...';
@@ -162,7 +162,7 @@ create table comments
        inherits (template_table_record_ref);
 comment on table comments is 'Comments associated to a record of a given table (and maybe a given field) on a given subject';
 comment on column comments.id is 'Unique identifier of a comment';
-comment on column comments.referenced_relation is 'Reference of table a comment is posted for - id field of table_list table';
+comment on column comments.referenced_relation is 'Reference-Name of table a comment is posted for';
 comment on column comments.record_id is 'Identifier of the record concerned';
 comment on column comments.notion_concerned is 'Notion concerned by comment';
 comment on column comments.comment is 'Comment';
@@ -270,7 +270,7 @@ create table catalogue_properties
 inherits (template_table_record_ref);
 
 comment on table catalogue_properties is 'All properties or all measurements describing an object in darwin are stored in this table';
-comment on column catalogue_properties.referenced_relation is 'Identifier of the table a property is defined for - id field of table_list table';
+comment on column catalogue_properties.referenced_relation is 'Identifier-Name of the table a property is defined for';
 comment on column catalogue_properties.record_id is 'Identifier of record a property is defined for';
 comment on column catalogue_properties.property_type is 'Type-Category of property - Latitude, Longitude, Ph, Height, Weight, Color, Temperature, Wind direction,...';
 comment on column catalogue_properties.property_sub_type is 'Sub type or sub category of property: For Latitudes and Longitudes, precise which type of lat/long it is like Lambert 72, Lambert 92, UTM,...';
@@ -815,7 +815,7 @@ inherits (template_table_record_ref);
 comment on table record_visibilities is 'Manage visibility of records for all DaRWIN 2 tables - visibility per user type and/or specific user';
 comment on column record_visibilities.user_ref is 'Reference of user - id field of users table';
 comment on column record_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
-comment on column record_visibilities.referenced_relation is 'Reference of table concerned - id field of table_list table';
+comment on column record_visibilities.referenced_relation is 'Reference-Name of table concerned';
 comment on column record_visibilities.record_id is 'ID of record a visibility is defined for';
 comment on column record_visibilities.visible is 'Flag telling if record is visible or not';
 
@@ -833,7 +833,7 @@ create table users_workflow
 inherits (template_table_record_ref);
 comment on table users_workflow is 'Workflow information for each record encoded';
 comment on column users_workflow.user_ref is 'Reference of user - id field of users table';
-comment on column users_workflow.referenced_relation is 'Reference of table concerned - id field of table_list table';
+comment on column users_workflow.referenced_relation is 'Reference-Name of table concerned';
 comment on column users_workflow.record_id is 'ID of record a workflow is defined for';
 comment on column users_workflow.status is 'Record status: to correct, to be corrected or published';
 comment on column users_workflow.modification_date_time is 'Date and time of status change - last date/time is used as actual status, but helps also to keep an history of status change';
@@ -862,7 +862,7 @@ create table users_tracking
        )
 inherits (template_table_record_ref);
 comment on table users_tracking is 'Tracking of users actions on tables';
-comment on column users_tracking.referenced_relation is 'Reference of table concerned - id field of table_list table';
+comment on column users_tracking.referenced_relation is 'Reference-Name of table concerned';
 comment on column users_tracking.record_id is 'ID of record concerned';
 comment on column users_tracking.id is 'Unique identifier of a table track entry';
 comment on column users_tracking.user_ref is 'Reference of user having made an action - id field of users table';
@@ -1610,6 +1610,24 @@ comment on column soortenregister.habitat_ref is 'Reference of habitat concerned
 comment on column soortenregister.date_from is 'From date association definition';
 comment on column soortenregister.date_to is 'To date association definition';
 
+create sequence igs_id_seq;
+
+create table igs
+       (
+         id integer default nextval('igs_id_seq'),
+         ig_num varchar not null,
+         ig_date_mask integer not null default 0,
+         ig_date date not null default '01/01/0001',
+         constraint pk_igs primary key (id),
+         constraint unq_igs unique (ig_num)
+       );
+
+comment on table igs is 'Inventory table - register all ig (inventory general) numbers given in RBINS';
+comment on column igs.id is 'Unique identifier of an ig reference';
+comment on column igs.ig_num is 'IG number';
+comment on column igs.ig_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
+comment on column igs.ig_date is 'Date of ig number creation';
+
 create sequence specimens_id_seq;
 
 create table specimens
@@ -1635,6 +1653,7 @@ create table specimens
         specimen_count_max integer not null default 1,
         station_visible boolean not null default true,
         multimedia_visible boolean not null default true,
+        ig_ref integer,
         constraint pk_specimens primary key (id),
         constraint unq_specimens unique (collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, host_taxon_ref, acquisition_category, acquisition_date, collecting_method, collecting_tool),
         constraint fk_specimens_expeditions foreign key (expedition_ref) references expeditions(id),
@@ -1647,6 +1666,7 @@ create table specimens
         constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id) on delete set default,
         constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
+        constraint fk_specimens_igs foreign key (ig_ref) references igs(id) on delete set null,
 	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max),
 	constraint chk_chk_specimens_min check (specimen_count_min >= 0)
        );
@@ -1672,6 +1692,7 @@ comment on column specimens.station_visible is 'Flag telling if the sampling loc
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
 comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
 comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxonomy table';
+comment on column specimens.ig_ref is 'Reference of ig number this specimen has been associated to';
 
 create sequence codes_id_seq;
 
@@ -1683,7 +1704,8 @@ create table codes
         code integer,
         code_suffix varchar,
         full_code_indexed varchar not null,
-        code_date timestamp
+        code_date timestamp not null default '0001-01-01 00:00:00',
+        code_date_mask integer not null default 0
        )
 inherits (template_table_record_ref);
 
@@ -1783,22 +1805,24 @@ comment on column specimen_parts.specimen_part_count_max is 'Maximum number of p
 comment on column specimen_parts.complete is 'Flag telling if part/specimen is complete or not';
 comment on column specimen_parts.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 
-create table specimen_parts_insurances
+create table insurances
        (
-        specimen_part_ref integer not null,
+        insurance_value numeric not null,
+        insurance_currency varchar not null default 'euro',
         insurance_year smallint not null default extract(year from now()),
-        insurance_value numeric not null default 0,
         insurer_ref integer,
-        constraint unq_specimen_parts_insurances unique (specimen_part_ref, insurance_year),
-        constraint fk_specimen_parts_insurances_specimen_parts foreign key (specimen_part_ref) references specimen_parts(id) on delete cascade,
-        constraint fk_specimen_parts_insurances_people foreign key (insurer_ref) references people(id),
-        constraint chk_chk_specimen_parts_insurances check (insurance_value >= 0)
-       );
-comment on table specimen_parts_insurances is 'List of insurances values for given specimen parts/individuals';
-comment on column specimen_parts_insurances.specimen_part_ref is 'Reference of specimen part/individual concerned - id field of specimen_parts table';
-comment on column specimen_parts_insurances.insurance_year is 'Reference year for insurance subscription';
-comment on column specimen_parts_insurances.insurance_value is 'Insurance value';
-comment on column specimen_parts_insurances.insurer_ref is 'Reference of the insurance firm an insurance have been subscripted at';
+        constraint unq_specimen_parts_insurances unique (referenced_relation, record_id, insurance_year),
+        constraint fk_specimen_parts_insurances_people foreign key (insurer_ref) references people(id) on delete set null,
+        constraint chk_chk_specimen_parts_insurances check (insurance_value > 0)
+       )
+       inherits (template_table_record_ref);
+comment on table insurances is 'List of insurances values for given specimen parts/individuals';
+comment on column insurances.referenced_relation is 'Reference-Name of table concerned';
+comment on column insurances.record_id is 'Identifier of record concerned';
+comment on column insurances.insurance_currency is 'Currency used with insurance value';
+comment on column insurances.insurance_year is 'Reference year for insurance subscription';
+comment on column insurances.insurance_value is 'Insurance value';
+comment on column insurances.insurer_ref is 'Reference of the insurance firm an insurance have been subscripted at';
 
 create sequence associated_multimedia_id_seq;
 
@@ -1812,7 +1836,7 @@ create table associated_multimedia
        inherits (template_table_record_ref);
 comment on table associated_multimedia is 'List of all associated multimedia to an element of DaRWIN 2 application: specimen, catalogue unit';
 comment on column associated_multimedia.id is 'Unique identifier of a multimedia association';
-comment on column associated_multimedia.referenced_relation is 'Reference of table concerned - id field of table_list table';
+comment on column associated_multimedia.referenced_relation is 'Reference-Name of table concerned';
 comment on column associated_multimedia.record_id is 'Identifier of record concerned';
 comment on column associated_multimedia.multimedia_ref is 'Reference of multimedia object concerned - id field of multimedia table';
 create table specimens_accompanying
