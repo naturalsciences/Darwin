@@ -12,6 +12,8 @@
    <input type="hidden" name="relation_id" value="<?php echo $relation->getId(); ?>"/>
    <div id="relation_catalogue_name" <?php if($remoteItem->getId()==0):?> class="hidden"> <?php else: ?>> <?php echo $remoteItem->getName();?><?php endif;?></div>
     <div class="clear"> </div>
+
+  <a href="#" class="cancel_qtip">Cancel</a>
   <button class="modify"><?php echo __('Modify');?></button>
   <button class="delete" <?php if($remoteItem->getId()==0):?> style="display:none" <?php endif;?>><?php echo __('Delete');?></button>
   <input class="hidden save" type="submit" name="submit" value="<?php echo __('Save');?>" />
@@ -62,23 +64,26 @@
 
       $(".delete").click(function()
       {
-	removeError();
-	$.ajax({
-	  url: '<?php echo url_for('catalogue/deleteRelation?relid='.$relation->getId())?>',
-	  success: function(html){
-	    if(html == "ok" )
+	if(confirm('<?php echo __('Are you sure?');?>'))
+	{
+	  removeError();
+	  $.ajax({
+	    url: '<?php echo url_for('catalogue/deleteRelation?relid='.$relation->getId())?>',
+	    success: function(html){
+	      if(html == "ok" )
+	      {
+		$('.qtip-button').click();
+	      }
+	      else
+	      {
+		addError(html);
+	      }
+	    },
+	    error: function(xhr)
 	    {
-	      $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      addError(html);
-	    }
-	  },
-	  error: function(xhr)
-	  {
-	    addError('Error!  Status = ' + xhr.status);
-	  }});
+	      addError('Error!  Status = ' + xhr.status);
+	    }});
+	  }
 	return false;
       });
 

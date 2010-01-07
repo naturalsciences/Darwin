@@ -88,6 +88,7 @@
   <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
   </div>
 
+  <a href="#" class="cancel_qtip">Cancel</a>
  <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?> <input type="submit" value="<?php echo __('Save');?>" />
 
 </form>
@@ -115,20 +116,23 @@
 
       $("#delete").click(function()
       {
-	hideForRefresh($('#property_screen'));
-	$.ajax({
-	  url: '<?php echo url_for('property/delete?id='.$form->getObject()->getId())?>',
-	  success: function(html){
-	    if(html == "ok" )
-	    {
-	      $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      addError(html);
-	    }
-	  },
-	});
+	if(confirm('<?php echo __('Are you sure?');?>'))
+	{
+	  hideForRefresh($('#property_screen'));
+	  $.ajax({
+	    url: '<?php echo url_for('property/delete?id='.$form->getObject()->getId())?>',
+	    success: function(html){
+	      if(html == "ok" )
+	      {
+		$('.qtip-button').click();
+	      }
+	      else
+	      {
+		addError(html);
+	      }
+	    },
+	  });
+	}
 	return false;
       });
 

@@ -39,23 +39,26 @@ $("#comment_form").submit(function()
 
       $("#delete").click(function()
       {
-	removeError();
-	$.ajax({
-	  url: '<?php echo url_for('comment/delete?id='.$form->getObject()->getId())?>',
-	  success: function(html){
-	    if(html == "ok" )
+	if(confirm('<?php echo __('Are you sure?');?>'))
+	{
+	  removeError();
+	  $.ajax({
+	    url: '<?php echo url_for('comment/delete?id='.$form->getObject()->getId())?>',
+	    success: function(html){
+	      if(html == "ok" )
+	      {
+		$('.qtip-button').click();
+	      }
+	      else
+	      {
+		addError(html);
+	      }
+	    },
+	    error: function(xhr)
 	    {
-	      $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      addError(html);
-	    }
-	  },
-	  error: function(xhr)
-	  {
-	    addError('Error!  Status = ' + xhr.status);
-	  }});
+	      addError('Error!  Status = ' + xhr.status);
+	    }});
+	}
 	return false;
       });
 </script>
@@ -83,6 +86,7 @@ $("#comment_form").submit(function()
   </td>
   </tr>
 </table>
+  <a href="#" class="cancel_qtip">Cancel</a>
   <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?>
   <input type="submit" name="submit" id="save" value="<?php echo __('Save');?>" />
 </form>

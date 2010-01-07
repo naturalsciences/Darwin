@@ -111,3 +111,9 @@ function hideForRefresh(el)
                 zIndex: 10000
             });
 }
+
+$(document).ready(function () {
+  $('.cancel_qtip').live('click',function () {
+    $('.qtip-button').click();
+  });
+});
