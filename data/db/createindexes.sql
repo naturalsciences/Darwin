@@ -145,12 +145,16 @@ CREATE INDEX CONCURRENTLY idx_specimens_host_taxon_ref on specimens(host_taxon_r
 CREATE INDEX CONCURRENTLY idx_specimens_host_specimen_ref on specimens(host_specimen_ref) WHERE host_specimen_ref IS NOT NULL;
 CREATE INDEX CONCURRENTLY idx_specimen_individuals_specimen_ref on specimen_individuals(specimen_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_specimen_individual_ref on specimen_parts(specimen_individual_ref);
-CREATE INDEX CONCURRENTLY idx_specimen_parts_insurances_specimen_part_ref on specimen_parts_insurances(specimen_part_ref);
-CREATE INDEX CONCURRENTLY idx_specimen_parts_insurances_insurer_ref on specimen_parts_insurances(insurer_ref);
 CREATE INDEX CONCURRENTLY idx_associated_multimedia_multimedia_ref on associated_multimedia(multimedia_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_specimen_ref on specimens_accompanying(specimen_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_taxon_ref on specimens_accompanying(taxon_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_mineral_ref on specimens_accompanying(mineral_ref);
+CREATE INDEX CONCURRENTLY idx_insurances_referenced_relation on insurances(referenced_relation);
+CREATE INDEX CONCURRENTLY idx_insurances_record_id on insurances(record_id);
+CREATE INDEX CONCURRENTLY idx_insurances_insurance_currency on insurances(insurance_currency);
+CREATE INDEX CONCURRENTLY idx_insurances_insurer_ref on insurances(insurer_ref);
+CREATE INDEX CONCURRENTLY idx_specimens_ig_ref on specimens(ig_ref);
+CREATE INDEX CONCURRENTLY idx_igs_ig_num on igs (ig_num);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 
@@ -303,4 +307,9 @@ CREATE INDEX CONCURRENTLY idx_collections_collection_type on collections(collect
 CREATE INDEX CONCURRENTLY idx_words_trgm ON words USING gin(word gin_trgm_ops);
 CREATE INDEX CONCURRENTLY idx_words_table_field on words(referenced_relation,field_name);
 
+/*** Dates ***/
+
+CREATE INDEX CONCURRENTLY idx_igs_ig_date on igs(ig_date, ig_date_mask);
+CREATE INDEX CONCURRENTLY idx_expeditions_expedition_from_date on expeditions(expedition_from_date, expedition_from_date_mask);
+CREATE INDEX CONCURRENTLY idx_expeditions_expedition_to_date on expeditions(expedition_to_date, expedition_to_date_mask);
 
