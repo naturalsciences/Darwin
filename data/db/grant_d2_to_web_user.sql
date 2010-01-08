@@ -15,7 +15,8 @@
  GRANT select, insert, update, delete on darwin2.specimens to cebmpad;
  GRANT select, insert, update, delete on darwin2.codes to cebmpad;
  GRANT select, insert, update, delete on darwin2.associated_multimedia to cebmpad;
- GRANT select, insert, update, delete on darwin2.specimen_parts_insurances to cebmpad;
+ GRANT select, insert, update, delete on darwin2.insurances to cebmpad;
+ GRANT select, insert, update, delete on darwin2.igs to cebmpad;
  GRANT select, insert, update, delete on darwin2.collection_maintenance to cebmpad;
  GRANT select, insert, update, delete on darwin2.catalogue_relationships to cebmpad;
  GRANT select, insert, update, delete on darwin2.template_people to cebmpad;
