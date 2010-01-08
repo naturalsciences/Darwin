@@ -88,8 +88,29 @@ class catalogueActions extends sfActions
       $form->bind($request->getParameter('searchTaxon'));
       if ($form->isValid())
       {
- 	$this->items = Doctrine::getTable( Catalogue::getModelForTable($form->getValue('table')) )
- 	  ->getByNameLike($form->getValue('name'));
+        $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
+        $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
+        $this->pagerLayout = new PagerLayoutWithArrows(
+	  new Doctrine_Pager(
+	    Doctrine::getTable(Catalogue::getModelForTable($form->getValue('table')))
+	      ->getByNameLike($form->getValue('name')),
+	    $this->currentPage,
+	    $form->getValue('rec_per_page')
+	  ),
+	  new Doctrine_Pager_Range_Sliding(
+	    array('chunk' => $pagerSlidingSize)
+	    ),
+	  $this->getController()->genUrl('catalogue/search?is_choose='.$this->is_choose.'&page=').'{%page_number}'
+	);
+
+        // Sets the Pager Layout templates
+        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
+        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
+        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        // If pager not yet executed, this means the query has to be executed for data loading
+        if (! $this->pagerLayout->getPager()->getExecuted())
+           $this->items = $this->pagerLayout->execute();
+	
       }
     }
   }

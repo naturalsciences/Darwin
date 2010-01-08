@@ -161,7 +161,7 @@ form#search_taxa
 
 .search_content table
 {
-  margin:-1em;
+  margin-left:-1em;
 }
 
 .search_content table tr > td
@@ -509,6 +509,11 @@ table.encoding tbody
 #search_catalogue_form
 {
   margin-bottom: 2em;
+}
+
+#search_catalogue_form .pager
+{
+    margin-left:-1em;
 }
 
 #searchTaxon_name

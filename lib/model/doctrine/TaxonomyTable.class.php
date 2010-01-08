@@ -17,8 +17,7 @@ class TaxonomyTable extends Doctrine_Table
     }
     if($level)
       $q->andWhere('level_ref = ?',$level);
-    $q->limit(30);
-    return $q->execute();
+    return $q;
   }
 
   public function findWithParents($id)

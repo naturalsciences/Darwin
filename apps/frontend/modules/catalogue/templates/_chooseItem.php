@@ -24,13 +24,28 @@ $(document).ready(function () {
 	  }
 	  $('.tree').slideUp();
       });
+
+   $(".pager a").live('click',function ()
+   {
+     $.ajax({
+             type: "POST",
+             url: $(this).attr("href"),
+             data: $('#search_catalogue_form').serialize(),
+             success: function(html){
+                                     $(".search_content").html(html);
+                                    }
+            }
+           );
+     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     return false;
+   });
+
 });
 </script>  
 <form id="search_catalogue_form" method="post" action="">
     <?php echo $searchForm['table'];?>
     <?php echo $searchForm['name'];?>
     <input type="submit" name="search" value="<?php echo __('Search');?>" />
-  </form>
-
 <div class="search_content">
 </div>
+</form>

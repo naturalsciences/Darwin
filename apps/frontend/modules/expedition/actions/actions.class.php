@@ -176,7 +176,8 @@ class expeditionActions extends sfActions
         $this->expePagerLayout->setSelectedTemplate('<li>{%page}</li>');
         $this->expePagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
         // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->expePagerLayout->getPager()->getExecuted()) $this->expeditions = $this->expePagerLayout->execute();
+        if (! $this->expePagerLayout->getPager()->getExecuted())
+           $this->expeditions = $this->expePagerLayout->execute();
       }
     }
   }
