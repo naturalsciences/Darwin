@@ -26,7 +26,7 @@ fieldset
 
 .hidden
 {
-    display:none !important;
+    display:none;
 }
 
 .show
