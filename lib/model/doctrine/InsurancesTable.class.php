@@ -1,5 +1,5 @@
 <?php
 
-class InsurancesTable extends Doctrine_Table
+class InsurancesTable extends DarwinTable
 {
 }

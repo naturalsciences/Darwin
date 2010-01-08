@@ -53,7 +53,7 @@ $(document).ready(function ()
 </script>
 <form id="search_expedition" action="<?php echo url_for('igs/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <?php echo $form->renderGlobalErrors() ?>
-  <table class="search">
+  <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
     <thead>
       <tr>
         <th><?php echo $form['ig_num']->renderLabel() ?></th>

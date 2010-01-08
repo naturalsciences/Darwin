@@ -12,6 +12,18 @@
 class igsActions extends sfActions
 {
   /**
+    * Action executed when calling the expeditions from an other screen
+    * @param sfWebRequest $request Request coming from browser
+    */ 
+  public function executeChoose(sfWebRequest $request)
+  {
+    // Initialization of the Search expedition form
+    $this->form = new SearchIgForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    // Remove surrounding layout
+    $this->setLayout(false);
+  }
+
+  /**
     * Action executed when calling the expeditions directly
     * @param sfWebRequest $request Request coming from browser
     */ 
@@ -68,7 +80,7 @@ class igsActions extends sfActions
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
     // Instantiate a new expedition form
-    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    $this->form = new SearchIgForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
     // Triggers the search result function
     $this->searchResults($this->form,$request);    
   }
@@ -92,7 +104,7 @@ class igsActions extends sfActions
         // Define all properties that will be either used by the data query or by the pager
         // They take their values from the request. If not present, a default value is defined
         $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
-        $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
+        $this->orderBy = ($request->getParameter('orderby', '') == '')?'ig_num':$request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
         // Define in one line a pager Layout based on a PagerLayoutWithArrows object

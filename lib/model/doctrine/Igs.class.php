@@ -12,4 +12,30 @@
  */
 class Igs extends BaseIgs
 {
+  public function getIgDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('ig_date'), $this->_get('ig_date_mask'));
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getIgDate()
+  {
+    $from_date = new FuzzyDateTime($this->_get('ig_date'), $this->_get('ig_date_mask'));
+    return $from_date->getDateTimeMaskedAsArray();
+  }
+
+  public function setIgDate($fd)
+  {
+    if ($fd instanceof FuzzyDateTime)
+    {
+      $this->_set('ig_date', $fd->format('Y/m/d'));
+      $this->_set('ig_date_mask', $fd->getMask());
+    }
+    else
+    {
+      $dateTime = new FuzzyDateTime($fd, 56, true); 
+      $this->_set('ig_date', $dateTime->format('Y/m/d'));
+    }
+  }
+
 }

@@ -40,14 +40,14 @@ class collectionActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($collections = Doctrine::getTable('Collections')->find(array($request->getParameter('id'))), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
+    $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
     $this->form = new CollectionsForm($collections);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
-    $this->forward404Unless($collections = Doctrine::getTable('Collections')->find(array($request->getParameter('id'))), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
+    $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
     $this->form = new CollectionsForm($collections);
 
     $this->processForm($request, $this->form);
@@ -62,7 +62,7 @@ class collectionActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $this->forward404Unless($collections = Doctrine::getTable('Collections')->find(array($request->getParameter('id'))), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
+    $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
     try
     {
       $collections->delete();

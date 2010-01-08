@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class ClassificationKeywordsTable extends Doctrine_Table
+class ClassificationKeywordsTable extends DarwinTable
 {
 
 }

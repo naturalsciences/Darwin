@@ -37,6 +37,11 @@ class specimenwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeRefIgs()
+  {
+    $this->defineForm();
+  }
+
   public function executeAcquisitionCategory()
   {
     $this->defineForm();

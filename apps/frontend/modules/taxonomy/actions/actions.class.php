@@ -19,7 +19,7 @@ class taxonomyActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
     $this->forward404Unless(
-      $taxa = Doctrine::getTable('Taxonomy')->find(array($request->getParameter('id'))),
+      $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
       sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
     );
 
@@ -52,7 +52,7 @@ class taxonomyActions extends sfActions
     
   public function executeEdit(sfWebRequest $request)
   {
-    $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
+    $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     

@@ -31,6 +31,14 @@ class SpecimensForm extends BaseSpecimensForm
        'nullable' => true,
      ));
 
+    $this->widgetSchema['ig_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Igs',
+       'link_url' => 'igs/choose',
+       'method' => 'getIgNum',
+       'box_title' => $this->getI18N()->__('Choose an I.G. number'),
+       'nullable' => true,
+     ));
+
     $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',
        'link_url' => 'taxonomy/choose',

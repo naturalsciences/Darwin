@@ -14,7 +14,7 @@ class propertyActions extends sfActions
     $this->property = null;
     if($request->hasParameter('rid'))
     {
-      $this->property = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('rid'));
+      $this->property = Doctrine::getTable('CatalogueProperties')->findExcept($request->getParameter('rid'));
     }
 
     if(! $this->property)
@@ -47,7 +47,7 @@ class propertyActions extends sfActions
 
   public function executeDelete(sfWebRequest $request)
   {
-    $r = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('id'));
+    $r = Doctrine::getTable('CatalogueProperties')->findExcept($request->getParameter('id'));
     $this->forward404Unless($r,'No such Property');
     try{
       $r->delete();
@@ -83,7 +83,7 @@ class propertyActions extends sfActions
     $prop = null;
 
     if($request->hasParameter('id') && $request->getParameter('id'))
-      $prop = Doctrine::getTable('CatalogueProperties')->find($request->getParameter('id') );
+      $prop = Doctrine::getTable('CatalogueProperties')->findExcept($request->getParameter('id') );
 
     $form = new CataloguePropertiesForm($prop);
     $form->addValue($number);

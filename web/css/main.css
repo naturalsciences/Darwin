@@ -300,6 +300,11 @@ padding: 2px;
   vertical-align: middle;
 }
 
+table#search_and_choose
+{
+  width: 100%;
+}
+
 .results
 {
   background-color:white;

@@ -76,7 +76,7 @@ class expeditionActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     // Forward to a 404 page if the requested expedition id is not found
-    $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->find(array($request->getParameter('id'))), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
+    $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Otherwise initialize the expedition encoding form
     $this->form = new ExpeditionsForm($expeditions);
   }
@@ -91,7 +91,7 @@ class expeditionActions extends sfActions
     $request->checkCSRFProtection();
     // If method is <> from post or put and if the id edited and to be saved doesn't exist anymore... forward to a 404 page
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
-    $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->find(array($request->getParameter('id'))), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
+    $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Instantiate a new expedition form
     $this->form = new ExpeditionsForm($expeditions);
     // Process the form for saving informations

@@ -14,7 +14,7 @@ class catalogueActions extends sfActions
   public function executeRelation(sfWebRequest $request)
   {
     $modelName = Catalogue::getModelForTable($request->getParameter('table'));
-    $this->linkItem = Doctrine::getTable($modelName)->find($request->getParameter('id'));
+    $this->linkItem = Doctrine::getTable($modelName)->findExcept($request->getParameter('id'));
     $this->relation = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relid',0));
     if(! $this->relation)
     {
@@ -23,7 +23,7 @@ class catalogueActions extends sfActions
     }
     else
     {
-      $this->remoteItem = Doctrine::getTable($modelName)->find($this->relation->getRecordId2());
+      $this->remoteItem = Doctrine::getTable($modelName)->findExcept($this->relation->getRecordId2());
     }
     $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
   }

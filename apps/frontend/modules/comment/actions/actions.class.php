@@ -12,7 +12,7 @@ class commentActions extends sfActions
 {
   public function executeDelete(sfWebRequest $request)
   {
-    $r = Doctrine::getTable('Comments')->find($request->getParameter('id'));
+    $r = Doctrine::getTable('Comments')->findExcept($request->getParameter('id'));
     $this->forward404Unless($r,'No such comment');
     try{
       $r->delete();
@@ -27,7 +27,7 @@ class commentActions extends sfActions
   public function executeComment(sfWebRequest $request)
   {
     if($request->hasParameter('cid'))
-      $this->comment =  Doctrine::getTable('Comments')->find($request->getParameter('cid'));
+      $this->comment =  Doctrine::getTable('Comments')->findExcept($request->getParameter('cid'));
     else
     {
      $this->comment = new Comments();

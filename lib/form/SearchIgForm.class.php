@@ -12,8 +12,6 @@
 class SearchIgForm extends DarwinForm
 {
 
-  protected static $recPerPages = array("1", "2", "5", "10", "25", "50", "75", "100");
-
  /**
   * Configure the form with its widgets and validators
   *

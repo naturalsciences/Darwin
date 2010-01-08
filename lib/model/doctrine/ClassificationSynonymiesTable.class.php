@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class ClassificationSynonymiesTable extends Doctrine_Table
+class ClassificationSynonymiesTable extends DarwinTable
 {
 
 }
