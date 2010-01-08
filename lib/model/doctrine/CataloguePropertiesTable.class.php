@@ -50,7 +50,9 @@ class CataloguePropertiesTable extends Doctrine_Table
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
     $results = $q->fetchArray();
-    return array_merge(array(''=>''), array_combine(array_keys($results),array_keys($results)));
+    if(count($results))
+      $results = array_combine(array_keys($results),array_keys($results));
+    return array_merge(array(''=>''), $results);
   }
 
   /**
@@ -98,6 +100,9 @@ class CataloguePropertiesTable extends Doctrine_Table
       $q->addWhere('property_type = ?',$type);
     $results_accuracy = $q->fetchArray();
     $results = array_merge($results_unit, $results_accuracy);
-    return array_merge(array(''=>''), array_combine(array_keys($results),array_keys($results)));
+  
+    if(count($results))
+      $results = array_combine(array_keys($results),array_keys($results));
+    return array_merge(array(''=>'unit'), $results);
   }
 }

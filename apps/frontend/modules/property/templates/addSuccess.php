@@ -72,8 +72,10 @@
 <table class="encoding proprety_values">
   <thead>
     <tr>
-      <th><label>Value</label> <?php echo $form['property_unit'];?></th>
-      <th><label>Accuracy</label> <?php echo $form['property_accuracy_unit'];?></th>
+      <th><label>Value</label></th>
+      <th class="unit_col"><?php echo $form['property_unit'];?></th>
+      <th><label>Accuracy</label></th>
+      <th class="unit_col"><?php echo $form['property_accuracy_unit'];?></th>
       <th></th>
     </tr>
   </thead>

@@ -113,9 +113,17 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
                              {
                                day = daysInMonth;
                              }
-                         
+
                              jQuery("#%7$s").val(year + "-" + month + "-" + day);
-                         
+
+                             if(jQuery("#%7$s").val() == "%4$s-12-31")
+                             {
+                               jQuery("#%7$s").val(
+                               jQuery(".from_date[id$=\"_year\"]").val() + "-" +
+                               jQuery(".from_date[id$=\"_month\"]").val() + "-" +
+                               jQuery(".from_date[id$=\"_day\"]").val()
+                               );
+                             }                         
                              return {};
                            }
                          

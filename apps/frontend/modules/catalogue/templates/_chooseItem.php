@@ -15,11 +15,14 @@ $(document).ready(function () {
       });
 
       $('.search_content tbody tr .info').live('click',function() {
-	  $('.tree').slideUp();
 	  item_row=$(this).closest('tr');
-	  $.get('<?php echo url_for('catalogue/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses(item_row),function (html){
-	    item_row.find('.tree').html(html).slideDown();
-	  });
+	  if(item_row.find('.tree').is(":hidden"))
+	  {
+	    $.get('<?php echo url_for('catalogue/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses(item_row),function (html){
+	      item_row.find('.tree').html(html).slideDown();
+	    });
+	  }
+	  $('.tree').slideUp();
       });
 });
 </script>  

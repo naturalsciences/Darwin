@@ -1,9 +1,9 @@
   <tr>
-    <td><?php echo $form['id'];?>
+    <td colspan="2"><?php echo $form['id'];?>
       <?php echo $form['property_value']->renderError(); ?>
       <?php echo $form['property_value'];?>
     </td>
-    <td>
+    <td colspan="2">
       <?php echo $form['property_accuracy']->renderError(); ?>
       <?php echo $form['property_accuracy'];?>
     </td>
