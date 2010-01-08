@@ -25,5 +25,5 @@ $t->is( count($stype) ,2, 'There is 1 different qualifier with this sub type');
 
 $units = Doctrine::getTable('CatalogueProperties')->getDistinctUnit('physical measurement');
 $t->is( count($units) ,3, 'There is 3 different units');
-$t->is_deeply($units, array('' =>'','cm' => 'cm', 'mm' => 'mm'), 'There is 3 corret units');
+$t->is_deeply($units, array('' =>'unit','cm' => 'cm', 'mm' => 'mm'), 'There is 3 corret units');
 
