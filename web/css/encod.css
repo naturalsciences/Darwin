@@ -128,10 +128,6 @@
 {
     border: 1px solid #EC9593;
 }
-.spec_error_list:empty
-{
-    display: none;
-}
 
 .link_catalogue
 {
