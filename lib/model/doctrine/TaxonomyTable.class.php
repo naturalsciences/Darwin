@@ -18,7 +18,7 @@ class TaxonomyTable extends Doctrine_Table
     if($level)
       $q->andWhere('level_ref = ?',$level);
 
-    $q->andWhere("id > 0 ");
+    $q->andWhere("id != 0 ");
     return $q;
   }
 
