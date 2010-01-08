@@ -19,7 +19,7 @@ $browser->
   end()->
   info('executeTree');
 
-$items = Doctrine::getTable('Taxonomy')->getByNameLike('duchesnus');
+$items = Doctrine::getTable('Taxonomy')->findByNameLike('duchesnus');
 
 $browser->
   get('/catalogue/tree?table=taxonomy&id='.$items[0]->getId())->

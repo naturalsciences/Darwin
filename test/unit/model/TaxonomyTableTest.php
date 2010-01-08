@@ -2,15 +2,15 @@
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
 $t = new lime_test(8, new lime_output_color());
 
-$t->info('getByNameLike($name,$level=null)');
-$taxs = Doctrine::getTable('Taxonomy')->getByNameLike('euca');
+$t->info('findByNameLike($name,$level=null)');
+$taxs = Doctrine::getTable('Taxonomy')->findByNameLike('euca');
 $t->is($taxs->count(),1,'There are some results in taxo');
 $t->is($taxs[0]->getName(),'Eucaryota','we get the good taxa');
 
-$taxs = Doctrine::getTable('Taxonomy')->getByNameLike('euca',4);
+$taxs = Doctrine::getTable('Taxonomy')->findByNameLike('euca',4);
 $t->is($taxs->count(),0,'There are no results in taxo with phylum');
 
-$taxs = Doctrine::getTable('Taxonomy')->getByNameLike('falc');
+$taxs = Doctrine::getTable('Taxonomy')->findByNameLike('falc');
 $t->is($taxs->count(),4,'There are 2 results in taxo');
 $t->is($taxs[0]->getName(),'Falco Peregrinus', 'they are order');
 

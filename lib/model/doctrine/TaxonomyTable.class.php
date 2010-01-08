@@ -17,7 +17,14 @@ class TaxonomyTable extends Doctrine_Table
     }
     if($level)
       $q->andWhere('level_ref = ?',$level);
+
+    $q->andWhere("id > 0 ");
     return $q;
+  }
+
+  public function findByNameLike($name,$level=null)
+  {
+    return $this->getByNameLike($name,$level)->execute();
   }
 
   public function findWithParents($id)
