@@ -19,8 +19,10 @@ class MyPreferencesTable extends Doctrine_Table
     return $this;
   }
 
-  public function changeWidgetStatus($category,$widget,$status)
+  public function changeWidgetStatus($category, $widget, $status)
   {
+
+
     $q = Doctrine_Query::create()
 	->update('MyPreferences p');
 	if($status == "open" || $status == "close")
@@ -32,6 +34,15 @@ class MyPreferencesTable extends Doctrine_Table
         $q->set('p.visible', 'true');
         $q->set('p.opened', 'true');
         $q->set('p.col_num', 1);
+        
+        $q2 = Doctrine_Query::create()
+	    ->select('MAX(p.order_by) as ord')
+            ->from('MyPreferences p')
+	    ->andWhere('p.visible=?','true');
+
+	$this->addCategoryUser($q2,$category);
+	$result = $q2->execute()->getFirst();
+	$q->set('p.order_by', (isset($result['ord'])) ? $result['ord']+1 : 1);
     }
     elseif($status == "hidden")
     {
