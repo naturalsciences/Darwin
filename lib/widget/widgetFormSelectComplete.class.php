@@ -25,7 +25,7 @@ class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
       $this->getChoices();
-      $widget = '<div id="'.$this->generateId($name).'_parent">';
+      $widget = '<div id="'.$this->generateId($name).'_parent" class="complete_widget">';
 
       if( array_key_exists($value,$this->choices))
       {
@@ -41,8 +41,8 @@ class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
 	$add_class=' hidden';
 	$pick_class='';
       }
-      $widget .= '<div class="add_item_button'. $add_class .'">'.$this->renderTag('img',array('src'=>'/images/add_green.png', 'alt'=>'+')).__($this->getOption('add_label')).'</div>';
-      $widget .= '<div class="change_item_button'. $pick_class .'">'.$this->renderTag('img',array('src'=>'/images/refresh_green.png', 'alt'=>'+')).__($this->getOption('change_label')).'</div>';
+      $widget .= '<div class="add_item_button'. $add_class .'">'.$this->renderTag('img',array('src'=>'/images/add_green.png', 'alt'=>'+')).'<span>'.__($this->getOption('add_label')).'</span></div>';
+      $widget .= '<div class="change_item_button'. $pick_class .'">'.$this->renderTag('img',array('src'=>'/images/refresh_green.png', 'alt'=>'+')).'<span>'.__($this->getOption('change_label')).'</span></div>';
       $widget .= '</div>';
       
       $widget .=  sprintf(<<<EOF

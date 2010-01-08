@@ -26,7 +26,7 @@ fieldset
 
 .hidden
 {
-    display:none;
+    display:none !important;
 }
 
 .show
@@ -497,8 +497,18 @@ table.encoding tbody
 
 .proprety_values tbody input
 {
-  width: 85%;
+  width: 220px;
+  margin-right: 32px;
   margin-left: 2px;
+}
+.complete_widget select, .complete_widget img, .complete_widget span {
+vertical-align: middle;
+display: inline-block;
+}
+
+.proprety_values .unit_col
+{
+  text-align:right;
 }
 
 .catalogue_table
@@ -566,6 +576,7 @@ table.encoding tbody
  padding: 0.2em;
 }
 
+
 #catalogue_properties_property_unit_parent, #catalogue_properties_property_accuracy_unit_parent
 {
   display:inline;
@@ -600,7 +611,7 @@ table.encoding tbody
 }
 .proprety_values .hidden
 {
-  display:none;
+  display:none !important;
 }
 
 .add_value {
