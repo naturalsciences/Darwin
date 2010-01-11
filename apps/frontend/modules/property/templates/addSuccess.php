@@ -4,10 +4,10 @@
   <div class="flash_save"><?php echo $message ?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
+<form class="edition" action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
-<table>
+<table class="qtiped">
   <tr>
       <td colspan="2">
         <?php echo $form->renderGlobalErrors() ?>
@@ -88,10 +88,10 @@
 
  <div class='add_value'>
   <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
-  </div>
+ </div>
 
   <a href="#" class="cancel_qtip">Cancel</a>
- <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?> <input type="submit" value="<?php echo __('Save');?>" />
+ <?php if(! $form->getObject()->isNew()):?><button id="delete"><?php echo __('Delete');?></button><?php endif;?> <input id="submit" type="submit" value="<?php echo __('Save');?>" />
 
 </form>
 

@@ -1,4 +1,7 @@
 <?php slot('widget_title',__('Properties'));  ?>
+<ul class="hidden error_list">
+  <li></li>
+</ul>
 <table class="catalogue_table">
   <thead>
     <tr>
@@ -8,6 +11,7 @@
       <th><?php echo __('Date From');?></th>
       <th><?php echo __('Date To');?></th>
       <th><?php echo __('Values');?></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -40,6 +44,10 @@
 	  <?php echo __('No Values');?>
 	<?php endif;?>
       </td>
+      <td class="widget_row_delete">
+        <a class="widget_row_delete" href="<?php echo url_for('property/delete?id='.$property->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+        </a>
+      </td>
     </tr>
     <?php endforeach;?>
   </tbody>
@@ -60,8 +68,6 @@ $('.hide_value').click(function()
   $(this).hide();
   return false;
 });
-
-
 </script>
 <br />
 <?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Properties');?>" class="link_catalogue" href="<?php echo url_for('property/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>

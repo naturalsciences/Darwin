@@ -519,6 +519,7 @@ display: inline-block;
 .catalogue_table
 {
   width:100%;
+  text-align:left;
 }
 
 #search_catalogue_form
@@ -628,6 +629,13 @@ display: inline-block;
   color:#C1CF56;
 }
 
+form.edition
+{
+  border:1px solid #C1CC33;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
 .edition label, form img
 {
   vertical-align:middle;
@@ -639,7 +647,7 @@ display: inline-block;
   padding-top:1.2em;
 }
 
-.edition #submit, .edition tfoot a
+.edition input#submit, .edition input#save, .edition button, .edition tfoot a
 {
   border:1px solid #C1CC33;
   background-color:#C1CF56;
@@ -650,13 +658,22 @@ display: inline-block;
   text-decoration: none;
 }
 
-.edition tfoot a
+.edition input#submit, .edition input#save
 {
-  padding:2px;
-  padding-top:3px;
+  padding-top:0px;
 }
 
-.edition #submit:hover
+div .edition tfoot a 
+{
+  padding:2px;
+}
+
+.edition table.qtiped input#submit, .edition table.qtiped input#save
+{
+  padding-top:1px;
+}  
+
+.edition #submit:hover, .edition #save:hover, .edition button
 {
   cursor:pointer;
 }
@@ -664,4 +681,10 @@ display: inline-block;
 .error
 {
   padding:0.5em;
+}
+
+.widget_row_delete
+{
+  vertical-align:top;
+  text-align:right;
 }

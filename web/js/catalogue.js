@@ -1,3 +1,13 @@
+function addError(html, element)
+    {
+      $(element).closest('.widget_content').find('.error_list li').text(html);
+      $(element).closest('.widget_content').find('.error_list').show();
+    }
+function removeError(element)
+    {
+	$(element).closest('.widget_content').find('.error_list').hide();
+	$(element).closest('.widget_content').find('.error_list li').text(' ');
+    }
  $(document).ready(function () {
  $("a.link_catalogue").live('click', function(){
     $(this).qtip({
@@ -12,7 +22,9 @@
         },
         hide: false,
         style: {
-            width: { min: 600/*, max: 1000*/}
+            width: { min: 600/*, max: 1000*/},
+            border: {radius:3},
+            title: { background: '#C1CF56', color:'white'}
         },
         api: {
             beforeShow: function()
@@ -35,5 +47,33 @@
         }
     });
     return false;
-  });
+ });
+ $("a.widget_row_delete").live('click', function(){
+     if(confirm($(this).attr('title')))
+     {
+       currentElement = $(this);
+       removeError($(this));
+       $.ajax({
+               url: $(this).attr('href'),
+               success: function(html){
+                                       if(html == "ok" )
+                                       {
+		                         widget_parent = currentElement.closest('li.widget');
+		                         widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
+		                         hideForRefresh(widget_parent.find('.widget_content'));                                        
+                                       }
+                                       else
+                                       {
+                                         addError(html, currentElement);
+                                       }
+                                      },
+               error: function(xhr)
+                      {
+                        addError('Error!  Status = ' + xhr.status);
+                      }
+             }
+            );
+    }
+    return false;
+ });
 });

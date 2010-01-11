@@ -1,15 +1,18 @@
 <?php slot('widget_title',__('Recombination'));  ?>
 <table class="catalogue_table">
   <thead>
-    <th>
-     Combination of
-    </th>
+    <th><?php echo __('Combination of');?></th>
+    <th></th>
   </thead>
   <tbody>
   <?php foreach($relations as $renamed):?>
   <tr>
     <td>
       <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('catalogue/relation?type=recombined&table='.$table.'&id='.$eid.'&relid='.$renamed[0]) ?>"><?php echo $renamed[5]//Rec Name?></a>
+    </td>
+    <td class="widget_row_delete">
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelation?relid='.$renamed[0]);?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      </a>
     </td>
   </tr>
   <?php endforeach;?>

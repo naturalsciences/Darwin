@@ -4,10 +4,13 @@
  */
 class CommentsTable extends DarwinTable
 {
-  protected static $notions = array('taxonomy' => array(
-    'taxon information' => 'taxon information',
-    'taxon life history' => 'taxon life history',
-    ),);
+  protected static $notions = array('taxonomy' => array('taxon information' => 'taxon information',
+                                                        'taxon life history' => 'taxon life history',
+                                                       ),
+                                    'igs' => array('ig definition' => 'ig definition',
+                                                   'diverse' => 'diverse'
+                                                  )
+                                   );
 
   /**
   * Find all comments for a table name and a recordId

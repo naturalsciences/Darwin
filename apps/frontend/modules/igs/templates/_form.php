@@ -12,7 +12,7 @@
           <?php echo $form->renderHiddenFields() ?>
           &nbsp;<a href="<?php echo url_for('igs/index') ?>"><?php echo __('Cancel');?></a>
           <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to(__('Delete'), 'igs/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
+            <?php echo link_to(__('Delete'), 'igs/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
           <?php endif; ?>
           <input id="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>

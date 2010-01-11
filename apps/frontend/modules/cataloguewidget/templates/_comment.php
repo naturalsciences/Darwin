@@ -4,6 +4,7 @@
     <tr>
       <th><?php echo __('Notion');?></th>
       <th><?php echo __('Comment');?></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +18,10 @@
     </td>
     <td>
       <?php echo $comment->getComment();?>
+    </td>
+    <td class="widget_row_delete">
+      <a class="widget_row_delete" href="<?php echo url_for('comment/delete?id='.$comment->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      </a>
     </td>
   </tr>
   <?php endforeach;?>

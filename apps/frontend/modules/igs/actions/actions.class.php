@@ -53,6 +53,10 @@ class igsActions extends sfActions
   {
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
     $this->form = new igsForm($igs);
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('catalogue_igs_widget');
+    if(! $this->widgets) $this->widgets=array();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -111,7 +115,8 @@ class igsActions extends sfActions
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getIgLike method of IgTable class)
         $this->igPagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager(Doctrine::getTable('Igs')
                                                                                ->getIgLike($form->getValue('ig_num'), 
-                                                                                            $form->getValue('ig_creation_date'),
+                                                                                            $form->getValue('from_date'),
+                                                                                            $form->getValue('to_date'),
                                                                                             $this->orderBy,
                                                                                             $this->orderDir
                                                                                            ),

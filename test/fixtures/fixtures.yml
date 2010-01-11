@@ -401,6 +401,15 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+    u1ws14:
+        User: u1
+        col_num: 1
+        category: catalogue_igs_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+
 
 CatalogueProperties:
     cprop1:

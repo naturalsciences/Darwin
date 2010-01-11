@@ -57,7 +57,8 @@ $(document).ready(function ()
     <thead>
       <tr>
         <th><?php echo $form['ig_num']->renderLabel() ?></th>
-        <th><?php echo $form['ig_creation_date']->renderLabel(); ?></th>
+        <th><?php echo $form['from_date']->renderLabel(); ?></th>
+        <th><?php echo $form['to_date']->renderLabel(); ?></th>
         <th>&nbsp;</th>
       </tr>
     </thead>
@@ -67,7 +68,10 @@ $(document).ready(function ()
           <?php echo $form['ig_num']->renderError() ?>
         </td>
         <td>
-          <?php echo $form['ig_creation_date']->renderError() ?>
+          <?php echo $form['from_date']->renderError() ?>
+        </td>
+        <td>
+          <?php echo $form['to_date']->renderError() ?>
         </td>
         <td>
         </td>
@@ -77,7 +81,10 @@ $(document).ready(function ()
           <?php echo $form['ig_num']->render() ?>
         </td>
         <td>
-          <?php echo $form['ig_creation_date']->render() ?>
+          <?php echo $form['from_date']->render() ?>
+        </td>
+        <td>
+          <?php echo $form['to_date']->render() ?>
         </td>
         <td>
           <input id="expedition_search" type="submit" name="search" value="<?php echo __('Search'); ?>" />
