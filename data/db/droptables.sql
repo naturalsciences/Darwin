@@ -1,6 +1,7 @@
 \set log_error_verbosity terse
 
 DROP TABLE  IF EXISTS specimens_accompanying CASCADE;
+DROP TABLE  IF EXISTS igs CASCADE;
 DROP TABLE  IF EXISTS associated_multimedia CASCADE;
 DROP TABLE  IF EXISTS specimen_parts_insurances CASCADE;
 DROP TABLE  IF EXISTS specimen_parts CASCADE;
@@ -71,6 +72,7 @@ DROP TABLE  IF EXISTS template_table_record_ref CASCADE;
 DROP TABLE  IF EXISTS catalogue_relationships CASCADE;
 DROP TABLE  IF EXISTS words CASCADE;
 DROP SEQUENCE IF EXISTS expeditions_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS igs_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS people_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_relationships_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_people_id_seq CASCADE;

@@ -1013,7 +1013,7 @@ create table classification_synonymies
 	(
 	 group_id integer not null,
 	 group_name varchar not null,
-	 basionym_record_id integer,
+	 is_basionym boolean DEFAULT false,
 	 order_by integer not null default 0,
 	 constraint unq_synonym unique (referenced_relation, record_id, group_id)
 	)
@@ -1025,7 +1025,7 @@ comment on column classification_synonymies.record_id is 'Id of record placed in
 comment on column classification_synonymies.group_name is 'Name of group under which synonyms are placed';
 comment on column classification_synonymies.group_id is 'Id given to group';
 comment on column classification_synonymies.order_by is 'Order by used to qualify order amongst synonyms - used mainly for senio and junior synonyms';
-comment on column classification_synonymies.basionym_record_id is 'Id of basionym if one';
+comment on column classification_synonymies.is_basionym is 'If record is a basionym';
 
 create sequence taxonomy_id_seq;
 
