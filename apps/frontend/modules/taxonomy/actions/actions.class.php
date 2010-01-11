@@ -71,7 +71,6 @@ class taxonomyActions extends sfActions
     $this->form = new TaxonomyForm($taxa);
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
-    $combination = false;
     $this->processForm($request,$this->form);
     $this->setTemplate('edit');
   }
