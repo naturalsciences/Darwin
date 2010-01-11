@@ -1009,8 +1009,10 @@ comment on column classification_keywords.keyword is 'Keyword';
 
 create sequence classification_synonymies_id_seq;
 
+create sequence classification_synonymies_id_seq;
 create table classification_synonymies
 	(
+         id integer not null default nextval('classification_synonymies_id_seq'),
 	 group_id integer not null,
 	 group_name varchar not null,
 	 is_basionym boolean DEFAULT false,
