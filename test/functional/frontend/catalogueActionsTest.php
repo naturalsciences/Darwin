@@ -52,7 +52,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('.catalogue_action_type','is recombined from :')->
     checkElement('form')->
     checkElement('#relation_catalogue_name','/Falco Peregrinus recombinus/')->
   end()->
@@ -63,7 +63,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('.catalogue_action_type','is recombined from :')->
     checkElement('form')->
     checkElement('#relation_catalogue_name',' ')->
   end()->
@@ -82,7 +82,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('.catalogue_action_type','is recombined from :')->
     checkElement('form')->
     checkElement('#relation_catalogue_name','/Falco Peregrinus/')->
   end()->
@@ -98,7 +98,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined into :')->
+    checkElement('.catalogue_action_type','is recombined from :')->
     checkElement('form')->
     checkElement('#relation_catalogue_name',' ')->
   end()
