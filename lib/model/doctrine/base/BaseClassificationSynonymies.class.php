@@ -10,7 +10,7 @@
  * @property integer $record_id
  * @property integer $group_id
  * @property string $group_name
- * @property integer $basionym_record_id
+ * @property boolean $is_basionym
  * @property integer $order_by
  * 
  * @method integer                  getId()                  Returns the current record's "id" value
@@ -18,14 +18,14 @@
  * @method integer                  getRecordId()            Returns the current record's "record_id" value
  * @method integer                  getGroupId()             Returns the current record's "group_id" value
  * @method string                   getGroupName()           Returns the current record's "group_name" value
- * @method integer                  getBasionymRecordId()    Returns the current record's "basionym_record_id" value
+ * @method boolean                  getIsBasionym()          Returns the current record's "is_basionym" value
  * @method integer                  getOrderBy()             Returns the current record's "order_by" value
  * @method ClassificationSynonymies setId()                  Sets the current record's "id" value
  * @method ClassificationSynonymies setReferencedRelation()  Sets the current record's "referenced_relation" value
  * @method ClassificationSynonymies setRecordId()            Sets the current record's "record_id" value
  * @method ClassificationSynonymies setGroupId()             Sets the current record's "group_id" value
  * @method ClassificationSynonymies setGroupName()           Sets the current record's "group_name" value
- * @method ClassificationSynonymies setBasionymRecordId()    Sets the current record's "basionym_record_id" value
+ * @method ClassificationSynonymies setIsBasionym()          Sets the current record's "is_basionym" value
  * @method ClassificationSynonymies setOrderBy()             Sets the current record's "order_by" value
  * 
  * @package    darwin
@@ -59,8 +59,9 @@ abstract class BaseClassificationSynonymies extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
-        $this->hasColumn('basionym_record_id', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('is_basionym', 'boolean', null, array(
+             'type' => 'boolean',
+             'default' => false,
              ));
         $this->hasColumn('order_by', 'integer', null, array(
              'type' => 'integer',

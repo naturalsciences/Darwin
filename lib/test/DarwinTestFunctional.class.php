@@ -17,6 +17,9 @@ class DarwinTestFunctional extends sfTestFunctional
     $conn->exec("SELECT setval('taxonomy_id_seq',10000)");
     $conn->exec("SELECT nextval('expeditions_id_seq')");
     $conn->exec("SELECT setval('expeditions_id_seq',10000)");
+    $conn->exec("SELECT nextval('classification_synonymies_id_seq')");
+    $conn->exec("SELECT setval('classification_synonymies_id_seq',1)");
+
   }
 
   public function login($user,$pass)

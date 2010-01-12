@@ -20,4 +20,9 @@ class DarwinTable extends Doctrine_Table
         }
     }
 
+  protected function getI18N()
+  {
+     return sfContext::getInstance()->getI18N();
+  }
+
 }

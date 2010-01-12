@@ -23,7 +23,8 @@ class CommentsTable extends DarwinTable
      $q = Doctrine_Query::create()
 	 ->from('Comments c')
 	 ->andWhere('c.referenced_relation = ?',$table_name)
-         ->andWhere('c.record_id = ?',$record_id);
+         ->andWhere('c.record_id = ?',$record_id)
+	 ->andWhere('c.record_id != 0');
     return $q->execute();
   }
   

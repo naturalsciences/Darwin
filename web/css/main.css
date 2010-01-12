@@ -31,7 +31,7 @@ fieldset
 
 .show
 {
-  display:block;
+  display:block !important;
 }
 
 ul.spec_error_list, ul.error_list
@@ -700,4 +700,14 @@ table.encoding tbody .widget_row_delete
 .clear_prop
 {
   cursor:pointer;
+}
+
+.merge_question div
+{
+    border: 2px solid #F4BB0F;
+    background-color:#FFEFBF;
+}
+#classification_synonymies_record_id_button
+{
+  display:none;
 }

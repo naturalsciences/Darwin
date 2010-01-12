@@ -30,4 +30,9 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->properties =  Doctrine::getTable('CatalogueProperties')->findForTable($this->table, $this->eid);
   }
+
+  public function executeSynonym()
+  {
+    $this->synonyms = Doctrine::getTable('ClassificationSynonymies')->findForTable($this->table, $this->eid);
+  }
 }

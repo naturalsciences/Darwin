@@ -409,7 +409,14 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
-
+    u1ws15:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: synonym
+        order_by: 1
+        opened: true
+        visible: true
 
 CatalogueProperties:
     cprop1:

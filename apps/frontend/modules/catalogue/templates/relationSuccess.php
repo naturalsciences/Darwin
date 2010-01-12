@@ -120,6 +120,6 @@
       });      
   }); 
   </script>
-<div class="search_box">
+<div class="search_box show">
   <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm,'is_choose'=>true)) ?>
 </div>

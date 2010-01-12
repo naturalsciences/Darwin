@@ -20,7 +20,7 @@ abstract class BaseClassificationSynonymiesForm extends BaseFormDoctrine
       'record_id'           => new sfWidgetFormInputText(),
       'group_id'            => new sfWidgetFormInputText(),
       'group_name'          => new sfWidgetFormTextarea(),
-      'basionym_record_id'  => new sfWidgetFormInputText(),
+      'is_basionym'         => new sfWidgetFormInputCheckbox(),
       'order_by'            => new sfWidgetFormInputText(),
     ));
 
@@ -30,7 +30,7 @@ abstract class BaseClassificationSynonymiesForm extends BaseFormDoctrine
       'record_id'           => new sfValidatorInteger(),
       'group_id'            => new sfValidatorInteger(),
       'group_name'          => new sfValidatorString(),
-      'basionym_record_id'  => new sfValidatorInteger(array('required' => false)),
+      'is_basionym'         => new sfValidatorBoolean(array('required' => false)),
       'order_by'            => new sfValidatorInteger(array('required' => false)),
     ));
 
