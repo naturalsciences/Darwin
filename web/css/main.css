@@ -664,20 +664,10 @@ form.edition
   text-decoration: none;
 }
 
-.edition input#submit, .edition input#save
-{
-  padding-top:0px;
-}
-
 div .edition tfoot a 
 {
   padding:2px;
 }
-
-.qtip-contentWrapper .edition input#submit, .qtip-contentWrapper .edition input#save
-{
-  padding-top:1px;
-}  
 
 .edition #submit:hover, .edition #save:hover, .edition button
 {
@@ -700,4 +690,9 @@ table.encoding tbody .widget_row_delete
   vertical-align:middle;
   text-align:center;  
   padding-right:1px;
+}
+
+.clear_prop
+{
+  cursor:pointer;
 }
