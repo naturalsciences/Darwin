@@ -1805,12 +1805,16 @@ comment on column specimen_parts.specimen_part_count_max is 'Maximum number of p
 comment on column specimen_parts.complete is 'Flag telling if part/specimen is complete or not';
 comment on column specimen_parts.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 
+create sequence insurances_id_seq;
+
 create table insurances
        (
+        id integer not null default nextval('insurances_id_seq'),
         insurance_value numeric not null,
         insurance_currency varchar not null default 'euro',
-        insurance_year smallint not null default extract(year from now()),
+        insurance_year smallint not null default 0,
         insurer_ref integer,
+        constraint pk_insurances primary_key (id),
         constraint unq_specimen_parts_insurances unique (referenced_relation, record_id, insurance_year),
         constraint fk_specimen_parts_insurances_people foreign key (insurer_ref) references people(id) on delete set null,
         constraint chk_chk_specimen_parts_insurances check (insurance_value > 0)
