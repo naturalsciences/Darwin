@@ -63,19 +63,7 @@ $("#comment_form").submit(function()
       });
 </script>
 <form class="edition" method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
-<table class="qtiped">
-  <tfoot>
-      <tr>
-        <td colspan="2">
-          <?php echo $form->renderHiddenFields() ?>
-          &nbsp;<a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
-          <?php if (!$form->getObject()->isNew()): ?>
-            <button id="delete"><?php echo __('Delete');?></button>
-          <?php endif; ?>
-          <input id="save" name="submit" type="submit" value="<?php echo __('Save');?>" />
-        </td>
-      </tr>
-  </tfoot>  
+<table>
   <tbody>
     <tr>
         <td colspan="2">
@@ -96,5 +84,17 @@ $("#comment_form").submit(function()
       </td>
     </tr>
   </tbody>
+  <tfoot>
+      <tr>
+        <td colspan="2">
+          <?php echo $form->renderHiddenFields() ?>
+          &nbsp;<a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
+          <?php if (!$form->getObject()->isNew()): ?>
+            <button id="delete"><?php echo __('Delete');?></button>
+          <?php endif; ?>
+          <input id="save" name="submit" type="submit" value="<?php echo __('Save');?>" />
+        </td>
+      </tr>
+  </tfoot>  
 </table>
 </form>

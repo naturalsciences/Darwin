@@ -7,8 +7,7 @@
       <?php echo $form['property_accuracy']->renderError(); ?>
       <?php echo $form['property_accuracy'];?>
     </td>
-    
-    <td>
-      <?php echo image_tag('widget_help_close.png','alt=Delete class=clear_prop');?>
-    </td>
+    <td class="widget_row_delete">
+      <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?>
+    </td>    
   </tr>

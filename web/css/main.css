@@ -141,7 +141,7 @@ a.but_text
 }
 .right_part,.left_part
 {
-	float:left;
+  float:left;
 }
 
 form#search_taxa
@@ -170,7 +170,7 @@ form#search_taxa
 }
 #choose_taxa_button
 {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .search_content li
@@ -490,14 +490,14 @@ table.encoding tbody
 }
 .proprety_values
 {
-  margin: 1em;
-  width:500px;
+  margin: 0.5em;
+  width:550px;
 }
 
 .proprety_values td 
 {
   margin:0;
-  padding:0;
+  padding:0.1em;
 }
 
 .proprety_values tbody input
@@ -506,6 +506,7 @@ table.encoding tbody
   margin-right: 32px;
   margin-left: 2px;
 }
+
 .complete_widget select, .complete_widget img, .complete_widget span {
 vertical-align: middle;
 display: inline-block;
@@ -514,6 +515,7 @@ display: inline-block;
 .proprety_values .unit_col
 {
   text-align:right;
+  padding-right:0.9em;
 }
 
 .catalogue_table
@@ -598,17 +600,25 @@ display: inline-block;
 .add_value
 {
   background: white url(/images/widget_button.png) no-repeat;
-  height:22px;
+  height:24px;
   width:74px;
   text-align:center;
   font-size:small;
   background: white url(/images/widget_button_green.png) no-repeat;
+  float:right;
+  margin-right:16px;
 }
+
 .add_value a
 {
   vertical-align:middle;
   text-decoration:none;
   color:white;
+}
+
+.bottom_actions
+{
+  width:566px;
 }
 
 .proprety_values .show , .proprety_values .add_item_button, .proprety_values .change_item_button 
@@ -618,10 +628,6 @@ display: inline-block;
 .proprety_values .hidden
 {
   display:none !important;
-}
-
-.add_value {
-  margin-left: 430px;
 }
 
 .edit_mode
@@ -644,7 +650,7 @@ form.edition
 .edition tfoot td
 {
   text-align:right;
-  padding-top:1.2em;
+  padding-top:1em;
 }
 
 .edition input#submit, .edition input#save, .edition button, .edition tfoot a
@@ -668,7 +674,7 @@ div .edition tfoot a
   padding:2px;
 }
 
-.edition table.qtiped input#submit, .edition table.qtiped input#save
+.qtip-contentWrapper .edition input#submit, .qtip-contentWrapper .edition input#save
 {
   padding-top:1px;
 }  
@@ -687,4 +693,11 @@ div .edition tfoot a
 {
   vertical-align:top;
   text-align:right;
+}
+
+table.encoding tbody .widget_row_delete
+{
+  vertical-align:middle;
+  text-align:center;  
+  padding-right:1px;
 }
