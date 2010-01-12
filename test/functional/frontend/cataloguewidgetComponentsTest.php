@@ -12,7 +12,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tr',1)->
         checkElement('table tr td:first a.link_catalogue','/Falco Peregrinus Tunstall/')->
-	checkElement('img',0)->
+	checkElement('img', 1)->
     end()->
 
     info('2 - Recombined')->
@@ -21,7 +21,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tr',1)->
         checkElement('table tr td:first a.link_catalogue','/recombinus/')->
-	checkElement('img',1)->
+	checkElement('img',2)->
     end();
 
  $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'current_name');
@@ -46,7 +46,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tr',2)->
         checkElement('table tr:last a.link_catalogue','/taxon information/')->
-	checkElement('table tr:last td:last','/This is bullshit/')->
+	checkElement('table tr:last td:nth-child(2)','/This is bullshit/')->
     end()->
 
     info('4 - Properties')->
@@ -55,7 +55,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tbody tr',2)->
         checkElement('table tbody tr:first td:first','/physical measurement/')->
-	checkElement('table tbody tr:first td:last','/Show 2 Values/')->
+	checkElement('table tbody tr:first td::nth-child(6)','/Show 2 Values/')->
 	checkElement('table tbody tr:last td:first','/protection status/')->
-	checkElement('table tbody tr:last td:last','/Show 1 Value/')->
+	checkElement('table tbody tr:last td::nth-child(6)','/Show 1 Value/')->
     end();
