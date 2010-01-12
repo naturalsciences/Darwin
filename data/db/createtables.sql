@@ -1811,7 +1811,7 @@ create table insurances
        (
         id integer not null default nextval('insurances_id_seq'),
         insurance_value numeric not null,
-        insurance_currency varchar not null default 'euro',
+        insurance_currency varchar not null default '€',
         insurance_year smallint not null default 0,
         insurer_ref integer,
         constraint pk_insurances primary_key (id),
