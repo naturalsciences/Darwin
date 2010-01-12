@@ -635,7 +635,7 @@ display: inline-block;
   color:#C1CF56;
 }
 
-form.edition
+form.edition, form.renamed
 {
   border:1px solid #C1CC33;
   -moz-border-radius: 5px;
@@ -653,7 +653,12 @@ form.edition
   padding-top:1em;
 }
 
-.edition input#submit, .edition input#save, .edition button, .edition tfoot a
+.renamed tfoot td
+{
+  text-align:right;
+}
+
+.edition input#submit, .edition input#save, .edition button, .edition tfoot a, .renamed input#submit, .renamed input#save, .renamed button, .renamed tfoot a
 {
   border:1px solid #C1CC33;
   background-color:#C1CF56;
@@ -664,12 +669,12 @@ form.edition
   text-decoration: none;
 }
 
-div .edition tfoot a 
+div .edition tfoot a, div .renamed tfoot a  
 {
   padding:2px;
 }
 
-.edition #submit:hover, .edition #save:hover, .edition button
+.edition #submit:hover, .edition #save:hover, .edition button, .renamed #submit:hover, .renamed #save:hover, .renamed button
 {
   cursor:pointer;
 }
