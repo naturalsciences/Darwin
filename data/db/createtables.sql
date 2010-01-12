@@ -1814,7 +1814,7 @@ create table insurances
         insurance_currency varchar not null default '€',
         insurance_year smallint not null default 0,
         insurer_ref integer,
-        constraint pk_insurances primary_key (id),
+        constraint pk_insurances primary key (id),
         constraint unq_specimen_parts_insurances unique (referenced_relation, record_id, insurance_year),
         constraint fk_specimen_parts_insurances_people foreign key (insurer_ref) references people(id) on delete set null,
         constraint chk_chk_specimen_parts_insurances check (insurance_value > 0)
