@@ -1015,7 +1015,8 @@ create table classification_synonymies
 	 group_name varchar not null,
 	 is_basionym boolean DEFAULT false,
 	 order_by integer not null default 0,
-	 constraint unq_synonym unique (referenced_relation, record_id, group_id)
+	 constraint unq_synonym unique (referenced_relation, record_id, group_id),
+         constraint pk_synonym_id primary key (id)
 	)
 inherits (template_table_record_ref);
 
@@ -1616,6 +1617,7 @@ create table igs
        (
          id integer default nextval('igs_id_seq'),
          ig_num varchar not null,
+         ig_num_indexed varchar not null,
          ig_date_mask integer not null default 0,
          ig_date date not null default '01/01/0001',
          constraint pk_igs primary key (id),

@@ -2426,6 +2426,11 @@ BEGIN
 			IF NEW.name <> oldValue THEN
 				NEW.name_indexed := fullToIndex(NEW.name);
 			END IF;
+		ELSIF TG_TABLE_NAME = 'igs' THEN
+			oldValue := OLD.ig_num;
+			IF NEW.ig_num <> oldValue THEN
+				NEW.ig_num_indexed := fullToIndex(NEW.ig_num);
+			END IF;
 		END IF;	
 	ELSIF TG_OP = 'INSERT' THEN
 		IF TG_TABLE_NAME = 'catalogue_properties' THEN
@@ -2469,8 +2474,8 @@ BEGIN
 			NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
-		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
-			NEW.name_indexed := fullToIndex(NEW.name);
+		ELSIF TG_TABLE_NAME = 'igs' THEN
+			NEW.ig_num_indexed := fullToIndex(NEW.ig_num);
 		END IF;	
 	END IF;
 	RETURN NEW;

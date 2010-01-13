@@ -172,6 +172,10 @@ CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 	
 
+CREATE TRIGGER trg_cpy_fullToIndex_igs BEFORE INSERT OR UPDATE
+	ON igs FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_fullToIndex();
+	
 CREATE TRIGGER trg_clr_specialstatus_specimenindividuals BEFORE INSERT OR UPDATE
 	ON specimen_individuals FOR EACH ROW
 	EXECUTE PROCEDURE fct_clr_specialstatus();
