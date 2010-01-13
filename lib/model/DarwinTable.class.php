@@ -25,4 +25,12 @@ class DarwinTable extends Doctrine_Table
      return sfContext::getInstance()->getI18N();
   }
 
+  public function addCatalogueReferences($query, $table_name, $record_id, $alias)
+  {
+    $query->andWhere($alias.'.referenced_relation = ?',$table_name)
+         ->andWhere($alias.'.record_id = ?',$record_id)
+	 ->andWhere($alias.'.record_id != 0');
+    return $query;
+  }
+
 }

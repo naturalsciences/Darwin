@@ -4,13 +4,14 @@
     <tr>
       <th><?php echo __('Type');?></th>
       <th><?php echo __('Items');?></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <?php foreach($synonyms as $group_name => $group):?>
     <tr>
       <td>
-	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/index?table='.$table.'&rid='.'&id='.$eid); ?>">
+	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/index?table='.$table.'&group_id='.$group[0]['group_id'].'&id='.$eid); ?>">
 	    <?php echo $group_name;?>
 	  </a>
       </td>
@@ -25,6 +26,10 @@
 	      </li>
 	    <?php endforeach;?>
 	  </ul>
+      </td>
+      <td class="widget_row_delete">
+        <a class="widget_row_delete" href="" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+        </a>
       </td>
     </tr>
     <?php endforeach;?>
