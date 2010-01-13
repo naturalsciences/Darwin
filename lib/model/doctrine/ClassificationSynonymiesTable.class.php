@@ -30,7 +30,7 @@ class ClassificationSynonymiesTable extends DarwinTable
 	 ->andWhere('s.record_id != 0');
     $results = $q->fetchArray();
     if(!count($results))
-      return false;
+      return array();
     $groups = array();
     foreach($results as $result)
     {
@@ -52,7 +52,14 @@ class ClassificationSynonymiesTable extends DarwinTable
 	//group_name 
 	if(! isset($results[$item[0]]))
 	  $results[$item[0]]=array();
-	$results[$item[0]][] = $item;
+	$results[$item[0]][] = array(
+	  'id' => $item[1],
+	  'record_id' => $item[2],
+	  'group_id' => $item[3],
+	  'is_basionym' => $item[4],
+	  'order_by' => $item[5],
+	  'name' => $item[6],
+	);
     }
     return $results;
   }

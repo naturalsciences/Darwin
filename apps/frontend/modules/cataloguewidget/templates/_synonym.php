@@ -18,7 +18,10 @@
 	  <ul>
 	    <?php foreach($group as $synonym):?>
 	      <li>
-		<?php echo $synonym[6];?>
+		<?php if($synonym['is_basionym']):?>
+		    <em>B</em>
+		<?php endif;?>
+		<?php echo $synonym['name'];?> [<?php echo $synonym['order_by'];?>]
 	      </li>
 	    <?php endforeach;?>
 	  </ul>
