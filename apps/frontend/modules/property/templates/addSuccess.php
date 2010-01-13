@@ -1,7 +1,7 @@
 <div id="property_screen">
 
 <?php if (isset($message)): ?>
-  <div class="flash_save"><?php echo $message ?></div>
+  <div class="flash_save"><?php echo __($message); ?></div>
 <?php endif; ?>
 
 <form class="edition" action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">

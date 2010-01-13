@@ -927,6 +927,7 @@ Igs:
     columns:
         id: { type: integer, primary: true, autoincrement: true}
         ig_num: { type: string, notnull: true}
+        ig_num_indexed: { type: string, notnull: true}
         ig_date_mask: { type: integer, notnull: true, default:0}
         ig_date: { type: string, default:'0001-01-01'}
 
@@ -1052,11 +1053,12 @@ SpecimenParts:
 
 Insurances:
     columns:
+        id: { type: integer, primary: true, autoincrement: true }
         referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         insurance_value: { type: integer, notnull: true}
-        insurance_currency: { type: string, notnull: true, default: 'euro'}
-        insurance_year: { type: integer}
+        insurance_currency: { type: string, notnull: true, default: '€'}
+        insurance_year: { type: integer, default:0}
         insurer_ref: { type: integer}
     relations:
         People:

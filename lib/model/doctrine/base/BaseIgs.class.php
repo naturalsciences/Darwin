@@ -7,20 +7,23 @@
  * 
  * @property integer $id
  * @property string $ig_num
+ * @property string $ig_num_indexed
  * @property integer $ig_date_mask
  * @property string $ig_date
  * @property Doctrine_Collection $Specimens
  * 
- * @method integer             getId()           Returns the current record's "id" value
- * @method string              getIgNum()        Returns the current record's "ig_num" value
- * @method integer             getIgDateMask()   Returns the current record's "ig_date_mask" value
- * @method string              getIgDate()       Returns the current record's "ig_date" value
- * @method Doctrine_Collection getSpecimens()    Returns the current record's "Specimens" collection
- * @method Igs                 setId()           Sets the current record's "id" value
- * @method Igs                 setIgNum()        Sets the current record's "ig_num" value
- * @method Igs                 setIgDateMask()   Sets the current record's "ig_date_mask" value
- * @method Igs                 setIgDate()       Sets the current record's "ig_date" value
- * @method Igs                 setSpecimens()    Sets the current record's "Specimens" collection
+ * @method integer             getId()             Returns the current record's "id" value
+ * @method string              getIgNum()          Returns the current record's "ig_num" value
+ * @method string              getIgNumIndexed()   Returns the current record's "ig_num_indexed" value
+ * @method integer             getIgDateMask()     Returns the current record's "ig_date_mask" value
+ * @method string              getIgDate()         Returns the current record's "ig_date" value
+ * @method Doctrine_Collection getSpecimens()      Returns the current record's "Specimens" collection
+ * @method Igs                 setId()             Sets the current record's "id" value
+ * @method Igs                 setIgNum()          Sets the current record's "ig_num" value
+ * @method Igs                 setIgNumIndexed()   Sets the current record's "ig_num_indexed" value
+ * @method Igs                 setIgDateMask()     Sets the current record's "ig_date_mask" value
+ * @method Igs                 setIgDate()         Sets the current record's "ig_date" value
+ * @method Igs                 setSpecimens()      Sets the current record's "Specimens" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -38,6 +41,10 @@ abstract class BaseIgs extends sfDoctrineRecord
              'autoincrement' => true,
              ));
         $this->hasColumn('ig_num', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
+        $this->hasColumn('ig_num_indexed', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              ));

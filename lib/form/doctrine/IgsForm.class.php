@@ -17,7 +17,8 @@ class IgsForm extends BaseIgsForm
   public function configure()
   {
 
-    unset($this['ig_date_mask']);
+    unset($this['ig_date_mask'],
+          $this['ig_num_indexed']);
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);

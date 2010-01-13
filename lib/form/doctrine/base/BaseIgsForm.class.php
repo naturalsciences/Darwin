@@ -15,17 +15,19 @@ abstract class BaseIgsForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'           => new sfWidgetFormInputHidden(),
-      'ig_num'       => new sfWidgetFormTextarea(),
-      'ig_date_mask' => new sfWidgetFormInputText(),
-      'ig_date'      => new sfWidgetFormTextarea(),
+      'id'             => new sfWidgetFormInputHidden(),
+      'ig_num'         => new sfWidgetFormTextarea(),
+      'ig_num_indexed' => new sfWidgetFormTextarea(),
+      'ig_date_mask'   => new sfWidgetFormInputText(),
+      'ig_date'        => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'           => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'ig_num'       => new sfValidatorString(),
-      'ig_date_mask' => new sfValidatorInteger(array('required' => false)),
-      'ig_date'      => new sfValidatorString(array('required' => false)),
+      'id'             => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'ig_num'         => new sfValidatorString(),
+      'ig_num_indexed' => new sfValidatorString(),
+      'ig_date_mask'   => new sfValidatorInteger(array('required' => false)),
+      'ig_date'        => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('igs[%s]');

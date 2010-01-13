@@ -29,6 +29,11 @@ fieldset
     display:none;
 }
 
+.complete_widget .hidden
+{
+  display:none !important;
+}
+
 .show
 {
   display:block !important;

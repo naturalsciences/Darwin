@@ -100,7 +100,7 @@ Igs:
     ig1:
         ig_num: '2692'
     ig2:
-        ig_num: '21ter'
+        ig_num: '21Ter'
         ig_date: '1847-07-23'
         ig_date_mask: 56
     ig3:
@@ -416,6 +416,14 @@ MyPreferences:
         group_name: synonym
         order_by: 1
         opened: true
+        visible: true
+    u1ws16:
+        User: u1
+        col_num: 1
+        category: catalogue_igs_widget
+        group_name: insurances
+        order_by: 1
+        opened: false
         visible: true
 
 CatalogueProperties:
