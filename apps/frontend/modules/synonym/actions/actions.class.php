@@ -49,7 +49,13 @@ class synonymActions extends sfActions
 	      $this->form->getValue('group_name')
 	    );
 
-	    if($ref_group_id == 0)
+	    $ref_group_id_2 = Doctrine::getTable('ClassificationSynonymies')->findSynonymsFor(
+		$this->form->getValue('referenced_relation'),
+		$request->getParameter('id'),
+		$this->form->getValue('group_name')
+	    );
+
+	    if($ref_group_id == 0 && $ref_group_id_2 == 0)
 	    {
 	      $c1 = new ClassificationSynonymies();
 	      $c1->setRecordId($request->getParameter('id'));
@@ -65,14 +71,24 @@ class synonymActions extends sfActions
 	      $c2->setGroupName($this->form->getValue('group_name'));
 	      $c2->save();
 	    }
+	    elseif($ref_group_id == 0)
+	    {
+	      $c2 = new ClassificationSynonymies();
+	      $c2->setRecordId($this->form->getValue('record_id'));
+	      $c2->setReferencedRelation($request->getParameter('table'));
+	      $c2->setGroupId($ref_group_id_2);
+	      $c2->setGroupName($this->form->getValue('group_name'));
+	      $c2->save();
+	    }
 	    else
 	    {
-	      $c1 = new ClassificationSynonymies();
+	      /*$c1 = new ClassificationSynonymies();
 	      $c1->setRecordId($request->getParameter('id'));
 	      $c1->setReferencedRelation($request->getParameter('table'));
 	      $c1->setGroupId($ref_group_id);
 	      $c1->setGroupName( $this->form->getValue('group_name'));
-	      $c1->save();
+	      $c1->save();*/
+	      Doctrine::getTable('ClassificationSynonymies')->mergeGroup($ref_group_id,$ref_group_id_2);
 	    }
 	    $conn->commit();
 	    return $this->renderText('ok');

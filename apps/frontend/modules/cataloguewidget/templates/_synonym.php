@@ -7,50 +7,25 @@
     </tr>
   </thead>
   <tbody>
-    <?php foreach($synonyms as $synonym):?>
+    <?php foreach($synonyms as $group_name => $group):?>
     <tr>
       <td>
-	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/index?table='.$table.'&rid='.$synonym->getId().'&id='.$eid); ?>">
-	    <?php echo $synonym->getGroupName();?>
+	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/index?table='.$table.'&rid='.'&id='.$eid); ?>">
+	    <?php echo $group_name;?>
 	  </a>
       </td>
       <td>
-	<?php  if(false): // count($synonym->PropertiesValues) ):?>
-	  <a href="#" class="display_value">...</a>
-	  <a href="#" class="hidden hide_value">++++</a>
-	  <ul class="hidden">
-	    <?php //foreach($synonym->PropertiesValues as $value):?>
+	  <ul>
+	    <?php foreach($group as $synonym):?>
 	      <li>
-		<?php //echo $value->getPropertyValue();?> <?php //echo $synonym->getPropertyUnit();?> 
+		<?php echo $synonym[6];?>
 	      </li>
-	    <?php //endforeach;?>
+	    <?php endforeach;?>
 	  </ul>
-	<?php else:?>
-	  <?php echo __('No Values');?>
-	<?php endif;?>
       </td>
     </tr>
     <?php endforeach;?>
   </tbody>
 </table>
-
-<script>
-$('.display_value').click(function()
-{
-  $(this).parent().find('ul').slideDown();
-  $(this).parent().find('.hide_value').show();
-  $(this).hide();
-  return false;
-});
-$('.hide_value').click(function()
-{
-  $(this).parent().find('ul').slideUp();
-  $(this).parent().find('.display_value').show();
-  $(this).hide();
-  return false;
-});
-
-
-</script>
 <br />
 <?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Synonymies');?>" class="link_catalogue" href="<?php echo url_for('synonym/index?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
