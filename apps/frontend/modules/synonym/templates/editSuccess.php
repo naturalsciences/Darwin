@@ -8,19 +8,24 @@
     <tr>
       <th></th>
       <th>Item</th>
+     <?php if(! isset($groups["homonym"])):?>
       <th>Basionym</th>
+     <?php endif;?>
       <th></th>
     </tr>
   </thead>
 
   <tbody>
-  <?php foreach($groups as $synonyms):?>
+  <?php foreach($groups as $group => $synonyms):?>
     <?php foreach($synonyms as $synonym):?>
       <tr class="syn_id_<?php echo $synonym['id'];?>" id="id_<?php echo $synonym['id'];?>">
 	<td class="handle"><?php echo image_tag('drag.png');?></td>
 	<td><?php echo $synonym['name'];?></td>
+
+      <?php if($group != "homonym"):?>
 	<td><input type="checkbox" name="basionym" class="basionym_checkbox" value="<?php echo $synonym['id'];?>" <?php if($synonym['is_basionym']) echo 'checked="checked"';?>></td>
-	<td  class="widget_row_delete">
+      <?php endif;?>
+	<td class="widget_row_delete">
 	  <?php if($synonym['record_id'] == $sf_request->getParameter('id')):?>
 	    <a class="widget_row_delete" href="<?php echo url_for('synonym/delete?id='.$synonym['id']);?>" title="<?php echo __('Are you sure ?') ?>">
 	      <?php echo image_tag('remove.png'); ?>

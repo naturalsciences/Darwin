@@ -13,7 +13,7 @@
       <?php echo $form['group_name'];?>
     </td>
   </tr>
-  <tr>
+  <tr class="basionym_raw">
     <th><?php echo $form['is_basionym']->renderLabel();?></th>
     <td>
       <?php echo $form['is_basionym']->renderError(); ?>
@@ -61,35 +61,56 @@
 </table>
 </form>
 
- <script type="text/javascript">
+<script type="text/javascript">
+
+function checkGroup()
+{
+  if($("#classification_synonymies_record_id").val() == '')
+    return;
+
+  $('#save').attr("disabled","disabled");
+  $.ajax({
+      url: '<?php echo url_for('synonym/checks?table='.$sf_request->getParameter('table'))?>/id/'+$("#classification_synonymies_record_id").val()+'/type/'+$("#classification_synonymies_group_name").val(),
+      success: function(html){
+	$('#save').removeAttr("disabled");
+	if(html == "0" )
+	{
+	  $(".merge_question").hide();
+	  $(".merge_question input").attr('checked', true);
+	}
+	else
+	{
+	  $(".merge_question input").attr('checked', false);
+	  $(".merge_question").show();
+	}
+      },
+      error: function(xhr)
+      {
+	$('#save').removeAttr("disabled");
+      }
+   });
+}
+
+function showBasionym()
+{
+  if($('#classification_synonymies_group_name').val() == "homonym")
+    $('.basionym_raw').hide();
+  else
+    $('.basionym_raw').show();
+}
+
   $(document).ready(function () {
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
 	$("#classification_synonymies_record_id").val(getIdInClasses(el));
 	$("#classification_synonymies_record_id_name").text(el.find('span.item_name').text()).show();
-	$('#save').attr("disabled","disabled");
-	$.ajax({
-	    url: '<?php echo url_for('synonym/checks?table='.$sf_request->getParameter('table'))?>/id/'+getIdInClasses(el)+'/type/'+$('#classification_synonymies_group_name').val(),
-	    success: function(html){
-	      $('#save').removeAttr("disabled");
-	      if(html == "0" )
-	      {
-		$(".merge_question").hide();
-		$(".merge_question input").attr('checked', true);
-	      }
-	      else
-	      {
-		$(".merge_question input").attr('checked', false);
-		$(".merge_question").show();
-	      }
-	    },
-	    error: function(xhr)
-	    {
-	      $('#save').removeAttr("disabled");
-	      //addError('Error!  Status = ' + xhr.status);
-	    }
-	    });
+	checkGroup();
     });
+
+    showBasionym();
+
+    $('#classification_synonymies_group_name').change(checkGroup);
+    $('#classification_synonymies_group_name').change(showBasionym);
 
     $('form#synonym_form').submit(function () {
       $('form#synonym_form input[type=submit]').attr('disabled','disabled');
