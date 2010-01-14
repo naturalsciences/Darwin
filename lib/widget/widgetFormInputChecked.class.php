@@ -7,7 +7,7 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
         parent::configure($options, $attributes);
         $this->addRequiredOption('model');
         $this->addOption('method', '__toString');
-        $this->addOption('link_url', '');
+        $this->addOption('link_url', '/#');
         $this->addOption('notExistingAddDisplay', true);
         $this->addOption('notExistingAddTitle', 'This entry do not exist. Would you like we had it ?');
         $this->addOption('notExistingAddValues', array('Yes', 'No'));
@@ -67,27 +67,28 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
 $(document).ready(function () {
     $('#%1\$s').live('change', function()
     {
-      $('#%2\$s').val('');
-      selectMesg = '#%3\$s';
-      $(selectMesg).parent().removeClass('show').addClass('hidden');
-      $(selectMesg + ' option:first').attr('selected', true);
-      $(selectMesg + ' option:last').attr('selected', false);
-      /*parent_id = '%1\$s';
-      el = $('#'+parent_id +' select');
-      el.removeClass('show').addClass('hidden');
-      $('#'+parent_id +' input').attr('name', el.attr('name'))
-      $('#'+parent_id +' input').removeClass('hidden').addClass('show');
-      el.removeAttr('name');
-      $('#'+parent_id +' .change_item_button').removeClass('hidden').addClass('show');
-      $('#'+parent_id +' .add_item_button').removeClass('show').addClass('hidden');*/
+      $(this).prev().val('');
+      toggledMsg = $(this).closest('ul').children('li:last');
+      toggledMsg.removeClass('show').addClass('hidden');
+      toggledMsg.find('option:first').attr('selected', "selected");
+      toggledMsg.find('option:last').removeAttr('selected');
+      link_url = '%2\$s';
+      $.ajax({
+             type: "GET",
+             url: link_url + '/igNum/',
+             data: $(this).serialize(),
+             success: function(html){
+                                     $(this).prev().val(html);
+                                    }
+            }
+           );
     });
 
 });
 </script>
 EOF
     , $this->generateId($name).'_name',
-      $this->generateId($name),
-      $this->generateId($name).'_check');
+      $this->getOption('link_url'));
         return $input;
      }  
 }
