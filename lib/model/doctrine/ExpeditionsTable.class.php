@@ -35,6 +35,6 @@ class ExpeditionsTable extends DarwinTable
 
     $q->andWhere("id > 0 ")
       ->orderby($orderBy . ' ' . $orderByOrder);
-    return $q->execute();
+    return $q;
   }
 }
