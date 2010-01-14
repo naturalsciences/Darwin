@@ -11,26 +11,37 @@
     <?php foreach($synonyms as $group_name => $group):?>
     <tr>
       <td>
-	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/index?table='.$table.'&group_id='.$group[0]['group_id'].'&id='.$eid); ?>">
+	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/edit?table='.$table.'&group_id='.$group[0]['group_id'].'&id='.$eid); ?>">
 	    <?php echo $group_name;?>
 	  </a>
       </td>
       <td>
-	  <ul>
+	  <table>
 	    <?php foreach($group as $synonym):?>
-	      <li>
-		<?php if($synonym['is_basionym']):?>
+	      <tr>
+		<td>
+		  <?php if($synonym['is_basionym']):?>
 		    <em>B</em>
-		<?php endif;?>
-		<?php echo $synonym['name'];?> [<?php echo $synonym['order_by'];?>]
-	      </li>
+		  <?php endif;?>
+		  <?php if($synonym['record_id'] == $eid):?>
+		      <strong><?php echo $synonym['name'];?></strong>
+		  <?php else:?>
+		    <?php echo $synonym['name'];?>
+		  <?php endif;?>    
+		  [<?php echo $synonym['order_by'];?>]
+		</td>
+		<td class="widget_row_delete">
+		  <?php if($synonym['record_id'] == $eid):?>
+		    <a class="widget_row_delete" href="<?php echo url_for('synonym/delete?id='.$synonym['id']);?>" title="<?php echo __('Are you sure ?') ?>">
+		     <?php echo image_tag('remove.png'); ?>
+		    </a>
+		  <?php endif;?>
+		</td>
+	      </tr>
 	    <?php endforeach;?>
-	  </ul>
+	  </table>
       </td>
-      <td class="widget_row_delete">
-        <a class="widget_row_delete" href="" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
-        </a>
-      </td>
+
     </tr>
     <?php endforeach;?>
   </tbody>

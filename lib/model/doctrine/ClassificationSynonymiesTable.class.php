@@ -18,6 +18,14 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $q->execute();
   }
 
+  public function DeleteAllItemInGroup($id)
+  {
+    $q = Doctrine_Query::create()
+      ->delete('ClassificationSynonymies s')
+      ->where('s.group_id = ?',$id)
+      ->execute();
+  }
+
   public function findOneForTableWithGroup($table_name, $record_id, $group_id)
   {
     $q = Doctrine_Query::create()
@@ -44,17 +52,19 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $groups;
   }
 
-  public function findGroupForTable($table_name, $record_id)
+  public function findGroupForTable($table_name, $record_id, $groups = null)
   {
-    $groups = $this->findGroupsIdsForRecord($table_name, $record_id);
+    if($groups === null)
+      $groups = $this->findGroupsIdsForRecord($table_name, $record_id);
+
     if(empty($groups))
       return array();
     $q = Doctrine_Query::create()
-	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name')
+	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id')
 	 ->from('ClassificationSynonymies s, '.Catalogue::getModelForTable($table_name). ' t')
 	 ->whereIn('s.group_id', $groups)
 	 ->andWhere('t.id=s.record_id')
-	 ->andWhere('s.record_id != ?',$record_id)
+// 	 ->andWhere('s.record_id != ?',$record_id)
 	 ->andWhere('s.referenced_relation = ?',$table_name) //Not really necessay but....
 	 ->orderBy('s.group_name ASC, s.order_by')
 	 ->setHydrationMode(Doctrine::HYDRATE_NONE);
@@ -72,6 +82,7 @@ class ClassificationSynonymiesTable extends DarwinTable
 	  'is_basionym' => $item[4],
 	  'order_by' => $item[5],
 	  'name' => $item[6],
+	  'item_id' => $item[7],
 	);
     }
     return $results;
@@ -95,7 +106,7 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $result->getGid()+1;
   }
   
-  public  function findSynonymsFor($table_name, $record_id, $type)
+  public function findSynonymsFor($table_name, $record_id, $type)
   {
     $q = Doctrine_Query::create()
 	 ->from('ClassificationSynonymies s')
@@ -108,6 +119,18 @@ class ClassificationSynonymiesTable extends DarwinTable
       return $result->getGroupId();
     else
       return 0;
+  }
+
+  public function saveOrderAndResetBasio($ids)
+  {
+    $id_list = explode(',',$ids);
+     $q = Doctrine_Query::create()
+      ->update('ClassificationSynonymies')
+      ->set('is_basionym', '?', false)
+      ->set('order_by',"fct_array_find(?, id::text) ",implode(",",$id_list))
+      ->whereIn('id', $id_list);
+
+    $updated = $q->execute();
   }
 
   public function mergeGroup($group1, $group2)
