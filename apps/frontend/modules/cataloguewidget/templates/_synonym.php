@@ -19,16 +19,17 @@
 	  <table>
 	    <?php foreach($group as $synonym):?>
 	      <tr>
+		<td><?php echo $synonym['order_by'];?> - </td>
 		<td>
-		  <?php if($synonym['is_basionym']):?>
-		    <em>B</em>
-		  <?php endif;?>
 		  <?php if($synonym['record_id'] == $eid):?>
 		      <strong><?php echo $synonym['name'];?></strong>
 		  <?php else:?>
 		    <?php echo $synonym['name'];?>
-		  <?php endif;?>    
-		  [<?php echo $synonym['order_by'];?>]
+		  <?php endif;?>
+		  
+		  <?php if($synonym['is_basionym']):?>
+		    <em>( <?php echo __('Basionym');?> )</em>
+		  <?php endif;?>
 		</td>
 		<td class="widget_row_delete">
 		  <?php if($synonym['record_id'] == $eid):?>

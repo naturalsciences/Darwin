@@ -70,6 +70,15 @@ class synonymActions extends sfActions
 		$c2->setGroupName($this->form->getValue('group_name'));
 		$c2->save();
 	      }
+	      elseif($ref_group_id_2 == 0)
+	      {
+		$c1 = new ClassificationSynonymies();
+		$c1->setRecordId($request->getParameter('id'));
+		$c1->setReferencedRelation($request->getParameter('table'));
+		$c1->setGroupId( $ref_group_id );
+		$c1->setGroupName( $this->form->getValue('group_name'));
+		$c1->save();
+	      }
 	      else
 	      {
 		Doctrine::getTable('ClassificationSynonymies')->mergeGroup($ref_group_id,$ref_group_id_2);

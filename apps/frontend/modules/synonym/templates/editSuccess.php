@@ -1,9 +1,9 @@
-<div>
+<div class="edit_syn_screen">
 <ul class="hidden error_list">
   <li></li>
 </ul>
 
-<table class="edit_synon">
+<table class="edition edit_synon">
   <thead>
     <tr>
       <th></th>
