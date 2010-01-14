@@ -88,6 +88,21 @@ class igsActions extends sfActions
     // Triggers the search result function
     $this->searchResults($this->form,$request);    
   }
+  public function executeSearchFor(sfWebRequest $request)
+  {
+    // Forward to a 404 page if the method used is not a post
+    $this->forward404Unless($request->isMethod('get'));
+    // Triggers the search ID function
+    if($request->getParameter('igNum', '') !== '')
+    {
+      $igId = Doctrine::getTable('Igs')->findOneByIgNum($request->getParameter('igNum'));
+      if ($igId) 
+        return $this->renderText($igId->getId());
+      else
+        return $this->renderText('');
+    }  
+    return $this->renderText('');
+  }
 
   /**
     * Method executed when searching an ig - trigger by the click on the search button

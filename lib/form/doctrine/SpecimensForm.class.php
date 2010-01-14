@@ -31,13 +31,16 @@ class SpecimensForm extends BaseSpecimensForm
        'nullable' => true,
      ));
 
-    $this->widgetSchema['ig_ref'] = new widgetFormButtonRef(array(
-       'model' => 'Igs',
-       'link_url' => 'igs/choose',
-       'method' => 'getIgNum',
-       'box_title' => $this->getI18N()->__('Choose an I.G. number'),
-       'nullable' => true,
-     ));
+    $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(array('model' => 'Igs',
+                                                                     'method' => 'getIgNum',
+                                                                     'nullable' => true,
+                                                                     'link_url' => 'igs/searchFor',
+                                                                     'notExistingAddTitle' => $this->getI18N()->__('This I.G. number does not exist. Would you like to automatically insert it ?'),
+                                                                     'notExistingAddValues' => array($this->getI18N()->__('Yes'),
+                                                                                                     $this->getI18N()->__('No')
+                                                                                                    ),
+                                                                    )
+                                                              );
 
     $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',

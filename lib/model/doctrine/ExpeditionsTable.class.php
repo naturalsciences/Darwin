@@ -8,7 +8,7 @@ class ExpeditionsTable extends DarwinTable
   {
     $q = Doctrine_Query::create()
          ->from('Expeditions e');
-    if (trim($name) != ""):
+    if ($name != ""):
       $words = explode(" ",$name);
       foreach($words as $word)
       {
@@ -35,6 +35,6 @@ class ExpeditionsTable extends DarwinTable
 
     $q->andWhere("id > 0 ")
       ->orderby($orderBy . ' ' . $orderByOrder);
-    return $q;
+    return $q->execute();
   }
 }

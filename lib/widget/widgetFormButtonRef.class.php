@@ -16,7 +16,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	if($this->getOption('nullable'))
 	{
 	  $options = array(
-	    'src' => '/images/widget_help_close.png',
+	    'src' => '/images/remove.png',
 	    'class' => 'ref_clear'
 	  );
 

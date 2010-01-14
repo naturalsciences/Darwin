@@ -9,7 +9,7 @@ class IgsTable extends DarwinTable
   {
     $q = Doctrine_Query::create()
          ->from('Igs i');
-    if (trim($ig_num) != "")
+    if ($ig_num != "")
     {
       $q->andWhere("i.ig_num_indexed like concat(fullToIndex(?), '%') ", $ig_num);
     }
