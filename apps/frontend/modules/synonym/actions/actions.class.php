@@ -1,5 +1,4 @@
 <?php
-
 /**
  * synonym actions.
  *
@@ -33,13 +32,13 @@ class synonymActions extends sfActions
 	      $conn = Doctrine_Manager::connection();
 	      $conn->beginTransaction();
 
-	      $ref_group_id = Doctrine::getTable('ClassificationSynonymies')->findSynonymsFor(
+	      $ref_group_id = Doctrine::getTable('ClassificationSynonymies')->findSynonymsGroupFor(
 		$this->form->getValue('referenced_relation'),
 		$this->form->getValue('record_id'),
 		$this->form->getValue('group_name')
 	      );
 
-	      $ref_group_id_2 = Doctrine::getTable('ClassificationSynonymies')->findSynonymsFor(
+	      $ref_group_id_2 = Doctrine::getTable('ClassificationSynonymies')->findSynonymsGroupFor(
 		  $this->form->getValue('referenced_relation'),
 		  $request->getParameter('id'),
 		  $this->form->getValue('group_name')
@@ -156,7 +155,7 @@ class synonymActions extends sfActions
   public function executeChecks(sfWebRequest $request)
   {
     return $this->renderText(
-      Doctrine::getTable('ClassificationSynonymies')->findSynonymsFor(
+      Doctrine::getTable('ClassificationSynonymies')->findSynonymsGroupFor(
 	$request->getParameter('table'),
 	$request->getParameter('id'),
 	$request->getParameter('type'))

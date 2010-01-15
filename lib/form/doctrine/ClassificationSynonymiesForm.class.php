@@ -11,7 +11,7 @@ class ClassificationSynonymiesForm extends BaseClassificationSynonymiesForm
 {
   public function configure()
   {
-    unset($this['id']);
+    unset($this['id'], $this['is_basionym']);
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['group_id'] = new sfWidgetFormInputHidden();

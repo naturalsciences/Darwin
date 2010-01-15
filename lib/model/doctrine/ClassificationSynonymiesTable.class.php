@@ -64,7 +64,6 @@ class ClassificationSynonymiesTable extends DarwinTable
 	 ->from('ClassificationSynonymies s, '.Catalogue::getModelForTable($table_name). ' t')
 	 ->whereIn('s.group_id', $groups)
 	 ->andWhere('t.id=s.record_id')
-// 	 ->andWhere('s.record_id != ?',$record_id)
 	 ->andWhere('s.referenced_relation = ?',$table_name) //Not really necessay but....
 	 ->orderBy('s.group_name ASC, s.order_by')
 	 ->setHydrationMode(Doctrine::HYDRATE_NONE);
@@ -102,11 +101,11 @@ class ClassificationSynonymiesTable extends DarwinTable
     $q = Doctrine_Query::create()
 	 ->select('MAX(s.group_id) as gid')
 	 ->from('ClassificationSynonymies s');
-    $result = $q->fetchOne();
-    return $result->getGid()+1;
+    $res = $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+    return $res+1;
   }
   
-  public function findSynonymsFor($table_name, $record_id, $type)
+  public function findSynonymsGroupFor($table_name, $record_id, $type)
   {
     $q = Doctrine_Query::create()
 	 ->from('ClassificationSynonymies s')
@@ -141,5 +140,22 @@ class ClassificationSynonymiesTable extends DarwinTable
       ->where('s.group_id = ?', $group2);
 
     $updated = $q->execute();
+    //Check if 2 basionym
+    $q = Doctrine_Query::create()
+      ->select("COUNT(s.id) num_ids")
+      ->from('ClassificationSynonymies s')
+      ->andWhere('s.group_id = ?', $group1)
+      ->andWhere('s.is_basionym = ?',true);
+
+    $res = $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+    // Set No Basionym If more than 1
+    if($res > 1)
+    {
+      Doctrine_Query::create()
+	->update('ClassificationSynonymies s')
+	->set('s.is_basionym','?',false)
+	->where('s.group_id = ?', $group1)
+	->execute();
+    }
   }
 }

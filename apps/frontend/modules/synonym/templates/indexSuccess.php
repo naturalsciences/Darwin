@@ -13,13 +13,6 @@
       <?php echo $form['group_name'];?>
     </td>
   </tr>
-  <tr class="basionym_raw">
-    <th><?php echo $form['is_basionym']->renderLabel();?></th>
-    <td>
-      <?php echo $form['is_basionym']->renderError(); ?>
-      <?php echo $form['is_basionym'];?>
-    </td>
-  </tr>
   <tr>
     <th><?php echo $form['order_by']->renderLabel();?></th>
     <td>
@@ -91,15 +84,7 @@ function checkGroup()
    });
 }
 
-function showBasionym()
-{
-  if($('#classification_synonymies_group_name').val() == "homonym")
-    $('.basionym_raw').hide();
-  else
-    $('.basionym_raw').show();
-}
-
-  $(document).ready(function () {
+$(document).ready(function () {
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
 	$("#classification_synonymies_record_id").val(getIdInClasses(el));
@@ -107,10 +92,7 @@ function showBasionym()
 	checkGroup();
     });
 
-    showBasionym();
-
     $('#classification_synonymies_group_name').change(checkGroup);
-    $('#classification_synonymies_group_name').change(showBasionym);
 
     $('form#synonym_form').submit(function () {
       $('form#synonym_form input[type=submit]').attr('disabled','disabled');
