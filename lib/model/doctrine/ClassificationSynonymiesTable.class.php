@@ -3,36 +3,12 @@
  */
 class ClassificationSynonymiesTable extends DarwinTable
 {
-
-  /**
-  * Find all Synonyms for a table name and a recordId
-  * @param string $table_name the table to look for
-  * @param int record_id the record to be linked.
-  * @return Doctrine_Collection Collection of Doctrine records
-  */
-  public function findForTable($table_name, $record_id)
-  {
-    $q = Doctrine_Query::create()
-	 ->from('ClassificationSynonymies s');
-    $q = $this->addCatalogueReferences($q,$table_name, $record_id,'s');
-    return $q->execute();
-  }
-
   public function DeleteAllItemInGroup($id)
   {
     $q = Doctrine_Query::create()
       ->delete('ClassificationSynonymies s')
       ->where('s.group_id = ?',$id)
       ->execute();
-  }
-
-  public function findOneForTableWithGroup($table_name, $record_id, $group_id)
-  {
-    $q = Doctrine_Query::create()
-	 ->from('ClassificationSynonymies s')
-	 ->andWhere('s.group_id = ?',$group_id);
-    $q = $this->addCatalogueReferences($q,$table_name, $record_id,'s');
-    return $q->fetchOne();
   }
 
   public function findGroupsIdsForRecord($table_name, $record_id)
@@ -52,7 +28,7 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $groups;
   }
 
-  public function findGroupForTable($table_name, $record_id, $groups = null)
+  public function findAllForRecord($table_name, $record_id, $groups = null)
   {
     if($groups === null)
       $groups = $this->findGroupsIdsForRecord($table_name, $record_id);
@@ -105,7 +81,7 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $resultset[0][0];
   }
   
-  public function findSynonymsGroupFor($table_name, $record_id, $type)
+  public function findGroupIdFor($table_name, $record_id, $type)
   {
     $q = Doctrine_Query::create()
 	 ->from('ClassificationSynonymies s')
@@ -131,8 +107,48 @@ class ClassificationSynonymiesTable extends DarwinTable
 
     $updated = $q->execute();
   }
+  
+  public function mergeSynonyms($table, $record_id_1, $record_id_2, $group_name)
+  {
+    //Get id For the element to be linked
+    $ref_group_id_1 = $this->findGroupIdFor($table, $record_id_1, $group_name);
 
-  public function mergeGroup($group1, $group2)
+    //Get id For this element 
+    $ref_group_id_2 = $this->findGroupIdFor($table, $record_id_2, $group_name);
+
+    if($ref_group_id_1 == 0 || $ref_group_id_2 == 0)
+    {
+      $c1 = new ClassificationSynonymies();
+      $c1->setReferencedRelation($table);
+      $c1->setGroupName($group_name);
+      $c1->setRecordId($record_id_2);
+
+      if($ref_group_id_1 == 0 && $ref_group_id_2 == 0) //If there is no group
+      {
+	$c1->setGroupId( $this->findNextGroupId());
+
+	$c2 = clone $c1;
+	$c2->setRecordId($record_id_1);
+	$c2->save();
+      }
+      elseif($ref_group_id_1 == 0)
+      {
+	$c1->setRecordId($record_id_1);
+	$c1->setGroupId($ref_group_id_2);
+      }
+      else
+      {
+	$c1->setGroupId( $ref_group_id_1 );
+      }
+      $c1->save();
+    }
+    else // There is 2 existing groups... let's merge them
+    {
+      $this->mergeGroup($ref_group_id_1, $ref_group_id_2);
+    }
+  }
+
+  protected function mergeGroup($group1, $group2)
   {
     $q = Doctrine_Query::create()
       ->update('ClassificationSynonymies s')

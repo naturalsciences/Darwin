@@ -581,7 +581,7 @@ display: inline-block;
 
 #synonym .catalogue_table > tbody > tr
 {
-    border-bottom: 1px solid #C1CF56;
+     border-bottom: 1px dashed #E9EDBE; 
 }
 .catalogue_table tbody tr ul
 {
