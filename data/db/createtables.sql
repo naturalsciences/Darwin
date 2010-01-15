@@ -1008,6 +1008,7 @@ comment on column classification_keywords.keyword_type is 'Keyword type: name, y
 comment on column classification_keywords.keyword is 'Keyword';
 
 create sequence classification_synonymies_id_seq;
+create sequence classification_synonymies_group_id_seq;
 create table classification_synonymies
 	(
          id integer not null default nextval('classification_synonymies_id_seq'),
