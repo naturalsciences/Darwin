@@ -98,11 +98,11 @@ class ClassificationSynonymiesTable extends DarwinTable
 
   public function findNextGroupId()
   {
-    $q = Doctrine_Query::create()
-	 ->select('MAX(s.group_id) as gid')
-	 ->from('ClassificationSynonymies s');
-    $res = $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
-    return $res+1;
+    $conn = Doctrine_Manager::connection()->getDbh();
+    $statement = $conn->prepare("SELECT nextval('classification_synonymies_group_id_seq')");
+    $statement->execute();
+    $resultset = $statement->fetchAll(PDO::FETCH_NUM);
+    return $resultset[0][0];
   }
   
   public function findSynonymsGroupFor($table_name, $record_id, $type)
@@ -138,7 +138,6 @@ class ClassificationSynonymiesTable extends DarwinTable
       ->update('ClassificationSynonymies s')
       ->set('s.group_id', '?', $group1)
       ->where('s.group_id = ?', $group2);
-
     $updated = $q->execute();
     //Check if 2 basionym
     $q = Doctrine_Query::create()
