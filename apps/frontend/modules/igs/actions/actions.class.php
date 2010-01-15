@@ -88,20 +88,44 @@ class igsActions extends sfActions
     // Triggers the search result function
     $this->searchResults($this->form,$request);    
   }
+
   public function executeSearchFor(sfWebRequest $request)
   {
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('get'));
     // Triggers the search ID function
-    if($request->getParameter('igNum', '') !== '')
+    if($request->getParameter('searchedCrit', '') !== '')
     {
-      $igId = Doctrine::getTable('Igs')->findOneByIgNum($request->getParameter('igNum'));
+      $igId = Doctrine::getTable('Igs')->findOneByIgNum($request->getParameter('searchedCrit'));
       if ($igId) 
         return $this->renderText($igId->getId());
       else
-        return $this->renderText('');
+        return $this->renderText('not found');
     }  
     return $this->renderText('');
+  }
+
+  public function executeSearchForLimited(sfWebRequest $request)
+  {
+    // Forward to a 404 page if the method used is not a post
+    $this->forward404Unless($request->isMethod('get'));
+    // Triggers the search ID function
+    if($request->getParameter('q', '') !== '' && $request->getParameter('limit', '') !== '')
+    {
+      $igIds = Doctrine::getTable('Igs')->findByIgNumLimited($request->getParameter('q'), $request->getParameter('limit'));
+      if ($igIds) 
+      {
+        $values=array();
+        foreach($igIds as $key=>$value)
+        {
+          $values[$key]=$value->getIgNum();
+        }
+        return $this->renderText(implode("\n",$values));
+      }
+      else
+        return $this->renderText(array(''));
+    }  
+    return $this->renderText(array(''));
   }
 
   /**

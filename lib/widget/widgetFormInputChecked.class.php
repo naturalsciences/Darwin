@@ -69,26 +69,38 @@ $(document).ready(function () {
     {
       $(this).prev().val('');
       toggledMsg = $(this).closest('ul').children('li:last');
-      toggledMsg.removeClass('show').addClass('hidden');
+      toggledMsg.slideUp("slow");
       toggledMsg.find('option:first').attr('selected', "selected");
       toggledMsg.find('option:last').removeAttr('selected');
       link_url = '%2\$s';
+      hideForRefresh($(this).closest('.widget_content'));
       $.ajax({
-             type: "GET",
-             url: link_url + '/igNum/',
-             data: $(this).serialize(),
-             success: function(html){
-                                     $(this).prev().val(html);
-                                    }
+              type: "GET",
+              url: link_url,
+              data: {'searchedCrit' : $(this).val()},
+              success: function(html){
+                                       if (html == 'not found')
+                                       {
+                                         $('#%1\$s').closest('ul').children('li:last').show("slow");
+                                       }
+                                       else
+                                       {
+                                         $('#%1\$s').prev().val(html);
+                                       }
+                                       showAfterRefresh($('#%1\$s').closest('.widget_content'));
+                                     }
             }
            );
+      return false;
     });
+    $("#%1\$s").autocomplete('%3\$s').setOptions({max: 50, minChars: 3, autoFill: true})
 
 });
 </script>
 EOF
     , $this->generateId($name).'_name',
-      $this->getOption('link_url'));
+      url_for($this->getOption('link_url')),
+      url_for($this->getOption('link_url').'Limited'));
         return $input;
      }  
 }

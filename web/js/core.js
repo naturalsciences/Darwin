@@ -112,6 +112,11 @@ function hideForRefresh(el)
             });
 }
 
+function showAfterRefresh(el)
+{
+  $(el).children('#loading_screen').remove();
+}
+
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();

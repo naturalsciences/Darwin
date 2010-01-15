@@ -39,4 +39,15 @@ class IgsTable extends DarwinTable
       ->orderby($orderBy . ' ' . $orderByOrder);
     return $q;
   }
+  
+  public function findByIgNumLimited($ig_num, $limit)
+  {
+    $q = Doctrine_Query::create()
+         ->from('Igs i')
+         ->where("i.ig_num_indexed like concat (fullToIndex(?), '%') ", $ig_num)
+         ->limit($limit)
+         ->orderBy("i.ig_num ASC");
+    return $q->execute();
+  }
+
 }
