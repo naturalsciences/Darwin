@@ -100,14 +100,16 @@ Igs:
     ig1:
         ig_num: '2692'
     ig2:
+        ig_num: '2693'
+    ig3:
         ig_num: '21Ter'
         ig_date: '1847-07-23'
         ig_date_mask: 56
-    ig3:
+    ig4:
         ig_num: '10795'
         ig_date: '1936-03-13'
         ig_date_mask: 56
-    ig4:
+    ig5:
         ig_num: '3881'
         ig_date: '1877-01-01'
         ig_date_mask: 32
