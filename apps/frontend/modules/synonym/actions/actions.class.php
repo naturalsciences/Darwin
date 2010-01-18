@@ -66,7 +66,7 @@ class synonymActions extends sfActions
     }
     else     //Delete the entire group if there is only two record
     {
-      Doctrine::getTable('ClassificationSynonymies')->DeleteAllItemInGroup( $synonym->getGroupId() );
+      Doctrine::getTable('ClassificationSynonymies')->deleteAllItemInGroup( $synonym->getGroupId() );
     }
     $conn->commit();
     return $this->renderText('ok');

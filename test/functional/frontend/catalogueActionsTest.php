@@ -14,7 +14,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('table tbody tr',4)->
+    checkElement('table tbody tr',5)->
     checkElement('tbody tr:first span','/Falco Peregrinus/')->
   end()->
   info('executeTree');

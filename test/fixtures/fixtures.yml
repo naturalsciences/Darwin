@@ -40,6 +40,12 @@ Taxonomy:
         level_ref: 49
         status: valid
         Parent: ta2
+    ta6:
+        id: 6
+        name: Falco Peregrinus eliticus
+        level_ref: 52
+        status: valid
+        Parent: ta5
 
 Expeditions:
     ex0:
@@ -473,3 +479,47 @@ Comments:
           This is bullshit... 
           None of this is right!
           Ok?
+
+ClassificationSynonymies:
+    csynon1:
+        referenced_relation: taxonomy
+        record_id: 4
+        group_id: 1
+        group_name: synonym
+        is_basionym: true
+        order_by: 0
+    csynon2:
+        referenced_relation: taxonomy
+        record_id: 5
+        group_id: 1
+        group_name: synonym
+        is_basionym: false
+        order_by: 1
+    csynon3:
+        referenced_relation: taxonomy
+        record_id: 4
+        group_id: 2
+        group_name: homonym
+        is_basionym: false
+        order_by: 2
+    csynon4:
+        referenced_relation: taxonomy
+        record_id: 3
+        group_id: 2
+        group_name: homonym
+        is_basionym: false
+        order_by: 1
+    csynon5:
+        referenced_relation: taxonomy
+        record_id: 2
+        group_id: 3
+        group_name: synonym
+        is_basionym: false
+        order_by: 1
+    csynon6:
+        referenced_relation: taxonomy
+        record_id: 6
+        group_id: 3
+        group_name: synonym
+        is_basionym: false
+        order_by: 2

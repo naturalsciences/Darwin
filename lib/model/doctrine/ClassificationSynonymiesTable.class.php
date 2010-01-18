@@ -1,9 +1,15 @@
 <?php
 /**
+ * Synonyms or Homonyms for catalogues
  */
 class ClassificationSynonymiesTable extends DarwinTable
 {
-  public function DeleteAllItemInGroup($id)
+  /**
+   * deleteAllItemInGroup
+   * Delete All synonyms in a given group
+   * @param int $id Id of the group
+   */
+  public function deleteAllItemInGroup($id)
   {
     $q = Doctrine_Query::create()
       ->delete('ClassificationSynonymies s')
@@ -11,6 +17,13 @@ class ClassificationSynonymiesTable extends DarwinTable
       ->execute();
   }
 
+  /**
+   * findGroupsIdsForRecord
+   * find group ids in an array of ids for a given table_name and record_id
+   * @param string $table_name the name of the referenced relation
+   * @param int $record_id record id of the referenced item_id
+   * @return  array Array of ids of the groups (or empty array if there is no existing groups)
+  */
   public function findGroupsIdsForRecord($table_name, $record_id)
   {
     $q = Doctrine_Query::create()
@@ -28,6 +41,15 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $groups;
   }
 
+  /**
+   * findAllForRecord
+   * Find all synoyms (including self) of a given table_name and record_id (and group if specified).
+   * Also takes the 'name' column of the referenced record
+   * @param string $table_name the name of the referenced relation
+   * @param int $record_id record id of the referenced item_id
+   * @param array $groups array of group ids to filter the research
+   * @return array of array of result. each item has keys  id, record_id, group_id, is_basionym, order_by, item_id, name (of the referenced record)
+  */
   public function findAllForRecord($table_name, $record_id, $groups = null)
   {
     if($groups === null)
@@ -63,6 +85,11 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $results;
   }
   
+  /**
+   * findGroupnames
+   * Give all the possible groups of synonymies
+   * @return array an array of key/value (value is localised)
+ */
   public function findGroupnames()
   {
     return array(
@@ -72,6 +99,11 @@ class ClassificationSynonymiesTable extends DarwinTable
     );
   }
 
+  /**
+   * findNextGroupId
+   * Give the next unused id for a group
+   * @return int next unused id of group
+  */
   public function findNextGroupId()
   {
     $conn = Doctrine_Manager::connection()->getDbh();
@@ -81,6 +113,14 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $resultset[0][0];
   }
   
+  /**
+   * findGroupIdFor
+   * Give the id of the group for a given group type and referenced recordµ
+   * @param string $table_name the name of the referenced relation
+   * @param int $record_id record id of the referenced item_id
+   * @param string $type string of the group name
+   * @return int the id of the group or '0' if it doesn't exist yet
+  */
   public function findGroupIdFor($table_name, $record_id, $type)
   {
     $q = Doctrine_Query::create()
@@ -96,6 +136,11 @@ class ClassificationSynonymiesTable extends DarwinTable
       return 0;
   }
 
+  /**
+   * saveOrderAndResetBasio
+   * Save the order of the synonyms in a group and reset the basionym to false 
+   * @param string $ids string of Ids separated by ',' of ClassificationSynonymies records id ordered
+  */
   public function saveOrderAndResetBasio($ids)
   {
     $id_list = explode(',',$ids);
@@ -108,6 +153,14 @@ class ClassificationSynonymiesTable extends DarwinTable
     $updated = $q->execute();
   }
   
+  /**
+   * mergeSynonyms
+   * Merge two groups of synonyms for 2 items (or create groups if they doesn't exists)
+   * @param string $table the name of the referenced relation
+   * @param int $record_id_1 id of the first referenced record
+   * @param int $record_id_2 id of the second referenced record
+   * @param string $group_name the type of the group (synonym, homonym,...)
+  */
   public function mergeSynonyms($table, $record_id_1, $record_id_2, $group_name)
   {
     //Get id For the element to be linked
@@ -148,6 +201,12 @@ class ClassificationSynonymiesTable extends DarwinTable
     }
   }
 
+  /** 
+   * mergeGroup
+   * Merge groups of two synonyms
+   * @param int $group1 id of the first group 
+   * @param int $group2 id of the second group
+  */
   protected function mergeGroup($group1, $group2)
   {
     $q = Doctrine_Query::create()

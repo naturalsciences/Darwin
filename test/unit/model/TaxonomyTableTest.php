@@ -11,7 +11,7 @@ $taxs = Doctrine::getTable('Taxonomy')->findByNameLike('euca',4);
 $t->is($taxs->count(),0,'There are no results in taxo with phylum');
 
 $taxs = Doctrine::getTable('Taxonomy')->findByNameLike('falc');
-$t->is($taxs->count(),4,'There are 2 results in taxo');
+$t->is($taxs->count(),5,'There are 2 results in taxo');
 $t->is($taxs[0]->getName(),'Falco Peregrinus', 'they are order');
 
 $t->info('findWithParents($id)');
