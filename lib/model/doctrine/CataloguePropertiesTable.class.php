@@ -16,11 +16,9 @@ class CataloguePropertiesTable extends DarwinTable
      $q = Doctrine_Query::create()
 	 ->from('CatalogueProperties p')
 	 ->leftJoin('p.PropertiesValues v')
-	 ->andWhere('p.referenced_relation = ?',$table_name)
-         ->andWhere('p.record_id = ?',$record_id)
-	 ->andWhere('p.record_id != 0')
 	 ->orderBy('p.property_type ASC');
-    return $q->execute();
+     $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'p', true);
+     return $q->execute();
   }
 
   /**

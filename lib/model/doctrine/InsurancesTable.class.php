@@ -16,11 +16,11 @@ class InsurancesTable extends DarwinTable
     $q = Doctrine_Query::create()
 	 ->from('Insurances i')
          ->leftJoin('i.People p')
-	 ->andWhere('i.referenced_relation = ?',$table_name)
-         ->andWhere('i.record_id = ?',$record_id)
 	 ->orderBy('i.insurance_year DESC');
+    $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'i', true);
     return $q->execute();
   }
+
   /**
   * Get Distincts Currencies
   * @return array an Array of currencies in keys

@@ -23,10 +23,8 @@ class CommentsTable extends DarwinTable
   public function findForTable($table_name, $record_id)
   {
      $q = Doctrine_Query::create()
-	 ->from('Comments c')
-	 ->andWhere('c.referenced_relation = ?',$table_name)
-         ->andWhere('c.record_id = ?',$record_id)
-	 ->andWhere('c.record_id != 0');
+	 ->from('Comments c');
+     $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
     return $q->execute();
   }
   
