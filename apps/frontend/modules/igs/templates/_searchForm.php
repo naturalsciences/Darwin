@@ -3,13 +3,13 @@
 <script type="text/javascript">
 $(document).ready(function () 
  {
-   $("#search_expedition").submit(function ()
+   $("#search_form").submit(function ()
    {
      $(".search_content").html('<?php echo image_tag('loader.gif');?>');
      $.ajax({
              type: "POST",
              url: $(this).attr('action'),
-             data: $('#search_expedition').serialize(),
+             data: $('#search_form').serialize(),
              success: function(html){
                                      $(".search_results_content").html(html);
                                      $('.search_results').slideDown();
@@ -24,7 +24,7 @@ $(document).ready(function ()
      $.ajax({
              type: "POST",
              url: $(this).attr("href"),
-             data: $('#search_expedition').serialize(),
+             data: $('#search_form').serialize(),
              success: function(html){
                                      $(".search_results_content").html(html);
                                     }
@@ -39,7 +39,7 @@ $(document).ready(function ()
      $.ajax({
              type: "POST",
              url: $(this).attr("href"),
-             data: $('#search_expedition').serialize(),
+             data: $('#search_form').serialize(),
              success: function(html){
                                      $(".search_results_content").html(html);
                                     }
@@ -51,7 +51,7 @@ $(document).ready(function ()
 
  });
 </script>
-<form id="search_expedition" action="<?php echo url_for('igs/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<form id="search_form" action="<?php echo url_for('igs/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <?php echo $form->renderGlobalErrors() ?>
   <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
     <thead>
@@ -87,7 +87,7 @@ $(document).ready(function ()
           <?php echo $form['to_date']->render() ?>
         </td>
         <td>
-          <input id="expedition_search" type="submit" name="search" value="<?php echo __('Search'); ?>" />
+          <input id="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
         </td>
       </tr>
     </tbody>

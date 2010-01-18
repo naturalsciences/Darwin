@@ -184,17 +184,19 @@ $browser->
   with('response')->
   begin()->
     checkElement('form input[name="expeditions[name]"][value="Antarctica 2000"]', 1)->
+    checkElement('li[class="widget"][id="comment"]', 1)->
+    checkElement('li[class="widget"][id="comment"] div[class="widget_content hidden"]', 1)->
   end();
 
   $items = Doctrine::getTable('Expeditions')->findByName('Antarctica 2000');
 
   $browser->
   info('Check new record has been saved in DB')->
-  test()->is($items[0]->getName(),'Antarctica 2000', 'We have the new encoded taxa');
+  test()->is($items[0]->getName(),'Antarctica 2000', 'We have the new encoded expedition');
   $browser->
-  test()->is($items[0]->getExpeditionFromDate(),array('year'=>1999, 'month'=>12, 'day'=>5, 'hour'=>'', 'minute'=>'', 'second'=>''), 'We have the new encoded taxa');
+  test()->is($items[0]->getExpeditionFromDate(),array('year'=>1999, 'month'=>12, 'day'=>5, 'hour'=>'', 'minute'=>'', 'second'=>''), 'We have the new encoded expedition');
   $browser->
-  test()->is($items[0]->getExpeditionToDate(),array('year'=>2000, 'month'=>12, 'day'=>5, 'hour'=>'', 'minute'=>'', 'second'=>''), 'We have the new encoded taxa');
+  test()->is($items[0]->getExpeditionToDate(),array('year'=>2000, 'month'=>12, 'day'=>5, 'hour'=>'', 'minute'=>'', 'second'=>''), 'We have the new encoded expedition');
 
   $browser->
   info('Test the delete action...')->

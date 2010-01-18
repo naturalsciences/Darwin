@@ -9,7 +9,9 @@ class CommentsTable extends DarwinTable
                                                        ),
                                     'igs' => array('ig definition' => 'ig definition',
                                                    'diverse' => 'diverse'
-                                                  )
+                                                  ),
+                                    'expeditions' => array('expedition information' => 'expedition information',
+                                                         )
                                    );
 
   /**

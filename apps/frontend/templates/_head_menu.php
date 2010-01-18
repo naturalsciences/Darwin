@@ -33,6 +33,7 @@
                 </li>
                 <li><?php echo link_to(__('Collections'),'collection/index');?></li>
                 <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
+                <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
             </ul>
         </li>
         <li>
@@ -40,6 +41,7 @@
             <ul>
                 <li><?php echo link_to(__('Collections'),'collection/new');?></li>
                 <li><?php echo link_to(__('Expeditions'),'expedition/new');?></li>
+                <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/new');?></li>
                 <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
                 <li>
                     <a href="#">Catalogues</a>

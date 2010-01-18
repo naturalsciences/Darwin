@@ -79,6 +79,10 @@ class expeditionActions extends sfActions
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Otherwise initialize the expedition encoding form
     $this->form = new ExpeditionsForm($expeditions);
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('catalogue_expedition_widget');
+    if(! $this->widgets) $this->widgets=array();
   }
 
   /**

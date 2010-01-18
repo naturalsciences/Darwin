@@ -30,9 +30,10 @@ class IgsTable extends DarwinTable
     } 
     elseif (($from_date->getMask() == 0) && ($to_date->getMask() > 0))
     {
-      $q->andWhere(" i.ig_date >= ? ", 
+      $q->andWhere(" i.ig_date <= ?", 
                    $to_date->format('d/m/Y')
-                  );
+                  )
+        ->andWhere(" i.ig_date_mask > 0");
     } 
 
     $q->andWhere("i.id > 0 ")
