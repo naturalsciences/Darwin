@@ -2315,122 +2315,48 @@ DECLARE
 BEGIN
 	IF TG_OP = 'UPDATE' THEN
 		IF TG_TABLE_NAME = 'catalogue_properties' THEN
-			oldValue := OLD.property_tool;
-			IF NEW.property_tool <> oldValue THEN
-				NEW.property_tool_indexed := COALESCE(fullToIndex(NEW.property_tool),'');
-			END IF;
-			oldValue := OLD.property_sub_type;
-			IF NEW.property_sub_type <> oldValue THEN
-				NEW.property_sub_type_indexed := COALESCE(fullToIndex(NEW.property_sub_type),'');
-			END IF;
-			oldValue := OLD.property_method;
-			IF NEW.property_method <> oldValue THEN
-				NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
-			END IF;
-			oldValue := OLD.property_qualifier;
-			IF NEW.property_qualifier <> oldValue THEN
-				NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
-			END IF;
+			NEW.property_tool_indexed := COALESCE(fullToIndex(NEW.property_tool),'');
+			NEW.property_sub_type_indexed := COALESCE(fullToIndex(NEW.property_sub_type),'');
+			NEW.property_method_indexed := COALESCE(fullToIndex(NEW.property_method),'');
+			NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := to_tsvector('simple', NEW.name);
-			END IF;
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'expeditions' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
-			END IF;
+			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'habitats' THEN
-			oldValue := OLD.code;
-			IF NEW.code <> oldValue THEN
-				NEW.code_indexed := fullToIndex(NEW.code);
-			END IF;
+			NEW.code_indexed := fullToIndex(NEW.code);
 		ELSIF TG_TABLE_NAME = 'identifications' THEN
-			oldValue := OLD.value_defined;
-			IF NEW.value_defined <> oldValue THEN
-				NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
-			END IF;
+			NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := to_tsvector('simple', NEW.name);
-			END IF;
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := to_tsvector('simple', NEW.name);
-			END IF;
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := to_tsvector('simple', NEW.name);
-			END IF;
-			oldValue := OLD.formule;
-			IF NEW.formule <> oldValue THEN
-				NEW.formule_indexed := fullToIndex(NEW.formule);
-			END IF;
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.formule_indexed := fullToIndex(NEW.formule);
 		ELSIF TG_TABLE_NAME = 'multimedia' THEN
-			oldValue := OLD.title;
-			IF NEW.title <> oldValue THEN
-				NEW.title_indexed := fullToIndex(NEW.title);
-			END IF;
+			NEW.title_indexed := fullToIndex(NEW.title);
 		ELSIF TG_TABLE_NAME = 'multimedia_keywords' THEN
-			oldValue := OLD.keyword;
-			IF NEW.keyword <> oldValue THEN
-				NEW.keyword_indexed := fullToIndex(NEW.keyword);
-			END IF;
+			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'people' THEN
-			oldValue := OLD.formated_name;
-			IF NEW.formated_name <> oldValue THEN
-				NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
-			END IF;
+			NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
 		ELSIF TG_TABLE_NAME = 'codes' THEN
-			oldCodePrefix := OLD.code_prefix;
-			oldCode := OLD.code;
-			oldCodeSuffix := OLD.code_suffix;
-			IF NEW.code::text <> oldCode OR NEW.code_prefix <> oldCodePrefix OR NEW.code_suffix <> oldCodeSuffix THEN
-				NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
-			END IF;
+			NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
 		ELSIF TG_TABLE_NAME = 'tag_groups' THEN
-			oldValue := OLD.group_name;
-			IF NEW.group_name <> oldValue THEN
-				NEW.group_name_indexed := fullToIndex(NEW.group_name);
-			END IF;
-			oldValue := OLD.sub_group_name;
-			IF NEW.sub_group_name <> oldValue THEN
-				NEW.sub_group_name_indexed := fullToIndex(NEW.sub_group_name);
-			END IF;
+			NEW.group_name_indexed := fullToIndex(NEW.group_name);
+			NEW.sub_group_name_indexed := fullToIndex(NEW.sub_group_name);
 		ELSIF TG_TABLE_NAME = 'tags' THEN
-			oldValue := OLD.label;
-			IF NEW.label <> oldValue THEN
-				NEW.label_indexed := fullToIndex(NEW.label);
-			END IF;
+			NEW.label_indexed := fullToIndex(NEW.label);
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := to_tsvector('simple', NEW.name);
-			END IF;
+			NEW.name_indexed := to_tsvector('simple', NEW.name);
 		ELSIF TG_TABLE_NAME = 'classification_keywords' THEN
-			oldValue := OLD.keyword;
-			IF NEW.keyword <> oldValue THEN
-				NEW.keyword_indexed := fullToIndex(NEW.keyword);
-			END IF;
+			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'users' THEN
-			oldValue := OLD.formated_name;
-			IF NEW.formated_name <> oldValue THEN
-				NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
-			END IF;
+			NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
-			oldValue := OLD.name;
-			IF NEW.name <> oldValue THEN
-				NEW.name_indexed := fullToIndex(NEW.name);
-			END IF;
+			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'igs' THEN
-			oldValue := OLD.ig_num;
-			IF NEW.ig_num <> oldValue THEN
-				NEW.ig_num_indexed := fullToIndex(NEW.ig_num);
-			END IF;
+			NEW.ig_num_indexed := fullToIndex(NEW.ig_num);
 		END IF;	
 	ELSIF TG_OP = 'INSERT' THEN
 		IF TG_TABLE_NAME = 'catalogue_properties' THEN

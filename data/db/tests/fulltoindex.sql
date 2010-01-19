@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(880);
+SELECT plan(882);
 
 SELECT diag('FulltoIndex Function');
 SELECT ok('msdfnjrt' = fullToIndex('MsdfnJrt'),'With Majuscule and minuscule');
@@ -1114,5 +1114,9 @@ SELECT ok( to_tsvector('simple', 'Méàleis Gùbularis&AP') = (SELECT sub_genus_
 SELECT ok( to_tsvector('simple', 'Méàleis Gùbularis&AP') = (SELECT sub_genus_indexed FROM taxonomy WHERE id=53),'Sub Genus name of taxonomic unit N°53: mealeisgubularisap');
 SELECT ok( to_tsvector('simple', 'Méàleis Gùbularis&AP') = (SELECT sub_genus_indexed FROM taxonomy WHERE id=54),'Sub Genus name of taxonomic unit N°54: mealeisgubularisap');
 
+SELECT ok( to_tsvector('simple', 'Méàleis Gùbularis&') = (SELECT name_indexed FROM taxonomy WHERE id=1),'FulltoIndex on taxonomy name');
+
+UPDATE taxonomy SET name_indexed  = to_tsvector('simple', 'brol') , extinct = true WHERE id=1;
+SELECT ok( to_tsvector('simple', 'Méàleis Gùbularis&') = (SELECT name_indexed FROM taxonomy WHERE id=1),'the name_index hasnt changed');
 SELECT * FROM finish();
 ROLLBACK;
