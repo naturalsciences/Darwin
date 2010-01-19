@@ -14,7 +14,7 @@ class synonymActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeIndex(sfWebRequest $request)
+  public function executeAdd(sfWebRequest $request)
   {
 
     $this->classification = new ClassificationSynonymies();

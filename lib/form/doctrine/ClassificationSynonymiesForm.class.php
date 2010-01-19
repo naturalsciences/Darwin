@@ -11,10 +11,9 @@ class ClassificationSynonymiesForm extends BaseClassificationSynonymiesForm
 {
   public function configure()
   {
-    unset($this['id'], $this['is_basionym']);
+    unset($this['id'], $this['is_basionym'], $this['group_id']);
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['group_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['group_name'] = new sfWidgetFormChoice(array(
     	'choices' => Doctrine::getTable('ClassificationSynonymies')->findGroupnames(),
 	'expanded' => false)
@@ -29,7 +28,6 @@ class ClassificationSynonymiesForm extends BaseClassificationSynonymiesForm
     $this->widgetSchema['merge'] = new sfWidgetFormInputCheckbox();
 
     $this->validatorSchema['record_id'] = new sfValidatorInteger(array('required' => true));
-    $this->validatorSchema['group_id'] = new sfValidatorPass();
     $this->validatorSchema['merge'] = new sfValidatorChoice(array('required' => true,'choices' => array('true', 't', 'yes', 'y', 'on', 1)));
   }
 }

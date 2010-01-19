@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(17, new lime_output_color());
+$t = new lime_test(18, new lime_output_color());
 
 $t->info('findGroupsIdsForRecord');
 $syns = Doctrine::getTable('ClassificationSynonymies')->findGroupsIdsForRecord('taxonomy',4);
@@ -204,3 +204,7 @@ Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 2, 6, 
 $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId( Doctrine::getTable('ClassificationSynonymies')->findNextGroupId() - 1);
 $t->is(count($syn), 2, 'two records create a new group');
 
+$t->info('deleteAllItemInGroup');
+Doctrine::getTable('ClassificationSynonymies')->deleteAllItemInGroup(2);
+$syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId(2);
+$t->is(count($syn), 0, 'All record in group was deleted');

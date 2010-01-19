@@ -1,5 +1,5 @@
 <div id="syn_screen">
-<form class="edition" action="<?php echo url_for('synonym/index?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ( ! $sf_request->hasParameter('group_id') ? '': '&group_id='.$sf_request->getParameter('group_id') ) );?>" method="post" id="synonym_form">
+<form class="edition" action="<?php echo url_for('synonym/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id'));?>" method="post" id="synonym_form">
 <table >
   <tr>
       <td colspan="2">

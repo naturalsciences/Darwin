@@ -48,4 +48,4 @@
   </tbody>
 </table>
 <br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Synonymies');?>" class="link_catalogue" href="<?php echo url_for('synonym/index?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
+<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Synonymies');?>" class="link_catalogue" href="<?php echo url_for('synonym/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
