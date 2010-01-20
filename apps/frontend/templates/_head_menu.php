@@ -27,13 +27,13 @@
                     <a href="#aa">Catalogues</a>
                     <ul>
                         <li><?php echo link_to(__('Taxa'),'taxonomy/index');?></li>
+                        <li><?php echo link_to(__('Collections'),'collection/index');?></li>
+                        <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
+                        <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
                         <li><a href="#">Habitats</a></li>
                         <li><a href="#">....</a></li>
                     </ul>
                 </li>
-                <li><?php echo link_to(__('Collections'),'collection/index');?></li>
-                <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
-                <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
             </ul>
         </li>
         <li>
