@@ -980,7 +980,7 @@ create table template_classifications
        (
         name varchar not null,
         name_indexed tsvector not null,
-        level_ref integer,
+        level_ref integer not null,
         status varchar not null default 'valid',
         path varchar not null default '/',
         parent_ref integer not null default 0
