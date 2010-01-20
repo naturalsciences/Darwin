@@ -47,9 +47,9 @@
     <tfoot>
       <tr>
         <td colspan="2">
-	  <?php if (!$form->getObject()->isNew()): ?>
+          <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New Taxa'), 'taxonomy/new') ?>
-	  <?php endif?>
+          <?php endif?>
 
           <?php echo $form['id']->render() ?>  &nbsp;<a href="<?php echo url_for('taxonomy/index') ?>"><?php echo __('Cancel');?></a>
 

@@ -165,6 +165,9 @@ $browser->
   with('response')->
   begin()->
     checkElement('form input[name="igs[ig_num]"][value="Pollux"]', 1)->
+    checkElement('form table tfoot a:first', 'New I.G.')->
+    checkElement('form table tfoot a:nth-child(3)', 'Cancel')->
+    checkElement('form table tfoot a:nth-child(4)', 'Delete')->
     checkElement('li[class="widget"][id="comment"]', 1)->
     checkElement('li[class="widget"][id="comment"] div[class="widget_content hidden"]', 1)->
     checkElement('li[class="widget"][id="insurances"]', 1)->

@@ -27,6 +27,11 @@
       <tr>
         <td colspan="2">
           <?php echo $form->renderHiddenFields() ?>
+
+          <?php if (!$form->getObject()->isNew()): ?>
+            <?php echo link_to(__('New I.G.'), 'igs/new') ?>
+          <?php endif?>
+
           &nbsp;<a href="<?php echo url_for('igs/index') ?>"><?php echo __('Cancel');?></a>
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('Delete'), 'igs/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>

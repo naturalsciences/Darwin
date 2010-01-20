@@ -184,6 +184,9 @@ $browser->
   with('response')->
   begin()->
     checkElement('form input[name="expeditions[name]"][value="Antarctica 2000"]', 1)->
+    checkElement('form table tfoot a:first', 'New Expedition')->
+    checkElement('form table tfoot a:nth-child(3)', 'Cancel')->
+    checkElement('form table tfoot a:nth-child(4)', 'Delete')->
     checkElement('li[class="widget"][id="comment"]', 1)->
     checkElement('li[class="widget"][id="comment"] div[class="widget_content hidden"]', 1)->
   end();
