@@ -34,7 +34,7 @@ class propertyActions extends sfActions
 	    $this->form->save();
 	    $this->form->getObject()->refreshRelated();
 	    $this->form = new CataloguePropertiesForm($this->form->getObject()); //Ugly refresh
-	    $this->message = 'Your property was saved';
+	    return $this->renderText('ok');
 	  }
 	  catch(Exception $e)
 	  {

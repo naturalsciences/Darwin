@@ -11,7 +11,7 @@
     <?php foreach($synonyms as $group_name => $group):?>
     <tr>
       <td>
-	  <a class="link_catalogue" title="<?php echo __('Edit Synonymies');?>" href="<?php echo url_for('synonym/edit?table='.$table.'&group_id='.$group[0]['group_id'].'&id='.$eid); ?>">
+	  <a class="link_catalogue" title="<?php echo __('Edit Synonyms');?>" href="<?php echo url_for('synonym/edit?table='.$table.'&group_id='.$group[0]['group_id'].'&id='.$eid); ?>">
 	    <?php echo $group_name;?>
 	  </a>
       </td>

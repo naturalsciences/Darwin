@@ -47,10 +47,16 @@
     <tfoot>
       <tr>
         <td colspan="2">
+	  <?php if (!$form->getObject()->isNew()): ?>
+            <?php echo link_to(__('New Taxa'), 'taxonomy/new') ?>
+	  <?php endif?>
+
           <?php echo $form['id']->render() ?>  &nbsp;<a href="<?php echo url_for('taxonomy/index') ?>"><?php echo __('Cancel');?></a>
+
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('Delete'), 'taxonomy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
           <?php endif; ?>
+
           <input id="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>
       </tr>
