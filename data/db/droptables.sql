@@ -72,6 +72,7 @@ DROP TABLE  IF EXISTS template_table_record_ref CASCADE;
 DROP TABLE  IF EXISTS catalogue_relationships CASCADE;
 DROP TABLE  IF EXISTS words CASCADE;
 DROP SEQUENCE IF EXISTS expeditions_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS insurances_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS igs_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS people_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_relationships_id_seq CASCADE;
