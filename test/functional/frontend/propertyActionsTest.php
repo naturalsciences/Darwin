@@ -34,8 +34,6 @@ $browser->
     isError('property_type', 'required')->
   end()->
 
-//   get('/property/add?id=4&table=taxonomy')->
-
   click('Save', array('catalogue_properties' => array(
     'referenced_relation' => 'taxonomy',
     'record_id'           => '4',
@@ -57,15 +55,9 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.flash_save')->
-    checkElement('#catalogue_properties_property_type option',3)->
-    checkElement('#catalogue_properties_property_sub_type option',2)->
-    checkElement('#catalogue_properties_property_unit option',5)->
-    checkElement('#catalogue_properties_property_accuracy_unit option',5)->
-    checkElement('.proprety_values tbody tr',1)->
-    checkElement('#catalogue_properties_PropertiesValues_0_property_value')->
-    checkElement('.proprety_values tbody input[value="12"]')->
+    matches('/ok/')->
   end()->
+  
 
   get('/property/getUnit?type=physical%20measurement')->
   
