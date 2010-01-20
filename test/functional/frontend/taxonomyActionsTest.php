@@ -33,8 +33,9 @@ $browser->
   )))->
 
   with('form')->begin()->
-    hasErrors(2)->
+    hasErrors(3)->
     isError('name', 'required')->
+    isError('level_ref', 'required')->
     isError('status', 'required')->
   end()->
 

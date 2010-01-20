@@ -69,7 +69,6 @@ class catalogueActions extends sfActions
   {
     $this->items = Doctrine::getTable( Catalogue::getModelForTable($request->getParameter('table')) )
       ->findWithParents($request->getParameter('id'));
-    $this->setLayout(false);
   }
 
   public function executeSearch(sfWebRequest $request)

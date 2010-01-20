@@ -610,7 +610,7 @@ Taxonomy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        level_ref: { type: integer}
+        level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
         parent_ref: { type: integer, default: null}
@@ -773,7 +773,7 @@ Chronostratigraphy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        level_ref: { type: integer}
+        level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
         parent_ref: { type: integer, notnull: true, default: 0}
@@ -808,7 +808,7 @@ Lithostratigraphy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        level_ref: { type: integer}
+        level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
         parent_ref: { type: integer, notnull: true, default: 0}
@@ -835,7 +835,7 @@ Mineralogy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        level_ref: { type: integer}
+        level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
         parent_ref: { type: integer, notnull: true, default: 0}
@@ -865,7 +865,7 @@ Lithology:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
-        level_ref: { type: integer}
+        level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: true, default: '/'}
         parent_ref: { type: integer, notnull: true, default: 0}

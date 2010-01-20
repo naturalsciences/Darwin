@@ -36,7 +36,7 @@ abstract class BaseLithologyForm extends BaseFormDoctrine
       'id'                      => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'name'                    => new sfValidatorString(),
       'name_indexed'            => new sfValidatorString(array('required' => false)),
-      'level_ref'               => new sfValidatorInteger(array('required' => false)),
+      'level_ref'               => new sfValidatorInteger(),
       'status'                  => new sfValidatorString(array('required' => false)),
       'path'                    => new sfValidatorString(array('required' => false)),
       'parent_ref'              => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),

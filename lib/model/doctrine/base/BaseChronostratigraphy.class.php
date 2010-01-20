@@ -121,6 +121,7 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('level_ref', 'integer', null, array(
              'type' => 'integer',
+             'notnull' => true,
              ));
         $this->hasColumn('status', 'string', null, array(
              'type' => 'string',

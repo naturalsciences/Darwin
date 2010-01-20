@@ -26,9 +26,9 @@ $browser->
   
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('ul > li',2)->
-    checkElement('li:first','/Animalia/')->
-    checkElement('li:last','/Duchesnus/')->
+    checkElement('body > ul > li',2)->
+    checkElement('body > ul li:first','/Animalia/')->
+    checkElement('body > ul li:last','/Duchesnus/')->
   end()->
 
   info('Relation');
