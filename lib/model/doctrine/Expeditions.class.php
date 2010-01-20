@@ -40,6 +40,7 @@ class Expeditions extends BaseExpeditions
     {
       $dateTime = new FuzzyDateTime($fd, 56, true); 
       $this->_set('expedition_from_date', $dateTime->format('Y/m/d'));
+      $this->_set('expedition_from_date_mask', $dateTime->getMask());
     }
   }
 
@@ -54,6 +55,7 @@ class Expeditions extends BaseExpeditions
     {
       $dateTime = new FuzzyDateTime($fd, 56, false); 
       $this->_set('expedition_to_date', $dateTime->format('Y/m/d'));
+      $this->_set('expedition_to_date_mask', $dateTime->getMask());
     }
   }
 
