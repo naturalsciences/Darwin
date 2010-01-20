@@ -43,7 +43,7 @@ SELECT ok( 'jespee' = (SELECT value_defined_indexed FROM identifications WHERE r
 INSERT INTO identifications (referenced_relation, record_id, notion_concerned, value_defined) VALUES ('taxonomy', 0, 'Taxonomic identification' , null);
 SELECT ok( '' = (SELECT value_defined_indexed FROM identifications WHERE record_id=0 AND notion_concerned='Taxonomic identification'),'FulltoIndex on identifications with null');
 
-INSERT INTO lithology (id, name, level_ref) VALUES (1,'éLoow !', null);
+INSERT INTO lithology (id, name, level_ref) VALUES (1,'éLoow !', 1);
 SELECT ok( to_tsvector('simple', 'éLoow !') = (SELECT name_indexed FROM lithology WHERE id=1),'FulltoIndex on lithology');
 
 INSERT INTO lithostratigraphy (id,name, level_ref) VALUES (1, 'Méalo-nÿeø@ß€', 64);
