@@ -6,9 +6,9 @@
     <?php include_partial('form', array('form' => $form)) ?>
 
     <script type="text/javascript">
-      var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=catalogue_expedition');?>';
-      var chgorder_url='<?php echo url_for('widgets/changeOrder?category=catalogue_expedition');?>';
-      var reload_url='<?php echo url_for('widgets/reloadContent?category=catalogue_expedition&eid='.$form->getObject()->getId());?>';
+      var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=catalogue_expeditions');?>';
+      var chgorder_url='<?php echo url_for('widgets/changeOrder?category=catalogue_expeditions');?>';
+      var reload_url='<?php echo url_for('widgets/reloadContent?category=catalogue_expeditions&eid='.$form->getObject()->getId());?>';
     </script>
     <ul class="board_col one_col encod_screen">
       <?php foreach($widgets as $id => $widget):?>

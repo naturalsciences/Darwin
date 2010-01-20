@@ -26,7 +26,6 @@ class IgsForm extends BaseIgsForm
     $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
-    /*$dateUpperBound = new FuzzyDateTime(sfConfig::get('app_dateUpperBound'));*/
     $maxDate->setStart(false);
 
     $this->widgetSchema['ig_num'] = new sfWidgetFormInputText();
@@ -36,7 +35,7 @@ class IgsForm extends BaseIgsForm
                                                                          'years' => $years,
                                                                          'empty_values' => $dateText,
                                                                         ),
-                                                                   array('class' => 'from_date')
+                                                                   array('class' => 'to_date')
                                                                   );
     $this->validatorSchema['ig_num'] = new sfValidatorString(array('required' => true, 'trim' => true));
     $this->validatorSchema['ig_date'] = new fuzzyDateValidator(array('required' => false,
