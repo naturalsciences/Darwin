@@ -461,3 +461,8 @@ CREATE TRIGGER trg_words_ts_cpy_taxonomy BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_nbr_in_relation  BEFORE INSERT OR UPDATE
    	ON catalogue_relationships FOR EACH ROW
 	EXECUTE PROCEDURE fct_nbr_in_relation();
+
+CREATE TRIGGER trg_nbr_in_synonym  AFTER INSERT OR UPDATE
+   	ON classification_synonymies FOR EACH ROW
+	EXECUTE PROCEDURE fct_nbr_in_synonym();
+

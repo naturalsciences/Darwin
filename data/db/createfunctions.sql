@@ -6634,6 +6634,34 @@ END;
 $$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION fct_nbr_in_synonym() RETURNS TRIGGER
+AS
+$$
+DECLARE 
+  nbr integer = 0 ;
+BEGIN
+
+  SELECT count(id) INTO nbr FROM classification_synonymies WHERE
+      referenced_relation = NEW.referenced_relation
+      AND record_id = NEW.record_id
+      AND group_name = NEW.group_name;
+
+  IF TG_OP = 'INSERT' THEN
+    IF nbr > 1 THEN
+      RAISE EXCEPTION 'You can ''t set this synonym twice!';
+    END IF;
+  ELSE
+--     RAISE info 'nbr %', nbr;
+    IF nbr > 2 THEN
+      RAISE EXCEPTION 'You can ''t set this synonym twice!';
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION datesOverlaps(start1 date, end1 date, start2 date, end2 date) RETURNS boolean LANGUAGE plpgsql
 AS
 $$
