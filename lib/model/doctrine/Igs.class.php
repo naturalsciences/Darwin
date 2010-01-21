@@ -35,6 +35,7 @@ class Igs extends BaseIgs
     {
       $dateTime = new FuzzyDateTime($fd, 56, true); 
       $this->_set('ig_date', $dateTime->format('Y/m/d'));
+      $this->_set('ig_date_mask', $dateTime->getMask());
     }
   }
 
