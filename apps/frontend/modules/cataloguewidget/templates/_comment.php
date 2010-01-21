@@ -29,10 +29,4 @@
 </table>
 
 <br />
-  <?php if($addAllowed): ?><?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Comment');?>" class="link_catalogue" href="<?php echo url_for('comment/comment?table='.$table.'&id='.$eid); ?>">
-  <?php else: ?><?php echo image_tag('add_grey.png');?><span class='add_not_allowed'>
-  <?php endif; ?>
-    <?php echo __('Add');?>
-  <?php if($addAllowed): ?></a>
-  <?php else: ?></span>
-  <?php endif; ?>
+<?php if($addAllowed):?><?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Comment');?>" class="link_catalogue" href="<?php echo url_for('comment/comment?table='.$table.'&id='.$eid);?>"><?php else:?><?php echo image_tag('add_grey.png');?><span class='add_not_allowed'><?php endif;?><?php echo __('Add');?><?php if($addAllowed):?></a><?php else:?></span><?php endif;?>
