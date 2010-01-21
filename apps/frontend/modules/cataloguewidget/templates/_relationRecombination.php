@@ -8,10 +8,10 @@
   <?php foreach($relations as $renamed):?>
   <tr>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('catalogue/relation?type=recombined&table='.$table.'&id='.$eid.'&relid='.$renamed[0]) ?>"><?php echo $renamed[5]//Rec Name?></a>
+      <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('catalogue/relation?type=recombined&table='.$table.'&id='.$eid.'&relid='.$renamed['id']) ?>"><?php echo $renamed['ref_item']->getNameWithFormat()?></a>
     </td>
     <td class="widget_row_delete">
-      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelation?relid='.$renamed[0]);?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelation?relid='.$renamed['id']);?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>

@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <td>
-          <div id="relation_catalogue_name" <?php if($remoteItem->getId()==0):?> class="hidden"> <?php else: ?>> <?php echo $remoteItem->getName();?><?php endif;?></div>
+          <div id="relation_catalogue_name" <?php if($remoteItem->isNew()):?> class="hidden"> <?php else: ?>> <?php echo $remoteItem->getNameWithFormat();?><?php endif;?></div>
         </td>
       </tr>
       <tr>
@@ -35,9 +35,8 @@
       <tr>
         <td>
           <a href="#" class="cancel_qtip">Cancel</a>
-          <button id="modify" class="modify"><?php echo __('Modify');?></button>
-          <button id="delete" class="delete" <?php if($remoteItem->getId()==0):?> style="display:none" <?php endif;?>><?php echo __('Delete');?></button>
-          <input id="save" class="hidden save" type="submit" name="submit" value="<?php echo __('Save');?>" />
+          <button id="delete" class="<?php if($remoteItem->isNew()):?>hidden<?php endif;?> delete"><?php echo __('Delete');?></button>
+          <input id="save" class="save" type="submit" name="submit" value="<?php echo __('Save');?>" />
         </td>
       </tr>
     </tfoot>
@@ -110,14 +109,6 @@
 	  }
 	return false;
       });
-
-      $(".modify").click(function()
-      {
-	$(this).hide();
-	$(".search_box").show();
-	$(".save").show();
-	return false;
-      });      
   }); 
   </script>
 <div class="search_box show">

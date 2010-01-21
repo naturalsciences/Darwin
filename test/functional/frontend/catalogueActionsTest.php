@@ -36,7 +36,7 @@ $browser->
 $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'current_name');
 
 $browser->  
-  get('/catalogue/relation?type=rename&table=taxonomy&id=4&relid='.$items[0][0])->
+  get('/catalogue/relation?type=rename&table=taxonomy&id=4&relid='.$items[0]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
@@ -48,7 +48,7 @@ $browser->
 $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
 
 $browser->  
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[0][0])->
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[0]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
@@ -78,7 +78,7 @@ $browser->
   $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
  
   $browser->
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1][0])->
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
@@ -89,12 +89,12 @@ $browser->
 
   info('DeleteRelation')->
 
-  get('/catalogue/deleteRelation?relid='.$items[1][0])->
+  get('/catalogue/deleteRelation?relid='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
   end()->
 
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1][0])->
+  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->

@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(18, new lime_output_color());
+$t = new lime_test(29, new lime_output_color());
 
 $t->info('findGroupsIdsForRecord');
 $syns = Doctrine::getTable('ClassificationSynonymies')->findGroupsIdsForRecord('taxonomy',4);
@@ -12,102 +12,20 @@ $t->is_deeply($syns, array(), 'We don\'t have id for not existing group');
 
 $t->info('findAllForRecord');
 $records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 4);
+$t->is($records['homonym'][0]['id'],5,'They are the same');
+$t->is(count($records['homonym']),2,'They are the same');
+$t->is($records['synonym'][0]['id'],2,'They are the same');
+$t->is(count($records['synonym']),2,'They are the same');
 
-$t->is_deeply($records,
-  array(
-    'homonym' => array (
-      0 => array(
-	'id' => 5,
-	'record_id' => 3,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 1,
-	'name' => 'Falco Peregrinus Tunstall, 1771',
-	'item_id' => 3,
-      ),
-      1 => array (
-	'id' => 4,
-	'record_id' => 4,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 2,
-	'name' => 'Falco Peregrinus (Duchesnus Brulus 1912)',
-	'item_id' => 4,
-      ),
-    ),
-    'synonym' => array (
-      0 => array (
-	'id' => 2,
-	'record_id' => 4,
-	'group_id' => 1,
-	'is_basionym' => true,
-	'order_by' => 0,
-	'name' => 'Falco Peregrinus (Duchesnus Brulus 1912)',
-	'item_id' => 4,
-      ),
-      1 => array (
-	'id' => 3,
-	'record_id' => 5,
-	'group_id' => 1,
-	'is_basionym' => false,
-	'order_by' => 1,
-	'name' => 'Falco Peregrinus recombinus',
-	'item_id' => 5,
-	),
-      ),
-    ),'GetAll records of all group for this item');
-
-$records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 3);
-$t->is_deeply($records,
-  array(
-    'homonym' => array (
-      0 => array (
-	'id' => 5,
-	'record_id' => 3,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 1,
-	'name' => 'Falco Peregrinus Tunstall, 1771',
-	'item_id' => 3,
-      ),
-      1 => array(
-	'id' => 4,
-	'record_id' => 4,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 2,
-	'name' => 'Falco Peregrinus (Duchesnus Brulus 1912)',
-	'item_id' => 4,
-      ),
-    )
-  ),'GetAll records for this item (only homonym)');
+$t->is($records['homonym'][0]['id'],5,'They are the same');
+$t->is(count($records['homonym']),2,'They are the same');
+$t->is($records['homonym'][1]['id'],4,'They are the same');
 
 $records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 4, array(2));
 
-$t->is_deeply($records,
- array(
-    'homonym' => array (
-      0 => array(
-	'id' => 5,
-	'record_id' => 3,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 1,
-	'name' => 'Falco Peregrinus Tunstall, 1771',
-	'item_id' => 3,
-      ),
-      1 => array (
-	'id' => 4,
-	'record_id' => 4,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 2,
-	'name' => 'Falco Peregrinus (Duchesnus Brulus 1912)',
-	'item_id' => 4,
-      ),
-    )
-  ),'Get only homonym for the first record');
-
+$t->is($records['homonym'][0]['id'],5,'They are the same');
+$t->is(count($records['homonym']),2,'They are the same');
+$t->is($records['homonym'][1]['id'],4,'They are the same');
 
 $t->info('findGroupnames');
 $groups = Doctrine::getTable('ClassificationSynonymies')->findGroupnames();
@@ -134,58 +52,19 @@ $t->is(0 ,$group,'We get no group id for synonym');
 
 $t->info('saveOrderAndResetBasio');
 Doctrine::getTable('ClassificationSynonymies')->saveOrderAndResetBasio('4,5');
-
 $records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 3);
-$t->is_deeply($records,
-  array(
-    'homonym' => array (
-      0 => array(
-	'id' => 4,
-	'record_id' => 4,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 1,
-	'name' => 'Falco Peregrinus (Duchesnus Brulus 1912)',
-	'item_id' => 4,
-      ),
-      1 => array (
-	'id' => 5,
-	'record_id' => 3,
-	'group_id' => 2,
-	'is_basionym' => false,
-	'order_by' => 2,
-	'name' => 'Falco Peregrinus Tunstall, 1771',
-	'item_id' => 3,
-      ),
-    )
-  ),'Everything is reset');
+
+$t->is($records['homonym'][0]['id'],4,'They are the same');
+$t->is(count($records['homonym']),2,'They are the same');
+$t->is($records['homonym'][1]['id'],5,'They are the same');
 
 Doctrine::getTable('ClassificationSynonymies')->saveOrderAndResetBasio('2,3');
 
 $records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 4, array(1));
-$t->is_deeply($records,
-array(
-    'synonym' => array (
-      0 => array (
-	'id' => 2,
-	'record_id' => 4,
-	'group_id' => 1,
-	'is_basionym' => false,
-	'order_by' => 1,
-	'name' => 'Falco Peregrinus (Duchesnus Brulus 1912)',
-	'item_id' => 4,
-      ),
-      1 => array (
-	'id' => 3,
-	'record_id' => 5,
-	'group_id' => 1,
-	'is_basionym' => false,
-	'order_by' => 2,
-	'name' => 'Falco Peregrinus recombinus',
-	'item_id' => 5,
-	),
-      )
-  ),'Everything is reset also is_basio');
+$t->is($records['synonym'][0]['id'],2,'They are the same');
+$t->is(count($records['synonym']),2,'They are the same');
+$t->is($records['synonym'][1]['id'],3,'They are the same');
+
 
 $t->info('mergeSynonyms');
 Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 4, 2, 'synonym');

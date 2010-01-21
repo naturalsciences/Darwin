@@ -20,7 +20,7 @@
     <?php foreach($synonyms as $synonym):?>
       <tr class="syn_id_<?php echo $synonym['id'];?>" id="id_<?php echo $synonym['id'];?>">
 	<td class="handle"><?php echo image_tag('drag.png');?></td>
-	<td><?php echo $synonym['name'];?></td>
+	<td><?php echo $synonym['ref_item']->getNameWithFormat();?></td>
 
       <?php if($group != "homonym"):?>
 	<td><input type="checkbox" name="basionym" class="basionym_checkbox" value="<?php echo $synonym['id'];?>" <?php if($synonym['is_basionym']) echo 'checked="checked"';?>></td>

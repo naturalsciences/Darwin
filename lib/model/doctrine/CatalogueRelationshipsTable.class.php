@@ -8,7 +8,7 @@ class CatalogueRelationshipsTable extends DarwinTable
   {
     $model = Catalogue::getModelForTable($table);
     $q = Doctrine_Query::create()
-	    ->select('r.*, t.name')
+	    ->select('r.id, r.referenced_relation, r.record_id_1, r.record_id_2, r.relationship_type , t.id, t.name' . ($table == 'taxonomy' ? ', t.extinct' : '') )
 	    ->from('CatalogueRelationships r, '.$model. ' t')
 	    ->andWhere('t.id=r.record_id_2')
 	    ->andwhere('r.referenced_relation = ?', $table)
@@ -16,7 +16,28 @@ class CatalogueRelationshipsTable extends DarwinTable
 	    ->setHydrationMode(Doctrine::HYDRATE_NONE);
     if($type != null)
       $q->andWhere('r.relationship_type = ?',$type);
-    return $q->execute();
+
+    $items = $q->execute();
+
+    $results = array();
+    foreach($items as $item)
+    {
+	$cRecord = new $model();
+	$cRecord->setName($item[6]);
+	$cRecord->setId($item[5]);
+	if($table=='taxonomy')
+	  $cRecord->setExtinct($item[7]);
+
+	$results[] = array(
+	  'id' => $item[0],
+	  'referenced_relation' => $item[1],
+	  'record_id_1' => $item[2],
+	  'record_id_2' => $item[3],
+	  'relationship_type' => $item[4],
+	  'ref_item' => $cRecord,
+	);
+    }
+    return $results;
   }
 
   public function DeleteRelationsForTable($table, $id)

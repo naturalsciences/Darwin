@@ -58,7 +58,8 @@ class ClassificationSynonymiesTable extends DarwinTable
     if(empty($groups))
       return array();
     $q = Doctrine_Query::create()
-	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id')
+	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id ' .
+	    ($table_name=='taxonomy' ? ', t.extinct' : '') )
 	 ->from('ClassificationSynonymies s, '.Catalogue::getModelForTable($table_name). ' t')
 	 ->whereIn('s.group_id', $groups)
 	 ->andWhere('t.id=s.record_id')
@@ -69,6 +70,13 @@ class ClassificationSynonymiesTable extends DarwinTable
     $results = array();
     foreach($items as $item)
     {
+  	$catalogue = Catalogue::getModelForTable($table_name);
+	$cRecord = new $catalogue();
+	$cRecord->setName($item[6]);
+	$cRecord->setId($item[7]);
+	if($table_name=='taxonomy')
+	  $cRecord->setExtinct($item[8]);
+
 	//group_name 
 	if(! isset($results[$item[0]]) )
 	  $results[$item[0]]=array();
@@ -78,9 +86,9 @@ class ClassificationSynonymiesTable extends DarwinTable
 	  'group_id' => $item[3],
 	  'is_basionym' => $item[4],
 	  'order_by' => $item[5],
-	  'name' => $item[6],
-	  'item_id' => $item[7],
+	  'ref_item' => $cRecord,
 	);
+
     }
     return $results;
   }

@@ -22,9 +22,9 @@
 		<td><?php echo $synonym['order_by'];?> - </td>
 		<td>
 		  <?php if($synonym['record_id'] == $eid):?>
-		      <strong><?php echo $synonym['name'];?></strong>
+		      <strong><?php echo $synonym['ref_item']->getNameWithFormat();?></strong>
 		  <?php else:?>
-		    <?php echo $synonym['name'];?>
+		    <?php echo $synonym['ref_item']->getNameWithFormat();?>
 		  <?php endif;?>
 		  
 		  <?php if($synonym['is_basionym']):?>

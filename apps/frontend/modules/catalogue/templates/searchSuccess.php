@@ -40,7 +40,7 @@ $(document).ready(function ()
     <tr class="rid_<?php echo $item->getId();?>">
       <td><?php echo image_tag('info.png',"title=info class=info");?></td>
       <td>
-	<span class="item_name"><?php echo $item->getName();?></span>
+	<span class="item_name"><?php echo $item->getNameWithFormat();?></span>
 
 	<div class="tree">
 	</div>
