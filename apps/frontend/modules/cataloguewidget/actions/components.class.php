@@ -24,6 +24,7 @@ class cataloguewidgetComponents extends sfComponents
   public function executeComment()
   {
     $this->comments =  Doctrine::getTable('Comments')->findForTable($this->table, $this->eid);
+    $this->addAllowed = ($this->comments->count() == count(CommentsTable::getNotionsFor($this->table)))?false:true;
   }
 
   public function executeInsurances()
@@ -39,5 +40,7 @@ class cataloguewidgetComponents extends sfComponents
   public function executeSynonym()
   {
     $this->synonyms = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord($this->table, $this->eid);
+    //$this->addAllowed = (count(Doctrine::getTable('ClassificationSynonymies')->findGroupsIdsForRecord($this->table, $this->eid)) == count(ClassificationSynonymiesTable::findGroupNames()))?false:true;
+    $this->addAllowed = (count(Doctrine::getTable('ClassificationSynonymies')->findGroupsIdsForRecord($this->table, $this->eid)) == 3)?false:true;
   }
 }

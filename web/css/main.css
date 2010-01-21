@@ -743,3 +743,7 @@ table.encoding tbody .widget_row_delete
    cursor:default;
 }
 
+.add_not_allowed
+{
+  color:#C1C1C1;
+}
