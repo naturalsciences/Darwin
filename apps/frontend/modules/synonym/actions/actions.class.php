@@ -27,27 +27,35 @@ class synonymActions extends sfActions
 	$this->form->bind($request->getParameter('classification_synonymies'));
 	if($this->form->isValid())
 	{
-	    try
+	    if($this->form->getValue('record_id') == $request->getParameter('id'))
 	    {
-	      $conn = Doctrine_Manager::connection();
-	      $conn->beginTransaction();
-
-	      Doctrine::getTable('ClassificationSynonymies')
-		->mergeSynonyms(
-		  $request->getParameter('table'),
-		  $this->form->getValue('record_id'),
-		  $request->getParameter('id'),
-		  $this->form->getValue('group_name')
-		);
-	      $conn->commit();
-	      return $this->renderText('ok');
-	    }
-	    catch(Doctrine_Exception $e)
-	    {
-	      $conn->rollback();
-	      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	      $error = new sfValidatorError(new savedValidator(),'You can\'t synonym yourself!');
 	      $this->form->getErrorSchema()->addError($error); 
-	    }	  
+	    }
+	    else
+	    {
+	      try
+	      {
+		$conn = Doctrine_Manager::connection();
+		$conn->beginTransaction();
+
+		Doctrine::getTable('ClassificationSynonymies')
+		  ->mergeSynonyms(
+		    $request->getParameter('table'),
+		    $this->form->getValue('record_id'),
+		    $request->getParameter('id'),
+		    $this->form->getValue('group_name')
+		  );
+		$conn->commit();
+		return $this->renderText('ok');
+	      }
+	      catch(Doctrine_Exception $e)
+	      {
+		$conn->rollback();
+		$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+		$this->form->getErrorSchema()->addError($error); 
+	      }
+	    }
 	 }
     }
     $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
