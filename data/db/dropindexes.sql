@@ -151,6 +151,15 @@ DROP INDEX IF EXISTS idx_associated_multimedia_multimedia_ref;
 DROP INDEX IF EXISTS idx_specimens_accompanying_specimen_ref;
 DROP INDEX IF EXISTS idx_specimens_accompanying_taxon_ref;
 DROP INDEX IF EXISTS idx_specimens_accompanying_mineral_ref;
+DROP INDEX IF EXISTS idx_insurances_referenced_relation;
+DROP INDEX IF EXISTS idx_insurances_record_id;
+DROP INDEX IF EXISTS idx_insurances_insurance_currency;
+DROP INDEX IF EXISTS idx_insurances_insurer_ref;
+DROP INDEX IF EXISTS idx_specimens_ig_ref;
+DROP INDEX IF EXISTS idx_igs_ig_num_indexed;
+DROP INDEX IF EXISTS idx_class_vernacular_names_community_indexed;
+DROP INDEX IF EXISTS idx_vernacular_names_name_indexed;
+
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 

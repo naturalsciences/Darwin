@@ -155,6 +155,8 @@ CREATE INDEX CONCURRENTLY idx_insurances_insurance_currency on insurances(insura
 CREATE INDEX CONCURRENTLY idx_insurances_insurer_ref on insurances(insurer_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_ig_ref on specimens(ig_ref);
 CREATE INDEX CONCURRENTLY idx_igs_ig_num_indexed on igs (ig_num_indexed);
+CREATE INDEX CONCURRENTLY idx_class_vernacular_names_community_indexed on class_vernacular_names (community_indexed);
+CREATE INDEX CONCURRENTLY idx_vernacular_names_name_indexed on vernacular_names (name_indexed);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 

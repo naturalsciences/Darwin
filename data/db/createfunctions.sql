@@ -2353,6 +2353,8 @@ BEGIN
 			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+		ELSIF TG_TABLE_NAME = 'class_vernacular_names' THEN
+			NEW.community_indexed := fullToIndex(NEW.community);
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'igs' THEN
@@ -2398,6 +2400,8 @@ BEGIN
 			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'users' THEN
 			NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
+		ELSIF TG_TABLE_NAME = 'class_vernacular_names' THEN
+			NEW.community_indexed := fullToIndex(NEW.community);
 		ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'igs' THEN

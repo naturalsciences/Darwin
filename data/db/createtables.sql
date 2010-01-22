@@ -341,8 +341,9 @@ create table class_vernacular_names
        (
         id integer not null default nextval('class_vernacular_names_id_seq'),
         community varchar not null,
+        community_indexed varchar not null,
         constraint pk_class_vernacular_names primary key (id),
-        constraint unq_class_vernacular_names unique (referenced_relation, record_id, community)
+        constraint unq_class_vernacular_names unique (referenced_relation, record_id, community_indexed)
        )
 inherits (template_table_record_ref);
 comment on table class_vernacular_names is 'Contains the language communities a unit name translation is available for';
@@ -350,8 +351,12 @@ comment on column class_vernacular_names.id is 'Unique identifier of a language 
 comment on column class_vernacular_names.referenced_relation is 'Reference of the unit table a vernacular name for a language community has to be defined - id field of table_list table';
 comment on column class_vernacular_names.record_id is 'Identifier of record a vernacular name for a language community has to be defined';
 comment on column class_vernacular_names.community is 'Language community, a unit translation is available for';
+
+create sequence vernacular_names_id_seq;
+
 create table vernacular_names
        (
+        id integer not null default nextval('vernacular_names_id_seq'),
         vernacular_class_ref integer not null,
         name varchar not null,
         name_ts tsvector not null,
