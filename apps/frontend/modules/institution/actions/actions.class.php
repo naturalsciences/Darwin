@@ -12,19 +12,19 @@ class institutionActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->institutions = Doctrine::getTable('Institution')->getAll();
+    $this->institutions = Doctrine::getTable('Institutions')->getAll();
   }
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new InstitutionForm();
+    $this->form = new InstitutionsForm();
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new InstitutionForm();
+    $this->form = new InstitutionsForm();
 
     $this->processForm($request, $this->form);
 
@@ -33,15 +33,15 @@ class institutionActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($institution = Doctrine::getTable('Institution')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
-    $this->form = new InstitutionForm($institution);
+    $this->forward404Unless($institution = Doctrine::getTable('Institutions')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
+    $this->form = new InstitutionsForm($institution);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $this->forward404Unless($institution = Doctrine::getTable('Institution')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
-    $this->form = new InstitutionForm($institution);
+    $this->forward404Unless($institution = Doctrine::getTable('Institutions')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
+    $this->form = new InstitutionsForm($institution);
 
     $this->processForm($request, $this->form);
 
@@ -52,7 +52,7 @@ class institutionActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $this->forward404Unless($institution = Doctrine::getTable('Institution')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($institution = Doctrine::getTable('Institutions')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     $institution->delete();
 
     $this->redirect('institution/index');

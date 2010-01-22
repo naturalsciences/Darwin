@@ -1,4 +1,4 @@
-Institution:                                                                        
+Institutions:                                                                        
   tableName: people                                                           
   columns:
         id: { type: integer, notnull: true,primary: true, autoincrement: true}

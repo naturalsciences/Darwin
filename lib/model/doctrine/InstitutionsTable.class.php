@@ -1,11 +1,11 @@
 <?php
 
-class InstitutionTable extends Doctrine_Table
+class InstitutionsTable extends Doctrine_Table
 {
     public function getAll()
     {
       $q = Doctrine_Query::create()
-	 ->from('Institution i')
+	 ->from('Institutions i')
 	 ->addWhere('i.is_physical = ?',false)
 	 ->orderBy('i.formated_name_indexed ASC');
       return $q->execute();
@@ -15,7 +15,7 @@ class InstitutionTable extends Doctrine_Table
     {
       $results = Doctrine_Query::create()->
 	select('DISTINCT(sub_type) as type')->
-	from('Institution i')->
+	from('Institutions i')->
 	execute();
       return $results;
     }

@@ -8,7 +8,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class InstitutionForm extends BaseInstitutionForm
+class InstitutionsForm extends BaseInstitutionsForm
 {
   public function configure()
   {
@@ -16,7 +16,7 @@ class InstitutionForm extends BaseInstitutionForm
     
     $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
     $this->widgetSchema['sub_type'] = new widgetFormSelectComplete(array(
-        'model' => 'Institution',
+        'model' => 'Institutions',
         'table_method' => 'getDistinctSubType',
         'method' => 'getType',
         'key_method' => 'getType',
