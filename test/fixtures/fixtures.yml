@@ -181,6 +181,7 @@ People:
         is_physical: false
         public_class: public
         family_name: Institut Royal des Sciences Naturelles de Belgique
+        additional_names: RBINS
         birth_date: "<?php echo date('Y-m-d');?>"
     p2:
         is_physical: false

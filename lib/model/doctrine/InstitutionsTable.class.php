@@ -15,4 +15,5 @@ class InstitutionsTable extends DarwinTable
     {
       return $this->createDistinct('Institutions', 'sub_type', 'type')->execute();
     }
+  
 }

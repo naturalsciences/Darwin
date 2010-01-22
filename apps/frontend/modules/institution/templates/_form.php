@@ -9,21 +9,21 @@
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
-        <th><?php echo $form['family_name']->renderLabel() ?></th>
+        <th><?php echo $form['family_name']->renderLabel('Name') ?></th>
         <td>
           <?php echo $form['family_name']->renderError() ?>
           <?php echo $form['family_name'] ?>
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['additional_names']->renderLabel() ?></th>
+        <th><?php echo $form['additional_names']->renderLabel('Abbreviation') ?></th>
         <td>
           <?php echo $form['additional_names']->renderError() ?>
           <?php echo $form['additional_names'] ?>
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['sub_type']->renderLabel() ?></th>
+        <th><?php echo $form['sub_type']->renderLabel('Type') ?></th>
         <td>
           <?php echo $form['sub_type']->renderError() ?>
           <?php echo $form['sub_type'] ?>

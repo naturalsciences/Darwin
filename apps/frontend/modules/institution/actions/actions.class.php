@@ -12,7 +12,51 @@ class institutionActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->institutions = Doctrine::getTable('Institutions')->getAll();
+//     $this->institutions = Doctrine::getTable('Institutions')->getAll();
+    $this->form = new InstitutionsFormFilter();
+  }
+
+  public function executeSearch(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->form = new InstitutionsFormFilter();
+    $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
+
+
+
+    if($request->getParameter('institutions_filters','') !== '')
+    {
+      $this->form->bind($request->getParameter('institutions_filters'));
+
+      if ($this->form->isValid())
+      {
+        $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
+        $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
+        $this->pagerLayout = new PagerLayoutWithArrows(
+	  new Doctrine_Pager(
+	    $this->form->getQuery(),
+	    $this->currentPage,
+	    $this->form->getValue('rec_per_page')
+	  ),
+	  new Doctrine_Pager_Range_Sliding(
+	    array('chunk' => $pagerSlidingSize)
+	    ),
+	  $this->getController()->genUrl('institution/search?is_choose='.$this->is_choose.'&page=').'{%page_number}'
+	);
+
+        // Sets the Pager Layout templates
+        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
+        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
+        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        // If pager not yet executed, this means the query has to be executed for data loading
+        if (! $this->pagerLayout->getPager()->getExecuted())
+           $this->items = $this->pagerLayout->execute();
+      }
+    }
+
+
+
+    
   }
 
   public function executeNew(sfWebRequest $request)
