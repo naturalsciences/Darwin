@@ -4,5 +4,37 @@
  */
 class VernacularNamesTable extends DarwinTable
 {
-
+    static public $country_language_full_text = array(
+        'simple' => 'Simple',
+        'danish' => 'Danish',
+        'dutch' => 'Dutch',
+        'english' => 'English',
+        'finnish' => 'Finnish',
+        'french' => 'French',
+        'german' => 'German',
+        'hungarian' => 'Hungarian',
+        'italian' => 'Italian',
+        'norwegian' => 'Norwegian',
+        'portuguese' => 'Portuguese',
+        'romanian' => 'Romanian',
+        'russian' => 'Russian',
+        'spanish' => 'Spanish',
+        'swedish' => 'Swedish',
+        'turkish' => 'Turkish',
+        );
+    /**
+    * Get differents acquisition categories
+    * @return array of key/value of acquisition categories
+    */
+    public static function getDistinctLanguages()
+    {
+        try{
+            $i18n_object = sfContext::getInstance()->getI18n();
+        }
+        catch( Exception $e )
+        {
+            return self::$country_language_full_text;
+        }
+        return array_map(array($i18n_object, '__'), self::$country_language_full_text);
+    }
 }
