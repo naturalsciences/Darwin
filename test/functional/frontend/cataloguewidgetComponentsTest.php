@@ -12,7 +12,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tr',1)->
         checkElement('table tr td:first a.link_catalogue','/Falco Peregrinus Tunstall/')->
-	checkElement('img', 1)->
+	checkElement('img', 2)->
     end()->
 
     info('2 - Recombined')->
