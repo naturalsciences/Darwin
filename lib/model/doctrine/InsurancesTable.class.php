@@ -27,11 +27,7 @@ class InsurancesTable extends DarwinTable
   */
   public function getDistinctCurrencies()
   {
-    $results = Doctrine_Query::create()->
-      select('DISTINCT(insurance_currency) as currencies')->
-      from('insurances')->
-      execute();
-    return $results;
+    return $this->createDistinct('Insurances', 'insurance_currency', 'currencies')->execute();
   }
 
 }

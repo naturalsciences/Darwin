@@ -41,11 +41,7 @@ class SpecimensTable extends DarwinTable
     */
     public function getDistinctTools()
     {
-        $results = Doctrine_Query::create()->
-           select('DISTINCT(collecting_tool) as tool')->
-           from('Specimens')->
-           execute();
-        return $results;
+      return $this->createDistinct('Specimens', 'collecting_tool', 'tool')->execute();
     }
 
     /**
@@ -54,10 +50,6 @@ class SpecimensTable extends DarwinTable
     */
     public function getDistinctMethods()
     {
-        $results = Doctrine_Query::create()->
-           select('DISTINCT(collecting_method) as method')->
-           from('Specimens')->
-           execute();
-        return $results;
+	return $this->createDistinct('Specimens', 'collecting_method', 'method')->execute();
     }
 }

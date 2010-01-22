@@ -1,6 +1,6 @@
 <?php
 
-class InstitutionsTable extends Doctrine_Table
+class InstitutionsTable extends DarwinTable
 {
     public function getAll()
     {
@@ -13,10 +13,6 @@ class InstitutionsTable extends Doctrine_Table
 
     public function getDistinctSubType()
     {
-      $results = Doctrine_Query::create()->
-	select('DISTINCT(sub_type) as type')->
-	from('Institutions i')->
-	execute();
-      return $results;
+      return $this->createDistinct('Institutions', 'sub_type', 'type')->execute();
     }
 }

@@ -27,11 +27,7 @@ class CataloguePropertiesTable extends DarwinTable
   */
   public function getDistinctType()
   {
-    $results = Doctrine_Query::create()->
-      select('DISTINCT(property_type) as type')->
-      from('CatalogueProperties')->
-      execute();
-    return $results;
+    return $this->createDistinct('CatalogueProperties', 'property_type', 'type')->execute();
   }
 
   /**
@@ -42,10 +38,7 @@ class CataloguePropertiesTable extends DarwinTable
   */
   public function getDistinctSubType($type=null)
   {
-    $q = Doctrine_Query::create()->
-      select('DISTINCT(property_sub_type) as sub_type')->
-      from('CatalogueProperties INDEXBY sub_type');
-
+    $q = $this->createDistinct('CatalogueProperties INDEXBY sub_type', 'property_sub_type', 'sub_type','');
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
     $results = $q->fetchArray();
@@ -62,9 +55,7 @@ class CataloguePropertiesTable extends DarwinTable
   */
   public function getDistinctQualifier($sub_type=null)
   {
-    $q = Doctrine_Query::create()->
-      select('DISTINCT(property_qualifier) as qualifier')->
-      from('CatalogueProperties');
+    $q = $this->createDistinct('CatalogueProperties', 'property_qualifier', 'qualifier','');
 
     if(! is_null($sub_type))
       $q->addWhere('property_sub_type = ?',$sub_type);
@@ -83,17 +74,13 @@ class CataloguePropertiesTable extends DarwinTable
   */
   public function getDistinctUnit($type=null)
   {
-    $q = Doctrine_Query::create()->
-      select('DISTINCT(property_unit) as unit')->
-      from('CatalogueProperties INDEXBY unit');
+    $q = $this->createDistinct('CatalogueProperties INDEXBY unit', 'property_unit', 'unit','');
 
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
     $results_unit = $q->fetchArray();
 
-    $q = Doctrine_Query::create()->
-      select('DISTINCT(property_accuracy_unit) as unit')->
-      from('CatalogueProperties INDEXBY unit');
+    $q = $this->createDistinct('CatalogueProperties INDEXBY unit', 'property_accuracy_unit', 'unit','');
 
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);

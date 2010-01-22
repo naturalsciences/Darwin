@@ -29,5 +29,5 @@ $insurances = Doctrine::getTable('insurances')->findForTable('igs', $lastIg->get
 $t->is( count($insurances) , 2, 'Theres a new insurance inserted...');
 $insurance_currencies = Doctrine::getTable('insurances')->getDistinctCurrencies();
 $t->is( count($insurance_currencies) , 2, 'There are two distinct insurance currencies');
-$t->is( $insurance_currencies[0]->getCurrencies() , '€', 'Fisrt currency is "€"');
-$t->is( $insurance_currencies[1]->getCurrencies() , '$', 'Fisrt currency is "$"');
+$t->is( $insurance_currencies[0]->getCurrencies() , '$', 'Fisrt currency is "$"');
+$t->is( $insurance_currencies[1]->getCurrencies() , '€', 'Fisrt currency is "€"');

@@ -30,6 +30,7 @@ class ClassificationSynonymiesTable extends DarwinTable
 	 ->select('DISTINCT(group_id) as group')
 	 ->from('ClassificationSynonymies s INDEXBY group');
     $q = $this->addCatalogueReferences($q,$table_name, $record_id,'s');
+    $q->orderBy('group');
     $results = $q->fetchArray();
     if(!count($results))
       return array();

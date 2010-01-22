@@ -44,4 +44,13 @@ class DarwinTable extends Doctrine_Table
     return $query;
   }
 
+  public function createDistinct($model, $column, $new_col='item', $table_alias = 't')
+  {
+    $q = Doctrine_Query::create()->
+	select("DISTINCT($table_alias.$column) as $new_col")->
+	from("$model $table_alias")->
+	orderBy("$new_col ASC");
+    return $q;
+  }
+
 }

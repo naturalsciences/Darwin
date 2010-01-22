@@ -17,5 +17,5 @@ $t->is($cat[1]->getTool(),'fish Pas net','get the last tool');
 $t->info('getDistinctMethods');
 $cat = Doctrine::getTable('Specimens')->getDistinctMethods();
 $t->is($cat->count(),2,'Number of differents method');
-$t->is($cat[0]->getMethod(),'Hunting','get the first method');
-$t->is($cat[1]->getMethod(),'Fishing','get the last method');
+$t->is($cat[0]->getMethod(),'Fishing','get the first method');
+$t->is($cat[1]->getMethod(),'Hunting','get the last method');
