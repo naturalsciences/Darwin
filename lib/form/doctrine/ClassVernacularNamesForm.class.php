@@ -21,8 +21,8 @@ public function configure()
     $this->widgetSchema['community'] = new widgetFormSelectComplete(array(
         'model' => 'ClassVernacularNames',
         'table_method' => 'getDistinctCommunities',
-        'method' => 'getCommunities',
-        'key_method' => 'getCommunities',
+        'method' => 'getCommunity',
+        'key_method' => 'getCommunity',
         'add_empty' => true,
 	'change_label' => 'Pick a community in the list',
 	'add_label' => 'Add another community',
@@ -40,7 +40,6 @@ public function configure()
       $val->ClassVernacularNames = $this->getObject();
       $form = new VernacularNamesForm($val);
   
-      //Embedding the new picture in the container
       $this->embeddedForms['newVal']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newVal', $this->embeddedForms['newVal']);

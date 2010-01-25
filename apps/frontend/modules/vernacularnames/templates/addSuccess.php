@@ -1,6 +1,8 @@
 <div id="property_screen">
+<?php //echo $form;?>
 <form class="edition" action="<?php echo url_for('vernacularnames/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
-<?php echo $form->renderHiddenFields();?>
+<?php echo $form['referenced_relation'];?>
+<?php echo $form['record_id'];?>
 <table>
   <tbody>
     <tr>
@@ -21,7 +23,6 @@
   <thead>
     <tr>
       <th><label><?php echo __('Vernacular name');?></label></th>
-      <th><label><?php echo __('Language');?></label></th>
       <th></th>
     </tr>
   </thead>

@@ -37,6 +37,11 @@ class cataloguewidgetComponents extends sfComponents
     $this->properties =  Doctrine::getTable('CatalogueProperties')->findForTable($this->table, $this->eid);
   }
 
+  public function executeVernacularNames()
+  {
+    $this->vernacular_names =  Doctrine::getTable('ClassVernacularNames')->findForTable($this->table, $this->eid);
+  }
+
   public function executeSynonym()
   {
     $this->synonyms = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord($this->table, $this->eid);

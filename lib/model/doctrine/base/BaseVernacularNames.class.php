@@ -10,23 +10,20 @@
  * @property string $name
  * @property string $name_indexed
  * @property string $name_ts
- * @property string $country_language_full_text
- * @property VernacularNames $VernacularNames
+ * @property ClassVernacularNames $ClassVernacularNames
  * 
- * @method integer         getId()                         Returns the current record's "id" value
- * @method integer         getVernacularClassRef()         Returns the current record's "vernacular_class_ref" value
- * @method string          getName()                       Returns the current record's "name" value
- * @method string          getNameIndexed()                Returns the current record's "name_indexed" value
- * @method string          getNameTs()                     Returns the current record's "name_ts" value
- * @method string          getCountryLanguageFullText()    Returns the current record's "country_language_full_text" value
- * @method VernacularNames getVernacularNames()            Returns the current record's "VernacularNames" value
- * @method VernacularNames setId()                         Sets the current record's "id" value
- * @method VernacularNames setVernacularClassRef()         Sets the current record's "vernacular_class_ref" value
- * @method VernacularNames setName()                       Sets the current record's "name" value
- * @method VernacularNames setNameIndexed()                Sets the current record's "name_indexed" value
- * @method VernacularNames setNameTs()                     Sets the current record's "name_ts" value
- * @method VernacularNames setCountryLanguageFullText()    Sets the current record's "country_language_full_text" value
- * @method VernacularNames setVernacularNames()            Sets the current record's "VernacularNames" value
+ * @method integer              getId()                   Returns the current record's "id" value
+ * @method integer              getVernacularClassRef()   Returns the current record's "vernacular_class_ref" value
+ * @method string               getName()                 Returns the current record's "name" value
+ * @method string               getNameIndexed()          Returns the current record's "name_indexed" value
+ * @method string               getNameTs()               Returns the current record's "name_ts" value
+ * @method ClassVernacularNames getClassVernacularNames() Returns the current record's "ClassVernacularNames" value
+ * @method VernacularNames      setId()                   Sets the current record's "id" value
+ * @method VernacularNames      setVernacularClassRef()   Sets the current record's "vernacular_class_ref" value
+ * @method VernacularNames      setName()                 Sets the current record's "name" value
+ * @method VernacularNames      setNameIndexed()          Sets the current record's "name_indexed" value
+ * @method VernacularNames      setNameTs()               Sets the current record's "name_ts" value
+ * @method VernacularNames      setClassVernacularNames() Sets the current record's "ClassVernacularNames" value
  * 
  * @package    darwin
  * @subpackage model
@@ -45,7 +42,6 @@ abstract class BaseVernacularNames extends sfDoctrineRecord
              ));
         $this->hasColumn('vernacular_class_ref', 'integer', null, array(
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('name', 'string', null, array(
              'type' => 'string',
@@ -53,22 +49,16 @@ abstract class BaseVernacularNames extends sfDoctrineRecord
              ));
         $this->hasColumn('name_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
              ));
         $this->hasColumn('name_ts', 'string', null, array(
              'type' => 'string',
-             ));
-        $this->hasColumn('country_language_full_text', 'string', null, array(
-             'type' => 'string',
-             'notnull' => true,
-             'default' => 'simple',
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('VernacularNames', array(
+        $this->hasOne('ClassVernacularNames', array(
              'local' => 'vernacular_class_ref',
              'foreign' => 'id'));
     }

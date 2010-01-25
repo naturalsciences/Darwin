@@ -188,13 +188,12 @@ ClassVernacularNames:
 VernacularNames:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        vernacular_class_ref: { type: integer, primary: true }
+        vernacular_class_ref: { type: integer}
         name:  { type: string, notnull: true}
-        name_indexed:  { type: string, notnull: true}
+        name_indexed:  { type: string}
         name_ts:  { type: string}
-        country_language_full_text:  { type: string, notnull: true, default: 'simple'}
     relations:
-        VernacularNames:
+        ClassVernacularNames:
             local: vernacular_class_ref
             foreign: id
 

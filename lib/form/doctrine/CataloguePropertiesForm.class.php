@@ -144,7 +144,6 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
       $val->CatalogueProperties = $this->getObject();
       $form = new PropertiesValuesForm($val);
   
-      //Embedding the new picture in the container
       $this->embeddedForms['newVal']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newVal', $this->embeddedForms['newVal']);
@@ -167,6 +166,7 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 
     public function saveEmbeddedForms($con = null, $forms = null)
     {
+
       if (null === $forms)
       {
 	$value = $this->getValue('newVal');

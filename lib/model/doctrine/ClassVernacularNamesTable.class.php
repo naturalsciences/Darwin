@@ -4,5 +4,30 @@
  */
 class ClassVernacularNamesTable extends DarwinTable
 {
+  /**
+  * Find vernacular names communities (joined with names)
+  * for a given table and record id
+  * @param string $table_name db table name
+  * @param int $record_id id of the record
+  * @return a Doctrine_collection of results
+  */
+  public function findForTable($table_name, $record_id)
+  {
+     $q = Doctrine_Query::create()
+	 ->from('ClassVernacularNames cv')
+	 ->leftJoin('cv.VernacularNames v')
+	 ->orderBy('cv.community ASC, v.name_indexed');
+     $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'cv', true);
+     return $q->execute();
+  }
+
+  /**
+  * Get Distincts type of communities
+  * @return array an Array of types in keys
+  */
+  public function getDistinctCommunities()
+  {
+    return $this->createDistinct('ClassVernacularNames', 'community', 'community')->execute();
+  }
 
 }

@@ -444,6 +444,14 @@ MyPreferences:
         order_by: 1
         opened: false
         visible: true
+    u1ws18:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
 
 
 CatalogueProperties:
