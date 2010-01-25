@@ -361,7 +361,6 @@ create table vernacular_names
         name varchar not null,
         name_ts tsvector not null,
         name_indexed varchar not null,
-        country_language_full_text full_text_language,
         constraint unq_vernacular_names unique (vernacular_class_ref, name_indexed),
         constraint fk_vernacular_class_class_vernacular_names foreign key (vernacular_class_ref) references class_vernacular_names(id) on delete cascade
        );
@@ -370,7 +369,6 @@ comment on column vernacular_names.vernacular_class_ref is 'Identifier of a unit
 comment on column vernacular_names.name is 'Vernacular name';
 comment on column vernacular_names.name_ts is 'tsvector version of name field';
 comment on column vernacular_names.name_indexed is 'Indexed form of vernacular name';
-comment on column vernacular_names.country_language_full_text is 'Language used by full text search to_tsvector function';
 
 create sequence expeditions_id_seq;
 

@@ -175,7 +175,6 @@ CREATE TRIGGER trg_cpy_fullToIndex_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 	
-
 CREATE TRIGGER trg_cpy_fullToIndex_igs BEFORE INSERT OR UPDATE
 	ON igs FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();

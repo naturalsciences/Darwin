@@ -3300,7 +3300,7 @@ BEGIN
 		ELSEIF TG_TABLE_NAME = 'habitats' THEN
 			NEW.description_ts := to_tsvector(NEW.description_language_full_text::regconfig, NEW.description);
 		ELSEIF TG_TABLE_NAME = 'vernacular_names' THEN
-			NEW.name_ts := to_tsvector(NEW.country_language_full_text::regconfig, NEW.name);
+			NEW.name_ts := to_tsvector('simple', NEW.name);
 		END IF;
 	ELSE
 		IF TG_TABLE_NAME = 'comments' THEN
@@ -3341,7 +3341,7 @@ BEGIN
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'vernacular_names' THEN
 			IF OLD.name != NEW.name OR OLD.country_language_full_text != NEW.country_language_full_text THEN
-				NEW.name_ts := to_tsvector(NEW.country_language_full_text::regconfig, NEW.name);
+				NEW.name_ts := to_tsvector('simple', NEW.name);
 			END IF;
 		END IF;
 	END IF;
