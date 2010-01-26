@@ -11,6 +11,8 @@ class CommentsTable extends DarwinTable
                                                    'diverse' => 'diverse'
                                                   ),
                                     'expeditions' => array('expedition information' => 'expedition information',
+                                                         ),
+                                    'people' => array('institution information' => 'institution information',
                                                          )
                                    );
 

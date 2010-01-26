@@ -558,7 +558,7 @@ display: inline-block;
   padding-left: 1em;
 }
 
-#search_catalogue_form input[name="search"]
+.search_form input[name="search"]
 {
   background: white url(/images/widget_button.png) no-repeat;
   border:0;

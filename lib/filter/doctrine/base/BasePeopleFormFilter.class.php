@@ -15,7 +15,6 @@ abstract class BasePeopleFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'is_physical'           => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'sub_type'              => new sfWidgetFormFilterInput(),
-      'public_class'          => new sfWidgetFormChoice(array('choices' => array('' => '', 'public' => 'public', 'private' => 'private'))),
       'formated_name'         => new sfWidgetFormFilterInput(),
       'formated_name_indexed' => new sfWidgetFormFilterInput(),
       'formated_name_ts'      => new sfWidgetFormFilterInput(),
@@ -34,7 +33,6 @@ abstract class BasePeopleFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'is_physical'           => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'sub_type'              => new sfValidatorPass(array('required' => false)),
-      'public_class'          => new sfValidatorChoice(array('required' => false, 'choices' => array('public' => 'public', 'private' => 'private'))),
       'formated_name'         => new sfValidatorPass(array('required' => false)),
       'formated_name_indexed' => new sfValidatorPass(array('required' => false)),
       'formated_name_ts'      => new sfValidatorPass(array('required' => false)),
@@ -70,7 +68,6 @@ abstract class BasePeopleFormFilter extends BaseFormFilterDoctrine
       'id'                    => 'Number',
       'is_physical'           => 'Boolean',
       'sub_type'              => 'Text',
-      'public_class'          => 'Enum',
       'formated_name'         => 'Text',
       'formated_name_indexed' => 'Text',
       'formated_name_ts'      => 'Text',

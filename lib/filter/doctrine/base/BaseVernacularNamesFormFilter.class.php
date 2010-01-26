@@ -13,15 +13,17 @@ abstract class BaseVernacularNamesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'name'                       => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'name_ts'                    => new sfWidgetFormFilterInput(),
-      'country_language_full_text' => new sfWidgetFormFilterInput(),
+      'vernacular_class_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('ClassVernacularNames'), 'add_empty' => true)),
+      'name'                 => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'name_indexed'         => new sfWidgetFormFilterInput(),
+      'name_ts'              => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'name'                       => new sfValidatorPass(array('required' => false)),
-      'name_ts'                    => new sfValidatorPass(array('required' => false)),
-      'country_language_full_text' => new sfValidatorPass(array('required' => false)),
+      'vernacular_class_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('ClassVernacularNames'), 'column' => 'id')),
+      'name'                 => new sfValidatorPass(array('required' => false)),
+      'name_indexed'         => new sfValidatorPass(array('required' => false)),
+      'name_ts'              => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('vernacular_names_filters[%s]');
@@ -41,10 +43,11 @@ abstract class BaseVernacularNamesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'vernacular_class_ref'       => 'Number',
-      'name'                       => 'Text',
-      'name_ts'                    => 'Text',
-      'country_language_full_text' => 'Text',
+      'id'                   => 'Number',
+      'vernacular_class_ref' => 'ForeignKey',
+      'name'                 => 'Text',
+      'name_indexed'         => 'Text',
+      'name_ts'              => 'Text',
     );
   }
 }

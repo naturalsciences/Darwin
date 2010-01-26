@@ -13,6 +13,7 @@ class InstitutionsFormFilter extends BaseInstitutionsFormFilter
   public function configure()
   {
     $this->useFields(array('family_name'));
+    $this->widgetSchema['family_name'] = new sfWidgetFormFilterInput(array('template' => '%input%'));
     $recPerPages = array("1"=>"1", "2"=>"2", "5"=>"5", "10"=>"10", "25"=>"25", "50"=>"50", "75"=>"75", "100"=>"100");
     $this->widgetSchema['rec_per_page'] = new sfWidgetFormChoice(array('choices' => $recPerPages));
     $this->setDefault('rec_per_page', strval(sfConfig::get('app_recPerPage'))); 

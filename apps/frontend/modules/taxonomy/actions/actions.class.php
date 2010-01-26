@@ -72,6 +72,12 @@ class taxonomyActions extends sfActions
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
     $this->processForm($request,$this->form);
+
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('catalogue_taxonomy_widget');
+    if(! $this->widgets) $this->widgets=array();
+
     $this->setTemplate('edit');
   }
 

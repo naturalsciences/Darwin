@@ -136,7 +136,6 @@ CatalogueRelationships:
 Users:
     u1:
         is_physical: true
-        public_class: private
         title: Mr
         family_name: Evil
         given_name: Root
@@ -179,25 +178,21 @@ MySavedSearches:
 People:
     p1:
         is_physical: false
-        public_class: public
         family_name: Institut Royal des Sciences Naturelles de Belgique
         additional_names: RBINS
         birth_date: "<?php echo date('Y-m-d');?>"
     p2:
         is_physical: false
-        public_class: public
         family_name: UGMM
         birth_date: "<?php echo date('Y-m-d');?>"
     p3:
         is_physical: true
-        public_class: private
         title: Mr
         family_name: Duchesne
         given_name: Poilux
         gender: M
     p4:
         is_physical: true
-        public_class: private
         title: Mrs
         family_name: Duchesne
         given_name: ML
@@ -452,7 +447,30 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
-
+    u1ws19:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: comment
+        order_by: 1
+        opened: true
+        visible: false
+    u1ws20:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: properties
+        order_by: 2
+        opened: true
+        visible: false
+    u1ws21:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: address
+        order_by: 3
+        opened: true
+        visible: true
 
 CatalogueProperties:
     cprop1:

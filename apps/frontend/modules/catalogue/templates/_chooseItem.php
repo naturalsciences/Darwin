@@ -42,7 +42,7 @@ $(document).ready(function () {
 
 });
 </script>  
-<form id="search_catalogue_form" method="post" action="">
+<form id="search_catalogue_form" method="post" action="" class="search_form">
     <?php echo $searchForm['table'];?>
     <?php echo $searchForm['name'];?>
     <input type="submit" name="search" value="<?php echo __('Search');?>" />

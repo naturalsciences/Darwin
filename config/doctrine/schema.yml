@@ -15,7 +15,6 @@ People:
         id: { type: integer, notnull: true,primary: true, autoincrement: true}
         is_physical: { type: boolean, notnull: true}
         sub_type: { type: string }
-        public_class: { type: enum, values: ['public','private'] },
         formated_name: { type: string},
         formated_name_indexed: { type: string}
         formated_name_ts: { type: string}
@@ -214,7 +213,6 @@ Users:
         id: { type: integer, primary: true, autoincrement: true}
         is_physical: { type: boolean, notnull: true}
         sub_type: { type: string }
-        public_class: { type: enum, values: ['public','private'] },
         formated_name: { type: string},
         formated_name_indexed: { type: string}
         formated_name_ts: { type: string}
@@ -320,9 +318,7 @@ PeopleAddresses:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         tag: { type: string, notnull: true}
-        organization_unit: { type: string }
-        person_user_role: { type: string }
-        activity_period: { type: string }
+        entry: { type: string }
         po_box: { type: string }
         extended_address: { type: string }
         locality: { type: string, notnull:true }

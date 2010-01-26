@@ -31,7 +31,7 @@ $(document).ready(function () {
 });
 </script>  
 
-<form id="institution_filter" method="post" action="<?php echo url_for('institution/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
+<form id="institution_filter" class="search_form" method="post" action="<?php echo url_for('institution/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
   <?php echo $form->renderGlobalErrors() ?>
 
     <?php echo $form['family_name']->renderLabel('Name');?>

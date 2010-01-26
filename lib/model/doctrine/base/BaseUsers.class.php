@@ -8,7 +8,6 @@
  * @property integer $id
  * @property boolean $is_physical
  * @property string $sub_type
- * @property enum $public_class
  * @property string $formated_name
  * @property string $formated_name_indexed
  * @property string $formated_name_ts
@@ -42,7 +41,6 @@
  * @method integer             getId()                            Returns the current record's "id" value
  * @method boolean             getIsPhysical()                    Returns the current record's "is_physical" value
  * @method string              getSubType()                       Returns the current record's "sub_type" value
- * @method enum                getPublicClass()                   Returns the current record's "public_class" value
  * @method string              getFormatedName()                  Returns the current record's "formated_name" value
  * @method string              getFormatedNameIndexed()           Returns the current record's "formated_name_indexed" value
  * @method string              getFormatedNameTs()                Returns the current record's "formated_name_ts" value
@@ -75,7 +73,6 @@
  * @method Users               setId()                            Sets the current record's "id" value
  * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
  * @method Users               setSubType()                       Sets the current record's "sub_type" value
- * @method Users               setPublicClass()                   Sets the current record's "public_class" value
  * @method Users               setFormatedName()                  Sets the current record's "formated_name" value
  * @method Users               setFormatedNameIndexed()           Sets the current record's "formated_name_indexed" value
  * @method Users               setFormatedNameTs()                Sets the current record's "formated_name_ts" value
@@ -127,14 +124,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              ));
         $this->hasColumn('sub_type', 'string', null, array(
              'type' => 'string',
-             ));
-        $this->hasColumn('public_class', 'enum', null, array(
-             'type' => 'enum',
-             'values' => 
-             array(
-              0 => 'public',
-              1 => 'private',
-             ),
              ));
         $this->hasColumn('formated_name', 'string', null, array(
              'type' => 'string',

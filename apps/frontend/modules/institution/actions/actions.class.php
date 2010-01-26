@@ -79,6 +79,10 @@ class institutionActions extends sfActions
   {
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->find(array($request->getParameter('id'))), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     $this->form = new InstitutionsForm($institution);
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('people_widget');
+    if(! $this->widgets) $this->widgets=array();
   }
 
   public function executeUpdate(sfWebRequest $request)
