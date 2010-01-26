@@ -23,4 +23,48 @@ class peopleActions extends sfActions
   {
     $this->people = Doctrine::getTable('People')->searchPysical($request->getParameter('name',''));
   }
+
+  public function executeAddress(sfWebRequest $request)
+  {
+
+    if($request->hasParameter('id'))
+      $this->address =  Doctrine::getTable('PeopleAddresses')->find($request->getParameter('id'));
+    else
+    {
+     $this->address = new PeopleAddresses();
+     $this->address->setPersonUserRef($request->getParameter('ref_id'));
+    }
+     
+    $this->form = new PeopleAddressesForm($this->address);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('people_addresses'));
+	if($this->form->isValid())
+	{
+	  try{
+	    $this->form->save();
+	  }
+	  catch(Exception $e)
+	  {
+	    return $this->renderText($e->getMessage());
+	  }
+	  return $this->renderText('ok');
+	}
+    }
+  }
+
+  public function executeDeleteAddress(sfWebRequest $request)
+  {
+    $r = Doctrine::getTable('PeopleAddresses')->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such address');
+    try{
+      $r->delete();
+    }
+    catch(Exception $e)
+    {
+      return $this->renderText($e->getMessage());
+    }
+    return $this->renderText('ok');
+  }
 }

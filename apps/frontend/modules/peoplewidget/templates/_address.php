@@ -10,7 +10,7 @@
   <?php foreach($addresses as $address):?>
   <tr>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Address');?>"  href="">
+      <a class="link_catalogue" title="<?php echo __('Edit Address');?>"  href="<?php echo url_for('people/address?ref_id='.$eid.'&id='.$address->getId());?>">
 	<?php echo $address->getEntry();?>
       </a>
       <?php echo $address->getPoBox();?>
@@ -23,7 +23,7 @@
     </td>
 
     <td class="widget_row_delete">
-      <a class="widget_row_delete" href="<?php echo url_for('comment/delete?id='.$comment->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('people/deleteAddress?id='.$address->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>
@@ -33,6 +33,6 @@
 
 <br />
 <?php echo image_tag('add_green.png');?>
-<a title="<?php echo __('Add Address');?>" class="link_catalogue" href=""> 
+<a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('people/address?ref_id='.$eid);?>"> 
   <?php echo __('Add');?>
 </a>
