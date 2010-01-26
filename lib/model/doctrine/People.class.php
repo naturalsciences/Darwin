@@ -5,8 +5,66 @@
  */
 class People extends BasePeople
 {
-    public function __toString()
-    {
+   public function __toString()
+   {
         return $this->getFormatedName();
-    }
+   }
+
+  public function setBirthDate($fd)
+  {
+     if(is_string($fd))
+     {
+	$this->_set('birth_date',$fd);
+     }
+     else
+     {
+      $this->_set('birth_date', $fd->format('Y/m/d H:i:s') );
+      $this->_set('birth_date_mask', $fd->getMask() );
+     }
+     return $this;
+  }
+
+
+  public function setEndDate($fd)
+  {
+     if(is_string($fd))
+     {
+	$this->_set('end_date',$fd);
+     }
+     else
+     {
+      $this->_set('end_date', $fd->format('Y/m/d H:i:s') );
+      $this->_set('end_date_mask', $fd->getMask() );
+     }
+     return $this;
+  }
+  
+ 
+  public function getBirthDateMasked($tag='em')
+  {
+    $dateTime = new FuzzyDateTime($this->_get('birth_date'), $this->_get('birth_date_mask'),true);
+    return $dateTime->getDateMasked($tag);
+  }
+ 
+  
+  public function getEndDateMasked($tag='em')
+  {
+    $dateTime = new FuzzyDateTime($this->_get('end_date'), $this->_get('end_date_mask'),false);
+    return $dateTime->getDateMasked($tag);
+  }
+
+
+  public function getBirthDate()
+  {
+
+    $date = new FuzzyDateTime($this->_get('birth_date'),$this->_get('birth_date_mask'),true);
+    return $date->getDateTimeMaskedAsArray();
+  }
+
+  
+  public function getEndDate()
+  {
+    $date = new FuzzyDateTime($this->_get('end_date'),$this->_get('end_date_mask'),false);
+    return $date->getDateTimeMaskedAsArray();
+  }
 }

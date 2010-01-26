@@ -10,6 +10,13 @@
  */
 class peopleActions extends sfActions
 {
+  protected function getWidgets()
+  {
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('people_widget');
+    if(! $this->widgets) $this->widgets=array();
+  }
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new PeopleFormFilter();
@@ -75,10 +82,7 @@ class peopleActions extends sfActions
   {
     $this->forward404Unless($people = Doctrine::getTable('People')->find(array($request->getParameter('id'))), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('people_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->getWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -88,7 +92,7 @@ class peopleActions extends sfActions
     $this->form = new PeopleForm($people);
 
     $this->processForm($request, $this->form);
-
+    $this->getWidgets();
     $this->setTemplate('edit');
   }
 
