@@ -1,2 +1,1 @@
-DROP TYPE IF EXISTS public_classes CASCADE;
 DROP TYPE IF EXISTS coverages CASCADE;

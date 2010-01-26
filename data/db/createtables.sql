@@ -3,7 +3,6 @@ create table template_people
        (
         is_physical boolean not null default true,
         sub_type varchar,
-        public_class public_classes not null default 'public',
         formated_name varchar not null,
         formated_name_indexed varchar not null,
         formated_name_ts tsvector not null,
@@ -18,7 +17,6 @@ create table template_people
 comment on table template_people is 'Template table used to describe user/people tables';
 comment on column template_people.is_physical is 'Type of user/person: physical or moral - true is physical, false is moral';
 comment on column template_people.sub_type is 'Used for moral user/persons: precise nature - public institution, asbl, sprl, sa,...';
-comment on column template_people.public_class is 'Tells public nature of user/person information - public is default value';
 comment on column template_people.formated_name is 'Complete user/person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column template_people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column template_people.formated_name_indexed is 'Indexed form of formated_name field';
@@ -56,7 +54,6 @@ comment on table people is 'All physical and moral persons used in the applicati
 comment on column people.id is 'Unique identifier of a person';
 comment on column people.is_physical is 'Type of person: physical or moral - true is physical, false is moral';
 comment on column people.sub_type is 'Used for moral persons: precise nature - public institution, asbl, sprl, sa,...';
-comment on column people.public_class is 'Tells public nature of person information - public is default value';
 comment on column people.formated_name is 'Complete person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column people.formated_name_indexed is 'Indexed form of formated_name field';
@@ -410,7 +407,6 @@ comment on table users is 'List all application users';
 comment on column users.id is 'Unique identifier of a user';
 comment on column users.is_physical is 'Type of user: physical or moral - true is physical, false is moral';
 comment on column users.sub_type is 'Used for moral users: precise nature - public institution, asbl, sprl, sa,...';
-comment on column users.public_class is 'Tells public nature of user information - public is default value';
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
