@@ -1,33 +1,60 @@
-<script src="http://dev.jquery.com/view/trunk/plugins/ajaxQueue/jquery.ajaxQueue.js"></script>
-<script>
-var cnt = 0;
-$(document).ready(function(){
-    
-    $("#people_name").bind('paste input', function(event)
-    {
-      $.ajax({
-      mode: 'abort', 
-      type: "GET",
-      url: "<?php echo url_for('people/complete');?>",
-      data: ( {name : $(this).val()} ),
-      beforeSend: function(){
-	// Handle the beforeSend event
-      },
-      complete: function(){
-	// Handle the beforeSend event
-      },
-      success: function(result){
-	$(".results ul").html(result);
-      },
-    });
-  });
-});
-</script>
-<!--<form action="#" name="people_search">-->
-  <input type="text" name="people_name" id="people_name" value="" />
-<!--</form> -->
-<div class="results">
-  <ul>
-  
+<?php if(isset($items) && $items->count() != 0):?>
+<div>
+  <ul class="pager">
+      <li>
+	  <?php echo $form['rec_per_page']->renderLabel(); echo $form['rec_per_page']->render(); ?>
+      </li>
+      <?php $pagerLayout->display(); ?>
+      <li class="nbrRecTot">
+	<span class="nbrRecTotLabel">Total:&nbsp;</span><span class="nbrRecTotValue"><?php echo $pagerLayout->getPager()->getNumResults();?></span>
+      </li>
   </ul>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function () 
+  {
+    $("#people_filters_rec_per_page").change(function ()
+    {
+      $.ajax({
+	      type: "POST",
+	      url: "<?php echo url_for('people/search?page='.$currentPage.'&is_choose='.$is_choose);?>",
+	      data: $('#people_filter').serialize(),
+	      success: function(html){
+				      $(".search_content").html(html);
+				    }
+	    }
+	    );
+      $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+      return false;
+    });
+  });
+</script>
+
+<table class="results <?php if($is_choose) echo 'is_choose';?>">
+  <thead>
+      <th><?php echo __('Name');?></th>
+      <th><?php echo __('Abbreviation');?></th>
+      <th><?php echo __('Type');?></th>
+      <th></th>
+  </thead>
+  <tbody>
+  <?php foreach($items as $item):?>
+    <tr class="rid_<?php echo $item->getId();?>">
+      <td><?php echo $item->getFamilyName();?></td>
+      <td><?php echo $item->getAdditionalNames() ?></td>
+      <td><?php echo $item->getSubType() ?></td>
+      <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
+          <?php if(! $is_choose):?>
+	    <?php echo link_to(image_tag('edit.png'),'people/edit?id='.$item->getId());?>
+          <?php else:?>
+             <div class="result_choose"><?php echo __('Choose');?></div>
+          <?php endif;?>
+      </td>
+    </tr>
+  <?php endforeach;?>
+  </tbody>
+</table>
+<?php else:?>
+  <?php echo __('No Matching Items');?>
+<?php endif;?>
