@@ -9,27 +9,21 @@
  * @property integer $person_user_ref
  * @property string $comm_type
  * @property string $tag
- * @property string $organization_unit
- * @property string $person_user_role
- * @property string $activity_period
+ * @property string $entry
  * @property People $People
  * 
- * @method integer    getId()                Returns the current record's "id" value
- * @method integer    getPersonUserRef()     Returns the current record's "person_user_ref" value
- * @method string     getCommType()          Returns the current record's "comm_type" value
- * @method string     getTag()               Returns the current record's "tag" value
- * @method string     getOrganizationUnit()  Returns the current record's "organization_unit" value
- * @method string     getPersonUserRole()    Returns the current record's "person_user_role" value
- * @method string     getActivityPeriod()    Returns the current record's "activity_period" value
- * @method People     getPeople()            Returns the current record's "People" value
- * @method PeopleComm setId()                Sets the current record's "id" value
- * @method PeopleComm setPersonUserRef()     Sets the current record's "person_user_ref" value
- * @method PeopleComm setCommType()          Sets the current record's "comm_type" value
- * @method PeopleComm setTag()               Sets the current record's "tag" value
- * @method PeopleComm setOrganizationUnit()  Sets the current record's "organization_unit" value
- * @method PeopleComm setPersonUserRole()    Sets the current record's "person_user_role" value
- * @method PeopleComm setActivityPeriod()    Sets the current record's "activity_period" value
- * @method PeopleComm setPeople()            Sets the current record's "People" value
+ * @method integer    getId()              Returns the current record's "id" value
+ * @method integer    getPersonUserRef()   Returns the current record's "person_user_ref" value
+ * @method string     getCommType()        Returns the current record's "comm_type" value
+ * @method string     getTag()             Returns the current record's "tag" value
+ * @method string     getEntry()           Returns the current record's "entry" value
+ * @method People     getPeople()          Returns the current record's "People" value
+ * @method PeopleComm setId()              Sets the current record's "id" value
+ * @method PeopleComm setPersonUserRef()   Sets the current record's "person_user_ref" value
+ * @method PeopleComm setCommType()        Sets the current record's "comm_type" value
+ * @method PeopleComm setTag()             Sets the current record's "tag" value
+ * @method PeopleComm setEntry()           Sets the current record's "entry" value
+ * @method PeopleComm setPeople()          Sets the current record's "People" value
  * 
  * @package    darwin
  * @subpackage model
@@ -59,14 +53,9 @@ abstract class BasePeopleComm extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
-        $this->hasColumn('organization_unit', 'string', null, array(
+        $this->hasColumn('entry', 'string', null, array(
              'type' => 'string',
-             ));
-        $this->hasColumn('person_user_role', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('activity_period', 'string', null, array(
-             'type' => 'string',
+             'notnull' => true,
              ));
     }
 

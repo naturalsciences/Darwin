@@ -305,9 +305,7 @@ PeopleComm:
         person_user_ref: { type: integer, notnull: true}
         comm_type: { type: string, notnull: true, default: 'phone/fax' }
         tag: { type: string, notnull: true}
-        organization_unit: { type: string }
-        person_user_role: { type: string }
-        activity_period: { type: string }
+        entry: { type: string, notnull: true }
     relations:
         People:
             local: person_user_ref
