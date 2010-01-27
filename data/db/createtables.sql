@@ -46,6 +46,10 @@ create table people
         db_people_type integer not null default 1,
         end_date_mask integer not null default 0,
         end_date date not null default '01/01/0001',
+        activity_date_from_mask integer not null default 0,
+        activity_date_from timestamp not null default '01/01/0001 00:00:00',
+        activity_date_to_mask integer not null default 0,
+        activity_date_to timestamp not null default '01/01/0001 00:00:00',
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
        )
@@ -67,6 +71,11 @@ comment on column people.gender is 'For physical persons give the gender: M or F
 comment on column people.db_people_type is 'Sum of numbers in an arithmetic suite (1,2,4,8,...) that gives a unique number identifying people roles - each roles represented by one of the number in the arithmetic suite: 1 is contact, 2 is author, 4 is identifier, 8 is expert, 16 is collector, 32 preparator, 64 photographer...';
 comment on column people.end_date is 'End date';
 comment on column people.end_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
+comment on column people.activity_date_from is 'person general activity period or person activity period in the organization referenced date from';
+comment on column people.activity_date_from_mask is 'person general activity period or person activity period in the organization referenced date from mask';
+comment on column people.activity_date_to is 'person general activity period or person activity period in the organization referenced date to';
+comment on column people.activity_date_to_mask is 'person general activity period or person activity period in the organization referenced date to mask';
+
 
 create sequence catalogue_relationships_id_seq;
 
