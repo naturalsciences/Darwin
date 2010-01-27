@@ -37,6 +37,13 @@
         </td>
       </tr>
       <tr>
+        <th><?php echo $form['gender']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['gender']->renderError() ?>
+          <?php echo $form['gender'] ?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['birth_date']->renderLabel() ?></th>
         <td>
           <?php echo $form['birth_date']->renderError() ?>
@@ -51,17 +58,10 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['db_people_type']->renderLabel() ?></th>
+        <th><?php echo $form['db_people_type']->renderLabel('Type') ?></th>
         <td>
           <?php echo $form['db_people_type']->renderError() ?>
           <?php echo $form['db_people_type'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['gender']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['gender']->renderError() ?>
-          <?php echo $form['gender'] ?>
         </td>
       </tr>
     </tbody>

@@ -27,6 +27,12 @@ class PeopleForm extends BasePeopleForm
     $this->widgetSchema['title'] = new sfWidgetFormInput();
 
 
+    $this->widgetSchema['db_people_type'] = new sfWidgetFormChoice(array(
+      'choices'        => People::getTypes(),
+      'renderer_class' => 'sfWidgetFormSelectDoubleList',
+    ));
+    $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('choices' => array_keys(People::getTypes()), 'required' => false, 'multiple' => true));
+
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);

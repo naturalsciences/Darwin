@@ -5,10 +5,50 @@
  */
 class People extends BasePeople
 {
-   public function __toString()
-   {
+  public static function getTypes()
+  {
+    return array(
+      1 => 'Contact',
+      2 => 'Author',
+      4 => 'Identifier',
+      8 => 'Expert',
+      16 => 'Collector',
+      32 => 'Preparator',
+      64 => 'Photographer'
+    );
+  }
+
+  public function __toString()
+  {
         return $this->getFormatedName();
-   }
+  }
+
+  public function getDbPeopleType()
+  {
+    $result = array();
+    foreach(self::getTypes() as $k => $value)
+    {
+      if($k & $this->_get('db_people_type'))
+      {
+	$result[] = $k;
+      }
+    }
+    return $result;
+  }
+
+  public function setDbPeopleType($db_types)
+  {
+//     var_dump($type);
+//     exit;
+    $result = 0;
+    $types = self::getTypes();
+    foreach($db_types as $value)
+    {
+      if(isset($types[$value]))
+	$result += $value;
+    }
+    $this->_set('db_people_type',$result);
+  }
 
   public function setBirthDate($fd)
   {
