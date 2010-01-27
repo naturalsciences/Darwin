@@ -23,7 +23,6 @@
  * @property Doctrine_Collection $CollectionsRights
  * @property Doctrine_Collection $CollectionsFieldsVisibilities
  * @property Doctrine_Collection $UsersCollRightsAsked
- * @property Doctrine_Collection $PeopleAliases
  * @property Doctrine_Collection $Specimens
  * 
  * @method integer             getId()                            Returns the current record's "id" value
@@ -44,7 +43,6 @@
  * @method Doctrine_Collection getCollectionsRights()             Returns the current record's "CollectionsRights" collection
  * @method Doctrine_Collection getCollectionsFieldsVisibilities() Returns the current record's "CollectionsFieldsVisibilities" collection
  * @method Doctrine_Collection getUsersCollRightsAsked()          Returns the current record's "UsersCollRightsAsked" collection
- * @method Doctrine_Collection getPeopleAliases()                 Returns the current record's "PeopleAliases" collection
  * @method Doctrine_Collection getSpecimens()                     Returns the current record's "Specimens" collection
  * @method Collections         setId()                            Sets the current record's "id" value
  * @method Collections         setCollectionType()                Sets the current record's "collection_type" value
@@ -64,7 +62,6 @@
  * @method Collections         setCollectionsRights()             Sets the current record's "CollectionsRights" collection
  * @method Collections         setCollectionsFieldsVisibilities() Sets the current record's "CollectionsFieldsVisibilities" collection
  * @method Collections         setUsersCollRightsAsked()          Sets the current record's "UsersCollRightsAsked" collection
- * @method Collections         setPeopleAliases()                 Sets the current record's "PeopleAliases" collection
  * @method Collections         setSpecimens()                     Sets the current record's "Specimens" collection
  * 
  * @package    darwin
@@ -161,10 +158,6 @@ abstract class BaseCollections extends sfDoctrineRecord
              'foreign' => 'collection_ref'));
 
         $this->hasMany('UsersCollRightsAsked', array(
-             'local' => 'id',
-             'foreign' => 'collection_ref'));
-
-        $this->hasMany('PeopleAliases', array(
              'local' => 'id',
              'foreign' => 'collection_ref'));
 

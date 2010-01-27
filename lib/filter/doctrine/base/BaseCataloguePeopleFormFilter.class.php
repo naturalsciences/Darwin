@@ -16,6 +16,7 @@ abstract class BaseCataloguePeopleFormFilter extends BaseFormFilterDoctrine
       'referenced_relation' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'record_id'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'people_type'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'people_sub_type'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'order_by'            => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'people_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true)),
     ));
@@ -24,6 +25,7 @@ abstract class BaseCataloguePeopleFormFilter extends BaseFormFilterDoctrine
       'referenced_relation' => new sfValidatorPass(array('required' => false)),
       'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'people_type'         => new sfValidatorPass(array('required' => false)),
+      'people_sub_type'     => new sfValidatorPass(array('required' => false)),
       'order_by'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'people_ref'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('People'), 'column' => 'id')),
     ));
@@ -49,6 +51,7 @@ abstract class BaseCataloguePeopleFormFilter extends BaseFormFilterDoctrine
       'referenced_relation' => 'Text',
       'record_id'           => 'Number',
       'people_type'         => 'Text',
+      'people_sub_type'     => 'Text',
       'order_by'            => 'Number',
       'people_ref'          => 'ForeignKey',
     );

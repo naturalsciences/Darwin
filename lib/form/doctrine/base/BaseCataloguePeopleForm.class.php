@@ -19,6 +19,7 @@ abstract class BaseCataloguePeopleForm extends BaseFormDoctrine
       'referenced_relation' => new sfWidgetFormTextarea(),
       'record_id'           => new sfWidgetFormInputText(),
       'people_type'         => new sfWidgetFormTextarea(),
+      'people_sub_type'     => new sfWidgetFormTextarea(),
       'order_by'            => new sfWidgetFormInputText(),
       'people_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => false)),
     ));
@@ -28,6 +29,7 @@ abstract class BaseCataloguePeopleForm extends BaseFormDoctrine
       'referenced_relation' => new sfValidatorString(),
       'record_id'           => new sfValidatorInteger(),
       'people_type'         => new sfValidatorString(array('required' => false)),
+      'people_sub_type'     => new sfValidatorString(),
       'order_by'            => new sfValidatorInteger(array('required' => false)),
       'people_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'))),
     ));

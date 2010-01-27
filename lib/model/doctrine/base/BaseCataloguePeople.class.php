@@ -9,6 +9,7 @@
  * @property string $referenced_relation
  * @property integer $record_id
  * @property string $people_type
+ * @property string $people_sub_type
  * @property integer $order_by
  * @property integer $people_ref
  * @property People $People
@@ -17,6 +18,7 @@
  * @method string          getReferencedRelation()  Returns the current record's "referenced_relation" value
  * @method integer         getRecordId()            Returns the current record's "record_id" value
  * @method string          getPeopleType()          Returns the current record's "people_type" value
+ * @method string          getPeopleSubType()       Returns the current record's "people_sub_type" value
  * @method integer         getOrderBy()             Returns the current record's "order_by" value
  * @method integer         getPeopleRef()           Returns the current record's "people_ref" value
  * @method People          getPeople()              Returns the current record's "People" value
@@ -24,6 +26,7 @@
  * @method CataloguePeople setReferencedRelation()  Sets the current record's "referenced_relation" value
  * @method CataloguePeople setRecordId()            Sets the current record's "record_id" value
  * @method CataloguePeople setPeopleType()          Sets the current record's "people_type" value
+ * @method CataloguePeople setPeopleSubType()       Sets the current record's "people_sub_type" value
  * @method CataloguePeople setOrderBy()             Sets the current record's "order_by" value
  * @method CataloguePeople setPeopleRef()           Sets the current record's "people_ref" value
  * @method CataloguePeople setPeople()              Sets the current record's "People" value
@@ -55,6 +58,10 @@ abstract class BaseCataloguePeople extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'default' => 'authors',
+             ));
+        $this->hasColumn('people_sub_type', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
              ));
         $this->hasColumn('order_by', 'integer', null, array(
              'type' => 'integer',

@@ -58,22 +58,23 @@ class sfWidgetFormSelectDoubleList extends sfWidgetForm
     $this->addOption('class_select', 'double_list_select');
     $this->addOption('label_unassociated', 'Unassociated');
     $this->addOption('label_associated', 'Associated');
-    $this->addOption('unassociate', '<img src="/images/next.png" alt="unassociate" />');
-    $this->addOption('associate', '<img src="/images/previous.png" alt="associate" />');
+    $this->addOption('unassociate', '<img src="/images/previous.png" alt="unassociate" />');
+    $this->addOption('associate', '<img src="/images/next.png" alt="associate" />');
     $this->addOption('template', <<<EOF
 <div class="%class%">
-  <div style="float: left">
-    <div class="double_list_label">%label_associated%</div>
-    %associated%
-  </div>
-  <div style="float: left; margin-top: 2em">
-    %associate%
-    <br />
-    %unassociate%
-  </div>
+
   <div style="float: left">
     <div class="double_list_label">%label_unassociated%</div>
     %unassociated%
+  </div>
+  <div style="float: left; margin-top: 2em">
+    %unassociate%
+    <br />
+    %associate%
+  </div>
+  <div style="float: left">
+    <div class="double_list_label">%label_associated%</div>
+    %associated%
   </div>
   <br style="clear: both" />
   <script type="text/javascript">

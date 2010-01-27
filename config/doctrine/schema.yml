@@ -44,7 +44,7 @@ CataloguePeople:
         referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         people_type: {  type: string, notnull: true , default: authors }
-#         people_sub_type: {  type: string, notnull: true }
+        people_sub_type: {  type: string, notnull: true }
         order_by: { type: integer, notnull: true, default: 1}
         people_ref: { type: integer, notnull: true}
     relations:
@@ -281,14 +281,16 @@ Multimedia:
 
 PeopleRelationships:
     columns:
+        id: { type: integer, primary: true, autoincrement: true }
         relationship_type: { type: string, notnull: true, default: 'belongs to' }
         person_1_ref: { type: integer, notnull: true}
         person_2_ref: { type: integer, notnull: true}
-        person_title: { type: string }
         path: { type: string }
-        organization_unit: { type: string }
         person_user_role: { type: string }
-        activity_period: { type: string }
+        activity_date_from: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_from_mask: { type: integer, notnull: true, default:0}
+        activity_date_to: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_to_mask: { type: integer, notnull: true, default:0}
     relations:
         People1:
             class: People
@@ -758,22 +760,6 @@ ClassificationSynonymies:
         group_name: {type:string, notnull:true}
         is_basionym: { type: boolean, default: false}
         order_by: { type: integer, notnull: true, default:0}
-
-PeopleAliases:
-    columns:
-        id: { type: integer, primary: true, autoincrement: true }
-        referenced_relation: { type: string, notnull: true}
-        record_id: { type: integer, notnull: true}
-        person_ref: { type: integer, notnull: true }
-        collection_ref: { type: integer, notnull: true, default: 0}
-        person_name: { type: string, notnull: true}
-    relations:
-        People:
-            local: person_ref
-            foreign: id
-        Collections:
-            local: collection_ref
-            foreign: id
 
 Chronostratigraphy:
     columns:
