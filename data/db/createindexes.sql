@@ -127,8 +127,6 @@ CREATE INDEX CONCURRENTLY idx_lithology_unit_main_group_ref on lithology(unit_ma
 CREATE INDEX CONCURRENTLY idx_lithology_unit_group_ref on lithology(unit_group_ref);
 CREATE INDEX CONCURRENTLY idx_lithology_unit_sub_group_ref on lithology(unit_sub_group_ref);
 CREATE INDEX CONCURRENTLY idx_lithology_unit_rock_ref on lithology(unit_rock_ref);
-CREATE INDEX CONCURRENTLY idx_people_aliases_collection_ref on people_aliases(collection_ref);
-CREATE INDEX CONCURRENTLY idx_people_aliases_person_ref on people_aliases(person_ref);
 CREATE INDEX CONCURRENTLY idx_multimedia_keywords_object_ref on multimedia_keywords(object_ref);
 CREATE INDEX CONCURRENTLY idx_soortenregister_taxa_ref on soortenregister(taxa_ref);
 CREATE INDEX CONCURRENTLY idx_soortenregister_gtu_ref on soortenregister(gtu_ref);

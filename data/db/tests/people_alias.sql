@@ -1,22 +1,11 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(9);
+SELECT plan(4);
 
 INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (2, 'AMéàleis Gùbularis&', 2, 1);
 
-SELECT ok (true = (SELECT fct_chk_Is_FirstLevel('taxonomy',1)),' Check if Taxa is first level');
-SELECT ok (false = (SELECT fct_chk_Is_FirstLevel('taxonomy',2)),' Check if Taxa is not first level');
 
-SELECT throws_ok('INSERT INTO people_aliases (referenced_relation, record_id, person_ref, collection_ref, person_name)
-	VALUES (''taxonomy'', 2, 1, null, ''Jozééé'')');
-
-SELECT lives_ok('INSERT INTO people_aliases (referenced_relation, record_id, person_ref, collection_ref, person_name)
-	VALUES (''taxonomy'', 1, 1, null, ''Jozééé'')','Insert into taxonomy');
-
-SELECT lives_ok('INSERT INTO people_aliases (referenced_relation, record_id, person_ref, collection_ref, person_name)
-	VALUES (''mineralogy'', 0, 1, null, ''Jozééé'')','Insert into mineralogy');
-	
 SELECT diag('Checking db_people_type');
 UPDATE people SET db_people_type = 6 WHERE id=2;
 UPDATE people SET db_people_type = 6 WHERE id=1;

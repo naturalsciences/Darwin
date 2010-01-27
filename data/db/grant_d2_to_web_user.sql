@@ -66,13 +66,11 @@
  GRANT select, insert, update, delete on darwin2.users to cebmpad;
  GRANT select, insert, update, delete on darwin2.template_classifications to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_workflow to cebmpad;
- GRANT select, insert, update, delete on darwin2.people_aliases to cebmpad;
  GRANT select, insert, update, delete on darwin2.classification_keywords to cebmpad;
  GRANT select, insert, update, delete on darwin2.classification_synonymies to cebmpad;
  GRANT select, insert, update, delete on darwin2.words to cebmpad;
  GRANT USAGE ON darwin2.taxonomy_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.chronostratigraphy_id_seq TO cebmpad;
- GRANT USAGE ON darwin2.people_aliases_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.mineralogy_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.lithostratigraphy_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.specimens_id_seq TO cebmpad;

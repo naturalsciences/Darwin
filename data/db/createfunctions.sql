@@ -3230,7 +3230,6 @@ BEGIN
 	DELETE FROM users_workflow WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM collection_maintenance WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM associated_multimedia WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM people_aliases WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM codes WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM insurances WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	RETURN OLD;
@@ -5702,23 +5701,6 @@ END;
 $$
 LANGUAGE plpgsql;
 
-/**
-	fct_chk_authorAliasLevel
-	Check if a domain is a frist level domain
-*/
-CREATE OR REPLACE FUNCTION fct_chk_Is_FirstLevel(referenced_relation people_aliases.referenced_relation%TYPE, record_id  people_aliases.record_id%TYPE) RETURNS boolean
-AS $$
-DECLARE
-	is_ok boolean;
-BEGIN
-	IF referenced_relation IS NULL OR record_id IS NULL THEN
-		RETURN TRUE;
-	END IF;
-	EXECUTE 'SELECT parent_ref=0 FROM ' || quote_ident(referenced_relation) || ' WHERE id=' || quote_literal(record_id::varchar) INTO is_ok;
-	RETURN is_ok;
-END;
-$$
-LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION fct_chk_AreAuthors() RETURNS TRIGGER
 AS $$

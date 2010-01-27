@@ -507,14 +507,10 @@ comment on column template_people_users_comm_common.person_user_ref is 'Referenc
 comment on column template_people_users_comm_common.entry is 'Communication entry';
 create table template_people_users_rel_common
        (
-        organization_unit varchar,
-        person_user_role varchar,
-        activity_period varchar
+        person_user_role varchar
        );
 comment on table template_people_users_rel_common is 'Template table used to propagate three field in different tables depending it''s people or user dedicated';
-comment on column template_people_users_rel_common.organization_unit is 'When a physical person/user is in relationship with a moral one, indicates the department or unit the person/user is related to';
 comment on column template_people_users_rel_common.person_user_role is 'Role the person/user have in the moral person he depends of';
-comment on column template_people_users_rel_common.activity_period is 'Person/User activity period';
 create table template_people_users_addr_common
        (
         po_box varchar,
@@ -533,26 +529,35 @@ comment on column template_people_users_addr_common.region is 'Region';
 comment on column template_people_users_addr_common.zip_code is 'zip code';
 comment on column template_people_users_addr_common.country is 'Country';
 comment on column template_people_users_addr_common.address_parts_ts is 'tsvector field containing vectorized form of all addresses fields: country, region, locality, extended address,...';
+
+create sequence people_relationships_id_seq;
+
 create table people_relationships
        (
+        id integer not null default nextval('people_relationships_id_seq'),
         relationship_type varchar not null default 'belongs to',
         person_1_ref integer not null,
         person_2_ref integer not null,
-        person_title varchar,
         path varchar,
-        constraint unq_people_relationships unique (relationship_type, person_1_ref, person_2_ref),
+        activity_date_from_mask integer not null default 0,
+        activity_date_from timestamp not null default '01/01/0001 00:00:00',
+        activity_date_to_mask integer not null default 0,
+        activity_date_to timestamp not null default '01/01/0001 00:00:00',
+        constraint pk_people_relationships primary key (id),
         constraint fk_people_relationships_people_01 foreign key (person_1_ref) references people(id) on delete cascade,
         constraint fk_people_relationships_people_02 foreign key (person_2_ref) references people(id)
        )
+
 inherits (template_people_users_rel_common);
 comment on table people_relationships is 'Relationships between people - mainly between physical person and moral person: relationship of dependancy';
 comment on column people_relationships.relationship_type is 'Type of relationship between two persons: belongs to, is department of, is section of, works for,...';
 comment on column people_relationships.person_1_ref is 'Reference of person to be puted in relationship with an other - id field of people table';
 comment on column people_relationships.person_2_ref is 'Reference of person puted the person puted in relationship with is dependant of - id field of people table';
-comment on column people_relationships.organization_unit is 'When a physical person is in relationship with a moral one, indicates the department or unit the person is related to';
-comment on column people_relationships.person_title is 'Person title';
 comment on column people_relationships.person_user_role is 'Person role in the organization referenced';
-comment on column people_relationships.activity_period is 'Main person activity period or person activity period in the organization referenced';
+comment on column people_relationships.activity_date_from is 'person activity period or person activity period in the organization referenced date from';
+comment on column people_relationships.activity_date_from_mask is 'person activity period or person activity period in the organization referenced date from mask';
+comment on column people_relationships.activity_date_to is 'person activity period or person activity period in the organization referenced date to';
+comment on column people_relationships.activity_date_to_mask is 'person activity period or person activity period in the organization referenced date to mask';
 comment on column people_relationships.path is 'Hierarchical path of the organization structure';
 
 create sequence people_comm_id_seq;
@@ -624,12 +629,12 @@ create sequence users_addresses_id_seq;
 create table users_addresses
        (
         id integer not null default nextval('users_addresses_id_seq'),
-        tag varchar not null,
+        organization_unit varchar,
         constraint pk_users_addresses primary key (id),
         constraint unq_users_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_users_addresses_users foreign key (person_user_ref) references users(id) on delete cascade
        )
-inherits (template_people_users_comm_common, template_people_users_rel_common, template_people_users_addr_common);
+inherits (template_people_users_rel_common, template_people_users_comm_common, template_people_users_addr_common);
 comment on table users_addresses is 'Users addresses';
 comment on column users_addresses.address_parts_ts is 'tsvector column used to search an address part';
 comment on column users_addresses.id is 'Unique identifier of a user address';
@@ -643,8 +648,6 @@ comment on column users_addresses.region is 'Region';
 comment on column users_addresses.zip_code is 'Zip code';
 comment on column users_addresses.organization_unit is 'When a physical user is in relationship with a moral one, indicates the department or unit the user is related to';
 comment on column users_addresses.person_user_role is 'User role in the organization referenced';
-comment on column users_addresses.activity_period is 'Main user activity period or user activity period in the organization referenced';
-comment on column users_addresses.tag is 'List of descriptive tags: home, work,...';
 create table users_login_infos
        (
         user_ref integer not null,
@@ -1319,26 +1322,6 @@ comment on column taxonomy.abberans_indexed is 'Indexed name of abberans the cur
 comment on column taxonomy.extinct is 'Tells if taxonomy is extinct or not';
 comment on column taxonomy.path is 'Hierarchy path (/ for root)';
 comment on column taxonomy.parent_ref is 'Id of parent - id field from table itself';
-
-create sequence people_aliases_id_seq;
-
-create table people_aliases
-       (
-        id integer not null default nextval('people_aliases_id_seq'),
-        person_ref integer not null,
-        collection_ref integer default 0,
-        person_name varchar not null,
-        constraint unq_people_aliases unique (referenced_relation, record_id, person_ref, collection_ref, person_name),
-        constraint fk_people_aliases_collection foreign key (collection_ref) references collections(id) on delete cascade,
-        constraint fk_people_aliases_names_people foreign key (person_ref) references people(id) on delete cascade
-       )
-       inherits (template_table_record_ref);
-comment on table people_aliases is 'Name translation depending on taxonomic top group studied: in botany, Liné will be written L. and in zoology, Liné will be written Linaeus';
-comment on column people_aliases.referenced_relation is 'Reference of the catalogue table';
-comment on column people_aliases.record_id is 'Identifier of record concerned : 1st level';
-comment on column people_aliases.person_ref is 'Reference of the person concerned - id field of people table';
-comment on column people_aliases.collection_ref is 'Reference the collection where the alias apply';
-comment on column people_aliases.person_name is 'Person name for the group concerned';
 
 create sequence chronostratigraphy_id_seq;
 

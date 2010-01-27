@@ -127,8 +127,6 @@ DROP INDEX IF EXISTS idx_lithology_unit_main_group_ref;
 DROP INDEX IF EXISTS idx_lithology_unit_group_ref;
 DROP INDEX IF EXISTS idx_lithology_unit_sub_group_ref;
 DROP INDEX IF EXISTS idx_lithology_unit_rock_ref;
-DROP INDEX IF EXISTS idx_people_aliases_collection_ref;
-DROP INDEX IF EXISTS idx_people_aliases_person_ref;
 DROP INDEX IF EXISTS idx_multimedia_keywords_object_ref;
 DROP INDEX IF EXISTS idx_soortenregister_taxa_ref;
 DROP INDEX IF EXISTS idx_soortenregister_gtu_ref;

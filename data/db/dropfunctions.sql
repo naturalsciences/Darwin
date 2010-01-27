@@ -33,7 +33,6 @@ DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
 DROP FUNCTION IF EXISTS fct_clr_title() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_AreAuthors() CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_Is_FirstLevel(referenced_relation people_aliases.referenced_relation%TYPE, record_id  people_aliases.record_id%TYPE) CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_peopleType() CASCADE;
 DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_toFullText() CASCADE;
