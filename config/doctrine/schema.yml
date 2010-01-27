@@ -28,6 +28,10 @@ People:
         db_people_type:  { type: integer, notnull: true, default:1}
         end_date_mask:  { type: integer, notnull: true, default:0}
         end_date: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_from: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_from_mask: { type: integer, notnull: true, default:0}
+        activity_date_to: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_to_mask: { type: integer, notnull: true, default:0}
 
 CatalogueRelationships:
     columns:
