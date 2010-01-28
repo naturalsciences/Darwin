@@ -47,9 +47,9 @@ create table people
         end_date_mask integer not null default 0,
         end_date date not null default '01/01/0001',
         activity_date_from_mask integer not null default 0,
-        activity_date_from timestamp not null default '01/01/0001 00:00:00',
+        activity_date_from date not null default '01/01/0001',
         activity_date_to_mask integer not null default 0,
-        activity_date_to timestamp not null default '01/01/0001 00:00:00',
+        activity_date_to date not null default '01/01/0001',
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
        )
@@ -549,9 +549,9 @@ create table people_relationships
         person_2_ref integer not null,
         path varchar,
         activity_date_from_mask integer not null default 0,
-        activity_date_from timestamp not null default '01/01/0001 00:00:00',
+        activity_date_from date not null default '01/01/0001',
         activity_date_to_mask integer not null default 0,
-        activity_date_to timestamp not null default '01/01/0001 00:00:00',
+        activity_date_to date not null default '01/01/0001',
         constraint pk_people_relationships primary key (id),
         constraint fk_people_relationships_people_01 foreign key (person_1_ref) references people(id) on delete cascade,
         constraint fk_people_relationships_people_02 foreign key (person_2_ref) references people(id)
