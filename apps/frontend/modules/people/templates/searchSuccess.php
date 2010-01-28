@@ -1,3 +1,4 @@
+<?php if($form->isValid()):?>
 <?php if(isset($items) && $items->count() != 0):?>
 <div>
   <ul class="pager">
@@ -57,4 +58,18 @@ $(document).ready(function ()
 </table>
 <?php else:?>
   <?php echo __('No Matching Items');?>
+<?php endif;?>
+
+<?php else:?>
+
+<div class="error">
+    <?php var_dump($sf_params->get('people_filters'));?>
+
+    <?php echo $form->renderGlobalErrors();?>
+    <?php echo $form['activity_date_to']->renderError(); ?>
+    <?php echo $form['db_people_type']->renderError(); ?>
+    <?php echo $form['is_physical']->renderError(); ?>
+    <?php echo $form['activity_date_from']->renderError(); ?>
+    <?php echo $form['family_name']->renderError(); ?>
+</div>
 <?php endif;?>

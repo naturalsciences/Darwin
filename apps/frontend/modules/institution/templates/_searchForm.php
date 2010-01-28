@@ -35,8 +35,8 @@ $(document).ready(function () {
   <?php echo $form->renderGlobalErrors() ?>
 
     <?php echo $form['family_name']->renderLabel('Name');?>
-    <?php echo $form['family_name']->renderError(); ?>
     <?php echo $form['family_name'];?>
+    <?php echo $form['is_physical'];?>
     <input type="submit" name="search" value="Search" />
 
 <div class="search_content"> 

@@ -35,19 +35,17 @@ $(document).ready(function () {
   <?php echo $form->renderGlobalErrors() ?>
 
     <?php echo $form['family_name']->renderLabel('Name');?>
-    <?php echo $form['family_name']->renderError(); ?>
     <?php echo $form['family_name'];?>
 
     <?php echo $form['activity_date_from']->renderLabel();?>
-    <?php echo $form['activity_date_from']->renderError(); ?>
     <?php echo $form['activity_date_from'];?>
 
+    <?php echo $form['is_physical'];?>
+
     <?php echo $form['activity_date_to']->renderLabel();?>
-    <?php echo $form['activity_date_to']->renderError(); ?>
     <?php echo $form['activity_date_to'];?>
 
     <?php echo $form['db_people_type']->renderLabel('Type');?>
-    <?php echo $form['db_people_type']->renderError(); ?>
     <?php echo $form['db_people_type'];?>
     <input type="submit" name="search" value="Search" />
 

@@ -13,4 +13,14 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   public function setup()
   {
   }
+
+  protected function getI18N()
+  {
+     return sfContext::getInstance()->getI18N();
+  }
+
+  public function getCurrentCulture()
+  {
+    return isset($this->options['culture']) ? $this->options['culture'] : 'en';
+  }
 }
