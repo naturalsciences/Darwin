@@ -55,6 +55,7 @@ $(document).ready(function ()
 <table class="results <?php if($is_choose) echo 'is_choose';?>">
   <thead>
     <tr>
+      <th></th>
       <th>
 	<a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
 	  <?php echo __('Title');?>
@@ -97,6 +98,7 @@ $(document).ready(function ()
   <tbody>
   <?php foreach($items as $item):?>
     <tr class="rid_<?php echo $item->getId();?>">
+      <td><?php echo image_tag('info.png',"title=info class=info");?></td>
       <td><?php echo $item->getTitle() ?></td>
       <td><?php echo $item->getFamilyName();?></td>
       <td><?php echo $item->getGivenName();?></td>
@@ -116,6 +118,9 @@ $(document).ready(function ()
              <div class="result_choose"><?php echo __('Choose');?></div>
           <?php endif;?>
       </td>
+    </tr>
+    <tr class="hidden details details_rid_<?php echo $item->getId();?>" >
+      <td colspan="8"></td>
     </tr>
   <?php endforeach;?>
   </tbody>
@@ -137,3 +142,24 @@ $(document).ready(function ()
     <?php echo $form['family_name']->renderError(); ?>
 </div>
 <?php endif;?>
+<script>
+  $("img.info").click(function() {
+      item_row=$(this).closest('tr');
+      el_id  = getIdInClasses(item_row);
+      if($('.details_rid_'+el_id).is(":hidden"))
+      {
+	if($('.details_rid_'+el_id+' > td:first ').html() == '')
+	{
+	  $.get('<?php echo url_for('people/details');?>/id/'+el_id,function (html){
+	    $('.details_rid_'+el_id+' > td:first ').html(html).parent().show();
+	  });
+	}
+	else
+	{
+	  $('.details_rid_'+el_id+'').show();
+	}
+      }
+      else
+	$('.details_rid_'+el_id+'').hide();
+  });
+</script>

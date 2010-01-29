@@ -31,6 +31,8 @@
                         <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/index');?></li>
+                        <li><?php echo link_to(__('People'),'people/index');?></li>
+
                     </ul>
                 </li>
             </ul>
@@ -47,6 +49,7 @@
                         <li><?php echo link_to(__('Expeditions'),'expedition/new');?></li>
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/new');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/new');?></li>
+                        <li><?php echo link_to(__('People'),'people/new');?></li>
                     </ul>
                 </li>
             </ul>

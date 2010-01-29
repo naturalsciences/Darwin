@@ -231,6 +231,7 @@ Users:
 
 PeopleLanguages:
     columns:
+        id: { type: integer, primary: true, autoincrement: true}
         people_ref: { type: integer, notnull: true}
         language_country: { type: string, notnull: true, default: en_gb}
         mother: { type: boolean, notnull: true, default: true}

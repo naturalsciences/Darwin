@@ -67,6 +67,11 @@ class peopleActions extends sfActions
     }
   }
 
+  public function executeDetails(sfWebRequest $request)
+  {
+    $this->item = Doctrine::getTable('People')->find($request->getParameter('id'));
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new PeopleForm();
