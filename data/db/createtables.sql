@@ -427,8 +427,12 @@ comment on column users.additional_names is 'Any additional names given to user'
 comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
 comment on column users.birth_date is 'Birth/Creation date composed';
 comment on column users.gender is 'For physical users give the gender: M or F';
+
+create sequence people_languages_id_seq;
+
 create table people_languages
        (
+	id integer not null default nextval('people_languages_id_seq'),
         people_ref integer not null,
         constraint unq_people_languages unique (people_ref, language_country),
         constraint fk_people_languages_people foreign key (people_ref) references people(id) on delete cascade
