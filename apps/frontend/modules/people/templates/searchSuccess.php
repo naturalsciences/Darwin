@@ -11,15 +11,14 @@
       </li>
   </ul>
 </div>
-
 <script type="text/javascript">
 $(document).ready(function () 
   {
     $("#people_filters_rec_per_page").change(function ()
     {
       $.ajax({
-	      type: "POST",
-	      url: "<?php echo url_for($s_url.'orderby='.$orderBy.'&orderdir='.$orderDir);?>",
+	      type: "post",
+	      url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
 	      data: $('#people_filter').serialize(),
 	      success: function(html){
 				      $(".search_content").html(html);
@@ -33,7 +32,7 @@ $(document).ready(function ()
    $("a.sort").click(function ()
    {
      $.ajax({
-             type: "POST",
+             type: "post",
              url: $(this).attr("href"),
              data: $('#people_filter').serialize(),
              success: function(html){

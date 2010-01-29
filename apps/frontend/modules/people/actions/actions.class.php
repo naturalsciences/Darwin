@@ -41,6 +41,8 @@ class peopleActions extends sfActions
 	$query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
+	$this->s_url = 'people/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
+
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager(
 	    $query,
@@ -50,7 +52,7 @@ class peopleActions extends sfActions
 	  new Doctrine_Pager_Range_Sliding(
 	    array('chunk' => $pagerSlidingSize)
 	    ),
-	  $this->getController()->genUrl('people/search?is_choose='.$this->is_choose.'&page=').'{%page_number}'
+	  $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
 	);
 
         // Sets the Pager Layout templates
@@ -61,7 +63,6 @@ class peopleActions extends sfActions
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
 
-	$this->s_url = 'people/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
       }
     }
   }

@@ -30,24 +30,56 @@ $(document).ready(function () {
    });
 });
 </script>  
-
 <form id="people_filter" class="search_form" method="post" action="<?php echo url_for('people/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
-  <?php echo $form->renderGlobalErrors() ?>
+  <?php echo $form->renderGlobalErrors(); ?>
+  <?php echo $form['is_physical'];?>
 
-    <?php echo $form['family_name']->renderLabel('Name');?>
-    <?php echo $form['family_name'];?>
-
-    <?php echo $form['activity_date_from']->renderLabel();?>
-    <?php echo $form['activity_date_from'];?>
-
-    <?php echo $form['is_physical'];?>
-
-    <?php echo $form['activity_date_to']->renderLabel();?>
-    <?php echo $form['activity_date_to'];?>
-
-    <?php echo $form['db_people_type']->renderLabel('Type');?>
-    <?php echo $form['db_people_type'];?>
-    <input type="submit" name="search" value="Search" />
+  <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
+    <thead>
+      <tr>
+        <th><?php echo $form['family_name']->renderLabel('Name') ?></th>
+        <th><?php echo $form['activity_date_from']->renderLabel(); ?></th>
+        <th><?php echo $form['activity_date_to']->renderLabel(); ?></th>
+	<th><?php echo $form['db_people_type']->renderLabel('Type');?></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <?php echo $form['family_name']->renderError() ?>
+        </td>
+        <td>
+          <?php echo $form['activity_date_from']->renderError() ?>
+        </td>
+        <td>
+          <?php echo $form['activity_date_to']->renderError() ?>
+        </td>
+	<td>
+          <?php echo $form['db_people_type']->renderError() ?>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <?php echo $form['family_name']->render() ?>
+        </td>
+        <td>
+          <?php echo $form['activity_date_from']->render() ?>
+        </td>
+        <td>
+          <?php echo $form['activity_date_to']->render() ?>
+        </td>
+        <td>
+          <?php echo $form['db_people_type']->render() ?>
+        </td>
+        <td>
+          <input id="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 <div class="search_content"> 
 </div> 

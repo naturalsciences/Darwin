@@ -9,7 +9,7 @@
            $.ajax({
                    type: "POST",
                    url: "<?php echo url_for('expedition/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage.'&is_choose='.$is_choose);?>",
-                   data: $('#search_expedition').serialize(),
+                   data: $('#search_form').serialize(),
                    success: function(html){
                                            $(".search_results_content").html(html);
                                           }
