@@ -38,8 +38,6 @@ class People extends BasePeople
 
   public function setDbPeopleType($db_types)
   {
-//     var_dump($type);
-//     exit;
     $result = 0;
     $types = self::getTypes();
     foreach($db_types as $value)
@@ -58,7 +56,7 @@ class People extends BasePeople
      }
      else
      {
-      $this->_set('birth_date', $fd->format('Y/m/d H:i:s') );
+      $this->_set('birth_date', $fd->format('Y/m/d') );
       $this->_set('birth_date_mask', $fd->getMask() );
      }
      return $this;
@@ -73,38 +71,103 @@ class People extends BasePeople
      }
      else
      {
-      $this->_set('end_date', $fd->format('Y/m/d H:i:s') );
+      $this->_set('end_date', $fd->format('Y/m/d') );
       $this->_set('end_date_mask', $fd->getMask() );
      }
      return $this;
   }
-  
+
+  public function getEndDateObject()
+  {
+    $date = new FuzzyDateTime($this->_get('end_date'),$this->_get('end_date_mask'),true);
+    return $date;
+  }
+
+  public function getBirthDateObject()
+  {
+    $date = new FuzzyDateTime($this->_get('birth_date'),$this->_get('birth_date_mask'),true);
+    return $date;
+  }
  
   public function getBirthDateMasked($tag='em')
   {
-    $dateTime = new FuzzyDateTime($this->_get('birth_date'), $this->_get('birth_date_mask'),true);
-    return $dateTime->getDateMasked($tag);
+    return $this->getBirthDateObject()->getDateMasked($tag);
   }
  
-  
   public function getEndDateMasked($tag='em')
   {
-    $dateTime = new FuzzyDateTime($this->_get('end_date'), $this->_get('end_date_mask'),false);
-    return $dateTime->getDateMasked($tag);
+    return $this->getBirthDateObject()->getDateMasked($tag);
   }
-
 
   public function getBirthDate()
   {
-
-    $date = new FuzzyDateTime($this->_get('birth_date'),$this->_get('birth_date_mask'),true);
-    return $date->getDateTimeMaskedAsArray();
+    return $this->getBirthDateObject()->getDateTimeMaskedAsArray();
   }
 
-  
   public function getEndDate()
   {
-    $date = new FuzzyDateTime($this->_get('end_date'),$this->_get('end_date_mask'),false);
-    return $date->getDateTimeMaskedAsArray();
+    return $this->getEndDateObject()->getDateTimeMaskedAsArray();
+  }
+
+
+  public function setActivityDateFrom($fd)
+  {
+     if(is_string($fd))
+     {
+	$this->_set('activity_date_from',$fd);
+     }
+     else
+     {
+      $this->_set('activity_date_from', $fd->format('Y/m/d') );
+      $this->_set('activity_date_from_mask', $fd->getMask() );
+     }
+//      return $this;
+  }
+
+
+  public function setActivityDateTo($fd)
+  {
+     if(is_string($fd))
+     {
+	$this->_set('activity_date_to',$fd);
+     }
+     else
+     {
+      $this->_set('activity_date_to', $fd->format('Y/m/d') );
+      $this->_set('activity_date_to_mask', $fd->getMask() );
+     }
+  }
+  
+ 
+  public function getActivityDateToObject()
+  {
+    $date = new FuzzyDateTime($this->_get('activity_date_to'),$this->_get('activity_date_to_mask'),true);
+    return $date;
+  }
+
+  public function getActivityDateFromObject()
+  {
+    $date = new FuzzyDateTime($this->_get('activity_date_from'),$this->_get('activity_date_from_mask'),true);
+    return $date;
+  }
+
+  public function getActivityDateFromMasked($tag='em')
+  {
+    return $this->getActivityDateToObject()->getDateMasked($tag);
+  }
+  
+  public function getActivityDateToMasked($tag='em')
+  {
+    return $this->getActivityDateToObject()->getDateMasked($tag);
+  }
+
+  public function getActivityDateFrom()
+  {
+    return $this->getActivityDateFromObject()->getDateTimeMaskedAsArray();
+  }
+
+  public function getActivityDateTo()
+  {
+    return $this->getActivityDateToObject()->getDateTimeMaskedAsArray();
   }
 }

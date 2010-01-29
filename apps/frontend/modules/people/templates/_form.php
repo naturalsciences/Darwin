@@ -58,6 +58,20 @@
         </td>
       </tr>
       <tr>
+        <th><?php echo $form['activity_date_from']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['activity_date_from']->renderError() ?>
+          <?php echo $form['activity_date_from'] ?>
+        </td>
+      </tr>
+      <tr>
+        <th><?php echo $form['activity_date_to']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['activity_date_to']->renderError() ?>
+          <?php echo $form['activity_date_to'] ?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['db_people_type']->renderLabel('Type') ?></th>
         <td>
           <?php echo $form['db_people_type']->renderError() ?>

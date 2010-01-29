@@ -18,7 +18,9 @@ class PeopleForm extends BasePeopleForm
       $this['sub_type'],
       $this['formated_name'],
       $this['birth_date_mask'], 
-      $this['end_date_mask']
+      $this['end_date_mask'],
+      $this['activity_date_from_mask'], 
+      $this['activity_date_to_mask']
     );
     
     $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
@@ -33,7 +35,13 @@ class PeopleForm extends BasePeopleForm
     ));
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('choices' => array_keys(People::getTypes()), 'required' => false, 'multiple' => true));
 
+    $this->initiateActivityItems();
+    $this->initiateBirthItems();
 
+  }
+
+  protected function initiateBirthItems()
+  {
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
@@ -92,6 +100,70 @@ class PeopleForm extends BasePeopleForm
         'end_date',
         array('throw_global_error' => true),
         array('invalid'=>'The birth date cannot be above the "end" date.')
+      )
+    );
+  }
+
+  protected function initiateActivityItems()
+  {
+    $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
+    $years = array_combine($yearsKeyVal, $yearsKeyVal);
+    $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
+    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
+    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
+    $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
+    $dateUpperBound = new FuzzyDateTime(sfConfig::get('app_dateUpperBound'));
+    $maxDate->setStart(false);
+
+    $this->widgetSchema['activity_date_from'] = new widgetFormJQueryFuzzyDate(
+      array('culture'=>$this->getCurrentCulture(), 
+            'image'=>'/images/calendar.gif',       
+            'format' => '%day%/%month%/%year%',    
+            'years' => $years,                     
+            'empty_values' => $dateText,           
+      ),                                      
+      array('class' => 'from_date')                
+    );      
+                                      
+    $this->widgetSchema['activity_date_to'] = new widgetFormJQueryFuzzyDate(
+      array('culture'=>$this->getCurrentCulture(), 
+            'image'=>'/images/calendar.gif',       
+            'format' => '%day%/%month%/%year%',    
+            'years' => $years,                     
+            'empty_values' => $dateText,           
+      ),                                      
+      array('class' => 'to_date')                
+    );      
+
+    $this->validatorSchema['activity_date_from'] = new fuzzyDateValidator(
+      array(
+        'required' => false,                       
+        'from_date' => true,                       
+        'min' => $minDate,                         
+        'max' => $maxDate,
+        'empty_value' => $dateLowerBound,
+      ),
+      array('invalid' => 'Date provided is not valid')
+    );
+
+    $this->validatorSchema['activity_date_to'] = new fuzzyDateValidator(
+      array(
+        'required' => false,
+        'from_date' => false,
+        'min' => $minDate,
+        'max' => $maxDate,
+        'empty_value' => $dateUpperBound,
+      ),
+      array('invalid' => 'Date provided is not valid')
+    );
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorSchemaCompare(
+        'birth_date',
+        '<=',
+        'end_date',
+        array('throw_global_error' => true),
+        array('invalid'=>'The begin activity date cannot be above the end activity date.')
       )
     );
   }

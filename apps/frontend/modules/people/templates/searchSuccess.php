@@ -34,17 +34,31 @@ $(document).ready(function ()
 
 <table class="results <?php if($is_choose) echo 'is_choose';?>">
   <thead>
-      <th><?php echo __('Name');?></th>
-      <th><?php echo __('Abbreviation');?></th>
-      <th><?php echo __('Type');?></th>
+    <tr>
+      <th><?php echo __('Title');?></th>
+      <th><?php echo __('Family Name');?></th>
+      <th><?php echo __('Given Name');?></th>
+      <th><?php echo __('Additional Names');?></th>
+      <th><?php echo __('Life');?></th>
+      <th><?php echo __('Activity');?></th>
       <th></th>
+    <tr>
   </thead>
   <tbody>
   <?php foreach($items as $item):?>
     <tr class="rid_<?php echo $item->getId();?>">
+      <td><?php echo $item->getTitle() ?></td>
       <td><?php echo $item->getFamilyName();?></td>
+      <td><?php echo $item->getGivenName();?></td>
       <td><?php echo $item->getAdditionalNames() ?></td>
-      <td><?php echo $item->getSubType() ?></td>
+      <td class="datesNum">
+	<?php echo $item->getBirthDateObject()->getDateMasked('em','Y');?> - 
+	<?php echo $item->getEndDateObject()->getDateMasked('em','Y') ?>
+      </td>
+      <td class="datesNum">
+	<?php echo $item->getActivityDateFromObject()->getDateMasked('em','Y');?> - 
+	<?php echo $item->getActivityDateToObject()->getDateMasked('em','Y') ?>
+      </td>
       <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
           <?php if(! $is_choose):?>
 	    <?php echo link_to(image_tag('edit.png'),'people/edit?id='.$item->getId());?>

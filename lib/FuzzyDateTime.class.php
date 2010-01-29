@@ -397,56 +397,42 @@ class FuzzyDateTime extends DateTime
    * @return array
    *
    */ 
-  public function getDateMasked($tag='em')
+  public function getDateMasked($tag='em', $format=null)
   {
-    $firstPart = '';
-    $lastPart = '';
-    $yearAtLeast = self::$datePartsMask['year'] & $this->getMask();
-    
-    // Test each date parts to define what should be masked and what not
-    if (!$yearAtLeast)
+    if($format==null)
     {
-      $mainPart = '<'.$tag.'>'.strval($this->getDateTime($this->getWithTime())).'</'.$tag.'>';
-    }
-    elseif (!(self::$datePartsMask['month'] & $this->getMask()))
-    {
-      $firstPart = '<'.$tag.'>'.strval($this->getDateTime(false, 'd/m/')).'</'.$tag.'>';
-      $mainPart = strval($this->getDateTime(false, 'Y'));
-    }
-    elseif (!(self::$datePartsMask['day'] & $this->getMask()))
-    {
-      $firstPart = '<'.$tag.'>'.strval($this->getDateTime(false, 'd/')).'</'.$tag.'>';
-      $mainPart = strval($this->getDateTime(false, 'm/Y'));
-    }
-    else
-    {
-      $mainPart = strval($this->getDateTime(false));
-    }
-    
-    // Do we have to cope with time ? If yes do the same with time as what we did with date
-    if ($this->getWithTime() && $yearAtLeast)
-    {
-      if (!(self::$datePartsMask['hour'] & $this->getMask()))
-      {
-        $lastPart = '<'.$tag.'> '.strval($this->getTime()).'</'.$tag.'>';
-      }
-      elseif (!(self::$datePartsMask['minute'] & $this->getMask()))
-      {
-        $mainPart .= ' '.$this->getTime('H');
-        $lastPart = '<'.$tag.'>'.strval($this->getTime(':i:s')).'</'.$tag.'>';
-      }
-      elseif (!(self::$datePartsMask['second'] & $this->getMask()))
-      {
-        $mainPart .= ' '.$this->getTime('H:i');
-        $lastPart = '<'.$tag.'>'.strval($this->getTime(':s')).'</'.$tag.'>';
-      }
-      else
-      {
-        $mainPart .= ' '.$this->getTime();
-      }
+      $format = $this->dateFormat;
+      if($this->getWithTime())
+	$format .= ' '.$this->timeFormat;
     }
 
-    return $firstPart.$mainPart.$lastPart;
+    $patterns = array(
+      'year' => array('Y','y','o'),
+      'month' => array('n','F','m','M','t'),
+      'day' => array('d','D','j','l','N','w','z'),
+      'hour' => array('g','G','h','H','a','A'),
+      'minute' => array('i') ,
+      'second' => array('s','U') 
+    );
+
+    foreach(self::$datePartsMask as $date_part => $associated_mask)
+    {
+      if( ! ($associated_mask & $this->getMask()) )
+      {
+	 foreach($patterns[$date_part] as $pattern)
+	 {
+	    
+	    $format = preg_replace("/($pattern)/", '§$1£',$format);
+	 }
+      }
+    }
+    $result = $this->format($format);
+//     print $result ."-".$this->getMask()."\n";
+
+//
+    $result = preg_replace('|£([\-\/\\\ \:])§|','$1',$result); //Replace if tag are joined replace 2 tag by one big
+    $result = preg_replace(array('/§/','/£/'), array("<$tag>","</$tag>"),$result);
+    return $result;
   }
 
  /**
