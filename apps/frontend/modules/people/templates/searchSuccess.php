@@ -19,7 +19,7 @@ $(document).ready(function ()
     {
       $.ajax({
 	      type: "POST",
-	      url: "<?php echo url_for('people/search?page='.$currentPage.'&is_choose='.$is_choose);?>",
+	      url: "<?php echo url_for($s_url.'orderby='.$orderBy.'&orderdir='.$orderDir);?>",
 	      data: $('#people_filter').serialize(),
 	      success: function(html){
 				      $(".search_content").html(html);
@@ -29,18 +29,69 @@ $(document).ready(function ()
       $(".search_content").html('<?php echo image_tag('loader.gif');?>');
       return false;
     });
+
+   $("a.sort").click(function ()
+   {
+     $.ajax({
+             type: "POST",
+             url: $(this).attr("href"),
+             data: $('#people_filter').serialize(),
+             success: function(html){
+                                     $(".search_content").html(html);
+                                    }
+            }
+           );
+     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     return false;
+   });
+
   });
 </script>
-
+<?php
+  if($orderDir=='asc')
+    $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
+  else
+    $orderSign = '<span class="order_sign_up">&nbsp;&#9650;</span>';
+?>
 <table class="results <?php if($is_choose) echo 'is_choose';?>">
   <thead>
     <tr>
-      <th><?php echo __('Title');?></th>
-      <th><?php echo __('Family Name');?></th>
-      <th><?php echo __('Given Name');?></th>
-      <th><?php echo __('Additional Names');?></th>
-      <th><?php echo __('Life');?></th>
-      <th><?php echo __('Activity');?></th>
+      <th>
+	<a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	  <?php echo __('Title');?>
+          <?php if($orderBy=='title') echo $orderSign ?>
+	</a>
+      </th>
+      <th>
+	<a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	  <?php echo __('Family Name');?>
+	  <?php if($orderBy=='family_name') echo $orderSign ?>
+	</a>
+      </th>
+      <th>
+	<a class="sort" href="<?php echo url_for($s_url.'&orderby=given_name'.( ($orderBy=='given_name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	  <?php echo __('Given Name');?>
+	  <?php if($orderBy=='given_name') echo $orderSign ?>
+	</a>
+      </th>
+      <th>
+	<a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	  <?php echo __('Additional Names');?>
+	  <?php if($orderBy=='additional_names') echo $orderSign ?>
+	</a>
+      </th>
+      <th>
+	<a class="sort" href="<?php echo url_for($s_url.'&orderby=birth_date'.( ($orderBy=='birth_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	  <?php echo __('Life');?>
+	  <?php if($orderBy=='birth_date') echo $orderSign ?>
+	</a>
+      </th>
+      <th>
+	<a class="sort" href="<?php echo url_for($s_url.'&orderby=activity_date_from'.( ($orderBy=='activity_date_from' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	  <?php echo __('Activity');?>
+	  <?php if($orderBy=='activity_date_from') echo $orderSign ?>
+	</a>
+      </th>
       <th></th>
     <tr>
   </thead>

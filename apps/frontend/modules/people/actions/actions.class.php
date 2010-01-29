@@ -36,11 +36,14 @@ class peopleActions extends sfActions
 
       if ($this->form->isValid())
       {
+	$this->orderBy = ($request->getParameter('orderby', '') == '') ? 'family_name' : $request->getParameter('orderby');
+        $this->orderDir = ($request->getParameter('orderdir', '') == '') ? 'asc' : $request->getParameter('orderdir');
+	$query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager(
-	    $this->form->getQuery(),
+	    $query,
 	    $this->currentPage,
 	    $this->form->getValue('rec_per_page')
 	  ),
@@ -57,9 +60,10 @@ class peopleActions extends sfActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
+
+	$this->s_url = 'people/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
       }
     }
-   
   }
 
   public function executeNew(sfWebRequest $request)
