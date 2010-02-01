@@ -220,4 +220,49 @@ class peopleActions extends sfActions
     }
     return $this->renderText('ok');
   }
+
+
+  public function executeLang(sfWebRequest $request)
+  {
+
+    if($request->hasParameter('id'))
+      $this->lang =  Doctrine::getTable('PeopleLanguages')->find($request->getParameter('id'));
+    else
+    {
+     $this->lang = new PeopleLanguages();
+     $this->lang->setPeopleRef($request->getParameter('ref_id'));
+    }
+     
+    $this->form = new PeopleLanguages($this->comm);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('people_lang'));
+	if($this->form->isValid())
+	{
+	  try{
+	    $this->form->save();
+	  }
+	  catch(Exception $e)
+	  {
+	    return $this->renderText($e->getMessage());
+	  }
+	  return $this->renderText('ok');
+	}
+    }
+  }
+
+  public function executeDeleteLang(sfWebRequest $request)
+  {
+    $r = Doctrine::getTable('PeopleLanguages')->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such language');
+    try{
+      $r->delete();
+    }
+    catch(Exception $e)
+    {
+      return $this->renderText($e->getMessage());
+    }
+    return $this->renderText('ok');
+  }
 }

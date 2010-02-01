@@ -748,3 +748,24 @@ table.encoding tbody .widget_row_delete
   color:#C1C1C1;
   padding-left:1em;
 }
+
+table.details_info {
+  width:95%;
+  margin: 5px;
+  background-color:#ebf5f5;
+}
+.results tbody tr.details:hover 
+{
+  background-color:white;
+}
+tr.details .details_info tr:hover
+{
+  background-color:#ebf5f5;
+}
+.details_info td
+{
+/*   background-color:#D4FDFF; */
+  vertical-align:top;
+  border: 1px dashed #5BABBD; 
+  padding:0.5em;
+}
