@@ -17,6 +17,17 @@ class peopleActions extends sfActions
       ->getWidgets('people_widget');
     if(! $this->widgets) $this->widgets=array();
   }
+
+  public function executeChoose(sfWebRequest $request)
+  {
+    $this->form = new PeopleFormFilter();
+  }
+
+  public function executeSearchBoth(sfWebRequest $request)
+  {
+    
+  }
+  
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new PeopleFormFilter();

@@ -41,7 +41,7 @@ $(document).ready(function ()
   <tbody>
   <?php foreach($items as $item):?>
     <tr class="rid_<?php echo $item->getId();?>">
-      <td><?php echo $item->getFamilyName();?></td>
+      <td class="item_name"><?php echo $item->getFamilyName();?></td>
       <td><?php echo $item->getAdditionalNames() ?></td>
       <td><?php echo $item->getSubType() ?></td>
       <td class="<?php echo (! $is_choose)?'edit':'choose';?>">

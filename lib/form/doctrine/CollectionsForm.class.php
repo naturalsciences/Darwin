@@ -16,10 +16,12 @@ class CollectionsForm extends BaseCollectionsForm
     );
     $this->widgetSchema['code'] = new sfWidgetFormInputText();
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
-/* @TODO remove this line when people search will be ready */
-    $this->widgetSchema['institution_ref'] = new sfWidgetFormInputText();
-  /** @TODO : PARENT REF MUST DEPEND OF institution_ref*/
-/* @TODO end of line to remove */
+    $this->widgetSchema['institution_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Institutions',
+       'link_url' => 'institution/choose',
+       'method' => 'getFamilyName',
+       'box_title' => $this->getI18N()->__('Choose Institution'),
+     ));
 
     $this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
     

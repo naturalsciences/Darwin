@@ -10,9 +10,13 @@
  */
 class institutionActions extends sfActions
 {
+  public function executeChoose(sfWebRequest $request)
+  {
+    $this->form = new InstitutionsFormFilter();
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
-//     $this->institutions = Doctrine::getTable('Institutions')->getAll();
     $this->form = new InstitutionsFormFilter();
   }
 

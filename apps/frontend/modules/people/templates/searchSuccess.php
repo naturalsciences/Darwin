@@ -99,6 +99,7 @@ $(document).ready(function ()
   <?php foreach($items as $item):?>
     <tr class="rid_<?php echo $item->getId();?>">
       <td><?php echo image_tag('info.png',"title=info class=info");?></td>
+      <td class="hiddden item_name"><?php echo $item->getFormatedName();?></td>
       <td><?php echo $item->getTitle() ?></td>
       <td><?php echo $item->getFamilyName();?></td>
       <td><?php echo $item->getGivenName();?></td>
