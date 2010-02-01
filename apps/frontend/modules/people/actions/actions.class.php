@@ -233,21 +233,22 @@ class peopleActions extends sfActions
      $this->lang->setPeopleRef($request->getParameter('ref_id'));
     }
      
-    $this->form = new PeopleLanguages($this->comm);
+    $this->form = new PeopleLanguagesForm($this->lang);
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('people_lang'));
+	$this->form->bind($request->getParameter('people_languages'));
 	if($this->form->isValid())
 	{
-	  try{
+	  try {
 	    $this->form->save();
+	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
+	  catch(Doctrine_Exception $e)
 	  {
-	    return $this->renderText($e->getMessage());
+	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	    $this->form->getErrorSchema()->addError($error); 
 	  }
-	  return $this->renderText('ok');
 	}
     }
   }

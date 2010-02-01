@@ -1,6 +1,6 @@
 <div id="lang_screen">
 <form class="edition" action="<?php echo url_for('people/lang?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="lang_form">
-<?php echo $form['person_user_ref'];?>
+<?php echo $form['people_ref'];?>
 <table>
   <tbody>
     <tr>
@@ -82,7 +82,10 @@
 	    {
 	      $('.qtip-button').click();
 	    }
-	    $('form#lang_form').parent().before(html).remove();
+	    else
+	    {
+	      $('form#lang_form').parent().before(html).remove();
+	    }
 	  }
       });
       return false;

@@ -35,9 +35,38 @@ class PeopleForm extends BasePeopleForm
     ));
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('choices' => array_keys(People::getTypes()), 'required' => false, 'multiple' => true));
 
+    $this->Postvalidators = array();
     $this->initiateActivityItems();
     $this->initiateBirthItems();
 
+    $this->Postvalidators[] = new sfValidatorCallback(array('callback' => array($this, 'checkActivity')));
+    $this->validatorSchema->setPostValidator(new sfValidatorAnd($this->Postvalidators));
+  }
+
+  public function checkActivity($validator, $values)
+  {
+    if(! empty($values['birth_date']) )
+    {
+	if($values['birth_date']->getMask() !=0 && $values['activity_date_from']->getMask() !=0)
+	{
+	  if($values['birth_date'] >= $values['activity_date_from'])
+	  {
+            $error = new sfValidatorError($validator, 'The start of the activity must be after the birth');
+            // throw an error bound to the password field
+            throw new sfValidatorErrorSchema($validator, array('activity_date_from' => $error));
+	  }
+	}
+	if($values['end_date']->getMask() !=0 && $values['activity_date_to']->getMask() !=0)
+	{
+	  if($values['end_date'] <= $values['activity_date_to'])
+	  {
+            $error = new sfValidatorError($validator,'The end of the activity must be before the death');
+            // throw an error bound to the password field
+            throw new sfValidatorErrorSchema($validator, array('activity_date_to' => $error));
+	  }
+	}
+    }
+    return $values;
   }
 
   protected function initiateBirthItems()
@@ -93,14 +122,12 @@ class PeopleForm extends BasePeopleForm
       array('invalid' => 'Date provided is not valid')
     );
 
-    $this->validatorSchema->setPostValidator(
-      new sfValidatorSchemaCompare(
-        'birth_date',
-        '<=',
-        'end_date',
-        array('throw_global_error' => true),
-        array('invalid'=>'The birth date cannot be above the "end" date.')
-      )
+    $this->Postvalidators[] = new sfValidatorSchemaCompare(
+      'birth_date',
+      '<=',
+      'end_date',
+      array('throw_global_error' => true),
+      array('invalid'=>'The birth date cannot be above the "end" date.')
     );
   }
 
@@ -157,14 +184,12 @@ class PeopleForm extends BasePeopleForm
       array('invalid' => 'Date provided is not valid')
     );
 
-    $this->validatorSchema->setPostValidator(
-      new sfValidatorSchemaCompare(
-        'birth_date',
-        '<=',
-        'end_date',
-        array('throw_global_error' => true),
-        array('invalid'=>'The begin activity date cannot be above the end activity date.')
-      )
+    $this->Postvalidators[] = new sfValidatorSchemaCompare(
+      'birth_date',
+      '<=',
+      'end_date',
+      array('throw_global_error' => true),
+      array('invalid'=>'The begin activity date cannot be above the end activity date.')
     );
   }
 }

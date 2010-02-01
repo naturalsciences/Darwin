@@ -22,7 +22,15 @@
       <h3><?php echo __('Language');?> :</h3>
       <ul>
       <?php foreach($item->PeopleLanguages as $lang):?>
-	  <li><?php echo $lang->getLanguageCountry();?></li>
+	  <li>
+	    <?php echo format_language($lang->getLanguageCountry());?> 
+	    <?php if($lang->getMother()):?>
+	      (mother)
+	    <?php endif;?>
+	    <?php if($lang->getPreferedLanguage()):?>
+	      (prefered)
+	    <?php endif;?>
+	  </li>
       <?php endforeach;?>
       </ul>
     </td>
