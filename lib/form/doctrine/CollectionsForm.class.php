@@ -35,13 +35,21 @@ class CollectionsForm extends BaseCollectionsForm
     $this->widgetSchema['code_part_code_auto_copy']->setLabel('Auto copy code from specimen to parts');
 
      $this->validatorSchema->setPostValidator(
-	new sfValidatorSchemaCompare(
-	  'parent_ref',
-	  '!=',
-	  'id',
-	  array('throw_global_error' => true),
-	  array('invalid'=>"A collection can't be attached to itself")
-	)
+      new sfValidatorCallback(array('callback' => array($this, 'checkSelfAttached')))
      );
   }
+
+  public function checkSelfAttached($validator, $values)
+  {
+    if(! empty($values['id']) )
+    {
+      if($values['parent_ref'] == $values['id'])
+      {
+	$error = new sfValidatorError($validator, "A collection can't be attached to itself");
+        throw new sfValidatorErrorSchema($validator, array('parent_ref' => $error));
+      }
+    }
+    return $values;
+  }
+  
 }

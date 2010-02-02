@@ -117,6 +117,11 @@ function showAfterRefresh(el)
   $(el).children('#loading_screen').remove();
 }
 
+function trim(myString) 
+{ 
+  return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
+}
+
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();
