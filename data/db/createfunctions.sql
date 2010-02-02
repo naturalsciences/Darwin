@@ -5980,7 +5980,7 @@ BEGIN
                 IF TG_TABLE_NAME::text = 'multimedia' THEN
                     UPDATE multimedia SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
                 ELSIF TG_TABLE_NAME::text = 'collections' THEN
-                    UPDATE collections SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
+                    UPDATE collections SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/'), institution_ref=NEW.institution_ref WHERE path like OLD.path || OLD.id || '/%';
 		ELSIF TG_TABLE_NAME::text = 'gtu' THEN
 		    UPDATE gtu SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
 		ELSE
