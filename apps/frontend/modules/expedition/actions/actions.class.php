@@ -26,7 +26,7 @@ class expeditionActions extends sfActions
   public function executeChoose(sfWebRequest $request)
   {
     // Initialization of the Search expedition form
-    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    $this->form = new ExpeditionsFormFilter();
     // Remove surrounding layout
     $this->setLayout(false);
   }
@@ -38,7 +38,7 @@ class expeditionActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     //  Initialization of the Search expedition form
-    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
+    $this->form = new ExpeditionsFormFilter();
   }
 
   /**
@@ -129,9 +129,9 @@ class expeditionActions extends sfActions
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
     // Instantiate a new expedition form
-    $this->form = new SearchExpeditionForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    $this->form = new ExpeditionsFormFilter();
     // Triggers the search result function
-    $this->searchResults($this->form,$request);    
+    $this->searchResults($this->form, $request);    
   }
 
   /**
@@ -140,7 +140,7 @@ class expeditionActions extends sfActions
     * @param sfWebRequest         $request Request coming from browser
     * @var   int                  $pagerSlidingSize: Get the config value to define the range size of pager to be displayed in numbers (i.e.: with a value of 5, it will give this: << < 1 2 3 4 5 > >>)
     */
-  protected function searchResults(SearchExpeditionForm $form, sfWebRequest $request)
+  protected function searchResults(ExpeditionsFormFilter $form, sfWebRequest $request)
   {
     if($request->getParameter('searchExpedition','') !== '')
     {
@@ -155,19 +155,14 @@ class expeditionActions extends sfActions
         $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
         $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
+        $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
         // Define in one line a pager Layout based on a PagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-        $this->expePagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager(Doctrine::getTable('Expeditions')
-                                                                               ->getExpLike($form->getValue('name'), 
-                                                                                            $form->getValue('from_date'),
-                                                                                            $form->getValue('to_date'),
-                                                                                            $this->orderBy,
-                                                                                            $this->orderDir
-                                                                                           ),
-                                                                               $this->currentPage,
-                                                                               $form->getValue('rec_per_page')
-                                                                              ),
+        $this->expePagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+                                                                              $this->currentPage,
+                                                                              $form->getValue('rec_per_page')
+                                                                             ),
                                                             new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
                                                             $this->getController()->genUrl('expedition/search?orderby='.$this->orderBy.
                                                                                            '&orderdir='.$this->orderDir.

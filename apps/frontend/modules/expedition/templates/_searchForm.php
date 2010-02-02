@@ -57,8 +57,8 @@ $(document).ready(function ()
     <thead>
       <tr>
         <th><?php echo $form['name']->renderLabel() ?></th>
-        <th><?php echo $form['from_date']->renderLabel(); ?></th>
-        <th><?php echo $form['to_date']->renderLabel(); ?></th>
+        <th><?php echo $form['expedition_from_date']->renderLabel(); ?></th>
+        <th><?php echo $form['expedition_to_date']->renderLabel(); ?></th>
         <th>&nbsp;</th>
       </tr>
     </thead>
@@ -68,10 +68,10 @@ $(document).ready(function ()
           <?php echo $form['name']->renderError() ?>
         </td>
         <td>
-          <?php echo $form['from_date']->renderError() ?>
+          <?php echo $form['expedition_from_date']->renderError() ?>
         </td>
         <td>
-          <?php echo $form['to_date']->renderError() ?>
+          <?php echo $form['expedition_to_date']->renderError() ?>
         </td>
         <td>
         </td>
@@ -81,10 +81,10 @@ $(document).ready(function ()
           <?php echo $form['name']->render() ?>
         </td>
         <td>
-          <?php echo $form['from_date']->render() ?>
+          <?php echo $form['expedition_from_date']->render() ?>
         </td>
         <td>
-          <?php echo $form['to_date']->render() ?>
+          <?php echo $form['expedition_to_date']->render() ?>
         </td>
         <td>
           <input id="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />

@@ -25,7 +25,8 @@ class catalogueActions extends sfActions
     {
       $this->remoteItem = Doctrine::getTable($modelName)->findExcept($this->relation->getRecordId2());
     }
-    $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
+    $filterFormName = ucfirst($request->getParameter('table')). 'FormFilter';
+    $this->searchForm = new $filterFormName(array('table'=>$request->getParameter('table')));
   }
 
   public function executeDeleteRelation(sfWebRequest $request)
@@ -73,8 +74,9 @@ class catalogueActions extends sfActions
 
   public function executeSearch(sfWebRequest $request)
   {
-    $item = $request->getParameter('searchTaxon',array('') );
-    $this->searchForm = new SearchCatalogueForm(array(),array('table' => $item['table']));
+    $item = $request->getParameter('searchCatalogue',array('') );
+    $formFilterName = ucfirst($item['table']). 'FormFilter';
+    $this->searchForm = new $formFilterName(array('table' => $item['table']));
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
     $this->searchResults($this->searchForm,$request);
     $this->setLayout(false);
@@ -82,20 +84,19 @@ class catalogueActions extends sfActions
 
   protected function searchResults($form, $request)
   {
-    if($request->getParameter('searchTaxon','') !== '')
+    if($request->getParameter('searchCatalogue','') !== '')
     {
-      $form->bind($request->getParameter('searchTaxon'));
+      $form->bind($request->getParameter('searchCatalogue'));
       if ($form->isValid())
       {
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
+        $query = $form->getQuery();
         $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
         $this->pagerLayout = new PagerLayoutWithArrows(
-	  new Doctrine_Pager(
-	    Doctrine::getTable(Catalogue::getModelForTable($form->getValue('table')))
-	      ->getByNameLike($form->getValue('name')),
-	    $this->currentPage,
-	    $form->getValue('rec_per_page')
-	  ),
+	  new Doctrine_Pager($query,
+                             $this->currentPage,
+                             $form->getValue('rec_per_page')
+	                    ),
 	  new Doctrine_Pager_Range_Sliding(
 	    array('chunk' => $pagerSlidingSize)
 	    ),

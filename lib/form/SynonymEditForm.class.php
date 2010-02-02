@@ -1,5 +1,5 @@
 <?php 
-class SynonymEditForm extends DarwinForm
+class SynonymEditForm extends BaseForm
 {
   public function configure()
   {

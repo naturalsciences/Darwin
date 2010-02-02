@@ -12,7 +12,7 @@ class taxonomyActions extends sfActions
 {
   public function executeChoose(sfWebRequest $request)
   {
-    $this->searchForm = new SearchCatalogueForm(array('table'=> 'taxonomy'));
+    $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
     $this->setLayout(false);
   }
 
@@ -84,7 +84,7 @@ class taxonomyActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searchForm = new SearchCatalogueForm(array('table'=> 'taxonomy'));
+    $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -106,16 +106,16 @@ class taxonomyActions extends sfActions
     }
   }
 
-  protected function searchResults($form, $request)
+/*  protected function searchResults($form, $request)
   {
-    if($request->getParameter('searchTaxon','') !== '')
+    if($request->getParameter('searchCatalogue','') !== '')
     {
-      $form->bind($request->getParameter('searchTaxon'));
+      $form->bind($request->getParameter('searchCatalogue'));
       if ($form->isValid())
       {
  	$this->taxons = Doctrine::getTable('Taxonomy')
  	  ->getByNameLike($form->getValue('name'));
       }
     }
-  }
+  }*/
 }

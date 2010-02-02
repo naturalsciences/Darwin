@@ -96,13 +96,13 @@
   <?php endif;?>
 <?php else:?>
   <div class="error">
-    <?php if(!$form['to_date']->hasError()): ?>
+    <?php if(!$form['expedition_to_date']->hasError()): ?>
       <?php echo $form->renderGlobalErrors();?>
     <?php endif; ?>
     <?php echo $form['name']->renderError() ?>
-    <?php echo $form['from_date']->renderError() ?>
-    <?php if(!$form['from_date']->hasError()): ?>
-      <?php echo $form['to_date']->renderError() ?>
+    <?php echo $form['expedition_from_date']->renderError() ?>
+    <?php if(!$form['expedition_from_date']->hasError()): ?>
+      <?php echo $form['expedition_to_date']->renderError() ?>
     <?php endif; ?>
 </div>
 <?php endif;?>

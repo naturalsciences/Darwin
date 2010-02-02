@@ -14,13 +14,13 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   {
   }
 
-  protected function addPagerItems()
+  public function addPagerItems()
   {
     $recPerPages = array("1"=>"1", "2"=>"2", "5"=>"5", "10"=>"10", "25"=>"25", "50"=>"50", "75"=>"75", "100"=>"100");
     
     $this->widgetSchema['rec_per_page'] = new sfWidgetFormChoice(array('choices' => $recPerPages));
     $this->setDefault('rec_per_page', strval(sfConfig::get('app_recPerPage'))); 
-    
+    $this->widgetSchema->setLabels(array('rec_per_page' => 'Records per page: ',));    
     $this->validatorSchema['rec_per_page'] = new sfValidatorChoice(array('required' => false, 'choices'=>$recPerPages, 'empty_value'=>strval(sfConfig::get('app_recPerPage'))));
     $this->hasPager = true;
   }
@@ -48,6 +48,66 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
             'years' => $years,                     
             'empty_values' => $dateText,           
       ); 
+  }
+
+  public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values)
+  {
+     if ($values != "" && $table != "" && $field != ""):
+       $words = explode(" ",$values);
+       foreach($words as $word)
+       {
+         $query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ? , 'contains') ",$word);
+       }
+     endif;
+     return $query;
+  }
+
+  public function addDateFromToColumnQuery(Doctrine_Query $query, array $dateFields, $val_from, $val_to)
+  {
+    if (count($dateFields) > 0)
+    {
+      if($val_from->getMask() > 0 && $val_to->getMask() > 0)
+      {
+        if (count($dateFields) == 1)
+        {
+          $query->andWhere($dateFields[0] . " Between ? and ? ",
+                           array($val_from->format('d/m/Y'), 
+                                 $val_to->format('d/m/Y')
+                                )
+                          );
+        }
+        else
+        {
+          $query->andWhere(" " . $dateFields[0] . " >= ? ", $val_from->format('d/m/Y'))
+                ->andWhere(" " . $dateFields[1] . " <= ? ", $val_to->format('d/m/Y'));
+        }
+      }
+      elseif ($val_from->getMask() > 0)
+      {
+        $sql = " (" . $dateFields[0] . " >= ? AND " . $dateFields[0] . "_mask > 0) ";
+        for ($i = 1; $i <= count($dateFields); $i++)
+        {
+          $vals[] = $val_from->format('d/m/Y');
+        }
+        if (count($dateFields) > 1) $sql .= " OR (" . $dateFields[1] . " >= ? AND " . $dateFields[1] . "_mask > 0) ";
+        $query->andWhere($sql, 
+                         $vals
+                        );
+      } 
+      elseif ($val_to->getMask() > 0)
+      {
+        $sql = " (" . $dateFields[0] . " <= ? AND " . $dateFields[0] . "_mask > 0) ";
+        for ($i = 1; $i <= count($dateFields); $i++)
+        {
+          $vals[] = $val_to->format('d/m/Y');
+        }
+        if (count($dateFields) > 1) $sql .= " OR (" . $dateFields[1] . " <= ? AND " . $dateFields[1] . "_mask > 0) ";
+        $query->andWhere($sql, 
+                         $vals
+                        );
+      }
+    }
+    return $query;
   }
 
   protected function getI18N()

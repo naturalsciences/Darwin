@@ -58,7 +58,8 @@ class synonymActions extends sfActions
 	    }
 	 }
     }
-    $this->searchForm = new SearchCatalogueForm(array('table'=> $request->getParameter('table') ));
+    $formFilterName = ucfirst($request->getParameter('table')).'FormFilter';
+    $this->searchForm = new $formFilterName(array('table'=> $request->getParameter('table') ));
   }
   
   public function executeDelete(sfWebRequest $request)

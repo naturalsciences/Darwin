@@ -18,7 +18,7 @@ class igsActions extends sfActions
   public function executeChoose(sfWebRequest $request)
   {
     // Initialization of the Search expedition form
-    $this->form = new SearchIgForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    $this->form = new IgsFormFilter();
     // Remove surrounding layout
     $this->setLayout(false);
   }
@@ -30,7 +30,7 @@ class igsActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     //  Initialization of the Search expedition form
-    $this->form = new SearchIgForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));    
+    $this->form = new IgsFormFilter();    
   }
 
   public function executeNew(sfWebRequest $request)
@@ -84,7 +84,7 @@ class igsActions extends sfActions
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
     // Instantiate a new expedition form
-    $this->form = new SearchIgForm(null, array('culture' => $this->getUser()->getCulture(), 'month_format' => 'short_name'));
+    $this->form = new IgsFormFilter();
     // Triggers the search result function
     $this->searchResults($this->form,$request);    
   }
@@ -134,7 +134,7 @@ class igsActions extends sfActions
     * @param sfWebRequest         $request Request coming from browser
     * @var   int                  $pagerSlidingSize: Get the config value to define the range size of pager to be displayed in numbers (i.e.: with a value of 5, it will give this: << < 1 2 3 4 5 > >>)
     */
-  protected function searchResults(SearchIgForm $form, sfWebRequest $request)
+  protected function searchResults(IgsFormFilter $form, sfWebRequest $request)
   {
     if($request->getParameter('searchIg','') !== '')
     {
@@ -149,19 +149,14 @@ class igsActions extends sfActions
         $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
         $this->orderBy = ($request->getParameter('orderby', '') == '')?'ig_num':$request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
+        $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
         // Define in one line a pager Layout based on a PagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getIgLike method of IgTable class)
-        $this->igPagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager(Doctrine::getTable('Igs')
-                                                                               ->getIgLike($form->getValue('ig_num'), 
-                                                                                            $form->getValue('from_date'),
-                                                                                            $form->getValue('to_date'),
-                                                                                            $this->orderBy,
-                                                                                            $this->orderDir
-                                                                                           ),
-                                                                               $this->currentPage,
-                                                                               $form->getValue('rec_per_page')
-                                                                              ),
+        $this->igPagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+                                                                            $this->currentPage,
+                                                                            $form->getValue('rec_per_page')
+                                                                           ),
                                                             new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
                                                             $this->getController()->genUrl('igs/search?orderby='.$this->orderBy.
                                                                                            '&orderdir='.$this->orderDir.

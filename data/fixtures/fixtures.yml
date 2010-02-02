@@ -40,6 +40,12 @@ Taxonomy:
         level_ref: 49
         status: valid
         Parent: ta2
+    ta6:
+        id: 6
+        name: Falco Peregrinus eliticus
+        level_ref: 52
+        status: valid
+        Parent: ta5
 
 Expeditions:
     ex0:
@@ -55,6 +61,8 @@ Expeditions:
         name: 'Informatica 75'
         expedition_from_date: '1975-02-24'
         expedition_from_date_mask: 56
+        expedition_to_date: '2030-12-31'
+        expedition_to_date_mask: 0
     ex3:
         name: 'C Noël C Noël Vive le vent divers'
         expedition_to_date: '2002-12-24'
@@ -65,27 +73,54 @@ Expeditions:
         expedition_from_date_mask: 48
         expedition_to_date: '1988-07-31'
         expedition_to_date_mask: 48
-
     ex5:
         name: 'Pollux Expedition'
         expedition_from_date: '2003-03-12'
         expedition_from_date_mask: 56
         expedition_to_date: '2005-12-31'
         expedition_to_date_mask: 32
-
     ex6:
         name: 'Mister B Expe'
         expedition_from_date: '2004-01-01'
         expedition_from_date_mask: 32
         expedition_to_date: '2004-12-31'
         expedition_to_date_mask: 32
-
     ex7:
         name: 'Cathy Expe'
         expedition_from_date: '0001-01-01'
         expedition_from_date_mask: 0
         expedition_to_date: '2009-12-31'
         expedition_to_date_mask: 32
+    ex8:
+        name: 'No date'
+        expedition_from_date: '0001-01-01'
+        expedition_from_date_mask: 0
+        expedition_to_date: '2035-12-31'
+        expedition_to_date_mask: 0
+
+Igs:
+    ig0:
+        ig_num: '2653'
+        ig_date: '1868-06-24'
+        ig_date_mask: 56
+    ig1:
+        ig_num: '2692'
+    ig2:
+        ig_num: '2695'
+    ig3:
+        ig_num: '2693'
+    ig4:
+        ig_num: '21Ter'
+        ig_date: '1847-07-23'
+        ig_date_mask: 56
+    ig5:
+        ig_num: '10795'
+        ig_date: '1936-03-13'
+        ig_date_mask: 56
+    ig6:
+        ig_num: '3881'
+        ig_date: '1877-01-01'
+        ig_date_mask: 32
 
 CatalogueRelationships:
     catart1:
@@ -101,7 +136,6 @@ CatalogueRelationships:
 Users:
     u1:
         is_physical: true
-        public_class: private
         title: Mr
         family_name: Evil
         given_name: Root
@@ -116,13 +150,13 @@ UsersLoginInfos:
 UsersLanguages:
     ul1:
         User: u1
-        language_country: en_gb
+        language_country: en
         mother: true
         prefered_language: true
 
     ul2:
         User: u1
-        language_country: fr_be
+        language_country: fr
         mother: false
         prefered_language: false
 
@@ -144,24 +178,21 @@ MySavedSearches:
 People:
     p1:
         is_physical: false
-        public_class: public
         family_name: Institut Royal des Sciences Naturelles de Belgique
+        additional_names: RBINS
         birth_date: "<?php echo date('Y-m-d');?>"
     p2:
         is_physical: false
-        public_class: public
         family_name: UGMM
         birth_date: "<?php echo date('Y-m-d');?>"
     p3:
         is_physical: true
-        public_class: private
         title: Mr
         family_name: Duchesne
         given_name: Poilux
         gender: M
     p4:
         is_physical: true
-        public_class: private
         title: Mrs
         family_name: Duchesne
         given_name: ML
@@ -328,13 +359,31 @@ MyPreferences:
         visible: false
     u1ws8:
         User: u1
+        col_num: 2
+        category: specimen_widget
+        group_name: refExpedition
+        mandatory: false
+        order_by: 1
+        opened: false
+        visible: true
+    u1ws9:
+        User: u1
+        col_num: 2
+        category: specimen_widget
+        group_name: refIgs
+        mandatory: false
+        order_by: 2
+        opened: false
+        visible: true
+    u1ws10:
+        User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
         group_name: relationRename
         order_by: 0
         opened: false
         visible: false
-    u1ws9:
+    u1ws11:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
@@ -342,7 +391,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
-    u1ws10:
+    u1ws12:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
@@ -350,7 +399,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
-    u1ws11:
+    u1ws13:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
@@ -358,6 +407,114 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+    u1ws14:
+        User: u1
+        col_num: 1
+        category: catalogue_igs_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws15:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: synonym
+        order_by: 1
+        opened: true
+        visible: true
+    u1ws16:
+        User: u1
+        col_num: 1
+        category: catalogue_igs_widget
+        group_name: insurances
+        order_by: 1
+        opened: false
+        visible: true
+    u1ws17:
+        User: u1
+        col_num: 1
+        category: catalogue_expedition_widget
+        group_name: comment
+        order_by: 1
+        opened: false
+        visible: true
+    u1ws18:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws19:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: comment
+        order_by: 1
+        opened: true
+        visible: false
+    u1ws20:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: properties
+        order_by: 2
+        opened: true
+        visible: false
+    u1ws21:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: address
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws22:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: comm
+        order_by: 4
+        opened: true
+        visible: true
+
+CatalogueProperties:
+    cprop1:
+        referenced_relation: taxonomy
+        record_id: 4
+        property_type: protection status
+        property_sub_type: bxl
+        property_unit: ''
+        property_accuracy_unit: ''
+    cprop2:
+        referenced_relation: taxonomy
+        record_id: 4
+        property_type: physical measurement
+        property_sub_type: length
+        property_qualifier: beak length
+        date_from_mask: 56
+        date_from: '1932-12-24 23:32:11'
+        date_to_mask: 0
+        date_to: '0001-01-01 0:0:0'
+        property_unit: cm
+        property_accuracy_unit: mm
+
+PropertiesValues:
+    prop1val1:
+        CatalogueProperties: cprop1
+        property_value: 1
+
+    prop2val1:
+        CatalogueProperties: cprop2
+        property_value: 12
+        property_accuracy: 1.5
+
+    prop2val2:
+        CatalogueProperties: cprop2
+        property_value: 8
+        property_accuracy: 1.5
 
 Comments:
     comment1:
@@ -368,3 +525,47 @@ Comments:
           This is bullshit... 
           None of this is right!
           Ok?
+
+ClassificationSynonymies:
+    csynon1:
+        referenced_relation: taxonomy
+        record_id: 4
+        group_id: 1
+        group_name: synonym
+        is_basionym: true
+        order_by: 0
+    csynon2:
+        referenced_relation: taxonomy
+        record_id: 5
+        group_id: 1
+        group_name: synonym
+        is_basionym: false
+        order_by: 1
+    csynon3:
+        referenced_relation: taxonomy
+        record_id: 4
+        group_id: 2
+        group_name: homonym
+        is_basionym: false
+        order_by: 2
+    csynon4:
+        referenced_relation: taxonomy
+        record_id: 3
+        group_id: 2
+        group_name: homonym
+        is_basionym: false
+        order_by: 1
+    csynon5:
+        referenced_relation: taxonomy
+        record_id: 2
+        group_id: 3
+        group_name: synonym
+        is_basionym: false
+        order_by: 1
+    csynon6:
+        referenced_relation: taxonomy
+        record_id: 6
+        group_id: 3
+        group_name: synonym
+        is_basionym: false
+        order_by: 2

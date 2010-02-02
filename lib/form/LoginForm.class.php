@@ -1,5 +1,5 @@
 <?php
-class LoginForm extends DarwinForm
+class LoginForm extends BaseForm
 {
   public function configure()
   {

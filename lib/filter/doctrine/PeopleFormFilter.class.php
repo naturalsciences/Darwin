@@ -80,42 +80,19 @@ class PeopleFormFilter extends BasePeopleFormFilter
     );
   }
 
-
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
-    $this->addActivityDateFromToColumnQuery($query, $values['activity_date_from'], $values['activity_date_to']);
+    $fields = array('activity_date_from', 'activity_date_to');
+    $this->addDateFromToColumnQuery($query, $fields, $values['activity_date_from'], $values['activity_date_to']);
     return $query;
   }
   
-  public function addActivityDateFromToColumnQuery($query, $val_from, $val_to)
-  {
-    if($val_from->getMask() > 0 && $val_to->getMask() > 0)
-    {
-      $query->andWhere("activity_date_from >= ? ", $val_from->format('d/m/Y'))
-        ->andWhere("activity_date_to <= ? ", $val_to->format('d/m/Y'));
-    }
-    elseif ($val_from->getMask() > 0)
-    {
-      $query->andWhere("(activity_date_from >= ? AND activity_date_from_mask > 0) OR (activity_date_to >= ? AND activity_date_to_mask > 0)", 
-	array($val_from->format('d/m/Y'), $val_from->format('d/m/Y'))
-      );
-    } 
-    elseif ($val_to->getMask() > 0)
-    {
-      $query->andWhere("(activity_date_from <= ? AND activity_date_from_mask > 0) OR (activity_date_to <= ? AND activity_date_to_mask > 0)", 
-	array($val_to->format('d/m/Y'), $val_to->format('d/m/Y'))
-      );
-    }
-    return $query;
-  }
   public function addDbPeopleTypeColumnQuery($query, $field, $val)
   {
     $query->andWhere("($field &  ?) != 0 ", $val);
     return $query;
   }
-
-
 
   public function addFamilyNameColumnQuery($query, $field, $val)
   {

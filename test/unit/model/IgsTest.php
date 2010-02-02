@@ -4,11 +4,11 @@ $t = new lime_test(12, new lime_output_color());
 
 $fromDate = new FuzzyDateTime('1830/01/01', 32);
 $toDate = new FuzzyDateTime('2009/12/31', 32);
-$igs = Doctrine::getTable('Igs')->getIgLike('',$fromDate, $toDate)->execute();
-$t->is( $igs[0]->getIgDateMasked() , '13/03/1936', 'Correct date masked: "13/03/1936"');
-$t->is( $igs[3]->getIgDateMasked() , '<em>01/01</em>/1877', 'Correct date masked: "<em>01/01/</em>1877"');
-$t->is( $igs[0]->getIgDate() , array('year'=>1936, 'month'=>03, 'day'=>13, 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
-$t->is( $igs[3]->getIgDate() , array('year'=>1877, 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
+$igs = Doctrine::getTable('Igs')->findAll();
+$t->is( $igs[0]->getIgDateMasked() , '24/06/1868', 'Correct date masked: "24/06/1868"');
+$t->is( $igs[3]->getIgDateMasked() , '<em>01/01/0001</em>', 'Correct date masked: "<em>01/01/0001</em>"');
+$t->is( $igs[0]->getIgDate() , array('year'=>1868, 'month'=>06, 'day'=>24, 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
+$t->is( $igs[3]->getIgDate() , array('year'=>'', 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
 $igs[0]->setIgDate($fromDate);
 $igs[3]->setIgDate($toDate);
 $t->is( $igs[0]->getIgDateMasked() , '<em>01/01</em>/1830', 'Correct date masked: "<em>01/01/</em>1830"');

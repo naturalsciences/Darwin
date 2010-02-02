@@ -4,37 +4,4 @@
  */
 class ExpeditionsTable extends DarwinTable
 {
-  public function getExpLike($name, $from_date, $to_date, $orderBy='name', $orderByOrder='asc')
-  {
-    $q = Doctrine_Query::create()
-         ->from('Expeditions e');
-    if ($name != ""):
-      $words = explode(" ",$name);
-      foreach($words as $word)
-      {
-        $q->andWhere("name_ts @@ search_words_to_query('expeditions' , 'name_ts', ? , 'contains') ",$word);
-      }
-    endif;
-    if (($from_date->getMask() > 0) && ($to_date->getMask() > 0))
-    {
-      $q->andWhere(" e.expedition_from_date >= ? ", $from_date->format('d/m/Y'))
-        ->andWhere(" e.expedition_to_date <= ? ", $to_date->format('d/m/Y'));
-    }
-    elseif (($from_date->getMask() > 0) && ($to_date->getMask() == 0))
-    {
-      $q->andWhere(" ((e.expedition_from_date >= ? AND e.expedition_from_date_mask > 0) OR (e.expedition_to_date >= ? AND e.expedition_to_date_mask > 0)) ", 
-                   array($from_date->format('d/m/Y'), $from_date->format('d/m/Y'))
-                  );
-    } 
-    elseif (($from_date->getMask() == 0) && ($to_date->getMask() > 0))
-    {
-      $q->andWhere(" ((e.expedition_from_date <= ? AND e.expedition_from_date_mask > 0) OR (e.expedition_to_date <= ? AND e.expedition_to_date_mask > 0)) ", 
-                   array($to_date->format('d/m/Y'), $to_date->format('d/m/Y'))
-                  );      
-    } 
-
-    $q->andWhere("id > 0 ")
-      ->orderby($orderBy . ' ' . $orderByOrder);
-    return $q;
-  }
 }

@@ -6,7 +6,7 @@ $browser->loadData($configuration)->login('root','evil');
 
 $browser->
   info('executeSearch')->
-  get('/catalogue/search?searchTaxon[name]=falco&searchTaxon[table]=taxonomy')->
+  get('/catalogue/search?searchCatalogue[name]=falco&searchCatalogue[table]=taxonomy')->
   with('request')->begin()->
     isParameter('module', 'catalogue')->
     isParameter('action', 'search')->
@@ -19,7 +19,7 @@ $browser->
   end()->
   info('executeTree');
 
-$items = Doctrine::getTable('Taxonomy')->findByNameLike('duchesnus');
+$items = Doctrine::getTable('Taxonomy')->findByName('Falco Peregrinus (Duchesnus Brulus 1912)');
 
 $browser->
   get('/catalogue/tree?table=taxonomy&id='.$items[0]->getId())->

@@ -4,29 +4,6 @@
  */
 class TaxonomyTable extends DarwinTable
 {
-  public function getByNameLike($name,$level=null)
-  {
-    if(trim($name) == "")
-      return null;
-    $q = Doctrine_Query::create()
-	 ->from('Taxonomy t');
-    $words = explode(" ",$name);
-    foreach($words as $word)
-    {
-	 $q->andWhere("name_indexed @@ search_words_to_query('taxonomy' , 'name_indexed', ? , 'contains') ",$word);
-    }
-    if($level)
-      $q->andWhere('level_ref = ?',$level);
-
-    $q->andWhere("id != 0 ");
-    return $q;
-  }
-
-  public function findByNameLike($name,$level=null)
-  {
-    return $this->getByNameLike($name,$level)->execute();
-  }
-
   public function findWithParents($id)
   {
     $self_taxa = Doctrine::getTable('Taxonomy')->find($id);

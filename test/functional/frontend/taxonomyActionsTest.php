@@ -53,7 +53,7 @@ $browser->
 
   followRedirect();
 
-$nitems = Doctrine::getTable('Taxonomy')->findByNameLike('savadje');
+$nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès 1830)');
 
   $browser->
   test()->is($nitems[0]->getName(),'tchet savadje (tchantchès 1830)', 'We have the new encoded taxa');
@@ -105,7 +105,7 @@ $nitems = Doctrine::getTable('Taxonomy')->findByNameLike('savadje');
     isParameter('action', 'index')->
   end();
 
-  $nitems = Doctrine::getTable('Taxonomy')->findByNameLike('savadje');
+  $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès 1830)');
 
   $browser->
   test()->is($nitems->count(),0, 'We have no matching taxa');

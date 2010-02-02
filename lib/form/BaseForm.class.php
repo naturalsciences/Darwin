@@ -10,4 +10,13 @@
  */
 class BaseForm extends sfFormSymfony
 {
+  protected function getI18N()
+  {
+     return sfContext::getInstance()->getI18N();
+  }
+
+  public function setup()
+  {
+    sfWidgetFormSchema::setDefaultFormFormatterName('list');
+  }
 }

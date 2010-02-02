@@ -14,7 +14,7 @@
 <script type="text/javascript">
 $(document).ready(function () 
   {
-    $("#searchTaxon_rec_per_page").change(function ()
+    $("#searchCatalogue_rec_per_page").change(function ()
     {
       $.ajax({
 	      type: "POST",
