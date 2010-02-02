@@ -111,3 +111,6 @@ DROP SEQUENCE IF EXISTS specimen_parts_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS associated_multimedia_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS classification_synonymies_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS classification_synonymies_group_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS people_relationships_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS people_languages_id_seq CASCADE;
+
