@@ -769,3 +769,8 @@ tr.details .details_info tr:hover
   border: 1px dashed #5BABBD; 
   padding:0.5em;
 }
+
+#collections_institution_ref_button
+{
+float:none;
+}
