@@ -106,14 +106,14 @@ form th, form tr > td
 
 }
 
-.search_result
+.search_results
 {
-  margin-top: 1.5em;
-  margin-left: 2em;
+  margin-top: 0.5em;
+  margin-left: 0.2em;
 }
 
 
-.search_result li
+.search_results li
 {
   list-style: square;
 }
@@ -144,7 +144,7 @@ a.but_text
   text-decoration:none;
   color:black;
 }
-.right_part,.left_part
+.right_part, .left_part
 {
   float:left;
 }
@@ -154,7 +154,7 @@ form#search_taxa
   margin-bottom: 1.5em;
 }
 
-.search h3,  .tree, .search_content
+.search h3, .tree, .search_content
 {
   display:none;
 }
@@ -173,17 +173,19 @@ form#search_taxa
 {
   padding: 0.2em;
 }
+
 #choose_taxa_button
 {
   margin-bottom: 1em;
 }
 
-.search_content li
+.search_results_content li
 {
   padding:0.2em;
   padding-left: 1em;
-  list-style-type:disc;
+  list-style-type: disc;
 }
+
 .ref_name
 {
   float:left;
@@ -200,6 +202,11 @@ form#search_taxa
 .tree h3
 {
   margin-bottom: 0.5em;
+}
+
+.tree ul
+{
+  padding-left:1.1em;
 }
 
 .tree li:hover

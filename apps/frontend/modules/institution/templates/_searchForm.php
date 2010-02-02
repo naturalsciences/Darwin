@@ -3,15 +3,16 @@
 $(document).ready(function () {
       $("#institution_filter").submit(function ()
       {
-	$(".search_content").html('Searching');
 	$.ajax({
 	  type: "POST",
 	  url: "<?php echo url_for('institution/search' . ($is_choose?'?is_choose=1' : '') );?>",
 	  data: $('#institution_filter').serialize(),
 	  success: function(html){
-	    $('.search_content').html(html).slideDown();
+	    $('.search_results_content').html(html);
+            $('.search_results').slideDown();
 	  }});
-	  return false;
+        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
+        return false;
       });
 
    $(".pager a").live('click',function ()
@@ -21,11 +22,12 @@ $(document).ready(function () {
              url: $(this).attr("href"),
              data: $('#institution_filter').serialize(),
              success: function(html){
-                                     $(".search_content").html(html);
+                                     $(".search_results_content").html(html);
+                                     $('.search_results').slideDown();
                                     }
             }
            );
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
      return false;
    });
 });
@@ -38,7 +40,8 @@ $(document).ready(function () {
     <?php echo $form['family_name'];?>
     <?php echo $form['is_physical'];?>
     <input type="submit" name="search" value="Search" />
-
-<div class="search_content"> 
-</div> 
+<div class="search_results">
+<div class="search_results_content"> 
+</div>
+</div>
 </form> 

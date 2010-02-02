@@ -5,7 +5,7 @@
 
   <br /><br />
   <div class='new_link'>
-    <a href="<?php echo url_for('institution/new') ?>">New</a>
+    <a href="<?php echo url_for('institution/new') ?>"><?php echo __('New');?></a>
   </div>
 
 </div>

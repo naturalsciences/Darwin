@@ -1,20 +1,21 @@
 <script type="text/javascript">
 $(document).ready(function () {
-      $("#search_catalogue_form").submit(function ()
+      $("#search_form").submit(function ()
       {
-	$(".search_content").html('Searching');
 	$(".tree").slideUp().html("");
 	$.ajax({
 	  type: "POST",
 	  url: "<?php echo url_for('catalogue/search' . ($is_choose?'?is_choose=1' : '') );?>",
-	  data: $('#search_catalogue_form').serialize(),
+	  data: $('#search_form').serialize(),
 	  success: function(html){
-	    $('.search_content').html(html).slideDown();
+	    $('.search_results_content').html(html);
+            $('.search_results').slideDown();
 	  }});
-	  return false;
+        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
+        return false;
       });
 
-      $('.search_content tbody tr .info').live('click',function() {
+      $('.search_results_content tbody tr .info').live('click',function() {
 	  item_row=$(this).closest('tr');
 	  if(item_row.find('.tree').is(":hidden"))
 	  {
@@ -30,22 +31,33 @@ $(document).ready(function () {
      $.ajax({
              type: "POST",
              url: $(this).attr("href"),
-             data: $('#search_catalogue_form').serialize(),
+             data: $('#search_form').serialize(),
              success: function(html){
-                                     $(".search_content").html(html);
+                                     $(".search_results_content").html(html);
+                                     $('.search_results').slideDown();
                                     }
             }
            );
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
      return false;
    });
 
 });
 </script>  
-<form id="search_catalogue_form" method="post" action="" class="search_form">
-    <?php echo $searchForm['table'];?>
-    <?php echo $searchForm['name'];?>
-    <input type="submit" name="search" value="<?php echo __('Search');?>" />
-<div class="search_content">
+<form id="search_form" method="post" action="" class="search_form">
+  <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
+    <tbody>
+      <tr>
+        <td colspan="2"><?php echo $searchForm['table'];?></td>
+      </tr>
+      <tr>
+        <td><?php echo $searchForm['name'];?></td>
+        <td><input type="submit" name="search" value="<?php echo __('Search');?>" /></td>
+      </tr>
+    </tbody>
+  </table>
+<div class="search_results">
+  <div class="search_results_content">
+  </div>
 </div>
 </form>

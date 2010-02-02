@@ -15,7 +15,7 @@
                                           }
                   }
                  );
-           $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+           $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
            return false;
          });
        });

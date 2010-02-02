@@ -21,11 +21,11 @@ $(document).ready(function ()
 	      url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
 	      data: $('#people_filter').serialize(),
 	      success: function(html){
-				      $(".search_content").html(html);
+				      $(".search_results_content").html(html);
 				    }
 	    }
 	    );
-      $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+      $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
       return false;
     });
 
@@ -36,11 +36,11 @@ $(document).ready(function ()
              url: $(this).attr("href"),
              data: $('#people_filter').serialize(),
              success: function(html){
-                                     $(".search_content").html(html);
+                                     $(".search_results_content").html(html);
                                     }
             }
            );
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
      return false;
    });
 

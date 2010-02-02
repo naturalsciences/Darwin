@@ -5,7 +5,6 @@ $(document).ready(function ()
  {
    $("#search_form").submit(function ()
    {
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
      $.ajax({
              type: "POST",
              url: $(this).attr('action'),
@@ -16,6 +15,7 @@ $(document).ready(function ()
                                     }
             }
            );
+     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
      return false;
    });
 
@@ -27,10 +27,11 @@ $(document).ready(function ()
              data: $('#search_form').serialize(),
              success: function(html){
                                      $(".search_results_content").html(html);
+                                     $('.search_results').slideDown();
                                     }
             }
            );
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
      return false;
    });
 
@@ -42,10 +43,11 @@ $(document).ready(function ()
              data: $('#search_form').serialize(),
              success: function(html){
                                      $(".search_results_content").html(html);
+                                     $('.search_results').slideDown();
                                     }
             }
            );
-     $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
      return false;
    });
 
@@ -92,7 +94,6 @@ $(document).ready(function ()
       </tr>
     </tbody>
   </table>
-  <br /><br />
   <div class="search_results">
     <div class="search_results_content">
     </div>

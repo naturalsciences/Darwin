@@ -16,7 +16,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.search_content')->
+    checkElement('.search_results_content')->
   end()->
 
   get('/taxonomy/new/')->

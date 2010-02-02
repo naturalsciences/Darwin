@@ -19,13 +19,13 @@ $(document).ready(function ()
       $.ajax({
 	      type: "POST",
 	      url: "<?php echo url_for('catalogue/search?page='.$currentPage.'&is_choose='.$is_choose);?>",
-	      data: $('#search_catalogue_form').serialize(),
+	      data: $('#search_form').serialize(),
 	      success: function(html){
-				      $(".search_content").html(html);
+				      $(".search_results_content").html(html);
 				    }
 	    }
 	    );
-      $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+      $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
       return false;
     });
   });

@@ -3,6 +3,6 @@
   <?php include_partial('searchForm', array('form' => $form, 'is_choose' => false)) ?>
   <br /><br />
   <div class='new_link'>
-    <a href="<?php echo url_for('igs/new') ?>">New</a>
+    <a href="<?php echo url_for('igs/new') ?>"><?php echo __('New');?></a>
   </div>
 </div>
