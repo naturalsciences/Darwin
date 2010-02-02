@@ -56,6 +56,7 @@ $(document).ready(function ()
   <thead>
     <tr>
       <th></th>
+      <th></th>
       <th>
 	<a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
 	  <?php echo __('Title');?>

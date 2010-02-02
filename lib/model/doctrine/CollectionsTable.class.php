@@ -14,4 +14,22 @@ class CollectionsTable extends DarwinTable
             ->orderBy('p.id ASC, col_path_id ASC');
         return $q->execute();
     }
+
+    public function getDistinctCollectionByInstitution($inst = null)
+    {
+      $q = Doctrine_Query::create()
+	    ->select('c.*, CONCAT(c.path,c.id,E\'/\') as col_path_id')
+            ->from('Collections c')
+            ->orderBy('col_path_id ASC');
+      if($inst != null)
+	$q->andWhere('c.institution_ref = ?',$inst);
+
+      $res = $q->execute();
+      $results = array('' =>'');
+      foreach($res as $row)
+      {
+	$results[$row->getId()] = $row->__toString();
+      }
+      return $results;
+    }
 }

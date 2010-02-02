@@ -23,8 +23,15 @@ class CollectionsForm extends BaseCollectionsForm
        'box_title' => $this->getI18N()->__('Choose Institution'),
      ));
 
+    $this->widgetSchema['parent_ref'] = new sfWidgetFormChoice(array(
+      'choices' =>  array(),
+    ));
+
     $this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
     
+    if(! $this->getObject()->isNew())
+      $this->widgetSchema['parent_ref']->setOption('choices', Doctrine::getTable('Collections')->findByInstitutionRef($this->getObject()->getInstitutionRef()) );
+
     $this->widgetSchema['code_part_code_auto_copy']->setLabel('Auto copy code from specimen to parts');
   }
 }

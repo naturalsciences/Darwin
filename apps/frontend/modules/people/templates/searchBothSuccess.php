@@ -7,6 +7,7 @@
 <script language="javascript">
 
   $(document).ready(function () {
+    $('input[name="type_search"]').attr("checked", false); 
     $('input[name="type_search"]').change(function()
     {
       $(".search_both_item").html('Searching');

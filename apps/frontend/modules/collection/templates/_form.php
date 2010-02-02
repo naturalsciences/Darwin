@@ -1,6 +1,15 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
-
+<script type="text/javascript">
+$(document).ready(function () 
+{
+    $("#collections_institution_ref").change(function() {
+      $.get("<?php echo url_for('collection/completeOptions');?>/institution/"+$(this).val(), function (data) {
+	$("#collections_parent_ref").html(data);
+      });
+    });
+});
+</script>
 <form class="edition" action="<?php echo url_for('collection/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />

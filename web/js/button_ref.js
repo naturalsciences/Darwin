@@ -43,6 +43,7 @@ $(document).ready(function () {
 		  parent_el.prev().val(ref_element_id);
 		  $(this.elements.target).parent().prevAll('.ref_clear').show();
 		  $(this.elements.target).text('Change !');
+		  parent_el.prev().trigger('change');
 		}
 		$(this.elements.target).qtip("destroy");
 	    }

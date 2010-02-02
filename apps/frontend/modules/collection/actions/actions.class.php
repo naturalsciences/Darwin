@@ -10,7 +10,12 @@
  */
 class collectionActions extends sfActions
 {
-
+  public function executeCompleteOptions(sfWebRequest $request)
+  {
+    $this->collections = Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($request->getParameter('institution'));
+    $this->setLayout(false);
+  }
+  
   public function executeChoose(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
