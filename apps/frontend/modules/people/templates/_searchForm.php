@@ -76,9 +76,7 @@ $(document).ready(function () {
         <td>
           <?php echo $form['db_people_type']->render() ?>
         </td>
-        <td>
-          <input id="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
-        </td>
+        <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
       </tr>
     </tbody>
   </table>

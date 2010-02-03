@@ -52,7 +52,7 @@ $(document).ready(function () {
       </tr>
       <tr>
         <td><?php echo $searchForm['name'];?></td>
-        <td><input type="submit" name="search" value="<?php echo __('Search');?>" /></td>
+        <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search');?>" /></td>
       </tr>
     </tbody>
   </table>

@@ -52,13 +52,14 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 
   public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values)
   {
-     if ($values != "" && $table != "" && $field != ""):
-       $words = explode(" ",$values);
+     if ($values != "" && $table != "" && $field != "")
+     {
+       $words = explode(" ", $values);
        foreach($words as $word)
        {
          $query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ? , 'contains') ",$word);
        }
-     endif;
+     }
      return $query;
   }
 

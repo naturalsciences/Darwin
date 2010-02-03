@@ -35,13 +35,22 @@ $(document).ready(function () {
 
 <form id="institution_filter" class="search_form" method="post" action="<?php echo url_for('institution/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
   <?php echo $form->renderGlobalErrors() ?>
-
-    <?php echo $form['family_name']->renderLabel('Name');?>
-    <?php echo $form['family_name'];?>
-    <?php echo $form['is_physical'];?>
-    <input type="submit" name="search" value="Search" />
+  <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
+    <thead>
+      <tr>  
+        <th><?php echo $form['family_name']->renderLabel(__('Name'));?></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><?php echo $form['family_name'];?><?php echo $form['is_physical'];?></td>
+        <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
+      </tr>
+    </tbody>
+  </table>
 <div class="search_results">
-<div class="search_results_content"> 
-</div>
+  <div class="search_results_content"> 
+  </div>
 </div>
 </form> 

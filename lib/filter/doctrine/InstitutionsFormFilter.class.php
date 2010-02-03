@@ -23,8 +23,7 @@ class InstitutionsFormFilter extends BaseInstitutionsFormFilter
 
   public function addFamilyNameColumnQuery($query, $field, $val)
   {
-    $query->andWhere("formated_name_ts  @@ search_words_to_query('people' , 'formated_name_ts', ? , 'contains') ", $val['text']);
-    return $query;
+    return $this->addNamingColumnQuery($query, 'people', 'formated_name_ts', $val['text']);
   }
 
 }

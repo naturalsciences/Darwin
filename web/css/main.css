@@ -1,3 +1,5 @@
+/* Main Clauses */
+
 body
 {
   min-width: 968px;
@@ -10,6 +12,16 @@ fieldset
   border: 1px solid #C1CF56;
   padding: 1em;
   margin:0.7em;
+}
+
+table tr
+{
+  text-align:left;
+}
+
+table td
+{
+  vertical-align: middle;
 }
 
 .clear
@@ -26,18 +38,25 @@ fieldset
 
 .hidden
 {
-    display:none;
-}
-
-.complete_widget .hidden
-{
-  display:none !important;
+  display:none;
 }
 
 .show
 {
   display:block !important;
 }
+
+h1
+{
+  color:#3390a1;
+  text-decoration: underline;
+  font-size:large;
+  margin-bottom: 1em;
+}
+
+/* Errors style */
+
+/** Used for main spec errors and errors generated with renderErrors **/
 
 ul.spec_error_list, ul.error_list
 {
@@ -47,10 +66,20 @@ ul.spec_error_list, ul.error_list
   padding: 1em;
 }
 
-.treelist ul , .treelist ul li
+/** Used for errors in search form and placed in a div.error: purpose is to align it on search form **/
+
+.error
 {
-    margin-left: 15px;
+  padding:0.5em;
 }
+
+/* Tree views (Collections list) */
+
+.treelist ul, .treelist ul li
+{
+  margin-left: 15px;
+}
+
 .treelist li
 {
   margin: 0.5em;
@@ -59,77 +88,60 @@ ul.spec_error_list, ul.error_list
 .treelist
 {}
 
-.treelist li > ul
+.treelist li > ul, .expanded
 {
   display:none;
 }
 
-.expanded
-{
-    display:none;
-}
-
-h1
-{
-    color:#3390a1;
-    text-decoration: underline;
-    font-size:large;
-    margin-bottom: 1em;
-}
-
-form th, form tr > td
-{
-    text-align:left;
-    padding: 0.5em;
-}
 .col_name
 {
-    margin-left: 0.5em;
-    padding:0.1em;
+  margin-left: 0.5em;
+  padding:0.1em;
 }
 
 .col_name:hover
 {
-    background-color: #ececec;
+  background-color: #ececec;
 }
 .col_name span
 {
-    margin-left: 0.3em;
-    padding-left: 0.2em;
-    border-bottom: 1px dashed #878988;
+  margin-left: 0.3em;
+  padding-left: 0.2em;
+  border-bottom: 1px dashed #878988;
 }
+
+/* Widget behavior */
+
+/** WidgetFormSelectComplete behavior **/
+
+.complete_widget .hidden
+{
+  display:none !important;
+}
+
+.complete_widget select, .complete_widget img, .complete_widget span 
+{
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/** widgetFormButtonRef **/
 
 .ref_name
 {
-   margin: 0.5em;
-   font-weight: bold;
-
-}
-
-.search_results
-{
-  margin-top: 0.5em;
-  margin-left: 0.2em;
-}
-
-
-.search_results li
-{
-  list-style: square;
+  margin: 0.5em;
+  font-weight: bold;
+  float:left;
 }
 
 .ref_clear
 {
-   float: left;
-   margin-right: 2em;
-   margin-top: 0.8em;
-   vertical-align: middle;
+  float: left;
+  margin-right: 2em;
+  margin-top: 0.8em;
+  vertical-align: middle;
 }
 
-.button {
-	line-height:24px;
-	float:left;
-}
 .but_text
 {
   background-image: url(/images/button_grey_center.png);
@@ -139,79 +151,42 @@ form th, form tr > td
   display:block;
   height:24px;
 }
+
 a.but_text
 {
   text-decoration:none;
   color:black;
 }
+
 .right_part, .left_part
 {
   float:left;
 }
 
-form#search_taxa
+/* Forms */
+
+/** Forms - General **/
+
+form th, form tr > td
 {
-  margin-bottom: 1.5em;
+  text-align:left;
+  padding: 0.5em;
 }
 
-.search h3, .tree, .search_content
+/** Forms - Search **/
+
+.search
+{
+  background-color:white;
+  margin-left: 1px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: middle;
+}
+
+.search h3, .tree
 {
   display:none;
-}
-
-.search_content
-{
-  margin:1em;
-}
-
-.search_content table
-{
-  margin-left:-1em;
-}
-
-.search_content table tr > td
-{
-  padding: 0.2em;
-}
-
-#choose_taxa_button
-{
-  margin-bottom: 1em;
-}
-
-.search_results_content li
-{
-  padding:0.2em;
-  padding-left: 1em;
-  list-style-type: disc;
-}
-
-.ref_name
-{
-  float:left;
-}
-
-.tree
-{
-  padding: 0.5em;
-  margin: 1em;
-  background-color: #ebf5f5;
-  border: 1px solid #5BAABD;
-}
-
-.tree h3
-{
-  margin-bottom: 0.5em;
-}
-
-.tree ul
-{
-  padding-left:1.1em;
-}
-
-.tree li:hover
-{
-  background-color:#ebf5f5;
 }
 
 .search li
@@ -226,152 +201,49 @@ form#search_taxa
   cursor:pointer;
 }
 
-.recombination .clear
-{
-  display:none;
-}
-
-table td
-{
-  vertical-align: middle;
-}
-
-.search_box
-{
-  display:none;
-  border: 2px solid #5BAABD;
-  padding:1em;
-  margin:1em;
-  
-}
-table tr 
-{
-  text-align:left;
-}
-/******TEEEEMP LOGIN **********/
-#login_page label
-{
-  float: left;
-  width: 7em;
-  font-weight: bold;
-}
-#login_page h2
-{
-  margin-top: 1em;
-  font-size: x-large;
-  text-align:center;
-  color:#3390A1;
-}
-#login_page .login
-{
-  background-color:white;
-  width: 50%;
-  margin:auto;
-  padding: 2em;
-  border: 1px solid #3390A1;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-#login_page ul.form
-{
-  margin: auto;
-  width: 50%;
-  margin-top:1em;
-}
-#login_page ul.form li
-{
-  margin:auto;
-}
-#login_page input
-{
-padding: 2px;
-}
-#login_page input[type=password]
-{
-  background: white url(/images/key.png) no-repeat 3px 3px;
-  padding-left: 25px;
-}
-#login_page input#login_username
-{
-  padding-left: 25px;
-  background: white url(/images/user_suit.png) no-repeat 3px 3px;
-}
-
-#ui-datepicker-div
-{
-  z-index: 9000;
-}
-/*******TEMP Expeditions Results******/
-.search
-{
-  background-color:white;
-  margin-left: 1px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  vertical-align: middle;
-}
-
 table#search_and_choose
 {
   width: 100%;
 }
 
-.results
+.button 
 {
-  background-color:white;
-  width:60%;
-  margin-left: 0.51em;
-  border: 1px solid #5BAABD;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  vertical-align: middle;
+  line-height:24px;
+  float:left;
 }
 
-.results thead
+input[type="submit"][class="search_submit"]
 {
-  background-color: #5BAABD;
-  text-align: left;
-  color: white;
-}
-
-.results thead a
-{
-  text-decoration:none;
+  background: white url(/images/widget_button.png) no-repeat;
+  border:0;
+  width:73px;
+  height:21px;
   color:white;
 }
 
-.results thead a:hover
+/* Results table */
+
+/** Main container and sub-container **/
+
+.search_results
 {
-  text-decoration:underline;
+  margin-top: 0.5em;
+  margin-left: 0.2em;
 }
 
-.results tbody tr:hover
+.search_results li
 {
-  background-color:#D5DEE3;
+  list-style: square;
 }
 
-.datesNum
+.search_results_content li
 {
-  text-align: right;
+  padding:0.2em;
+  padding-left: 1em;
+  list-style-type: disc;
 }
 
-.datesNum em, #properties table em
-{
-  color:#C1C1C1;
-  font-style:normal;
-}
-
-.edit
-{
-  text-align:right;
-}
-
-.results th, .results td
-{
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-}
+/** Pager **/
 
 .pager
 {
@@ -408,6 +280,70 @@ table#search_and_choose
   text-decoration:underline;
 }
 
+
+/** Table of results **/
+
+.results
+{
+  background-color:white;
+  width:60%;
+  margin-left: 0.51em;
+  border: 1px solid #5BAABD;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: middle;
+}
+
+.results thead
+{
+  background-color: #5BAABD;
+  text-align: left;
+  color: white;
+}
+
+.results thead a
+{
+  text-decoration:none;
+  color:white;
+}
+
+.results thead a:hover
+{
+  text-decoration:underline;
+}
+
+.results tbody tr:hover
+{
+  background-color:#D5DEE3;
+}
+
+.results th, .results td
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+
+.is_choose_1 table, table.is_choose
+{
+  width:100%;
+}
+
+.datesNum
+{
+  text-align: right;
+}
+
+.datesNum em, #properties table em
+{
+  color:#C1C1C1;
+  font-style:normal;
+}
+
+.edit
+{
+  text-align:right;
+}
+
 .order_sign_down 
 {
   vertical-align:middle;
@@ -419,6 +355,53 @@ table#search_and_choose
   vertical-align:top;
   font-size:0.8em;
 }
+
+.choose
+{
+  text-align:center;
+}
+
+.result_choose
+{
+  background-color:#5BAABD;
+  color:white;
+  padding-top:1px;
+  padding-bottom:1px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.result_choose:hover
+{
+  cursor:pointer;
+}
+
+/*** Hierarchical structure for catalogue units - integrated into results ***/
+
+.tree
+{
+  padding: 0.5em;
+  margin: 1em;
+  background-color: #ebf5f5;
+  border: 1px solid #5BAABD;
+}
+
+.tree h3
+{
+  margin-bottom: 0.5em;
+}
+
+.tree ul
+{
+  padding-left:1.1em;
+}
+
+.tree li:hover
+{
+  background-color:#ebf5f5;
+}
+
+/** Add New button after results **/
 
 .new_link
 {
@@ -452,28 +435,81 @@ table#search_and_choose
   margin: 0.5em;
 }
 
-.is_choose_1 table, table.is_choose
+/** Recombination and Synonimies **/
+
+.recombination .clear
 {
-  width:100%;
+  display:none;
 }
 
-.choose
+.search_box
 {
+  display:none;
+  border: 2px solid #5BAABD;
+  padding:1em;
+  margin:1em;  
+}
+
+/* Login Page */
+
+#login_page label
+{
+  float: left;
+  width: 7em;
+  font-weight: bold;
+}
+
+#login_page h2
+{
+  margin-top: 1em;
+  font-size: x-large;
   text-align:center;
+  color:#3390A1;
 }
 
-.result_choose
+#login_page .login
 {
-  background-color:#5BAABD;
-  color:white;
-  padding-top:1px;
-  padding-bottom:1px;
+  background-color:white;
+  width: 50%;
+  margin:auto;
+  padding: 2em;
+  border: 1px solid #3390A1;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-.result_choose:hover
+
+#login_page ul.form
 {
-  cursor:pointer;
+  margin: auto;
+  width: 50%;
+  margin-top:1em;
+}
+
+#login_page ul.form li
+{
+  margin:auto;
+}
+
+#login_page input
+{
+padding: 2px;
+}
+
+#login_page input[type=password]
+{
+  background: white url(/images/key.png) no-repeat 3px 3px;
+  padding-left: 25px;
+}
+
+#login_page input#login_username
+{
+  padding-left: 25px;
+  background: white url(/images/user_suit.png) no-repeat 3px 3px;
+}
+
+#ui-datepicker-div
+{
+  z-index: 9000;
 }
 
 .add_item_button img, .change_item_button img
@@ -519,11 +555,6 @@ table.encoding tbody
   margin-left: 2px;
 }
 
-.complete_widget select, .complete_widget img, .complete_widget span {
-vertical-align: middle;
-display: inline-block;
-}
-
 .proprety_values .unit_col
 {
   text-align:right;
@@ -536,51 +567,21 @@ display: inline-block;
   text-align:left;
 }
 
-#search_catalogue_form
-{
-  margin-bottom: 2em;
-}
-
-#search_catalogue_form .pager
-{
-    margin-left:-1em;
-}
-
 #searchCatalogue_name
 {
   min-width: 20em;
 }
 
-.search_content li
-{
-  list-style:none;
-}
-
-
-.search_catalogue_result h3 
-{
-  background-color:#5BABBD;
-  color:white;
-  padding: 0.3em;
-  padding-left: 1em;
-}
-
-.search_form input[name="search"]
-{
-  background: white url(/images/widget_button.png) no-repeat;
-  border:0;
-  width:73px;
-  height:21px;
-  color:white;
-}
 .catalogue_table thead
 {
   border-bottom: 1px solid #C1CF56;
 }
+
 .catalogue_table thead th
 {
   padding: 0.3em;
 }
+
 .catalogue_table tbody tr:hover
 {
   background-color: #E9EDBE;
@@ -590,17 +591,18 @@ display: inline-block;
 {
      border-bottom: 1px dashed #E9EDBE; 
 }
+
 .catalogue_table tbody tr ul
 {
   margin-top: 0.3em;
   list-style-type:disc;
   margin-left:2em;
 }
+
 .catalogue_table td
 {
  padding: 0.2em;
 }
-
 
 #catalogue_properties_property_unit_parent, #catalogue_properties_property_accuracy_unit_parent
 {
@@ -642,6 +644,7 @@ display: inline-block;
 {
    display:inline;
 }
+
 .proprety_values .hidden
 {
   display:none !important;
@@ -706,11 +709,6 @@ div .edition tfoot a, div .renamed tfoot a
   cursor:pointer;
 }
 
-.error
-{
-  padding:0.5em;
-}
-
 .widget_row_delete
 {
   vertical-align:top;
@@ -734,7 +732,7 @@ table.encoding tbody .widget_row_delete
     border: 2px solid #F4BB0F;
     background-color:#FFEFBF;
 }
-#classification_synonymies_record_id_button
+#classification_synonymies_record_id_button, #people_relationships_person_1_ref_button
 {
   display:none;
 }
@@ -756,19 +754,23 @@ table.encoding tbody .widget_row_delete
   padding-left:1em;
 }
 
-table.details_info {
+table.details_info 
+{
   width:95%;
   margin: 5px;
   background-color:#ebf5f5;
 }
+
 .results tbody tr.details:hover 
 {
   background-color:white;
 }
+
 tr.details .details_info tr:hover
 {
   background-color:#ebf5f5;
 }
+
 .details_info td
 {
 /*   background-color:#D4FDFF; */
