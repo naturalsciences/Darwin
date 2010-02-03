@@ -1,3 +1,4 @@
+<?php slot('title', __('Search Institutions'));  ?>        
 <div class="page">
 <h1>Institutions Search</h1>
 
