@@ -178,7 +178,6 @@ form th, form tr > td
 .search
 {
   background-color:white;
-  margin-left: 1px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: middle;
@@ -219,6 +218,13 @@ input[type="submit"][class="search_submit"]
   width:73px;
   height:21px;
   color:white;
+  margin-top:1px;
+  padding-bottom:10px;
+}
+
+input[type="submit"][class="search_submit"]:hover
+{
+  cursor:pointer;
 }
 
 /* Results table */
@@ -228,7 +234,6 @@ input[type="submit"][class="search_submit"]
 .search_results
 {
   margin-top: 0.5em;
-  margin-left: 0.2em;
 }
 
 .search_results li
@@ -416,14 +421,9 @@ input[type="submit"][class="search_submit"]
 
 .new_link a
 {
-  vertical-align:middle;
+  vertical-align:text-bottom;
   text-decoration:none;
   color:white;
-}
-
-.new_link a:hover
-{
-  text-decoration:underline;
 }
 
 .flash_save

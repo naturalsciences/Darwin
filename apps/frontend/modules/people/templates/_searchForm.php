@@ -43,39 +43,15 @@ $(document).ready(function () {
         <th><?php echo $form['activity_date_from']->renderLabel(); ?></th>
         <th><?php echo $form['activity_date_to']->renderLabel(); ?></th>
 	<th><?php echo $form['db_people_type']->renderLabel('Type');?></th>
-        <th>&nbsp;</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>
-          <?php echo $form['family_name']->renderError() ?>
-        </td>
-        <td>
-          <?php echo $form['activity_date_from']->renderError() ?>
-        </td>
-        <td>
-          <?php echo $form['activity_date_to']->renderError() ?>
-        </td>
-	<td>
-          <?php echo $form['db_people_type']->renderError() ?>
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <?php echo $form['family_name']->render() ?>
-        </td>
-        <td>
-          <?php echo $form['activity_date_from']->render() ?>
-        </td>
-        <td>
-          <?php echo $form['activity_date_to']->render() ?>
-        </td>
-        <td>
-          <?php echo $form['db_people_type']->render() ?>
-        </td>
+        <td><?php echo $form['family_name']->render() ?></td>
+        <td><?php echo $form['activity_date_from']->render() ?></td>
+        <td><?php echo $form['activity_date_to']->render() ?></td>
+        <td><?php echo $form['db_people_type']->render() ?></td>
         <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
       </tr>
     </tbody>

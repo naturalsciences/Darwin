@@ -46,12 +46,15 @@ $(document).ready(function () {
 </script>  
 <form id="search_form" method="post" action="" class="search_form">
   <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
+    <thead>
+      <tr>  
+        <th><?php echo $searchForm['name']->renderLabel(__('Name'));?></th>
+        <th></th>
+      </tr>
+    </thead>
     <tbody>
       <tr>
-        <td colspan="2"><?php echo $searchForm['table'];?></td>
-      </tr>
-      <tr>
-        <td><?php echo $searchForm['name'];?></td>
+        <td><?php echo $searchForm['name'];?><?php echo $searchForm['table'];?></td>
         <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search');?>" /></td>
       </tr>
     </tbody>

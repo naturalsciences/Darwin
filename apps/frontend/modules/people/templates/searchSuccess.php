@@ -81,13 +81,13 @@ $(document).ready(function ()
 	  <?php if($orderBy=='additional_names') echo $orderSign ?>
 	</a>
       </th>
-      <th>
+      <th class="datesNum">
 	<a class="sort" href="<?php echo url_for($s_url.'&orderby=birth_date'.( ($orderBy=='birth_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
 	  <?php echo __('Life');?>
 	  <?php if($orderBy=='birth_date') echo $orderSign ?>
 	</a>
       </th>
-      <th>
+      <th class="datesNum">
 	<a class="sort" href="<?php echo url_for($s_url.'&orderby=activity_date_from'.( ($orderBy=='activity_date_from' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
 	  <?php echo __('Activity');?>
 	  <?php if($orderBy=='activity_date_from') echo $orderSign ?>
@@ -134,8 +134,6 @@ $(document).ready(function ()
 <?php else:?>
 
 <div class="error">
-    <?php var_dump($sf_params->get('people_filters'));?>
-
     <?php echo $form->renderGlobalErrors();?>
     <?php echo $form['activity_date_to']->renderError(); ?>
     <?php echo $form['db_people_type']->renderError(); ?>

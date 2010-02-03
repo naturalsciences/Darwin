@@ -61,36 +61,15 @@ $(document).ready(function ()
         <th><?php echo $form['name']->renderLabel() ?></th>
         <th><?php echo $form['expedition_from_date']->renderLabel(); ?></th>
         <th><?php echo $form['expedition_to_date']->renderLabel(); ?></th>
-        <th>&nbsp;</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>
-          <?php echo $form['name']->renderError() ?>
-        </td>
-        <td>
-          <?php echo $form['expedition_from_date']->renderError() ?>
-        </td>
-        <td>
-          <?php echo $form['expedition_to_date']->renderError() ?>
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <?php echo $form['name']->render() ?>
-        </td>
-        <td>
-          <?php echo $form['expedition_from_date']->render() ?>
-        </td>
-        <td>
-          <?php echo $form['expedition_to_date']->render() ?>
-        </td>
-        <td>
-          <input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
-        </td>
+        <td><?php echo $form['name']->render() ?></td>
+        <td><?php echo $form['expedition_from_date']->render() ?></td>
+        <td><?php echo $form['expedition_to_date']->render() ?></td>
+        <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
       </tr>
     </tbody>
   </table>
