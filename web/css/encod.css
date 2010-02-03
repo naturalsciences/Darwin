@@ -61,12 +61,12 @@
 	border:1px solid #C1CF56;
 }
 
-.panel .widget_content .form input
+form.edition input
 {
 	border:1px solid #BBBDBC;
 }
 
-.encod_screen .widget_content .form input:focus
+form.edition input:focus
 {
 	border:1px solid #C1CF56;
 }
@@ -75,20 +75,9 @@
 {
 	line-height: 20px;
 }
-.encod_screen .widget_content .form .help_ico
-{
-	vertical-align:middle;
-}
 
-
-.people_count
+form.edition .help_ico
 {
-	float:left;
-	margin-left: 30px;
-}
-.people_count img
-{
-	line-height:25px;
 	vertical-align:middle;
 }
 
