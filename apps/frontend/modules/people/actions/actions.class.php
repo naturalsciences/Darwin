@@ -280,4 +280,50 @@ class peopleActions extends sfActions
     }
     return $this->renderText('ok');
   }
+
+
+  public function executeDeleteRelation(sfWebRequest $request)
+  {
+    $r = Doctrine::getTable('PeopleRelationships')->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such PeopleRelation');
+    try{
+      $r->delete();
+    }
+    catch(Exception $e)
+    {
+      return $this->renderText($e->getMessage());
+    }
+    return $this->renderText('ok');
+  }
+
+  public function executeRelation(sfWebRequest $request)
+  {
+
+    if($request->hasParameter('id'))
+      $this->relation =  Doctrine::getTable('PeopleRelationships')->find($request->getParameter('id'));
+    else
+    {
+     $this->relation = new PeopleRelationships();
+     $this->relation->setPerson2Ref($request->getParameter('ref_id'));
+    }
+     
+    $this->form = new PeopleRelationshipsForm($this->relation);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('people_relationships'));
+	if($this->form->isValid())
+	{
+	  try {
+	    $this->form->save();
+	    return $this->renderText('ok');
+	  }
+	  catch(Doctrine_Exception $e)
+	  {
+	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	    $this->form->getErrorSchema()->addError($error); 
+	  }
+	}
+    }
+  }
 }

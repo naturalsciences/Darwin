@@ -21,7 +21,9 @@ class peoplewidgetComponents extends sfComponents
   {
     $this->langs =  Doctrine::getTable('PeopleLanguages')->findByPeopleRef($this->eid);
   }
+  
+  public function executeRelation()
+  {
+    $this->relations  = Doctrine::getTable('PeopleRelationships')->findAllRelated($this->eid);
+  }
 }
-/**
-PeopleRelationships
-*/

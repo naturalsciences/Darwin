@@ -291,17 +291,17 @@ PeopleRelationships:
         person_1_ref: { type: integer, notnull: true}
         person_2_ref: { type: integer, notnull: true}
         path: { type: string }
-        person_user_role: { type: string }
         activity_date_from: { type: string, notnull: true, default: '0001-01-01'}
         activity_date_from_mask: { type: integer, notnull: true, default:0}
         activity_date_to: { type: string, notnull: true, default: '0001-01-01'}
         activity_date_to_mask: { type: integer, notnull: true, default:0}
+        person_user_role: { type: string }
     relations:
-        People1:
-            class: People
+        Parent:
+            class: Institutions
             local: person_1_ref
             foreign: id
-        People2:
+        Child:
             class: People
             local: person_2_ref
             foreign: id

@@ -487,6 +487,14 @@ MyPreferences:
         order_by: 5
         opened: true
         visible: true
+    u1ws24:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: relation
+        order_by: 5
+        opened: true
+        visible: true
 
 CatalogueProperties:
     cprop1:

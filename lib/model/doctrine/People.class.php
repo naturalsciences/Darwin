@@ -121,7 +121,6 @@ class People extends BasePeople
       $this->_set('activity_date_from', $fd->format('Y/m/d') );
       $this->_set('activity_date_from_mask', $fd->getMask() );
      }
-//      return $this;
   }
 
 

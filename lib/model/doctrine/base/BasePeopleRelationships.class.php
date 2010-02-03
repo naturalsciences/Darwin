@@ -10,38 +10,38 @@
  * @property integer $person_1_ref
  * @property integer $person_2_ref
  * @property string $path
- * @property string $person_user_role
  * @property string $activity_date_from
  * @property integer $activity_date_from_mask
  * @property string $activity_date_to
  * @property integer $activity_date_to_mask
- * @property People $People1
- * @property People $People2
+ * @property string $person_user_role
+ * @property Institutions $Parent
+ * @property People $Child
  * 
  * @method integer             getId()                      Returns the current record's "id" value
  * @method string              getRelationshipType()        Returns the current record's "relationship_type" value
  * @method integer             getPerson1Ref()              Returns the current record's "person_1_ref" value
  * @method integer             getPerson2Ref()              Returns the current record's "person_2_ref" value
  * @method string              getPath()                    Returns the current record's "path" value
- * @method string              getPersonUserRole()          Returns the current record's "person_user_role" value
  * @method string              getActivityDateFrom()        Returns the current record's "activity_date_from" value
  * @method integer             getActivityDateFromMask()    Returns the current record's "activity_date_from_mask" value
  * @method string              getActivityDateTo()          Returns the current record's "activity_date_to" value
  * @method integer             getActivityDateToMask()      Returns the current record's "activity_date_to_mask" value
- * @method People              getPeople1()                 Returns the current record's "People1" value
- * @method People              getPeople2()                 Returns the current record's "People2" value
+ * @method string              getPersonUserRole()          Returns the current record's "person_user_role" value
+ * @method Institutions        getParent()                  Returns the current record's "Parent" value
+ * @method People              getChild()                   Returns the current record's "Child" value
  * @method PeopleRelationships setId()                      Sets the current record's "id" value
  * @method PeopleRelationships setRelationshipType()        Sets the current record's "relationship_type" value
  * @method PeopleRelationships setPerson1Ref()              Sets the current record's "person_1_ref" value
  * @method PeopleRelationships setPerson2Ref()              Sets the current record's "person_2_ref" value
  * @method PeopleRelationships setPath()                    Sets the current record's "path" value
- * @method PeopleRelationships setPersonUserRole()          Sets the current record's "person_user_role" value
  * @method PeopleRelationships setActivityDateFrom()        Sets the current record's "activity_date_from" value
  * @method PeopleRelationships setActivityDateFromMask()    Sets the current record's "activity_date_from_mask" value
  * @method PeopleRelationships setActivityDateTo()          Sets the current record's "activity_date_to" value
  * @method PeopleRelationships setActivityDateToMask()      Sets the current record's "activity_date_to_mask" value
- * @method PeopleRelationships setPeople1()                 Sets the current record's "People1" value
- * @method PeopleRelationships setPeople2()                 Sets the current record's "People2" value
+ * @method PeopleRelationships setPersonUserRole()          Sets the current record's "person_user_role" value
+ * @method PeopleRelationships setParent()                  Sets the current record's "Parent" value
+ * @method PeopleRelationships setChild()                   Sets the current record's "Child" value
  * 
  * @package    darwin
  * @subpackage model
@@ -74,9 +74,6 @@ abstract class BasePeopleRelationships extends sfDoctrineRecord
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('person_user_role', 'string', null, array(
-             'type' => 'string',
-             ));
         $this->hasColumn('activity_date_from', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
@@ -97,16 +94,19 @@ abstract class BasePeopleRelationships extends sfDoctrineRecord
              'notnull' => true,
              'default' => 0,
              ));
+        $this->hasColumn('person_user_role', 'string', null, array(
+             'type' => 'string',
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('People as People1', array(
+        $this->hasOne('Institutions as Parent', array(
              'local' => 'person_1_ref',
              'foreign' => 'id'));
 
-        $this->hasOne('People as People2', array(
+        $this->hasOne('People as Child', array(
              'local' => 'person_2_ref',
              'foreign' => 'id'));
     }

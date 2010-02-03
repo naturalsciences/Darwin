@@ -203,7 +203,7 @@ abstract class BasePeople extends sfDoctrineRecord
 
         $this->hasMany('PeopleRelationships', array(
              'local' => 'id',
-             'foreign' => 'person_1_ref'));
+             'foreign' => 'person_2_ref'));
 
         $this->hasMany('PeopleComm', array(
              'local' => 'id',
