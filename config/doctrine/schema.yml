@@ -310,7 +310,7 @@ PeopleComm:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
-        comm_type: { type: string, notnull: true, default: 'phone/fax' }
+        comm_type: { type: string, notnull: true, default: 'TEL' }
         tag: { type: string, notnull: true}
         entry: { type: string, notnull: true }
     relations:
@@ -340,7 +340,7 @@ UsersComm:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
-        comm_type: { type: string, notnull: true, default: 'phone/fax' }
+        comm_type: { type: string, notnull: true, default: 'TEL' }
         tag: { type: string, notnull: true}
         organization_unit: { type: string }
         person_user_role: { type: string }

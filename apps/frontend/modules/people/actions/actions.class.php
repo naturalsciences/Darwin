@@ -24,9 +24,7 @@ class peopleActions extends sfActions
   }
 
   public function executeSearchBoth(sfWebRequest $request)
-  {
-    
-  }
+  {}
   
   public function executeIndex(sfWebRequest $request)
   {
@@ -188,6 +186,11 @@ class peopleActions extends sfActions
     return $this->renderText('ok');
   }
 
+
+  public function executeGetTags(sfWebRequest $request)
+  {
+    $this->array_possible = Doctrine::getTable('PeopleComm')->getTags($request->getParameter('type'));
+  }
   public function executeComm(sfWebRequest $request)
   {
 

@@ -44,7 +44,7 @@ class widgetFormTagEntry extends sfWidgetFormInput
 <script type="text/javascript"> 
 $(document).ready(function () {
    //ADD
-  $('#%1\$s li').click(function() {
+  $('#%1\$s li').live('click',function() {
     $('#%2\$s').append('<li class="'+$(this).attr('class')+'">'+$(this).text()+'<img src="/images/widget_help_close.png"></li>');
     value = trim($(this).attr('class').substr(2));
     $(this).addClass('hidden');

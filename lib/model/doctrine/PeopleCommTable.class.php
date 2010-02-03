@@ -4,5 +4,11 @@
  */
 class PeopleCommTable extends DarwinTable
 {
-
+  public function getTags($type)
+  {
+    if($type=="TEL")
+      return array('home'=>'Home', 'pager'=>'Pager', 'work'=>'Work', 'pref'=>'Prefered', 'voice'=>'Voice', 'fax'=>'Fax', 'cell'=>'Cell');
+    else
+      return array('home'=>'Home','pref'=>'Prefered', 'work'=>'Work','internet'=> 'Internet');
+  }
 }

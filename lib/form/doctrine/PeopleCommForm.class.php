@@ -13,10 +13,10 @@ class PeopleCommForm extends BasePeopleCommForm
   {
     unset($this['id']);
     $this->widgetSchema['person_user_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['tag'] = new widgetFormTagEntry(array('choices' => array('home'=>'Home', 'pager'=>'Pager', 'work'=>'Work', 'pref'=>'Prefered', 'voice'=>'Voice', 'fax'=>'Fax', 'cell'=>'Cell')));
-    //home/pref/work/internet ( for mail)
     $this->widgetSchema['entry'] = new sfWidgetFormInput();
     $this->widgetSchema['comm_type'] = new sfWidgetFormChoice(array('choices' => array('TEL'=>'tel','EMAIL'=>'email')));
+
     $this->validatorSchema['tag'] = new sfValidatorString(array('required'=> false));
+    $this->widgetSchema['tag'] = new widgetFormTagEntry(array('choices' => Doctrine::getTable('PeopleComm')->getTags($this->getObject()->getCommType()) ));
   }
 }

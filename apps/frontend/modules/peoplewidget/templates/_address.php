@@ -2,7 +2,7 @@
 <table class="catalogue_table">
   <thead>
     <tr>
-      <th><?php echo __('address');?></th>
+      <th><?php echo __('Address');?></th>
       <th></th>
     </tr>
   </thead>

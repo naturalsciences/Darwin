@@ -88,6 +88,19 @@
       return false;
     });
 
+
+    $('#people_comm_comm_type').change(function () {
+      $('form#lang_form input[type=submit]').attr('disabled','disabled');
+      $.ajax({
+	  type: "get",
+	  url: "<?php echo url_for('people/getTags');?>/type/" + $('#people_comm_comm_type').val(),
+	  success: function(html){
+	    $('#people_comm_tag').val('');
+	    $('#people_comm_tag_selected').html('');
+	    $('#people_comm_tag_available').html(html);
+	  }
+      });
+    });
   });
 </script>
 </div>
