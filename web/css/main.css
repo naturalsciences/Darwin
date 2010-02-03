@@ -803,3 +803,15 @@ tr.details .details_info tr:hover
 {
   margin-left: 5px;
 }
+
+.tag
+{
+  color: #004A6A;
+  font-size: x-small;
+  padding-left: 0.7em;
+
+}
+.tag img
+{
+  padding-left: 0.5em;
+}

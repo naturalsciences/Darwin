@@ -5,5 +5,17 @@
  */
 class PeopleComm extends BasePeopleComm
 {
-
+  public function getTagsAsArray()
+  {
+    $array = explode(',',$this->_get('tag'));
+    $result = array();
+    $possible_tags = Doctrine::getTable('PeopleComm')->getTags($this->_get('comm_type'));
+    foreach($array as $tag)
+    {
+      $tag=trim($tag);
+      if(isset($possible_tags[$tag]))
+	$result[] = $possible_tags[$tag];
+    }
+    return $result;
+  }
 }

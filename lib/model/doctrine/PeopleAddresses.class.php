@@ -5,5 +5,19 @@
  */
 class PeopleAddresses extends BasePeopleAddresses
 {
+  public static $possible_tags = array('home'=>'Home', 'dom'=>'Dom', 'work'=>'Work', 'pref'=>'Prefered', 'intl'=>'International', 'postal'=>'Postal');
 
+  public function getTagsAsArray()
+  {
+    $array = explode(',',$this->_get('tag'));
+    $result = array();
+
+    foreach($array as $tag)
+    {
+      $tag=trim($tag);
+      if(isset(self::$possible_tags[$tag]))
+	$result[] = self::$possible_tags[$tag];
+    }
+    return $result;
+  }
 }
