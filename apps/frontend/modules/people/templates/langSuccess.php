@@ -54,7 +54,7 @@
 	{
 	  hideForRefresh($('#lang_screen'));
 	  $.ajax({
-	    url: '<?php echo url_for('people/deleteLang?id='.$form->getObject()->getId())?>',
+	    url: '<?php echo url_for('catalogue/deleteRelated?table=people_languages&id='.$form->getObject()->getId())?>',
 	    success: function(html){
 	      if(html == "ok" )
 	      {

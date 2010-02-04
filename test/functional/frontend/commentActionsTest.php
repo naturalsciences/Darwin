@@ -84,7 +84,7 @@ $browser->
   end()->
 
   info('Delete')->
-  get('/comment/delete?id='.$item->getId())->
+  get('/catalogue/deleteRelated?table=comments&id='.$item->getId())->
   with('response')->begin()->
     isStatusCode(200)->
   end();

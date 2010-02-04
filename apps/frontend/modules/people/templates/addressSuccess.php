@@ -89,7 +89,7 @@
 	{
 	  hideForRefresh($('#address_screen'));
 	  $.ajax({
-	    url: '<?php echo url_for('people/deleteAddress?id='.$form->getObject()->getId())?>',
+	    url: '<?php echo url_for('catalogue/deleteRelated?table=people_addresses&id='.$form->getObject()->getId())?>',
 	    success: function(html){
 	      if(html == "ok" )
 	      {

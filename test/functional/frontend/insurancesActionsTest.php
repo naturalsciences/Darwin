@@ -56,7 +56,7 @@ $items = Doctrine::getTable('Insurances')->findByInsuranceValue('750');
 
 $browser->
   info('Delete last insurance inserted...')->
-  get('insurances/delete?id='.$items[0]->getId())->
+  get('catalogue/deleteRelated?table=insurances&id='.$items[0]->getId())->
   with('response')->
   begin()->
     isStatusCode()->

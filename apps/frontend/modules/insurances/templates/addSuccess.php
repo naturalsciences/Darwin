@@ -65,7 +65,7 @@
 	{
 	  hideForRefresh($('#insurances_screen'));
 	  $.ajax({
-	    url: '<?php echo url_for('insurances/delete?id='.$form->getObject()->getId())?>',
+	    url: '<?php echo url_for('catalogue/deleteRelated?table=insurances&id='.$form->getObject()->getId())?>',
 	    success: function(html){
 	      if(html == "ok" )
 	      {

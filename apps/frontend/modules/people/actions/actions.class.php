@@ -172,25 +172,12 @@ class peopleActions extends sfActions
     }
   }
 
-  public function executeDeleteAddress(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('PeopleAddresses')->find($request->getParameter('id'));
-    $this->forward404Unless($r,'No such address');
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
-  }
-
 
   public function executeGetTags(sfWebRequest $request)
   {
     $this->array_possible = Doctrine::getTable('PeopleComm')->getTags($request->getParameter('type'));
   }
+
   public function executeComm(sfWebRequest $request)
   {
 
@@ -221,21 +208,6 @@ class peopleActions extends sfActions
     }
   }
 
-  public function executeDeleteComm(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('PeopleComm')->find($request->getParameter('id'));
-    $this->forward404Unless($r,'No such commucation mean');
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
-  }
-
-
   public function executeLang(sfWebRequest $request)
   {
 
@@ -265,35 +237,6 @@ class peopleActions extends sfActions
 	  }
 	}
     }
-  }
-
-  public function executeDeleteLang(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('PeopleLanguages')->find($request->getParameter('id'));
-    $this->forward404Unless($r,'No such language');
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
-  }
-
-
-  public function executeDeleteRelation(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('PeopleRelationships')->find($request->getParameter('id'));
-    $this->forward404Unless($r,'No such PeopleRelation');
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
   }
 
   public function executeRelation(sfWebRequest $request)

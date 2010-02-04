@@ -20,7 +20,7 @@ class PeopleRelationshipsForm extends BasePeopleRelationshipsForm
     $this->widgetSchema['person_user_role'] = new sfWidgetFormInput();
     $this->widgetSchema['person_2_ref'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['person_1_ref'] = new widgetFormButtonRef(array(
-       'model' => 'Institutions',//Catalogue::getModelForTable($this->options['table']),
+       'model' => 'Institutions',
        'link_url' => 'instituion/choose',
        'method' => 'getFamilyName',
        'box_title' => '',

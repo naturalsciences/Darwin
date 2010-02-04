@@ -87,9 +87,9 @@ $browser->
     checkElement('#relation_catalogue_name','/Falco Peregrinus/')->
   end()->
 
-  info('DeleteRelation')->
+  info('DeleteRelated')->
 
-  get('/catalogue/deleteRelation?relid='.$items[1]['id'])->
+  get('/catalogue/deleteRelated?table=catalogue_relationships&id='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
   end()->

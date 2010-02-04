@@ -23,7 +23,7 @@
        <?php endif;?>
     </td>
     <td class="widget_row_delete">
-      <a class="widget_row_delete" href="<?php echo url_for('people/deleteLang?id='.$lang->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_languages&id='.$lang->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>

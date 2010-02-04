@@ -36,7 +36,7 @@ $browser->
  $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'current_name');
 
 $browser->
-    get('/catalogue/deleteRelation?relid='.$items[0]['id'])->
+    get('/catalogue/deleteRelated?table=catalogue_relationships&id='.$items[0]['id'])->
     with('response')->begin()->
       isStatusCode(200)->
     end()->

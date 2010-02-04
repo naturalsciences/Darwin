@@ -43,7 +43,7 @@ $("#comment_form").submit(function()
 	{
 	  removeError();
 	  $.ajax({
-	    url: '<?php echo url_for('comment/delete?id='.$form->getObject()->getId())?>',
+	    url: '<?php echo url_for('catalogue/deleteRelated?table=comments&id='.$form->getObject()->getId())?>',
 	    success: function(html){
 	      if(html == "ok" )
 	      {

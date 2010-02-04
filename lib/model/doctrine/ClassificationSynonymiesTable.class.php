@@ -61,7 +61,7 @@ class ClassificationSynonymiesTable extends DarwinTable
     $q = Doctrine_Query::create()
 	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id ' .
 	    ($table_name=='taxonomy' ? ', t.extinct' : '') )
-	 ->from('ClassificationSynonymies s, '.Catalogue::getModelForTable($table_name). ' t')
+	 ->from('ClassificationSynonymies s, '.DarwinTable::getModelForTable($table_name). ' t')
 	 ->whereIn('s.group_id', $groups)
 	 ->andWhere('t.id=s.record_id')
 	 ->andWhere('s.referenced_relation = ?',$table_name) //Not really necessay but....
@@ -71,7 +71,7 @@ class ClassificationSynonymiesTable extends DarwinTable
     $results = array();
     foreach($items as $item)
     {
-  	$catalogue = Catalogue::getModelForTable($table_name);
+  	$catalogue = DarwinTable::getModelForTable($table_name);
 	$cRecord = new $catalogue();
 	$cRecord->setName($item[6]);
 	$cRecord->setId($item[7]);

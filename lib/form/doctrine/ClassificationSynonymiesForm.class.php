@@ -20,7 +20,7 @@ class ClassificationSynonymiesForm extends BaseClassificationSynonymiesForm
     );
 
     $this->widgetSchema['record_id'] = new widgetFormButtonRef(array(
-       'model' => Catalogue::getModelForTable($this->options['table']),
+       'model' => DarwinTable::getModelForTable($this->options['table']),
        'link_url' => 'catalogue/choose',
        'method' => 'getName',
        'box_title' => '',

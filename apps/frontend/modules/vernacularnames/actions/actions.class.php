@@ -44,20 +44,6 @@ class vernacularnamesActions extends sfActions
 	}
     }
   }
-
-  public function executeDelete(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('ClassVernacularNames')->findExcept($request->getParameter('id'));
-    $this->forward404Unless($r,'No such vernacular name');
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
-  }
   
   public function executeAddValue(sfWebRequest $request)
   {

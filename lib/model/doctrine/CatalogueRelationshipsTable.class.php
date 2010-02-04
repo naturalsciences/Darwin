@@ -6,7 +6,7 @@ class CatalogueRelationshipsTable extends DarwinTable
 {
   public function getRelationsForTable($table, $id, $type=null)
   {
-    $model = Catalogue::getModelForTable($table);
+    $model = DarwinTable::getModelForTable($table);
     $q = Doctrine_Query::create()
 	    ->select('r.id, r.referenced_relation, r.record_id_1, r.record_id_2, r.relationship_type , t.id, t.name' . ($table == 'taxonomy' ? ', t.extinct' : '') )
 	    ->from('CatalogueRelationships r, '.$model. ' t')

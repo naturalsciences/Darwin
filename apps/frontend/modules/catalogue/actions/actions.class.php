@@ -13,7 +13,7 @@ class catalogueActions extends sfActions
 
   public function executeRelation(sfWebRequest $request)
   {
-    $modelName = Catalogue::getModelForTable($request->getParameter('table'));
+    $modelName = DarwinTable::getModelForTable($request->getParameter('table'));
     $this->linkItem = Doctrine::getTable($modelName)->findExcept($request->getParameter('id'));
     $this->relation = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relid',0));
     if(! $this->relation)
@@ -25,21 +25,8 @@ class catalogueActions extends sfActions
     {
       $this->remoteItem = Doctrine::getTable($modelName)->findExcept($this->relation->getRecordId2());
     }
-    $filterFormName = ucfirst($request->getParameter('table')). 'FormFilter';
+    $filterFormName = DarwinTable::getFilterForTable($request->getParameter('table'));
     $this->searchForm = new $filterFormName(array('table'=>$request->getParameter('table')));
-  }
-
-  public function executeDeleteRelation(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relid'));
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
   }
 
   public function executeSaveRelation(sfWebRequest $request)
@@ -68,18 +55,32 @@ class catalogueActions extends sfActions
   
   public function executeTree(sfWebRequest $request)
   {
-    $this->items = Doctrine::getTable( Catalogue::getModelForTable($request->getParameter('table')) )
+    $this->items = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )
       ->findWithParents($request->getParameter('id'));
   }
 
   public function executeSearch(sfWebRequest $request)
   {
     $item = $request->getParameter('searchCatalogue',array('') );
-    $formFilterName = ucfirst($item['table']). 'FormFilter';
+    $formFilterName = DarwinTable::getFilterForTable($item['table']);
     $this->searchForm = new $formFilterName(array('table' => $item['table']));
-    $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
+    $this->is_choose = ($request->getParameter('is_choose', '') == '') ? 0 : intval($request->getParameter('is_choose')) ;
     $this->searchResults($this->searchForm,$request);
     $this->setLayout(false);
+  }
+
+  public function executeDeleteRelated(sfWebRequest $request)
+  {
+    $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such item');
+    try{
+      $r->delete();
+    }
+    catch(Exception $e)
+    {
+      return $this->renderText($e->getMessage());
+    }
+    return $this->renderText('ok');
   }
 
   protected function searchResults($form, $request)

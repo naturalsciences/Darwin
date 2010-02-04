@@ -36,7 +36,7 @@
       <?php endforeach;?>
     </td>
     <td class="widget_row_delete">
-      <a class="widget_row_delete" href="<?php echo url_for('people/deleteAddress?id='.$address->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_addresses&id='.$address->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>

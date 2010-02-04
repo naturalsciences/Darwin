@@ -20,7 +20,7 @@
       <?php echo $comment->getComment();?>
     </td>
     <td class="widget_row_delete">
-      <a class="widget_row_delete" href="<?php echo url_for('comment/delete?id='.$comment->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=comments&id='.$comment->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>

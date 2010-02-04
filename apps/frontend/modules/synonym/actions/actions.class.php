@@ -58,7 +58,7 @@ class synonymActions extends sfActions
 	    }
 	 }
     }
-    $formFilterName = ucfirst($request->getParameter('table')).'FormFilter';
+    $formFilterName = DarwinTable::getFilterForTable($request->getParameter('table'));
     $this->searchForm = new $formFilterName(array('table'=> $request->getParameter('table') ));
   }
   

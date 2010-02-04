@@ -91,7 +91,7 @@
 	{
 	  removeError();
 	  $.ajax({
-	    url: '<?php echo url_for('catalogue/deleteRelation?relid='.$relation->getId())?>',
+	    url: '<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$relation->getId())?>',
 	    success: function(html){
 	      if(html == "ok" )
 	      {

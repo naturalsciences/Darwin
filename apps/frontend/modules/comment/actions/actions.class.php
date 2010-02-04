@@ -10,20 +10,6 @@
  */
 class commentActions extends sfActions
 {
-  public function executeDelete(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable('Comments')->findExcept($request->getParameter('id'));
-    $this->forward404Unless($r,'No such comment');
-    try{
-      $r->delete();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
-  }
-
   public function executeComment(sfWebRequest $request)
   {
     if($request->hasParameter('cid'))

@@ -121,7 +121,7 @@
 	{
 	  hideForRefresh($('#property_screen'));
 	  $.ajax({
-	    url: '<?php echo url_for('property/delete?id='.$form->getObject()->getId())?>',
+	    url: '<?php echo url_for('catalogue/deleteRelated?table=catalogue_properties&id='.$form->getObject()->getId())?>',
 	    success: function(html){
 	      if(html == "ok" )
 	      {
