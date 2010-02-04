@@ -89,10 +89,26 @@
             </tr>
           <?php endforeach;?>
         </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><div class='new_link'><a href="<?php echo url_for('expedition/new') ?>"><?php echo __('New');?></a></div></td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   <?php else:?>
-    <?php echo __('No Expedition Matching');?>
+    <div class='is_choose_<?php echo $is_choose ?>'>
+      <table>
+        <tbody>
+          <tr>
+            <td><?php echo __('No Expedition Matching');?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   <?php endif;?>
 <?php else:?>
   <div class="error">

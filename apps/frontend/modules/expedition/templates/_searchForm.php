@@ -12,6 +12,7 @@ $(document).ready(function ()
              success: function(html){
                                      $(".search_results_content").html(html);
                                      $('.search_results').slideDown();
+                                     $(".search_new_link_line").hide();
                                     }
             }
            );
@@ -70,6 +71,12 @@ $(document).ready(function ()
         <td><?php echo $form['expedition_from_date']->render() ?></td>
         <td><?php echo $form['expedition_to_date']->render() ?></td>
         <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
+      </tr>
+      <tr class="search_new_link_line">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><div class='new_link'><a href="<?php echo url_for('expedition/new') ?>"><?php echo __('New');?></a></div></td>
       </tr>
     </tbody>
   </table>

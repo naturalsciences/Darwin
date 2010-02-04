@@ -36,6 +36,14 @@ table td
   margin-right: 51px;
 }
 
+.qtip-content .page
+{
+  margin-top: 15px;
+  margin-left:0;
+  margin-right:0;
+  min-width:720px;
+}
+
 .hidden
 {
   display:none;
@@ -170,7 +178,9 @@ a.but_text
 form th, form tr > td
 {
   text-align:left;
-  padding: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
 }
 
 /** Forms - Search **/
@@ -200,15 +210,20 @@ form th, form tr > td
   cursor:pointer;
 }
 
-table#search_and_choose
+/*table#search_and_choose
 {
   width: 100%;
-}
+}*/
 
 .button 
 {
   line-height:24px;
   float:left;
+}
+
+.ui-datepicker-trigger
+{
+  vertical-align:text-bottom;
 }
 
 input[type="submit"][class="search_submit"]
@@ -253,7 +268,7 @@ input[type="submit"][class="search_submit"]:hover
 .pager
 {
   margin-bottom:0.3em;
-  padding-left:0.7em;
+/*  padding-left:0.7em;*/
 }
 
 .pager li
@@ -292,8 +307,6 @@ input[type="submit"][class="search_submit"]:hover
 {
   background-color:white;
   width:60%;
-  margin-left: 0.51em;
-  border: 1px solid #5BAABD;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: middle;
@@ -301,6 +314,9 @@ input[type="submit"][class="search_submit"]:hover
 
 .results thead
 {
+  border-top: 1px solid #5BAABD;
+  border-left: 1px solid #5BAABD;
+  border-right: 1px solid #5BAABD;
   background-color: #5BAABD;
   text-align: left;
   color: white;
@@ -317,6 +333,11 @@ input[type="submit"][class="search_submit"]:hover
   text-decoration:underline;
 }
 
+.results tbody
+{
+  border: 1px solid #5BAABD;
+}
+
 .results tbody tr:hover
 {
   background-color:#D5DEE3;
@@ -326,6 +347,12 @@ input[type="submit"][class="search_submit"]:hover
 {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
+  padding-left:0.2em;
+}
+
+.results tfoot td
+{
+  padding-right:0;
 }
 
 .is_choose_1 table, table.is_choose
@@ -411,7 +438,6 @@ input[type="submit"][class="search_submit"]:hover
 .new_link
 {
   float:right;
-  margin-right:39.3%;
   background: white url(/images/widget_button.png) no-repeat;
   height:22px;
   width:74px;
@@ -527,7 +553,6 @@ table.encoding thead
 table.encoding thead th
 {
   font-weight: normal;
-/*   text-align: center; */
 }
 
 table.encoding tbody
@@ -660,6 +685,7 @@ form.edition, form.renamed, .edit_syn_screen
   border:1px solid #C1CC33;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+  padding-left:0.5em;
 }
 
 .edit_syn_screen
