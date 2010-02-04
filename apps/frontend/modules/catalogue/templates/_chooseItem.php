@@ -48,7 +48,7 @@ $(document).ready(function () {
   <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
     <thead>
       <tr>  
-        <th><?php echo $searchForm['name']->renderLabel(__('Name'));?></th>
+        <th><?php echo $searchForm['name']->renderLabel('Name');?></th>
         <th></th>
       </tr>
     </thead>
