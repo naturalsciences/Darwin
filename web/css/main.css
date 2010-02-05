@@ -36,6 +36,11 @@ table td
   margin-right: 51px;
 }
 
+.container
+{
+  display:inline-block
+}
+
 .qtip-content .page
 {
   margin-top: 15px;
@@ -78,7 +83,9 @@ ul.spec_error_list, ul.error_list
 
 .error
 {
-  padding:0.5em;
+  padding-top:0.5em;
+  padding-right:0.5em;
+  padding-bottom:0.5em;
 }
 
 /* Tree views (Collections list) */
@@ -248,7 +255,8 @@ input[type="submit"][class="search_submit"]:hover
 
 .search_results
 {
-  margin-top: 0.5em;
+  margin-top: 0.2em;
+  margin-bottom: 0.5em;
 }
 
 .search_results li
@@ -306,17 +314,15 @@ input[type="submit"][class="search_submit"]:hover
 .results
 {
   background-color:white;
-  width:60%;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: middle;
+  width:100%;
+  border: 1px solid #5BAABD;
 }
 
 .results thead
 {
-  border-top: 1px solid #5BAABD;
-  border-left: 1px solid #5BAABD;
-  border-right: 1px solid #5BAABD;
   background-color: #5BAABD;
   text-align: left;
   color: white;
@@ -333,11 +339,6 @@ input[type="submit"][class="search_submit"]:hover
   text-decoration:underline;
 }
 
-.results tbody
-{
-  border: 1px solid #5BAABD;
-}
-
 .results tbody tr:hover
 {
   background-color:#D5DEE3;
@@ -350,14 +351,9 @@ input[type="submit"][class="search_submit"]:hover
   padding-left:0.2em;
 }
 
-.results tfoot td
+.results_container
 {
-  padding-right:0;
-}
-
-.is_choose_1 table, table.is_choose
-{
-  width:100%;
+  padding-right: 0.5em;
 }
 
 .datesNum
@@ -443,11 +439,13 @@ input[type="submit"][class="search_submit"]:hover
   width:74px;
   text-align:center;
   font-size:small;
+  padding-right:0.4em;
+  padding-top:0.2em;
 }
 
 .new_link a
 {
-  vertical-align:text-bottom;
+/*  vertical-align:text-bottom;*/
   text-decoration:none;
   color:white;
 }
@@ -461,7 +459,7 @@ input[type="submit"][class="search_submit"]:hover
   margin: 0.5em;
 }
 
-/** Recombination and Synonimies **/
+/** Recombination and Synonymies **/
 
 .recombination .clear
 {

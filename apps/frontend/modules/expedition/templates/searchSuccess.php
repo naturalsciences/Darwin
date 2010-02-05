@@ -30,7 +30,7 @@
          </li>
       </ul>
     </div>
-    <div class='is_choose_<?php echo $is_choose ?>'>
+    <div class="results_container">
       <table class="results">
         <thead>
           <tr>
@@ -89,14 +89,6 @@
             </tr>
           <?php endforeach;?>
         </tbody>
-        <tfoot>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><div class='new_link'><a href="<?php echo url_for('expedition/new') ?>"><?php echo __('New');?></a></div></td>
-          </tr>
-        </tfoot>
       </table>
     </div>
   <?php else:?>

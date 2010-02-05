@@ -30,7 +30,7 @@
          </li>
       </ul>
     </div>
-    <div class='is_choose_<?php echo $is_choose ?>'>
+    <div class="results_container">
       <table class="results">
         <thead>
           <tr>
