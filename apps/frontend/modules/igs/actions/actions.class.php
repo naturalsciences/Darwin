@@ -151,19 +151,16 @@ class igsActions extends sfActions
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
+        $this->s_url = 'igs/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
         // Define in one line a pager Layout based on a PagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getIgLike method of IgTable class)
         $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
                                                                             $this->currentPage,
                                                                             $form->getValue('rec_per_page')
                                                                            ),
-                                                            new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
-                                                            $this->getController()->genUrl('igs/search?orderby='.$this->orderBy.
-                                                                                           '&orderdir='.$this->orderDir.
-                                                                                           '&is_choose='.$this->is_choose.
-                                                                                           '&page='
-                                                                                          ).'{%page_number}'
-                                                          );
+                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
+                                                       $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
+                                                      );
         // Sets the Pager Layout templates
         $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
         $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');

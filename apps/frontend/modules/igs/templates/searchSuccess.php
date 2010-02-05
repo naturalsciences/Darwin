@@ -7,7 +7,7 @@
       {
         $.ajax({
                 type: "POST",
-                url: "<?php echo url_for('igs/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage.'&is_choose='.$is_choose);?>",
+                url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
                 data: $('#search_form').serialize(),
                 success: function(html){
                                         $(".search_results_content").html(html);
@@ -19,6 +19,12 @@
       });
     });
     </script>
+    <?php
+      if($orderDir=='asc')
+        $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
+      else
+        $orderSign = '<span class="order_sign_up">&nbsp;&#9650;</span>';
+    ?>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
     <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
     <div class="results_container">
@@ -26,28 +32,16 @@
         <thead>
           <tr>
             <th>
-              <a class="sort" href="<?php echo url_for('igs/search?orderby=ig_num'.
-                                                       (($orderBy=='ig_num' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                       '&page='.$currentPage.
-                                                       '&is_choose='.$is_choose
-                                                      );?>">
-              <?php echo __('I.G.');?>
-              <?php if($orderBy=='ig_num'):?>
-                <span class="order_sign_<?php echo (($orderDir=='asc')?'down':'up');?>">&nbsp;<?php echo (($orderDir=='asc')?'&#9660;':'&#9650;');?></span>
-              <?php endif; ?>
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_num'.( ($orderBy=='ig_num' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+                <?php echo __('I.G.');?>
+                <?php if($orderBy=='ig_num') echo $orderSign ?>
               </a>
             </th>
             <th class="datesNum">
-                <a class="sort" href="<?php echo url_for('igs/search?orderby=ig_date'.
-                                                         (($orderBy=='ig_date' && $orderDir=='asc')?'&orderdir=desc':'').
-                                                         '&page='.$currentPage.
-                                                         '&is_choose='.$is_choose
-                                                        );?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_date'.( ($orderBy=='ig_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
                 <?php echo __('I.G. creation date');?>
-                <?php if($orderBy=='ig_date'):?>
-                  <span class="order_sign_<?php echo (($orderDir=='asc')?'down':'up');?>">&nbsp;<?php echo (($orderDir=='asc')?'&#9660;':'&#9650;');?></span>
-                <?php endif; ?>
-                </a>
+                <?php if($orderBy=='ig_date') echo $orderSign ?>
+              </a>
             </th>
             <th>&nbsp;</th>
           </tr>

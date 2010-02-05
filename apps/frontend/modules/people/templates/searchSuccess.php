@@ -49,10 +49,10 @@
           <th></th>
           <th class="hidden"></th>
           <th>
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
-	      <?php echo __('Title');?>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+              <?php echo __('Title');?>
               <?php if($orderBy=='title') echo $orderSign ?>
-	    </a>
+            </a>
           </th>
           <th>
 	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
@@ -135,7 +135,7 @@
     <?php echo $form['family_name']->renderError(); ?>
 </div>
 <?php endif;?>
-<script language="javascript">
+<script>
   $("img.info").click(function() {
       item_row=$(this).closest('tr');
       el_id  = getIdInClasses(item_row);

@@ -45,9 +45,9 @@ class peopleActions extends sfActions
 
       if ($this->form->isValid())
       {
-	$this->orderBy = ($request->getParameter('orderby', '') == '') ? 'family_name' : $request->getParameter('orderby');
+        $this->orderBy = ($request->getParameter('orderby', '') == '') ? 'family_name' : $request->getParameter('orderby');
         $this->orderDir = ($request->getParameter('orderdir', '') == '') ? 'asc' : $request->getParameter('orderdir');
-	$query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
+        $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
 	$this->s_url = 'people/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;

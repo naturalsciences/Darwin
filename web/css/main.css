@@ -287,6 +287,7 @@ input[type="submit"][class="search_submit"]:hover
   background-color:#5BAABD;
   margin-right:0.5em;
   margin-bottom:1em;
+  margin-top:0.5em;
   color:white;
   min-width:600px;
 }

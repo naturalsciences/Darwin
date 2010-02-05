@@ -34,18 +34,22 @@ class institutionActions extends sfActions
 
       if ($this->form->isValid())
       {
+        $this->orderBy = ($request->getParameter('orderby', '') == '') ? 'family_name' : $request->getParameter('orderby');
+        $this->orderDir = ($request->getParameter('orderdir', '') == '') ? 'asc' : $request->getParameter('orderdir');
+        $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
+	$this->s_url = 'institution/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager(
-	    $this->form->getQuery(),
+	    $query,
 	    $this->currentPage,
 	    $this->form->getValue('rec_per_page')
 	  ),
 	  new Doctrine_Pager_Range_Sliding(
 	    array('chunk' => $pagerSlidingSize)
 	    ),
-	  $this->getController()->genUrl('institution/search?is_choose='.$this->is_choose.'&page=').'{%page_number}'
+	  $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
 	);
 
         // Sets the Pager Layout templates
