@@ -153,7 +153,7 @@ class igsActions extends sfActions
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
         // Define in one line a pager Layout based on a PagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getIgLike method of IgTable class)
-        $this->igPagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+        $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
                                                                             $this->currentPage,
                                                                             $form->getValue('rec_per_page')
                                                                            ),
@@ -165,11 +165,11 @@ class igsActions extends sfActions
                                                                                           ).'{%page_number}'
                                                           );
         // Sets the Pager Layout templates
-        $this->igPagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
-        $this->igPagerLayout->setSelectedTemplate('<li>{%page}</li>');
-        $this->igPagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
+        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
+        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
         // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->igPagerLayout->getPager()->getExecuted()) $this->igss = $this->igPagerLayout->execute();
+        if (! $this->pagerLayout->getPager()->getExecuted()) $this->igss = $this->pagerLayout->execute();
       }
     }
   }

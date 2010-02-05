@@ -13,7 +13,7 @@
  * @var        string                $this->orderBy: field by which the data are ordered
  * @var        string                $this->orderDir: Indicates the order of the order by: Ascending or Descending
  * @var        int                   $this->currentPage: Give the page of data the user is on (used with Doctrine_Pager)
- * @var        PagerLayoutWithArrows $this->expePagerLayout: Pager layout initialized
+ * @var        pagerLayoutWithArrows $this->expepagerLayout: Pager layout initialized
  * @var        Doctrine_Collection   $this->expeditions: Collection of data, resulting of the query triggered by an expedition search
  */
 class expeditionActions extends sfActions
@@ -157,9 +157,9 @@ class expeditionActions extends sfActions
         $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
         $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
-        // Define in one line a pager Layout based on a PagerLayoutWithArrows object
+        // Define in one line a pager Layout based on a pagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-        $this->expePagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+        $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
                                                                               $this->currentPage,
                                                                               $form->getValue('rec_per_page')
                                                                              ),
@@ -171,12 +171,12 @@ class expeditionActions extends sfActions
                                                                                           ).'{%page_number}'
                                                           );
         // Sets the Pager Layout templates
-        $this->expePagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
-        $this->expePagerLayout->setSelectedTemplate('<li>{%page}</li>');
-        $this->expePagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
+        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
+        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
         // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->expePagerLayout->getPager()->getExecuted())
-           $this->expeditions = $this->expePagerLayout->execute();
+        if (! $this->pagerLayout->getPager()->getExecuted())
+           $this->expeditions = $this->pagerLayout->execute();
       }
     }
   }

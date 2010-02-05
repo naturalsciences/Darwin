@@ -1,35 +1,26 @@
 <?php if($form->isValid()):?>
   <?php if(isset($igss) && $igss->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>
-    <div>
-      <script type="text/javascript">
-      $(document).ready(function () 
-       {
-         $("#searchIg_rec_per_page").change(function ()
-         {
-           $.ajax({
-                   type: "POST",
-                   url: "<?php echo url_for('igs/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage.'&is_choose='.$is_choose);?>",
-                   data: $('#search_form').serialize(),
-                   success: function(html){
-                                           $(".search_results_content").html(html);
-                                          }
-                  }
-                 );
-           $(".search_content").html('<?php echo image_tag('loader.gif');?>');
-           return false;
-         });
-       });
-      </script>
-      <ul class="pager">
-         <li>
-             <?php echo $form['rec_per_page']->renderLabel(); echo $form['rec_per_page']->render(); ?>
-         </li>
-         <?php $igPagerLayout->display(); ?>
-         <li class="nbrRecTot">
-           <span class="nbrRecTotLabel">Total:&nbsp;</span><span class="nbrRecTotValue"><?php echo $igPagerLayout->getPager()->getNumResults();?></span>
-         </li>
-      </ul>
-    </div>
+    <script type="text/javascript">
+    $(document).ready(function () 
+    {
+      $("#searchIg_rec_per_page").change(function ()
+      {
+        $.ajax({
+                type: "POST",
+                url: "<?php echo url_for('igs/search?orderby='.$orderBy.'&orderdir='.$orderDir.'&page='.$currentPage.'&is_choose='.$is_choose);?>",
+                data: $('#search_form').serialize(),
+                success: function(html){
+                                        $(".search_results_content").html(html);
+                                       }
+               }
+              );
+        $(".search_content").html('<?php echo image_tag('loader.gif');?>');
+        return false;
+      });
+    });
+    </script>
+    <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
+    <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
     <div class="results_container">
       <table class="results">
         <thead>
@@ -78,6 +69,7 @@
         </tbody>
       </table>
     </div>
+    <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php else:?>
     <?php echo __('No I.G. Matching');?>
   <?php endif;?>

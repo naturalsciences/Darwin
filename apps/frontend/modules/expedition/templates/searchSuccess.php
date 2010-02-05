@@ -1,10 +1,9 @@
 <?php if($form->isValid()):?>
   <?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>
-    <div>
-      <script type="text/javascript">
+    <script type="text/javascript">
       $(document).ready(function () 
-       {
-         $("#searchExpedition_rec_per_page").change(function ()
+      {
+        $("#searchExpedition_rec_per_page").change(function ()
          {
            $.ajax({
                    type: "POST",
@@ -19,17 +18,9 @@
            return false;
          });
        });
-      </script>
-      <ul class="pager">
-         <li>
-             <?php echo $form['rec_per_page']->renderLabel(); echo $form['rec_per_page']->render(); ?>
-         </li>
-         <?php $expePagerLayout->display(); ?>
-         <li class="nbrRecTot">
-           <span class="nbrRecTotLabel">Total:&nbsp;</span><span class="nbrRecTotValue"><?php echo $expePagerLayout->getPager()->getNumResults();?></span>
-         </li>
-      </ul>
-    </div>
+    </script>
+    <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
+    <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
     <div class="results_container">
       <table class="results">
         <thead>
@@ -91,16 +82,9 @@
         </tbody>
       </table>
     </div>
+    <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php else:?>
-    <div class='is_choose_<?php echo $is_choose ?>'>
-      <table>
-        <tbody>
-          <tr>
-            <td><?php echo __('No Expedition Matching');?></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <?php echo __('No Expedition Matching');?>
   <?php endif;?>
 <?php else:?>
   <div class="error">

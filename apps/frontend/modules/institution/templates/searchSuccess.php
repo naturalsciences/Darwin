@@ -1,15 +1,4 @@
 <?php if(isset($items) && $items->count() != 0):?>
-  <div>
-    <ul class="pager">
-        <li>
-          <?php echo $form['rec_per_page']->renderLabel(); echo $form['rec_per_page']->render(); ?>
-        </li>
-        <?php $pagerLayout->display(); ?>
-        <li class="nbrRecTot">
-          <span class="nbrRecTotLabel">Total:&nbsp;</span><span class="nbrRecTotValue"><?php echo $pagerLayout->getPager()->getNumResults();?></span>
-        </li>
-    </ul>
-  </div>
   <script type="text/javascript">
     $(document).ready(function () 
     {
@@ -29,6 +18,8 @@
       });
     });
   </script>
+  <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
+  <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
   <div class="results_container">
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
@@ -55,6 +46,7 @@
       </tbody>
     </table>
   </div>
+  <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
 <?php else:?>
   <?php echo __('No Matching Items');?>
 <?php endif;?>
