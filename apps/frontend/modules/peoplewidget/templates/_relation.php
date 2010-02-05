@@ -47,22 +47,9 @@
       item_row=$(this).closest('tr');
       el_id  = getIdInClasses(item_row);
       level = getIdInClasses(this);
-      /*if($('.details_rid_'+el_id).is(":hidden"))
-      {
-	if($('.details_rid_'+el_id+' > td:first ').html() == '')
-	{*/
-	  $.get('<?php echo url_for('people/relationDetails');?>/id/'+el_id+'/level/'+level,function (html){
+      $.get('<?php echo url_for('people/relationDetails');?>/id/'+el_id+'/level/'+level,function (html){
 	    $(item_row).after(html);
-	  });
-	/*}
-	else
-	{
-	  $('.details_rid_'+el_id+'').show();
-	}
-      }
-      else
-	$('.details_rid_'+el_id+'').hide();
-      */
+      });
   }
    $("img.info").click(fetchRelDetails);
 </script>

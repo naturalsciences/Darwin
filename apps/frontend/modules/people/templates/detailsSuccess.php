@@ -38,8 +38,8 @@
     <td class="details_rel">
       <h3><?php echo __('Relationships');?> :</h3>
       <ul>
-      <?php foreach($item->PeopleRelationships as $rel):?>
-	  <li><?php echo $rel->getPersonRef2();?></li>
+      <?php foreach($relations as $rel):?>
+	  <li><?php echo $rel->Parent;?></li>
       <?php endforeach;?>
       </ul>
     </td>

@@ -10,7 +10,7 @@
  */
 class peopleActions extends sfActions
 {
-  protected function getWidgets()
+  protected function initiateWidgets()
   {
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
@@ -79,6 +79,7 @@ class peopleActions extends sfActions
   public function executeDetails(sfWebRequest $request)
   {
     $this->item = Doctrine::getTable('People')->find($request->getParameter('id'));
+    $this->relations = Doctrine::getTable('PeopleRelationships')->findAllRelated($request->getParameter('id'));
   }
 
   public function executeNew(sfWebRequest $request)
@@ -101,7 +102,7 @@ class peopleActions extends sfActions
   {
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
-    $this->getWidgets();
+    $this->initiateWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -111,7 +112,7 @@ class peopleActions extends sfActions
     $this->form = new PeopleForm($people);
 
     $this->processForm($request, $this->form);
-    $this->getWidgets();
+    $this->initiateWidgets();
     $this->setTemplate('edit');
   }
 
@@ -120,10 +121,20 @@ class peopleActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
-    $people->delete();
-
-    $this->redirect('people/index');
+    try{
+        $people->delete();
+	$this->redirect('people/edit?id='.$people->getId());
+    }
+    catch(Doctrine_Exception $e)
+    {
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+    }
+    $this->form = new PeopleForm($people);
+    $this->form->getErrorSchema()->addError($error); 
+    $this->initiateWidgets();
+    $this->setTemplate('edit');
   }
+
 
   protected function processForm(sfWebRequest $request, sfForm $form)
   {

@@ -79,14 +79,19 @@ class institutionActions extends sfActions
     $this->setTemplate('new');
   }
 
+  protected function initiateWidgets()
+  {
+      $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('people_widget');
+    if(! $this->widgets) $this->widgets=array();
+  }
+
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     $this->form = new InstitutionsForm($institution);
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('people_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->initiateWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -96,7 +101,7 @@ class institutionActions extends sfActions
     $this->form = new InstitutionsForm($institution);
 
     $this->processForm($request, $this->form);
-
+    $this->initiateWidgets();
     $this->setTemplate('edit');
   }
 
@@ -105,9 +110,18 @@ class institutionActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
-    $institution->delete();
-
-    $this->redirect('institution/index');
+    try{
+        $institution->delete();
+	$this->redirect('institution/edit?id='.$institution->getId());
+    }
+    catch(Doctrine_Exception $e)
+    {
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+    }
+    $this->form = new InstitutionsForm($institution);
+    $this->form->getErrorSchema()->addError($error); 
+    $this->initiateWidgets();
+    $this->setTemplate('edit');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -115,9 +129,15 @@ class institutionActions extends sfActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $institution = $form->save();
-
-      $this->redirect('institution/edit?id='.$institution->getId());
+      try{
+        $institution = $form->save();
+	$this->redirect('institution/edit?id='.$institution->getId());
+      }
+      catch(Doctrine_Exception $e)
+      {
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
+      }
     }
   }
 }

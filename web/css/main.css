@@ -266,9 +266,10 @@ input[type="submit"][class="search_submit"]:hover
 
 .search_results_content li
 {
+
   padding:0.2em;
   padding-left: 1em;
-  list-style-type: disc;
+  list-style-type: none;
 }
 
 /** Pager **/
@@ -841,3 +842,4 @@ tr.details .details_info tr:hover
 {
   padding-left: 0.5em;
 }
+
