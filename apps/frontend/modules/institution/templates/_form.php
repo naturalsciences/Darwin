@@ -33,7 +33,7 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          <?php echo $form->renderHiddenFields(false) ?>
+          <?php echo $form->renderHiddenFields(true) ?>
 
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New Institution'), 'institution/new') ?>

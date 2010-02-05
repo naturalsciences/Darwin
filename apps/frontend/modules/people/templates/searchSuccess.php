@@ -143,7 +143,7 @@
     <?php echo $form['family_name']->renderError(); ?>
 </div>
 <?php endif;?>
-<script>
+<script language="javascript">
   $("img.info").click(function() {
       item_row=$(this).closest('tr');
       el_id  = getIdInClasses(item_row);

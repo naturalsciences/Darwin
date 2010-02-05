@@ -99,7 +99,7 @@ class peopleActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($people = Doctrine::getTable('People')->find(array($request->getParameter('id'))), sprintf('people does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
     $this->getWidgets();
   }
@@ -107,7 +107,7 @@ class peopleActions extends sfActions
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $this->forward404Unless($people = Doctrine::getTable('People')->find(array($request->getParameter('id'))), sprintf('people does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
 
     $this->processForm($request, $this->form);
@@ -119,7 +119,7 @@ class peopleActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $this->forward404Unless($people = Doctrine::getTable('People')->find(array($request->getParameter('id'))), sprintf('people does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $people->delete();
 
     $this->redirect('people/index');
@@ -268,5 +268,13 @@ class peopleActions extends sfActions
 	  }
 	}
     }
+  }
+  
+  public function executeRelationDetails(sfWebRequest $request)
+  {
+    $this->level = $request->getParameter('level',1);
+    $this->relations  = Doctrine::getTable('PeopleRelationships')->findAllRelated($request->getParameter('id'));
+    if(!$this->relations)
+      return $this->renderText('nothing');
   }
 }

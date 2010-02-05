@@ -12,4 +12,8 @@
  */
 class Institutions extends BaseInstitutions
 {
+  public function __toString()
+  {
+        return $this->getFormatedName();
+  }
 }

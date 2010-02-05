@@ -17,4 +17,20 @@ class PeopleTable extends DarwinTable
 	->andWhere('p.formated_name_ts @@ to_tsquery(\'simple\',?)',$name);
     return $q->execute();
   }
+
+
+  /**
+  * Find Only people not institution
+  * @param int the id of the people
+  * @return Doctrine_Record 
+  */
+  public function findPeople($id)
+  {
+    $q = Doctrine_Query::create()
+	 ->from('People p')
+	 ->where('p.id = ?', $id)
+	 ->andWhere('p.is_physical = ?', true);
+
+    return $q->fetchOne(); 
+  }
 }

@@ -6,11 +6,12 @@ class PeopleRelationshipsTable extends DarwinTable
 {
   public function findAllRelated($id)
   {
-     $q = Doctrine_Query::create()
+      $q = Doctrine_Query::create()
             ->from('PeopleRelationships r')
-	    ->innerJoin('r.Parent')
-	    ->where('r.person_2_ref = ?', $id);
-            //->orderBy('p.col_num ASC, p.order_by ASC');
+	    ->innerJoin('r.Parent p')
+	    ->innerJoin('r.Child')
+	    ->orderBy('r.path ASC')
+	    ->where("r.person_2_ref = ?", $id);
      return $q->execute();
   }
 

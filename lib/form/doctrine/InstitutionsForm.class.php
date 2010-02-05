@@ -12,8 +12,9 @@ class InstitutionsForm extends BaseInstitutionsForm
 {
   public function configure()
   {
-    unset($this['is_physical'], $this['formated_name_indexed'], $this['formated_name_ts']);
-    
+    unset($this['formated_name_indexed'], $this['formated_name_ts']);
+    $this->widgetSchema['is_physical'] = new sfWidgetFormInputHidden();
+    $this->setDefault('is_physical', 'off');
     $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
     $this->widgetSchema['sub_type'] = new widgetFormSelectComplete(array(
         'model' => 'Institutions',

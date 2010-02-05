@@ -7,6 +7,16 @@ class PeopleRelationships extends BasePeopleRelationships
 {
   public static $possible_types = array('belongs to' => 'belongs to', 'is department of' => 'is department of', 'is section of' =>  'is section of', 'works for' => 'works for');
 
+   public function getLevel()
+   {
+       return  substr_count($this->getPath(),'/');
+   }
+    
+  public function showPadding()
+  {
+      return str_repeat('&nbsp;&nbsp;&nbsp;',$this->getLevel()-2);
+  }
+
   public function setActivityDateFrom($fd)
   {
      if(is_string($fd))
