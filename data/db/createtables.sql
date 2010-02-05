@@ -581,7 +581,6 @@ create table people_comm
         comm_type varchar default 'phone/fax' not null,
         tag varchar not null,
         constraint pk_people_comm primary key (id),
-        constraint unq_people_comm unique (comm_type, person_user_ref, entry),
         constraint fk_people_comm_people foreign key (person_user_ref) references people(id) on delete cascade
        )
 inherits (template_people_users_comm_common);
@@ -600,7 +599,6 @@ create table people_addresses
         id integer not null default nextval('people_addresses_id_seq'),
         tag varchar not null,
         constraint pk_people_addresses primary key (id),
-        constraint unq_people_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_people_addresses_people foreign key (person_user_ref) references people(id) on delete cascade
        )
 inherits (template_people_users_comm_common, template_people_users_addr_common);
@@ -625,7 +623,6 @@ create table users_comm
         comm_type varchar not null default 'phone/fax',
         tag varchar not null,
         constraint pk_users_comm primary key (id),
-        constraint unq_users_comm unique (comm_type, person_user_ref, entry),
         constraint fk_users_comm_users foreign key (person_user_ref) references users(id) on delete cascade
        )
 inherits (template_people_users_comm_common);
@@ -644,7 +641,6 @@ create table users_addresses
         id integer not null default nextval('users_addresses_id_seq'),
         organization_unit varchar,
         constraint pk_users_addresses primary key (id),
-        constraint unq_users_addresses unique (person_user_ref, entry, locality, country),
         constraint fk_users_addresses_users foreign key (person_user_ref) references users(id) on delete cascade
        )
 inherits (template_people_users_rel_common, template_people_users_comm_common, template_people_users_addr_common);
