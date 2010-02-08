@@ -41,10 +41,11 @@ $browser->
   with('response')->
   begin()->
     isStatusCode()->
-    checkElement('ul.pager li', 7)->
-    checkElement('ul.pager li.page_selected', '[1]')->
+    checkElement('ul.pager_nav li', 10)->
+    checkElement('ul.pager_nav li.page_selected', '[1]')->
     checkElement('.pager li a span.nav_arrow', 0)->
-    checkElement('ul.pager li.nbrRecTot span.nbrRecTotValue', '7')->
+    checkElement('div.paging_info table td:nth-child(2)', 'Your query retrieved 7 records')->
+    checkElement('div.paging_info table td:last-child select[id="searchIg_rec_per_page"]', 1)->
     checkElement('table.results tbody tr', 7)->
     checkElement('table.results thead th:first_element a.sort span.order_sign_down')->
   end()->  
@@ -58,8 +59,8 @@ $browser->
   post('/igs/search', array('orderby'=>'ig_num', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchIg'=>array('rec_per_page'=>5, 'ig_num'=>'', 'from_date'=>'', 'to_date'=>'')))->
   with('response')->
   begin()->
-    checkElement('.pager .pager_separator')->
-    checkElement('.pager li a span.nav_arrow', 2)->
+    checkElement('.pager_nav .pager_separator')->
+    checkElement('.pager_nav li a span.nav_arrow', 4)->
     checkElement('table.results tbody tr', 5)->
   end()->
   info('Select page 2')->
@@ -67,8 +68,8 @@ $browser->
   with('response')->
   begin()->
     checkElement('.pager .pager_separator')->
-    checkElement('ul.pager li.page_selected', '[2]')->
-    checkElement('.pager li a span.nav_arrow', 2)->
+    checkElement('ul.pager_nav li.page_selected', '[2]')->
+    checkElement('.pager_nav li a span.nav_arrow', 4)->
     checkElement('table.results tbody tr', 2)->
   end()->
   info('Search on IG num "26" like')->

@@ -41,10 +41,11 @@ $browser->
   with('response')->
   begin()->
     isStatusCode()->
-    checkElement('ul.pager li', 7)->
-    checkElement('ul.pager li.page_selected', '[1]')->
+    checkElement('ul.pager_nav li', 10)->
+    checkElement('ul.pager_nav li.page_selected', '[1]')->
     checkElement('.pager li a span.nav_arrow', 0)->
-    checkElement('ul.pager li.nbrRecTot span.nbrRecTotValue', '8')->
+    checkElement('div.paging_info table td:nth-child(2)', 'Your query retrieved 8 records')->
+    checkElement('div.paging_info table td:last-child select[id="searchExpedition_rec_per_page"]', 1)->
     checkElement('table.results tbody tr', 8)->
     checkElement('table.results thead th:first_element a.sort span.order_sign_down')->
   end()->  
@@ -58,8 +59,8 @@ $browser->
   post('/expedition/search', array('orderby'=>'name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchExpedition'=>array('rec_per_page'=>5, 'name'=>'', 'expedition_from_date'=>'', 'expedition_to_date'=>'')))->
   with('response')->
   begin()->
-    checkElement('.pager .pager_separator')->
-    checkElement('.pager li a span.nav_arrow', 2)->
+    checkElement('.pager_nav .pager_separator')->
+    checkElement('.pager_nav li a span.nav_arrow', 4)->
     checkElement('table.results tbody tr', 5)->
   end()->
   info('Select page 2')->
@@ -67,8 +68,8 @@ $browser->
   with('response')->
   begin()->
     checkElement('.pager .pager_separator')->
-    checkElement('ul.pager li.page_selected', '[2]')->
-    checkElement('.pager li a span.nav_arrow', 2)->
+    checkElement('ul.pager_nav li.page_selected', '[2]')->
+    checkElement('.pager_nav li a span.nav_arrow', 4)->
     checkElement('table.results tbody tr', 3)->
   end()->
   info('Search on Expedition name "Antar" like')->
