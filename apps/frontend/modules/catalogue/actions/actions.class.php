@@ -90,9 +90,12 @@ class catalogueActions extends sfActions
       $form->bind($request->getParameter('searchCatalogue'));
       if ($form->isValid())
       {
+        $this->orderBy = ($request->getParameter('orderby', '') == '') ? 'name_indexed' : $request->getParameter('orderby');
+        $this->orderDir = ($request->getParameter('orderdir', '') == '') ? 'asc' : $request->getParameter('orderdir');
+        $query = $form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
-        $query = $form->getQuery();
         $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
+	$this->s_url = 'catalogue/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager($query,
                              $this->currentPage,
@@ -101,7 +104,7 @@ class catalogueActions extends sfActions
 	  new Doctrine_Pager_Range_Sliding(
 	    array('chunk' => $pagerSlidingSize)
 	    ),
-	  $this->getController()->genUrl('catalogue/search?is_choose='.$this->is_choose.'&page=').'{%page_number}'
+	  $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
 	);
 
         // Sets the Pager Layout templates

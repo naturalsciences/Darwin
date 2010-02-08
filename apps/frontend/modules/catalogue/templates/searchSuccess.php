@@ -16,14 +16,40 @@
         $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
         return false;
       });
+
+      $("a.sort").click(function ()
+      {
+        $.ajax({
+                type: "post",
+                url: $(this).attr("href"),
+                data: $('#search_form').serialize(),
+                success: function(html){
+                                        $(".search_results_content").html(html);
+                                       }
+               }
+              );
+        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
+        return false;
+      });
     });
   </script>
+  <?php
+    if($orderDir=='asc')
+      $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
+    else
+      $orderSign = '<span class="order_sign_up">&nbsp;&#9650;</span>';
+  ?>
   <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php include_partial('global/pager_info', array('form' => $searchForm, 'pagerLayout' => $pagerLayout)); ?>
   <div class="results_container">
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
-        <th colspan="3">Search Result</td>
+        <th colspan="3">
+          <a class="sort" href="<?php echo url_for($s_url.'&orderby=name_indexed'.( ($orderBy=='name_indexed' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+            <?php echo __('Name');?>
+            <?php if($orderBy=='name_indexed') echo $orderSign ?>
+          </a>
+        </th>
       </thead>
       <tbody>
         <?php foreach($items as $item):?>
