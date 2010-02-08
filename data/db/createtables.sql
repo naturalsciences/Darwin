@@ -31,12 +31,12 @@ create table template_people_languages
        (
         language_country varchar not null default 'en_gb',
         mother boolean not null default true,
-        prefered_language boolean not null default false
+        preferred_language boolean not null default false
        );
 comment on table template_people_languages is 'Template supporting users/people languages table definition';
 comment on column template_people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column template_people_languages.mother is 'Flag telling if its mother language or not';
-comment on column template_people_languages.prefered_language is 'Flag telling which language is prefered in communications';
+comment on column template_people_languages.preferred_language is 'Flag telling which language is preferred in communications';
 
 create sequence people_id_seq;
 
@@ -442,7 +442,7 @@ comment on table people_languages is 'Languages spoken by a given person';
 comment on column people_languages.people_ref is 'Reference of person - id field of people table';
 comment on column people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column people_languages.mother is 'Flag telling if its mother language or not';
-comment on column people_languages.prefered_language is 'Flag telling which language is prefered in communications';
+comment on column people_languages.preferred_language is 'Flag telling which language is preferred in communications';
 create table users_languages
        (
         users_ref integer not null,
@@ -454,7 +454,7 @@ comment on table users_languages is 'Languages spoken by a given user';
 comment on column users_languages.users_ref is 'Reference of user - id field of users table';
 comment on column users_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column users_languages.mother is 'Flag telling if its mother language or not';
-comment on column users_languages.prefered_language is 'Flag telling which language is prefered in communications';
+comment on column users_languages.preferred_language is 'Flag telling which language is preferred in communications';
 
 create sequence multimedia_id_seq;
 

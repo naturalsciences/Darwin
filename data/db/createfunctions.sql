@@ -87,10 +87,10 @@ $$ LANGUAGE plpgsql;
 
 /***
 * Function fct_chk_one_pref_language
-* Check if there is only ONE prefered language for a user
-* Return false if there is already a prefered language false otherwise
+* Check if there is only ONE preferred language for a user
+* Return false if there is already a preferred language false otherwise
 */
-CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE, table_prefix varchar) returns boolean
+CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE, table_prefix varchar) returns boolean
 as $$
 DECLARE
 	response boolean default false;
@@ -100,8 +100,8 @@ DECLARE
 BEGIN
 	select count(*)::integer::boolean into tableExist from pg_tables where schemaname not in ('pg_catalog','information_schema') and tablename = tabl;
 	IF tableExist THEN
-		IF prefered THEN
-			EXECUTE 'select not count(*)::integer::boolean from ' || quote_ident(tabl) || ' where ' || quote_ident(prefix || '_ref') || ' = ' || $1 || ' and prefered_language = ' || $2 INTO response;
+		IF preferred THEN
+			EXECUTE 'select not count(*)::integer::boolean from ' || quote_ident(tabl) || ' where ' || quote_ident(prefix || '_ref') || ' = ' || $1 || ' and preferred_language = ' || $2 INTO response;
 		ELSE
 			response := true;
 		END IF;
@@ -114,12 +114,12 @@ $$ LANGUAGE plpgsql;
 * Trigger Function fct_chk_one_pref_language
 * Trigger that call the fct_chk_one_pref_language fct
 */
-CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, prefered people_languages.prefered_language%TYPE) returns boolean
+CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE) returns boolean
 as $$
 DECLARE
         response boolean default false;
 BEGIN
-	response := fct_chk_one_pref_language(person, prefered, 'people');
+	response := fct_chk_one_pref_language(person, preferred, 'people');
 	return response;
 END;
 $$ LANGUAGE plpgsql;

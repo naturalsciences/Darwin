@@ -1,4 +1,4 @@
--- Testing that only one prefered language is provided for people/users
+-- Testing that only one preferred language is provided for people/users
 \unset ECHO
 \i unit_launch.sql
 SELECT plan(9);
