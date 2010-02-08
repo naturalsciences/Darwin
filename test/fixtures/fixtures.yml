@@ -495,6 +495,46 @@ MyPreferences:
         order_by: 5
         opened: true
         visible: true
+    u1ws25:
+        User: u1
+        col_num: 1
+        category: people_institution_widget
+        group_name: comment
+        order_by: 1
+        opened: true
+        visible: false
+    u1ws26:
+        User: u1
+        col_num: 1
+        category: people_institution_widget
+        group_name: properties
+        order_by: 2
+        opened: true
+        visible: false
+    u1ws27:
+        User: u1
+        col_num: 1
+        category: people_institution_widget
+        group_name: address
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws28:
+        User: u1
+        col_num: 1
+        category: people_institution_widget
+        group_name: comm
+        order_by: 4
+        opened: true
+        visible: true
+    u1ws29:
+        User: u1
+        col_num: 1
+        category: people_institution_widget
+        group_name: relation
+        order_by: 5
+        opened: true
+        visible: true
 
 CatalogueProperties:
     cprop1:

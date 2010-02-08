@@ -87,7 +87,7 @@ class institutionActions extends sfActions
   {
       $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('people_widget');
+      ->getWidgets('people_institution_widget');
     if(! $this->widgets) $this->widgets=array();
   }
 
