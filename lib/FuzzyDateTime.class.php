@@ -3,31 +3,33 @@
  * FuzzyDateTime is an object that will contain a date/time and an applied mask to render the fuzzyness
  *
  * @package    darwin
- * @subpackage lib
- * @category   object
  * @author     DB team <collections@naturalsciences.be>
- * @staticvar  array   $defaultValues: List of default values for each date/time part: year, month,...
- * @staticvar  array   $defaultMaxValues: List of default max values for all date/time parts except year
- * @staticvar  array   $datePartsMask: List of values used for the mask and telling a given part was encoded for the date/time: 32 for year, 16 for month,...
- * @var        boolean $start: Flag used for date auto-completion when some parts are missing - if start is true, bring the first day when day is missing and if start is false, bring the last day in month,...
- * @var        int     $mask : Total mask value - comes as a sum of all date parts mask illustrating what have been encoded
- * @var        boolean $withTime: Flag telling if what's expected to be brought back is a date or a date/time
- * @var        string  $dateFormat: Date format by default
- * @var        string  $timeFormat: Time format by default
  */
 class FuzzyDateTime extends DateTime
 {
-  protected static
-    $defaultValues = array('year'=>'0001', 'month'=>'01', 'day'=>'01', 'hour'=>'00', 'minute'=>'00', 'second'=>'00'),
-    $defaultMaxValues = array('month'=>'12', 'day' => '31','hour'=>'23', 'minute'=>'59', 'second'=>'59'),
-    $datePartsMask = array('year'=>32, 'month'=>16, 'day'=>8, 'hour'=>4, 'minute'=>2, 'second'=>1);
-  protected
-    $start = true,
-    $mask = 0,
-    $withTime = false,
-    $dateFormat = 'd/m/Y',
-    
-    $timeFormat = 'H:i:s';
+  /** @staticvar  array   $defaultValues: List of default values for each date/time part: year, month,... */
+  protected static $defaultValues = array('year'=>'0001', 'month'=>'01', 'day'=>'01', 'hour'=>'00', 'minute'=>'00', 'second'=>'00');
+
+  /** @staticvar  array   $defaultMaxValues: List of default max values for all date/time parts except year */
+  protected static $defaultMaxValues = array('month'=>'12', 'day' => '31','hour'=>'23', 'minute'=>'59', 'second'=>'59');
+  
+  /** @staticvar  array   $datePartsMask: List of values used for the mask and telling a given part was encoded for the date/time: 32 for year, 16 for month,...*/
+  protected static $datePartsMask = array('year'=>32, 'month'=>16, 'day'=>8, 'hour'=>4, 'minute'=>2, 'second'=>1);
+  
+  /** @var boolean $start: Flag used for date auto-completion when some parts are missing - if start is true, bring the first day when day is missing and if start is false, bring the last day in month,... */
+  protected $start = true;
+
+  /** @var int $mask : Total mask value - comes as a sum of all date parts mask illustrating what have been encoded */
+  protected $mask = 0;
+
+  /** @var boolean $withTime: Flag telling if what's expected to be brought back is a date or a date/time */
+  protected $withTime = false;
+ 
+  /** @var string $dateFormat: Date format by default */
+  protected $dateFormat = 'd/m/Y';
+  
+  /** @var string  $timeFormat: Time format by default */
+  protected $timeFormat = 'H:i:s';
   
  /**
    * Configures the current date/time object.
@@ -427,9 +429,6 @@ class FuzzyDateTime extends DateTime
       }
     }
     $result = $this->format($format);
-//     print $result ."-".$this->getMask()."\n";
-
-//
     $result = preg_replace('|£([\-\/\\\ \:])§|','$1',$result); //Replace if tag are joined replace 2 tag by one big
     $result = preg_replace(array('/§/','/£/'), array("<$tag>","</$tag>"),$result);
     return $result;

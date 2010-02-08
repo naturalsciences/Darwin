@@ -27,7 +27,7 @@
       <td><?php echo $property->getFromDateMasked();?></td>
       <td><?php echo $property->getToDateMasked();?></td>
       <td>
-	<?php if( count($property->PropertiesValues) ):?>
+	<?php if( count($property->PropertiesValues) > 1):?>
 	  <a href="#" class="display_value"><?php echo format_number_choice('[1]Show 1 Value|(1,+Inf]Show %1% Values', array('%1%' => count($property->PropertiesValues) ), count($property->PropertiesValues));?></a>
 	  <a href="#" class="hidden hide_value"><?php echo __('Hide Values');?></a>
 	  <ul class="hidden">
@@ -40,6 +40,11 @@
 	      </li>
 	    <?php endforeach;?>    
 	  </ul>
+	<?php elseif(count($property->PropertiesValues) == 1):?>
+	  <ul><li><?php echo $property->PropertiesValues[0]->getPropertyValue();?> <?php echo $property->getPropertyUnit();?> 
+	    <?php if($property->PropertiesValues[0]->getPropertyAccuracy() != ""):?>
+	      ( +- <?php echo $property->PropertiesValues[0]->getPropertyAccuracy();?> <?php echo $property->getPropertyAccuracyUnit();?>)
+	    <?php endif;?></li></ul>
 	<?php else:?>
 	  <?php echo __('No Values');?>
 	<?php endif;?>

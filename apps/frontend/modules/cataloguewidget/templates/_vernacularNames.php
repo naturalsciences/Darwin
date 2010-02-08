@@ -19,7 +19,7 @@
 	  </a>
       </td>
       <td>
-	<?php if( count($vernacular_name->VernacularNames) ):?>
+	<?php if( count($vernacular_name->VernacularNames) > 1):?>
 	  <a href="#" class="display_value"><?php echo format_number_choice('[1]Show 1 Name|(1,+Inf]Show %1% Names', array('%1%' => count($vernacular_name->VernacularNames) ), count($vernacular_name->VernacularNames));?></a>
 	  <a href="#" class="hidden hide_value"><?php echo __('Hide Names');?></a>
 	  <ul class="hidden">
@@ -29,6 +29,8 @@
 	      </li>
 	    <?php endforeach;?>
 	  </ul>
+	<?php elseif( count($vernacular_name->VernacularNames) == 1):?>
+	    <ul><li><?php echo $vernacular_name->VernacularNames[0]->getName();?></li></ul>
 	<?php else:?>
 	  <?php echo __('No Names');?>
 	<?php endif;?>
