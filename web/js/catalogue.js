@@ -8,7 +8,9 @@ function removeError(element)
 	$(element).closest('.widget_content').find('.error_list').hide();
 	$(element).closest('.widget_content').find('.error_list li').text(' ');
     }
- $(document).ready(function () {
+
+$(document).ready(function () {
+
  $("a.link_catalogue").live('click', function(){
     $(this).qtip({
         content: {

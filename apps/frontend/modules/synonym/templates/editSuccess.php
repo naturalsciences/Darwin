@@ -41,7 +41,7 @@
         <td colspan="3">
 	  <form id="edit_syn_form"  action="<?php echo url_for('synonym/edit?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') .'&group_id='.$sf_request->getParameter('group_id') );?>" method="post">
 	    <?php echo $form;?>
-	    <a href="#" class="cancel_qtip">Cancel</a>
+	    <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
 	    <input id="save" class="save" type="submit" name="submit" value="<?php echo __('Save');?>" />
 	  </form>
         </td>

@@ -86,7 +86,7 @@
   <tfoot>
     <tr>
       <td>
-        <a href="#" class="cancel_qtip">Cancel</a>
+        <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
           <button id="delete"><?php echo __('Delete');?></button>
         <?php endif;?> 

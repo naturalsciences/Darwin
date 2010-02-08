@@ -34,7 +34,7 @@
     <tfoot>
       <tr>
         <td>
-          <a href="#" class="cancel_qtip">Cancel</a>
+          <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
           <button id="delete" class="<?php if($remoteItem->isNew()):?>hidden<?php endif;?> delete"><?php echo __('Delete');?></button>
           <input id="save" class="save" type="submit" name="submit" value="<?php echo __('Save');?>" />
         </td>
