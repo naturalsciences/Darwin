@@ -5,15 +5,15 @@
 class UsersLanguagesTable extends DarwinTable
 {
     /**
-    * Get The prefered Language of a user
+    * Get The preferred Language of a user
     * @param int $user_id the id of the user
     * @return a UsersLanguages Record or null if not found
     */
-    public function getPreferedLanguage($user_id)
+    public function getPreferredLanguage($user_id)
     {
         $q = Doctrine_Query::create()
             ->from('UsersLanguages ul')
-            ->addWhere('ul.prefered_language = true')
+            ->addWhere('ul.preferred_language = true')
             ->addWhere('ul.users_ref = ?', $user_id);
         return $q->fetchOne();
     }

@@ -152,13 +152,13 @@ UsersLanguages:
         User: u1
         language_country: en
         mother: true
-        prefered_language: true
+        preferred_language: true
 
     ul2:
         User: u1
         language_country: fr
         mother: false
-        prefered_language: false
+        preferred_language: false
 
 MySavedSearches:
     ss1_1:

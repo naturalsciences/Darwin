@@ -15,17 +15,17 @@ abstract class BaseUsersLanguagesForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'users_ref'         => new sfWidgetFormInputHidden(),
-      'language_country'  => new sfWidgetFormInputHidden(),
-      'mother'            => new sfWidgetFormInputCheckbox(),
-      'prefered_language' => new sfWidgetFormInputCheckbox(),
+      'users_ref'          => new sfWidgetFormInputHidden(),
+      'language_country'   => new sfWidgetFormInputHidden(),
+      'mother'             => new sfWidgetFormInputCheckbox(),
+      'preferred_language' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
-      'users_ref'         => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'users_ref', 'required' => false)),
-      'language_country'  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'language_country', 'required' => false)),
-      'mother'            => new sfValidatorBoolean(array('required' => false)),
-      'prefered_language' => new sfValidatorBoolean(array('required' => false)),
+      'users_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'users_ref', 'required' => false)),
+      'language_country'   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'language_country', 'required' => false)),
+      'mother'             => new sfValidatorBoolean(array('required' => false)),
+      'preferred_language' => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_languages[%s]');

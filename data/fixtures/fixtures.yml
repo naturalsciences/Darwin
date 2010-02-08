@@ -152,13 +152,13 @@ UsersLanguages:
         User: u1
         language_country: en
         mother: true
-        prefered_language: true
+        preferred_language: true
 
     ul2:
         User: u1
         language_country: fr
         mother: false
-        prefered_language: false
+        preferred_language: false
 
 MySavedSearches:
     ss1_1:
@@ -477,6 +477,22 @@ MyPreferences:
         category: people_widget
         group_name: comm
         order_by: 4
+        opened: true
+        visible: true
+    u1ws23:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: lang
+        order_by: 5
+        opened: true
+        visible: true
+    u1ws24:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: relation
+        order_by: 5
         opened: true
         visible: true
 

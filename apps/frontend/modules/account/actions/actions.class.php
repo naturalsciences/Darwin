@@ -27,7 +27,7 @@ class accountActions extends sfActions
         $this->getUser()->setAuthenticated(true);
         sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('username').' '.$this->form->user->getId() );
         $this->getUser()->setAttribute('db_user_id',$this->form->user->getId());
-        $lang = Doctrine::getTable("UsersLanguages")->getPreferedLanguage($this->form->user->getId());
+        $lang = Doctrine::getTable("UsersLanguages")->getPreferredLanguage($this->form->user->getId());
         if($lang) //prevent from crashing if lang is set
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());

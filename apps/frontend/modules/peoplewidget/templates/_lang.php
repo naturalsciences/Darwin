@@ -13,8 +13,8 @@
       <a class="link_catalogue" title="<?php echo __('Edit Languages');?>"  href="<?php echo url_for('people/lang?ref_id='.$eid.'&id='.$lang->getId());?>">
 	      <?php echo format_language($lang->getLanguageCountry());?>
       </a>
-      <?php if($lang->getPreferedLanguage()):?>
-	(<?php echo __('Prefered');?>)
+      <?php if($lang->getPreferredLanguage()):?>
+	(<?php echo __('Preferred');?>)
       <?php endif;?>
     </td>
     <td>

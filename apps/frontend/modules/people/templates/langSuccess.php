@@ -23,10 +23,10 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['prefered_language']->renderLabel();?></th>
+      <th><?php echo $form['preferred_language']->renderLabel();?></th>
       <td>
-        <?php echo $form['prefered_language']->renderError(); ?>
-        <?php echo $form['prefered_language'];?>
+        <?php echo $form['preferred_language']->renderError(); ?>
+        <?php echo $form['preferred_language'];?>
       </td>
     </tr>
   </tbody>

@@ -27,8 +27,8 @@
 	    <?php if($lang->getMother()):?>
 	      (mother)
 	    <?php endif;?>
-	    <?php if($lang->getPreferedLanguage()):?>
-	      (prefered)
+	    <?php if($lang->getPreferredLanguage()):?>
+	      (preferred)
 	    <?php endif;?>
 	  </li>
       <?php endforeach;?>

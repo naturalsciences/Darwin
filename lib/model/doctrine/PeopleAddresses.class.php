@@ -5,7 +5,7 @@
  */
 class PeopleAddresses extends BasePeopleAddresses
 {
-  public static $possible_tags = array('home'=>'Home', 'dom'=>'Dom', 'work'=>'Work', 'pref'=>'Prefered', 'intl'=>'International', 'postal'=>'Postal');
+  public static $possible_tags = array('home'=>'Home', 'dom'=>'Dom', 'work'=>'Work', 'pref'=>'Preferred', 'intl'=>'International', 'postal'=>'Postal');
 
   public function getTagsAsArray()
   {

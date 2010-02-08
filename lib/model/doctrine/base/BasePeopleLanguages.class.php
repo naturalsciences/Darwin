@@ -9,21 +9,21 @@
  * @property integer $people_ref
  * @property string $language_country
  * @property boolean $mother
- * @property boolean $prefered_language
+ * @property boolean $preferred_language
  * @property People $People
  * 
- * @method integer         getId()                Returns the current record's "id" value
- * @method integer         getPeopleRef()         Returns the current record's "people_ref" value
- * @method string          getLanguageCountry()   Returns the current record's "language_country" value
- * @method boolean         getMother()            Returns the current record's "mother" value
- * @method boolean         getPreferedLanguage()  Returns the current record's "prefered_language" value
- * @method People          getPeople()            Returns the current record's "People" value
- * @method PeopleLanguages setId()                Sets the current record's "id" value
- * @method PeopleLanguages setPeopleRef()         Sets the current record's "people_ref" value
- * @method PeopleLanguages setLanguageCountry()   Sets the current record's "language_country" value
- * @method PeopleLanguages setMother()            Sets the current record's "mother" value
- * @method PeopleLanguages setPreferedLanguage()  Sets the current record's "prefered_language" value
- * @method PeopleLanguages setPeople()            Sets the current record's "People" value
+ * @method integer         getId()                 Returns the current record's "id" value
+ * @method integer         getPeopleRef()          Returns the current record's "people_ref" value
+ * @method string          getLanguageCountry()    Returns the current record's "language_country" value
+ * @method boolean         getMother()             Returns the current record's "mother" value
+ * @method boolean         getPreferredLanguage()  Returns the current record's "preferred_language" value
+ * @method People          getPeople()             Returns the current record's "People" value
+ * @method PeopleLanguages setId()                 Sets the current record's "id" value
+ * @method PeopleLanguages setPeopleRef()          Sets the current record's "people_ref" value
+ * @method PeopleLanguages setLanguageCountry()    Sets the current record's "language_country" value
+ * @method PeopleLanguages setMother()             Sets the current record's "mother" value
+ * @method PeopleLanguages setPreferredLanguage()  Sets the current record's "preferred_language" value
+ * @method PeopleLanguages setPeople()             Sets the current record's "People" value
  * 
  * @package    darwin
  * @subpackage model
@@ -54,7 +54,7 @@ abstract class BasePeopleLanguages extends sfDoctrineRecord
              'notnull' => true,
              'default' => true,
              ));
-        $this->hasColumn('prefered_language', 'boolean', null, array(
+        $this->hasColumn('preferred_language', 'boolean', null, array(
              'type' => 'boolean',
              'notnull' => true,
              'default' => false,

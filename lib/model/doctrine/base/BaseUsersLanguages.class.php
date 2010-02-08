@@ -8,19 +8,19 @@
  * @property integer $users_ref
  * @property string $language_country
  * @property boolean $mother
- * @property boolean $prefered_language
+ * @property boolean $preferred_language
  * @property Users $User
  * 
- * @method integer        getUsersRef()          Returns the current record's "users_ref" value
- * @method string         getLanguageCountry()   Returns the current record's "language_country" value
- * @method boolean        getMother()            Returns the current record's "mother" value
- * @method boolean        getPreferedLanguage()  Returns the current record's "prefered_language" value
- * @method Users          getUser()              Returns the current record's "User" value
- * @method UsersLanguages setUsersRef()          Sets the current record's "users_ref" value
- * @method UsersLanguages setLanguageCountry()   Sets the current record's "language_country" value
- * @method UsersLanguages setMother()            Sets the current record's "mother" value
- * @method UsersLanguages setPreferedLanguage()  Sets the current record's "prefered_language" value
- * @method UsersLanguages setUser()              Sets the current record's "User" value
+ * @method integer        getUsersRef()           Returns the current record's "users_ref" value
+ * @method string         getLanguageCountry()    Returns the current record's "language_country" value
+ * @method boolean        getMother()             Returns the current record's "mother" value
+ * @method boolean        getPreferredLanguage()  Returns the current record's "preferred_language" value
+ * @method Users          getUser()               Returns the current record's "User" value
+ * @method UsersLanguages setUsersRef()           Sets the current record's "users_ref" value
+ * @method UsersLanguages setLanguageCountry()    Sets the current record's "language_country" value
+ * @method UsersLanguages setMother()             Sets the current record's "mother" value
+ * @method UsersLanguages setPreferredLanguage()  Sets the current record's "preferred_language" value
+ * @method UsersLanguages setUser()               Sets the current record's "User" value
  * 
  * @package    darwin
  * @subpackage model
@@ -45,7 +45,7 @@ abstract class BaseUsersLanguages extends sfDoctrineRecord
              'notnull' => true,
              'default' => true,
              ));
-        $this->hasColumn('prefered_language', 'boolean', null, array(
+        $this->hasColumn('preferred_language', 'boolean', null, array(
              'type' => 'boolean',
              'notnull' => true,
              'default' => false,
