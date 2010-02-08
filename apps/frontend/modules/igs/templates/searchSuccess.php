@@ -8,7 +8,7 @@
         $.ajax({
                 type: "POST",
                 url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
-                data: $('#search_form').serialize(),
+                data: $('.search_form').serialize(),
                 success: function(html){
                                         $(".search_results_content").html(html);
                                        }

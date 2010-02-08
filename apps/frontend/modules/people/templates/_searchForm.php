@@ -1,37 +1,6 @@
+<?php include_stylesheets_for_form($form) ?>
+<?php include_javascripts_for_form($form) ?>
 
-<script type="text/javascript">
-$(document).ready(function () {
-      $("#people_filter").submit(function ()
-      {
-	$.ajax({
-	  type: "POST",
-	  url: "<?php echo url_for('people/search' . ($is_choose?'?is_choose=1' : '') );?>",
-	  data: $('#people_filter').serialize(),
-	  success: function(html){
-	    $('.search_results_content').html(html);
-            $('.search_results').slideDown();
-	  }});
-        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-	return false;
-      });
-
-   $(".pager a").live('click',function ()
-   {
-     $.ajax({
-             type: "POST",
-             url: $(this).attr("href"),
-             data: $('#people_filter').serialize(),
-             success: function(html){
-                                     $(".search_results_content").html(html);
-                                     $('.search_results').slideDown();
-                                    }
-            }
-           );
-     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-     return false;
-   });
-});
-</script>  
 <form id="people_filter" class="search_form" method="post" action="<?php echo url_for('people/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
   <div class="container">
     <?php echo $form['is_physical'];?>

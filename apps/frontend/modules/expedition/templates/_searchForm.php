@@ -1,59 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
-<script type="text/javascript">
-$(document).ready(function () 
- {
-   $("#search_form").submit(function ()
-   {
-     $.ajax({
-             type: "POST",
-             url: $(this).attr('action'),
-             data: $('#search_form').serialize(),
-             success: function(html){
-                                     $(".search_results_content").html(html);
-                                     $('.search_results').slideDown();
-                                    }
-            }
-           );
-     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-     return false;
-   });
 
-   $("a.sort").live('click',function ()
-   {
-     $.ajax({
-             type: "POST",
-             url: $(this).attr("href"),
-             data: $('#search_form').serialize(),
-             success: function(html){
-                                     $(".search_results_content").html(html);
-                                     $('.search_results').slideDown();
-                                    }
-            }
-           );
-     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-     return false;
-   });
-
-   $(".pager a").live('click',function ()
-   {
-     $.ajax({
-             type: "POST",
-             url: $(this).attr("href"),
-             data: $('#search_form').serialize(),
-             success: function(html){
-                                     $(".search_results_content").html(html);
-                                     $('.search_results').slideDown();
-                                    }
-            }
-           );
-     $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-     return false;
-   });
-
- });
-</script>
-<form id="search_form" action="<?php echo url_for('expedition/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<form id="expedition_filter" class="search_form" action="<?php echo url_for('expedition/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>

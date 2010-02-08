@@ -8,7 +8,7 @@
         $.ajax({
 	        type: "post",
 	        url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
-	        data: $('#people_filter').serialize(),
+	        data: $('.search_form').serialize(),
 	        success: function(html){
 				        $(".search_results_content").html(html);
 				       }
@@ -17,21 +17,6 @@
         $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
         return false;
       });
-
-     $("a.sort").click(function ()
-     {
-       $.ajax({
-               type: "post",
-               url: $(this).attr("href"),
-               data: $('#people_filter').serialize(),
-               success: function(html){
-                                       $(".search_results_content").html(html);
-                                      }
-              }
-             );
-       $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-       return false;
-     });
     });
   </script>
   <?php

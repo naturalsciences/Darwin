@@ -7,27 +7,12 @@
         $.ajax({
 	        type: "POST",
 	        url: "<?php echo url_for('catalogue/search?page='.$currentPage.'&is_choose='.$is_choose);?>",
-	        data: $('#search_form').serialize(),
+	        data: $('.search_form').serialize(),
 	        success: function(html){
 				        $(".search_results_content").html(html);
 				       }
 	       }
 	      );
-        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-        return false;
-      });
-
-      $("a.sort").click(function ()
-      {
-        $.ajax({
-                type: "post",
-                url: $(this).attr("href"),
-                data: $('#search_form').serialize(),
-                success: function(html){
-                                        $(".search_results_content").html(html);
-                                       }
-               }
-              );
         $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
         return false;
       });
