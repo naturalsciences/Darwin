@@ -31,13 +31,17 @@ class InsurancesForm extends BaseInsurancesForm
     $this->widgetSchema['insurance_year'] = new sfWidgetFormChoice(array('choices'  => $years,
                                                                         )
                                                                   );
-    $this->widgetSchema['insurer_ref'] = new widgetFormButtonRef(array('model' => 'People',
-                                                                       'method' => 'getFamilyName',
-                                                                       'link_url' => 'people/choose',
-                                                                       'box_title' => $this->getI18N()->__('Choose Insurer'),
-                                                                       'nullable' => true,
-                                                                      )
-                                                                );
+    $this->widgetSchema['insurer_ref'] = new widgetFormButtonRef(
+      array(
+	'model' => 'People',
+	'method' => 'getFamilyName',
+	'link_url' => 'people/choose',
+	'box_title' => $this->getI18N()->__('Choose Insurer'),
+	'nullable' => true,
+	'is_hidden' => true,
+      )
+    );
+
     $this->widgetSchema->setLabels(array('insurance_value' => $this->getI18N()->__('Value'). ':' ,
                                          'insurance_currency' => $this->getI18N()->__('Currency'). ':',
                                          'insurance_year' => $this->getI18N()->__('Reference year'). ':',

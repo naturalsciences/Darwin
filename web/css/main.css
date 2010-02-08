@@ -776,10 +776,6 @@ table.encoding tbody .widget_row_delete
     border: 2px solid #F4BB0F;
     background-color:#FFEFBF;
 }
-#classification_synonymies_record_id_button, #people_relationships_person_1_ref_button
-{
-  display:none;
-}
 
 .edit_synon .ui-state-highlight
 {

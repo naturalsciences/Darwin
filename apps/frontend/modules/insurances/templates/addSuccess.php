@@ -98,6 +98,17 @@
 	return false;
       });
 
-  });
+    $('.result_choose').live('click',function () {
+	el = $(this).closest('tr');
+	$("#insurances_insurer_ref").val(getIdInClasses(el));
+	console.log(el.find('.item_name'));
+	$("#insurances_insurer_ref_name").text(el.find('.item_name').text()).show();
+    });
+});
 </script>
+
+<div class="search_box show">
+  <?php include_partial('institution/searchForm', array('form' => new InstitutionsFormFilter(),'is_choose'=>true)) ?>
+</div>
+
 </div>

@@ -24,7 +24,8 @@ class ClassificationSynonymiesForm extends BaseClassificationSynonymiesForm
        'link_url' => 'catalogue/choose',
        'method' => 'getName',
        'box_title' => '',
-       'nullable' => false,));
+       'nullable' => false,
+       'is_hidden' => true));
     $this->widgetSchema['merge'] = new sfWidgetFormInputCheckbox();
 
     $this->validatorSchema['record_id'] = new sfValidatorInteger(array('required' => true));

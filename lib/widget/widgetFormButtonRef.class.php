@@ -24,18 +24,20 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	    $options['class'] .= ' hidden';
 	  $input .= $this->renderTag('img',$options);
 	}
-	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
-	$input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
+	if(! $this->getOption('is_hidden'))
+	{
+	  $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
+	  $input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
 
-	$input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
-	    $this->getOption('link_url'),
-	    array('class' => 'but_text' )
-	); 
+	  $input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
+	      $this->getOption('link_url'),
+	      array('class' => 'but_text' )
+	  ); 
 
-	$input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
-        $input .= '</div>';
-	$input .= $this->renderContentTag('div','&nbsp;',array('class' => 'clear'));
-
+	  $input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
+	  $input .= '</div>';
+	  $input .= $this->renderContentTag('div','&nbsp;',array('class' => 'clear'));
+	}
         return $input;
     }
     
