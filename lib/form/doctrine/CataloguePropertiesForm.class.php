@@ -29,15 +29,15 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     $dateUpperBound = new FuzzyDateTime(sfConfig::get('app_dateUpperBound'));
     $maxDate->setStart(false);
 
-    $this->widgetSchema['date_from'] = new widgetFormJQueryFuzzyDate(array('culture'=>  'en',  //@TODO change
-                                                                               'image'=>'/images/calendar.gif', 
+    $this->widgetSchema['date_from'] = new widgetFormJQueryFuzzyDate(array('culture'=>  $this->getCurrentCulture(),
+                                                                               'image'=> '/images/calendar.gif', 
                                                                                'format' => '%day%/%month%/%year%', 
                                                                                'years' => $years,
 									       'with_time' => true ),
                                                                          array('class' => 'from_date')
                                                                         );
-    $this->widgetSchema['date_to'] = new widgetFormJQueryFuzzyDate(array('culture'=> 'en',  //@TODO change
-                                                                             'image'=>'/images/calendar.gif', 
+    $this->widgetSchema['date_to'] = new widgetFormJQueryFuzzyDate(array('culture'=> $this->getCurrentCulture(),
+                                                                             'image'=> '/images/calendar.gif', 
                                                                              'format' => '%day%/%month%/%year%', 
                                                                              'years' => $years,
                                                                              'with_time' => true),

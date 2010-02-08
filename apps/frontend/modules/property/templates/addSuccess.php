@@ -74,6 +74,9 @@
     <?php foreach($form['PropertiesValues'] as $form_value):?>
       <?php include_partial('prop_value', array('form' => $form_value));?>
     <?php endforeach;?>
+    <?php foreach($form['newVal'] as $form_value):?>
+      <?php include_partial('prop_value', array('form' => $form_value));?>
+    <?php endforeach;?>
   </tbody>
 </table>
 <div class='add_value'>

@@ -44,7 +44,7 @@ class PeopleRelationshipsForm extends BasePeopleRelationshipsForm
 
     $this->widgetSchema['activity_date_from'] = new widgetFormJQueryFuzzyDate(
       array('culture'=>$this->getCurrentCulture(), 
-            'image'=>'/images/calendar.gif',       
+            'image'=> '/images/calendar.gif',       
             'format' => '%day%/%month%/%year%',    
             'years' => $years,                     
             'empty_values' => $dateText,           

@@ -66,7 +66,7 @@ $browser->
         checkElement('table tbody tr:first td:first','/physical measurement/')->
 	checkElement('table tbody tr:first td::nth-child(6)','/Show 2 Values/')->
 	checkElement('table tbody tr:last td:first','/protection status/')->
-	checkElement('table tbody tr:last td::nth-child(6)','/Show 1 Value/')->
+	checkElement('table tbody tr:last td::nth-child(6)','/1/')->
     end()->
 
     info('5 - Vernacular Names')->

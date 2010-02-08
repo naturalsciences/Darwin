@@ -81,8 +81,8 @@ class PeopleForm extends BasePeopleForm
     $maxDate->setStart(false);
 
     $this->widgetSchema['birth_date'] = new widgetFormJQueryFuzzyDate(
-      array('culture'=>$this->getCurrentCulture(), 
-            'image'=>'/images/calendar.gif',       
+      array('culture'=> $this->getCurrentCulture(), 
+            'image'=> '/images/calendar.gif',       
             'format' => '%day%/%month%/%year%',    
             'years' => $years,                     
             'empty_values' => $dateText,           
@@ -91,8 +91,8 @@ class PeopleForm extends BasePeopleForm
     );      
                                       
     $this->widgetSchema['end_date'] = new widgetFormJQueryFuzzyDate(
-      array('culture'=>$this->getCurrentCulture(), 
-            'image'=>'/images/calendar.gif',       
+      array('culture'=> $this->getCurrentCulture(), 
+            'image'=> '/images/calendar.gif',       
             'format' => '%day%/%month%/%year%',    
             'years' => $years,                     
             'empty_values' => $dateText,           
