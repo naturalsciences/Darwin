@@ -6572,6 +6572,7 @@ $$
       WHERE referenced_relation = $1
 	AND field_name = $2
 	AND word % $3
+        AND to_tsvector($3) <> to_tsvector('')
 	AND word ilike 
 	  CASE WHEN $4 = 'begin' THEN $3 || '%'
 	      WHEN $4 = 'end' THEN '%' || $3
