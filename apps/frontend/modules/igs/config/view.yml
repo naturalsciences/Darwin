@@ -1,5 +1,5 @@
 indexSuccess:
-  javascripts: [searchForm.js]
+  javascripts: [searchForm.js, pager.js]
 newSuccess:
   stylesheets: [widgets.css, encod.css, jquery-ui-1.7.2.edit.css]
   javascripts: [jquery.ui.all.min.js]

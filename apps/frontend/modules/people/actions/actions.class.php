@@ -8,7 +8,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class peopleActions extends sfActions
+class peopleActions extends DarwinActions
 {
   protected function initiateWidgets()
   {
@@ -34,6 +34,7 @@ class peopleActions extends sfActions
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
+    $this->setCommonValues('people', 'family_name', $request);
     $this->form = new PeopleFormFilter();
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
 
@@ -45,13 +46,7 @@ class peopleActions extends sfActions
 
       if ($this->form->isValid())
       {
-        $this->orderBy = ($request->getParameter('orderby', '') == '') ? 'family_name' : $request->getParameter('orderby');
-        $this->orderDir = ($request->getParameter('orderdir', '') == '') ? 'asc' : $request->getParameter('orderdir');
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
-        $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
-        $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
-	$this->s_url = 'people/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
-
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager(
 	    $query,
@@ -59,15 +54,13 @@ class peopleActions extends sfActions
 	    $this->form->getValue('rec_per_page')
 	  ),
 	  new Doctrine_Pager_Range_Sliding(
-	    array('chunk' => $pagerSlidingSize)
+	    array('chunk' => $this->pagerSlidingSize)
 	    ),
-	  $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
+	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
 	);
 
         // Sets the Pager Layout templates
-        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
-        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
-        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();

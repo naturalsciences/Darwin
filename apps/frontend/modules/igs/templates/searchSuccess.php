@@ -1,24 +1,5 @@
 <?php if($form->isValid()):?>
   <?php if(isset($igss) && $igss->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>
-    <script type="text/javascript">
-    $(document).ready(function () 
-    {
-      $("#searchIg_rec_per_page").change(function ()
-      {
-        $.ajax({
-                type: "POST",
-                url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
-                data: $('.search_form').serialize(),
-                success: function(html){
-                                        $(".search_results_content").html(html);
-                                       }
-               }
-              );
-        $(".search_content").html('<?php echo image_tag('loader.gif');?>');
-        return false;
-      });
-    });
-    </script>
     <?php
       if($orderDir=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
@@ -32,13 +13,13 @@
         <thead>
           <tr>
             <th>
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_num'.( ($orderBy=='ig_num' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_num'.( ($orderBy=='ig_num' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('I.G.');?>
                 <?php if($orderBy=='ig_num') echo $orderSign ?>
               </a>
             </th>
             <th class="datesNum">
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_date'.( ($orderBy=='ig_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_date'.( ($orderBy=='ig_date' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('I.G. creation date');?>
                 <?php if($orderBy=='ig_date') echo $orderSign ?>
               </a>

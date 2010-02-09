@@ -1,24 +1,5 @@
 <?php if($form->isValid()):?>
   <?php if(isset($expeditions) && $expeditions->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>
-    <script type="text/javascript">
-      $(document).ready(function () 
-      {
-        $("#searchExpedition_rec_per_page").change(function ()
-         {
-           $.ajax({
-                   type: "POST",
-                   url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
-                   data: $('.search_form').serialize(),
-                   success: function(html){
-                                           $(".search_results_content").html(html);
-                                          }
-                  }
-                 );
-           $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-           return false;
-         });
-       });
-    </script>
     <?php
       if($orderDir=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
@@ -32,19 +13,19 @@
         <thead>
           <tr>
             <th>
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=name'.( ($orderBy=='name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=name'.( ($orderBy=='name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('Name');?>
                 <?php if($orderBy=='name') echo $orderSign ?>
               </a>
             </th>
             <th class="datesNum">
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=expedition_from_date'.( ($orderBy=='expedition_from_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=expedition_from_date'.( ($orderBy=='expedition_from_date' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('From');?>
                 <?php if($orderBy=='expedition_from_date') echo $orderSign ?>
               </a>
             </th>
             <th class="datesNum">
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=expedition_to_date'.( ($orderBy=='expedition_to_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=expedition_to_date'.( ($orderBy=='expedition_to_date' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('To');?>
                 <?php if($orderBy=='expedition_to_date') echo $orderSign ?>
               </a>

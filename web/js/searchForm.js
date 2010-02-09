@@ -30,6 +30,7 @@ jQuery(function ()
            }
           );
     $(".search_results_content").html('<img src="/images/loader.gif" />');
+    $(".search_form").attr('action', $(this).attr("href"))
     return false;
   });
 

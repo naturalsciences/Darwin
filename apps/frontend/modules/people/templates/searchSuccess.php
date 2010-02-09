@@ -1,24 +1,5 @@
 <?php if($form->isValid()):?>
 <?php if(isset($items) && $items->count() != 0):?>
-  <script type="text/javascript">
-    $(document).ready(function () 
-    {
-      $("#people_filters_rec_per_page").change(function ()
-      {
-        $.ajax({
-	        type: "post",
-	        url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
-	        data: $('.search_form').serialize(),
-	        success: function(html){
-				        $(".search_results_content").html(html);
-				       }
-	       }
-	      );
-        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-        return false;
-      });
-    });
-  </script>
   <?php
     if($orderDir=='asc')
       $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
@@ -34,37 +15,37 @@
           <th></th>
           <th class="hidden"></th>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Title');?>
               <?php if($orderBy=='title') echo $orderSign ?>
             </a>
           </th>
           <th>
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
 	      <?php echo __('Family Name');?>
 	      <?php if($orderBy=='family_name') echo $orderSign ?>
 	    </a>
           </th>
           <th>
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=given_name'.( ($orderBy=='given_name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=given_name'.( ($orderBy=='given_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
 	      <?php echo __('Given Name');?>
 	      <?php if($orderBy=='given_name') echo $orderSign ?>
 	    </a>
           </th>
           <th>
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
 	      <?php echo __('Additional Names');?>
 	      <?php if($orderBy=='additional_names') echo $orderSign ?>
 	    </a>
           </th>
           <th class="datesNum">
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=birth_date'.( ($orderBy=='birth_date' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=birth_date'.( ($orderBy=='birth_date' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
 	      <?php echo __('Life');?>
 	      <?php if($orderBy=='birth_date') echo $orderSign ?>
 	    </a>
           </th>
           <th class="datesNum">
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=activity_date_from'.( ($orderBy=='activity_date_from' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=activity_date_from'.( ($orderBy=='activity_date_from' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
 	      <?php echo __('Activity');?>
 	      <?php if($orderBy=='activity_date_from') echo $orderSign ?>
 	    </a>

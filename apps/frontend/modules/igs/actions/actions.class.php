@@ -9,7 +9,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class igsActions extends sfActions
+class igsActions extends DarwinActions
 {
   /**
     * Action executed when calling the expeditions from an other screen
@@ -54,8 +54,8 @@ class igsActions extends sfActions
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
     $this->form = new igsForm($igs);
     $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_igs_widget');
+                     ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+                     ->getWidgets('catalogue_igs_widget');
     if(! $this->widgets) $this->widgets=array();
   }
 
@@ -83,6 +83,7 @@ class igsActions extends sfActions
   {
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
+    $this->setCommonValues('igs', 'ig_num', $request);
     // Instantiate a new expedition form
     $this->form = new IgsFormFilter();
     // Triggers the search result function
@@ -143,28 +144,18 @@ class igsActions extends sfActions
       // Test that the form binded is still valid (no errors)
       if ($form->isValid())
       {
-        $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
-        // Define all properties that will be either used by the data query or by the pager
-        // They take their values from the request. If not present, a default value is defined
-        $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
-        $this->orderBy = ($request->getParameter('orderby', '') == '')?'ig_num':$request->getParameter('orderby');
-        $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-        $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
-        $this->s_url = 'igs/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
         // Define in one line a pager Layout based on a PagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getIgLike method of IgTable class)
         $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
-                                                                            $this->currentPage,
-                                                                            $form->getValue('rec_per_page')
-                                                                           ),
-                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
-                                                       $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
+                                                                          $this->currentPage,
+                                                                          $form->getValue('rec_per_page')
+                                                                         ),
+                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
+                                                       $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
                                                       );
         // Sets the Pager Layout templates
-        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
-        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
-        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted()) $this->igss = $this->pagerLayout->execute();
       }

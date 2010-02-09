@@ -16,7 +16,7 @@
  * @var        pagerLayoutWithArrows $this->expepagerLayout: Pager layout initialized
  * @var        Doctrine_Collection   $this->expeditions: Collection of data, resulting of the query triggered by an expedition search
  */
-class expeditionActions extends sfActions
+class expeditionActions extends DarwinActions
 {
 
   /**
@@ -128,6 +128,7 @@ class expeditionActions extends sfActions
   {
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
+    $this->setCommonValues('expedition', 'name', $request);
     // Instantiate a new expedition form
     $this->form = new ExpeditionsFormFilter();
     // Triggers the search result function
@@ -149,28 +150,20 @@ class expeditionActions extends sfActions
       // Test that the form binded is still valid (no errors)
       if ($form->isValid())
       {
-        $pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
         // Define all properties that will be either used by the data query or by the pager
         // They take their values from the request. If not present, a default value is defined
-        $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
-        $this->orderBy = ($request->getParameter('orderby', '') == '')?'name':$request->getParameter('orderby');
-        $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
         $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-        $this->currentPage = ($request->getParameter('page', '') == '')?1:intval($request->getParameter('page'));
-        $this->s_url = 'expedition/search?&page='.$this->currentPage.'&is_choose='.$this->is_choose;
         // Define in one line a pager Layout based on a pagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
         $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
                                                                           $this->currentPage,
                                                                           $form->getValue('rec_per_page')
                                                                          ),
-                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $pagerSlidingSize)),
-                                                       $this->getController()->genUrl($this->s_url.'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir).'/page/{%page_number}'
+                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
+                                                       $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
                                                       );
         // Sets the Pager Layout templates
-        $this->pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
-        $this->pagerLayout->setSelectedTemplate('<li>{%page}</li>');
-        $this->pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
+        $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->expeditions = $this->pagerLayout->execute();

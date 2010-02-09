@@ -1,23 +1,4 @@
 <?php if(isset($items) && $items->count() != 0):?>
-  <script type="text/javascript">
-    $(document).ready(function () 
-    {
-      $("#institutions_filters_rec_per_page").change(function ()
-      {
-        $.ajax({
-	        type: "POST",
-	        url: "<?php echo url_for($s_url.'&orderby='.$orderBy.'&orderdir='.$orderDir);?>",
-	        data: $('.search_form').serialize(),
-	        success: function(html){
-				        $(".search_results_content").html(html);
-				       }
-	       }
-	      );
-        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-        return false;
-      });
-    });
-  </script>
   <?php
     if($orderDir=='asc')
       $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
@@ -30,19 +11,19 @@
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Name');?>
               <?php if($orderBy=='family_name') echo $orderSign ?>
             </a>
           </th>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Abbreviation');?>
               <?php if($orderBy=='additional_names') echo $orderSign ?>
             </a>
           </th>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=sub_type'.( ($orderBy=='sub_type' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=sub_type'.( ($orderBy=='sub_type' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Type');?>
               <?php if($orderBy=='sub_type') echo $orderSign ?>
             </a>

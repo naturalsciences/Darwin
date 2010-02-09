@@ -1,23 +1,4 @@
 <?php if(isset($items) && $items->count() != 0):?>
-  <script type="text/javascript">
-    $(document).ready(function () 
-    {
-      $("#searchCatalogue_rec_per_page").change(function ()
-      {
-        $.ajax({
-	        type: "POST",
-	        url: "<?php echo url_for('catalogue/search?page='.$currentPage.'&is_choose='.$is_choose);?>",
-	        data: $('.search_form').serialize(),
-	        success: function(html){
-				        $(".search_results_content").html(html);
-				       }
-	       }
-	      );
-        $(".search_results_content").html('<?php echo image_tag('loader.gif');?>');
-        return false;
-      });
-    });
-  </script>
   <?php
     if($orderDir=='asc')
       $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
@@ -30,7 +11,7 @@
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
         <th colspan="3">
-          <a class="sort" href="<?php echo url_for($s_url.'&orderby=name_indexed'.( ($orderBy=='name_indexed' && $orderDir=='asc') ? '&orderdir=desc' : '') );?>">
+          <a class="sort" href="<?php echo url_for($s_url.'&orderby=name_indexed'.( ($orderBy=='name_indexed' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
             <?php echo __('Name');?>
             <?php if($orderBy=='name_indexed') echo $orderSign ?>
           </a>
