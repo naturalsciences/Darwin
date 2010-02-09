@@ -120,4 +120,13 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   {
     return isset($this->options['culture']) ? $this->options['culture'] : 'en';
   }
+
+  public function getJavascripts()
+  {
+    $javascripts=parent::getJavascripts();
+    $javascripts[]='/js/searchForm.js';
+    $javascripts[]='/js/pager.js';
+    return $javascripts;
+  }
+
 }
