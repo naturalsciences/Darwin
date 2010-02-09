@@ -180,6 +180,7 @@ People:
         is_physical: false
         family_name: Institut Royal des Sciences Naturelles de Belgique
         additional_names: RBINS
+        sub_type: Federal institution
         birth_date: "<?php echo date('Y-m-d');?>"
     p2:
         is_physical: false
@@ -197,7 +198,7 @@ People:
         family_name: Duchesne
         given_name: ML
         gender: F
-
+  
 Collections:
     c2:
         code: vert

@@ -96,7 +96,7 @@ class People extends BasePeople
  
   public function getEndDateMasked($tag='em')
   {
-    return $this->getBirthDateObject()->getDateMasked($tag);
+    return $this->getEndDateObject()->getDateMasked($tag);
   }
 
   public function getBirthDate()
@@ -136,7 +136,6 @@ class People extends BasePeople
       $this->_set('activity_date_to_mask', $fd->getMask() );
      }
   }
-  
  
   public function getActivityDateToObject()
   {
@@ -152,7 +151,7 @@ class People extends BasePeople
 
   public function getActivityDateFromMasked($tag='em')
   {
-    return $this->getActivityDateToObject()->getDateMasked($tag);
+    return $this->getActivityDateFromObject()->getDateMasked($tag);
   }
   
   public function getActivityDateToMasked($tag='em')

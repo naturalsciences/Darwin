@@ -5,6 +5,10 @@
  */
 class PeopleComm extends BasePeopleComm
 {
+  /**
+  * Get tags of the comm as an array (only label not keys)
+  * @return array Array of tags for this comm
+  */
   public function getTagsAsArray()
   {
     $array = explode(',',$this->_get('tag'));

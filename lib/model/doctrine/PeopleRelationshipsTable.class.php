@@ -4,6 +4,11 @@
  */
 class PeopleRelationshipsTable extends DarwinTable
 {
+  /**
+  * Find All DIRECT Parent of a People
+  * @param int $id The id of wich you look for parents
+  * @return Doctrine_Collection a collection of PeopleRelationships joined with "Parent"
+  */
   public function findAllRelated($id)
   {
       $q = Doctrine_Query::create()

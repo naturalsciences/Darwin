@@ -53,7 +53,15 @@ class DarwinTable extends Doctrine_Table
 	 $query->andWhere($alias.'.record_id != 0');
     return $query;
   }
-
+  /**
+   * createDistinct 
+   * Initiate a distinct query on a given model and column
+   * @param string $model The model name
+   * @param string $column The db column name that will be distinct
+   * @param string $new_col The name of the new column with distincts
+   * @param string $table_alias the alias of the used table
+   * @return Doctrine_Query with the distinct ordered by the $new_col ASC.
+  */
   public function createDistinct($model, $column, $new_col='item', $table_alias = 't')
   {
     $q = Doctrine_Query::create()->

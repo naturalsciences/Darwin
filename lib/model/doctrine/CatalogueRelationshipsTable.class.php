@@ -39,14 +39,4 @@ class CatalogueRelationshipsTable extends DarwinTable
     }
     return $results;
   }
-
-  public function DeleteRelationsForTable($table, $id)
-  {
-    $q = Doctrine_Query::create()
-            ->delete('CatalogueRelationships r')
-	    ->andwhere('r.referenced_relation = ?', $table)
-	    ->andWhere('r.record_id_1=?', $id);
-    return $q->execute();
-  }
-
 }

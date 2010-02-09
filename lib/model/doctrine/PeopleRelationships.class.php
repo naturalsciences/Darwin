@@ -7,14 +7,17 @@ class PeopleRelationships extends BasePeopleRelationships
 {
   public static $possible_types = array('belongs to' => 'belongs to', 'is department of' => 'is department of', 'is section of' =>  'is section of', 'works for' => 'works for');
 
-   public function getLevel()
-   {
-       return  substr_count($this->getPath(),'/');
-   }
-    
-  public function showPadding()
+  public function getLevel()
   {
-      return str_repeat('&nbsp;&nbsp;&nbsp;',$this->getLevel()-2);
+    $level = substr_count($this->getPath(),'/');
+    if($level >= 1)
+      return $level - 1;
+    return $level;
+  }
+    
+  public function showPadding($padding_item = '&nbsp;&nbsp;&nbsp;')
+  {
+      return str_repeat($padding_item, $this->getLevel());
   }
 
   public function setActivityDateFrom($fd)
@@ -59,7 +62,7 @@ class PeopleRelationships extends BasePeopleRelationships
 
   public function getActivityDateFromMasked($tag='em')
   {
-    return $this->getActivityDateToObject()->getDateMasked($tag);
+    return $this->getActivityDateFromObject()->getDateMasked($tag);
   }
   
   public function getActivityDateToMasked($tag='em')
