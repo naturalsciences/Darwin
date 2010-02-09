@@ -35,7 +35,11 @@
       <tr>
         <td>
           <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
-          <button id="delete" class="<?php if($remoteItem->isNew()):?>hidden<?php endif;?> delete"><?php echo __('Delete');?></button>
+          <?php if(! $remoteItem->isNew()):?>
+	    <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$relation->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+	      <?php echo __('Delete');?>
+	    </a>
+	  <?php endif;?>
           <input id="save" class="save" type="submit" name="submit" value="<?php echo __('Save');?>" />
         </td>
       </tr>
@@ -82,31 +86,6 @@
 	  {
 	    addError('Error!  Status = ' + xhr.status);
 	  }});
-	return false;
-      });
-
-      $(".delete").click(function()
-      {
-	if(confirm('<?php echo __('Are you sure?');?>'))
-	{
-	  removeError();
-	  $.ajax({
-	    url: '<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$relation->getId())?>',
-	    success: function(html){
-	      if(html == "ok" )
-	      {
-		$('.qtip-button').click();
-	      }
-	      else
-	      {
-		addError(html);
-	      }
-	    },
-	    error: function(xhr)
-	    {
-	      addError('Error!  Status = ' + xhr.status);
-	    }});
-	  }
 	return false;
       });
   }); 

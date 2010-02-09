@@ -44,9 +44,6 @@
         <td colspan="2">
           <?php echo $form->renderHiddenFields() ?>
           &nbsp;<a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
-          <?php if (!$form->getObject()->isNew()): ?>
-            <button id="delete"><?php echo __('Delete');?></button>
-          <?php endif; ?>
           <input id="save" name="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>
       </tr>

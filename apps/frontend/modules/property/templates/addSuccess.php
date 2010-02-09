@@ -88,7 +88,9 @@
       <td>
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
-          <button id="delete"><?php echo __('Delete');?></button>
+	  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_properties&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+	    <?php echo __('Delete');?>
+	  </a>
         <?php endif;?> 
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
       </td>
@@ -98,7 +100,7 @@
 </form>
 
 <script  type="text/javascript">
-  $(document).ready(function () {
+$(document).ready(function () {
     $('#catalogue_properties_property_type').change(function() {
       $.get("<?php echo url_for('property/getUnit');?>/type/"+$(this).val(), function (data) {
 	$("#catalogue_properties_property_unit_parent select").html(data);
@@ -117,28 +119,6 @@
 	$("#catalogue_properties_property_qualifier_parent select").html(data);
       });
     });
-
-      $("#delete").click(function()
-      {
-	if(confirm('<?php echo __('Are you sure?');?>'))
-	{
-	  hideForRefresh($('#property_screen'));
-	  $.ajax({
-	    url: '<?php echo url_for('catalogue/deleteRelated?table=catalogue_properties&id='.$form->getObject()->getId())?>',
-	    success: function(html){
-	      if(html == "ok" )
-	      {
-		$('.qtip-button').click();
-	      }
-	      else
-	      {
-		addError(html);
-	      }
-	    },
-	  });
-	}
-	return false;
-      });
 
     $('.clear_prop').live('click',function (){
       parent = $(this).closest('tr');

@@ -44,8 +44,10 @@
       <td>
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
-          <button id="delete"><?php echo __('Delete');?></button>
-        <?php endif;?> 
+	  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=class_vernacular_names&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+	    <?php echo __('Delete');?>
+	  </a>
+        <?php endif;?>
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
       </td>
     </tr>
@@ -55,28 +57,6 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
-    $("#delete").click(function()
-      {
-	if(confirm('<?php echo __('Are you sure?');?>'))
-	{
-	  hideForRefresh($('#property_screen'));
-	  $.ajax({
-	    url: '<?php echo url_for('vernacularnames/delete?id='.$form->getObject()->getId())?>',
-	    success: function(html){
-	      if(html == "ok" )
-	      {
-		$('.qtip-button').click();
-	      }
-	      else
-	      {
-		addError(html);
-	      }
-	    },
-	  });
-	}
-	return false;
-      });
-
     $('.clear_prop').live('click',function (){
       parent = $(this).closest('tr');
       nvalue='';

@@ -13,7 +13,9 @@
 	$('.error_list').hide();
 	$('.error_list li').text(' ');
     }
-$("#comment_form").submit(function()
+
+$(document).ready(function () {
+  $("#comment_form").submit(function()
       {
 	removeError();
 	$.ajax({
@@ -36,31 +38,7 @@ $("#comment_form").submit(function()
 	  }});
 	return false;
       });
-
-      $("#delete").click(function()
-      {
-	if(confirm('<?php echo __('Are you sure?');?>'))
-	{
-	  removeError();
-	  $.ajax({
-	    url: '<?php echo url_for('catalogue/deleteRelated?table=comments&id='.$form->getObject()->getId())?>',
-	    success: function(html){
-	      if(html == "ok" )
-	      {
-		$('.qtip-button').click();
-	      }
-	      else
-	      {
-		addError(html);
-	      }
-	    },
-	    error: function(xhr)
-	    {
-	      addError('Error!  Status = ' + xhr.status);
-	    }});
-	}
-	return false;
-      });
+});
 </script>
 <form class="edition" method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
 <table>
@@ -90,7 +68,9 @@ $("#comment_form").submit(function()
           <?php echo $form->renderHiddenFields() ?>
           &nbsp;<a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
           <?php if (!$form->getObject()->isNew()): ?>
-            <button id="delete"><?php echo __('Delete');?></button>
+	    <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=comments&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+	      <?php echo __('Delete');?>
+	    </a>
           <?php endif; ?>
           <input id="save" name="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>

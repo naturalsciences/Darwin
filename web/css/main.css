@@ -753,7 +753,7 @@ div .edition tfoot a, div .renamed tfoot a
   cursor:pointer;
 }
 
-.widget_row_delete
+td.widget_row_delete
 {
   vertical-align:top;
   text-align:right;

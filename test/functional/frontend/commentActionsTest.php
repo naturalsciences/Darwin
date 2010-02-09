@@ -16,7 +16,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#delete', false)->
+    checkElement('.widget_row_delete', false)->
     checkElement('textarea', '')->
   end()->
 
@@ -51,7 +51,7 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#delete')->
+    checkElement('.widget_row_delete')->
     checkElement('textarea', '/There is a thing/')->
   end()->
   
@@ -79,12 +79,12 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#delete')->
+    checkElement('.widget_row_delete')->
     checkElement('textarea', 'This is not ok...')->
   end()->
 
   info('Delete')->
-  get('/catalogue/deleteRelated?table=comments&id='.$item->getId())->
+  click('.widget_row_delete')->
   with('response')->begin()->
     isStatusCode(200)->
   end();

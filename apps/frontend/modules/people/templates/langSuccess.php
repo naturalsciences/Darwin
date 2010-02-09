@@ -35,8 +35,10 @@
       <td colspan="2">
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
-          <button id="delete"><?php echo __('Delete');?></button>
-        <?php endif;?> 
+	   <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_languages&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+	     <?php echo __('Delete');?>
+	  </a>
+	<?php endif;?>
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
       </td>
     </tr>
@@ -47,28 +49,6 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
-
-      $("#delete").click(function()
-      {
-	if(confirm('<?php echo __('Are you sure?');?>'))
-	{
-	  hideForRefresh($('#lang_screen'));
-	  $.ajax({
-	    url: '<?php echo url_for('catalogue/deleteRelated?table=people_languages&id='.$form->getObject()->getId())?>',
-	    success: function(html){
-	      if(html == "ok" )
-	      {
-		$('.qtip-button').click();
-	      }
-	      else
-	      {
-		addError(html);
-	      }
-	    },
-	  });
-	}
-	return false;
-      });
 
     $('form#lang_form').submit(function () {
       $('form#lang_form input[type=submit]').attr('disabled','disabled');
