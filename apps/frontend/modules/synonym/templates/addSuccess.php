@@ -30,7 +30,7 @@
     </td>
   </tr>
 
-  <tr class="<?php if(! $form['merge']->hasError()) echo 'hidden';?> merge_question">
+  <tr class="<?php if(! $form['merge']->hasError() || $form['record_id']->hasError()) echo 'hidden';?> merge_question">
    <th><?php echo $form['merge']->renderLabel('Confirm');?></th>
    <td>
       <?php echo $form['merge']->renderError(); ?>
@@ -63,6 +63,7 @@ function checkGroup()
       url: '<?php echo url_for('synonym/checks?table='.$sf_request->getParameter('table'))?>/id/'+$("#classification_synonymies_record_id").val()+'/type/'+$("#classification_synonymies_group_name").val(),
       success: function(html){
 	$('#save').removeAttr("disabled");
+	$('.merge_question .error_list').hide();
 	if(html == "0" )
 	{
 	  $(".merge_question").hide();

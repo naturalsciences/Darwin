@@ -50,6 +50,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 
 //         $this->addOption('connection', null);
 //         $this->addOption('table_method', null);
+	$this->addOption('is_hidden', false);
 	$this->addOption('button_is_hidden', false);
         $this->addRequiredOption('link_url');
 	$this->addRequiredOption('box_title');
