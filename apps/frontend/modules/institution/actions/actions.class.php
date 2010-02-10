@@ -110,7 +110,7 @@ class institutionActions extends DarwinActions
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     try{
         $institution->delete();
-	$this->redirect('institution/edit?id='.$institution->getId());
+	$this->redirect('institution/index');
     }
     catch(Doctrine_Exception $e)
     {

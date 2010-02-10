@@ -116,7 +116,7 @@ class peopleActions extends DarwinActions
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     try{
         $people->delete();
-	$this->redirect('people/edit?id='.$people->getId());
+	$this->redirect('people/index');
     }
     catch(Doctrine_Exception $e)
     {

@@ -40,10 +40,13 @@ class People extends BasePeople
   {
     $result = 0;
     $types = self::getTypes();
-    foreach($db_types as $value)
+    if(is_array($db_types))
     {
-      if(isset($types[$value]))
-	$result += $value;
+      foreach($db_types as $value)
+      {
+	if(isset($types[$value]))
+	  $result += $value;
+      }
     }
     $this->_set('db_people_type',$result);
   }
