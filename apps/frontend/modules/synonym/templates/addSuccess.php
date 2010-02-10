@@ -83,16 +83,10 @@ function checkGroup()
    });
 }
 
-$(document).ready(function () {
-    $('.result_choose').live('click',function () {
-	el = $(this).closest('tr');
-	$("#classification_synonymies_record_id").val(getIdInClasses(el));
-	$("#classification_synonymies_record_id_name").text(el.find('span.item_name').text()).show();
-	checkGroup();
-    });
-
-    $('#classification_synonymies_group_name').change(checkGroup);
-
+$(document).ready(function () 
+{
+   $('.result_choose').live('click', chooseResult("#catalogue_relationships_record_id_2"));
+   $('#classification_synonymies_group_name').change(checkGroup);
 });
 </script>
 

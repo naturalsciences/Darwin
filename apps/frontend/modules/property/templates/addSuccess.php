@@ -121,23 +121,10 @@ $(document).ready(function () {
       });
     });
 
-    $('.clear_prop').live('click',function (){
-      parent = $(this).closest('tr');
-      nvalue='';
-      $(parent).find('input').val(nvalue);
-      $(parent).hide();
-    });
+    $('.clear_prop').live('click', clearPropertyValue);
 
-    $('#add_prop_value').click(function () {
-	$.ajax({
-	  type: "GET",
-	  url: $(this).attr('href')+ (0+$('.proprety_values tbody tr').length),
-	  success: function(html){
-	    $('.proprety_values tbody').append(html);
-	  }
-	});
-	return false;
-    });
+    $('#add_prop_value').click(addPropertyValue);
+
   });
 </script>
 </div>

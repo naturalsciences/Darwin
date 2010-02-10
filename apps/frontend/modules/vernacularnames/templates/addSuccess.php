@@ -1,6 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="property_screen">
-<?php //echo $form;?>
-<form class="edition" action="<?php echo url_for('vernacularnames/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
+<form class="edition qtiped_form" action="<?php echo url_for('vernacularnames/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>
@@ -57,41 +57,9 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
-    $('.clear_prop').live('click',function (){
-      parent = $(this).closest('tr');
-      nvalue='';
-      $(parent).find('input').val(nvalue);
-      $(parent).hide();
-    });
+    $('.clear_prop').live('click', clearPropertyValue);
 
-    $('form#property_form').submit(function () {
-      $('form#property_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#property_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    $('form#property_form').parent().before(html).remove();
-	  }
-      });
-      return false;
-    });
-
-    $('#add_prop_value').click(function () {
-	$.ajax({
-	  type: "GET",
-	  url: $(this).attr('href')+ (0+$('.proprety_values tbody tr').length),
-	  success: function(html){
-	    $('.proprety_values tbody').append(html);
-	  }
-	});
-	return false;
-    });
+    $('#add_prop_value').click(addPropertyValue);
   });
 </script>
 </div>

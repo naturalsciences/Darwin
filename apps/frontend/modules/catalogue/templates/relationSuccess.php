@@ -36,15 +36,10 @@
 
 </form>
 <script  type="text/javascript">
-   $(document).ready(function () {
-
-    $('.result_choose').live('click',function () {
-	el = $(this).closest('tr');
-	$("#catalogue_relationships_record_id_2").val(getIdInClasses(el));
-	/*console.log(el.find('.item_name'));*/
-	$("#catalogue_relationships_record_id_2_name").text(el.find('.item_name').text()).show();
-    });
-});
+   $(document).ready(function () 
+   {
+     $('.result_choose').live('click', chooseResult("#catalogue_relationships_record_id_2"));
+   });
 </script>
 
 <div class="search_box show">

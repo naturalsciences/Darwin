@@ -139,6 +139,35 @@ function hideValues()
 };
 
 
+function clearPropertyValue()
+{
+  parent = $(this).closest('tr');
+  nvalue='';
+  $(parent).find('input').val(nvalue);
+  $(parent).hide();
+}
+
+function addPropertyValue()
+{
+  $.ajax(
+  {
+    type: "GET",
+    url: $(this).attr('href')+ (0+$('.proprety_values tbody tr').length),
+    success: function(html)
+    {
+      $('.proprety_values tbody').append(html);
+    }
+  });
+  return false;
+}
+
+function chooseResult(id)
+{
+  el = $(this).closest('tr');
+  $(id).val(getIdInClasses(el));
+  $(id+"_name").text(el.find('.item_name').text()).show();
+}
+
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();

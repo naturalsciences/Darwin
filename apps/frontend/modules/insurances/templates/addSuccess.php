@@ -63,13 +63,7 @@
 <script  type="text/javascript">
    $(document).ready(function () 
    {
-     $('.result_choose').live('click',function () 
-     {
-	el = $(this).closest('tr');
-	$("#insurances_insurer_ref").val(getIdInClasses(el));
-	/*console.log(el.find('.item_name'));*/
-	$("#insurances_insurer_ref_name").text(el.find('.item_name').text()).show();
-     });
+     $('.result_choose').live('click', chooseResult("#insurances_insurer_ref"));
    });
 </script>
 
