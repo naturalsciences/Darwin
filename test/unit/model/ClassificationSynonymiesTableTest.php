@@ -94,13 +94,23 @@ $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId( Doctrine::
 $t->is(count($syn), 2, 'We create a new group');
 
 
-$rec1 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(4);
+$rec1 = Doctrine_Query::create()
+	 ->from('ClassificationSynonymies s')
+	 ->andWhere('s.group_name = ?','isonym')
+	 ->andWhere('s.record_id = ?',4)
+	 ->fetchOne();
 $rec1->setIsBasionym(true)->save();
 $t->is($rec1->getIsBasionym(), true,'We set basionymies for the first rec');
 
-$rec2 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(3);
+$rec2 = Doctrine_Query::create()
+	 ->from('ClassificationSynonymies s')
+	 ->andWhere('s.group_name = ?','isonym')
+	 ->andWhere('s.record_id = ?',3)
+	 ->fetchOne();
+
 $rec2->setIsBasionym(true)->save();
 $t->is($rec2->getIsBasionym(), true,'We set basionymies for the second rec');
+
 
 Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 3, 6, 'isonym');
 $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId($syn[0]->getGroupId());
