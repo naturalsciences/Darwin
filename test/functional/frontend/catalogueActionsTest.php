@@ -36,55 +36,55 @@ $browser->
 $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'current_name');
 
 $browser->  
-  get('/catalogue/relation?type=rename&table=taxonomy&id=4&relid='.$items[0]['id'])->
+  get('/catalogue/relation?type=rename&table=taxonomy&rid=4&id='.$items[0]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is renamed in :')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Renamed in')->
     checkElement('form')->
-    checkElement('#relation_catalogue_name','/Falco Peregrinus Tunstall, 1771/')->
+    checkElement('#catalogue_relationships_record_id_2_name','/Falco Peregrinus Tunstall, 1771/')->
   end();
 
 $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
 
 $browser->  
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[0]['id'])->
+  get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[0]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined from :')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#relation_catalogue_name','/Falco Peregrinus recombinus/')->
+    checkElement('#catalogue_relationships_record_id_2_name','/Falco Peregrinus recombinus/')->
   end()->
 
   info('SaveRelation')->
 
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4')->
+  get('/catalogue/relation?type=recombined&table=taxonomy&rid=4')->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined from :')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#relation_catalogue_name',' ')->
+    checkElement('#catalogue_relationships_record_id_2_name','')->
   end()->
   
-  get('/catalogue/saveRelation?type=recombined&table=taxonomy&id=4&record_id_2=2&relation_id=')->
-  with('response')->begin()->
-    isStatusCode(200)->
-  end();
-
+  click('Save', 
+    array('catalogue_relationships' => array(
+	'record_id_2'  => '2',
+        'referenced_relation' => 'taxonomy',
+	'relationship_type' => 'recombined from',
+	'record_id_1' =>'4',
+      )
+    )
+  );
   $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
 
   $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
  
   $browser->
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1]['id'])->
+  get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined from :')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#relation_catalogue_name','/Falco Peregrinus/')->
+    checkElement('#catalogue_relationships_record_id_2_name','/Falco Peregrinus/')->
   end()->
 
   info('DeleteRelated')->
@@ -94,13 +94,12 @@ $browser->
     isStatusCode(200)->
   end()->
 
-  get('/catalogue/relation?type=recombined&table=taxonomy&id=4&relid='.$items[1]['id'])->
+  get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.catalogue_ref','Falco Peregrinus (Duchesnus Brulus 1912)')->
-    checkElement('.catalogue_action_type','is recombined from :')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#relation_catalogue_name',' ')->
+    checkElement('#relation_catalogue_name','')->
   end()
 
 ;

@@ -231,7 +231,6 @@ class ClassificationSynonymiesTable extends DarwinTable
       ->andWhere('s.is_basionym = ?',true);
 
     $res = $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
-      print "hey".$res;
 
     // Set No Basionym If more than 1
     if($res > 1)
