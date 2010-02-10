@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="syn_screen">
-<form class="edition" action="<?php echo url_for('synonym/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id'));?>" method="post" id="synonym_form">
+<form class="edition qtiped_form" action="<?php echo url_for('synonym/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id'));?>" method="post" id="synonym_form">
 <table >
   <tr>
       <td colspan="2">
@@ -92,26 +93,6 @@ $(document).ready(function () {
 
     $('#classification_synonymies_group_name').change(checkGroup);
 
-    $('form#synonym_form').submit(function () {
-      $('form#synonym_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#syn_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      $('form#synonym_form').parent().before(html).remove();
-	    }
-	  }
-      });
-      return false;
-    });
 });
 </script>
 

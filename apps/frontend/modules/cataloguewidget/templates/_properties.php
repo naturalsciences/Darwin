@@ -56,20 +56,8 @@
 </table>
 
 <script>
-$('.display_value').click(function()
-{
-  $(this).parent().find('ul').slideDown();
-  $(this).parent().find('.hide_value').show();
-  $(this).hide();
-  return false;
-});
-$('.hide_value').click(function()
-{
-  $(this).parent().find('ul').slideUp();
-  $(this).parent().find('.display_value').show();
-  $(this).hide();
-  return false;
-});
+$('.display_value').click(showValues);
+$('.hide_value').click(hideValues);
 </script>
 <br />
 <?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Properties');?>" class="link_catalogue" href="<?php echo url_for('property/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>

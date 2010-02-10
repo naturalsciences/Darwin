@@ -122,6 +122,23 @@ function trim(myString)
   return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
 }
 
+function showValues()
+{
+  $(this).parent().find('ul').slideDown();
+  $(this).parent().find('.hide_value').show();
+  $(this).hide();
+  return false;
+};
+
+function hideValues()
+{
+  $(this).parent().find('ul').slideUp();
+  $(this).parent().find('.display_value').show();
+  $(this).hide();
+  return false;
+};
+
+
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();

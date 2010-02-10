@@ -1,9 +1,10 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="insurances_screen">
 
 <?php if (isset($message)): ?>
   <div class="flash_save"><?php echo __($message); ?></div>
 <?php endif; ?>
-<form id="insurances_form" class="edition" action="<?php echo url_for('insurances/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post">
+<form id="insurances_form" class="edition qtiped_form" action="<?php echo url_for('insurances/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>
@@ -60,32 +61,16 @@
 </table>
 </form>
 <script  type="text/javascript">
-   $(document).ready(function () {
-
-    $('form#insurances_form').submit(function () {
-      $('form#insurances_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#insurances_screen'));
-      $.ajax({
-          type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-            if(html == 'ok')
-            {
-              $('.qtip-button').click();
-            }
-            $('form#insurances_form').parent().before(html).remove();
-	  }});
-	return false;
-      });
-
-    $('.result_choose').live('click',function () {
+   $(document).ready(function () 
+   {
+     $('.result_choose').live('click',function () 
+     {
 	el = $(this).closest('tr');
 	$("#insurances_insurer_ref").val(getIdInClasses(el));
-	console.log(el.find('.item_name'));
+	/*console.log(el.find('.item_name'));*/
 	$("#insurances_insurer_ref_name").text(el.find('.item_name').text()).show();
-    });
-});
+     });
+   });
 </script>
 
 <div class="search_box show">

@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="lang_screen">
-<form class="edition" action="<?php echo url_for('people/lang?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="lang_form">
+<form class="edition qtiped_form" action="<?php echo url_for('people/lang?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="lang_form">
 <?php echo $form['people_ref'];?>
 <table>
   <tbody>
@@ -47,30 +48,4 @@
 
 </form>
 
-<script  type="text/javascript">
-  $(document).ready(function () {
-
-    $('form#lang_form').submit(function () {
-      $('form#lang_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#lang_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      $('form#lang_form').parent().before(html).remove();
-	    }
-	  }
-      });
-      return false;
-    });
-
-  });
-</script>
 </div>

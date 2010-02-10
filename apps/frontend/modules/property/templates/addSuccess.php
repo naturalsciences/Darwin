@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="property_screen">
-<form class="edition" action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
+<form class="edition qtiped_form" action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>
@@ -125,24 +126,6 @@ $(document).ready(function () {
       nvalue='';
       $(parent).find('input').val(nvalue);
       $(parent).hide();
-    });
-
-    $('form#property_form').submit(function () {
-      $('form#property_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#property_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    $('form#property_form').parent().before(html).remove();
-	  }
-      });
-      return false;
     });
 
     $('#add_prop_value').click(function () {

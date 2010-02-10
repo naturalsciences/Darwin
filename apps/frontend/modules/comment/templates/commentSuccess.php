@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="comment_screen">
-<form class="edition" method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
+<form class="edition qtiped_form" method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
 <table>
   <tbody>
     <tr>
@@ -37,28 +38,5 @@
   </tfoot>  
 </table>
 </form>
-
-<script type="text/javascript">
-  $(document).ready(function () 
-  {
-    $('form#comment_form').submit(function () {
-      $('form#comment_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#comment_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    $('form#comment_form').parent().before(html).remove();
-	  }
-      });
-      return false;
-    });
-  });
-</script>
 
 </div>

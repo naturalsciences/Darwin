@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="address_screen">
-<form class="edition" action="<?php echo url_for('people/address?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="address_form">
+<form class="edition qtiped_form" action="<?php echo url_for('people/address?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="address_form">
 <?php echo $form['person_user_ref'];?>
 <table>
   <tbody>
@@ -82,27 +83,4 @@
 
 </form>
 
-<script  type="text/javascript">
-  $(document).ready(function () {
-
-    $('form#address_form').submit(function () {
-      $('form#address_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#address_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    $('form#address_form').parent().before(html).remove();
-	  }
-      });
-      return false;
-    });
-
-  });
-</script>
 </div>

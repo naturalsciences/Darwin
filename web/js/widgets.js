@@ -85,4 +85,5 @@ jQuery(function(){
         $(this).parent().parent().fadeOut();
         return false;
     });
+
 });

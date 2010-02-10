@@ -22,4 +22,11 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   {
     return isset($this->options['culture']) ? $this->options['culture'] : 'en';
   }
+
+  public function getJavascripts()
+  {
+    $javascripts=parent::getJavascripts();
+    $javascripts[]='/js/qtiped_forms.js';
+    return $javascripts;
+  }
 }

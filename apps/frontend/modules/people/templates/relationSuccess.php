@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="relation_screen">
-<form class="edition" action="<?php echo url_for('people/relation?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="relation_form">
+<form class="edition qtiped_form" action="<?php echo url_for('people/relation?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="relation_form">
 <?php echo $form['person_2_ref'];?>
 <?php echo $form['id'];?>
 <table>
@@ -63,28 +64,10 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
-    $('form#relation_form').submit(function () {
-      $('form#relation_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#relation_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    $('form#relation_form').parent().before(html).remove();
-	  }
-      });
-      return false;
-    });
-
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
 	$("#people_relationships_person_1_ref").val(getIdInClasses(el));
-	console.log(el.find('.item_name'));
+	/*console.log(el.find('.item_name'));*/
 	$("#people_relationships_person_1_ref_name").text(el.find('.item_name').text()).show();
     });
 });

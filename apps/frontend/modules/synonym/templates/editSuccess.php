@@ -35,7 +35,7 @@
     <tfoot>
       <tr>
         <td colspan="3">
-	  <form id="edit_syn_form"  action="<?php echo url_for('synonym/edit?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') .'&group_id='.$sf_request->getParameter('group_id') );?>" method="post">
+	  <form id="edit_syn_form" class="qtiped_form"  action="<?php echo url_for('synonym/edit?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') .'&group_id='.$sf_request->getParameter('group_id') );?>" method="post">
 	    <?php echo $form;?>
 	    <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
 	    <input id="save" class="save" type="submit" name="submit" value="<?php echo __('Save');?>" />
@@ -77,7 +77,7 @@ $(document).ready(function()
     }
   });
 
-  $("form#edit_syn_form").submit(function()
+  $("form.qtiped_form").submit(function()
   {
     el_Array = $(".edit_synon tbody").sortable('toArray');
     for(item in el_Array)
@@ -87,8 +87,10 @@ $(document).ready(function()
 
     $('#synonym_edit_basionym_id').val(' ');
     $('#synonym_edit_basionym_id').val( $('.basionym_checkbox:checked').val() );
+
+    $('form.qtiped_form input[type=submit]').attr('disabled','disabled');
     
-    hideForRefresh($('#edit_syn_screen'));
+    hideForRefresh($('form.qtiped_form').parent());
 
     $.ajax(
     {
@@ -101,7 +103,7 @@ $(document).ready(function()
         {
           $('.qtip-button').click();
         }
-        $('form#edit_syn_form').parent().before(html).remove();
+        $('form.qtiped_form').parent().before(html).remove();
       }
     });
     return false;

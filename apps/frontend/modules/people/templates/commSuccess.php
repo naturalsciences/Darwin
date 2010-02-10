@@ -1,5 +1,6 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="comm_screen">
-<form class="edition" action="<?php echo url_for('people/comm?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="comm_form">
+<form class="edition qtiped_form" action="<?php echo url_for('people/comm?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="comm_form">
 <?php echo $form['person_user_ref'];?>
 <table>
   <tbody>
@@ -49,25 +50,6 @@
 
 <script  type="text/javascript">
   $(document).ready(function () {
-
-    $('form#comm_form').submit(function () {
-      $('form#comm_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#comm_screen'));
-      $.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == 'ok')
-	    {
-	      $('.qtip-button').click();
-	    }
-	    $('form#comm_form').parent().before(html).remove();
-	  }
-      });
-      return false;
-    });
-
 
     $('#people_comm_comm_type').change(function () {
       $('form#lang_form input[type=submit]').attr('disabled','disabled');

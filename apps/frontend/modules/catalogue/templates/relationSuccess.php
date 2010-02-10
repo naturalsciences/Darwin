@@ -1,6 +1,7 @@
+<?php include_javascripts_for_form($form) ?>
 <div id="catalogue_relation_screen">
 
-<form class="edition" action="<?php echo url_for('catalogue/relation?table='.$sf_params->get('table').'&rid='.$sf_request->getParameter('rid'). '&type='.$sf_request->getParameter('type') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="relation_form">
+<form class="edition qtiped_form" action="<?php echo url_for('catalogue/relation?table='.$sf_params->get('table').'&rid='.$sf_request->getParameter('rid'). '&type='.$sf_request->getParameter('type') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="relation_form">
 <?php echo $form->renderHiddenFields();?>
 <table>
   <tbody>
@@ -37,27 +38,10 @@
 <script  type="text/javascript">
    $(document).ready(function () {
 
-    $('form#relation_form').submit(function () {
-      $('form#relation_form input[type=submit]').attr('disabled','disabled');
-      hideForRefresh($('#catalogue_relation_screen'));
-      $.ajax({
-          type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-            if(html == 'ok')
-            {
-              $('.qtip-button').click();
-            }
-            $('form#relation_form').parent().before(html).remove();
-	  }});
-	return false;
-      });
-
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
 	$("#catalogue_relationships_record_id_2").val(getIdInClasses(el));
-	console.log(el.find('.item_name'));
+	/*console.log(el.find('.item_name'));*/
 	$("#catalogue_relationships_record_id_2_name").text(el.find('.item_name').text()).show();
     });
 });
