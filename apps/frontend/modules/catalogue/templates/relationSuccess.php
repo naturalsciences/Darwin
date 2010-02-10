@@ -1,13 +1,11 @@
-<ul class="hidden error_list">
-  <li></li>
-</ul>
-<div class="catalogue_ref"><?php echo $linkItem->getName();?></div>
-<?php if($sf_params->get('type')=='rename'):?>
-  <label class="catalogue_action_type"><?php echo __('is renamed in');?> :</label>
-<?php else:?>
-  <label class="catalogue_action_type"><?php echo __('is recombined from');?> :</label>
-<?php endif;?>
-<form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" class="renamed">
+<div id="renamed_screen">
+  <div class="catalogue_ref"><?php echo $linkItem->getName();?></div>
+  <?php if($sf_params->get('type')=='rename'):?>
+    <label class="catalogue_action_type"><?php echo __('is renamed in');?> :</label>
+  <?php else:?>
+    <label class="catalogue_action_type"><?php echo __('is recombined from');?> :</label>
+  <?php endif;?>
+  <form method="post" action="<?php echo url_for('catalogue/SaveRelation?type='.($sf_params->get('type')=='rename'? 'rename': 'recombined') .'&table='.$sf_params->get('table').'&id='.$linkItem->getId());?>" class="renamed">
   <table class="bottom_actions">
     <tbody>
       <tr>
@@ -45,51 +43,36 @@
       </tr>
     </tfoot>
   </table>
-</form>
+  </form>
 
  <script type="text/javascript">
-  $(document).ready(function () {
+  $(document).ready(function () 
+  {
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
 	$("#relation_catalogue_id").val(getIdInClasses(el));
 	$("#relation_catalogue_name").text(el.find('span.item_name').text()).show();
     });
 
-    function addError(html)
-    {
-      $('.error_list li').text(html);
-      $('.error_list').show();
-    }
-    function removeError()
-    {
-	$('.error_list').hide();
-	$('.error_list li').text(' ');
-    }
-      $(".renamed").submit(function()
-      {
-	removeError();
-	$.ajax({
-	  type: "POST",
-	  url: $('.renamed').attr('action'),
-	  data: $('.renamed').serialize(),
+    $('form.renamed').submit(function () {
+      $('form.renamed input[type=submit]').attr('disabled','disabled');
+      hideForRefresh($('#renamed_screen'));
+      $.ajax({
+          type: "POST",
+	  url: $(this).attr('action'),
+	  data: $(this).serialize(),
 	  success: function(html){
-	    if(html == "ok" )
-	    {
-	     $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      addError(html);
-	    }
-	  },
-	  error: function(xhr)
-	  {
-	    addError('Error!  Status = ' + xhr.status);
+            if(html == 'ok')
+            {
+              $('.qtip-button').click();
+            }
+            $('form.renamed').parent().before(html).remove();
 	  }});
 	return false;
       });
   }); 
   </script>
-<div class="search_box show">
-  <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm,'is_choose'=>true)) ?>
+  <div class="search_box show">
+    <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm,'is_choose'=>true)) ?>
+  </div>
 </div>

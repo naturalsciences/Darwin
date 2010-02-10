@@ -1,45 +1,4 @@
-<ul class="hidden error_list">
-  <li></li>
-</ul>
-
-<script type="text/javascript">
-    function addError(html)
-    {
-      $('.error_list li').text(html);
-      $('.error_list').show();
-    }
-    function removeError()
-    {
-	$('.error_list').hide();
-	$('.error_list li').text(' ');
-    }
-
-$(document).ready(function () {
-  $("#comment_form").submit(function()
-      {
-	removeError();
-	$.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == "ok" )
-	    {
-	     $('.qtip-button').click();
-	    }
-	    else
-	    {
-	      addError(html);
-	    }
-	  },
-	  error: function(xhr)
-	  {
-	    addError('Error!  Status = ' + xhr.status);
-	  }});
-	return false;
-      });
-});
-</script>
+<div id="comment_screen">
 <form class="edition" method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
 <table>
   <tbody>
@@ -78,3 +37,28 @@ $(document).ready(function () {
   </tfoot>  
 </table>
 </form>
+
+<script type="text/javascript">
+  $(document).ready(function () 
+  {
+    $('form#comment_form').submit(function () {
+      $('form#comment_form input[type=submit]').attr('disabled','disabled');
+      hideForRefresh($('#comment_screen'));
+      $.ajax({
+	  type: "POST",
+	  url: $(this).attr('action'),
+	  data: $(this).serialize(),
+	  success: function(html){
+	    if(html == 'ok')
+	    {
+	      $('.qtip-button').click();
+	    }
+	    $('form#comment_form').parent().before(html).remove();
+	  }
+      });
+      return false;
+    });
+  });
+</script>
+
+</div>

@@ -140,9 +140,6 @@ class peopleActions extends DarwinActions
     }
   }
 
-
-
-
   /***
   * Screen for people and institutions widgets
   **/

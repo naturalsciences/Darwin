@@ -759,6 +759,11 @@ td.widget_row_delete
   text-align:right;
 }
 
+a.widget_row_delete
+{
+  margin-right:4px;
+}
+
 table.encoding tbody .widget_row_delete
 {
   vertical-align:middle;

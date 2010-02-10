@@ -34,7 +34,7 @@ class insurancesActions extends sfActions
 	    $this->form->save();
 	    $this->form->getObject()->refreshRelated();
 	    $this->form = new InsurancesForm($this->form->getObject()); //Ugly refresh
-	    $this->message = 'Your (insurance) value saved';
+	    return $this->renderText('ok');
 	  }
 	  catch(Exception $e)
 	  {
@@ -44,5 +44,4 @@ class insurancesActions extends sfActions
 	}
     }
   }
-  
 }

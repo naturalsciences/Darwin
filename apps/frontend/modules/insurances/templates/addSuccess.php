@@ -59,7 +59,6 @@
   </tfoot>
 </table>
 </form>
-
 <script  type="text/javascript">
    $(document).ready(function () {
 
@@ -71,11 +70,11 @@
 	  url: $(this).attr('action'),
 	  data: $(this).serialize(),
 	  success: function(html){
-            $('form#insurances_form').parent().before(html).remove();
-            if(!$("ul.error_list li").text())
+            if(html == 'ok')
             {
               $('.qtip-button').click();
             }
+            $('form#insurances_form').parent().before(html).remove();
 	  }});
 	return false;
       });
