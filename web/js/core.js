@@ -161,13 +161,6 @@ function addPropertyValue()
   return false;
 }
 
-function chooseResult(id)
-{
-  el = $(this).closest('tr');
-  $(id).val(getIdInClasses(el));
-  $(id+"_name").text(el.find('.item_name').text()).show();
-}
-
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();

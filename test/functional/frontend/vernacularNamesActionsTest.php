@@ -12,7 +12,7 @@ $browser->
     checkElement('#class_vernacular_names_community option',1)->
   end()->
   
-  click('Save', array('catalogue_properties' => array(
+  click('Save', array('class_vernacular_names' => array(
     'referenced_relation' => 'taxonomy',
     'record_id'           => '4',
     'community'       => '',
@@ -23,7 +23,7 @@ $browser->
     isError('community', 'required')->
   end()->
 
-  click('Save', array('catalogue_properties' => array(
+  click('Save', array('class_vernacular_names' => array(
     'referenced_relation' => 'taxonomy',
     'record_id'           => '4',
     'community'       => 'Français',
@@ -32,7 +32,6 @@ $browser->
                                   )
                      ),
   )))->
-
   with('response')->begin()->
     isStatusCode(200)->
     matches('/ok/')->

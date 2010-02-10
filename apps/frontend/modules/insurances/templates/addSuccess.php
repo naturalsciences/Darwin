@@ -63,7 +63,12 @@
 <script  type="text/javascript">
    $(document).ready(function () 
    {
-     $('.result_choose').live('click', chooseResult("#insurances_insurer_ref"));
+     $('.result_choose').live('click',function () 
+     {
+       el = $(this).closest('tr');
+       $("#insurances_insurer_ref").val(getIdInClasses(el));
+       $("#insurances_insurer_ref_name").text(el.find('.item_name').text()).show();
+     });
    });
 </script>
 
