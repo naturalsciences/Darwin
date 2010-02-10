@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(29, new lime_output_color());
+$t = new lime_test(36, new lime_output_color());
 
 $t->info('findGroupsIdsForRecord');
 $syns = Doctrine::getTable('ClassificationSynonymies')->findGroupsIdsForRecord('taxonomy',4);
@@ -40,6 +40,7 @@ $t->is($id+1, $id2,'Get Next Id');
 
 
 $t->info('findGroupIdFor');
+
 $group = Doctrine::getTable('ClassificationSynonymies')->findGroupIdFor('taxonomy', 4, 'homonym');
 $t->is(2, $group,'We get the group id for homonym');
 
@@ -67,6 +68,7 @@ $t->is($records['synonym'][1]['id'],3,'They are the same');
 
 
 $t->info('mergeSynonyms');
+
 Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 4, 2, 'synonym');
 $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId(1);
 $t->is(count($syn), 4, 'Group 1 and 2 merge to group 1');
@@ -83,7 +85,36 @@ Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 2, 6, 
 $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId( Doctrine::getTable('ClassificationSynonymies')->findNextGroupId() - 1);
 $t->is(count($syn), 2, 'two records create a new group');
 
+Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 4, 6, 'isonym');
+$syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId( $syn[0]->getGroupId());
+$t->is(count($syn), 3, 'the record join a group records create a new group');
+
+Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 3, 5, 'isonym');
+$syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId( Doctrine::getTable('ClassificationSynonymies')->findNextGroupId() - 1);
+$t->is(count($syn), 2, 'We create a new group');
+
+
+$rec1 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(4);
+$rec1->setIsBasionym(true)->save();
+$t->is($rec1->getIsBasionym(), true,'We set basionymies for the first rec');
+
+$rec2 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(3);
+$rec2->setIsBasionym(true)->save();
+$t->is($rec2->getIsBasionym(), true,'We set basionymies for the second rec');
+
+Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 3, 6, 'isonym');
+$syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId($syn[0]->getGroupId());
+$t->is(count($syn), 5, 'We merge all groups');
+
+$rec2 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(3);
+$rec1 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(4);
+$t->is($rec1->getIsBasionym(), false,'Basio is reset');
+$t->is($rec2->getIsBasionym(), false,'Basio is reset');
+
+
+
 $t->info('deleteAllItemInGroup');
+
 Doctrine::getTable('ClassificationSynonymies')->deleteAllItemInGroup(2);
 $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId(2);
 $t->is(count($syn), 0, 'All record in group was deleted');
