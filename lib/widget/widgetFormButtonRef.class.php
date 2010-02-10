@@ -24,7 +24,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	    $options['class'] .= ' hidden';
 	  $input .= $this->renderTag('img',$options);
 	}
-	if(! $this->getOption('is_hidden'))
+	if(! $this->getOption('button_is_hidden'))
 	{
 	  $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
 	  $input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
@@ -50,7 +50,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 
 //         $this->addOption('connection', null);
 //         $this->addOption('table_method', null);
-	$this->setOption('is_hidden', false);
+	$this->addOption('button_is_hidden', false);
         $this->addRequiredOption('link_url');
 	$this->addRequiredOption('box_title');
     }

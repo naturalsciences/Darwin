@@ -24,7 +24,7 @@ class PeopleRelationshipsForm extends BasePeopleRelationshipsForm
        'link_url' => 'instituion/choose',
        'method' => 'getFamilyName',
        'box_title' => '',
-       'is_hidden' => true,
+       'button_is_hidden' => true,
        'nullable' => false,));
     $this->widgetSchema['relationship_type'] = new sfWidgetFormChoice(array('choices' => PeopleRelationships::$possible_types));
     $this->Postvalidators = array();

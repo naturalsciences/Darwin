@@ -38,7 +38,7 @@ class InsurancesForm extends BaseInsurancesForm
 	'link_url' => 'people/choose',
 	'box_title' => $this->getI18N()->__('Choose Insurer'),
 	'nullable' => true,
-	'is_hidden' => true,
+	'button_is_hidden' => true,
       )
     );
 

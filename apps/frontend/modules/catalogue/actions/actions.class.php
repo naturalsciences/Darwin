@@ -13,44 +13,41 @@ class catalogueActions extends DarwinActions
 
   public function executeRelation(sfWebRequest $request)
   {
-    $modelName = DarwinTable::getModelForTable($request->getParameter('table'));
-    $this->linkItem = Doctrine::getTable($modelName)->findExcept($request->getParameter('id'));
-    $this->relation = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relid',0));
+    $this->relation = null;
+    if($request->hasParameter('id'))
+    {
+      $this->relation = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('id'));
+    }
     if(! $this->relation)
     {
-      $this->relation = new CatalogueRelationships();
-      $this->remoteItem = new $modelName();
+     $this->relation = new CatalogueRelationships();
+     $this->relation->setRecordId1($request->getParameter('rid'));
+     $this->relation->setReferencedRelation($request->getParameter('table'));
+     $this->relation->setRelationshipType($request->getParameter('type') == 'rename' ? 'current_name' : 'recombined from');
     }
-    else
+
+    $this->form = new CatalogueRelationshipsForm($this->relation);
+    
+    if($request->isMethod('post'))
     {
-      $this->remoteItem = Doctrine::getTable($modelName)->findExcept($this->relation->getRecordId2());
+	$this->form->bind($request->getParameter('catalogue_relationships'));
+	if($this->form->isValid())
+	{
+	  try{
+	    $this->form->save();
+	    $this->form->getObject()->refreshRelated();
+	    $this->form = new CatalogueRelationshipsForm($this->form->getObject()); //Ugly refresh
+	    return $this->renderText('ok');
+	  }
+	  catch(Exception $e)
+	  {
+            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+            $this->form->getErrorSchema()->addError($error); 
+	  }
+	}
     }
     $filterFormName = DarwinTable::getFilterForTable($request->getParameter('table'));
     $this->searchForm = new $filterFormName(array('table'=>$request->getParameter('table')));
-  }
-
-  public function executeSaveRelation(sfWebRequest $request)
-  {
-    $tableName = $request->getParameter('table');
-    $ref_item = $request->getParameter('id');
-    $linked_item = $request->getParameter('record_id_2');
-    $link_type = $request->getParameter('type');
-    
-    $r = new CatalogueRelationships();
-    if(is_numeric($request->getParameter('relation_id')))
-    $r = Doctrine::getTable('CatalogueRelationships')->find($request->getParameter('relation_id'));
-    $r->setReferencedRelation($tableName);
-    $r->setRecordId1($ref_item);
-    $r->setRecordId2($linked_item);
-    $r->setRelationshipType($link_type == 'rename' ? 'current_name' : 'recombined from');
-    try{
-      $r->save();
-    }
-    catch(Exception $e)
-    {
-      return $this->renderText($e->getMessage());
-    }
-    return $this->renderText('ok');
   }
   
   public function executeTree(sfWebRequest $request)
