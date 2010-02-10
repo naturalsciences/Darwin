@@ -1,8 +1,4 @@
 <div class="edit_syn_screen">
-<ul class="hidden error_list">
-  <li></li>
-</ul>
-
 <table class="edition edit_synon">
   <thead>
     <tr>
@@ -58,16 +54,6 @@ function forceHelper(e,ui)
 
 $(document).ready(function()
 {
-    function addError(html)
-    {
-      $('.error_list li').text(html);
-      $('.error_list').show();
-    }
-    function removeError()
-    {
-	$('.error_list').hide();
-	$('.error_list li').text(' ');
-    }
 
   $(".edit_synon tbody").sortable({
       placeholder: 'ui-state-highlight',
@@ -90,38 +76,36 @@ $(document).ready(function()
       $(":checked").removeAttr("checked");
     }
   });
-  
-  $("#edit_syn_form").submit(function()
-  {
-	removeError();
-	el_Array = $(".edit_synon tbody").sortable('toArray');
-	for(item in el_Array)
-	{
-	  $('#synonym_edit_orders').val( $('#synonym_edit_orders').val() + ',' + getIdInClasses( $('#'+el_Array[item]) ) );
-	}
 
-	$('#synonym_edit_basionym_id').val(' ');
-	$('#synonym_edit_basionym_id').val( $('.basionym_checkbox:checked').val() );
-	$.ajax({
-	  type: "POST",
-	  url: $(this).attr('action'),
-	  data: $(this).serialize(),
-	  success: function(html){
-	    if(html == "ok" )
-	    {
-	     $('.qtip-button').click();
-	    }
-	    else
-	    {
-	     addError(html);
-	    }
-	  },
-	  error: function(xhr)
-	  {
-	    addError('Error!  Status = ' + xhr.status);
-	  }});
-	  return false;
- });
+  $("form#edit_syn_form").submit(function()
+  {
+    el_Array = $(".edit_synon tbody").sortable('toArray');
+    for(item in el_Array)
+    {
+      $('#synonym_edit_orders').val( $('#synonym_edit_orders').val() + ',' + getIdInClasses( $('#'+el_Array[item]) ) );
+    }
+
+    $('#synonym_edit_basionym_id').val(' ');
+    $('#synonym_edit_basionym_id').val( $('.basionym_checkbox:checked').val() );
+    
+    hideForRefresh($('#edit_syn_screen'));
+
+    $.ajax(
+    {
+      type: "POST",
+      url: $(this).attr('action'),
+      data: $(this).serialize(),
+      success: function(html)
+      {
+        if(html == "ok" )
+        {
+          $('.qtip-button').click();
+        }
+        $('form#edit_syn_form').parent().before(html).remove();
+      }
+    });
+    return false;
+  });
 
 });
 </script>

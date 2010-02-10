@@ -1,7 +1,4 @@
 <?php slot('widget_title',__('Properties'));  ?>
-<ul class="hidden error_list">
-  <li></li>
-</ul>
 <table class="catalogue_table">
   <thead>
     <tr>
