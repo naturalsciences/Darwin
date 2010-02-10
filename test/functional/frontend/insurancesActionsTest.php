@@ -16,7 +16,7 @@ $browser->
   begin()->
     isStatusCode()->
     checkElement('div#insurances_screen')->
-    checkElement('form[class="edition"][id="insurances_form"]')->
+    checkElement('form[class="edition qtiped_form"][id="insurances_form"]')->
     checkElement('form input[type="hidden"][name="insurances[referenced_relation]"][value="igs"]')->
     checkElement('form input[type="hidden"][name="insurances[record_id]"][value="'.$items[0]->getId().'"]')->
     checkElement('form table tbody tr:nth-child(2) label[for="insurances_insurance_value"]')->
