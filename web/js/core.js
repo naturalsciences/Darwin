@@ -152,10 +152,10 @@ function addPropertyValue()
   $.ajax(
   {
     type: "GET",
-    url: $(this).attr('href')+ (0+$('.proprety_values tbody tr').length),
+    url: $(this).attr('href')+ (0+$('.property_values tbody tr').length),
     success: function(html)
     {
-      $('.proprety_values tbody').append(html);
+      $('.property_values tbody').append(html);
     }
   });
   return false;
