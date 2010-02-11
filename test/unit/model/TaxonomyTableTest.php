@@ -14,4 +14,4 @@ $t->is($taxs->getNameWithFormat(),'Falco Peregrinus eliticus', 'get Name without
 
 $taxs->setExtinct('true');
 
-$t->is($taxs->getNameWithFormat(),'Falco Peregrinus eliticus  †', 'get Name without extinct');
+$t->is($taxs->getNameWithFormat(),'Falco Peregrinus eliticus †', 'get Name without extinct');
