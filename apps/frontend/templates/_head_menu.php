@@ -57,7 +57,7 @@
         <li>
             <a href=""><?php echo __('Administration');?></a>
             <ul>
-                <li><a href="#">Users</a></li>
+                <li><?php echo link_to('Reload','account/reload');?></li>
                 <li><a href="#">Rights</a></li>
                 <li><a href="#">A Super Long truc en NL</a></li>
                 <li><a href="#">....</a></li>

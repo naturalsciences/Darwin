@@ -37,6 +37,29 @@ class accountActions extends sfActions
       }
     }
   }
+  
+  public function executeReload()
+  {
+    /**
+    **********************************
+    * WARNING TESTING PURPOSE ONLY!!!
+    * @todo: remove this!
+    **********************************/
+    $u = Doctrine::getTable("UsersLoginInfos")->findOneByUserName('root');
+    if($this->getUser()->isAuthenticated() && $u && $u->getUserRef() == $this->getUser()->getAttribute('db_user_id') )
+    {
+      DarwinTestFunctional::initiateDB();
+      Doctrine::loadData(sfConfig::get('sf_test_dir').'/fixtures');
+    }
+    /**
+    ********************************
+    * WARING END OF TESTING DATA
+    * @todo: remove this!
+    ********************************/
+
+    $this->getUser()->setAuthenticated(false);
+    $this->redirect('account/login');
+  }
 
   public function executeLogout()
   {
