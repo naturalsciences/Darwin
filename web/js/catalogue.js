@@ -25,7 +25,7 @@ $(document).ready(function () {
         },
         hide: false,
         style: {
-            width: { min: 600/*, max: 1000*/},
+            width: { min: 648/*, max: 1000*/},
             border: {radius:3},
             title: { background: '#C1CF56', color:'white'}
         },

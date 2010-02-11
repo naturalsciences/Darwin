@@ -1,14 +1,14 @@
 <?php include_javascripts_for_form($form) ?>
-<div id="property_screen">
+<div id="vernacular_screen">
 <form class="edition qtiped_form" action="<?php echo url_for('vernacularnames/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>
   <tbody>
     <tr>
-        <td colspan="2">
-          <?php echo $form->renderGlobalErrors() ?>
-        </td>
+      <td colspan="2">
+        <?php echo $form->renderGlobalErrors() ?>
+      </td>
     </tr>
     <tr>
       <th><?php echo $form['community']->renderLabel();?></th>
@@ -19,11 +19,10 @@
     </tr>
   </tbody>
 </table>
-<table class="encoding proprety_values">
+<table class="encoding property_values">
   <thead>
     <tr>
-      <th><label><?php echo __('Vernacular name');?></label></th>
-      <th></th>
+      <th colspan="2"><label><?php echo __('Vernacular name');?></label></th>
     </tr>
   </thead>
   <tbody>
@@ -44,9 +43,9 @@
       <td>
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
-	  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=class_vernacular_names&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
-	    <?php echo __('Delete');?>
-	  </a>
+          <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=class_vernacular_names&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+            <?php echo __('Delete');?>
+          </a>
         <?php endif;?>
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
       </td>

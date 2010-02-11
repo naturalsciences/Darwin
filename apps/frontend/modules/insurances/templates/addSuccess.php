@@ -43,11 +43,9 @@
       </td>
     </tr>
   </tbody>
-</table>
-<table class="bottom_actions">
   <tfoot>
     <tr>
-      <td>
+      <td colspan="2">
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
 	  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=insurances&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">

@@ -46,7 +46,6 @@ table td
   margin-top: 15px;
   margin-left:0;
   margin-right:0;
-  min-width:720px;
 }
 
 .hidden
@@ -491,7 +490,9 @@ input[type="submit"][class="search_submit"]:hover
   display:none;
   border: 2px solid #5BAABD;
   padding:1em;
-  margin:1em;  
+  margin-top:1em;  
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 /* Login Page */
@@ -579,29 +580,30 @@ table.encoding tbody
   border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }
-.proprety_values
+.property_values
 {
   margin: 0.5em;
-  width:550px;
+  margin-left:0;
+  width:98%;
 }
 
-.proprety_values td 
+.property_values td 
 {
   margin:0;
   padding:0.1em;
 }
 
-.proprety_values tbody input
+.property_values tbody input
 {
   width: 220px;
   margin-right: 32px;
   margin-left: 2px;
 }
 
-.proprety_values .unit_col
+.property_values .unit_col
 {
   text-align:right;
-  padding-right:0.9em;
+  padding-right:2.7em;
 }
 
 .catalogue_table
@@ -652,11 +654,16 @@ table.encoding tbody
   display:inline;
 }
 
-.proprety_values thead input, .proprety_values thead select
+.property_values thead input, .property_values thead select
 {
   width: 100px;
   margin-left:0.5em;
   margin-right:0.5em;
+}
+
+.property_values thead th
+{
+  padding-left:0.5em;
 }
 
 .add_value
@@ -668,7 +675,8 @@ table.encoding tbody
   font-size:small;
   background: white url(/images/widget_button_green.png) no-repeat;
   float:right;
-  margin-right:16px;
+  margin-right:2%;
+  padding-top:0.1em;
 }
 
 .add_value a
@@ -680,15 +688,15 @@ table.encoding tbody
 
 .bottom_actions
 {
-  width:566px;
+  width:99%;
 }
 
-.proprety_values .show , .proprety_values .add_item_button, .proprety_values .change_item_button 
+.property_values .show , .property_values .add_item_button, .property_values .change_item_button 
 {
    display:inline;
 }
 
-.proprety_values .hidden
+.property_values .hidden
 {
   display:none !important;
 }

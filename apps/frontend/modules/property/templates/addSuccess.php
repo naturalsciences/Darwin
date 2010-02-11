@@ -61,7 +61,7 @@
     </tr>
   </tbody>
 </table>
-<table class="encoding proprety_values">
+<table class="encoding property_values">
   <thead>
     <tr>
       <th><label>Value</label></th>
