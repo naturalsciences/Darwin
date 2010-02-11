@@ -19,6 +19,9 @@
  * @property string $birth_date
  * @property enum $gender
  * @property integer $db_user_type
+ * @property integer $people_id
+ * @property integer $approval_level
+ * @property People $People
  * @property Doctrine_Collection $UsersLanguages
  * @property Doctrine_Collection $UsersComm
  * @property Doctrine_Collection $UsersAddresses
@@ -52,6 +55,9 @@
  * @method string              getBirthDate()                     Returns the current record's "birth_date" value
  * @method enum                getGender()                        Returns the current record's "gender" value
  * @method integer             getDbUserType()                    Returns the current record's "db_user_type" value
+ * @method integer             getPeopleId()                      Returns the current record's "people_id" value
+ * @method integer             getApprovalLevel()                 Returns the current record's "approval_level" value
+ * @method People              getPeople()                        Returns the current record's "People" value
  * @method Doctrine_Collection getUsersLanguages()                Returns the current record's "UsersLanguages" collection
  * @method Doctrine_Collection getUsersComm()                     Returns the current record's "UsersComm" collection
  * @method Doctrine_Collection getUsersAddresses()                Returns the current record's "UsersAddresses" collection
@@ -84,6 +90,9 @@
  * @method Users               setBirthDate()                     Sets the current record's "birth_date" value
  * @method Users               setGender()                        Sets the current record's "gender" value
  * @method Users               setDbUserType()                    Sets the current record's "db_user_type" value
+ * @method Users               setPeopleId()                      Sets the current record's "people_id" value
+ * @method Users               setApprovalLevel()                 Sets the current record's "approval_level" value
+ * @method Users               setPeople()                        Sets the current record's "People" value
  * @method Users               setUsersLanguages()                Sets the current record's "UsersLanguages" collection
  * @method Users               setUsersComm()                     Sets the current record's "UsersComm" collection
  * @method Users               setUsersAddresses()                Sets the current record's "UsersAddresses" collection
@@ -171,11 +180,23 @@ abstract class BaseUsers extends sfDoctrineRecord
              'notnull' => true,
              'default' => 1,
              ));
+        $this->hasColumn('people_id', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('approval_level', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('People', array(
+             'local' => 'people_id',
+             'foreign' => 'id'));
+
         $this->hasMany('UsersLanguages', array(
              'local' => 'id',
              'foreign' => 'users_ref'));

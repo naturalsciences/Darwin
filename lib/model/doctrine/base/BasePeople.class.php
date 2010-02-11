@@ -26,6 +26,7 @@
  * @property string $activity_date_to
  * @property integer $activity_date_to_mask
  * @property Doctrine_Collection $CataloguePeople
+ * @property Doctrine_Collection $Users
  * @property Doctrine_Collection $PeopleLanguages
  * @property Doctrine_Collection $PeopleRelationships
  * @property Doctrine_Collection $PeopleComm
@@ -55,6 +56,7 @@
  * @method string              getActivityDateTo()          Returns the current record's "activity_date_to" value
  * @method integer             getActivityDateToMask()      Returns the current record's "activity_date_to_mask" value
  * @method Doctrine_Collection getCataloguePeople()         Returns the current record's "CataloguePeople" collection
+ * @method Doctrine_Collection getUsers()                   Returns the current record's "Users" collection
  * @method Doctrine_Collection getPeopleLanguages()         Returns the current record's "PeopleLanguages" collection
  * @method Doctrine_Collection getPeopleRelationships()     Returns the current record's "PeopleRelationships" collection
  * @method Doctrine_Collection getPeopleComm()              Returns the current record's "PeopleComm" collection
@@ -83,6 +85,7 @@
  * @method People              setActivityDateTo()          Sets the current record's "activity_date_to" value
  * @method People              setActivityDateToMask()      Sets the current record's "activity_date_to_mask" value
  * @method People              setCataloguePeople()         Sets the current record's "CataloguePeople" collection
+ * @method People              setUsers()                   Sets the current record's "Users" collection
  * @method People              setPeopleLanguages()         Sets the current record's "PeopleLanguages" collection
  * @method People              setPeopleRelationships()     Sets the current record's "PeopleRelationships" collection
  * @method People              setPeopleComm()              Sets the current record's "PeopleComm" collection
@@ -196,6 +199,10 @@ abstract class BasePeople extends sfDoctrineRecord
         $this->hasMany('CataloguePeople', array(
              'local' => 'id',
              'foreign' => 'people_ref'));
+
+        $this->hasMany('Users', array(
+             'local' => 'id',
+             'foreign' => 'people_id'));
 
         $this->hasMany('PeopleLanguages', array(
              'local' => 'id',
