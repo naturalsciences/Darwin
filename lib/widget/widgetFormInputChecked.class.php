@@ -20,6 +20,11 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
         $this->setOption('is_hidden', false);
     }
 
+  public function getJavaScripts()
+  {
+    return array('/js/jquery.autocomplete.min.js');
+  }
+
     public function getName($value)
     {
         if(is_numeric($value))

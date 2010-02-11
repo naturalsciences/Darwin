@@ -152,17 +152,23 @@ function addPropertyValue()
   $.ajax(
   {
     type: "GET",
-    url: $(this).attr('href')+ (0+$('.property_values tbody tr').length),
+    url: $(this).attr('href')+ (0+$('.proprety_values tbody tr').length),
     success: function(html)
     {
-      $('.property_values tbody').append(html);
+      $('.proprety_values tbody').append(html);
     }
   });
   return false;
 }
 
 $(document).ready(function () {
+
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();
   });
+
+  o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
+  $('ul.main_menu').supersubs().superfish(o);
+  $('ul.main_menu > li:not(.house):not(.exit)').append('<img class="highlight" src="/images/menu_expand.png" alt="" />');
+
 });

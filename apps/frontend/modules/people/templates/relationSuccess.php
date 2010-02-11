@@ -1,4 +1,5 @@
-<?php include_javascripts_for_form($form) ?>
+<?php use_stylesheets_for_form($form) ?>                                                      
+<?php use_javascripts_for_form($form) ?> 
 <div id="relation_screen">
 <form class="edition qtiped_form" action="<?php echo url_for('people/relation?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="relation_form">
 <?php echo $form['person_2_ref'];?>

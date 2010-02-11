@@ -18,4 +18,4 @@ jQuery(function ()
       });
       return false;
     });
-  })
+  });

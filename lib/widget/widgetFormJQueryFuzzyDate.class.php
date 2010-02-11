@@ -43,6 +43,11 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
     }
   }
 
+  public function getJavaScripts()
+  {
+    return array('/js/jquery-datepicker-'.$this->getOption('culture').'.js');
+  }
+
   /**
    * @param  string $name        The element name
    * @param  string $value       The date displayed in this widget
