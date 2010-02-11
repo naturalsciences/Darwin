@@ -58,6 +58,7 @@ class ExpeditionsForm extends BaseExpeditionsForm
                                                                                    ),
                                                                               array('class' => 'to_date')
                                                                              );
+    $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
     $this->validatorSchema['name'] = new sfValidatorString(array('required' => true, 'trim' => true));
     $this->validatorSchema['expedition_from_date'] = new fuzzyDateValidator(array('required' => false,
                                                                                   'from_date' => true,

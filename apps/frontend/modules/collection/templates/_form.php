@@ -18,6 +18,13 @@ $(document).ready(function ()
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
+        <th><?php echo $form['code']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['code']->renderError() ?>
+          <?php echo $form['code'] ?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['name']->renderLabel() ?></th>
         <td>
           <?php echo $form['name']->renderError() ?>
@@ -36,13 +43,6 @@ $(document).ready(function ()
         <td>
           <?php echo $form['collection_type']->renderError() ?>
           <?php echo $form['collection_type'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['code']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['code']->renderError() ?>
-          <?php echo $form['code'] ?>
         </td>
       </tr>
       <tr>

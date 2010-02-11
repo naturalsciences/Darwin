@@ -224,12 +224,12 @@ form th, form tr > td
   vertical-align:text-bottom;
 }
 
-input
+input, textarea
 {
   border:1px solid #BBBDBC;
 }
 
-input:focus
+input:focus, textarea:focus
 {
   border:1px solid #C1CF56;
 }
@@ -648,7 +648,7 @@ table.encoding tbody
 .property_values .unit_col
 {
   text-align:right;
-  padding-right:2.7em;
+  padding-right:2.8em;
 }
 
 .catalogue_table
@@ -656,12 +656,6 @@ table.encoding tbody
   width:100%;
   text-align:left;
 }
-
-/*#searchCatalogue_name
-{
-  min-width: 20em;
-}
-*/
 
 .catalogue_table thead
 {
@@ -734,7 +728,7 @@ table.encoding tbody
 
 .bottom_actions
 {
-  width:99%;
+  width:99.5%;
 }
 
 .property_values .show , .property_values .add_item_button, .property_values .change_item_button 

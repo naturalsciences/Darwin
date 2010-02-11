@@ -37,6 +37,7 @@ class IgsForm extends BaseIgsForm
                                                                         ),
                                                                    array('class' => 'to_date')
                                                                   );
+    $this->widgetSchema['ig_num']->setAttributes(array('class'=>'small_size'));
     $this->validatorSchema['ig_num'] = new sfValidatorString(array('required' => true, 'trim' => true));
     $this->validatorSchema['ig_date'] = new fuzzyDateValidator(array('required' => false,
                                                                      'from_date' => true,

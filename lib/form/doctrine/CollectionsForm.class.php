@@ -27,6 +27,9 @@ class CollectionsForm extends BaseCollectionsForm
       'choices' =>  array(),
     ));
 
+    $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
+    $this->widgetSchema['code']->setAttributes(array('class'=>'small_size'));
+
     $this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
     
     if(! $this->getObject()->isNew())

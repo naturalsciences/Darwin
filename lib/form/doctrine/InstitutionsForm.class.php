@@ -25,5 +25,7 @@ class InstitutionsForm extends BaseInstitutionsForm
 	'change_label' => 'Pick a type in the list',
 	'add_label' => 'Add another type',
     ));
+
+    $this->widgetSchema['additional_names']->setAttributes(array('class'=>'small_size'));
   }
 }

@@ -9,7 +9,7 @@
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
-        <th><?php echo $form['family_name']->renderLabel('Name') ?></th>
+        <th class="top_aligned"><?php echo $form['family_name']->renderLabel('Name') ?></th>
         <td>
           <?php echo $form['family_name']->renderError() ?>
           <?php echo $form['family_name'] ?>
@@ -23,7 +23,7 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['sub_type']->renderLabel('Type') ?></th>
+        <th class="top_aligned"><?php echo $form['sub_type']->renderLabel('Type') ?></th>
         <td>
           <?php echo $form['sub_type']->renderError() ?>
           <?php echo $form['sub_type'] ?>

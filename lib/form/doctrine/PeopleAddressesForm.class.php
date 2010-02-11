@@ -22,5 +22,11 @@ class PeopleAddressesForm extends BasePeopleAddressesForm
     $this->widgetSchema['zip_code'] = new sfWidgetFormInput();
     $this->widgetSchema['country'] = new sfWidgetFormInput();
 
+    $this->widgetSchema['entry']->setAttributes(array('class'=>'large_size'));
+    $this->widgetSchema['extended_address']->setAttributes(array('class'=>'large_size'));
+    $this->widgetSchema['po_box']->setAttributes(array('class'=>'small_size'));
+    $this->widgetSchema['zip_code']->setAttributes(array('class'=>'small_size'));
+    $this->widgetSchema['region']->setAttributes(array('class'=>'small_size'));
+
   }
 }

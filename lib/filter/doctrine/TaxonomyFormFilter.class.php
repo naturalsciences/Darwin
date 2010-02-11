@@ -17,6 +17,7 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden();
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
+    $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $this->validatorSchema['name'] = new sfValidatorString(array('required' => true,
                                                                  'trim' => true
                                                                 )
