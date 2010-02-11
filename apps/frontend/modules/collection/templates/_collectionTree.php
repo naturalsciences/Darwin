@@ -35,7 +35,7 @@ $(document).ready(function () {
         <?php echo image_tag ('individual_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
         <span><?php echo $col_item->getName();?>
         <?php if(! $is_choose):?>
-          <?php echo link_to(__('(e)'),'collection/edit?id='.$col_item->getId());?>
+	  <?php echo link_to(image_tag('edit.png'),'collection/edit?id='.$col_item->getId());?>
         <?php endif;?></span></div>
         <?php $prev_level =$col_item->getLevel();?>
       <?php endforeach;?>

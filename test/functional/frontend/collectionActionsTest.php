@@ -20,7 +20,7 @@ $browser->
     checkElement('h2:last','UGMM')->
     checkElement('.treelist:first > ul > li',1)->
     checkElement('.treelist:first > ul > li:first span','/Vertebrates/')->
-    checkElement('.treelist:first > ul > li:first span','/(e)/')->
+    checkElement('.treelist:first > ul > li:first span a img')->
     checkElement('.treelist:first > ul > li:first > ul > li',2)->
     checkElement('.treelist:first > ul > li:first > ul > li:first span', '/Amphibia/')->
     checkElement('.treelist:last > ul > li',1)->
@@ -85,7 +85,7 @@ $browser->
   end()->
   
   info('Edit')->
-  click('(e)', array(), array('position' => 5))->
+  click('span > a', array(), array('position' => 5))->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
@@ -122,7 +122,7 @@ $browser->
 
 
  info('Delete')->
-  click('(e)', array(), array('position' => 6))->
+  click('span > a', array(), array('position' => 6))->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
