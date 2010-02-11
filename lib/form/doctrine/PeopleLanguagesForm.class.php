@@ -14,5 +14,6 @@ class PeopleLanguagesForm extends BasePeopleLanguagesForm
     unset($this['id']);
     $this->widgetSchema['people_ref'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['language_country'] = new sfWidgetFormI18nChoiceLanguage(array('culture' => 'en'));
+    $this->validatorSchema['language_country'] = new sfValidatorI18nChoiceLanguage(array('required' => true) );
   }
 }
