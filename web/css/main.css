@@ -545,7 +545,6 @@ input[type="text"][class="xlarge_size"]
 
 #login_page label
 {
-  float: left;
   width: 7em;
   font-weight: bold;
 }
@@ -569,33 +568,33 @@ input[type="text"][class="xlarge_size"]
   -webkit-border-radius: 5px;
 }
 
-#login_page ul.form
-{
-  margin: auto;
-  width: 50%;
-  margin-top:1em;
-}
-
-#login_page ul.form li
+#login_page table
 {
   margin:auto;
 }
 
 #login_page input
 {
-padding: 2px;
+  padding: 2px;
+  width:18em;
 }
 
 #login_page input[type=password]
 {
   background: white url(/images/key.png) no-repeat 3px 3px;
-  padding-left: 25px;
+  padding-left:2em;
 }
 
 #login_page input#login_username
 {
-  padding-left: 25px;
   background: white url(/images/user_suit.png) no-repeat 3px 3px;
+  padding-left:2em;
+}
+
+#login_page input[type=submit]
+{
+  width:auto;
+  float:right;
 }
 
 #ui-datepicker-div

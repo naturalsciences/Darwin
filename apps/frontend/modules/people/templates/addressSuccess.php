@@ -52,7 +52,7 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['country']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['country']->renderLabel();?></th>
       <td>
         <?php echo $form['country']->renderError(); ?>
         <?php echo $form['country'];?>

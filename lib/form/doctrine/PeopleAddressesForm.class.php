@@ -20,13 +20,22 @@ class PeopleAddressesForm extends BasePeopleAddressesForm
     $this->widgetSchema['locality'] = new sfWidgetFormInput();
     $this->widgetSchema['region'] = new sfWidgetFormInput();
     $this->widgetSchema['zip_code'] = new sfWidgetFormInput();
-    $this->widgetSchema['country'] = new sfWidgetFormInput();
+    $this->widgetSchema['country'] = new widgetFormSelectComplete(array('model' => 'PeopleAddresses',
+                                                                        'table_method' => 'getDistinctCountries',
+                                                                        'method' => 'getCountries',
+                                                                        'key_method' => 'getCountries',
+                                                                        'add_empty' => false,
+                                                                        'change_label' => 'Pick a country in the list',
+                                                                        'add_label' => 'Add another country',
+                                                                       )
+                                                                 );
 
     $this->widgetSchema['entry']->setAttributes(array('class'=>'large_size'));
     $this->widgetSchema['extended_address']->setAttributes(array('class'=>'large_size'));
     $this->widgetSchema['po_box']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['zip_code']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['region']->setAttributes(array('class'=>'small_size'));
+    $this->widgetSchema['country']->setAttributes(array('class'=>'medium_size'));
 
   }
 }

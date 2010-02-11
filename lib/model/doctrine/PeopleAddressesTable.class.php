@@ -4,5 +4,14 @@
  */
 class PeopleAddressesTable extends DarwinTable
 {
+  /**
+  * Get Distincts Countries
+  * @return array an Array of countries in keys
+  */
+  public function getDistinctCountries()
+  {
+    return $this->createDistinct('PeopleAddresses', 'country', 'countries')->execute();
+  }
+
 
 }
