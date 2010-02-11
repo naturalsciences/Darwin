@@ -17,13 +17,6 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['po_box']->renderLabel();?></th>
-      <td>
-        <?php echo $form['po_box']->renderError(); ?>
-        <?php echo $form['po_box'];?>
-      </td>
-    </tr>
-    <tr>
       <th><?php echo $form['extended_address']->renderLabel();?></th>
       <td>
         <?php echo $form['extended_address']->renderError(); ?>
@@ -31,10 +24,10 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['locality']->renderLabel();?></th>
+      <th><?php echo $form['po_box']->renderLabel();?></th>
       <td>
-        <?php echo $form['locality']->renderError(); ?>
-        <?php echo $form['locality'];?>
+        <?php echo $form['po_box']->renderError(); ?>
+        <?php echo $form['po_box'];?>
       </td>
     </tr>
     <tr>
@@ -42,6 +35,13 @@
       <td>
         <?php echo $form['zip_code']->renderError(); ?>
         <?php echo $form['zip_code'];?>
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['locality']->renderLabel();?></th>
+      <td>
+        <?php echo $form['locality']->renderError(); ?>
+        <?php echo $form['locality'];?>
       </td>
     </tr>
     <tr>
@@ -59,7 +59,7 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['tag']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['tag']->renderLabel();?></th>
       <td>
         <?php echo $form['tag']->renderError(); ?>
         <?php echo $form['tag'];?>

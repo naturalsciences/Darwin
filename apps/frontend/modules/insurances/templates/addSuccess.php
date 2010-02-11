@@ -22,7 +22,7 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['insurance_currency']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['insurance_currency']->renderLabel();?></th>
       <td>
         <?php echo $form['insurance_currency']->renderError(); ?>
         <?php echo $form['insurance_currency'];?>

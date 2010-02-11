@@ -24,7 +24,7 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['tag']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['tag']->renderLabel();?></th>
       <td>
         <?php echo $form['tag']->renderError(); ?>
         <?php echo $form['tag'];?>

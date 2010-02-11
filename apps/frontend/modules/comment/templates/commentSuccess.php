@@ -15,7 +15,7 @@
         <?php echo $form['notion_concerned'];?>
       </td>
     <tr>
-      <th><?php echo $form['comment']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['comment']->renderLabel();?></th>
       <td>
         <?php echo $form['comment']->renderError(); ?>
         <?php echo $form['comment'];?>

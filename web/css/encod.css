@@ -61,16 +61,6 @@
 	border:1px solid #C1CF56;
 }
 
-form.edition input
-{
-	border:1px solid #BBBDBC;
-}
-
-form.edition input:focus
-{
-	border:1px solid #C1CF56;
-}
-
 .form
 {
 	line-height: 20px;

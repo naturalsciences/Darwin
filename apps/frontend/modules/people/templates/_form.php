@@ -72,7 +72,7 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['db_people_type']->renderLabel('Type') ?></th>
+        <th class="top_aligned"><?php echo $form['db_people_type']->renderLabel('Type') ?></th>
         <td>
           <?php echo $form['db_people_type']->renderError() ?>
           <?php echo $form['db_people_type'] ?>

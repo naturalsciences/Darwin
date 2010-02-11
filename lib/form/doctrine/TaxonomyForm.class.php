@@ -12,6 +12,7 @@ class TaxonomyForm extends BaseTaxonomyForm
   public function configure()
   {
     $this->widgetSchema['name'] = new sfWidgetFormInput();
+    $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $status = array($this->getI18N()->__('valid'), $this->getI18N()->__('invalid'), $this->getI18N()->__('depracated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices'  => array_combine($status,$status),

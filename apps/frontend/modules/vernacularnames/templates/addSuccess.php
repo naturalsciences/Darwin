@@ -11,7 +11,7 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['community']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['community']->renderLabel();?></th>
       <td>
         <?php echo $form['community']->renderError(); ?>
         <?php echo $form['community'];?>

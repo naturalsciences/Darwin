@@ -130,7 +130,9 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
       $this->widgetSchema['property_unit']->setOption('forced_choices',array(''=>''));
 
     $this->widgetSchema['property_method'] = new sfWidgetFormInput();
+    $this->widgetSchema['property_method']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['property_tool'] = new sfWidgetFormInput();
+    $this->widgetSchema['property_tool']->setAttributes(array('class'=>'medium_size'));
 
     $this->embedRelation('PropertiesValues');
     

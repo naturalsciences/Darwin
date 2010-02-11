@@ -23,11 +23,15 @@ class PeopleForm extends BasePeopleForm
       $this['activity_date_to_mask']
     );
     
-    $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
-    $this->widgetSchema['family_name'] = new sfWidgetFormInput();
-    $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['title'] = new sfWidgetFormInput();
+    $this->widgetSchema['given_name'] = new sfWidgetFormInput();
+    $this->widgetSchema['family_name'] = new sfWidgetFormInput();
+    $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
 
+    $this->widgetSchema['title']->setAttributes(array('class'=>'small_size'));
+    $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
+    $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));
+    $this->widgetSchema['additional_names']->setAttributes(array('class'=>'medium_size'));
 
     $this->widgetSchema['db_people_type'] = new sfWidgetFormChoice(array(
       'choices'        => People::getTypes(),

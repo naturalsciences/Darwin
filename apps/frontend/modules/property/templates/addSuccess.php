@@ -11,21 +11,21 @@
         </td>
     </tr>
     <tr>
-      <th><?php echo $form['property_type']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['property_type']->renderLabel();?></th>
       <td>
         <?php echo $form['property_type']->renderError(); ?>
         <?php echo $form['property_type'];?>
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['property_sub_type']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['property_sub_type']->renderLabel();?></th>
       <td>
         <?php echo $form['property_sub_type']->renderError(); ?>
         <?php echo $form['property_sub_type'];?>
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['property_qualifier']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['property_qualifier']->renderLabel();?></th>
       <td>
         <?php echo $form['property_qualifier']->renderError(); ?>
         <?php echo $form['property_qualifier'];?>
