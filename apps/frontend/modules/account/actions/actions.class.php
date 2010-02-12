@@ -15,7 +15,7 @@ class accountActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeLogin($request)
+  public function executeLogin(sfWebRequest $request)
   {
     $this->redirectIf($this->getUser()->isAuthenticated(),'@homepage');
     $this->form = new LoginForm();
@@ -38,7 +38,24 @@ class accountActions extends sfActions
     }
   }
   
-  public function executeReload()
+  public function executeProfile(sfWebRequest $request)
+  {
+    $this->user =  Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id') );
+    $this->forward404Unless($this->user);
+
+    $this->form = new UsersForm($this->user);
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('users'));
+      if($this->form->isValid())
+      {
+	$this->form->save();
+        $this->redirect('account/profile');
+      }
+    }
+  }
+
+  public function executeReload(sfWebRequest $request)
   {
     /**
     **********************************

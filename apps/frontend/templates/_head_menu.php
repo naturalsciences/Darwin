@@ -2,7 +2,7 @@
     <ul class="sf-menu main_menu">
         <li class="house"><?php echo link_to(image_tag('home.png', 'alt=Home'),'board/index');?></li>
         <li>
-            <a href="#a"><?php echo __('My Profile');?></a>
+            <?php echo link_to(__('My Profile'),'account/profile');?>
             <ul>
                 <li><a href="#aa">My data</a></li>
                 <li><a href="#aa">Preferences</a></li>
