@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(19, new lime_output_color());
+$t = new lime_test(23, new lime_output_color());
 $p = new People();
 $p->setFormatedName('Mr Poilux Duchesne');
 $t->is($p->__toString(),'Mr Poilux Duchesne','to string get FormatedName');

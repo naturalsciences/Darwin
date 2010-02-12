@@ -1,6 +1,6 @@
 <?php                                                                                     
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');                               
-$t = new lime_test(6, new lime_output_color());                                          
+$t = new lime_test(4, new lime_output_color());                                          
 
 $t->diag('findByIgNumLimited');
 
