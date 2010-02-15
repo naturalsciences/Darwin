@@ -46,7 +46,7 @@ abstract class BaseUsersForm extends BaseFormDoctrine
       'additional_names'      => new sfValidatorString(array('required' => false)),
       'birth_date_mask'       => new sfValidatorInteger(array('required' => false)),
       'birth_date'            => new sfValidatorString(array('required' => false)),
-      'gender'                => new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false)),
+      'gender'                => new sfValidatorChoice(array('choices' => array(0 => 'M', 1 => 'F'), 'required' => false)),
       'db_user_type'          => new sfValidatorInteger(array('required' => false)),
       'people_id'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'required' => false)),
       'approval_level'        => new sfValidatorInteger(array('required' => false)),

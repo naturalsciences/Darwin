@@ -50,7 +50,7 @@ abstract class BasePeopleForm extends BaseFormDoctrine
       'additional_names'        => new sfValidatorString(array('required' => false)),
       'birth_date_mask'         => new sfValidatorInteger(array('required' => false)),
       'birth_date'              => new sfValidatorString(array('required' => false)),
-      'gender'                  => new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false)),
+      'gender'                  => new sfValidatorChoice(array('choices' => array(0 => 'M', 1 => 'F'), 'required' => false)),
       'db_people_type'          => new sfValidatorInteger(array('required' => false)),
       'end_date_mask'           => new sfValidatorInteger(array('required' => false)),
       'end_date'                => new sfValidatorString(array('required' => false)),

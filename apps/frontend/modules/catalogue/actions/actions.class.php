@@ -21,7 +21,7 @@ class catalogueActions extends DarwinActions
     if(! $this->relation)
     {
      $this->relation = new CatalogueRelationships();
-     $this->relation->setRecordId1($request->getParameter('rid'));
+     $this->relation->setRecordId_1($request->getParameter('rid'));
      $this->relation->setReferencedRelation($request->getParameter('table'));
      $this->relation->setRelationshipType($request->getParameter('type') == 'rename' ? 'current_name' : 'recombined from');
     }

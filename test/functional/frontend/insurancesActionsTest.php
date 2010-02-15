@@ -23,7 +23,7 @@ $browser->
     checkElement('form table tbody tr:nth-child(2) input[id="insurances_insurance_value"]')->
     checkElement('form table tbody tr:nth-child(3) input[id="insurances_insurance_currency_input"][value="€"]')->
     checkElement('form table tbody tr:nth-child(3) select option', 0)->
-    checkElement('form table tbody tr:nth-child(4) select[id="insurances_insurance_year"] option[value="0"][selected="selected"]', '-')->
+    checkElement('form table tbody tr:nth-child(4) select[id="insurances_insurance_year"] option[selected="selected"]', '-')->
   end()->
   info('Try to save no value for IG 10795: wait for value required error...')->
   click('Save', 

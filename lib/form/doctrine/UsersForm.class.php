@@ -38,7 +38,8 @@ class UsersForm extends BaseUsersForm
      $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
      $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
      $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
-  
+     $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
+
      $this->validatorSchema->setPostValidator(
       new sfValidatorSchemaCompare('password', '==', 'password_again',
 	array(),

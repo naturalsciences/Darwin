@@ -248,7 +248,7 @@ class peopleActions extends DarwinActions
     else
     {
      $this->relation = new PeopleRelationships();
-     $this->relation->setPerson2Ref($request->getParameter('ref_id'));
+     $this->relation->setPerson_2Ref($request->getParameter('ref_id'));
     }
      
     $this->form = new PeopleRelationshipsForm($this->relation);

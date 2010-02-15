@@ -29,7 +29,7 @@ abstract class BaseCollectionsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'collection_type'          => new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => false)),
+      'collection_type'          => new sfValidatorChoice(array('choices' => array(0 => 'mix', 1 => 'observation', 2 => 'physical'), 'required' => false)),
       'code'                     => new sfValidatorString(),
       'name'                     => new sfValidatorString(),
       'institution_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Institution'))),

@@ -38,6 +38,7 @@ class PeopleForm extends BasePeopleForm
       'renderer_class' => 'sfWidgetFormSelectDoubleList',
     ));
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('choices' => array_keys(People::getTypes()), 'required' => false, 'multiple' => true));
+    $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
 
     $this->Postvalidators = array();
     $this->initiateActivityItems();
