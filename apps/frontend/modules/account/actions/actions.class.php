@@ -188,7 +188,16 @@ class accountActions extends sfActions
 	if($this->form->isValid())
 	{
 	  try {
+	    if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage() )
+	    {
+	      Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->getUser()->getAttribute('db_user_id'));
+	    }
+	    
 	    $this->form->save();
+	    if($this->form->getValue('preferred_language'))
+	    {
+	      $this->getUser()->setCulture($this->form->getValue('language_country'));
+	    }
 	    return $this->renderText('ok');
 	  }
 	  catch(Doctrine_Exception $e)

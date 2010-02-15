@@ -228,6 +228,10 @@ class peopleActions extends DarwinActions
 	if($this->form->isValid())
 	{
 	  try {
+	    if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage())
+	    {
+	      Doctrine::getTable('PeopleLanguages')->removeOldPreferredLang($request->getParameter('ref_id'));
+	    }
 	    $this->form->save();
 	    return $this->renderText('ok');
 	  }
