@@ -645,6 +645,7 @@ create table users_addresses
        (
         id integer not null default nextval('users_addresses_id_seq'),
         organization_unit varchar,
+        tag varchar not null,
         constraint pk_users_addresses primary key (id),
         constraint fk_users_addresses_users foreign key (person_user_ref) references users(id) on delete cascade
        )
@@ -662,6 +663,8 @@ comment on column users_addresses.region is 'Region';
 comment on column users_addresses.zip_code is 'Zip code';
 comment on column users_addresses.organization_unit is 'When a physical user is in relationship with a moral one, indicates the department or unit the user is related to';
 comment on column users_addresses.person_user_role is 'User role in the organization referenced';
+comment on column users_addresses.tag is 'List of descriptive tags: home, work,...';
+
 
 create sequence users_login_info_id_seq;
 
