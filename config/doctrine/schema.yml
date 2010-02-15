@@ -249,8 +249,9 @@ PeopleLanguages:
 
 UsersLanguages:
     columns:
-        users_ref: { type: integer, notnull: true, primary:true}
-        language_country: { type: string, notnull: true, default: en_gb, primary:true}
+        id: { type: integer, primary: true, autoincrement: true}
+        users_ref: { type: integer, notnull: true}
+        language_country: { type: string, notnull: true, default: en_gb}
         mother: { type: boolean, notnull: true, default: true}
         preferred_language: { type: boolean, notnull: true, default: false}
     relations:

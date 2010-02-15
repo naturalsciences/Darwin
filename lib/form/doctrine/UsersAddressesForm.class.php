@@ -20,6 +20,8 @@ class UsersAddressesForm extends BaseUsersAddressesForm
     $this->widgetSchema['locality'] = new sfWidgetFormInput();
     $this->widgetSchema['region'] = new sfWidgetFormInput();
     $this->widgetSchema['zip_code'] = new sfWidgetFormInput();
+    $this->widgetSchema['organization_unit'] = new sfWidgetFormInput();
+    $this->widgetSchema['person_user_role'] = new sfWidgetFormInput();
     $this->widgetSchema['country'] = new widgetFormSelectComplete(array('model' => 'UsersAddresses',
                                                                         'table_method' => 'getDistinctCountries',
                                                                         'method' => 'getCountries',
@@ -36,6 +38,7 @@ class UsersAddressesForm extends BaseUsersAddressesForm
     $this->widgetSchema['zip_code']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['region']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['country']->setAttributes(array('class'=>'medium_size'));
-
+    $this->widgetSchema['organization_unit']->setAttributes(array('class'=>'medium_size'));
+    $this->widgetSchema['person_user_role']->setAttributes(array('class'=>'medium_size'));
   }
 }

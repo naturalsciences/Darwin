@@ -177,7 +177,7 @@ class accountActions extends sfActions
     else
     {
      $this->lang = new UsersLanguages();
-     $this->lang->setPeopleRef($request->getParameter('ref_id'));
+     $this->lang->setUsersRef($request->getParameter('ref_id'));
     }
      
     $this->form = new UsersLanguagesForm($this->lang);

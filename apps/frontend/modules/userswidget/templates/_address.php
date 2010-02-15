@@ -6,6 +6,7 @@
       <th><?php echo __('Region');?></th>
       <th><?php echo __('Locality');?></th>
       <th><?php echo __('Address');?></th>
+      <th><?php echo __('Organisation');?></th>
       <th><?php echo __('Tags');?></th>
       <th></th>
     </tr>
@@ -29,6 +30,9 @@
       <?php echo $address->getEntry();?>
       <?php echo $address->getPoBox();?>
       <?php echo $address->getExtendedAddress();?>
+    </td>
+    <td>
+      <?php echo $address->getOrganizationUnit();?>
     </td>
     <td>
       <?php foreach($address->getTagsAsArray() as $item):?>

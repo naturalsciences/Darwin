@@ -15,15 +15,17 @@ abstract class BaseUsersLanguagesForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'users_ref'          => new sfWidgetFormInputHidden(),
-      'language_country'   => new sfWidgetFormInputHidden(),
+      'id'                 => new sfWidgetFormInputHidden(),
+      'users_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
+      'language_country'   => new sfWidgetFormTextarea(),
       'mother'             => new sfWidgetFormInputCheckbox(),
       'preferred_language' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
-      'users_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'users_ref', 'required' => false)),
-      'language_country'   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'language_country', 'required' => false)),
+      'id'                 => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'users_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
+      'language_country'   => new sfValidatorString(array('required' => false)),
       'mother'             => new sfValidatorBoolean(array('required' => false)),
       'preferred_language' => new sfValidatorBoolean(array('required' => false)),
     ));

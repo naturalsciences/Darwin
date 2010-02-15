@@ -10,7 +10,21 @@
         </td>
     </tr>
     <tr>
-      <th><?php echo $form['entry']->renderLabel();?></th>
+      <th><?php echo $form['organization_unit']->renderLabel('Organization');?></th>
+      <td>
+        <?php echo $form['organization_unit']->renderError(); ?>
+        <?php echo $form['organization_unit'];?>
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['person_user_role']->renderLabel('Role in the organization');?></th>
+      <td>
+        <?php echo $form['person_user_role']->renderError(); ?>
+        <?php echo $form['person_user_role'];?>
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['entry']->renderLabel('Street');?></th>
       <td>
         <?php echo $form['entry']->renderError(); ?>
         <?php echo $form['entry'];?>
