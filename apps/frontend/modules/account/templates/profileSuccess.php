@@ -69,6 +69,23 @@
 	      <?php echo $form['password_again'] ?>
 	    </td>
 	  </tr>
+	  <tr>
+	    <td colspan="2"><hr /></td>
+	  </tr>
+	  <tr>
+	    <th><?php echo $form['people_id']->renderLabel('Reference to a People') ?></th>
+	    <td class="trust_level_<?php echo $form->getObject()->getApprovalLevel()?>">
+	      <?php echo $form['people_id']->renderError() ?>
+	      <?php if($form->getObject()->getApprovalLevel() == 0):?>
+		<h3 class="status"><?php echo __('No link saved');?></h3>
+	      <?php elseif($form->getObject()->getApprovalLevel() == 1):?>
+		<h3 class="status"><?php echo __('The link with your "People" is waiting for approval');?></h3>
+	      <?php elseif($form->getObject()->getApprovalLevel() == 2):?>
+		<h3 class="status"><?php echo __('The link with your "People" is approved');?></h3>
+	      <?php endif;?>
+	      <?php echo $form['people_id'] ?>
+	    </td>
+	  </tr>
 	</tbody>
 	<tfoot>
 	  <tr>

@@ -916,6 +916,30 @@ tr.details .details_info tr:hover
   padding-left: 0.5em;
 }
 
+/** Profile Page **/
+.trust_level_0 h3, .trust_level_1 h3, .trust_level_2 h3
+{
+  text-align:center;
+  margin-bottom: 2em;
+}
+.trust_level_0 h3 { color: gray; }
+.trust_level_1 h3 { color: #F4BB0F; }
+.trust_level_2 h3 { color: green; }
+
+.trust_level_0
+{
+  border: 1px dashed gray;
+}
+.trust_level_1
+{
+  border: 1px solid #F4BB0F;
+}
+
+.trust_level_2
+{
+  border: 1px solid green;
+}
+
 /** Used for errors in search form and placed in a div.error: purpose is to align it on search form **/
 
 .error

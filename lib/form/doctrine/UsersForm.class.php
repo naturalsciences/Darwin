@@ -32,15 +32,23 @@ class UsersForm extends BaseUsersForm
     $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['additional_names']->setAttributes(array('class'=>'medium_size'));
 
+    $this->widgetSchema['people_id'] = new widgetFormButtonRef(array(
+       'model' => 'People',
+       'method' => 'getFormatedName',
+       'link_url' => 'people/choose',
+       'nullable' => true,
+       'box_title' => $this->getI18N()->__('Choose Yourself'),
+     ));
 
-     $this->widgetSchema['password']  = new sfWidgetFormInputPassword();
-     $this->widgetSchema['password_again']  = new sfWidgetFormInputPassword();
-     $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
-     $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
-     $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
-     $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
 
-     $this->validatorSchema->setPostValidator(
+    $this->widgetSchema['password']  = new sfWidgetFormInputPassword();
+    $this->widgetSchema['password_again']  = new sfWidgetFormInputPassword();
+    $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
+    $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
+    $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
+
+    $this->validatorSchema->setPostValidator(
       new sfValidatorSchemaCompare('password', '==', 'password_again',
 	array(),
 	array('invalid' => 'Passwords must be equals and can not contains spaces')

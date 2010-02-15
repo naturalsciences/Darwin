@@ -48,25 +48,38 @@ class accountActions extends sfActions
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->getWidgets('users_widget');
   
+    $old_people = $this->user->getPeopleId();
+
     $this->form = new UsersForm($this->user);
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users'));
       if($this->form->isValid())
       {
-	$this->form->save();
-	if($this->form->getValue('password') != '')
-	{
+	  $this->form->updateObject();
+	    
+	  //If People Ref is changed
+	  if($this->form->getValue('people_id') != $old_people)
+	  {
+	    if($this->form->getValue('people_id') != 0)
+	      $this->form->getObject()->setApprovalLevel(1);
+	    else
+	      $this->form->getObject()->setApprovalLevel(0);
+	  }
+	  // Let's save the object
+	  $this->form->getObject()->save();
+
+	  if($this->form->getValue('password') != '')
+	  {
 	    $login_infos = $this->user->UsersLoginInfos;
 	    if( count($login_infos) != 1)
 	    {
 	      print 'Ouups'; exit; // @TODO: replace this by a proper way
 	    }
-	    $login_infos[0]->sDebug();
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
-	}
-        return $this->redirect('account/profile');
+	  }
+	  return $this->redirect('account/profile');
       }
     }
   }
@@ -198,6 +211,7 @@ class accountActions extends sfActions
 	    {
 	      $this->getUser()->setCulture($this->form->getValue('language_country'));
 	    }
+	    
 	    return $this->renderText('ok');
 	  }
 	  catch(Doctrine_Exception $e)
