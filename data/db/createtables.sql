@@ -662,14 +662,19 @@ comment on column users_addresses.region is 'Region';
 comment on column users_addresses.zip_code is 'Zip code';
 comment on column users_addresses.organization_unit is 'When a physical user is in relationship with a moral one, indicates the department or unit the user is related to';
 comment on column users_addresses.person_user_role is 'User role in the organization referenced';
+
+create sequence users_login_info_id_seq;
+
 create table users_login_infos
        (
+        id integer not null default nextval('users_login_info_id_seq'),
         user_ref integer not null,
         login_type varchar not null default 'local',
         user_name varchar,
         password varchar,
-        system_id varchar,
+        login_system varchar,
         last_seen timestamp,
+        constraint pk_users_login_infos primary key (id),
         constraint unq_users_login_infos unique (user_ref, login_type),
         constraint fk_users_login_infos_users foreign key (user_ref) references users(id) on delete cascade
        );
@@ -678,7 +683,7 @@ comment on column users_login_infos.user_ref is 'Identifier of user - id field o
 comment on column users_login_infos.login_type is 'Type of identification system';
 comment on column users_login_infos.user_name is 'For some system (local, ldap, kerberos,...) provides the username (encrypted form)';
 comment on column users_login_infos.password is 'For some system (local, ldap, kerberos,...) provides the password (encrypted form)';
-comment on column users_login_infos.system_id is 'For some system (shibbolet, openID,...) provides the user id';
+comment on column users_login_infos.login_system is 'For some system (shibbolet, openID,...) provides the user id';
 comment on column users_login_infos.last_seen is 'Last time the user has logged in.';
 create table template_people_users_multimedia
        (
