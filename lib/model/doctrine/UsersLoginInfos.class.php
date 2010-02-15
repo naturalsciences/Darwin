@@ -5,5 +5,8 @@
  */
 class UsersLoginInfos extends BaseUsersLoginInfos
 {
-
+  public function sDebug()
+  {
+    return "-".$this->_state;
+  }
 }

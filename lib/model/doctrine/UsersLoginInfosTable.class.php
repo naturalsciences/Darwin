@@ -4,5 +4,15 @@
  */
 class UsersLoginInfosTable extends DarwinTable
 {
-
+  public function getInfoForUser($user_id, $system=null)
+  {
+    $q = Doctrine_Query::create()
+            ->from('UsersLoginInfos u')
+            ->andWhere('u.user_ref = ?', $user_id);
+    if( $system !== null)
+    {
+      $q->andWhere('ul.system_id = ?',$system);
+    }
+    return $q->execute();
+  }
 }

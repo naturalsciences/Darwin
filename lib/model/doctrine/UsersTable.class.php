@@ -17,7 +17,7 @@ class UsersTable extends DarwinTable
             ->leftJoin('u.UsersLoginInfos ul')
             ->andWhere('ul.user_name = ?',$username)
             ->andWhere('ul.password = ?',sha1(sfConfig::get('app_salt').$password))
-            ->andWhere('ul.system_id is null');
+            ->andWhere('ul.login_system is null');
         return $q->fetchOne();
     }
 }

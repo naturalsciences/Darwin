@@ -13,17 +13,21 @@ abstract class BaseUsersLoginInfosFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'login_type' => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'user_name'  => new sfWidgetFormFilterInput(),
-      'password'   => new sfWidgetFormFilterInput(),
-      'last_seen'  => new sfWidgetFormFilterInput(),
+      'user_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => true)),
+      'login_type'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'user_name'    => new sfWidgetFormFilterInput(),
+      'password'     => new sfWidgetFormFilterInput(),
+      'login_system' => new sfWidgetFormFilterInput(),
+      'last_seen'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'login_type' => new sfValidatorPass(array('required' => false)),
-      'user_name'  => new sfValidatorPass(array('required' => false)),
-      'password'   => new sfValidatorPass(array('required' => false)),
-      'last_seen'  => new sfValidatorPass(array('required' => false)),
+      'user_ref'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('User'), 'column' => 'id')),
+      'login_type'   => new sfValidatorPass(array('required' => false)),
+      'user_name'    => new sfValidatorPass(array('required' => false)),
+      'password'     => new sfValidatorPass(array('required' => false)),
+      'login_system' => new sfValidatorPass(array('required' => false)),
+      'last_seen'    => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_login_infos_filters[%s]');
@@ -43,12 +47,13 @@ abstract class BaseUsersLoginInfosFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'user_ref'   => 'Number',
-      'login_type' => 'Text',
-      'user_name'  => 'Text',
-      'password'   => 'Text',
-      'system_id'  => 'Text',
-      'last_seen'  => 'Text',
+      'id'           => 'Number',
+      'user_ref'     => 'ForeignKey',
+      'login_type'   => 'Text',
+      'user_name'    => 'Text',
+      'password'     => 'Text',
+      'login_system' => 'Text',
+      'last_seen'    => 'Text',
     );
   }
 }

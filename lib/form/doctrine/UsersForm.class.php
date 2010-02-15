@@ -18,6 +18,7 @@ class UsersForm extends BaseUsersForm
       $this['formated_name_ts'],
       $this['approval_level'],
       $this['birth_date_mask'],
+      $this['is_physical'],
       $this['db_user_type']
     );
     
@@ -32,6 +33,18 @@ class UsersForm extends BaseUsersForm
     $this->widgetSchema['additional_names']->setAttributes(array('class'=>'medium_size'));
 
 
+     $this->widgetSchema['password']  = new sfWidgetFormInputPassword();
+     $this->widgetSchema['password_again']  = new sfWidgetFormInputPassword();
+     $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
+     $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
+     $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
+  
+     $this->validatorSchema->setPostValidator(
+      new sfValidatorSchemaCompare('password', '==', 'password_again',
+	array(),
+	array('invalid' => 'Passwords must be equals and can not contains spaces')
+      )
+    );
 
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));

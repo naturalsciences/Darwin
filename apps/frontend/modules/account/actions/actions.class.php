@@ -43,6 +43,11 @@ class accountActions extends sfActions
     $this->user =  Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id') );
     $this->forward404Unless($this->user);
 
+
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets('user_widget');
+
     $this->form = new UsersForm($this->user);
     if($request->isMethod('post'))
     {
@@ -50,7 +55,18 @@ class accountActions extends sfActions
       if($this->form->isValid())
       {
 	$this->form->save();
-        $this->redirect('account/profile');
+	if($this->form->getValue('password') != '')
+	{
+	    $login_infos = $this->user->UsersLoginInfos;
+	    if( count($login_infos) != 1)
+	    {
+	      print 'Ouups'; exit; // @TODO: replace this by a proper way
+	    }
+	    $login_infos[0]->sDebug();
+            $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
+	    $login_infos[0]->save();
+	}
+        return $this->redirect('account/profile');
       }
     }
   }
@@ -80,6 +96,7 @@ class accountActions extends sfActions
 
   public function executeLogout()
   {
+    $this->getUser()->clearCredentials();
     $this->getUser()->setAuthenticated(false);
     $this->redirect('account/login');
   }

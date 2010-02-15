@@ -378,11 +378,12 @@ UsersAddresses:
 
 UsersLoginInfos:
     columns:
-        user_ref: { type: integer, notnull: true, primary:true}
+        id: { type: integer, notnull: true, primary:true}
+        user_ref: { type: integer, notnull: true}
         login_type: { type: string, notnull: true, default: local}
         user_name: { type: string }
         password: { type: string }
-        system_id: { type: string, primary:true}
+        login_system: { type: string}
         last_seen: { type: string }
     relations:
         User:

@@ -1,5 +1,5 @@
 <?php slot('title', __('My Profile'));  ?>        
-                                                                                               
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'users')); ?>
 <div class="page">
   <h1 class="edit_mode">Edit My Profile</h1>
 
@@ -53,10 +53,20 @@
 	    </td>
 	  </tr>
 	  <tr>
-	    <th><?php echo $form['is_physical']->renderLabel() ?></th>
+	    <td colspan="2"><hr /></td>
+	  </tr>
+	  <tr>
+	    <th><?php echo $form['password']->renderLabel() ?></th>
 	    <td>
-	      <?php echo $form['is_physical']->renderError() ?>
-	      <?php echo $form['is_physical'] ?>
+	      <?php echo $form['password']->renderError() ?>
+	      <?php echo $form['password'] ?>
+	    </td>
+	  </tr>
+	  <tr>
+	    <th><?php echo $form['password_again']->renderLabel() ?></th>
+	    <td>
+	      <?php echo $form['password_again']->renderError() ?>
+	      <?php echo $form['password_again'] ?>
 	    </td>
 	  </tr>
 	</tbody>

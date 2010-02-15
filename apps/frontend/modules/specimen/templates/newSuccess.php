@@ -1,10 +1,6 @@
 <?php slot('title', __('Add Specimens'));  ?>
 
 <script type="text/javascript">
-var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=specimen');?>';
-var chgorder_url='<?php echo url_for('widgets/changeOrder?category=specimen');?>';
-var reload_url='<?php echo url_for('widgets/reloadContent?category=specimen');?>';
-
 $(document).ready(function ()
 {
     $('.widget .widget_content:hidden .error_list:has(li)').each(function(){

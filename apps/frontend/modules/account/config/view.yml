@@ -1,4 +1,9 @@
 loginSuccess:
   layout:  not_logged
+
+profileSuccess:
+  stylesheets: [widgets.css, encod.css]
+  javascripts: [jquery.ui.all.min.js, widgets.js]
+
 submitSuccess:
   layout:  not_logged

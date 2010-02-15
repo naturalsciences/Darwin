@@ -1,3 +1,9 @@
+<script type="text/javascript">
+var chgstatus_url='<?php echo url_for('widgets/changeStatus?category='.$category);?>';
+var chgorder_url='<?php echo url_for('widgets/changeOrder?category='.$category);?>';
+var reload_url='<?php echo url_for('widgets/reloadContent?category='.$category);?>';
+</script>
+
 <div class="widget_collection_global">
 	<div class="widget_collection_container">
         <?php foreach($widgets as $widget):?>
