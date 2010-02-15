@@ -448,8 +448,11 @@ comment on column people_languages.people_ref is 'Reference of person - id field
 comment on column people_languages.language_country is 'Reference of Language - language_country field of languages_countries table';
 comment on column people_languages.mother is 'Flag telling if its mother language or not';
 comment on column people_languages.preferred_language is 'Flag telling which language is preferred in communications';
+
+create sequence users_languages_id_seq;
 create table users_languages
        (
+	id integer not null default nextval('users_languages_id_seq'),
         users_ref integer not null,
         constraint unq_users_languages unique (users_ref, language_country),
         constraint fk_users_languages_people foreign key (users_ref) references users(id) on delete cascade
