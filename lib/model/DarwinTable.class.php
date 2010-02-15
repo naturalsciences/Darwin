@@ -71,4 +71,18 @@ class DarwinTable extends Doctrine_Table
     return $q;
   }
 
+  public function findWithParents($id)
+  {
+    $self_unit = Doctrine::getTable($this->getTableName())->find($id);
+    $ids = explode('/', $self_unit->getPath().$self_unit->getId());
+
+    array_shift($ids); //Removing the first blank element 
+
+    $q = Doctrine_Query::create()
+	 ->from($this->getTableName())
+	 ->whereIn('id', $ids)
+	 ->orderBy('path ASC');
+    return $q->execute();
+  }
+
 }

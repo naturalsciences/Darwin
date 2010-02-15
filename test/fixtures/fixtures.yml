@@ -2,13 +2,13 @@ Taxonomy:
     ta0:
         id: 0
         name: ''
-        level_ref: 1
+        level_ref: 0
         status: valid
         parent_ref: ~
     tam1:
         id: '-1'
         name: Eucaryota
-        level_ref: 2
+        level_ref: 1
         status: valid
         parent_ref: ~
     ta1:
@@ -650,3 +650,247 @@ ClassificationSynonymies:
         group_name: synonym
         is_basionym: false
         order_by: 2
+
+Chronostratigraphy:
+    chs0:
+        id: 0
+        name: ''
+        level_ref: 0
+        status: valid
+        parent_ref: ~
+    chs1:
+        name: Phanerozoic
+        level_ref: 55
+        status: valid
+        parent_ref: 0
+    chs2:
+        name: Proterozoic
+        level_ref: 55
+        status: valid
+        parent_ref: 0
+    chs3:
+        name: Mesozoic
+        level_ref: 56
+        status: valid
+        Parent: chs1
+    chs4:
+        name: Paleoproterozoic
+        level_ref: 56
+        status: valid
+        Parent: chs2
+    chs5:
+        name: Jurassic
+        level_ref: 57
+        status: valid
+        Parent: chs3
+    chs6:
+        name: Orosirian
+        level_ref: 57
+        status: valid
+        Parent: chs4
+    chs7:
+        name: Oxfordian
+        level_ref: 58
+        status: valid
+        Parent: chs5
+    chs8:
+        name: Sinemurian
+        level_ref: 58
+        status: valid
+        Parent: chs5
+    chs9:
+        name: Polluxien inférieur
+        level_ref: 58
+        status: valid
+        Parent: chs5
+    chs10:
+        name: Bricien
+        level_ref: 58
+        status: valid
+        Parent: chs5
+    chs11:
+        name: Polluxien supérieur
+        level_ref: 58
+        status: valid
+        Parent: chs5
+
+Lithostratigraphy:
+    ls0:
+        id: 0
+        name: ''
+        level_ref: 0
+        status: valid
+        parent_ref: ~
+    ls1:
+        name: 'Groupe Houiller'
+        level_ref: 64
+        status: valid
+        parent_ref: 0
+    ls2:
+        name: 'Groupe du Hoyoux'
+        level_ref: 64
+        status: valid
+        parent_ref: 0
+    ls3:
+        name: "Formation d'Anhée"
+        level_ref: 65
+        status: valid
+        Parent: ls2
+    ls4:
+        name: 'Formation de Thon Samson'
+        level_ref: 65
+        status: valid
+        Parent: ls2
+    ls5:
+        name: 'Formation de Poilvache'
+        level_ref: 65
+        status: invalid
+        Parent: ls2
+    ls6:
+        name: 'Membre de Pollux'
+        level_ref: 66
+        status: valid
+        Parent: ls3
+    ls7:
+        name: 'Polluxien rouge'
+        level_ref: 67
+        status: valid
+        Parent: ls6
+    ls8:
+        name: 'Polluxien vert'
+        level_ref: 67
+        status: valid
+        Parent: ls6
+
+Mineralogy:
+    min0:
+        id: 0
+        code: ''
+        name: ''
+        level_ref: 0
+        status: valid
+        parent_ref: ~
+    min1:
+        code: '4'
+        name: Oxides
+        level_ref: 70
+        status: valid
+        parent_ref: 0
+    min2:
+        code: '5'
+        name: Carbonates
+        level_ref: 70
+        status: valid
+        parent_ref: 0
+    min3:
+        code: '4.A'
+        name: 'Metal: Oxygen = 2:1 and 1:1'
+        level_ref: 71
+        status: valid
+        Parent: min1
+    min4:
+        code: '4.B'
+        name: 'Metal: Oxygen = 3:4 and similar'
+        level_ref: 71
+        status: valid
+        Parent: min1
+    min5:
+        code: '4.G'
+        name: 'Uranyl Hydroxides'
+        level_ref: 71
+        status: valid
+        Parent: min1
+    min6:
+        code: '5.A'
+        name: 'Carbonates without additional anions, without H2O'
+        level_ref: 71
+        status: valid
+        Parent: min2
+    min7:
+        code: '5.N'
+        name: 'Nitrates'
+        level_ref: 71
+        status: valid
+        Parent: min2
+    min8:
+        code: '5.AA'
+        name: 'Alkali carbonates'
+        level_ref: 72
+        status: valid
+        Parent: min6
+    min9:
+        code: '5.AB'
+        name: 'Alkali-earth (and other M2+) carbonates'
+        level_ref: 72
+        status: valid
+        Parent: min6
+    min10:
+        code: '4.AA'
+        name: 'Cation:Anion (M:O) = 2:1 (and 1.8:1)'
+        level_ref: 72
+        status: valid
+        Parent: min3
+    min11:
+        code: '4.GC'
+        name: 'With additional cations; with mainly UO2(O,OH)6 hexagonal polyhedra'
+        level_ref: 72
+        status: valid
+        Parent: min5
+
+Lithology:
+    lol0:
+        id: 0
+        name: ''
+        level_ref: 0
+        status: valid
+        parent_ref: ~
+    lol1:
+        name: Sedimentary rocks 
+        level_ref: 75
+        status: valid
+        parent_ref: 0
+    lol2:
+        name: Meteoric rocks
+        level_ref: 75
+        status: valid
+        parent_ref: 0
+    lol3:
+        name: Siliciclastic rocks
+        level_ref: 76
+        status: valid
+        Parent: lol1
+    lol4:
+        name: 'Chemical & Biochemical rocks'
+        level_ref: 76
+        status: valid
+        Parent: lol1
+    lol5:
+        name: Meteoric rocks
+        level_ref: 76
+        status: valid
+        Parent: lol2
+    lol6: 
+        name: Rudites
+        level_ref: 77
+        status: valid
+        Parent: lol3
+    lol7:
+        name: Carbonate rocks
+        level_ref: 77
+        status: valid
+        Parent: lol4
+    lol8:
+        name: Ores
+        level_ref: 77
+        status: valid
+        Parent: lol4
+    lol9:
+        name: Lithosiderite
+        level_ref: 77
+        status: valid
+        Parent: lol5
+    lol10:
+        name: Puddingstone
+        level_ref: 78
+        status: valid
+        Parent: lol6

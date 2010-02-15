@@ -28,6 +28,7 @@
  * @property integer $unit_variety_ref
  * @property string $unit_variety_indexed
  * @property Mineralogy $Parent
+ * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Mineralogy
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimensAccompanying
@@ -55,6 +56,7 @@
  * @method integer             getUnitVarietyRef()        Returns the current record's "unit_variety_ref" value
  * @method string              getUnitVarietyIndexed()    Returns the current record's "unit_variety_indexed" value
  * @method Mineralogy          getParent()                Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()                 Returns the current record's "Level" value
  * @method Doctrine_Collection getMineralogy()            Returns the current record's "Mineralogy" collection
  * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
@@ -81,6 +83,7 @@
  * @method Mineralogy          setUnitVarietyRef()        Sets the current record's "unit_variety_ref" value
  * @method Mineralogy          setUnitVarietyIndexed()    Sets the current record's "unit_variety_indexed" value
  * @method Mineralogy          setParent()                Sets the current record's "Parent" value
+ * @method Mineralogy          setLevel()                 Sets the current record's "Level" value
  * @method Mineralogy          setMineralogy()            Sets the current record's "Mineralogy" collection
  * @method Mineralogy          setSpecimens()             Sets the current record's "Specimens" collection
  * @method Mineralogy          setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
@@ -118,13 +121,11 @@ abstract class BaseMineralogy extends sfDoctrineRecord
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '/',
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('code', 'string', null, array(
              'type' => 'string',
@@ -146,52 +147,52 @@ abstract class BaseMineralogy extends sfDoctrineRecord
              ));
         $this->hasColumn('unit_class_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_class_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_division_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_division_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_family_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_family_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_group_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_group_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_variety_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_variety_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
     }
@@ -201,6 +202,10 @@ abstract class BaseMineralogy extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Mineralogy as Parent', array(
              'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as Level', array(
+             'local' => 'level_ref',
              'foreign' => 'id'));
 
         $this->hasMany('Mineralogy', array(

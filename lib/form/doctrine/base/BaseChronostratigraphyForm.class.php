@@ -18,10 +18,10 @@ abstract class BaseChronostratigraphyForm extends BaseFormDoctrine
       'id'                  => new sfWidgetFormInputHidden(),
       'name'                => new sfWidgetFormTextarea(),
       'name_indexed'        => new sfWidgetFormTextarea(),
-      'level_ref'           => new sfWidgetFormInputText(),
+      'level_ref'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Level'), 'add_empty' => false)),
       'status'              => new sfWidgetFormTextarea(),
       'path'                => new sfWidgetFormTextarea(),
-      'parent_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => false)),
+      'parent_ref'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'eon_ref'             => new sfWidgetFormInputText(),
       'eon_indexed'         => new sfWidgetFormTextarea(),
       'era_ref'             => new sfWidgetFormInputText(),
@@ -48,7 +48,7 @@ abstract class BaseChronostratigraphyForm extends BaseFormDoctrine
       'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'name'                => new sfValidatorString(),
       'name_indexed'        => new sfValidatorString(array('required' => false)),
-      'level_ref'           => new sfValidatorInteger(),
+      'level_ref'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Level'))),
       'status'              => new sfValidatorString(array('required' => false)),
       'path'                => new sfValidatorString(array('required' => false)),
       'parent_ref'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
@@ -70,8 +70,8 @@ abstract class BaseChronostratigraphyForm extends BaseFormDoctrine
       'sub_level_1_indexed' => new sfValidatorString(array('required' => false)),
       'sub_level_2_ref'     => new sfValidatorInteger(array('required' => false)),
       'sub_level_2_indexed' => new sfValidatorString(array('required' => false)),
-      'lower_bound'         => new sfValidatorInteger(array('required' => false)),
-      'upper_bound'         => new sfValidatorInteger(array('required' => false)),
+      'lower_bound'         => new sfValidatorNumber(array('required' => false)),
+      'upper_bound'         => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('chronostratigraphy[%s]');

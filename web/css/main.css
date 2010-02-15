@@ -421,6 +421,12 @@ input[type="text"][class="xlarge_size"]
   margin-left:0.05em;
 }
 
+.invalid
+{
+  color:#C11C1C;
+  font-weight:bold;
+}
+
 .datesNum
 {
   text-align: right;

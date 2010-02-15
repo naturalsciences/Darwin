@@ -13,9 +13,10 @@ class TaxonomyForm extends BaseTaxonomyForm
   {
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
-    $status = array($this->getI18N()->__('valid'), $this->getI18N()->__('invalid'), $this->getI18N()->__('depracated'));
+    $statusKeys = array('valid', 'invalid', 'deprecated');
+    $statusVals = array($this->getI18N()->__('valid'), $this->getI18N()->__('invalid'), $this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
-        'choices'  => array_combine($status,$status),
+        'choices'  => array_combine($statusKeys,$statusVals),
     ));
     $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
 	'model' => 'CatalogueLevels',
@@ -28,7 +29,7 @@ class TaxonomyForm extends BaseTaxonomyForm
        'link_url' => 'taxonomy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
-      $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_combine($status,$status), 'required' => true));
+      $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_combine($statusKeys,$statusVals), 'required' => true));
 
   }
 }

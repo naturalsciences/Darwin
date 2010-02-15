@@ -26,8 +26,8 @@ $browser->
   
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('body > ul > li',2)->
-    checkElement('body > ul li:first','/Animalia/')->
+    checkElement('body > ul > li',3)->
+    checkElement('body > ul li:first','/Eucaryota/')->
     checkElement('body > ul li:last','/Duchesnus/')->
   end()->
 

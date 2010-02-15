@@ -779,32 +779,36 @@ Chronostratigraphy:
         name_indexed: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
-        path: { type: string, notnull: true, default: '/'}
-        parent_ref: { type: integer, notnull: true, default: 0}
-        eon_ref: { type: integer, notnull: true, default: 0}
-        eon_indexed: { type: string, notnull: true, default: ''}
-        era_ref: { type: integer, notnull: true, default: 0}
-        era_indexed: { type: string, notnull: true, default: ''}
-        sub_era_ref: { type: integer, notnull: true, default: 0}
-        sub_era_indexed: { type: string, notnull: true, default: ''}
-        system_ref: { type: integer, notnull: true, default: 0}
-        system_indexed: { type: string, notnull: true, default: ''}
-        serie_ref: { type: integer, notnull: true, default: 0}
-        serie_indexed: { type: string, notnull: true, default: ''}
-        stage_ref: { type: integer, notnull: true, default: 0}
-        stage_indexed: { type: string, notnull: true, default: ''}
-        sub_stage_ref: { type: integer, notnull: true, default: 0}
-        sub_stage_indexed: { type: string, notnull: true, default: ''}
-        sub_level_1_ref: { type: integer, notnull: true, default: 0}
-        sub_level_1_indexed: { type: string, notnull: true, default: ''}
-        sub_level_2_ref: { type: integer, notnull: true, default: 0}
-        sub_level_2_indexed: { type: string, notnull: true, default: ''}
-        lower_bound: { type: integer}
-        upper_bound: { type: integer}
+        path: { type: string, notnull: false, default: '/'}
+        parent_ref: { type: integer, default: null}
+        eon_ref: { type: integer, notnull: false, default: 0}
+        eon_indexed: { type: string, notnull: false, default: ''}
+        era_ref: { type: integer, notnull: false, default: 0}
+        era_indexed: { type: string, notnull: false, default: ''}
+        sub_era_ref: { type: integer, notnull: false, default: 0}
+        sub_era_indexed: { type: string, notnull: false, default: ''}
+        system_ref: { type: integer, notnull: false, default: 0}
+        system_indexed: { type: string, notnull: false, default: ''}
+        serie_ref: { type: integer, notnull: false, default: 0}
+        serie_indexed: { type: string, notnull: false, default: ''}
+        stage_ref: { type: integer, notnull: false, default: 0}
+        stage_indexed: { type: string, notnull: false, default: ''}
+        sub_stage_ref: { type: integer, notnull: false, default: 0}
+        sub_stage_indexed: { type: string, notnull: false, default: ''}
+        sub_level_1_ref: { type: integer, notnull: false, default: 0}
+        sub_level_1_indexed: { type: string, notnull: false, default: ''}
+        sub_level_2_ref: { type: integer, notnull: false, default: 0}
+        sub_level_2_indexed: { type: string, notnull: false, default: ''}
+        lower_bound: { type: float}
+        upper_bound: { type: float}
     relations:
         Parent:
             class: Chronostratigraphy
             local: parent_ref
+            foreign: id
+        Level:
+            class: CatalogueLevels
+            local: level_ref
             foreign: id
 
 Lithostratigraphy:
@@ -814,24 +818,28 @@ Lithostratigraphy:
         name_indexed: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
-        path: { type: string, notnull: true, default: '/'}
-        parent_ref: { type: integer, notnull: true, default: 0}
-        group_ref: { type: integer, notnull: true, default: 0}
-        group_indexed: { type: string, notnull: true, default: ''}
-        formation_ref: { type: integer, notnull: true, default: 0}
-        formation_indexed: { type: string, notnull: true, default: ''}
-        member_ref: { type: integer, notnull: true, default: 0}
-        member_indexed: { type: string, notnull: true, default: ''}
-        layer_ref: { type: integer, notnull: true, default: 0}
-        layer_indexed: { type: string, notnull: true, default: ''}
-        sub_level_1_ref: { type: integer, notnull: true, default: 0}
-        sub_level_1_indexed: { type: string, notnull: true, default: ''}
-        sub_level_2_ref: { type: integer, notnull: true, default: 0}
-        sub_level_2_indexed: { type: string, notnull: true, default: ''}
+        path: { type: string, notnull: false, default: '/'}
+        parent_ref: { type: integer, default: null}
+        group_ref: { type: integer, notnull: false, default: 0}
+        group_indexed: { type: string, notnull: false, default: ''}
+        formation_ref: { type: integer, notnull: false, default: 0}
+        formation_indexed: { type: string, notnull: false, default: ''}
+        member_ref: { type: integer, notnull: false, default: 0}
+        member_indexed: { type: string, notnull: false, default: ''}
+        layer_ref: { type: integer, notnull: false, default: 0}
+        layer_indexed: { type: string, notnull: false, default: ''}
+        sub_level_1_ref: { type: integer, notnull: false, default: 0}
+        sub_level_1_indexed: { type: string, notnull: false, default: ''}
+        sub_level_2_ref: { type: integer, notnull: false, default: 0}
+        sub_level_2_indexed: { type: string, notnull: false, default: ''}
     relations:
         Parent:
             class: Lithostratigraphy
             local: parent_ref
+            foreign: id
+        Level:
+            class: CatalogueLevels
+            local: level_ref
             foreign: id
 
 Mineralogy:
@@ -841,27 +849,31 @@ Mineralogy:
         name_indexed: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
-        path: { type: string, notnull: true, default: '/'}
-        parent_ref: { type: integer, notnull: true, default: 0}
+        path: { type: string, notnull: false, default: '/'}
+        parent_ref: { type: integer, default: null}
         code: { type: string, notnull: true}
         classification: { type: string, notnull: true, default: strunz}
         formule: { type: string }
         formule_indexed: { type: string }
         cristal_system: { type: string }
-        unit_class_ref: { type: integer, notnull: true, default: 0}
-        unit_class_indexed: { type: string, notnull: true, default: ''}
-        unit_division_ref: { type: integer, notnull: true, default: 0}
-        unit_division_indexed: { type: string, notnull: true, default: ''}
-        unit_family_ref: { type: integer, notnull: true, default: 0}
-        unit_family_indexed: { type: string, notnull: true, default: ''}
-        unit_group_ref: { type: integer, notnull: true, default: 0}
-        unit_group_indexed: { type: string, notnull: true, default: ''}
-        unit_variety_ref: { type: integer, notnull: true, default: 0}
-        unit_variety_indexed: { type: string, notnull: true, default: ''}
+        unit_class_ref: { type: integer, notnull: false, default: 0}
+        unit_class_indexed: { type: string, notnull: false, default: ''}
+        unit_division_ref: { type: integer, notnull: false, default: 0}
+        unit_division_indexed: { type: string, notnull: false, default: ''}
+        unit_family_ref: { type: integer, notnull: false, default: 0}
+        unit_family_indexed: { type: string, notnull: false, default: ''}
+        unit_group_ref: { type: integer, notnull: false, default: 0}
+        unit_group_indexed: { type: string, notnull: false, default: ''}
+        unit_variety_ref: { type: integer, notnull: false, default: 0}
+        unit_variety_indexed: { type: string, notnull: false, default: ''}
     relations:
         Parent:
             class: Mineralogy
             local: parent_ref
+            foreign: id
+        Level:
+            class: CatalogueLevels
+            local: level_ref
             foreign: id
 
 Lithology:
@@ -871,20 +883,24 @@ Lithology:
         name_indexed: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
-        path: { type: string, notnull: true, default: '/'}
-        parent_ref: { type: integer, notnull: true, default: 0}
-        unit_main_group_ref: { type: integer, notnull: true, default: 0}
-        unit_main_group_indexed: { type: string, notnull: true, default: ''}
-        unit_group_ref: { type: integer, notnull: true, default: 0}
-        unit_group_indexed: { type: string, notnull: true, default: ''}
-        unit_sub_group_ref: { type: integer, notnull: true, default: 0}
-        unit_sub_group_indexed: { type: string, notnull: true, default: ''}
-        unit_rock_ref: { type: integer, notnull: true, default: 0}
-        unit_rock_indexed: { type: string, notnull: true, default: ''}
+        path: { type: string, notnull: false, default: '/'}
+        parent_ref: { type: integer, default: null}
+        unit_main_group_ref: { type: integer, notnull: false, default: 0}
+        unit_main_group_indexed: { type: string, notnull: false, default: ''}
+        unit_group_ref: { type: integer, notnull: false, default: 0}
+        unit_group_indexed: { type: string, notnull: false, default: ''}
+        unit_sub_group_ref: { type: integer, notnull: false, default: 0}
+        unit_sub_group_indexed: { type: string, notnull: false, default: ''}
+        unit_rock_ref: { type: integer, notnull: false, default: 0}
+        unit_rock_indexed: { type: string, notnull: false, default: ''}
     relations:
         Parent:
             class: Lithology
             local: parent_ref
+            foreign: id
+        Level:
+            class: CatalogueLevels
+            local: level_ref
             foreign: id
 
 Habitats:

@@ -30,9 +30,10 @@
  * @property string $sub_level_1_indexed
  * @property integer $sub_level_2_ref
  * @property string $sub_level_2_indexed
- * @property integer $lower_bound
- * @property integer $upper_bound
+ * @property float $lower_bound
+ * @property float $upper_bound
  * @property Chronostratigraphy $Parent
+ * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Chronostratigraphy
  * @property Doctrine_Collection $Specimens
  * 
@@ -61,9 +62,10 @@
  * @method string              getSubLevel1Indexed()    Returns the current record's "sub_level_1_indexed" value
  * @method integer             getSubLevel2Ref()        Returns the current record's "sub_level_2_ref" value
  * @method string              getSubLevel2Indexed()    Returns the current record's "sub_level_2_indexed" value
- * @method integer             getLowerBound()          Returns the current record's "lower_bound" value
- * @method integer             getUpperBound()          Returns the current record's "upper_bound" value
+ * @method float               getLowerBound()          Returns the current record's "lower_bound" value
+ * @method float               getUpperBound()          Returns the current record's "upper_bound" value
  * @method Chronostratigraphy  getParent()              Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()               Returns the current record's "Level" value
  * @method Doctrine_Collection getChronostratigraphy()  Returns the current record's "Chronostratigraphy" collection
  * @method Doctrine_Collection getSpecimens()           Returns the current record's "Specimens" collection
  * @method Chronostratigraphy  setId()                  Sets the current record's "id" value
@@ -94,6 +96,7 @@
  * @method Chronostratigraphy  setLowerBound()          Sets the current record's "lower_bound" value
  * @method Chronostratigraphy  setUpperBound()          Sets the current record's "upper_bound" value
  * @method Chronostratigraphy  setParent()              Sets the current record's "Parent" value
+ * @method Chronostratigraphy  setLevel()               Sets the current record's "Level" value
  * @method Chronostratigraphy  setChronostratigraphy()  Sets the current record's "Chronostratigraphy" collection
  * @method Chronostratigraphy  setSpecimens()           Sets the current record's "Specimens" collection
  * 
@@ -130,109 +133,107 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '/',
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('eon_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('eon_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('era_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('era_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_era_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_era_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('system_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('system_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('serie_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('serie_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('stage_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('stage_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_stage_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_stage_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_level_1_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_level_1_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_level_2_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_level_2_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
-        $this->hasColumn('lower_bound', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('lower_bound', 'float', null, array(
+             'type' => 'float',
              ));
-        $this->hasColumn('upper_bound', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('upper_bound', 'float', null, array(
+             'type' => 'float',
              ));
     }
 
@@ -241,6 +242,10 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Chronostratigraphy as Parent', array(
              'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as Level', array(
+             'local' => 'level_ref',
              'foreign' => 'id'));
 
         $this->hasMany('Chronostratigraphy', array(

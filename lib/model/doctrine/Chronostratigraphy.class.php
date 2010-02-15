@@ -5,5 +5,8 @@
  */
 class Chronostratigraphy extends BaseChronostratigraphy
 {
-
+  public function getNameWithFormat()
+  {
+    return $this->_get('name');
+  }
 }

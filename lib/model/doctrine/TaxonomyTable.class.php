@@ -4,17 +4,4 @@
  */
 class TaxonomyTable extends DarwinTable
 {
-  public function findWithParents($id)
-  {
-    $self_taxa = Doctrine::getTable('Taxonomy')->find($id);
-    $ids = explode('/', $self_taxa->getPath().$self_taxa->getId());
-
-    array_shift($ids); //Removing the first blank element 
-
-    $q = Doctrine_Query::create()
-	 ->from('Taxonomy t')
-	 ->whereIn('id', $ids)
-	 ->orderBy('path ASC');
-    return $q->execute();
-  }
 }

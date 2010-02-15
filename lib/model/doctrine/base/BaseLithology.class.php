@@ -21,6 +21,7 @@
  * @property integer $unit_rock_ref
  * @property string $unit_rock_indexed
  * @property Lithology $Parent
+ * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Lithology
  * @property Doctrine_Collection $Specimens
  * 
@@ -40,6 +41,7 @@
  * @method integer             getUnitRockRef()             Returns the current record's "unit_rock_ref" value
  * @method string              getUnitRockIndexed()         Returns the current record's "unit_rock_indexed" value
  * @method Lithology           getParent()                  Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()                   Returns the current record's "Level" value
  * @method Doctrine_Collection getLithology()               Returns the current record's "Lithology" collection
  * @method Doctrine_Collection getSpecimens()               Returns the current record's "Specimens" collection
  * @method Lithology           setId()                      Sets the current record's "id" value
@@ -58,6 +60,7 @@
  * @method Lithology           setUnitRockRef()             Sets the current record's "unit_rock_ref" value
  * @method Lithology           setUnitRockIndexed()         Sets the current record's "unit_rock_indexed" value
  * @method Lithology           setParent()                  Sets the current record's "Parent" value
+ * @method Lithology           setLevel()                   Sets the current record's "Level" value
  * @method Lithology           setLithology()               Sets the current record's "Lithology" collection
  * @method Lithology           setSpecimens()               Sets the current record's "Specimens" collection
  * 
@@ -94,52 +97,50 @@ abstract class BaseLithology extends sfDoctrineRecord
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '/',
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('unit_main_group_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_main_group_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_group_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_group_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_sub_group_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_sub_group_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('unit_rock_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('unit_rock_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
     }
@@ -149,6 +150,10 @@ abstract class BaseLithology extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Lithology as Parent', array(
              'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as Level', array(
+             'local' => 'level_ref',
              'foreign' => 'id'));
 
         $this->hasMany('Lithology', array(

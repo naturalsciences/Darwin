@@ -37,6 +37,6 @@ $(document).ready(function ()
       <div class="search_results_content">
       </div>
     </div>
-    <div class='new_link'><a href="<?php echo url_for('taxonomy/new') ?>"><?php echo __('New');?></a></div>
+    <div class='new_link'><a href="<?php echo url_for($searchForm['table']->getValue().'/new') ?>"><?php echo __('New Unit');?></a></div>
   </div>
 </form>

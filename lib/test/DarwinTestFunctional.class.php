@@ -15,6 +15,14 @@ class DarwinTestFunctional extends sfTestFunctional
     $conn = Doctrine_Manager::connection();
     $conn->exec("SELECT nextval('taxonomy_id_seq')");
     $conn->exec("SELECT setval('taxonomy_id_seq',10000)");
+    $conn->exec("SELECT nextval('chronostratigraphy_id_seq')");
+    $conn->exec("SELECT setval('chronostratigraphy_id_seq',10000)");
+    $conn->exec("SELECT nextval('lithostratigraphy_id_seq')");
+    $conn->exec("SELECT setval('lithostratigraphy_id_seq',10000)");
+    $conn->exec("SELECT nextval('mineralogy_id_seq')");
+    $conn->exec("SELECT setval('mineralogy_id_seq',10000)");
+    $conn->exec("SELECT nextval('lithology_id_seq')");
+    $conn->exec("SELECT setval('lithology_id_seq',10000)");
     $conn->exec("SELECT nextval('expeditions_id_seq')");
     $conn->exec("SELECT setval('expeditions_id_seq',10000)");
     $conn->exec("SELECT nextval('classification_synonymies_id_seq')");

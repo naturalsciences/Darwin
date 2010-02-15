@@ -25,6 +25,7 @@
  * @property integer $sub_level_2_ref
  * @property string $sub_level_2_indexed
  * @property Lithostratigraphy $Parent
+ * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Lithostratigraphy
  * @property Doctrine_Collection $Specimens
  * 
@@ -48,6 +49,7 @@
  * @method integer             getSubLevel2Ref()        Returns the current record's "sub_level_2_ref" value
  * @method string              getSubLevel2Indexed()    Returns the current record's "sub_level_2_indexed" value
  * @method Lithostratigraphy   getParent()              Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()               Returns the current record's "Level" value
  * @method Doctrine_Collection getLithostratigraphy()   Returns the current record's "Lithostratigraphy" collection
  * @method Doctrine_Collection getSpecimens()           Returns the current record's "Specimens" collection
  * @method Lithostratigraphy   setId()                  Sets the current record's "id" value
@@ -70,6 +72,7 @@
  * @method Lithostratigraphy   setSubLevel2Ref()        Sets the current record's "sub_level_2_ref" value
  * @method Lithostratigraphy   setSubLevel2Indexed()    Sets the current record's "sub_level_2_indexed" value
  * @method Lithostratigraphy   setParent()              Sets the current record's "Parent" value
+ * @method Lithostratigraphy   setLevel()               Sets the current record's "Level" value
  * @method Lithostratigraphy   setLithostratigraphy()   Sets the current record's "Lithostratigraphy" collection
  * @method Lithostratigraphy   setSpecimens()           Sets the current record's "Specimens" collection
  * 
@@ -106,72 +109,70 @@ abstract class BaseLithostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '/',
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('group_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('group_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('formation_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('formation_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('member_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('member_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('layer_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('layer_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_level_1_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_level_1_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
         $this->hasColumn('sub_level_2_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'notnull' => false,
              'default' => 0,
              ));
         $this->hasColumn('sub_level_2_indexed', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'notnull' => false,
              'default' => '',
              ));
     }
@@ -181,6 +182,10 @@ abstract class BaseLithostratigraphy extends sfDoctrineRecord
         parent::setUp();
         $this->hasOne('Lithostratigraphy as Parent', array(
              'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as Level', array(
+             'local' => 'level_ref',
              'foreign' => 'id'));
 
         $this->hasMany('Lithostratigraphy', array(

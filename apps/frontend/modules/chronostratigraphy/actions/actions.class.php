@@ -1,81 +1,81 @@
 <?php
 
 /**
- * taxonomy actions.
+ * chronostratigraphy actions.
  *
  * @package    darwin
- * @subpackage taxonomy
+ * @subpackage chronostratigraphy
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class taxonomyActions extends sfActions
+class chronostratigraphyActions extends sfActions
 {
   public function executeChoose(sfWebRequest $request)
   {
-    $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
+    $this->searchForm = new ChronostratigraphyFormFilter(array('table'=> 'chronostratigraphy'));
     $this->setLayout(false);
   }
 
   public function executeDelete(sfWebRequest $request)
   {
     $this->forward404Unless(
-      $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
-      sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
+      $unit = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id')),
+      sprintf('Object chronostratigraphy does not exist (%s).', array($request->getParameter('id')))
     );
 
     try
     {
-      $taxa->delete();
+      $unit->delete();
     }
     catch(Doctrine_Connection_Pgsql_Exception $e)
     {
-      $this->form = new TaxonomyForm($taxa);
+      $this->form = new ChronostratigraphyForm($unit);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
       $this->form->getErrorSchema()->addError($error); 
       $this->setTemplate('edit');
       return ;
     }
-    $this->redirect('taxonomy/index');
+    $this->redirect('chronostratigraphy/index');
   }
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new TaxonomyForm();
+    $this->form = new ChronostratigraphyForm();
   }
 
   public function executeCreate(sfWebRequest $request)
   {
-    $this->form = new TaxonomyForm();
+    $this->form = new ChronostratigraphyForm();
     $this->processForm($request,$this->form);
     $this->setTemplate('new');
   }
     
   public function executeEdit(sfWebRequest $request)
   {
-    $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
-    $this->forward404Unless($taxa,'Taxa not Found');
-    $this->form = new TaxonomyForm($taxa);
+    $unit = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($unit,'Unit not Found');
+    $this->form = new ChronostratigraphyForm($unit);
     
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_taxonomy_widget');
+      ->getWidgets('catalogue_chronostratigraphy_widget');
     if(! $this->widgets) $this->widgets=array();
 
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('chronostratigraphy',$unit->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
-    $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
-    $this->forward404Unless($taxa,'Taxa not Found');
-    $this->form = new TaxonomyForm($taxa);
+    $unit = Doctrine::getTable('Chronostratigraphy')->find($request->getParameter('id'));
+    $this->forward404Unless($unit,'Unit not Found');
+    $this->form = new ChronostratigraphyForm($unit);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('chronostratigraphy',$unit->getId());
     $this->processForm($request,$this->form);
 
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_taxonomy_widget');
+      ->getWidgets('catalogue_chronostratigraphy_widget');
     if(! $this->widgets) $this->widgets=array();
 
     $this->setTemplate('edit');
@@ -84,7 +84,7 @@ class taxonomyActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
+    $this->searchForm = new ChronostratigraphyFormFilter(array('table'=> 'chronostratigraphy'));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -94,7 +94,7 @@ class taxonomyActions extends sfActions
     {
       try{
 	$form->save();
-	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
+	$this->redirect('chronostratigraphy/edit?id='.$form->getObject()->getId());
       }
       catch(sfStopException $e)
       { throw $e; }
@@ -105,4 +105,5 @@ class taxonomyActions extends sfActions
       }
     }
   }
+
 }

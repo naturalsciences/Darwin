@@ -19,4 +19,24 @@ class CatalogueLevelsTable extends DarwinTable
   {
     return $this->getLevelsByTypes('taxonomy')->execute();
   }
+
+  public function getLevelsForChronostratigraphy()
+  {
+    return $this->getLevelsByTypes('chronostratigraphy')->execute();
+  }
+
+  public function getLevelsForLithostratigraphy()
+  {
+    return $this->getLevelsByTypes('lithostratigraphy')->execute();
+  }
+
+  public function getLevelsForLithology()
+  {
+    return $this->getLevelsByTypes('lithology')->execute();
+  }
+
+  public function getLevelsForMineralogy()
+  {
+    return $this->getLevelsByTypes('mineralogy')->execute();
+  }
 }
