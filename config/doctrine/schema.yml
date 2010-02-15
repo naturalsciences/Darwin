@@ -347,10 +347,8 @@ UsersComm:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         comm_type: { type: string, notnull: true, default: 'TEL' }
+        entry: { type: string }
         tag: { type: string, notnull: true}
-        organization_unit: { type: string }
-        person_user_role: { type: string }
-        activity_period: { type: string }
     relations:
         Users:
             local: person_user_ref
@@ -361,9 +359,9 @@ UsersAddresses:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         tag: { type: string, notnull: true}
+        entry: { type: string }
         organization_unit: { type: string }
         person_user_role: { type: string }
-        activity_period: { type: string }
         po_box: { type: string }
         extended_address: { type: string }
         locality: { type: string, notnull:true }

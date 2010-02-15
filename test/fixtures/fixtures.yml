@@ -536,6 +536,22 @@ MyPreferences:
         order_by: 5
         opened: true
         visible: true
+    u1ws30:
+        User: u1
+        col_num: 1
+        category: users_widget
+        group_name: comm
+        order_by: 1
+        opened: true
+        visible: true
+    u1ws31:
+        User: u1
+        col_num: 1
+        category: users_widget
+        group_name: address
+        order_by: 2
+        opened: true
+        visible: true
 
 CatalogueProperties:
     cprop1:

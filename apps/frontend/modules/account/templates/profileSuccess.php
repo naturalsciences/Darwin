@@ -1,5 +1,5 @@
 <?php slot('title', __('My Profile'));  ?>        
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'users')); ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'users', 'eid' => $sf_user->getAttribute('db_user_id'))); ?>
 <div class="page">
   <h1 class="edit_mode">Edit My Profile</h1>
 
@@ -81,4 +81,17 @@
 	</tfoot>
       </table>
     </form>
+
+    <ul class="board_col one_col encod_screen">
+      <?php foreach($widgets as $id => $widget):?>
+	<?php if(!$widget->getVisible()) continue;?>
+	<?php include_partial('widgets/wlayout', array(
+	    'widget' => $widget->getGroupName(),
+	    'is_opened' => $widget->getOpened(),
+	    'category' => 'userswidget',
+	    'options' => array('eid' => $form->getObject()->getId(), 'table' => 'users')
+	    )); ?>
+      <?php endforeach;?>
+    </ul>
+
 </div>

@@ -46,8 +46,8 @@ class accountActions extends sfActions
 
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('user_widget');
-
+      ->getWidgets('users_widget');
+  
     $this->form = new UsersForm($this->user);
     if($request->isMethod('post'))
     {
@@ -99,5 +99,104 @@ class accountActions extends sfActions
     $this->getUser()->clearCredentials();
     $this->getUser()->setAuthenticated(false);
     $this->redirect('account/login');
+  }
+
+
+
+ public function executeAddress(sfWebRequest $request)
+  {
+
+    if($request->hasParameter('id'))
+      $this->address =  Doctrine::getTable('UsersAddresses')->find($request->getParameter('id'));
+    else
+    {
+     $this->address = new UsersAddresses();
+     $this->address->setPersonUserRef($request->getParameter('ref_id'));
+    }
+     
+    $this->form = new UsersAddressesForm($this->address);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('users_addresses'));
+	if($this->form->isValid())
+	{
+	  try{
+	    $this->form->save();
+	  }
+	  catch(Exception $e)
+	  {
+	    return $this->renderText($e->getMessage());
+	  }
+	  return $this->renderText('ok');
+	}
+    }
+  }
+
+
+  public function executeGetTags(sfWebRequest $request)
+  {
+    $this->array_possible = Doctrine::getTable('UsersComm')->getTags($request->getParameter('type'));
+  }
+
+  public function executeComm(sfWebRequest $request)
+  {
+
+    if($request->hasParameter('id'))
+      $this->comm =  Doctrine::getTable('UsersComm')->find($request->getParameter('id'));
+    else
+    {
+     $this->comm = new UsersComm();
+     $this->comm->setPersonUserRef($request->getParameter('ref_id'));
+    }
+     
+    $this->form = new UsersCommForm($this->comm);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('users_comm'));
+	if($this->form->isValid())
+	{
+	  try{
+	    $this->form->save();
+	  }
+	  catch(Exception $e)
+	  {
+	    return $this->renderText($e->getMessage());
+	  }
+	  return $this->renderText('ok');
+	}
+    }
+  }
+
+  public function executeLang(sfWebRequest $request)
+  {
+
+    if($request->hasParameter('id'))
+      $this->lang =  Doctrine::getTable('UsersLanguages')->find($request->getParameter('id'));
+    else
+    {
+     $this->lang = new UsersLanguages();
+     $this->lang->setPeopleRef($request->getParameter('ref_id'));
+    }
+     
+    $this->form = new UsersLanguagesForm($this->lang);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('users_languages'));
+	if($this->form->isValid())
+	{
+	  try {
+	    $this->form->save();
+	    return $this->renderText('ok');
+	  }
+	  catch(Doctrine_Exception $e)
+	  {
+	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	    $this->form->getErrorSchema()->addError($error); 
+	  }
+	}
+    }
   }
 }

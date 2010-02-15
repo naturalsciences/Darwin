@@ -11,7 +11,7 @@ class UsersLoginInfosTable extends DarwinTable
             ->andWhere('u.user_ref = ?', $user_id);
     if( $system !== null)
     {
-      $q->andWhere('ul.system_id = ?',$system);
+      $q->andWhere('ul.login_system = ?',$system);
     }
     return $q->execute();
   }

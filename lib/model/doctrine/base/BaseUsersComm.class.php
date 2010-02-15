@@ -8,28 +8,22 @@
  * @property integer $id
  * @property integer $person_user_ref
  * @property string $comm_type
+ * @property string $entry
  * @property string $tag
- * @property string $organization_unit
- * @property string $person_user_role
- * @property string $activity_period
  * @property Users $Users
  * 
- * @method integer   getId()                Returns the current record's "id" value
- * @method integer   getPersonUserRef()     Returns the current record's "person_user_ref" value
- * @method string    getCommType()          Returns the current record's "comm_type" value
- * @method string    getTag()               Returns the current record's "tag" value
- * @method string    getOrganizationUnit()  Returns the current record's "organization_unit" value
- * @method string    getPersonUserRole()    Returns the current record's "person_user_role" value
- * @method string    getActivityPeriod()    Returns the current record's "activity_period" value
- * @method Users     getUsers()             Returns the current record's "Users" value
- * @method UsersComm setId()                Sets the current record's "id" value
- * @method UsersComm setPersonUserRef()     Sets the current record's "person_user_ref" value
- * @method UsersComm setCommType()          Sets the current record's "comm_type" value
- * @method UsersComm setTag()               Sets the current record's "tag" value
- * @method UsersComm setOrganizationUnit()  Sets the current record's "organization_unit" value
- * @method UsersComm setPersonUserRole()    Sets the current record's "person_user_role" value
- * @method UsersComm setActivityPeriod()    Sets the current record's "activity_period" value
- * @method UsersComm setUsers()             Sets the current record's "Users" value
+ * @method integer   getId()              Returns the current record's "id" value
+ * @method integer   getPersonUserRef()   Returns the current record's "person_user_ref" value
+ * @method string    getCommType()        Returns the current record's "comm_type" value
+ * @method string    getEntry()           Returns the current record's "entry" value
+ * @method string    getTag()             Returns the current record's "tag" value
+ * @method Users     getUsers()           Returns the current record's "Users" value
+ * @method UsersComm setId()              Sets the current record's "id" value
+ * @method UsersComm setPersonUserRef()   Sets the current record's "person_user_ref" value
+ * @method UsersComm setCommType()        Sets the current record's "comm_type" value
+ * @method UsersComm setEntry()           Sets the current record's "entry" value
+ * @method UsersComm setTag()             Sets the current record's "tag" value
+ * @method UsersComm setUsers()           Sets the current record's "Users" value
  * 
  * @package    darwin
  * @subpackage model
@@ -55,18 +49,12 @@ abstract class BaseUsersComm extends sfDoctrineRecord
              'notnull' => true,
              'default' => 'TEL',
              ));
+        $this->hasColumn('entry', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('tag', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             ));
-        $this->hasColumn('organization_unit', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('person_user_role', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('activity_period', 'string', null, array(
-             'type' => 'string',
              ));
     }
 

@@ -8,9 +8,9 @@
  * @property integer $id
  * @property integer $person_user_ref
  * @property string $tag
+ * @property string $entry
  * @property string $organization_unit
  * @property string $person_user_role
- * @property string $activity_period
  * @property string $po_box
  * @property string $extended_address
  * @property string $locality
@@ -23,9 +23,9 @@
  * @method integer        getId()                Returns the current record's "id" value
  * @method integer        getPersonUserRef()     Returns the current record's "person_user_ref" value
  * @method string         getTag()               Returns the current record's "tag" value
+ * @method string         getEntry()             Returns the current record's "entry" value
  * @method string         getOrganizationUnit()  Returns the current record's "organization_unit" value
  * @method string         getPersonUserRole()    Returns the current record's "person_user_role" value
- * @method string         getActivityPeriod()    Returns the current record's "activity_period" value
  * @method string         getPoBox()             Returns the current record's "po_box" value
  * @method string         getExtendedAddress()   Returns the current record's "extended_address" value
  * @method string         getLocality()          Returns the current record's "locality" value
@@ -37,9 +37,9 @@
  * @method UsersAddresses setId()                Sets the current record's "id" value
  * @method UsersAddresses setPersonUserRef()     Sets the current record's "person_user_ref" value
  * @method UsersAddresses setTag()               Sets the current record's "tag" value
+ * @method UsersAddresses setEntry()             Sets the current record's "entry" value
  * @method UsersAddresses setOrganizationUnit()  Sets the current record's "organization_unit" value
  * @method UsersAddresses setPersonUserRole()    Sets the current record's "person_user_role" value
- * @method UsersAddresses setActivityPeriod()    Sets the current record's "activity_period" value
  * @method UsersAddresses setPoBox()             Sets the current record's "po_box" value
  * @method UsersAddresses setExtendedAddress()   Sets the current record's "extended_address" value
  * @method UsersAddresses setLocality()          Sets the current record's "locality" value
@@ -72,13 +72,13 @@ abstract class BaseUsersAddresses extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              ));
+        $this->hasColumn('entry', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('organization_unit', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('person_user_role', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('activity_period', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('po_box', 'string', null, array(
