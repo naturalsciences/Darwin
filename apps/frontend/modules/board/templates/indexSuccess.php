@@ -1,9 +1,5 @@
 <?php slot('title', __('Dashboard'));  ?>
-<script type="text/javascript">
-var chgstatus_url='<?php echo url_for('widgets/changeStatus?category=board');?>';
-var chgorder_url='<?php echo url_for('widgets/changeOrder?category=board');?>';
-var reload_url='<?php echo url_for('widgets/reloadContent?category=board');?>';
-</script>
+
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'board')) ?>
 <div class="board">
   <ul class="board_col">
