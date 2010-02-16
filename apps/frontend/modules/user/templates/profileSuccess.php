@@ -67,13 +67,13 @@
 	      <?php echo $form['password_again'] ?>
 	    </td>
 	  </tr>
-	  <tr>
+	  <tr class="trusted_user_links">
 	    <td colspan="2">
-		<a href="#" class="trusted_user"><?php echo __('Show Trust Link');?></a>
-		<hr class="hidden"/>
+		<a href="#" class="display_value">> <?php echo __('Show link with people');?> <</a>
+		<a href="#" class="hide_value hidden">< <?php echo __('Hide link with people');?>  ></a>
 	    </td>
 	  </tr>
-	  <tr>
+	  <tr class="trusted_user hidden">
 	    <th><?php echo $form['people_id']->renderLabel('Reference to a People') ?></th>
 	    <td class="trust_level_<?php echo $form->getObject()->getApprovalLevel()?>">
 	      <?php echo $form['people_id']->renderError() ?>
@@ -99,6 +99,20 @@
 	</tfoot>
       </table>
     </form>
+
+<script type="text/javascript">
+$('.display_value').click(function(){
+  $('.trusted_user').show();
+  $(this).hide();
+  $('.hide_value').show();
+});
+
+$('.hide_value').click(function(){
+  $('.trusted_user').hide();
+  $(this).hide();
+  $('.display_value').show();
+});
+</script>
 
     <ul class="board_col one_col encod_screen">
       <?php foreach($widgets as $id => $widget):?>

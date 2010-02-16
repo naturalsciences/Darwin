@@ -41,7 +41,7 @@
   </tbody>
 </table>
 
-<script>
+<script type="text/javascript">
 $('.display_value').click(showValues);
 $('.hide_value').click(hideValues);
 </script>

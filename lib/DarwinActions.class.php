@@ -13,7 +13,8 @@ class DarwinActions extends sfActions
     $this->s_url = $moduleName.'/search'.'?is_choose='.$this->is_choose;
     $this->o_url = '&orderby='.$this->orderBy.'&orderdir='.$this->orderDir;
   }
-  protected function setDefaultPaggingLayout(PagerLayoutWithArrows &$pagerLayout)
+
+  protected function setDefaultPaggingLayout(PagerLayoutWithArrows $pagerLayout)
   {
     $pagerLayout->setTemplate('<li><a href="{%url}">{%page}</a></li>');
     $pagerLayout->setSelectedTemplate('<li>{%page}</li>');

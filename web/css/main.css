@@ -917,6 +917,18 @@ tr.details .details_info tr:hover
 }
 
 /** Profile Page **/
+.trusted_user_links td
+{ 
+  text-align:center;
+  height: 50px;
+}
+
+.trusted_user_links a[href]
+{
+  color: gray;
+  font-style: italic ;
+}
+
 .trust_level_0 h3, .trust_level_1 h3, .trust_level_2 h3
 {
   text-align:center;
