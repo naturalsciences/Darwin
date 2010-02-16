@@ -395,6 +395,7 @@ $browser->
   click('Save', array('people_languages' => array(
     'language_country'  => 'am',
     'mother' => 'yes',
+    'preferred_language' => 'yes'
   )))->
 
   with('response')->begin()->
@@ -416,8 +417,41 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('#lang tbody tr',1)->
+    checkElement('#lang tbody tr td:first','/Preferred/')->
   end()->
   
+  click('#lang .widget_content > a.link_catalogue')->
+
+  click('Save', array('people_languages' => array(
+    'language_country'  => 'fr',
+    'mother' => '',
+    'preferred_language' => 'yes'
+  )))->
+
+  with('response')->begin()->
+    isStatusCode(200)->
+  end();
+
+  $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
+
+$browser->
+  get('/people/index')->
+
+  click('Search', array('people_filters' => array(
+    'family_name' => array('text' => 'poil'),
+    'is_physical' => 1,)
+    )
+  )->
+  click('.edit a')->
+
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#lang tbody tr',2)->
+    checkElement('#lang tbody tr:last td:first','/French/')->
+    checkElement('#lang tbody tr:last td:first','/Preferred/')->
+    checkElement('#lang tbody tr:first td:first','!/Preferred/')->
+  end()->
+
   click('#lang table tbody a.link_catalogue')->
   with('response')->begin()->
     isStatusCode(200)->
