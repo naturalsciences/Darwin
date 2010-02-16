@@ -2,8 +2,6 @@
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'users', 'eid' => $sf_user->getAttribute('db_user_id'))); ?>
 <div class="page">
   <h1 class="edit_mode">Edit My Profile</h1>
-
-
     <?php use_stylesheets_for_form($form) ?>
     <?php use_javascripts_for_form($form) ?>
     <form class="edition" action="<?php echo url_for('user/profile') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
@@ -70,7 +68,10 @@
 	    </td>
 	  </tr>
 	  <tr>
-	    <td colspan="2"><hr /></td>
+	    <td colspan="2">
+		<a href="#" class="trusted_user"><?php echo __('Show Trust Link');?></a>
+		<hr class="hidden"/>
+	    </td>
 	  </tr>
 	  <tr>
 	    <th><?php echo $form['people_id']->renderLabel('Reference to a People') ?></th>
