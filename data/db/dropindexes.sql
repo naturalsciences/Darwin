@@ -157,7 +157,7 @@ DROP INDEX IF EXISTS idx_specimens_ig_ref;
 DROP INDEX IF EXISTS idx_igs_ig_num_indexed;
 DROP INDEX IF EXISTS idx_class_vernacular_names_community_indexed;
 DROP INDEX IF EXISTS idx_vernacular_names_name_indexed;
-
+DROP INDEX IF EXISTS idx_mineralogy_code;
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 
