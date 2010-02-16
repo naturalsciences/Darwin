@@ -8,7 +8,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class userActions extends sfActions
+class userActions extends DarwinActions
 {
 
   /**
@@ -19,6 +19,45 @@ class userActions extends sfActions
   {
     $this->form = new UsersFormFilter();
     $this->setLayout(false);
+  }
+
+  public function executeSearch(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->setCommonValues('user', 'family_name', $request);
+    $this->form = new UsersFormFilter();
+    $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
+
+    if($request->getParameter('users_filters','') !== '')
+    {
+      $this->form->bind($request->getParameter('users_filters'));
+
+      if ($this->form->isValid())
+      {
+        $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
+
+	$query->andWhere('approval_level = ?',2); //Only Approved users
+
+        $this->pagerLayout = new PagerLayoutWithArrows(
+	  new Doctrine_Pager(
+	    $query,
+	    $this->currentPage,
+	    $this->form->getValue('rec_per_page')
+	  ),
+	  new Doctrine_Pager_Range_Sliding(
+	    array('chunk' => $this->pagerSlidingSize)
+	    ),
+	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+	);
+
+        // Sets the Pager Layout templates
+        $this->setDefaultPaggingLayout($this->pagerLayout);
+        // If pager not yet executed, this means the query has to be executed for data loading
+        if (! $this->pagerLayout->getPager()->getExecuted())
+           $this->items = $this->pagerLayout->execute();
+
+      }
+    }
   }
 
   public function executeProfile(sfWebRequest $request)

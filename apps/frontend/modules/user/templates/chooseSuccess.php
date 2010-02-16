@@ -1,6 +1,6 @@
-<?php slot('title', __('Search People'));  ?>        
+<?php slot('title', __('Search User'));  ?>        
 <div class="page">
-<h1><?php echo __('Search People');?></h1>
+<h1><?php echo __('Search User');?></h1>
 
 <script language="javascript">
 $(document).ready(function () {

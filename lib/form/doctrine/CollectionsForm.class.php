@@ -23,6 +23,13 @@ class CollectionsForm extends BaseCollectionsForm
        'box_title' => $this->getI18N()->__('Choose Institution'),
      ));
 
+    $this->widgetSchema['main_manager_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Users',
+       'link_url' => 'user/choose',
+       'method' => 'getFormatedName',
+       'box_title' => $this->getI18N()->__('Choose Manager'),
+     ));
+
     $this->widgetSchema['parent_ref'] = new sfWidgetFormChoice(array(
       'choices' =>  array(),
     ));
