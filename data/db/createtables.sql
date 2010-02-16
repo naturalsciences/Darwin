@@ -1371,8 +1371,8 @@ create table chronostratigraphy
         sub_level_1_indexed classifications_names,
         sub_level_2_ref integer default 0 not null,
         sub_level_2_indexed classifications_names,
-        lower_bound numeric,
-        upper_bound numeric,
+        lower_bound numeric(10,3),
+        upper_bound numeric(10,3),
         constraint pk_chronostratigraphy primary key (id),
         constraint unq_chronostratigraphy unique (path, name_indexed, level_ref),
         constraint fk_chronostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
@@ -1820,7 +1820,7 @@ create sequence insurances_id_seq;
 create table insurances
        (
         id integer not null default nextval('insurances_id_seq'),
-        insurance_value numeric not null,
+        insurance_value numeric(16,2) not null,
         insurance_currency varchar not null default '€',
         insurance_year smallint not null default 0,
         insurer_ref integer,
@@ -1860,7 +1860,7 @@ create table specimens_accompanying
         taxon_ref integer not null default 0,
         mineral_ref integer not null default 0,
         form varchar,
-        quantity real,
+        quantity numeric(16,2),
         unit varchar not null default '%',
         constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
         constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
