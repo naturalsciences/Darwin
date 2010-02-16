@@ -12,7 +12,7 @@
   <?php foreach($comms as $comm):?>
   <tr>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Communication Means');?>"  href="<?php echo url_for('account/comm?ref_id='.$eid.'&id='.$comm->getId());?>">
+      <a class="link_catalogue" title="<?php echo __('Edit Communication Means');?>"  href="<?php echo url_for('user/comm?ref_id='.$eid.'&id='.$comm->getId());?>">
       <?php if($comm->getCommType()=="TEL"):?>
 	<?php echo __('Phone');?>
       <?php else:?>
@@ -40,4 +40,4 @@
 
 <br />
 
-<a title="<?php echo __('Add Communication Means');?>" class="link_catalogue" href="<?php echo url_for('account/comm?ref_id='.$eid);?>"><?php echo __('Add');?></a>
+<a title="<?php echo __('Add Communication Means');?>" class="link_catalogue" href="<?php echo url_for('user/comm?ref_id='.$eid);?>"><?php echo __('Add');?></a>

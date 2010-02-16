@@ -1,6 +1,6 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="comm_screen">
-<form class="edition qtiped_form" action="<?php echo url_for('account/comm?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="comm_form">
+<form class="edition qtiped_form" action="<?php echo url_for('user/comm?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="comm_form">
 <?php echo $form['person_user_ref'];?>
 <table>
   <tbody>
@@ -55,7 +55,7 @@
       $('form#lang_form input[type=submit]').attr('disabled','disabled');
       $.ajax({
 	  type: "get",
-	  url: "<?php echo url_for('account/getTags');?>/type/" + $('#users_comm_comm_type').val(),
+	  url: "<?php echo url_for('user/getTags');?>/type/" + $('#users_comm_comm_type').val(),
 	  success: function(html){
 	    $('#users_comm_tag').val('');
 	    $('#users_comm_tag_selected').html('');

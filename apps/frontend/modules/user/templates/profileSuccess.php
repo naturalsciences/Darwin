@@ -6,7 +6,7 @@
 
     <?php use_stylesheets_for_form($form) ?>
     <?php use_javascripts_for_form($form) ?>
-    <form class="edition" action="<?php echo url_for('account/profile') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+    <form class="edition" action="<?php echo url_for('user/profile') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
       <table>
 	<tbody>
 	  <?php echo $form->renderGlobalErrors() ?>

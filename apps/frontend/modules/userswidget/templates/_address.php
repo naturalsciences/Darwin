@@ -15,7 +15,7 @@
   <?php foreach($addresses as $address):?>
   <tr>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Address');?>"  href="<?php echo url_for('account/address?ref_id='.$eid.'&id='.$address->getId());?>">
+      <a class="link_catalogue" title="<?php echo __('Edit Address');?>"  href="<?php echo url_for('user/address?ref_id='.$eid.'&id='.$address->getId());?>">
 	<?php echo $address->getCountry();?>
       </a>
     </td>
@@ -50,6 +50,6 @@
 
 <br />
 <?php echo image_tag('add_green.png');?>
-<a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('account/address?ref_id='.$eid);?>"> 
+<a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('user/address?ref_id='.$eid);?>"> 
   <?php echo __('Add');?>
 </a>
