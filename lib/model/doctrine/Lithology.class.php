@@ -5,5 +5,9 @@
  */
 class Lithology extends BaseLithology
 {
+  public function getNameWithFormat()
+  {
+    return $this->_get('name');
+  }
 
 }

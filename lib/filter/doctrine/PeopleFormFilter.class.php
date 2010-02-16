@@ -27,7 +27,7 @@ class PeopleFormFilter extends BasePeopleFormFilter
     $this->widgetSchema['is_physical'] = new sfWidgetFormInputHidden();
     $this->setDefault('is_physical', true); 
 
-    $this->widgetSchema['family_name']->setAttributes(array('class'=>'large_size'));
+    $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
 
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($db_people_types) ));
 

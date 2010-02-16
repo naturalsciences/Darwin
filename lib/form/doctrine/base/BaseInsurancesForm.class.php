@@ -28,7 +28,7 @@ abstract class BaseInsurancesForm extends BaseFormDoctrine
       'id'                  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'referenced_relation' => new sfValidatorString(),
       'record_id'           => new sfValidatorInteger(),
-      'insurance_value'     => new sfValidatorInteger(),
+      'insurance_value'     => new sfValidatorNumber(),
       'insurance_currency'  => new sfValidatorString(array('required' => false)),
       'insurance_year'      => new sfValidatorInteger(array('required' => false)),
       'insurer_ref'         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'required' => false)),

@@ -799,8 +799,8 @@ Chronostratigraphy:
         sub_level_1_indexed: { type: string, notnull: false, default: ''}
         sub_level_2_ref: { type: integer, notnull: false, default: 0}
         sub_level_2_indexed: { type: string, notnull: false, default: ''}
-        lower_bound: { type: float}
-        upper_bound: { type: float}
+        lower_bound: { type: decimal, length: 10, scale: 3}
+        upper_bound: { type: decimal, length: 10, scale: 3}
     relations:
         Parent:
             class: Chronostratigraphy
@@ -1076,7 +1076,7 @@ Insurances:
         id: { type: integer, primary: true, autoincrement: true }
         referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
-        insurance_value: { type: integer, notnull: true}
+        insurance_value: { type: decimal, length: 16, scale: 2, notnull: true}
         insurance_currency: { type: string, notnull: true, default: '€'}
         insurance_year: { type: integer, default:0}
         insurer_ref: { type: integer}
@@ -1103,7 +1103,7 @@ SpecimensAccompanying:
         taxon_ref: { type: integer, notnull: true, default:0}
         mineral_ref: { type: integer, notnull: true, default:0}
         form: { type: string}
-        quantity: { type: float}
+        quantity: { type: decimal, length: 16, scale: 2}
         unit: { type: string, notnull: true, default: '%'}
     relations:
         Specimens:

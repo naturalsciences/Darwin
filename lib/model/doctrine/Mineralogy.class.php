@@ -5,5 +5,8 @@
  */
 class Mineralogy extends BaseMineralogy
 {
-
+  public function getNameWithFormat()
+  {
+    return $this->_get('name');
+  }
 }

@@ -24,7 +24,7 @@ abstract class BaseInsurancesFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'referenced_relation' => new sfValidatorPass(array('required' => false)),
       'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'insurance_value'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'insurance_value'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'insurance_currency'  => new sfValidatorPass(array('required' => false)),
       'insurance_year'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'insurer_ref'         => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('People'), 'column' => 'id')),

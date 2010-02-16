@@ -27,6 +27,10 @@
                     <a href="">Catalogues</a>
                     <ul>
                         <li><?php echo link_to(__('Taxa'),'taxonomy/index');?></li>
+                        <li><?php echo link_to(__('Chronostratigraphy'),'chronostratigraphy/index');?></li>
+                        <li><?php echo link_to(__('Lithostratigraphy'),'lithostratigraphy/index');?></li>
+                        <li><?php echo link_to(__('Lithology'),'lithology/index');?></li>
+                        <li><?php echo link_to(__('Mineralogy'),'mineralogy/index');?></li>
                         <li><?php echo link_to(__('Collections'),'collection/index');?></li>
                         <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
@@ -45,6 +49,10 @@
                     <a href="#">Catalogues</a>
                     <ul>
                         <li><?php echo link_to(__('Taxa'),'taxonomy/new');?></li>
+                        <li><?php echo link_to(__('Chronostratigraphy'),'chronostratigraphy/new');?></li>
+                        <li><?php echo link_to(__('Lithostratigraphy'),'lithostratigraphy/new');?></li>
+                        <li><?php echo link_to(__('Lithology'),'lithology/new');?></li>
+                        <li><?php echo link_to(__('Mineralogy'),'mineralogy/new');?></li>
                         <li><?php echo link_to(__('Collections'),'collection/new');?></li>
                         <li><?php echo link_to(__('Expeditions'),'expedition/new');?></li>
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/new');?></li>

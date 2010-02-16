@@ -201,17 +201,12 @@ form th, form tr > td
   display:none;
 }
 
-.search li
-{
-  border-bottom: 1px solid white;
-}
-
-.search li:hover
+/*.search li:hover
 {
   background-color:#ebf5f5;
   border-bottom: 1px solid #5BAABD;
   cursor:pointer;
-}
+}*/
 
 .button 
 {
@@ -260,27 +255,27 @@ input[type="text"]
   width:220px;
 }
 
-input[type="text"][class="xsmall_size"]
+input[type="text"].xsmall_size
 {
   width:20px;
 }
 
-input[type="text"][class="small_size"]
+input[type="text"].small_size
 {
   width:120px;
 }
 
-input[type="text"][class="medium_size"]
+input[type="text"].medium_size
 {
   width:320px;
 }
 
-input[type="text"][class="large_size"]
+input[type="text"].large_size
 {
   width:420px;
 }
 
-input[type="text"][class="xlarge_size"]
+input[type="text"].xlarge_size
 {
   width:520px;
 }
@@ -871,7 +866,6 @@ tr.details .details_info tr:hover
 
 .details_info td
 {
-/*   background-color:#D4FDFF; */
   vertical-align:top;
   border: 1px dashed #5BABBD; 
   padding:0.5em;
@@ -894,7 +888,6 @@ tr.details .details_info tr:hover
 {
   float:left;
   padding:0.2em;
-/*   padding-left: 20px; */
   margin:0.3em;
   border: 1px solid #E3E3E3;
 }
@@ -916,6 +909,11 @@ tr.details .details_info tr:hover
   padding-left: 0.5em;
 }
 
+
+img.info:hover
+{
+  cursor:pointer;
+}
 /** Profile Page **/
 .trusted_user_links td
 { 

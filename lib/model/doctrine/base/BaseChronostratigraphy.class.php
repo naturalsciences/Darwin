@@ -30,8 +30,8 @@
  * @property string $sub_level_1_indexed
  * @property integer $sub_level_2_ref
  * @property string $sub_level_2_indexed
- * @property float $lower_bound
- * @property float $upper_bound
+ * @property decimal $lower_bound
+ * @property decimal $upper_bound
  * @property Chronostratigraphy $Parent
  * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Chronostratigraphy
@@ -62,8 +62,8 @@
  * @method string              getSubLevel1Indexed()    Returns the current record's "sub_level_1_indexed" value
  * @method integer             getSubLevel2Ref()        Returns the current record's "sub_level_2_ref" value
  * @method string              getSubLevel2Indexed()    Returns the current record's "sub_level_2_indexed" value
- * @method float               getLowerBound()          Returns the current record's "lower_bound" value
- * @method float               getUpperBound()          Returns the current record's "upper_bound" value
+ * @method decimal             getLowerBound()          Returns the current record's "lower_bound" value
+ * @method decimal             getUpperBound()          Returns the current record's "upper_bound" value
  * @method Chronostratigraphy  getParent()              Returns the current record's "Parent" value
  * @method CatalogueLevels     getLevel()               Returns the current record's "Level" value
  * @method Doctrine_Collection getChronostratigraphy()  Returns the current record's "Chronostratigraphy" collection
@@ -229,11 +229,15 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              'notnull' => false,
              'default' => '',
              ));
-        $this->hasColumn('lower_bound', 'float', null, array(
-             'type' => 'float',
+        $this->hasColumn('lower_bound', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => 3,
              ));
-        $this->hasColumn('upper_bound', 'float', null, array(
-             'type' => 'float',
+        $this->hasColumn('upper_bound', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => 3,
              ));
     }
 

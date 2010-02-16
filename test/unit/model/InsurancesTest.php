@@ -11,5 +11,5 @@ $insurances->setRecordId($lastIg->getId());
 $insurances->save();
 
 $insurances = Doctrine::getTable('insurances')->findForTable('igs', $lastIg->getId());
-$t->is( $insurances[0]->getFormatedInsuranceValue() , '750&nbsp;€', 'Insurance value is well "750 €"');
+$t->is( $insurances[0]->getFormatedInsuranceValue() , '750.00&nbsp;€', 'Insurance value is well "750.00 €"');
 $t->is( $insurances[0]->getFormatedInsuranceYear() , '-', 'Insurance year is well "-"');

@@ -10,19 +10,37 @@
   <div class="results_container">
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
-        <th colspan="2">
+        <th></th>
+        <?php if(isset($items[0]['code'])): ?>
+          <th>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=code'.( ($orderBy=='code' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <?php echo __('Code');?>
+              <?php if($orderBy=='code') echo $orderSign ?>
+            </a>
+          </th>
+        <?php endif;?>
+        <th>
           <a class="sort" href="<?php echo url_for($s_url.'&orderby=name_indexed'.( ($orderBy=='name_indexed' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
             <?php echo __('Name');?>
             <?php if($orderBy=='name_indexed') echo $orderSign ?>
           </a>
-        <?php if(isset($items[0]['lower_bound']) && isset($items[0]['upper_bound'])): ?>
+        </th>
+        <?php if(isset($items[0]['classification'])): ?>
           <th>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=classification'.( ($orderBy=='classification' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <?php echo __('Classification');?>
+              <?php if($orderBy=='classification') echo $orderSign ?>
+            </a>
+          </th>
+        <?php endif;?>
+        <?php if(isset($items[0]['lower_bound']) && isset($items[0]['upper_bound'])): ?>
+          <th class="datesNum">
             <a class="sort" href="<?php echo url_for($s_url.'&orderby=lower_bound'.( ($orderBy=='lower_bound' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Lower bound (My)');?>
               <?php if($orderBy=='lower_bound') echo $orderSign ?>
             </a>
           </th>
-          <th>
+          <th class="datesNum">
             <a class="sort" href="<?php echo url_for($s_url.'&orderby=upper_bound'.( ($orderBy=='upper_bound' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Upper bound (My)');?>
               <?php if($orderBy=='upper_bound') echo $orderSign ?>
@@ -47,16 +65,26 @@
               }
             ?>
             <td><?php echo image_tag('info.png',"title=info class=info");?></td>
+            <?php if(isset($item['code'])): ?>
+              <td>
+                <span><?php echo $item->getCode();?></span>
+              </td>
+            <?php endif;?>
             <td>
               <span class="item_name"><?php echo $item->getNameWithFormat();?><span class="invalid"><?php echo $addedFormat;?></span></span>
               <div class="tree">
               </div>
             </td>
-            <?php if(isset($item['lower_bound']) && isset($item['upper_bound'])): ?>
+            <?php if(isset($item['classification'])): ?>
               <td>
+                <span><?php echo $item->getClassification();?></span>
+              </td>
+            <?php endif;?>
+            <?php if(isset($item['lower_bound']) && isset($item['upper_bound'])): ?>
+              <td class="datesNum">
                 <span><?php echo $item->getLowerBound();?></span>
               </td>
-              <td>
+              <td class="datesNum">
                 <span><?php echo $item->getUpperBound();?></span>
               </td>
             <?php endif;?>

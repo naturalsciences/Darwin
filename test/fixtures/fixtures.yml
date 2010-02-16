@@ -567,6 +567,135 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
+    u1ws31:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: relationRename
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws32:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws33:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: properties
+        order_by: 0
+        opened: true
+        visible: true
+    u1ws34:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws35:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: relationRename
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws36:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws37:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: properties
+        order_by: 0
+        opened: true
+        visible: true
+    u1ws38:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws39:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: relationRename
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws40:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws41:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: properties
+        order_by: 0
+        opened: true
+        visible: true
+    u1ws42:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws43:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: relationRename
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws44:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws45:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: properties
+        order_by: 0
+        opened: true
+        visible: true
+    u1ws46:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
+
 
 CatalogueProperties:
     cprop1:
@@ -709,6 +838,8 @@ Chronostratigraphy:
         name: Polluxien inférieur
         level_ref: 58
         status: valid
+        lower_bound: -205
+        upper_bound: -200
         Parent: chs5
     chs10:
         name: Bricien
@@ -719,7 +850,15 @@ Chronostratigraphy:
         name: Polluxien supérieur
         level_ref: 58
         status: valid
+        lower_bound: -200
+        upper_bound: -195
         Parent: chs5
+    chs12:
+        name: Polluxian
+        level_ref: 56
+        status: valid
+        lower_bound: -400
+        Parent: chs2
 
 Lithostratigraphy:
     ls0:

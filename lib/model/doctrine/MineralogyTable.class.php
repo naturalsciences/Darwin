@@ -4,5 +4,23 @@
  */
 class MineralogyTable extends DarwinTable
 {
+  /**
+  * Get Distincts Cristalographic system
+  * @return array an Array of currencies in keys
+  */
+  public function getDistinctSystems()
+  {
+    return $this->createDistinct('Mineralogy', 'cristal_system', 'Systems')->execute();
+  }
+
+  public function findByCodeLimited($code, $limit)
+  {
+    $q = Doctrine_Query::create()
+         ->from('Mineralogy')
+         ->where("upper(code) like concat (upper(?), '%') ", $code)
+         ->limit($limit)
+         ->orderBy("code ASC");
+    return $q->execute();
+  }
 
 }

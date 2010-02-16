@@ -6,8 +6,9 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
     {
         parent::configure($options, $attributes);
         $this->addRequiredOption('model');
-        $this->addOption('method', '__toString');
         $this->addRequiredOption('link_url', '#');
+        $this->addOption('behindScene', true);
+        $this->addOption('method', '__toString');
         $this->addOption('notExistingAddDisplay', true);
         $this->addOption('notExistingAddTitle', 'This entry do not exist. Would you like we had it ?');
         $this->addOption('notExistingAddValues', array('Yes', 'No'));
@@ -46,13 +47,18 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
     {
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $obj_name = $this->getName($value);
+        $showedInputName = $this->generateId($name);
+        $inputTagAttributes = array('type' => 'text', 'value' => $this->escapeOnce($obj_name), 'name' => $name);
         $input = '<ul><li>';
-        $input .= parent::render($name, $value, $attributes, $errors);
+        if($this->getOption('behindScene'))
+        {
+          $input .= parent::render($name, $value, $attributes, $errors);
+          array_splice($inputTagAttributes, 2);
+          $showedInputName .= "_name";
+        }
+        $inputTagAttributes['id'] = $showedInputName;
         $input .= $this->renderTag('input',
-                                   array('id' => $this->generateId($name)."_name",
-                                         'type' => 'text',
-                                         'value' => $this->escapeOnce($obj_name),
-                                        )
+                                   $inputTagAttributes
                                   );
         $input .= '</li>';
         if($this->getOption('notExistingAddDisplay'))
@@ -90,7 +96,7 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
                                      else
                                      {
                                        $('#%1\$s').closest('ul').children('li#toggledMsg').slideUp("fast");
-                                       $('#%1\$s').prev().val(html);
+                                       $('#%8\$s').val(html);
                                      }
                                      showAfterRefresh($('#%1\$s').closest('.widget_content'));
                                    }
@@ -121,13 +127,14 @@ $(document).ready(function () {
 });
 </script>
 EOF
-    , $this->generateId($name).'_name',
+    , $showedInputName,
       url_for($this->getOption('link_url')),
       url_for($this->getOption('link_url').'Limited'),
       $this->getOption('autocomplete'),
       $this->getOption('autocomplete_max'),
       $this->getOption('autocomplete_minChars'),
-      $this->getOption('autocomplete_autoFill'));
+      $this->getOption('autocomplete_autoFill'),
+      $this->generateId($name));
         return $input;
      }  
 }

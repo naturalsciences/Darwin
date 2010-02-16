@@ -8,7 +8,7 @@
  * @property integer $id
  * @property string $referenced_relation
  * @property integer $record_id
- * @property integer $insurance_value
+ * @property decimal $insurance_value
  * @property string $insurance_currency
  * @property integer $insurance_year
  * @property integer $insurer_ref
@@ -17,7 +17,7 @@
  * @method integer    getId()                  Returns the current record's "id" value
  * @method string     getReferencedRelation()  Returns the current record's "referenced_relation" value
  * @method integer    getRecordId()            Returns the current record's "record_id" value
- * @method integer    getInsuranceValue()      Returns the current record's "insurance_value" value
+ * @method decimal    getInsuranceValue()      Returns the current record's "insurance_value" value
  * @method string     getInsuranceCurrency()   Returns the current record's "insurance_currency" value
  * @method integer    getInsuranceYear()       Returns the current record's "insurance_year" value
  * @method integer    getInsurerRef()          Returns the current record's "insurer_ref" value
@@ -54,8 +54,10 @@ abstract class BaseInsurances extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              ));
-        $this->hasColumn('insurance_value', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('insurance_value', 'decimal', 16, array(
+             'type' => 'decimal',
+             'length' => 16,
+             'scale' => 2,
              'notnull' => true,
              ));
         $this->hasColumn('insurance_currency', 'string', null, array(

@@ -37,14 +37,14 @@
 }
 
 .ac_loading {
-	background: white url('loader.png') right center no-repeat;
+        background: white url(/images/loader.png) right center no-repeat;
 }
 
 .ac_odd {
-	background-color: #C1CF56;
+	background-color: white;
 }
 
 .ac_over {
-	background-color: #C1CF56;
+	background-color: grey;
 	color: white;
 }

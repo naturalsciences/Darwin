@@ -19,7 +19,7 @@ class InstitutionsFormFilter extends BaseInstitutionsFormFilter
     $this->setDefault('is_physical', 0); 
 
     $this->widgetSchema['family_name'] = new sfWidgetFormFilterInput(array('template' => '%input%'));
-    $this->widgetSchema['family_name']->setAttributes(array('class'=>'large_size'));
+    $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
   }
 
   public function addFamilyNameColumnQuery($query, $field, $val)

@@ -21,14 +21,26 @@ $(document).ready(function ()
   <div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
-        <tr>  
+        <tr>
+          <?php if(isset($searchForm['code'])):?>
+            <th><?php echo $searchForm['code']->renderLabel();?></th>
+          <?php endif;?>
           <th><?php echo $searchForm['name']->renderLabel('Name');?></th>
+          <?php if(isset($searchForm['classification'])):?>
+            <th><?php echo $searchForm['classification']->renderLabel();?></th>
+          <?php endif;?>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <?php if(isset($searchForm['code'])):?>
+            <td><?php echo $searchForm['code'];?></td>
+          <?php endif;?>
           <td><?php echo $searchForm['name'];?><?php echo $searchForm['table'];?></td>
+          <?php if(isset($searchForm['classification'])):?>
+            <td><?php echo $searchForm['classification'];?></td>
+          <?php endif;?>
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search');?>" /></td>
         </tr>
       </tbody>

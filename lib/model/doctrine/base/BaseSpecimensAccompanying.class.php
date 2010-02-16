@@ -10,7 +10,7 @@
  * @property integer $taxon_ref
  * @property integer $mineral_ref
  * @property string $form
- * @property float $quantity
+ * @property decimal $quantity
  * @property string $unit
  * @property Specimens $Specimens
  * @property Taxonomy $Taxonomy
@@ -21,7 +21,7 @@
  * @method integer               getTaxonRef()     Returns the current record's "taxon_ref" value
  * @method integer               getMineralRef()   Returns the current record's "mineral_ref" value
  * @method string                getForm()         Returns the current record's "form" value
- * @method float                 getQuantity()     Returns the current record's "quantity" value
+ * @method decimal               getQuantity()     Returns the current record's "quantity" value
  * @method string                getUnit()         Returns the current record's "unit" value
  * @method Specimens             getSpecimens()    Returns the current record's "Specimens" value
  * @method Taxonomy              getTaxonomy()     Returns the current record's "Taxonomy" value
@@ -69,8 +69,10 @@ abstract class BaseSpecimensAccompanying extends sfDoctrineRecord
         $this->hasColumn('form', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('quantity', 'float', null, array(
-             'type' => 'float',
+        $this->hasColumn('quantity', 'decimal', 16, array(
+             'type' => 'decimal',
+             'length' => 16,
+             'scale' => 2,
              ));
         $this->hasColumn('unit', 'string', null, array(
              'type' => 'string',
