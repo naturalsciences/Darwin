@@ -140,6 +140,8 @@ Users:
         family_name: Evil
         given_name: Root
         gender: M
+        approval_level: 2
+        People: p5
 
 UsersLoginInfos:
     u1l1:
@@ -156,7 +158,7 @@ UsersLanguages:
 
     ul2:
         User: u1
-        language_country: fr
+        language_country: nl
         mother: false
         preferred_language: false
 
@@ -198,6 +200,11 @@ People:
         family_name: Duchesne
         given_name: ML
         gender: F
+    p5:
+        is_physical: true
+        family_name: Root
+        given_name: Evil
+        gender: M
   
 Collections:
     c2:

@@ -348,7 +348,7 @@ UsersComm:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
         comm_type: { type: string, notnull: true, default: 'TEL' }
-        entry: { type: string }
+        entry: { type: string, notnull: true}
         tag: { type: string, notnull: true}
     relations:
         Users:

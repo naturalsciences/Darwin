@@ -447,7 +447,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('#lang tbody tr',2)->
-    checkElement('#lang tbody tr:last td:first','/French/')->
+    checkElement('#lang tbody tr:last td:first','/français/')->
     checkElement('#lang tbody tr:last td:first','/Preferred/')->
     checkElement('#lang tbody tr:first td:first','!/Preferred/')->
   end()->

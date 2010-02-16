@@ -359,6 +359,11 @@
         <source>Delete</source>
         <target phase-name="approval-1" state="signed-off" >Supprimer</target>
       </trans-unit>
+      <trans-unit id="23" >
+        <source>Preferred</source>
+        <target phase-name="approval-1" state="signed-off" >Préféré</target>
+      </trans-unit>
+      
     </body>
   </file>
 </xliff>

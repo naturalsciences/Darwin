@@ -15,7 +15,7 @@ abstract class BaseUsersCommFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'person_user_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => true)),
       'comm_type'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'entry'           => new sfWidgetFormFilterInput(),
+      'entry'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'tag'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
