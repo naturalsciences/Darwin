@@ -567,7 +567,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
-    u1ws31:
+    u1ws33:
         User: u1
         col_num: 1
         category: catalogue_chronostratigraphy_widget
@@ -575,7 +575,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
-    u1ws32:
+    u1ws34:
         User: u1
         col_num: 1
         category: catalogue_chronostratigraphy_widget
@@ -583,7 +583,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
-    u1ws33:
+    u1ws35:
         User: u1
         col_num: 1
         category: catalogue_chronostratigraphy_widget
@@ -591,39 +591,39 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
-    u1ws34:
+    u1ws36:
         User: u1
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: vernacularNames
         order_by: 3
         opened: true
-        visible: true
-    u1ws35:
-        User: u1
-        col_num: 1
-        category: catalogue_lithostratigraphy_widget
-        group_name: relationRename
-        order_by: 0
-        opened: false
-        visible: false
-    u1ws36:
-        User: u1
-        col_num: 1
-        category: catalogue_lithostratigraphy_widget
-        group_name: comment
-        order_by: 0
-        opened: false
         visible: true
     u1ws37:
         User: u1
         col_num: 1
         category: catalogue_lithostratigraphy_widget
+        group_name: relationRename
+        order_by: 0
+        opened: false
+        visible: false
+    u1ws38:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: comment
+        order_by: 0
+        opened: false
+        visible: true
+    u1ws39:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
         group_name: properties
         order_by: 0
         opened: true
         visible: true
-    u1ws38:
+    u1ws40:
         User: u1
         col_num: 1
         category: catalogue_lithostratigraphy_widget
@@ -631,7 +631,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
-    u1ws39:
+    u1ws40:
         User: u1
         col_num: 1
         category: catalogue_lithology_widget
@@ -639,7 +639,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
-    u1ws40:
+    u1ws41:
         User: u1
         col_num: 1
         category: catalogue_lithology_widget
@@ -647,7 +647,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
-    u1ws41:
+    u1ws42:
         User: u1
         col_num: 1
         category: catalogue_lithology_widget
@@ -655,7 +655,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
-    u1ws42:
+    u1ws43:
         User: u1
         col_num: 1
         category: catalogue_lithology_widget
@@ -663,7 +663,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
-    u1ws43:
+    u1ws44:
         User: u1
         col_num: 1
         category: catalogue_mineralogy_widget
@@ -671,7 +671,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
-    u1ws44:
+    u1ws45:
         User: u1
         col_num: 1
         category: catalogue_mineralogy_widget
@@ -679,7 +679,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
-    u1ws45:
+    u1ws46:
         User: u1
         col_num: 1
         category: catalogue_mineralogy_widget
@@ -687,7 +687,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
-    u1ws46:
+    u1ws47:
         User: u1
         col_num: 1
         category: catalogue_mineralogy_widget
