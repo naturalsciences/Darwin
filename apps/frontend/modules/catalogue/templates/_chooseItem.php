@@ -25,9 +25,14 @@ $(document).ready(function ()
           <?php if(isset($searchForm['code'])):?>
             <th><?php echo $searchForm['code']->renderLabel();?></th>
           <?php endif;?>
-          <th><?php echo $searchForm['name']->renderLabel('Name');?></th>
+          <th><?php echo $searchForm['name']->renderLabel();?></th>
           <?php if(isset($searchForm['classification'])):?>
             <th><?php echo $searchForm['classification']->renderLabel();?></th>
+          <?php endif;?>
+          <th><?php echo $searchForm['level_ref']->renderLabel();?></th>
+          <?php if(isset($searchForm['lower_bound']) && isset($searchForm['upper_bound'])):?>
+            <th class="datesNum"><?php echo $searchForm['lower_bound']->renderLabel();?></th>
+            <th class="datesNum"><?php echo $searchForm['upper_bound']->renderLabel();?></th>
           <?php endif;?>
           <th></th>
         </tr>
@@ -40,6 +45,11 @@ $(document).ready(function ()
           <td><?php echo $searchForm['name'];?><?php echo $searchForm['table'];?></td>
           <?php if(isset($searchForm['classification'])):?>
             <td><?php echo $searchForm['classification'];?></td>
+          <?php endif;?>
+          <td><?php echo $searchForm['level_ref'];?></td>
+          <?php if(isset($searchForm['lower_bound']) && isset($searchForm['upper_bound'])):?>
+            <td class="datesNum"><?php echo $searchForm['lower_bound'];?></td>
+            <td class="datesNum"><?php echo $searchForm['upper_bound'];?></td>
           <?php endif;?>
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search');?>" /></td>
         </tr>

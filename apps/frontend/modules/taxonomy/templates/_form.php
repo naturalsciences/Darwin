@@ -16,7 +16,7 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['level_ref']->renderLabel('Level') ?></th>
+        <th><?php echo $form['level_ref']->renderLabel() ?></th>
         <td>
           <?php echo $form['level_ref']->renderError() ?>
           <?php echo $form['level_ref'] ?>
@@ -37,7 +37,7 @@
         </td>
       </tr> 
       <tr>
-        <th><?php echo $form['parent_ref']->renderLabel('Parent') ?></th>
+        <th class="top_aligned"><?php echo $form['parent_ref']->renderLabel() ?></th>
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
           <?php echo $form['parent_ref'] ?>

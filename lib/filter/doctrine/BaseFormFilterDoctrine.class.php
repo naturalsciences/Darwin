@@ -50,6 +50,11 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       ); 
   }
 
+  protected function getCatalogueRecLimits()
+  {
+    return intval(sfConfig::get('app_catalogueRecLimit'));
+  }
+
   public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values)
   {
      if ($values != "" && $table != "" && $field != "")

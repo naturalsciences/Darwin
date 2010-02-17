@@ -99,6 +99,5 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
-//     $this->validatorSchema->setOption('allow_extra_fields', true);
   }
 }

@@ -25,14 +25,12 @@
             <?php if($orderBy=='name_indexed') echo $orderSign ?>
           </a>
         </th>
-        <?php if(isset($items[0]['classification'])): ?>
-          <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=classification'.( ($orderBy=='classification' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-              <?php echo __('Classification');?>
-              <?php if($orderBy=='classification') echo $orderSign ?>
-            </a>
-          </th>
-        <?php endif;?>
+        <th>
+          <a class="sort" href="<?php echo url_for($s_url.'&orderby=level_ref'.( ($orderBy=='level_ref' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+            <?php echo __('Level');?>
+            <?php if($orderBy=='level_ref') echo $orderSign ?>
+          </a>
+        </th>
         <?php if(isset($items[0]['lower_bound']) && isset($items[0]['upper_bound'])): ?>
           <th class="datesNum">
             <a class="sort" href="<?php echo url_for($s_url.'&orderby=lower_bound'.( ($orderBy=='lower_bound' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
@@ -75,11 +73,9 @@
               <div class="tree">
               </div>
             </td>
-            <?php if(isset($item['classification'])): ?>
-              <td>
-                <span><?php echo $item->getClassification();?></span>
-              </td>
-            <?php endif;?>
+            <td>
+              <span><?php echo $item->getLevel();?></span>
+            </td>
             <?php if(isset($item['lower_bound']) && isset($item['upper_bound'])): ?>
               <td class="datesNum">
                 <span><?php echo $item->getLowerBound();?></span>

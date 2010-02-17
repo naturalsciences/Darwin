@@ -19,10 +19,9 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
     $this->widgetSchema['upper_bound'] = new sfWidgetFormInput();
     $this->widgetSchema['upper_bound']->setAttributes(array('class'=>'small_size datesNum'));
     $this->widgetSchema['upper_bound']->setLabel($this->getI18N()->__('Upper bound (in My)'));
-    $statusKeys = array('valid', 'invalid', 'deprecated');
-    $statusVals = array($this->getI18N()->__('valid'), $this->getI18N()->__('invalid'), $this->getI18N()->__('deprecated'));
+    $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
-        'choices'  => array_combine($statusKeys,$statusVals),
+        'choices'  => $statuses,
     ));
     $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'CatalogueLevels',
@@ -35,12 +34,14 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
        'link_url' => 'chronostratigraphy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
-    $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_combine($statusKeys,$statusVals), 'required' => true));
+    $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'min' => -4600));
+    $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'max' => 1));
+    $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('lower_bound', 
                                                                           '<=', 
                                                                           'upper_bound', 
                                                                           array('throw_global_error' => true), 
-                                                                          array('invalid'=>$this->getI18N()->__('The lower bound cannot be above the upper bound.'))
+                                                                          array('invalid'=>$this->getI18N()->__('The lower bound (%left_field%) cannot be above the upper bound (%right_field%).'))
                                                                          )
                                             );
   }

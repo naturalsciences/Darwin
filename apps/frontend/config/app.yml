@@ -9,3 +9,4 @@ all:
        yearUpperBound: '2038'
        recPerPage: 10
        pagerSlidingSize: 5
+       catalogueRecLimit: 200

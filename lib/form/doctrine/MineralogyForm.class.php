@@ -19,16 +19,14 @@ class MineralogyForm extends BaseMineralogyForm
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $this->widgetSchema['formule']->setAttributes(array('class'=>'medium_size'));
 
-    $statusKeys = array('valid', 'invalid', 'deprecated');
-    $statusVals = array($this->getI18N()->__('valid'), $this->getI18N()->__('invalid'), $this->getI18N()->__('deprecated'));
+    $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
-        'choices'  => array_combine($statusKeys,$statusVals),
+        'choices'  => $statuses,
     ));
 
-    $classificationKeys = array('strunz', 'dana');
-    $classificationVals = array('Strunz', 'Dana');
+    $classifications = array('strunz'=>'Strunz', 'dana'=>'Dana');
     $this->widgetSchema['classification'] = new sfWidgetFormChoice(array(
-        'choices'  => array_combine($classificationKeys,$classificationVals),
+        'choices'  => $classifications,
     ));
 
     $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
@@ -46,20 +44,22 @@ class MineralogyForm extends BaseMineralogyForm
 
     $this->widgetSchema['cristal_system'] = new widgetFormSelectComplete(array('model' => 'Mineralogy',
                                                                                'table_method' => 'getDistinctSystems',
-                                                                               'method' => 'getSystems',
-                                                                               'key_method' => 'getSystems',
+                                                                               'method' => 'getCristalSystem',
+                                                                               'key_method' => 'getCristalSystem',
                                                                                'add_empty' => false,
                                                                                'change_label' => 'Pick a system in the list',
                                                                                'add_label' => 'Add another system',
                                                                               )
                                                                         );
 
-    $this->widgetSchema->setLabels(array('cristal_system' => $this->getI18N()->__('Cristalographic system')
+    $this->widgetSchema->setLabels(array('cristal_system' => $this->getI18N()->__('Cristalographic system'),
+                                         'level_ref' => $this->getI18N()->__('Level'),
+                                         'parent_ref' => $this->getI18N()->__('Parent')
                                         )
                                   );
 
-    $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_combine($statusKeys,$statusVals), 'required' => true));
-    $this->validatorSchema['classification'] = new sfValidatorChoice(array('choices'  => array_combine($classificationKeys,$classificationVals), 'required' => true));
+    $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
+    $this->validatorSchema['classification'] = new sfValidatorChoice(array('choices'  => array_keys($classifications), 'required' => true));
 
   }
 }

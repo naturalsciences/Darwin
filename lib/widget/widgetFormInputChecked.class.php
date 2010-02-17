@@ -18,7 +18,7 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
         $this->addOption('autocomplete_minChars', 3);
         $this->addOption('autocomplete_autoFill', true);
         $this->addOption('nullable', false);
-        $this->setOption('is_hidden', false);
+        $this->addOption('is_hidden', false);
     }
 
   public function getJavaScripts()
@@ -77,6 +77,8 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
           }
         }
         $input .= '</select></li></ul>';
+	if(!function_exists('url_for'))
+	  sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
         $input .= sprintf(<<<EOF
 <script type="text/javascript">
   var lastCaller;
