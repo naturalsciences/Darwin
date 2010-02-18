@@ -335,9 +335,9 @@ CREATE TRIGGER trg_chk_peopleType AFTER UPDATE
 	ON people FOR EACH ROW
 	EXECUTE PROCEDURE fct_chk_peopleType();
 	
-CREATE TRIGGER trg_chk_AreAuthors AFTER INSERT OR UPDATE
+CREATE TRIGGER trg_chk_AreRole AFTER INSERT OR UPDATE
 	ON catalogue_people FOR EACH ROW
-	EXECUTE PROCEDURE fct_chk_AreAuthors();
+	EXECUTE PROCEDURE fct_chk_AreRole();
 	
 
 CREATE TRIGGER trg_clr_title BEFORE INSERT OR UPDATE

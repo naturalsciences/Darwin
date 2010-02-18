@@ -5713,13 +5713,12 @@ $$
 LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION fct_chk_AreAuthors() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION fct_chk_AreRole() RETURNS TRIGGER
 AS $$
 DECLARE
 	are_not_author boolean;
 BEGIN
 	IF NEW.people_type = 'authors' THEN
-	
 		IF TG_OP ='UPDATE' THEN
 			IF OLD.people_ref = NEW.people_ref THEN 
 				RETURN NEW;
@@ -5732,7 +5731,20 @@ BEGIN
 			RAISE EXCEPTION 'Author must be defined as author.';
 		END IF;
 		
+	ELSIF NEW.people_type = 'experts' THEN
+		IF TG_OP ='UPDATE' THEN
+			IF OLD.people_ref = NEW.people_ref THEN 
+				RETURN NEW;
+			END IF;
+		END IF;
+	
+		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 8)=0 AND id=NEW.people_ref;
+		
+		IF are_not_author THEN
+			RAISE EXCEPTION 'Experts must be defined as expert.';
+		END IF;
 	END IF;
+
 	RETURN NEW;
 END;
 $$
