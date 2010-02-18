@@ -9,6 +9,7 @@ Institutions:
         formated_name_ts: { type: string}
         family_name: { type: string, notnull: true}
         additional_names: { type: string}
+        db_people_type:  { type: integer, notnull: true, default:1}
 
 People:
     columns:

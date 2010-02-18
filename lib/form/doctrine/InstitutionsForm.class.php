@@ -26,6 +26,14 @@ class InstitutionsForm extends BaseInstitutionsForm
 	'add_label' => 'Add another type',
     ));
 
+    $this->widgetSchema['db_people_type'] = new sfWidgetFormChoice(array(
+      'choices'        => Institutions::getTypes(),
+      'renderer_class' => 'sfWidgetFormSelectDoubleList',
+    ));
+    $this->widgetSchema['db_people_type']->setLabel('Role');
+    $this->widgetSchema['sub_type']->setLabel('Type');
+    $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('choices' => array_keys(Institutions::getTypes()), 'required' => false, 'multiple' => true));
+
     $this->widgetSchema['additional_names']->setAttributes(array('class'=>'small_size'));
   }
 }

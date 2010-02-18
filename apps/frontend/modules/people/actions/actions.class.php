@@ -23,8 +23,8 @@ class peopleActions extends DarwinActions
     $this->form = new PeopleFormFilter();
   }
 
-  public function executeSearchBoth(sfWebRequest $request)
-  {}
+   public function executeSearchBoth(sfWebRequest $request)
+   {}
   
   public function executeIndex(sfWebRequest $request)
   {

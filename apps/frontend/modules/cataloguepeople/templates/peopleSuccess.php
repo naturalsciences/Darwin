@@ -53,10 +53,15 @@ function toggleChangingChoice()
       {
 	$('#catalogue_people_people_sub_type_parent .change_item_button:visible').click();
 	$('#catalogue_people_people_sub_type_parent .add_item_button').hide();
+	
+	$('.both_search_institutions').hide();
+	$('.both_search_institutions input').removeAttr('checked');
+	$('.both_search_people input').attr('checked','checked').change();
       }
       else
       {
 	$('#catalogue_people_people_sub_type_parent .add_item_button').show();
+	$('.both_search_institutions').show();
       }
 }
 $(document).ready(function () 
@@ -80,7 +85,7 @@ $(document).ready(function ()
 </script>
 
 <div class="search_box show">
-  <?php include_partial('people/searchForm', array('form' => $searchForm, 'is_choose' => true)) ?>
+  <?php include_partial('people/searchBoth', array('is_choose' => true)); ?>
 </div>
 
 </div>

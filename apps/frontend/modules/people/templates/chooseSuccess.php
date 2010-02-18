@@ -2,6 +2,7 @@
 <div class="page">
 <h1><?php echo __('Search People');?></h1>
 
+<?php if($sf_params->get('with_js',true) == true):?>
 <script language="javascript">
 $(document).ready(function () {
     $('.result_choose').live('click',function () {
@@ -13,7 +14,7 @@ $(document).ready(function () {
     });
 });
 </script>
-
+<?php endif;?>
   <?php include_partial('searchForm', array('form' => $form, 'is_choose' => true)) ?>
 
 </div>
