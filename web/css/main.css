@@ -818,6 +818,24 @@ table.encoding tbody .widget_row_delete
   text-align:center;  
   padding-right:1px;
 }
+.widget_sub_table
+{
+  width:100%;
+}
+
+#cataloguePeople .widget_sub_table .handle
+{
+  width:18px;
+}
+#cataloguePeople .widget_sub_table .catalogue_people_sub_type
+{
+  width: 40%;
+}
+
+#cataloguePeople .widget_sub_table .widget_row_delete
+{
+  width:18px;
+}
 
 .clear_prop
 {

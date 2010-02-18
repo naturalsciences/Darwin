@@ -431,6 +431,14 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+    u1ws15-2:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: cataloguePeople
+        order_by: 1
+        opened: true
+        visible: true
     u1ws16:
         User: u1
         col_num: 1

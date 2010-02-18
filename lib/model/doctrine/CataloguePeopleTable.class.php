@@ -4,5 +4,48 @@
  */
 class CataloguePeopleTable extends DarwinTable
 {
+  /**
+  * Find all People linked for a table name and a recordId
+  * @param string $table_name the table to look for
+  * @param int record_id the record to be commented out.
+  * @return Doctrine_Collection Collection of Doctrine records
+  */
+  public function findForTableByType($table_name, $record_id)
+  {
+     $q = Doctrine_Query::create()
+	 ->from('CataloguePeople c')
+	 ->innerJoin('c.People');
+     $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
+     $q->orderBy('c.people_type ASC, order_by ASC');
+    $items = $q->execute();
+    $results = array();
+    foreach($items as $item)
+    {
+      if(! isset($results[$item->getPeopleType()]))
+	$results[$item->getPeopleType()] = array();
+      $results[$item->getPeopleType()][] = $item;
+    }
+    return $results;
+  }
 
+  /**
+  * Get Distincts Sub Type of properties
+  * filter by type if one given
+  * @param string $type a type
+  * @return array an Array of sub-types in keys/values
+  */
+  public function getDistinctSubType($type=null)
+  {
+    if($type=="authors")
+    {
+      return CataloguePeople::getAuthorTypes();
+    }
+    $q = $this->createDistinct('CataloguePeople INDEXBY sub_type', 'people_sub_type', 'sub_type','');
+    if(! is_null($type))
+      $q->addWhere('people_type = ?',$type);
+    $results = $q->fetchArray();
+    if(count($results))
+      $results = array_combine(array_keys($results),array_keys($results));
+    return $results;//array_merge(array(''=>''), );
+  }
 }

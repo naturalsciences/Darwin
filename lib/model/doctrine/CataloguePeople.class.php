@@ -5,5 +5,10 @@
  */
 class CataloguePeople extends BaseCataloguePeople
 {
-
+  public static function getAuthorTypes()
+  {
+        return array('Main Author' => 'Main Author','Secondary Author' => 'Secondary Author',
+	'Reviewer'=> 'Reviewer', 'Publisher' => 'Publisher', 'Corrector' => 'Corrector', 'Related' => 'Related');
+  }
+ 
 }

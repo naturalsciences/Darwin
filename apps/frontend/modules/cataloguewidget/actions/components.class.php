@@ -46,4 +46,9 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->synonyms = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord($this->table, $this->eid);
   }
+  
+  public function executeCataloguePeople()
+  {
+    $this->types = Doctrine::getTable('CataloguePeople')->findForTableByType($this->table, $this->eid);
+  }
 }
