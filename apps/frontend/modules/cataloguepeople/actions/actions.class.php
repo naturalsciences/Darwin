@@ -39,6 +39,7 @@ class cataloguepeopleActions extends sfActions
 	  }
 	}
     }
+    $this->form->forceSubType();
     $this->searchForm = new PeopleFormFilter(array('table'=> $request->getParameter('table') ));
 
   }
