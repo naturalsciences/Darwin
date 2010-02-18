@@ -205,6 +205,7 @@ People:
         family_name: Root
         given_name: Evil
         gender: M
+        db_people_type: 127
   
 Collections:
     c2:

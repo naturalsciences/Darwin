@@ -43,6 +43,19 @@ class cataloguepeopleActions extends sfActions
 
   }
 
+  public function executeEditOrder(sfWebRequest $request)
+  {
+    $orders = substr($request->getParameter('order', ','),0,-1);
+    $orders_ids = explode(',',$orders);
+    Doctrine::getTable('CataloguePeople')->changeOrder(
+      $request->getParameter('table'),
+      $request->getParameter('rid'),
+      $request->getParameter('people_type'),
+      $orders_ids
+    );
+    return $this->renderText('ok');
+  }
+
   public function executeGetSubType(sfWebRequest $request)
   {
     $this->items = Doctrine::getTable('CataloguePeople')->getDistinctSubType($request->getParameter('type'));

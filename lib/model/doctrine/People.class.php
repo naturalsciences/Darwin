@@ -47,8 +47,11 @@ class People extends BasePeople
 	if(isset($types[$value]))
 	  $result += $value;
       }
+      $this->_set('db_people_type', $result);
     }
-    $this->_set('db_people_type',$result);
+    else
+      $this->_set('db_people_type', $db_types);
+
   }
 
   public function setBirthDate($fd)

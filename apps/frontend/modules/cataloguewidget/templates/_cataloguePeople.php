@@ -13,7 +13,7 @@
 	<?php echo __(ucfirst($type)); ?>
       </td>
       <td>
-	  <table class="widget_sub_table">
+	  <table class="widget_sub_table" alt="<?php echo $type;?>">
 	    <thead>
 	      <tr>
 		<th></th>
@@ -22,6 +22,7 @@
 		<th></th>
 	      </tr>
 	    </thead>
+	    <tbody>
 	    <?php foreach($items as $person):?>
 	      <tr class="peo_id_<?php echo $person->getId();?>" id="id_<?php echo $person->getId();?>">
 		<td class="handle"><?php echo image_tag('drag.png');?></td>
@@ -40,6 +41,7 @@
 		</td>
 	      </tr>
 	    <?php endforeach;?>
+	    </tbody>
 	  </table>
       </td>
 
@@ -49,3 +51,36 @@
 </table>
 <br />
 <?php echo image_tag('add_green.png');?><a title="<?php echo __('Add People');?>" class="link_catalogue" href="<?php echo url_for('cataloguepeople/people?table='.$table.'&rid='.$eid); ?>"><?php echo __('Add');?></a>
+<script type="text/javascript">
+
+function forceHelper(e,ui)
+{
+   $(".ui-state-highlight").html("<td colspan='3'>&nbsp;</td>");
+}
+
+$(document).ready(function()
+{
+
+  $("#cataloguePeople .widget_sub_table tbody").sortable({
+      placeholder: 'ui-state-highlight',
+      handle: '.handle',
+      axis: 'y',
+      change: function(e, ui) {
+	forceHelper(e,ui);
+      },
+      deactivate: function(event, ui) {
+	  el_Array = $(this).sortable('toArray');
+	  result='';
+	  for(item in el_Array)
+	  {
+	    result += getIdInClasses( $('#'+el_Array[item]) )+',';
+	  }
+	  $.ajax({
+	    type: "POST",
+	    url: "<?php echo url_for('cataloguepeople/editOrder?table='.$table.'&rid='.$eid); ?>",
+	    data: { order: result, people_type: $(this).parent().attr('alt') }
+	  });
+      }
+    });
+});
+</script>

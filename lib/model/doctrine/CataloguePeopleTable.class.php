@@ -48,4 +48,21 @@ class CataloguePeopleTable extends DarwinTable
       $results = array_combine(array_keys($results),array_keys($results));
     return $results;//array_merge(array(''=>''), );
   }
+
+  public function changeOrder($table_name, $record_id, $people_type, $order)
+  {
+      if(! is_array($order))
+        throw new Exception ('order must be an array of ids');
+
+      $q = Doctrine_Query::create()
+	->update('CataloguePeople c')
+	->set('c.order_by',"fct_array_find(?,id::text) ",implode(",",$order));
+
+      $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
+
+      $q->andWhereIn('c.id',$order)
+	->andWhere('c.people_type = ?', $people_type)
+	->execute();
+	
+  }
 }
