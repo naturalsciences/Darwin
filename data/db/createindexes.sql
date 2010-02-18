@@ -156,6 +156,13 @@ CREATE INDEX CONCURRENTLY idx_igs_ig_num_indexed on igs (ig_num_indexed);
 CREATE INDEX CONCURRENTLY idx_class_vernacular_names_community_indexed on class_vernacular_names (community_indexed);
 CREATE INDEX CONCURRENTLY idx_vernacular_names_name_indexed on vernacular_names (name_indexed);
 CREATE INDEX CONCURRENTLY idx_mineralogy_code on mineralogy(upper(code));
+CREATE INDEX CONCURRENTLY idx_chronostratigraphy_lower_bound on chronostratigraphy(coalesce(lower_bound, -4600));
+CREATE INDEX CONCURRENTLY idx_chronostratigraphy_upper_bound on chronostratigraphy(coalesce(upper_bound, 1));
+CREATE INDEX CONCURRENTLY idx_taxonomy_name_order_by on taxonomy(name_order_by);
+CREATE INDEX CONCURRENTLY idx_chronostratigraphy_name_order_by on chronostratigraphy(name_order_by);
+CREATE INDEX CONCURRENTLY idx_lithostratigraphy_name_order_by on lithostratigraphy(name_order_by);
+CREATE INDEX CONCURRENTLY idx_lithology_name_order_by on lithology(name_order_by);
+CREATE INDEX CONCURRENTLY idx_mineralogy_name_order_by on mineralogy(name_order_by);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 

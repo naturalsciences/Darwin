@@ -158,6 +158,14 @@ DROP INDEX IF EXISTS idx_igs_ig_num_indexed;
 DROP INDEX IF EXISTS idx_class_vernacular_names_community_indexed;
 DROP INDEX IF EXISTS idx_vernacular_names_name_indexed;
 DROP INDEX IF EXISTS idx_mineralogy_code;
+DROP INDEX IF EXISTS idx_chronostratigraphy_lower_bound;
+DROP INDEX IF EXISTS idx_chronostratigraphy_upper_bound;
+DROP INDEX IF EXISTS idx_taxonomy_name_order_by;
+DROP INDEX IF EXISTS idx_chronostratigraphy_name_order_by;
+DROP INDEX IF EXISTS idx_lithostratigraphy_name_order_by;
+DROP INDEX IF EXISTS idx_lithology_name_order_by;
+DROP INDEX IF EXISTS idx_mineralogy_name_order_by;
+
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 

@@ -1007,6 +1007,7 @@ create table template_classifications
        (
         name varchar not null,
         name_indexed tsvector not null,
+        name_order_by varchar,
         level_ref integer not null,
         status varchar not null default 'valid',
         path varchar not null default '/',
@@ -1014,7 +1015,8 @@ create table template_classifications
        );
 comment on table template_classifications is 'Template table used to construct every common data in each classifications tables (taxonomy, chronostratigraphy, lithostratigraphy,...)';
 comment on column template_classifications.name is 'Classification unit name';
-comment on column template_classifications.name_indexed is 'Indexed form of name field';
+comment on column template_classifications.name_indexed is 'TS Vector Indexed form of name field';
+comment on column template_classifications.name_order_by is 'Indexed form of name field for ordering';
 comment on column template_classifications.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column template_classifications.path is 'Hierarchy path (/ for root)';

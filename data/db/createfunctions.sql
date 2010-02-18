@@ -2322,6 +2322,7 @@ BEGIN
 			NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'expeditions' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'habitats' THEN
@@ -2330,10 +2331,13 @@ BEGIN
 			NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 			NEW.formule_indexed := fullToIndex(NEW.formule);
 		ELSIF TG_TABLE_NAME = 'multimedia' THEN
 			NEW.title_indexed := fullToIndex(NEW.title);
@@ -2350,6 +2354,7 @@ BEGIN
 			NEW.label_indexed := fullToIndex(NEW.label);
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'classification_keywords' THEN
 			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'users' THEN
@@ -2369,6 +2374,7 @@ BEGIN
 			NEW.property_qualifier_indexed := COALESCE(fullToIndex(NEW.property_qualifier),'');
 		ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'expeditions' THEN
 			NEW.name_indexed := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'habitats' THEN
@@ -2377,10 +2383,13 @@ BEGIN
 			NEW.value_defined_indexed := COALESCE(fullToIndex(NEW.value_defined),'');
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 			NEW.formule_indexed := fullToIndex(NEW.formule);
 		ELSIF TG_TABLE_NAME = 'multimedia' THEN
 			NEW.title_indexed := fullToIndex(NEW.title);
@@ -2397,6 +2406,7 @@ BEGIN
 			NEW.label_indexed := fullToIndex(NEW.label);
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 			NEW.name_indexed := to_tsvector('simple', NEW.name);
+			NEW.name_order_by := fullToIndex(NEW.name);
 		ELSIF TG_TABLE_NAME = 'classification_keywords' THEN
 			NEW.keyword_indexed := fullToIndex(NEW.keyword);
 		ELSIF TG_TABLE_NAME = 'users' THEN
