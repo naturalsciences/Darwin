@@ -58,5 +58,5 @@
     <?php if(!$form['from_date']->hasError()): ?>
       <?php echo $form['to_date']->renderError() ?>
     <?php endif; ?>
-</div>
+  </div>
 <?php endif;?>

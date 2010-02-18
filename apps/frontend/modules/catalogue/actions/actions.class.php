@@ -58,7 +58,7 @@ class catalogueActions extends DarwinActions
 
   public function executeSearch(sfWebRequest $request)
   {
-    $this->setCommonValues('catalogue', 'name_indexed', $request);
+    $this->setCommonValues('catalogue', 'name_order_by', $request);
     $item = $request->getParameter('searchCatalogue',array('') );
     $formFilterName = DarwinTable::getFilterForTable($item['table']);
     $this->searchForm = new $formFilterName(array('table' => $item['table']));

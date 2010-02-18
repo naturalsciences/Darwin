@@ -1,3 +1,4 @@
+<?php if($searchForm->isValid()):?>
 <?php if(isset($items) && $items->count() != 0):?>
   <?php
     if($orderDir=='asc')
@@ -20,9 +21,9 @@
           </th>
         <?php endif;?>
         <th>
-          <a class="sort" href="<?php echo url_for($s_url.'&orderby=name_indexed'.( ($orderBy=='name_indexed' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+          <a class="sort" href="<?php echo url_for($s_url.'&orderby=name_order_by'.( ($orderBy=='name_order_by' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
             <?php echo __('Name');?>
-            <?php if($orderBy=='name_indexed') echo $orderSign ?>
+            <?php if($orderBy=='name_order_by') echo $orderSign ?>
           </a>
         </th>
         <th>
@@ -99,4 +100,21 @@
   <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
 <?php else:?>
   <?php echo __('No Matching Items');?>
+<?php endif;?>
+<?php else:?>
+  <div class="error">
+    <?php echo $searchForm['name']->renderError() ?>
+    <?php echo $searchForm['level_ref']->renderError() ?>
+    <?php if(isset($searchForm['code'])):?>
+      <?php echo $searchForm['code']->renderError() ?>
+    <?php endif;?>
+    <?php if (isset($searchForm['upper_bound'])):?>
+      <?php if($searchForm['lower_bound']->hasError() || $searchForm['upper_bound']->hasError()):?>
+        <?php echo $searchForm['lower_bound']->renderError() ?>
+        <?php echo $searchForm['upper_bound']->renderError() ?>
+      <?php elseif($searchForm->hasGlobalErrors()):?>
+        <?php echo $searchForm->renderGlobalErrors() ?>
+      <?php endif;?>
+    <?php endif;?>
+  </div>
 <?php endif;?>

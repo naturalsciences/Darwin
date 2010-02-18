@@ -15,6 +15,7 @@ abstract class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'name'                         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'name_indexed'                 => new sfWidgetFormFilterInput(),
+      'name_order_by'                => new sfWidgetFormFilterInput(),
       'level_ref'                    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Level'), 'add_empty' => true)),
       'status'                       => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'path'                         => new sfWidgetFormFilterInput(),
@@ -133,6 +134,7 @@ abstract class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'name'                         => new sfValidatorPass(array('required' => false)),
       'name_indexed'                 => new sfValidatorPass(array('required' => false)),
+      'name_order_by'                => new sfValidatorPass(array('required' => false)),
       'level_ref'                    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Level'), 'column' => 'id')),
       'status'                       => new sfValidatorPass(array('required' => false)),
       'path'                         => new sfValidatorPass(array('required' => false)),
@@ -268,6 +270,7 @@ abstract class BaseTaxonomyFormFilter extends BaseFormFilterDoctrine
       'id'                           => 'Number',
       'name'                         => 'Text',
       'name_indexed'                 => 'Text',
+      'name_order_by'                => 'Text',
       'level_ref'                    => 'ForeignKey',
       'status'                       => 'Text',
       'path'                         => 'Text',

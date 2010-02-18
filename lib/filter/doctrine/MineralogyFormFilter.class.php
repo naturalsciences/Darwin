@@ -43,8 +43,8 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
     $this->widgetSchema['code']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
 
-    $this->widgetSchema->setLabels(array('classification' => $this->getI18N()->__('Class.'),
-                                         'level_ref' => $this->getI18N()->__('Level')
+    $this->widgetSchema->setLabels(array('classification' => 'Class.',
+                                         'level_ref' => 'Level'
                                         )
                                   );
 

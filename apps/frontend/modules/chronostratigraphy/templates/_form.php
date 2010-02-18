@@ -44,7 +44,7 @@
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['parent_ref']->renderLabel('Parent') ?></th>
+        <th class="top_aligned"><?php echo $form['parent_ref']->renderLabel('Parent') ?></th>
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
           <?php echo $form['parent_ref'] ?>

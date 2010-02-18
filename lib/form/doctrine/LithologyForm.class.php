@@ -28,7 +28,11 @@ class LithologyForm extends BaseLithologyForm
        'link_url' => 'lithology/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
-      $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
+    $this->widgetSchema->setLabels(array('level_ref' => 'Level',
+                                         'parent_ref' => 'Parent'
+                                        )
+                                  );
+    $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
 
   }
 }

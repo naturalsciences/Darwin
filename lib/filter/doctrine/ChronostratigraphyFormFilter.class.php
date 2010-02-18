@@ -20,15 +20,15 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden();
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
     $this->widgetSchema['lower_bound']->setAttributes(array('class'=>'small_size datesNum'));
-    $this->widgetSchema['lower_bound']->setLabel($this->getI18N()->__('Low. bound (My)'));
     $this->widgetSchema['upper_bound']->setAttributes(array('class'=>'small_size datesNum'));
-    $this->widgetSchema['upper_bound']->setLabel($this->getI18N()->__('Up. bound (My)'));
     $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => 'getLevelsForChronostratigraphy',
         'add_empty' => 'All'
       ));
-    $this->widgetSchema->setLabels(array('level_ref' => $this->getI18N()->__('Level')
+    $this->widgetSchema->setLabels(array('level_ref' => 'Level',
+                                         'lower_bound' => 'Low. bound (My)',
+                                         'upper_bound' => 'Up. bound (My)'
                                         )
                                   );
 
@@ -37,8 +37,8 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
                                                                 )
                                                           );
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => true));
-    $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'empty_value' => -4600, 'min' => -4600));
-    $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'empty_value' => 1, 'max' => 1));
+    $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'empty_value' => -4600, 'min' => -4600, 'max' => 1));
+    $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'empty_value' => 1, 'min' => -4600, 'max' => 1));
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('lower_bound', 
                                                                           '<=', 
                                                                           'upper_bound', 

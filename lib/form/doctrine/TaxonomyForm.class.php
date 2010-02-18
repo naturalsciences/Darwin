@@ -28,8 +28,8 @@ class TaxonomyForm extends BaseTaxonomyForm
        'link_url' => 'taxonomy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
-    $this->widgetSchema->setLabels(array('level_ref' => $this->getI18N()->__('Level'),
-                                         'parent_ref' => $this->getI18N()->__('Parent')
+    $this->widgetSchema->setLabels(array('level_ref' => 'Level',
+                                         'parent_ref' => 'Parent'
                                         )
                                   );
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));

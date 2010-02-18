@@ -52,9 +52,9 @@ class MineralogyForm extends BaseMineralogyForm
                                                                               )
                                                                         );
 
-    $this->widgetSchema->setLabels(array('cristal_system' => $this->getI18N()->__('Cristalographic system'),
-                                         'level_ref' => $this->getI18N()->__('Level'),
-                                         'parent_ref' => $this->getI18N()->__('Parent')
+    $this->widgetSchema->setLabels(array('cristal_system' => 'Cristalographic system',
+                                         'level_ref' => 'Level',
+                                         'parent_ref' => 'Parent'
                                         )
                                   );
 

@@ -630,6 +630,7 @@ Taxonomy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
+        name_order_by: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
@@ -777,6 +778,7 @@ Chronostratigraphy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
+        name_order_by: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
@@ -816,6 +818,7 @@ Lithostratigraphy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
+        name_order_by: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
@@ -847,6 +850,7 @@ Mineralogy:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
+        name_order_by: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
@@ -881,6 +885,7 @@ Lithology:
         id: { type: integer, primary: true, autoincrement: true }
         name: { type: string, notnull: true}
         name_indexed: { type: string}
+        name_order_by: { type: string}
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}

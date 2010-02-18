@@ -15,10 +15,8 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $this->widgetSchema['lower_bound'] = new sfWidgetFormInput();
     $this->widgetSchema['lower_bound']->setAttributes(array('class'=>'small_size datesNum'));
-    $this->widgetSchema['lower_bound']->setLabel($this->getI18N()->__('Lower bound (in My)'));
     $this->widgetSchema['upper_bound'] = new sfWidgetFormInput();
     $this->widgetSchema['upper_bound']->setAttributes(array('class'=>'small_size datesNum'));
-    $this->widgetSchema['upper_bound']->setLabel($this->getI18N()->__('Upper bound (in My)'));
     $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices'  => $statuses,
@@ -34,6 +32,11 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
        'link_url' => 'chronostratigraphy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
      ));
+    $this->widgetSchema->setLabels(array('level_ref' => 'Level',
+                                         'lower_bound' => 'Low. bound (My)',
+                                         'upper_bound' => 'Up. bound (My)'
+                                        )
+                                  );
     $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'min' => -4600));
     $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'max' => 1));
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));

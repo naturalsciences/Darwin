@@ -23,7 +23,7 @@ class LithologyFormFilter extends BaseLithologyFormFilter
         'table_method' => 'getLevelsForLithology',
         'add_empty' => 'All'
       ));
-    $this->widgetSchema->setLabels(array('level_ref' => $this->getI18N()->__('Level')
+    $this->widgetSchema->setLabels(array('level_ref' => 'Level'
                                         )
                                   );
     $this->validatorSchema['name'] = new sfValidatorString(array('required' => false,
