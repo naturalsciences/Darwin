@@ -15,7 +15,7 @@
           <?php echo $form['name'] ?>
 	<td>
 	<td rowspan="6" class="keyword_row">
-	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'field_name' => 'taxonomy_name')); ?>
+	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'taxonomy','field_name' => 'taxonomy_name')); ?>
 	</td>
       </tr>
       <tr>

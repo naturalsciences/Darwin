@@ -14,6 +14,15 @@
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
         </td>
+	<td rowspan="7" class="keyword_row">
+	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'chronostratigraphy','field_name' => 'chronostratigraphy_name')); ?>
+	</td>
+      </tr>
+      <tr>
+	<th></th>
+	<td>
+	   <?php include_partial('catalogue/keywordsList');?>
+        </td>
       </tr>
       <tr>
         <th><?php echo $form['level_ref']->renderLabel('Level') ?></th>

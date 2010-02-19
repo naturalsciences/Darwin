@@ -113,7 +113,8 @@ class catalogueActions extends DarwinActions
   {
     $number = intval($request->getParameter('num'));
     
-    $form = new TaxonomyForm();
+    $formName = DarwinTable::getFormForTable($request->getParameter('table'));
+    $form = new $formName();
 
     $form->addKeyword($number, $request->getParameter('keyword'), $request->getParameter('value'));
 

@@ -53,7 +53,6 @@ class taxonomyActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
-    $this->keywords = Doctrine::getTable('ClassificationKeywords')->findForTable('taxonomy', $taxa->getId());
 
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
@@ -69,7 +68,6 @@ class taxonomyActions extends sfActions
   public function executeUpdate(sfWebRequest $request)
   {
     $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
-    $this->keywords = Doctrine::getTable('ClassificationKeywords')->findForTable('taxonomy', $taxa->getId());
 
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);

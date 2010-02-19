@@ -26,7 +26,7 @@
                 <li>
                     <a href="">Catalogues</a>
                     <ul>
-                        <li><?php echo link_to(__('Taxa'),'taxonomy/index');?></li>
+                        <li><?php echo link_to(__('Taxonomy'),'taxonomy/index');?></li>
                         <li><?php echo link_to(__('Chronostratigraphy'),'chronostratigraphy/index');?></li>
                         <li><?php echo link_to(__('Lithostratigraphy'),'lithostratigraphy/index');?></li>
                         <li><?php echo link_to(__('Lithology'),'lithology/index');?></li>
@@ -48,7 +48,7 @@
                 <li>
                     <a href="#">Catalogues</a>
                     <ul>
-                        <li><?php echo link_to(__('Taxa'),'taxonomy/new');?></li>
+                        <li><?php echo link_to(__('Taxonomy'),'taxonomy/new');?></li>
                         <li><?php echo link_to(__('Chronostratigraphy'),'chronostratigraphy/new');?></li>
                         <li><?php echo link_to(__('Lithostratigraphy'),'lithostratigraphy/new');?></li>
                         <li><?php echo link_to(__('Lithology'),'lithology/new');?></li>

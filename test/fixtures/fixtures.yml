@@ -584,6 +584,14 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+    u1ws33-2:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: cataloguePeople
+        order_by: 1
+        opened: true
+        visible: true
     u1ws34:
         User: u1
         col_num: 1
@@ -616,6 +624,14 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+    u1ws37-2:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: cataloguePeople
+        order_by: 1
+        opened: true
+        visible: true
     u1ws38:
         User: u1
         col_num: 1
@@ -648,6 +664,14 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+    u1ws40-2:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: cataloguePeople
+        order_by: 1
+        opened: true
+        visible: true
     u1ws41:
         User: u1
         col_num: 1
@@ -680,6 +704,14 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+    u1ws44-2:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: cataloguePeople
+        order_by: 1
+        opened: true
+        visible: true
     u1ws45:
         User: u1
         col_num: 1

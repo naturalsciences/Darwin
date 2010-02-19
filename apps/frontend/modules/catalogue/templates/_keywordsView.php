@@ -30,7 +30,7 @@ $(document).ready(function () {
       $.ajax(
       {
 	type: "GET",
-	url: "<?php echo url_for('catalogue/addValue');?>/num/" + (0+$('#catalogue_keywords tbody tr').length) + "/keyword/" + $(this).attr('alt') + "/value/" + tag_value,
+	url: "<?php echo url_for('catalogue/addValue?table='.$table_name);?>/num/" + (0+$('#catalogue_keywords tbody tr').length) + "/keyword/" + $(this).attr('alt') + "/value/" + tag_value,
 	success: function(html)
 	{
 	  $('#catalogue_keywords tbody').append(html);

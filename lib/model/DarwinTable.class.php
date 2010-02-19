@@ -6,6 +6,12 @@ class DarwinTable extends Doctrine_Table
     {
       return self::getModelForTable($table). 'FormFilter';
     }
+    
+    public static function getFormForTable($table)
+    {
+      return self::getModelForTable($table). 'Form';
+    }
+
     public static function getModelForTable($table)
     {
       return sfInflector::camelize($table);
