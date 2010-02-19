@@ -108,4 +108,16 @@ class catalogueActions extends DarwinActions
       }
     }
   }
+
+  public function executeAddValue(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    
+    $kw = new ClassificationKeywords();
+    $kw->setKeywordType($request->getParameter('keyword'));
+    $kw->setKeyWord($request->getParameter('value'));
+
+    $form = new ClassificationKeywordsForm($kw, array('new_object' => true,'num'=> $number));
+    return $this->renderPartial('nameValue',array('form' => $form));
+  }
 }

@@ -9,6 +9,11 @@
 	<tbody>
 	  <?php echo $form->renderGlobalErrors() ?>
 	  <tr>
+	    <th><?php echo __('Login');?></th>
+	    <td>
+	      <?php echo $login->getUserName();?>
+	    </td>
+	  <tr>
 	    <th><?php echo $form['title']->renderLabel() ?></th>
 	    <td>
 	      <?php echo $form['title']->renderError() ?>

@@ -53,6 +53,8 @@ class taxonomyActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
+    $this->keywords = Doctrine::getTable('ClassificationKeywords')->findForTable('taxonomy', $taxa->getId());
+
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
@@ -67,6 +69,8 @@ class taxonomyActions extends sfActions
   public function executeUpdate(sfWebRequest $request)
   {
     $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
+    $this->keywords = Doctrine::getTable('ClassificationKeywords')->findForTable('taxonomy', $taxa->getId());
+
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
@@ -94,15 +98,59 @@ class taxonomyActions extends sfActions
     {
       try{
 	$form->save();
+	$keywords = $request->getParameter('classsification_keywords');
+	if(isset($keywords['new']) && is_array( $keywords['new']))
+	{
+	  foreach( $keywords['new'] as $keyword)
+	  {
+	    $kw_obj = new ClassificationKeywords();
+	    $kw_obj->setReferencedRelation('taxonomy');
+	    $kw_obj->setRecordId($form->getObject()->getId());
+	    $kw_obj->setKeyword($keyword['keyword']);
+	    $kw_obj->setKeywordType($keyword['keyword_type']);
+	    $kw_obj->save();
+	  }
+	}
+	if(isset($keywords['old']) && is_array( $keywords['old']))
+	{
+	  foreach( $keywords['old'] as $id => $keyword)
+	  {
+	    $kw_obj = Doctrine::getTable('ClassificationKeywords')->find($id);
+	    if(!$kw_obj) continue;
+
+	    if($keyword['id'] != "")
+	    {
+	      $kw_obj->setKeyword($keyword['keyword']);
+	      $kw_obj->setKeywordType($keyword['keyword_type']);
+	      $kw_obj->save();
+	    }
+	    else
+	    {
+	      $kw_obj->delete();
+	    }
+	  }
+	}
+
 	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
       }
-      catch(sfStopException $e)
-      { throw $e; }
-      catch(Exception $e)
+      catch(Doctrine_Exception $e)
       {
 	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$form->getErrorSchema()->addError($error); 
       }
     }
+	$keywords = $request->getParameter('classsification_keywords');
+	if(isset($keywords['new']) && is_array( $keywords['new']))
+	{
+	  foreach( $keywords['new'] as $keyword)
+	  {
+	    $kw_obj = new ClassificationKeywords();
+	    $kw_obj->setReferencedRelation('taxonomy');
+	    $kw_obj->setRecordId($form->getObject()->getId());
+	    $kw_obj->setKeyword($keyword['keyword']);
+	    $kw_obj->setKeywordType($keyword['keyword_type']);
+	    $this->keywords[] = $kw_obj;
+	  }
+	}
   }
 }

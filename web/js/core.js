@@ -161,6 +161,29 @@ function addPropertyValue()
   return false;
 }
 
+function returnText(object)
+{
+  var obj = object.jquery ? object[0] : object;
+  if(typeof obj.selectionStart == 'number')
+  {
+    return obj.value.substring(obj.selectionStart, obj.selectionEnd);
+  }
+  else if(document.selection)
+  {
+    // Internet Explorer
+    obj.focus();
+    var range = document.selection.createRange();
+    if(range.parentElement() != obj) return false;
+
+    if(typeof range.text == 'string')
+    {
+      return range.text;
+    }
+  }
+  else
+    return false;
+}
+
 $(document).ready(function () {
 
   $('.cancel_qtip').live('click',function () {

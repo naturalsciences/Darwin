@@ -11,5 +11,18 @@ class ClassificationKeywordsForm extends BaseClassificationKeywordsForm
 {
   public function configure()
   {
+    $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['keyword_type'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['keyword'] = new sfWidgetFormInputHidden();
+
+    if(isset($this->options['new_object']))
+    {
+      $this->widgetSchema->setNameFormat('classsification_keywords[new]['.$this->options['num'].'][%s]');
+    }
+    else
+    {
+      $this->widgetSchema->setNameFormat('classsification_keywords[old]['.$this->getObject()->getId().'][%s]');
+    }
   }
 }

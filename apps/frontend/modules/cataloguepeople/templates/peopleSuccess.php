@@ -57,11 +57,13 @@ function toggleChangingChoice()
 	$('.both_search_institutions').hide();
 	$('.both_search_institutions input').removeAttr('checked');
 	$('.both_search_people input').attr('checked','checked').change();
+	$('#only_role').val(2);
       }
       else
       {
 	$('#catalogue_people_people_sub_type_parent .add_item_button').show();
 	$('.both_search_institutions').show();
+	$('#only_role').val(8);
       }
 }
 $(document).ready(function () 

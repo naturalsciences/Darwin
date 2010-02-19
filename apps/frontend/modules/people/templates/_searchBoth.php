@@ -1,6 +1,7 @@
 <h2><?php echo __('Search');?> :</h2>
 <span class="both_search_people"><?php echo __('People');?> : <input name="type_search" type="radio" value="people" /></span>
 <span class="both_search_institutions"><?php echo __('Institution');?> <input name="type_search" type="radio" value="institution" /></span>
+<input type="hidden" name="only_role" id="only_role" value="0" />
 
 <script language="javascript">
 
@@ -20,7 +21,7 @@
 
       $.ajax({
 	  type: "POST",
-	  url: search_url,
+	  url: search_url + 'only_role='+$("#only_role").val(),
 	  success: function(html){
 	    $('.search_both_item').html(html);
 	  }});

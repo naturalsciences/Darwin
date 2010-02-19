@@ -63,6 +63,7 @@ class userActions extends DarwinActions
   public function executeProfile(sfWebRequest $request)
   {
     $this->user =  Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id') );
+    $this->login = Doctrine::getTable('UsersLoginInfos')->findOneByUserRef( $this->getUser()->getAttribute('db_user_id'));
     $this->forward404Unless($this->user);
 
 
