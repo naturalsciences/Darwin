@@ -111,6 +111,7 @@ create table catalogue_people
         people_sub_type varchar not null default '',
         order_by integer not null default 1,
         people_ref integer not null,
+        constraint pk_catalogue_people primary key (id),
         constraint fk_people_list_person foreign key (people_ref) references people(id) on delete cascade,
         constraint unq_catalogue_people unique (referenced_relation, people_type, people_sub_type, record_id, people_ref)
        )
@@ -1022,11 +1023,15 @@ comment on column template_classifications.status is 'Validitiy status: valid, i
 comment on column template_classifications.path is 'Hierarchy path (/ for root)';
 comment on column template_classifications.parent_ref is 'Id of parent - id field from table itself';
 
+create sequence classification_keywords_id_seq;
+
 create table classification_keywords
 	(
+         id integer not null default nextval('classification_keywords_id_seq'),
 	 keyword_type varchar not null default 'name',
 	 keyword varchar not null,
-	 keyword_indexed varchar not null
+	 keyword_indexed varchar not null,
+         constraint pk_classification_keywords_id primary key (id)
 	)
 inherits (template_table_record_ref);
 

@@ -74,6 +74,7 @@ DROP SEQUENCE IF EXISTS expeditions_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS insurances_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS class_vernacular_names_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS vernacular_names_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS classification_keywords_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS igs_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS people_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_relationships_id_seq CASCADE;
