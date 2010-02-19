@@ -113,11 +113,10 @@ class catalogueActions extends DarwinActions
   {
     $number = intval($request->getParameter('num'));
     
-    $kw = new ClassificationKeywords();
-    $kw->setKeywordType($request->getParameter('keyword'));
-    $kw->setKeyWord($request->getParameter('value'));
+    $form = new TaxonomyForm();
 
-    $form = new ClassificationKeywordsForm($kw, array('new_object' => true,'num'=> $number));
-    return $this->renderPartial('nameValue',array('form' => $form));
+    $form->addKeyword($number, $request->getParameter('keyword'), $request->getParameter('value'));
+
+    return $this->renderPartial('nameValue',array('form' => $form['newVal'][$number]));
   }
 }

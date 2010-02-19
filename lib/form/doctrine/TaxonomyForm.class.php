@@ -33,5 +33,20 @@ class TaxonomyForm extends BaseTaxonomyForm
                                         )
                                   );
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
+
+    $this->addKeywordsRelation('taxonomy');
+    $subForm = new sfForm();
+    $this->embedForm('newVal',$subForm);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    parent::bindKeywords($taintedValues,$taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    parent::saveKeywordsEmbeddedForms($con, $forms);
+    return parent::saveEmbeddedForms($con, $forms);
   }
 }

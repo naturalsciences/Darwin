@@ -13,64 +13,16 @@
         <td>
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
-
-	  <ul class="name_tags">
-	    <li alt="name">Name Part</li>
-	    <li alt="year">Year</li>
-	  </ul>
-
-        </td>
-	<td rowspan="5">
-	  <div id="catalogue_keywords">
-	       <table>
-		<tbody>	
-		  <?php if(isset($keywords)):?>
-		    <?php foreach($keywords as $keyword):?>
-		      <?php include_partial('catalogue/nameValue', array('form' => new ClassificationKeywordsForm($keyword)));?>
-		    <?php endforeach;?>
-		  <?php endif;?>
-		</tbody>
-	       </table>
-	  </div>
-	  
-
-	  <script language="javascript">
-	    $(document).ready(function () {
-
-	  $('.name_tags li').click(function()
-	  {
-
-  $.ajax(
-  {
-    type: "GET",
-    url: "<?php echo url_for('catalogue/addValue');?>/num/" + (0+$('#catalogue_keywords tbody tr').length) + "/keyword/" + $(this).attr('alt') + "/value/" + returnText($('#taxonomy_name')),
-    success: function(html)
-    {
-      $('#catalogue_keywords tbody').append(html);
-    }
-  });
-
-	  });
-
-      $('.clear_prop').live('click', function()
-      {
-
-	parent = $(this).closest('tr');
-	if(parent.hasClass('new_record'))
-	{
-	  parent.remove();
-	}
-	else
-	{
-	  $(parent).find('input').val('');
-	  $(parent).hide();
-	}
-
-      });
-
-	});
-	  </script>
+	<td>
+	<td rowspan="6" class="keyword_row">
+	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'field_name' => 'taxonomy_name')); ?>
 	</td>
+      </tr>
+      <tr>
+	<th></th>
+	<td>
+	   <?php include_partial('catalogue/keywordsList');?>
+        </td>
       </tr>
       <tr>
         <th><?php echo $form['level_ref']->renderLabel() ?></th>

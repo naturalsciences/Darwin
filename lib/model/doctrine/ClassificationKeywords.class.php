@@ -12,5 +12,20 @@
  */
 class ClassificationKeywords extends BaseClassificationKeywords
 {
-
+  public static function getTags()
+  {
+    return array(
+      'name' => 'Name part',
+      'pub_year' => 'Publication Year',
+      'author' => 'Author part',
+      'recombination' => 'Recombination',
+      'uncertainty' => 'Uncertainty',
+      'particular_attribute' => 'Particular attribute',
+    );
+  }
+  public static function getTagNameFor($tag)
+  {
+    $tags = self::getTags();
+    return $tags[$tag];
+  }
 }

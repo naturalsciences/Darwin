@@ -98,38 +98,6 @@ class taxonomyActions extends sfActions
     {
       try{
 	$form->save();
-	$keywords = $request->getParameter('classsification_keywords');
-	if(isset($keywords['new']) && is_array( $keywords['new']))
-	{
-	  foreach( $keywords['new'] as $keyword)
-	  {
-	    $kw_obj = new ClassificationKeywords();
-	    $kw_obj->setReferencedRelation('taxonomy');
-	    $kw_obj->setRecordId($form->getObject()->getId());
-	    $kw_obj->setKeyword($keyword['keyword']);
-	    $kw_obj->setKeywordType($keyword['keyword_type']);
-	    $kw_obj->save();
-	  }
-	}
-	if(isset($keywords['old']) && is_array( $keywords['old']))
-	{
-	  foreach( $keywords['old'] as $id => $keyword)
-	  {
-	    $kw_obj = Doctrine::getTable('ClassificationKeywords')->find($id);
-	    if(!$kw_obj) continue;
-
-	    if($keyword['id'] != "")
-	    {
-	      $kw_obj->setKeyword($keyword['keyword']);
-	      $kw_obj->setKeywordType($keyword['keyword_type']);
-	      $kw_obj->save();
-	    }
-	    else
-	    {
-	      $kw_obj->delete();
-	    }
-	  }
-	}
 
 	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
       }
@@ -139,18 +107,5 @@ class taxonomyActions extends sfActions
 	$form->getErrorSchema()->addError($error); 
       }
     }
-	$keywords = $request->getParameter('classsification_keywords');
-	if(isset($keywords['new']) && is_array( $keywords['new']))
-	{
-	  foreach( $keywords['new'] as $keyword)
-	  {
-	    $kw_obj = new ClassificationKeywords();
-	    $kw_obj->setReferencedRelation('taxonomy');
-	    $kw_obj->setRecordId($form->getObject()->getId());
-	    $kw_obj->setKeyword($keyword['keyword']);
-	    $kw_obj->setKeywordType($keyword['keyword_type']);
-	    $this->keywords[] = $kw_obj;
-	  }
-	}
   }
 }
