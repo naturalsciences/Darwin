@@ -10,7 +10,7 @@ class MineralogyTable extends DarwinTable
   */
   public function getDistinctSystems()
   {
-    return $this->createDistinct('Mineralogy', 'cristal_system', 'CristalSystem')->execute();
+    return $this->createDistinct('Mineralogy', 'cristal_system', 'c_system')->execute();
   }
 
   public function findByCodeLimited($code, $limit)

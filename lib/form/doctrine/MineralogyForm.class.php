@@ -44,8 +44,8 @@ class MineralogyForm extends BaseMineralogyForm
 
     $this->widgetSchema['cristal_system'] = new widgetFormSelectComplete(array('model' => 'Mineralogy',
                                                                                'table_method' => 'getDistinctSystems',
-                                                                               'method' => 'getCristalSystem',
-                                                                               'key_method' => 'getCristalSystem',
+                                                                               'method' => 'getCSystem',
+                                                                               'key_method' => 'getCSystem',
                                                                                'add_empty' => false,
                                                                                'change_label' => 'Pick a system in the list',
                                                                                'add_label' => 'Add another system',

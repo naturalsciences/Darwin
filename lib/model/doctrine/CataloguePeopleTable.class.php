@@ -46,7 +46,7 @@ class CataloguePeopleTable extends DarwinTable
     $results = $q->fetchArray();
     if(count($results))
       $results = array_combine(array_keys($results),array_keys($results));
-    return $results;//array_merge(array(''=>''), );
+    return $results;
   }
 
   public function changeOrder($table_name, $record_id, $people_type, $order)

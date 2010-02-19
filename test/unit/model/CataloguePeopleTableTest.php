@@ -1,0 +1,78 @@
+<?php 
+include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
+$t = new lime_test(20, new lime_output_color());
+
+$taxon = Doctrine::getTable('taxonomy')->findOneByName('Falco Peregrinus');
+$person1 = Doctrine::getTable('People')->findOneByFamilyNameAndGivenName('Duchesne', 'Poilux');
+$person2 = Doctrine::getTable('People')->findOneByFamilyName('Root');
+$person3 = Doctrine::getTable('People')->findOneByFamilyNameAndGivenName('Duchesne', 'ML');
+$person1->setDbPeopleType(2);
+$person1->save();
+$person3->setDbPeopleType(2);
+$person3->save();
+$author = new CataloguePeople;
+$author->setReferencedRelation('taxonomy');
+$author->setRecordId($taxon->getId());
+$author->setPeopleType('authors');
+$author->setPeopleSubType('Main Author');
+$author->setPeopleRef($person1->getId());
+$author->save();
+$t->info('Author associated');
+$expert = new CataloguePeople;
+$expert->setReferencedRelation('taxonomy');
+$expert->setRecordId($taxon->getId());
+$expert->setPeopleType('experts');
+$expert->setPeopleRef($person2->getId());
+$expert->save();
+$t->info('Expert associated');
+$t->info('Testing the insertions');
+$catpeo = Doctrine::getTable('CataloguePeople')->findForTableByType('taxonomy', $taxon->getId());
+$t->is(count($catpeo), 2, '"2" were correctly inserted !');
+$t->is(count($catpeo['authors']), 1, 'With authors key: "1" record.');
+$t->is(count($catpeo['experts']), 1, 'With experts key: "1" record.');
+$t->is($catpeo['authors'][0]->getPeople()->getFamilyName(), 'Duchesne', 'First type is well an author and well associated to "Duchesne"');
+$t->is($catpeo['experts'][0]->getPeople()->getFamilyName(), 'Root', 'First type is well an expert and well associated to "Root"');
+$t->info('Testing the sub-types');
+$catpeostyp = Doctrine::getTable('CataloguePeople')->getDistinctSubType();
+$t->is(count($catpeostyp), 2, 'Without giving a type, we have "2" different subtypes');
+$t->is($catpeostyp[''], '', 'First sub-type is well "empty"');
+$t->is($catpeostyp['Main Author'], 'Main Author', 'Second sub-type is well "Main Author"');
+$catpeo = Doctrine::getTable('CataloguePeople')->findByPeopleType('experts');
+$catpeo[0]->setPeopleSubType('General');
+$catpeo->save();
+$t->info('Testing the sub-types after modifying one');
+$catpeostyp = Doctrine::getTable('CataloguePeople')->getDistinctSubType();
+$t->is(count($catpeostyp), 2, 'Without giving a type, we have "2" different subtypes');
+$t->is($catpeostyp['General'], 'General', 'First sub-type has been well modified in "General"');
+$t->is($catpeostyp['Main Author'], 'Main Author', 'Second sub-type is still well "Main Author"');
+$t->info('Testing the sub-types with a given type');
+$catpeostyp = Doctrine::getTable('CataloguePeople')->getDistinctSubType('authors');
+$t->is(count($catpeostyp), 6, 'With "authors" type, we have "6" different subtypes');
+$t->is($catpeostyp['Main Author'], 'Main Author', 'Only sub-type fetched is well "Main Author"');
+$catpeostyp = Doctrine::getTable('CataloguePeople')->getDistinctSubType('experts');
+$t->is(count($catpeostyp), 1, 'With "experts" type, we have "1" different subtypes');
+$t->is($catpeostyp['General'], 'General', 'Only sub-type fetched is well "General"');
+$t->info('Associating a new Author: "ML Duchesne"');
+$author = new CataloguePeople;
+$author->setReferencedRelation('taxonomy');
+$author->setRecordId($taxon->getId());
+$author->setPeopleType('authors');
+$author->setPeopleSubType('Main Author');
+$author->setPeopleRef($person3->getId());
+$author->setOrderBy(1);
+$author->save();
+$t->info('ML Duchesne as Author associated');
+$catpeo = Doctrine::getTable('CataloguePeople')->findForTableByType('taxonomy', $taxon->getId());
+$t->is(count($catpeo['authors']), 2, 'With authors key: "2" record.');
+$t->is($catpeo['authors'][0]->getPeople()->getGivenName(), 'Poilux', 'Type author and first person well associated to "Poilux"');
+$t->is($catpeo['authors'][1]->getPeople()->getGivenName(), 'ML', 'Type author and second person well associated to "ML"');
+$t->info('Interverting order of "Poilux Duchesne" and "ML Duchesne"');
+$catpeo = Doctrine::getTable('CataloguePeople')->findAll();
+Doctrine::getTable('CataloguePeople')->changeOrder($catpeo[0]->getReferencedRelation(),
+                                                   $catpeo[0]->getRecordId(),
+                                                   $catpeo[0]->getPeopleType(),
+                                                   array($catpeo[2]->getId(), $catpeo[0]->getId())
+                                                  );
+$catpeo = Doctrine::getTable('CataloguePeople')->findForTableByType('taxonomy', $taxon->getId());
+$t->is($catpeo['authors'][0]->getPeople()->getGivenName(), 'ML', 'Type author and first person well associated to "ML"');
+$t->is($catpeo['authors'][1]->getPeople()->getGivenName(), 'Poilux', 'Type author and second person well associated to "Poilux"');
