@@ -1,5 +1,5 @@
 <?php include_javascripts_for_form($form) ?>
-<div id="syn_screen">
+<div id="catalogue_people_screen">
 <form class="edition qtiped_form" method="post" action="<?php echo url_for('cataloguepeople/people?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&id='.$form->getObject()->getId() ) );?>" id="cataloguepeople_form">
 <table >
   <tr>
@@ -54,15 +54,17 @@ function toggleChangingChoice()
 	$('#catalogue_people_people_sub_type_parent .change_item_button:visible').click();
 	$('#catalogue_people_people_sub_type_parent .add_item_button').hide();
 	
-	$('.both_search_institutions').hide();
-	$('.both_search_institutions input').removeAttr('checked');
-	$('.both_search_people input').attr('checked','checked').change();
+	$('.both_search_institutions').addClass('disabled');
+	
+	//if($('.both_search_institutions').hasClass('activated'))
+	$('.both_search_people').click();
+
 	$('#only_role').val(2);
       }
       else
       {
 	$('#catalogue_people_people_sub_type_parent .add_item_button').show();
-	$('.both_search_institutions').show();
+	$('.both_search_institutions').removeClass('disabled');
 	$('#only_role').val(8);
       }
 }
@@ -86,8 +88,58 @@ $(document).ready(function ()
 });
 </script>
 
+
+
+<input type="hidden" name="only_role" id="only_role" value="0" />
+
+<script language="javascript">
+
+  $(document).ready(function () {
+    $('.both_search_people').click(function()
+    {
+      $('.both_search_institutions').removeClass('activated');
+
+      $(".search_box").html('<?php echo __("Searching");?>');
+
+      people_search_url = '<?php echo url_for('people/choose?with_js=0&is_choose=1');?>';
+      $('.both_search_people').addClass('activated');
+      $.ajax({
+	  type: "POST",
+	  url: people_search_url + '/only_role/'+$("#only_role").val(),
+	  success: function(html){
+	    $('.search_box').html(html);
+	  }
+      });
+    });
+    
+    $('.both_search_institutions').click(function()
+    {
+      if( $(this).hasClass('disabled')) return false;
+      $('.both_search_people').removeClass('activated');
+
+      $(".search_box").html('<?php echo __("Searching");?>');
+
+      $('.both_search_institutions').addClass('activated');
+
+      $.ajax({
+	  type: "POST",
+	  url: '<?php echo url_for('institution/choose?with_js=0&is_choose=1&only_role=8');?>',
+	  success: function(html){
+	    $('.search_box').html(html);
+	  }
+      });
+    });
+
+  });
+</script>
+
+
+<ul class="tab_choice">
+  <li class="both_search_people"><?php echo __('People');?></li>
+  <li class="both_search_institutions"><?php echo __('Institution');?></li>
+</ul>
 <div class="search_box show">
-  <?php include_partial('people/searchBoth', array('is_choose' => true)); ?>
+  <?php echo __("Choose a type");?>
 </div>
 
 </div>

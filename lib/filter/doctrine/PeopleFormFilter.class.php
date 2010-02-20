@@ -29,6 +29,10 @@ class PeopleFormFilter extends BasePeopleFormFilter
 
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($db_people_types) ));
 
+    $this->widgetSchema['only_role'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['only_role']->setDefault(0);
+
+    $this->validatorSchema['only_role'] = new sfValidatorNumber(array('required' => false));
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
@@ -87,7 +91,15 @@ class PeopleFormFilter extends BasePeopleFormFilter
     $this->addDateFromToColumnQuery($query, $fields, $values['activity_date_from'], $values['activity_date_to']);
     return $query;
   }
+
   
+  public function addOnlyRoleColumnQuery($query, $field, $val)
+  {
+    if($val != 0)
+      $query->andWhere("(db_people_type &  ?) != 0 ", intval($val));
+    return $query;
+  }
+
   public function addDbPeopleTypeColumnQuery($query, $field, $val)
   {
     $query->andWhere("($field &  ?) != 0 ", $val);

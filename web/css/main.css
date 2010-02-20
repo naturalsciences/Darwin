@@ -1006,6 +1006,45 @@ img.info:hover
   border: 1px solid green;
 }
 
+.tab_choice
+{
+  
+  margin-top:1em;
+  margin-left:2em;
+}
+
+#catalogue_people_screen .search_box
+{
+  margin-top: 0.3em;
+}
+
+.tab_choice li
+{
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  display:inline;
+  padding: 3px;
+  background-color: #ACADAC;
+  color: black;
+  border: 1px solid #ACADAC;
+  z-index:-1;
+}
+
+.tab_choice li.activated
+{
+  background-color: #3391A1;
+  border-color:#3391A1;
+  color: white;
+}
+
+.tab_choice li.disabled
+{
+display:none;
+}
+
+
 /** Used for errors in search form and placed in a div.error: purpose is to align it on search form **/
 
 .error

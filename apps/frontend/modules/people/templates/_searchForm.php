@@ -4,6 +4,7 @@
 <form id="people_filter" class="search_form" method="post" action="<?php echo url_for('people/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
   <div class="container">
     <?php echo $form['is_physical'];?>
+    <?php echo $form['only_role'];?>
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
         <tr>
