@@ -184,6 +184,13 @@ function returnText(object)
     return false;
 }
 
+function clearSelection(el)
+{
+  t = el.val();
+  el.val('');
+  el.val(t);
+}
+
 $(document).ready(function () {
 
   $('.cancel_qtip').live('click',function () {

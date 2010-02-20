@@ -36,6 +36,7 @@ $(document).ready(function () {
 	  $('#catalogue_keywords tbody').append(html);
 	}
       });
+      clearSelection($('#<?php echo $field_name;?>'));
     }
 
   });
