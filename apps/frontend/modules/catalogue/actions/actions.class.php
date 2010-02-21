@@ -87,7 +87,10 @@ class catalogueActions extends DarwinActions
       $form->bind($request->getParameter('searchCatalogue'));
       if ($form->isValid())
       {
-        $query = $form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
+        $query = $form->getQuery()
+	  ->orderBy($this->orderBy .' '.$this->orderDir);
+	if($this->is_choose == 0)
+	  $query->andWhere('id > 0');
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager($query,
                              $this->currentPage,

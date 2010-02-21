@@ -18,15 +18,14 @@ class DarwinTable extends Doctrine_Table
     }
 
    /**
-     * Finds a record by its identifier except an other one defined.
+     * Finds a record by its identifier if the id is greater than 0
      *
      * @param integer $rowId          Database Row ID
-     * @param integer $excludedRowId  Excluded Row ID
-     * @return mixed                  Doctrine_Collection, array, Doctrine_Record or false if no result
+     * @return Doctrine_Record or false if no result
      */
-    public function findExcept($rowId, $excludedRowId=0)
+    public function findExcept($rowId)
     {
-        if ($rowId != $excludedRowId)
+        if ($rowId > 0)
         { 
           return parent::find($rowId);
         }
