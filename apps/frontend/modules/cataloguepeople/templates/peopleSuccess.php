@@ -46,7 +46,10 @@
 </table>
 </form>
 
-<script type="text/javascript">
+<input type="hidden" name="only_role" id="only_role" value="0" />
+
+<script language="text/javascript">
+
 function toggleChangingChoice()
 {
       if($('#catalogue_people_people_type').val() =='authors')
@@ -69,10 +72,10 @@ function toggleChangingChoice()
 	$('#only_role').val(8);
       }
 }
-$(document).ready(function () 
-{
+
+  $(document).ready(function () {
+
     toggleChangingChoice();
-    $('.both_search_people').click();
 
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
@@ -87,16 +90,7 @@ $(document).ready(function ()
 	$("#catalogue_people_people_sub_type").html(data);
       });
     });
-});
-</script>
 
-
-
-<input type="hidden" name="only_role" id="only_role" value="0" />
-
-<script language="javascript">
-
-  $(document).ready(function () {
     $('.both_search_people').click(function()
     {
       $('.both_search_institutions').removeClass('activated');
@@ -131,6 +125,8 @@ $(document).ready(function ()
 	  }
       });
     });
+
+    $('.both_search_people').click();
 
   });
 </script>
