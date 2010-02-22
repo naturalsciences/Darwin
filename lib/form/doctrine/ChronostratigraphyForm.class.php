@@ -11,6 +11,8 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
 {
   public function configure()
   {
+    unset($this['path']);
+
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $this->widgetSchema['lower_bound'] = new sfWidgetFormInput();

@@ -13,24 +13,6 @@
  * @property string $status
  * @property string $path
  * @property integer $parent_ref
- * @property integer $eon_ref
- * @property string $eon_indexed
- * @property integer $era_ref
- * @property string $era_indexed
- * @property integer $sub_era_ref
- * @property string $sub_era_indexed
- * @property integer $system_ref
- * @property string $system_indexed
- * @property integer $serie_ref
- * @property string $serie_indexed
- * @property integer $stage_ref
- * @property string $stage_indexed
- * @property integer $sub_stage_ref
- * @property string $sub_stage_indexed
- * @property integer $sub_level_1_ref
- * @property string $sub_level_1_indexed
- * @property integer $sub_level_2_ref
- * @property string $sub_level_2_indexed
  * @property decimal $lower_bound
  * @property decimal $upper_bound
  * @property Chronostratigraphy $Parent
@@ -38,70 +20,34 @@
  * @property Doctrine_Collection $Chronostratigraphy
  * @property Doctrine_Collection $Specimens
  * 
- * @method integer             getId()                  Returns the current record's "id" value
- * @method string              getName()                Returns the current record's "name" value
- * @method string              getNameIndexed()         Returns the current record's "name_indexed" value
- * @method string              getNameOrderBy()         Returns the current record's "name_order_by" value
- * @method integer             getLevelRef()            Returns the current record's "level_ref" value
- * @method string              getStatus()              Returns the current record's "status" value
- * @method string              getPath()                Returns the current record's "path" value
- * @method integer             getParentRef()           Returns the current record's "parent_ref" value
- * @method integer             getEonRef()              Returns the current record's "eon_ref" value
- * @method string              getEonIndexed()          Returns the current record's "eon_indexed" value
- * @method integer             getEraRef()              Returns the current record's "era_ref" value
- * @method string              getEraIndexed()          Returns the current record's "era_indexed" value
- * @method integer             getSubEraRef()           Returns the current record's "sub_era_ref" value
- * @method string              getSubEraIndexed()       Returns the current record's "sub_era_indexed" value
- * @method integer             getSystemRef()           Returns the current record's "system_ref" value
- * @method string              getSystemIndexed()       Returns the current record's "system_indexed" value
- * @method integer             getSerieRef()            Returns the current record's "serie_ref" value
- * @method string              getSerieIndexed()        Returns the current record's "serie_indexed" value
- * @method integer             getStageRef()            Returns the current record's "stage_ref" value
- * @method string              getStageIndexed()        Returns the current record's "stage_indexed" value
- * @method integer             getSubStageRef()         Returns the current record's "sub_stage_ref" value
- * @method string              getSubStageIndexed()     Returns the current record's "sub_stage_indexed" value
- * @method integer             getSubLevel1Ref()        Returns the current record's "sub_level_1_ref" value
- * @method string              getSubLevel1Indexed()    Returns the current record's "sub_level_1_indexed" value
- * @method integer             getSubLevel2Ref()        Returns the current record's "sub_level_2_ref" value
- * @method string              getSubLevel2Indexed()    Returns the current record's "sub_level_2_indexed" value
- * @method decimal             getLowerBound()          Returns the current record's "lower_bound" value
- * @method decimal             getUpperBound()          Returns the current record's "upper_bound" value
- * @method Chronostratigraphy  getParent()              Returns the current record's "Parent" value
- * @method CatalogueLevels     getLevel()               Returns the current record's "Level" value
- * @method Doctrine_Collection getChronostratigraphy()  Returns the current record's "Chronostratigraphy" collection
- * @method Doctrine_Collection getSpecimens()           Returns the current record's "Specimens" collection
- * @method Chronostratigraphy  setId()                  Sets the current record's "id" value
- * @method Chronostratigraphy  setName()                Sets the current record's "name" value
- * @method Chronostratigraphy  setNameIndexed()         Sets the current record's "name_indexed" value
- * @method Chronostratigraphy  setNameOrderBy()         Sets the current record's "name_order_by" value
- * @method Chronostratigraphy  setLevelRef()            Sets the current record's "level_ref" value
- * @method Chronostratigraphy  setStatus()              Sets the current record's "status" value
- * @method Chronostratigraphy  setPath()                Sets the current record's "path" value
- * @method Chronostratigraphy  setParentRef()           Sets the current record's "parent_ref" value
- * @method Chronostratigraphy  setEonRef()              Sets the current record's "eon_ref" value
- * @method Chronostratigraphy  setEonIndexed()          Sets the current record's "eon_indexed" value
- * @method Chronostratigraphy  setEraRef()              Sets the current record's "era_ref" value
- * @method Chronostratigraphy  setEraIndexed()          Sets the current record's "era_indexed" value
- * @method Chronostratigraphy  setSubEraRef()           Sets the current record's "sub_era_ref" value
- * @method Chronostratigraphy  setSubEraIndexed()       Sets the current record's "sub_era_indexed" value
- * @method Chronostratigraphy  setSystemRef()           Sets the current record's "system_ref" value
- * @method Chronostratigraphy  setSystemIndexed()       Sets the current record's "system_indexed" value
- * @method Chronostratigraphy  setSerieRef()            Sets the current record's "serie_ref" value
- * @method Chronostratigraphy  setSerieIndexed()        Sets the current record's "serie_indexed" value
- * @method Chronostratigraphy  setStageRef()            Sets the current record's "stage_ref" value
- * @method Chronostratigraphy  setStageIndexed()        Sets the current record's "stage_indexed" value
- * @method Chronostratigraphy  setSubStageRef()         Sets the current record's "sub_stage_ref" value
- * @method Chronostratigraphy  setSubStageIndexed()     Sets the current record's "sub_stage_indexed" value
- * @method Chronostratigraphy  setSubLevel1Ref()        Sets the current record's "sub_level_1_ref" value
- * @method Chronostratigraphy  setSubLevel1Indexed()    Sets the current record's "sub_level_1_indexed" value
- * @method Chronostratigraphy  setSubLevel2Ref()        Sets the current record's "sub_level_2_ref" value
- * @method Chronostratigraphy  setSubLevel2Indexed()    Sets the current record's "sub_level_2_indexed" value
- * @method Chronostratigraphy  setLowerBound()          Sets the current record's "lower_bound" value
- * @method Chronostratigraphy  setUpperBound()          Sets the current record's "upper_bound" value
- * @method Chronostratigraphy  setParent()              Sets the current record's "Parent" value
- * @method Chronostratigraphy  setLevel()               Sets the current record's "Level" value
- * @method Chronostratigraphy  setChronostratigraphy()  Sets the current record's "Chronostratigraphy" collection
- * @method Chronostratigraphy  setSpecimens()           Sets the current record's "Specimens" collection
+ * @method integer             getId()                 Returns the current record's "id" value
+ * @method string              getName()               Returns the current record's "name" value
+ * @method string              getNameIndexed()        Returns the current record's "name_indexed" value
+ * @method string              getNameOrderBy()        Returns the current record's "name_order_by" value
+ * @method integer             getLevelRef()           Returns the current record's "level_ref" value
+ * @method string              getStatus()             Returns the current record's "status" value
+ * @method string              getPath()               Returns the current record's "path" value
+ * @method integer             getParentRef()          Returns the current record's "parent_ref" value
+ * @method decimal             getLowerBound()         Returns the current record's "lower_bound" value
+ * @method decimal             getUpperBound()         Returns the current record's "upper_bound" value
+ * @method Chronostratigraphy  getParent()             Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()              Returns the current record's "Level" value
+ * @method Doctrine_Collection getChronostratigraphy() Returns the current record's "Chronostratigraphy" collection
+ * @method Doctrine_Collection getSpecimens()          Returns the current record's "Specimens" collection
+ * @method Chronostratigraphy  setId()                 Sets the current record's "id" value
+ * @method Chronostratigraphy  setName()               Sets the current record's "name" value
+ * @method Chronostratigraphy  setNameIndexed()        Sets the current record's "name_indexed" value
+ * @method Chronostratigraphy  setNameOrderBy()        Sets the current record's "name_order_by" value
+ * @method Chronostratigraphy  setLevelRef()           Sets the current record's "level_ref" value
+ * @method Chronostratigraphy  setStatus()             Sets the current record's "status" value
+ * @method Chronostratigraphy  setPath()               Sets the current record's "path" value
+ * @method Chronostratigraphy  setParentRef()          Sets the current record's "parent_ref" value
+ * @method Chronostratigraphy  setLowerBound()         Sets the current record's "lower_bound" value
+ * @method Chronostratigraphy  setUpperBound()         Sets the current record's "upper_bound" value
+ * @method Chronostratigraphy  setParent()             Sets the current record's "Parent" value
+ * @method Chronostratigraphy  setLevel()              Sets the current record's "Level" value
+ * @method Chronostratigraphy  setChronostratigraphy() Sets the current record's "Chronostratigraphy" collection
+ * @method Chronostratigraphy  setSpecimens()          Sets the current record's "Specimens" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -144,96 +90,6 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             ));
-        $this->hasColumn('eon_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('eon_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('era_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('era_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('sub_era_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('sub_era_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('system_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('system_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('serie_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('serie_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('stage_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('stage_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('sub_stage_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('sub_stage_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('sub_level_1_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('sub_level_1_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('sub_level_2_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('sub_level_2_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
              ));
         $this->hasColumn('lower_bound', 'decimal', 10, array(
              'type' => 'decimal',

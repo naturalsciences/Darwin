@@ -11,6 +11,8 @@ class LithologyForm extends BaseLithologyForm
 {
   public function configure()
   {
+    unset($this['path']);
+
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));

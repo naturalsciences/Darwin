@@ -13,59 +13,35 @@
  * @property string $status
  * @property string $path
  * @property integer $parent_ref
- * @property integer $unit_main_group_ref
- * @property string $unit_main_group_indexed
- * @property integer $unit_group_ref
- * @property string $unit_group_indexed
- * @property integer $unit_sub_group_ref
- * @property string $unit_sub_group_indexed
- * @property integer $unit_rock_ref
- * @property string $unit_rock_indexed
  * @property Lithology $Parent
  * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Lithology
  * @property Doctrine_Collection $Specimens
  * 
- * @method integer             getId()                      Returns the current record's "id" value
- * @method string              getName()                    Returns the current record's "name" value
- * @method string              getNameIndexed()             Returns the current record's "name_indexed" value
- * @method string              getNameOrderBy()             Returns the current record's "name_order_by" value
- * @method integer             getLevelRef()                Returns the current record's "level_ref" value
- * @method string              getStatus()                  Returns the current record's "status" value
- * @method string              getPath()                    Returns the current record's "path" value
- * @method integer             getParentRef()               Returns the current record's "parent_ref" value
- * @method integer             getUnitMainGroupRef()        Returns the current record's "unit_main_group_ref" value
- * @method string              getUnitMainGroupIndexed()    Returns the current record's "unit_main_group_indexed" value
- * @method integer             getUnitGroupRef()            Returns the current record's "unit_group_ref" value
- * @method string              getUnitGroupIndexed()        Returns the current record's "unit_group_indexed" value
- * @method integer             getUnitSubGroupRef()         Returns the current record's "unit_sub_group_ref" value
- * @method string              getUnitSubGroupIndexed()     Returns the current record's "unit_sub_group_indexed" value
- * @method integer             getUnitRockRef()             Returns the current record's "unit_rock_ref" value
- * @method string              getUnitRockIndexed()         Returns the current record's "unit_rock_indexed" value
- * @method Lithology           getParent()                  Returns the current record's "Parent" value
- * @method CatalogueLevels     getLevel()                   Returns the current record's "Level" value
- * @method Doctrine_Collection getLithology()               Returns the current record's "Lithology" collection
- * @method Doctrine_Collection getSpecimens()               Returns the current record's "Specimens" collection
- * @method Lithology           setId()                      Sets the current record's "id" value
- * @method Lithology           setName()                    Sets the current record's "name" value
- * @method Lithology           setNameIndexed()             Sets the current record's "name_indexed" value
- * @method Lithology           setNameOrderBy()             Sets the current record's "name_order_by" value
- * @method Lithology           setLevelRef()                Sets the current record's "level_ref" value
- * @method Lithology           setStatus()                  Sets the current record's "status" value
- * @method Lithology           setPath()                    Sets the current record's "path" value
- * @method Lithology           setParentRef()               Sets the current record's "parent_ref" value
- * @method Lithology           setUnitMainGroupRef()        Sets the current record's "unit_main_group_ref" value
- * @method Lithology           setUnitMainGroupIndexed()    Sets the current record's "unit_main_group_indexed" value
- * @method Lithology           setUnitGroupRef()            Sets the current record's "unit_group_ref" value
- * @method Lithology           setUnitGroupIndexed()        Sets the current record's "unit_group_indexed" value
- * @method Lithology           setUnitSubGroupRef()         Sets the current record's "unit_sub_group_ref" value
- * @method Lithology           setUnitSubGroupIndexed()     Sets the current record's "unit_sub_group_indexed" value
- * @method Lithology           setUnitRockRef()             Sets the current record's "unit_rock_ref" value
- * @method Lithology           setUnitRockIndexed()         Sets the current record's "unit_rock_indexed" value
- * @method Lithology           setParent()                  Sets the current record's "Parent" value
- * @method Lithology           setLevel()                   Sets the current record's "Level" value
- * @method Lithology           setLithology()               Sets the current record's "Lithology" collection
- * @method Lithology           setSpecimens()               Sets the current record's "Specimens" collection
+ * @method integer             getId()            Returns the current record's "id" value
+ * @method string              getName()          Returns the current record's "name" value
+ * @method string              getNameIndexed()   Returns the current record's "name_indexed" value
+ * @method string              getNameOrderBy()   Returns the current record's "name_order_by" value
+ * @method integer             getLevelRef()      Returns the current record's "level_ref" value
+ * @method string              getStatus()        Returns the current record's "status" value
+ * @method string              getPath()          Returns the current record's "path" value
+ * @method integer             getParentRef()     Returns the current record's "parent_ref" value
+ * @method Lithology           getParent()        Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()         Returns the current record's "Level" value
+ * @method Doctrine_Collection getLithology()     Returns the current record's "Lithology" collection
+ * @method Doctrine_Collection getSpecimens()     Returns the current record's "Specimens" collection
+ * @method Lithology           setId()            Sets the current record's "id" value
+ * @method Lithology           setName()          Sets the current record's "name" value
+ * @method Lithology           setNameIndexed()   Sets the current record's "name_indexed" value
+ * @method Lithology           setNameOrderBy()   Sets the current record's "name_order_by" value
+ * @method Lithology           setLevelRef()      Sets the current record's "level_ref" value
+ * @method Lithology           setStatus()        Sets the current record's "status" value
+ * @method Lithology           setPath()          Sets the current record's "path" value
+ * @method Lithology           setParentRef()     Sets the current record's "parent_ref" value
+ * @method Lithology           setParent()        Sets the current record's "Parent" value
+ * @method Lithology           setLevel()         Sets the current record's "Level" value
+ * @method Lithology           setLithology()     Sets the current record's "Lithology" collection
+ * @method Lithology           setSpecimens()     Sets the current record's "Specimens" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -108,46 +84,6 @@ abstract class BaseLithology extends sfDoctrineRecord
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             ));
-        $this->hasColumn('unit_main_group_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('unit_main_group_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('unit_group_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('unit_group_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('unit_sub_group_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('unit_sub_group_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('unit_rock_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('unit_rock_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
              ));
     }
 

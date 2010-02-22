@@ -13,71 +13,35 @@
  * @property string $status
  * @property string $path
  * @property integer $parent_ref
- * @property integer $group_ref
- * @property string $group_indexed
- * @property integer $formation_ref
- * @property string $formation_indexed
- * @property integer $member_ref
- * @property string $member_indexed
- * @property integer $layer_ref
- * @property string $layer_indexed
- * @property integer $sub_level_1_ref
- * @property string $sub_level_1_indexed
- * @property integer $sub_level_2_ref
- * @property string $sub_level_2_indexed
  * @property Lithostratigraphy $Parent
  * @property CatalogueLevels $Level
  * @property Doctrine_Collection $Lithostratigraphy
  * @property Doctrine_Collection $Specimens
  * 
- * @method integer             getId()                  Returns the current record's "id" value
- * @method string              getName()                Returns the current record's "name" value
- * @method string              getNameIndexed()         Returns the current record's "name_indexed" value
- * @method string              getNameOrderBy()         Returns the current record's "name_order_by" value
- * @method integer             getLevelRef()            Returns the current record's "level_ref" value
- * @method string              getStatus()              Returns the current record's "status" value
- * @method string              getPath()                Returns the current record's "path" value
- * @method integer             getParentRef()           Returns the current record's "parent_ref" value
- * @method integer             getGroupRef()            Returns the current record's "group_ref" value
- * @method string              getGroupIndexed()        Returns the current record's "group_indexed" value
- * @method integer             getFormationRef()        Returns the current record's "formation_ref" value
- * @method string              getFormationIndexed()    Returns the current record's "formation_indexed" value
- * @method integer             getMemberRef()           Returns the current record's "member_ref" value
- * @method string              getMemberIndexed()       Returns the current record's "member_indexed" value
- * @method integer             getLayerRef()            Returns the current record's "layer_ref" value
- * @method string              getLayerIndexed()        Returns the current record's "layer_indexed" value
- * @method integer             getSubLevel1Ref()        Returns the current record's "sub_level_1_ref" value
- * @method string              getSubLevel1Indexed()    Returns the current record's "sub_level_1_indexed" value
- * @method integer             getSubLevel2Ref()        Returns the current record's "sub_level_2_ref" value
- * @method string              getSubLevel2Indexed()    Returns the current record's "sub_level_2_indexed" value
- * @method Lithostratigraphy   getParent()              Returns the current record's "Parent" value
- * @method CatalogueLevels     getLevel()               Returns the current record's "Level" value
- * @method Doctrine_Collection getLithostratigraphy()   Returns the current record's "Lithostratigraphy" collection
- * @method Doctrine_Collection getSpecimens()           Returns the current record's "Specimens" collection
- * @method Lithostratigraphy   setId()                  Sets the current record's "id" value
- * @method Lithostratigraphy   setName()                Sets the current record's "name" value
- * @method Lithostratigraphy   setNameIndexed()         Sets the current record's "name_indexed" value
- * @method Lithostratigraphy   setNameOrderBy()         Sets the current record's "name_order_by" value
- * @method Lithostratigraphy   setLevelRef()            Sets the current record's "level_ref" value
- * @method Lithostratigraphy   setStatus()              Sets the current record's "status" value
- * @method Lithostratigraphy   setPath()                Sets the current record's "path" value
- * @method Lithostratigraphy   setParentRef()           Sets the current record's "parent_ref" value
- * @method Lithostratigraphy   setGroupRef()            Sets the current record's "group_ref" value
- * @method Lithostratigraphy   setGroupIndexed()        Sets the current record's "group_indexed" value
- * @method Lithostratigraphy   setFormationRef()        Sets the current record's "formation_ref" value
- * @method Lithostratigraphy   setFormationIndexed()    Sets the current record's "formation_indexed" value
- * @method Lithostratigraphy   setMemberRef()           Sets the current record's "member_ref" value
- * @method Lithostratigraphy   setMemberIndexed()       Sets the current record's "member_indexed" value
- * @method Lithostratigraphy   setLayerRef()            Sets the current record's "layer_ref" value
- * @method Lithostratigraphy   setLayerIndexed()        Sets the current record's "layer_indexed" value
- * @method Lithostratigraphy   setSubLevel1Ref()        Sets the current record's "sub_level_1_ref" value
- * @method Lithostratigraphy   setSubLevel1Indexed()    Sets the current record's "sub_level_1_indexed" value
- * @method Lithostratigraphy   setSubLevel2Ref()        Sets the current record's "sub_level_2_ref" value
- * @method Lithostratigraphy   setSubLevel2Indexed()    Sets the current record's "sub_level_2_indexed" value
- * @method Lithostratigraphy   setParent()              Sets the current record's "Parent" value
- * @method Lithostratigraphy   setLevel()               Sets the current record's "Level" value
- * @method Lithostratigraphy   setLithostratigraphy()   Sets the current record's "Lithostratigraphy" collection
- * @method Lithostratigraphy   setSpecimens()           Sets the current record's "Specimens" collection
+ * @method integer             getId()                Returns the current record's "id" value
+ * @method string              getName()              Returns the current record's "name" value
+ * @method string              getNameIndexed()       Returns the current record's "name_indexed" value
+ * @method string              getNameOrderBy()       Returns the current record's "name_order_by" value
+ * @method integer             getLevelRef()          Returns the current record's "level_ref" value
+ * @method string              getStatus()            Returns the current record's "status" value
+ * @method string              getPath()              Returns the current record's "path" value
+ * @method integer             getParentRef()         Returns the current record's "parent_ref" value
+ * @method Lithostratigraphy   getParent()            Returns the current record's "Parent" value
+ * @method CatalogueLevels     getLevel()             Returns the current record's "Level" value
+ * @method Doctrine_Collection getLithostratigraphy() Returns the current record's "Lithostratigraphy" collection
+ * @method Doctrine_Collection getSpecimens()         Returns the current record's "Specimens" collection
+ * @method Lithostratigraphy   setId()                Sets the current record's "id" value
+ * @method Lithostratigraphy   setName()              Sets the current record's "name" value
+ * @method Lithostratigraphy   setNameIndexed()       Sets the current record's "name_indexed" value
+ * @method Lithostratigraphy   setNameOrderBy()       Sets the current record's "name_order_by" value
+ * @method Lithostratigraphy   setLevelRef()          Sets the current record's "level_ref" value
+ * @method Lithostratigraphy   setStatus()            Sets the current record's "status" value
+ * @method Lithostratigraphy   setPath()              Sets the current record's "path" value
+ * @method Lithostratigraphy   setParentRef()         Sets the current record's "parent_ref" value
+ * @method Lithostratigraphy   setParent()            Sets the current record's "Parent" value
+ * @method Lithostratigraphy   setLevel()             Sets the current record's "Level" value
+ * @method Lithostratigraphy   setLithostratigraphy() Sets the current record's "Lithostratigraphy" collection
+ * @method Lithostratigraphy   setSpecimens()         Sets the current record's "Specimens" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -120,66 +84,6 @@ abstract class BaseLithostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
-             ));
-        $this->hasColumn('group_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('group_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('formation_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('formation_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('member_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('member_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('layer_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('layer_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('sub_level_1_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('sub_level_1_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
-             ));
-        $this->hasColumn('sub_level_2_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => false,
-             'default' => 0,
-             ));
-        $this->hasColumn('sub_level_2_indexed', 'string', null, array(
-             'type' => 'string',
-             'notnull' => false,
-             'default' => '',
              ));
     }
 

@@ -11,6 +11,7 @@ class MineralogyForm extends BaseMineralogyForm
 {
   public function configure()
   {
+    unset($this['path']);
     $this->widgetSchema['code'] = new sfWidgetFormInput();
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['formule'] = new sfWidgetFormInput();
