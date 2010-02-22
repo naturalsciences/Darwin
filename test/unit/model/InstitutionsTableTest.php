@@ -13,6 +13,6 @@ $r = Doctrine::getTable('Institutions')->findInstitution($people[0]->getId());
 $t->is($r,null,'we did not find the P');
 $ugmmm = Doctrine::getTable('People')->findByFamilyName('UGMM'); 
 $r = Doctrine::getTable('Institutions')->findInstitution( $ugmmm[0]->getId());
-$t->isnt($r,null,'But ugmm is a Institutions');
+$t->isnt($r,null,'But ugmm is an Institutions');
 
 $t->is($r->__toString(),'UGMM','get The toString of this institution');
