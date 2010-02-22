@@ -54,6 +54,7 @@ function toggleChangingChoice()
 {
       if($('#catalogue_people_people_type').val() =='authors')
       {
+	$('#only_role').val(2);
 	$('#catalogue_people_people_sub_type_parent .change_item_button:visible').click();
 	$('#catalogue_people_people_sub_type_parent .add_item_button').hide();
 	
@@ -62,14 +63,13 @@ function toggleChangingChoice()
 	//if($('.both_search_institutions').hasClass('activated'))
 	$('.both_search_people').click();
 
-	$('#only_role').val(2);
       }
       else
       {
+	$('#only_role').val(8);
 	$('.both_search_people').click();
 	$('#catalogue_people_people_sub_type_parent .add_item_button').show();
 	$('.both_search_institutions').removeClass('disabled');
-	$('#only_role').val(8);
       }
 }
 
