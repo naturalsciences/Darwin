@@ -81,41 +81,18 @@ class synonymActions extends sfActions
     return $this->renderText('ok');
   }
 
-  public function executeEdit(sfWebRequest $request)
+  public function executeEditOrder(sfWebRequest $request)
   {
-    $this->groups = Doctrine::getTable('ClassificationSynonymies')
-       ->findAllForRecord($request->getParameter('table'), $request->getParameter('id'), $request->getParameter('group_id') );
-    $this->form = new SynonymEditForm();
-    if($request->isMethod('post'))
-    {
-	$this->form->bind($request->getParameter('synonym_edit'));
-	if($this->form->isValid())
-	{
-	  try
-	  {
-	    $conn = Doctrine_Manager::connection();
-	    $conn->beginTransaction();
-	    Doctrine::getTable('ClassificationSynonymies')->saveOrderAndResetBasio( substr($this->form->getValue('orders'),1) );
-	    if($this->form->getValue('basionym_id')!= '')
-	      $synonym = Doctrine::getTable('ClassificationSynonymies')->find($this->form->getValue('basionym_id'));
-	    else
-	      $synonym = null;
-	    if($synonym)
-	    {
-		$synonym->setIsBasionym(true);
-		$synonym->save();
-	    }
-	      
-	    $conn->commit();
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $e)
-	  {
-	    $conn->rollback();
-	    return $this->renderText($e->getMessage());
-	  }
-	}
-    }    
+    $this->forward404Unless($request->isMethod('post'));
+    Doctrine::getTable('ClassificationSynonymies')->saveOrder(substr($request->getParameter('order', ','),0,-1));
+    return $this->renderText('ok');
+  }
+
+  public function executeSetBasionym(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    Doctrine::getTable('ClassificationSynonymies')->setBasionym($request->getParameter('group_id'), $request->getParameter('id'));
+    return $this->renderText('ok');
   }
 
   public function executeChecks(sfWebRequest $request)

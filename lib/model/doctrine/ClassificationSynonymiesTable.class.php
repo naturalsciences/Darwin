@@ -146,22 +146,47 @@ class ClassificationSynonymiesTable extends DarwinTable
   }
 
   /**
-   * saveOrderAndResetBasio
-   * Save the order of the synonyms in a group and reset the basionym to false 
+   * saveOrder
+   * Save the order of the synonyms in a group
    * @param string $ids string of Ids separated by ',' of ClassificationSynonymies records id ordered
   */
-  public function saveOrderAndResetBasio($ids)
+  public function saveOrder($ids)
   {
     $id_list = explode(',',$ids);
      $q = Doctrine_Query::create()
       ->update('ClassificationSynonymies')
-      ->set('is_basionym', '?', false)
       ->set('order_by',"fct_array_find(?, id::text) ",implode(",",$id_list))
       ->whereIn('id', $id_list);
 
     $updated = $q->execute();
   }
   
+  /**
+   * Set Basionym
+   * @param int $group_id The id of the synonym group
+   * @param int $basionym_id The id of the new basionym record
+  */
+  public function setBasionym($group_id, $basionym_id)
+  {
+    $this->resetBasionym($group_id);
+    $element = $this->find($basionym_id);
+    $element->setIsBasionym(true);
+    $element->save();
+  }
+  
+  /**
+  * Reset the basionym for a given groupId
+  * @param int Group Id
+  */
+  protected function resetBasionym($group_id)
+  {
+    $q = Doctrine_Query::create()
+      ->update('ClassificationSynonymies')
+      ->set('is_basionym', '?', false)
+      ->where('group_id = ?',$group_id)
+      ->execute();
+  }
+
   /**
    * mergeSynonyms
    * Merge two groups of synonyms for 2 items (or create groups if they doesn't exists)
@@ -235,11 +260,7 @@ class ClassificationSynonymiesTable extends DarwinTable
     // Set No Basionym If more than 1
     if($res > 1)
     {
-      Doctrine_Query::create()
-	->update('ClassificationSynonymies s')
-	->set('s.is_basionym','?',false)
-	->where('s.group_id = ?', $group1)
-	->execute();
+      $this->resetBasionym($group1);
     }
   }
 }

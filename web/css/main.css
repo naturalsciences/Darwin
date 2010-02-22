@@ -823,16 +823,16 @@ table.encoding tbody .widget_row_delete
   width:100%;
 }
 
-#cataloguePeople .widget_sub_table .handle
+.widget_sub_table .handle
 {
   width:18px;
 }
-#cataloguePeople .widget_sub_table .catalogue_people_sub_type
+.widget_sub_table .catalogue_people_sub_type
 {
   width: 40%;
 }
 
-#cataloguePeople .widget_sub_table .widget_row_delete
+.widget_sub_table .widget_row_delete
 {
   width:18px;
 }
@@ -1041,9 +1041,30 @@ img.info:hover
 
 .tab_choice li.disabled
 {
-display:none;
+  display:none;
 }
 
+.basio_cell
+{
+  width: 5em;
+}
+.basio_cell a
+{
+  display:block;
+  width:14px;
+  height:14px;
+  background: transparent url(/images/checkbox.png) 0px 0px no-repeat;
+}
+
+.basio_cell:hover a
+{
+  background-position: 0px -14px;
+}
+
+.basio_cell a.checked
+{
+  background-position: 0px -28px;
+}
 
 /** Used for errors in search form and placed in a div.error: purpose is to align it on search form **/
 

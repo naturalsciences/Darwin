@@ -63,6 +63,7 @@ function toggleChangingChoice()
       }
       else
       {
+	$('.both_search_people').click();
 	$('#catalogue_people_people_sub_type_parent .add_item_button').show();
 	$('.both_search_institutions').removeClass('disabled');
 	$('#only_role').val(8);
@@ -71,6 +72,7 @@ function toggleChangingChoice()
 $(document).ready(function () 
 {
     toggleChangingChoice();
+    $('.both_search_people').click();
 
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');

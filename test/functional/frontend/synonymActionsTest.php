@@ -74,53 +74,34 @@ $browser->test()->is(count($syn), 4, 'There are 4 synonyms');
 
 $browser->
   info('Edit')->
-  get('/synonym/edit?table=taxonomy&id=4&group_id=3')->
-
-  with('request')->begin()->
-    isParameter('module', 'synonym')->
-    isParameter('action', 'edit')->
-  end()->
+  get('/widgets/reloadContent?widget=synonym&category=catalogue_taxonomy&eid=4')->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.edit_synon tbody tr', 4)->
-    checkElement('.edit_synon tbody tr:first td:contains(\'Duchesnus\')')->
-    checkElement('.edit_synon tbody tr:last td:contains(\'eliticus\')')->
-    checkElement('.edit_synon tbody tr:first .widget_row_delete img')->
-    checkElement('.edit_synon tbody tr:last .widget_row_delete img',false)->
+    checkElement('table[alt="synonym"] tbody tr', 4)->
+    checkElement('table[alt="synonym"] tbody tr:first td:contains(\'Duchesnus\')')->
+    checkElement('table[alt="synonym"] tbody tr:last td:contains(\'eliticus\')')->
+    checkElement('table[alt="synonym"] tbody tr:first .widget_row_delete img')->
+    checkElement('table[alt="synonym"] tbody tr:last .widget_row_delete img',false)->
   end()->
   
-  
-  click('Save', array('synonym_edit' => array(
-    'orders' => ',3,6,2,7',
-    'basionym_id' => '',
-    ))
-  )->
-
-  with('form')->begin()->
-    hasErrors(false)->
-  end()->
-
+  post('/synonym/editOrder?order=3,6,2,7,')->
   with('response')->begin()->
     isStatusCode(200)->
     matches('/ok/')->
   end()->
 
-  get('/synonym/edit?table=taxonomy&id=4&group_id=3')->
-
-  with('request')->begin()->
-    isParameter('module', 'synonym')->
-    isParameter('action', 'edit')->
-  end()->
+  get('/widgets/reloadContent?widget=synonym&category=catalogue_taxonomy&eid=4')->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.edit_synon tbody tr', 4)->
-    checkElement('.edit_synon tbody tr:last td:contains(\'eliticus\')')->
-    checkElement('.edit_synon tbody tr:first td:contains(\'recombinus\')')->
-    checkElement('.edit_synon tbody tr.syn_id_2 .widget_row_delete img')->
-    checkElement('.edit_synon tbody tr:first .widget_row_delete img',false)->
+    checkElement('table[alt="synonym"] tbody tr', 4)->
+    checkElement('table[alt="synonym"] tbody tr:last td:contains(\'eliticus\')')->
+    checkElement('table[alt="synonym"] tbody tr:first td:contains(\'recombinus\')')->
+    checkElement('table[alt="synonym"] tbody tr.syn_id_2 .widget_row_delete img')->
+    checkElement('table[alt="synonym"] tbody tr:first .widget_row_delete img',false)->
   end()->
+
 
   info('Delete')->
   get('/synonym/delete?table=taxonomy&id=3')->

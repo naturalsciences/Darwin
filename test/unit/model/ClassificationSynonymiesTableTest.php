@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(36, new lime_output_color());
+$t = new lime_test(38, new lime_output_color());
 
 $t->info('findGroupsIdsForRecord');
 $syns = Doctrine::getTable('ClassificationSynonymies')->findGroupsIdsForRecord('taxonomy',4);
@@ -51,21 +51,31 @@ $group = Doctrine::getTable('ClassificationSynonymies')->findGroupIdFor('taxonom
 $t->is(0 ,$group,'We get no group id for synonym');
 
 
-$t->info('saveOrderAndResetBasio');
-Doctrine::getTable('ClassificationSynonymies')->saveOrderAndResetBasio('4,5');
+$t->info('saveOrder');
+Doctrine::getTable('ClassificationSynonymies')->saveOrder('4,5');
 $records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 3);
 
 $t->is($records['homonym'][0]['id'],4,'They are the same');
 $t->is(count($records['homonym']),2,'They are the same');
 $t->is($records['homonym'][1]['id'],5,'They are the same');
 
-Doctrine::getTable('ClassificationSynonymies')->saveOrderAndResetBasio('2,3');
+Doctrine::getTable('ClassificationSynonymies')->saveOrder('2,3');
 
 $records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 4, array(1));
 $t->is($records['synonym'][0]['id'],2,'They are the same');
 $t->is(count($records['synonym']),2,'They are the same');
 $t->is($records['synonym'][1]['id'],3,'They are the same');
 
+
+
+$t->info('setBasionym');
+$records = Doctrine::getTable('ClassificationSynonymies')->findAllForRecord('taxonomy', 5, array(1));
+Doctrine::getTable('ClassificationSynonymies')->setBasionym(1, $records['synonym'][0]['id']);
+$el = Doctrine::getTable('ClassificationSynonymies')->find($records['synonym'][0]['id']);
+$t->is($el->getIsBasionym(), true,'We have set the basionym');
+
+$el = Doctrine::getTable('ClassificationSynonymies')->find(3);
+$t->is($el->getIsBasionym(), false,'for others the basionym is reset');
 
 $t->info('mergeSynonyms');
 
