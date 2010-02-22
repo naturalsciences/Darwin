@@ -38,7 +38,12 @@ $(document).ready(function () {
       });
       clearSelection($('#<?php echo $field_name;?>'));
     }
-
+    else
+    {
+      message = $('<div class="warn_message"><?php echo __('You must select a part of the name to add a tag');?></a>').hide();
+      $('.name_tags').before(message);
+      $(message).fadeIn('slow').animate({opacity: 1.0}, 3000).fadeOut('slow', function() { $(this).remove();});
+    }
   });
 
   $('#catalogue_keywords .clear_prop').live('click', clearPropertyValue);

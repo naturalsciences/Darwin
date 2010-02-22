@@ -842,10 +842,16 @@ table.encoding tbody .widget_row_delete
   cursor:pointer;
 }
 
-.merge_question div
+.merge_question div, .warn_message
 {
     border: 2px solid #F4BB0F;
     background-color:#FFEFBF;
+}
+
+.warn_message
+{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .edit_synon .ui-state-highlight
