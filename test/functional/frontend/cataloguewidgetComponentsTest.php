@@ -14,6 +14,16 @@ $vernacular_names->VernacularNames[]->name ='Faux con';
 $vernacular_names->VernacularNames[]->name ='Con de pélerin';
 $vernacular_names->save();
 
+$personId = Doctrine::getTable('People')->findOneByFamilyNameAndGivenName('Root', 'Evil')->getId();
+
+$catalogue_people = new CataloguePeople;
+$catalogue_people->setReferencedRelation('taxonomy');
+$catalogue_people->setRecordId(4);
+$catalogue_people->setPeopleType('authors');
+$catalogue_people->setPeopleSubType('Main authors');
+$catalogue_people->setPeopleRef($personId);
+$catalogue_people->save();
+
 $browser->
     info('1 - Rename')->
      get('/widgets/reloadContent?widget=relationRename&category=catalogue_taxonomy&eid=4')->
@@ -76,4 +86,52 @@ $browser->
         checkElement('table tbody tr',1)->
         checkElement('table tbody tr:first td:first','/French/')->
 	checkElement('table tbody tr:first td::nth-child(2)','/Show 2 Names/')->
+    end()->
+
+    info('6 - Synonymies')->
+     get('/widgets/reloadContent?widget=synonym&category=catalogue_taxonomy&eid=4')->
+     with('response')->begin()->
+        isStatusCode(200)->
+        checkElement('table.catalogue_table tbody table[alt="homonym"]',1)->
+        checkElement('table.catalogue_table tbody table[alt="synonym"]',1)->
+        checkElement('table.catalogue_table tbody table[alt="synonym"] tbody tr',2)->
+        checkElement('table.catalogue_table tbody table[alt="synonym"] tbody td:first[class="handle"]',1)->
+        checkElement('table.catalogue_table tbody table[alt="synonym"] tbody td:nth-child(2)','/Duchesnus Brulus 1912/')->
+        checkElement('table.catalogue_table tbody table[alt="synonym"] tbody tr:first td:nth-child(3)[class="basio_cell"]',1)->
+        checkElement('table.catalogue_table tbody table[alt="synonym"] tbody tr:first td:nth-child(4)[class="widget_row_delete"]',1)->
     end();
+
+$items = Doctrine::getTable('ClassificationSynonymies')->findOneByReferencedRelationAndRecordId('taxonomy', 4);
+
+$browser->
+  info('8 - Synonymies after a delete')->
+  get('/synonym/delete?id='.$items['id'])->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/ok/')->
+  end()->
+  get('/widgets/reloadContent?widget=synonym&category=catalogue_taxonomy&eid=4')->
+    with('response')->begin()->
+      isStatusCode(200)->
+      checkElement('table.catalogue_table tbody table[alt="homonym"]',1)->
+      checkElement('table.catalogue_table tbody table[alt="synonym"]',0)->
+  end()->
+  info('9 - People related')->
+  get('/widgets/reloadContent?widget=cataloguePeople&category=catalogue_taxonomy&eid=4')->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('table[class="widget_sub_table"] tbody td:first[class="handle"]', 1)->
+    checkElement('table[class="widget_sub_table"] tbody td:nth-child(2)', '/Root Evil/')->
+    checkElement('table[class="widget_sub_table"] tbody td:nth-child(3)[class="catalogue_people_sub_type"]', 1)->
+    checkElement('table[class="widget_sub_table"] tbody td:last[class="widget_row_delete"]', 1)->
+  end()->
+  click('table[class="widget_sub_table"] tbody td:last[class="widget_row_delete"] > a')->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/ok/')->
+  end()->
+  get('/widgets/reloadContent?widget=cataloguePeople&category=catalogue_taxonomy&eid=4')->
+    with('response')->begin()->
+      isStatusCode(200)->
+      checkElement('table[class="widget_sub_table"]', 0)->
+  end();

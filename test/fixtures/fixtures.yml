@@ -616,6 +616,14 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+    u1ws36-2:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: synonym
+        order_by: 3
+        opened: true
+        visible: true
     u1ws37:
         User: u1
         col_num: 1
@@ -656,7 +664,15 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
-    u1ws40:
+    u1ws40-0:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: synonym
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws40-1:
         User: u1
         col_num: 1
         category: catalogue_lithology_widget
@@ -693,6 +709,14 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: vernacularNames
+        order_by: 3
+        opened: true
+        visible: true
+    u1ws43-1:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: synonym
         order_by: 3
         opened: true
         visible: true
@@ -736,7 +760,14 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
-
+    u1ws48:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: synonym
+        order_by: 3
+        opened: true
+        visible: true
 
 CatalogueProperties:
     cprop1:
@@ -863,7 +894,7 @@ Chronostratigraphy:
     chs6:
         name: Orosirian
         level_ref: 57
-        status: valid
+        status: invalid
         Parent: chs4
     chs7:
         name: Oxfordian
@@ -1003,7 +1034,7 @@ Mineralogy:
         code: '5.AA'
         name: 'Alkali carbonates'
         level_ref: 72
-        status: valid
+        status: invalid
         Parent: min6
     min9:
         code: '5.AB'
@@ -1069,7 +1100,7 @@ Lithology:
     lol8:
         name: Ores
         level_ref: 77
-        status: valid
+        status: invalid
         Parent: lol4
     lol9:
         name: Lithosiderite

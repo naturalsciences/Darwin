@@ -100,6 +100,4 @@ $browser->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
     checkElement('#relation_catalogue_name','')->
-  end()
-
-;
+  end();
