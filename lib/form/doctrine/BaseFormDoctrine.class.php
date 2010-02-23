@@ -86,7 +86,7 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
 	  if (!isset($value[$name]['keyword_type']) || $value[$name]['keyword_type']=='' )
 	  {
 	    unset($this->embeddedForms['newVal'][$name]);
-	  }	  
+	  }
 	}
 
 	$value = $this->getValue('ClassificationKeywords');
