@@ -7,6 +7,10 @@ $browser->loadData($configuration)->login('root','evil');
 
 $browser->
   info('Index')->
+  get('/taxonomy/edit?id=-1')->
+    with('response')->begin()->
+    isStatusCode(404)->
+  end()->
   get('/taxonomy/index')->
   
   with('request')->begin()->
@@ -74,6 +78,36 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
     'status' => 'valid', //Of course!
     'extinct'   => '',
     'parent_ref'=> '0',
+    'newVal' => array(
+      '0' => array(
+	'id' => '',
+	'referenced_relation' => 'taxonomy',
+	'record_id' =>'',
+	'keyword_type' => 'name_part',
+	'keyword' => 'tchet',
+      ),
+      '1' => array(
+	'id' => '',
+	'referenced_relation' => 'taxonomy',
+	'record_id' =>'',
+	'keyword_type' => 'pub_year',
+	'keyword' => '1830',
+      ),
+      '2' => array(
+	'id' => '',
+	'referenced_relation' => 'taxonomy',
+	'record_id' =>'',
+	'keyword_type' => 'name_part',
+	'keyword' => 'savadje',
+      ),
+      '3' => array(
+	'id' => '',
+	'referenced_relation' => 'taxonomy',
+	'record_id' =>'',
+	'keyword_type' => 'author',
+	'keyword' => 'tchantchès',
+      ),
+    )
   )))->
 
   with('response')->begin()->
@@ -90,7 +124,11 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('input[value="tchet savadje (tchantchès 1830)"]')->
-
+    checkElement('#catalogue_keywords > table >  tbody > tr',3)->
+    checkElement('#catalogue_keywords > table > tbody > tr > td:first span',"/Author part/")->
+    checkElement('#catalogue_keywords table[alt="author"] tr',1)->
+    checkElement('#catalogue_keywords table[alt="name_part"] tr',2)->
+    checkElement('#catalogue_keywords table[alt="pub_year"] tr',1)->
   end()->
 
   click('Delete')->
