@@ -7,7 +7,7 @@ $t->info('findWithParents($id)');
 $unit = Doctrine::getTable('Lithostratigraphy')->findWithParents($lithoS->getId());
 $t->isnt($unit,null, 'we got a unit');
 $t->is($unit->count(),3, 'we got all parent of the unit');
-$t->is($unit[1]->getId(),$lithoS->getFormationRef(), 'Parent is correct');
+$t->is($unit[1]->getId(),$lithoS->getParentRef(), 'Parent is correct');
 
 $t->is($unit[1]->Level->__toString(),'formation', 'get Level');
 $t->is($lithoS->getNameWithFormat(),'Membre de Pollux', 'get Name');
