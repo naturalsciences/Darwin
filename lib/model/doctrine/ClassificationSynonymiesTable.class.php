@@ -65,7 +65,7 @@ class ClassificationSynonymiesTable extends DarwinTable
 	 ->whereIn('s.group_id', $groups)
 	 ->andWhere('t.id=s.record_id')
 	 ->andWhere('s.referenced_relation = ?',$table_name) //Not really necessay but....
-	 ->orderBy('s.group_name ASC, s.order_by')
+	 ->orderBy('s.group_name ASC, s.order_by ASC')
 	 ->setHydrationMode(Doctrine::HYDRATE_NONE);
     $items = $q->execute();
     $results = array();

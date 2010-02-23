@@ -126,10 +126,18 @@ Doctrine::getTable('ClassificationSynonymies')->mergeSynonyms('taxonomy', 3, 6, 
 $syn = Doctrine::getTable('ClassificationSynonymies')->findByGroupId($syn[0]->getGroupId());
 $t->is(count($syn), 5, 'We merge all groups');
 
-$rec2 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(3);
-$rec1 = Doctrine::getTable('ClassificationSynonymies')->findOneByRecordId(4);
-$t->is($rec1->getIsBasionym(), false,'Basio is reset');
-$t->is($rec2->getIsBasionym(), false,'Basio is reset');
+$recs1 = Doctrine::getTable('ClassificationSynonymies')->findByRecordId(4);
+$recs2 = Doctrine::getTable('ClassificationSynonymies')->findByRecordId(3);
+foreach($recs1 as $rec)
+{
+  if($rec->getGroupName()=='isonym')
+    $t->is($rec->getIsBasionym(), false,'Basio is reset');
+}
+foreach($recs2 as $rec)
+{
+  if($rec->getGroupName()=='isonym')
+    $t->is($rec->getIsBasionym(), false,'Basio is reset');
+}
 
 
 
