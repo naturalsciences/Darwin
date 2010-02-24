@@ -42,5 +42,5 @@ $(document).ready(function () {
       <?php echo str_repeat('</li></ul>',$col_item->getLevel());?>
     </div>
   <?php endforeach;?>
-  <div class='new_link'><a href="<?php echo url_for('collection/new') ?>"><?php echo __('New');?></a></div>
+  <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('collection/new') ?>"><?php echo __('New');?></a></div>
 </div>
