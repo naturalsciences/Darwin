@@ -15,12 +15,13 @@ class ClassificationKeywords extends BaseClassificationKeywords
   public static function getTags()
   {
     return array(
-      'name' => 'Name part',
-      'pub_year' => 'Publication Year',
-      'author' => 'Author part',
-      'recombination' => 'Recombination',
+      'scientific_name_authorship' => 'Scientific Name Authorship',
+      'verbatim_taxon_rank' => 'Verbatim Taxon Rank',
+      'nomenclatural_status' => 'Nomenclatural Status',
+      'specific_epithet' => 'Specific Epithet',
+      'infra_specific_epithet' => 'Infra Specific Epithet',
       'uncertainty' => 'Uncertainty',
-      'particular_attribute' => 'Particular attribute',
+      'pub_year' => 'Publication Year',
     );
   }
   public static function getTagNameFor($tag)

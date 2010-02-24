@@ -79,13 +79,6 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
     'extinct'   => '',
     'parent_ref'=> '0',
     'newVal' => array(
-      '0' => array(
-	'id' => '',
-	'referenced_relation' => 'taxonomy',
-	'record_id' =>'',
-	'keyword_type' => 'name_part',
-	'keyword' => 'tchet',
-      ),
       '1' => array(
 	'id' => '',
 	'referenced_relation' => 'taxonomy',
@@ -97,14 +90,14 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
 	'id' => '',
 	'referenced_relation' => 'taxonomy',
 	'record_id' =>'',
-	'keyword_type' => 'name_part',
+	'keyword_type' => 'specific_epithet',
 	'keyword' => 'savadje',
       ),
       '3' => array(
 	'id' => '',
 	'referenced_relation' => 'taxonomy',
 	'record_id' =>'',
-	'keyword_type' => 'author',
+	'keyword_type' => 'scientific_name_authorship',
 	'keyword' => 'tchantchès',
       ),
     )
@@ -125,9 +118,9 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
     isStatusCode(200)->
     checkElement('input[value="tchet savadje (tchantchès 1830)"]')->
     checkElement('#catalogue_keywords > table >  tbody > tr',3)->
-    checkElement('#catalogue_keywords > table > tbody > tr > td:first span',"/Author part/")->
-    checkElement('#catalogue_keywords table[alt="author"] tr',1)->
-    checkElement('#catalogue_keywords table[alt="name_part"] tr',2)->
+    checkElement('#catalogue_keywords > table > tbody > tr > td:first span',"/Publication Year/")->
+    checkElement('#catalogue_keywords table[alt="scientific_name_authorship"] tr',1)->
+    checkElement('#catalogue_keywords table[alt="specific_epithet"] tr',1)->
     checkElement('#catalogue_keywords table[alt="pub_year"] tr',1)->
   end()->
 
