@@ -68,10 +68,10 @@ $t->is($catpeo['authors'][0]->getPeople()->getGivenName(), 'Poilux', 'Type autho
 $t->is($catpeo['authors'][1]->getPeople()->getGivenName(), 'ML', 'Type author and second person well associated to "ML"');
 $t->info('Interverting order of "Poilux Duchesne" and "ML Duchesne"');
 $catpeo = Doctrine::getTable('CataloguePeople')->findAll();
-Doctrine::getTable('CataloguePeople')->changeOrder($catpeo[0]->getReferencedRelation(),
-                                                   $catpeo[0]->getRecordId(),
-                                                   $catpeo[0]->getPeopleType(),
-                                                   array($catpeo[2]->getId(), $catpeo[0]->getId())
+Doctrine::getTable('CataloguePeople')->changeOrder($catpeo[1]->getReferencedRelation(),
+                                                   $catpeo[1]->getRecordId(),
+                                                   'authors',
+                                                   array($catpeo[3]->getId(), $catpeo[1]->getId())
                                                   );
 $catpeo = Doctrine::getTable('CataloguePeople')->findForTableByType('taxonomy', $taxon->getId());
 $t->is($catpeo['authors'][0]->getPeople()->getGivenName(), 'ML', 'Type author and first person well associated to "ML"');
