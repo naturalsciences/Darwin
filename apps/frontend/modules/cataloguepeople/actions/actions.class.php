@@ -61,4 +61,5 @@ class cataloguepeopleActions extends sfActions
   {
     $this->items = Doctrine::getTable('CataloguePeople')->getDistinctSubType($request->getParameter('type'));
   }
+
 }

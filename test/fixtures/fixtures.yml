@@ -1112,3 +1112,12 @@ Lithology:
         level_ref: 78
         status: valid
         Parent: lol6
+
+CataloguePeople:
+    cpeo1:
+        referenced_relation: taxonomy
+        record_id: 3
+        people_type: authors
+        people_sub_type: Main Author
+        People: p5
+        
