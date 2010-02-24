@@ -16,7 +16,7 @@ class CataloguePeopleTable extends DarwinTable
 	 ->from('CataloguePeople c')
 	 ->innerJoin('c.People');
      $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
-     $q->orderBy('c.people_type ASC, order_by ASC');
+     $q->orderBy('c.people_type ASC, order_by ASC, id ASC');
     $items = $q->execute();
     $results = array();
     foreach($items as $item)

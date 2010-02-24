@@ -11,7 +11,7 @@ if($userLanguages[0]->getLanguageCountry() != "en")
   $lang = $userLanguages[1];
 }
 
-$t->is($userLanguages[0]->getPreferredLanguage(), true, 'Language "'.$userLanguages[0]->getLanguageCountry().'" is well the "preferred" language');
+$t->is($lang->getPreferredLanguage(), true, 'Language "'.$lang->getLanguageCountry().'" is well the "preferred" language');
 $t->is(Doctrine::getTable('UsersLanguages')->getPreferredLanguage($userId)->getLanguageCountry(), 'en', '"en" is well the "preferred" language (got by getPreferredLanguage($userId) method)');
 $t->info('Reset now preferred languages');
 Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($userId);
