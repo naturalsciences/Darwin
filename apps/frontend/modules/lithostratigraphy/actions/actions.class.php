@@ -10,7 +10,7 @@
  */
 class lithostratigraphyActions extends DarwinActions
 {
-  protected $widgetCategegory = 'people_widget';
+  protected $widgetCategegory = 'catalogue_lithostratigraphy_widget';
 
   public function executeChoose(sfWebRequest $request)
   {

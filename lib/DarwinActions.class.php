@@ -9,7 +9,8 @@ class DarwinActions extends sfActions
     $this->currentPage = ($request->getParameter('page', '') == '')? 1: $request->getParameter('page');
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
     $this->orderBy = ($request->getParameter('orderby', '') == '')?$defaultOrderByField:$request->getParameter('orderby');
-    $this->orderDir = ($request->getParameter('orderdir', '') == '')?'asc':$request->getParameter('orderdir');
+    $this->orderDir = ($request->getParameter('orderdir', '') == '' || $request->getParameter('orderdir') == 'asc') ? 'asc' : 'desc';
+
     $this->s_url = $moduleName.'/search'.'?is_choose='.$this->is_choose;
     $this->o_url = '&orderby='.$this->orderBy.'&orderdir='.$this->orderDir;
   }
