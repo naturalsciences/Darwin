@@ -24,9 +24,11 @@ class DarwinActions extends sfActions
   
   protected function loadWidgets()
   {
+    $this->__set('widgetCategory',$this->widgetCategory);
+
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets($this->widgetCategegory);
+      ->getWidgets($this->widgetCategory);
     if(! $this->widgets) $this->widgets=array();
   }
 }

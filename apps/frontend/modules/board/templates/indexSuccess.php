@@ -2,28 +2,12 @@
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'board')) ?>
 <div class="board">
-  <ul class="board_col">
-    <?php $changed_col=false;?>
-    <?php foreach($widgets as $id => $widget):?>
-      <?php if(!$widget->getVisible()) continue;?>
 
-      <?php if($changed_col==false && $widget->getColNum()==2):?>
-	    <?php $changed_col=true;?>
-	      </ul>
-	      <div class="board_spacer">&nbsp;</div>
-	      <ul class="board_col">
-      <?php endif;?>
-	  <?php include_partial('widgets/wlayout', array(
-        'widget' => $widget->getGroupName(),
-        'is_opened' => $widget->getOpened(),
-        'category' => 'boardwidget',
-	'options' => array(),
-        )); ?>
-    <?php endforeach;?>
-    <?php if($changed_col==false):?>
-      </ul>
-      <div class="board_spacer">&nbsp;</div>
-      <ul class="board_col">
-      <?php endif;?>
-  </ul>
+ <?php include_partial('widgets/screen', array(
+	'widgets' => $widgets,
+	'encod' => false,
+	'category' => 'boardwidget',
+	'columns' => 2,
+	'options' => array()
+	)); ?>
 </div>

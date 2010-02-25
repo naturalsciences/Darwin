@@ -10,7 +10,7 @@
  */
 class boardActions extends DarwinActions
 {
-  protected $widgetCategegory = 'board_widget';
+  protected $widgetCategory = 'board_widget';
 
   public function executeIndex(sfWebRequest $request)
   {

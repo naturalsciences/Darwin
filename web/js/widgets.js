@@ -63,7 +63,12 @@ jQuery(function(){
         $.get(this.href, function(msg){
             $('.board_col:first').append(msg);
         });
-        $(this).parent().fadeOut();
+        $(this).parent().hide();
+
+	if($('.widget_collection_container .widget_preview:visible').length == 0)
+	  $('.widget_collection_container .no_more').removeClass('hidden');
+
+	$('.no_more_wigets').addClass('hidden');
         return false;
     });
 
@@ -76,8 +81,15 @@ jQuery(function(){
     $('.widget_close').live('click',function(){
         widget = $(this).parent().parent().parent();
         $.post(chgstatus_url+'/widget/'+widget.attr('id')+'/status/hidden' );
+  
+	$('.widget_collection_container .no_more').addClass('hidden');
+
         $('#boardprev_'+widget.attr('id')).fadeIn();
+
         widget.remove();
+
+	if($('.board_col li').length == 0)
+	  $('.no_more_wigets').removeClass('hidden');
         return false;
     });
     

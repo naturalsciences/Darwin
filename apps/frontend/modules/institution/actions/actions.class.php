@@ -10,7 +10,7 @@
  */
 class institutionActions extends DarwinActions
 {
-  protected $widgetCategegory = 'people_institution_widget';
+  protected $widgetCategory = 'people_institution_widget';
 
   public function executeChoose(sfWebRequest $request)
   {

@@ -10,7 +10,7 @@
  */
 class chronostratigraphyActions extends DarwinActions
 {
-  protected $widgetCategegory = 'catalogue_chronostratigraphy_widget';
+  protected $widgetCategory = 'catalogue_chronostratigraphy_widget';
 
   public function executeChoose(sfWebRequest $request)
   {

@@ -45,29 +45,15 @@ $(document).ready(function ()
                         <?php endforeach; ?>
                     </ul>
                 <?php endif;?>
-                <ul class="board_col">
-                    <?php $changed_col=false;?>
-                    <?php foreach($widgets as $id => $widget):?>
-                        <?php if(!$widget->getVisible()) continue;?>
-                        <?php if($changed_col==false && $widget->getColNum()==2):?>
-                            <?php $changed_col=true;?>
-                            </ul>
-                            <div class="board_spacer">&nbsp;</div>
-                            <ul class="board_col">
-                        <?php endif;?>
-                        <?php include_partial('widgets/wlayout', array(
-                            'widget' => $widget->getGroupName(),
-                            'is_opened' => $widget->getOpened(),
-                            'category' => 'specimenwidget',
-                            'options' => array('form' => $form),
-                            )); ?>
-                    <?php endforeach;?>
-                        <?php if($changed_col==false):?>
-                            </ul>
-                            <div class="board_spacer">&nbsp;</div>
-                            <ul class="board_col">
-                        <?php endif;?>
-                        </ul>
+
+
+		<?php include_partial('widgets/screen', array(
+		  'widgets' => $widgets,
+		  'category' => 'specimenwidget',
+		  'columns' => 2,
+		  'options' => array('form' => $form),
+		)); ?>
+
                     </div>
                     <p class="clear"></p>
                     <p>

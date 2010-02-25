@@ -119,16 +119,10 @@ $('.hide_value').click(function(){
 });
 </script>
 
-    <ul class="board_col one_col encod_screen">
-      <?php foreach($widgets as $id => $widget):?>
-	<?php if(!$widget->getVisible()) continue;?>
-	<?php include_partial('widgets/wlayout', array(
-	    'widget' => $widget->getGroupName(),
-	    'is_opened' => $widget->getOpened(),
-	    'category' => 'userswidget',
-	    'options' => array('eid' => $form->getObject()->getId(), 'table' => 'users')
-	    )); ?>
-      <?php endforeach;?>
-    </ul>
-
+ <?php include_partial('widgets/screen', array(
+	'widgets' => $widgets,
+	'category' => 'userswidget',
+	'columns' => 1,
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'users')
+	)); ?>
 </div>

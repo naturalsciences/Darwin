@@ -143,6 +143,22 @@
 	text-align:center;
 }
 
+.widget_collection_container .no_more
+{
+  text-align:center;
+  color:white;
+  margin-top: 1em;
+/*   text-decoration: underline; */
+  font-size: large;
+}
+
+.no_more_wigets
+{
+  font-size: large;
+  text-align:center;
+
+}
+
 .help_message
 {
 	color: #004A6A;

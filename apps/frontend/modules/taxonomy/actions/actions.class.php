@@ -10,7 +10,7 @@
  */
 class taxonomyActions extends DarwinActions
 {
-  protected $widgetCategegory = 'catalogue_taxonomy_widget';
+  public $widgetCategory = 'catalogue_taxonomy_widget';
 
   public function executeChoose(sfWebRequest $request)
   {

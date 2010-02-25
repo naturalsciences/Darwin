@@ -10,7 +10,7 @@
  */
 class specimenActions extends DarwinActions
 {
-  protected $widgetCategegory = 'specimen_widget';
+  protected $widgetCategory = 'specimen_widget';
 
   public function executeNew(sfWebRequest $request)
   {

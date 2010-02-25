@@ -10,7 +10,7 @@
  */
 class userActions extends DarwinActions
 {
-  protected $widgetCategegory = 'users_widget';
+  protected $widgetCategory = 'users_widget';
 
   /**
     * Action executed when calling the expeditions from an other screen

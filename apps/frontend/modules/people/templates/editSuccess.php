@@ -5,16 +5,10 @@
   <h1 class="edit_mode">Edit People</h1>
   <?php include_partial('form', array('form' => $form)) ?>
 
-<ul class="board_col one_col encod_screen">
-  <?php foreach($widgets as $id => $widget):?>
-    <?php if(!$widget->getVisible()) continue;?>
-    <?php include_partial('widgets/wlayout', array(
-	'widget' => $widget->getGroupName(),
-	'is_opened' => $widget->getOpened(),
+  <?php include_partial('widgets/screen', array(
+	'widgets' => $widgets,
 	'category' => 'peoplewidget',
+	'columns' => 1,
 	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'people')
 	)); ?>
-  <?php endforeach;?>
-</ul>
-
 </div>

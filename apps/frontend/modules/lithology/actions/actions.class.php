@@ -10,7 +10,7 @@
  */
 class lithologyActions extends DarwinActions
 {
-  protected $widgetCategegory = 'catalogue_lithology_widget';
+  protected $widgetCategory = 'catalogue_lithology_widget';
 
   public function executeChoose(sfWebRequest $request)
   {

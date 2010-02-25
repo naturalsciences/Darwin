@@ -11,7 +11,7 @@
  */
 class igsActions extends DarwinActions
 {
-  protected $widgetCategegory = 'catalogue_igs_widget';
+  protected $widgetCategory = 'catalogue_igs_widget';
 
   /**
     * Action executed when calling the expeditions from an other screen

@@ -10,7 +10,7 @@
  */
 class peopleActions extends DarwinActions
 {
-  protected $widgetCategegory = 'people_widget';
+  protected $widgetCategory = 'people_widget';
 
   public function executeChoose(sfWebRequest $request)
   {
