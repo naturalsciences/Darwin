@@ -8,8 +8,10 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class chronostratigraphyActions extends sfActions
+class chronostratigraphyActions extends DarwinActions
 {
+  protected $widgetCategegory = 'catalogue_chronostratigraphy_widget';
+
   public function executeChoose(sfWebRequest $request)
   {
     $this->searchForm = new ChronostratigraphyFormFilter(array('table'=> 'chronostratigraphy'));
@@ -56,11 +58,7 @@ class chronostratigraphyActions extends sfActions
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new ChronostratigraphyForm($unit);
     
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_chronostratigraphy_widget');
-    if(! $this->widgets) $this->widgets=array();
-
+    $this->loadWidgets();
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('chronostratigraphy',$unit->getId());
   }
 
@@ -73,10 +71,7 @@ class chronostratigraphyActions extends sfActions
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('chronostratigraphy',$unit->getId());
     $this->processForm($request,$this->form);
 
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_chronostratigraphy_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
 
     $this->setTemplate('edit');
   }

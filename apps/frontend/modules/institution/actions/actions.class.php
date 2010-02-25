@@ -10,6 +10,8 @@
  */
 class institutionActions extends DarwinActions
 {
+  protected $widgetCategegory = 'people_institution_widget';
+
   public function executeChoose(sfWebRequest $request)
   {
     $this->form = new InstitutionsFormFilter();
@@ -30,8 +32,6 @@ class institutionActions extends DarwinActions
     $this->setCommonValues('institution', 'family_name', $request);
     $this->form = new InstitutionsFormFilter();
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
-
-
 
     if($request->getParameter('institutions_filters','') !== '')
     {
@@ -58,11 +58,7 @@ class institutionActions extends DarwinActions
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
       }
-    }
-
-
-
-    
+    }    
   }
 
   public function executeNew(sfWebRequest $request)
@@ -81,19 +77,11 @@ class institutionActions extends DarwinActions
     $this->setTemplate('new');
   }
 
-  protected function initiateWidgets()
-  {
-      $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('people_institution_widget');
-    if(! $this->widgets) $this->widgets=array();
-  }
-
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     $this->form = new InstitutionsForm($institution);
-    $this->initiateWidgets();
+    $this->loadWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -103,7 +91,7 @@ class institutionActions extends DarwinActions
     $this->form = new InstitutionsForm($institution);
 
     $this->processForm($request, $this->form);
-    $this->initiateWidgets();
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 
@@ -122,7 +110,7 @@ class institutionActions extends DarwinActions
     }
     $this->form = new InstitutionsForm($institution);
     $this->form->getErrorSchema()->addError($error); 
-    $this->initiateWidgets();
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 

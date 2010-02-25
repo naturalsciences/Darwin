@@ -10,6 +10,7 @@
  */
 class userActions extends DarwinActions
 {
+  protected $widgetCategegory = 'users_widget';
 
   /**
     * Action executed when calling the expeditions from an other screen
@@ -67,10 +68,8 @@ class userActions extends DarwinActions
     $this->forward404Unless($this->user);
 
 
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('users_widget');
-  
+    $this->loadWidgets();
+
     $old_people = $this->user->getPeopleId();
 
     $this->form = new UsersForm($this->user);

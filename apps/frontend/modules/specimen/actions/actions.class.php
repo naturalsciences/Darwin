@@ -8,15 +8,9 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class specimenActions extends sfActions
+class specimenActions extends DarwinActions
 {
-
-  public function loadWidgets()
-  {
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('specimen_widget');
-  }
+  protected $widgetCategegory = 'specimen_widget';
 
   public function executeNew(sfWebRequest $request)
   {
@@ -31,6 +25,7 @@ class specimenActions extends sfActions
     $this->processForm($request, $this->form);
 
     $this->loadWidgets();
+
     $this->setTemplate('new');
   }
 

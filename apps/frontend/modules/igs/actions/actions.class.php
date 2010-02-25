@@ -11,6 +11,8 @@
  */
 class igsActions extends DarwinActions
 {
+  protected $widgetCategegory = 'catalogue_igs_widget';
+
   /**
     * Action executed when calling the expeditions from an other screen
     * @param sfWebRequest $request Request coming from browser
@@ -53,10 +55,7 @@ class igsActions extends DarwinActions
   {
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
     $this->form = new igsForm($igs);
-    $this->widgets = Doctrine::getTable('MyPreferences')
-                     ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-                     ->getWidgets('catalogue_igs_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -66,7 +65,7 @@ class igsActions extends DarwinActions
     $this->form = new igsForm($igs);
 
     $this->processForm($request, $this->form);
-
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 

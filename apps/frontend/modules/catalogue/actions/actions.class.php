@@ -10,7 +10,6 @@
  */
 class catalogueActions extends DarwinActions
 {
-
   public function executeRelation(sfWebRequest $request)
   {
     $this->relation = null;

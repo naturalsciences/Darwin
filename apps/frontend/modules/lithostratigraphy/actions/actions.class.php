@@ -8,8 +8,10 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class lithostratigraphyActions extends sfActions
+class lithostratigraphyActions extends DarwinActions
 {
+  protected $widgetCategegory = 'people_widget';
+
   public function executeChoose(sfWebRequest $request)
   {
     $this->searchForm = new LithostratigraphyFormFilter(array('table'=> 'lithostratigraphy'));
@@ -55,11 +57,7 @@ class lithostratigraphyActions extends sfActions
     $unit = Doctrine::getTable('Lithostratigraphy')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new LithostratigraphyForm($unit);
-    
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_lithostratigraphy_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
 
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('lithostratigraphy',$unit->getId());
   }
@@ -72,12 +70,7 @@ class lithostratigraphyActions extends sfActions
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('lithostratigraphy',$unit->getId());
     $this->processForm($request,$this->form);
-
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_lithostratigraphy_widget');
-    if(! $this->widgets) $this->widgets=array();
-
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 

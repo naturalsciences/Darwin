@@ -7,17 +7,10 @@
  * @subpackage expedition
  * @category   actions
  * @author     DB team <collections@naturalsciences.be>
- * @var        sfForm                $this->form: Encoding form
- * @var        SearchExpeditionForm  $this->form: Search expedition Form
- * @var        bool|int              $this->is_choose: Flag telling if the search form has been called from an other window or directly
- * @var        string                $this->orderBy: field by which the data are ordered
- * @var        string                $this->orderDir: Indicates the order of the order by: Ascending or Descending
- * @var        int                   $this->currentPage: Give the page of data the user is on (used with Doctrine_Pager)
- * @var        pagerLayoutWithArrows $this->expepagerLayout: Pager layout initialized
- * @var        Doctrine_Collection   $this->expeditions: Collection of data, resulting of the query triggered by an expedition search
  */
 class expeditionActions extends DarwinActions
 {
+  protected $widgetCategegory = 'catalogue_expedition_widget';
 
   /**
     * Action executed when calling the expeditions from an other screen
@@ -79,10 +72,7 @@ class expeditionActions extends DarwinActions
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Otherwise initialize the expedition encoding form
     $this->form = new ExpeditionsForm($expeditions);
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_expedition_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
   }
 
   /**
@@ -100,6 +90,7 @@ class expeditionActions extends DarwinActions
     $this->form = new ExpeditionsForm($expeditions);
     // Process the form for saving informations
     $this->processForm($request, $this->form);
+    $this->loadWidgets();
     // Set the template to edit
     $this->setTemplate('edit');
   }

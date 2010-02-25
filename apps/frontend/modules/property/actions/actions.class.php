@@ -7,7 +7,7 @@
  * @subpackage property
  * @author     DB team <collections@naturalsciences.be>
  */
-class propertyActions extends sfActions
+class propertyActions extends DarwinActions
 {
   public function executeAdd(sfWebRequest $request)
   {

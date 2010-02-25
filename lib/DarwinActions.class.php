@@ -20,4 +20,12 @@ class DarwinActions extends sfActions
     $pagerLayout->setSelectedTemplate('<li>{%page}</li>');
     $pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
   }
+  
+  protected function loadWidgets()
+  {
+    $this->widgets = Doctrine::getTable('MyPreferences')
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->getWidgets($this->widgetCategegory);
+    if(! $this->widgets) $this->widgets=array();
+  }
 }

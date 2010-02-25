@@ -10,13 +10,7 @@
  */
 class peopleActions extends DarwinActions
 {
-  protected function initiateWidgets()
-  {
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('people_widget');
-    if(! $this->widgets) $this->widgets=array();
-  }
+  protected $widgetCategegory = 'people_widget';
 
   public function executeChoose(sfWebRequest $request)
   {
@@ -97,7 +91,7 @@ class peopleActions extends DarwinActions
   {
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
-    $this->initiateWidgets();
+    $this->loadWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -126,7 +120,7 @@ class peopleActions extends DarwinActions
     }
     $this->form = new PeopleForm($people);
     $this->form->getErrorSchema()->addError($error); 
-    $this->initiateWidgets();
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 

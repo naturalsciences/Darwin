@@ -8,7 +8,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12474 2008-10-31 10:41:27Z fabien $
  */
-class collectionActions extends sfActions
+class collectionActions extends DarwinActions
 {
   public function executeCompleteOptions(sfWebRequest $request)
   {

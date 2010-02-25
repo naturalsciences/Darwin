@@ -8,8 +8,10 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class taxonomyActions extends sfActions
+class taxonomyActions extends DarwinActions
 {
+  protected $widgetCategegory = 'catalogue_taxonomy_widget';
+
   public function executeChoose(sfWebRequest $request)
   {
     $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
@@ -57,10 +59,7 @@ class taxonomyActions extends sfActions
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_taxonomy_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
 
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
   }
@@ -75,11 +74,7 @@ class taxonomyActions extends sfActions
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
     $this->processForm($request,$this->form);
 
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_taxonomy_widget');
-    if(! $this->widgets) $this->widgets=array();
-
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 

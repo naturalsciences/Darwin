@@ -8,8 +8,10 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class mineralogyActions extends sfActions
+class mineralogyActions extends DarwinActions
 {
+  protected $widgetCategegory = 'catalogue_mineralogy_widget';
+
   public function executeChoose(sfWebRequest $request)
   {
     $this->searchForm = new MineralogyFormFilter(array('table'=> 'mineralogy'));
@@ -55,11 +57,7 @@ class mineralogyActions extends sfActions
     $unit = Doctrine::getTable('Mineralogy')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new MineralogyForm($unit);
-    
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_mineralogy_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
 
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('mineralogy',$unit->getId());
   }
@@ -73,10 +71,7 @@ class mineralogyActions extends sfActions
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('mineralogy',$unit->getId());
     $this->processForm($request,$this->form);
 
-    $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->getWidgets('catalogue_mineralogy_widget');
-    if(! $this->widgets) $this->widgets=array();
+    $this->loadWidgets();
 
     $this->setTemplate('edit');
   }

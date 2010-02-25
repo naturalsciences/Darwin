@@ -7,7 +7,7 @@
  * @subpackage vernacularnames
  * @author     DB team <collections@naturalsciences.be>
  */
-class vernacularnamesActions extends sfActions
+class vernacularnamesActions extends DarwinActions
 {
   public function executeAdd(sfWebRequest $request)
   {

@@ -8,7 +8,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class widgetsActions extends sfActions
+class widgetsActions extends DarwinActions
 {
  /**
   * Executes index action

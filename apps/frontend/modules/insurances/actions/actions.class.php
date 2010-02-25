@@ -7,7 +7,7 @@
  * @subpackage insurances
  * @author     DB team <collections@naturalsciences.be>
  */
-class insurancesActions extends sfActions
+class insurancesActions extends DarwinActions
 {
   public function executeAdd(sfWebRequest $request)
   {
