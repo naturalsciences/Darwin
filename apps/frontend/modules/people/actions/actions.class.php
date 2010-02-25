@@ -101,7 +101,7 @@ class peopleActions extends DarwinActions
     $this->form = new PeopleForm($people);
 
     $this->processForm($request, $this->form);
-    $this->initiateWidgets();
+    $this->loadWidgets();
     $this->setTemplate('edit');
   }
 
@@ -130,9 +130,16 @@ class peopleActions extends DarwinActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $people = $form->save();
-
-      $this->redirect('people/edit?id='.$people->getId());
+      try{
+	$people = $form->save();
+	$this->redirect('people/edit?id='.$people->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error);
+      }
     }
   }
 
