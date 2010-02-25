@@ -945,16 +945,26 @@ tr.details .details_info tr:hover
   border-color:#C1CF56;
 }
 
+table.classifications_edit tbody td:nth-child(2)
+{
+  width:41%;
+}
+
 .keyword_row
 {
   vertical-align:top;
-  padding-left: 1em;
+  padding-left: 0.2em;
+  padding-top:0.2em;
+  padding-right:0.2em;
+  width:50%
 }
 
 #catalogue_keywords 
 {
   border: 1px solid #E3E3E3;
-  padding: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
 }
 
 #catalogue_keywords table > tbody

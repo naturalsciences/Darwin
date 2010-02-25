@@ -5,7 +5,7 @@
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />
 <?php endif; ?>
-  <table>
+  <table class="classifications_edit">
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
@@ -13,7 +13,7 @@
         <td>
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
-	<td>
+	</td>
 	<td rowspan="6" class="keyword_row">
 	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'taxonomy','field_name' => 'taxonomy_name')); ?>
 	</td>
@@ -68,7 +68,6 @@
 
           <input id="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>
-	<td></td>
       </tr>
     </tfoot>
   </table>
