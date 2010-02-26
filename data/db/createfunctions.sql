@@ -5707,6 +5707,15 @@ BEGIN
 			RAISE EXCEPTION 'Author still used as author.';
 		END IF;
 	END IF;
+
+	/** Expert Flag is 8 **/
+        IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
+                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='experts';
+                IF still_referenced THEN
+                        RAISE EXCEPTION 'Expert still used as expert.';
+                END IF;
+        END IF;
+
 	RETURN NEW;
 END;
 $$
