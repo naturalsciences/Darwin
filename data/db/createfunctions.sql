@@ -5698,12 +5698,12 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_chk_peopleType() RETURNS TRIGGER
 AS $$
 DECLARE
-	still_referenced boolean;
+	still_referenced integer;
 BEGIN
 	/** AUTHOR FLAG IS 2 **/
 	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
 		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='authors';
-		IF still_referenced THEN
+		IF still_referenced !=0 THEN
 			RAISE EXCEPTION 'Author still used as author.';
 		END IF;
 	END IF;
@@ -5711,7 +5711,7 @@ BEGIN
 	/** Expert Flag is 8 **/
         IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
                 SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='experts';
-                IF still_referenced THEN
+                IF still_referenced !=0 THEN
                         RAISE EXCEPTION 'Expert still used as expert.';
                 END IF;
         END IF;
@@ -5728,11 +5728,6 @@ DECLARE
 	are_not_author boolean;
 BEGIN
 	IF NEW.people_type = 'authors' THEN
-		IF TG_OP ='UPDATE' THEN
-			IF OLD.people_ref = NEW.people_ref THEN 
-				RETURN NEW;
-			END IF;
-		END IF;
 	
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id=NEW.people_ref;
 		
@@ -5741,11 +5736,6 @@ BEGIN
 		END IF;
 		
 	ELSIF NEW.people_type = 'experts' THEN
-		IF TG_OP ='UPDATE' THEN
-			IF OLD.people_ref = NEW.people_ref THEN 
-				RETURN NEW;
-			END IF;
-		END IF;
 	
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 8)=0 AND id=NEW.people_ref;
 		
