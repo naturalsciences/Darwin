@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(23, new lime_output_color());
+$t = new lime_test(22, new lime_output_color());
 $p = new People();
 $p->setFormatedName('Mr Poilux Duchesne');
 $t->is($p->__toString(),'Mr Poilux Duchesne','to string get FormatedName');
@@ -9,13 +9,10 @@ $types = People::getTypes();
 $t->is($types[4], 'Identifier','We have this as Type');
 $t->is($types[16], 'Collector','We have this as Type');
 
-$t->is($p->getDbPeopleType(),array('1'),'We have only the default type');
+$t->is($p->getDbPeopleType(),array(),'We have only the default type');
 
 $p->setDbPeopleType(array('8','32'));
 $t->is($p->getDbPeopleType(),array('8','32'),'We have set 2 types');
-
-$p->setDbPeopleType(array('8','1','32'));
-$t->is($p->getDbPeopleType(),array('1','8','32'),'We have set 3 types');
 
 $p->setBirthDate('05/12/1908');
 $t->is($p->getBirthDate(), array('year' => '', 'month' => '', 'day' => '', 'hour' => '', 'minute' => '','second' => ''),'We have set a null birth date');

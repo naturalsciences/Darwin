@@ -159,7 +159,7 @@ abstract class BasePeople extends sfDoctrineRecord
         $this->hasColumn('db_people_type', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => 1,
+             'default' => 0,
              ));
         $this->hasColumn('end_date_mask', 'integer', null, array(
              'type' => 'integer',

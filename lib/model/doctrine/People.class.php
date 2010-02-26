@@ -8,7 +8,6 @@ class People extends BasePeople
   public static function getTypes()
   {
     return array(
-      1 => 'Contact',
       2 => 'Author',
       4 => 'Identifier',
       8 => 'Expert',

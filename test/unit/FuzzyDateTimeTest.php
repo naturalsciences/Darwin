@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../bootstrap/unit.php');
-$t = new lime_test(78, new lime_output_color());
+$t = new lime_test(79, new lime_output_color());
 
 $t->info('FuzzyDateTime instanciation');
 $t->isa_ok(new FuzzyDateTime(), 'FuzzyDateTime', 'New creates an object of the right class');
@@ -178,3 +178,7 @@ $t->is('2009/12/31',FuzzyDateTime::getDateTimeStringFromArray($testArray, false)
 
 $testArray = array('year'=>2009, 'month'=>100);
 $t->is('2038/12/31',FuzzyDateTime::getDateTimeStringFromArray($testArray, false),'Default date is set from wrong dates');
+
+$fdt=new FuzzyDateTime(array('year'=>'2005', 'month'=>'02', 'day'=>'02', 'hour'=>'01', 'minute'=>0, 'second'=>0),63,false,true);
+$fdt->setDateFormat('Y/m/d');
+$t->is($fdt->getDateMasked(), '2005/02/02 01:00:00','Default date is set from wrong dates');

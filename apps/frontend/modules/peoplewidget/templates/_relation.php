@@ -47,9 +47,22 @@
       item_row=$(this).closest('tr');
       el_id  = getIdInClasses(item_row);
       level = getIdInClasses(this);
-      $.get('<?php echo url_for('people/relationDetails');?>/id/'+el_id+'/level/'+level,function (html){
-	    $(item_row).after(html);
-      });
+      if($('.detail_'+el_id).length == 0)
+      {
+	$.get('<?php echo url_for('people/relationDetails');?>/id/'+el_id+'/level/'+level,function (html){
+	  if(html=='')
+	  {
+	    item_row.find('.info').attr('src','<?php echo url_for('/images/info-bw.png');?>');
+	  }
+	  else
+	  {
+	    if($('.detail_'+el_id).length == 0)
+	    {
+	      $(item_row).after(html);
+	    }
+	  }
+	});
+      }
   }
    $("img.info").click(fetchRelDetails);
 </script>

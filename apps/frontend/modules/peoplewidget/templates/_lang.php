@@ -33,6 +33,4 @@
 
 <br />
 <?php echo image_tag('add_green.png');?>
-<a title="<?php echo __('Add Language');?>" class="link_catalogue" href="<?php echo url_for('people/lang?ref_id='.$eid);?>"> 
-  <?php echo __('Add');?>
-</a>
+<a title="<?php echo __('Add Language');?>" class="link_catalogue" href="<?php echo url_for('people/lang?ref_id='.$eid);?>"><?php echo __('Add');?></a>

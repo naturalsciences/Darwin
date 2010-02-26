@@ -46,6 +46,4 @@
 
 <br />
 <?php echo image_tag('add_green.png');?>
-<a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('people/address?ref_id='.$eid);?>"> 
-  <?php echo __('Add');?>
-</a>
+<a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('people/address?ref_id='.$eid);?>"><?php echo __('Add');?></a>

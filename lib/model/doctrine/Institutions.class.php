@@ -20,7 +20,6 @@ class Institutions extends BaseInstitutions
   public static function getTypes()
   {
     return array(
-      1 => 'Contact',
       8 => 'Expert',
     );
   }

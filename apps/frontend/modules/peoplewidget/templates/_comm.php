@@ -39,5 +39,5 @@
 </table>
 
 <br />
-
+<?php echo image_tag('add_green.png');?>
 <a title="<?php echo __('Add Communication Means');?>" class="link_catalogue" href="<?php echo url_for('people/comm?ref_id='.$eid);?>"><?php echo __('Add');?></a>

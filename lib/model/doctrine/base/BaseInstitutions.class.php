@@ -78,7 +78,7 @@ abstract class BaseInstitutions extends sfDoctrineRecord
         $this->hasColumn('db_people_type', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => 1,
+             'default' => 0,
              ));
     }
 

@@ -9,7 +9,7 @@ class DarwinPgErrorParser
     '/Still Manager in some Collections/i' => '', // @TODO ??
     '/follow the rules of possible upper level attachement/i' => 'The modification Does not follow the rules of Upper levels attachements',
     '/Update of unit level break "possible_upper_levels" rule of direct children related/i' => 'The modification Does not follow the rules of Upper levels attachements',
-    '/Impossible to update children Update of parent_ref and/or level_ref of current unit aborted/i' => 'Impossible to impact children names',
+    '/Impossible to update children Update of parent_ref/i' => 'Impossible to impact children names',
     '/Author must be defined as author/i' => 'The author must be defined as such to be attached',
     '/Experts must be defined as expert/i' =>  'The expert must be defined as such to be attached',
     '/Maximum number of renamed item reach/i' => 'Maximum number of "current names" reach',

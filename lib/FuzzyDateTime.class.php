@@ -138,7 +138,7 @@ class FuzzyDateTime extends DateTime
     // Makes the replacement of empty parts by default values depending of it's a start or an end date/time
     foreach (array('year', 'month', 'day', 'hour', 'minute', 'second') as $key)
     {
-      if (!isset($dateTime[$key]) || empty($dateTime[$key]))
+      if (!isset($dateTime[$key]) || $dateTime[$key]==='' || $dateTime[$key] === null)
       {
         if ($start)
         {

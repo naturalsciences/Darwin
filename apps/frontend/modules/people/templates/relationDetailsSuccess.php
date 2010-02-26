@@ -1,5 +1,5 @@
 <?php foreach($relations as $relation):?>
-    <tr class="rid_<?php echo $relation->Parent->getId();?>">
+    <tr class="rid_<?php echo $relation->Parent->getId();?> detail_<?php echo $relation->Child->getId();?>">
     <td><?php echo str_repeat('&nbsp;&nbsp;&nbsp;',$level);?><?php echo image_tag('info.png',"title=info class='info lid_".($level+1)."'");?></td>
     <td><?php echo str_repeat('&nbsp;&nbsp;&nbsp;',$level);?><?php echo $relation->Child;?></td>
     <td><?php echo $relation->getRelationshipType();?></td>

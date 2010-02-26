@@ -1,35 +1,22 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(15, new lime_output_color());
+$t = new lime_test(7, new lime_output_color());
 
 $t->info('Get Possible types from array');
 $institution = new Institutions;
 $types = $institution->getTypes();
-$t->is(count($types), 2, 'There are "2" differents types');
-$t->is($types[1], 'Contact', 'First type is well "Contact"');
-$t->is($types[8], 'Expert', 'Last type is well "Expert"');
+$t->is(count($types), 1, 'There are "1" differents types');
+$t->is($types[8], 'Expert', 'the type "Expert"');
 $t->info('Test types for Institutions encoded');
 $institutions = Doctrine::getTable('Institutions')->findByIsPhysical(false);
 $dbTypes = $institutions[0]->getDbPeopleType();
-$t->is(count($dbTypes), 1, 'There is "1" type encoded for "'.$institutions[0]->getFormatedName().'"');
-$t->is($types[$dbTypes[0]], 'Contact', 'The DB people type of "'.$institutions[0]->getFormatedName().'" is well "Contact"');
-$dbTypes = $institutions[1]->getDbPeopleType();
-$t->is(count($dbTypes), 1, 'There is "1" type encoded for "'.$institutions[1]->getFormatedName().'"');
-$t->is($types[$dbTypes[0]], 'Contact', 'The DB people type of "'.$institutions[1]->getFormatedName().'" is well "Contact"');
-$t->info('Set the UGMM types to "Contact" and "Expert"');
-$institutions[1]->setDbPeopleType(array(1,8));
-$institutions[1]->save();
-$dbTypes = $institutions[1]->getDbPeopleType();
-$t->is(count($dbTypes), 2, 'There are "2" type encoded for "'.$institutions[1]->getFormatedName().'"');
-$t->is($types[$dbTypes[0]], 'Contact', 'The "first" DB people type of "'.$institutions[1]->getFormatedName().'" is well "Contact"');
-$t->is($types[$dbTypes[1]], 'Expert', 'The "second" DB people type of "'.$institutions[1]->getFormatedName().'" is well "Expert"');
-$t->info('Do the same for RBINS but with a number, not an array');
-$institutions[0]->setDbPeopleType(9);
+$t->is(count($dbTypes), 0, 'There is "1" type encoded for "'.$institutions[0]->getFormatedName().'"');
+
+$institutions[0]->setDbPeopleType(8);
 $institutions[0]->save();
 $dbTypes = $institutions[0]->getDbPeopleType();
-$t->is(count($dbTypes), 2, 'There are "2" type encoded for "'.$institutions[0]->getFormatedName().'"');
-$t->is($types[$dbTypes[0]], 'Contact', 'The "first" DB people type of "'.$institutions[0]->getFormatedName().'" is well "Contact"');
-$t->is($types[$dbTypes[1]], 'Expert', 'The "second" DB people type of "'.$institutions[0]->getFormatedName().'" is well "Expert"');
+$t->is(count($dbTypes), 1, 'There are "1" type encoded for "'.$institutions[0]->getFormatedName().'"');
+$t->is($types[$dbTypes[0]], 'Expert', 'The DB people type of "'.$institutions[0]->getFormatedName().'" is well "Expert"');
 $t->info('Give a wrong array of values for RBINS to see if it has been reset to 0 for type');
 $institutions[0]->setDbPeopleType(array(2,15));
 $institutions[0]->save();
