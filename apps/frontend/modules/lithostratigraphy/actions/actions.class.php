@@ -28,16 +28,17 @@ class lithostratigraphyActions extends DarwinActions
     try
     {
       $unit->delete();
+      $this->redirect('lithostratigraphy/index');
     }
-    catch(Doctrine_Connection_Pgsql_Exception $e)
+    catch(Doctrine_Exception $ne)
     {
-      $this->form = new LithostratigraphyForm($unit);
+      $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new InstitutionsForm($institution);
       $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
       $this->setTemplate('edit');
-      return ;
     }
-    $this->redirect('lithostratigraphy/index');
   }
 
   public function executeNew(sfWebRequest $request)
@@ -89,10 +90,9 @@ class lithostratigraphyActions extends DarwinActions
 	$form->save();
 	$this->redirect('lithostratigraphy/edit?id='.$form->getObject()->getId());
       }
-      catch(sfStopException $e)
-      { throw $e; }
-      catch(Exception $e)
+      catch(Doctrine_Exception $ne)
       {
+	$e = new DarwinPgErrorParser($ne);
 	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$form->getErrorSchema()->addError($error); 
       }

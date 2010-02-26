@@ -38,10 +38,11 @@ class catalogueActions extends DarwinActions
 	    $this->form = new CatalogueRelationshipsForm($this->form->getObject()); //Ugly refresh
 	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
+	  catch(Doctrine_Exception $ne)
 	  {
-            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-            $this->form->getErrorSchema()->addError($error); 
+	    $e = new DarwinPgErrorParser($ne);
+	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	    $form->getErrorSchema()->addError($error);
 	  }
 	}
     }
@@ -72,8 +73,9 @@ class catalogueActions extends DarwinActions
     try{
       $r->delete();
     }
-    catch(Exception $e)
+    catch(Doctrine_Exception $ne)
     {
+      $e = new DarwinPgErrorParser($ne);
       return $this->renderText($e->getMessage());
     }
     return $this->renderText('ok');

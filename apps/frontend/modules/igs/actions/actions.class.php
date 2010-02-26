@@ -74,9 +74,20 @@ class igsActions extends DarwinActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
-    $igs->delete();
-
-    $this->redirect('igs/index');
+    try
+    {
+      $igs->delete();
+      $this->redirect('igs/index');
+    }
+    catch(Doctrine_Exception $ne)
+    {
+      $e = new DarwinPgErrorParser($ne);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new IgsForm($igs);
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
+    }
   }
   public function executeSearch(sfWebRequest $request)
   {
@@ -172,9 +183,17 @@ class igsActions extends DarwinActions
     $form->bind($request->getParameter($form->getName()));
     if ($form->isValid())
     {
-      $igs = $form->save();
-
-      $this->redirect('igs/edit?id='.$igs->getId());
+      try
+      {
+	$igs = $form->save();
+	$this->redirect('igs/edit?id='.$igs->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$form->getErrorSchema()->addError($error); 
+      }
     }
   }
 }

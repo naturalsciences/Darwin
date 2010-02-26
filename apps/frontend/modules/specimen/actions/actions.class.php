@@ -62,10 +62,11 @@ class specimenActions extends DarwinActions
         $specimen = $form->save();
         $this->redirect('specimen/edit?id='.$specimen->getId());
       }
-      catch(Exception $e)
+      catch(Doctrine_Exception $ne)
       {
-        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-        $form->getErrorSchema()->addError($error); 
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$form->getErrorSchema()->addError($error); 
       }
     }
   }

@@ -104,14 +104,15 @@ class institutionActions extends DarwinActions
         $institution->delete();
 	$this->redirect('institution/index');
     }
-    catch(Doctrine_Exception $e)
+    catch(Doctrine_Exception $ne)
     {
-        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $e = new DarwinPgErrorParser($ne);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new InstitutionsForm($institution);
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
     }
-    $this->form = new InstitutionsForm($institution);
-    $this->form->getErrorSchema()->addError($error); 
-    $this->loadWidgets();
-    $this->setTemplate('edit');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -120,12 +121,13 @@ class institutionActions extends DarwinActions
     if ($form->isValid())
     {
       try{
-        $institution = $form->save();
-	$this->redirect('institution/edit?id='.$institution->getId());
+        $item = $form->save();
+	$this->redirect('institution/edit?id='.$item->getId());
       }
-      catch(Doctrine_Exception $e)
+      catch(Doctrine_Exception $ne)
       {
-        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
         $form->getErrorSchema()->addError($error); 
       }
     }

@@ -106,9 +106,20 @@ class expeditionActions extends DarwinActions
     // Forward to a 404 page if the expedition to be deleted has not been found
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->find(array($request->getParameter('id'))), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Effectively triggers the delete method of the expedition table
-    $expeditions->delete();
-    // Redirect to the expedition index page
-    $this->redirect('expedition/index');
+    try
+    {
+      $expeditions->delete();
+      $this->redirect('expedition/index');
+    }
+    catch(Doctrine_Exception $ne)
+    {
+      $e = new DarwinPgErrorParser($ne);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new ExpeditionsForm($expeditions);
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
+    }
   }
 
   /**
@@ -173,9 +184,17 @@ class expeditionActions extends DarwinActions
     $form->bind($request->getParameter($form->getName()));
     if ($form->isValid())
     {
-      $expeditions = $form->save();
-
-      $this->redirect('expedition/edit?id='.$expeditions->getId());
+      try
+      {
+	$item = $form->save();
+	$this->redirect('expedition/edit?id='.$item->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$form->getErrorSchema()->addError($error); 
+      }
     }
   }
 

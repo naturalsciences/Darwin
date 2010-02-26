@@ -28,16 +28,17 @@ class mineralogyActions extends DarwinActions
     try
     {
       $unit->delete();
+      $this->redirect('mineralogy/index');
     }
-    catch(Doctrine_Connection_Pgsql_Exception $e)
+    catch(Doctrine_Exception $ne)
     {
-      $this->form = new MineralogyForm($unit);
+      $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new MineralogyForm($unit);
       $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
       $this->setTemplate('edit');
-      return ;
     }
-    $this->redirect('mineralogy/index');
   }
 
   public function executeNew(sfWebRequest $request)
@@ -91,10 +92,9 @@ class mineralogyActions extends DarwinActions
 	$form->save();
 	$this->redirect('mineralogy/edit?id='.$form->getObject()->getId());
       }
-      catch(sfStopException $e)
-      { throw $e; }
-      catch(Exception $e)
+      catch(Doctrine_Exception $ne)
       {
+	$e = new DarwinPgErrorParser($ne);
 	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$form->getErrorSchema()->addError($error); 
       }

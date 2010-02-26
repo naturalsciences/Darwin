@@ -28,16 +28,17 @@ class taxonomyActions extends DarwinActions
     try
     {
       $taxa->delete();
+      $this->redirect('taxonomy/index');
     }
-    catch(Doctrine_Connection_Pgsql_Exception $e)
+    catch(Doctrine_Exception $ne)
     {
-      $this->form = new TaxonomyForm($taxa);
+      $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new TaxonomyForm($taxa);
       $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
       $this->setTemplate('edit');
-      return ;
     }
-    $this->redirect('taxonomy/index');
   }
 
   public function executeNew(sfWebRequest $request)
@@ -94,8 +95,9 @@ class taxonomyActions extends DarwinActions
 
 	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
       }
-      catch(Doctrine_Exception $e)
+      catch(Doctrine_Exception $ne)
       {
+	$e = new DarwinPgErrorParser($ne);
 	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$form->getErrorSchema()->addError($error); 
       }

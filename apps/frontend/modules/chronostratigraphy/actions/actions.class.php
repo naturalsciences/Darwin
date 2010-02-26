@@ -29,11 +29,13 @@ class chronostratigraphyActions extends DarwinActions
     {
       $unit->delete();
     }
-    catch(Doctrine_Connection_Pgsql_Exception $e)
+    catch(Doctrine_Exception $ne)
     {
-      $this->form = new ChronostratigraphyForm($unit);
+      $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new ChronostratigraphyForm($unit);
       $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
       $this->setTemplate('edit');
       return ;
     }
@@ -91,10 +93,9 @@ class chronostratigraphyActions extends DarwinActions
 	$form->save();
 	$this->redirect('chronostratigraphy/edit?id='.$form->getObject()->getId());
       }
-      catch(sfStopException $e)
-      { throw $e; }
-      catch(Exception $e)
+      catch(Doctrine_Exception $ne)
       {
+	$e = new DarwinPgErrorParser($ne);
 	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$form->getErrorSchema()->addError($error); 
       }

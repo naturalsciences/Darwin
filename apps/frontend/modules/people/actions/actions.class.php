@@ -114,14 +114,15 @@ class peopleActions extends DarwinActions
         $people->delete();
 	$this->redirect('people/index');
     }
-    catch(Doctrine_Exception $e)
+    catch(Doctrine_Exception $ne)
     {
+	$e = new DarwinPgErrorParser($ne);
         $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$this->form = new PeopleForm($people);
+	$this->form->getErrorSchema()->addError($error); 
+	$this->loadWidgets();
+	$this->setTemplate('edit');
     }
-    $this->form = new PeopleForm($people);
-    $this->form->getErrorSchema()->addError($error); 
-    $this->loadWidgets();
-    $this->setTemplate('edit');
   }
 
 
@@ -166,12 +167,13 @@ class peopleActions extends DarwinActions
 	{
 	  try{
 	    $this->form->save();
+	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
+	  catch(Doctrine_Exception $ne)
 	  {
+	    $e = new DarwinPgErrorParser($ne);
 	    return $this->renderText($e->getMessage());
 	  }
-	  return $this->renderText('ok');
 	}
     }
   }
@@ -202,12 +204,13 @@ class peopleActions extends DarwinActions
 	{
 	  try{
 	    $this->form->save();
+	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
+	  catch(Doctrine_Exception $ne)
 	  {
+	    $e = new DarwinPgErrorParser($ne);
 	    return $this->renderText($e->getMessage());
 	  }
-	  return $this->renderText('ok');
 	}
     }
   }
@@ -238,10 +241,10 @@ class peopleActions extends DarwinActions
 	    $this->form->save();
 	    return $this->renderText('ok');
 	  }
-	  catch(Doctrine_Exception $e)
+	  catch(Doctrine_Exception $ne)
 	  {
-	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	    $this->form->getErrorSchema()->addError($error); 
+	    $e = new DarwinPgErrorParser($ne);
+	    return $this->renderText($e->getMessage());
 	  }
 	}
     }
@@ -269,10 +272,10 @@ class peopleActions extends DarwinActions
 	    $this->form->save();
 	    return $this->renderText('ok');
 	  }
-	  catch(Doctrine_Exception $e)
+	  catch(Doctrine_Exception $ne)
 	  {
-	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	    $this->form->getErrorSchema()->addError($error); 
+	    $e = new DarwinPgErrorParser($ne);
+	    return $this->renderText($e->getMessage());
 	  }
 	}
     }
