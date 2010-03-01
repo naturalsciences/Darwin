@@ -10,14 +10,16 @@ class widgetFormJQueryDLookup extends sfWidgetFormInputText
         $this->addOption('method', '__toString');
         $this->addOption('nullable', false);
         $this->addOption('is_hidden', false);
+        $this->addOption('fieldsHidders', array());
     }
 
     public function render($name, $value = null, $attributes = array(), $errors = array())
     {
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $obj_name = $this->getName($value);
+        $obj_id = $this->generateId($name)."_name";
         $input = parent::render($name, $value, $attributes, $errors);
-        $attributes = array_merge($attributes, array('id' => $this->generateId($name)."_name",'class' => 'large_size'));
+        $attributes = array_merge($attributes, array('id' => $obj_id,'class' => 'large_size'));
         $input .= parent::render('', $obj_name, $attributes, $errors);
 
         if($this->getOption('nullable'))
@@ -31,7 +33,40 @@ class widgetFormJQueryDLookup extends sfWidgetFormInputText
             $options['class'] .= ' hidden';
           $input .= $this->renderTag('img',$options);
         }
-        return $input;
+
+        $script_header = '<script type="text/javascript">';
+        $script_footer = '</script>';
+
+        $script_formated = sprintf('jQuery("#%1$s").focus(function() 
+                                    {
+                                      if (jQuery("div.search_box:hidden").length)
+                                      {
+                                        jQuery("div.search_box, ul.tab_choice").slideDown();
+                                      }
+                                      jQuery("div.search_box table#search_and_choose tbody td:first input:first").focus();
+                                    });
+                                   ',
+                                   $obj_id
+                                  );
+
+        foreach ($this->getOption('fieldsHidders') as $key=>$value)
+        {
+          $script_formated .= sprintf('jQuery("#%1$s").focus(function() 
+                                       {
+                                         if (jQuery("div.search_box:visible").length)
+                                         {
+                                           jQuery("div.search_box, ul.tab_choice").slideUp();
+                                         }
+                                       });
+                                      ',
+                                       $value
+                                     );
+        }        
+
+        return $input .
+               $script_header .
+               $script_formated .
+               $script_footer;
     }
 
     public function getJavaScripts()

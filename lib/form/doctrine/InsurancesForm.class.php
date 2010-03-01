@@ -34,16 +34,20 @@ class InsurancesForm extends BaseInsurancesForm
     $this->widgetSchema['insurer_ref'] = new widgetFormJQueryDLookup(
       array(
 	'model' => 'People',
-	'method' => 'getFamilyName',
+	'method' => 'getFormatedName',
 	'nullable' => true,
+        'fieldsHidders' => array('insurances_insurance_value', 
+                                 'insurances_insurance_currency', 
+                                 'insurances_insurance_currency_input', 
+                                 'insurances_insurance_year',),
       ),
       array('class' => 'hidden',)
     );
 
-    $this->widgetSchema->setLabels(array('insurance_value' => $this->getI18N()->__('Value'). ':' ,
-                                         'insurance_currency' => $this->getI18N()->__('Currency'). ':',
-                                         'insurance_year' => $this->getI18N()->__('Reference year'). ':',
-                                         'insurer_ref' => $this->getI18N()->__('Insurer'). ':'
+    $this->widgetSchema->setLabels(array('insurance_value' => 'Value:' ,
+                                         'insurance_currency' => 'Currency:',
+                                         'insurance_year' => 'Reference year:',
+                                         'insurer_ref' => 'Insurer:'
                                         )
                                   );
     $this->validatorSchema['insurance_year'] = new sfValidatorChoice(array('choices' => $yearsKeyVal));

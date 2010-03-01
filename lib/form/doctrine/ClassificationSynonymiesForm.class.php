@@ -19,13 +19,16 @@ class ClassificationSynonymiesForm extends BaseClassificationSynonymiesForm
 	'expanded' => false)
     );
 
-    $this->widgetSchema['record_id'] = new widgetFormButtonRef(array(
-       'model' => DarwinTable::getModelForTable($this->options['table']),
-       'link_url' => 'catalogue/choose',
-       'method' => 'getName',
-       'box_title' => '',
-       'nullable' => false,
-       'button_is_hidden' => true));
+    $this->widgetSchema['record_id'] = new widgetFormJQueryDLookup(
+      array(
+	'model' => DarwinTable::getModelForTable($this->options['table']),
+	'method' => 'getName',
+	'nullable' => false,
+        'fieldsHidders' => array('classification_synonymies_group_name',),
+      ),
+      array('class' => 'hidden',)
+    );
+
     $this->widgetSchema['merge'] = new sfWidgetFormInputCheckbox();
 
     $this->validatorSchema['record_id'] = new sfValidatorInteger(array('required' => true));

@@ -42,7 +42,7 @@ class catalogueActions extends DarwinActions
 	  {
 	    $e = new DarwinPgErrorParser($ne);
 	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	    $form->getErrorSchema()->addError($error);
+	    $this->form->getErrorSchema()->addError($error);
 	  }
 	}
     }

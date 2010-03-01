@@ -14,15 +14,15 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    
 
-    $this->widgetSchema['people_ref'] = new widgetFormButtonRef(
+    $this->widgetSchema['people_ref'] = new widgetFormJQueryDLookup(
       array(
 	'model' => 'People',
 	'method' => 'getFormatedName',
-	'link_url' => 'people/choose',
-	'box_title' => $this->getI18N()->__('Choose People'),
 	'nullable' => false,
-	'button_is_hidden' => true,
-      )
+        'fieldsHidders' => array('catalogue_people_people_type', 
+                                 'catalogue_people_people_sub_type',),
+      ),
+      array('class' => 'hidden',)
     );
 
     $this->widgetSchema['people_type'] = new sfWidgetFormChoice(array(
@@ -45,6 +45,13 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
     else
       $this->widgetSchema['people_sub_type']->setDefault('General');
     $this->widgetSchema['people_sub_type']->setOption('forced_choices', Doctrine::getTable('CataloguePeople')->getDistinctSubType($this->getObject()->getPeopleType()) );
+
+    $this->widgetSchema->setLabels(array('people_type' => 'Type:' ,
+                                         'people_sub_type' => 'Sub-type:',
+                                         'people_ref' => 'Associated:',
+                                        )
+                                  );
+
   }
   
   public function forceSubType()

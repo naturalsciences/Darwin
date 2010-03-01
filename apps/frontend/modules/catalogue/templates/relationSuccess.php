@@ -39,14 +39,17 @@
    $(document).ready(function () {
 
     $('.result_choose').live('click',function () {
-	el = $(this).closest('tr');
-	$("#catalogue_relationships_record_id_2").val(getIdInClasses(el));
-	$("#catalogue_relationships_record_id_2_name").text(el.find('.item_name').text()).show();
+       el = $(this).closest('tr');
+       $("#catalogue_relationships_record_id_2").val(getIdInClasses(el));
+       $("#catalogue_relationships_record_id_2_name").val(el.find('.item_name').text()).show();
+       console.log($("#catalogue_relationships_record_id_2").val());
+       $('.reference_clear').show();
+       $('div.search_box, ul.tab_choice').slideUp();
     });
 });
 </script>
 
-<div class="search_box show">
+<div class="search_box">
   <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm,'is_choose'=>true)) ?>
 </div>
 

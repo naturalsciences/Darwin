@@ -451,7 +451,7 @@ MyPreferences:
     u1ws17:
         User: u1
         col_num: 1
-        category: catalogue_expedition_widget
+        category: catalogue_expeditions_widget
         group_name: comment
         order_by: 1
         opened: false

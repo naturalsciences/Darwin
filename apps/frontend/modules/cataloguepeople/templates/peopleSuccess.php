@@ -78,10 +78,11 @@ function toggleChangingChoice()
     toggleChangingChoice();
 
     $('.result_choose').live('click',function () {
-	el = $(this).closest('tr');
-	$("#catalogue_people_people_ref").val(getIdInClasses(el));
-	$("#catalogue_people_people_ref_name").text(el.find('.item_name').text()).show();
-	console.log(el.find('.item_name').text());
+       el = $(this).closest('tr');
+       $("#catalogue_people_people_ref").val(getIdInClasses(el));
+       $("#catalogue_people_people_ref_name").val(el.find('.item_name').text()).show();
+       $('.reference_clear').show();
+       $('div.search_box, ul.tab_choice').slideUp();
     });
 
     $('#catalogue_people_people_type').change(function() {
@@ -95,7 +96,7 @@ function toggleChangingChoice()
     {
       $('.both_search_institutions').removeClass('activated');
 
-      $(".search_box").html('<?php echo __("Searching");?>');
+      $(".search_box").html('<img src="/images/loader.gif" />');
 
       people_search_url = '<?php echo url_for('people/choose?with_js=0&is_choose=1');?>';
       $('.both_search_people').addClass('activated');
@@ -113,7 +114,7 @@ function toggleChangingChoice()
       if( $(this).hasClass('disabled')) return false;
       $('.both_search_people').removeClass('activated');
 
-      $(".search_box").html('<?php echo __("Searching");?>');
+      $(".search_box").html('<img src="/images/loader.gif" />');
 
       $('.both_search_institutions').addClass('activated');
 
@@ -132,11 +133,11 @@ function toggleChangingChoice()
 </script>
 
 
-<ul class="tab_choice">
+<ul class="tab_choice hidden">
   <li class="both_search_people"><?php echo __('People');?></li>
   <li class="both_search_institutions"><?php echo __('Institution');?></li>
 </ul>
-<div class="search_box show">
+<div class="search_box">
   <?php echo __("Choose a type");?>
 </div>
 

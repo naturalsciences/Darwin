@@ -19,13 +19,23 @@ class PeopleRelationshipsForm extends BasePeopleRelationshipsForm
     
     $this->widgetSchema['person_user_role'] = new sfWidgetFormInput();
     $this->widgetSchema['person_2_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['person_1_ref'] = new widgetFormButtonRef(array(
-       'model' => 'Institutions',
-       'link_url' => 'instituion/choose',
-       'method' => 'getFamilyName',
-       'box_title' => '',
-       'button_is_hidden' => true,
-       'nullable' => false,));
+    $this->widgetSchema['person_1_ref'] = new widgetFormJQueryDLookup(
+      array(
+	'model' => 'Institutions',
+	'method' => 'getFamilyName',
+	'nullable' => false,
+        'fieldsHidders' => array('people_relationships_relationship_type', 
+                                 'people_relationships_person_user_role', 
+                                 'people_relationships_activity_date_from_day',
+                                 'people_relationships_activity_date_from_day',
+                                 'people_relationships_activity_date_from_month',
+                                 'people_relationships_activity_date_to_year',
+                                 'people_relationships_activity_date_to_month',
+                                 'people_relationships_activity_date_to_year',
+                                 ),
+      ),
+      array('class' => 'hidden',)
+    );
     $this->widgetSchema['relationship_type'] = new sfWidgetFormChoice(array('choices' => PeopleRelationships::$possible_types));
     $this->Postvalidators = array();
     $this->initiateActivityItems();

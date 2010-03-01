@@ -15,14 +15,6 @@
     </td>
   </tr>
   <tr>
-    <th><?php echo $form['order_by']->renderLabel();?></th>
-    <td>
-      <?php echo $form['order_by']->renderError(); ?>
-      <?php echo $form['order_by'];?>
-    </td>
-  </tr>
-
-  <tr>
     <th><?php echo $form['record_id']->renderLabel('Item');?></th>
     <td>
       <?php echo $form['record_id']->renderError(); ?>
@@ -87,8 +79,10 @@ $(document).ready(function ()
 {
     $('.result_choose').live('click',function () {
 	el = $(this).closest('tr');
-	$("#classification_synonymies_record_id").val(getIdInClasses(el));
-	$("#classification_synonymies_record_id_name").text(el.find('span.item_name').text()).show();
+        $("#classification_synonymies_record_id").val(getIdInClasses(el));
+        $("#classification_synonymies_record_id_name").val(el.find('.item_name').text()).show();
+        $('.reference_clear').show();
+        $('div.search_box').slideUp();
 	checkGroup();
     });
 
@@ -97,7 +91,7 @@ $(document).ready(function ()
 });
 </script>
 
-<div class="search_box show">
+<div class="search_box">
   <?php include_partial('catalogue/chooseItem', array('searchForm' => $searchForm, 'is_choose' => true)) ?>
 </div>
 </div>

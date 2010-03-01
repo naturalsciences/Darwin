@@ -66,15 +66,16 @@
 <script  type="text/javascript">
   $(document).ready(function () {
     $('.result_choose').live('click',function () {
-	el = $(this).closest('tr');
-	$("#people_relationships_person_1_ref").val(getIdInClasses(el));
-	/*console.log(el.find('.item_name'));*/
-	$("#people_relationships_person_1_ref_name").text(el.find('.item_name').text()).show();
+       el = $(this).closest('tr');
+       $("#people_relationships_person_1_ref").val(getIdInClasses(el));
+       $("#people_relationships_person_1_ref_name").val(el.find('.item_name').text()).show();
+       $('.reference_clear').show();
+       $('div.search_box, ul.tab_choice').slideUp();
     });
 });
 </script>
 
-<div class="search_box show">
+<div class="search_box">
   <?php include_partial('institution/searchForm', array('form' => new InstitutionsFormFilter(),'is_choose'=>true)) ?>
 </div>
 

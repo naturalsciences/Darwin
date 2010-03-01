@@ -31,4 +31,4 @@ if(!isset($columns)) $columns = 1;
   <?php endif;?>
 
 </ul>
-<div class="no_more_wigets<?php if($has_one_visible) echo ' hidden';?>"><?php echo __("There is no widgets here. Pick one from the widgets collection.");?></div>
+<div class="no_more_wigets<?php if($has_one_visible) echo ' hidden';?>"><?php echo __("There are no widgets here. Pick one from the widgets collection.");?></div>

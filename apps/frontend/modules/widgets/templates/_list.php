@@ -21,7 +21,7 @@ var reload_url='<?php echo url_for('widgets/reloadContent?category='.$category.$
             </div>
   
 	  <?php endforeach;?>
-	<div class="no_more<?php if($has_one_visible) echo ' hidden';?>"><?php echo __("There is no more widgets to add");?></div>
+	<div class="no_more<?php if($has_one_visible) echo ' hidden';?>"><?php echo __("There are no more widgets to add");?></div>
         <br />
 	</div>	
 	<div class="widget_collection_top">

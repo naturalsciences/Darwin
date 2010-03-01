@@ -66,11 +66,14 @@
        el = $(this).closest('tr');
        $("#insurances_insurer_ref").val(getIdInClasses(el));
        $("#insurances_insurer_ref_name").val(el.find('.item_name').text()).show();
+       $('.reference_clear').show();
+       $('div.search_box').slideUp();
      });
    });
 </script>
-        <div class="search_box show">
-          <?php include_partial('institution/searchForm', array('form' => new InstitutionsFormFilter(),'is_choose'=>true, 'hidden'=>true)) ?>
-        </div>
+  
+  <div class="search_box">
+    <?php include_partial('institution/searchForm', array('form' => new InstitutionsFormFilter(),'is_choose'=>true)) ?>
+  </div>
 
 </div>
