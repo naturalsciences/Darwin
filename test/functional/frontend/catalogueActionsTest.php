@@ -41,7 +41,7 @@ $browser->
     isStatusCode(200)->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Renamed in')->
     checkElement('form')->
-    checkElement('#catalogue_relationships_record_id_2_name','/Falco Peregrinus Tunstall, 1771/')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus Tunstall, 1771"]')->
   end();
 
 $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
@@ -52,7 +52,7 @@ $browser->
     isStatusCode(200)->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#catalogue_relationships_record_id_2_name','/Falco Peregrinus recombinus/')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus recombinus"]')->
   end()->
 
   info('SaveRelation')->
@@ -62,7 +62,7 @@ $browser->
     isStatusCode(200)->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#catalogue_relationships_record_id_2_name','')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"][value=""]')->
   end()->
   
   click('Save', 
@@ -84,7 +84,8 @@ $browser->
     isStatusCode(200)->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
-    checkElement('#catalogue_relationships_record_id_2_name','/Falco Peregrinus/')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"]')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus recombinus"]')->
   end()->
 
   info('DeleteRelated')->
