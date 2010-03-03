@@ -29,7 +29,6 @@
  GRANT select, insert, update, delete on darwin2.properties_values to cebmpad;
  GRANT select, insert, update, delete on darwin2.tag_groups to cebmpad;
  GRANT select, insert, update, delete on darwin2.vernacular_names to cebmpad;
- GRANT select, insert, update, delete on darwin2.gtu_tags to cebmpad;
  GRANT select, insert, update, delete on darwin2.catalogue_properties to cebmpad;
  GRANT select, insert, update, delete on darwin2.identifications to cebmpad;
  GRANT select, insert, update, delete on darwin2.class_vernacular_names to cebmpad;
