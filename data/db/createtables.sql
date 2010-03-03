@@ -201,7 +201,12 @@ comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the da
 comment on column gtu.gtu_to_date is 'composed to date of the GTU';
 comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
 
-
+create table tags
+      (
+        gtu_ref integer not null,
+        tag_indexed varchar not null,
+        constraint fk_tag_groups_gtu foreign key (gtu_ref) references gtu(id) on delete cascade
+      );
 create sequence tag_groups_id_seq;
 
 create table tag_groups
@@ -214,10 +219,9 @@ create table tag_groups
         sub_group_name_indexed varchar not null,
         color varchar not null default '#FFFFFF',
         tag_value varchar not null,
-        tag_value_indexed varchar not null,
         constraint fk_tag_groups_gtu foreign key (gtu_ref) references gtu(id) on delete cascade,
         constraint pk_tag_groups primary key (id),
-        constraint unq_tag_groups unique (tag_value_indexed, group_name_indexed, sub_group_name_indexed)
+        constraint unq_tag_groups unique (tag_value, group_name_indexed, sub_group_name_indexed)
        );
 comment on table tag_groups is 'List of grouped tags';
 comment on column tag_groups.id is 'Unique identifier of a grouped tag';
@@ -227,8 +231,7 @@ comment on column tag_groups.group_name_indexed is 'Indexed form of a group name
 comment on column tag_groups.group_name is 'Sub-Group name under which the tag is grouped: Country, River, Mountain,...';
 comment on column tag_groups.group_name_indexed is 'Indexed form of a sub-group name';
 comment on column tag_groups.color is 'Color associated to the group concerned';
-comment on column tag_groups.tag_value is 'Tag';
-comment on column tag_groups.tag_value_indexed is 'Indexed form of tag';
+comment on column tag_groups.tag_value is 'Ensemble of Tags';
 
 create sequence catalogue_properties_id_seq;
 

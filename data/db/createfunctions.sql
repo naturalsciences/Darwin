@@ -2344,7 +2344,6 @@ BEGIN
 	ELSIF TG_TABLE_NAME = 'tag_groups' THEN
 		NEW.group_name_indexed := fullToIndex(NEW.group_name);
 		NEW.sub_group_name_indexed := fullToIndex(NEW.sub_group_name);
-		NEW.tag_value_indexed := fullToIndex(NEW.tag_value);
 	ELSIF TG_TABLE_NAME = 'taxonomy' THEN
 		NEW.name_indexed := to_tsvector('simple', NEW.name);
 		NEW.name_order_by := fullToIndex(NEW.name);
