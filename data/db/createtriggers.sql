@@ -155,10 +155,6 @@ CREATE TRIGGER trg_cpy_fullToIndex_taggroups BEFORE INSERT OR UPDATE
 	ON tag_groups FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();
 
-CREATE TRIGGER trg_cpy_fullToIndex_tags BEFORE INSERT OR UPDATE
-	ON tags FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_fullToIndex();
-
 CREATE TRIGGER trg_cpy_fullToIndex_taxa BEFORE INSERT OR UPDATE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_fullToIndex();

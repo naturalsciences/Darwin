@@ -72,12 +72,9 @@ INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (1,1,'holotype'
 INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (1, 1, 'head');
 
 
-INSERT INTO tags (id, label) VALUES (1,'La ''mèr'' Nwàre') ;
-SELECT ok( 'lamernware' = (SELECT label_indexed FROM tags WHERE id=1),'FulltoIndex on tags');
-
-INSERT INTO tag_groups (id, tag_ref,group_name,sub_group_name) VALUES (1, 1, 'Rév#ers','');
+INSERT INTO tag_groups (id, tag_ref,group_name,sub_group_name,tag_value) VALUES (1, 1, 'Rév#ers','','La ''mèr'' Nwàre');
 SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'FulltoIndex on tags_groups');
-
+SELECT ok( 'lamernware' = (SELECT tag_value FROM tag_groups WHERE id=1),'FulltoIndex on tags');
 
 INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 SELECT ok( to_tsvector('simple', 'Méàleis Gùbularis&') = (SELECT name_indexed FROM taxonomy WHERE id=1),'FulltoIndex on taxonomy name');

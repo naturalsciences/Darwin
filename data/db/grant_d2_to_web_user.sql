@@ -30,7 +30,6 @@
  GRANT select, insert, update, delete on darwin2.tag_groups to cebmpad;
  GRANT select, insert, update, delete on darwin2.vernacular_names to cebmpad;
  GRANT select, insert, update, delete on darwin2.gtu_tags to cebmpad;
- GRANT select, insert, update, delete on darwin2.tags to cebmpad;
  GRANT select, insert, update, delete on darwin2.catalogue_properties to cebmpad;
  GRANT select, insert, update, delete on darwin2.identifications to cebmpad;
  GRANT select, insert, update, delete on darwin2.class_vernacular_names to cebmpad;
@@ -84,7 +83,6 @@
  GRANT USAGE ON darwin2.catalogue_relationships_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.catalogue_people_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.catalogue_levels_id_seq TO cebmpad;
- GRANT USAGE ON darwin2.tags_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.comments_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.tag_groups_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.gtu_id_seq TO cebmpad;

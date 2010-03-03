@@ -13,7 +13,6 @@ DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimedia ON multimedia CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_codes ON codes CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimediakeywords ON multimedia_keywords CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taggroups ON tag_groups CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_tags ON tags CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxonomy CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_classvernacularnames ON class_vernacular_names CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_vernacularnames ON vernacular_names CASCADE;

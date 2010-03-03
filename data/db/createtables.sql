@@ -176,21 +176,6 @@ comment on column comments.comment is 'Comment';
 comment on column comments.comment_ts is 'tsvector form of comment field';
 comment on column comments.comment_language_full_text is 'Corresponding language to the language/country reference recognized by full text search to_tsvector function';
 
-create sequence tags_id_seq;
-
-create table tags
-       (
-        id integer not null default nextval('tags_id_seq'),
-        label varchar not null,
-        label_indexed varchar not null,
-        constraint pk_tags primary key (id),
-        constraint unq_tags_label unique (label_indexed)
-       );
-comment on table tags is 'List of all tags introduced to describe GTUs';
-comment on column tags.id is 'Unique identifier of a tag';
-comment on column tags.label is 'Tag';
-comment on column tags.label_indexed is 'Indexed form of tag';
-
 create sequence tag_groups_id_seq;
 
 create table tag_groups
@@ -202,9 +187,10 @@ create table tag_groups
         sub_group_name varchar not null,
         sub_group_name_indexed varchar not null,
         color varchar not null default '#FFFFFF',
+        tag_value varchar not null,
+        tag_value_indexed varchar not null,
         constraint pk_tag_groups primary key (id),
-        constraint fk_tag_groups_tags foreign key (tag_ref) references tags(id) on delete cascade,
-        constraint unq_tag_groups unique (tag_ref, group_name_indexed, sub_group_name_indexed)
+        constraint unq_tag_groups unique (tag_value_indexed, group_name_indexed, sub_group_name_indexed)
        );
 comment on table tag_groups is 'List of grouped tags';
 comment on column tag_groups.id is 'Unique identifier of a grouped tag';
@@ -214,6 +200,9 @@ comment on column tag_groups.group_name_indexed is 'Indexed form of a group name
 comment on column tag_groups.group_name is 'Sub-Group name under which the tag is grouped: Country, River, Mountain,...';
 comment on column tag_groups.group_name_indexed is 'Indexed form of a sub-group name';
 comment on column tag_groups.color is 'Color associated to the group concerned';
+comment on column tag_groups.tag_value is 'Tag';
+comment on column tag_groups.tag_value_indexed is 'Indexed form of tag';
+
 
 create sequence gtu_id_seq;
 
