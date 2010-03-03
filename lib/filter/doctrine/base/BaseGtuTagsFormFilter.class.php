@@ -13,13 +13,9 @@ abstract class BaseGtuTagsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'tag_group_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TagGroups'), 'add_empty' => true)),
-      'gtu_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'tag_group_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TagGroups'), 'column' => 'id')),
-      'gtu_ref'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Gtu'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('gtu_tags_filters[%s]');
@@ -39,9 +35,8 @@ abstract class BaseGtuTagsFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'            => 'Number',
-      'tag_group_ref' => 'ForeignKey',
-      'gtu_ref'       => 'ForeignKey',
+      'tag_group_ref' => 'Number',
+      'gtu_ref'       => 'Number',
     );
   }
 }

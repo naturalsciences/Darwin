@@ -11,8 +11,9 @@
  * @property string $group_name_indexed
  * @property string $sub_group_name
  * @property string $sub_group_name_indexed
- * @property string $color
- * @property Tags $Tags
+ * @property string $group_color
+ * @property string $tag_value
+ * @property string $tag_value_indexed
  * @property Doctrine_Collection $GtuTags
  * 
  * @method integer             getId()                     Returns the current record's "id" value
@@ -21,8 +22,9 @@
  * @method string              getGroupNameIndexed()       Returns the current record's "group_name_indexed" value
  * @method string              getSubGroupName()           Returns the current record's "sub_group_name" value
  * @method string              getSubGroupNameIndexed()    Returns the current record's "sub_group_name_indexed" value
- * @method string              getColor()                  Returns the current record's "color" value
- * @method Tags                getTags()                   Returns the current record's "Tags" value
+ * @method string              getGroupColor()             Returns the current record's "group_color" value
+ * @method string              getTagValue()               Returns the current record's "tag_value" value
+ * @method string              getTagValueIndexed()        Returns the current record's "tag_value_indexed" value
  * @method Doctrine_Collection getGtuTags()                Returns the current record's "GtuTags" collection
  * @method TagGroups           setId()                     Sets the current record's "id" value
  * @method TagGroups           setTagRef()                 Sets the current record's "tag_ref" value
@@ -30,8 +32,9 @@
  * @method TagGroups           setGroupNameIndexed()       Sets the current record's "group_name_indexed" value
  * @method TagGroups           setSubGroupName()           Sets the current record's "sub_group_name" value
  * @method TagGroups           setSubGroupNameIndexed()    Sets the current record's "sub_group_name_indexed" value
- * @method TagGroups           setColor()                  Sets the current record's "color" value
- * @method TagGroups           setTags()                   Sets the current record's "Tags" value
+ * @method TagGroups           setGroupColor()             Sets the current record's "group_color" value
+ * @method TagGroups           setTagValue()               Sets the current record's "tag_value" value
+ * @method TagGroups           setTagValueIndexed()        Sets the current record's "tag_value_indexed" value
  * @method TagGroups           setGtuTags()                Sets the current record's "GtuTags" collection
  * 
  * @package    darwin
@@ -67,19 +70,23 @@ abstract class BaseTagGroups extends sfDoctrineRecord
         $this->hasColumn('sub_group_name_indexed', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('color', 'string', null, array(
+        $this->hasColumn('group_color', 'string', null, array(
              'type' => 'string',
              'default' => '#FFFFFF',
+             ));
+        $this->hasColumn('tag_value', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
+        $this->hasColumn('tag_value_indexed', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Tags', array(
-             'local' => 'tag_ref',
-             'foreign' => 'id'));
-
         $this->hasMany('GtuTags', array(
              'local' => 'id',
              'foreign' => 'tag_group_ref'));

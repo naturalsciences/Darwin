@@ -89,12 +89,6 @@ Comments:
         comment_ts: { type: string}
         comment_language_full_text: { type: string}
 
-Tags:
-    columns:
-        id: { type: integer, primary: true, autoincrement: true }
-        label: { type: string, notnull: true}
-        label_indexed: { type: string, notnull: true}
-
 TagGroups:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
@@ -103,11 +97,10 @@ TagGroups:
         group_name_indexed: { type: string }
         sub_group_name:  { type: string, notnull: true }
         sub_group_name_indexed: {type: string}
-        color: {type: string, default: '#FFFFFF' }
-    relations:
-        Tags:
-            local: tag_ref
-            foreign: id
+        group_color: {type: string, default: '#FFFFFF' }
+        tag_value: { type: string, notnull: true}
+        tag_value_indexed: { type: string, notnull: true}
+
 Gtu:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
@@ -125,8 +118,8 @@ Gtu:
 
 GtuTags:
     columns:
-        tag_group_ref: { type: integer, notnull:true}
-        gtu_ref: { type: integer, notnull:true}
+        tag_group_ref: { type: integer, notnull:true, primary:true}
+        gtu_ref: { type: integer, notnull:true, primary:true}
     relations:
         TagGroups:
             local: tag_group_ref

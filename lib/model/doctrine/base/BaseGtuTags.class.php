@@ -31,11 +31,11 @@ abstract class BaseGtuTags extends sfDoctrineRecord
         $this->setTableName('gtu_tags');
         $this->hasColumn('tag_group_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'primary' => true,
              ));
         $this->hasColumn('gtu_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'primary' => true,
              ));
     }
 

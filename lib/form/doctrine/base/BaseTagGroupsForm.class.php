@@ -16,22 +16,26 @@ abstract class BaseTagGroupsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                     => new sfWidgetFormInputHidden(),
-      'tag_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Tags'), 'add_empty' => false)),
+      'tag_ref'                => new sfWidgetFormInputText(),
       'group_name'             => new sfWidgetFormTextarea(),
       'group_name_indexed'     => new sfWidgetFormTextarea(),
       'sub_group_name'         => new sfWidgetFormTextarea(),
       'sub_group_name_indexed' => new sfWidgetFormTextarea(),
-      'color'                  => new sfWidgetFormTextarea(),
+      'group_color'            => new sfWidgetFormTextarea(),
+      'tag_value'              => new sfWidgetFormTextarea(),
+      'tag_value_indexed'      => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
       'id'                     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'tag_ref'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Tags'))),
+      'tag_ref'                => new sfValidatorInteger(),
       'group_name'             => new sfValidatorString(),
       'group_name_indexed'     => new sfValidatorString(array('required' => false)),
       'sub_group_name'         => new sfValidatorString(),
       'sub_group_name_indexed' => new sfValidatorString(array('required' => false)),
-      'color'                  => new sfValidatorString(array('required' => false)),
+      'group_color'            => new sfValidatorString(array('required' => false)),
+      'tag_value'              => new sfValidatorString(),
+      'tag_value_indexed'      => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('tag_groups[%s]');

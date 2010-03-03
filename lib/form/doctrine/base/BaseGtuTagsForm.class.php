@@ -15,15 +15,13 @@ abstract class BaseGtuTagsForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'            => new sfWidgetFormInputHidden(),
-      'tag_group_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TagGroups'), 'add_empty' => false)),
-      'gtu_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => false)),
+      'tag_group_ref' => new sfWidgetFormInputHidden(),
+      'gtu_ref'       => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
-      'id'            => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'tag_group_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TagGroups'))),
-      'gtu_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'))),
+      'tag_group_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'tag_group_ref', 'required' => false)),
+      'gtu_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'gtu_ref', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('gtu_tags[%s]');

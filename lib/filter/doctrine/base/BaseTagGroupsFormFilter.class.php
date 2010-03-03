@@ -13,21 +13,25 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'tag_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Tags'), 'add_empty' => true)),
+      'tag_ref'                => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'group_name'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'group_name_indexed'     => new sfWidgetFormFilterInput(),
       'sub_group_name'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'sub_group_name_indexed' => new sfWidgetFormFilterInput(),
-      'color'                  => new sfWidgetFormFilterInput(),
+      'group_color'            => new sfWidgetFormFilterInput(),
+      'tag_value'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'tag_value_indexed'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'tag_ref'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Tags'), 'column' => 'id')),
+      'tag_ref'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'group_name'             => new sfValidatorPass(array('required' => false)),
       'group_name_indexed'     => new sfValidatorPass(array('required' => false)),
       'sub_group_name'         => new sfValidatorPass(array('required' => false)),
       'sub_group_name_indexed' => new sfValidatorPass(array('required' => false)),
-      'color'                  => new sfValidatorPass(array('required' => false)),
+      'group_color'            => new sfValidatorPass(array('required' => false)),
+      'tag_value'              => new sfValidatorPass(array('required' => false)),
+      'tag_value_indexed'      => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tag_groups_filters[%s]');
@@ -48,12 +52,14 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                     => 'Number',
-      'tag_ref'                => 'ForeignKey',
+      'tag_ref'                => 'Number',
       'group_name'             => 'Text',
       'group_name_indexed'     => 'Text',
       'sub_group_name'         => 'Text',
       'sub_group_name_indexed' => 'Text',
-      'color'                  => 'Text',
+      'group_color'            => 'Text',
+      'tag_value'              => 'Text',
+      'tag_value_indexed'      => 'Text',
     );
   }
 }
