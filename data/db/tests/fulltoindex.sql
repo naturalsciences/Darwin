@@ -72,7 +72,7 @@ INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (1,1,'holotype'
 INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (1, 1, 'head');
 
 
-INSERT INTO tag_groups (id, tag_ref,group_name,sub_group_name,tag_value) VALUES (1, 1, 'Rév#ers','','La ''mèr'' Nwàre');
+INSERT INTO tag_groups (id, gtu_ref,group_name,sub_group_name,tag_value) VALUES (1, 0, 'Rév#ers','','La ''mèr'' Nwàre');
 SELECT ok( 'revers' = (SELECT group_name_indexed FROM tag_groups WHERE id=1),'FulltoIndex on tags_groups');
 SELECT ok( 'lamernware' = (SELECT tag_value_indexed FROM tag_groups WHERE id=1),'FulltoIndex on tags');
 
