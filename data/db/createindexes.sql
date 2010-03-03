@@ -4,7 +4,7 @@
 
 CREATE INDEX CONCURRENTLY idx_possible_upper_levels_level_ref on possible_upper_levels(level_ref);
 CREATE INDEX CONCURRENTLY idx_possible_upper_levels_level_upper_ref on possible_upper_levels(level_upper_ref);
-CREATE INDEX CONCURRENTLY idx_tag_groups_tag_ref on tag_groups(tag_ref);
+CREATE INDEX CONCURRENTLY idx_tag_groups_gtu_ref on tag_groups(gtu_ref);
 CREATE INDEX CONCURRENTLY idx_gtu_parent_ref on gtu(parent_ref);
 CREATE INDEX CONCURRENTLY idx_people_languages_people_ref on people_languages(people_ref);
 CREATE INDEX CONCURRENTLY idx_users_languages_users_ref on users_languages(users_ref);

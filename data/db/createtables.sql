@@ -176,6 +176,32 @@ comment on column comments.comment is 'Comment';
 comment on column comments.comment_ts is 'tsvector form of comment field';
 comment on column comments.comment_language_full_text is 'Corresponding language to the language/country reference recognized by full text search to_tsvector function';
 
+create sequence gtu_id_seq;
+
+create table gtu
+       (
+        id integer not null default nextval('gtu_id_seq'),
+        code varchar not null,
+        parent_ref integer,
+        gtu_from_date_mask integer not null default 0,
+        gtu_from_date timestamp not null default '01/01/0001 00:00:00',
+        gtu_to_date_mask integer not null default 0,
+        gtu_to_date timestamp not null default '01/01/0001 00:00:00',
+        path varchar not null default '/',
+        constraint pk_gtu primary key (id),
+        constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
+       );
+comment on table gtu is 'Location or sampling units - GeoTemporalUnits';
+comment on column gtu.id is 'Unique identifier of a location or sampling unit';
+comment on column gtu.code is 'Code given - for sampling units - takes id if none defined';
+comment on column gtu.parent_ref is 'Recursive reference to a parent location-sampling unit - id field of gtu table itself';
+comment on column gtu.gtu_from_date is 'composed from date of the GTU';
+comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day, 4 for hour, 2 for minutes, 1 for seconds';
+comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day, 4 for hour, 2 for minutes, 1 for seconds';
+comment on column gtu.gtu_to_date is 'composed to date of the GTU';
+comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
+
+
 create sequence tag_groups_id_seq;
 
 create table tag_groups
@@ -203,32 +229,6 @@ comment on column tag_groups.group_name_indexed is 'Indexed form of a sub-group 
 comment on column tag_groups.color is 'Color associated to the group concerned';
 comment on column tag_groups.tag_value is 'Tag';
 comment on column tag_groups.tag_value_indexed is 'Indexed form of tag';
-
-
-create sequence gtu_id_seq;
-
-create table gtu
-       (
-        id integer not null default nextval('gtu_id_seq'),
-        code varchar not null,
-        parent_ref integer,
-        gtu_from_date_mask integer not null default 0,
-        gtu_from_date timestamp not null default '01/01/0001 00:00:00',
-        gtu_to_date_mask integer not null default 0,
-        gtu_to_date timestamp not null default '01/01/0001 00:00:00',
-        path varchar not null default '/',
-        constraint pk_gtu primary key (id),
-        constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
-       );
-comment on table gtu is 'Location or sampling units - GeoTemporalUnits';
-comment on column gtu.id is 'Unique identifier of a location or sampling unit';
-comment on column gtu.code is 'Code given - for sampling units - takes id if none defined';
-comment on column gtu.parent_ref is 'Recursive reference to a parent location-sampling unit - id field of gtu table itself';
-comment on column gtu.gtu_from_date is 'composed from date of the GTU';
-comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day, 4 for hour, 2 for minutes, 1 for seconds';
-comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day, 4 for hour, 2 for minutes, 1 for seconds';
-comment on column gtu.gtu_to_date is 'composed to date of the GTU';
-comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
 
 create sequence catalogue_properties_id_seq;
 
