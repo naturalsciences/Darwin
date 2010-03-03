@@ -16,7 +16,7 @@ abstract class BaseTagGroupsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                     => new sfWidgetFormInputHidden(),
-      'tag_ref'                => new sfWidgetFormInputText(),
+      'gtu_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => false)),
       'group_name'             => new sfWidgetFormTextarea(),
       'group_name_indexed'     => new sfWidgetFormTextarea(),
       'sub_group_name'         => new sfWidgetFormTextarea(),
@@ -28,7 +28,7 @@ abstract class BaseTagGroupsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'tag_ref'                => new sfValidatorInteger(),
+      'gtu_ref'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'))),
       'group_name'             => new sfValidatorString(),
       'group_name_indexed'     => new sfValidatorString(array('required' => false)),
       'sub_group_name'         => new sfValidatorString(),

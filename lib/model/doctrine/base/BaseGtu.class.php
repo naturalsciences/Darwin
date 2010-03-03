@@ -13,8 +13,8 @@
  * @property integer $gtu_to_date_mask
  * @property string $gtu_to_date
  * @property Gtu $Parent
+ * @property Doctrine_Collection $TagGroups
  * @property Doctrine_Collection $Gtu
- * @property Doctrine_Collection $GtuTags
  * @property Doctrine_Collection $Soortenregister
  * 
  * @method integer             getId()                 Returns the current record's "id" value
@@ -25,8 +25,8 @@
  * @method integer             getGtuToDateMask()      Returns the current record's "gtu_to_date_mask" value
  * @method string              getGtuToDate()          Returns the current record's "gtu_to_date" value
  * @method Gtu                 getParent()             Returns the current record's "Parent" value
+ * @method Doctrine_Collection getTagGroups()          Returns the current record's "TagGroups" collection
  * @method Doctrine_Collection getGtu()                Returns the current record's "Gtu" collection
- * @method Doctrine_Collection getGtuTags()            Returns the current record's "GtuTags" collection
  * @method Doctrine_Collection getSoortenregister()    Returns the current record's "Soortenregister" collection
  * @method Gtu                 setId()                 Sets the current record's "id" value
  * @method Gtu                 setCode()               Sets the current record's "code" value
@@ -36,8 +36,8 @@
  * @method Gtu                 setGtuToDateMask()      Sets the current record's "gtu_to_date_mask" value
  * @method Gtu                 setGtuToDate()          Sets the current record's "gtu_to_date" value
  * @method Gtu                 setParent()             Sets the current record's "Parent" value
+ * @method Gtu                 setTagGroups()          Sets the current record's "TagGroups" collection
  * @method Gtu                 setGtu()                Sets the current record's "Gtu" collection
- * @method Gtu                 setGtuTags()            Sets the current record's "GtuTags" collection
  * @method Gtu                 setSoortenregister()    Sets the current record's "Soortenregister" collection
  * 
  * @package    darwin
@@ -62,6 +62,7 @@ abstract class BaseGtu extends sfDoctrineRecord
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
+             'default' => 0,
              ));
         $this->hasColumn('gtu_from_date_mask', 'integer', null, array(
              'type' => 'integer',
@@ -92,13 +93,13 @@ abstract class BaseGtu extends sfDoctrineRecord
              'local' => 'parent_ref',
              'foreign' => 'id'));
 
+        $this->hasMany('TagGroups', array(
+             'local' => 'id',
+             'foreign' => 'gtu_ref'));
+
         $this->hasMany('Gtu', array(
              'local' => 'id',
              'foreign' => 'parent_ref'));
-
-        $this->hasMany('GtuTags', array(
-             'local' => 'id',
-             'foreign' => 'gtu_ref'));
 
         $this->hasMany('Soortenregister', array(
              'local' => 'id',

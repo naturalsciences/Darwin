@@ -13,7 +13,7 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'tag_ref'                => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'gtu_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => true)),
       'group_name'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'group_name_indexed'     => new sfWidgetFormFilterInput(),
       'sub_group_name'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -24,7 +24,7 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'tag_ref'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'gtu_ref'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Gtu'), 'column' => 'id')),
       'group_name'             => new sfValidatorPass(array('required' => false)),
       'group_name_indexed'     => new sfValidatorPass(array('required' => false)),
       'sub_group_name'         => new sfValidatorPass(array('required' => false)),
@@ -52,7 +52,7 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                     => 'Number',
-      'tag_ref'                => 'Number',
+      'gtu_ref'                => 'ForeignKey',
       'group_name'             => 'Text',
       'group_name_indexed'     => 'Text',
       'sub_group_name'         => 'Text',

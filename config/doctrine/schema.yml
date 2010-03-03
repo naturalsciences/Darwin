@@ -92,7 +92,7 @@ Comments:
 TagGroups:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        tag_ref:  { type: integer, notnull: true }
+        gtu_ref:  { type: integer, notnull: true }
         group_name: {type: string, notnull: true}
         group_name_indexed: { type: string }
         sub_group_name:  { type: string, notnull: true }
@@ -100,12 +100,16 @@ TagGroups:
         group_color: {type: string, default: '#FFFFFF' }
         tag_value: { type: string, notnull: true}
         tag_value_indexed: { type: string, notnull: true}
+    relations:
+        Gtu:
+            local: gtu_ref
+            foreign: id
 
 Gtu:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         code: {type: string, notnull: true}
-        parent_ref:  {type: integer, notnull: true}
+        parent_ref:  {type: integer, notnull: true,default:0}
         gtu_from_date_mask: { type: integer, notnull: true, default:0}
         gtu_from_date: { type: string, notnull: true, default: '0001-01-01'}
         gtu_to_date_mask: { type: integer, notnull: true, default:0}
@@ -114,18 +118,6 @@ Gtu:
         Parent:
             class: Gtu
             local: parent_ref
-            foreign: id
-
-GtuTags:
-    columns:
-        tag_group_ref: { type: integer, notnull:true, primary:true}
-        gtu_ref: { type: integer, notnull:true, primary:true}
-    relations:
-        TagGroups:
-            local: tag_group_ref
-            foreign: id
-        Gtu:
-            local: gtu_ref
             foreign: id
 
 CatalogueProperties:
