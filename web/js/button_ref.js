@@ -1,12 +1,24 @@
 var ref_element_id = null;
 var ref_element_name = null;
+var ref_level_id = '';
+var ref_caller_id = '';
 $(document).ready(function () {
 
   $("a.but_text").live('click', function(){
+    ref_level_id = $('select[id$=\"_level_ref\"]').val();
+    if (ref_level_id.length)
+    {
+      ref_level_id = '/level/'+ref_level_id;
+    }
+    ref_caller_id = $('input[id$=\"_id\"]').val();
+    if (ref_caller_id.length)
+    {
+      ref_caller_id = '/caller_id/'+ref_caller_id;
+    }
     $(this).qtip({
         content: {
             title: { text : $(this).parent().attr('title'), button: 'X' },
-            url: $(this).attr('href')
+            url: $(this).attr('href')+ref_level_id+ref_caller_id
         },
         show: { when: 'click', ready: true },
         position: {

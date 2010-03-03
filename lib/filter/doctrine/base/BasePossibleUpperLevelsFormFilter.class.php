@@ -13,13 +13,9 @@ abstract class BasePossibleUpperLevelsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'level_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Level'), 'add_empty' => true)),
-      'level_upper_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('UpperLevel'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'level_ref'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Level'), 'column' => 'id')),
-      'level_upper_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('UpperLevel'), 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('possible_upper_levels_filters[%s]');
@@ -39,9 +35,8 @@ abstract class BasePossibleUpperLevelsFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'              => 'Number',
-      'level_ref'       => 'ForeignKey',
-      'level_upper_ref' => 'ForeignKey',
+      'level_ref'       => 'Number',
+      'level_upper_ref' => 'Number',
     );
   }
 }

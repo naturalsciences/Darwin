@@ -12,6 +12,7 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
 {
   public function configure()
   {
+    $parameters = array(array_merge($this->options, array('type'=>'mineralogy')));
     $this->useFields(array('code', 'name', 'classification', 'level_ref'));
     $this->addPagerItems();
 
@@ -26,9 +27,9 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
                                                             );
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
 
-    $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
+    $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => 'getLevelsForMineralogy',
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>$parameters),
         'add_empty' => 'All'
       ));
 
@@ -81,6 +82,14 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['name']);
+    if ($this->options['caller_id'] != '')
+    {
+      $query->andWhere("id != ?", $this->options['caller_id']);
+    }
+    if (is_array($this->options['levels']) && count($this->options['levels']) > 0)
+    {
+      $query->andWhereIn('level_ref', $this->options['levels']);
+    }
     $query->andWhere("id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

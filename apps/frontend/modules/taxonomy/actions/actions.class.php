@@ -14,7 +14,13 @@ class taxonomyActions extends DarwinActions
 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
+    $level = '';
+    $caller_id = '';
+    if ($request->hasParameter('level')) $level = $request->getParameter('level');
+    if ($request->hasParameter('caller_id')) $caller_id = $request->getParameter('caller_id');
+    $this->searchForm = new TaxonomyFormFilter(array('table' => 'taxonomy'), 
+                                               array('level' => $level, 'caller_id' => $caller_id)
+                                              );
     $this->setLayout(false);
   }
 

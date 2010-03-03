@@ -4,39 +4,22 @@
  */
 class CatalogueLevelsTable extends DarwinTable
 {
-  public function getLevelsByTypes($type, $q = null)
+  public function getLevelsByTypes(array $parameters, $q = null)
   {
     if (is_null($q))
     {
       $q = Doctrine_Query::create()
 	 ->from('CatalogueLevels cl');
     }
-    $q->addWhere('cl.level_type = ?', $type);
-    return $q;
-  }
-
-  public function getLevelsForTaxonomy()
-  {
-    return $this->getLevelsByTypes('taxonomy')->execute();
-  }
-
-  public function getLevelsForChronostratigraphy()
-  {
-    return $this->getLevelsByTypes('chronostratigraphy')->execute();
-  }
-
-  public function getLevelsForLithostratigraphy()
-  {
-    return $this->getLevelsByTypes('lithostratigraphy')->execute();
-  }
-
-  public function getLevelsForLithology()
-  {
-    return $this->getLevelsByTypes('lithology')->execute();
-  }
-
-  public function getLevelsForMineralogy()
-  {
-    return $this->getLevelsByTypes('mineralogy')->execute();
+    if (isset($parameters['level']) && $parameters['level'] != '')
+    {
+      $q->innerJoin('cl.PossibleUpperLevels pul ON cl.id = pul.level_upper_ref')
+        ->addWhere('pul.level_ref = ?', $parameters['level']);
+    }
+    if (isset($parameters['type']))
+    {
+      $q->addWhere('cl.level_type = ?', $parameters['type']);
+    }
+    return $q->execute();
   }
 }

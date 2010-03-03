@@ -791,6 +791,12 @@ table.edit_synon td
   text-decoration: none;
 }
 
+.edition input[type="submit"], .renamed input[type="submit"]
+{
+  padding-top:2px;
+  padding-bottom:2px;
+}
+
 div .edition tfoot a, div .renamed tfoot a  
 {
   padding:2px;
@@ -818,6 +824,7 @@ table.encoding tbody .widget_row_delete
   text-align:center;  
   padding-right:1px;
 }
+
 .widget_sub_table
 {
   width:100%;
@@ -827,6 +834,7 @@ table.encoding tbody .widget_row_delete
 {
   width:18px;
 }
+
 .widget_sub_table .catalogue_people_sub_type
 {
   width: 40%;

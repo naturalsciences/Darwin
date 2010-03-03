@@ -16,8 +16,15 @@ $(document).ready(function ()
      $('.tree').slideUp();
    });
 });
-</script>  
-<form id="catalogue_filter" class="search_form" method="post" action="<?php echo url_for('catalogue/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
+</script>
+
+<?php $parameters = '?'; ?>
+<?php $parameters .= (!isset($is_choose))?'':'is_choose='.$is_choose.'&'; ?>
+<?php $parameters .= ($searchForm->getOption('level')=='')?'':'level='.$searchForm->getOption('level').'&'; ?>
+<?php $parameters .= ($searchForm->getOption('caller_id')=='')?'':'caller_id='.$searchForm->getOption('caller_id').'&'; ?>
+<?php $parameters = ($parameters=='?')?'':rtrim($parameters, '&');?>
+
+<form id="catalogue_filter" class="search_form" method="post" action="<?php echo url_for('catalogue/search'.$parameters);?>">
   <div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>

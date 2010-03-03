@@ -15,15 +15,13 @@ abstract class BasePossibleUpperLevelsForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'              => new sfWidgetFormInputHidden(),
-      'level_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Level'), 'add_empty' => false)),
-      'level_upper_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('UpperLevel'), 'add_empty' => false)),
+      'level_ref'       => new sfWidgetFormInputHidden(),
+      'level_upper_ref' => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
-      'id'              => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'level_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Level'))),
-      'level_upper_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('UpperLevel'))),
+      'level_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'level_ref', 'required' => false)),
+      'level_upper_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'level_upper_ref', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('possible_upper_levels[%s]');

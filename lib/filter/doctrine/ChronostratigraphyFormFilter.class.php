@@ -12,6 +12,7 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
 {
   public function configure()
   {
+    $parameters = array(array_merge($this->options, array('type'=>'chronostratigraphy')));
     $this->useFields(array('name', 'level_ref', 'lower_bound', 'upper_bound'));
     $this->addPagerItems();
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
@@ -21,9 +22,9 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
     $this->widgetSchema['lower_bound']->setAttributes(array('class'=>'small_size datesNum'));
     $this->widgetSchema['upper_bound']->setAttributes(array('class'=>'small_size datesNum'));
-    $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
+    $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => 'getLevelsForChronostratigraphy',
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>$parameters),
         'add_empty' => 'All'
       ));
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
@@ -61,6 +62,14 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['name']);
     $this->addBoundRangeColumnQuery($query, $values['lower_bound'], $values['upper_bound']);
+    if ($this->options['caller_id'] != '')
+    {
+      $query->andWhere("id != ?", $this->options['caller_id']);
+    }
+    if (is_array($this->options['levels']) && count($this->options['levels']) > 0)
+    {
+      $query->andWhereIn('level_ref', $this->options['levels']);
+    }
     $query->andWhere("id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

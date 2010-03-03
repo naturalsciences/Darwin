@@ -14,7 +14,13 @@ class mineralogyActions extends DarwinActions
 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->searchForm = new MineralogyFormFilter(array('table'=> 'mineralogy'));
+    $level = '';
+    $caller_id = '';
+    if ($request->hasParameter('level')) $level = $request->getParameter('level');
+    if ($request->hasParameter('caller_id')) $caller_id = $request->getParameter('caller_id');
+    $this->searchForm = new MineralogyFormFilter(array('table' => 'mineralogy'), 
+                                                 array('level' => $level, 'caller_id' => $caller_id)
+                                                );
     $this->setLayout(false);
   }
 

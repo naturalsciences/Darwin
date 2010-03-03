@@ -14,7 +14,13 @@ class lithologyActions extends DarwinActions
 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->searchForm = new LithologyFormFilter(array('table'=> 'lithology'));
+    $level = '';
+    $caller_id = '';
+    if ($request->hasParameter('level')) $level = $request->getParameter('level');
+    if ($request->hasParameter('caller_id')) $caller_id = $request->getParameter('caller_id');
+    $this->searchForm = new LithologyFormFilter(array('table' => 'lithology'), 
+                                                array('level' => $level, 'caller_id' => $caller_id)
+                                               );
     $this->setLayout(false);
   }
 

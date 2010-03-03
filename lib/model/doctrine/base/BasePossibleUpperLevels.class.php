@@ -31,11 +31,11 @@ abstract class BasePossibleUpperLevels extends sfDoctrineRecord
         $this->setTableName('possible_upper_levels');
         $this->hasColumn('level_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'primary' => true,
              ));
         $this->hasColumn('level_upper_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'primary' => true,
              ));
     }
 

@@ -23,9 +23,9 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices'  => $statuses,
     ));
-    $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
+    $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => 'getLevelsForChronostratigraphy',
+        'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('type'=>'chronostratigraphy'))),
         'add_empty' => true
       ));
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(

@@ -12,15 +12,16 @@ class LithologyFormFilter extends BaseLithologyFormFilter
 {
   public function configure()
   {
+    $parameters = array(array_merge($this->options, array('type'=>'lithology')));
     $this->useFields(array('name', 'level_ref'));
     $this->addPagerItems();
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden();
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
     $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
-    $this->widgetSchema['level_ref'] = new sfWidgetFormDoctrineChoice(array(
+    $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => 'getLevelsForLithology',
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>$parameters),
         'add_empty' => 'All'
       ));
     $this->widgetSchema->setLabels(array('level_ref' => 'Level'
@@ -37,6 +38,14 @@ class LithologyFormFilter extends BaseLithologyFormFilter
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['name']);
+    if ($this->options['caller_id'] != '')
+    {
+      $query->andWhere("id != ?", $this->options['caller_id']);
+    }
+    if (is_array($this->options['levels']) && count($this->options['levels']) > 0)
+    {
+      $query->andWhereIn('level_ref', $this->options['levels']);
+    }
     $query->andWhere("id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

@@ -67,8 +67,8 @@ CatalogueLevels:
 
 PossibleUpperLevels:
     columns:
-        level_ref: { type: integer, notnull: true}
-        level_upper_ref: { type: integer, notnull: true}
+        level_ref: { type: integer, notnull: true, primary:true}
+        level_upper_ref: { type: integer, notnull: true, primary:true}
     relations:
         UpperLevel:
             class: CatalogueLevels
