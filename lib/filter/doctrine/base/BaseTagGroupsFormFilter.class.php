@@ -18,9 +18,8 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
       'group_name_indexed'     => new sfWidgetFormFilterInput(),
       'sub_group_name'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'sub_group_name_indexed' => new sfWidgetFormFilterInput(),
-      'group_color'            => new sfWidgetFormFilterInput(),
+      'color'                  => new sfWidgetFormFilterInput(),
       'tag_value'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'tag_value_indexed'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -29,9 +28,8 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
       'group_name_indexed'     => new sfValidatorPass(array('required' => false)),
       'sub_group_name'         => new sfValidatorPass(array('required' => false)),
       'sub_group_name_indexed' => new sfValidatorPass(array('required' => false)),
-      'group_color'            => new sfValidatorPass(array('required' => false)),
+      'color'                  => new sfValidatorPass(array('required' => false)),
       'tag_value'              => new sfValidatorPass(array('required' => false)),
-      'tag_value_indexed'      => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tag_groups_filters[%s]');
@@ -57,9 +55,8 @@ abstract class BaseTagGroupsFormFilter extends BaseFormFilterDoctrine
       'group_name_indexed'     => 'Text',
       'sub_group_name'         => 'Text',
       'sub_group_name_indexed' => 'Text',
-      'group_color'            => 'Text',
+      'color'                  => 'Text',
       'tag_value'              => 'Text',
-      'tag_value_indexed'      => 'Text',
     );
   }
 }

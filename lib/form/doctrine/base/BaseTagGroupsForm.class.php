@@ -21,9 +21,8 @@ abstract class BaseTagGroupsForm extends BaseFormDoctrine
       'group_name_indexed'     => new sfWidgetFormTextarea(),
       'sub_group_name'         => new sfWidgetFormTextarea(),
       'sub_group_name_indexed' => new sfWidgetFormTextarea(),
-      'group_color'            => new sfWidgetFormTextarea(),
+      'color'                  => new sfWidgetFormTextarea(),
       'tag_value'              => new sfWidgetFormTextarea(),
-      'tag_value_indexed'      => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -33,9 +32,8 @@ abstract class BaseTagGroupsForm extends BaseFormDoctrine
       'group_name_indexed'     => new sfValidatorString(array('required' => false)),
       'sub_group_name'         => new sfValidatorString(),
       'sub_group_name_indexed' => new sfValidatorString(array('required' => false)),
-      'group_color'            => new sfValidatorString(array('required' => false)),
+      'color'                  => new sfValidatorString(array('required' => false)),
       'tag_value'              => new sfValidatorString(),
-      'tag_value_indexed'      => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('tag_groups[%s]');

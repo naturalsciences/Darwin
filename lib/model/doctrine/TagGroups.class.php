@@ -5,5 +5,30 @@
  */
 class TagGroups extends BaseTagGroups
 {
-
+  static public function getGroups()
+  {
+    return array(
+      'administrative' => 'Administrative area', 
+      'topographic' => 'Topographic structure',
+      'hydrographic' => 'Hydrographic',
+      'orography' => 'Orography', 
+    );
+  }
+  static public function getSubGroups($group)
+  {
+    $groups = array(
+      'administrative' => array(
+	'country' => 'Country',
+	'province' => 'Province',
+	'hamlet' => 'Hamlet',
+      ),
+      'topographic' => array(),
+      'hydrographic' => array(),
+      'orography' => array(),
+    );
+    if(isset($groups[$group]))
+      return $groups[$group];
+    else
+      return $groups;
+  }
 }

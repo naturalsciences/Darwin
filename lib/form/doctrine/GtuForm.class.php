@@ -49,8 +49,6 @@ class GtuForm extends BaseGtuForm
                                                                                    ),
                                                                               array('class' => 'to_date')
                                                                              );
-    $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
-    $this->validatorSchema['name'] = new sfValidatorString(array('required' => true, 'trim' => true));
     $this->validatorSchema['gtu_from_date'] = new fuzzyDateValidator(array('required' => false,
                                                                                   'from_date' => true,
                                                                                   'min' => $minDate,
@@ -76,5 +74,67 @@ class GtuForm extends BaseGtuForm
                                                                           array('invalid'=>'The "begin" date cannot be above the "end" date.')
                                                                          )
                                             );
+
+    $this->embedRelation('TagGroups');
+    
+    $subForm = new sfForm();
+    $this->embedForm('newVal',$subForm);
   }
+  
+  public function addValue($num, $group="")
+  {
+      $val = new TagGroups();
+      if($group != '')
+	$val->setGroupName($group);
+
+      $val->Gtu = $this->getObject();
+      $form = new TagGroupsForm($val);
+  
+      $this->embeddedForms['newVal']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newVal', $this->embeddedForms['newVal']);
+   }
+
+    public function bind(array $taintedValues = null, array $taintedFiles = null)
+    {
+      if(isset($taintedValues['newVal']))
+      {
+	foreach($taintedValues['newVal'] as $key=>$newVal)
+	{
+	  if (!isset($this['newVal'][$key]))
+	  {
+	    $this->addValue($key);
+	  }
+	}
+      }
+      parent::bind($taintedValues, $taintedFiles);
+    }
+
+    public function saveEmbeddedForms($con = null, $forms = null)
+    {
+
+      if (null === $forms)
+      {
+	$value = $this->getValue('newVal');
+	foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['tag_value'])  || $value[$name]['tag_value'] == '')
+	  {
+	    unset($this->embeddedForms['newVal'][$name]);
+	  }
+	}
+
+	$value = $this->getValue('TagGroups');
+	foreach($this->embeddedForms['TagGroups']->getEmbeddedForms() as $name => $form)
+	{
+	  
+	  if (!isset($value[$name]['tag_value']) || $value[$name]['tag_value'] == '' )
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['TagGroups'][$name]);
+	  }
+	}
+      }
+      return parent::saveEmbeddedForms($con, $forms);
+    }
 }

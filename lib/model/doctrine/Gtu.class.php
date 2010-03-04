@@ -5,5 +5,57 @@
  */
 class Gtu extends BaseGtu
 {
+  public function getGtuFromDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('gtu_from_date'), $this->_get('gtu_from_date_mask'));
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getGtuToDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('gtu_to_date'), $this->_get('gtu_to_date_mask'));
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getGtuFromDate()
+  {
+    $from_date = new FuzzyDateTime($this->_get('gtu_from_date'), $this->_get('gtu_from_date_mask'));
+    return $from_date->getDateTimeMaskedAsArray();
+  }
 
+  public function getGtuToDate()
+  {
+    $to_date = new FuzzyDateTime($this->_get('gtu_to_date'), $this->_get('gtu_to_date_mask'), false);
+    return $to_date->getDateTimeMaskedAsArray();
+  }
+
+  public function setGtuFromDate($fd)
+  {
+    if ($fd instanceof FuzzyDateTime)
+    {
+      $this->_set('gtu_from_date', $fd->format('Y/m/d'));
+      $this->_set('gtu_from_date_mask', $fd->getMask());
+    }
+    else
+    {
+      $dateTime = new FuzzyDateTime($fd, 56, true); 
+      $this->_set('gtu_from_date', $dateTime->format('Y/m/d'));
+      $this->_set('gtu_from_date_mask', $dateTime->getMask());
+    }
+  }
+
+  public function setGtuToDate($fd)
+  {
+    if ($fd instanceof FuzzyDateTime)
+    {
+      $this->_set('gtu_to_date', $fd->format('Y/m/d'));
+      $this->_set('gtu_to_date_mask', $fd->getMask());
+    }
+    else
+    {
+      $dateTime = new FuzzyDateTime($fd, 56, false); 
+      $this->_set('gtu_to_date', $dateTime->format('Y/m/d'));
+      $this->_set('gtu_to_date_mask', $dateTime->getMask());
+    }
+  }
 }

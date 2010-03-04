@@ -11,9 +11,8 @@
  * @property string $group_name_indexed
  * @property string $sub_group_name
  * @property string $sub_group_name_indexed
- * @property string $group_color
+ * @property string $color
  * @property string $tag_value
- * @property string $tag_value_indexed
  * @property Gtu $Gtu
  * 
  * @method integer   getId()                     Returns the current record's "id" value
@@ -22,9 +21,8 @@
  * @method string    getGroupNameIndexed()       Returns the current record's "group_name_indexed" value
  * @method string    getSubGroupName()           Returns the current record's "sub_group_name" value
  * @method string    getSubGroupNameIndexed()    Returns the current record's "sub_group_name_indexed" value
- * @method string    getGroupColor()             Returns the current record's "group_color" value
+ * @method string    getColor()                  Returns the current record's "color" value
  * @method string    getTagValue()               Returns the current record's "tag_value" value
- * @method string    getTagValueIndexed()        Returns the current record's "tag_value_indexed" value
  * @method Gtu       getGtu()                    Returns the current record's "Gtu" value
  * @method TagGroups setId()                     Sets the current record's "id" value
  * @method TagGroups setGtuRef()                 Sets the current record's "gtu_ref" value
@@ -32,9 +30,8 @@
  * @method TagGroups setGroupNameIndexed()       Sets the current record's "group_name_indexed" value
  * @method TagGroups setSubGroupName()           Sets the current record's "sub_group_name" value
  * @method TagGroups setSubGroupNameIndexed()    Sets the current record's "sub_group_name_indexed" value
- * @method TagGroups setGroupColor()             Sets the current record's "group_color" value
+ * @method TagGroups setColor()                  Sets the current record's "color" value
  * @method TagGroups setTagValue()               Sets the current record's "tag_value" value
- * @method TagGroups setTagValueIndexed()        Sets the current record's "tag_value_indexed" value
  * @method TagGroups setGtu()                    Sets the current record's "Gtu" value
  * 
  * @package    darwin
@@ -70,15 +67,11 @@ abstract class BaseTagGroups extends sfDoctrineRecord
         $this->hasColumn('sub_group_name_indexed', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('group_color', 'string', null, array(
+        $this->hasColumn('color', 'string', null, array(
              'type' => 'string',
              'default' => '#FFFFFF',
              ));
         $this->hasColumn('tag_value', 'string', null, array(
-             'type' => 'string',
-             'notnull' => true,
-             ));
-        $this->hasColumn('tag_value_indexed', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              ));
