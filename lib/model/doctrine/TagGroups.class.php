@@ -8,27 +8,22 @@ class TagGroups extends BaseTagGroups
   static public function getGroups()
   {
     return array(
-      'administrative' => 'Administrative area', 
+      'administrative' => 'Administrative area',
       'topographic' => 'Topographic structure',
       'hydrographic' => 'Hydrographic',
-      'orography' => 'Orography', 
+      'orography' => 'Orography',
+      'spot' => 'Spot',
+      'area' => 'Area',
+      'historical' => 'Historical',
+      'populated' => 'Populated Places',
+      'underground' => 'Underground',
+      'other' => 'Other'
     );
   }
-  static public function getSubGroups($group)
+
+  static public function getGroup($name)
   {
-    $groups = array(
-      'administrative' => array(
-	'country' => 'Country',
-	'province' => 'Province',
-	'hamlet' => 'Hamlet',
-      ),
-      'topographic' => array(),
-      'hydrographic' => array(),
-      'orography' => array(),
-    );
-    if(isset($groups[$group]))
-      return $groups[$group];
-    else
-      return $groups;
+    $groups = self::getGroups();
+    return $groups[$name];
   }
 }

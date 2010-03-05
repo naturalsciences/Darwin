@@ -138,7 +138,7 @@ class gtuActions extends DarwinActions
       $gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id') );
 
     $form = new GtuForm($gtu);
-    $form->addValue($number, $request->getParameter('group','administrative'));
+    $form->addValue($number, $request->getParameter('group'));
     return $this->renderPartial('taggroups',array('form' => $form['newVal'][$number]));
   }
 }

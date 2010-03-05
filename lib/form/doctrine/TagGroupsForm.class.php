@@ -17,23 +17,22 @@ class TagGroupsForm extends BaseTagGroupsForm
       $this['gtu_ref'],
       $this['color']
      );
-    
+    $this->validatorSchema['group_name']->setOption('required', false);
+    $this->validatorSchema['sub_group_name']->setOption('required', false);
+    $this->validatorSchema['tag_value']->setOption('required', false);
+
     $this->widgetSchema['group_name'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['group_name']->setDefault('administrative');
 
-    $this->widgetSchema['sub_group_name'] = new sfWidgetFormChoice(array(
-      'choices' => array(),
+    $this->widgetSchema['sub_group_name'] = new widgetFormSelectComplete(array(
+        'model' => 'TagGroups',
+	'change_label' => 'Pick a sub-type in the list',
+	'add_label' => 'Add another sub-type',
     ));
-//     if(! $this->getObject()->isNew())
-      $this->widgetSchema['sub_group_name']->setOption('choices', TagGroups::getSubGroups($this->getObject()->getGroupName()) );
+
+    $this->widgetSchema['sub_group_name']->setOption('forced_choices', Doctrine::getTable('TagGroups')->getDistinctSubGroups($this->getObject()->getGroupName()) );
   
-
     $this->widgetSchema['tag_value'] = new sfWidgetFormInputText();
-
-    $this->validatorSchema['group_name']->setOption('required', false);
-    $this->validatorSchema['sub_group_name']->setOption('required', false);
-
-    $this->validatorSchema['tag_value']->setOption('required', false);
 
   }
 }
