@@ -6625,3 +6625,37 @@ EXCEPTION
     return response;
 END;
 $$;
+
+
+CREATE OR REPLACE FUNCTION fct_cpy_gtuTags() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+DECLARE
+  curs_entry refcursor;
+  entry_row RECORD;
+  seen_el varchar[];
+BEGIN
+    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag FROM regexp_split_to_table(NEW.tag_value, ';') as tags WHERE fulltoIndex(tags) != '';
+
+    LOOP
+      FETCH curs_entry INTO entry_row;
+      EXIT WHEN NOT FOUND;
+      
+      seen_el := array_append(seen_el, entry_row.u_tag);
+
+      PERFORM * FROM tags WHERE gtu_ref = NEW.gtu_ref AND group_ref = NEW.id AND tag_indexed = entry_row.u_tag LIMIT 1;
+      IF FOUND THEN
+        CONTINUE;
+      ELSE
+        INSERT INTO tags (gtu_ref, group_ref, tag_indexed)
+	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag);
+      END IF;
+    END LOOP;
+
+    CLOSE curs_entry;
+
+    DELETE FROM tags WHERE group_ref = NEW.id AND gtu_ref = NEW.gtu_ref AND fct_array_find(seen_el, tag_indexed ) IS NULL;
+    RETURN NEW;
+END;
+$$;

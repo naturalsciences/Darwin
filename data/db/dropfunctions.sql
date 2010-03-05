@@ -23,6 +23,7 @@ DROP FUNCTION IF EXISTS fct_cpy_name_updt_impact_children() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_cascade_children_indexed_names (referenced_relation varchar, new_level_ref template_classifications.level_ref%TYPE, new_name_indexed template_classifications.name_indexed%TYPE, new_id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_hierarchy_from_parents() CASCADE;
 DROP FUNCTION IF EXISTS fct_get_hierarchy_from_parents(referenced_relation varchar, id integer) CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_gtuTags() CASCADE;
 
 /*** Others ***/
 

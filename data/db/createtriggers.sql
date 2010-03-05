@@ -179,7 +179,10 @@ CREATE TRIGGER trg_clr_specialstatus_specimenindividuals BEFORE INSERT OR UPDATE
 	ON specimen_individuals FOR EACH ROW
 	EXECUTE PROCEDURE fct_clr_specialstatus();
 	
-	
+CREATE TRIGGER trg_cpy_gtuTags_TagGroups AFTER INSERT OR UPDATE
+	ON tag_groups FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_gtuTags();
+
 /******* BEGIN TRIGGER REFS *************
 **
 **
