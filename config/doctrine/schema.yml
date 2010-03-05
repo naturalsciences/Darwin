@@ -631,7 +631,7 @@ Taxonomy:
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
-        parent_ref: { type: integer, default: null}
+        parent_ref: { type: integer, default: 0}
         extinct: { type: boolean, notnull: true, default: false}
     relations:
         Parent:

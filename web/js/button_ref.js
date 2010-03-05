@@ -50,7 +50,6 @@ $(document).ready(function () {
 		if(ref_element_id != null && ref_element_name != null)
 		{
 		  parent_el = $(this.elements.target).parent().prevAll('.ref_name');
-
 		  parent_el.text(ref_element_name);
 		  parent_el.prev().val(ref_element_id);
 		  $(this.elements.target).parent().prevAll('.ref_clear').show();

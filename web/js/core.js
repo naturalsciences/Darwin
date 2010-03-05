@@ -3,7 +3,7 @@ function getIdInClasses(el)
     var classes = $(el).attr("class").split(" ");
     for ( var i = 0; i < classes.length; i++ )
     {
-        exp = new RegExp(".*id_([0-9]+)",'gi');
+        exp = new RegExp(".*id_([-]?[0-9]+)",'gi');
         var result = exp.exec(classes[i]) ;
         if ( result )
         {
@@ -189,6 +189,15 @@ function clearSelection(el)
   t = el.val();
   el.val('');
   el.val(t);
+}
+
+function result_choose ()
+{
+        el = $(this).closest('tr');
+        ref_element_id = getIdInClasses(el);
+        ref_element_name = el.find('span.item_name').text();
+        $('.result_choose').die('click');
+        $('.qtip-button').click();
 }
 
 $(document).ready(function () {
