@@ -107,8 +107,12 @@ TagGroups:
 Tags:
     columns:
         gtu_ref:  { type: integer, notnull: true, primary:true}
+        group_ref:  {type: integer, notnull: true, primary:true}
         tag_value_indexed: { type: string, notnull: true, primary:true}
     relations:
+        TagGroups:
+            local: group_ref
+            foreign: id
         Gtu:
             local: gtu_ref
             foreign: id

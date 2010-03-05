@@ -36,6 +36,7 @@ abstract class BaseTagsFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'gtu_ref'           => 'Number',
+      'group_ref'         => 'Number',
       'tag_value_indexed' => 'Text',
     );
   }

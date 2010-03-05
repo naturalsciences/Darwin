@@ -16,11 +16,13 @@ abstract class BaseTagsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'gtu_ref'           => new sfWidgetFormInputHidden(),
+      'group_ref'         => new sfWidgetFormInputHidden(),
       'tag_value_indexed' => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
       'gtu_ref'           => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'gtu_ref', 'required' => false)),
+      'group_ref'         => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'group_ref', 'required' => false)),
       'tag_value_indexed' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'tag_value_indexed', 'required' => false)),
     ));
 

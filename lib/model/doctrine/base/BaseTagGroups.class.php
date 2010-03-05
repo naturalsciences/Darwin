@@ -14,25 +14,28 @@
  * @property string $color
  * @property string $tag_value
  * @property Gtu $Gtu
+ * @property Doctrine_Collection $Tags
  * 
- * @method integer   getId()                     Returns the current record's "id" value
- * @method integer   getGtuRef()                 Returns the current record's "gtu_ref" value
- * @method string    getGroupName()              Returns the current record's "group_name" value
- * @method string    getGroupNameIndexed()       Returns the current record's "group_name_indexed" value
- * @method string    getSubGroupName()           Returns the current record's "sub_group_name" value
- * @method string    getSubGroupNameIndexed()    Returns the current record's "sub_group_name_indexed" value
- * @method string    getColor()                  Returns the current record's "color" value
- * @method string    getTagValue()               Returns the current record's "tag_value" value
- * @method Gtu       getGtu()                    Returns the current record's "Gtu" value
- * @method TagGroups setId()                     Sets the current record's "id" value
- * @method TagGroups setGtuRef()                 Sets the current record's "gtu_ref" value
- * @method TagGroups setGroupName()              Sets the current record's "group_name" value
- * @method TagGroups setGroupNameIndexed()       Sets the current record's "group_name_indexed" value
- * @method TagGroups setSubGroupName()           Sets the current record's "sub_group_name" value
- * @method TagGroups setSubGroupNameIndexed()    Sets the current record's "sub_group_name_indexed" value
- * @method TagGroups setColor()                  Sets the current record's "color" value
- * @method TagGroups setTagValue()               Sets the current record's "tag_value" value
- * @method TagGroups setGtu()                    Sets the current record's "Gtu" value
+ * @method integer             getId()                     Returns the current record's "id" value
+ * @method integer             getGtuRef()                 Returns the current record's "gtu_ref" value
+ * @method string              getGroupName()              Returns the current record's "group_name" value
+ * @method string              getGroupNameIndexed()       Returns the current record's "group_name_indexed" value
+ * @method string              getSubGroupName()           Returns the current record's "sub_group_name" value
+ * @method string              getSubGroupNameIndexed()    Returns the current record's "sub_group_name_indexed" value
+ * @method string              getColor()                  Returns the current record's "color" value
+ * @method string              getTagValue()               Returns the current record's "tag_value" value
+ * @method Gtu                 getGtu()                    Returns the current record's "Gtu" value
+ * @method Doctrine_Collection getTags()                   Returns the current record's "Tags" collection
+ * @method TagGroups           setId()                     Sets the current record's "id" value
+ * @method TagGroups           setGtuRef()                 Sets the current record's "gtu_ref" value
+ * @method TagGroups           setGroupName()              Sets the current record's "group_name" value
+ * @method TagGroups           setGroupNameIndexed()       Sets the current record's "group_name_indexed" value
+ * @method TagGroups           setSubGroupName()           Sets the current record's "sub_group_name" value
+ * @method TagGroups           setSubGroupNameIndexed()    Sets the current record's "sub_group_name_indexed" value
+ * @method TagGroups           setColor()                  Sets the current record's "color" value
+ * @method TagGroups           setTagValue()               Sets the current record's "tag_value" value
+ * @method TagGroups           setGtu()                    Sets the current record's "Gtu" value
+ * @method TagGroups           setTags()                   Sets the current record's "Tags" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -83,5 +86,9 @@ abstract class BaseTagGroups extends sfDoctrineRecord
         $this->hasOne('Gtu', array(
              'local' => 'gtu_ref',
              'foreign' => 'id'));
+
+        $this->hasMany('Tags', array(
+             'local' => 'id',
+             'foreign' => 'group_ref'));
     }
 }
