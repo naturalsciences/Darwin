@@ -12,16 +12,17 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
 {
   public function configure()
   {
-    $parameters = array(array_merge($this->options, array('type'=>'taxonomy')));
     $this->useFields(array('name', 'level_ref'));
     $this->addPagerItems();
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
     $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>$parameters),
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array($this->defaults)),
         'add_empty' => 'All'
       ));
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['level'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
     $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema->setLabels(array('level_ref' => $this->getI18N()->__('Level')
@@ -32,20 +33,14 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
                                                                 )
                                                           );
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => true));
+    $this->validatorSchema['level'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
   }
 
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['name']);
-    if ($this->options['caller_id'] != '')
-    {
-      $query->andWhere("id != ?", $this->options['caller_id']);
-    }
-    if (is_array($this->options['levels']) && count($this->options['levels']) > 0)
-    {
-      $query->andWhereIn('level_ref', $this->options['levels']);
-    }
     $query->andWhere("id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

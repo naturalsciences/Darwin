@@ -20,7 +20,7 @@ class TaxonomyForm extends BaseTaxonomyForm
     ));
     $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
 	'model' => 'CatalogueLevels',
-	'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('type'=>'taxonomy'))),
+	'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('table'=>'taxonomy'))),
 	'add_empty' => true
       ));
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(

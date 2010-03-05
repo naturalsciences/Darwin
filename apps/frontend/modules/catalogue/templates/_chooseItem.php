@@ -18,14 +18,7 @@ $(document).ready(function ()
 });
 </script>
 
-<?php $parameters = '?'; ?>
-<?php $parameters .= (!isset($is_choose))?'':'is_choose='.$is_choose.'&'; ?>
-<?php $parameters .= ($searchForm->getOption('level')=='')?'':'level='.$searchForm->getOption('level').'&'; ?>
-<?php $parameters .= ($searchForm->getOption('caller_id')=='')?'':'caller_id='.$searchForm->getOption('caller_id').'&'; ?>
-<?php $parameters = ($parameters=='?')?'':rtrim($parameters, '&');?>
-
-<form id="catalogue_filter" class="search_form" method="post" action="<?php echo url_for('catalogue/search'.$parameters);?>">
-  <div class="container">
+<form id="catalogue_filter" class="search_form" method="post" action="<?php echo url_for('catalogue/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">  <div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
         <tr>
@@ -49,7 +42,7 @@ $(document).ready(function ()
           <?php if(isset($searchForm['code'])):?>
             <td><?php echo $searchForm['code'];?></td>
           <?php endif;?>
-          <td><?php echo $searchForm['name'];?><?php echo $searchForm['table'];?></td>
+          <td><?php echo $searchForm['name'];?><?php echo $searchForm->renderHiddenFields();?></td>
           <?php if(isset($searchForm['classification'])):?>
             <td><?php echo $searchForm['classification'];?></td>
           <?php endif;?>

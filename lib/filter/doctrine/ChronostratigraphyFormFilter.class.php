@@ -12,19 +12,20 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
 {
   public function configure()
   {
-    $parameters = array(array_merge($this->options, array('type'=>'chronostratigraphy')));
     $this->useFields(array('name', 'level_ref', 'lower_bound', 'upper_bound'));
     $this->addPagerItems();
     $this->widgetSchema['name'] = new sfWidgetFormInputText();
     $this->widgetSchema['lower_bound'] = new sfWidgetFormInput();
     $this->widgetSchema['upper_bound'] = new sfWidgetFormInput();
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['level'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
     $this->widgetSchema['lower_bound']->setAttributes(array('class'=>'small_size datesNum'));
     $this->widgetSchema['upper_bound']->setAttributes(array('class'=>'small_size datesNum'));
     $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>$parameters),
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array($this->defaults)),
         'add_empty' => 'All'
       ));
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
@@ -40,6 +41,8 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => true));
     $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'empty_value' => -4600, 'min' => -4600, 'max' => 1));
     $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'empty_value' => 1, 'min' => -4600, 'max' => 1));
+    $this->validatorSchema['level'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('lower_bound', 
                                                                           '<=', 
                                                                           'upper_bound', 
@@ -62,14 +65,6 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['name']);
     $this->addBoundRangeColumnQuery($query, $values['lower_bound'], $values['upper_bound']);
-    if ($this->options['caller_id'] != '')
-    {
-      $query->andWhere("id != ?", $this->options['caller_id']);
-    }
-    if (is_array($this->options['levels']) && count($this->options['levels']) > 0)
-    {
-      $query->andWhereIn('level_ref', $this->options['levels']);
-    }
     $query->andWhere("id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

@@ -12,7 +12,6 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
 {
   public function configure()
   {
-    $parameters = array(array_merge($this->options, array('type'=>'mineralogy')));
     $this->useFields(array('code', 'name', 'classification', 'level_ref'));
     $this->addPagerItems();
 
@@ -29,7 +28,7 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
 
     $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>$parameters),
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array($this->defaults)),
         'add_empty' => 'All'
       ));
 
@@ -38,6 +37,8 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
         'choices'  => $classificationKeys,
     ));
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['level'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
 
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
 
@@ -60,6 +61,8 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
 
     $this->validatorSchema['classification'] = new sfValidatorChoice(array('choices'  => array_keys($classificationKeys), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => true));
+    $this->validatorSchema['level'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
   }
 
   public function addCodeColumnQuery(Doctrine_Query $query, $field, $values)
@@ -82,14 +85,6 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['name']);
-    if ($this->options['caller_id'] != '')
-    {
-      $query->andWhere("id != ?", $this->options['caller_id']);
-    }
-    if (is_array($this->options['levels']) && count($this->options['levels']) > 0)
-    {
-      $query->andWhereIn('level_ref', $this->options['levels']);
-    }
     $query->andWhere("id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

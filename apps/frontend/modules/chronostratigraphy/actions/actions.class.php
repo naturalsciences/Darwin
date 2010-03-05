@@ -11,16 +11,12 @@
 class chronostratigraphyActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_chronostratigraphy_widget';
+  protected $table = 'chronostratigraphy';
 
   public function executeChoose(sfWebRequest $request)
   {
-    $level = '';
-    $caller_id = '';
-    if ($request->hasParameter('level')) $level = $request->getParameter('level');
-    if ($request->hasParameter('caller_id')) $caller_id = $request->getParameter('caller_id');
-    $this->searchForm = new ChronostratigraphyFormFilter(array('table' => 'chronostratigraphy'), 
-                                                         array('level' => $level, 'caller_id' => $caller_id)
-                                                        );
+    $this->setLevelAndCaller($request);
+    $this->searchForm = new ChronostratigraphyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
     $this->setLayout(false);
   }
 
@@ -67,7 +63,7 @@ class chronostratigraphyActions extends DarwinActions
     $this->form = new ChronostratigraphyForm($unit);
     
     $this->loadWidgets();
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('chronostratigraphy',$unit->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -76,7 +72,7 @@ class chronostratigraphyActions extends DarwinActions
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new ChronostratigraphyForm($unit);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('chronostratigraphy',$unit->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
     $this->processForm($request,$this->form);
 
     $this->loadWidgets();
@@ -87,7 +83,8 @@ class chronostratigraphyActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searchForm = new ChronostratigraphyFormFilter(array('table'=> 'chronostratigraphy'));
+    $this->setLevelAndCaller($request);
+    $this->searchForm = new ChronostratigraphyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

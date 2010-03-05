@@ -16,9 +16,9 @@ class CatalogueLevelsTable extends DarwinTable
       $q->innerJoin('cl.PossibleUpperLevels pul ON cl.id = pul.level_upper_ref')
         ->addWhere('pul.level_ref = ?', $parameters['level']);
     }
-    if (isset($parameters['type']))
+    if (isset($parameters['table']))
     {
-      $q->addWhere('cl.level_type = ?', $parameters['type']);
+      $q->addWhere('cl.level_type = ?', $parameters['table']);
     }
     return $q->execute();
   }

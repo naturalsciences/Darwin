@@ -21,7 +21,7 @@ class LithostratigraphyForm extends BaseLithostratigraphyForm
     ));
     $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('type'=>'lithostratigraphy'))),
+        'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('table'=>'lithostratigraphy'))),
         'add_empty' => true
       ));
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(

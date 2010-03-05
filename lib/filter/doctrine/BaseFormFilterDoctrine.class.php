@@ -116,6 +116,32 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     return $query;
   }
 
+  public function addLevelColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+     if ($values != "")
+     {
+       $levels = array();
+       $pul = Doctrine::getTable('PossibleUpperLevels')->findByLevelRef($values)->toArray();
+       foreach ($pul as $key=>$val)
+       {
+         $levels[]=$val['level_upper_ref'];
+       }
+       if (count($levels)>0):     
+         $query->andWhereIn('level_ref', $levels);
+       endif;
+     }
+     return $query;
+  }
+
+  public function addCallerIdColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+     if ($values != "")
+     {
+       $query->andWhere('id != ?', $values);
+     }
+     return $query;
+  }
+
   protected function getI18N()
   {
      return sfContext::getInstance()->getI18N();

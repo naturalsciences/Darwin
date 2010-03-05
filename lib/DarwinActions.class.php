@@ -22,6 +22,12 @@ class DarwinActions extends sfActions
     $pagerLayout->setSeparatorTemplate('<span class="pager_separator">::</span>');
   }
   
+  protected function setLevelAndCaller(sfWebRequest $request)
+  {
+    $this->level = (!$request->hasParameter('level'))?'':$request->getParameter('level');
+    $this->caller_id = (!$request->hasParameter('caller_id'))?'':$request->getParameter('caller_id');
+  }
+
   protected function loadWidgets()
   {
     $this->__set('widgetCategory',$this->widgetCategory);

@@ -32,7 +32,7 @@ class MineralogyForm extends BaseMineralogyForm
 
     $this->widgetSchema['level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
-        'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('type'=>'mineralogy'))),
+        'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => true
       ));
 

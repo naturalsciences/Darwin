@@ -60,18 +60,8 @@ class catalogueActions extends DarwinActions
   {
     $this->setCommonValues('catalogue', 'name_order_by', $request);
     $item = $request->getParameter('searchCatalogue',array('') );
-    $levels = array();
-    if ($request->getParameter('level', '') != '')
-    {
-      $pul = Doctrine::getTable('PossibleUpperLevels')->findByLevelRef($request->getParameter('level'))->toArray();
-      foreach ($pul as $key=>$val)
-      {
-        $levels[]=$val['level_upper_ref'];
-      }
-    }
-    $caller_id = $request->getParameter('caller_id', '');
     $formFilterName = DarwinTable::getFilterForTable($item['table']);
-    $this->searchForm = new $formFilterName(array('table' => $item['table']), array('levels'=>$levels, 'caller_id'=>$caller_id));
+    $this->searchForm = new $formFilterName(array('table' => $item['table'], 'level' => $item['level'], 'caller_id' => $item['caller_id']));
     $this->searchResults($this->searchForm,$request);
     $this->setLayout(false);
   }

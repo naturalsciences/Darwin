@@ -11,16 +11,12 @@
 class mineralogyActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_mineralogy_widget';
+  protected $table = 'mineralogy';
 
   public function executeChoose(sfWebRequest $request)
   {
-    $level = '';
-    $caller_id = '';
-    if ($request->hasParameter('level')) $level = $request->getParameter('level');
-    if ($request->hasParameter('caller_id')) $caller_id = $request->getParameter('caller_id');
-    $this->searchForm = new MineralogyFormFilter(array('table' => 'mineralogy'), 
-                                                 array('level' => $level, 'caller_id' => $caller_id)
-                                                );
+    $this->setLevelAndCaller($request);
+    $this->searchForm = new MineralogyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
     $this->setLayout(false);
   }
 
@@ -66,7 +62,7 @@ class mineralogyActions extends DarwinActions
     $this->form = new MineralogyForm($unit);
     $this->loadWidgets();
 
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('mineralogy',$unit->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -75,7 +71,7 @@ class mineralogyActions extends DarwinActions
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new MineralogyForm($unit);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('mineralogy',$unit->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
     $this->processForm($request,$this->form);
 
     $this->loadWidgets();
@@ -86,7 +82,8 @@ class mineralogyActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searchForm = new MineralogyFormFilter(array('table'=> 'mineralogy'));
+    $this->setLevelAndCaller($request);
+    $this->searchForm = new MineralogyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

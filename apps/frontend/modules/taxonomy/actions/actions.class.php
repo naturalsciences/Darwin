@@ -10,17 +10,13 @@
  */
 class taxonomyActions extends DarwinActions
 {
-  public $widgetCategory = 'catalogue_taxonomy_widget';
+  protected $widgetCategory = 'catalogue_taxonomy_widget';
+  protected $table = 'taxonomy';
 
   public function executeChoose(sfWebRequest $request)
   {
-    $level = '';
-    $caller_id = '';
-    if ($request->hasParameter('level')) $level = $request->getParameter('level');
-    if ($request->hasParameter('caller_id')) $caller_id = $request->getParameter('caller_id');
-    $this->searchForm = new TaxonomyFormFilter(array('table' => 'taxonomy'), 
-                                               array('level' => $level, 'caller_id' => $caller_id)
-                                              );
+    $this->setLevelAndCaller($request);
+    $this->searchForm = new TaxonomyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
     $this->setLayout(false);
   }
 
@@ -68,7 +64,7 @@ class taxonomyActions extends DarwinActions
     
     $this->loadWidgets();
 
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$taxa->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -78,7 +74,7 @@ class taxonomyActions extends DarwinActions
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy',$taxa->getId());
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$taxa->getId());
     $this->processForm($request,$this->form);
 
     $this->loadWidgets();
@@ -88,7 +84,8 @@ class taxonomyActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searchForm = new TaxonomyFormFilter(array('table'=> 'taxonomy'));
+    $this->setLevelAndCaller($request);
+    $this->searchForm = new TaxonomyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
