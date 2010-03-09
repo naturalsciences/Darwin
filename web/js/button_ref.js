@@ -2,6 +2,7 @@ var ref_element_id = null;
 var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
+var ref_table_name = '';
 $(document).ready(function () {
 
   $("a.but_text").live('click', function(){
@@ -14,6 +15,11 @@ $(document).ready(function () {
     if (ref_caller_id.length)
     {
       ref_caller_id = '/caller_id/'+ref_caller_id;
+    }
+    ref_table_name = $('input[id$=\"_table\"]').val();
+    if (ref_table_name.length)
+    {
+      ref_table_name = '/table/'+ref_table_name;
     }
     $(this).qtip({
         content: {
@@ -54,6 +60,20 @@ $(document).ready(function () {
 		  parent_el.prev().val(ref_element_id);
 		  $(this.elements.target).parent().prevAll('.ref_clear').show();
 		  $(this.elements.target).text('Change !');
+                  if(ref_table_name.length && $('a#searchPUL').attr('href').length)
+                  {
+                    ref_element_id = '/parent_id/'+ref_element_id;
+                    $.ajax({
+                            url: $('a#searchPUL').attr('href')+ref_level_id+ref_element_id+ref_table_name,
+                            success: function(html) 
+                            {
+                              if (html == 'ok')
+                              {
+                                $('div[id$=\"_warning\"]').hide();
+                              }
+                            }
+                           });
+                  }
 		  parent_el.prev().trigger('change');
 		}
 		$(this.elements.target).qtip("destroy");

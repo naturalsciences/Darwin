@@ -84,6 +84,7 @@ abstract class BaseLithostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
+             'default' => 0,
              ));
     }
 

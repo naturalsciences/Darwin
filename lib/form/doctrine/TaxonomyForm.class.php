@@ -12,6 +12,7 @@ class TaxonomyForm extends BaseTaxonomyForm
   public function configure()
   {
     unset($this['path']);
+    $this->widgetSchema['table'] = new sfWidgetFormInputHidden(array('default'=>'taxonomy'));
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
@@ -22,18 +23,22 @@ class TaxonomyForm extends BaseTaxonomyForm
 	'model' => 'CatalogueLevels',
 	'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('table'=>'taxonomy'))),
 	'add_empty' => true
-      ));
+      ),
+      array('class'=>'catalogue_level')
+      );
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',
        'method' => 'getName',
        'link_url' => 'taxonomy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
+       'wrong_parent_warning' => true,
      ));
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
                                          'parent_ref' => 'Parent'
                                         )
                                   );
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
+    $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
 
     $this->addKeywordsRelation('taxonomy');
     $subForm = new sfForm();

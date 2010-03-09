@@ -12,6 +12,7 @@ class MineralogyForm extends BaseMineralogyForm
   public function configure()
   {
     unset($this['path']);
+    $this->widgetSchema['table'] = new sfWidgetFormInputHidden(array('default'=>'mineralogy'));
     $this->widgetSchema['code'] = new sfWidgetFormInput();
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['formule'] = new sfWidgetFormInput();
@@ -34,13 +35,16 @@ class MineralogyForm extends BaseMineralogyForm
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => true
-      ));
+      ),
+      array('class'=>'catalogue_level')
+      );
 
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
        'model' => 'Mineralogy',
        'method' => 'getName',
        'link_url' => 'mineralogy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
+       'wrong_parent_warning' => true,
      ));
 
     $this->widgetSchema['cristal_system'] = new widgetFormSelectComplete(array('model' => 'Mineralogy',
@@ -61,6 +65,7 @@ class MineralogyForm extends BaseMineralogyForm
 
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema['classification'] = new sfValidatorChoice(array('choices'  => array_keys($classifications), 'required' => true));
+    $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
 
     $this->addKeywordsRelation('mineralogy');
     $subForm = new sfForm();

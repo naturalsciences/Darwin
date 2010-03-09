@@ -30,7 +30,6 @@ function addFormError(form_el, message)
 {
     if( $(form_el).is(':visible') )
     {
-//         $(form_el).addClass('error_fld');
         $(form_el).qtip({
             content: message,
             show: { ready: true, when : { event: 'none'} },

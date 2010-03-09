@@ -45,8 +45,8 @@
           <?php echo $form['extinct'] ?>
         </td>
       </tr> 
-      <tr>
-        <th class="top_aligned"><?php echo $form['parent_ref']->renderLabel() ?></th>
+      <tr id="parent_ref">
+        <th class="ref_name"><?php echo $form['parent_ref']->renderLabel() ?></th>
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
           <?php echo $form['parent_ref'] ?>
@@ -60,7 +60,7 @@
             <?php echo link_to(__('New Taxa'), 'taxonomy/new') ?>
           <?php endif?>
 
-          <?php echo $form['id']->render() ?>  &nbsp;<a href="<?php echo url_for('taxonomy/index') ?>"><?php echo __('Cancel');?></a>
+          <?php echo $form['id']->render() ?><?php echo $form['table']->render() ?><?php echo link_to('search PUL', 'catalogue/searchPUL', array('id' => 'searchPUL', 'class' => 'hidden'));?>  &nbsp;<a href="<?php echo url_for('taxonomy/index') ?>"><?php echo __('Cancel');?></a>
 
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('Delete'), 'taxonomy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>

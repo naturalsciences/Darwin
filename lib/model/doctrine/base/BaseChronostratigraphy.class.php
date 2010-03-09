@@ -90,6 +90,7 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
              'type' => 'integer',
+             'default' => 0,
              ));
         $this->hasColumn('lower_bound', 'decimal', 10, array(
              'type' => 'decimal',

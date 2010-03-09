@@ -671,7 +671,7 @@ Chronostratigraphy:
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
-        parent_ref: { type: integer, default: null}
+        parent_ref: { type: integer, default: 0}
         lower_bound: { type: decimal, length: 10, scale: 3}
         upper_bound: { type: decimal, length: 10, scale: 3}
     relations:
@@ -693,7 +693,7 @@ Lithostratigraphy:
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
-        parent_ref: { type: integer, default: null}
+        parent_ref: { type: integer, default: 0}
     relations:
         Parent:
             class: Lithostratigraphy
@@ -713,7 +713,7 @@ Mineralogy:
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
-        parent_ref: { type: integer, default: null}
+        parent_ref: { type: integer, default: 0}
         code: { type: string, notnull: true}
         classification: { type: string, notnull: true, default: strunz}
         formule: { type: string }
@@ -738,7 +738,7 @@ Lithology:
         level_ref: { type: integer, notnull: true}
         status: { type: string, notnull: true, default: valid}
         path: { type: string, notnull: false, default: '/'}
-        parent_ref: { type: integer, default: null}
+        parent_ref: { type: integer, default: 0}
     relations:
         Parent:
             class: Lithology

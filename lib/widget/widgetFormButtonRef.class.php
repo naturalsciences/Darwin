@@ -8,11 +8,11 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
-	$input .= $this->renderContentTag('div',$this->escapeOnce($obj_name), array(
+	$input .= $this->renderContentTag('div',$this->escapeOnce(($obj_name == '')?'-':$obj_name), array(
 	   'id' => $this->generateId($name)."_name",
 	   'class' => "ref_name",
 	));
-
+        
 	if($this->getOption('nullable'))
 	{
 	  $options = array(
@@ -24,9 +24,13 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	    $options['class'] .= ' hidden';
 	  $input .= $this->renderTag('img',$options);
 	}
+
+        $class = 'ref_name button';
 	if(! $this->getOption('button_is_hidden'))
 	{
-	  $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="button">';
+          if ($value == 0)
+            $class .= ' hidden';
+	  $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="'.$class.'">';
 	  $input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
 
 	  $input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
@@ -35,9 +39,21 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	  ); 
 
 	  $input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
-	  $input .= '</div>';
-	  $input .= $this->renderContentTag('div','&nbsp;',array('class' => 'clear'));
+          $input .= '</div>';
+/*	  $input .= $this->renderContentTag('div','&nbsp;',array('class' => 'clear'));*/
 	}
+
+        if($this->getOption('wrong_parent_warning'))
+        {
+          $class .= ' warn_message hidden';
+          $input .= $this->renderContentTag('div', 
+                                            __('The parenty does not follow the possible upper level rule'), 
+                                            array(
+                                                   'id' => $this->generateId($name).'_warning',
+                                                   'class' => $class
+                                                 )
+                                           );
+        }
         return $input;
     }
     
@@ -47,11 +63,9 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $this->addRequiredOption('model');
         $this->addOption('method', '__toString');
 	$this->addOption('nullable', false);
-
-//         $this->addOption('connection', null);
-//         $this->addOption('table_method', null);
 	$this->addOption('is_hidden', false);
 	$this->addOption('button_is_hidden', false);
+	$this->addOption('wrong_parent_warning', false);
         $this->addRequiredOption('link_url');
 	$this->addRequiredOption('box_title');
     }
@@ -77,4 +91,5 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
             throw $e;
         }
     }
+
 }

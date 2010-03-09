@@ -9,7 +9,7 @@ $browser->
   info('Index')->
   get('/taxonomy/edit?id=-1')->
     with('response')->begin()->
-    isStatusCode(404)->
+    isStatusCode(200)->
   end()->
   get('/taxonomy/index')->
   

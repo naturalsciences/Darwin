@@ -25,7 +25,7 @@ class DarwinTable extends Doctrine_Table
      */
     public function findExcept($rowId)
     {
-        if ($rowId > 0)
+        if ($rowId != 0)
         { 
           return parent::find($rowId);
         }

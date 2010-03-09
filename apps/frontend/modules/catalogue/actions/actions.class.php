@@ -91,7 +91,7 @@ class catalogueActions extends DarwinActions
         $query = $form->getQuery()
 	  ->orderBy($this->orderBy .' '.$this->orderDir);
 	if($this->is_choose == 0)
-	  $query->andWhere('id > 0');
+	  $query->andWhere('id != 0');
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager($query,
                              $this->currentPage,
@@ -111,6 +111,35 @@ class catalogueActions extends DarwinActions
 	
       }
     }
+  }
+
+  public function executeSearchPUL(sfWebRequest $request)
+  {
+    $response = 'ok';
+    if($request->hasParameter('level_id') && $request->hasParameter('parent_id') && $request->hasParameter('table'))
+    {
+      $parent_level = Doctrine::getTable($request->getParameter('table'))->findOneById($request->getParameter('parent_id'))->getLevelRef();
+      $possible_upper_levels = Doctrine::getTable('PossibleUpperLevels')->findByLevelRef($request->getParameter('level_id'));
+      if($possible_upper_levels)
+      {
+        $possible_upper_levels = $possible_upper_levels->toArray();
+        $response = 'not ok';
+        foreach($possible_upper_levels as $key=>$val)
+        {
+          if($val['level_upper_ref'] == 0)
+          {
+            $response = 'top';
+            break;
+          }
+          elseif ($val['level_upper_ref'] == $parent_level)
+          {
+            $response = 'ok';
+            break;
+          }
+        }
+      }
+    }
+    return $this->renderText($response);
   }
 
   public function executeAddValue(sfWebRequest $request)
