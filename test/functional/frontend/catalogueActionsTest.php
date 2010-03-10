@@ -102,3 +102,32 @@ $browser->
     checkElement('form')->
     checkElement('#relation_catalogue_name','')->
   end();
+
+  $items = Doctrine::getTable('Taxonomy')->findByName('Falco Peregrinus (Duchesnus Brulus 1912)');
+  $parent_item = Doctrine::getTable('Taxonomy')->findOneByLevelRef(48);
+  $items[0]->setParentRef($parent_item->getId());
+  $items[0]->save();
+
+$browser->
+  info('Test the possible upper levels check function')->
+  get('/catalogue/searchPUL/table/taxonomy/level_id/'.$items[0]->getLevelRef().'/parent_id/'.$parent_item->getId())->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/ok/')->
+  end()->
+  get('/catalogue/searchPUL/table/taxonomy/level_id/20/parent_id/'.$parent_item->getId())->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/not ok/')->
+  end()->
+  get('/catalogue/searchPUL/table/taxonomy/level_id/50/parent_id/'.$parent_item->getId())->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/ok/')->
+  end()->
+  get('/catalogue/searchPUL/table/taxonomy/level_id/1/parent_id/'.$parent_item->getId())->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/top/')->
+  end();
+  

@@ -122,6 +122,10 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
     checkElement('#catalogue_keywords table[alt="scientific_name_authorship"] tr',1)->
     checkElement('#catalogue_keywords table[alt="specific_epithet"] tr',1)->
     checkElement('#catalogue_keywords table[alt="pub_year"] tr',1)->
+    checkElement('div#taxonomy_parent_ref_warning', 1)->
+    checkElement('table.classifications_edit tfoot tr td input#taxonomy_id', 1)->
+    checkElement('table.classifications_edit tfoot tr td input#taxonomy_table', 1)->
+    checkElement('table.classifications_edit tfoot tr td a#searchPUL', 1)->
   end()->
 
   click('Delete')->
@@ -140,3 +144,21 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
 
   $browser->
   test()->is($nitems->count(),0, 'We have no matching taxa');
+
+  $item = Doctrine::getTable('Taxonomy')->findOneByStatusAndLevelRef('invalid',49);
+
+  $browser->
+  info('Mimic the parenty set of the only invalid taxon of level sub_species')->
+  get('/taxonomy/choose?level='.$item->getLevelRef().'&caller_id='.$item->getId())->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('form select option',2)->
+    checkElement('form select option:last[text="species"]',true)->
+    checkElement('form input[id="searchCatalogue_table"][value="taxonomy"]', true)->
+    checkElement('form input[id="searchCatalogue_level"][value="49"]', true)->
+  end()->
+  info('Check that the results when clicking on search retrieve the only "one" species encoded')->
+  click('Search')->
+  with('response')->begin()->
+    checkElement('table.results tbody tr', 1)->
+  end();
