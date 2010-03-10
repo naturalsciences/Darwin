@@ -25,7 +25,7 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
     $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema->setNameFormat('searchCatalogue[%s]');
     $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
-    $this->widgetSchema->setLabels(array('level_ref' => $this->getI18N()->__('Level')
+    $this->widgetSchema->setLabels(array('level_ref' => 'Level'
                                         )
                                   );
     $this->validatorSchema['name'] = new sfValidatorString(array('required' => false,

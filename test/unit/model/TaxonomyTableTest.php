@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(12, new lime_output_color());
+$t = new lime_test(13, new lime_output_color());
 
 $taxs = Doctrine::getTable('Taxonomy')->findOneByName('Falco Peregrinus eliticus');
 $t->info('findWithParents($id)');
@@ -20,6 +20,7 @@ $t->is(DarwinTable::getFilterForTable('classification_syonymies'),"Classificatio
 $t->is(DarwinTable::getFormForTable('classification_syonymies'),"ClassificationSyonymiesForm",'Form Name');
 $t->is(DarwinTable::getModelForTable('classification_syonymies'),"ClassificationSyonymies",'Model Name');
 
-$t->isnt(Doctrine::getTable('Taxonomy')->findExcept(4),false,'We got the record');
-$t->is(Doctrine::getTable('Taxonomy')->findExcept(-1),false,'We when id is below 0 there is no record');
-$t->isnt(Doctrine::getTable('Taxonomy')->find(-1),false,'We when id is below 0 "find" has a record');
+$t->is(Doctrine::getTable('Taxonomy')->findExcept(4)->toArray(),true,'We got the record with findExcept');
+$t->is(Doctrine::getTable('Taxonomy')->findExcept(-1)->toArray(),true,'Record bellow 0 are found  with findExcept');
+$t->is(Doctrine::getTable('Taxonomy')->findExcept(0),false,'Record 0 cannot be found with findExcept');
+$t->is(Doctrine::getTable('Taxonomy')->findById(0)->toArray(),true,'Prove the record 0 can be found by an other mean (findById)');
