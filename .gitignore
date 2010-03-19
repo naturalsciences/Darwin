@@ -1,4 +1,6 @@
 cache/*
+!cache/.gitignore
 log/*
+!log/.gitignore
 ./config/databases.yml
 ./web/favicon.ico
