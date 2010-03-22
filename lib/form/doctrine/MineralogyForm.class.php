@@ -44,7 +44,7 @@ class MineralogyForm extends BaseMineralogyForm
        'method' => 'getName',
        'link_url' => 'mineralogy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
-       'wrong_parent_warning' => true,
+       'button_is_hidden' => true,
      ));
 
     $this->widgetSchema['cristal_system'] = new widgetFormSelectComplete(array('model' => 'Mineralogy',

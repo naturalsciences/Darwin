@@ -9,4 +9,12 @@ class Chronostratigraphy extends BaseChronostratigraphy
   {
     return $this->_get('name');
   }
+
+  public function getName()
+  {
+    if(! $this->isNew() && $this->_get('id')==0)
+      return '-';
+    return $this->_get('name');
+  }
+
 }

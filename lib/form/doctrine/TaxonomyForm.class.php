@@ -31,7 +31,7 @@ class TaxonomyForm extends BaseTaxonomyForm
        'method' => 'getName',
        'link_url' => 'taxonomy/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
-       'wrong_parent_warning' => true,
+       'button_is_hidden' => true,
      ));
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
                                          'parent_ref' => 'Parent'

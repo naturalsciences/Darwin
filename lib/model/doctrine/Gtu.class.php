@@ -58,4 +58,11 @@ class Gtu extends BaseGtu
       $this->_set('gtu_to_date_mask', $dateTime->getMask());
     }
   }
+
+  public function getCode()
+  {
+    if(! $this->isNew() && $this->_get('id')==0)
+      return '-';
+    return $this->_get('code');
+  }
 }

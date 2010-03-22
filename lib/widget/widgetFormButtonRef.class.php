@@ -8,7 +8,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
-	$input .= $this->renderContentTag('div',$this->escapeOnce(($obj_name == '')?'-':$obj_name), array(
+	$input .= $this->renderContentTag('div',$obj_name, array(
 	   'id' => $this->generateId($name)."_name",
 	   'class' => "ref_name",
 	));
@@ -20,40 +20,27 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	    'class' => 'ref_clear'
 	  );
 
-	  if($obj_name == '')
+	  if($value == 0)
 	    $options['class'] .= ' hidden';
 	  $input .= $this->renderTag('img',$options);
 	}
 
         $class = 'ref_name button';
-	if(! $this->getOption('button_is_hidden'))
+	if($this->getOption('button_is_hidden') && $value == 0)
 	{
-          if ($value == 0)
-            $class .= ' hidden';
-	  $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="'.$class.'">';
-	  $input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
-
-	  $input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
-	      $this->getOption('link_url'),
-	      array('class' => 'but_text' )
-	  ); 
-
-	  $input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
-          $input .= '</div>';
-/*	  $input .= $this->renderContentTag('div','&nbsp;',array('class' => 'clear'));*/
+	  $class .= ' hidden';
 	}
+	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="'.$class.'">';
+	$input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
 
-        if($this->getOption('wrong_parent_warning'))
-        {
-          $class .= ' warn_message hidden';
-          $input .= $this->renderContentTag('div', 
-                                            __('The parenty does not follow the possible upper level rule'), 
-                                            array(
-                                                   'id' => $this->generateId($name).'_warning',
-                                                   'class' => $class
-                                                 )
-                                           );
-        }
+	$input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
+	    $this->getOption('link_url'),
+	    array('class' => 'but_text' )
+	); 
+
+	$input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
+	$input .= '</div>';
+
         return $input;
     }
     
@@ -65,7 +52,6 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	$this->addOption('nullable', false);
 	$this->addOption('is_hidden', false);
 	$this->addOption('button_is_hidden', false);
-	$this->addOption('wrong_parent_warning', false);
         $this->addRequiredOption('link_url');
 	$this->addRequiredOption('box_title');
     }
@@ -80,9 +66,9 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         if(is_numeric($value))
             $object = Doctrine::getTable($this->getOption('model'))->find($value);
         else
-            return '';
+            return '-';
         if(! $object)
-            return '';
+            return '-';
         $method = $this->getOption('method');
         try
         {

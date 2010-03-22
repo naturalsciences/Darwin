@@ -36,4 +36,42 @@ $(document).ready(function () {
    return false;
  });
 
+ $('tr#parent_ref input[type="hidden"]').bind('loadref',function()
+  {
+    ref_level_id = $('select[id$=\"_level_ref\"]').val();
+    if (ref_level_id.length)
+    {
+      ref_level_id = '/level/'+ref_level_id;
+    }
+    ref_caller_id = $('input[id$=\"_id\"]').val();
+    if (ref_caller_id.length)
+    {
+      ref_caller_id = '/caller_id/'+ref_caller_id;
+    }
+
+    button = $(this).parent().find('.but_text');
+
+    if(button.data('href') == null)
+    {
+      button.data('href', button.attr('href'));
+    }
+    
+    button.attr('href', button.data('href') + ref_level_id + ref_caller_id);
+
+  });
+
+ $('tr#parent_ref input[type="hidden"]').change(function()
+ {
+    $.ajax({
+      url: $('a#searchPUL').attr('href')+ $('select[id$=\"_level_ref\"]').val() + '/parent_id/' + $(this).val() + '/table/' +$('input[id$=\"_table\"]').val(),
+      success: function(html) 
+      {
+	if (html == 'ok')
+	{
+	  $('div[id$=\"_warning\"]').hide();
+	}
+      }
+    });
+ });
+
 });
