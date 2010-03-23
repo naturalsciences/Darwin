@@ -1,6 +1,6 @@
 Taxonomy:
     ta0:
-        id: 0
+        id: '0'
         name: ''
         level_ref: 0
         status: valid
@@ -49,7 +49,7 @@ Taxonomy:
 
 Expeditions:
     ex0:
-        id: 0
+        id: '0'
         name: ''
     ex1:
         name: 'PNG77'
@@ -861,7 +861,7 @@ ClassificationSynonymies:
 
 Chronostratigraphy:
     chs0:
-        id: 0
+        id: '0'
         name: ''
         level_ref: 0
         status: valid
@@ -934,7 +934,7 @@ Chronostratigraphy:
 
 Lithostratigraphy:
     ls0:
-        id: 0
+        id: '0'
         name: ''
         level_ref: 0
         status: valid
@@ -982,7 +982,7 @@ Lithostratigraphy:
 
 Mineralogy:
     min0:
-        id: 0
+        id: '0'
         code: ''
         name: ''
         level_ref: 0
@@ -1057,7 +1057,7 @@ Mineralogy:
 
 Lithology:
     lol0:
-        id: 0
+        id: '0'
         name: ''
         level_ref: 0
         status: valid
