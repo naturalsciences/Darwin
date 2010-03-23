@@ -7,6 +7,11 @@ class DarwinTable extends Doctrine_Table
       return self::getModelForTable($table). 'FormFilter';
     }
     
+    /**
+     * Get the Form formating of a table name
+     * @param $table string a table name
+     * @return string The Form name formatted
+    */
     public static function getFormForTable($table)
     {
       return self::getModelForTable($table). 'Form';
