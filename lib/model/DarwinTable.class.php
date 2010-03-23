@@ -11,7 +11,12 @@ class DarwinTable extends Doctrine_Table
     {
       return self::getModelForTable($table). 'Form';
     }
-
+  
+    /**
+     * Get the Model formating of a table name
+     * @param $table string a table name
+     * @return string The model name formatted
+    */
     public static function getModelForTable($table)
     {
       return sfInflector::camelize($table);
