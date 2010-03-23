@@ -76,6 +76,12 @@ class DarwinTable extends Doctrine_Table
     return $q;
   }
 
+  /**
+   * findWithParents
+   * Find records with his parents order by the path ( root first)
+   * @param $id int Id of the record to search
+   * @return Doctrine_Collection A collection of records
+  */
   public function findWithParents($id)
   {
     $self_unit = Doctrine::getTable($this->getTableName())->find($id);
