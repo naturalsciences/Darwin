@@ -5890,6 +5890,9 @@ AS $$
 BEGIN
 	IF TG_OP = 'INSERT' THEN
 		IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats') THEN
+		    IF NEW.id = 0 THEN
+			NEW.parent_ref = null;
+		    END IF;
 	            IF NEW.parent_ref IS NULL THEN
         	        NEW.path ='/';
 	            ELSE
