@@ -5,6 +5,17 @@
 class MyPreferencesTable extends DarwinTable
 {
 
+  public function getWidgetTitle($userId, $widget, $category)
+  {
+    $q = Doctrine_Query::create()
+         ->select('p.title_perso as title')
+         ->from('MyPreferences p')
+         ->andWhere('p.user_ref = ?', $userId)
+         ->andWhere('p.group_name = ?', $widget)
+         ->andWhere('p.category = ?', $category);
+    return $q->execute();
+  }
+
   public function getWidgets($category)
   {
       $q = Doctrine_Query::create()

@@ -92,8 +92,8 @@ $browser->
   get('/board/index')->
   with('response')->begin()->
     checkElement('.board_col:first .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')-> //First widget
-    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My Saved Specimens')->//Second widget
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')-> //First widget
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My saved specimens')->//Second widget
   end()->
   get('/widgets/changeOrder?category=board&col1=savedSpecimens,savedSearch&col2=')->
   with('response')->begin()->
@@ -102,8 +102,8 @@ $browser->
   get('/board/index')->
   with('response')->begin()->
     checkElement('.board_col:first .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Specimens')-> //First widget
-    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My Saved Searches')->//Second widget
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved specimens')-> //First widget
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My saved searches')->//Second widget
   end()->
   
   
@@ -116,8 +116,8 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',0)->
     checkElement('.board_col:last .widget',2)->
-    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Searches')-> //First widget
-    checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','My Saved Specimens')->//Second widget
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My saved searches')-> //First widget
+    checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','My saved specimens')->//Second widget
   end()->
   
   
@@ -130,8 +130,8 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',1)->
     checkElement('.board_col:last .widget',1)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')-> 
-    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')-> 
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My saved specimens')->
   end()->
 
 
@@ -144,8 +144,8 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',1)->
     checkElement('.board_col:last .widget',1)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')-> 
-    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')-> 
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My saved specimens')->
   end()->
 
 
@@ -158,7 +158,7 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',1)->
     checkElement('.board_col:last .widget',1)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My Saved Searches')->
-    checkElement('.board_col:last .widget:first .widget_top_bar span','My Saved Specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')->
+    checkElement('.board_col:last .widget:first .widget_top_bar span','My saved specimens')->
   end()
 ;

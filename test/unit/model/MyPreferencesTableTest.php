@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(18, new lime_output_color());
+$t = new lime_test(19, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
@@ -118,3 +118,8 @@ $t->is($widgets[0]->getOrderBy(),1, "Is order set correctly");
 $t->is($widgets[1]->getOrderBy(),1, "Is order set for everyone");
 $t->is($widgets[0]->getColNum(),2, "Is col_num set correctly");
 $t->is($widgets[1]->getColNum(),1, "Is col_num for everyone");
+
+$title = Doctrine::getTable('MyPreferences')->getWidgetTitle($userEvil, $widgets[0]->getGroupName(), $widgets[0]->getCategory());
+$title = $title->toArray();
+
+$t->is($widgets[0]->getTitlePerso(), $title[0]['title'], 'Title perso is well what is coming from "getWidgetTitle" method');

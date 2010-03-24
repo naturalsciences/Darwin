@@ -1,4 +1,3 @@
-<?php slot('widget_title',__('Recombination'));  ?>
 <table class="catalogue_table">
   <thead>
     <th><?php echo __('Combination of');?></th>
