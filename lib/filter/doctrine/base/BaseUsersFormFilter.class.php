@@ -18,7 +18,7 @@ abstract class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'formated_name'         => new sfWidgetFormFilterInput(),
       'formated_name_indexed' => new sfWidgetFormFilterInput(),
       'formated_name_ts'      => new sfWidgetFormFilterInput(),
-      'title'                 => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'title'                 => new sfWidgetFormFilterInput(),
       'family_name'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'given_name'            => new sfWidgetFormFilterInput(),
       'additional_names'      => new sfWidgetFormFilterInput(),

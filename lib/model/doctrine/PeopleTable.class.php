@@ -5,6 +5,15 @@
 class PeopleTable extends DarwinTable
 {
   /**
+  * Find all distinct tyoe of institutions
+  * @return Doctrine_Collection with only the key 'type'
+  */
+  public function getDistinctTitles()
+  {
+    return $this->createDistinct('People', 'title', 'titles')->execute();
+  }
+
+  /**
   * Search all physical people by name
   * @param string $name a part of the formated name to look for (with ts)
   * @return Doctrine_Collection Collection of People

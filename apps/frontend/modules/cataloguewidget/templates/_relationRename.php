@@ -1,4 +1,3 @@
-<?php slot('widget_title',__('Renamed'));  ?>
 <table class="catalogue_table">
   <thead>
     <th><?php echo __('Renamed to');?></th>

@@ -10,6 +10,8 @@
  */
 class collectionActions extends DarwinActions
 {
+  protected $widgetCategory = 'catalogue_collections_widget';
+
   public function executeCompleteOptions(sfWebRequest $request)
   {
     $this->collections = Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($request->getParameter('institution'));
@@ -47,6 +49,7 @@ class collectionActions extends DarwinActions
   {
     $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
     $this->form = new CollectionsForm($collections);
+    $this->loadWidgets();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -56,6 +59,7 @@ class collectionActions extends DarwinActions
     $this->form = new CollectionsForm($collections);
 
     $this->processForm($request, $this->form);
+    $this->loadWidgets();
 
     $this->setTemplate('edit');
   }
@@ -77,6 +81,7 @@ class collectionActions extends DarwinActions
       $this->form = new CollectionsForm($collections);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
       $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
       $this->setTemplate('edit');
       return ;
     }

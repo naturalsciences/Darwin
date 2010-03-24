@@ -23,10 +23,19 @@ class widgetsActions extends DarwinActions
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), 'visible');
 
+    $title = Doctrine::getTable('MyPreferences')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
+                                                                 $request->getParameter('widget'),
+                                                                 $request->getParameter('category')."_widget");
+    if($title)
+    {
+      $title = $title[0]['title'];
+    }
+
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
             'category' => $this->getComponentFromCategory($request->getParameter('category')),
+            'title' => $title,
 	    'options' => array(
 		'eid' =>  $request->getParameter('eid',null),
 		'table' => $this->getTableFromCategory($request->getParameter('category')),
