@@ -115,7 +115,7 @@
  * @package    darwin
  * @subpackage model
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7380 2010-03-15 21:07:50Z jwage $
  */
 abstract class BaseUsers extends sfDoctrineRecord
 {
@@ -145,7 +145,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              ));
         $this->hasColumn('title', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
              ));
         $this->hasColumn('family_name', 'string', null, array(
              'type' => 'string',

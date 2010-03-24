@@ -40,7 +40,7 @@ abstract class BaseUsersForm extends BaseFormDoctrine
       'formated_name'         => new sfValidatorString(array('required' => false)),
       'formated_name_indexed' => new sfValidatorString(array('required' => false)),
       'formated_name_ts'      => new sfValidatorString(array('required' => false)),
-      'title'                 => new sfValidatorString(),
+      'title'                 => new sfValidatorString(array('required' => false)),
       'family_name'           => new sfValidatorString(),
       'given_name'            => new sfValidatorString(array('required' => false)),
       'additional_names'      => new sfValidatorString(array('required' => false)),

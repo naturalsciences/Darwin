@@ -9,7 +9,7 @@
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
-        <th><?php echo $form['title']->renderLabel() ?></th>
+        <th class="top_aligned"><?php echo $form['title']->renderLabel() ?></th>
         <td>
           <?php echo $form['title']->renderError() ?>
           <?php echo $form['title'] ?>

@@ -23,12 +23,21 @@ class PeopleForm extends BasePeopleForm
       $this['activity_date_to_mask']
     );
     
-    $this->widgetSchema['title'] = new sfWidgetFormInput();
+    $this->widgetSchema['title'] = new widgetFormSelectComplete(array(
+        'model' => 'People',
+        'table_method' => 'getDistinctTitles',
+        'method' => 'getTitles',
+        'key_method' => 'getTitles',
+        'add_empty' => true,
+        'change_label' => 'Pick a title in the list',
+        'add_label' => 'Add another title',
+    ));
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['family_name'] = new sfWidgetFormInput();
     $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
 
     $this->widgetSchema['title']->setAttributes(array('class'=>'small_size'));
+
     $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['additional_names']->setAttributes(array('class'=>'medium_size'));
@@ -39,7 +48,6 @@ class PeopleForm extends BasePeopleForm
     ));
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('choices' => array_keys(People::getTypes()), 'required' => false, 'multiple' => true));
     $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
-
     $this->Postvalidators = array();
     $this->initiateActivityItems();
     $this->initiateBirthItems();
