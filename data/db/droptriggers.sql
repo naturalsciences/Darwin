@@ -62,8 +62,6 @@ DROP TRIGGER trg_cas_userType_users ON users;
 DROP TRIGGER trg_chk_peopleType ON people;
 DROP TRIGGER trg_chk_AreRole ON catalogue_people;
 
-DROP TRIGGER trg_clr_title ON people;
-DROP TRIGGER trg_clr_title ON users;
 DROP TRIGGER trg_cpy_FormattedName ON people;
 DROP TRIGGER trg_cpy_FormattedName ON users;
 

@@ -5699,33 +5699,6 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_clr_title() RETURNS TRIGGER
-AS $$
-BEGIN
-	IF NEW.is_physical THEN
-		IF TG_OP ='UPDATE' THEN
-			IF OLD.gender != NEW.gender THEN
-				IF ( NEW.gender='M' AND NEW.title='Mrs') OR ( NEW.gender='F' AND NEW.title='Mr') THEN
-					NEW.title='';
-				END IF;
-			END IF;
-		END IF;
-		
-		IF NEW.title is NULL OR NEW.title = '' THEN
-			IF NEW.gender = 'M' THEN
-				NEW.title := 'Mr';
-			ELSE
-				NEW.title := 'Mrs';
-			END IF;
-		END IF;
-	ELSE
-		NEW.title := '';
-	END IF;
-	RETURN NEW;
-END;
-$$
-LANGUAGE plpgsql;
-
 CREATE OR REPLACE FUNCTION fct_cpy_FormattedName() RETURNS TRIGGER
 AS $$
 BEGIN
