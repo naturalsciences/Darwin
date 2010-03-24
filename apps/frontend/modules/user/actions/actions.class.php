@@ -11,7 +11,16 @@
 class userActions extends DarwinActions
 {
   protected $widgetCategory = 'users_widget';
-
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->form = new UsersForm();
+  }
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
+    $this->form = new UsersForm($user);
+    $this->loadWidgets();
+  }
   /**
     * Action executed when calling the expeditions from an other screen
     * @param sfWebRequest $request Request coming from browser
@@ -24,7 +33,7 @@ class userActions extends DarwinActions
 
   public function executeSearch(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod('post'));
+
     $this->setCommonValues('user', 'family_name', $request);
     $this->form = new UsersFormFilter();
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
@@ -72,7 +81,7 @@ class userActions extends DarwinActions
 
     $old_people = $this->user->getPeopleId();
 
-    $this->form = new UsersForm($this->user);
+    $this->form = new ProfileForm($this->user);
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users'));
@@ -169,6 +178,33 @@ class userActions extends DarwinActions
 	  }
 	  return $this->renderText('ok');
 	}
+    }
+  }
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+    $this->form = new UsersForm();
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('new');
+  }
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      try{
+	$user = $form->save();
+	$this->redirect('user/edit?id='.$user->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error);
+      }
     }
   }
 

@@ -9,4 +9,12 @@ class Users extends BaseUsers
     {
         return $this->getFormatedName();
     }
+    public static function getTypes()
+    {
+     return array(
+      1 => 'Registered user',
+      2 => 'Encoder',
+      4 => 'Collection manager',
+      );
+    }
 }

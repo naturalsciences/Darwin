@@ -10,8 +10,8 @@ dev:
     class: sfDoctrineDatabase
     param:
       dsn: 'pgsql:host=127.0.0.1;dbname=darwin2'
-      username: unit
-      password: unit
+      username: cebmpad
+      password: cebmpad
 
 test:
   doctrine:
@@ -19,13 +19,13 @@ test:
     param:
       quote_identifier: true
       dsn: 'pgsql:host=127.0.0.1;dbname=darwin2'
-      username: unit
-      password: unit
+      username: cebmpad
+      password: cebmpad
 
 preprod:
   doctrine:
     class: sfDoctrineDatabase
     param:
       dsn: 'pgsql:host=127.0.0.1;dbname=darwin2'
-      username: darwin2
-      password: Cave66
+      username: cebmpad
+      password: cebmpad

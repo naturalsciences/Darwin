@@ -69,6 +69,13 @@
                 <li><a href="#">Rights</a></li>
                 <li><a href="#">A Super Long truc en NL</a></li>
                 <li><a href="#">....</a></li>
+                <li>
+                	<a href="#">User</a>
+                	<ul>
+                		<li><?php echo link_to(__('Add'),'user/new');?></li>
+                		<li><?php echo link_to(__('Search'),'user/search');?></li>
+                	</ul>
+                </li>
             </ul>
         </li>
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>

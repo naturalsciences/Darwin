@@ -217,7 +217,7 @@ Users:
         formated_name: { type: string},
         formated_name_indexed: { type: string}
         formated_name_ts: { type: string}
-        title: { type: string, notnull: true}
+        title: { type: string}
         family_name: { type: string, notnull: true}
         given_name: { type: string}
         additional_names: { type: string}

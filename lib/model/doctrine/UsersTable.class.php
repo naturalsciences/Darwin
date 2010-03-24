@@ -20,4 +20,20 @@ class UsersTable extends DarwinTable
             ->andWhere('ul.login_system is null');
         return $q->fetchOne();
     }
+    public function findUser($id)
+    {
+	   $q = Doctrine_Query::create()
+		->from('users u')
+		->where('u.id = ?', $id);
+
+	   return $q->fetchOne(); 
+    }
+    public function getDistinctTitle()
+    {
+        return $this->createDistinct('Users', 'title', 'title')->execute();
+    }	
+    public function getDistinctSubType()
+    {
+        return $this->createDistinct('Users', 'sub_type', 'sub_type')->execute();
+    }	
 }
