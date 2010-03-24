@@ -6636,7 +6636,7 @@ DECLARE
   entry_row RECORD;
   seen_el varchar[];
 BEGIN
-    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag FROM regexp_split_to_table(NEW.tag_value, ';') as tags WHERE fulltoIndex(tags) != '';
+    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag, trim(tags) as tags FROM regexp_split_to_table(NEW.tag_value, ';') as tags WHERE fulltoIndex(tags) != '';
 
     LOOP
       FETCH curs_entry INTO entry_row;
@@ -6648,8 +6648,8 @@ BEGIN
       IF FOUND THEN
         CONTINUE;
       ELSE
-        INSERT INTO tags (gtu_ref, group_ref, tag_indexed)
-	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag);
+        INSERT INTO tags (gtu_ref, group_ref, tag_indexed, tag)
+	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags);
       END IF;
     END LOOP;
 

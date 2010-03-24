@@ -231,6 +231,7 @@ create table tags
       (
         gtu_ref integer not null,
 	group_ref integer not null,
+	tag varchar not null,
         tag_indexed varchar not null,
         constraint fk_tags_gtu foreign key (gtu_ref) references gtu(id) on delete cascade,
 	constraint fk_tags_tag_groups foreign key (group_ref) references tag_groups(id) on delete cascade
