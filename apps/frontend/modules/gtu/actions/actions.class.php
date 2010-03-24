@@ -129,6 +129,11 @@ class gtuActions extends DarwinActions
     }
   }
 
+  public function executePurposeTag(sfWebRequest $request)
+  {
+    $this->tags = Doctrine::getTable('TagGroups')->getPropositions($request->getParameter('value'), $request->getParameter('group_name'), $request->getParameter('sub_group_name'));
+  }
+
   public function executeAddGroup(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
