@@ -1,18 +1,18 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(22);
+SELECT plan(18);
 
 insert into people (id, db_people_type, is_physical,family_name, given_name, birth_date, gender,end_date)
  VALUES (3,6, true, 'Zé Doe', 'Jo-zé', DATE 'June 20, 1989', 'M', DEFAULT);
 
-SELECT ok( 'Mr' = (SELECT title FROM people WHERE id=3),'Title Filled');
-SELECT ok( 'Zé Doe Jo-zé (Mr)' = (SELECT formated_name FROM people WHERE id=3),'formated_name composed');
+SELECT formated_name FROM people WHERE id=3;
+
+SELECT ok( 'Zé Doe Jo-zé' = (SELECT formated_name FROM people WHERE id=3),'formated_name composed');
 
 
 UPDATE people SET gender='F' WHERE id=3;
 
-SELECT ok( 'Mrs' = (SELECT title FROM people WHERE id=3),'Title Filled on changed gender');
-SELECT ok( 'Zé Doe Jo-zé (Mrs)' = (SELECT formated_name FROM people WHERE id=3),'formated_name composed on changed gender');
+SELECT ok( 'Zé Doe Jo-zé' = (SELECT formated_name FROM people WHERE id=3),'formated_name composed on changed gender');
 
 UPDATE people SET title = 'Dr' ,gender='F' WHERE id=3;
 SELECT ok( 'Zé Doe Jo-zé (Dr)' = (SELECT formated_name FROM people WHERE id=3),'formated_name composed on changed gender and title');
@@ -26,14 +26,12 @@ SELECT ok( to_tsvector('simple', 'Van piéperzééél Jo-zé (Dr)') = (SELECT fo
 insert into users (id, is_physical,family_name, given_name, birth_date, gender)
  VALUES (3,true, 'Zé Doe', 'Jo-zé', DATE 'June 20, 1989', 'M');
 
-SELECT ok( 'Mr' = (SELECT title FROM users WHERE id=3),'Title Filled');
-SELECT ok( 'Zé Doe Jo-zé (Mr)' = (SELECT formated_name FROM users WHERE id=3),'formated_name composed');
+SELECT ok( 'Zé Doe Jo-zé' = (SELECT formated_name FROM users WHERE id=3),'formated_name composed');
 
 
 UPDATE users SET gender='F' WHERE id=3;
 
-SELECT ok( 'Mrs' = (SELECT title FROM users WHERE id=3),'Title Filled on changed gender');
-SELECT ok( 'Zé Doe Jo-zé (Mrs)' = (SELECT formated_name FROM users WHERE id=3),'formated_name composed on changed gender');
+SELECT ok( 'Zé Doe Jo-zé' = (SELECT formated_name FROM users WHERE id=3),'formated_name composed on changed gender');
 
 UPDATE users SET title = 'Dr' ,gender='F' WHERE id=3;
 SELECT ok( 'Zé Doe Jo-zé (Dr)' = (SELECT formated_name FROM users WHERE id=3),'formated_name composed on changed gender and title');
@@ -56,7 +54,7 @@ SELECT ok('models' = (SELECT word FROM words where referenced_relation = 'people
 
 UPDATE people SET title='Mr' WHERE id=10;
 
-SELECT ok( '' = (SELECT title FROM people WHERE id=10),'title is still empty');
+SELECT ok( 'Mr' = (SELECT title FROM people WHERE id=10),'title is still empty');
 
 SELECT * FROM finish();
 ROLLBACK;

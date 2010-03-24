@@ -5709,7 +5709,11 @@ BEGIN
 	END IF;
 	
 	IF NEW.is_physical THEN
-		NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'') || ' (' || NEW.title || ')';
+                IF NEW.title = '' THEN
+		        NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'');
+		ELSE
+		        NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'') || ' (' || NEW.title || ')';
+                END IF;
 	ELSE
 		NEW.formated_name := NEW.family_name;
 	END IF;
