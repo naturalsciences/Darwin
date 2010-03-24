@@ -1,7 +1,7 @@
 collManagerWidgetList:
     col1:
         col_num: 1
-        category: collection_widget
+        category: catalogue_collections_widget
         group_name: comment
         mandatory: false
         order_by: 1

@@ -829,6 +829,17 @@ MyPreferences:
         opened: true
         visible: true
         title_perso: Synonymies
+    u1col1:
+        User: u1
+        col_num: 1
+        category: catalogue_collections_widget
+        group_name: comment
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        title_perso: Comment
+
 
 CatalogueProperties:
     cprop1:
