@@ -101,9 +101,17 @@ $(document).ready(function () {
       input_el.trigger('change');
     });
 
-    $('input[id$="_tag_value"]').live('change',purposeTags);
+    $('input[id$="_tag_value"]').live('keypress',pressTags);
+    $('input[id$="_tag_value"]').live('change', purposeTags);
     $('input[id$="_tag_value"]').live('click',purposeTags);
 
+   function pressTags(event)
+   {
+      if (event.keyCode == 59 /* ;*/ || event.keyCode == 32 /* */ )
+      {
+	$(this).trigger('change');
+      }
+   }	
    function purposeTags()
    {
       parent_el = $(this).closest('tr');
