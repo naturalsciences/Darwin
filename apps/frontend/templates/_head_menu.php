@@ -36,7 +36,7 @@
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/index');?></li>
                         <li><?php echo link_to(__('People'),'people/index');?></li>
-
+                        <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
                     </ul>
                 </li>
             </ul>
@@ -58,6 +58,7 @@
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/new');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/new');?></li>
                         <li><?php echo link_to(__('People'),'people/new');?></li>
+                        <li><?php echo link_to(__('Sampling location'),'gtu/new');?></li>
                     </ul>
                 </li>
             </ul>

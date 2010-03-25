@@ -12,26 +12,28 @@ class gtuActions extends DarwinActions
 {
   protected $widgetCategory = 'gtu_widget';
 
- /* public function executeChoose(sfWebRequest $request)
+  public function executeChoose(sfWebRequest $request)
   {
     $this->form = new GtuFormFilter();
   }
-*/
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new GtuFormFilter();
   }
 
-/*  public function executeSearch(sfWebRequest $request)
+ public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
-    $this->setCommonValues('gtu', 'family_name', $request);
-    $this->form = new InstitutionsFormFilter();
+
+    $this->setCommonValues('gtu', 'code', $request);
+
+    $this->form = new GtuFormFilter();
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
 
     if($request->getParameter('gtu_filters','') !== '')
     {
-      $this->form->bind($request->getParameter('institutions_filters'));
+      $this->form->bind($request->getParameter('gtu_filters'));
 
       if ($this->form->isValid())
       {
@@ -53,10 +55,16 @@ class gtuActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
+	$gtu_ids = array();
+	foreach($this->items as $item)
+	{
+	  $gtu_ids[] = $item->getId();
+	}
+	$this->tags = Doctrine::getTable('TagGroups')->fetchTag($gtu_ids);
       }
     }    
   }
-*/
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new GtuForm();

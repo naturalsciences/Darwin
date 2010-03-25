@@ -50,4 +50,22 @@ order BY tag asc LIMIT 10");
     
   }
 
+  public function fetchTag($ids)
+  {
+    $q = Doctrine_Query::create()
+	 ->from('TagGroups g')
+	 ->innerJoin('g.Tags t')
+	 ->andWherein('g.gtu_ref', $ids);
+    $r = $q->execute();
+    $results = array();
+    foreach($r as $i)
+    {
+      if(!isset($results[$i->getGtuRef()]))
+	$results[$i->getGtuRef()] = array();
+
+      $results[$i->getGtuRef()][] = $i;      
+    }
+    return $results;
+  }
+
 }

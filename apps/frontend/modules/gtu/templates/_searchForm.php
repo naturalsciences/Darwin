@@ -6,13 +6,20 @@
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
         <tr>  
-          <th><?php //echo $form['family_name']->renderLabel('Name');?></th>
+        <tr>
+          <th><?php echo $form['code']->renderLabel() ?></th>
+          <th><?php echo $form['gtu_from_date']->renderLabel(); ?></th>
+          <th><?php echo $form['gtu_to_date']->renderLabel(); ?></th>
+          <th><?php echo $form['tags']->renderLabel(); ?></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><?php //echo $form['family_name'];?></td>
+          <td><?php echo $form['code']->render() ?></td>
+          <td><?php echo $form['gtu_from_date']->render() ?></td>
+          <td><?php echo $form['gtu_to_date']->render() ?></td>
+          <td><?php echo $form['tags']->render() ?></td>
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
         </tr>
       </tbody>

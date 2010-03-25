@@ -11,34 +11,51 @@
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-              <?php echo __('Name');?>
-              <?php if($orderBy=='family_name') echo $orderSign ?>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=code'.( ($orderBy=='code' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <?php echo __('Code');?>
+              <?php if($orderBy=='code') echo $orderSign ?>
             </a>
           </th>
-          <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-              <?php echo __('Abbreviation');?>
-              <?php if($orderBy=='additional_names') echo $orderSign ?>
-            </a>
+          <th><?php echo __('Location');?></th>
+          <th class="datesNum">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=gtu_from_date'.( ($orderBy=='gtu_from_date' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+                <?php echo __('From');?>
+                <?php if($orderBy=='gtu_from_date') echo $orderSign ?>
+              </a>
           </th>
-          <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=sub_type'.( ($orderBy=='sub_type' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-              <?php echo __('Type');?>
-              <?php if($orderBy=='sub_type') echo $orderSign ?>
-            </a>
+          <th class="datesNum">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=gtu_to_date'.( ($orderBy=='gtu_to_date' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+                <?php echo __('To');?>
+                <?php if($orderBy=='gtu_to_date') echo $orderSign ?>
+              </a>
           </th>
           <th></th>
       </thead>
       <tbody>
         <?php foreach($items as $item):?>
           <tr class="rid_<?php echo $item->getId();?>">
-            <td class="item_name"><?php echo $item->getFamilyName();?></td>
-            <td><?php echo $item->getAdditionalNames() ?></td>
-            <td><?php echo $item->getSubType() ?></td>
+            <td class="item_name"><?php echo $item->getCode();?></td>
+	    <td>
+	      <ul>
+		<?php if(isset($tags[$item->getId()])):?>
+		  <?php foreach($tags[$item->getId()] as $tag_group):?>	
+		     <li>
+		      <?php echo $tag_group->getGroupName() .' - '.$tag_group->getSubGroupName();?>
+		      <ul>
+			<?php foreach($tag_group->Tags as $tag):?>
+			  <li><?php echo $tag->getTag();?></li>
+			<?php endforeach;?>
+		      </ul>
+		     </li>
+		  <?php endforeach;?>
+		<?php endif;?>
+	      </ul>
+	    </td>
+            <td class="datesNum"><?php echo $item->getGtuFromDateMasked();?></td>
+            <td class="datesNum"><?php echo $item->getGtuToDateMasked();?></td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
               <?php if(! $is_choose):?>
-                <?php echo link_to(image_tag('edit.png'),'institution/edit?id='.$item->getId());?>
+                <?php echo link_to(image_tag('edit.png'),'gtu/edit?id='.$item->getId());?>
               <?php else:?>
                 <div class="result_choose"><?php echo __('Choose');?></div>
               <?php endif;?>

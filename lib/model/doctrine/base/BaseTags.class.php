@@ -7,20 +7,23 @@
  * 
  * @property integer $gtu_ref
  * @property integer $group_ref
- * @property string $tag_value_indexed
+ * @property string $tag
+ * @property string $tag_indexed
  * @property TagGroups $TagGroups
  * @property Gtu $Gtu
  * 
- * @method integer   getGtuRef()            Returns the current record's "gtu_ref" value
- * @method integer   getGroupRef()          Returns the current record's "group_ref" value
- * @method string    getTagValueIndexed()   Returns the current record's "tag_value_indexed" value
- * @method TagGroups getTagGroups()         Returns the current record's "TagGroups" value
- * @method Gtu       getGtu()               Returns the current record's "Gtu" value
- * @method Tags      setGtuRef()            Sets the current record's "gtu_ref" value
- * @method Tags      setGroupRef()          Sets the current record's "group_ref" value
- * @method Tags      setTagValueIndexed()   Sets the current record's "tag_value_indexed" value
- * @method Tags      setTagGroups()         Sets the current record's "TagGroups" value
- * @method Tags      setGtu()               Sets the current record's "Gtu" value
+ * @method integer   getGtuRef()      Returns the current record's "gtu_ref" value
+ * @method integer   getGroupRef()    Returns the current record's "group_ref" value
+ * @method string    getTag()         Returns the current record's "tag" value
+ * @method string    getTagIndexed()  Returns the current record's "tag_indexed" value
+ * @method TagGroups getTagGroups()   Returns the current record's "TagGroups" value
+ * @method Gtu       getGtu()         Returns the current record's "Gtu" value
+ * @method Tags      setGtuRef()      Sets the current record's "gtu_ref" value
+ * @method Tags      setGroupRef()    Sets the current record's "group_ref" value
+ * @method Tags      setTag()         Sets the current record's "tag" value
+ * @method Tags      setTagIndexed()  Sets the current record's "tag_indexed" value
+ * @method Tags      setTagGroups()   Sets the current record's "TagGroups" value
+ * @method Tags      setGtu()         Sets the current record's "Gtu" value
  * 
  * @package    darwin
  * @subpackage model
@@ -40,7 +43,11 @@ abstract class BaseTags extends sfDoctrineRecord
              'type' => 'integer',
              'primary' => true,
              ));
-        $this->hasColumn('tag_value_indexed', 'string', null, array(
+        $this->hasColumn('tag', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
+        $this->hasColumn('tag_indexed', 'string', null, array(
              'type' => 'string',
              'primary' => true,
              ));
