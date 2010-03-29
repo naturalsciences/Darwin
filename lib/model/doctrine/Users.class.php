@@ -9,12 +9,41 @@ class Users extends BaseUsers
     {
         return $this->getFormatedName();
     }
-    public static function getTypes()
+    
+    //function getStatus, return a 'title' for a user : 'M' for a Male, 'F' for a female, and 'moral' for a non physical user
+    public function getStatus()
     {
-     return array(
-      1 => 'Registered user',
-      2 => 'Encoder',
-      4 => 'Collection manager',
+       $gender = $this->getGender()  ;
+       if (!$this->getIsPhysical())
+       	return ("moral") ;
+       else 
+       	return (strtolower($gender)) ;
+    }
+    
+    public static function getTypes($options)
+    {
+    	if (isset($options['screen']) && $options['screen'] == 1) return array(4=>Users::getTypeName(4)) ;
+     $db_user_type = array(
+      1 => Users::getTypeName(1),
+      2 => Users::getTypeName(2),
+      4 => Users::getTypeName(4),
+      8 => Users::getTypeName(8)
       );
+      if ($options['db_user_type'] != 8) { 
+      	array_pop($db_user_type) ;
+	     array_pop($db_user_type) ;
+	 }
+	 return $db_user_type ;
+    }
+    
+    public static function getTypeName($db_user_type)
+    {
+    	  switch ($db_user_type) {
+    	  	case 1 : return 'Registered user';
+    	  	case 2 : return 'Encoder';
+    	  	case 4 : return 'Collection manager';
+          case 8 : return 'Administrator';   	  
+    	  }
+    
     }
 }

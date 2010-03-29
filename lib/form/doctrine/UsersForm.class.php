@@ -57,7 +57,7 @@ class UsersForm extends BaseUsersForm
      ));
      
     $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array(
-      'choices'        => Users::getTypes()
+      'choices'        => Users::getTypes($this->options)
      ));
 
     $this->widgetSchema['gender'] = new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))) ;
@@ -68,7 +68,7 @@ class UsersForm extends BaseUsersForm
     $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
     $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
     $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
-    $this->validatorSchema['db_user_type'] = new sfValidatorChoice(array('choices' => array_keys(Users::getTypes()), 'required' => false));
+    $this->validatorSchema['db_user_type'] = new sfValidatorChoice(array('choices' => array_keys(Users::getTypes($this->options)), 'required' => false));
     
     $this->validatorSchema->setPostValidator(
       new sfValidatorSchemaCompare('password', '==', 'password_again',

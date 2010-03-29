@@ -28,10 +28,36 @@ class UsersTable extends DarwinTable
 
 	   return $q->fetchOne(); 
     }
+    
     public function getDistinctTitle()
     {
         return $this->createDistinct('Users', 'title', 'title')->execute();
     }	
+  /*  public function getTypes($user_type)
+    {
+     $db_user_type = array(
+      1 => 'Registered user',
+      2 => 'Encoder',
+      4 => 'Collection manager',
+      8 => 'Administrator'
+      );
+	 for($i=8;$i<$user_type;$i*2) array_pop($db_user_type) ;
+	 return $db_user_type ;
+    }     */
+    public function getTypesLevel(array $parameters, $q = null)
+    {
+      if (is_null($q))
+      {
+        $q = Doctrine_Query::create()
+   	   ->from('users u');
+      }
+      if (isset($parameters['db_user_type']))
+      {
+        $q->addWhere('u.db_user_type < ?', 2/*$parameters['db_user_type']*/);
+      }
+      return $q->execute();
+    }
+    
     public function getDistinctSubType()
     {
         return $this->createDistinct('Users', 'sub_type', 'sub_type')->execute();

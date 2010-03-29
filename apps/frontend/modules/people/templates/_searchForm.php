@@ -11,7 +11,7 @@
           <th><?php echo $form['family_name']->renderLabel('Name') ?></th>
           <th><?php echo $form['activity_date_from']->renderLabel(); ?></th>
           <th><?php echo $form['activity_date_to']->renderLabel(); ?></th>
-	  <th><?php echo $form['db_people_type']->renderLabel('Type');?></th>
+	     <th><?php echo $form['db_people_type']->renderLabel('Type');?></th>
           <th></th>
         </tr>
       </thead>

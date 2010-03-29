@@ -13,12 +13,13 @@ class userActions extends DarwinActions
   protected $widgetCategory = 'users_widget';
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new UsersForm();
+    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type')));
   }
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
-    $this->form = new UsersForm($user);
+    $this->forward404Unless(Doctrine::getTable('users')->findUser($request->getParameter('db_user_type')) < 2 , sprintf('You are not allowed to access to this page'));
+    $this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type')));
     $this->loadWidgets();
   }
   /**
@@ -27,15 +28,23 @@ class userActions extends DarwinActions
     */ 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->form = new UsersFormFilter();
+    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => 1));
     $this->setLayout(false);
+  }
+
+  public function executeIndex(sfWebRequest $request)
+  {
+    /** don't forget to replace "< 2" by "> 2" ( = more than encoder privileges) after testing is over **/
+    $this->forward404Unless(Doctrine::getTable('users')->findUser($request->getParameter('db_user_type')) < 2 , sprintf('You are not allowed to access to this page')) ;
+    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => 2));
   }
 
   public function executeSearch(sfWebRequest $request)
   {
-
+    $this->forward404Unless($request->isMethod('post')) ;
+    $screen = $request->getAttribute('users_filters[screen]') ;
     $this->setCommonValues('user', 'family_name', $request);
-    $this->form = new UsersFormFilter();
+    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => $screen));
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
 
     if($request->getParameter('users_filters','') !== '')
@@ -45,9 +54,7 @@ class userActions extends DarwinActions
       if ($this->form->isValid())
       {
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
-
-	$query->andWhere('approval_level = ?',2); //Only Approved users
-
+        // if this is not an admin, make sure no admin and collection manager are visible in the search form
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager(
 	    $query,
@@ -67,6 +74,27 @@ class userActions extends DarwinActions
            $this->items = $this->pagerLayout->execute();
 
       }
+    }
+
+  }
+
+  public function executeDelete(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+    $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
+    try{
+        $user->delete();
+	$this->redirect('user/index');
+    }
+    catch(Doctrine_Exception $ne)
+    {
+	$e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$this->form = new UserForm($user);
+	$this->form->getErrorSchema()->addError($error); 
+	$this->loadWidgets();
+	$this->setTemplate('edit');
     }
   }
 
@@ -184,7 +212,7 @@ class userActions extends DarwinActions
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new UsersForm();
+    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type')));
 
     $this->processForm($request, $this->form);
 
