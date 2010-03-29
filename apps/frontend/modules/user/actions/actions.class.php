@@ -34,7 +34,6 @@ class userActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    /** don't forget to replace "< 2" by "> 2" ( = more than encoder privileges) after testing is over **/
     $this->forward404Unless(Doctrine::getTable('users')->findUser($request->getParameter('db_user_type')) < 2 , sprintf('You are not allowed to access to this page')) ;
     $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => 2));
   }
