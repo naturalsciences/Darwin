@@ -6628,8 +6628,8 @@ BEGIN
       IF FOUND THEN
         CONTINUE;
       ELSE
-        INSERT INTO tags (gtu_ref, group_ref, tag_indexed, tag)
-	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags);
+        INSERT INTO tags (gtu_ref, group_ref, tag_indexed, tag, group_type )
+	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags, NEW.group_name);
       END IF;
     END LOOP;
 
