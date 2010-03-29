@@ -8,22 +8,28 @@
  * @property integer $gtu_ref
  * @property integer $group_ref
  * @property string $tag
+ * @property string $group_type
+ * @property string $sub_group_type
  * @property string $tag_indexed
  * @property TagGroups $TagGroups
  * @property Gtu $Gtu
  * 
- * @method integer   getGtuRef()      Returns the current record's "gtu_ref" value
- * @method integer   getGroupRef()    Returns the current record's "group_ref" value
- * @method string    getTag()         Returns the current record's "tag" value
- * @method string    getTagIndexed()  Returns the current record's "tag_indexed" value
- * @method TagGroups getTagGroups()   Returns the current record's "TagGroups" value
- * @method Gtu       getGtu()         Returns the current record's "Gtu" value
- * @method Tags      setGtuRef()      Sets the current record's "gtu_ref" value
- * @method Tags      setGroupRef()    Sets the current record's "group_ref" value
- * @method Tags      setTag()         Sets the current record's "tag" value
- * @method Tags      setTagIndexed()  Sets the current record's "tag_indexed" value
- * @method Tags      setTagGroups()   Sets the current record's "TagGroups" value
- * @method Tags      setGtu()         Sets the current record's "Gtu" value
+ * @method integer   getGtuRef()         Returns the current record's "gtu_ref" value
+ * @method integer   getGroupRef()       Returns the current record's "group_ref" value
+ * @method string    getTag()            Returns the current record's "tag" value
+ * @method string    getGroupType()      Returns the current record's "group_type" value
+ * @method string    getSubGroupType()   Returns the current record's "sub_group_type" value
+ * @method string    getTagIndexed()     Returns the current record's "tag_indexed" value
+ * @method TagGroups getTagGroups()      Returns the current record's "TagGroups" value
+ * @method Gtu       getGtu()            Returns the current record's "Gtu" value
+ * @method Tags      setGtuRef()         Sets the current record's "gtu_ref" value
+ * @method Tags      setGroupRef()       Sets the current record's "group_ref" value
+ * @method Tags      setTag()            Sets the current record's "tag" value
+ * @method Tags      setGroupType()      Sets the current record's "group_type" value
+ * @method Tags      setSubGroupType()   Sets the current record's "sub_group_type" value
+ * @method Tags      setTagIndexed()     Sets the current record's "tag_indexed" value
+ * @method Tags      setTagGroups()      Sets the current record's "TagGroups" value
+ * @method Tags      setGtu()            Sets the current record's "Gtu" value
  * 
  * @package    darwin
  * @subpackage model
@@ -44,6 +50,14 @@ abstract class BaseTags extends sfDoctrineRecord
              'primary' => true,
              ));
         $this->hasColumn('tag', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
+        $this->hasColumn('group_type', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
+        $this->hasColumn('sub_group_type', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              ));

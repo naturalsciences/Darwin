@@ -109,6 +109,8 @@ Tags:
         gtu_ref:  { type: integer, notnull: true, primary:true}
         group_ref:  {type: integer, notnull: true, primary:true}
         tag:  { type: string, notnull: true}
+        group_type:  { type: string, notnull: true}
+        sub_group_type:  { type: string, notnull: true}
         tag_indexed: { type: string, notnull: true, primary:true}
     relations:
         TagGroups:

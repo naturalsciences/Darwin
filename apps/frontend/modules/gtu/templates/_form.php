@@ -137,7 +137,7 @@ $(document).ready(function () {
     disableUsedGroups();
     $('.purposed_tags li').live('click', function()
     {
-      input_el = $(this).closest('tr').find('input[id$="_tag_value"]');
+      input_el = $(this).parent().closest('li').find('input[id$="_tag_value"]');
       if(input_el.val().match("\;\s*$"))
 	input_el.val( input_el.val() + $(this).text() );
       else
@@ -161,7 +161,7 @@ $(document).ready(function () {
       parent_el = $(this).closest('li');
       group_name = parent_el.find('input[name$="\[group_name\]"]').val();
       sub_group_name = parent_el.find('[name$="\[sub_group_name\]"]').val();
-      if(sub_group_name=='') sub_group_name='-'
+      if(sub_group_name=='') return false;
       $.ajax({
 	  type: "GET",
 	  url: "<?php echo url_for('gtu/purposeTag');?>" + '/group_name/' + group_name + '/sub_group_name/' + sub_group_name + '/value/'+ $(this).val(),
