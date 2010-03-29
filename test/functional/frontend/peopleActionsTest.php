@@ -21,7 +21,7 @@ $browser->
   end()->
 
 
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
@@ -35,7 +35,7 @@ $browser->
   end()->
 
   get('/people/index')->
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'ntol'),
     'is_physical' => 1,)
     )
@@ -136,12 +136,12 @@ $nitems = Doctrine::getTable('People')->findByAdditionalNames('jr');
 $browser->
   info('Address')->
   
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -180,12 +180,12 @@ $browser->
 $browser->
   get('/people/index')->
 
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -211,12 +211,12 @@ $browser->
 $browser->
   info('Comm')->
   get('/people/index')->
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -253,12 +253,12 @@ $browser->
 $browser->
   get('/people/index')->
 
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -284,12 +284,12 @@ $browser->
   info('Relation')->
 
   get('/people/index')->
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -329,12 +329,12 @@ $nitems = Doctrine::getTable('Institutions')->findOneByFamilyName('UGMM');
 $browser->
   get('/people/index')->
 
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -360,12 +360,12 @@ $browser->
   info('Lang')->
 
   get('/people/index')->
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -407,12 +407,12 @@ $browser->
 $browser->
   get('/people/index')->
 
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -437,12 +437,12 @@ $browser->
 $browser->
   get('/people/index')->
 
-  click('Search', array('people_filters' => array(
+  click('.search_submit', array('people_filters' => array(
     'family_name' => array('text' => 'poil'),
     'is_physical' => 1,)
     )
   )->
-  click('.edit a')->
+  click('td.edit a')->
 
   with('response')->begin()->
     isStatusCode(200)->

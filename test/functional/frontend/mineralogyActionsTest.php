@@ -34,7 +34,7 @@ $browser->
   with('response')->begin()->
     isStatusCode('200')->
   end()->
-  click('Search')->
+  click('.search_submit')->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', '/11/')->

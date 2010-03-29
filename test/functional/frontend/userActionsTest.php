@@ -7,11 +7,11 @@ $browser->loadData($configuration)->login('root','evil');
 
 $browser->
   info('Search')->
-  get('/user/choose')->
+  get('/user/index')->
   
   with('request')->begin()->
     isParameter('module', 'user')->
-    isParameter('action', 'choose')->
+    isParameter('action', 'index')->
   end()->
 
   with('response')->begin()->
@@ -21,7 +21,7 @@ $browser->
   end()->
 
 
-  click('Search', array('users_filters' => array(
+  click('.search_submit', array('users_filters' => array(
     'family_name' => array('text' => 'Evil'),
       )
     )
@@ -29,7 +29,6 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    debug()->
     checkElement('.results_container')->
     checkElement('.results_container .results > tbody > tr',1)->
   end()->
@@ -180,12 +179,12 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('#lang tbody tr',2)->
-    checkElement('#lang tbody tr td:first','/Preferred/')->
+    checkElement('#lang tbody','/Preferred/')->
   end()->
   
   click('#lang .widget_content > a.link_catalogue')->
 
-  click('Save', array('users_languages' => array(
+  click('#submit', array('users_languages' => array(
     'language_country'  => 'fr',
     'mother' => '',
     'preferred_language' => 'yes'

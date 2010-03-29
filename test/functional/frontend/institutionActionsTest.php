@@ -21,7 +21,7 @@ $browser->
   end()->
 
 
-  click('Search', array('institutions_filters' => array(
+  click('.search_submit', array('institutions_filters' => array(
     'family_name' => array('text' => 'royal'),
     'is_physical' => 0,)
     )
@@ -34,7 +34,7 @@ $browser->
   end()->
 
   get('/institution/index')->
-  click('Search', array('institutions_filters' => array(
+  click('.search_submit', array('institutions_filters' => array(
     'family_name' => array('text' => 'ntol'),
     'is_physical' => 0,)
     )

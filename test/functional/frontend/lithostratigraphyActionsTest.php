@@ -22,7 +22,7 @@ $browser->
     checkElement('div.new_link', 1)->
   end()->
   info('Search without criterias')->
-  click('Search')->
+  click('.search_submit')->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', '/8/')->
