@@ -91,26 +91,46 @@
 <script  type="text/javascript">
 $(document).ready(function () {
     $('.clear_prop').live('click', clearPropertyValue);
-
-    function disableUsedGroups()
+    $('.purposed_tags li').live('click', function()
     {
-      $('#groups_select option').removeAttr('disabled');
-      $('table.tag_groups tbody tr:visible').each(function()
+      input_el = $(this).closest('tr').find('input[id$="_tag_value"]');
+      if(input_el.val().match("\;\s*$"))
+	input_el.val( input_el.val() + $(this).text() );
+      else
+	input_el.val( input_el.val() + " ; " +$(this).text() );
+      input_el.trigger('change');
+    });
+
+    $('input[id$="_tag_value"]').live('keypress',pressTags);
+    $('input[id$="_tag_value"]').live('change', purposeTags);
+    $('input[id$="_tag_value"]').live('click',purposeTags);
+
+   function pressTags(event)
+   {
+      if (event.keyCode == 59 /* ;*/ || event.keyCode == 32 /* */ )
       {
-	group = $(this).attr('alt');
-	$("#groups_select option[value='"+group+"']").attr('disabled','disabled');
-	if($("#groups_select option[value='"+group+"']:selected"))
-	  $('#groups_select').val("");
+	$(this).trigger('change');
+      }
+   }	
+   function purposeTags()
+   {
+      parent_el = $(this).closest('tr');
+      group_name = parent_el.find('input[name$="\[group_name\]"]').val();
+      sub_group_name = parent_el.find('[name$="\[sub_group_name\]"]').val();
+      if(sub_group_name=='') sub_group_name='-'
+      $.ajax({
+	  type: "GET",
+	  url: "<?php echo url_for('gtu/purposeTag');?>" + '/group_name/' + group_name + '/sub_group_name/' + sub_group_name + '/value/'+ $(this).val(),
+	  success: function(html)
+	  {
+	    parent_el.find('.purposed_tags').html(html);
+	  }
       });
     }
 
-    disableUsedGroups();
-
     $('#add_group').click(function()
     {
-      if($('#groups_select').val() != "" && ! $("#groups_select option:selected").is(":disabled"))
-      {
-	$.ajax({
+      $.ajax({
 	  type: "GET",
 	  url: $(this).attr('href')+'/group/'+$('#groups_select').val() + '/num/' + (0+$('table.tag_groups tbody tr').length),
 	  success: function(html)
@@ -119,7 +139,6 @@ $(document).ready(function () {
 	    disableUsedGroups();
 	  }
 	});
-      }
       return false;
     });
 

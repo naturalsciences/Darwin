@@ -905,7 +905,7 @@ tr.details .details_info tr:hover
   float:none;
 }
 
-.tag_selected, .tag_available, .name_tags li
+.tag_selected, .tag_available, .name_tags li, .purposed_tags li
 {
   background-color: #FAFAFA;
   min-height:1em;
@@ -914,7 +914,7 @@ tr.details .details_info tr:hover
   cursor: pointer;
 }
 
-.tag_selected li, .tag_available li, .name_tags li
+.tag_selected li, .tag_available li, .name_tags li, .purposed_tags li
 {
   float:left;
   padding:0.2em;
@@ -939,14 +939,14 @@ tr.details .details_info tr:hover
   padding-left: 0.5em;
 }
 
-.name_tags li
+.name_tags li, .purposed_tags li
 {
   font-size: x-small;
   border-color: #E3E3E3;
   border-left: 6px solid #C1CF56;
 
 }
-.name_tags li:hover
+.name_tags li:hover, .purposed_tags li:hover
 {
   border-color:#C1CF56;
 }
@@ -1140,3 +1140,10 @@ img.info:hover
 {
   list-style:none;
 }
+
+li.tag_size_0 { font-size: 10px; }
+li.tag_size_1 { font-size: 12px; }
+li.tag_size_2 { font-size: 14px; }
+li.tag_size_3 { font-size: 16px; }
+li.tag_size_4 { font-size: 18px; }
+li.tag_size_5 { font-size: 20px; }

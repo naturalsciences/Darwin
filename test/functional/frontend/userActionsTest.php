@@ -22,13 +22,14 @@ $browser->
 
 
   click('Search', array('users_filters' => array(
-    'family_name' => array('text' => 'root'),
+    'family_name' => array('text' => 'Evil'),
       )
     )
   )->
 
   with('response')->begin()->
     isStatusCode(200)->
+    debug()->
     checkElement('.results_container')->
     checkElement('.results_container .results > tbody > tr',1)->
   end()->

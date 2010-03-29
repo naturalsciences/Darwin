@@ -16,7 +16,7 @@
                 <a href="#" class="widget_close" ><?php echo image_tag('widget_close.png', 'alt=Close');?></a>
             <?php endif;?>
 		</div>
-		<span><?php include_slot('widget_title'); ?></span>
+		<span><?php echo __($title); ?></span>
 	</div>
 	<div class="widget_content <?php if(! $is_opened):?>hidden<?php endif;?>">
 

@@ -1,4 +1,3 @@
-<?php slot('widget_title',__('People'));  ?>
 <table class="catalogue_table">
   <thead>
     <tr>

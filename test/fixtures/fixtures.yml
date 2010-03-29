@@ -1,3 +1,18 @@
+Gtu:
+    gtu0:
+        id: '0'
+    gtu1:
+        code: 3615Danger
+        gtu_from_date_mask: 56
+        gtu_from_date: '2006-12-01'
+        gtu_to_date_mask: 56
+        gtu_to_date: '2006-12-12'
+    gtu2:
+        code: Antarctica
+    gtu3:
+        code: irsnb
+    gtu4:
+        code: tervuren
 Taxonomy:
     ta0:
         id: '0'
@@ -308,6 +323,7 @@ MyPreferences:
         order_by: 2
         visible: true
         opened: false
+        title_perso: My saved specimens
     u1wb2:
         User: u1
         col_num: 1
@@ -316,6 +332,7 @@ MyPreferences:
         order_by: 1
         visible: true
         opened: true
+        title_perso: My saved searches
     u1wb3:
         User: u1
         col_num: 1
@@ -324,6 +341,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: false
+        title_perso: Add specimens
     u1wb4:
         User: u1
         col_num: 1
@@ -332,6 +350,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: false
+        title_perso: Add taxa
     u1ws1:
         User: u1
         col_num: 1
@@ -340,6 +359,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: false
+        title_perso: Taxonomy
     u1ws2:
         User: u1
         col_num: 1
@@ -348,6 +368,7 @@ MyPreferences:
         order_by: 2
         opened: false
         visible: false
+        title_perso: Habitats
     u1ws3:
         User: u1
         col_num: 1
@@ -357,6 +378,7 @@ MyPreferences:
         order_by: 1
         opened: false
         visible: true
+        title_perso: Collection
     u1ws4:
         User: u1
         col_num: 1
@@ -365,6 +387,7 @@ MyPreferences:
         order_by: 2
         opened: false
         visible: false
+        title_perso: Acquisition
     u1ws5:
         User: u1
         col_num: 1
@@ -373,6 +396,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
+        title_perso: Specimen(s) count
     u1ws6:
         User: u1
         col_num: 1
@@ -381,6 +405,7 @@ MyPreferences:
         order_by: 2
         opened: false
         visible: false
+        title_perso: Collecting tools
     u1ws7:
         User: u1
         col_num: 1
@@ -389,6 +414,7 @@ MyPreferences:
         order_by: 2
         opened: false
         visible: false
+        title_perso: Collecting method
     u1ws8:
         User: u1
         col_num: 2
@@ -398,6 +424,7 @@ MyPreferences:
         order_by: 1
         opened: false
         visible: true
+        title_perso: Expedition
     u1ws9:
         User: u1
         col_num: 2
@@ -407,6 +434,7 @@ MyPreferences:
         order_by: 2
         opened: false
         visible: true
+        title_perso: I.G. number
     u1ws10:
         User: u1
         col_num: 1
@@ -415,6 +443,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+        title_perso: Current name
     u1ws11:
         User: u1
         col_num: 1
@@ -423,6 +452,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+        title_perso: Recombined from
     u1ws12:
         User: u1
         col_num: 1
@@ -431,6 +461,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
+        title_perso: Comments
     u1ws13:
         User: u1
         col_num: 1
@@ -439,6 +470,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+        title_perso: Properties
     u1ws14:
         User: u1
         col_num: 1
@@ -447,6 +479,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
+        title_perso: Comments
     u1ws15:
         User: u1
         col_num: 1
@@ -455,6 +488,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: Synonymies
     u1ws15-2:
         User: u1
         col_num: 1
@@ -463,6 +497,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: People
     u1ws16:
         User: u1
         col_num: 1
@@ -471,6 +506,7 @@ MyPreferences:
         order_by: 1
         opened: false
         visible: true
+        title_perso: Insurances
     u1ws17:
         User: u1
         col_num: 1
@@ -479,6 +515,7 @@ MyPreferences:
         order_by: 1
         opened: false
         visible: true
+        title_perso: Comments
     u1ws18:
         User: u1
         col_num: 1
@@ -487,6 +524,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Vernacular names
     u1ws19:
         User: u1
         col_num: 1
@@ -495,6 +533,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: false
+        title_perso: Comments
     u1ws20:
         User: u1
         col_num: 1
@@ -503,6 +542,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: false
+        title_perso: Properties
     u1ws21:
         User: u1
         col_num: 1
@@ -511,6 +551,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Addresses
     u1ws22:
         User: u1
         col_num: 1
@@ -519,6 +560,7 @@ MyPreferences:
         order_by: 4
         opened: true
         visible: true
+        title_perso: Communications
     u1ws23:
         User: u1
         col_num: 1
@@ -527,6 +569,7 @@ MyPreferences:
         order_by: 5
         opened: true
         visible: true
+        title_perso: Languages
     u1ws24:
         User: u1
         col_num: 1
@@ -535,6 +578,7 @@ MyPreferences:
         order_by: 5
         opened: true
         visible: true
+        title_perso: Relationships
     u1ws25:
         User: u1
         col_num: 1
@@ -543,6 +587,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: false
+        title_perso: Comments
     u1ws26:
         User: u1
         col_num: 1
@@ -551,6 +596,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: false
+        title_perso: Properties
     u1ws27:
         User: u1
         col_num: 1
@@ -559,6 +605,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Addresses
     u1ws28:
         User: u1
         col_num: 1
@@ -567,6 +614,7 @@ MyPreferences:
         order_by: 4
         opened: true
         visible: true
+        title_perso: Communications
     u1ws29:
         User: u1
         col_num: 1
@@ -575,6 +623,7 @@ MyPreferences:
         order_by: 5
         opened: true
         visible: true
+        title_perso: Relationships
     u1ws30:
         User: u1
         col_num: 1
@@ -583,6 +632,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: Communications
     u1ws31:
         User: u1
         col_num: 1
@@ -591,6 +641,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
+        title_perso: Addresses
     u1ws32:
         User: u1
         col_num: 1
@@ -599,6 +650,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
+        title_perso: Languages
     u1ws33:
         User: u1
         col_num: 1
@@ -607,6 +659,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+        title_perso: Current name
     u1ws33-2:
         User: u1
         col_num: 1
@@ -615,6 +668,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: People
     u1ws34:
         User: u1
         col_num: 1
@@ -623,6 +677,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
+        title_perso: Comments
     u1ws35:
         User: u1
         col_num: 1
@@ -631,6 +686,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+        title_perso: Properties
     u1ws36:
         User: u1
         col_num: 1
@@ -639,6 +695,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Vernacular names
     u1ws36-2:
         User: u1
         col_num: 1
@@ -647,6 +704,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Synonymies
     u1ws37:
         User: u1
         col_num: 1
@@ -655,6 +713,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+        title_perso: Current name
     u1ws37-2:
         User: u1
         col_num: 1
@@ -663,6 +722,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: People
     u1ws38:
         User: u1
         col_num: 1
@@ -671,6 +731,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
+        title_perso: Comments
     u1ws39:
         User: u1
         col_num: 1
@@ -679,6 +740,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+        title_perso: Properties
     u1ws40:
         User: u1
         col_num: 1
@@ -687,6 +749,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Vernacular names
     u1ws40-0:
         User: u1
         col_num: 1
@@ -695,6 +758,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Synonymies
     u1ws40-1:
         User: u1
         col_num: 1
@@ -703,6 +767,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+        title_perso: Current name
     u1ws40-2:
         User: u1
         col_num: 1
@@ -711,6 +776,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: People
     u1ws41:
         User: u1
         col_num: 1
@@ -719,6 +785,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
+        title_perso: Comments
     u1ws42:
         User: u1
         col_num: 1
@@ -727,6 +794,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+        title_perso: Properties
     u1ws43:
         User: u1
         col_num: 1
@@ -735,6 +803,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Vernacular names
     u1ws43-1:
         User: u1
         col_num: 1
@@ -743,6 +812,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Synonymies
     u1ws44:
         User: u1
         col_num: 1
@@ -751,6 +821,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: false
+        title_perso: Current name
     u1ws44-2:
         User: u1
         col_num: 1
@@ -759,6 +830,7 @@ MyPreferences:
         order_by: 1
         opened: true
         visible: true
+        title_perso: People
     u1ws45:
         User: u1
         col_num: 1
@@ -767,6 +839,7 @@ MyPreferences:
         order_by: 0
         opened: false
         visible: true
+        title_perso: Comments
     u1ws46:
         User: u1
         col_num: 1
@@ -775,6 +848,7 @@ MyPreferences:
         order_by: 0
         opened: true
         visible: true
+        title_perso: Properties
     u1ws47:
         User: u1
         col_num: 1
@@ -783,6 +857,7 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Vernacular names
     u1ws48:
         User: u1
         col_num: 1
@@ -791,6 +866,18 @@ MyPreferences:
         order_by: 3
         opened: true
         visible: true
+        title_perso: Synonymies
+    u1col1:
+        User: u1
+        col_num: 1
+        category: catalogue_collections_widget
+        group_name: comment
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        title_perso: Comment
+
 
 CatalogueProperties:
     cprop1:
@@ -1143,4 +1230,36 @@ CataloguePeople:
         people_type: authors
         people_sub_type: Main Author
         People: p5
-        
+
+TagGroups:
+    tg1:
+        Gtu: gtu3
+        group_name: administrative
+        sub_group_name:  country
+        tag_value: Belgique; Belgium; Belgïe; belgien
+    tg2:
+        Gtu: gtu3
+        group_name: administrative
+        sub_group_name:  city
+        tag_value: Brussels; Bruxelles; Bruselas; 
+    tg3:
+        Gtu: gtu4
+        group_name: administrative
+        sub_group_name:  city
+        tag_value: Brussels;Bruselo
+    tg4:
+        Gtu: gtu4
+        group_name: administrative
+        sub_group_name:  country
+        tag_value: Belgique;Belgio
+    tg5:
+        Gtu: gtu2
+        group_name: administrative
+        sub_group_name:  country
+        tag_value: Antartica;Terre Marie Byrd ; Marie-Byrd-Land
+    tg6:
+        Gtu: gtu2
+        group_name: topographic
+        sub_group_name:  mountain
+        tag_value: Big White Mountain
+

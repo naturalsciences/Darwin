@@ -1,4 +1,3 @@
-<?php slot('widget_title',__('Specimen Count'));  ?>
 <script>
 jQuery(function(){
     if($('input#specimen_accuracy_0:checked').length)

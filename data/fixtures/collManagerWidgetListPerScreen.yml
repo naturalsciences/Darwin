@@ -1,0 +1,10 @@
+collManagerWidgetList:
+    col1:
+        col_num: 1
+        category: catalogue_collections_widget
+        group_name: comment
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        title_perso: Comments
