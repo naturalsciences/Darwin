@@ -60,7 +60,13 @@ class GtuFormFilter extends BaseGtuFormFilter
 
   public function addTagsColumnQuery($query, $field, $val)
   {
-    return $query->andWhere('tag_indexed like fullToIndex(?)',$val);
+    $alias = $query->getRootAlias();
+    $vals = explode(';',$val);
+    foreach($vals as $i)
+    {
+      $query->andWhere("id in (select DISTINCT(gtu_ref) FROM tags WHERE tag_indexed = fulltoindex(?) )", $i);
+    }
+    return $query;
   }
 
   public function doBuildQuery(array $values)
@@ -69,8 +75,6 @@ class GtuFormFilter extends BaseGtuFormFilter
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
     $query->andWhere("id > 0 ");
-    $alias = $query->getRootAlias();
-    $query->leftJoin($alias.'.Tags t');
     return $query;
   }
 }

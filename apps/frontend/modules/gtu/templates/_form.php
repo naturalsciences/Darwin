@@ -39,32 +39,49 @@
     </tbody>
 </table>
 
-<table class="tag_groups">
-  <tbody>
-    <?php foreach($form['TagGroups'] as $form_value):?>
-      <?php include_partial('taggroups', array('form' => $form_value));?>
-    <?php endforeach;?>
-    <?php foreach($form['newVal'] as $form_value):?>
-      <?php include_partial('taggroups', array('form' => $form_value));?>
-    <?php endforeach;?>
+<?php
+$tag_grouped = array();
+$avail_groups = TagGroups::getGroups(); 
+foreach($form['TagGroups'] as $group)
+{
+  $type = $group['group_name']->getValue();
+  if(!isset($tag_grouped[$type]))
+    $tag_grouped[$type] = array();
+  $tag_grouped[$type][] = $group;
+}
+foreach($form['newVal'] as $group)
+{
+  $type = $group['group_name']->getValue();
+  if(!isset($tag_grouped[$type]))
+    $tag_grouped[$type] = array();
+  $tag_grouped[$type][] = $group;
+}
+?>
 
-  </tbody>
-  <tfoot>
-    <tr>
-	<td>
-	    <select id="groups_select">
-	    <option value=""></option>
-	     <?php foreach(TagGroups::getGroups() as $k => $v):?>
-		<option value="<?php echo $k;?>"><?php echo $v;?></option>
-	      <?php endforeach;?>
-	    </select>
-	</td>
-	<td>
-	    <a href="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>" id="add_group"><?php echo __('Add Group');?></a>
-	</td>
-      </tr>
-    </tfoot>
-  </table>
+<div class="tag_parts_screen" alt="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>">
+<?php foreach($tag_grouped as  $group_key => $sub_forms):?>
+  <fieldset alt="<?php echo $group_key;?>">
+    <legend><?php echo __($avail_groups[$group_key]);?></legend>
+    <ul>
+      <?php foreach($sub_forms as $form_value):?>
+	<?php include_partial('taggroups', array('form' => $form_value));?>
+      <?php endforeach;?>
+    </ul>
+    <a class="sub_group"><?php echo __('Add Sub Group');?></a>
+  </fieldset>
+<?php endforeach;?>
+</div>
+
+
+  <div class="gtu_groups_add">
+    <select id="groups_select">
+      <option value=""></option>
+      <?php foreach(TagGroups::getGroups() as $k => $v):?>
+	<option value="<?php echo $k;?>"><?php echo $v;?></option>
+      <?php endforeach;?>
+    </select>
+    <a href="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>" id="add_group"><?php echo __('Add Group');?></a>
+  </div>
 
   <table>
     <tfoot>
@@ -90,7 +107,34 @@
 
 <script  type="text/javascript">
 $(document).ready(function () {
-    $('.clear_prop').live('click', clearPropertyValue);
+    $('.clear_prop').live('click', function()
+    {
+      parent = $(this).closest('li');
+      nvalue='';
+      $(parent).find('input').val(nvalue);
+      $(parent).hide();
+
+      sub_groups  = parent.parent();
+      if(sub_groups.find("li:visible").length == 0)
+      {
+	sub_groups.closest('fieldset').hide();
+	disableUsedGroups();
+      }
+    });
+
+    
+    function disableUsedGroups()
+    {
+      $('#groups_select option').removeAttr('disabled');
+      $('.tag_parts_screen fieldset:visible').each(function()
+      {
+	var cur_group = $(this).attr('alt');
+	$("#groups_select option[value='"+cur_group+"']").attr('disabled','disabled');
+	if($("#groups_select option[value='"+cur_group+"']:selected"))
+	  $('#groups_select').val("");
+      });
+    }
+    disableUsedGroups();
     $('.purposed_tags li').live('click', function()
     {
       input_el = $(this).closest('tr').find('input[id$="_tag_value"]');
@@ -114,7 +158,7 @@ $(document).ready(function () {
    }	
    function purposeTags()
    {
-      parent_el = $(this).closest('tr');
+      parent_el = $(this).closest('li');
       group_name = parent_el.find('input[name$="\[group_name\]"]').val();
       sub_group_name = parent_el.find('[name$="\[sub_group_name\]"]').val();
       if(sub_group_name=='') sub_group_name='-'
@@ -130,13 +174,44 @@ $(document).ready(function () {
 
     $('#add_group').click(function()
     {
+      selected_group = $('#groups_select option:selected').val();
+      selected_group_name = $('#groups_select option:selected').text();
+      if(selected_group != '')
+      {
+	$.ajax({
+	    type: "GET",
+	    url: $('.tag_parts_screen').attr('alt')+'/group/'+ selected_group + '/num/' + (0+$('.tag_parts_screen ul li').length),
+	    success: function(html)
+	    {
+	      if( $('fieldset[alt="'+selected_group+'"]').length != 0)
+	      {
+		fld_set = $('fieldset[alt="'+selected_group+'"]');
+		fld_set.find('> ul').append(html);
+		fld_set.show();
+	      }
+	      else
+	      {
+		html = '<fieldset alt="'+ selected_group +'"><legend>' + selected_group_name + '</legend><ul>'+html+'</ul><a class="sub_group"><?php echo __('Add Sub Group');?></a></fieldset>';
+		$('.tag_parts_screen').append(html);
+	      }
+	      disableUsedGroups();
+	    }
+	  });
+      }
+      return false;
+    });
+
+    $('a.sub_group').live('click',function()
+    {
+      fieldset = $(this).closest('fieldset');
+      selected_group = fieldset.attr('alt');
+      list =  fieldset.find('> ul');
       $.ajax({
 	  type: "GET",
-	  url: $(this).attr('href')+'/group/'+$('#groups_select').val() + '/num/' + (0+$('table.tag_groups tbody tr').length),
+	  url: $('.tag_parts_screen').attr('alt')+'/group/'+ selected_group + '/num/' + (0+$('.tag_parts_screen ul li').length),
 	  success: function(html)
 	  {
-	    $('table.tag_groups tbody').append(html);
-	    disableUsedGroups();
+	    list.append(html);
 	  }
 	});
       return false;
