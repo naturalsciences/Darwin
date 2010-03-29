@@ -73,7 +73,7 @@
                 	<a href="#">User</a>
                 	<ul>
                 		<li><?php echo link_to(__('Add'),'user/new');?></li>
-                		<li><?php echo link_to(__('Search'),'user/search');?></li>
+                		<li><?php echo link_to(__('Search'),'user/index');?></li>
                 	</ul>
                 </li>
             </ul>

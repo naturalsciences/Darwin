@@ -14,27 +14,27 @@
         <tr>
           <th class="hidden"></th>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=title'.( ($orderBy=='title' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-              <?php echo __('Title');?>
-              <?php if($orderBy=='title') echo $orderSign ?>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=is_physical,title'.( ($orderBy=='is_physical,title' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <?php echo __('Status');?>
+              <?php if($orderBy=='is_physical,title') echo $orderSign ?>
             </a>
           </th>
           <th>
 	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=family_name'.( ($orderBy=='family_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-	      <?php echo __('Family Name');?>
+	      <?php echo __('Name');?>
 	      <?php if($orderBy=='family_name') echo $orderSign ?>
 	    </a>
           </th>
           <th>
 	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=given_name'.( ($orderBy=='given_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-	      <?php echo __('Given Name');?>
+	      <?php echo __('Surname');?>
 	      <?php if($orderBy=='given_name') echo $orderSign ?>
 	    </a>
           </th>
           <th>
-	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=additional_names'.( ($orderBy=='additional_names' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-	      <?php echo __('Additional Names');?>
-	      <?php if($orderBy=='additional_names') echo $orderSign ?>
+	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=db_user_type'.( ($orderBy=='db_user_type' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+	      <?php echo __('Type');?>
+	      <?php if($orderBy=='db_user_type') echo $orderSign ?>
 	    </a>
           </th>
           <th></th>
@@ -44,12 +44,14 @@
         <?php foreach($items as $item):?>
           <tr class="rid_<?php echo $item->getId();?>">
             <td class="hidden item_name"><?php echo $item->getFormatedName();?></td>
-            <td><?php echo $item->getTitle() ?></td>
+            <td><img src="/images/user_suit_<?php echo $item->getStatus() ?>.png" label="<?php echo $item->getTitle() ?>"></td>
             <td><?php echo $item->getFamilyName();?></td>
             <td><?php echo $item->getGivenName();?></td>
-            <td><?php echo $item->getAdditionalNames() ?></td>
+            <td><?php echo $item->getTypeName($item->getDbUserType()) ?></td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
-                <?php if($is_choose):?>
+                <?php if(!$is_choose):?>
+                <?php echo link_to(image_tag('edit.png'),'user/edit?id='.$item->getId());?>
+                <?php else:?>
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
             </td>
@@ -64,8 +66,8 @@
 <?php endif;?>
 
 <?php else:?>
-
 <div class="error">
+
     <?php echo $form->renderGlobalErrors();?>
     <?php echo $form['family_name']->renderError(); ?>
 </div>
