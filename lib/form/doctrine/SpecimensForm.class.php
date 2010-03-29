@@ -11,18 +11,25 @@ class SpecimensForm extends BaseSpecimensForm
 {
   public function configure()
   {
+    
+    /* Set default values */
     $this->setDefaults(array(
         'gtu_ref' => 0,
         'expedition_ref' => 0,
     ));
+
+    /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
+
+    /* Fields */
+    /* Collection */
     $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(array(
        'model' => 'Collections',
        'link_url' => 'collection/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Collection'),
      ));
-
+    
     $this->widgetSchema['expedition_ref'] = new widgetFormButtonRef(array(
        'model' => 'Expeditions',
        'link_url' => 'expedition/choose',

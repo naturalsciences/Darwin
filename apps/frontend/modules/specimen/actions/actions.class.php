@@ -58,7 +58,8 @@ class specimenActions extends DarwinActions
     $form->bind($request->getParameter($form->getName()));
     if ($form->isValid())
     {
-      try{
+      try
+      {
         $specimen = $form->save();
         $this->redirect('specimen/edit?id='.$specimen->getId());
       }
