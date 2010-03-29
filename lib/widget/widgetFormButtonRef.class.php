@@ -5,19 +5,22 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 
     public function render($name, $value = null, $attributes = array(), $errors = array())
     {
+        $class = array('class'=>'ref');
+        if (isset($attributes['class'])) $class = array_merge($class, $attributes);
+        $class = $class['class'];
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
 	$input .= $this->renderContentTag('div',$obj_name, array(
 	   'id' => $this->generateId($name)."_name",
-	   'class' => "ref_name",
+	   'class' => $class."_name",
 	));
         
 	if($this->getOption('nullable'))
 	{
 	  $options = array(
 	    'src' => '/images/remove.png',
-	    'class' => 'ref_clear'
+	    'class' => $class."_clear"
 	  );
 
 	  if($value == 0)
@@ -25,7 +28,13 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	  $input .= $this->renderTag('img',$options);
 	}
 
-        $class = 'ref_name button';
+        $class .= '_name';
+        if (strlen($this->getOption('button_class')) > 0)
+        {
+          $class .= ' '.$this->getOption('button_class');
+        }
+
+
 	if($this->getOption('button_is_hidden') && $value == 0)
 	{
 	  $class .= ' hidden';
@@ -54,6 +63,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	$this->addOption('button_is_hidden', false);
         $this->addRequiredOption('link_url');
 	$this->addRequiredOption('box_title');
+        $this->addOption('button_class', 'button');
     }
 
     public function getJavaScripts()

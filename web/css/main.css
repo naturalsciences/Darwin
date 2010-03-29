@@ -141,9 +141,26 @@ ul.spec_error_list, ul.error_list
   line-height:24px;
 }
 
+.ref_inline_name
+{
+  display:inline;
+  margin: 0.5em;
+  margin-left: 0;
+  font-weight: bold;
+  line-height:24px;
+}
+
 .ref_clear
 {
   float: left;
+  margin-right: 2em;
+  margin-top: 0.8em;
+  vertical-align: middle;
+}
+
+.ref_inline_clear
+{
+  display: inline;
   margin-right: 2em;
   margin-top: 0.8em;
   vertical-align: middle;

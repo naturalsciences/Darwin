@@ -14,22 +14,34 @@ class SpecimensForm extends BaseSpecimensForm
     
     /* Set default values */
     $this->setDefaults(array(
-        'gtu_ref' => 0,
+        'collection_ref' => 0,
         'expedition_ref' => 0,
+        'taxon_ref' => 0,
+        'mineral_ref' => 0,
+        'lithology_ref' => 0,
+        'litho_ref' => 0,
+        'chrono_ref' => 0,
+        'gtu_ref' => 0,
+        'host_taxon_ref' => 0,
     ));
 
     /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
 
     /* Fields */
-    /* Collection */
-    $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(array(
-       'model' => 'Collections',
-       'link_url' => 'collection/choose',
-       'method' => 'getName',
-       'box_title' => $this->getI18N()->__('Choose Collection'),
-     ));
+    /* Collection Reference */
+    $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(
+      array('model' => 'Collections',
+            'link_url' => 'collection/choose',
+            'method' => 'getName',
+            'box_title' => $this->getI18N()->__('Choose Collection'),
+            'button_class'=>'',
+           ),
+      array('class'=>'ref_inline',
+           )
+     );
     
+    /* Expedition Reference */
     $this->widgetSchema['expedition_ref'] = new widgetFormButtonRef(array(
        'model' => 'Expeditions',
        'link_url' => 'expedition/choose',
@@ -38,6 +50,15 @@ class SpecimensForm extends BaseSpecimensForm
        'nullable' => true,
      ));
 
+    /* Taxonomy Reference */
+    $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Taxonomy',
+       'link_url' => 'taxonomy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Taxon'),
+     ));
+
+    /* IG number Reference */
     $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(array('model' => 'Igs',
                                                                      'method' => 'getIgNum',
                                                                      'nullable' => true,
@@ -49,13 +70,29 @@ class SpecimensForm extends BaseSpecimensForm
                                                                     )
                                                               );
 
-    $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
-       'model' => 'Taxonomy',
-       'link_url' => 'taxonomy/choose',
-       'method' => 'getName',
-       'box_title' => $this->getI18N()->__('Choose Taxon'),
-     ));
+    /* Collecting method */
+    $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctMethods',
+        'method' => 'getMethod',
+        'key_method' => 'getMethod',
+        'add_empty' => true,
+        'change_label' => 'Pick a method in the list',
+        'add_label' => 'Add another method',
+    ));
+    
+    /* Collecting tool */
+    $this->widgetSchema['collecting_tool'] = new widgetFormSelectComplete(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctTools',
+        'method' => 'getTool',
+        'key_method' => 'getTool',
+        'add_empty' => true,
+        'change_label' => 'Pick a tool in the list',
+        'add_label' => 'Add another tool',
+    ));
 
+    /* Acquisition categories */
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
       'choices' =>  SpecimensTable::getDistinctCategories(),
     ));
@@ -63,26 +100,6 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
         'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
         'expanded' => true,
-    ));
-    
-    $this->widgetSchema['collecting_tool'] = new widgetFormSelectComplete(array(
-        'model' => 'Specimens',
-        'table_method' => 'getDistinctTools',
-        'method' => 'getTool',
-        'key_method' => 'getTool',
-        'add_empty' => true,
-	'change_label' => 'Pick a tool in the list',
-	'add_label' => 'Add another tool',
-    ));
-
-    $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
-        'model' => 'Specimens',
-        'table_method' => 'getDistinctMethods',
-        'method' => 'getMethod',
-        'key_method' => 'getMethod',
-        'add_empty' => true,
-	'change_label' => 'Pick a method in the list',
-	'add_label' => 'Add another method',
     ));
     
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
@@ -95,6 +112,7 @@ class SpecimensForm extends BaseSpecimensForm
         'required' => false,
         ));
         
+    /* Validators */
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
     $this->validatorSchema['expedition_ref'] = new sfValidatorInteger();
     $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
