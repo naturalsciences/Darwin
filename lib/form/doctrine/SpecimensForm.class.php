@@ -37,7 +37,7 @@ class SpecimensForm extends BaseSpecimensForm
             'box_title' => $this->getI18N()->__('Choose Collection'),
             'button_class'=>'',
            ),
-      array('class'=>'ref_inline',
+      array('class'=>'inline',
            )
      );
     
@@ -48,7 +48,11 @@ class SpecimensForm extends BaseSpecimensForm
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Expedition'),
        'nullable' => true,
-     ));
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
 
     /* Taxonomy Reference */
     $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
@@ -56,7 +60,11 @@ class SpecimensForm extends BaseSpecimensForm
        'link_url' => 'taxonomy/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Taxon'),
-     ));
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
 
     /* IG number Reference */
     $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(array('model' => 'Igs',

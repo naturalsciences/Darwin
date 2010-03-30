@@ -143,29 +143,11 @@ ul.spec_error_list, ul.error_list
   line-height:24px;
 }
 
-.ref_inline_name
-{
-  display:inline;
-  margin: 0.5em;
-  margin-left: 0;
-  font-weight: bold;
-  line-height:24px;
-}
-
 .ref_clear
 {
   float: left;
-  margin-right: 2em;
-  margin-top: 0.8em;
-  vertical-align: middle;
-}
-
-.ref_inline_clear
-{
-  display: inline;
-  margin-right: 2em;
-  margin-top: 0.8em;
-  vertical-align: middle;
+  margin-right: 1em;
+  vertical-align: bottom;
 }
 
 .but_text
@@ -176,6 +158,11 @@ ul.spec_error_list, ul.error_list
   float:left;
   display:block;
   height:24px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-weight: normal;
 }
 
 a.but_text
@@ -184,9 +171,18 @@ a.but_text
   color:black;
 }
 
+/*TODO Check if this still have to exist or if it can be deleted*/
 .right_part, .left_part
 {
   float:left;
+}
+
+.inline
+{
+  float:none;
+  display:inline;
+  padding-top:0.3em;
+  padding-bottom:0.3em;
 }
 
 /* Forms */

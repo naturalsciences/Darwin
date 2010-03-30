@@ -5,49 +5,49 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 
     public function render($name, $value = null, $attributes = array(), $errors = array())
     {
-        $class = array('class'=>'ref');
-        if (isset($attributes['class'])) $class = array_merge($class, $attributes);
-        $class = $class['class'];
+        $class = array('class'=>'');
+        if (isset($attributes['class']))
+        {
+          $class = array_merge($class, $attributes);
+          $attributes['class'] .= ' hidden';
+        }
+        $class = ' '.$class['class'];
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
         $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
 	$input .= $this->renderContentTag('div',$obj_name, array(
 	   'id' => $this->generateId($name)."_name",
-	   'class' => $class."_name",
+	   'class' => "ref_name" . $class,
 	));
         
 	if($this->getOption('nullable'))
 	{
 	  $options = array(
 	    'src' => '/images/remove.png',
-	    'class' => $class."_clear"
+	    'class' => "ref_clear" . $class
 	  );
 
 	  if($value == 0)
 	    $options['class'] .= ' hidden';
 	  $input .= $this->renderTag('img',$options);
 	}
-
-        $class .= '_name';
+        
         if (strlen($this->getOption('button_class')) > 0)
         {
           $class .= ' '.$this->getOption('button_class');
         }
 
-
 	if($this->getOption('button_is_hidden') && $value == 0)
 	{
 	  $class .= ' hidden';
 	}
-	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="'.$class.'">';
-	$input .= image_tag('button_grey_left.png', array('class' => 'left_part' ));
+	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="ref_name ' .$class. '">';
 
 	$input .= link_to( $obj_name=='' ? __('Choose !') : __('Change !'),
 	    $this->getOption('link_url'),
-	    array('class' => 'but_text' )
+	    array('class' => 'but_text' . $class )
 	); 
 
-	$input .= image_tag('button_grey_right.png', array('class' => 'right_part' ));
 	$input .= '</div>';
 
         return $input;
