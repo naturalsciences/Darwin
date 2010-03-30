@@ -77,6 +77,54 @@ class SpecimensForm extends BaseSpecimensForm
            )
     );
 
+    /* Chronostratigraphy Reference */
+    $this->widgetSchema['chrono_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Chronostratigraphy',
+       'link_url' => 'chronostratigraphy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Chronostratigraphic unit'),
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    /* Lithostratigraphy Reference */
+    $this->widgetSchema['litho_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Lithostratigraphy',
+       'link_url' => 'lithostratigraphy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Lithostratigraphic unit'),
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    /* Lithology Reference */
+    $this->widgetSchema['lithology_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Lithology',
+       'link_url' => 'lithology/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Lithologic unit'),
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    /* Mineralogy Reference */
+    $this->widgetSchema['mineral_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Mineralogy',
+       'link_url' => 'mineralogy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Mineralogic unit'),
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
     /* IG number Reference */
     $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(array('model' => 'Igs',
                                                                      'method' => 'getIgNum',
@@ -137,6 +185,14 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['expedition_ref'] = new sfValidatorInteger();
 
     $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
+
+    $this->validatorSchema['chrono_ref'] = new sfValidatorInteger();
+
+    $this->validatorSchema['litho_ref'] = new sfValidatorInteger();
+
+    $this->validatorSchema['lithology_ref'] = new sfValidatorInteger();
+
+    $this->validatorSchema['mineral_ref'] = new sfValidatorInteger();
 
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),

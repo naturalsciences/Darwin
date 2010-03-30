@@ -67,6 +67,26 @@ class specimenwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeRefChrono()
+  {
+    $this->defineForm();
+  }
+
+  public function executeRefLitho()
+  {
+    $this->defineForm();
+  }
+
+  public function executeRefLithology()
+  {
+    $this->defineForm();
+  }
+
+  public function executeRefMineral()
+  {
+    $this->defineForm();
+  }
+
   public function executeLinkHabitat()
   {}
 
