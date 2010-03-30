@@ -815,7 +815,7 @@ Specimens:
         host_specimen_ref: { type: integer}
         host_relationship: { type: string}
         acquisition_category: { type: string, default: expedition}
-        acquisition_date_mask: { type: integer, default:0}
+        acquisition_date_mask: { type: integer, notnull: true, default:0}
         acquisition_date: { type: string, default: '0001-01-01'}
         collecting_method: { type: string}
         collecting_tool: { type: string}

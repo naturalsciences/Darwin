@@ -12,6 +12,9 @@ class SpecimensForm extends BaseSpecimensForm
   public function configure()
   {
     
+    unset($this['acquisition_date_mask']
+         );
+
     /* Set default values */
     $this->setDefaults(array(
         'collection_ref' => 0,
@@ -24,6 +27,14 @@ class SpecimensForm extends BaseSpecimensForm
         'gtu_ref' => 0,
         'host_taxon_ref' => 0,
     ));
+
+    $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
+    $years = array_combine($yearsKeyVal, $yearsKeyVal);
+    $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
+    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
+    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
+    $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
+    $maxDate->setStart(false);
 
     /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
@@ -105,26 +116,48 @@ class SpecimensForm extends BaseSpecimensForm
       'choices' =>  SpecimensTable::getDistinctCategories(),
     ));
 
+    $this->widgetSchema['acquisition_date'] = new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
+                                                                                  'image'=>'/images/calendar.gif', 
+                                                                                  'format' => '%day%/%month%/%year%', 
+                                                                                  'years' => $years,
+                                                                                  'empty_values' => $dateText,
+                                                                                 ),
+                                                                            array('class' => 'to_date')
+                                                                           );
+
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
         'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
         'expanded' => true,
     ));
     
+    /* Validators */
+
+    $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
+
+    $this->validatorSchema['expedition_ref'] = new sfValidatorInteger();
+
+    $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
+
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),
         'required' => false,
         ));
+
+    $this->validatorSchema['acquisition_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                              'from_date' => true,
+                                                                              'min' => $minDate,
+                                                                              'max' => $maxDate, 
+                                                                              'empty_value' => $dateLowerBound,
+                                                                             ),
+                                                                        array('invalid' => 'Date provided is not valid',
+                                                                             )
+                                                                       );
 
     $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
         'choices' => array(0,1),
         'required' => false,
         ));
         
-    /* Validators */
-    $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
-    $this->validatorSchema['expedition_ref'] = new sfValidatorInteger();
-    $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
-
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
             array(),

@@ -178,6 +178,7 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              ));
         $this->hasColumn('acquisition_date_mask', 'integer', null, array(
              'type' => 'integer',
+             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('acquisition_date', 'string', null, array(

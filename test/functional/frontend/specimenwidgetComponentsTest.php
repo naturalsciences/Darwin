@@ -9,9 +9,9 @@ $browser->
     get('/widgets/reloadContent?widget=acquisitionCategory&category=specimen')->
     with('response')->begin()->
         isStatusCode(200)->
-        checkElement('select',1)->
-        checkElement('select option',12)->
-        checkElement('select option:first','Undefined')->
+        checkElement('select',4)->
+        checkElement('select:first option',12)->
+        checkElement('select:first option:first','Undefined')->
     end()->
     info('2 - CollectionRef')->
     get('/widgets/reloadContent?widget=refCollection&category=specimen')->

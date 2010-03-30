@@ -5,5 +5,31 @@
  */
 class Specimens extends BaseSpecimens
 {
+  public function getAcquisitionDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('acquisition_date'), $this->_get('acquisition_date_mask'));
+    return $dateTime->getDateMasked();
+  }
+  
+  public function getAcquisitionDate()
+  {
+    $from_date = new FuzzyDateTime($this->_get('acquisition_date'), $this->_get('acquisition_date_mask'));
+    return $from_date->getDateTimeMaskedAsArray();
+  }
+
+  public function setAcquisitionDate($fd)
+  {
+    if ($fd instanceof FuzzyDateTime)
+    {
+      $this->_set('acquisition_date', $fd->format('Y/m/d'));
+      $this->_set('acquisition_date_mask', $fd->getMask());
+    }
+    else
+    {
+      $dateTime = new FuzzyDateTime($fd, 56, true); 
+      $this->_set('acquisition_date', $dateTime->format('Y/m/d'));
+      $this->_set('acquisition_date_mask', $dateTime->getMask());
+    }
+  }
 
 }

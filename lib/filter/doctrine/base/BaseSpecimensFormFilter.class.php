@@ -25,7 +25,7 @@ abstract class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
       'host_specimen_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('HostSpecimen'), 'add_empty' => true)),
       'host_relationship'     => new sfWidgetFormFilterInput(),
       'acquisition_category'  => new sfWidgetFormFilterInput(),
-      'acquisition_date_mask' => new sfWidgetFormFilterInput(),
+      'acquisition_date_mask' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'acquisition_date'      => new sfWidgetFormFilterInput(),
       'collecting_method'     => new sfWidgetFormFilterInput(),
       'collecting_tool'       => new sfWidgetFormFilterInput(),
