@@ -34,7 +34,7 @@ WHERE tag_indexed not in (SELECT distinct(fulltoIndex(tags)) as u_tag FROM regex
     if($sub_group != "")
 	$sql .= " AND sub_group_type = $q_sub_group";
 
-    $sql .= " GROUP by tag order BY tag asc LIMIT 10";
+    $sql .= " GROUP by tag ORDER BY tag asc LIMIT 10";
     $result = $conn->fetchAssoc($sql);
 
     $max = 0;
