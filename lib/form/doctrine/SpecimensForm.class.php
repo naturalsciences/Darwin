@@ -146,7 +146,7 @@ class SpecimensForm extends BaseSpecimensForm
        'model' => 'Gtu',
        'link_url' => 'gtu/choose',
        'method' => 'getCode',
-       'box_title' => $this->getI18N()->__('Choose Gtu unit'),
+       'box_title' => $this->getI18N()->__('Choose Sampling Location'),
        'nullable' => true,
        'button_class'=>'',
      ),

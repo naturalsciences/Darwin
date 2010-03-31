@@ -453,7 +453,7 @@ MyPreferences:
         order_by: 4
         opened: true
         visible: true
-        title_perso: G(eo) T(emporal) U(nit)
+        title_perso: Sampling location
     u1ws12:
         User: u1
         col_num: 2
