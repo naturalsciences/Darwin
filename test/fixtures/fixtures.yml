@@ -894,6 +894,24 @@ MyPreferences:
         opened: true
         visible: true
         title_perso: Addresses
+    u1wgtu1:
+        User: u1
+        col_num: 1
+        category: catalogue_gtu_widget
+        group_name: comment
+        order_by: 1
+        opened: false
+        visible: true
+        title_perso: Comments
+    u1wgtu2:
+        User: u1
+        col_num: 1
+        category: catalogue_gtu_widget
+        group_name: properties
+        order_by: 5
+        opened: true
+        visible: false
+        title_perso: Properties
 
 CatalogueProperties:
     cprop1:

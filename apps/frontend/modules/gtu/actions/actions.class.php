@@ -10,7 +10,7 @@
  */
 class gtuActions extends DarwinActions
 {
-  protected $widgetCategory = 'gtu_widget';
+  protected $widgetCategory = 'catalogue_gtu_widget';
 
   public function executeChoose(sfWebRequest $request)
   {
