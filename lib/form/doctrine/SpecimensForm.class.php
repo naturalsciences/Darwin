@@ -17,7 +17,6 @@ class SpecimensForm extends BaseSpecimensForm
 
     /* Set default values */
     $this->setDefaults(array(
-        'collection_ref' => 0,
         'expedition_ref' => 0,
         'taxon_ref' => 0,
         'mineral_ref' => 0,
@@ -142,6 +141,19 @@ class SpecimensForm extends BaseSpecimensForm
                                                                     )
                                                               );
 
+    /* Gtu Reference */
+    $this->widgetSchema['gtu_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Gtu',
+       'link_url' => 'gtu/choose',
+       'method' => 'getCode',
+       'box_title' => $this->getI18N()->__('Choose Gtu unit'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
     /* Collecting method */
     $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
         'model' => 'Specimens',
@@ -185,7 +197,7 @@ class SpecimensForm extends BaseSpecimensForm
     
     /* Validators */
 
-    $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['collection_ref'] = new sfValidatorInteger(array('required'=>true));
 
     $this->validatorSchema['expedition_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
@@ -198,6 +210,8 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['lithology_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
     $this->validatorSchema['mineral_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+
+    $this->validatorSchema['gtu_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),
