@@ -1230,3 +1230,13 @@ a.sub_group
   color:white;
   text-decoration: none;
 }
+#gtu_filter .widget_row_delete
+{
+  text-align:left;
+  vertical-align:middle;
+}
+
+input.tag_line
+{
+  width:100%;
+}

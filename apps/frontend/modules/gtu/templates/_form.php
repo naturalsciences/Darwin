@@ -162,12 +162,14 @@ $(document).ready(function () {
       group_name = parent_el.find('input[name$="\[group_name\]"]').val();
       sub_group_name = parent_el.find('[name$="\[sub_group_name\]"]').val();
       if(sub_group_name=='') return false;
+      $('.purposed_tags').hide();
       $.ajax({
 	  type: "GET",
 	  url: "<?php echo url_for('gtu/purposeTag');?>" + '/group_name/' + group_name + '/sub_group_name/' + sub_group_name + '/value/'+ $(this).val(),
 	  success: function(html)
 	  {
 	    parent_el.find('.purposed_tags').html(html);
+	    parent_el.find('.purposed_tags').show();
 	  }
       });
     }

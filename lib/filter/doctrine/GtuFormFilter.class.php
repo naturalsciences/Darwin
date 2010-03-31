@@ -55,18 +55,44 @@ class GtuFormFilter extends BaseGtuFormFilter
                                                                           array('invalid'=>'The "begin" date cannot be above the "end" date.')
                                                                          )
                                             );
-
+    $subForm = new sfForm();
+    $this->embedForm('Tags',$subForm);
   }
 
   public function addTagsColumnQuery($query, $field, $val)
   {
     $alias = $query->getRootAlias();
-    $vals = explode(';',$val);
-    foreach($vals as $i)
+    foreach($val as $line)
     {
-      $query->andWhere("id in (select DISTINCT(gtu_ref) FROM tags WHERE tag_indexed = fulltoindex(?) )", $i);
+      $line_val = $line['tag'];
+      if( $line_val != '')
+      {
+	$query->andWhere("id in (select DISTINCT(gtu_ref) FROM tags WHERE tag_indexed in  (select lineToTagRows(?) ) )", $line_val);
+      }
     }
     return $query;
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['Tags']))
+    {
+      foreach($taintedValues['Tags'] as $key=>$newVal)
+      {
+	if (!isset($this['Tags'][$key]))
+	{
+	  $this->addValue($key);
+	}
+      }
+    }
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function addValue($num)
+  {
+      $form = new TagLineForm();
+      $this->embeddedForms['Tags']->embedForm($num, $form);
+      $this->embedForm('Tags', $this->embeddedForms['Tags']);
   }
 
   public function doBuildQuery(array $values)

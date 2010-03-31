@@ -15,11 +15,13 @@ class gtuActions extends DarwinActions
   public function executeChoose(sfWebRequest $request)
   {
     $this->form = new GtuFormFilter();
+    $this->form->addValue(0);
   }
 
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new GtuFormFilter();
+    $this->form->addValue(0);
   }
 
  public function executeSearch(sfWebRequest $request)
@@ -153,5 +155,14 @@ class gtuActions extends DarwinActions
     $form = new GtuForm($gtu);
     $form->addValue($number, $request->getParameter('group'));
     return $this->renderPartial('taggroups',array('form' => $form['newVal'][$number]));
+  }
+  
+  public function executeAndSearch(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+
+    $form = new GtuFormFilter();
+    $form->addValue($number);
+    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number]));
   }
 }
