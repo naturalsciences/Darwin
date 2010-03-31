@@ -6606,6 +6606,11 @@ EXCEPTION
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION lineToTagRows(IN line text) RETURNS SETOF varchar AS
+$$
+SELECT distinct(fulltoIndex(tags)) FROM regexp_split_to_table($1, ';') as tags WHERE fulltoIndex(tags) != '' ;
+$$
+LANGUAGE 'sql' IMMUTABLE STRICT;
 
 CREATE OR REPLACE FUNCTION fct_cpy_gtuTags() RETURNS TRIGGER
 language plpgsql
@@ -6642,3 +6647,5 @@ BEGIN
     RETURN NEW;
 END;
 $$;
+
+
