@@ -71,6 +71,7 @@ class SpecimensForm extends BaseSpecimensForm
        'link_url' => 'taxonomy/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Taxon'),
+       'nullable' => true,
        'button_class'=>'',
      ),
       array('class'=>'inline',
@@ -83,6 +84,7 @@ class SpecimensForm extends BaseSpecimensForm
        'link_url' => 'chronostratigraphy/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Chronostratigraphic unit'),
+       'nullable' => true,
        'button_class'=>'',
      ),
       array('class'=>'inline',
@@ -95,6 +97,7 @@ class SpecimensForm extends BaseSpecimensForm
        'link_url' => 'lithostratigraphy/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Lithostratigraphic unit'),
+       'nullable' => true,
        'button_class'=>'',
      ),
       array('class'=>'inline',
@@ -107,6 +110,7 @@ class SpecimensForm extends BaseSpecimensForm
        'link_url' => 'lithology/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Lithologic unit'),
+       'nullable' => true,
        'button_class'=>'',
      ),
       array('class'=>'inline',
@@ -119,6 +123,7 @@ class SpecimensForm extends BaseSpecimensForm
        'link_url' => 'mineralogy/choose',
        'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Mineralogic unit'),
+       'nullable' => true,
        'button_class'=>'',
      ),
       array('class'=>'inline',
@@ -182,17 +187,17 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger();
 
-    $this->validatorSchema['expedition_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['expedition_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
-    $this->validatorSchema['taxon_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['taxon_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
-    $this->validatorSchema['chrono_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['chrono_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
-    $this->validatorSchema['litho_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['litho_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
-    $this->validatorSchema['lithology_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['lithology_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
-    $this->validatorSchema['mineral_ref'] = new sfValidatorInteger();
+    $this->validatorSchema['mineral_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),

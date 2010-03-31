@@ -279,7 +279,7 @@ Specimens:
     sp1:
         Collections: c1
         specimen_count_min: 1
-        acquisition_date: '0001-01-01'
+        acquisition_date: '2001-01-01'
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Hunting
@@ -287,7 +287,7 @@ Specimens:
     sp2:
         Collections: c2
         specimen_count_min: 1
-        acquisition_date: '0001-03-01'
+        acquisition_date: '2001-03-01'
         acquisition_category: theft
         collecting_tool: fish Pas net
         collecting_method: Hunting
@@ -295,7 +295,7 @@ Specimens:
     sp3:
         Collections: c3
         specimen_count_min: 1
-        acquisition_date: '0001-02-01'
+        acquisition_date: '2001-02-01'
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Fishing
@@ -462,7 +462,7 @@ MyPreferences:
         opened: false
         visible: false
         title_perso: Collecting tools
-    u1ws15-2:
+    u1wtax0:
         User: u1
         col_num: 1
         category: catalogue_taxonomy_widget
@@ -525,12 +525,21 @@ MyPreferences:
         opened: true
         visible: false
         title_perso: Properties
+    u1wchs0:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: cataloguePeople
+        order_by: 0
+        opened: true
+        visible: true
+        title_perso: People
     u1wchs1:
         User: u1
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: relationRename
-        order_by: 0
+        order_by: 1
         opened: false
         visible: false
         title_perso: Current name
@@ -539,7 +548,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: synonym
-        order_by: 1
+        order_by: 2
         opened: true
         visible: true
         title_perso: Synonymies
@@ -548,7 +557,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: vernacularNames
-        order_by: 2
+        order_by: 3
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -557,7 +566,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: comment
-        order_by: 3
+        order_by: 4
         opened: false
         visible: true
         title_perso: Comments
@@ -566,16 +575,25 @@ MyPreferences:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: properties
-        order_by: 4
+        order_by: 5
         opened: true
         visible: false
         title_perso: Properties
+    u1wlhs0:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: cataloguePeople
+        order_by: 0
+        opened: true
+        visible: true
+        title_perso: People
     u1wlhs1:
         User: u1
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: relationRename
-        order_by: 0
+        order_by: 1
         opened: false
         visible: false
         title_perso: Current name
@@ -584,7 +602,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: synonym
-        order_by: 1
+        order_by: 2
         opened: true
         visible: true
         title_perso: Synonymies
@@ -593,7 +611,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: vernacularNames
-        order_by: 2
+        order_by: 3
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -602,7 +620,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: comment
-        order_by: 3
+        order_by: 4
         opened: false
         visible: true
         title_perso: Comments
@@ -611,16 +629,25 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: properties
-        order_by: 4
+        order_by: 5
         opened: true
         visible: false
         title_perso: Properties
+    u1wlil0:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: cataloguePeople
+        order_by: 0
+        opened: true
+        visible: true
+        title_perso: People
     u1wlil1:
         User: u1
         col_num: 1
         category: catalogue_lithology_widget
         group_name: relationRename
-        order_by: 0
+        order_by: 1
         opened: false
         visible: false
         title_perso: Current name
@@ -629,7 +656,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: synonym
-        order_by: 1
+        order_by: 2
         opened: true
         visible: true
         title_perso: Synonymies
@@ -638,7 +665,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: vernacularNames
-        order_by: 2
+        order_by: 3
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -647,7 +674,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: comment
-        order_by: 3
+        order_by: 4
         opened: false
         visible: true
         title_perso: Comments
@@ -656,16 +683,25 @@ MyPreferences:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: properties
-        order_by: 4
+        order_by: 5
         opened: true
         visible: false
         title_perso: Properties
+    u1wmin0:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: cataloguePeople
+        order_by: 0
+        opened: true
+        visible: true
+        title_perso: People
     u1wmin1:
         User: u1
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: relationRename
-        order_by: 0
+        order_by: 1
         opened: false
         visible: false
         title_perso: Current name
@@ -674,7 +710,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: synonym
-        order_by: 1
+        order_by: 2
         opened: true
         visible: true
         title_perso: Synonymies
@@ -683,7 +719,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: vernacularNames
-        order_by: 2
+        order_by: 3
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -692,7 +728,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: comment
-        order_by: 3
+        order_by: 4
         opened: false
         visible: true
         title_perso: Comments
@@ -701,7 +737,7 @@ MyPreferences:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: properties
-        order_by: 4
+        order_by: 5
         opened: true
         visible: false
         title_perso: Properties

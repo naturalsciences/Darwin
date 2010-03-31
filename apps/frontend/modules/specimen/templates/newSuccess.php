@@ -35,7 +35,7 @@ $(document).ready(function ()
                 <div>
                 <?php //echo $form->renderHiddenFields() ?>
                  <?php echo $form['id']->render() ?>
-                <?php if($form->hasErrors()):?>
+                <?php if($form->hasGlobalErrors()):?>
                     <ul class="spec_error_list">
                         <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
                             <li><?php echo __($name." ".$error); ?></li>

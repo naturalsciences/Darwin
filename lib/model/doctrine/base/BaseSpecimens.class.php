@@ -29,12 +29,12 @@
  * @property integer $ig_ref
  * @property Collections $Collections
  * @property Expeditions $Expeditions
+ * @property Gtu $Gtu
  * @property Taxonomy $Taxonomy
  * @property Lithostratigraphy $Lithostratigraphy
  * @property Chronostratigraphy $Chronostratigraphy
  * @property Lithology $Lithology
  * @property Mineralogy $Mineralogy
- * @property Taxonomy $IdentificationsTaxon
  * @property Taxonomy $HostTaxon
  * @property Specimens $HostSpecimen
  * @property Igs $Igs
@@ -66,12 +66,12 @@
  * @method integer             getIgRef()                 Returns the current record's "ig_ref" value
  * @method Collections         getCollections()           Returns the current record's "Collections" value
  * @method Expeditions         getExpeditions()           Returns the current record's "Expeditions" value
+ * @method Gtu                 getGtu()                   Returns the current record's "Gtu" value
  * @method Taxonomy            getTaxonomy()              Returns the current record's "Taxonomy" value
  * @method Lithostratigraphy   getLithostratigraphy()     Returns the current record's "Lithostratigraphy" value
  * @method Chronostratigraphy  getChronostratigraphy()    Returns the current record's "Chronostratigraphy" value
  * @method Lithology           getLithology()             Returns the current record's "Lithology" value
  * @method Mineralogy          getMineralogy()            Returns the current record's "Mineralogy" value
- * @method Taxonomy            getIdentificationsTaxon()  Returns the current record's "IdentificationsTaxon" value
  * @method Taxonomy            getHostTaxon()             Returns the current record's "HostTaxon" value
  * @method Specimens           getHostSpecimen()          Returns the current record's "HostSpecimen" value
  * @method Igs                 getIgs()                   Returns the current record's "Igs" value
@@ -102,12 +102,12 @@
  * @method Specimens           setIgRef()                 Sets the current record's "ig_ref" value
  * @method Specimens           setCollections()           Sets the current record's "Collections" value
  * @method Specimens           setExpeditions()           Sets the current record's "Expeditions" value
+ * @method Specimens           setGtu()                   Sets the current record's "Gtu" value
  * @method Specimens           setTaxonomy()              Sets the current record's "Taxonomy" value
  * @method Specimens           setLithostratigraphy()     Sets the current record's "Lithostratigraphy" value
  * @method Specimens           setChronostratigraphy()    Sets the current record's "Chronostratigraphy" value
  * @method Specimens           setLithology()             Sets the current record's "Lithology" value
  * @method Specimens           setMineralogy()            Sets the current record's "Mineralogy" value
- * @method Specimens           setIdentificationsTaxon()  Sets the current record's "IdentificationsTaxon" value
  * @method Specimens           setHostTaxon()             Sets the current record's "HostTaxon" value
  * @method Specimens           setHostSpecimen()          Sets the current record's "HostSpecimen" value
  * @method Specimens           setIgs()                   Sets the current record's "Igs" value
@@ -223,6 +223,10 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              'local' => 'expedition_ref',
              'foreign' => 'id'));
 
+        $this->hasOne('Gtu', array(
+             'local' => 'gtu_ref',
+             'foreign' => 'id'));
+
         $this->hasOne('Taxonomy', array(
              'local' => 'taxon_ref',
              'foreign' => 'id'));
@@ -241,10 +245,6 @@ abstract class BaseSpecimens extends sfDoctrineRecord
 
         $this->hasOne('Mineralogy', array(
              'local' => 'mineral_ref',
-             'foreign' => 'id'));
-
-        $this->hasOne('Taxonomy as IdentificationsTaxon', array(
-             'local' => 'identification_taxon_ref',
              'foreign' => 'id'));
 
         $this->hasOne('Taxonomy as HostTaxon', array(
