@@ -133,7 +133,7 @@ class userActions extends DarwinActions
 
     $old_people = $this->user->getPeopleId();
 
-    $this->form = new ProfileForm($this->user);
+    $this->form = new ProfileForm($this->user,array('is_physical' => $this->user->getIsPhysical()));
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users'));

@@ -8,6 +8,32 @@
   <table>
   <tbody>
   <?php include_partial('profile', array('form' => $form)) ?>
+</tbody>
+<tfoot>
+  <tr>
+    <td colspan="2">
+      <?php echo $form->renderHiddenFields(false) ?>
+      <a href="<?php echo url_for('@homepage') ?>"><?php echo __('Cancel');?></a>
+      <input id="submit" type="submit" value="<?php echo __('Save');?>" />
+    </td>
+  </tr>
+</tfoot>
+ </table>
+</form>
+
+<script type="text/javascript">
+$('.display_value').click(function(){
+  $('.trusted_user').show();
+  $(this).hide();
+  $('.hide_value').show();
+});
+
+$('.hide_value').click(function(){
+  $('.trusted_user').hide();
+  $(this).hide();
+  $('.display_value').show();
+});
+</script>
   <?php include_partial('widgets/screen', array(
 	'widgets' => $widgets,
 	'category' => 'userswidget',
