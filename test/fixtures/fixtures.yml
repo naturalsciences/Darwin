@@ -9,6 +9,10 @@ Gtu:
         gtu_to_date: '2006-12-12'
     gtu2:
         code: Antarctica
+        gtu_from_date: '1988-04-01'
+        gtu_from_date_mask: 48
+        gtu_to_date: '1988-07-31'
+        gtu_to_date_mask: 48
     gtu3:
         code: irsnb
     gtu4:
