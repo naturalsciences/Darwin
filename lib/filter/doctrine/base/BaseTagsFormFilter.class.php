@@ -13,9 +13,15 @@ abstract class BaseTagsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'tag'            => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'group_type'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'sub_group_type' => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
+      'tag'            => new sfValidatorPass(array('required' => false)),
+      'group_type'     => new sfValidatorPass(array('required' => false)),
+      'sub_group_type' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tags_filters[%s]');
@@ -35,9 +41,12 @@ abstract class BaseTagsFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'gtu_ref'           => 'Number',
-      'group_ref'         => 'Number',
-      'tag_value_indexed' => 'Text',
+      'gtu_ref'        => 'Number',
+      'group_ref'      => 'Number',
+      'tag'            => 'Text',
+      'group_type'     => 'Text',
+      'sub_group_type' => 'Text',
+      'tag_indexed'    => 'Text',
     );
   }
 }

@@ -12,6 +12,8 @@ fieldset
   border: 1px solid #C1CF56;
   padding: 1em;
   margin:0.7em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 table tr
@@ -144,9 +146,8 @@ ul.spec_error_list, ul.error_list
 .ref_clear
 {
   float: left;
-  margin-right: 2em;
-  margin-top: 0.8em;
-  vertical-align: middle;
+  margin-right: 1em;
+  vertical-align: bottom;
 }
 
 .but_text
@@ -157,6 +158,11 @@ ul.spec_error_list, ul.error_list
   float:left;
   display:block;
   height:24px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-weight: normal;
 }
 
 a.but_text
@@ -165,9 +171,18 @@ a.but_text
   color:black;
 }
 
+/*TODO Check if this still have to exist or if it can be deleted*/
 .right_part, .left_part
 {
   float:left;
+}
+
+.inline
+{
+  float:none;
+  display:inline;
+  padding-top:0.3em;
+  padding-bottom:0.3em;
 }
 
 /* Forms */
@@ -1147,3 +1162,81 @@ li.tag_size_2 { font-size: 14px; }
 li.tag_size_3 { font-size: 16px; }
 li.tag_size_4 { font-size: 18px; }
 li.tag_size_5 { font-size: 20px; }
+
+.gtu_groups_add
+{
+  background-color: #C1CF56;
+  color:white;
+  text-align:center;
+  padding:0.2em;
+  width: 60%;
+  margin-left: 0.7em;
+
+}
+.gtu_groups_add a[href]
+{
+/*   color:white; */
+}
+
+.tag_parts_screen
+{
+  width:60%;
+  margin-top:2em;
+  margin-bottom:2em;
+}
+
+.tag_parts_screen ul
+{
+    margin-bottom:1.5em;
+}
+
+.tag_parts_screen li
+{
+    margin-bottom:0.5em;
+}
+
+.tag_parts_screen ul .sub_group 
+{
+  float: left;
+  width: 240px;
+}
+
+.tag_parts_screen ul .tag_encod
+{
+  float: left;
+  width: 60%;
+}
+
+.tag_encod input
+{
+  width: 95%;
+}
+
+.tag_parts_screen ul div.widget_row_delete
+{
+  float:left;
+  width:18px;
+}
+
+a.sub_group
+{
+
+  padding: 2px;
+  border:1px solid #C1CC33;
+  background-color:#C1CF56;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding:1px;
+  color:white;
+  text-decoration: none;
+}
+#gtu_filter .widget_row_delete
+{
+  text-align:left;
+  vertical-align:middle;
+}
+
+input.tag_line
+{
+  width:100%;
+}

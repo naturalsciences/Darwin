@@ -20,7 +20,7 @@ class MyPreferencesTable extends DarwinTable
   {
       $q = Doctrine_Query::create()
             ->from('MyPreferences p INDEXBY p.group_name')
-            ->orderBy('p.col_num ASC, p.order_by ASC');
+            ->orderBy('p.col_num ASC, p.order_by ASC, p.group_name ASC');
     return $this->addCategoryUser($q,$category)->execute();
   }
   
