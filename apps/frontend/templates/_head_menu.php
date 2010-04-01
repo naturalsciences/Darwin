@@ -70,7 +70,7 @@
                 <li><a href="#">A Super Long truc en NL</a></li>
                 <li><a href="#">....</a></li>
                 <li>
-                	<a href="#">User</a>
+                	<a href="#"><?php echo __('User');?></a>
                 	<ul>
                 		<li><?php echo link_to(__('Add'),'user/new');?></li>
                 		<li><?php echo link_to(__('Search'),'user/index');?></li>

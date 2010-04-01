@@ -20,7 +20,6 @@
  * @property enum $gender
  * @property integer $db_user_type
  * @property integer $people_id
- * @property integer $approval_level
  * @property People $People
  * @property Doctrine_Collection $UsersLanguages
  * @property Doctrine_Collection $UsersComm
@@ -56,7 +55,6 @@
  * @method enum                getGender()                        Returns the current record's "gender" value
  * @method integer             getDbUserType()                    Returns the current record's "db_user_type" value
  * @method integer             getPeopleId()                      Returns the current record's "people_id" value
- * @method integer             getApprovalLevel()                 Returns the current record's "approval_level" value
  * @method People              getPeople()                        Returns the current record's "People" value
  * @method Doctrine_Collection getUsersLanguages()                Returns the current record's "UsersLanguages" collection
  * @method Doctrine_Collection getUsersComm()                     Returns the current record's "UsersComm" collection
@@ -91,7 +89,6 @@
  * @method Users               setGender()                        Sets the current record's "gender" value
  * @method Users               setDbUserType()                    Sets the current record's "db_user_type" value
  * @method Users               setPeopleId()                      Sets the current record's "people_id" value
- * @method Users               setApprovalLevel()                 Sets the current record's "approval_level" value
  * @method Users               setPeople()                        Sets the current record's "People" value
  * @method Users               setUsersLanguages()                Sets the current record's "UsersLanguages" collection
  * @method Users               setUsersComm()                     Sets the current record's "UsersComm" collection
@@ -181,11 +178,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              ));
         $this->hasColumn('people_id', 'integer', null, array(
              'type' => 'integer',
-             ));
-        $this->hasColumn('approval_level', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
     }
 

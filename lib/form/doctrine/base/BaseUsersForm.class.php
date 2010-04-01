@@ -30,7 +30,6 @@ abstract class BaseUsersForm extends BaseFormDoctrine
       'gender'                => new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))),
       'db_user_type'          => new sfWidgetFormInputText(),
       'people_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true)),
-      'approval_level'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -49,7 +48,6 @@ abstract class BaseUsersForm extends BaseFormDoctrine
       'gender'                => new sfValidatorChoice(array('choices' => array(0 => 'M', 1 => 'F'), 'required' => false)),
       'db_user_type'          => new sfValidatorInteger(array('required' => false)),
       'people_id'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'required' => false)),
-      'approval_level'        => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users[%s]');

@@ -155,7 +155,6 @@ Users:
         family_name: Evil
         given_name: Root
         gender: M
-        approval_level: 2
         db_user_type: 8
         People: p5
     u2:
@@ -164,7 +163,7 @@ Users:
         family_name: vanbegin
         given_name: stephanie
         gender: F
-        db_user_type: 2
+        db_user_type: 1
 
     u3:
         is_physical: true
@@ -176,7 +175,7 @@ Users:
 
     u4:
         is_physical: false
-        title: usine
+        sub_type: usine
         family_name: Traitement
         given_name: dechet
         db_user_type: 2
@@ -186,7 +185,19 @@ UsersLoginInfos:
         User: u1
         user_name: root
         password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-
+    u1l2:
+        User: u2
+        user_name: vanbegin
+        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
+    u1l3:
+        User: u3
+        user_name: chambert
+        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
+    u1l4:
+        User: u4
+        user_name: decheterie
+        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
+ 
 UsersLanguages:
     ul1:
         User: u1
