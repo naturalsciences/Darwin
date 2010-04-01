@@ -1,4 +1,3 @@
-
 MyPreferences:
     u1wb1:
         User: u1
@@ -133,17 +132,27 @@ MyPreferences:
         User: u1
         col_num: 2
         category: specimen_widget
-        group_name: method
+        group_name: refGtu
+        mandatory: false
         order_by: 4
-        opened: false
-        visible: false
-        title_perso: Collecting method
+        opened: true
+        visible: true
+        title_perso: Sampling location
     u1ws12:
         User: u1
         col_num: 2
         category: specimen_widget
-        group_name: tool
+        group_name: method
         order_by: 5
+        opened: false
+        visible: false
+        title_perso: Collecting method
+    u1ws13:
+        User: u1
+        col_num: 2
+        category: specimen_widget
+        group_name: tool
+        order_by: 6
         opened: false
         visible: false
         title_perso: Collecting tools
