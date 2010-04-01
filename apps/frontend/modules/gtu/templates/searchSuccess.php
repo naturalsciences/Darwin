@@ -1,3 +1,4 @@
+<?php if($form->isValid()):?>
 <?php if(isset($items) && $items->count() != 0):?>
   <?php
     if($orderDir=='asc')
@@ -68,4 +69,13 @@
   <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
 <?php else:?>
   <?php echo __('No Matching Items');?>
+<?php endif;?>
+
+<?php else:?>
+  <div class="error">
+    <?php echo $form->renderGlobalErrors();?>
+    <?php echo $form['code']->renderError() ?>
+    <?php echo $form['gtu_from_date']->renderError() ?>
+    <?php echo $form['gtu_to_date']->renderError() ?>
+</div>
 <?php endif;?>
