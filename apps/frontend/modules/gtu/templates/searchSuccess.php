@@ -37,16 +37,17 @@
           <tr class="rid_<?php echo $item->getId();?>">
             <td class="item_name"><?php echo $item->getCode();?></td>
 	    <td>
-	      <ul>
+	      <ul class="search_tags">
 		<?php if(isset($tags[$item->getId()])):?>
 		  <?php foreach($tags[$item->getId()] as $tag_group):?>	
 		     <li>
-		      <?php echo $tag_group->getGroupName() .' - '.$tag_group->getSubGroupName();?>
-		      <ul>
+		      <label><?php echo $tag_group->getSubGroupName();?> <span class="gtu_group"> - <?php echo TagGroups::getGroup($tag_group->getGroupName());?></span></label>
+		      <ul class="name_tags">
 			<?php foreach($tag_group->Tags as $tag):?>
 			  <li><?php echo $tag->getTag();?></li>
 			<?php endforeach;?>
 		      </ul>
+		      <div class="clear" />
 		     </li>
 		  <?php endforeach;?>
 		<?php endif;?>
