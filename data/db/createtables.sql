@@ -397,7 +397,6 @@ create table users
         id integer not null default nextval('users_id_seq'),
         db_user_type smallint default 1 not null,
 	people_id integer,
-	approval_level smallint default 0 not null,
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
@@ -410,7 +409,6 @@ comment on column users.sub_type is 'Used for moral users: precise nature - publ
 comment on column users.formated_name is 'Complete user formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column users.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
 comment on column users.people_id is 'Reference to a people if this user is also known as a people';
-comment on column users.approval_level is 'if the user is has asked for trust (link with a people) 0 for not trusted, 1 for asked, 2 for trusted';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
