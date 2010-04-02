@@ -63,7 +63,7 @@ $(document).ready(function () {
  $('tr#parent_ref input[type="hidden"]').change(function()
  {
     $.ajax({
-      url: $('a#searchPUL').attr('href')+ $('select[id$=\"_level_ref\"]').val() + '/parent_id/' + $(this).val() + '/table/' +$('input[id$=\"_table\"]').val(),
+      url: $('a#searchPUL').attr('href')+ '/' + $('select[id$=\"_level_ref\"]').val() + '/parent_id/' + $(this).val() + '/table/' +$('input[id$=\"_table\"]').val(),
       success: function(html) 
       {
 	if (html == 'ok')
