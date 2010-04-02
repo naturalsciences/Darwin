@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Specimens filter form.
+ * Taxonomy filter form.
  *
  * @package    darwin
  * @subpackage filter
@@ -12,5 +12,54 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 {
   public function configure()
   {
+    $this->addPagerItems();
+    $this->widgetSchema->setNameFormat('searchSpecimen[%s]');
+    $this->widgetSchema['taxon_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
+    $this->widgetSchema['taxon_level'] = new sfWidgetFormDarwinDoctrineChoice(array(
+        'model' => 'CatalogueLevels',
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
+        'add_empty' => 'All'
+      ));
+    $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
+
+    $this->widgetSchema->setLabels(array('taxon_name' => 'Taxon',
+                                         'taxon_level' => 'Level'
+                                        )
+                                  );
+
+    $this->validatorSchema['taxon_name'] = new sfValidatorString(array('required' => false,
+                                                                       'trim' => true
+                                                                      )
+                                                                );
+    $this->validatorSchema['taxon_level'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
+  }
+
+  public function addTaxonNameColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if ($values != "")
+    {
+      $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values);
+    }
+    return $query;
+  }
+
+  public function addTaxonLevelColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if ($values != "")
+    {
+      $query->addWhere('level_ref = ?', $values);
+    }
+    return $query;
+  }
+
+  public function doBuildQuery(array $values)
+  {
+    $query = parent::doBuildQuery($values);
+    $alias = $query->getRootAlias();
+    $query->innerJoin($alias.'.Taxonomy t')
+          ->andWhere("t.id != 0 ")
+          ->limit($this->getCatalogueRecLimits());
+    return $query;
   }
 }
