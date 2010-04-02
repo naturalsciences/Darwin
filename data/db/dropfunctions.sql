@@ -24,6 +24,7 @@ DROP FUNCTION IF EXISTS fct_cpy_cascade_children_indexed_names (referenced_relat
 DROP FUNCTION IF EXISTS fct_cpy_hierarchy_from_parents() CASCADE;
 DROP FUNCTION IF EXISTS fct_get_hierarchy_from_parents(referenced_relation varchar, id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_gtuTags() CASCADE;
+DROP FUNCTION IF EXISTS lineToTagRows(line text) CASCADE;
 
 /*** Others ***/
 

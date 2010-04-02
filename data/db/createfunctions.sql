@@ -6606,6 +6606,11 @@ EXCEPTION
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION lineToTagRows(IN line text) RETURNS SETOF varchar AS
+$$
+SELECT distinct(fulltoIndex(tags)) FROM regexp_split_to_table($1, ';') as tags WHERE fulltoIndex(tags) != '' ;
+$$
+LANGUAGE 'sql' IMMUTABLE STRICT;
 
 CREATE OR REPLACE FUNCTION fct_cpy_gtuTags() RETURNS TRIGGER
 language plpgsql
@@ -6626,10 +6631,13 @@ BEGIN
 
       PERFORM * FROM tags WHERE gtu_ref = NEW.gtu_ref AND group_ref = NEW.id AND tag_indexed = entry_row.u_tag LIMIT 1;
       IF FOUND THEN
+	IF OLD.sub_group_name = NEW.sub_group_name THEN
+	  UPDATE tags SET sub_group_type = NEW.sub_group_name WHERE group_ref = NEW.id;
+	END IF;
         CONTINUE;
       ELSE
-        INSERT INTO tags (gtu_ref, group_ref, tag_indexed, tag)
-	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags);
+        INSERT INTO tags (gtu_ref, group_ref, tag_indexed, tag, group_type, sub_group_type )
+	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags, NEW.group_name, NEW.sub_group_name);
       END IF;
     END LOOP;
 
@@ -6639,3 +6647,5 @@ BEGIN
     RETURN NEW;
 END;
 $$;
+
+
