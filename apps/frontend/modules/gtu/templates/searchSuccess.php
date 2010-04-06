@@ -1,3 +1,4 @@
+<?php if($form->isValid()):?>
 <?php if(isset($items) && $items->count() != 0):?>
   <?php
     if($orderDir=='asc')
@@ -36,16 +37,17 @@
           <tr class="rid_<?php echo $item->getId();?>">
             <td class="item_name"><?php echo $item->getCode();?></td>
 	    <td>
-	      <ul>
+	      <ul class="search_tags">
 		<?php if(isset($tags[$item->getId()])):?>
 		  <?php foreach($tags[$item->getId()] as $tag_group):?>	
 		     <li>
-		      <?php echo $tag_group->getGroupName() .' - '.$tag_group->getSubGroupName();?>
-		      <ul>
+		      <label><?php echo $tag_group->getSubGroupName();?> <span class="gtu_group"> - <?php echo TagGroups::getGroup($tag_group->getGroupName());?></span></label>
+		      <ul class="name_tags">
 			<?php foreach($tag_group->Tags as $tag):?>
 			  <li><?php echo $tag->getTag();?></li>
 			<?php endforeach;?>
 		      </ul>
+		      <div class="clear" />
 		     </li>
 		  <?php endforeach;?>
 		<?php endif;?>
@@ -68,4 +70,13 @@
   <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
 <?php else:?>
   <?php echo __('No Matching Items');?>
+<?php endif;?>
+
+<?php else:?>
+  <div class="error">
+    <?php echo $form->renderGlobalErrors();?>
+    <?php echo $form['code']->renderError() ?>
+    <?php echo $form['gtu_from_date']->renderError() ?>
+    <?php echo $form['gtu_to_date']->renderError() ?>
+</div>
 <?php endif;?>

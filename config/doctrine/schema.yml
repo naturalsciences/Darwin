@@ -229,7 +229,6 @@ Users:
         gender: { type: enum, values: ['M','F'] }
         db_user_type: { type: integer, notnull: true, default: 1}
         people_id: { type: integer}
-        approval_level: { type: integer, notnull: true, default: 0}
     relations:
         People:
             local: people_id

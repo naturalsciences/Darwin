@@ -342,7 +342,10 @@ input[type="text"].xlarge_size
   color:white;
   min-width:600px;
 }
-
+.paging_info > span
+{
+ font-weight:bold;
+}
 .paging_info table
 {
   width:100%;
@@ -407,10 +410,8 @@ input[type="text"].xlarge_size
   text-decoration:underline;
 }
 
-.results tbody tr:hover
-{
-  background-color:#D5DEE3;
-}
+.results tbody tr:nth-child(even) {background: #E9F2F7}
+.results tbody tr:nth-child(odd) {background: white}
 
 .results th, .results td
 {
@@ -1236,7 +1237,26 @@ a.sub_group
   vertical-align:middle;
 }
 
+#gtu_filter .item_name
+{
+   vertical-align: top;
+}
+
 input.tag_line
 {
   width:100%;
+}
+
+.search_tags label
+{
+    font-weight: bold;
+    text-transform:capitalize;
+}
+.search_tags .name_tags
+{
+  margin-left: 1em;
+}
+.search_tags .gtu_group
+{
+  color: gray;
 }

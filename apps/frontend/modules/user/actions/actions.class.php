@@ -13,14 +13,39 @@ class userActions extends DarwinActions
   protected $widgetCategory = 'users_widget';
   public function executeNew(sfWebRequest $request)
   {
+	$this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
     $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type')));
   }
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
-    $this->forward404Unless(Doctrine::getTable('users')->findUser($request->getParameter('db_user_type')) < 2 , sprintf('You are not allowed to access to this page'));
-    $this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type')));
+    $this->forward404Unless($this->user = Doctrine::getTable('Users')->find($request->getparameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
+    $is_physical = Doctrine::getTable('Users')->find($request->getparameter('id'))->getIsPhysical() ;
+    $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
     $this->loadWidgets();
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('users'));
+      if($this->form->isValid())
+      {
+	  $this->form->updateObject();
+
+	  // Let's save the object
+	  $this->form->getObject()->save();
+
+/*	  if($this->form->getValue('password') != '')
+	  {
+	    $login_infos = $this->user->UsersLoginInfos;
+	    if( count($login_infos) != 1)
+	    {
+	      print 'Ouups'; exit; // @TODO: replace this by a proper way
+	    }
+            $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
+	    $login_infos[0]->save();
+	  }*/
+	  return $this->redirect('user/index');
+      }
+    }
   }
   /**
     * Action executed when calling the expeditions from an other screen
@@ -34,7 +59,7 @@ class userActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward404Unless(Doctrine::getTable('users')->findUser($request->getParameter('db_user_type')) < 2 , sprintf('You are not allowed to access to this page')) ;
+	$this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
     $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => 2));
   }
 
@@ -108,7 +133,7 @@ class userActions extends DarwinActions
 
     $old_people = $this->user->getPeopleId();
 
-    $this->form = new ProfileForm($this->user);
+    $this->form = new ProfileForm($this->user,array('is_physical' => $this->user->getIsPhysical()));
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users'));

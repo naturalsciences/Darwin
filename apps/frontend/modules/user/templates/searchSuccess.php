@@ -14,7 +14,7 @@
         <tr>
           <th class="hidden"></th>
           <th>
-            <a class="sort" href="<?php echo url_for($s_url.'&orderby=is_physical,title'.( ($orderBy=='is_physical,title' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=is_physical,gender'.( ($orderBy=='is_physical,gender' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
               <?php echo __('Status');?>
               <?php if($orderBy=='is_physical,title') echo $orderSign ?>
             </a>

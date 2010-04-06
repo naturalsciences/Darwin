@@ -26,8 +26,7 @@ abstract class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'birth_date'            => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'gender'                => new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'M', 'F' => 'F'))),
       'db_user_type'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'people_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true)),
-      'approval_level'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'people_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true))
     ));
 
     $this->setValidators(array(
@@ -45,7 +44,6 @@ abstract class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'gender'                => new sfValidatorChoice(array('required' => false, 'choices' => array('M' => 'M', 'F' => 'F'))),
       'db_user_type'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'people_id'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('People'), 'column' => 'id')),
-      'approval_level'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('users_filters[%s]');
@@ -79,8 +77,7 @@ abstract class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'birth_date'            => 'Text',
       'gender'                => 'Enum',
       'db_user_type'          => 'Number',
-      'people_id'             => 'ForeignKey',
-      'approval_level'        => 'Number',
+      'people_id'             => 'ForeignKey'
     );
   }
 }

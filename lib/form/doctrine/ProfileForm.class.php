@@ -19,34 +19,54 @@ class ProfileForm extends BaseUsersForm
       $this['approval_level'],
       $this['birth_date_mask'],
       $this['is_physical'],
-      $this['db_user_type']
+      $this['db_user_type'],
+      $this['people_id']
     );
-    
-    $this->widgetSchema['title'] = new sfWidgetFormInput();
+    if ($this->options['is_physical'])
+    {
+    		$this->widgetSchema['title'] = new widgetFormSelectComplete(array('model' => 'Users',
+                                                                        'table_method' => 'getDistinctTitle',
+                                                                        'method' => 'getTitle',
+                                                                        'key_method' => 'getTitle',
+                                                                        'add_empty' => true,
+                                                                        'change_label' => 'Pick a title in the list',
+                                                                        'add_label' => 'Add another title',
+                                                                       )
+                                                                 );   
+	     $this->widgetSchema['title']->setAttributes(array('class'=>'small_size'));
+	     $this->validatorSchema['title'] =  new sfValidatorString(array('required' => false));
+	     $this->widgetSchema['gender'] = new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))) ;
+	     $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
+      	unset($this['sub_type'],$this['is_physical']) ;
+    }
+    else
+    {
+	    $this->widgetSchema['sub_type'] = new widgetFormSelectComplete(array('model' => 'Users',
+                                                                   'table_method' => 'getDistinctSubType',
+                                                                   'method' => 'getSubType',
+                                                                   'key_method' => 'getSubType',
+                                                                   'add_empty' => true,
+                                                                   'change_label' => 'Pick a sub type in the list',
+                                                                   'add_label' => 'Add another sub type',
+                                                                  )
+                                                            ); 
+	    $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));
+	    unset($this['title'],$this['gender'],$this['is_physical']) ; 
+    }     
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['family_name'] = new sfWidgetFormInput();
     $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
-
-    $this->widgetSchema['title']->setAttributes(array('class'=>'small_size'));
+    
     $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['additional_names']->setAttributes(array('class'=>'medium_size'));
-
-    $this->widgetSchema['people_id'] = new widgetFormButtonRef(array(
-       'model' => 'People',
-       'method' => 'getFormatedName',
-       'link_url' => 'people/choose',
-       'nullable' => true,
-       'box_title' => $this->getI18N()->__('Choose Yourself'),
-     ));
-
 
     $this->widgetSchema['password']  = new sfWidgetFormInputPassword();
     $this->widgetSchema['password_again']  = new sfWidgetFormInputPassword();
     $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
     $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
     $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
-    $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
+    
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorSchemaCompare('password', '==', 'password_again',

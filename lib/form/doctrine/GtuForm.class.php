@@ -73,12 +73,10 @@ class GtuForm extends BaseGtuForm
                                                                           array('throw_global_error' => true), 
                                                                           array('invalid'=>'The "begin" date cannot be above the "end" date.')
                                                                          )
-                                            );
-
-    $this->embedRelation('TagGroups');
-    
+                                            ); 
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
+    $this->embedRelation('TagGroups');
   }
   
   public function addValue($num, $group="")

@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(16, new lime_output_color());
+$t = new lime_test(17, new lime_output_color());
 
 $t->info('distinct SubGroup()');
 $sgroups= Doctrine::getTable('TagGroups')->getDistinctSubGroups('administrative');
@@ -40,3 +40,4 @@ $t->is($tags[$gtu->getId()][0]->getGroupName(), 'administrative', 'administrativ
 $t->is($tags[$gtu->getId()][0]->getSubGroupName(), 'country', 'country is the sub group');
 $t->is(count($tags[$gtu->getId()][0]->Tags),4, 'We got 4 tags');
 
+$t->is(TagGroups::getGroup('populated'), 'Populated Places', 'Get a Tag group');
