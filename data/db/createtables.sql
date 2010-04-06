@@ -957,6 +957,7 @@ create table my_preferences
         visible boolean not null default true,
         opened boolean not null default true,
         color varchar not null default '#5BAABD',
+	is_available boolean not null default false,
         icon_ref integer,
         title_perso varchar(32),
         constraint unq_my_preferences unique (user_ref, category, group_name),
