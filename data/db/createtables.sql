@@ -974,6 +974,7 @@ comment on column my_preferences.mandatory is 'Flag telling if the page element 
 comment on column my_preferences.visible is 'Flag telling if the page element is on the board or in the widget chooser';
 comment on column my_preferences.opened is 'Flag telling if the page element is opened by default or not';
 comment on column my_preferences.color is 'Color given to page element by user';
+comment on column my_preferences.is_available is 'Flag telling if the widget can be used or not';
 comment on column my_preferences.icon_ref is 'Reference of multimedia icon to be used before page element title';
 comment on column my_preferences.title_perso is 'Page element title given by user';
 create table my_saved_specimens
