@@ -46,7 +46,7 @@ $browser->
   post('/catalogue/search/', array('searchCatalogue'=>array('table'=>'chronostratigraphy', 'lower_bound'=>'-400', 'upper_bound'=>'-200')))->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', 'Your query retrieved 1 records')->
+    checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', 'Your query retrieved 1 record')->
   end()->
   info('Edit this record')->
   click('td.edit a')->
