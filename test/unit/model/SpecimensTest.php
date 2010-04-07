@@ -11,6 +11,6 @@ $specimen->setAcquisitionDate($toDate);
 $specimen->save();
 
 $specimens = Doctrine::getTable('Specimens')->findAll();
-$t->is( $specimens->count() , 4, 'New "Vertebrate" specimen inserted');
-$t->is( $specimens[3]->getAcquisitionDateMasked() , '<em>31/12</em>/2009', 'Correct date masked: "<em>31/12</em>/2009"');
-$t->is( $specimens[3]->getAcquisitionDate() , array('year'=>2009, 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
+$t->is( $specimens->count() , 5, 'New "Vertebrate" specimen inserted');
+$t->is( $specimens[4]->getAcquisitionDateMasked() , '<em>31/12</em>/2009', 'Correct date masked: "<em>31/12</em>/2009"');
+$t->is( $specimens[4]->getAcquisitionDate() , array('year'=>2009, 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
