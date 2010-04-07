@@ -38,13 +38,22 @@ encoderWidgetList:
     sw3:
         col_num: 1
         category: specimen_widget
-        group_name: specimenCount
+        group_name: refHosts
         mandatory: false
         order_by: 3
         opened: false
         visible: false
-        title_perso: Specimen(s) count
+        title_perso: Host
     sw4:
+        col_num: 1
+        category: specimen_widget
+        group_name: specimenCount
+        mandatory: false
+        order_by: 4
+        opened: false
+        visible: false
+        title_perso: Specimen(s) count
+    sw5:
         col_num: 2
         category: specimen_widget
         group_name: acquisitionCategory
@@ -53,7 +62,7 @@ encoderWidgetList:
         opened: true
         visible: true
         title_perso: Acquisition
-    sw5:
+    sw6:
         col_num: 2
         category: specimen_widget
         group_name: refExpedition
@@ -62,7 +71,7 @@ encoderWidgetList:
         opened: true
         visible: true
         title_perso: Expedition
-    sw6:
+    sw7:
         col_num: 2
         category: specimen_widget
         group_name: refIgs
@@ -71,24 +80,60 @@ encoderWidgetList:
         opened: true
         visible: true
         title_perso: I.G. number
-    sw7:
+    sw8:
         col_num: 1
         category: specimen_widget
         group_name: method
         mandatory: false
-        order_by: 5
+        order_by: 4
         opened: false
         visible: false
         title_perso: Collecting method
-    sw8:
+    sw9:
         col_num: 1
         category: specimen_widget
         group_name: tool
         mandatory: false
-        order_by: 4
+        order_by: 5
         opened: false
         visible: false
         title_perso: Collecting tool
+    sw10:
+        col_num: 1
+        category: specimen_widget
+        group_name: refChrono
+        mandatory: false
+        order_by: 5
+        opened: false
+        visible: false
+        title_perso: Chronostratigraphy
+    sw11:
+        col_num: 1
+        category: specimen_widget
+        group_name: refLitho
+        mandatory: false
+        order_by: 6
+        opened: false
+        visible: false
+        title_perso: Lithostratigraphy
+    sw12:
+        col_num: 1
+        category: specimen_widget
+        group_name: refLithology
+        mandatory: false
+        order_by: 7
+        opened: false
+        visible: false
+        title_perso: Lithology
+    sw13:
+        col_num: 1
+        category: specimen_widget
+        group_name: refMineral
+        mandatory: false
+        order_by: 8
+        opened: false
+        visible: false
+        title_perso: Mineralogy
     tw1:
         col_num: 1
         category: catalogue_taxonomy_widget
@@ -173,45 +218,36 @@ encoderWidgetList:
     chw3:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
-        group_name: cataloguePeople
-        mandatory: false
-        order_by: 3
-        opened: true
-        visible: true
-        title_perso: Recombined from
-    chw4:
-        col_num: 1
-        category: catalogue_chronostratigraphy_widget
         group_name: synonym
-        order_by: 4
+        order_by: 3
         mandatory: false
         opened: true
         visible: true
         title_perso: Synonymies
-    chw5:
+    chw4:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: vernacularNames
         mandatory: false
-        order_by: 5
+        order_by: 4
         opened: true
         visible: true
         title_perso: Vernacular names
-    chw6:
+    chw5:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: comment
         mandatory: false
-        order_by: 6
+        order_by: 5
         opened: false
         visible: false
         title_perso: Comments
-    chw7:
+    chw6:
         col_num: 1
         category: catalogue_chronostratigraphy_widget
         group_name: properties
         mandatory: false
-        order_by: 7
+        order_by: 6
         opened: false
         visible: false
         title_perso: Properties
@@ -236,45 +272,36 @@ encoderWidgetList:
     lhw3:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
-        group_name: cataloguePeople
-        mandatory: false
-        order_by: 3
-        opened: true
-        visible: true
-        title_perso: Recombined from
-    lhw4:
-        col_num: 1
-        category: catalogue_lithostratigraphy_widget
         group_name: synonym
-        order_by: 4
+        order_by: 3
         mandatory: false
         opened: true
         visible: true
         title_perso: Synonymies
-    lhw5:
+    lhw4:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: vernacularNames
         mandatory: false
-        order_by: 5
+        order_by: 4
         opened: true
         visible: true
         title_perso: Vernacular names
-    lhw6:
+    lhw5:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: comment
         mandatory: false
-        order_by: 6
+        order_by: 5
         opened: false
         visible: false
         title_perso: Comments
-    lhw7:
+    lhw6:
         col_num: 1
         category: catalogue_lithostratigraphy_widget
         group_name: properties
         mandatory: false
-        order_by: 7
+        order_by: 6
         opened: false
         visible: false
         title_perso: Properties
@@ -299,45 +326,36 @@ encoderWidgetList:
     liw3:
         col_num: 1
         category: catalogue_lithology_widget
-        group_name: cataloguePeople
-        mandatory: false
-        order_by: 3
-        opened: true
-        visible: true
-        title_perso: Recombined from
-    liw4:
-        col_num: 1
-        category: catalogue_lithology_widget
         group_name: synonym
-        order_by: 4
+        order_by: 3
         mandatory: false
         opened: true
         visible: true
         title_perso: Synonymies
-    liw5:
+    liw4:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: vernacularNames
         mandatory: false
-        order_by: 5
+        order_by: 4
         opened: true
         visible: true
         title_perso: Vernacular names
-    liw6:
+    liw5:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: comment
         mandatory: false
-        order_by: 6
+        order_by: 5
         opened: false
         visible: false
         title_perso: Comments
-    liw7:
+    liw6:
         col_num: 1
         category: catalogue_lithology_widget
         group_name: properties
         mandatory: false
-        order_by: 7
+        order_by: 6
         opened: false
         visible: false
         title_perso: Properties
@@ -362,45 +380,36 @@ encoderWidgetList:
     miw3:
         col_num: 1
         category: catalogue_mineralogy_widget
-        group_name: cataloguePeople
-        mandatory: false
-        order_by: 3
-        opened: true
-        visible: true
-        title_perso: Recombined from
-    miw4:
-        col_num: 1
-        category: catalogue_mineralogy_widget
         group_name: synonym
-        order_by: 4
+        order_by: 3
         mandatory: false
         opened: true
         visible: true
         title_perso: Synonymies
-    miw5:
+    miw4:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: vernacularNames
         mandatory: false
-        order_by: 5
+        order_by: 4
         opened: true
         visible: true
         title_perso: Vernacular names
-    miw6:
+    miw5:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: comment
         mandatory: false
-        order_by: 6
+        order_by: 5
         opened: false
         visible: false
         title_perso: Comments
-    miw7:
+    miw6:
         col_num: 1
         category: catalogue_mineralogy_widget
         group_name: properties
         mandatory: false
-        order_by: 7
+        order_by: 6
         opened: false
         visible: false
         title_perso: Properties

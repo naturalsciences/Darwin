@@ -315,12 +315,16 @@ Specimens:
         collecting_tool: Fish Net
         collecting_method: Fishing
         Taxonomy: ta3
+        HostSpecimen: sp1
+        HostTaxon: ta1
     sp4:
         Collections: c3
         specimen_count_min: 3
         specimen_count_max: 3
         acquisition_date: '2009-02-24'
         acquisition_category: expedition
+        HostSpecimen: sp2
+        HostTaxon: ta2
 
 MySavedSpecimens:
     ssp1:

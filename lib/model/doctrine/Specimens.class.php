@@ -32,4 +32,11 @@ class Specimens extends BaseSpecimens
     }
   }
 
+  public function getName()
+  {
+    if(! $this->isNew() && $this->_get('id')==0)
+      return '-';
+    return $this->Taxonomy->getNameWithFormat();
+  }
+
 }
