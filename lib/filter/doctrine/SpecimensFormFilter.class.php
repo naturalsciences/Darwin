@@ -58,6 +58,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     $query = parent::doBuildQuery($values);
     $alias = $query->getRootAlias();
     $query->innerJoin($alias.'.Taxonomy t')
+          ->innerJoin('t.Level cl')
           ->andWhere("t.id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;

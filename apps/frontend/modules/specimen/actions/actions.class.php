@@ -101,7 +101,7 @@ class specimenActions extends DarwinActions
   {
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
-    $this->setCommonValues('specimens', 't.name', $request);
+    $this->setCommonValues('specimen', 't.name', $request);
     $item = $request->getParameter('searchSpecimen',array(''));
     // Instantiate a new expedition form
     $this->form = new SpecimensFormFilter(array('caller_id'=>$item['caller_id']));

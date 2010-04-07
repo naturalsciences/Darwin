@@ -298,7 +298,7 @@ Specimens:
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Hunting
-        Taxonomy: ta3
+        Taxonomy: ta1
     sp2:
         Collections: c2
         specimen_count_min: 1
@@ -306,7 +306,7 @@ Specimens:
         acquisition_category: theft
         collecting_tool: fish Pas net
         collecting_method: Hunting
-        Taxonomy: ta3
+        Taxonomy: ta2
     sp3:
         Collections: c3
         specimen_count_min: 1
@@ -314,6 +314,13 @@ Specimens:
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Fishing
+        Taxonomy: ta3
+    sp4:
+        Collections: c3
+        specimen_count_min: 3
+        specimen_count_max: 3
+        acquisition_date: '2009-02-24'
+        acquisition_category: expedition
 
 MySavedSpecimens:
     ssp1:

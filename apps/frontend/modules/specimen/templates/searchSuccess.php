@@ -31,6 +31,7 @@
           <?php foreach($specimens as $specimen):?>
             <tr class="rid_<?php echo $specimen->getId(); ?>">
               <td><?php echo $specimen->Taxonomy->getName();?></td>
+              <td><?php echo $specimen->Taxonomy->Level->getLevelName();?></td>
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png'),'specimen/edit?id='.$specimen->getId());?>
