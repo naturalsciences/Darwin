@@ -8,9 +8,9 @@ class MyPreferences extends BaseMyPreferences
   public static function getFileByRight($right)
   {
      switch ($right) {
-     	case 'Encoder' : $file ='/var/project/darwin/web/data/fixtures/encoderWidgetListPerScreen.yml' ; break ;
-     	case 'Collection manager' : $file ='/var/project/darwin/web/data/fixtures/collManagerWidgetListPerScreen.yml' ; break ;
-		case 'Registered user' : $file='/var/project/darwin/web/data/fixtures/regUserWidgetListPerScreen.yml' ; break ;
+     	case 'Encoder' : $file ='data/fixtures/encoderWidgetListPerScreen.yml' ; break ;
+     	case 'Collection manager' : $file ='data/fixtures/collManagerWidgetListPerScreen.yml' ; break ;
+		case 'Registered user' : $file='data/fixtures/regUserWidgetListPerScreen.yml' ; break ;
 		default : return(0);
      }  
      return($file) ;  
