@@ -12,6 +12,7 @@
  * @property integer $col_num
  * @property boolean $mandatory
  * @property boolean $visible
+ * @property boolean $is_available
  * @property boolean $opened
  * @property string $color
  * @property integer $icon_ref
@@ -19,32 +20,34 @@
  * @property Users $User
  * @property Multimedia $Multimedia
  * 
- * @method integer       getUserRef()     Returns the current record's "user_ref" value
- * @method string        getCategory()    Returns the current record's "category" value
- * @method string        getGroupName()   Returns the current record's "group_name" value
- * @method integer       getOrderBy()     Returns the current record's "order_by" value
- * @method integer       getColNum()      Returns the current record's "col_num" value
- * @method boolean       getMandatory()   Returns the current record's "mandatory" value
- * @method boolean       getVisible()     Returns the current record's "visible" value
- * @method boolean       getOpened()      Returns the current record's "opened" value
- * @method string        getColor()       Returns the current record's "color" value
- * @method integer       getIconRef()     Returns the current record's "icon_ref" value
- * @method string        getTitlePerso()  Returns the current record's "title_perso" value
- * @method Users         getUser()        Returns the current record's "User" value
- * @method Multimedia    getMultimedia()  Returns the current record's "Multimedia" value
- * @method MyPreferences setUserRef()     Sets the current record's "user_ref" value
- * @method MyPreferences setCategory()    Sets the current record's "category" value
- * @method MyPreferences setGroupName()   Sets the current record's "group_name" value
- * @method MyPreferences setOrderBy()     Sets the current record's "order_by" value
- * @method MyPreferences setColNum()      Sets the current record's "col_num" value
- * @method MyPreferences setMandatory()   Sets the current record's "mandatory" value
- * @method MyPreferences setVisible()     Sets the current record's "visible" value
- * @method MyPreferences setOpened()      Sets the current record's "opened" value
- * @method MyPreferences setColor()       Sets the current record's "color" value
- * @method MyPreferences setIconRef()     Sets the current record's "icon_ref" value
- * @method MyPreferences setTitlePerso()  Sets the current record's "title_perso" value
- * @method MyPreferences setUser()        Sets the current record's "User" value
- * @method MyPreferences setMultimedia()  Sets the current record's "Multimedia" value
+ * @method integer       getUserRef()      Returns the current record's "user_ref" value
+ * @method string        getCategory()     Returns the current record's "category" value
+ * @method string        getGroupName()    Returns the current record's "group_name" value
+ * @method integer       getOrderBy()      Returns the current record's "order_by" value
+ * @method integer       getColNum()       Returns the current record's "col_num" value
+ * @method boolean       getMandatory()    Returns the current record's "mandatory" value
+ * @method boolean       getVisible()      Returns the current record's "visible" value
+ * @method boolean       getIsAvailable()  Returns the current record's "is_available" value
+ * @method boolean       getOpened()       Returns the current record's "opened" value
+ * @method string        getColor()        Returns the current record's "color" value
+ * @method integer       getIconRef()      Returns the current record's "icon_ref" value
+ * @method string        getTitlePerso()   Returns the current record's "title_perso" value
+ * @method Users         getUser()         Returns the current record's "User" value
+ * @method Multimedia    getMultimedia()   Returns the current record's "Multimedia" value
+ * @method MyPreferences setUserRef()      Sets the current record's "user_ref" value
+ * @method MyPreferences setCategory()     Sets the current record's "category" value
+ * @method MyPreferences setGroupName()    Sets the current record's "group_name" value
+ * @method MyPreferences setOrderBy()      Sets the current record's "order_by" value
+ * @method MyPreferences setColNum()       Sets the current record's "col_num" value
+ * @method MyPreferences setMandatory()    Sets the current record's "mandatory" value
+ * @method MyPreferences setVisible()      Sets the current record's "visible" value
+ * @method MyPreferences setIsAvailable()  Sets the current record's "is_available" value
+ * @method MyPreferences setOpened()       Sets the current record's "opened" value
+ * @method MyPreferences setColor()        Sets the current record's "color" value
+ * @method MyPreferences setIconRef()      Sets the current record's "icon_ref" value
+ * @method MyPreferences setTitlePerso()   Sets the current record's "title_perso" value
+ * @method MyPreferences setUser()         Sets the current record's "User" value
+ * @method MyPreferences setMultimedia()   Sets the current record's "Multimedia" value
  * 
  * @package    darwin
  * @subpackage model
@@ -87,6 +90,11 @@ abstract class BaseMyPreferences extends sfDoctrineRecord
              'type' => 'boolean',
              'notnull' => true,
              'default' => true,
+             ));
+        $this->hasColumn('is_available', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => false,
              ));
         $this->hasColumn('opened', 'boolean', null, array(
              'type' => 'boolean',

@@ -599,6 +599,7 @@ MyPreferences:
         col_num: { type: integer, notnull: true, default:1 }
         mandatory: { type: boolean, notnull: true, default: false}
         visible: { type: boolean, notnull: true, default: true}
+        is_available: { type: boolean, notnull: true, default: false}
         opened: { type: boolean, notnull: true, default: true}
         color: { type: string, default:'#5BAABD'}
         icon_ref: { type: integer}
