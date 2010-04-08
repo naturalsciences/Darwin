@@ -157,45 +157,11 @@ Users:
         gender: M
         db_user_type: 8
         People: p5
-    u2:
-        is_physical: true
-        title: Mme
-        family_name: vanbegin
-        given_name: stephanie
-        gender: F
-        db_user_type: 1
-
-    u3:
-        is_physical: true
-        title: Mr
-        family_name: chambert
-        given_name: yann
-        gender: M
-        db_user_type: 4
-
-    u4:
-        is_physical: false
-        sub_type: usine
-        family_name: Traitement
-        given_name: dechet
-        db_user_type: 2
         
 UsersLoginInfos:
     u1l1:
         User: u1
         user_name: root
-        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-    u1l2:
-        User: u2
-        user_name: vanbegin
-        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-    u1l3:
-        User: u3
-        user_name: chambert
-        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-    u1l4:
-        User: u4
-        user_name: decheterie
         password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
  
 UsersLanguages:
@@ -332,6 +298,7 @@ MyPreferences:
         category: board_widget
         group_name: savedSpecimens
         order_by: 1
+        is_available: true
         visible: true
         opened: false
         title_perso: My saved specimens
@@ -341,6 +308,7 @@ MyPreferences:
         category: board_widget
         group_name: savedSearch
         order_by: 2
+        is_available: true
         visible: true
         opened: false
         title_perso: My saved searches
@@ -350,6 +318,7 @@ MyPreferences:
         category: board_widget
         group_name: addSpecimen
         order_by: 1
+        is_available: true
         opened: true
         visible: true
         title_perso: Add specimens
@@ -359,6 +328,7 @@ MyPreferences:
         category: board_widget
         group_name: addTaxon
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Add taxa
@@ -369,6 +339,7 @@ MyPreferences:
         group_name: refCollection
         mandatory: true
         order_by: 1
+        is_available: true
         opened: true
         visible: true
         title_perso: Collection
@@ -378,6 +349,7 @@ MyPreferences:
         category: specimen_widget
         group_name: refTaxon
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Taxonomy
@@ -387,6 +359,7 @@ MyPreferences:
         category: specimen_widget
         group_name: refChrono
         order_by: 3
+        is_available: true
         opened: true
         visible: false
         title_perso: Chronostratigraphy
@@ -396,6 +369,7 @@ MyPreferences:
         category: specimen_widget
         group_name: refLitho
         order_by: 4
+        is_available: true
         opened: true
         visible: false
         title_perso: Lithostratigraphy
@@ -405,6 +379,7 @@ MyPreferences:
         category: specimen_widget
         group_name: refLithology
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Lithology
@@ -414,6 +389,7 @@ MyPreferences:
         category: specimen_widget
         group_name: refMineral
         order_by: 6
+        is_available: true
         opened: true
         visible: false
         title_perso: Mineralogy
@@ -423,6 +399,7 @@ MyPreferences:
         category: specimen_widget
         group_name: specimenCount
         order_by: 7
+        is_available: true
         opened: true
         visible: false
         title_perso: Specimen(s) count
@@ -432,6 +409,7 @@ MyPreferences:
         category: specimen_widget
         group_name: acquisitionCategory
         order_by: 1
+        is_available: true
         opened: true
         visible: true
         title_perso: Acquisition
@@ -442,6 +420,7 @@ MyPreferences:
         group_name: refExpedition
         mandatory: false
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Expedition
@@ -452,6 +431,7 @@ MyPreferences:
         group_name: refIgs
         mandatory: false
         order_by: 3
+        is_available: true
         opened: true
         visible: true
         title_perso: I.G. number
@@ -462,6 +442,7 @@ MyPreferences:
         group_name: refGtu
         mandatory: false
         order_by: 4
+        is_available: true
         opened: true
         visible: true
         title_perso: Sampling location
@@ -471,6 +452,7 @@ MyPreferences:
         category: specimen_widget
         group_name: method
         order_by: 5
+        is_available: true
         opened: false
         visible: false
         title_perso: Collecting method
@@ -480,6 +462,7 @@ MyPreferences:
         category: specimen_widget
         group_name: tool
         order_by: 6
+        is_available: true
         opened: false
         visible: false
         title_perso: Collecting tools
@@ -489,6 +472,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: cataloguePeople
         order_by: 1
+        is_available: true
         opened: true
         visible: true
         title_perso: People
@@ -498,6 +482,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: relationRename
         order_by: 0
+        is_available: true
         opened: false
         visible: false
         title_perso: Current name
@@ -507,6 +492,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: relationRecombination
         order_by: 1
+        is_available: true
         opened: false
         visible: false
         title_perso: Recombined from
@@ -516,6 +502,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: synonym
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Synonymies
@@ -525,6 +512,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: vernacularNames
         order_by: 3
+        is_available: true
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -534,6 +522,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: comment
         order_by: 4
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -543,6 +532,7 @@ MyPreferences:
         category: catalogue_taxonomy_widget
         group_name: properties
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -552,6 +542,7 @@ MyPreferences:
         category: catalogue_chronostratigraphy_widget
         group_name: cataloguePeople
         order_by: 0
+        is_available: true
         opened: true
         visible: true
         title_perso: People
@@ -561,6 +552,7 @@ MyPreferences:
         category: catalogue_chronostratigraphy_widget
         group_name: relationRename
         order_by: 1
+        is_available: true
         opened: false
         visible: false
         title_perso: Current name
@@ -570,6 +562,7 @@ MyPreferences:
         category: catalogue_chronostratigraphy_widget
         group_name: synonym
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Synonymies
@@ -579,6 +572,7 @@ MyPreferences:
         category: catalogue_chronostratigraphy_widget
         group_name: vernacularNames
         order_by: 3
+        is_available: true
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -588,6 +582,7 @@ MyPreferences:
         category: catalogue_chronostratigraphy_widget
         group_name: comment
         order_by: 4
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -597,6 +592,7 @@ MyPreferences:
         category: catalogue_chronostratigraphy_widget
         group_name: properties
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -606,6 +602,7 @@ MyPreferences:
         category: catalogue_lithostratigraphy_widget
         group_name: cataloguePeople
         order_by: 0
+        is_available: true
         opened: true
         visible: true
         title_perso: People
@@ -615,6 +612,7 @@ MyPreferences:
         category: catalogue_lithostratigraphy_widget
         group_name: relationRename
         order_by: 1
+        is_available: true
         opened: false
         visible: false
         title_perso: Current name
@@ -624,6 +622,7 @@ MyPreferences:
         category: catalogue_lithostratigraphy_widget
         group_name: synonym
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Synonymies
@@ -633,6 +632,7 @@ MyPreferences:
         category: catalogue_lithostratigraphy_widget
         group_name: vernacularNames
         order_by: 3
+        is_available: true
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -642,6 +642,7 @@ MyPreferences:
         category: catalogue_lithostratigraphy_widget
         group_name: comment
         order_by: 4
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -651,6 +652,7 @@ MyPreferences:
         category: catalogue_lithostratigraphy_widget
         group_name: properties
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -660,6 +662,7 @@ MyPreferences:
         category: catalogue_lithology_widget
         group_name: cataloguePeople
         order_by: 0
+        is_available: true
         opened: true
         visible: true
         title_perso: People
@@ -669,6 +672,7 @@ MyPreferences:
         category: catalogue_lithology_widget
         group_name: relationRename
         order_by: 1
+        is_available: true
         opened: false
         visible: false
         title_perso: Current name
@@ -678,6 +682,7 @@ MyPreferences:
         category: catalogue_lithology_widget
         group_name: synonym
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Synonymies
@@ -687,6 +692,7 @@ MyPreferences:
         category: catalogue_lithology_widget
         group_name: vernacularNames
         order_by: 3
+        is_available: true
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -696,6 +702,7 @@ MyPreferences:
         category: catalogue_lithology_widget
         group_name: comment
         order_by: 4
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -705,6 +712,7 @@ MyPreferences:
         category: catalogue_lithology_widget
         group_name: properties
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -714,6 +722,7 @@ MyPreferences:
         category: catalogue_mineralogy_widget
         group_name: cataloguePeople
         order_by: 0
+        is_available: true
         opened: true
         visible: true
         title_perso: People
@@ -723,6 +732,7 @@ MyPreferences:
         category: catalogue_mineralogy_widget
         group_name: relationRename
         order_by: 1
+        is_available: true
         opened: false
         visible: false
         title_perso: Current name
@@ -732,6 +742,7 @@ MyPreferences:
         category: catalogue_mineralogy_widget
         group_name: synonym
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Synonymies
@@ -741,6 +752,7 @@ MyPreferences:
         category: catalogue_mineralogy_widget
         group_name: vernacularNames
         order_by: 3
+        is_available: true
         opened: true
         visible: false
         title_perso: Vernacular names
@@ -750,6 +762,7 @@ MyPreferences:
         category: catalogue_mineralogy_widget
         group_name: comment
         order_by: 4
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -759,6 +772,7 @@ MyPreferences:
         category: catalogue_mineralogy_widget
         group_name: properties
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -768,6 +782,7 @@ MyPreferences:
         category: catalogue_igs_widget
         group_name: comment
         order_by: 0
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -777,6 +792,7 @@ MyPreferences:
         category: catalogue_igs_widget
         group_name: insurances
         order_by: 1
+        is_available: true
         opened: false
         visible: true
         title_perso: Insurances
@@ -786,6 +802,7 @@ MyPreferences:
         category: catalogue_expeditions_widget
         group_name: comment
         order_by: 1
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -795,6 +812,7 @@ MyPreferences:
         category: people_widget
         group_name: lang
         order_by: 1
+        is_available: true
         opened: true
         visible: true
         title_perso: Languages
@@ -804,6 +822,7 @@ MyPreferences:
         category: people_widget
         group_name: address
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Addresses
@@ -813,6 +832,7 @@ MyPreferences:
         category: people_widget
         group_name: comm
         order_by: 3
+        is_available: true
         opened: true
         visible: true
         title_perso: Communications
@@ -822,6 +842,7 @@ MyPreferences:
         category: people_widget
         group_name: relation
         order_by: 4
+        is_available: true
         opened: true
         visible: true
         title_perso: Relationships
@@ -831,6 +852,7 @@ MyPreferences:
         category: people_widget
         group_name: comment
         order_by: 5
+        is_available: true
         opened: false
         visible: false
         title_perso: Comments
@@ -840,6 +862,7 @@ MyPreferences:
         category: people_widget
         group_name: properties
         order_by: 6
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -849,6 +872,7 @@ MyPreferences:
         category: people_institution_widget
         group_name: address
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Addresses
@@ -858,6 +882,7 @@ MyPreferences:
         category: people_institution_widget
         group_name: comm
         order_by: 3
+        is_available: true
         opened: true
         visible: true
         title_perso: Communications
@@ -867,6 +892,7 @@ MyPreferences:
         category: people_institution_widget
         group_name: relation
         order_by: 4
+        is_available: true
         opened: true
         visible: true
         title_perso: Relationships
@@ -876,6 +902,7 @@ MyPreferences:
         category: people_institution_widget
         group_name: comment
         order_by: 5
+        is_available: true
         opened: false
         visible: false
         title_perso: Comments
@@ -885,6 +912,7 @@ MyPreferences:
         category: people_institution_widget
         group_name: properties
         order_by: 6
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
@@ -894,6 +922,7 @@ MyPreferences:
         category: users_widget
         group_name: lang
         order_by: 1
+        is_available: true
         opened: true
         visible: true
         title_perso: Languages
@@ -903,6 +932,7 @@ MyPreferences:
         category: users_widget
         group_name: comm
         order_by: 2
+        is_available: true
         opened: true
         visible: true
         title_perso: Communications
@@ -912,6 +942,7 @@ MyPreferences:
         category: users_widget
         group_name: address
         order_by: 3
+        is_available: true
         opened: true
         visible: true
         title_perso: Addresses
@@ -921,6 +952,7 @@ MyPreferences:
         category: catalogue_gtu_widget
         group_name: comment
         order_by: 1
+        is_available: true
         opened: false
         visible: true
         title_perso: Comments
@@ -930,6 +962,7 @@ MyPreferences:
         category: catalogue_gtu_widget
         group_name: properties
         order_by: 5
+        is_available: true
         opened: true
         visible: false
         title_perso: Properties
