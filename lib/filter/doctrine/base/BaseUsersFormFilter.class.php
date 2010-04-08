@@ -26,7 +26,7 @@ abstract class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'birth_date'            => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'gender'                => new sfWidgetFormChoice(array('choices' => array('' => '', 'M' => 'M', 'F' => 'F'))),
       'db_user_type'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'people_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true))
+      'people_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -77,7 +77,7 @@ abstract class BaseUsersFormFilter extends BaseFormFilterDoctrine
       'birth_date'            => 'Text',
       'gender'                => 'Enum',
       'db_user_type'          => 'Number',
-      'people_id'             => 'ForeignKey'
+      'people_id'             => 'ForeignKey',
     );
   }
 }

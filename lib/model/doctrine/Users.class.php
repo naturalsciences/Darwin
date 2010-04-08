@@ -46,4 +46,22 @@ class Users extends BaseUsers
     	  }
     
     }
+    // function to add all user's widgets in my_preference table
+    public function addUserWidgets($user_id)
+    {
+     $array_right = Users::getTypes(array('db_user_type' => 8)) ;
+     foreach ($array_right as $key => $right)
+     {
+		$file = MyPreferences::getFileByRight($right) ;
+		if($file)
+		{
+			$data = new Doctrine_Parser_Yml;
+			$array = $data->loadData($file);
+			foreach ($array as $widget => $array_values) {
+			   $pref = new MyPreferences() ;
+			   $pref->addWidget($array_values, $user_id) ;
+			}
+		}
+	}
+    }
 }

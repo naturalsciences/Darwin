@@ -213,3 +213,38 @@ $browser->
   end();
 
   $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
+
+$nu = new Users() ;
+$nu->setFamilyName('Chambert') ;
+$nu->setGivenName('Yann') ;
+$nu->setGender('M') ;
+$nu->setDbUserType(1) ;
+$nu->setIsPhysical(true) ;
+$nu->save() ;
+$uli = new UsersLoginInfos() ;
+$uli->setUserRef($nu->getId()) ;
+$uli->setUserName('ychambert') ;
+$uli->setPassword(sha1(sfConfig::get('app_salt').'toto'));
+$uli->save() ;
+
+$browser->get('account/logout')->
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+  followRedirect()->
+  with('user')->begin()->
+  isAuthenticated(false)->
+  end()->
+  login('ychambert','toto');
+
+$browser->
+  info('Search')->
+  get('/user/index')->
+  
+  with('request')->begin()->
+    isParameter('module', 'user')->
+    isParameter('action', 'index')->
+  end()->
+  with('response')->begin()->
+    isStatusCode(404)->
+  end();

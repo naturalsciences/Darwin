@@ -5,5 +5,28 @@
  */
 class MyPreferences extends BaseMyPreferences
 {
+  public static function getFileByRight($right)
+  {
+     switch ($right) {
+     	case 'Encoder' : $file ='/var/project/darwin/web/data/fixtures/encoderWidgetListPerScreen.yml' ; break ;
+     	case 'Collection manager' : $file ='/var/project/darwin/web/data/fixtures/collManagerWidgetListPerScreen.yml' ; break ;
+		case 'Registered user' : $file='/var/project/darwin/web/data/fixtures/regUserWidgetListPerScreen.yml' ; break ;
+		default : return(0);
+     }  
+     return($file) ;  
+  }
 
+  public function addWidget($options,$user_id = null)
+  {
+  		$this->category = $options['category'] ;
+		$this->col_num = $options['col_num'] ;
+          $this->user_ref = $user_id ;
+          $this->group_name = $options['group_name'];
+          $this->mandatory = $options['mandatory'] ;
+          $this->order_by = $options['order_by'] ;
+          $this->opened = $options['opened'] ;
+          $this->visible = $options['visible'] ;
+          $this->title_perso = $options['title_perso'] ;
+          $this->save() ;
+  }	
 }

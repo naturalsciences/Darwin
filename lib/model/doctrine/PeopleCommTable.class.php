@@ -7,7 +7,7 @@ class PeopleCommTable extends DarwinTable
   public function getTags($type)
   {
     if($type=="TEL")
-      return array('home'=>'Home', 'pager'=>'Pager', 'work'=>'Work', 'pref'=>'Preferred', 'voice'=>'Voice', 'fax'=>'Fax', 'cell'=>'Cell');
+      return array('home'=>'Home', 'pager'=>'Pager', 'work'=>'Work', 'pref'=>'Preferred', 'voice'=>'Voice', 'fax'=>'Fax', 'cell'=>'Cell', 'tel'=>'Tel');
     else
       return array('home'=>'Home','pref'=>'Preferred', 'work'=>'Work','internet'=> 'Internet');
   }
