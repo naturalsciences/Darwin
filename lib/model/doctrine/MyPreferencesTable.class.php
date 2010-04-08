@@ -4,7 +4,7 @@
  */
 class MyPreferencesTable extends DarwinTable
 {
-
+  
   public function getWidgetTitle($userId, $widget, $category)
   {
     $q = Doctrine_Query::create()
@@ -12,7 +12,8 @@ class MyPreferencesTable extends DarwinTable
          ->from('MyPreferences p')
          ->andWhere('p.user_ref = ?', $userId)
          ->andWhere('p.group_name = ?', $widget)
-         ->andWhere('p.category = ?', $category);
+         ->andWhere('p.category = ?', $category)
+         ->andWhere('p.is_available = true') ;
     return $q->execute();
   }
 
@@ -30,6 +31,7 @@ class MyPreferencesTable extends DarwinTable
     return $this;
   }
 
+    
   public function changeWidgetStatus($category, $widget, $status)
   {
 
@@ -70,12 +72,30 @@ class MyPreferencesTable extends DarwinTable
     $this->updateWidgetsOrder($col1, 1, $category);
     $this->updateWidgetsOrder($col2, 2, $category);
   }
+  
+  public function setWidgets($right,$val)
+  {
+	$file = MyPreferences::getFileByRight($right) ;
+	if($file)
+	{
+		$data = new Doctrine_Parser_Yml;
+		$array = $data->loadData($file);
+		foreach ($array as $widget => $array_values) {
+		   $q = Doctrine_Query::create()
+             ->update('MyPreferences p')
+		   ->set('p.is_available',($val==1?"true":"false")) 
+		   ->where('p.group_name = ?',$array_values['group_name'])
+		   ->andWhere('p.category = ?', $array_values['category'])
+		   ->execute() ;
+		}
+	}  	
+  }
 
   public function addCategoryUser(Doctrine_Query $q = null, $category)
   {
     if (sfConfig::get('sf_logging_enabled') && !$this->user_ref)
     {
-        sfContext::getInstance()->getLogger()->warning("No User defined with setUserRef");
+     sfContext::getInstance()->getLogger()->warning("No User defined with setUserRef");
 	throw new Exception('No User defined for query');
     }
     if (is_null($q))
@@ -87,7 +107,8 @@ class MyPreferencesTable extends DarwinTable
     $alias = $q->getRootAlias();
 
     $q->andWhere($alias . '.user_ref = ?', $this->user_ref)
-        ->andWhere($alias . '.category = ?', $category);
+        ->andWhere($alias . '.category = ?', $category)
+        ->andWhere('p.is_available = true') ;
     return $q;
   }
 

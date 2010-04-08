@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(19, new lime_output_color());
+$t = new lime_test(23, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
@@ -22,7 +22,7 @@ $t->is(count(Doctrine::getTable('MyPreferences')
         ->getWidgets('board_widget')),4,'Get all board widget');
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
-        ->getWidgets('specimen_widget')),13,'Get all specimen widget');
+        ->getWidgets('specimen_widget')),14,'Get all specimen widget');
 
 $t->comment('->changeWidgetStatus()');
 
@@ -123,3 +123,36 @@ $title = Doctrine::getTable('MyPreferences')->getWidgetTitle($userEvil, $widgets
 $title = $title->toArray();
 
 $t->is($widgets[0]->getTitlePerso(), $title[0]['title'], 'Title perso is well what is coming from "getWidgetTitle" method');
+
+$q = Doctrine_Query::create()
+    ->delete('MyPreferences p')
+    ->Where('p.user_ref = ?', $userEvil)
+    ->execute();
+    
+$t->is(count(Doctrine::getTable('MyPreferences')
+        ->setUserRef($userEvil)
+        ->getWidgets('board_widget')),0,'All widget would have been deleted');
+
+$t->comment('->addWidgets()');        
+$widget = new Users() ;
+$widget->addUserWidgets($userEvil);
+
+$q = Doctrine_Query::create()
+    ->from('MyPreferences p')
+    ->Where('p.user_ref = ?', $userEvil)
+    ->execute();
+$t->is($q->count(),64,'Now Root has his 64 widgets') ; 
+
+Doctrine::getTable('Mypreferences')->setUserRef($userEvil)->setWidgets('Registered user',true) ;
+
+$t->comment('->setWidgets()');  
+$t->is(count(Doctrine::getTable('MyPreferences')
+        ->setUserRef($userEvil)
+        ->getWidgets('board_widget')),2,'4 board widgets but only 2 visible for a registered user');
+
+Doctrine::getTable('Mypreferences')->setUserRef($userEvil)->setWidgets('Registered user',false) ;
+
+$t->is(count(Doctrine::getTable('MyPreferences')
+        ->setUserRef($userEvil)
+        ->getWidgets('board_widget')),0,'Removing \'Registered user\' right : 0 board widgets visible now');     
+

@@ -68,7 +68,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',
        'link_url' => 'taxonomy/choose',
-       'method' => 'getName',
+       'method' => 'getNameWithFormat',
        'box_title' => $this->getI18N()->__('Choose Taxon'),
        'nullable' => true,
        'button_class'=>'',
@@ -154,6 +154,31 @@ class SpecimensForm extends BaseSpecimensForm
            )
     );
 
+    /* Host Reference */
+    $this->widgetSchema['host_specimen_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Specimens',
+       'link_url' => 'specimen/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Host specimen'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    $this->widgetSchema['host_taxon_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Taxonomy',
+       'link_url' => 'taxonomy/choose',
+       'method' => 'getNameWithFormat',
+       'box_title' => $this->getI18N()->__('Choose Host taxon'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
     /* Collecting method */
     $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
         'model' => 'Specimens',
@@ -194,6 +219,12 @@ class SpecimensForm extends BaseSpecimensForm
         'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
         'expanded' => true,
     ));
+
+    /* Labels */
+    $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
+                                         'host_taxon_ref' => 'Host taxon'
+                                        )
+                                  );
     
     /* Validators */
 
@@ -212,6 +243,10 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['mineral_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
     $this->validatorSchema['gtu_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+
+    $this->validatorSchema['host_specimen_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>null));
+
+    $this->validatorSchema['host_taxon_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
         'choices' => SpecimensTable::getDistinctCategories(),

@@ -17,7 +17,16 @@ class UsersLanguagesTable extends DarwinTable
             ->addWhere('ul.users_ref = ?', $user_id);
         return $q->fetchOne();
     }
-
+    
+    public function getLangByUser($user_id)
+    {
+        $q = Doctrine_Query::create()
+            ->from('UsersLanguages ul')
+            ->addWhere('ul.users_ref = ?', $user_id)
+            ->orderBy('ul.preferred_language DESC, ul.language_country ASC');
+        return $q->execute(); 
+    }
+    
     public function removeOldPreferredLang($user_id)
     {
 	$q = Doctrine_Query::create()

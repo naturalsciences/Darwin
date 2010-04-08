@@ -1,19 +1,18 @@
-regUserWidgetList:
-    bw1:
-        col_num: 1
-        category: board_widget
-        group_name: savedSearch
-        mandatory: false
-        order_by: 1
-        opened: false
-        visible: true
-        title_perso: My saved searches
-    bw2:
-        col_num: 1
-        category: board_widget
-        group_name: savedSpecimens
-        mandatory: false
-        order_by: 2
-        opened: false
-        visible: true
-        title_perso: My saved specimens
+bw1:
+   col_num: 1
+   category: board_widget
+   group_name: savedSearch
+   mandatory: false
+   order_by: 1
+   opened: false
+   visible: true
+   title_perso: My saved searches
+bw2:
+   col_num: 1
+   category: board_widget
+   group_name: savedSpecimens
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: true
+   title_perso: My saved specimens

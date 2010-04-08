@@ -161,45 +161,11 @@ Users:
         gender: M
         db_user_type: 8
         People: p5
-    u2:
-        is_physical: true
-        title: Mme
-        family_name: vanbegin
-        given_name: stephanie
-        gender: F
-        db_user_type: 1
-
-    u3:
-        is_physical: true
-        title: Mr
-        family_name: chambert
-        given_name: yann
-        gender: M
-        db_user_type: 4
-
-    u4:
-        is_physical: false
-        sub_type: usine
-        family_name: Traitement
-        given_name: dechet
-        db_user_type: 2
         
 UsersLoginInfos:
     u1l1:
         User: u1
         user_name: root
-        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-    u1l2:
-        User: u2
-        user_name: vanbegin
-        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-    u1l3:
-        User: u3
-        user_name: chambert
-        password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
-    u1l4:
-        User: u4
-        user_name: decheterie
         password: "<?php echo sha1(sfConfig::get('app_salt').'evil');?>"
  
 UsersLanguages:
@@ -298,7 +264,7 @@ Specimens:
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Hunting
-        Taxonomy: ta3
+        Taxonomy: ta1
     sp2:
         Collections: c2
         specimen_count_min: 1
@@ -306,7 +272,7 @@ Specimens:
         acquisition_category: theft
         collecting_tool: fish Pas net
         collecting_method: Hunting
-        Taxonomy: ta3
+        Taxonomy: ta2
     sp3:
         Collections: c3
         specimen_count_min: 1
@@ -314,6 +280,17 @@ Specimens:
         acquisition_category: expedition
         collecting_tool: Fish Net
         collecting_method: Fishing
+        Taxonomy: ta3
+        HostSpecimen: sp1
+        HostTaxon: ta1
+    sp4:
+        Collections: c3
+        specimen_count_min: 3
+        specimen_count_max: 3
+        acquisition_date: '2009-02-24'
+        acquisition_category: expedition
+        HostSpecimen: sp2
+        HostTaxon: ta2
 
 MySavedSpecimens:
     ssp1:

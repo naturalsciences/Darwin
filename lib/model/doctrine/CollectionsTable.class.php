@@ -4,15 +4,18 @@
  */
 class CollectionsTable extends DarwinTable
 {
-    public function fetchByInstitutionList()
+
+    public function fetchByInstitutionList($institutionId = null)
     {
-        $q = Doctrine_Query::create()
+      $q = Doctrine_Query::create()
             ->from('People p')
             ->innerJoin('p.Collections col')
             ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->andWhere('p.is_physical = false')
             ->orderBy('p.id ASC, col_path_id ASC');
-        return $q->execute();
+      if($institutionId != null)
+        $q->andWhere('p.id = ?', $institutionId);
+      return $q->execute();
     }
 
     public function getDistinctCollectionByInstitution($inst = null)
@@ -32,4 +35,5 @@ class CollectionsTable extends DarwinTable
       }
       return $results;
     }
+
 }

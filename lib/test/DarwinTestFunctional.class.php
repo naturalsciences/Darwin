@@ -37,9 +37,9 @@ class DarwinTestFunctional extends sfTestFunctional
     $this->
       info('** initial login **')->
       get('account/login')->
-      click('Log in',array('login' => array(
-        'username' => 'root',
-        'password' => 'evil'
+      click('#login_page input[type="submit"]',array('login' => array(
+        'username' => $user,
+        'password' => $pass
         )))->
       with('user')->begin()->
         isAuthenticated(true)->

@@ -64,53 +64,63 @@ MyPreferences:
         User: u1
         col_num: 1
         category: specimen_widget
-        group_name: refChrono
+        group_name: refHosts
         order_by: 3
-        opened: true
-        visible: false
         is_available: true
-        title_perso: Chronostratigraphy
+        opened: true
+        visible: true
+        title_perso: Host
     u1ws4:
         User: u1
         col_num: 1
         category: specimen_widget
-        group_name: refLitho
+        group_name: refChrono
         order_by: 4
         opened: true
         visible: false
         is_available: true
-        title_perso: Lithostratigraphy
+        title_perso: Chronostratigraphy
     u1ws5:
         User: u1
         col_num: 1
         category: specimen_widget
-        group_name: refLithology
+        group_name: refLitho
         order_by: 5
         opened: true
         visible: false
         is_available: true
-        title_perso: Lithology
+        title_perso: Lithostratigraphy
     u1ws6:
         User: u1
         col_num: 1
         category: specimen_widget
-        group_name: refMineral
+        group_name: refLithology
         order_by: 6
         opened: true
         visible: false
         is_available: true
-        title_perso: Mineralogy
+        title_perso: Lithology
     u1ws7:
         User: u1
         col_num: 1
         category: specimen_widget
-        group_name: specimenCount
+        group_name: refMineral
         order_by: 7
         opened: true
         visible: false
         is_available: true
-        title_perso: Specimen(s) count
+        title_perso: Mineralogy
     u1ws8:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: specimenCount
+        order_by: 8
+        opened: true
+        visible: false
+        is_available: true
+        title_perso: Specimen(s) count
+    u1ws9:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -120,7 +130,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Acquisition
-    u1ws9:
+    u1ws10:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -131,7 +141,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Expedition
-    u1ws10:
+    u1ws11:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -142,7 +152,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: I.G. number
-    u1ws11:
+    u1ws12:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -153,7 +163,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Sampling location
-    u1ws12:
+    u1ws13:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -163,7 +173,7 @@ MyPreferences:
         visible: false
         is_available: true
         title_perso: Collecting method
-    u1ws13:
+    u1ws14:
         User: u1
         col_num: 2
         category: specimen_widget

@@ -22,18 +22,56 @@ class userActions extends DarwinActions
     $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
     $is_physical = Doctrine::getTable('Users')->find($request->getparameter('id'))->getIsPhysical() ;
     $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
+    $old_db_user_type = $this->user->getDbUserType() ;
     $this->loadWidgets();
     if($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('users'));
+	 $array = $request->getParameter('users');
+      $this->form->bind($array);
+	 $new_db_user_type = $array['db_user_type'] ;
+	 $user_id = $request->getParameter('id') ;
       if($this->form->isValid())
       {
 	  $this->form->updateObject();
 
 	  // Let's save the object
 	  $this->form->getObject()->save();
-
-/*	  if($this->form->getValue('password') != '')
+	  if ($old_db_user_type != $new_db_user_type)
+	  {
+	  	if ($old_db_user_type > $new_db_user_type)
+	  	{
+	  	  // widget to delete
+		  switch ($old_db_user_type)
+		  {
+		  	case 8: if ($new_db_user_type > 2) break ; // for now an admin and a CM have the same widget
+		  	        if ($new_db_user_type > 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',false) ; 
+		  	        if ($new_db_user_type == 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',false) ; 
+		  	        break ;
+		  	case 4: if ($new_db_user_type > 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',false) ; 
+		  	        if ($new_db_user_type == 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',false) ; 
+		  	        break ;
+		  	case 2: Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',false) ; 
+		  	        break ;
+		  	default: break ;
+		  }
+		}
+		else
+		{
+		  $widget = new Users() ;
+		   // widget to add
+		  switch ($old_db_user_type)
+		  {
+		  	case 1: Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',true) ; 
+		  	        if ($new_db_user_type > 2) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',true) ; 
+		  	        break ;
+		  	case 2: Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',true) ; 
+		  	        break ;
+		  	default: break ;
+		  }
+		
+		}
+	  }
+	  if($this->form->getValue('password') != '')
 	  {
 	    $login_infos = $this->user->UsersLoginInfos;
 	    if( count($login_infos) != 1)
@@ -42,7 +80,7 @@ class userActions extends DarwinActions
 	    }
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
-	  }*/
+	  }
 	  return $this->redirect('user/index');
       }
     }
@@ -90,13 +128,11 @@ class userActions extends DarwinActions
 	    ),
 	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
 	);
-
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
-
       }
     }
 
@@ -249,6 +285,12 @@ class userActions extends DarwinActions
     {
       try{
 	$user = $form->save();
+	$widget = new Users() ;
+	$widget->addUserWidgets($user->getId());
+	Doctrine::getTable('MyPreferences')->setUserRef($user->getId())->setWidgets('Registered user',true) ; 
+	if ($user->getDbUserType() > 1) Doctrine::getTable('MyPreferences')->setUserRef($user->getId())->setWidgets('Encoder',true) ; 
+	if ($user->getDbUserType() > 2) Doctrine::getTable('MyPreferences')->setUserRef($user->getId())->setWidgets('Collection manager',true) ; 
+	if ($user->getDbUserType() > 4) Doctrine::getTable('MyPreferences')->setUserRef($user->getId())->setWidgets('Administrator',true) ; 
 	$this->redirect('user/edit?id='.$user->getId());
       }
       catch(Doctrine_Exception $ne)
