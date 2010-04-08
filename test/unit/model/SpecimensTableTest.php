@@ -10,12 +10,12 @@ $t->is($cat['Collect'],'Collect','get the last category');
 
 $t->info('getDistinctTools');
 $cat = Doctrine::getTable('Specimens')->getDistinctTools();
-$t->is($cat->count(),2,'Number of differents tools');
-$t->is($cat[0]->getTool(),'Fish Net','get the first tool');
-$t->is($cat[1]->getTool(),'fish Pas net','get the last tool');
+$t->is($cat->count(),3,'Number of differents tools');
+$t->is($cat[1]->getTool(),'Fish Net','get the first tool');
+$t->is($cat[2]->getTool(),'fish Pas net','get the last tool');
 
 $t->info('getDistinctMethods');
 $cat = Doctrine::getTable('Specimens')->getDistinctMethods();
-$t->is($cat->count(),2,'Number of differents method');
-$t->is($cat[0]->getMethod(),'Fishing','get the first method');
-$t->is($cat[1]->getMethod(),'Hunting','get the last method');
+$t->is($cat->count(),3,'Number of differents method');
+$t->is($cat[1]->getMethod(),'Fishing','get the first method');
+$t->is($cat[2]->getMethod(),'Hunting','get the last method');

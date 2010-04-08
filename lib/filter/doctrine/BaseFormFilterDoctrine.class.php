@@ -137,7 +137,8 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   {
      if ($values != "")
      {
-       $query->andWhere('id != ?', $values);
+       $alias = $query->getRootAlias();       
+       $query->andWhere($alias.'.id != ?', $values);
      }
      return $query;
   }

@@ -44,7 +44,7 @@ $browser->
     checkElement('ul.pager_nav li', 10)->
     checkElement('ul.pager_nav li.page_selected', '[1]')->
     checkElement('.pager li a span.nav_arrow', 0)->
-    checkElement('div.paging_info table td:nth-child(2)', 'Your query retrieved 8 records')->
+    checkElement('div.paging_info table td:nth-child(2)', 1)->
     checkElement('div.paging_info table td:last-child select[id="searchExpedition_rec_per_page"]', 1)->
     checkElement('table.results tbody tr', 8)->
     checkElement('table.results thead th:first_element a.sort span.order_sign_down')->

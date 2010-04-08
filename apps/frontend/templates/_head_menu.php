@@ -22,7 +22,7 @@
                         <li><a href="#">menu item</a></li>
                     </ul>
                 </li>
-                <li><a href="./?page=result">Specimens</a></li>
+                <li><?php echo link_to(__('Specimens'),'specimen/index');?></li>
                 <li>
                     <a href="">Catalogues</a>
                     <ul>
