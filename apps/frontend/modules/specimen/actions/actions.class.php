@@ -145,4 +145,30 @@ class specimenActions extends DarwinActions
     }
   }
 
+  public function executeSameTaxon(sfWebRequest $request)
+  {
+    if($request->getParameter('specId') && $request->getParameter('taxonId'))
+    {
+      $result = Doctrine::getTable('Specimens')->findOneById($request->getParameter('specId'));
+      if($result)
+      {
+        return ($result->getTaxonRef() == $request->getParameter('taxonId'))?$this->renderText("ok"):$this->renderText("not ok");
+      }
+    }
+    return $this->renderText("ok");
+  }
+
+  public function executeGetTaxon(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->getParameter('specId') && $request->getParameter('targetField'));
+    $targetField = $request->getParameter('targetField');
+    $specimen = Doctrine::getTable('Specimens')->findOneById($request->getParameter('specId'));
+    $this->forward404Unless($specimen);
+    return $this->renderText('{'.
+                             '"'.$targetField.'":"'.$specimen->Taxonomy->getId().'",'.
+                             '"'.$targetField.'_name":"'.$specimen->Taxonomy->getNameWithFormat().'"'.
+                             '}'
+                            );
+  }
+
 }

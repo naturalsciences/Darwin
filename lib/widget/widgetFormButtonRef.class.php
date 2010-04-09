@@ -24,6 +24,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	{
 	  $options = array(
 	    'src' => '/images/remove.png',
+            'id' => $this->generateId($name)."_clear",
 	    'class' => "ref_clear" . $class
 	  );
 
