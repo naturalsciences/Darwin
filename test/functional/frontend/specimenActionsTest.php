@@ -114,4 +114,42 @@ $browser->
     isStatusCode(200)->
     checkElement('.board_col:first .widget:first .widget_content div#specimen_collection_ref_name','Aves')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content div#specimen_taxon_ref_name','Falco Peregrinus Tunstall, 1771')->
+  end()->
+  
+  info('4 - Check sameTaxon action call')->
+  info('4.1 - ...without arguments')->  
+  get('/specimen/sameTaxon')->
+  with('response')->begin()->
+    matches('/ok/')->
+  end();
+
+$specimens = Doctrine::getTable('Specimens')->findAll();
+  
+$browser->
+  info('4.2 - ...with a specimen id and a taxon id different from one associated to specimen called')->  
+  get('specimen/sameTaxon', array('specId'=>$specimens[0]->getId(), 'taxonId'=>'-1'))->
+  with('response')->begin()->
+    matches('/not ok/')->
+  end()->
+  info('4.3 - ...with a specimen id and a corresponding taxon id')->  
+  get('specimen/sameTaxon', array('specId'=>$specimens[0]->getId(), 'taxonId'=>$specimens[0]->Taxonomy->getId()))->
+  with('response')->begin()->
+    matches('/ok/')->
+  end()->
+  info('5 - Check getTaxon action call')->
+  info('5.1 - ...without arguments')->  
+  get('specimen/getTaxon')->
+  with('response')->begin()->
+    isStatusCode(404)->
+  end()->
+  info('5.2 - ...with a wrong specimen id')->
+  get('specimen/getTaxon', array('specId'=>'0', 'targetField'=>'specimen_host_taxon'))->
+  with('response')->begin()->
+    isStatusCode(404)->
+  end()->
+  info('5.3 - ...with correct infos')->
+  get('specimen/getTaxon', array('specId'=>$specimens[0]->getId(), 'targetField'=>'specimen_host_taxon'))->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/","specimen_host_taxon_name":"Animalia"}/')->
   end();
