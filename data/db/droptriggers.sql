@@ -95,3 +95,6 @@ DROP TRIGGER trg_cpy_update_path_lithostratigraphy ON lithostratigraphy;
 DROP TRIGGER trg_cpy_update_path_mineralogy ON mineralogy;
 DROP TRIGGER trg_cpy_update_path_taxonomy ON taxonomy;
 DROP TRIGGER trg_cpy_update_path_lithology ON lithology;
+
+/*** Specimen hosting ***/
+DROP TRIGGER trg_cpy_updateHosts ON specimens;

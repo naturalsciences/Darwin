@@ -460,3 +460,9 @@ CREATE TRIGGER trg_nbr_in_synonym  AFTER INSERT OR UPDATE
    	ON classification_synonymies FOR EACH ROW
 	EXECUTE PROCEDURE fct_nbr_in_synonym();
 
+
+/**** Specimen Hosting triggers ****/
+
+CREATE TRIGGER trg_cpy_updateHosts AFTER UPDATE
+        ON specimens FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_updateHosts();

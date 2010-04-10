@@ -6308,9 +6308,7 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION ts_stat(tsvector, OUT word text, OUT ndoc
-integer, OUT nentry integer)
-RETURNS SETOF record AS
+CREATE OR REPLACE FUNCTION ts_stat(tsvector, OUT word text, OUT ndoc integer, OUT nentry integer) RETURNS SETOF record AS
 $$
     SELECT ts_stat('SELECT ' || quote_literal( $1::text ) || '::tsvector') WHERE $1 != to_tsvector('');
 $$ LANGUAGE SQL RETURNS NULL ON NULL INPUT IMMUTABLE;
@@ -6649,3 +6647,16 @@ END;
 $$;
 
 
+CREATE OR REPLACE FUNCTION fct_cpy_updateHosts() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+BEGIN
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.taxon_ref <> OLD.taxon_ref THEN
+      UPDATE specimens SET host_taxon_ref = NEW.taxon_ref WHERE host_specimen_ref = NEW.id;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
