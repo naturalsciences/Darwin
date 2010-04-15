@@ -6654,7 +6654,24 @@ $$
 BEGIN
   IF TG_OP = 'UPDATE' THEN
     IF NEW.taxon_ref <> OLD.taxon_ref THEN
-      UPDATE specimens SET host_taxon_ref = NEW.taxon_ref WHERE host_specimen_ref = NEW.id;
+      UPDATE specimens SET host_taxon_ref = NEW.taxon_ref WHERE host_specimen_ref = NEW.id AND id <> NEW.id;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+
+CREATE OR REPLACE FUNCTION fct_cpy_updateSpecHostImpact() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+DECLARE
+  newTaxonRef specimens.host_taxon_ref%TYPE := 0;
+BEGIN
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.host_specimen_ref <> OLD.host_specimen_ref AND NEW.host_specimen_ref IS NOT NULL THEN
+      SELECT taxon_ref INTO STRICT NEW.host_taxon_ref FROM specimens WHERE id = NEW.host_specimen_ref;
     END IF;
   END IF;
   RETURN NEW;

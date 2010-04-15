@@ -466,3 +466,7 @@ CREATE TRIGGER trg_nbr_in_synonym  AFTER INSERT OR UPDATE
 CREATE TRIGGER trg_cpy_updateHosts AFTER UPDATE
         ON specimens FOR EACH ROW
         EXECUTE PROCEDURE fct_cpy_updateHosts();
+
+CREATE TRIGGER trg_cpy_updateSpecHostImpact BEFORE UPDATE
+        ON specimens FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_updateSpecHostImpact();

@@ -61,6 +61,7 @@ DROP FUNCTION IF EXISTS datesOverlaps(start1 date, end1 date, start2 date, end2 
 DROP FUNCTION IF EXISTS fct_chk_onceinpath(path varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_word(tbl_name character varying, fld_name character varying, word_ts tsvector) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updateHosts() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_updateSpecHostImpact() CASCADE;
 DROP FUNCTION IF EXISTS concat(text, text) CASCADE;
 DROP FUNCTION IF EXISTS concat(text, text, text) CASCADE;
 DROP FUNCTION IF EXISTS ts_stat(tsvector, OUT word text, OUT ndoc integer, OUT nentry integer) CASCADE;
