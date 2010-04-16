@@ -32,13 +32,11 @@
       <?php echo $form['people_id'] ?>
     </td>
   </tr>
-  <?php if (isset($saved)) : ?>
   <tr class="trusted_user_links">
     <td colspan="2">
-	<a href="<?php echo url_for('user/widget?id='.$form->getObject()->getId()) ?>"><?php echo __('You can now edit user widgets');?></a>
+	<a href="<?php echo url_for('user/widget?id='.$form->getObject()->getId()) ?>"><?php echo __('Edit user widgets');?></a>
     </td>
   </tr>
-  <?php endif ; ?>
 </tbody>
 <tfoot>
   <tr>

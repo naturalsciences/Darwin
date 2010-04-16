@@ -2,15 +2,14 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">
-  <form class="edition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <h1 class="edit_mode">List of widgets available for <?php echo($user->getFamilyName()." ".$user->getGivenName()) ?></h1>
+  <form class="edition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <table>
   <thead class="title_widget">
   <tr>
   	<th>Category/screen</th><th>Name</th><th colspan="6">Widget</th>
   </tr>
   </thead>
-  <tbody>
   <?php foreach($form_pref as $category=>$record) :?>
   	<thead alt="<?php echo $category ?>" class='head_widget'>
   		<tr>
@@ -52,7 +51,6 @@
 	<?php endforeach ?>
 	</tbody>
   <?php endforeach ; ?>
-</tbody>
 <tfoot>
   <tr>
     <td colspan="5">

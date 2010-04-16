@@ -25,7 +25,6 @@ class userActions extends DarwinActions
     $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
     $old_db_user_type = $this->user->getDbUserType() ;
     $this->loadWidgets();
-    if ($request->getParameter('save') == 1) $this->saved = true ; 
     if($request->isMethod('post'))
     {
 	 $array = $request->getParameter('users');
@@ -200,7 +199,6 @@ class userActions extends DarwinActions
 
 
     $this->loadWidgets();
-    if ($request->getParameter('save') == 1) $this->saved = true ;
     $old_people = $this->user->getPeopleId();
 
     $this->form = new ProfileForm($this->user,array('is_physical' => $this->user->getIsPhysical()));

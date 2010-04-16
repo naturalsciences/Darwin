@@ -1288,5 +1288,7 @@ input.tag_line
 {
   color:#C1CC33;
   border-right:1px solid #C1CC33;
+  border-top:1px solid #C1CC33;
+  border-left:1px solid #C1CC33;
   text-align: center
 }
