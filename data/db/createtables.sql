@@ -724,6 +724,10 @@ create table collections
         parent_ref integer,
         path varchar not null,
         code_auto_increment boolean not null default false,
+        code_prefix varchar,
+        code_prefix_separator varchar,
+        code_suffix varchar,
+        code_suffix_separator varchar,
         code_part_code_auto_copy boolean not null default false,
         constraint pk_collections primary key (id),
         constraint fk_collections_institutions foreign key (institution_ref) references people(id),
@@ -741,6 +745,10 @@ comment on column collections.parent_ref is 'Recursive reference to collection t
 comment on column collections.path is 'Descriptive path for collection hierarchy, each level separated by a /';
 comment on column collections.main_manager_ref is 'Reference of collection main manager - id field of users table';
 comment on column collections.code_auto_increment is 'Flag telling if the numerical part of a code has to be incremented or not';
+comment on column collections.code_prefix is 'Default code prefix to be used for specimens encoded in this collection';
+comment on column collections.code_prefix_separator is 'Character chain used to separate code prefix from code core';
+comment on column collections.code_suffix is 'Default code suffix to be used for specimens encoded in this collection';
+comment on column collections.code_suffix_separator is 'Character chain used to separate code suffix from code core';
 comment on column collections.code_part_code_auto_copy is 'Flag telling if the whole specimen code has to be copied for a part, when inserting a new one';
 create table template_collections_users
        (
@@ -1707,9 +1715,12 @@ create table codes
         id integer not null default nextval('codes_id_seq'),
         code_category varchar not null default 'main',
         code_prefix varchar,
+        code_prefix_separator varchar,
         code integer,
         code_suffix varchar,
-        full_code_indexed varchar not null,
+        code_suffix_separator varchar,
+        full_code_indexed tsvector not null,
+        full_code_order_by varchar not null,
         code_date timestamp not null default '0001-01-01 00:00:00',
         code_date_mask integer not null default 0
        )
@@ -1719,9 +1730,12 @@ comment on table codes is 'Template used to construct the specimen codes tables'
 comment on column codes.id is 'Unique identifier of a code';
 comment on column codes.code_category is 'Category of code: main, secondary, temporary,...';
 comment on column codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
+comment on column codes.code_prefix_separator is 'Separtor used between code core and code prefix';
 comment on column codes.code is 'Numerical part of code';
 comment on column codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
-comment on column codes.full_code_indexed is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
+comment on column codes.code_suffix_separator is 'Separtor used between code core and code suffix';
+comment on column codes.full_code_indexed is 'ts_vector code composition coming from all code parts - used for searching specimen codes';
+comment on column codes.full_code_order_by is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
 comment on column codes.code_date is 'Date of code creation';
 comment on column codes.referenced_relation is 'Reference name of table concerned';
 comment on column codes.record_id is 'Identifier of record concerned';

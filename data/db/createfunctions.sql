@@ -2340,7 +2340,8 @@ BEGIN
 	ELSIF TG_TABLE_NAME = 'people' THEN
 		NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 	ELSIF TG_TABLE_NAME = 'codes' THEN
-		NEW.full_code_indexed := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
+                NEW.full_code_indexed := to_tsvector('simple', COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,''));
+		NEW.full_code_order_by := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
 	ELSIF TG_TABLE_NAME = 'tag_groups' THEN
 		NEW.group_name_indexed := fullToIndex(NEW.group_name);
 		NEW.sub_group_name_indexed := fullToIndex(NEW.sub_group_name);
@@ -6476,6 +6477,16 @@ BEGIN
 	END IF;
       ELSE
 	PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
+      END IF;
+
+   ELSIF TG_TABLE_NAME ='codes' THEN
+
+      IF TG_OP = 'UPDATE' THEN 
+	IF OLD.full_code_indexed != NEW.full_code_indexed THEN
+	  PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
+	END IF;
+      ELSE
+	PERFORM fct_cpy_word('codes','full_code_indexed', NEW.name_ts);
       END IF;
 
    END IF;

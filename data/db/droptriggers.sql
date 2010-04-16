@@ -99,3 +99,52 @@ DROP TRIGGER trg_cpy_update_path_lithology ON lithology;
 /*** Specimen hosting ***/
 DROP TRIGGER trg_cpy_updateHosts ON specimens;
 DROP TRIGGER trg_cpy_updateSpecHostImpact ON specimens;
+
+/*** Words triggers ***/
+DROP TRIGGER trg_words_ts_cpy_collection_maintenance
+	ON collection_maintenance;
+
+DROP TRIGGER trg_words_ts_cpy_comments
+	ON comments;
+
+DROP TRIGGER trg_words_ts_cpy_vernacular_names
+	ON vernacular_names;
+
+DROP TRIGGER trg_words_ts_cpy_identification
+	ON identifications;
+
+DROP TRIGGER trg_words_ts_cpy_multimedia
+	ON multimedia;
+
+DROP TRIGGER trg_words_ts_cpy_people
+	ON people;
+
+DROP TRIGGER trg_words_ts_cpy_people_addresses
+	ON people_addresses;
+
+DROP TRIGGER trg_words_ts_cpy_users
+	ON users;
+
+DROP TRIGGER trg_words_ts_cpy_expeditions
+	ON expeditions;
+
+DROP TRIGGER trg_words_ts_cpy_habitats
+	ON habitats;
+
+DROP TRIGGER trg_words_ts_cpy_mineralogy
+	ON mineralogy;
+
+DROP TRIGGER trg_words_ts_cpy_chronostratigraphy
+	ON chronostratigraphy;
+
+DROP TRIGGER trg_words_ts_cpy_lithostratigraphy
+	ON lithostratigraphy;
+
+DROP TRIGGER trg_words_ts_cpy_lithology
+	ON lithology;
+
+DROP TRIGGER trg_words_ts_cpy_taxonomy
+	ON taxonomy;
+
+DROP TRIGGER trg_words_ts_cpy_codes
+	ON codes;

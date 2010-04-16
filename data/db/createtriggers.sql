@@ -452,6 +452,10 @@ CREATE TRIGGER trg_words_ts_cpy_taxonomy BEFORE INSERT OR UPDATE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_trg_word();
 
+CREATE TRIGGER trg_words_ts_cpy_codes BEFORE INSERT OR UPDATE
+	ON codes FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+
 CREATE TRIGGER trg_nbr_in_relation  BEFORE INSERT OR UPDATE
    	ON catalogue_relationships FOR EACH ROW
 	EXECUTE PROCEDURE fct_nbr_in_relation();
