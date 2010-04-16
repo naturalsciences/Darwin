@@ -24,6 +24,10 @@ abstract class BaseCollectionsForm extends BaseFormDoctrine
       'parent_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                     => new sfWidgetFormTextarea(),
       'code_auto_increment'      => new sfWidgetFormInputCheckbox(),
+      'code_prefix'              => new sfWidgetFormTextarea(),
+      'code_prefix_separator'    => new sfWidgetFormTextarea(),
+      'code_suffix'              => new sfWidgetFormTextarea(),
+      'code_suffix_separator'    => new sfWidgetFormTextarea(),
       'code_part_code_auto_copy' => new sfWidgetFormInputCheckbox(),
     ));
 
@@ -37,6 +41,10 @@ abstract class BaseCollectionsForm extends BaseFormDoctrine
       'parent_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
       'path'                     => new sfValidatorString(array('required' => false)),
       'code_auto_increment'      => new sfValidatorBoolean(array('required' => false)),
+      'code_prefix'              => new sfValidatorString(array('required' => false)),
+      'code_prefix_separator'    => new sfValidatorString(array('required' => false)),
+      'code_suffix'              => new sfValidatorString(array('required' => false)),
+      'code_suffix_separator'    => new sfValidatorString(array('required' => false)),
       'code_part_code_auto_copy' => new sfValidatorBoolean(array('required' => false)),
     ));
 

@@ -426,6 +426,10 @@ Collections:
         parent_ref: { type: integer}
         path: { type: string, notnull: true, default: '/'}
         code_auto_increment: { type: boolean, notnull: true, default: false}
+        code_prefix: { type: string}
+        code_prefix_separator: { type: string}
+        code_suffix: { type: string}
+        code_suffix_separator: { type: string}
         code_part_code_auto_copy: { type: boolean, notnull: true, default: false}
     relations:
         Institution:
@@ -870,9 +874,12 @@ Codes:
         record_id: { type: integer, notnull: true}
         code_category: { type: string, notnull: true, default: main}
         code_prefix: { type: string}
+        code_prefix_separator: { type: string}
         code: { type: integer}
         code_suffix: { type: string}
+        code_suffix_separator: { type: string}
         full_code_indexed: { type: string}
+        full_code_order_by: { type: string}
         code_date: { type: string}
 
 SpecimenIndividuals:

@@ -13,25 +13,31 @@ abstract class BaseCodesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'referenced_relation' => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'record_id'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'code_category'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'code_prefix'         => new sfWidgetFormFilterInput(),
-      'code'                => new sfWidgetFormFilterInput(),
-      'code_suffix'         => new sfWidgetFormFilterInput(),
-      'full_code_indexed'   => new sfWidgetFormFilterInput(),
-      'code_date'           => new sfWidgetFormFilterInput(),
+      'referenced_relation'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'record_id'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'code_category'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'code_prefix'           => new sfWidgetFormFilterInput(),
+      'code_prefix_separator' => new sfWidgetFormFilterInput(),
+      'code'                  => new sfWidgetFormFilterInput(),
+      'code_suffix'           => new sfWidgetFormFilterInput(),
+      'code_suffix_separator' => new sfWidgetFormFilterInput(),
+      'full_code_indexed'     => new sfWidgetFormFilterInput(),
+      'full_code_order_by'    => new sfWidgetFormFilterInput(),
+      'code_date'             => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'referenced_relation' => new sfValidatorPass(array('required' => false)),
-      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'code_category'       => new sfValidatorPass(array('required' => false)),
-      'code_prefix'         => new sfValidatorPass(array('required' => false)),
-      'code'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'code_suffix'         => new sfValidatorPass(array('required' => false)),
-      'full_code_indexed'   => new sfValidatorPass(array('required' => false)),
-      'code_date'           => new sfValidatorPass(array('required' => false)),
+      'referenced_relation'   => new sfValidatorPass(array('required' => false)),
+      'record_id'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'code_category'         => new sfValidatorPass(array('required' => false)),
+      'code_prefix'           => new sfValidatorPass(array('required' => false)),
+      'code_prefix_separator' => new sfValidatorPass(array('required' => false)),
+      'code'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'code_suffix'           => new sfValidatorPass(array('required' => false)),
+      'code_suffix_separator' => new sfValidatorPass(array('required' => false)),
+      'full_code_indexed'     => new sfValidatorPass(array('required' => false)),
+      'full_code_order_by'    => new sfValidatorPass(array('required' => false)),
+      'code_date'             => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('codes_filters[%s]');
@@ -51,15 +57,18 @@ abstract class BaseCodesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'                  => 'Number',
-      'referenced_relation' => 'Text',
-      'record_id'           => 'Number',
-      'code_category'       => 'Text',
-      'code_prefix'         => 'Text',
-      'code'                => 'Number',
-      'code_suffix'         => 'Text',
-      'full_code_indexed'   => 'Text',
-      'code_date'           => 'Text',
+      'id'                    => 'Number',
+      'referenced_relation'   => 'Text',
+      'record_id'             => 'Number',
+      'code_category'         => 'Text',
+      'code_prefix'           => 'Text',
+      'code_prefix_separator' => 'Text',
+      'code'                  => 'Number',
+      'code_suffix'           => 'Text',
+      'code_suffix_separator' => 'Text',
+      'full_code_indexed'     => 'Text',
+      'full_code_order_by'    => 'Text',
+      'code_date'             => 'Text',
     );
   }
 }

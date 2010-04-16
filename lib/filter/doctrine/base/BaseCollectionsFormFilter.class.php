@@ -21,6 +21,10 @@ abstract class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
       'parent_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'code_auto_increment'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'code_prefix'              => new sfWidgetFormFilterInput(),
+      'code_prefix_separator'    => new sfWidgetFormFilterInput(),
+      'code_suffix'              => new sfWidgetFormFilterInput(),
+      'code_suffix_separator'    => new sfWidgetFormFilterInput(),
       'code_part_code_auto_copy' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
@@ -33,6 +37,10 @@ abstract class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
       'parent_ref'               => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Parent'), 'column' => 'id')),
       'path'                     => new sfValidatorPass(array('required' => false)),
       'code_auto_increment'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'code_prefix'              => new sfValidatorPass(array('required' => false)),
+      'code_prefix_separator'    => new sfValidatorPass(array('required' => false)),
+      'code_suffix'              => new sfValidatorPass(array('required' => false)),
+      'code_suffix_separator'    => new sfValidatorPass(array('required' => false)),
       'code_part_code_auto_copy' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
@@ -62,6 +70,10 @@ abstract class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
       'parent_ref'               => 'ForeignKey',
       'path'                     => 'Text',
       'code_auto_increment'      => 'Boolean',
+      'code_prefix'              => 'Text',
+      'code_prefix_separator'    => 'Text',
+      'code_suffix'              => 'Text',
+      'code_suffix_separator'    => 'Text',
       'code_part_code_auto_copy' => 'Boolean',
     );
   }

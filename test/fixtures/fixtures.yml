@@ -227,11 +227,22 @@ People:
         db_people_type: 127
   
 Collections:
+    c1:
+        code: mol
+        name: Molusca
+        Institution: p2
+        Manager: u1
+        code_prefix: INV.
+        code_prefix_separator: "-"
+        code_suffix: Neo
+        code_suffix_separator: "-"
     c2:
         code: vert
         name: Vertebrates
         Institution: p1
         Manager: u1
+        code_prefix: VERT.
+        code_prefix_separator: "/"
     c3:
         code: amp
         name: Amphibia
@@ -250,14 +261,10 @@ Collections:
         Institution: p1
         Manager: u1
         Parent: c4
-    c1:
-        code: mol
-        name: Molusca
-        Institution: p2
-        Manager: u1
 
 Specimens:
     sp1:
+        id: 1
         Collections: c1
         specimen_count_min: 1
         acquisition_date: '2001-01-01'
@@ -266,6 +273,7 @@ Specimens:
         collecting_method: Hunting
         Taxonomy: ta1
     sp2:
+        id: 2
         Collections: c2
         specimen_count_min: 1
         acquisition_date: '2001-03-01'
@@ -274,6 +282,7 @@ Specimens:
         collecting_method: Hunting
         Taxonomy: ta2
     sp3:
+        id: 3
         Collections: c3
         specimen_count_min: 1
         acquisition_date: '2001-02-01'
@@ -284,6 +293,7 @@ Specimens:
         HostSpecimen: sp1
         HostTaxon: ta1
     sp4:
+        id: 4
         Collections: c3
         specimen_count_min: 3
         specimen_count_max: 3
@@ -291,6 +301,46 @@ Specimens:
         acquisition_category: expedition
         HostSpecimen: sp2
         HostTaxon: ta2
+
+Codes:
+    cosp1:
+        referenced_relation: specimens
+        record_id: 1
+        code_category: main
+        code_prefix: INV.
+        code_prefix_separator: "-"
+        code: 123
+        code_suffix: Neo
+        code_suffix_separator: "-"
+
+    cosp2-1:
+        referenced_relation: specimens
+        record_id: 2
+        code_category: main
+        code_prefix: VERT.
+        code_prefix_separator: " "
+        code: 12456
+        code_suffix: ""
+        code_suffix_separator: " "
+
+    cosp2-2:
+        referenced_relation: specimens
+        record_id: 2
+        code_category: secondary
+        code_prefix: VERT.
+        code_prefix_separator: "/"
+        code: 1548548
+        code_suffix: Abou
+        code_suffix_separator: " "
+
+    cosp2-3:
+        referenced_relation: specimens
+        record_id: 2
+        code_category: secondary
+        code_prefix: VERT.
+        code_prefix_separator: "/"
+        code: 85486846
+        code_suffix_separator: "/"
 
 MySavedSpecimens:
     ssp1:

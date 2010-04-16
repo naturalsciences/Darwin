@@ -14,6 +14,10 @@
  * @property integer $parent_ref
  * @property string $path
  * @property boolean $code_auto_increment
+ * @property string $code_prefix
+ * @property string $code_prefix_separator
+ * @property string $code_suffix
+ * @property string $code_suffix_separator
  * @property boolean $code_part_code_auto_copy
  * @property People $Institution
  * @property Users $Manager
@@ -34,6 +38,10 @@
  * @method integer             getParentRef()                     Returns the current record's "parent_ref" value
  * @method string              getPath()                          Returns the current record's "path" value
  * @method boolean             getCodeAutoIncrement()             Returns the current record's "code_auto_increment" value
+ * @method string              getCodePrefix()                    Returns the current record's "code_prefix" value
+ * @method string              getCodePrefixSeparator()           Returns the current record's "code_prefix_separator" value
+ * @method string              getCodeSuffix()                    Returns the current record's "code_suffix" value
+ * @method string              getCodeSuffixSeparator()           Returns the current record's "code_suffix_separator" value
  * @method boolean             getCodePartCodeAutoCopy()          Returns the current record's "code_part_code_auto_copy" value
  * @method People              getInstitution()                   Returns the current record's "Institution" value
  * @method Users               getManager()                       Returns the current record's "Manager" value
@@ -53,6 +61,10 @@
  * @method Collections         setParentRef()                     Sets the current record's "parent_ref" value
  * @method Collections         setPath()                          Sets the current record's "path" value
  * @method Collections         setCodeAutoIncrement()             Sets the current record's "code_auto_increment" value
+ * @method Collections         setCodePrefix()                    Sets the current record's "code_prefix" value
+ * @method Collections         setCodePrefixSeparator()           Sets the current record's "code_prefix_separator" value
+ * @method Collections         setCodeSuffix()                    Sets the current record's "code_suffix" value
+ * @method Collections         setCodeSuffixSeparator()           Sets the current record's "code_suffix_separator" value
  * @method Collections         setCodePartCodeAutoCopy()          Sets the current record's "code_part_code_auto_copy" value
  * @method Collections         setInstitution()                   Sets the current record's "Institution" value
  * @method Collections         setManager()                       Sets the current record's "Manager" value
@@ -118,6 +130,18 @@ abstract class BaseCollections extends sfDoctrineRecord
              'type' => 'boolean',
              'notnull' => true,
              'default' => false,
+             ));
+        $this->hasColumn('code_prefix', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('code_prefix_separator', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('code_suffix', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('code_suffix_separator', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('code_part_code_auto_copy', 'boolean', null, array(
              'type' => 'boolean',

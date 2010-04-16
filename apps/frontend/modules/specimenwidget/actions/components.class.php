@@ -97,6 +97,11 @@ class specimenwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeRefCodes()
+  {
+    $this->defineForm();
+  }
+
   public function executeLinkHabitat()
   {}
 
