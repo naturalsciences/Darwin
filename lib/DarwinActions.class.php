@@ -33,7 +33,7 @@ class DarwinActions extends sfActions
     $this->__set('widgetCategory',$this->widgetCategory);
 
     $this->widgets = Doctrine::getTable('MyPreferences')
-      ->setUserRef($id)
+      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->getWidgets($this->widgetCategory);
     if(! $this->widgets) $this->widgets=array();
   }
