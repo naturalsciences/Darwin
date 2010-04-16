@@ -24,10 +24,10 @@ $browser->
     isStatusCode(200)->
     checkElement('title','Add Specimens')->
     checkElement('.board_col',2)->
-    checkElement('.board_col:first .widget',3)->
+    checkElement('.board_col:first .widget',4)->
     checkElement('.board_col:last .widget',4)->
     checkElement('.board_col:first .widget:first .widget_top_bar span','Collection')->
-    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Taxonomy')->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Codes')->
     checkElement('.board_col:last .widget:first .widget_top_bar span','Acquisition')->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','I.G. number')->
@@ -86,11 +86,11 @@ $browser->
     isStatusCode(200)->
     checkElement('title','Add Specimens')->
     checkElement('.board_col',2)->
-    checkElement('.board_col:first .widget',3)->
+    checkElement('.board_col:first .widget',4)->
     checkElement('.board_col:last .widget',4)->
     checkElement('.board_col:first .widget:first .widget_top_bar span','Collection')->
     checkElement('.board_col:first .widget:first .widget_content div#specimen_collection_ref_name','Vertebrates')->
-    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Taxonomy')->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Codes')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content div#specimen_taxon_ref_name','Falco Peregrinus')->
     checkElement('.board_col:last .widget:first .widget_top_bar span','Acquisition')->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
