@@ -28,7 +28,7 @@ class DarwinActions extends sfActions
     $this->caller_id = (!$request->hasParameter('caller_id'))?'':$request->getParameter('caller_id');
   }
 
-  protected function loadWidgets($id)
+  protected function loadWidgets()
   {
     $this->__set('widgetCategory',$this->widgetCategory);
 

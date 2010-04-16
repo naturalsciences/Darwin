@@ -24,7 +24,7 @@ class userActions extends DarwinActions
     $is_physical = Doctrine::getTable('Users')->find($request->getparameter('id'))->getIsPhysical() ;
     $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
     $old_db_user_type = $this->user->getDbUserType() ;
-    $this->loadWidgets($this->user->getId());
+    $this->loadWidgets();
     if($request->isMethod('post'))
     {
 	 $array = $request->getParameter('users');
@@ -201,7 +201,7 @@ class userActions extends DarwinActions
     $this->forward404Unless($this->user);
 
 
-    $this->loadWidgets($this->user->getId());
+    $this->loadWidgets();
     $old_people = $this->user->getPeopleId();
 
     $this->form = new ProfileForm($this->user,array('is_physical' => $this->user->getIsPhysical()));
