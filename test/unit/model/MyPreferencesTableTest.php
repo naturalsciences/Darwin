@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(23, new lime_output_color());
+$t = new lime_test(24, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
@@ -156,3 +156,6 @@ $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
         ->getWidgets('board_widget')),0,'Removing \'Registered user\' right : 0 board widgets visible now');     
 
+$t->comment('->getWidgetsList()');
+$t->is(count(Doctrine::getTable('MyPreferences')
+		->getWidgetsList(2)),1,'Get a list of all available widgets (0 like above), but 1 mandatory !') ;

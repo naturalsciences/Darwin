@@ -81,9 +81,10 @@ class MyPreferencesTable extends DarwinTable
 		$data = new Doctrine_Parser_Yml;
 		$array = $data->loadData($file);
 		foreach ($array as $widget => $array_values) {
+		   if($array_values['mandatory']) continue ; //mandatory widget have already at true, and we don't want it could be changed
 		   $q = Doctrine_Query::create()
-             ->update('MyPreferences p')
-		   ->set('p.is_available',($val==1?"true":"false")) 
+             ->update('MyPreferences p') 
+             ->set('p.is_available',($val==1?"true":"false")) 
 		   ->where('p.group_name = ?',$array_values['group_name'])
 		   ->andWhere('p.category = ?', $array_values['category'])
 		   ->execute() ;
@@ -110,6 +111,24 @@ class MyPreferencesTable extends DarwinTable
         ->andWhere($alias . '.category = ?', $category)
         ->andWhere('p.is_available = true') ;
     return $q;
+  }
+ 
+   public function getWidgetsList($level)
+  {
+  	$q = Doctrine_Query::create()
+            ->from('MyPreferences p')
+  		  ->where('p.user_ref = ?', $this->user_ref) ;
+     if ($level < 4) $q->andWhere('p.is_available = true') ;
+   	return $q->execute() ;	
+  }
+ 
+  public function getAvailableWidgets()
+  {
+  	$q = Doctrine_Query::create()
+            ->from('MyPreferences p')
+            ->where('p.is_available = true') 
+  		  ->Andwhere('p.user_ref = ?', $this->user_ref) ;
+   	return $q->execute() ;	
   }
 
   public function updateWidgetsOrder($widget_array, $col_num, $category)

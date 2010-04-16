@@ -7,7 +7,14 @@
   <form class="edition" action="<?php echo url_for('user/profile') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <table>
   <tbody>
-  <?php include_partial('profile', array('form' => $form)) ?>
+  <?php include_partial('profile', array('form' => $form, 'saved' => (isset($button)?true:false))) ?>
+  <?php if (isset($saved)) : ?>
+  <tr class="trusted_user_links">
+    <td colspan="2">
+	<a id="submit" href="<?php echo url_for('user/widget') ?>"><?php echo __('You can now edit your widgets');?></a>
+    </td>
+  </tr>
+  <?php endif ; ?>
 </tbody>
 <tfoot>
   <tr>

@@ -214,18 +214,25 @@ $browser->
 
   $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
 
-$nu = new Users() ;
-$nu->setFamilyName('Chambert') ;
-$nu->setGivenName('Yann') ;
-$nu->setGender('M') ;
-$nu->setDbUserType(1) ;
-$nu->setIsPhysical(true) ;
-$nu->save() ;
+$browser->
+  get('/user/new')->
+  with('response')->begin()->
+    isStatusCode(200)->
+    click('#submit', array('users' => array(
+      'db_user_type'  => 1,
+      'gender' => 'M',
+      'family_name' => 'Chambert',
+      'given_name' => 'Yann',
+      'is_physical' => true
+    )))
+  ->end() ;
+
 $uli = new UsersLoginInfos() ;
-$uli->setUserRef($nu->getId()) ;
+$uli->setUserRef(Doctrine::getTable("Users")->findOneByFamilyName('Chambert')->getId()) ;
 $uli->setUserName('ychambert') ;
 $uli->setPassword(sha1(sfConfig::get('app_salt').'toto'));
 $uli->save() ;
+$id = Doctrine::getTable("Users")->findOneByFamilyName('Chambert')->getId();
 
 $browser->get('account/logout')->
   with('response')->begin()->
@@ -248,3 +255,39 @@ $browser->
   with('response')->begin()->
     isStatusCode(404)->
   end();
+
+$browser->
+  info('Widget')->
+  get('/user/widget')->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('tbody[alt="board_widget"] tr',2)->
+    click('#submit', array('user_widget' => array(
+    'MyPreferences' => array(
+       0 => array(
+	    'category'  => 'specimen_widget',
+	    'group_name' => 'refCollection',
+	    'user_ref' => $id,
+	    'widget_choice' => 'opened',
+	    'title_perso' => 'Search',
+	    'mandatory' => true),
+       1 => array(
+	    'category'  => 'board_widget',
+	    'group_name' => 'savedSpecimens',
+	    'user_ref' => $id,
+	    'widget_choice' => 'opened',
+	    'title_perso' => 'Spec'),
+	  2 => array(
+	    'category'  => 'board_widget',
+	    'group_name' => 'savedSearch',
+	    'user_ref' => $id,
+	    'widget_choice' => 'opened',
+	    'title_perso' => 'Search'))
+    )))->
+  end()->
+  with('request')->begin()->
+    isParameter('module', 'user')->
+    isParameter('action', 'widget')->
+end();
+
+

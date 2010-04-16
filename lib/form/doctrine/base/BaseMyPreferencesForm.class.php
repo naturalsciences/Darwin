@@ -22,15 +22,9 @@ abstract class BaseMyPreferencesForm extends BaseFormDoctrine
       'col_num'      => new sfWidgetFormInputText(),
       'mandatory'    => new sfWidgetFormInputCheckbox(),
       'visible'      => new sfWidgetFormInputCheckbox(),
-<<<<<<< HEAD:lib/form/doctrine/base/BaseMyPreferencesForm.class.php
       'is_available' => new sfWidgetFormInputCheckbox(),
       'opened'       => new sfWidgetFormInputCheckbox(),
       'color'        => new sfWidgetFormTextarea(),
-=======
-      'opened'       => new sfWidgetFormInputCheckbox(),
-      'color'        => new sfWidgetFormTextarea(),
-      'is_available' => new sfWidgetFormInputCheckbox(),
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/form/doctrine/base/BaseMyPreferencesForm.class.php
       'icon_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'add_empty' => true)),
       'title_perso'  => new sfWidgetFormTextarea(),
     ));
@@ -43,15 +37,9 @@ abstract class BaseMyPreferencesForm extends BaseFormDoctrine
       'col_num'      => new sfValidatorInteger(array('required' => false)),
       'mandatory'    => new sfValidatorBoolean(array('required' => false)),
       'visible'      => new sfValidatorBoolean(array('required' => false)),
-<<<<<<< HEAD:lib/form/doctrine/base/BaseMyPreferencesForm.class.php
       'is_available' => new sfValidatorBoolean(array('required' => false)),
       'opened'       => new sfValidatorBoolean(array('required' => false)),
       'color'        => new sfValidatorString(array('required' => false)),
-=======
-      'opened'       => new sfValidatorBoolean(array('required' => false)),
-      'color'        => new sfValidatorString(array('required' => false)),
-      'is_available' => new sfValidatorBoolean(array('required' => false)),
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/form/doctrine/base/BaseMyPreferencesForm.class.php
       'icon_ref'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'required' => false)),
       'title_perso'  => new sfValidatorString(array('required' => false)),
     ));

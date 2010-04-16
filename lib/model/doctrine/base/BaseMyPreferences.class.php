@@ -15,7 +15,6 @@
  * @property boolean $is_available
  * @property boolean $opened
  * @property string $color
- * @property boolean $is_available
  * @property integer $icon_ref
  * @property string $title_perso
  * @property Users $User
@@ -28,15 +27,9 @@
  * @method integer       getColNum()       Returns the current record's "col_num" value
  * @method boolean       getMandatory()    Returns the current record's "mandatory" value
  * @method boolean       getVisible()      Returns the current record's "visible" value
-<<<<<<< HEAD:lib/model/doctrine/base/BaseMyPreferences.class.php
  * @method boolean       getIsAvailable()  Returns the current record's "is_available" value
  * @method boolean       getOpened()       Returns the current record's "opened" value
  * @method string        getColor()        Returns the current record's "color" value
-=======
- * @method boolean       getOpened()       Returns the current record's "opened" value
- * @method string        getColor()        Returns the current record's "color" value
- * @method boolean       getIsAvailable()  Returns the current record's "is_available" value
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/model/doctrine/base/BaseMyPreferences.class.php
  * @method integer       getIconRef()      Returns the current record's "icon_ref" value
  * @method string        getTitlePerso()   Returns the current record's "title_perso" value
  * @method Users         getUser()         Returns the current record's "User" value
@@ -48,15 +41,9 @@
  * @method MyPreferences setColNum()       Sets the current record's "col_num" value
  * @method MyPreferences setMandatory()    Sets the current record's "mandatory" value
  * @method MyPreferences setVisible()      Sets the current record's "visible" value
-<<<<<<< HEAD:lib/model/doctrine/base/BaseMyPreferences.class.php
  * @method MyPreferences setIsAvailable()  Sets the current record's "is_available" value
  * @method MyPreferences setOpened()       Sets the current record's "opened" value
  * @method MyPreferences setColor()        Sets the current record's "color" value
-=======
- * @method MyPreferences setOpened()       Sets the current record's "opened" value
- * @method MyPreferences setColor()        Sets the current record's "color" value
- * @method MyPreferences setIsAvailable()  Sets the current record's "is_available" value
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/model/doctrine/base/BaseMyPreferences.class.php
  * @method MyPreferences setIconRef()      Sets the current record's "icon_ref" value
  * @method MyPreferences setTitlePerso()   Sets the current record's "title_perso" value
  * @method MyPreferences setUser()         Sets the current record's "User" value
@@ -65,7 +52,7 @@
  * @package    darwin
  * @subpackage model
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: Builder.php 7380 2010-03-15 21:07:50Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class BaseMyPreferences extends sfDoctrineRecord
 {
@@ -106,7 +93,6 @@ abstract class BaseMyPreferences extends sfDoctrineRecord
              ));
         $this->hasColumn('is_available', 'boolean', null, array(
              'type' => 'boolean',
-             'notnull' => true,
              'default' => false,
              ));
         $this->hasColumn('opened', 'boolean', null, array(
@@ -117,10 +103,6 @@ abstract class BaseMyPreferences extends sfDoctrineRecord
         $this->hasColumn('color', 'string', null, array(
              'type' => 'string',
              'default' => '#5BAABD',
-             ));
-        $this->hasColumn('is_available', 'boolean', null, array(
-             'type' => 'boolean',
-             'default' => false,
              ));
         $this->hasColumn('icon_ref', 'integer', null, array(
              'type' => 'integer',

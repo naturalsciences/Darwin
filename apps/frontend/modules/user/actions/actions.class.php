@@ -16,6 +16,7 @@ class userActions extends DarwinActions
 	$this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
     $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type')));
   }
+  
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($this->user = Doctrine::getTable('Users')->find($request->getparameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
@@ -24,6 +25,7 @@ class userActions extends DarwinActions
     $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
     $old_db_user_type = $this->user->getDbUserType() ;
     $this->loadWidgets();
+    if ($request->getParameter('save') == 1) $this->saved = true ; 
     if($request->isMethod('post'))
     {
 	 $array = $request->getParameter('users');
@@ -81,7 +83,7 @@ class userActions extends DarwinActions
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
 	  }
-	  return $this->redirect('user/index');
+	  return $this->redirect('user/edit?id='.$user_id."&save=1");
       }
     }
   }
@@ -157,7 +159,39 @@ class userActions extends DarwinActions
 	$this->setTemplate('edit');
     }
   }
-
+  
+  public function executeWidget(sfWebRequest $request)
+  {
+   $id = $request->getparameter('id') ;
+   if (!$id) $id = Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getId() ;
+   else { 
+	$this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
+ 	$this->forward404Unless(Doctrine::getTable('Users')->find($id), sprintf('User does not exist (%s).', $id));
+   }
+   $widget = Doctrine::getTable('MyPreferences')->setUserRef($id)->getWidgetsList($this->getUser()->getAttribute('db_user_type')) ;
+   $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getAttribute('db_user_type')));
+   $this->level = $this->getUser()->getAttribute('db_user_type') ;
+   $this->loadWidgets();  
+   if($request->isMethod('post'))
+   {
+     $this->form->bind($request->getParameter('user_widget')) ;
+     if($this->form->isValid())
+     {
+     	$this->form->save();
+     	return $this->redirect('@homepage');
+     }
+   }
+   $this->form_pref = array();
+   foreach($this->form['MyPreferences'] as $keyword)
+   {	
+      $type = $keyword['category']->getValue();
+      if(!isset($this->form_pref[$type]))
+        $this->form_pref[$type] = array();
+      $this->form_pref[$type][] = $keyword;
+   }
+   $this->user = Doctrine::getTable("Users")->findUser($id) ;
+  }
+  
   public function executeProfile(sfWebRequest $request)
   {
     $this->user =  Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id') );
@@ -166,7 +200,7 @@ class userActions extends DarwinActions
 
 
     $this->loadWidgets();
-
+    if ($request->getParameter('save') == 1) $this->saved = true ;
     $old_people = $this->user->getPeopleId();
 
     $this->form = new ProfileForm($this->user,array('is_physical' => $this->user->getIsPhysical()));
@@ -177,14 +211,6 @@ class userActions extends DarwinActions
       {
 	  $this->form->updateObject();
 	    
-	  //If People Ref is changed
-	  if($this->form->getValue('people_id') != $old_people)
-	  {
-	    if($this->form->getValue('people_id') != 0)
-	      $this->form->getObject()->setApprovalLevel(1);
-	    else
-	      $this->form->getObject()->setApprovalLevel(0);
-	  }
 	  // Let's save the object
 	  $this->form->getObject()->save();
 
@@ -198,7 +224,7 @@ class userActions extends DarwinActions
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
 	  }
-	  return $this->redirect('user/profile');
+	  return $this->redirect('user/profile?save=1');
       }
     }
   }

@@ -7,17 +7,28 @@ class MyPreferences extends BaseMyPreferences
 {
   public static function getFileByRight($right)
   {
-     switch ($right) {
-     	case 'Encoder' : $file ='data/fixtures/encoderWidgetListPerScreen.yml' ; break ;
-     	case 'Collection manager' : $file ='data/fixtures/collManagerWidgetListPerScreen.yml' ; break ;
-		case 'Registered user' : $file='data/fixtures/regUserWidgetListPerScreen.yml' ; break ;
+     $file=sfConfig::get('sf_data_dir').'/widgets/' ; 
+  	switch ($right) {
+     	case 'Encoder' : $file .='encoderWidgetListPerScreen.yml' ; break ;
+     	case 'Collection manager' : $file .='collManagerWidgetListPerScreen.yml' ; break ;
+		case 'Registered user' : $file .='regUserWidgetListPerScreen.yml' ; break ;
 		default : return(0);
      }  
      return($file) ;  
   }
 
+  public function getWidgetField()
+  {
+        if ($this->getMandatory()) return('opened') ;
+        if (!$this->getIsAvailable()) return ('unused') ;
+  	   if ($this->getOpened()) return('opened') ;
+  	   if ($this->getVisible()) return('visible') ;
+  	   if ($this->getIsAvailable()) return('is_available') ;
+  }
+
   public function addWidget($options,$user_id = null)
   {
+  	// $this->fromArray($options)->save()  
   		$this->category = $options['category'] ;
 		$this->col_num = $options['col_num'] ;
           $this->user_ref = $user_id ;
@@ -27,6 +38,23 @@ class MyPreferences extends BaseMyPreferences
           $this->opened = $options['opened'] ;
           $this->visible = $options['visible'] ;
           $this->title_perso = $options['title_perso'] ;
+          if ($options['mandatory']) $this->is_available = true ;
           $this->save() ;
   }	
+  
+  public function getWidgetChoice()
+  {
+  	return $this->getWidgetField() ;
+  }
+  
+  public function setWidgetChoice($value)
+  {
+	$this->setOpened(false) ;
+	$this->setVisible(false) ;
+	$this->setIsAvailable(false) ;	
+	if ($this->getMandatory()) { $this->setOpened(true) ; $this->setVisible(true) ; $this->setIsAvailable(true) ; }
+  	if ($value == 'is_available') $this->setIsAvailable(true) ;	
+  	if ($value == 'visible'){ $this->setVisible(true) ; $this->setIsAvailable(true) ; }	 	
+  	if ($value == 'opened'){ $this->setOpened(true) ; $this->setVisible(true) ; $this->setIsAvailable(true) ; }
+  }
 }

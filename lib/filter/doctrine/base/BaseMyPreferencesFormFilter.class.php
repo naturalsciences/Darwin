@@ -17,15 +17,9 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
       'col_num'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'mandatory'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'visible'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-<<<<<<< HEAD:lib/filter/doctrine/base/BaseMyPreferencesFormFilter.class.php
       'is_available' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'opened'       => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'color'        => new sfWidgetFormFilterInput(),
-=======
-      'opened'       => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'color'        => new sfWidgetFormFilterInput(),
-      'is_available' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/filter/doctrine/base/BaseMyPreferencesFormFilter.class.php
       'icon_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'add_empty' => true)),
       'title_perso'  => new sfWidgetFormFilterInput(),
     ));
@@ -35,15 +29,9 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
       'col_num'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'mandatory'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'visible'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-<<<<<<< HEAD:lib/filter/doctrine/base/BaseMyPreferencesFormFilter.class.php
       'is_available' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'opened'       => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'color'        => new sfValidatorPass(array('required' => false)),
-=======
-      'opened'       => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'color'        => new sfValidatorPass(array('required' => false)),
-      'is_available' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/filter/doctrine/base/BaseMyPreferencesFormFilter.class.php
       'icon_ref'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Multimedia'), 'column' => 'id')),
       'title_perso'  => new sfValidatorPass(array('required' => false)),
     ));
@@ -72,15 +60,9 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
       'col_num'      => 'Number',
       'mandatory'    => 'Boolean',
       'visible'      => 'Boolean',
-<<<<<<< HEAD:lib/filter/doctrine/base/BaseMyPreferencesFormFilter.class.php
       'is_available' => 'Boolean',
       'opened'       => 'Boolean',
       'color'        => 'Text',
-=======
-      'opened'       => 'Boolean',
-      'color'        => 'Text',
-      'is_available' => 'Boolean',
->>>>>>> 14718673772fd2b24fae3e62c613e6bce80b9512:lib/filter/doctrine/base/BaseMyPreferencesFormFilter.class.php
       'icon_ref'     => 'ForeignKey',
       'title_perso'  => 'Text',
     );

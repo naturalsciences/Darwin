@@ -50,4 +50,4 @@
 	      <?php echo $form['birth_date']->renderError() ?>
 	      <?php echo $form['birth_date'] ?>
 	    </td>
-	  </tr>
+	  </tr> 
