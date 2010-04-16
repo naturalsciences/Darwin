@@ -6486,7 +6486,7 @@ BEGIN
 	  PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
 	END IF;
       ELSE
-	PERFORM fct_cpy_word('codes','full_code_indexed', NEW.name_ts);
+	PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
       END IF;
 
    END IF;
