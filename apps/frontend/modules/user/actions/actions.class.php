@@ -82,7 +82,7 @@ class userActions extends DarwinActions
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
 	  }
-	  return $this->redirect('user/edit?id='.$user_id."&save=1");
+	  return $this->redirect('user/edit?id='.$user_id);
       }
     }
   }
@@ -162,7 +162,11 @@ class userActions extends DarwinActions
   public function executeWidget(sfWebRequest $request)
   {
    $id = $request->getparameter('id') ;
-   if (!$id) $id = Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getId() ;
+   $url = "user/edit?id=".$id ;
+   if (!$id) {
+   	$id = Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getId() ;
+   	$url = "user/profile" ;
+   }
    else { 
 	$this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
  	$this->forward404Unless(Doctrine::getTable('Users')->find($id), sprintf('User does not exist (%s).', $id));
@@ -177,7 +181,7 @@ class userActions extends DarwinActions
      if($this->form->isValid())
      {
      	$this->form->save();
-     	return $this->redirect('@homepage');
+     	return $this->redirect($url);
      }
    }
    $this->form_pref = array();
@@ -222,7 +226,7 @@ class userActions extends DarwinActions
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
 	  }
-	  return $this->redirect('user/profile?save=1');
+	  return $this->redirect('user/profile');
       }
     }
   }

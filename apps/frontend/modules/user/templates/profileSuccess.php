@@ -1,4 +1,4 @@
-<?php slot('title', __('My Profile'));  ?>        
+<?php slot('title', __('My Profile'));  ?>       
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'users', 'eid' => $sf_user->getAttribute('db_user_id'))); ?>
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
