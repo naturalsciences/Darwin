@@ -119,6 +119,7 @@ class MyPreferencesTable extends DarwinTable
             ->from('MyPreferences p')
   		  ->where('p.user_ref = ?', $this->user_ref) ;
      if ($level < 4) $q->andWhere('p.is_available = true') ;
+     $q->orderBy('category,group_name');
    	return $q->execute() ;	
   }
  

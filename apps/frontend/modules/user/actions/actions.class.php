@@ -24,7 +24,7 @@ class userActions extends DarwinActions
     $is_physical = Doctrine::getTable('Users')->find($request->getparameter('id'))->getIsPhysical() ;
     $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
     $old_db_user_type = $this->user->getDbUserType() ;
-    $this->loadWidgets();
+    $this->loadWidgets($this->user->getId());
     if($request->isMethod('post'))
     {
 	 $array = $request->getParameter('users');
@@ -154,7 +154,7 @@ class userActions extends DarwinActions
         $error = new sfValidatorError(new savedValidator(),$e->getMessage());
 	$this->form = new UserForm($user);
 	$this->form->getErrorSchema()->addError($error); 
-	$this->loadWidgets();
+	//$this->loadWidgets();
 	$this->setTemplate('edit');
     }
   }
@@ -173,8 +173,7 @@ class userActions extends DarwinActions
    }
    $widget = Doctrine::getTable('MyPreferences')->setUserRef($id)->getWidgetsList($this->getUser()->getAttribute('db_user_type')) ;
    $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getAttribute('db_user_type')));
-   $this->level = $this->getUser()->getAttribute('db_user_type') ;
-   $this->loadWidgets();  
+   $this->level = $this->getUser()->getAttribute('db_user_type') ; 
    if($request->isMethod('post'))
    {
      $this->form->bind($request->getParameter('user_widget')) ;
@@ -202,7 +201,7 @@ class userActions extends DarwinActions
     $this->forward404Unless($this->user);
 
 
-    $this->loadWidgets();
+    $this->loadWidgets($this->user->getId());
     $old_people = $this->user->getPeopleId();
 
     $this->form = new ProfileForm($this->user,array('is_physical' => $this->user->getIsPhysical()));

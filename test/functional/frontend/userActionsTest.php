@@ -264,13 +264,12 @@ $browser->
     checkElement('tbody[alt="board_widget"] tr',2)->
     click('#submit', array('user_widget' => array(
     'MyPreferences' => array(
-       0 => array(
-	    'category'  => 'specimen_widget',
-	    'group_name' => 'refCollection',
+	  0 => array(
+	    'category'  => 'board_widget',
+	    'group_name' => 'savedSearch',
 	    'user_ref' => $id,
 	    'widget_choice' => 'opened',
-	    'title_perso' => 'Search',
-	    'mandatory' => true),
+	    'title_perso' => 'Search'),
        1 => array(
 	    'category'  => 'board_widget',
 	    'group_name' => 'savedSpecimens',
@@ -278,11 +277,12 @@ $browser->
 	    'widget_choice' => 'opened',
 	    'title_perso' => 'Spec'),
 	  2 => array(
-	    'category'  => 'board_widget',
-	    'group_name' => 'savedSearch',
+	    'category'  => 'specimen_widget',
+	    'group_name' => 'refCollection',
 	    'user_ref' => $id,
 	    'widget_choice' => 'opened',
-	    'title_perso' => 'Search'))
+	    'title_perso' => 'Search',
+	    'mandatory' => true))
     )))->
   end()->
   with('request')->begin()->
