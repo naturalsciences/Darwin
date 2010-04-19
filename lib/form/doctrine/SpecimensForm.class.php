@@ -220,6 +220,14 @@ class SpecimensForm extends BaseSpecimensForm
         'expanded' => true,
     ));
 
+    /* Codes sub form */
+
+    $this->embedRelation('SpecimensCodes');
+    
+    $subForm = new sfForm();
+    $this->embedForm('newCode',$subForm);
+
+
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
                                          'host_taxon_ref' => 'Host taxon'
@@ -275,5 +283,58 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
+  }
+
+  public function addCodes($num)
+  {
+      $val = new SpecimensCodes();
+      $val->Specimens = $this->getObject();
+      $form = new SpecimensCodesForm($val);
+  
+      $this->embeddedForms['newCode']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newCode', $this->embeddedForms['newCode']);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['newCode']))
+    {
+	foreach($taintedValues['newCode'] as $key=>$newVal)
+	{
+	  if (!isset($this['newCode'][$key]))
+	  {
+	    $this->addCodes($key);
+	  }
+	}
+    }
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    if (null === $forms)
+    {
+	$value = $this->getValue('newCode');
+	foreach($this->embeddedForms['newCode']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
+	  {
+	    unset($this->embeddedForms['newCode'][$name]);
+	  }
+	}
+
+	$value = $this->getValue('SpecimensCodes');
+	foreach($this->embeddedForms['SpecimensCodes']->getEmbeddedForms() as $name => $form)
+	{
+	  
+	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['SpecimensCodes'][$name]);
+	  }
+	}
+    }
+    return parent::saveEmbeddedForms($con, $forms);
   }
 }

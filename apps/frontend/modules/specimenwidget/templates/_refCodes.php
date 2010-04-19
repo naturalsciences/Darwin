@@ -37,11 +37,17 @@
     </tr>
   </thead>
   <tbody>
+    <?php foreach($form['SpecimensCodes'] as $form_value):?>
+      <?php include_partial('spec_codes', array('form' => $form_value));?>
+    <?php endforeach;?>
+    <?php foreach($form['newCode'] as $form_value):?>
+      <?php include_partial('spec_codes', array('form' => $form_value));?>
+    <?php endforeach;?>
   </tbody>
   <tfoot>
     <tr>
       <td colspan='8' class='add_value'>
-        <a href="<?php echo url_for('codes/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value"><?php echo __('Add Code');?></a>
+        <a href="<?php echo url_for('specimen/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value"><?php echo __('Add Code');?></a>
       </td>
     </tr>
   </tfoot>

@@ -41,6 +41,7 @@
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimensAccompanying
+ * @property Doctrine_Collection $SpecimensCodes
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method integer             getCollectionRef()         Returns the current record's "collection_ref" value
@@ -78,6 +79,7 @@
  * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenIndividuals()   Returns the current record's "SpecimenIndividuals" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
+ * @method Doctrine_Collection getSpecimensCodes()        Returns the current record's "SpecimensCodes" collection
  * @method Specimens           setId()                    Sets the current record's "id" value
  * @method Specimens           setCollectionRef()         Sets the current record's "collection_ref" value
  * @method Specimens           setExpeditionRef()         Sets the current record's "expedition_ref" value
@@ -114,6 +116,7 @@
  * @method Specimens           setSpecimens()             Sets the current record's "Specimens" collection
  * @method Specimens           setSpecimenIndividuals()   Sets the current record's "SpecimenIndividuals" collection
  * @method Specimens           setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
+ * @method Specimens           setSpecimensCodes()        Sets the current record's "SpecimensCodes" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -270,5 +273,9 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasMany('SpecimensAccompanying', array(
              'local' => 'id',
              'foreign' => 'specimen_ref'));
+
+        $this->hasMany('SpecimensCodes', array(
+             'local' => 'id',
+             'foreign' => 'record_id'));
     }
 }
