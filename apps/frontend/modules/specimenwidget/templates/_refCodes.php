@@ -1,4 +1,4 @@
-<table>
+<table  class="property_values">
   <thead>
     <tr>
       <th>
@@ -19,24 +19,25 @@
       <th>
         <?php echo __('Suffix'); ?>
       </th>
-      <th colspan='2'>
-        <?php echo __('Date'); ?>
+      <th>
       </th>
     </tr>
     <tr>
       <th colspan='2'>
       </th>
-      <th>
+      <th class="reseted">
+        <?php echo $form['prefix_separator'];?>
       </th>
       <th>
       </th>
-      <th>
+      <th class="reseted">
+        <?php echo $form['suffix_separator'];?>
       </th>
       <th colspan='3'>
       </th>
     </tr>
   </thead>
-  <tbody class='property_values'>
+  <tbody class="codes">
     <?php foreach($form['SpecimensCodes'] as $form_value):?>
       <?php include_partial('spec_codes', array('form' => $form_value));?>
     <?php endforeach;?>
@@ -46,9 +47,22 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan='8' class='add_value'>
-        <a href="<?php echo url_for('specimen/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value"><?php echo __('Add Code');?></a>
+      <td colspan='8'>
+        <div class="add_code">
+          <a href="<?php echo url_for('specimen/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value"><?php echo __('Add Code');?></a>
+        </div>
       </td>
     </tr>
   </tfoot>
 </table>
+<script  type="text/javascript">
+$(document).ready(function () {
+
+    $('.clear_prop').live('click', clearPropertyValue);
+
+    $('#add_prop_value').click(addPropertyValue);
+    
+    $('select[id$=\"_prefix_separator\"]').change(updateVals('_prefix_separator', $(this).val()));
+
+});
+</script>

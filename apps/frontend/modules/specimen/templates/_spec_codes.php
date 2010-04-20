@@ -1,10 +1,15 @@
+  <?php if($form->hasError()): ?>
+  <tr>
+    <td colspan="8">
+      <?php echo $form->renderError();?>
+    </td>
+  </tr>
+  <?php endif;?>
   <tr>
     <td><?php echo $form['id'];?>
-      <?php echo $form['code_category']->renderError(); ?>
       <?php echo $form['code_category'];?>
     </td>
     <td>
-      <?php echo $form['code']->renderError(); ?>
       <?php echo $form['code_prefix'];?>
     </td>
     <td>
@@ -19,7 +24,7 @@
     <td>
       <?php echo $form['code_suffix'];?>
     </td>
-    <td colspan = '2' class="widget_row_delete">
+    <td class="widget_row_delete">
       <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?>
     </td>    
   </tr>

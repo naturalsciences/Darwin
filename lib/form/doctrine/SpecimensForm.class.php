@@ -227,6 +227,24 @@ class SpecimensForm extends BaseSpecimensForm
     $subForm = new sfForm();
     $this->embedForm('newCode',$subForm);
 
+    $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimensCodes',
+        'table_method' => 'getDistinctPrefixSep',
+        'method' => 'getCodePrefixSeparator',
+        'key_method' => 'getCodePrefixSeparator',
+        'add_empty' => true
+    ));
+    $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
+
+    $this->widgetSchema['suffix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimensCodes',
+        'table_method' => 'getDistinctSuffixSep',
+        'method' => 'getCodeSuffixSeparator',
+        'key_method' => 'getCodeSuffixSeparator',
+        'add_empty' => true
+    ));
+    $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
+
 
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
@@ -327,7 +345,6 @@ class SpecimensForm extends BaseSpecimensForm
 	$value = $this->getValue('SpecimensCodes');
 	foreach($this->embeddedForms['SpecimensCodes']->getEmbeddedForms() as $name => $form)
 	{
-	  
 	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
 	  {
 	    $form->getObject()->delete();

@@ -54,9 +54,9 @@ class specimenActions extends DarwinActions
     $code = null;
 
     if($request->hasParameter('id') && $request->getParameter('id'))
-      $code = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
 
-    $form = new SpecimensForm($code);
+    $form = new SpecimensForm($spec);
     $form->addCodes($number);
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
