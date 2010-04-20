@@ -26,17 +26,17 @@ class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
   {
       $this->getChoices();
       $widget = '<div id="'.$this->generateId($name).'_parent" class="complete_widget">';
-
+      $class = (!isset($attributes['class']))?'':$attributes['class'];
       if( array_key_exists($value,$this->choices))
       {
-	$widget .= $this->renderTag('input', array( 'type' => 'text', 'id' => $id = $this->generateId($name).'_input', 'class' => 'hidden'));
+	$widget .= $this->renderTag('input', array( 'type' => 'text', 'id' => $id = $this->generateId($name).'_input', 'class' => 'hidden ' . $class ));
 	$widget .= parent::render($name, $value, $attributes, $errors);
 	$add_class='';
 	$pick_class=' hidden';
       }
       else
       {
-	$widget .= $this->renderTag('input', array( 'type' => 'text', 'id' => $id = $this->generateId($name).'_input', 'value' => $value, 'name'=> $name));
+	$widget .= $this->renderTag('input', array( 'type' => 'text', 'id' => $id = $this->generateId($name).'_input', 'value' => $value, 'name'=> $name, 'class'=>$class));
 	$widget .= parent::render('', $value, array_merge(array('class'=>'hidden'),$attributes), $errors);
 	$add_class=' hidden';
 	$pick_class='';

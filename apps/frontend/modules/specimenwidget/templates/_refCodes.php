@@ -11,7 +11,7 @@
         <?php echo __('sep.'); ?>
       </th>
       <th>
-        <?php echo __('Numeric code'); ?>
+        <?php echo __('Num. code'); ?>
       </th>
       <th>
         <?php echo __('sep.'); ?>
@@ -36,7 +36,7 @@
       </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class='property_values'>
     <?php foreach($form['SpecimensCodes'] as $form_value):?>
       <?php include_partial('spec_codes', array('form' => $form_value));?>
     <?php endforeach;?>

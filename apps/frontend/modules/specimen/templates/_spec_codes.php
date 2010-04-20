@@ -3,12 +3,18 @@
       <?php echo $form['code_category']->renderError(); ?>
       <?php echo $form['code_category'];?>
     </td>
-    <td colspan = '2'>
+    <td>
       <?php echo $form['code']->renderError(); ?>
       <?php echo $form['code_prefix'];?>
     </td>
-    <td colspan = '2'>
+    <td>
+      <?php echo $form['code_prefix_separator'];?>
+    </td>
+    <td>
       <?php echo $form['code'];?>
+    </td>
+    <td>
+      <?php echo $form['code_suffix_separator'];?>
     </td>
     <td>
       <?php echo $form['code_suffix'];?>

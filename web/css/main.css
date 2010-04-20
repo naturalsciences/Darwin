@@ -271,6 +271,16 @@ input[type="text"].xsmall_size
   width:20px;
 }
 
+input[type="text"].vvsmall_size
+{
+  width:30px;
+}
+
+input[type="text"].vsmall_size
+{
+  width:75px;
+}
+
 input[type="text"].small_size
 {
   width:120px;
