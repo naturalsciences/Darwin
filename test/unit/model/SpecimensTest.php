@@ -6,6 +6,7 @@ $toDate = new FuzzyDateTime('2009/12/31', 32);
 
 $collection = Doctrine::getTable('Collections')->findOneByName('Vertebrates');
 $specimen = new Specimens();
+$specimen->setId(1000) ;
 $specimen->setCollectionRef($collection['id']);
 $specimen->setAcquisitionDate($toDate);
 $specimen->save();

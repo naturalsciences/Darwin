@@ -22,7 +22,7 @@ $t->is(count(Doctrine::getTable('MyPreferences')
         ->getWidgets('board_widget')),4,'Get all board widget');
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
-        ->getWidgets('specimen_widget')),14,'Get all specimen widget');
+        ->getWidgets('specimen_widget')),15,'Get all specimen widget');
 
 $t->comment('->changeWidgetStatus()');
 
@@ -141,7 +141,7 @@ $q = Doctrine_Query::create()
     ->from('MyPreferences p')
     ->Where('p.user_ref = ?', $userEvil)
     ->execute();
-$t->is($q->count(),65,'Now Root has his 65 widgets') ; 
+$t->is($q->count(),72,'Now Root has his 72 widgets') ; 
 
 Doctrine::getTable('Mypreferences')->setUserRef($userEvil)->setWidgets('Registered user',true) ;
 
