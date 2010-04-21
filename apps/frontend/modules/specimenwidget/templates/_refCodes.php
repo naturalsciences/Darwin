@@ -24,6 +24,7 @@
     </tr>
     <tr>
       <th colspan='2'>
+        <?php echo $form['code'];?>
       </th>
       <th class="reseted">
         <?php echo $form['prefix_separator'];?>

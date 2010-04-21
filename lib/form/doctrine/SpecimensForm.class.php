@@ -239,6 +239,7 @@ class SpecimensForm extends BaseSpecimensForm
     ));
     $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
+    $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
@@ -290,6 +291,7 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+    $this->validatorSchema['code'] = new sfValidatorPass();
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
@@ -325,7 +327,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-    if(isset($taintedValues['newCode']))
+    if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
     {
 	foreach($taintedValues['newCode'] as $key=>$newVal)
 	{
@@ -335,12 +337,19 @@ class SpecimensForm extends BaseSpecimensForm
 	  }
 	}
     }
+
+    if(!isset($taintedValues['code']))
+    {
+      $this->offsetUnset('SpecimensCodes');
+      unset($taintedValues['SpecimensCodes']);
+    }
+
     parent::bind($taintedValues, $taintedFiles);
   }
 
   public function saveEmbeddedForms($con = null, $forms = null)
   {
-    if (null === $forms)
+    if (null === $forms && $this->getValue('SpecimensCodes'))
     {
 	$value = $this->getValue('newCode');
 	foreach($this->embeddedForms['newCode']->getEmbeddedForms() as $name => $form)
@@ -350,7 +359,6 @@ class SpecimensForm extends BaseSpecimensForm
 	    unset($this->embeddedForms['newCode'][$name]);
 	  }
 	}
-
 	$value = $this->getValue('SpecimensCodes');
 	foreach($this->embeddedForms['SpecimensCodes']->getEmbeddedForms() as $name => $form)
 	{
