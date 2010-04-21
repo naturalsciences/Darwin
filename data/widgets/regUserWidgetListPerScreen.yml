@@ -16,3 +16,12 @@ bw2:
    opened: false
    visible: true
    title_perso: My saved specimens
+bw3:
+   col_num: 1
+   category: users_widget
+   group_name: info
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: User information

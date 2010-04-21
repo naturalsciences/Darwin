@@ -226,13 +226,16 @@ $browser->
       'is_physical' => true
     )))
   ->end() ;
-
-$uli = new UsersLoginInfos() ;
-$uli->setUserRef(Doctrine::getTable("Users")->findOneByFamilyName('Chambert')->getId()) ;
-$uli->setUserName('ychambert') ;
-$uli->setPassword(sha1(sfConfig::get('app_salt').'toto'));
-$uli->save() ;
 $id = Doctrine::getTable("Users")->findOneByFamilyName('Chambert')->getId();
+$browser->
+  get('user/loginInfo?user_ref='.$id)->
+  with('response')->begin()->
+    isStatusCode(200)->
+    click('#submit',array('users_login_infos' => array(
+       'login_type' => 'local',
+       'user_name' => 'ychambert',
+       'new_password' => 'toto',
+       'confirm_password' => 'toto')))-> end();
 
 $browser->get('account/logout')->
   with('response')->begin()->
@@ -290,4 +293,7 @@ $browser->
     isParameter('action', 'widget')->
 end();
 
-
+$browser->
+  get('user/loginInfo?user_ref='.$id)->
+  with('response')->begin()->
+    isStatusCode(404)->info('users ychambert is not allowed to access to this page')->end() ;

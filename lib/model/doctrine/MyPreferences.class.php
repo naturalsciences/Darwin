@@ -28,7 +28,6 @@ class MyPreferences extends BaseMyPreferences
 
   public function addWidget($options,$user_id = null)
   {
-  	// $this->fromArray($options)->save()  
   		$this->category = $options['category'] ;
 		$this->col_num = $options['col_num'] ;
           $this->user_ref = $user_id ;

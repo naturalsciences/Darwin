@@ -673,6 +673,16 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Addresses
+    u1wuse4:
+        User: u1
+        col_num: 1
+        category: users_widget
+        group_name: info
+        order_by: 4
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Login Info        
     u1wgtu1:
         User: u1
         col_num: 1

@@ -28,10 +28,10 @@ class DarwinActions extends sfActions
     $this->caller_id = (!$request->hasParameter('caller_id'))?'':$request->getParameter('caller_id');
   }
 
-  protected function loadWidgets()
+  protected function loadWidgets($id = null)
   {
     $this->__set('widgetCategory',$this->widgetCategory);
-
+    if($id == null) $id = $this->getUser()->getAttribute('db_user_id');
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->getWidgets($this->widgetCategory);

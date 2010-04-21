@@ -15,4 +15,14 @@ class UsersLoginInfosTable extends DarwinTable
     }
     return $q->execute();
   }
+  
+  
+  public function getPasswordByType($user_id, $type)
+  {
+  	$q = Doctrine_Query::create()
+            ->from('UsersLoginInfos u')
+            ->andWhere('u.user_ref = ?', $user_id)
+            ->andWhere('u.login_type = ?', $type); 
+	return $q->fetchOne() ;  
+  }
 }

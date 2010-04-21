@@ -1,0 +1,67 @@
+<?php include_javascripts_for_form($form) ?>
+<?php slot('title',__('Add a new login'));  ?>     
+<div id="login_info_screen">
+<form class="edition qtiped_form" action="<?php echo url_for('user/loginInfo?user_ref='.$sf_request->getParameter('user_ref') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="login_info_form">
+<?php echo $form['user_ref'];?>
+<table>
+  <tbody>
+    <tr>
+        <td colspan="2">
+          <?php if(!$form->getObject()->isNew()) : ?>
+          	<?php echo $form['id'] ; ?>
+          <?php endif ; ?>
+          <?php echo $form->renderGlobalErrors() ?>
+        </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['login_type']->renderLabel();?></th>
+      <td>
+        <?php if(! $form->getObject()->isNew()) : ?>
+              <?php echo $form['login_type']->getValue() ?>
+        <?php endif ; ?>
+        <?php echo $form['login_type']->renderError(); ?>
+    	   <?php echo $form['login_type'];?>        
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['user_name']->renderLabel();?></th>
+      <td>
+        <?php echo $form['user_name']->renderError(); ?>
+        <?php echo $form['user_name'];?>
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['new_password']->renderLabel();?></th>
+      <td>
+        <?php echo $form['new_password']->renderError(); ?>
+        <?php echo $form['new_password'];?>
+      </td>
+    </tr>
+    <tr>
+      <th><?php echo $form['confirm_password']->renderLabel();?></th>
+      <td>
+        <?php echo $form['confirm_password']->renderError(); ?>
+        <?php echo $form['confirm_password'];?>
+      </td>
+    </tr>    
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">
+        <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
+        <?php if(! $form->getObject()->isNew()):?>
+	   <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=users_login_infos&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+	     <?php echo __('Delete');?>
+	   </a>
+	   <input id="submit" type="submit" value="<?php echo __('Edit');?>" />
+	   <?php else :?>
+        <input id="submit" type="submit" value="<?php echo __('Save');?>" />
+        <?php endif;?>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+</form>
+
+</div>

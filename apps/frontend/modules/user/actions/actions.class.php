@@ -20,17 +20,17 @@ class userActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($this->user = Doctrine::getTable('Users')->find($request->getparameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
-    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
+    $this->forward404Unless($this->db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
     $is_physical = Doctrine::getTable('Users')->find($request->getparameter('id'))->getIsPhysical() ;
     $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "is_physical" => $is_physical));
     $old_db_user_type = $this->user->getDbUserType() ;
-    $this->loadWidgets();
+    $this->user_id = $request->getParameter('id') ;
+    $this->loadWidgets($this->user_id);
     if($request->isMethod('post'))
     {
 	 $array = $request->getParameter('users');
       $this->form->bind($array);
 	 $new_db_user_type = $array['db_user_type'] ;
-	 $user_id = $request->getParameter('id') ;
       if($this->form->isValid())
       {
 	  $this->form->updateObject();
@@ -45,13 +45,13 @@ class userActions extends DarwinActions
 		  switch ($old_db_user_type)
 		  {
 		  	case 8: if ($new_db_user_type > 2) break ; // for now an admin and a CM have the same widget
-		  	        if ($new_db_user_type > 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',false) ; 
-		  	        if ($new_db_user_type == 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',false) ; 
+		  	        if ($new_db_user_type > 1) Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Collection manager',false) ; 
+		  	        if ($new_db_user_type == 1) Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Encoder',false) ; 
 		  	        break ;
-		  	case 4: if ($new_db_user_type > 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',false) ; 
-		  	        if ($new_db_user_type == 1) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',false) ; 
+		  	case 4: if ($new_db_user_type > 1) Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Collection manager',false) ; 
+		  	        if ($new_db_user_type == 1) Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Encoder',false) ; 
 		  	        break ;
-		  	case 2: Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',false) ; 
+		  	case 2: Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Encoder',false) ; 
 		  	        break ;
 		  	default: break ;
 		  }
@@ -62,10 +62,10 @@ class userActions extends DarwinActions
 		   // widget to add
 		  switch ($old_db_user_type)
 		  {
-		  	case 1: Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Encoder',true) ; 
-		  	        if ($new_db_user_type > 2) Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',true) ; 
+		  	case 1: Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Encoder',true) ; 
+		  	        if ($new_db_user_type > 2) Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Collection manager',true) ; 
 		  	        break ;
-		  	case 2: Doctrine::getTable('MyPreferences')->setUserRef($user_id)->setWidgets('Collection manager',true) ; 
+		  	case 2: Doctrine::getTable('MyPreferences')->setUserRef($this->user_id)->setWidgets('Collection manager',true) ; 
 		  	        break ;
 		  	default: break ;
 		  }
@@ -82,7 +82,7 @@ class userActions extends DarwinActions
             $login_infos[0]->setPassword(sha1(sfConfig::get('app_salt').$this->form->getValue('password')));
 	    $login_infos[0]->save();
 	  }
-	  return $this->redirect('user/edit?id='.$user_id);
+	  return $this->redirect('user/edit?id='.$this->user_id);
       }
     }
   }
@@ -199,8 +199,7 @@ class userActions extends DarwinActions
     $this->user =  Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id') );
     $this->login = Doctrine::getTable('UsersLoginInfos')->findOneByUserRef( $this->getUser()->getAttribute('db_user_id'));
     $this->forward404Unless($this->user);
-
-
+    $this->db_user_type = $this->user->getDbUserType() ;
     $this->loadWidgets();
     $old_people = $this->user->getPeopleId();
 
@@ -327,6 +326,34 @@ class userActions extends DarwinActions
         $form->getErrorSchema()->addError($error);
       }
     }
+  }
+
+  public function executeLoginInfo(sfWebRequest $request)
+  {
+     $this->forward404Unless($this->user = Doctrine::getTable('Users')->find($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
+    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));  
+	$this->loginInfo = Doctrine::getTable('UsersLoginInfos')->find($request->getParameter('id'));
+	if( ! $this->loginInfo )
+	{
+		$this->loginInfo = new UsersLoginInfos() ;
+		$this->loginInfo->setUserRef($request->getParameter('user_ref')) ;
+	}
+	$this->form = new UsersLoginInfosForm($this->loginInfo);
+	if($request->isMethod('post'))
+	{
+    	     $this->form->bind($request->getParameter('users_login_infos'));
+		if($this->form->isValid())
+		{
+		  try{
+		    $this->form->save();
+		  }
+		  catch(Exception $e)
+		  {
+		    return $this->renderText($e->getMessage());
+		  }
+		  return $this->renderText('ok');
+		}
+	}
   }
 
   public function executeLang(sfWebRequest $request)

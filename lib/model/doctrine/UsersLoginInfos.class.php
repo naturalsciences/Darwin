@@ -5,4 +5,17 @@
  */
 class UsersLoginInfos extends BaseUsersLoginInfos
 {
+  protected function addLoginInfo($user)
+  {
+     $this->loadDataFromArray($user)->save();
+/*     $this->user_ref = $user->getId() ;
+     $this->login_type = $user->getLoginType();
+    	$this->user_name = $user->getFamilyName() ;
+     $this->save() 	;*/
+  }
+  
+  public function setNewPassword($values)
+  {
+  	if($values) $this->setPassword(sha1(sfConfig::get('app_salt').$values))  ;
+  }
 }

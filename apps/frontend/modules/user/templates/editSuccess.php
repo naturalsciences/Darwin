@@ -63,4 +63,10 @@ $('.hide_value').click(function(){
   $('.display_value').show();
 });
 </script>
+  <?php include_partial('widgets/screen', array(
+	'widgets' => $widgets,
+	'category' => 'userswidget',
+	'columns' => 1,
+	'options' => array('eid' => $user_id, 'table' => 'users')
+	)); ?>
 </div>

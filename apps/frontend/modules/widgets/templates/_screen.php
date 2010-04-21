@@ -17,7 +17,7 @@ if(!isset($columns)) $columns = 1;
 
     <?php include_partial('widgets/wlayout', array(
 	'widget' => $widget->getGroupName(),
-        'title' => $widget->getTitlePerso(),
+     'title' => $widget->getTitlePerso(),
 	'is_opened' => $widget->getOpened(),
 	'category' => $category,
 	'options' => $options,
