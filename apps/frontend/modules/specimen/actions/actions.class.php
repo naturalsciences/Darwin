@@ -12,42 +12,6 @@ class specimenActions extends DarwinActions
 {
   protected $widgetCategory = 'specimen_widget';
 
-/*  public function executeAdd(sfWebRequest $request)
-  {
-    $this->vernacularnames = null;
-    if($request->hasParameter('rid'))
-    {
-      $this->vernacularnames = Doctrine::getTable('ClassVernacularNames')->findExcept($request->getParameter('rid'));
-    }
-
-    if(! $this->vernacularnames)
-    {
-     $this->vernacularnames = new ClassVernacularNames();
-     $this->vernacularnames->setRecordId($request->getParameter('id'));
-     $this->vernacularnames->setReferencedRelation($request->getParameter('table'));
-    }
-    $this->form = new ClassVernacularNamesForm($this->vernacularnames);
-    
-    if($request->isMethod('post'))
-    {
-	$this->form->bind($request->getParameter('class_vernacular_names'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	    $this->form->getObject()->refreshRelated();
-	    $this->form = new ClassVernacularNamesForm($this->form->getObject()); //Ugly refresh
-	    return $this->renderText('ok');
-	  }
-	  catch(Exception $e)
-	  {
-            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-            $this->form->getErrorSchema()->addError($error); 
-	  }
-	}
-    }
-  }*/
-  
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
@@ -55,9 +19,11 @@ class specimenActions extends DarwinActions
 
     if($request->hasParameter('id') && $request->getParameter('id'))
       $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
+    
+    $collectionId = $request->getParameter('collection_id', null);
 
     $form = new SpecimensForm($spec);
-    $form->addCodes($number);
+    $form->addCodes($number, $collectionId);
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
 

@@ -12,6 +12,8 @@ class SpecimensCodesForm extends BaseSpecimensCodesForm
   public function configure()
   {
 
+    $this->useFields(array('id', 'code_category', 'code_prefix', 'code_prefix_separator', 'code', 'code_suffix', 'code_suffix_separator', 'code_date'));
+
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
@@ -19,9 +21,8 @@ class SpecimensCodesForm extends BaseSpecimensCodesForm
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);
-
-    $this->useFields(array('id', 'code_category', 'code_prefix', 'code_prefix_separator', 'code', 'code_suffix', 'code_suffix_separator', 'code_date'));
     $choices = array('main'=> 'Main', 'secondary' => 'Secondary', 'temporary' => 'Temporary') ;
+
     $this->widgetSchema['code_category'] = new sfWidgetFormChoice(array(
         'choices' => $choices
       ));

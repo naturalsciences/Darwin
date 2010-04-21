@@ -60,9 +60,33 @@ $(document).ready(function () {
 
     $('.clear_prop').live('click', clearPropertyValue);
 
-    $('#add_prop_value').click(addPropertyValue);
+    $('#add_prop_value').click(function()
+    {
+        $.ajax(
+        {
+          type: "GET",
+          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
+          success: function(html)
+          {
+            $('.property_values tbody').append(html);
+          }
+        });
+        return false;
+    });
     
-    $('select[id$=\"_prefix_separator\"]').change(updateVals('_prefix_separator', $(this).val()));
+    $('select#specimen_prefix_separator').change(function()
+    {
+      parent = $(this).closest('table');
+      $(parent).find('tbody select[id$=\"_prefix_separator\"]').val($(this).val());
+    }
+    );
+
+    $('select#specimen_suffix_separator').change(function()
+    {
+      parent = $(this).closest('table');
+      $(parent).find('tbody select[id$=\"_suffix_separator\"]').val($(this).val());
+    }
+    );
 
 });
 </script>

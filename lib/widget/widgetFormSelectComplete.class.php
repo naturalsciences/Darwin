@@ -37,7 +37,7 @@ class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
       else
       {
 	$widget .= $this->renderTag('input', array( 'type' => 'text', 'id' => $id = $this->generateId($name).'_input', 'value' => $value, 'name'=> $name, 'class'=>$class));
-	$widget .= parent::render('', $value, array_merge(array('class'=>'hidden'),$attributes), $errors);
+	$widget .= parent::render('', $value, array('class'=>'hidden'), $errors);
 	$add_class=' hidden';
 	$pick_class='';
       }

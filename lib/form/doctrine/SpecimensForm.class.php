@@ -34,6 +34,8 @@ class SpecimensForm extends BaseSpecimensForm
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);
+    $prefixes = Doctrine::getTable('SpecimensCodes')->getDistinctSepVals();
+    $suffixes = Doctrine::getTable('SpecimensCodes')->getDistinctSepVals(false);
 
     /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
@@ -227,21 +229,13 @@ class SpecimensForm extends BaseSpecimensForm
     $subForm = new sfForm();
     $this->embedForm('newCode',$subForm);
 
-    $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
-        'model' => 'SpecimensCodes',
-        'table_method' => 'getDistinctPrefixSep',
-        'method' => 'getCodePrefixSeparator',
-        'key_method' => 'getCodePrefixSeparator',
-        'add_empty' => true
+    $this->widgetSchema['prefix_separator'] = new sfWidgetFormChoice(array(
+        'choices' => $prefixes
     ));
     $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
-    $this->widgetSchema['suffix_separator'] = new sfWidgetFormDoctrineChoice(array(
-        'model' => 'SpecimensCodes',
-        'table_method' => 'getDistinctSuffixSep',
-        'method' => 'getCodeSuffixSeparator',
-        'key_method' => 'getCodeSuffixSeparator',
-        'add_empty' => true
+    $this->widgetSchema['suffix_separator'] = new sfWidgetFormChoice(array(
+        'choices' => $suffixes
     ));
     $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
@@ -293,7 +287,10 @@ class SpecimensForm extends BaseSpecimensForm
         'choices' => array(0,1),
         'required' => false,
         ));
-        
+
+    $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
+    $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
             array(),
@@ -303,12 +300,24 @@ class SpecimensForm extends BaseSpecimensForm
     $this->setDefault('accuracy', 1);
   }
 
-  public function addCodes($num)
+  public function addCodes($num, $collectionId=null)
   {
+      $options = array();
+      if ($collectionId)
+      {
+        $collection = Doctrine::getTable('Collections')->findOneById($collectionId);
+        if($collection)
+        {
+          $options['code_prefix'] = $collection->getCodePrefix();
+          $options['code_prefix_separator'] = $collection->getCodePrefixSeparator();
+          $options['code_suffix'] = $collection->getCodeSuffix();
+          $options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
+        }
+      }
       $val = new SpecimensCodes();
+      $val->fromArray($options);
       $val->Specimens = $this->getObject();
       $form = new SpecimensCodesForm($val);
-  
       $this->embeddedForms['newCode']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
