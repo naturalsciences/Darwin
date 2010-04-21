@@ -17,6 +17,8 @@ class TagGroups extends BaseTagGroups
       'historical' => 'Historical',
       'populated' => 'Populated Places',
       'underground' => 'Underground',
+      'road' => 'Road',
+      'vegetation' => 'Vegetation',
       'other' => 'Other'
     );
   }
