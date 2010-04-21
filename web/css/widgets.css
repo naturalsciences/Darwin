@@ -28,6 +28,8 @@
 {
 	padding-top: 8px;
 	display:block;
+	text-shadow: 1px 1px 1px #787878;
+	font-weight:bold;
 }
 
 .widget .widget_content
