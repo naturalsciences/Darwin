@@ -37,8 +37,8 @@ class collectionActions extends DarwinActions
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
-
-    $this->form = new CollectionsForm();
+    $options = $request->getParameter('collections');
+    $this->form = new CollectionsForm(null,array('new_with_error' => true, 'institution' => $options['institution_ref']));
 
     $this->processForm($request, $this->form);
 
