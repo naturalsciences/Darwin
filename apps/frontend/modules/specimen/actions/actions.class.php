@@ -15,7 +15,7 @@ class specimenActions extends DarwinActions
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
-    $code = null;
+    $spec = null;
 
     if($request->hasParameter('id') && $request->getParameter('id'))
       $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
