@@ -881,6 +881,7 @@ Codes:
         full_code_indexed: { type: string}
         full_code_order_by: { type: string}
         code_date: { type: string}
+        code_date_mask: { type: integer, notnull: true, default:0}
 
 SpecimenIndividuals:
     columns:
