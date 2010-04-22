@@ -770,7 +770,6 @@ comment on column collections_admin.collection_ref is 'Reference of collection c
 comment on column collections_admin.user_ref is 'Reference of user - id field of users table';
 create table collections_rights
        (
-        rights smallint not null default 1,
         constraint fk_collections_rights_users foreign key (user_ref) references users(id) on delete cascade,
         constraint fk_collections_rights_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint unq_collections_rights unique (collection_ref, user_ref)
