@@ -12,6 +12,21 @@ class specimenActions extends DarwinActions
 {
   protected $widgetCategory = 'specimen_widget';
 
+  public function executeAddCode(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $spec = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
+    
+    $collectionId = $request->getParameter('collection_id', null);
+
+    $form = new SpecimensForm($spec);
+    $form->addCodes($number, $collectionId);
+    return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->loadWidgets();

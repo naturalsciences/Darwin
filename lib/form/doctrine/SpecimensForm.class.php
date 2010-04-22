@@ -34,6 +34,8 @@ class SpecimensForm extends BaseSpecimensForm
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);
+    $prefixes = Doctrine::getTable('SpecimensCodes')->getDistinctSepVals();
+    $suffixes = Doctrine::getTable('SpecimensCodes')->getDistinctSepVals(false);
 
     /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
@@ -220,6 +222,25 @@ class SpecimensForm extends BaseSpecimensForm
         'expanded' => true,
     ));
 
+    /* Codes sub form */
+
+    $this->embedRelation('SpecimensCodes');
+    
+    $subForm = new sfForm();
+    $this->embedForm('newCode',$subForm);
+
+    $this->widgetSchema['prefix_separator'] = new sfWidgetFormChoice(array(
+        'choices' => $prefixes
+    ));
+    $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
+
+    $this->widgetSchema['suffix_separator'] = new sfWidgetFormChoice(array(
+        'choices' => $suffixes
+    ));
+    $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
+
+    $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
+
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
                                          'host_taxon_ref' => 'Host taxon'
@@ -267,7 +288,11 @@ class SpecimensForm extends BaseSpecimensForm
         'choices' => array(0,1),
         'required' => false,
         ));
-        
+
+    $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
+    $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+    $this->validatorSchema['code'] = new sfValidatorPass();
+
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
             array(),
@@ -275,5 +300,75 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
+  }
+
+  public function addCodes($num, $collectionId=null)
+  {
+      $options = array();
+      if ($collectionId)
+      {
+        $collection = Doctrine::getTable('Collections')->findOneById($collectionId);
+        if($collection)
+        {
+          $options['code_prefix'] = $collection->getCodePrefix();
+          $options['code_prefix_separator'] = $collection->getCodePrefixSeparator();
+          $options['code_suffix'] = $collection->getCodeSuffix();
+          $options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
+        }
+      }
+      $val = new SpecimensCodes();
+      $val->fromArray($options);
+      $val->Specimens = $this->getObject();
+      $form = new SpecimensCodesForm($val);
+      $this->embeddedForms['newCode']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newCode', $this->embeddedForms['newCode']);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
+    {
+	foreach($taintedValues['newCode'] as $key=>$newVal)
+	{
+	  if (!isset($this['newCode'][$key]))
+	  {
+	    $this->addCodes($key);
+	  }
+	}
+    }
+
+    if(!isset($taintedValues['code']))
+    {
+      $this->offsetUnset('SpecimensCodes');
+      unset($taintedValues['SpecimensCodes']);
+    }
+
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    if (null === $forms && $this->getValue('SpecimensCodes'))
+    {
+	$value = $this->getValue('newCode');
+	foreach($this->embeddedForms['newCode']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
+	  {
+	    unset($this->embeddedForms['newCode'][$name]);
+	  }
+	}
+	$value = $this->getValue('SpecimensCodes');
+	foreach($this->embeddedForms['SpecimensCodes']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['SpecimensCodes'][$name]);
+	  }
+	}
+    }
+    return parent::saveEmbeddedForms($con, $forms);
   }
 }

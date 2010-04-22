@@ -271,6 +271,21 @@ input[type="text"].xsmall_size
   width:20px;
 }
 
+input[type="text"].vvsmall_size
+{
+  width:30px;
+}
+
+input[type="text"].vsmall_size
+{
+  width:60px;
+}
+
+input[type="text"].lsmall_size
+{
+  width:85px;
+}
+
 input[type="text"].small_size
 {
   width:120px;
@@ -645,7 +660,7 @@ table.encoding tbody
   width:98%;
 }
 
-.property_values td 
+.property_values td, .property_values th
 {
   margin:0;
   padding:0.1em;
@@ -655,6 +670,11 @@ table.encoding tbody
 {
   margin-right: 32px;
   margin-left: 2px;
+}
+
+.property_values tbody.codes input
+{
+  margin:0;
 }
 
 .property_values .unit_col
@@ -718,9 +738,20 @@ table.encoding tbody
   padding-left:0.5em;
 }
 
+.property_values thead th.reseted input, .property_values thead th.reseted select
+{
+  width: auto;
+  margin-left:0;
+  margin-right:0;
+}
+
+.property_values thead th.reseted
+{
+  padding-left:0.1em;
+}
+
 .add_value
 {
-  background: white url(/images/widget_button.png) no-repeat;
   height:24px;
   width:74px;
   text-align:center;
@@ -731,7 +762,19 @@ table.encoding tbody
   padding-top:0.1em;
 }
 
-.add_value a
+.add_code
+{
+  height:24px;
+  width:74px;
+  text-align:center;
+  font-size:small;
+  background: #F6F6F6 url(/images/widget_button_green.png) no-repeat;
+  float:right;
+  padding-top:0.1em;
+  margin-top:0.5em;
+}
+
+.add_value a, .add_code a
 {
   vertical-align:middle;
   text-decoration:none;

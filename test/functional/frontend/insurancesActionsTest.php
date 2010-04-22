@@ -49,7 +49,7 @@ $browser->
   get('/insurances/add?table=igs&id='.$items[0]->getId())->
   with('response')->
   begin()->
-    checkElement('form table tbody tr:nth-child(3) input[id="insurances_insurance_currency_input"][value=""][class="hidden"]')->
+    checkElement('form table tbody tr:nth-child(3) input#insurances_insurance_currency_input')->
     checkElement('form table tbody tr:nth-child(3) select option[value="€"]', '€')->
   end();
 
