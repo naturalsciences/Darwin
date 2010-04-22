@@ -31,7 +31,7 @@ abstract class BaseCodesForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'referenced_relation'   => new sfValidatorString(),
+      'referenced_relation'   => new sfValidatorString(array('required' => false)),
       'record_id'             => new sfValidatorInteger(),
       'code_category'         => new sfValidatorString(array('required' => false)),
       'code_prefix'           => new sfValidatorString(array('required' => false)),

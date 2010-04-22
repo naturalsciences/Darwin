@@ -39,7 +39,7 @@
     </tr>
   </thead>
   <tbody class="codes">
-    <?php foreach($form['SpecimensCodes'] as $form_value):?>
+    <?php foreach($form['Codes'] as $form_value):?>
       <?php include_partial('spec_codes', array('form' => $form_value));?>
     <?php endforeach;?>
     <?php foreach($form['newCode'] as $form_value):?>

@@ -4,4 +4,50 @@
  */
 class CodesTable extends DarwinTable
 {
+  /**
+  * Get Distincts prefix separators
+  * @return array an Array of types in keys
+  */
+  public function getDistinctPrefixSep()
+  {
+    return $this->createDistinct('Codes', 'code_prefix_separator', 'code_prefix_separator')->execute();
+  }
+
+  /**
+  * Get Distincts suffix separators
+  * @return array an Array of types in keys
+  */
+  public function getDistinctSuffixSep()
+  {
+    return $this->createDistinct('Codes', 'code_suffix_separator', 'code_suffix_separator')->execute();
+  }
+
+  public function getDistinctSepVals($option=true)
+  {
+    $field = ($option)?'code_prefix_separator':'code_suffix_separator';
+    $vals = $this->createDistinct('Codes', $field, $field)->execute();
+    $response = array(''=>'');
+    foreach($vals as $keys=>$value)
+    {
+      if ($option)
+      {
+        $response[$value->getCodePrefixSeparator()] = $value->getCodePrefixSeparator();
+      }
+      else
+      {
+        $response[$value->getCodeSuffixSeparator()] = $value->getCodeSuffixSeparator();
+      }
+    }
+    return $response;
+  }
+
+  public function getCodesRelated($table='specimens', $specId)
+  {
+    $q = Doctrine_Query::create()->
+         from('Codes')->
+         where('referenced_relation = ?', $table)->
+         andWhere('record_id = ?', $specId)->
+         orderBy('code_category ASC, code_date DESC');
+    return $q->execute();
+  }
 }

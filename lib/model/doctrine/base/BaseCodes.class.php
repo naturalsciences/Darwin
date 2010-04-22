@@ -61,6 +61,7 @@ abstract class BaseCodes extends sfDoctrineRecord
         $this->hasColumn('referenced_relation', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
+             'default' => 'specimens',
              ));
         $this->hasColumn('record_id', 'integer', null, array(
              'type' => 'integer',
