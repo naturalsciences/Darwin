@@ -49,14 +49,7 @@
     <tr>
       <td colspan="2">
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
-        <?php if(! $form->getObject()->isNew()):?>
-	   <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=users_login_infos&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
-	     <?php echo __('Delete');?>
-	   </a>
-	   <input id="submit" type="submit" value="<?php echo __('Edit');?>" />
-	   <?php else :?>
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
-        <?php endif;?>
       </td>
     </tr>
   </tfoot>

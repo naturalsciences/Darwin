@@ -261,7 +261,7 @@ input[type="submit"][class="search_submit"]:hover
   cursor:pointer;
 }
 
-input[type="text"]
+input[type="text"] input[type="password"] 
 {
   width:220px;
 }

@@ -4,9 +4,8 @@
         <li>
             <?php echo link_to(__('My Profile'),'user/profile');?>
             <ul>
-                <li><a href="#aa">My data</a></li>
-                <li><a href="#aa">Preferences</a></li>
-                <li><a href="#aa">Rights</a></li>
+                <li><?php echo link_to(__('My Widgets'),'user/widget');?></li>
+
             </ul>
         </li>
         <li>
@@ -67,9 +66,6 @@
             <a href=""><?php echo __('Administration');?></a>
             <ul>
                 <li><?php echo link_to('Reload','account/reload');?></li>
-                <li><a href="#">Rights</a></li>
-                <li><a href="#">A Super Long truc en NL</a></li>
-                <li><a href="#">....</a></li>
                 <li>
                 	<a href="#"><?php echo __('User');?></a>
                 	<ul>

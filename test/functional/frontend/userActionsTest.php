@@ -294,6 +294,6 @@ $browser->
 end();
 
 $browser->
-  get('user/loginInfo?user_ref='.$id)->
+  get('user/loginInfo?user_ref='.Doctrine::getTable("Users")->findOneByFamilyName('Evil')->getId())->
   with('response')->begin()->
     isStatusCode(404)->info('users ychambert is not allowed to access to this page')->end() ;

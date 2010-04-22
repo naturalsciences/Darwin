@@ -331,7 +331,8 @@ class userActions extends DarwinActions
   public function executeLoginInfo(sfWebRequest $request)
   {
      $this->forward404Unless($this->user = Doctrine::getTable('Users')->find($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
-    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));  
+     if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
+	    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));  
 	$this->loginInfo = Doctrine::getTable('UsersLoginInfos')->find($request->getParameter('id'));
 	if( ! $this->loginInfo )
 	{
