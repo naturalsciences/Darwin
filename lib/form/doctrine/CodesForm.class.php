@@ -31,7 +31,7 @@ class CodesForm extends BaseCodesForm
     $this->validatorSchema['code_category'] = new sfValidatorChoice(array('required' => true, 'choices'=>array_keys($choices)));
     $this->widgetSchema['code_prefix'] = new sfWidgetFormInput();
     $this->widgetSchema['code_prefix']->setAttributes(array('class'=>'lsmall_size'));
-    $this->validatorSchema['code_prefix'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['code_prefix'] = new sfValidatorString(array('required' => false, 'trim'=>true));
     $this->widgetSchema['code_prefix_separator'] = new widgetFormSelectComplete(array(
         'model' => 'Codes',
         'table_method' => 'getDistinctPrefixSep',
@@ -44,10 +44,10 @@ class CodesForm extends BaseCodesForm
     $this->widgetSchema['code_prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
     $this->widgetSchema['code'] = new sfWidgetFormInput();
     $this->widgetSchema['code']->setAttributes(array('class'=>'lsmall_size'));
-    $this->validatorSchema['code'] = new sfValidatorInteger(array('required' => false));
+    $this->validatorSchema['code'] = new sfValidatorString(array('required' => false, 'trim'=>true));
     $this->widgetSchema['code_suffix'] = new sfWidgetFormInput();
     $this->widgetSchema['code_suffix']->setAttributes(array('class'=>'lsmall_size'));
-    $this->validatorSchema['code_suffix'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['code_suffix'] = new sfValidatorString(array('required' => false, 'trim'=>true));
     $this->widgetSchema['code_suffix_separator'] = new widgetFormSelectComplete(array(
         'model' => 'Codes',
         'table_method' => 'getDistinctSuffixSep',

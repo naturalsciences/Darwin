@@ -31,6 +31,7 @@ class specimenActions extends DarwinActions
   {
     $this->loadWidgets();
     $this->form = new SpecimensForm();
+    $this->form->addCodes(0, null);
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -49,7 +50,6 @@ class specimenActions extends DarwinActions
     $this->loadWidgets();
     $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
     $this->forward404Unless($specimen,'Specimen not Found');
-    
     $this->form = new SpecimensForm($specimen);
     $this->setTemplate('new');
   }

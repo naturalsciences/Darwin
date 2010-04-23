@@ -875,7 +875,7 @@ Codes:
         code_category: { type: string, notnull: true, default: main}
         code_prefix: { type: string}
         code_prefix_separator: { type: string}
-        code: { type: integer}
+        code: { type: string}
         code_suffix: { type: string}
         code_suffix_separator: { type: string}
         full_code_indexed: { type: string}

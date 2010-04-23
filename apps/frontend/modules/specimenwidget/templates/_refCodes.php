@@ -1,5 +1,5 @@
 <table  class="property_values">
-  <thead>
+  <thead style="<?php echo ($form['Codes']->count() || $form['newCode']->count())?'':'display: none;';?>">
     <tr>
       <th>
         <?php echo __('Category'); ?>
@@ -59,17 +59,32 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-    $('.clear_prop').live('click', clearPropertyValue);
+    $('.clear_prop').live('click', function()
+    {
+      parent = $(this).closest('tr');
+      nvalue='';
+      $(parent).find('input[id$=\"_code_prefix\"]').val(nvalue);
+      $(parent).find('input[id$=\"_code\"]').val(nvalue);
+      $(parent).find('input[id$=\"_code_suffix\"]').val(nvalue);
+      $(parent).hide();
+      visibles = $(parent).closest('tbody').find('tr:visible').size();
+      if(!visibles)
+      {
+        $(this).closest('table.property_values').find('thead').hide();
+      }
+    });
 
     $('#add_prop_value').click(function()
     {
+        parent = $(this).closest('table.property_values');
         $.ajax(
         {
           type: "GET",
           url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
           success: function(html)
           {
-            $('.property_values tbody').append(html);
+            $(parent).find('tbody').append(html);
+            $(parent).find('thead:hidden').show();
           }
         });
         return false;
@@ -79,15 +94,13 @@ $(document).ready(function () {
     {
       parent = $(this).closest('table');
       $(parent).find('tbody select[id$=\"_prefix_separator\"]').val($(this).val());
-    }
-    );
+    });
 
     $('select#specimen_suffix_separator').change(function()
     {
       parent = $(this).closest('table');
       $(parent).find('tbody select[id$=\"_suffix_separator\"]').val($(this).val());
-    }
-    );
+    });
 
 });
 </script>

@@ -11,7 +11,7 @@
  * @property string $code_category
  * @property string $code_prefix
  * @property string $code_prefix_separator
- * @property integer $code
+ * @property string $code
  * @property string $code_suffix
  * @property string $code_suffix_separator
  * @property string $full_code_indexed
@@ -25,7 +25,7 @@
  * @method string  getCodeCategory()          Returns the current record's "code_category" value
  * @method string  getCodePrefix()            Returns the current record's "code_prefix" value
  * @method string  getCodePrefixSeparator()   Returns the current record's "code_prefix_separator" value
- * @method integer getCode()                  Returns the current record's "code" value
+ * @method string  getCode()                  Returns the current record's "code" value
  * @method string  getCodeSuffix()            Returns the current record's "code_suffix" value
  * @method string  getCodeSuffixSeparator()   Returns the current record's "code_suffix_separator" value
  * @method string  getFullCodeIndexed()       Returns the current record's "full_code_indexed" value
@@ -81,8 +81,8 @@ abstract class BaseCodes extends sfDoctrineRecord
         $this->hasColumn('code_prefix_separator', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('code', 'integer', null, array(
-             'type' => 'integer',
+        $this->hasColumn('code', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('code_suffix', 'string', null, array(
              'type' => 'string',
