@@ -27,11 +27,14 @@ BEGIN
 			last_line.code_category := 'main';
 		END IF;
 		
-		last_line.code := last_line.code+1;
+		last_line.code := (last_line.code::integer+1)::varchar;
 		INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code, code_suffix)
 			VALUES ('specimens',NEW.id, 'main', last_line.code_prefix, last_line.code, last_line.code_suffix );
 	END IF;
 	RETURN NEW;
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
