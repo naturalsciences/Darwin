@@ -776,7 +776,6 @@ create table collections_rights
        )
 inherits (template_collections_users);
 comment on table collections_rights is 'List of rights of given users on given collections';
-comment on column collections_rights.rights is 'Integer value resulting of the sum of integers from an arithmetic suite. Each number of this suite represent a right on the collection: 1 for read, 2 for insert, 4 for update and 8 for delete - A rights value of 11 means read-insert-delete (1+2+8)';
 comment on column collections_rights.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_rights.user_ref is 'Reference of user - id field of users table';
 create table collections_fields_visibilities

@@ -25,9 +25,9 @@ INSERT INTO collections_fields_visibilities (collection_ref, user_ref, field_gro
 INSERT INTO users_coll_rights_asked (collection_ref, user_ref, field_group_name, db_user_type, searchable, visible, motivation, asking_date_time)
 	VALUES (2, 2, 'taxonomic_name', 2, false, false, 'JE VEUX!', now());
 
-INSERT INTO collections_rights (collection_ref, user_ref, rights) VALUES (3,2,2);
+INSERT INTO collections_rights (collection_ref, user_ref) VALUES (3,2);
 SELECT lives_ok('UPDATE users SET db_user_type=1 WHERE id=2','From encoder to registered');
-SELECT ok( 1 = (SELECT rights FROM collections_rights WHERE collection_ref=3 AND user_ref=2), 'Check rights retrograded to 1');
+SELECT ok( 0 = (SELECT count(*) FROM collections_rights WHERE collection_ref=3 AND user_ref=2), 'Check no more rights on collection he was encoder on');
 
 SELECT ok( 1 = (SELECT db_user_type FROM record_visibilities WHERE record_id=0 AND user_ref=2), '');
 SELECT ok( 1 = (SELECT db_user_type FROM collections_fields_visibilities WHERE collection_ref=1 AND user_ref=2), '');

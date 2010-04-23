@@ -3363,7 +3363,7 @@ BEGIN
 		
 		IF OLD.db_user_type >= 2 AND NEW.db_user_type = 1 THEN
 			/** If retrograde to register , remove write/insert/update rights**/
-			UPDATE collections_rights SET rights=1 WHERE user_ref=NEW.id;
+			DELETE FROM collections_rights WHERE user_ref=NEW.id;
 		END IF;
 	END IF;
 	RETURN NEW;
