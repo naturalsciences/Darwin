@@ -163,10 +163,12 @@ CREATE INDEX CONCURRENTLY idx_chronostratigraphy_name_order_by on chronostratigr
 CREATE INDEX CONCURRENTLY idx_lithostratigraphy_name_order_by on lithostratigraphy(name_order_by);
 CREATE INDEX CONCURRENTLY idx_lithology_name_order_by on lithology(name_order_by);
 CREATE INDEX CONCURRENTLY idx_mineralogy_name_order_by on mineralogy(name_order_by);
+CREATE INDEX CONCURRENTLY idx_codes_full_code_order_by on codes(full_code_order_by);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 
 CREATE INDEX CONCURRENTLY idx_gist_comments_comment_ts on comments using gist(comment_ts);
+CREATE INDEX CONCURRENTLY idx_gist_codes_full_code_indexed on codes using gist(full_code_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_identifications_value_defined_ts on identifications using gin(value_defined_ts);
 CREATE INDEX CONCURRENTLY idx_gist_vernacular_names_name_ts on vernacular_names using gist(name_ts);
 CREATE INDEX CONCURRENTLY idx_gist_expeditions_name_ts on expeditions using gist(name_ts);

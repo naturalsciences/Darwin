@@ -1716,13 +1716,14 @@ create table codes
         code_category varchar not null default 'main',
         code_prefix varchar,
         code_prefix_separator varchar,
-        code integer,
+        code varchar,
         code_suffix varchar,
         code_suffix_separator varchar,
         full_code_indexed tsvector not null,
         full_code_order_by varchar not null,
         code_date timestamp not null default '0001-01-01 00:00:00',
-        code_date_mask integer not null default 0
+        code_date_mask integer not null default 0,
+        constraint unq_codes unique (referenced_relation, record_id, full_code_order_by)
        )
 inherits (template_table_record_ref);
 
@@ -1731,12 +1732,13 @@ comment on column codes.id is 'Unique identifier of a code';
 comment on column codes.code_category is 'Category of code: main, secondary, temporary,...';
 comment on column codes.code_prefix is 'Code prefix - entire code if all alpha, begining character part if code is made of characters and numeric parts';
 comment on column codes.code_prefix_separator is 'Separtor used between code core and code prefix';
-comment on column codes.code is 'Numerical part of code';
+comment on column codes.code is 'Numerical part of code - but not forced: if users want to use it as alphanumerical code - possible too';
 comment on column codes.code_suffix is 'For codes made of characters and numerical parts, this field stores the last alpha part of code';
 comment on column codes.code_suffix_separator is 'Separtor used between code core and code suffix';
 comment on column codes.full_code_indexed is 'ts_vector code composition coming from all code parts - used for searching specimen codes';
 comment on column codes.full_code_order_by is 'Full code composition by code_prefix, code and code suffix concatenation and indexed for unique check purpose';
-comment on column codes.code_date is 'Date of code creation';
+comment on column codes.code_date is 'Date of code creation (fuzzy date)';
+comment on column codes.code_date_mask is 'Mask used for code date';
 comment on column codes.referenced_relation is 'Reference name of table concerned';
 comment on column codes.record_id is 'Identifier of record concerned';
 

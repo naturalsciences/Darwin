@@ -165,6 +165,7 @@ DROP INDEX IF EXISTS idx_chronostratigraphy_name_order_by;
 DROP INDEX IF EXISTS idx_lithostratigraphy_name_order_by;
 DROP INDEX IF EXISTS idx_lithology_name_order_by;
 DROP INDEX IF EXISTS idx_mineralogy_name_order_by;
+DROP INDEX IF EXISTS idx_codes_full_code_order_by;
 
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
@@ -172,6 +173,7 @@ DROP INDEX IF EXISTS idx_mineralogy_name_order_by;
 DROP INDEX IF EXISTS idx_gist_comments_comment_ts;
 DROP INDEX IF EXISTS idx_gin_identifications_value_defined_ts;
 DROP INDEX IF EXISTS idx_gist_vernacular_names_name_ts;
+DROP INDEX IF EXISTS idx_gist_codes_full_code_indexed;
 DROP INDEX IF EXISTS idx_gist_expeditions_name_ts;
 DROP INDEX IF EXISTS idx_gin_people_formated_name_ts;
 DROP INDEX IF EXISTS idx_gin_users_formated_name_ts;
