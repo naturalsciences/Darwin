@@ -11,7 +11,7 @@
         <?php echo __('sep.'); ?>
       </th>
       <th>
-        <?php echo __('Num. code'); ?>
+        <?php echo __('Code'); ?>
       </th>
       <th>
         <?php echo __('sep.'); ?>
