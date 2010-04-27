@@ -55,6 +55,9 @@
       return false;
     });
    $('.widget_row_delete').live('click',function(){
+    if($('.tag_line').length == 1)
+      $(this).closest('tr').find('.tag_line').val('');
+    else
      $(this).closest('tr').remove();
    });
 

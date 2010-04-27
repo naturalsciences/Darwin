@@ -1228,7 +1228,10 @@ li.tag_size_5 { font-size: 20px; }
 {
 /*   color:white; */
 }
-
+#gtu_filter .datesNum
+{
+  vertical-align:top;
+}
 .tag_parts_screen
 {
   width:60%;
