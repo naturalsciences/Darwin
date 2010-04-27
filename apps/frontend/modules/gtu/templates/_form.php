@@ -142,7 +142,7 @@ $(document).ready(function () {
 	input_el.val( input_el.val() + $(this).text() );
       else
 	input_el.val( input_el.val() + " ; " +$(this).text() );
-      input_el.trigger('change');
+      input_el.trigger('click');
     });
 
     $('input[id$="_tag_value"]').live('keydown click',purposeTags);
