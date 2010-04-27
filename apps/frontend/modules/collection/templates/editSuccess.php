@@ -6,10 +6,10 @@
     <?php include_partial('form', array('form' => $form)) ?>
 
     <?php include_partial('widgets/screen', array(
-	'widgets' => $widgets,
-	'category' => 'cataloguewidget',
-	'columns' => 1,
-	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'collections')
-	)); ?>
+                          'widgets' => $widgets,
+                          'category' => 'cataloguewidget',
+                          'columns' => 1,
+                          'options' => array('eid' => $form->getObject()->getId(), 'table' => 'collections')
+                          )); ?>
 
 </div>

@@ -10,7 +10,7 @@
  */
 class cataloguewidgetComponents extends sfComponents
 {
-
+  
   public function executeRelationRename()
   {
     $this->relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table, $this->eid, 'current_name');
@@ -51,4 +51,10 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->types = Doctrine::getTable('CataloguePeople')->findForTableByType($this->table, $this->eid);
   }
+
+  public function executeCollectionsCodes()
+  {
+    $this->collCodes = Doctrine::getTable('Collections')->findExcept($this->eid);
+  }
+
 }

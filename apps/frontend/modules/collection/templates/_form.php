@@ -59,20 +59,6 @@ $(document).ready(function ()
           <?php echo $form['parent_ref'] ?>
         </td>
       </tr>
-      <tr>
-        <th><?php echo $form['code_auto_increment']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['code_auto_increment']->renderError() ?>
-          <?php echo $form['code_auto_increment'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['code_part_code_auto_copy']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['code_part_code_auto_copy']->renderError() ?>
-          <?php echo $form['code_part_code_auto_copy'] ?>
-        </td>
-      </tr>
     </tbody>
     <tfoot>
       <tr>

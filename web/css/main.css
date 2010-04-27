@@ -26,6 +26,11 @@ table td
   vertical-align: middle;
 }
 
+table td.centered, table th.centered
+{
+  text-align:center;
+}
+
 .clear
 {
   clear:both;
@@ -807,6 +812,7 @@ form.edition, form.renamed, .edit_syn_screen
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   padding-left:0.5em;
+  padding-right:0.5em;
 }
 
 .edit_syn_screen
@@ -1168,6 +1174,7 @@ img.info:hover
 {
   width: 5em;
 }
+
 .basio_cell a
 {
   display:block;

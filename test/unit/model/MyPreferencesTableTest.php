@@ -141,7 +141,7 @@ $q = Doctrine_Query::create()
     ->from('MyPreferences p')
     ->Where('p.user_ref = ?', $userEvil)
     ->execute();
-$t->is($q->count(),72,'Now Root has his 72 widgets') ; 
+$t->is($q->count(),73,'Now Root has his 73 widgets') ; 
 
 Doctrine::getTable('Mypreferences')->setUserRef($userEvil)->setWidgets('Registered user',true) ;
 

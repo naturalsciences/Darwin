@@ -236,6 +236,7 @@ Collections:
         code_prefix_separator: "-"
         code_suffix: Neo
         code_suffix_separator: "-"
+        code_part_code_auto_copy: true
     c2:
         code: vert
         name: Vertebrates
@@ -243,6 +244,7 @@ Collections:
         Manager: u1
         code_prefix: VERT.
         code_prefix_separator: "/"
+        code_auto_increment: true
     c3:
         code: amp
         name: Amphibia

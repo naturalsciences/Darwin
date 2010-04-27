@@ -12,6 +12,31 @@ class collectionActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_collections_widget';
 
+  public function executeAddSpecCodes(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    $this->collCodes = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
+    $this->form = new CollectionsCodesForm($this->collCodes);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('collections'));
+	if($this->form->isValid())
+	{
+	  try
+          {
+	    $this->form->save();
+	    return $this->renderText('ok');
+	  }
+	  catch(Exception $e)
+	  {
+            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+            $this->form->getErrorSchema()->addError($error); 
+	  }
+	}
+    }
+  }
+
   public function executeCompleteOptions(sfWebRequest $request)
   {
     $this->collections = Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($request->getParameter('institution'));
