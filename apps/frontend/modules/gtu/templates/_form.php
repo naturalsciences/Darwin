@@ -145,23 +145,19 @@ $(document).ready(function () {
       input_el.trigger('change');
     });
 
-    $('input[id$="_tag_value"]').live('keypress',pressTags);
-    $('input[id$="_tag_value"]').live('change', purposeTags);
-    $('input[id$="_tag_value"]').live('click',purposeTags);
+    $('input[id$="_tag_value"]').live('keydown click',purposeTags);
 
-   function pressTags(event)
+   function purposeTags(event)
    {
-      if (event.keyCode == 59 /* ;*/ || event.keyCode == 32 /* */ )
+      if (event.type == 'keydown')
       {
-	$(this).trigger('change');
+	var code = (event.keyCode ? event.keyCode : event.which);
+	if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
       }
-   }	
-   function purposeTags()
-   {
       parent_el = $(this).closest('li');
       group_name = parent_el.find('input[name$="\[group_name\]"]').val();
       sub_group_name = parent_el.find('[name$="\[sub_group_name\]"]').val();
-      if(sub_group_name=='') return false;
+      if(sub_group_name == '' || $(this).val() == '') return;
       $('.purposed_tags').hide();
       $.ajax({
 	  type: "GET",

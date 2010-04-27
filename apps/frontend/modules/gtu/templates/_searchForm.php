@@ -58,23 +58,20 @@
      $(this).closest('tr').remove();
    });
 
+   $('input.tag_line').live('keydown click',purposeTags);
 
-
-    $('input.tag_line').live('keypress',pressTags);
-    $('input.tag_line').live('change', purposeTags);
-    $('input.tag_line').live('click',purposeTags);
-
-   function pressTags(event)
+   function purposeTags(event)
    {
-      if (event.keyCode == 59 /* ;*/ || event.keyCode == 32 /* */ )
+      if (event.type == 'keydown')
       {
-	$(this).trigger('change');
+	var code = (event.keyCode ? event.keyCode : event.which);
+	if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
       }
-   }	
-   function purposeTags()
-   {
       $('.purposed_tags').hide();
       parent_el = $(this).closest('tr');
+
+      if($(this).val() == '') return;
+
       $.ajax({
 	  type: "GET",
 	  url: "<?php echo url_for('gtu/purposeTag');?>" + '/value/'+ $(this).val(),
