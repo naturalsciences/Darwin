@@ -5,5 +5,20 @@
  */
 class Codes extends BaseCodes
 {
+  public function getCodeFormated()
+  {
+    $code_prefix = $this->_get('code_prefix');
+    $code_prefix_separator = (strlen($this->_get('code_prefix_separator')))?$this->_get('code_prefix_separator'):' ';
+    $code = (strlen($this->_get('code')))?$this->_get('code'):'-';
+    $code_suffix = $this->_get('code_suffix');
+    $code_suffix_separator = (strlen($this->_get('code_suffix_separator')))?$this->_get('code_suffix_separator'):' ';
 
+    if (strlen($code_prefix))
+      $code_prefix .= $code_prefix_separator;
+
+    if (strlen($code_suffix))
+      $code_suffix = $code_suffix_separator.$code_suffix;
+
+    return $code_prefix.$code.$code_suffix;
+  }
 }

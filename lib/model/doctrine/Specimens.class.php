@@ -34,9 +34,19 @@ class Specimens extends BaseSpecimens
 
   public function getName()
   {
+    $name = '-';
     if(! $this->isNew() && $this->_get('id')==0)
-      return '-';
-    return $this->Taxonomy->getNameWithFormat();
+      return $name;
+    $codes = Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->_get('id'));
+    if (!$codes->count())
+      return $name;
+    $name = '';
+    foreach ($codes as $code)
+    {
+      $name .= '['.$code->getCodeFormated().'] ';
+    }
+    $name = rtrim($name);
+    return $name;
   }
 
 }
