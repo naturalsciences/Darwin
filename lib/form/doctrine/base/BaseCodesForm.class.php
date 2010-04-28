@@ -21,27 +21,29 @@ abstract class BaseCodesForm extends BaseFormDoctrine
       'code_category'         => new sfWidgetFormTextarea(),
       'code_prefix'           => new sfWidgetFormTextarea(),
       'code_prefix_separator' => new sfWidgetFormTextarea(),
-      'code'                  => new sfWidgetFormInputText(),
+      'code'                  => new sfWidgetFormTextarea(),
       'code_suffix'           => new sfWidgetFormTextarea(),
       'code_suffix_separator' => new sfWidgetFormTextarea(),
       'full_code_indexed'     => new sfWidgetFormTextarea(),
       'full_code_order_by'    => new sfWidgetFormTextarea(),
       'code_date'             => new sfWidgetFormTextarea(),
+      'code_date_mask'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'                    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'referenced_relation'   => new sfValidatorString(),
+      'referenced_relation'   => new sfValidatorString(array('required' => false)),
       'record_id'             => new sfValidatorInteger(),
       'code_category'         => new sfValidatorString(array('required' => false)),
       'code_prefix'           => new sfValidatorString(array('required' => false)),
       'code_prefix_separator' => new sfValidatorString(array('required' => false)),
-      'code'                  => new sfValidatorInteger(array('required' => false)),
+      'code'                  => new sfValidatorString(array('required' => false)),
       'code_suffix'           => new sfValidatorString(array('required' => false)),
       'code_suffix_separator' => new sfValidatorString(array('required' => false)),
       'full_code_indexed'     => new sfValidatorString(array('required' => false)),
       'full_code_order_by'    => new sfValidatorString(array('required' => false)),
       'code_date'             => new sfValidatorString(array('required' => false)),
+      'code_date_mask'        => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('codes[%s]');

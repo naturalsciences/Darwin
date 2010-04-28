@@ -13,6 +13,9 @@
         <thead>
           <tr>
             <th>
+              <?php echo __('Code(s)');?>
+            </th>
+            <th>
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=t.name'.( ($orderBy=='t.name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('Taxon');?>
                 <?php if($orderBy=='t.name') echo $orderSign ?>
@@ -30,9 +33,23 @@
         <tbody>
           <?php foreach($specimens as $specimen):?>
             <tr class="rid_<?php echo $specimen->getId(); ?>">
-              <td><?php echo $specimen->Taxonomy->getName();?></td>
-              <td><?php echo $specimen->Taxonomy->Level->getLevelName();?></td>
-              <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
+              <td>
+                <ul>
+                  <?php if (!$specimen->SpecimensCodes->count()): ?>
+                    <li>
+                      <?php echo '-';?>
+                    </li>
+                  <?php endif;?>
+                  <?php foreach($specimen->SpecimensCodes as $code):?>
+                    <li style="font-weight:<?php echo ($code->getCodeCategory()=='main')?'bold':'normal';?>">
+                      <?php echo $code->getCodeFormated(); ?>
+                    </li>
+                  <?php endforeach;?>
+                </ul>
+              </td>
+              <td class="top_aligned"><?php echo $specimen->Taxonomy->getName();?></td>
+              <td class="top_aligned"><?php echo $specimen->Taxonomy->Level->getLevelName();?></td>
+              <td class="<?php echo (! $is_choose)?'edit':'choose';?> top_aligned">
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png'),'specimen/edit?id='.$specimen->getId());?>
                 <?php else:?>

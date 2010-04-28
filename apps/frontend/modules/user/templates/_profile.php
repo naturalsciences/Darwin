@@ -1,21 +1,22 @@
-	  <?php echo $form->renderGlobalErrors() ?>
-	  <?php if (isset($form['title'])) : ?>
-	    <th><?php echo $form['title']->renderLabel() ?></th>
-	    <td>
-	      <?php echo $form['title']->renderError() ?>
-	      <?php echo $form['title'] ?>
-	    </td>
-	  </tr>
-	  <?php else : ?>
-	    <th><?php echo $form['sub_type']->renderLabel() ?></th>
-	    <td>
-	      <?php echo $form['sub_type']->renderError() ?>
-	      <?php echo $form['sub_type'] ?>
-	    </td>
-	  </tr>
-	  <?php endif ;?>
 	  <tr>
-	    <th><?php echo $form['given_name']->renderLabel(isset($form['title'])?'Given name':'Abreviation') ?></th>
+	    <?php if (isset($form['title'])) : ?>
+	      <th><?php echo $form['title']->renderLabel() ?></th>
+	      <td>
+		<?php echo $form['title']->renderError() ?>
+		<?php echo $form['title'] ?>
+	      </td>
+	    <?php else : ?>
+	      <th><?php echo $form['sub_type']->renderLabel() ?></th>
+	      <td>
+		<?php echo $form['sub_type']->renderError() ?>
+		<?php echo $form['sub_type'] ?>
+	      </td>
+	    <?php endif ;?>
+	  </tr>
+	  <tr>
+	    <th><?php echo $form['given_name']->renderLabel(isset($form['title'])?'Given name':'Abreviation') ?>
+		<?php echo $form->renderGlobalErrors() ?>
+	    </th>
 	    <td>
 	      <?php echo $form['given_name']->renderError() ?>
 	      <?php echo $form['given_name'] ?>

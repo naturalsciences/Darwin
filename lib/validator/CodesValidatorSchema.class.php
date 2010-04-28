@@ -1,5 +1,5 @@
 <?php
-class SpecimensCodesValidatorSchema extends sfValidatorSchema
+class CodesValidatorSchema extends sfValidatorSchema
 {
   protected function configure($options = array(), $messages = array())
   {

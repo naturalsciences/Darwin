@@ -11,7 +11,6 @@ function removeError(element)
 }
 
 $(document).ready(function () {
- jQuery.fx.off = true;
  $("a.link_catalogue").live('click', function(){
     $(this).qtip({
         content: {

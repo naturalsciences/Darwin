@@ -34,8 +34,8 @@ class SpecimensForm extends BaseSpecimensForm
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);
-    $prefixes = Doctrine::getTable('SpecimensCodes')->getDistinctSepVals();
-    $suffixes = Doctrine::getTable('SpecimensCodes')->getDistinctSepVals(false);
+    $prefixes = Doctrine::getTable('Codes')->getDistinctSepVals();
+    $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
 
     /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
@@ -223,9 +223,17 @@ class SpecimensForm extends BaseSpecimensForm
     ));
 
     /* Codes sub form */
-
-    $this->embedRelation('SpecimensCodes');
     
+    $subForm = new sfForm();
+    $this->embedForm('Codes',$subForm);   
+    foreach(Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CodesForm($vals);
+      $this->embeddedForms['Codes']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Codes', $this->embeddedForms['Codes']);
+
     $subForm = new sfForm();
     $this->embedForm('newCode',$subForm);
 
@@ -304,7 +312,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addCodes($num, $collectionId=null)
   {
-      $options = array();
+      $options = array('referenced_relation' => 'specimens');
       if ($collectionId)
       {
         $collection = Doctrine::getTable('Collections')->findOneById($collectionId);
@@ -316,10 +324,10 @@ class SpecimensForm extends BaseSpecimensForm
           $options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
         }
       }
-      $val = new SpecimensCodes();
+      $val = new Codes();
       $val->fromArray($options);
-      $val->Specimens = $this->getObject();
-      $form = new SpecimensCodesForm($val);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new CodesForm($val);
       $this->embeddedForms['newCode']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
@@ -335,13 +343,14 @@ class SpecimensForm extends BaseSpecimensForm
 	  {
 	    $this->addCodes($key);
 	  }
+          $taintedValues['newCode'][$key]['record_id'] = 0;
 	}
     }
 
     if(!isset($taintedValues['code']))
     {
-      $this->offsetUnset('SpecimensCodes');
-      unset($taintedValues['SpecimensCodes']);
+      $this->offsetUnset('Codes');
+      unset($taintedValues['Codes']);
     }
 
     parent::bind($taintedValues, $taintedFiles);
@@ -349,7 +358,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function saveEmbeddedForms($con = null, $forms = null)
   {
-    if (null === $forms && $this->getValue('SpecimensCodes'))
+    if (null === $forms && $this->getValue('code'))
     {
 	$value = $this->getValue('newCode');
 	foreach($this->embeddedForms['newCode']->getEmbeddedForms() as $name => $form)
@@ -358,14 +367,18 @@ class SpecimensForm extends BaseSpecimensForm
 	  {
 	    unset($this->embeddedForms['newCode'][$name]);
 	  }
+          else
+          {
+            $form->getObject()->setRecordId($this->getObject()->getId());
+          }
 	}
-	$value = $this->getValue('SpecimensCodes');
-	foreach($this->embeddedForms['SpecimensCodes']->getEmbeddedForms() as $name => $form)
+	$value = $this->getValue('Codes');
+	foreach($this->embeddedForms['Codes']->getEmbeddedForms() as $name => $form)
 	{
 	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
 	  {
 	    $form->getObject()->delete();
-	    unset($this->embeddedForms['SpecimensCodes'][$name]);
+	    unset($this->embeddedForms['Codes'][$name]);
 	  }
 	}
     }

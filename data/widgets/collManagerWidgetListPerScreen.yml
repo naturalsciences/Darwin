@@ -1,3 +1,11 @@
+col0:
+   col_num: 1
+   category: catalogue_collections_widget
+   group_name: collectionsCodes
+   order_by: 0
+   opened: true
+   visible: true
+   title_perso: Default specimens codes
 col1:
    col_num: 1
    category: catalogue_collections_widget

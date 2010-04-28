@@ -703,3 +703,23 @@ MyPreferences:
         visible: false
         is_available: true
         title_perso: Properties
+    u1wcol0:
+        User: u1
+        col_num: 1
+        category: catalogue_collections_widget
+        group_name: collectionsCodes
+        order_by: 0
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Default specimens codes
+    u1wcol1:
+        User: u1
+        col_num: 1
+        category: catalogue_collections_widget
+        group_name: comment
+        order_by: 0
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Comments

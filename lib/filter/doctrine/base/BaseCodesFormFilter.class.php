@@ -24,6 +24,7 @@ abstract class BaseCodesFormFilter extends BaseFormFilterDoctrine
       'full_code_indexed'     => new sfWidgetFormFilterInput(),
       'full_code_order_by'    => new sfWidgetFormFilterInput(),
       'code_date'             => new sfWidgetFormFilterInput(),
+      'code_date_mask'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -32,12 +33,13 @@ abstract class BaseCodesFormFilter extends BaseFormFilterDoctrine
       'code_category'         => new sfValidatorPass(array('required' => false)),
       'code_prefix'           => new sfValidatorPass(array('required' => false)),
       'code_prefix_separator' => new sfValidatorPass(array('required' => false)),
-      'code'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'code'                  => new sfValidatorPass(array('required' => false)),
       'code_suffix'           => new sfValidatorPass(array('required' => false)),
       'code_suffix_separator' => new sfValidatorPass(array('required' => false)),
       'full_code_indexed'     => new sfValidatorPass(array('required' => false)),
       'full_code_order_by'    => new sfValidatorPass(array('required' => false)),
       'code_date'             => new sfValidatorPass(array('required' => false)),
+      'code_date_mask'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('codes_filters[%s]');
@@ -63,12 +65,13 @@ abstract class BaseCodesFormFilter extends BaseFormFilterDoctrine
       'code_category'         => 'Text',
       'code_prefix'           => 'Text',
       'code_prefix_separator' => 'Text',
-      'code'                  => 'Number',
+      'code'                  => 'Text',
       'code_suffix'           => 'Text',
       'code_suffix_separator' => 'Text',
       'full_code_indexed'     => 'Text',
       'full_code_order_by'    => 'Text',
       'code_date'             => 'Text',
+      'code_date_mask'        => 'Number',
     );
   }
 }

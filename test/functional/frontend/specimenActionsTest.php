@@ -62,22 +62,22 @@ $browser->
     checkElement('div.paging_info table td:nth-child(2)', 1)->
     checkElement('div.paging_info table td:last-child select[id="searchSpecimen_rec_per_page"]', 1)->
     checkElement('table.results tbody tr', 3)->
-    checkElement('table.results tbody tr td:first', 'Animalia')->
-    checkElement('table.results thead th:first_element a.sort span.order_sign_down')->
+    checkElement('table.results tbody tr td:nth-child(2)', 'Animalia')->
+    checkElement('table.results thead th:nth-child(2) a.sort span.order_sign_down')->
   end()->  
   info('2.3 - Click to sort on name descending...')->
   post('/specimen/search', array('orderby'=>'t.name', 'orderdir'=>'desc', 'page'=>1, 'is_choose'=>0, 'searchSpecimen'=>array('taxon_name'=>'', 'taxon_level'=>'')))->
   with('response')->
   begin()->
-    checkElement('table.results thead th:first_element a.sort span.order_sign_up')->
-    checkElement('table.results tbody tr td:first', 'Falco Peregrinus Tunstall, 1771')->
+    checkElement('table.results thead th:nth-child(2) a.sort span.order_sign_up')->
+    checkElement('table.results tbody tr td:nth-child(2)', 'Falco Peregrinus Tunstall, 1771')->
   end()->
   info('2.4 - Select only species level...')->
   post('/specimen/search', array('orderby'=>'t.name', 'orderdir'=>'asc', 'page'=>1, 'is_choose'=>0, 'searchSpecimen'=>array('taxon_name'=>'', 'taxon_level'=>'48')))->
   with('response')->
   begin()->
     checkElement('table.results tbody tr', 1)->
-    checkElement('table.results tbody tr td:first', 'Falco Peregrinus')->
+    checkElement('table.results tbody tr td:nth-child(2)', 'Falco Peregrinus')->
   end()->
   info('2.5 - Click on edition...')->
   click('.edit a')->

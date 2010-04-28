@@ -31,6 +31,7 @@ class specimenActions extends DarwinActions
   {
     $this->loadWidgets();
     $this->form = new SpecimensForm();
+    $this->form->addCodes(0, null);
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -49,7 +50,6 @@ class specimenActions extends DarwinActions
     $this->loadWidgets();
     $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
     $this->forward404Unless($specimen,'Specimen not Found');
-    
     $this->form = new SpecimensForm($specimen);
     $this->setTemplate('new');
   }
@@ -156,6 +156,23 @@ class specimenActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->specimens = $this->pagerLayout->execute();
+
+        $specs = array();
+        foreach($this->specimens as $specimen)
+        {
+          $specs[$specimen->getId()] = $specimen->getId();
+        }
+        $specCodes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens', $specs);
+        foreach($this->specimens as $specimen)
+        {
+          $codes = array();
+          foreach($specCodes as $code)
+          {
+            if($specimen->getId()==$code->getRecordId())
+              $codes[] = $code->toArray();
+          }
+          $specimen->SpecimensCodes->fromArray($codes);
+        }
       }
     }
   }

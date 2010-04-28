@@ -44,8 +44,6 @@ $browser->
     'code'            => '',
     'main_manager_ref'=> '',
     'parent_ref'      => '',
-    'code_auto_increment' => false,
-    'code_part_code_auto_copy'=> false,
   )))->
 
   with('form')->begin()->
@@ -69,8 +67,6 @@ $browser->
     'code'            => 'paleo',
     'main_manager_ref'=> Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId(),
     'parent_ref'      => '',
-    'code_auto_increment' => false,
-    'code_part_code_auto_copy'=> false,
   )))->
   followRedirect()->
   
@@ -103,8 +99,6 @@ $browser->
     'code'            => 'paleo',
     'main_manager_ref'=> Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId(),
     'parent_ref'      => Doctrine::getTable('Collections')->findOneByName('Molusca')->getId(),
-    'code_auto_increment' => false,
-    'code_part_code_auto_copy'=> false,
         )))->
   followRedirect()->
 

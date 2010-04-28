@@ -6,6 +6,7 @@
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
         <tr>
+          <th><?php echo $form['code']->renderLabel() ?></th>
           <th><?php echo $form['taxon_name']->renderLabel() ?></th>
           <th><?php echo $form['taxon_level']->renderLabel() ?></th>
           <th></th>
@@ -13,9 +14,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><?php echo $form['taxon_name']->render() ?><?php echo $form->renderHiddenFields();?></td>
+          <td><?php echo $form['code']->render() ?></td>
+          <td><?php echo $form['taxon_name']->render() ?></td>
           <td><?php echo $form['taxon_level']->render() ?></td>
-          <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
+          <td><?php echo $form->renderHiddenFields();?><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
         </tr>
       </tbody>
     </table>

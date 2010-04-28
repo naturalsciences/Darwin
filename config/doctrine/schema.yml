@@ -597,9 +597,10 @@ MySavedSearches:
 
 MyPreferences:
     columns:
-        user_ref: { type: integer, notnull: true, primary:true}
-        category: { type: string, notnull: true, default: board_widget, primary:true}
-        group_name: { type: string, notnull: true, primary:true}
+        id: { type: integer, primary: true, autoincrement: true }
+        user_ref: { type: integer, notnull: true}
+        category: { type: string, notnull: true, default: board_widget}
+        group_name: { type: string, notnull: true}
         order_by: { type: integer, notnull: true, default:1 }
         col_num: { type: integer, notnull: true, default:1 }
         mandatory: { type: boolean, notnull: true, default: false}
@@ -869,19 +870,20 @@ Specimens:
             foreign: id
 
 Codes:
-    columns:
-        id: { type: integer, primary: true, autoincrement: true }
-        referenced_relation: { type: string, notnull: true}
+  columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        referenced_relation : { type: string, notnull: true, default: specimens}
         record_id: { type: integer, notnull: true}
         code_category: { type: string, notnull: true, default: main}
         code_prefix: { type: string}
         code_prefix_separator: { type: string}
-        code: { type: integer}
+        code: { type: string}
         code_suffix: { type: string}
         code_suffix_separator: { type: string}
         full_code_indexed: { type: string}
         full_code_order_by: { type: string}
         code_date: { type: string}
+        code_date_mask: { type: integer, notnull: true, default:0}
 
 SpecimenIndividuals:
     columns:
@@ -973,22 +975,23 @@ SpecimensAccompanying:
             local: mineral_ref
             foreign: id
 
-SpecimensCodes:                                                                        
-  tableName: codes
-  columns:
-        id: { type: integer, notnull: true,primary: true, autoincrement: true}
+SpecimensCodes:
+    tableName: codes
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
         referenced_relation : { type: string, notnull: true, default: specimens}
         record_id: { type: integer, notnull: true}
         code_category: { type: string, notnull: true, default: main}
         code_prefix: { type: string}
         code_prefix_separator: { type: string}
-        code: { type: integer}
+        code: { type: string}
         code_suffix: { type: string}
         code_suffix_separator: { type: string}
         full_code_indexed: { type: string}
         full_code_order_by: { type: string}
         code_date: { type: string}
-  relations:
-      Specimens:
-          local: record_id
-          foreign: id
+        code_date_mask: { type: integer, notnull: true, default:0}
+    relations:
+        Specimens:
+            local: record_id
+            foreign: id

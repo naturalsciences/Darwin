@@ -55,26 +55,26 @@
       return false;
     });
    $('.widget_row_delete').live('click',function(){
+    if($('.tag_line').length == 1)
+      $(this).closest('tr').find('.tag_line').val('');
+    else
      $(this).closest('tr').remove();
    });
 
+   $('input.tag_line').live('keydown click',purposeTags);
 
-
-    $('input.tag_line').live('keypress',pressTags);
-    $('input.tag_line').live('change', purposeTags);
-    $('input.tag_line').live('click',purposeTags);
-
-   function pressTags(event)
+   function purposeTags(event)
    {
-      if (event.keyCode == 59 /* ;*/ || event.keyCode == 32 /* */ )
+      if (event.type == 'keydown')
       {
-	$(this).trigger('change');
+	var code = (event.keyCode ? event.keyCode : event.which);
+	if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
       }
-   }	
-   function purposeTags()
-   {
       $('.purposed_tags').hide();
       parent_el = $(this).closest('tr');
+
+      if($(this).val() == '') return;
+
       $.ajax({
 	  type: "GET",
 	  url: "<?php echo url_for('gtu/purposeTag');?>" + '/value/'+ $(this).val(),
@@ -93,7 +93,7 @@
 	input_el.val( input_el.val() + $(this).text() );
       else
 	input_el.val( input_el.val() + " ; " +$(this).text() );
-      input_el.trigger('change');
+      input_el.trigger('click');
     });
 </script>
     <div class="search_results">

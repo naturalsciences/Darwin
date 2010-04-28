@@ -221,7 +221,7 @@ function result_choose ()
 }
 
 $(document).ready(function () {
-
+  jQuery.fx.off = true;
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();
   });

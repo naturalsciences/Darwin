@@ -12,6 +12,54 @@ class collectionActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_collections_widget';
 
+  public function executeAddSpecCodes(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    $this->collCodes = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
+    $this->form = new CollectionsCodesForm($this->collCodes);
+    
+    if($request->isMethod('post'))
+    {
+	$this->form->bind($request->getParameter('collections'));
+	if($this->form->isValid())
+	{
+	  try
+          {
+	    $this->form->save();
+	    return $this->renderText('ok');
+	  }
+	  catch(Exception $e)
+	  {
+            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+            $this->form->getErrorSchema()->addError($error); 
+	  }
+	}
+    }
+  }
+
+  public function executeDeleteSpecCodes(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'),'No id given');
+    $item = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($item,'No such item');
+    try
+    {
+      $item->setCodePrefix(Doctrine::getTable('Collections')->getDefaultValueOf('code_prefix'));
+      $item->setCodePrefixSeparator(Doctrine::getTable('Collections')->getDefaultValueOf('code_prefix_separator'));
+      $item->setCodeSuffix(Doctrine::getTable('Collections')->getDefaultValueOf('code_suffix'));
+      $item->setCodeSuffixSeparator(Doctrine::getTable('Collections')->getDefaultValueOf('code_suffix_separator'));
+      $item->setCodeAutoIncrement(Doctrine::getTable('Collections')->getDefaultValueOf('code_auto_increment'));
+      $item->setCodePartCodeAutoCopy(Doctrine::getTable('Collections')->getDefaultValueOf('code_part_code_auto_copy'));
+      $item->save();
+      return $this->renderText('ok');
+    }
+    catch(Doctrine_Exception $ne)
+    {
+      $e = new DarwinPgErrorParser($ne);
+      return $this->renderText($e->getMessage());
+    }
+  }
+
   public function executeCompleteOptions(sfWebRequest $request)
   {
     $this->collections = Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($request->getParameter('institution'));
