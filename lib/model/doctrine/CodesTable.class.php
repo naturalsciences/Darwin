@@ -50,4 +50,17 @@ class CodesTable extends DarwinTable
          orderBy('code_category ASC, code_date DESC, full_code_order_by ASC');
     return $q->execute();
   }
+
+  public function getCodesRelatedArray($table='specimens', $specIds)
+  {
+    if(!is_array($specIds))
+      $specIds = array($specIds=>$specIds);
+    $q = Doctrine_Query::create()->
+         from('Codes')->
+         where('referenced_relation = ?', $table)->
+         andWhereIn('record_id', $specIds)->
+         orderBy('record_id, code_category ASC, code_date DESC, full_code_order_by ASC');
+    return $q->execute();
+  }
+
 }
