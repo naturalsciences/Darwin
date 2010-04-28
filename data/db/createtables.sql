@@ -758,24 +758,34 @@ create table template_collections_users
 comment on table template_collections_users is 'Template table used to construct collections rights tables';
 comment on column template_collections_users.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column template_collections_users.user_ref is 'Reference of user - id field of users table';
+create sequence collections_admin_id_seq;
 create table collections_admin
        (
+        id integer not null default nextval('collections_admin_id_seq'),
+	constraint pk_collections_admin primary key (id),
         constraint unq_collections_admin unique (collection_ref, user_ref),
         constraint fk_collections_admin_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint fk_collections_admin_users foreign key (user_ref) references users(id) on delete cascade
        )
 inherits (template_collections_users);
+comment on table collections_admin.id is 'Unique identifier for collection admin';
 comment on table collections_admin is 'Stores the list of collections administrators';
 comment on column collections_admin.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_admin.user_ref is 'Reference of user - id field of users table';
+
+create sequence collections_rights_id_seq;
+
 create table collections_rights
        (
+        id integer not null default nextval('collections_rights_id_seq'),
+	constraint pk_collections_right primary key (id),
         constraint fk_collections_rights_users foreign key (user_ref) references users(id) on delete cascade,
         constraint fk_collections_rights_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint unq_collections_rights unique (collection_ref, user_ref)
        )
 inherits (template_collections_users);
 comment on table collections_rights is 'List of rights of given users on given collections';
+comment on table collections_rights.id is 'Unique identifier for collection rights';
 comment on column collections_rights.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_rights.user_ref is 'Reference of user - id field of users table';
 create table collections_fields_visibilities
