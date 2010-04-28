@@ -92,7 +92,9 @@ class userActions extends DarwinActions
     */ 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => 1));
+    if ($request->hasParameter('num')) $screen = 3 ;
+    else $screen = 1 ;
+    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => $screen));
     $this->setLayout(false);
   }
 
@@ -105,9 +107,10 @@ class userActions extends DarwinActions
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post')) ;
-    $screen = $request->getAttribute('users_filters[screen]') ;
+    $user_filter = $request->getParameter("users_filters") ;
+    $this->screen = $user_filter['screen'] ;
     $this->setCommonValues('user', 'family_name', $request);
-    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => $screen));
+    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getAttribute('db_user_type'), "screen" => $this->screen));
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));
 
     if($request->getParameter('users_filters','') !== '')

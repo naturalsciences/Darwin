@@ -73,6 +73,30 @@ $(document).ready(function ()
           <?php echo $form['code_part_code_auto_copy'] ?>
         </td>
       </tr>
+      <tr>
+      	<td colspan="2">
+      	<table class="encoding collections_rights">
+		  <thead>
+		    <tr>
+			 <th><label><?php echo __("User") ; ?></label></th>
+			 <th>&nbsp;</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <?php foreach($form['CollectionsRights'] as $form_value):?>
+			 <?php include_partial('coll_rights', array('form' => $form_value));?>
+		    <?php endforeach;?>
+		    <?php foreach($form['newVal'] as $form_value):?>
+			 <?php include_partial('coll_rights', array('form' => $form_value));?>
+		    <?php endforeach;?>
+		  </tbody>
+		</table>
+		<div class='add_value'>
+		  <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+		  <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/"><?php echo __('Add Value');?></a>
+		</div>
+      	</td>
+      <tr>
     </tbody>
     <tfoot>
       <tr>
@@ -88,3 +112,8 @@ $(document).ready(function ()
     </tfoot>
   </table>
 </form>
+<script  type="text/javascript">
+$(document).ready(function () {
+    $('.clear_coll').live('click', detachCollRightValue);
+  });
+</script>

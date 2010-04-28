@@ -49,6 +49,23 @@ class CollectionsForm extends BaseCollectionsForm
      $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkSelfAttached')))
      );
+ 
+    $this->embedRelation('CollectionsRights');
+    $subForm = new sfForm();
+    $this->embedForm('newVal',$subForm);
+  
+  }
+  
+  public function addValue($num,$user_id)
+  {
+      $val = new CollectionsRights();
+      $val->Collections = $this->getObject();      
+      $val->setUserRef($user_id) ;
+      $form = new CollectionsRightsForm($val,array('user_id'=>$user_id));
+  
+      $this->embeddedForms['newVal']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newVal', $this->embeddedForms['newVal']);
   }
 
   public function checkSelfAttached($validator, $values)
@@ -64,4 +81,43 @@ class CollectionsForm extends BaseCollectionsForm
     return $values;
   }
   
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+      if(isset($taintedValues['newVal']))
+      {
+	foreach($taintedValues['newVal'] as $key=>$newVal)
+	{
+	  if (!isset($this['newVal'][$key]))
+	  {
+	    $this->addValue($key,$newVal['user_ref']);
+	  }
+	}
+      }
+      parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+   if (null === $forms)
+   {
+	$value = $this->getValue('newVal');
+	foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['user_ref']))
+	  {
+	    unset($this->embeddedForms['newVal'][$name]);
+	  }
+	}
+	$value = $this->getValue('CollectionsRights');
+	foreach($this->embeddedForms['CollectionsRights']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['user_ref']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Collectionsrights'][$name]);
+	  }
+	 }
+   }
+   return parent::saveEmbeddedForms($con, $forms);
+  }
 }

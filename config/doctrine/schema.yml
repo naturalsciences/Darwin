@@ -447,6 +447,7 @@ Collections:
 
 CollectionsAdmin:
     columns:
+        id: { type: integer, primary: true, autoincrement: true} 
         collection_ref: { type: integer, notnull: true, default:0 }
         user_ref: { type: integer, notnull: true, default:0 }
     relations:
@@ -459,9 +460,9 @@ CollectionsAdmin:
 
 CollectionsRights:
     columns:
+        id: { type: integer, primary: true, autoincrement: true}    
         collection_ref: { type: integer, notnull: true, default:0 }
-        user_ref: { type: integer, notnull: true, default:0 }
-        rights: { type: integer, notnull: true, default:1 }
+        user_ref: { type: integer, notnull: true, default:0 }      
     relations:
         Collections:
             local: collection_ref

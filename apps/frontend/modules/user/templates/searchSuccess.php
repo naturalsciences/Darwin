@@ -52,7 +52,7 @@
                 <?php if(!$is_choose):?>
                 <?php echo link_to(image_tag('edit.png'),'user/edit?id='.$item->getId());?>
                 <?php else:?>
-                  <div class="result_choose"><?php echo __('Choose');?></div>
+                  <div class="result_choose<?php if ($screen== 3) echo ('_coll_rights') ?>"><?php echo __('Choose');?></div>
                 <?php endif;?>
             </td>
           </tr>
@@ -72,3 +72,6 @@
     <?php echo $form['family_name']->renderError(); ?>
 </div>
 <?php endif;?>
+<?php if ($screen == 3) : ?>
+   <div class="edit"><a class="cancel_qtip bt_close" href="#"><?php echo __('Close'); ?></a></div>
+ <?php endif; ?>

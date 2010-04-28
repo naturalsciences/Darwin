@@ -449,6 +449,20 @@ input[type="text"].xlarge_size
   font-weight:bold;
 }
 
+.bt_close
+{
+  background-color:#5BAABD;
+  text-align:right;
+  color:white;
+  padding-top:1px;
+  padding-bottom:1px;
+  padding-left:10px;
+  padding-right:10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-right:15px
+}
+
 .datesNum
 {
   text-align: right;
@@ -482,7 +496,7 @@ input[type="text"].xlarge_size
   text-align:center;
 }
 
-.result_choose
+.result_choose, .result_choose_coll_rights
 {
   background-color:#5BAABD;
   color:white;
@@ -492,7 +506,7 @@ input[type="text"].xlarge_size
   -webkit-border-radius: 5px;
 }
 
-.result_choose:hover
+.result_choose:hover, .result_choose_coll_rights:hover
 {
   cursor:pointer;
 }
@@ -653,6 +667,36 @@ table.encoding tbody
   border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }
+.collections_rights
+{
+  margin: 0.5em;
+  margin-left:0;
+  width:98%;
+}
+
+.collections_rights td, .collections_rights th
+{
+  margin:0;
+  padding:0.1em;
+}
+
+.collections_rights tbody input
+{
+  margin-right: 32px;
+  margin-left: 2px;
+}
+
+.collections_rights tbody.codes input
+{
+  margin:0;
+}
+
+.collections_rights .unit_col
+{
+  text-align:right;
+  padding-right:2.8em;
+}
+
 .property_values
 {
   margin: 0.5em;

@@ -26,6 +26,9 @@
     <tr>
       <th><?php echo $form['user_name']->renderLabel();?></th>
       <td>
+        <?php if(! $form->getObject()->isNew()) : ?>
+              <?php echo $form['user_name']->getValue() ?>
+        <?php endif ; ?>
         <?php echo $form['user_name']->renderError(); ?>
         <?php echo $form['user_name'];?>
       </td>

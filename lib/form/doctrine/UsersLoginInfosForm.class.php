@@ -22,20 +22,24 @@ class UsersLoginInfosForm extends BaseUsersLoginInfosForm
      $this->validatorSchema['new_password'] = new sfValidatorString(array('required' => true, 'min_length' => 4),
                                                                   array('min_length' => '"%value%" must be at least %min_length% characters.')); 
      $this->widgetSchema['confirm_password'] = new sfwidgetFormInputPassword();
-     $this->validatorSchema['confirm_password'] = new sfValidatorString(array('required' => true, 'min_length' => 4),
-                                                                      array('min_length' => '"%value%" must be at least %min_length% characters.'));    
+     $this->validatorSchema['confirm_password'] = new sfValidatorString();    
+    $this->widgetSchema['user_name'] = new sfWidgetFormInputText() ;
+    $this->validatorSchema['user_name'] = new sfValidatorString(array('required' => true, 'min_length' => 4),
+                                                                  array('min_length' => '"%value%" must be at least %min_length% characters.')) ;    
     }
     else
     {
      $this->widgetSchema['login_type'] = new sfWidgetFormInputHidden() ;
-     $this->validatorSchema['login_type'] = new sfValidatorPass() ;
+     $this->validatorSchema['login_type'] = new sfValidatorPass(array('required' => true)) ;
  	$this->widgetSchema['new_password'] = new sfwidgetFormInputPassword();
      $this->validatorSchema['new_password'] = new sfValidatorString(array('required' => false));
      $this->widgetSchema['confirm_password'] = new sfwidgetFormInputPassword();
      $this->validatorSchema['confirm_password'] = new sfValidatorString(array('required' => false));                                                                      
+     $this->widgetSchema['user_name'] = new sfWidgetFormInputHidden() ;
+     $this->validatorSchema['user_name'] = new sfValidatorPass(array('required' => true)) ;
     }
     $this->widgetSchema['user_ref'] = new sfWidgetFormInputHidden() ;
-    $this->widgetSchema['user_name'] = new sfWidgetFormInputText() ;
+
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkPassword'))));
   }

@@ -146,6 +146,12 @@ function clearPropertyValue()
   $(parent).hide();
 }
 
+function detachCollRightValue()
+{
+  parent = $(this).closest('tr');
+  $(parent).detach();
+}
+
 function addPropertyValue()
 {
   $.ajax(
@@ -155,6 +161,21 @@ function addPropertyValue()
     success: function(html)
     {
       $('.property_values tbody').append(html);
+    }
+  });
+  return false;
+}
+
+function addCollRightValue(user_ref)
+{
+  $.ajax(
+  {
+    type: "GET",
+    url: $('a.hidden').attr('href')+ (0+$('.collections_rights tbody tr').length)+'/user_ref/'+user_ref,
+    success: function(html)
+    {
+      $('.collections_rights tbody').append(html);
+      $('.collections_rights tbody tr:last').attr("id" , user_ref) ;
     }
   });
   return false;

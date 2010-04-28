@@ -31,6 +31,7 @@ class collectionActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
     $this->form = new CollectionsForm();
   }
 
@@ -48,8 +49,19 @@ class collectionActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
+//    $this->forward404Unless(Doctrine::getTable('Collections')->find( $this->getUser()->getAttribute('db_user_id')), sprintf('You are not allowed to edit this collection'));    
     $this->form = new CollectionsForm($collections);
     $this->loadWidgets();
+  }
+
+  public function executeAddValue(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $user_ref = intval($request->getParameter('user_ref'));
+    $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')) ;
+    $form = new CollectionsForm($collection);
+    $form->addValue($number,$user_ref);
+    return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number]));
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -95,7 +107,7 @@ class collectionActions extends DarwinActions
     {
         try{
             $collections = $form->save();
-            $this->redirect('collection/index');
+            //$this->redirect('collection/index');
         }
         catch(Exception $e)
         {
