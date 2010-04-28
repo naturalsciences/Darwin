@@ -162,10 +162,10 @@ class userActions extends DarwinActions
   public function executeWidget(sfWebRequest $request)
   {
    $id = $request->getparameter('id') ;
-   $url = "user/edit?id=".$id ;
+   $url = "user/widget?id=".$id ;
    if (!$id) {
    	$id = Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getId() ;
-   	$url = "user/profile" ;
+   	$url = "user/widget" ;
    }
    else { 
 	$this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));

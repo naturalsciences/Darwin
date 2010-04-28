@@ -48,12 +48,21 @@ class MyPreferences extends BaseMyPreferences
   
   public function setWidgetChoice($value)
   {
-	$this->setOpened(false) ;
-	$this->setVisible(false) ;
-	$this->setIsAvailable(false) ;	
-	if ($this->getMandatory()) { $this->setOpened(true) ; $this->setVisible(true) ; $this->setIsAvailable(true) ; }
-  	if ($value == 'is_available') $this->setIsAvailable(true) ;	
-  	if ($value == 'visible'){ $this->setVisible(true) ; $this->setIsAvailable(true) ; }	 	
-  	if ($value == 'opened'){ $this->setOpened(true) ; $this->setVisible(true) ; $this->setIsAvailable(true) ; }
+      $values_array = array('opened' => false, 'visible' => false, 'is_available' => false);
+
+      if ($this->getMandatory()) $values_array = array_fill_keys(array_keys($values_array), true);
+      if ($value == 'opened') $values_array = array_fill_keys(array_keys($values_array), true);
+      if ($value == 'is_available') $values_array['is_available'] = true;
+      if ($value == 'visible')
+      {
+	$values_array['visible'] = true;
+	$values_array['is_available'] = true;
+      }
+
+      foreach($values_array as $key => $new_value)
+      {
+	if($this[$key] != $new_value)
+	  $this[$key] = $new_value;
+      }
   }
 }

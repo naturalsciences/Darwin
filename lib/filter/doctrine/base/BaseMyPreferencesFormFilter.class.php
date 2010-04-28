@@ -13,6 +13,9 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'user_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => true)),
+      'category'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'group_name'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'order_by'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'col_num'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'mandatory'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
@@ -25,6 +28,9 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
+      'user_ref'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('User'), 'column' => 'id')),
+      'category'     => new sfValidatorPass(array('required' => false)),
+      'group_name'   => new sfValidatorPass(array('required' => false)),
       'order_by'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'col_num'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'mandatory'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
@@ -53,7 +59,8 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'user_ref'     => 'Number',
+      'id'           => 'Number',
+      'user_ref'     => 'ForeignKey',
       'category'     => 'Text',
       'group_name'   => 'Text',
       'order_by'     => 'Number',

@@ -596,9 +596,10 @@ MySavedSearches:
 
 MyPreferences:
     columns:
-        user_ref: { type: integer, notnull: true, primary:true}
-        category: { type: string, notnull: true, default: board_widget, primary:true}
-        group_name: { type: string, notnull: true, primary:true}
+        id: { type: integer, primary: true, autoincrement: true }
+        user_ref: { type: integer, notnull: true}
+        category: { type: string, notnull: true, default: board_widget}
+        group_name: { type: string, notnull: true}
         order_by: { type: integer, notnull: true, default:1 }
         col_num: { type: integer, notnull: true, default:1 }
         mandatory: { type: boolean, notnull: true, default: false}

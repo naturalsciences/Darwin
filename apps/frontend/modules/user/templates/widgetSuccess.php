@@ -26,27 +26,24 @@
 	<tbody alt="<?php echo $category ?>" class='widget_selection'>
 	<?php foreach($record as $i=>$widget) :?>
 		<tr>
-		<?php if($i=='user_ref') echo("<th rowspan='".count($record)."' >".$category."</th>") ; ?>
-			<th><?php echo $widget['widget_choice']->renderLabel() ?></th>
-			<?php if ($widget['mandatory']->getValue()) : ?>
-  				<th colspan="<?php echo ($level>2?5:4) ?>" class='widget_selection'>-----   Mandatory  -----
-  				<?php echo $widget['category'] ?>
-				<?php echo $widget['group_name'] ?>
-				<?php echo $widget['user_ref'] ?>
-				<?php echo $widget['mandatory'] ?>				
-  				</th>
- 			<?php else : ?>
-				<td>
-				  <?php echo $widget['category'] ?>
-				  <?php echo $widget['group_name'] ?>
-				  <?php echo $widget['user_ref'] ?>			  
-				  <?php echo $widget['widget_choice']->renderError() ?>
-				  <?php echo $widget['widget_choice'] ?>
-				</td>
-			<?php endif ; ?>	
-			<td class='widget_selection'><?php echo $widget['title_perso']->renderError() ?>
-			    <?php echo $widget['title_perso'] ?>
-			</td>	
+		    <?php if($i=='user_ref'):?>
+			<?php echo("<th rowspan='".count($record)."' >".$category."</th>") ; ?>
+		    <?php endif;?>
+		    <th>
+		      <?php echo $widget['widget_choice']->renderLabel() ?>
+		      <?php echo $widget->renderHiddenFields(); ?>
+		    </th>
+		    <?php if ($form->getEmbeddedForm('MyPreferences')->getEmbeddedForm($widget->getName())->getObject()->getMandatory() ) : ?>
+			    <th colspan="<?php echo ($level>2?5:4) ?>" class='widget_selection'>-----   Mandatory  -----</th>
+		    <?php else : ?>
+			    <td>
+			      <?php echo $widget['widget_choice']->renderError() ?>
+			      <?php echo $widget['widget_choice'] ?>
+			    </td>
+		    <?php endif ; ?>	
+		    <td class='widget_selection'><?php echo $widget['title_perso']->renderError() ?>
+			<?php echo $widget['title_perso'] ?>
+		    </td>	
 		</tr>
 	<?php endforeach ?>
 	</tbody>

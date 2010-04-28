@@ -15,9 +15,10 @@ abstract class BaseMyPreferencesForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'user_ref'     => new sfWidgetFormInputHidden(),
-      'category'     => new sfWidgetFormInputHidden(),
-      'group_name'   => new sfWidgetFormInputHidden(),
+      'id'           => new sfWidgetFormInputHidden(),
+      'user_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
+      'category'     => new sfWidgetFormTextarea(),
+      'group_name'   => new sfWidgetFormTextarea(),
       'order_by'     => new sfWidgetFormInputText(),
       'col_num'      => new sfWidgetFormInputText(),
       'mandatory'    => new sfWidgetFormInputCheckbox(),
@@ -30,9 +31,10 @@ abstract class BaseMyPreferencesForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_ref', 'required' => false)),
-      'category'     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'category', 'required' => false)),
-      'group_name'   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'group_name', 'required' => false)),
+      'id'           => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'user_ref'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
+      'category'     => new sfValidatorString(array('required' => false)),
+      'group_name'   => new sfValidatorString(),
       'order_by'     => new sfValidatorInteger(array('required' => false)),
       'col_num'      => new sfValidatorInteger(array('required' => false)),
       'mandatory'    => new sfValidatorBoolean(array('required' => false)),
