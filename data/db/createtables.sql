@@ -768,8 +768,8 @@ create table collections_admin
         constraint fk_collections_admin_users foreign key (user_ref) references users(id) on delete cascade
        )
 inherits (template_collections_users);
-comment on table collections_admin.id is 'Unique identifier for collection admin';
 comment on table collections_admin is 'Stores the list of collections administrators';
+comment on column collections_admin.id is 'Unique identifier for collection admin';
 comment on column collections_admin.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_admin.user_ref is 'Reference of user - id field of users table';
 
@@ -785,7 +785,7 @@ create table collections_rights
        )
 inherits (template_collections_users);
 comment on table collections_rights is 'List of rights of given users on given collections';
-comment on table collections_rights.id is 'Unique identifier for collection rights';
+comment on column collections_rights.id is 'Unique identifier for collection rights';
 comment on column collections_rights.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_rights.user_ref is 'Reference of user - id field of users table';
 create table collections_fields_visibilities
