@@ -952,8 +952,12 @@ comment on column my_saved_searches.search_criterias is 'String field containing
 comment on column my_saved_searches.favorite is 'Flag telling if saved search concerned is one of the favorites or not';
 comment on column my_saved_searches.modification_date_time is 'Last modification or entry date and time';
 comment on column my_saved_searches.visible_fields_in_result is 'Array of fields that were set visible in the result table at the time the search was saved';
+
+create sequence my_preferences_id_seq;
+
 create table my_preferences
        (
+	id integer not null default nextval('my_preferences_id_seq'),
         user_ref integer not null,
         category varchar not null default 'board_widget',
         group_name varchar not null,
