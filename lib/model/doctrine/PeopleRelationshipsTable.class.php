@@ -19,5 +19,4 @@ class PeopleRelationshipsTable extends DarwinTable
 	    ->where("r.person_2_ref = ?", $id);
      return $q->execute();
   }
-
 }

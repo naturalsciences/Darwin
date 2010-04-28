@@ -12,4 +12,13 @@ class PeopleLanguagesTable extends DarwinTable
             ->addWhere('people_ref = ?', $user_id);
       return $q->execute();
     }
+
+  public function fetchByPeople($id)
+  {
+    $q = Doctrine_Query::create()
+	  ->from('PeopleLanguages r')
+	  ->where('r.people_ref = ?',$id)
+	  ->orderBy('r.language_country ASC');
+    return $q->execute();
+  }
 }

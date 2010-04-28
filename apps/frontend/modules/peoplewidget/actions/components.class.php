@@ -9,17 +9,17 @@ class peoplewidgetComponents extends sfComponents
 
   public function executeAddress()
   {
-    $this->addresses =  Doctrine::getTable('PeopleAddresses')->findByPersonUserRef($this->eid);
+    $this->addresses =  Doctrine::getTable('PeopleAddresses')->fetchByPeople($this->eid);
   }
   
   public function executeComm()
   {
-    $this->comms =  Doctrine::getTable('PeopleComm')->findByPersonUserRef($this->eid);
+    $this->comms =  Doctrine::getTable('PeopleComm')->fetchByPeople($this->eid);
   }
   
   public function executeLang()
   {
-    $this->langs =  Doctrine::getTable('PeopleLanguages')->findByPeopleRef($this->eid);
+    $this->langs =  Doctrine::getTable('PeopleLanguages')->fetchByPeople($this->eid);
   }
   
   public function executeRelation()

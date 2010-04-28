@@ -123,7 +123,7 @@ class igsActions extends DarwinActions
     // Triggers the search ID function
     if($request->getParameter('q', '') !== '' && $request->getParameter('limit', '') !== '')
     {
-      $igIds = Doctrine::getTable('Igs')->findByIgNumLimited($request->getParameter('q'), $request->getParameter('limit'));
+      $igIds = Doctrine::getTable('Igs')->fetchByIgNumLimited($request->getParameter('q'), $request->getParameter('limit'));
       if ($igIds) 
       {
         $values=array();
