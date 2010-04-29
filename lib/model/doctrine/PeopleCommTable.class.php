@@ -11,4 +11,13 @@ class PeopleCommTable extends DarwinTable
     else
       return array('home'=>'Home','pref'=>'Preferred', 'work'=>'Work','internet'=> 'Internet');
   }
+
+  public function fetchByPeople($id)
+  {
+    $q = Doctrine_Query::create()
+	  ->from('PeopleComm r')
+	  ->where('r.person_user_ref = ?',$id)
+	  ->orderBy('r.comm_type ASC, r.id ASC');
+    return $q->execute();
+  }
 }

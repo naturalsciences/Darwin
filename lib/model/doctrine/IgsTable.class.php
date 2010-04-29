@@ -5,7 +5,7 @@
  */
 class IgsTable extends DarwinTable
 {
-  public function findByIgNumLimited($ig_num, $limit)
+  public function fetchByIgNumLimited($ig_num, $limit)
   {
     $q = Doctrine_Query::create()
          ->from('Igs i')

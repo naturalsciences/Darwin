@@ -263,4 +263,12 @@ class ClassificationSynonymiesTable extends DarwinTable
       $this->resetBasionym($group1);
     }
   }
+
+  public function countRecordInGroup($group_id)
+  {
+    $q = Doctrine_Query::create()
+	->from('ClassificationSynonymies s')
+	->andWhere('s.group_id = ?', $group_id);
+    return $q->count();
+  }
 }

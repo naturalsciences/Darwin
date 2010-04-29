@@ -11,7 +11,7 @@
         <li>
             <a href="#"><?php echo __('Searches');?></a>
             <ul>
-                <li>
+                <!--<li>
                     <a href="#aa">My Searches</a>
                     <ul>
                         <li><a href="#">menu item</a></li>
@@ -20,8 +20,7 @@
                         <li><a href="#">menu item</a></li>
                         <li><a href="#">menu item</a></li>
                     </ul>
-                </li>
-                <li><?php echo link_to(__('Specimens'),'specimen/index');?></li>
+                </li>-->
                 <li>
                     <a href="">Catalogues</a>
                     <ul>
@@ -30,7 +29,6 @@
                         <li><?php echo link_to(__('Lithostratigraphy'),'lithostratigraphy/index');?></li>
                         <li><?php echo link_to(__('Lithology'),'lithology/index');?></li>
                         <li><?php echo link_to(__('Mineralogy'),'mineralogy/index');?></li>
-                        <li><?php echo link_to(__('Collections'),'collection/index');?></li>
                         <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/index');?></li>
@@ -38,12 +36,13 @@
                         <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
                     </ul>
                 </li>
+                <li><?php echo link_to(__('Specimens'),'specimen/index');?></li>
+                <li><?php echo link_to(__('Collections'),'collection/index');?></li>
             </ul>
         </li>
         <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
-                <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
                 <li>
                     <a href="#">Catalogues</a>
                     <ul>
@@ -52,7 +51,6 @@
                         <li><?php echo link_to(__('Lithostratigraphy'),'lithostratigraphy/new');?></li>
                         <li><?php echo link_to(__('Lithology'),'lithology/new');?></li>
                         <li><?php echo link_to(__('Mineralogy'),'mineralogy/new');?></li>
-                        <li><?php echo link_to(__('Collections'),'collection/new');?></li>
                         <li><?php echo link_to(__('Expeditions'),'expedition/new');?></li>
                         <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/new');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/new');?></li>
@@ -60,6 +58,8 @@
                         <li><?php echo link_to(__('Sampling location'),'gtu/new');?></li>
                     </ul>
                 </li>
+                <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
+                <li><?php echo link_to(__('Collections'),'collection/new');?></li>
             </ul>
         </li>
         <li>

@@ -4,12 +4,12 @@ class userswidgetComponents extends sfComponents
 {
   public function executeAddress()
   {
-    $this->addresses =  Doctrine::getTable('UsersAddresses')->findByPersonUserRef($this->eid);
+    $this->addresses =  Doctrine::getTable('UsersAddresses')->fetchByUser($this->eid);
   }
   
   public function executeComm()
   {
-    $this->comms =  Doctrine::getTable('UsersComm')->findByPersonUserRef($this->eid);
+    $this->comms =  Doctrine::getTable('UsersComm')->fetchByUser($this->eid);
   }
   
   public function executeLang()
