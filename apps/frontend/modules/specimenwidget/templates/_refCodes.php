@@ -50,7 +50,7 @@
     <tr>
       <td colspan='8'>
         <div class="add_code">
-          <a href="<?php echo url_for('specimen/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value"><?php echo __('Add Code');?></a>
+          <a href="<?php echo url_for('specimen/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_code"><?php echo __('Add Code');?></a>
         </div>
       </td>
     </tr>
@@ -74,7 +74,7 @@ $(document).ready(function () {
       }
     });
 
-    $('#add_prop_value').click(function()
+    $('#add_code').click(function()
     {
         parent = $(this).closest('table.property_values');
         $.ajax(

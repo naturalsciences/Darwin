@@ -27,11 +27,25 @@ class specimenActions extends DarwinActions
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
 
+  public function executeAddIdentification(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $spec = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
+    
+    $form = new SpecimensForm($spec);
+    $form->addIdentifications($number);
+    return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number]));
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->loadWidgets();
     $this->form = new SpecimensForm();
     $this->form->addCodes(0, null);
+    $this->form->addIdentifications(0, null);
   }
 
   public function executeCreate(sfWebRequest $request)

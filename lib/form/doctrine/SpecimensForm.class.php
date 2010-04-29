@@ -249,6 +249,24 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+    /* Identifications sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('Identifications',$subForm);   
+    foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new IdentificationsForm($vals);
+      $this->embeddedForms['Identifications']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newIdentification',$subForm);
+
+
+    $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
+
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
                                          'host_taxon_ref' => 'Host taxon'
@@ -300,6 +318,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
     $this->validatorSchema['code'] = new sfValidatorPass();
+    $this->validatorSchema['ident'] = new sfValidatorPass();
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
@@ -333,6 +352,18 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
   }
 
+  public function addIdentifications($num)
+  {
+      $options = array('referenced_relation' => 'specimens');
+      $val = new Identifications();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new IdentificationsForm($val);
+      $this->embeddedForms['newIdentification']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
+  }
+
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
@@ -347,10 +378,28 @@ class SpecimensForm extends BaseSpecimensForm
 	}
     }
 
+    if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
+    {
+	foreach($taintedValues['newIdentification'] as $key=>$newVal)
+	{
+	  if (!isset($this['newIdentification'][$key]))
+	  {
+	    $this->addIdentifications($key);
+	  }
+          $taintedValues['newIdentification'][$key]['record_id'] = 0;
+	}
+    }
+
     if(!isset($taintedValues['code']))
     {
       $this->offsetUnset('Codes');
       unset($taintedValues['Codes']);
+    }
+
+    if(!isset($taintedValues['ident']))
+    {
+      $this->offsetUnset('Identifications');
+      unset($taintedValues['Identifications']);
     }
 
     parent::bind($taintedValues, $taintedFiles);
@@ -379,6 +428,30 @@ class SpecimensForm extends BaseSpecimensForm
 	  {
 	    $form->getObject()->delete();
 	    unset($this->embeddedForms['Codes'][$name]);
+	  }
+	}
+    }
+    if (null === $forms && $this->getValue('ident'))
+    {
+	$value = $this->getValue('newIdentification');
+	foreach($this->embeddedForms['newIdentification']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['value_defined']))
+	  {
+	    unset($this->embeddedForms['newIdentification'][$name]);
+	  }
+          else
+          {
+            $form->getObject()->setRecordId($this->getObject()->getId());
+          }
+	}
+	$value = $this->getValue('Identifications');
+	foreach($this->embeddedForms['Identifications']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['value_defined']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Identifications'][$name]);
 	  }
 	}
     }

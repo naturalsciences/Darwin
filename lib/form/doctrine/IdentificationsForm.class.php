@@ -1,15 +1,69 @@
 <?php
 
 /**
- * Identifications form.
+ * VernacularNames form.
  *
  * @package    form
- * @subpackage Identifications
+ * @subpackage VernacularNames
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
 class IdentificationsForm extends BaseIdentificationsForm
 {
   public function configure()
   {
+
+    $this->useFields(array('id', 'referenced_relation', 'record_id', 'notion_date', 'notion_concerned', 'value_defined', 'determination_status', 'order_by'));
+
+    $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
+    $years = array_combine($yearsKeyVal, $yearsKeyVal);
+    $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
+    $minDate = new FuzzyDateTime(strval(min($yearsKeyVal).'/01/01'));
+    $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
+    $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
+    $maxDate->setStart(false);
+    $choices = array('taxonomy'=> 'Taxon.', 'mineralogy' => 'Miner.', 'chronostratigraphy' => 'Chron.', 'lithostratigraphy' => 'Litho.', 'lithology' => 'Rock') ;
+
+    $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['referenced_relation'] = new sfValidatorString();
+    $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['record_id'] = new sfValidatorInteger();
+    $this->widgetSchema['notion_date'] = new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
+                                                                             'image'=>'/images/calendar.gif', 
+                                                                             'format' => '%day%/%month%/%year%', 
+                                                                             'years' => $years,
+                                                                             'empty_values' => $dateText,
+                                                                            ),
+                                                                       array('class' => 'to_date')
+                                                                      );
+    $this->validatorSchema['notion_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                         'from_date' => true,
+                                                                         'min' => $minDate,
+                                                                         'max' => $maxDate, 
+                                                                         'empty_value' => $dateLowerBound,
+                                                                        ),
+                                                                   array('invalid' => 'Date provided is not valid',
+                                                                        )
+                                                                  );
+    $this->widgetSchema['notion_concerned'] = new sfWidgetFormChoice(array(
+        'choices' => $choices
+      ));
+    $this->validatorSchema['notion_concerned'] = new sfValidatorChoice(array('required' => true, 'choices'=>array_keys($choices)));
+    $this->widgetSchema['value_defined'] = new sfWidgetFormInput();
+    $this->widgetSchema['value_defined']->setAttributes(array('class'=>'small_size'));
+    $this->validatorSchema['value_defined'] = new sfValidatorString(array('required' => false, 'trim'=>true));
+    $this->widgetSchema['determination_status'] = new widgetFormSelectComplete(array(
+        'model' => 'Identifications',
+        'table_method' => 'getDistinctDeterminationStatus',
+        'method' => 'getDeterminationStatus',
+        'key_method' => 'getDeterminationStatus',
+        'add_empty' => true,
+        'change_label' => '',
+        'add_label' => '',
+    ));
+    $this->widgetSchema['determination_status']->setAttributes(array('class'=>'vvvsmall_size'));
+    $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['order_by'] = new sfValidatorInteger();
+    $this->setDefault('order_by', 0);
+    $this->mergePostValidator(new IdentificationsValidatorSchema());
   }
 }
