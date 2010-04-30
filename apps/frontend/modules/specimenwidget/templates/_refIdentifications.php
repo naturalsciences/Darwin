@@ -47,13 +47,14 @@ function forceHelper(e,ui)
 
 $(document).ready(function () {
 
-    $('.clear_prop').live('click', function()
+    $('.clear_identification').live('click', function()
     {
       parent = $(this).closest('tr');
+      parent_class = parent.attr('class');
       nvalue='';
       $(parent).find('input[id$=\"_value_defined\"]').val(nvalue);
-      $(parent).hide();
-      visibles = $(parent).closest('tbody').find('tr:visible').size();
+      $('.'+parent_class).hide();
+      visibles = $('tbody#identifications').find('tr[class$=\"'+parent_class+'\"]:visible').size();
       if(!visibles)
       {
         $(this).closest('table.property_values').find('thead').hide();
@@ -63,14 +64,14 @@ $(document).ready(function () {
     $('#add_identification').click(function()
     {
         parent = $(this).closest('table.property_values');
-        visibles = $(parent).find('tbody#identifications').find('tr').size();
+        visibles = $(parent).find('tbody#identifications').find('tr[class$=\"spec_ident_group_id_"]:visible').size();
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/order_by/' + (visibles+1),
+          url: $(this).attr('href')+ (0+$('.property_values tbody tr[class$=\"spec_ident_group_id_"]').length) + '/order_by/' + (visibles+1),
           success: function(html)
           {
-            $(parent).find('tbody').append(html);
+            $(parent).find('tbody#identifications').append(html);
             $(parent).find('thead:hidden').show();
           }
         });

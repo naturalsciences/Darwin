@@ -25,7 +25,7 @@
       <?php echo $form['code_suffix'];?>
     </td>
     <td class="widget_row_delete">
-      <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?>
+      <?php echo image_tag('remove.png', 'alt=Delete class=clear_code'); ?>
       <?php echo $form->renderHiddenFields();?>
     </td>    
   </tr>

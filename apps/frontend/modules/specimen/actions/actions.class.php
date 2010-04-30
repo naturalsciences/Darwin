@@ -38,7 +38,7 @@ class specimenActions extends DarwinActions
     
     $form = new SpecimensForm($spec);
     $form->addIdentifications($number, $order_by);
-    return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number]));
+    return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number], 'row_num'=>$number));
   }
 
   public function executeNew(sfWebRequest $request)

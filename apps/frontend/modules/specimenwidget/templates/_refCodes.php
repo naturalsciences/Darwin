@@ -59,7 +59,7 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-    $('.clear_prop').live('click', function()
+    $('.clear_code').live('click', function()
     {
       parent = $(this).closest('tr');
       nvalue='';

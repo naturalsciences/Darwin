@@ -891,6 +891,11 @@ table.encoding tbody .widget_row_delete
   padding-right:1px;
 }
 
+.handle
+{
+  cursor:move;
+}
+
 .widget_sub_table
 {
   width:100%;
@@ -911,7 +916,7 @@ table.encoding tbody .widget_row_delete
   width:18px;
 }
 
-.clear_prop
+.clear_prop, .clear_code, .clear_identification, .clear_identifier
 {
   cursor:pointer;
 }
