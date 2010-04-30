@@ -6,7 +6,8 @@
   </tr>
   <?php endif;?>
   <tr>
-    <td>
+    <td class="handle">
+      <?php echo image_tag('drag.png');?>
     </td>
     <td>
       <?php echo $form['notion_date'];?>

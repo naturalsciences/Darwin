@@ -30,13 +30,14 @@ class specimenActions extends DarwinActions
   public function executeAddIdentification(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
+    $order_by = intval($request->getParameter('order_by',0));
     $spec = null;
 
     if($request->hasParameter('id') && $request->getParameter('id'))
       $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
     
     $form = new SpecimensForm($spec);
-    $form->addIdentifications($number);
+    $form->addIdentifications($number, $order_by);
     return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number]));
   }
 

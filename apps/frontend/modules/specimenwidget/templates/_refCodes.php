@@ -38,7 +38,7 @@
       </th>
     </tr>
   </thead>
-  <tbody class="codes">
+  <tbody id="codes">
     <?php foreach($form['Codes'] as $form_value):?>
       <?php include_partial('spec_codes', array('form' => $form_value));?>
     <?php endforeach;?>

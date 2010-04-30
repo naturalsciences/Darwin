@@ -63,7 +63,6 @@ class IdentificationsForm extends BaseIdentificationsForm
     $this->widgetSchema['determination_status']->setAttributes(array('class'=>'vvvsmall_size'));
     $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['order_by'] = new sfValidatorInteger();
-    $this->setDefault('order_by', 0);
     $this->mergePostValidator(new IdentificationsValidatorSchema());
   }
 }

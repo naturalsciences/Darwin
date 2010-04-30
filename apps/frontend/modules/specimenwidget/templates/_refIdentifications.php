@@ -20,7 +20,7 @@
       </th>
     </tr>
   </thead>
-  <tbody class="codes">
+  <tbody id="identifications">
     <?php foreach($form['Identifications'] as $form_value):?>
       <?php include_partial('spec_identifications', array('form' => $form_value));?>
     <?php endforeach;?>
@@ -39,6 +39,12 @@
   </tfoot>
 </table>
 <script  type="text/javascript">
+
+function forceHelper(e,ui)
+{
+   $(".ui-state-highlight").html("<td colspan='6'>&nbsp;</td>");
+}
+
 $(document).ready(function () {
 
     $('.clear_prop').live('click', function()
@@ -57,10 +63,11 @@ $(document).ready(function () {
     $('#add_identification').click(function()
     {
         parent = $(this).closest('table.property_values');
+        visibles = $(parent).find('tbody#identifications').find('tr').size();
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length),
+          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/order_by/' + (visibles+1),
           success: function(html)
           {
             $(parent).find('tbody').append(html);
@@ -70,5 +77,21 @@ $(document).ready(function () {
         return false;
     });
     
+  $("#identifications").sortable({
+      placeholder: 'ui-state-highlight',
+      handle: '.handle',
+      axis: 'y',
+      change: function(e, ui) {
+	forceHelper(e,ui);
+      },
+      deactivate: function(event, ui) {
+        $(this).find('tr:visible').each(function (index, item) 
+                                        {
+                                          $(item).find('input[id$=\"_order_by\"]').val(index+1);
+                                        }
+                                       );
+      }
+    });
+
 });
 </script>

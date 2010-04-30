@@ -352,9 +352,9 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
   }
 
-  public function addIdentifications($num)
+  public function addIdentifications($num, $order_by=0)
   {
-      $options = array('referenced_relation' => 'specimens');
+      $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
       $val = new Identifications();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
