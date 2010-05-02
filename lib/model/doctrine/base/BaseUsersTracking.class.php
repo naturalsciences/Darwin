@@ -12,21 +12,24 @@
  * @property string $action
  * @property string $modification_date_time
  * @property Users $Users
+ * @property Doctrine_Collection $UsersTrackingRecords
  * 
- * @method integer       getId()                     Returns the current record's "id" value
- * @method string        getReferencedRelation()     Returns the current record's "referenced_relation" value
- * @method integer       getRecordId()               Returns the current record's "record_id" value
- * @method integer       getUserRef()                Returns the current record's "user_ref" value
- * @method string        getAction()                 Returns the current record's "action" value
- * @method string        getModificationDateTime()   Returns the current record's "modification_date_time" value
- * @method Users         getUsers()                  Returns the current record's "Users" value
- * @method UsersTracking setId()                     Sets the current record's "id" value
- * @method UsersTracking setReferencedRelation()     Sets the current record's "referenced_relation" value
- * @method UsersTracking setRecordId()               Sets the current record's "record_id" value
- * @method UsersTracking setUserRef()                Sets the current record's "user_ref" value
- * @method UsersTracking setAction()                 Sets the current record's "action" value
- * @method UsersTracking setModificationDateTime()   Sets the current record's "modification_date_time" value
- * @method UsersTracking setUsers()                  Sets the current record's "Users" value
+ * @method integer             getId()                     Returns the current record's "id" value
+ * @method string              getReferencedRelation()     Returns the current record's "referenced_relation" value
+ * @method integer             getRecordId()               Returns the current record's "record_id" value
+ * @method integer             getUserRef()                Returns the current record's "user_ref" value
+ * @method string              getAction()                 Returns the current record's "action" value
+ * @method string              getModificationDateTime()   Returns the current record's "modification_date_time" value
+ * @method Users               getUsers()                  Returns the current record's "Users" value
+ * @method Doctrine_Collection getUsersTrackingRecords()   Returns the current record's "UsersTrackingRecords" collection
+ * @method UsersTracking       setId()                     Sets the current record's "id" value
+ * @method UsersTracking       setReferencedRelation()     Sets the current record's "referenced_relation" value
+ * @method UsersTracking       setRecordId()               Sets the current record's "record_id" value
+ * @method UsersTracking       setUserRef()                Sets the current record's "user_ref" value
+ * @method UsersTracking       setAction()                 Sets the current record's "action" value
+ * @method UsersTracking       setModificationDateTime()   Sets the current record's "modification_date_time" value
+ * @method UsersTracking       setUsers()                  Sets the current record's "Users" value
+ * @method UsersTracking       setUsersTrackingRecords()   Sets the current record's "UsersTrackingRecords" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -72,5 +75,9 @@ abstract class BaseUsersTracking extends sfDoctrineRecord
         $this->hasOne('Users', array(
              'local' => 'user_ref',
              'foreign' => 'id'));
+
+        $this->hasMany('UsersTrackingRecords', array(
+             'local' => 'id',
+             'foreign' => 'tracking_ref'));
     }
 }

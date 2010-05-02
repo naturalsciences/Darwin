@@ -2,10 +2,10 @@
     <ul class="sf-menu main_menu">
         <li class="house"><?php echo link_to(image_tag('home.png', 'alt=Home'),'board/index');?></li>
         <li>
-            <?php echo link_to(__('My Profile'),'user/profile');?>
+            <a href="#"><?php echo __('My Preferences');?></a>
             <ul>
+		<li><?php echo link_to(__('My Profile'),'user/profile');?></li>
                 <li><?php echo link_to(__('My Widgets'),'user/widget');?></li>
-
             </ul>
         </li>
         <li>
@@ -22,7 +22,7 @@
                     </ul>
                 </li>-->
                 <li>
-                    <a href="">Catalogues</a>
+                    <a href="#"><?php echo __('Catalogues');?></a>
                     <ul>
                         <li><?php echo link_to(__('Taxonomy'),'taxonomy/index');?></li>
                         <li><?php echo link_to(__('Chronostratigraphy'),'chronostratigraphy/index');?></li>
@@ -44,7 +44,7 @@
             <a href="#"><?php echo __('Add');?></a>
             <ul>
                 <li>
-                    <a href="#">Catalogues</a>
+                    <a href="#"><?php echo __('Catalogues');?></a>
                     <ul>
                         <li><?php echo link_to(__('Taxonomy'),'taxonomy/new');?></li>
                         <li><?php echo link_to(__('Chronostratigraphy'),'chronostratigraphy/new');?></li>
@@ -65,7 +65,8 @@
         <li>
             <a href=""><?php echo __('Administration');?></a>
             <ul>
-                <li><?php echo link_to('Reload','account/reload');?></li>
+                <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>
+                <li><?php echo link_to('Big Brother','bigbro/index');?></li>
                 <li>
                 	<a href="#"><?php echo __('User');?></a>
                 	<ul>

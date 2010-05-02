@@ -4,5 +4,8 @@
  */
 class UsersTrackingTable extends DarwinTable
 {
-
+  public function getDistinctTable()
+  {
+    return $this->createDistinct('UsersTracking', 'referenced_relation', 'name')->execute();
+  }
 }

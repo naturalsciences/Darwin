@@ -1438,3 +1438,8 @@ input.tag_line
   border-left:1px solid #C1CC33;
   text-align: center
 }
+
+.field_change
+{
+  display:none;
+}

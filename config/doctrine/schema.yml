@@ -559,10 +559,14 @@ UsersTracking:
 #MAY BE MODIFIED
 UsersTrackingRecords:
     columns:
-        tracking_ref: { type: integer, notnull: true},
-        field_name: { type: string, notnull: true}
+        tracking_ref: { type: integer, notnull: true, primary: true,},
+        field_name: { type: string, notnull: true,primary: true,}
         old_value: {type: string}
         new_value: {type: string}
+    relations:
+        UsersTracking:
+            local: tracking_ref
+            foreign: id
 
 CollectionMaintenance:
     columns:

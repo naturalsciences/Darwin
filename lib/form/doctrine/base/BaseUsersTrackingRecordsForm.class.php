@@ -15,17 +15,15 @@ abstract class BaseUsersTrackingRecordsForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'           => new sfWidgetFormInputHidden(),
-      'tracking_ref' => new sfWidgetFormInputText(),
-      'field_name'   => new sfWidgetFormTextarea(),
+      'tracking_ref' => new sfWidgetFormInputHidden(),
+      'field_name'   => new sfWidgetFormInputHidden(),
       'old_value'    => new sfWidgetFormTextarea(),
       'new_value'    => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
-      'id'           => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'tracking_ref' => new sfValidatorInteger(),
-      'field_name'   => new sfValidatorString(),
+      'tracking_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'tracking_ref', 'required' => false)),
+      'field_name'   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'field_name', 'required' => false)),
       'old_value'    => new sfValidatorString(array('required' => false)),
       'new_value'    => new sfValidatorString(array('required' => false)),
     ));

@@ -9,15 +9,18 @@
  * @property string $field_name
  * @property string $old_value
  * @property string $new_value
+ * @property UsersTracking $UsersTracking
  * 
- * @method integer              getTrackingRef()  Returns the current record's "tracking_ref" value
- * @method string               getFieldName()    Returns the current record's "field_name" value
- * @method string               getOldValue()     Returns the current record's "old_value" value
- * @method string               getNewValue()     Returns the current record's "new_value" value
- * @method UsersTrackingRecords setTrackingRef()  Sets the current record's "tracking_ref" value
- * @method UsersTrackingRecords setFieldName()    Sets the current record's "field_name" value
- * @method UsersTrackingRecords setOldValue()     Sets the current record's "old_value" value
- * @method UsersTrackingRecords setNewValue()     Sets the current record's "new_value" value
+ * @method integer              getTrackingRef()   Returns the current record's "tracking_ref" value
+ * @method string               getFieldName()     Returns the current record's "field_name" value
+ * @method string               getOldValue()      Returns the current record's "old_value" value
+ * @method string               getNewValue()      Returns the current record's "new_value" value
+ * @method UsersTracking        getUsersTracking() Returns the current record's "UsersTracking" value
+ * @method UsersTrackingRecords setTrackingRef()   Sets the current record's "tracking_ref" value
+ * @method UsersTrackingRecords setFieldName()     Sets the current record's "field_name" value
+ * @method UsersTrackingRecords setOldValue()      Sets the current record's "old_value" value
+ * @method UsersTrackingRecords setNewValue()      Sets the current record's "new_value" value
+ * @method UsersTrackingRecords setUsersTracking() Sets the current record's "UsersTracking" value
  * 
  * @package    darwin
  * @subpackage model
@@ -31,11 +34,11 @@ abstract class BaseUsersTrackingRecords extends sfDoctrineRecord
         $this->setTableName('users_tracking_records');
         $this->hasColumn('tracking_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'primary' => true,
              ));
         $this->hasColumn('field_name', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
+             'primary' => true,
              ));
         $this->hasColumn('old_value', 'string', null, array(
              'type' => 'string',
@@ -48,6 +51,8 @@ abstract class BaseUsersTrackingRecords extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        
+        $this->hasOne('UsersTracking', array(
+             'local' => 'tracking_ref',
+             'foreign' => 'id'));
     }
 }
