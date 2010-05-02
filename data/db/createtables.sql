@@ -885,13 +885,14 @@ create sequence users_tracking_id_seq;
 create table users_tracking
        (
         id bigint not null default nextval('users_tracking_id_seq'),
+        referenced_relation varchar not null,
+        record_id integer not null,
         user_ref integer not null,
         action varchar not null default 'insert',
         modification_date_time update_date_time,
         constraint pk_users_tracking_pk primary key (id),
         constraint fk_users_tracking_users foreign key (user_ref) references users(id)
-       )
-inherits (template_table_record_ref);
+       );
 comment on table users_tracking is 'Tracking of users actions on tables';
 comment on column users_tracking.referenced_relation is 'Reference-Name of table concerned';
 comment on column users_tracking.record_id is 'ID of record concerned';

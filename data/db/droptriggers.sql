@@ -148,3 +148,44 @@ DROP TRIGGER trg_words_ts_cpy_taxonomy
 
 DROP TRIGGER trg_words_ts_cpy_codes
 	ON codes;
+
+/*** Tracking ***/
+
+DROP TRIGGER trg_trk_log_table_taxonomy
+	ON taxonomy; 
+
+DROP TRIGGER trg_trk_log_table_lithology
+	ON lithology;
+
+DROP TRIGGER trg_trk_log_table_chronostratigraphy
+	ON chronostratigraphy;
+
+DROP TRIGGER trg_trk_log_table_mineralogy
+	ON mineralogy;
+
+DROP TRIGGER trg_trk_log_table_people
+	ON people;
+
+DROP TRIGGER trg_trk_log_table_insurances
+	ON insurances;
+
+DROP TRIGGER trg_trk_log_table_specimens
+	ON specimens;
+
+DROP TRIGGER trg_trk_log_table_specimen_individuals
+	ON specimen_individuals;
+
+DROP TRIGGER trg_trk_log_table_specimen_parts
+	ON specimen_parts;
+
+DROP TRIGGER trg_trk_log_table_gtu
+	ON gtu;
+
+DROP TRIGGER trg_trk_log_table_tag_groups
+	ON tag_groups;
+
+DROP TRIGGER trg_trk_log_table_collections
+	ON collections;
+
+DROP TRIGGER trg_trk_log_table_comments
+	ON comments;
