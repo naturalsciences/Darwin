@@ -1,4 +1,4 @@
-<table class="property_values">
+<table class="property_values" id="identifications">
   <thead style="<?php echo ($form['Identifications']->count() || $form['newIdentification']->count())?'':'display: none;';?>">
     <tr>
       <th>
@@ -20,14 +20,12 @@
       </th>
     </tr>
   </thead>
-  <tbody id="identifications">
     <?php foreach($form['Identifications'] as $form_value):?>
       <?php include_partial('spec_identifications', array('form' => $form_value));?>
     <?php endforeach;?>
     <?php foreach($form['newIdentification'] as $form_value):?>
       <?php include_partial('spec_identifications', array('form' => $form_value));?>
     <?php endforeach;?>
-  </tbody>
   <tfoot>
     <tr>
       <td colspan='6'>
@@ -42,57 +40,62 @@
 
 function forceHelper(e,ui)
 {
-   $(".ui-state-highlight").html("<td colspan='6'>&nbsp;</td>");
+   $(".ui-state-highlight").html("<td colspan='6' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
 }
+
+function reOrderIdent()
+{
+  $('table#identifications').find('tbody.spec_ident_data:visible').each(function (index, item){
+    $(item).find('tr.spec_ident_data input[id$=\"_order_by\"]').val(index+1);
+  });
+}
+
 
 $(document).ready(function () {
 
     $('.clear_identification').live('click', function()
     {
-      parent = $(this).closest('tr');
-      parent_class = parent.attr('class');
+      parent = $(this).closest('tbody');
       nvalue='';
       $(parent).find('input[id$=\"_value_defined\"]').val(nvalue);
-      $('.'+parent_class).hide();
-      visibles = $('tbody#identifications').find('tr[class$=\"'+parent_class+'\"]:visible').size();
+      $(parent).hide();
+      reOrderIdent();
+      visibles = $('table#identifications tbody.spec_ident_data:visible').size();
       if(!visibles)
       {
-        $(this).closest('table.property_values').find('thead').hide();
+        $(this).closest('table#identifications').find('thead').hide();
       }
     });
 
     $('#add_identification').click(function()
     {
-        parent = $(this).closest('table.property_values');
-        visibles = $(parent).find('tbody#identifications').find('tr[class$=\"spec_ident_group_id_"]:visible').size();
+        parent = $(this).closest('table#identifications');
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody tr[class$=\"spec_ident_group_id_"]').length) + '/order_by/' + (visibles+1),
+          url: $(this).attr('href')+ ($('tbody.spec_ident_data').length) + '/order_by/' + ($('tbody.spec_ident_data:visible').length+1),
           success: function(html)
           {
-            $(parent).find('tbody#identifications').append(html);
+            $(parent).append(html);
             $(parent).find('thead:hidden').show();
           }
         });
         return false;
     });
     
-  $("#identifications").sortable({
+
+ $("#identifications").sortable({
       placeholder: 'ui-state-highlight',
-      handle: '.handle',
+      handle: '.spec_ident_handle',
       axis: 'y',
       change: function(e, ui) {
 	forceHelper(e,ui);
       },
       deactivate: function(event, ui) {
-        $(this).find('tr:visible').each(function (index, item) 
-                                        {
-                                          $(item).find('input[id$=\"_order_by\"]').val(index+1);
-                                        }
-                                       );
+        reOrderIdent();
       }
     });
 
+				
 });
 </script>

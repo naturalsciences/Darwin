@@ -1,10 +1,10 @@
 <?php
 
 /**
- * VernacularNames form.
+ * Identifications form.
  *
  * @package    form
- * @subpackage VernacularNames
+ * @subpackage Identifications
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
 class IdentificationsForm extends BaseIdentificationsForm
@@ -63,6 +63,89 @@ class IdentificationsForm extends BaseIdentificationsForm
     $this->widgetSchema['determination_status']->setAttributes(array('class'=>'vvvsmall_size'));
     $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['order_by'] = new sfValidatorInteger();
+    $this->widgetSchema['identifier'] = new sfWidgetFormInputHidden(array('default'=>1));
+    $this->validatorSchema['identifier'] = new sfValidatorPass();
+
+    /* Identifiers sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('Identifiers',$subForm);   
+    foreach(Doctrine::getTable('CataloguePeople')->getIdentifiersRelated('identifications', 'identifier', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new IdentifiersForm($vals);
+      $this->embeddedForms['Identifiers']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Identifiers', $this->embeddedForms['Identifiers']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newIdentifier',$subForm);
+
+    /*Identifications post-validation to empty null values*/
     $this->mergePostValidator(new IdentificationsValidatorSchema());
+  }
+
+  public function addIdentifiers($num, $order_by=0)
+  {
+      $options = array('referenced_relation' => 'identifications', 'order_by' => $order_by);
+      $val = new CataloguePeople();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new IdentifiersForm($val);
+      $this->embeddedForms['newIdentifier']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newIdentifier', $this->embeddedForms['newIdentifier']);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['newIdentifier']) && isset($taintedValues['identifier']))
+    {
+      foreach($taintedValues['newIdentifier'] as $key=>$newVal)
+      {
+        if (!isset($this['newIdentifier'][$key]))
+        {
+          $this->addIdentifications($key);
+        }
+        $taintedValues['newIdentifier'][$key]['record_id'] = 0;
+      }
+    }
+
+    if(!isset($taintedValues['identifier']))
+    {
+      $this->offsetUnset('Identifiers');
+      unset($taintedValues['Identifiers']);
+    }
+
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    if (null === $forms && $this->getValue('identifier'))
+    {
+      $value = $this->getValue('newIdentifier');
+      foreach($this->embeddedForms['newIdentifier']->getEmbeddedForms() as $name => $form)
+      {
+        if (!isset($value[$name]['people_ref']))
+        {
+          unset($this->embeddedForms['newIdentifier'][$name]);
+        }
+        else
+        {
+          $form->getObject()->setRecordId($this->getObject()->getId());
+        }
+      }
+      $value = $this->getValue('Identifiers');
+      foreach($this->embeddedForms['Identifiers']->getEmbeddedForms() as $name => $form)
+      {
+        if (!isset($value[$name]['people_ref']))
+        {
+          $form->getObject()->delete();
+          unset($this->embeddedForms['Identifiers'][$name]);
+        }
+      }
+    }
+    return parent::saveEmbeddedForms($con, $forms);
   }
 }
