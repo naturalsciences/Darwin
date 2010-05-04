@@ -114,3 +114,5 @@ DROP SEQUENCE IF EXISTS people_relationships_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS people_languages_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS users_languages_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS users_login_info_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS collections_rights_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS collections_admin_id_seq CASCADE;

@@ -6691,3 +6691,24 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION fct_cpy_updateCollectionAdmin() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+DECLARE
+	ref_id integer ;
+BEGIN
+IF TG_OP = 'INSERT' THEN
+	INSERT INTO collections_admin(collection_ref, user_ref) VALUES (NEW.id, NEW.main_manager_ref);
+ELSIF NEW.main_manager_ref <> OLD.main_manager_ref THEN
+	SELECT collections_admin.id INTO ref_id FROM collections_admin ca WHERE ca.user_ref = NEW.main_manager_ref and ca.collection_ref = NEW.id  ;
+	IF FOUND THEN
+		DELETE FROM collections_admin ca WHERE ca.user_ref = OLD.main_manager_ref and ca.collection_ref = OLD.id  ;
+	ELSE
+	     UPDATE collections_admin ca SET ca.user_ref = NEW.main_manager_ref WHERE ca.user_ref = OLD.main_manager_ref and ca.collection_ref = OLD.id  ;  
+	END IF;
+END IF;
+RETURN NEW;
+END;
+$$

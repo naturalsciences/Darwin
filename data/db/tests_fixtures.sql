@@ -9,5 +9,4 @@ insert into collections (id, code, name, main_manager_ref, institution_ref, pare
 insert into collections (id, code, name, main_manager_ref, institution_ref, parent_ref, path, code_auto_increment, code_part_code_auto_copy) VALUES ( 2, 'mam', 'mamalia', 1, 1, 1, '1', true, true);
 insert into collections (id, code, name, main_manager_ref, institution_ref, parent_ref, path, code_auto_increment, code_part_code_auto_copy) VALUES ( 3, 'invert', 'invertebrate', 1, 1, null, '', false, true);
 
-insert into collections_admin (collection_ref, user_ref) VALUES (1,1);
 set darwin.userid= '2';

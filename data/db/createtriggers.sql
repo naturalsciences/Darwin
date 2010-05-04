@@ -313,6 +313,10 @@ CREATE TRIGGER trg_cpy_toFullText_multimedia BEFORE INSERT OR UPDATE
 CREATE TRIGGER trg_cpy_toFullText_collectionmaintenance BEFORE INSERT OR UPDATE
 	ON collection_maintenance FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();
+
+CREATE TRIGGER trg_cpy_updateCollectionAdmin_collections AFTER INSERT OR UPDATE
+	ON collections FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_updateCollectionAdmin();
 	
 CREATE TRIGGER trg_cpy_toFullText_expeditions BEFORE INSERT OR UPDATE
 	ON expeditions FOR EACH ROW
