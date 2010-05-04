@@ -163,7 +163,7 @@ create table comments
         notion_concerned varchar not null,
         comment text not null,
         comment_ts tsvector not null,
-        comment_language_full_text full_text_language
+        comment_language_full_text full_text_language,
         constraint pk_comments primary key (id),
         constraint unq_comments unique (referenced_relation, record_id, notion_concerned)
        )
@@ -382,7 +382,6 @@ create table expeditions
         expedition_from_date date not null default '01/01/0001',
         expedition_to_date_mask integer not null default 0,
         expedition_to_date date not null default '01/01/0001',
-        constraint pk_expeditions primary key (id),
         constraint pk_expeditions primary key (id)
        );
 comment on table expeditions is 'List of expeditions made to collect specimens';
@@ -1930,7 +1929,7 @@ create table specimens_accompanying
         form varchar,
         quantity numeric(16,2),
         unit varchar not null default '%',
-        constraint pk_associated_multimedia primary key (id),
+        constraint pk_specimens_accompanying primary key (id),
         constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
         constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint fk_specimens_accompanying_mineralogy foreign key (mineral_ref) references mineralogy(id),
