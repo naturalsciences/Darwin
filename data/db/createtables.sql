@@ -163,7 +163,8 @@ create table comments
         notion_concerned varchar not null,
         comment text not null,
         comment_ts tsvector not null,
-        comment_language_full_text full_text_language, 
+        comment_language_full_text full_text_language
+        constraint pk_comments primary key (id),
         constraint unq_comments unique (referenced_relation, record_id, notion_concerned)
        )
        inherits (template_table_record_ref);
@@ -316,6 +317,7 @@ create table identifications
         value_defined_ts tsvector,
         determination_status varchar,
         order_by integer not null default 1,
+        constraint pk_identifications primary key (id),
         constraint unq_identifications unique (referenced_relation, record_id, notion_concerned, value_defined_indexed)
        )
 inherits (template_table_record_ref);
@@ -358,6 +360,7 @@ create table vernacular_names
         name_ts tsvector not null,
         name_indexed varchar not null,
         constraint unq_vernacular_names unique (vernacular_class_ref, name_indexed),
+        constraint pk_vernacular_names primary key (id),
         constraint fk_vernacular_class_class_vernacular_names foreign key (vernacular_class_ref) references class_vernacular_names(id) on delete cascade
        );
 comment on table vernacular_names is 'List of vernacular names for a given unit and a given language community';
@@ -379,6 +382,7 @@ create table expeditions
         expedition_from_date date not null default '01/01/0001',
         expedition_to_date_mask integer not null default 0,
         expedition_to_date date not null default '01/01/0001',
+        constraint pk_expeditions primary key (id),
         constraint pk_expeditions primary key (id)
        );
 comment on table expeditions is 'List of expeditions made to collect specimens';
@@ -427,6 +431,7 @@ create table people_languages
        (
 	id integer not null default nextval('people_languages_id_seq'),
         people_ref integer not null,
+        constraint pk_people_languages primary key (id),
         constraint unq_people_languages unique (people_ref, language_country),
         constraint fk_people_languages_people foreign key (people_ref) references people(id) on delete cascade
        )
@@ -442,6 +447,7 @@ create table users_languages
        (
 	id integer not null default nextval('users_languages_id_seq'),
         users_ref integer not null,
+        constraint pk_users_languages primary key (id),
         constraint unq_users_languages unique (users_ref, language_country),
         constraint fk_users_languages_people foreign key (users_ref) references users(id) on delete cascade
        )
@@ -788,12 +794,18 @@ comment on table collections_rights is 'List of rights of given users on given c
 comment on column collections_rights.id is 'Unique identifier for collection rights';
 comment on column collections_rights.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_rights.user_ref is 'Reference of user - id field of users table';
+
+
+create sequence collections_fields_visibilities_id_seq;
+
 create table collections_fields_visibilities
        (
+        id integer not null default nextval('collections_fields_visibilities_id_seq'),
         field_group_name varchar not null,
         db_user_type smallint not null default 1,
         searchable boolean not null default true,
         visible boolean not null default true,
+        constraint pk_collections_fields_visibilities primary key (id),
         constraint unq_collections_fields_visibilities unique (collection_ref, user_ref, field_group_name, db_user_type),
         constraint fk_collections_fields_visibilities_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint fk_collections_fields_visibilities_users foreign key (user_ref) references users(id) on delete cascade
@@ -806,8 +818,12 @@ comment on column collections_fields_visibilities.field_group_name is 'Group of 
 comment on column collections_fields_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
 comment on column collections_fields_visibilities.searchable is 'Flag telling if the field group is searchable - meaning these fields will appear as search criterias in the search form';
 comment on column collections_fields_visibilities.visible is 'Flag telling if the field group is visible - meaning these fields will be displayable in the result table';
+
+create sequence users_coll_rights_asked_id_seq;
+
 create table users_coll_rights_asked
        (
+        id integer not null default nextval('users_coll_rights_asked_id_seq'),
         field_group_name varchar not null,
         db_user_type smallint not null,
         searchable boolean not null default true,
@@ -815,6 +831,7 @@ create table users_coll_rights_asked
         motivation varchar not null,
         asking_date_time update_date_time,
         with_sub_collections boolean not null default true,
+        constraint pk_users_coll_rights_asked primary key (id),
         constraint unq_users_coll_rights_asked unique (collection_ref, user_ref, field_group_name, db_user_type),
         constraint fk_users_coll_rights_asked_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint fk_users_coll_rights_asked_users foreign key (user_ref) references users(id) on delete cascade
@@ -839,6 +856,7 @@ create table record_visibilities
         db_user_type smallint not null default 0,
         user_ref integer not null default 0,
         visible boolean not null default true,
+        constraint pk_record_visibilities primary key (id),
         constraint unq_record_visibilities unique (referenced_relation, record_id, user_ref, db_user_type),
         constraint fk_record_visibilities_users foreign key (user_ref) references users(id) on delete cascade
        )
@@ -859,6 +877,7 @@ create table users_workflow
         status varchar not null default 'to check',
         modification_date_time update_date_time,
         comment varchar,
+        constraint pk_users_workflow primary key (id),
         constraint fk_users_workflow_users foreign key (user_ref) references users(id) on delete cascade
        )
 inherits (template_table_record_ref);
@@ -877,7 +896,7 @@ create table users_tables_fields_tracked
 	id integer not null default nextval('users_tables_fields_tracked_id_seq'),
         referenced_relation varchar not null,
         field_name varchar not null,
-        user_ref integer not null,
+        user_ref integer,
 	constraint pk_users_tables_fields_tracked primary key (id),
         constraint unq_users_tables_fields_tracked unique (referenced_relation, field_name, user_ref),
         constraint fk_users_tables_fields_tracked_users foreign key (user_ref) references users(id) on delete cascade
@@ -906,13 +925,16 @@ comment on column users_tracking.user_ref is 'Reference of user having made an a
 comment on column users_tracking.action is 'Action done on table record: insert, update, delete';
 comment on column users_tracking.modification_date_time is 'Track date and time';
 
+create sequence users_tracking_records_id_seq;
 
 create table users_tracking_records
        (
+        id bigint not null default nextval('users_tracking_records_id_seq'),
         tracking_ref bigint not null,
         field_name varchar not null,
         old_value varchar,
         new_value varchar,
+        constraint pk_users_tracking_records primary key (id),
         constraint unq_users_tracking_records unique (tracking_ref, field_name),
         constraint fk_users_tracking_records_users_tracking foreign key (tracking_ref) references users_tracking(id) on delete cascade
        );
@@ -1007,16 +1029,22 @@ comment on column my_preferences.color is 'Color given to page element by user';
 comment on column my_preferences.is_available is 'Flag telling if the widget can be used or not';
 comment on column my_preferences.icon_ref is 'Reference of multimedia icon to be used before page element title';
 comment on column my_preferences.title_perso is 'Page element title given by user';
+
+create sequence my_saved_specimens_id_seq;
+
 create table my_saved_specimens
        (
+	id integer not null default nextval('my_saved_specimens_id_seq'),
         user_ref integer not null,
         name varchar not null,
         specimen_ids varchar not null,
         favorite boolean not null default false,
         modification_date_time update_date_time,
         constraint unq_my_saved_specimens unique (user_ref, name),
+        constraint pk_my_saved_specimens primary key (id),
         constraint fk_my_saved_specimens_users foreign key (user_ref) references users(id) on delete cascade
        );
+
 comment on table my_saved_specimens is 'List of specimens selection made by users - sort of suitcases for personal selections';
 comment on column my_saved_specimens.user_ref is 'Reference of user - id field of users table';
 comment on column my_saved_specimens.name is 'Name given to this selection by user';
@@ -1745,6 +1773,7 @@ create table codes
         full_code_order_by varchar not null,
         code_date timestamp not null default '0001-01-01 00:00:00',
         code_date_mask integer not null default 0,
+        constraint pk_codes primary key (id),
         constraint unq_codes unique (referenced_relation, record_id, full_code_order_by)
        )
 inherits (template_table_record_ref);
@@ -1878,6 +1907,7 @@ create table associated_multimedia
        (
         id integer not null default nextval('associated_multimedia_id_seq'),
         multimedia_ref integer not null,
+        constraint pk_associated_multimedia primary key (id),
         constraint unq_associated_multimedia unique (multimedia_ref, referenced_relation, record_id),
         constraint fk_associated_multimedia_multimedia foreign key (multimedia_ref) references multimedia(id) on delete cascade
        )
@@ -1887,8 +1917,12 @@ comment on column associated_multimedia.id is 'Unique identifier of a multimedia
 comment on column associated_multimedia.referenced_relation is 'Reference-Name of table concerned';
 comment on column associated_multimedia.record_id is 'Identifier of record concerned';
 comment on column associated_multimedia.multimedia_ref is 'Reference of multimedia object concerned - id field of multimedia table';
+
+create sequence specimens_accompanying_id_seq;
+
 create table specimens_accompanying
        (
+        id integer not null default nextval('specimens_accompanying_id_seq'),
         type varchar not null default 'secondary',
         specimen_ref integer not null,
         taxon_ref integer not null default 0,
@@ -1896,6 +1930,7 @@ create table specimens_accompanying
         form varchar,
         quantity numeric(16,2),
         unit varchar not null default '%',
+        constraint pk_associated_multimedia primary key (id),
         constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
         constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint fk_specimens_accompanying_mineralogy foreign key (mineral_ref) references mineralogy(id),
