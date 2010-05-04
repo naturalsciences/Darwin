@@ -5950,47 +5950,70 @@ $$
 language plpgsql;
 
 
+CREATE OR REPLACE FUNCTION get_setting(IN param text, OUT value text)
+LANGUAGE plpgsql STABLE STRICT AS
+$$BEGIN
+  SELECT current_setting(param) INTO value;
+  EXCEPTION
+  WHEN UNDEFINED_OBJECT THEN
+    value := NULL;
+END;$$;
+
 CREATE OR REPLACE FUNCTION fct_trk_log_table() RETURNS TRIGGER
 AS $$
 DECLARE 
 	user_id integer;
+	track_fields integer;
 	trk_id bigint;
 	tbl_row RECORD;
+	new_val varchar;
+	old_val varchar;
 BEGIN
 
-	SELECT COALESCE(current_setting('darwin.userid')::int,0) INTO user_id;
-	
-	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-		IF TG_OP = 'INSERT' THEN
-			INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
+	SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
+	IF user_id = 0 THEN
+	  RETURN NEW;
+	END IF;
+	IF TG_OP = 'INSERT' THEN
+		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
 				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert', now()) RETURNING id into trk_id;
-		ELSE
-			INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
-				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update', now()) RETURNING id into trk_id;
-		END IF;
+	ELSEIF TG_OP = 'UPDATE' THEN
 
-/*		FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE referenced_relation = TG_TABLE_NAME::text AND user_ref=user_id
-		LOOP
-			SELECT array(SELECT ROW(NEW.*) from taxonomy) as s ;
-			-- http://www.nabble.com/array-variables-td20477110.html
-			EXECUTE 'INSERT INTO users_tracking_records VALUES (' || quote_literal(trk_id) || ' , ' ||
-						quote_literal(tbl_row.field_name) || ' , ' ||
-						' ''{ OLD.'|| tbl_row.field_name || '}' || ''',' ||
-						' ''{NEW.'|| tbl_row.field_name || '}'  || ''' )';
-		END LOOP;*/
-		RETURN NEW;
-		/*EXECUTE 'INSERT INTO users_tracking_records 
-			(SELECT trk_id,
-					field_name,
-					NEW.'brol',
-					old.'', 
-				FROM users_tables_fields_tracked 
-					WHERE referenced_relation =TG_TABLE_NAME::text
-						AND user_ref=user_id)';*/
-	ELSE
+	  IF ROW(NEW.*) IS DISTINCT FROM ROW(OLD.*) THEN
+		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
+		    VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update', now()) RETURNING id into trk_id;
+	  ELSE
+	    RAISE info 'unnecessary update on table "%" and id "%"', TG_TABLE_NAME::text, NEW.id;
+	  END IF;
+
+	ELSEIF TG_OP = 'DELETE' THEN
 		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
  			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete', now());
 	END IF;
+
+	SELECT COALESCE(get_setting('darwin.track_fields'),'0')::integer INTO track_fields;
+	IF track_fields = 0 THEN
+	  RETURN NEW;
+	END IF;
+
+	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+	  FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE referenced_relation = TG_TABLE_NAME::text AND user_ref=user_id
+	  LOOP
+	      EXECUTE 'SELECT (' || quote_literal(NEW) || '::' || TG_RELID::regclass || ').' || quote_ident(tbl_row.field_name) INTO new_val;
+	      IF TG_OP = 'UPDATE' THEN
+		  EXECUTE 'SELECT (' || quote_literal(OLD) || '::' || TG_RELID::regclass || ').' || quote_ident(tbl_row.field_name) INTO old_val;
+	      ELSE
+		  old_val := null;
+	      END IF;
+
+	      INSERT INTO users_tracking_records (tracking_ref, field_name, old_value, new_value )
+		  VALUES (trk_id, tbl_row.field_name, old_val, new_val);
+	  END LOOP;
+	END IF;
+
+/* http://wiki.postgresql.org/wiki/PL/pgSQL_Dynamic_Triggers */
+
+
 	RETURN NULL;
 END;
 $$

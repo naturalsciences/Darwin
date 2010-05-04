@@ -869,11 +869,16 @@ comment on column users_workflow.record_id is 'ID of record a workflow is define
 comment on column users_workflow.status is 'Record status: to correct, to be corrected or published';
 comment on column users_workflow.modification_date_time is 'Date and time of status change - last date/time is used as actual status, but helps also to keep an history of status change';
 comment on column users_workflow.comment is 'Complementary comments';
+
+create sequence users_tables_fields_tracked_id_seq;
+
 create table users_tables_fields_tracked
        (
+	id integer not null default nextval('users_tables_fields_tracked_id_seq'),
         referenced_relation varchar not null,
         field_name varchar not null,
         user_ref integer not null,
+	constraint pk_users_tables_fields_tracked primary key (id),
         constraint unq_users_tables_fields_tracked unique (referenced_relation, field_name, user_ref),
         constraint fk_users_tables_fields_tracked_users foreign key (user_ref) references users(id) on delete cascade
        );
@@ -885,13 +890,14 @@ create sequence users_tracking_id_seq;
 create table users_tracking
        (
         id bigint not null default nextval('users_tracking_id_seq'),
+        referenced_relation varchar not null,
+        record_id integer not null,
         user_ref integer not null,
         action varchar not null default 'insert',
         modification_date_time update_date_time,
         constraint pk_users_tracking_pk primary key (id),
         constraint fk_users_tracking_users foreign key (user_ref) references users(id)
-       )
-inherits (template_table_record_ref);
+       );
 comment on table users_tracking is 'Tracking of users actions on tables';
 comment on column users_tracking.referenced_relation is 'Reference-Name of table concerned';
 comment on column users_tracking.record_id is 'ID of record concerned';
@@ -900,8 +906,6 @@ comment on column users_tracking.user_ref is 'Reference of user having made an a
 comment on column users_tracking.action is 'Action done on table record: insert, update, delete';
 comment on column users_tracking.modification_date_time is 'Track date and time';
 
--- @TODO: to be modified or not :)
--- @TODO: Discussion about that needed... :)
 
 create table users_tracking_records
        (
@@ -930,6 +934,7 @@ create table collection_maintenance
         language_full_text full_text_language,
         modification_date_time update_date_time,
         modification_date_mask int not null default '0',
+        constraint pk_collection_maintenance primary key (id),
         constraint fk_collection_maintenance_users foreign key (people_ref) references people(id)
        )
 inherits (template_table_record_ref);
@@ -944,14 +949,18 @@ comment on column collection_maintenance.description is 'Complementary descripti
 comment on column collection_maintenance.description_ts is 'tsvector form of description field';
 comment on column collection_maintenance.language_full_text is 'Language used by to_tsvector full text search function';
 comment on column collection_maintenance.modification_date_time is 'Last update date/time';
+
+create sequence my_saved_searches_id_seq;
 create table my_saved_searches
        (
+        id integer not null default nextval('my_saved_searches_id_seq'),
         user_ref integer not null,
         name varchar not null default 'default',
         search_criterias varchar not null,
         favorite boolean not null default false,
         modification_date_time update_date_time,
         visible_fields_in_result varchar not null,
+        constraint pk_my_saved_searches primary key (id),
         constraint unq_my_saved_searches unique (user_ref, name),
         constraint fk_my_saved_searches_users foreign key (user_ref) references users(id) on delete cascade
        );
@@ -980,6 +989,7 @@ create table my_preferences
 	is_available boolean not null default false,
         icon_ref integer,
         title_perso varchar(32),
+        constraint pk_my_preferences primary key (id),
         constraint unq_my_preferences unique (user_ref, category, group_name),
         constraint fk_my_preferences_users foreign key (user_ref) references users(id) on delete cascade,
         constraint fk_my_preferences_multimedia foreign key (icon_ref) references multimedia(id)

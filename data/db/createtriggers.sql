@@ -375,11 +375,62 @@ CREATE TRIGGER trg_cpy_path_habitats BEFORE INSERT OR UPDATE
 	ON habitats FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 
-/*
-CREATE TRIGGER trg_trk_log_table AFTER INSERT OR UPDATE OR  DELETE
+
+/*** TRACKING ****/
+
+CREATE TRIGGER trg_trk_log_table_taxonomy AFTER INSERT OR UPDATE OR  DELETE
 	ON taxonomy FOR EACH ROW
 	EXECUTE PROCEDURE fct_trk_log_table();
-*/
+
+CREATE TRIGGER trg_trk_log_table_lithology AFTER INSERT OR UPDATE OR  DELETE
+	ON lithology FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_chronostratigraphy AFTER INSERT OR UPDATE OR  DELETE
+	ON chronostratigraphy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_mineralogy AFTER INSERT OR UPDATE OR  DELETE
+	ON mineralogy FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_people AFTER INSERT OR UPDATE OR  DELETE
+	ON people FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_insurances AFTER INSERT OR UPDATE OR  DELETE
+	ON insurances FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimens AFTER INSERT OR UPDATE OR  DELETE
+	ON specimens FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimen_individuals AFTER INSERT OR UPDATE OR  DELETE
+	ON specimen_individuals FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimen_parts AFTER INSERT OR UPDATE OR  DELETE
+	ON specimen_parts FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_gtu AFTER INSERT OR UPDATE OR  DELETE
+	ON gtu FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_tag_groups AFTER INSERT OR UPDATE OR  DELETE
+	ON tag_groups FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_collections AFTER INSERT OR UPDATE OR  DELETE
+	ON collections FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_comments AFTER INSERT OR UPDATE OR  DELETE
+	ON comments FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
+
 
 /*
 ** Trigger aimed at calculating unified values
