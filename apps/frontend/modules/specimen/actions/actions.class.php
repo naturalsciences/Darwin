@@ -38,7 +38,21 @@ class specimenActions extends DarwinActions
     
     $form = new SpecimensForm($spec);
     $form->addIdentifications($number, $order_by);
-    return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number], 'row_num'=>$number));
+    return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number]));
+  }
+
+  public function executeAddIdentifier(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $order_by = intval($request->getParameter('order_by',0));
+    $ident = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $ident = Doctrine::getTable('Identifications')->findByReferencedRelationAndRecordId('identifications', $request->getParameter('id'));
+    
+    $form = new IdentificationsForm($ident);
+    $form->addIdentifiers($number, $order_by);
+    return $this->renderPartial('spec_identification_identifiers',array('form' => $form['newIdentifier'][$number]));
   }
 
   public function executeNew(sfWebRequest $request)

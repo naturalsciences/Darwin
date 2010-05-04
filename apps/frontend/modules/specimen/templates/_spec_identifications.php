@@ -1,12 +1,13 @@
+<tbody class="spec_ident_data">
   <?php if($form->hasError()): ?>
-  <tr class="spec_ident_group_id_<?php echo $row_num;?>">
+  <tr>
     <td colspan="6">
       <?php echo $form->renderError();?>
     </td>
   </tr>
   <?php endif;?>
-  <tr class="spec_ident_group_id_<?php echo $row_num;?>">
-    <td class="handle">
+  <tr class="spec_ident_data">
+    <td class="spec_ident_handle">
       <?php echo image_tag('drag.png');?>
     </td>
     <td>
@@ -26,7 +27,7 @@
       <?php echo $form->renderHiddenFields();?>
     </td>    
   </tr>
-  <tr class="spec_ident_group_id_<?php echo $row_num;?>">
+  <tr class="spec_ident_identifiers">
     <td colspan="2"></td>
     <td colspan="3">
       <table class="property_values">
@@ -35,9 +36,9 @@
             <td colspan="3"><?php echo __('Identifiers');?></td>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="spec_ident_identifiers_data">
           <tr>
-            <td><?php echo image_tag('drag.png');?></td>
+            <td class="spec_ident_identifiers_handle"><?php echo image_tag('drag.png');?></td>
             <td>Choose</td>
             <td class="widget_row_delete">
               <?php echo image_tag('remove.png', 'alt=Delete class=clear_identification'); ?>
@@ -57,3 +58,4 @@
     </td>
     <td></td>
   </tr>
+</tbody>

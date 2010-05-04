@@ -682,7 +682,7 @@ table.encoding tbody
   margin-left: 2px;
 }
 
-.property_values tbody#codes input, .property_values tbody#identifications input
+.property_values tbody#codes input, #identifications tbody input
 {
   margin:0;
 }
