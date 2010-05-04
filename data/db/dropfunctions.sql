@@ -67,3 +67,5 @@ DROP FUNCTION IF EXISTS concat(text, text, text) CASCADE;
 DROP FUNCTION IF EXISTS ts_stat(tsvector, OUT word text, OUT ndoc integer, OUT nentry integer) CASCADE;
 DROP FUNCTION IF EXISTS sha1(bytea) CASCADE;
 DROP FUNCTION IF EXISTS get_setting(IN param text, OUT value text) CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_updateCollectionAdmin() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_updatecollectionadmin() CASCADE;
