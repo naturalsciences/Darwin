@@ -16,7 +16,8 @@ $(function () {
 										  default: echo 'day';break;
 										}
 					  ;?>"],
-            }
+            },
+			lines: { fill: true}
         });
 
      $('#myChangesPlotted ul.graph_range a').click(function(event)
