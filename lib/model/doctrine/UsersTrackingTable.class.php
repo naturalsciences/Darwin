@@ -8,4 +8,36 @@ class UsersTrackingTable extends DarwinTable
   {
     return $this->createDistinct('UsersTracking', 'referenced_relation', 'name')->execute();
   }
+
+  public function getMyItems($user_id, $max_items = 0)
+  {
+    $q = Doctrine_Query::create()
+	  ->from('UsersTracking r')
+	  ->where('r.user_ref = ?',$user_id)
+	  ->orderBy('r.modification_date_time desc');
+    return $q;
+  }
+
+  public function getMyItemsForPlot($user_id, $range)
+  {
+	$conn = Doctrine_Manager::connection()->getDbh();
+	$days = 6;
+	if($range=='month') $days = 31;
+	if($range=='year') $days = 365;
+    $statement = $conn->prepare("SELECT X.dates, count(id) as nbr
+	  FROM
+	  (select current_date - s.a as dates from generate_series(0,".$days.") as s(a)) as X
+	  LEFT JOIN unit.users_tracking u on (X.dates = modification_date_time::date AND u.user_ref= :user_id )
+		GROUP BY X.dates
+	  ORDER BY X.dates
+	");
+    $statement->execute(array('user_id' => $user_id));
+    $resultset = $statement->fetchAll(PDO::FETCH_ASSOC);
+	$datas = array();
+	foreach($resultset as $row)
+	{
+	  array_push($datas,array($row['dates'],$row['nbr']));
+	}
+	return $datas;
+  }
 }
