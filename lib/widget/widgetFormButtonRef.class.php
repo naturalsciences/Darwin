@@ -42,11 +42,11 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 	{
 	  $class .= ' hidden';
 	}
-	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="ref_name ' .$class. '">';
+	$input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="ref_name' .$class. '">';
 
 	$input .= link_to( ($obj_name=='' || $obj_name=='-') ? __('Choose !') : __('Change !'),
 	    $this->getOption('link_url'),
-	    array('class' => 'but_text' . $class )
+	    array('class' => 'but_text'  )
 	); 
 
 	$input .= '</div>';

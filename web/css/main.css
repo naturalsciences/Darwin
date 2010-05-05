@@ -182,7 +182,7 @@ a.but_text
   float:left;
 }
 
-.inline
+.inline, .inline a
 {
   float:none;
   display:inline;
