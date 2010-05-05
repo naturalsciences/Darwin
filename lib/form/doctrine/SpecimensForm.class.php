@@ -385,8 +385,34 @@ class SpecimensForm extends BaseSpecimensForm
 	  if (!isset($this['newIdentification'][$key]))
 	  {
 	    $this->addIdentifications($key);
+            foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
+            {
+              if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
+	      {
+                $this['newIdentification'][$key]->addIdentifiers($ikey);
+              }
+              $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+            }
 	  }
           $taintedValues['newIdentification'][$key]['record_id'] = 0;
+	}
+    }
+
+    if(isset($taintedValues['Identifications']) && isset($taintedValues['ident']))
+    {
+	foreach($taintedValues['Identifications'] as $key=>$newVal)
+	{
+	  if (!isset($this['Identifications'][$key]))
+	  {
+            foreach($taintedValues['Identifications'][$key]['newIdentifier'] as $ikey=>$ival)
+            {
+              if(!isset($this['Identifications'][$key]['newIdentifier'][$ikey]))
+	      {
+                $this['Identifications'][$key]->addIdentifiers($ikey);
+              }
+              $taintedValues['Identifications'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+            }
+	  }
 	}
     }
 

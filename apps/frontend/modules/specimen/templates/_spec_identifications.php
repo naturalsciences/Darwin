@@ -30,8 +30,8 @@
   <tr class="spec_ident_identifiers">
     <td colspan="2"></td>
     <td colspan="3">
-      <table class="property_values">
-        <thead style="<?php echo ($form['Identifiers']->count() || $form['newIdentifier']->count())?'':'display: none;';?>">
+      <table class="property_values identifiers" id="spec_ident_identifiers_<?php echo $row_num;?>">
+        <thead style="<?php echo ($form['Identifiers']->count() || $form['newIdentifier']->count())?'':'display: none;';?>" class="spec_ident_identifiers_head">
           <tr>
             <td colspan="3"><?php echo __('Identifiers');?></td>
           </tr>
@@ -46,7 +46,7 @@
           <tr>
             <td colspan="3">
               <div class="add_code">
-                <a href="<?php echo url_for('specimen/addIdentifier');?>" id="add_identifier"><?php echo __('Add Ident.');?></a>
+                <a href="<?php echo url_for('specimen/addIdentifier'.((!$spec_id)?'':'?spec_id='.$spec_id)).'/num/'.$row_num.((!isset($form['id']))?'':'/iid/'.$form['id']->getValue());?>/inum/" class="add_identifier"><?php echo __('Add Ident.');?></a>
               </div>
             </td>
           </tr>

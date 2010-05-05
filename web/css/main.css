@@ -772,6 +772,28 @@ table.encoding tbody
   padding-top:0.1em;
 }
 
+table.green_border
+{
+  border:1px solid #c1cf56;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+thead.spec_ident_identifiers_head tr td
+{
+  padding-left:0.5em;
+  padding-top:0.3em;
+  padding-bottom:0.3em;
+  background-color:#c1cf56;
+  color:white;
+}
+
+tbody.spec_ident_identifiers_data tr td
+{
+  padding-top:0.1em;
+  padding-bottom:0.1em;
+}
+
 .add_code
 {
   height:24px;

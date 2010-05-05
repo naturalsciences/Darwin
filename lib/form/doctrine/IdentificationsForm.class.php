@@ -87,7 +87,7 @@ class IdentificationsForm extends BaseIdentificationsForm
 
   public function addIdentifiers($num, $order_by=0)
   {
-      $options = array('referenced_relation' => 'identifications', 'order_by' => $order_by);
+      $options = array('referenced_relation' => 'identifications', 'people_type' => 'identifier', 'order_by' => $order_by);
       $val = new CataloguePeople();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
@@ -105,7 +105,7 @@ class IdentificationsForm extends BaseIdentificationsForm
       {
         if (!isset($this['newIdentifier'][$key]))
         {
-          $this->addIdentifications($key);
+          $this->addIdentifiers($key);
         }
         $taintedValues['newIdentifier'][$key]['record_id'] = 0;
       }

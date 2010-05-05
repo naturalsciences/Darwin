@@ -11,6 +11,7 @@
             <td><?php echo $form['people_ref']->render();?></td>
             <td class="widget_row_delete">
               <?php echo image_tag('remove.png', 'alt=Delete class=clear_identifier'); ?>
+              <?php echo $form->renderHiddenFields();?>
             </td>
           </tr>
         </tbody>

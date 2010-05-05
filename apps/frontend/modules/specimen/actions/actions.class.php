@@ -27,32 +27,51 @@ class specimenActions extends DarwinActions
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
 
+  protected function getSpecimenForm(sfWebRequest $request)
+  {
+    $spec = null;
+
+    if($request->hasParameter('spec_id') && $request->getParameter('spec_id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id') );
+    
+    $form = new SpecimensForm($spec);
+    return $form;
+  }
+
   public function executeAddIdentification(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
     $order_by = intval($request->getParameter('order_by',0));
-    $spec = null;
-
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
-    
-    $form = new SpecimensForm($spec);
-    $form->addIdentifications($number, $order_by);
-    return $this->renderPartial('spec_identifications',array('form' => $form['newIdentification'][$number]));
+    $spec_form = $this->getSpecimenForm($request);
+    $spec_form->addIdentifications($number, $order_by);
+    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'spec_id'=>$request->getParameter('spec_id',0)));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
+    $spec_form = $this->getSpecimenForm($request);
     $number = intval($request->getParameter('num'));
-    $order_by = intval($request->getParameter('order_by',0));
+    $inumber = intval($request->getParameter('inum'));
+    $order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
 
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $ident = Doctrine::getTable('Identifications')->findByReferencedRelationAndRecordId('identifications', $request->getParameter('id'));
-    
-    $form = new IdentificationsForm($ident);
-    $form->addIdentifiers($number, $order_by);
-    return $this->renderPartial('spec_identification_identifiers',array('form' => $form['newIdentifier'][$number]));
+    if($request->hasParameter('iid') && $request->getParameter('iid'))
+    {
+      $ident = $spec_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
+      $ident->addIdentifiers($inumber, $order_by);
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $ident['newIdentifier'][$inumber]));
+    }
+    else
+    {
+      $spec_form->addIdentifications($number, 0);
+      $ident = $spec_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
+      $ident->addIdentifiers($inumber, $order_by);
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $ident['newIdentifier'][$inumber]));
+    }
+//       $ident = Doctrine::getTable('Identifications')->findExcept($request->getParameter('iid'));
+
+/*    $form = new IdentificationsForm($ident);
+    $form->addIdentifiers($number, $order_by);*/
   }
 
   public function executeNew(sfWebRequest $request)
