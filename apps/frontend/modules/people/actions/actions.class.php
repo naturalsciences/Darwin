@@ -21,9 +21,6 @@ class peopleActions extends DarwinActions
     }
   }
 
-   public function executeSearchBoth(sfWebRequest $request)
-   {}
-  
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new PeopleFormFilter();

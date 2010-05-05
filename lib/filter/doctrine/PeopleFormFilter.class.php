@@ -17,6 +17,9 @@ class PeopleFormFilter extends BasePeopleFormFilter
     $this->addPagerItems();
 
     $this->widgetSchema['family_name'] = new sfWidgetFormFilterInput(array('template' => '%input%'));
+
+    $this->widgetSchema['only_role'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['only_role']->setDefault(0);
     
     $db_people_types = array(''=>'');
     foreach(People::getTypes() as $flag => $name)
@@ -28,10 +31,6 @@ class PeopleFormFilter extends BasePeopleFormFilter
     $this->setDefault('is_physical', true); 
 
     $this->validatorSchema['db_people_type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($db_people_types) ));
-
-    $this->widgetSchema['only_role'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['only_role']->setDefault(0);
-
     $this->validatorSchema['only_role'] = new sfValidatorNumber(array('required' => false));
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));

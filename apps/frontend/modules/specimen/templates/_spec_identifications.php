@@ -31,20 +31,17 @@
     <td colspan="2"></td>
     <td colspan="3">
       <table class="property_values">
-        <thead>
+        <thead style="<?php echo ($form['Identifiers']->count() || $form['newIdentifier']->count())?'':'display: none;';?>">
           <tr>
             <td colspan="3"><?php echo __('Identifiers');?></td>
           </tr>
         </thead>
-        <tbody class="spec_ident_identifiers_data">
-          <tr>
-            <td class="spec_ident_identifiers_handle"><?php echo image_tag('drag.png');?></td>
-            <td>Choose</td>
-            <td class="widget_row_delete">
-              <?php echo image_tag('remove.png', 'alt=Delete class=clear_identification'); ?>
-            </td>
-          </tr>
-        </tbody>
+        <?php foreach($form['Identifiers'] as $form_value):?>
+          <?php include_partial('spec_identification_identifiers', array('form' => $form_value));?>
+        <?php endforeach;?>
+        <?php foreach($form['newIdentifier'] as $form_value):?>
+          <?php include_partial('spec_identification_identifiers', array('form' => $form_value));?>
+        <?php endforeach;?>
         <tfoot>
           <tr>
             <td colspan="3">
