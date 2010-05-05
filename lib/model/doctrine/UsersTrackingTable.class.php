@@ -27,7 +27,7 @@ class UsersTrackingTable extends DarwinTable
     $statement = $conn->prepare("SELECT X.dates, count(id) as nbr
 	  FROM
 	  (select current_date - s.a as dates from generate_series(0,".$days.") as s(a)) as X
-	  LEFT JOIN unit.users_tracking u on (X.dates = modification_date_time::date AND u.user_ref= :user_id )
+	  LEFT JOIN users_tracking u on (X.dates = modification_date_time::date AND u.user_ref= :user_id )
 		GROUP BY X.dates
 	  ORDER BY X.dates
 	");

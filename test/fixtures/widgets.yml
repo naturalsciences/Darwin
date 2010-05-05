@@ -39,6 +39,26 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Add taxa
+    u1wb5:
+        User: u1
+        col_num: 2
+        category: board_widget
+        group_name: myLastsItems
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: My Last Actions
+    u1wb6:
+        User: u1
+        col_num: 1
+        category: board_widget
+        group_name: myChangesPlotted
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: My activity
     u1ws1:
         User: u1
         col_num: 1
