@@ -5997,7 +5997,7 @@ BEGIN
 	END IF;
 
 	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-	  FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE referenced_relation = TG_TABLE_NAME::text AND user_ref=user_id
+	  FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE referenced_relation = TG_TABLE_NAME::text AND ( user_ref=user_id OR user_ref is null)
 	  LOOP
 	      EXECUTE 'SELECT (' || quote_literal(NEW) || '::' || TG_RELID::regclass || ').' || quote_ident(tbl_row.field_name) INTO new_val;
 	      IF TG_OP = 'UPDATE' THEN
@@ -6005,9 +6005,10 @@ BEGIN
 	      ELSE
 		  old_val := null;
 	      END IF;
-
-	      INSERT INTO users_tracking_records (tracking_ref, field_name, old_value, new_value )
-		  VALUES (trk_id, tbl_row.field_name, old_val, new_val);
+	      IF old_val <> new_val THEN
+		      INSERT INTO users_tracking_records (tracking_ref, field_name, old_value, new_value )
+			  VALUES (trk_id, tbl_row.field_name, old_val, new_val);
+	      END IF;
 	  END LOOP;
 	END IF;
 

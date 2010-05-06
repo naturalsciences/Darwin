@@ -430,7 +430,9 @@ CREATE TRIGGER trg_trk_log_table_comments AFTER INSERT OR UPDATE OR  DELETE
 	ON comments FOR EACH ROW
 	EXECUTE PROCEDURE fct_trk_log_table();
 
-
+CREATE TRIGGER trg_trk_log_table_expeditions AFTER INSERT OR UPDATE OR  DELETE
+	ON expeditions FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
 
 /*
 ** Trigger aimed at calculating unified values

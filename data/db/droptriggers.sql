@@ -189,3 +189,5 @@ DROP TRIGGER trg_trk_log_table_collections
 
 DROP TRIGGER trg_trk_log_table_comments
 	ON comments;
+DROP TRIGGER trg_trk_log_table_expeditions
+	ON expeditions;
