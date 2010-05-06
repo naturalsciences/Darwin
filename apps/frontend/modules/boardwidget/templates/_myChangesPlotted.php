@@ -1,7 +1,12 @@
 <script language="javascript" type="text/javascript" src="http://people.iola.dk/olau/flot/jquery.flot.js"></script> 
 <script id="source" language="javascript" type="text/javascript"> 
 $(function () {
-
+	var reclose = false;
+	if($('#myChangesPlotted .widget_top_button:visible').length)
+	{
+	  $('#myChangesPlotted .widget_content').show();
+	  reclose=true;
+	}
 	var d = [<?php foreach($items as $item):?>
 			  <?php echo '['. ( strtotime($item[0])*1000 ).', "'.$item[1].'"],' ;?>
 			<?php endforeach;?>];
@@ -17,8 +22,15 @@ $(function () {
 										}
 					  ;?>"],
             },
-			lines: { fill: true}
+			grid: { hoverable: true, clickable: true },
+    		points: { show: true },
+			lines: { fill: true, show: true}
         });
+
+
+
+
+	 if (reclose) $('#myChangesPlotted .widget_content').hide();
 
      $('#myChangesPlotted ul.graph_range a').click(function(event)
      {

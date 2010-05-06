@@ -1,7 +1,7 @@
 <?php slot('widget_title',__('AMy Lasts Items'));  ?>
 
 <?php if(count($items)):?>
-<table style="width:100%;">
+<table class="show_table">
         <thead>
 	  <tr>
             <th>
@@ -23,7 +23,7 @@
 		echo $date->format('d M Y ( a )'); ?></td>
 	  <td><?php echo $item['referenced_relation'];?></td>
 	  <td><?php if($item['action'] != 'delete'):?>
-		    <?php echo link_to($item['record_id'], $item['referenced_relation'].'/edit?id='.$item['record_id']);?>
+		    <?php echo link_to($item['record_id'], $item->getLink());?>
 		  <?php else:?>
 		    <?php echo $item['record_id'];?>
 		  <?php endif;?>
