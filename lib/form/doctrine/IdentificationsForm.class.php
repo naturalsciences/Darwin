@@ -63,8 +63,6 @@ class IdentificationsForm extends BaseIdentificationsForm
     $this->widgetSchema['determination_status']->setAttributes(array('class'=>'vvvsmall_size'));
     $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['order_by'] = new sfValidatorInteger();
-    $this->widgetSchema['identifier'] = new sfWidgetFormInputHidden(array('default'=>1));
-    $this->validatorSchema['identifier'] = new sfValidatorPass();
 
     /* Identifiers sub form */
     
@@ -97,55 +95,4 @@ class IdentificationsForm extends BaseIdentificationsForm
       $this->embedForm('newIdentifier', $this->embeddedForms['newIdentifier']);
   }
 
-  public function bind(array $taintedValues = null, array $taintedFiles = null)
-  {
-    if(isset($taintedValues['newIdentifier']) && isset($taintedValues['identifier']))
-    {
-      foreach($taintedValues['newIdentifier'] as $key=>$newVal)
-      {
-        if (!isset($this['newIdentifier'][$key]))
-        {
-          $this->addIdentifiers($key);
-        }
-        $taintedValues['newIdentifier'][$key]['record_id'] = 0;
-      }
-    }
-
-    if(!isset($taintedValues['identifier']))
-    {
-      $this->offsetUnset('Identifiers');
-      unset($taintedValues['Identifiers']);
-    }
-
-    parent::bind($taintedValues, $taintedFiles);
-  }
-
-  public function saveEmbeddedForms($con = null, $forms = null)
-  {
-    if (null === $forms && $this->getValue('identifier'))
-    {
-      $value = $this->getValue('newIdentifier');
-      foreach($this->embeddedForms['newIdentifier']->getEmbeddedForms() as $name => $form)
-      {
-        if (!isset($value[$name]['people_ref']))
-        {
-          unset($this->embeddedForms['newIdentifier'][$name]);
-        }
-        else
-        {
-          $form->getObject()->setRecordId($this->getObject()->getId());
-        }
-      }
-      $value = $this->getValue('Identifiers');
-      foreach($this->embeddedForms['Identifiers']->getEmbeddedForms() as $name => $form)
-      {
-        if (!isset($value[$name]['people_ref']))
-        {
-          $form->getObject()->delete();
-          unset($this->embeddedForms['Identifiers'][$name]);
-        }
-      }
-    }
-    return parent::saveEmbeddedForms($con, $forms);
-  }
 }

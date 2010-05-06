@@ -51,27 +51,25 @@ class specimenActions extends DarwinActions
   {
     $spec_form = $this->getSpecimenForm($request);
     $number = intval($request->getParameter('num'));
-    $inumber = intval($request->getParameter('inum'));
-    $order_by = intval($request->getParameter('iorder_by',0));
+    $identifier_number = intval($request->getParameter('identifier_num'));
+    $identifier_order_by = intval($request->getParameter('identifier_order_by',0));
     $ident = null;
 
-    if($request->hasParameter('iid') && $request->getParameter('iid'))
+    if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))
     {
       $ident = $spec_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
-      $ident->addIdentifiers($inumber, $order_by);
-      return $this->renderPartial('spec_identification_identifiers',array('form' => $ident['newIdentifier'][$inumber]));
+      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $spec_form->reembedIdentifications($ident, $number);
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['Identifications'][$number]['newIdentifier'][$identifier_number]));
     }
     else
     {
       $spec_form->addIdentifications($number, 0);
       $ident = $spec_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
-      $ident->addIdentifiers($inumber, $order_by);
-      return $this->renderPartial('spec_identification_identifiers',array('form' => $ident['newIdentifier'][$inumber]));
+      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $spec_form->reembedNewIdentification($ident, $number);
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number]));
     }
-//       $ident = Doctrine::getTable('Identifications')->findExcept($request->getParameter('iid'));
-
-/*    $form = new IdentificationsForm($ident);
-    $form->addIdentifiers($number, $order_by);*/
   }
 
   public function executeNew(sfWebRequest $request)

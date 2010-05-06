@@ -123,7 +123,7 @@ $(document).ready(function () {
       }
     });
 
-    $('.add_identifier').click(function()
+    $('.add_identifier').live('click', function()
     {
         parent = $(this).closest('table.identifiers');
         parentId = $(parent).attr('id');

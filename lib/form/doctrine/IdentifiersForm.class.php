@@ -26,11 +26,13 @@ class IdentifiersForm extends BaseCataloguePeopleForm
       array('class'=>'inline',
            )
     );
+    $this->validatorSchema['people_ref'] = new sfValidatorInteger(array('required'=>false));
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['referenced_relation'] = new sfValidatorString();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    
     $this->validatorSchema['record_id'] = new sfValidatorInteger();
-    $this->widgetSchema['people_sub_type'] = new sfWidgetFormInputHidden(array('default'=>'General'));
+    $this->widgetSchema['people_sub_type'] = new sfWidgetFormInputHidden(array('default'=>''));
+    $this->validatorSchema['people_sub_type'] = new sfValidatorString(array('required'=>false));
     $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['order_by'] = new sfValidatorInteger();
 
