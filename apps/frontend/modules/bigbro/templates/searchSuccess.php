@@ -57,14 +57,14 @@
 	    <td><?php echo $change['referenced_relation'];?></td>
 	    <td>
 	      <?php if($change['action'] != 'delete'):?>
-		    <?php echo link_to($change['record_id'], $change->getLink());?>
+		<?php echo link_to($change['record_id'], $change['referenced_relation'].'/edit?id='.$change['record_id']);?>
 	      <?php else:?>
 		<?php echo $change['record_id'];?>
 	      <?php endif;?>
 	      <?php echo image_tag('next.png','class=search_with_record alt='.$change['record_id'].' ref='.$change['referenced_relation']);?>
 	    </td>
 	    <td class="trk_action"><?php echo $change['action'];?></td>
-	    <td>
+	    <td><?php /*
 	      <?php if($change['action']=='update' && count($change['UsersTrackingRecords']) !=0 ):?>
 		  <?php echo image_tag('info.png', 'class=more_trk');?>
 		  <ul class="field_change">
@@ -74,7 +74,8 @@
 		  </ul>
 	      <?php else:?>
 		<?php echo image_tag('info-bw.png');?>
-	      <?php endif;?>
+	      <?php endif;?><?php */?>
+	      <?php echo $change['old_value'];?>
 	    </td>
 	  </tr>
 	<?php endforeach;?>

@@ -533,16 +533,6 @@ UsersWorkflow:
             local: user_ref
             foreign: id
 
-UsersTablesFieldsTracked:
-    columns:
-        referenced_relation: { type: string, notnull: true}
-        field_name: { type: string, notnull: true}
-        user_ref: { type: integer, notnull: true}
-    relations:
-        Users:
-            local: user_ref
-            foreign: id
-
 UsersTracking:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
@@ -551,21 +541,11 @@ UsersTracking:
         user_ref: { type: integer, notnull: true}
         action: { type: string, notnull: true, default: insert}
         modification_date_time: { type: string, notnull: true }
+        old_value: { type: string}
+        new_value: { type: string}
     relations:
         Users:
             local: user_ref
-            foreign: id
-
-#MAY BE MODIFIED
-UsersTrackingRecords:
-    columns:
-        tracking_ref: { type: integer, notnull: true, primary: true,},
-        field_name: { type: string, notnull: true,primary: true,}
-        old_value: {type: string}
-        new_value: {type: string}
-    relations:
-        UsersTracking:
-            local: tracking_ref
             foreign: id
 
 CollectionMaintenance:

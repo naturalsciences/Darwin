@@ -18,6 +18,8 @@ abstract class BaseUsersTrackingFormFilter extends BaseFormFilterDoctrine
       'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => true)),
       'action'                 => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'modification_date_time' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'old_value'              => new sfWidgetFormFilterInput(),
+      'new_value'              => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +28,8 @@ abstract class BaseUsersTrackingFormFilter extends BaseFormFilterDoctrine
       'user_ref'               => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Users'), 'column' => 'id')),
       'action'                 => new sfValidatorPass(array('required' => false)),
       'modification_date_time' => new sfValidatorPass(array('required' => false)),
+      'old_value'              => new sfValidatorPass(array('required' => false)),
+      'new_value'              => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_tracking_filters[%s]');
@@ -51,6 +55,8 @@ abstract class BaseUsersTrackingFormFilter extends BaseFormFilterDoctrine
       'user_ref'               => 'ForeignKey',
       'action'                 => 'Text',
       'modification_date_time' => 'Text',
+      'old_value'              => 'Text',
+      'new_value'              => 'Text',
     );
   }
 }

@@ -13,4 +13,3 @@ all:
 # dev:
 #    tracking:
 #        enabled: true
-#        trackfields: true
