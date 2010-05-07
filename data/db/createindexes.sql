@@ -32,8 +32,6 @@ CREATE INDEX CONCURRENTLY idx_users_coll_rights_asked_collection_ref on users_co
 CREATE INDEX CONCURRENTLY idx_users_coll_rights_asked_user_ref on users_coll_rights_asked(user_ref);
 CREATE INDEX CONCURRENTLY idx_record_visibilities on record_visibilities(user_ref);
 CREATE INDEX CONCURRENTLY idx_users_workflow_user_ref on users_workflow(user_ref);
-CREATE INDEX CONCURRENTLY idx_users_tables_fields_tracked_user_ref on users_tables_fields_tracked(user_ref);
-CREATE INDEX CONCURRENTLY idx_users_tracking_records_tracking_ref on users_tracking_records(tracking_ref);
 CREATE INDEX CONCURRENTLY idx_collection_maintenance_user_ref on collection_maintenance(people_ref);
 CREATE INDEX CONCURRENTLY idx_my_saved_searches_user_ref on my_saved_searches(user_ref);
 CREATE INDEX CONCURRENTLY idx_my_preferences_user_ref on my_preferences(user_ref);

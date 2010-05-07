@@ -32,8 +32,6 @@ DROP INDEX IF EXISTS idx_users_coll_rights_asked_collection_ref;
 DROP INDEX IF EXISTS idx_users_coll_rights_asked_user_ref;
 DROP INDEX IF EXISTS idx_record_visibilities;
 DROP INDEX IF EXISTS idx_users_workflow_user_ref;
-DROP INDEX IF EXISTS idx_users_tables_fields_tracked_user_ref;
-DROP INDEX IF EXISTS idx_users_tracking_records_tracking_ref;
 DROP INDEX IF EXISTS idx_collection_maintenance_user_ref;
 DROP INDEX IF EXISTS idx_my_saved_searches_user_ref;
 DROP INDEX IF EXISTS idx_my_preferences_user_ref;

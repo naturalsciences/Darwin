@@ -5975,45 +5975,21 @@ BEGIN
 	  RETURN NEW;
 	END IF;
 	IF TG_OP = 'INSERT' THEN
-		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
-				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert', now()) RETURNING id into trk_id;
+		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time, new_value)
+				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert', now(), hstore(NEW)) RETURNING id into trk_id;
 	ELSEIF TG_OP = 'UPDATE' THEN
 
 	  IF ROW(NEW.*) IS DISTINCT FROM ROW(OLD.*) THEN
-		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
-		    VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update', now()) RETURNING id into trk_id;
+		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time, new_value, old_value)
+		    VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'update', now(), hstore(NEW), hstore(OLD)) RETURNING id into trk_id;
 	  ELSE
 	    RAISE info 'unnecessary update on table "%" and id "%"', TG_TABLE_NAME::text, NEW.id;
 	  END IF;
 
 	ELSEIF TG_OP = 'DELETE' THEN
-		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time)
- 			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete', now());
+		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time, old_value)
+ 			VALUES (TG_TABLE_NAME::text, OLD.id, user_id, 'delete', now(), hstore(OLD));
 	END IF;
-
-	SELECT COALESCE(get_setting('darwin.track_fields'),'0')::integer INTO track_fields;
-	IF track_fields = 0 THEN
-	  RETURN NEW;
-	END IF;
-
-	IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-	  FOR tbl_row IN SELECT field_name FROM users_tables_fields_tracked WHERE referenced_relation = TG_TABLE_NAME::text AND ( user_ref=user_id OR user_ref is null)
-	  LOOP
-	      EXECUTE 'SELECT (' || quote_literal(NEW) || '::' || TG_RELID::regclass || ').' || quote_ident(tbl_row.field_name) INTO new_val;
-	      IF TG_OP = 'UPDATE' THEN
-		  EXECUTE 'SELECT (' || quote_literal(OLD) || '::' || TG_RELID::regclass || ').' || quote_ident(tbl_row.field_name) INTO old_val;
-	      ELSE
-		  old_val := null;
-	      END IF;
-	      IF old_val <> new_val THEN
-		      INSERT INTO users_tracking_records (tracking_ref, field_name, old_value, new_value )
-			  VALUES (trk_id, tbl_row.field_name, old_val, new_val);
-	      END IF;
-	  END LOOP;
-	END IF;
-
-/* http://wiki.postgresql.org/wiki/PL/pgSQL_Dynamic_Triggers */
-
 
 	RETURN NULL;
 END;

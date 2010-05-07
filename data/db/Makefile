@@ -156,6 +156,8 @@ install-lib:
 	#Make this more dynamical
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pg_trgm.sql
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pgcrypto.sql
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/hstore-new.sql
+
 create-user-web:
 	-createuser -l -i -S -R -D -P -E $(DB_WEB_USER)
 

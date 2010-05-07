@@ -888,21 +888,6 @@ comment on column users_workflow.status is 'Record status: to correct, to be cor
 comment on column users_workflow.modification_date_time is 'Date and time of status change - last date/time is used as actual status, but helps also to keep an history of status change';
 comment on column users_workflow.comment is 'Complementary comments';
 
-create sequence users_tables_fields_tracked_id_seq;
-
-create table users_tables_fields_tracked
-       (
-	id integer not null default nextval('users_tables_fields_tracked_id_seq'),
-        referenced_relation varchar not null,
-        field_name varchar not null,
-        user_ref integer,
-	constraint pk_users_tables_fields_tracked primary key (id),
-        constraint unq_users_tables_fields_tracked unique (referenced_relation, field_name, user_ref),
-        constraint fk_users_tables_fields_tracked_users foreign key (user_ref) references users(id) on delete cascade
-       );
-comment on table users_tables_fields_tracked is 'List fields tracked per user';
-comment on column users_tables_fields_tracked.user_ref is 'Reference of user - id field of users table';
-
 create sequence users_tracking_id_seq;
 
 create table users_tracking
@@ -912,6 +897,8 @@ create table users_tracking
         record_id integer not null,
         user_ref integer not null,
         action varchar not null default 'insert',
+	old_value hstore,
+	new_value hstore,
         modification_date_time update_date_time,
         constraint pk_users_tracking_pk primary key (id),
         constraint fk_users_tracking_users foreign key (user_ref) references users(id)
@@ -923,24 +910,6 @@ comment on column users_tracking.id is 'Unique identifier of a table track entry
 comment on column users_tracking.user_ref is 'Reference of user having made an action - id field of users table';
 comment on column users_tracking.action is 'Action done on table record: insert, update, delete';
 comment on column users_tracking.modification_date_time is 'Track date and time';
-
-create sequence users_tracking_records_id_seq;
-
-create table users_tracking_records
-       (
-        id bigint not null default nextval('users_tracking_records_id_seq'),
-        tracking_ref bigint not null,
-        field_name varchar not null,
-        old_value varchar,
-        new_value varchar,
-        constraint pk_users_tracking_records primary key (id),
-        constraint unq_users_tracking_records unique (tracking_ref, field_name),
-        constraint fk_users_tracking_records_users_tracking foreign key (tracking_ref) references users_tracking(id) on delete cascade
-       );
-comment on table users_tracking_records is 'Track of fields modification per record';
-comment on column users_tracking_records.tracking_ref is 'Reference of tracking entry - id field of users_tracking table';
-comment on column users_tracking_records.old_value is 'Old value when an update is done - array of values when field modified is an array';
-comment on column users_tracking_records.new_value is 'New value when an update is done - array of values when field modified is an array';
 
 create sequence collection_maintenance_id_seq;
 
