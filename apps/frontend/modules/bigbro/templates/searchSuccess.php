@@ -64,18 +64,17 @@
 	      <?php echo image_tag('next.png','class=search_with_record alt='.$change['record_id'].' ref='.$change['referenced_relation']);?>
 	    </td>
 	    <td class="trk_action"><?php echo $change['action'];?></td>
-	    <td><?php /*
-	      <?php if($change['action']=='update' && count($change['UsersTrackingRecords']) !=0 ):?>
+	    <td>
+	      <?php if($change['action']=='update' && count($change->getDiffAsArray()) >0 ):?>
 		  <?php echo image_tag('info.png', 'class=more_trk');?>
 		  <ul class="field_change">
-		  <?php foreach($change['UsersTrackingRecords'] as $field):?>
-		    <li><strong><?php echo $field['field_name'];?></strong> <em><?php echo $field['old_value'];?></em> -> <?php echo $field['new_value'];?></li>
+		  <?php foreach($change->getDiffAsArray() as $field => $value):?>
+		    <li><strong><?php echo $field;?></strong> <em><?php echo $value;?></em></li>
 		  <?php endforeach;?>
 		  </ul>
 	      <?php else:?>
 		<?php echo image_tag('info-bw.png');?>
-	      <?php endif;?><?php */?>
-	      <?php echo $change['old_value'];?>
+	      <?php endif;?>
 	    </td>
 	  </tr>
 	<?php endforeach;?>

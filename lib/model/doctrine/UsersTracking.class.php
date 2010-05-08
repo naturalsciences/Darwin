@@ -33,5 +33,17 @@ class UsersTracking extends BaseUsersTracking
 	}
 	return $link;
   }
+  
+  public function getDiffAsArray()
+  {
+    $hstore = $this->_get('diff');
+    eval("\$diff = array({$hstore});");
+    foreach($diff as $key=>$value)
+    {
+      if(preg_match("/_indexed$/", $key) || preg_match("/_name_ts$/", $key) || preg_match("/_order_by$/", $key))
+	unset($diff[$key]);
+    }
+    return $diff;
+  }
 }
 

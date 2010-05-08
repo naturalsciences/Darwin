@@ -96,8 +96,9 @@ class UsersTrackingFormFilter extends BaseUsersTrackingFormFilter
     $query = parent::doBuildQuery($values);
     $alias = $query->getRootAlias();
     $fields = array('modification_date_time');
+    $query->select($alias.'.*, u.*, old_value-new_value as diff');
     $this->addDateTimeColumnQuery($query, $fields, $values['from_date'], $values['to_date']);
-    $query->leftJoin($alias.'.Users');
+    $query->leftJoin($alias.'.Users u');
 
     return $query;
   }
