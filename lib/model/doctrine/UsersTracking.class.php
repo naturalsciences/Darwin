@@ -34,9 +34,12 @@ class UsersTracking extends BaseUsersTracking
 	return $link;
   }
   
-  public function getDiffAsArray()
+  public function getDiffAsArray($is_old = true)
   {
-    $hstore = $this->_get('diff');
+    if($is_old)
+      $hstore = $this->_get('old_diff');
+    else
+      $hstore = $this->_get('new_diff');
     eval("\$diff = array({$hstore});");
     foreach($diff as $key=>$value)
     {

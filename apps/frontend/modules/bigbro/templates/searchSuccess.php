@@ -68,8 +68,8 @@
 	      <?php if($change['action']=='update' && count($change->getDiffAsArray()) >0 ):?>
 		  <?php echo image_tag('info.png', 'class=more_trk');?>
 		  <ul class="field_change">
-		  <?php foreach($change->getDiffAsArray() as $field => $value):?>
-		    <li><strong><?php echo $field;?></strong> <em><?php echo $value;?></em></li>
+		  <?php $old_change = $change->getDiffAsArray(true);foreach($change->getDiffAsArray(false) as $field => $value):?>
+		    <li><strong><?php echo $field;?></strong> <em><?php echo $old_change[$field];?></em> -> <?php echo $value;?></li>
 		  <?php endforeach;?>
 		  </ul>
 	      <?php else:?>
