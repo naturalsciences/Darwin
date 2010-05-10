@@ -12,7 +12,8 @@ create table template_people
         additional_names varchar,
         birth_date_mask integer not null default 0,
         birth_date date not null default '01/01/0001',
-        gender genders
+        gender char(1),
+	constraint genders_chk CHECK (gender in ('M', 'F'))
        );
 comment on table template_people is 'Template table used to describe user/people tables';
 comment on column template_people.is_physical is 'Type of user/person: physical or moral - true is physical, false is moral';
