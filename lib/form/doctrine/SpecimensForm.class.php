@@ -488,7 +488,8 @@ class SpecimensForm extends BaseSpecimensForm
           else
           {
             $form->getObject()->setRecordId($this->getObject()->getId());
-            $subvalue = $form->getValue('newIdentifier');
+            $form->getObject()->save();
+            $subvalue = $value[$name]['newIdentifier'];
             foreach($form->embeddedForms['newIdentifier']->getEmbeddedForms() as $subname => $subform)
             {
               if (!isset($subvalue[$subname]['people_ref']))
@@ -515,7 +516,6 @@ class SpecimensForm extends BaseSpecimensForm
             $subvalue = $value[$name]['newIdentifier'];
             foreach($form->embeddedForms['newIdentifier']->getEmbeddedForms() as $subname => $subform)
             {
-//               die(var_dump($subvalue[$subname]));
               if (!isset($subvalue[$subname]['people_ref']))
               {
                 unset($form->embeddedForms['newIdentifier'][$subname]);

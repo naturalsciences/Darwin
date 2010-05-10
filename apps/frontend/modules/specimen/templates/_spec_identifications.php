@@ -28,8 +28,8 @@
     </td>    
   </tr>
   <tr class="spec_ident_identifiers">
-    <td colspan="2"></td>
-    <td colspan="3">
+    <td></td>
+    <td colspan="4">
       <?php $borderClass = (!$form['Identifiers']->count() && !$form['newIdentifier']->count())?'':'green_border';?>
       <table class="property_values identifiers <?php echo $borderClass;?>" id="spec_ident_identifiers_<?php echo $row_num;?>">
         <thead style="<?php echo ($form['Identifiers']->count() || $form['newIdentifier']->count())?'':'display: none;';?>" class="spec_ident_identifiers_head">

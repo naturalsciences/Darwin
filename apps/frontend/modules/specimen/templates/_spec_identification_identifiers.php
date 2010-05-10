@@ -1,7 +1,7 @@
         <tbody class="spec_ident_identifiers_data">
           <?php if($form->hasError()): ?>
             <tr>
-              <td colspan="6">
+              <td colspan="3">
                 <?php echo $form->renderError();?>
               </td>
             </tr>
