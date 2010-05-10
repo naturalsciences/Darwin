@@ -52,7 +52,7 @@ class specimenActions extends DarwinActions
     $spec_form = $this->getSpecimenForm($request);
     $number = intval($request->getParameter('num'));
     $identifier_number = intval($request->getParameter('identifier_num'));
-    $identifier_order_by = intval($request->getParameter('identifier_order_by',0));
+    $identifier_order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
 
     if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))

@@ -913,7 +913,7 @@ table.encoding tbody .widget_row_delete
   padding-right:1px;
 }
 
-.handle
+.handle, .spec_ident_handle, .spec_ident_identifiers_handle
 {
   cursor:move;
 }

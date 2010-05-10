@@ -1,3 +1,28 @@
+<script  type="text/javascript">
+function forceHelper(e,ui)
+{
+   $(".ui-state-highlight").html("<td colspan='6' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
+}
+
+function forceIdentifiersHelper(e,ui)
+{
+   $(".ui-state-highlight").html("<td colspan='3' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
+}
+
+function reOrderIdent()
+{
+  $('table#identifications').find('tbody.spec_ident_data:visible').each(function (index, item){
+    $(item).find('tr.spec_ident_data input[id$=\"_order_by\"]').val(index+1);
+  });
+}
+
+function reOrderIdentifiers(tableId)
+{
+  $('table#'+tableId).find('tbody.spec_ident_identifiers_data:visible').each(function (index, item){
+    $(item).find('tr.spec_ident_identifiers_data input[id$=\"_order_by\"]').val(index+1);
+  });
+}
+</script>
 <?php $spec_id = ($form->getObject()->isNew() ? 0: $form->getObject()->getId());?>
 <table class="property_values" id="identifications">
   <thead style="<?php echo ($form['Identifications']->count() || $form['newIdentification']->count())?'':'display: none;';?>" class="spec_ident_head">
@@ -39,25 +64,6 @@
 </table>
 <script  type="text/javascript">
 
-function forceHelper(e,ui)
-{
-   $(".ui-state-highlight").html("<td colspan='6' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
-}
-
-function reOrderIdent()
-{
-  $('table#identifications').find('tbody.spec_ident_data:visible').each(function (index, item){
-    $(item).find('tr.spec_ident_data input[id$=\"_order_by\"]').val(index+1);
-  });
-}
-
-function reOrderIdentifiers(tableId)
-{
-  $('table#'+tableId).find('tbody.spec_ident_identifiers_data:visible').each(function (index, item){
-    $(item).find('tr.spec_ident_identifiers_data input[id$=\"_order_by\"]').val(index+1);
-  });
-}
-
 $(document).ready(function () {
 
     $('.clear_identification').live('click', function()
@@ -88,8 +94,7 @@ $(document).ready(function () {
           }
         });
         return false;
-    });
-    
+    });    
 
     $("#identifications").sortable({
          placeholder: 'ui-state-highlight',
@@ -141,6 +146,5 @@ $(document).ready(function () {
         return false;
     });
     
-
 });
 </script>

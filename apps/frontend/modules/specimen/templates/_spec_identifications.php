@@ -57,3 +57,18 @@
     <td></td>
   </tr>
 </tbody>
+<script  type="text/javascript">
+$(document).ready(function () {
+  $("#spec_ident_identifiers_<?php echo $row_num ?>").sortable({
+    placeholder: 'ui-state-highlight',
+    handle: '.spec_ident_identifiers_handle',
+    axis: 'y',
+    change: function(e, ui) {
+              forceIdentifiersHelper(e,ui);
+            },
+    deactivate: function(event, ui) {
+                  reOrderIdentifiers($(this).attr('id'));
+                }
+   });
+});
+</script>

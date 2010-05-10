@@ -6,7 +6,7 @@
               </td>
             </tr>
           <?php endif;?>
-          <tr>
+          <tr class="spec_ident_identifiers_data">
             <td class="spec_ident_identifiers_handle"><?php echo image_tag('drag.png');?></td>
             <td><?php echo $form['people_ref']->render();?></td>
             <td class="widget_row_delete">
