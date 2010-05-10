@@ -241,6 +241,14 @@ create table tags
 	constraint fk_tags_tag_groups foreign key (group_ref) references tag_groups(id) on delete cascade
       );
 
+comment on table tags is 'List of calculated tags for a groups. This is only for query purpose (filled by triggers)';
+comment on column tags.gtu_ref is 'Reference to a Gtu';
+comment on column tags.group_ref is 'Reference of the Group name under which the tag is grouped';
+comment on column tags.group_type is 'Indexed form of a group name';
+comment on column tags.sub_group_type is 'Indexed form of a sub-group name';
+comment on column tags.tag is 'The readable version of the tag';
+comment on column tags.tag_indexed is 'The indexed version of the tag';
+
 
 create sequence catalogue_properties_id_seq;
 
