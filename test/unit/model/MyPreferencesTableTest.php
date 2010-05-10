@@ -19,7 +19,7 @@ $t->isnt(Doctrine::getTable('MyPreferences')->setUserRef($userEvil)->addCategory
 
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
-        ->getWidgets('board_widget')),6,'Get all board widget');
+        ->getWidgets('board_widget')),4,'Get all board widget');
 $t->is(count(Doctrine::getTable('MyPreferences')
         ->setUserRef($userEvil)
         ->getWidgets('specimen_widget')),16,'Get all specimen widget');
