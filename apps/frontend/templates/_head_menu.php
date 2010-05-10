@@ -30,7 +30,7 @@
                         <li><?php echo link_to(__('Lithology'),'lithology/index');?></li>
                         <li><?php echo link_to(__('Mineralogy'),'mineralogy/index');?></li>
                         <li><?php echo link_to(__('Expeditions'),'expedition/index');?></li>
-                        <li><?php echo link_to(__('RBINS I.G. Numbers'),'igs/index');?></li>
+                        <li><?php echo link_to(__('I.G. Numbers'),'igs/index');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/index');?></li>
                         <li><?php echo link_to(__('People'),'people/index');?></li>
                         <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
