@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript" src="http://people.iola.dk/olau/flot/jquery.flot.js"></script> 
+<?php javascript_include_tag('jquery.flot.js');?> 
 <script id="source" language="javascript" type="text/javascript"> 
 $(function () {
 	var reclose = false;
