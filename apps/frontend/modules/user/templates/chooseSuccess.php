@@ -18,7 +18,6 @@ $(document).ready(function () {
 	$info = 'good' ;
 	$('.collections_rights tbody tr').each(function() {
 	    if($(this).attr('id') == ref_element_id) $info = 'bad' ;
-	    if($(this).attr("style") == 'display: none; ') $info = 'good' ;
 	});
 	if($info == 'good') addCollRightValue(ref_element_id);
     });

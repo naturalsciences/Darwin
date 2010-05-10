@@ -11,7 +11,7 @@ class PropertiesValuesForm extends BasePropertiesValuesForm
 {
   public function configure()
   {
-    $this->useFields(array('id', 'property_value', 'property_accuracy'));
+    $this->useFields(array('property_value', 'property_accuracy'));
     $this->widgetSchema['property_value'] = new sfWidgetFormInput();
     $this->validatorSchema['property_value']->setOption('required', false);
     $this->mergePostValidator(new PropertyValidatorSchema());

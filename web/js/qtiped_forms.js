@@ -1,7 +1,6 @@
 jQuery(function () 
   {
     $('form.qtiped_form').submit(function () {
-
       $('form.qtiped_form input[type=submit]').attr('disabled','disabled');
       hideForRefresh($('form.qtiped_form').parent());
       $.ajax({

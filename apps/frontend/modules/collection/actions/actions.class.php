@@ -88,7 +88,7 @@ class collectionActions extends DarwinActions
     $this->forward404Unless($request->isMethod('post'));
     $options = $request->getParameter('collections');
     $this->form = new CollectionsForm(null,array('new_with_error' => true, 'institution' => $options['institution_ref']));
-
+    
     $this->processForm($request, $this->form);
 
     $this->setTemplate('new');
@@ -106,10 +106,16 @@ class collectionActions extends DarwinActions
   {
     $number = intval($request->getParameter('num'));
     $user_ref = intval($request->getParameter('user_ref'));
-    $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')) ;
-    $form = new CollectionsForm($collection);
+    if($request->hasParameter('id'))
+    {
+         $this->ref_id = $request->getParameter('id') ;
+	    $collection = Doctrine::getTable('Collections')->findExcept($this->ref_id) ;
+         $form = new CollectionsForm($collection);
+
+    }
+    else $form = new CollectionsForm();
     $form->addValue($number,$user_ref);
-    return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number]));
+    return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id));
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -148,6 +154,32 @@ class collectionActions extends DarwinActions
     $this->redirect('collection/index');
   }
 
+  public function executeRights(sfWebRequest $request)
+  {
+  	$id = $request->getParameter('collection_ref') ;
+  	$user = $request->getParameter('user_ref') ;
+	$this->forward404Unless($collections = Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
+  	$this->user_formated_name = Doctrine::getTable('Users')->findUser($user)->getFormatedName() ;
+  	$old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user) ;
+	$this->form = new SubCollectionsForm(null,array('collection' => $collections,'user_ref' => $user,'old_rights' => $old_rights));
+	$this->sub_coll = array();
+     if($request->isMethod('post'))
+     {
+       $this->form->bind($request->getParameter('sub_collection')) ;
+       if($this->form->isValid())
+       {
+     	$this->form->save();
+     	return $this->renderText('ok') ;
+       }
+     }	
+     foreach($collections as $key => $keyword)
+     {	
+       $this->sub_coll[$key] = array();
+       $this->sub_coll[$key]['level'] = substr_count($keyword->getPath(),'/') ;
+       $this->sub_coll[$key][] = $keyword ;
+     }
+  }
+  
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()));
@@ -155,7 +187,7 @@ class collectionActions extends DarwinActions
     {
         try{
             $collections = $form->save();
-            //$this->redirect('collection/index');
+            $this->redirect('collection/index');
         }
         catch(Exception $e)
         {
@@ -163,5 +195,5 @@ class collectionActions extends DarwinActions
             $form->getErrorSchema()->addError($error); 
         }
     }
-  }
+  }    
 }

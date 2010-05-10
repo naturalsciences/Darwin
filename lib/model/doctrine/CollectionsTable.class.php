@@ -35,5 +35,34 @@ class CollectionsTable extends DarwinTable
       }
       return $results;
     }
+    
+    public function getCollectionByName($name)
+    {
+	   $q = Doctrine_Query::create()
+		->from('collections c')
+		->where('c.name = ?', $name);
+
+	   return $q->fetchOne(); 
+    }
+    
+    public function findCollection($id)
+    {
+	   $q = Doctrine_Query::create()
+		->from('collections c')
+		->where('c.id = ?', $id);
+
+	   return $q->fetchOne(); 
+    }
+
+    public function fetchByCollectionParent($ParentId)
+    {
+      $expr = "%/$ParentId/%" ;
+      $q = Doctrine_Query::create()
+            ->from('Collections c')
+      	  ->select('c.id, c.name, c.path, CONCAT(c.path,c.id,E\'/\') as coll_path_id')
+            ->andWhere('c.path like ?', $expr)
+            ->orderBy('coll_path_id ASC');
+      return $q->execute();
+    }
 
 }

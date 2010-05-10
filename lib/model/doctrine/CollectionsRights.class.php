@@ -5,5 +5,13 @@
  */
 class CollectionsRights extends BaseCollectionsRights
 {
+	public function deleteCollectionRight()
+	{
+		$q = Doctrine_Query::create()
+		   ->delete('CollectionsRights c')
+		   ->where('c.user_ref = ?',$this->getUserRef())
+		   ->andWhere('c.collection_ref = ?',$this->getCollectionRef()) ;
 
+		return $q->execute() ;
+	}
 }

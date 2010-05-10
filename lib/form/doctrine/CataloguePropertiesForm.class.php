@@ -155,13 +155,13 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     {
       if(isset($taintedValues['newVal']))
       {
-	foreach($taintedValues['newVal'] as $key=>$newVal)
-	{
-	  if (!isset($this['newVal'][$key]))
-	  {
-	    $this->addValue($key);
-	  }
-	}
+		foreach($taintedValues['newVal'] as $key=>$newVal)
+		{
+		  if (!isset($this['newVal'][$key]))
+		  {
+		    $this->addValue($key);
+		  }
+		}
       }
       parent::bind($taintedValues, $taintedFiles);
     }

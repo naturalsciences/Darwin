@@ -80,7 +80,7 @@ class CollectionsForm extends BaseCollectionsForm
     {
       if($values['parent_ref'] == $values['id'])
       {
-	$error = new sfValidatorError($validator, "A collection can't be attached to itself");
+	   $error = new sfValidatorError($validator, "A collection can't be attached to itself");
         throw new sfValidatorErrorSchema($validator, array('parent_ref' => $error));
       }
     }
@@ -91,13 +91,13 @@ class CollectionsForm extends BaseCollectionsForm
   {
       if(isset($taintedValues['newVal']))
       {
-	foreach($taintedValues['newVal'] as $key=>$newVal)
-	{
-	  if (!isset($this['newVal'][$key]))
-	  {
-	    $this->addValue($key,$newVal['user_ref']);
-	  }
-	}
+		foreach($taintedValues['newVal'] as $key=>$newVal)
+		{
+		  if (!isset($this['newVal'][$key]))
+		  {
+		    $this->addValue($key,$newVal['user_ref']);
+		  }
+		}
       }
       parent::bind($taintedValues, $taintedFiles);
   }
@@ -106,23 +106,15 @@ class CollectionsForm extends BaseCollectionsForm
   {
    if (null === $forms)
    {
-	$value = $this->getValue('newVal');
-	foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
-	{
-	  if (!isset($value[$name]['user_ref']))
-	  {
-	    unset($this->embeddedForms['newVal'][$name]);
-	  }
-	}
 	$value = $this->getValue('CollectionsRights');
 	foreach($this->embeddedForms['CollectionsRights']->getEmbeddedForms() as $name => $form)
 	{
 	  if (!isset($value[$name]['user_ref']))
 	  {
 	    $form->getObject()->delete();
-	    unset($this->embeddedForms['Collectionsrights'][$name]);
-	  }
-	 }
+	    unset($this->embeddedForms['CollectionsRights'][$name]);
+	  } 
+	}	
    }
    return parent::saveEmbeddedForms($con, $forms);
   }

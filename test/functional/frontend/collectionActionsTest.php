@@ -134,3 +134,38 @@ $browser->
     checkElement('.treelist:first > ul > li',1)->
   end()
 ;
+$user_id = Doctrine::getTable('users')->getUserByPassword('root','evil')->getId() ;
+$collection_id = Doctrine::getTable('collections')->getCollectionByName('Vertebrates')->getId() ;
+
+$browser->
+  info('sub collection right')->
+  get('collection/rights/user_ref/'.$user_id.'/collection_ref/'.$collection_id)->
+  with('request')->begin()->
+    isParameter('module', 'collection')->
+    isParameter('action', 'rights')->
+  end()->
+with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('.treelist:first > ul > li:first span','/Amphibia/')->
+    end()->
+ 
+  click('#submit',  array('sub_collection' => array(
+    'SubCollectionsRights' => array(
+    0 => array(
+    'user_ref'       => $user_id,
+    'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Amphibia')->getId(),
+    'check_right' => true)
+    )
+    )));
+    
+$browser->
+  info('sub collection right')->
+  get('collection/edit/id/'.Doctrine::getTable('collections')->getCollectionByName('Amphibia')->getId())->
+  with('request')->begin()->
+    isParameter('module', 'collection')->
+    isParameter('action', 'edit')->
+  end()->
+with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#'.$user_id.' > td:first > label',Doctrine::getTable('users')->findUser($user_id)->getFormatedName())->
+    end();

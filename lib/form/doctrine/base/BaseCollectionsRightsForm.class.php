@@ -21,9 +21,9 @@ abstract class BaseCollectionsRightsForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'             => new sfValidatorInteger(array('required' => false)),
-      'collection_ref' => new sfValidatorInteger(array('required' => false)),
-      'user_ref'       => new sfValidatorInteger(array('required' => false)),
+      'id'             => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'collection_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'))),
+      'user_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('collections_rights[%s]');

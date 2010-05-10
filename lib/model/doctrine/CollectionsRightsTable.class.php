@@ -4,5 +4,12 @@
  */
 class CollectionsRightsTable extends DarwinTable
 {
-
+	public function findCollectionsByUser($user)
+	{
+		$q = Doctrine_Query::create()
+		   ->select('collection_ref')
+		   ->from('CollectionsRights')
+		   ->andWhere('user_ref = ?', $user) ;
+		return $q->execute() ;
+	}
 }

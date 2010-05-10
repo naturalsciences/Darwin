@@ -2,6 +2,7 @@ col0:
    col_num: 1
    category: catalogue_collections_widget
    group_name: collectionsCodes
+   mandatory: false
    order_by: 0
    opened: true
    visible: true
