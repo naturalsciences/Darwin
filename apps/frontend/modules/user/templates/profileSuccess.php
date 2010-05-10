@@ -3,7 +3,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 <div class="page">
-  <h1 class="edit_mode">Edit My Profile</h1>
+  <h1 class="edit_mode"><?php echo __("Edit My Profile");?></h1>
   <form class="edition" action="<?php echo url_for('user/profile') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <table>
   <tbody>
