@@ -1,6 +1,6 @@
 <?php slot('title', __('Search Institution'));  ?>        
 <div class="page">
-<h1>Institution Search</h1>
+<h1><?php echo __('Institution Search');?></h1>
 
 <?php if($sf_params->get('with_js',true) == true):?>
 
