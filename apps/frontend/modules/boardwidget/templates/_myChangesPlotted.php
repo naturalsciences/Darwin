@@ -1,4 +1,4 @@
-<?php javascript_include_tag('jquery.flot.js');?> 
+<?php echo javascript_include_tag('jquery.flot.min.js');?> 
 <script id="source" language="javascript" type="text/javascript"> 
 $(function () {
 	var reclose = false;
