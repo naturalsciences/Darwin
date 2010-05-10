@@ -13,7 +13,7 @@ class MineralogyTable extends DarwinTable
     return $this->createDistinct('Mineralogy', 'cristal_system', 'c_system')->execute();
   }
 
-  public function findByCodeLimited($code, $limit)
+  public function fetchByCodeLimited($code, $limit)
   {
     $q = Doctrine_Query::create()
          ->from('Mineralogy')

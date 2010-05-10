@@ -12,4 +12,13 @@ class UsersAddressesTable extends DarwinTable
   {
     return $this->createDistinct('UsersAddresses', 'country', 'countries')->execute();
   }
+
+  public function fetchByUser($id)
+  {
+    $q = Doctrine_Query::create()
+	  ->from('UsersAddresses r')
+	  ->where('r.person_user_ref = ?',$id)
+	  ->orderBy('r.country ASC,r.locality ASC, r.id ASC');
+    return $q->execute();
+  }
 }

@@ -1,6 +1,6 @@
 <?php slot('title', __('Search sampling location'));  ?>
 <div class="page">
-<h1><?php echo ('Sampling location search');?></h1>
+<h1><?php echo __('Sampling location search');?></h1>
 
 <?php if($sf_params->get('with_js',true) == true):?>
 

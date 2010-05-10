@@ -2,12 +2,12 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">
-  <h1 class="edit_mode">List of widgets available for <?php echo($user->getFamilyName()." ".$user->getGivenName()) ?></h1>
+  <h1 class="edit_mode"><?php echo __(sprintf("List of widgets available for %s", $user->getFormatedName())); ?></h1>
   <form class="edition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <table>
   <thead class="title_widget">
   <tr>
-  	<th>Category/screen</th><th>Name</th><th colspan="6">Widget</th>
+  	<th><?php echo __("Category/screen");?></th><th><?php echo __("Name");?></th><th colspan="6"><?php echo __("Widget");?></th>
   </tr>
   </thead>
   <?php foreach($form_pref as $category=>$record) :?>
@@ -15,12 +15,12 @@
   		<tr>
   			<td colspan="3" class='head_widget'>&nbsp;</td>
   			<?php if ($level > 2) : ?>
-			<th class='head_widget'>Deactivated ?<br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="unused"></th>
+			<th class='head_widget'><?php echo __("Deactivated");?><br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="unused"></th>
   			<?php endif ; ?>
-  			<th class='head_widget'>Activated ?<br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="is_available"></th>
-  			<th class='head_widget'>Visible ?<br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="visible"></th>
-  			<th class='head_widget'>Opened ?<br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="opened"></th>
-  			<th class='head_widget'>Custom title</th>
+  			<th class='head_widget'><?php echo __("Activated");?><br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="is_available"></th>
+  			<th class='head_widget'><?php echo __("Visible");?><br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="visible"></th>
+  			<th class='head_widget'><?php echo __("Opened");?><br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="opened"></th>
+  			<th class='head_widget'><?php echo __("Custom title");?></th>
   		</tr>	
 	</thead>
 	<tbody alt="<?php echo $category ?>" class='widget_selection'>
@@ -52,7 +52,7 @@
   <tr>
     <td colspan="5">
       <a href="<?php echo url_for('@homepage') ?>"><?php echo __('Cancel');?></a>
-      <input id="reset" type="reset" value="Reset" />
+      <input id="reset" type="reset" value="<?php echo __('Reset');?>" />
       <input id="submit" type="submit" value="<?php echo __('Save');?>" />
     </td>
   </tr>

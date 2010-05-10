@@ -13,5 +13,12 @@ class PeopleAddressesTable extends DarwinTable
     return $this->createDistinct('PeopleAddresses', 'country', 'countries')->execute();
   }
 
-
+  public function fetchByPeople($id)
+  {
+    $q = Doctrine_Query::create()
+	  ->from('PeopleAddresses r')
+	  ->where('r.person_user_ref = ?',$id)
+	  ->orderBy('r.country ASC,r.locality ASC, r.id ASC');
+    return $q->execute();
+  }
 }

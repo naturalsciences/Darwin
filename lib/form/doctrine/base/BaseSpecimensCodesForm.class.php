@@ -1,23 +1,23 @@
 <?php
 
 /**
- * Codes form base class.
+ * SpecimensCodes form base class.
  *
- * @method Codes getObject() Returns the current form's model object
+ * @method SpecimensCodes getObject() Returns the current form's model object
  *
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
  */
-abstract class BaseCodesForm extends BaseFormDoctrine
+abstract class BaseSpecimensCodesForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
       'referenced_relation'   => new sfWidgetFormTextarea(),
-      'record_id'             => new sfWidgetFormInputText(),
+      'record_id'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimens'), 'add_empty' => false)),
       'code_category'         => new sfWidgetFormTextarea(),
       'code_prefix'           => new sfWidgetFormTextarea(),
       'code_prefix_separator' => new sfWidgetFormTextarea(),
@@ -32,8 +32,8 @@ abstract class BaseCodesForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'referenced_relation'   => new sfValidatorString(),
-      'record_id'             => new sfValidatorInteger(),
+      'referenced_relation'   => new sfValidatorString(array('required' => false)),
+      'record_id'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Specimens'))),
       'code_category'         => new sfValidatorString(array('required' => false)),
       'code_prefix'           => new sfValidatorString(array('required' => false)),
       'code_prefix_separator' => new sfValidatorString(array('required' => false)),
@@ -46,7 +46,7 @@ abstract class BaseCodesForm extends BaseFormDoctrine
       'code_date_mask'        => new sfValidatorInteger(array('required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('codes[%s]');
+    $this->widgetSchema->setNameFormat('specimens_codes[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -57,7 +57,7 @@ abstract class BaseCodesForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'Codes';
+    return 'SpecimensCodes';
   }
 
 }

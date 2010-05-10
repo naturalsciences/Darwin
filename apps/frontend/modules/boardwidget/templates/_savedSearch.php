@@ -3,7 +3,7 @@
 <?php foreach($searches as $search):?>
     <li>
         <div class="w_search_label">
-            <?php echo image_tag('rounded_blue_square.png', 'alt=-');?>Specimens
+            <?php echo image_tag('rounded_blue_square.png', 'alt=-');?><?php echo __('Specimens');?>
         </div>
         <?php if($search->getFavorite()):?>
             <?php echo image_tag('favorite_on.png', 'alt=Favorite class=fav_img');?>

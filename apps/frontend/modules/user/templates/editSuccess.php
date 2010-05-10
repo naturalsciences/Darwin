@@ -1,9 +1,9 @@
-<?php slot('Title', __('Edit Profile'));  ?>        
+<?php slot('title', __('Edit Profile'));  ?>        
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'users','eid'=> (! $form->getObject()->isNew() ? $form->getObject()->getId() : null ))); ?>
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">
-  <h1 class="edit_mode">Profile for <?php echo($form['family_name']->getValue().' '.$form['given_name']->getValue()) ; ?></h1>
+  <h1 class="edit_mode"><?php echo __(sprintf("Profile for %s", $form->getObject()->getFormatedName() )) ; ?></h1>
   <form class="edition" action="<?php echo url_for('user/edit') ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <input type="hidden" name="id" value="<?php echo $form->getObject()->getId() ?>">
   <table>

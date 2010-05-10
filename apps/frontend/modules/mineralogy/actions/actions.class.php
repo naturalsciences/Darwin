@@ -127,7 +127,7 @@ class mineralogyActions extends DarwinActions
     // Triggers the search ID function
     if($request->getParameter('q', '') !== '' && $request->getParameter('limit', '') !== '')
     {
-      $codes = Doctrine::getTable('Mineralogy')->findByCodeLimited($request->getParameter('q'), $request->getParameter('limit'));
+      $codes = Doctrine::getTable('Mineralogy')->fetchByCodeLimited($request->getParameter('q'), $request->getParameter('limit'));
       if ($codes) 
       {
         $values=array();

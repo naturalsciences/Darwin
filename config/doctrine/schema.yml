@@ -872,7 +872,7 @@ Specimens:
 Codes:
   columns:
         id: { type: integer, primary: true, autoincrement: true}
-        referenced_relation : { type: string, notnull: true, default: specimens}
+        referenced_relation : { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
         code_category: { type: string, notnull: true, default: main}
         code_prefix: { type: string}

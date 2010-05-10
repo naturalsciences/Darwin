@@ -4,5 +4,24 @@
  */
 class IdentificationsTable extends DarwinTable
 {
+  /**
+  * Get Distincts suffix separators
+  * @return array an Array of types in keys
+  */
+  public function getDistinctDeterminationStatus()
+  {
+    return $this->createDistinct('Identifications', 'determination_status', 'determination_status')->execute();
+  }
+
+  public function getIdentificationsRelated($table='specimens', $specId)
+  {
+    $q = Doctrine_Query::create()->
+         from('Identifications')->
+         where('referenced_relation = ?', $table)->
+         andWhere('record_id = ?', $specId)->
+         orderBy('order_by ASC, notion_date DESC, notion_concerned ASC');
+    return $q->execute();
+  }
+
 
 }

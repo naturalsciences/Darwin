@@ -17,6 +17,15 @@ class People extends BasePeople
     );
   }
 
+  public static function getCorrespondingType($type)
+  {
+    foreach (self::getTypes() as $key=>$value)
+    {
+      if($value == ucfirst($type)) return $key;
+    }
+    return 0;
+  }
+
   public function __toString()
   {
         return $this->getFormatedName();

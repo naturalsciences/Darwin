@@ -132,6 +132,16 @@ MyPreferences:
         title_perso: Specimen(s) count
     u1ws10:
         User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: refIdentifications
+        order_by: 10
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Identifications
+    u1ws11:
+        User: u1
         col_num: 2
         category: specimen_widget
         group_name: acquisitionCategory
@@ -140,7 +150,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Acquisition
-    u1ws11:
+    u1ws12:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -151,7 +161,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Expedition
-    u1ws12:
+    u1ws13:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -162,7 +172,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: I.G. number
-    u1ws13:
+    u1ws14:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -173,7 +183,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Sampling location
-    u1ws14:
+    u1ws15:
         User: u1
         col_num: 2
         category: specimen_widget
@@ -183,7 +193,7 @@ MyPreferences:
         visible: false
         is_available: true
         title_perso: Collecting method
-    u1ws15:
+    u1ws16:
         User: u1
         col_num: 2
         category: specimen_widget

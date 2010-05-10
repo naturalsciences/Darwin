@@ -27,11 +27,57 @@ class specimenActions extends DarwinActions
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
 
+  protected function getSpecimenForm(sfWebRequest $request)
+  {
+    $spec = null;
+
+    if($request->hasParameter('spec_id') && $request->getParameter('spec_id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id') );
+    
+    $form = new SpecimensForm($spec);
+    return $form;
+  }
+
+  public function executeAddIdentification(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $order_by = intval($request->getParameter('order_by',0));
+    $spec_form = $this->getSpecimenForm($request);
+    $spec_form->addIdentifications($number, $order_by);
+    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'spec_id'=>$request->getParameter('spec_id',0)));
+  }
+
+  public function executeAddIdentifier(sfWebRequest $request)
+  {
+    $spec_form = $this->getSpecimenForm($request);
+    $number = intval($request->getParameter('num'));
+    $identifier_number = intval($request->getParameter('identifier_num'));
+    $identifier_order_by = intval($request->getParameter('iorder_by',0));
+    $ident = null;
+
+    if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))
+    {
+      $ident = $spec_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
+      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $spec_form->reembedIdentifications($ident, $number);
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['Identifications'][$number]['newIdentifier'][$identifier_number]));
+    }
+    else
+    {
+      $spec_form->addIdentifications($number, 0);
+      $ident = $spec_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
+      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $spec_form->reembedNewIdentification($ident, $number);
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number]));
+    }
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->loadWidgets();
     $this->form = new SpecimensForm();
     $this->form->addCodes(0, null);
+    $this->form->addIdentifications(0,0);
   }
 
   public function executeCreate(sfWebRequest $request)

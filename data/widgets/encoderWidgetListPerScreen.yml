@@ -88,7 +88,15 @@ sw9:
     opened: true
     visible: false
     title_perso: Specimen(s) count
-sw10:
+sw11:
+    col_num: 1
+    category: specimen_widget
+    group_name: refIdentifications
+    order_by: 10
+    opened: true
+    visible: true
+    title_perso: Identifications
+sw12:
     col_num: 2
     category: specimen_widget
     group_name: acquisitionCategory
@@ -96,7 +104,7 @@ sw10:
     opened: true
     visible: true
     title_perso: Acquisition
-sw11:
+sw13:
     col_num: 2
     category: specimen_widget
     group_name: refExpedition
@@ -105,7 +113,7 @@ sw11:
     opened: true
     visible: true
     title_perso: Expedition
-sw12:
+sw14:
     col_num: 2
     category: specimen_widget
     group_name: refIgs
@@ -114,7 +122,7 @@ sw12:
     opened: true
     visible: true
     title_perso: I.G. number
-sw13:
+sw15:
     col_num: 2
     category: specimen_widget
     group_name: refGtu
@@ -123,7 +131,7 @@ sw13:
     opened: true
     visible: true
     title_perso: Sampling location
-sw14:
+sw16:
     col_num: 2
     category: specimen_widget
     group_name: method
@@ -131,7 +139,7 @@ sw14:
     opened: false
     visible: false
     title_perso: Collecting method
-sw15:
+sw17:
     col_num: 2
     category: specimen_widget
     group_name: tool

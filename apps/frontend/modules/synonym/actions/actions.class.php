@@ -69,7 +69,7 @@ class synonymActions extends DarwinActions
 
     $synonym = Doctrine::getTable('ClassificationSynonymies')->find($request->getParameter('id'));
     
-    if( count(Doctrine::getTable('ClassificationSynonymies')->findByGroupId($synonym->getGroupId())) > 2)
+    if( Doctrine::getTable('ClassificationSynonymies')->countRecordInGroup($synonym->getGroupId()) > 2)
     {
       $synonym->delete();
     }

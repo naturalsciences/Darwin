@@ -182,7 +182,7 @@ a.but_text
   float:left;
 }
 
-.inline
+.inline, .inline a
 {
   float:none;
   display:inline;
@@ -274,6 +274,11 @@ input[type="text"], input[type="password"]
 input[type="text"].xsmall_size
 {
   width:20px;
+}
+
+input[type="text"].vvvsmall_size
+{
+  width:27px;
 }
 
 input[type="text"].vvsmall_size
@@ -721,7 +726,7 @@ table.encoding tbody
   margin-left: 2px;
 }
 
-.property_values tbody.codes input
+.property_values tbody#codes input, #identifications tbody input
 {
   margin:0;
 }
@@ -809,6 +814,28 @@ table.encoding tbody
   float:right;
   margin-right:2%;
   padding-top:0.1em;
+}
+
+table.green_border
+{
+  border:1px solid #c1cf56;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+thead.spec_ident_identifiers_head tr td
+{
+  padding-left:0.5em;
+  padding-top:0.3em;
+  padding-bottom:0.3em;
+  background-color:#c1cf56;
+  color:white;
+}
+
+tbody.spec_ident_identifiers_data tr td
+{
+  padding-top:0.1em;
+  padding-bottom:0.1em;
 }
 
 .add_code
@@ -930,6 +957,11 @@ table.encoding tbody .widget_row_delete
   padding-right:1px;
 }
 
+.handle, .spec_ident_handle, .spec_ident_identifiers_handle
+{
+  cursor:move;
+}
+
 .widget_sub_table
 {
   width:100%;
@@ -950,7 +982,7 @@ table.encoding tbody .widget_row_delete
   width:18px;
 }
 
-.clear_prop
+.clear_prop, .clear_code, .clear_identification, .clear_identifier
 {
   cursor:pointer;
 }
