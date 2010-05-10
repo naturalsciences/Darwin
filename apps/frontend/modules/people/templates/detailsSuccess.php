@@ -25,10 +25,10 @@
 	  <li>
 	    <?php echo format_language($lang->getLanguageCountry());?> 
 	    <?php if($lang->getMother()):?>
-	      (mother)
+	      <?php echo __('(mother)');?>
 	    <?php endif;?>
 	    <?php if($lang->getPreferredLanguage()):?>
-	      (preferred)
+	      <?php echo __('(preferred)');?>
 	    <?php endif;?>
 	  </li>
       <?php endforeach;?>
