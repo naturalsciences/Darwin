@@ -11,7 +11,7 @@ $browser->
   with('response')->
   begin()->
     isStatusCode()->
-    checkElement('h1', 'RBINS General Inventory Numbers List')->
+    checkElement('h1', 'General Inventory Numbers List')->
     checkElement('#searchIg_ig_num', '')->
     checkElement('#searchIg_from_date_day > option:first_element', 'dd')->
     checkElement('#searchIg_from_date_month > option:first_element', 'mm')->
