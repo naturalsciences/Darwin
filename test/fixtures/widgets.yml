@@ -47,7 +47,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
-        is_available: true
+        is_available: false
         title_perso: My Last Actions
     u1wb6:
         User: u1
@@ -57,7 +57,7 @@ MyPreferences:
         order_by: 2
         opened: true
         visible: true
-        is_available: true
+        is_available: false
         title_perso: My activity
     u1ws1:
         User: u1
