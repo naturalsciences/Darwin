@@ -792,6 +792,26 @@ table.encoding tbody
   padding: 0.2em;
 }
 
+.show_table
+{
+  width:100%;
+  text-align:left;
+}
+.show_table thead
+{
+  border-bottom: 1px solid #5BAABD;
+}
+
+.show_table thead th
+{
+  padding: 0.3em;
+}
+
+.show_table tbody tr:hover
+{
+  background-color: white;
+}
+
 #catalogue_properties_property_unit_parent, #catalogue_properties_property_accuracy_unit_parent
 {
   display:inline;
@@ -1437,4 +1457,34 @@ input.tag_line
   border-top:1px solid #C1CC33;
   border-left:1px solid #C1CC33;
   text-align: center
+}
+
+.field_change
+{
+  display:none;
+}
+
+#myLastsItems .show_table {
+  background-color:#E9F2F7;
+}
+
+#myLastsItems .show_table tr:nth-child(odd)
+{
+  background-color:white;
+}
+
+#myChangesPlotted a, #myChangesPlotted a[href]
+{
+  background-color: #55AFC5;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding:0.2em;
+  color:white;
+  text-decoration: none;
+}
+
+ul.graph_range
+{
+	padding-bottom:1em;
+/* 	text-align:center; */
 }

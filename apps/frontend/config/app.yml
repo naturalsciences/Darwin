@@ -10,3 +10,6 @@ all:
        recPerPage: 10
        pagerSlidingSize: 5
        catalogueRecLimit: 200
+# dev:
+#    tracking:
+#        enabled: true

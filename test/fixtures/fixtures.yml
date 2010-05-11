@@ -1,3 +1,11 @@
+UsersTracking:
+    ut1:
+        referenced_relation: taxonomy
+        record_id: 4
+        Users: u1
+        action: 'update'
+        old_value: '"name"=>"Hello"'
+        new_value: '"name"=>"world"'
 Gtu:
     gtu0:
         id: '0'

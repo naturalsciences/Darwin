@@ -21,6 +21,8 @@ abstract class BaseUsersTrackingForm extends BaseFormDoctrine
       'user_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => false)),
       'action'                 => new sfWidgetFormTextarea(),
       'modification_date_time' => new sfWidgetFormTextarea(),
+      'old_value'              => new sfWidgetFormTextarea(),
+      'new_value'              => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +32,8 @@ abstract class BaseUsersTrackingForm extends BaseFormDoctrine
       'user_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
       'action'                 => new sfValidatorString(array('required' => false)),
       'modification_date_time' => new sfValidatorString(),
+      'old_value'              => new sfValidatorString(array('required' => false)),
+      'new_value'              => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_tracking[%s]');
