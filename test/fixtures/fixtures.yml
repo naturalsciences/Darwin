@@ -263,6 +263,11 @@ Collections:
         Institution: p1
         Manager: u1
         Parent: c4
+
+CollectionsRights:
+    cr1:
+        Users: u1
+        Collections : c2
                            
 Specimens:
     sp1:

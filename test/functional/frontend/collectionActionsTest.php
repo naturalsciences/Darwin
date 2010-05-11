@@ -154,7 +154,11 @@ with('response')->begin()->
     0 => array(
     'user_ref'       => $user_id,
     'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Amphibia')->getId(),
-    'check_right' => true)
+    'check_right' => true),
+    1 => array(
+    'user_ref'       => $user_id,
+    'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Aves')->getId(),
+    'check_right' => false)
     )
     )));
     
@@ -165,7 +169,17 @@ $browser->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
   end()->
-with('response')->begin()->
+  with('response')->begin()->
     isStatusCode(200)->
     checkElement('#'.$user_id.' > td:first > label',Doctrine::getTable('users')->findUser($user_id)->getFormatedName())->
+    end()->
+    
+  get('collection/edit/id/'.Doctrine::getTable('collections')->getCollectionByName('Aves')->getId())->
+  with('request')->begin()->
+    isParameter('module', 'collection')->
+    isParameter('action', 'edit')->
+  end()->
+  with('response')->begin()->
+    isStatusCode(200)->
+    checkElement('#'.$user_id,null)->
     end();

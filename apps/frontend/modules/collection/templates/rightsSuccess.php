@@ -30,13 +30,13 @@ $(document).ready(function () {
 <table class='widget_sub_table'>
 <thead>
 	<tr><td>
-		<?php echo ('<h1  class="edit_mode">Browse Sub Collections for '.$user_formated_name.'</h1>');  ?>
+		<h1  class="edit_mode"><?php echo __('Browse Sub Collections for '.$user_formated_name);  ?></h1>
 	</td></tr>
 <tbody>
 <tr><td>
 	<div class="treelist">
 	<?php if (count($sub_coll) == 0) : ?>
-		<?php echo ("<h2>No existing sub collections</h2>"); ?>
+		<h2><?php echo __("No existing sub collections"); ?></h2>
      <?php else : ?>
 	<?php $prev_level = 0;?>
 	<?php foreach($form['SubCollectionsRights'] as $key => $form_value):?>
