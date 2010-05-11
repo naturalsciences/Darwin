@@ -43,6 +43,7 @@ class UsersFormFilter extends BaseUsersFormFilter
   {
   	if ($val == 1) $query->addWhere('db_user_type = 4') ;
   	if ($val == 2 && $this->options['db_user_type']!=8) $query->addWhere('db_user_type < 4') ;
+  	if ($val == 3) $query->addWhere('db_user_type > 1') ;
   }
   
   public function doBuildQuery(array $values)
