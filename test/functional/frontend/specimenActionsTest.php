@@ -9,6 +9,11 @@ $taxon = Doctrine::getTable('Taxonomy')->findOneByName('Falco Peregrinus Tunstal
 $taxonId = $taxon->getId();
 $collection = Doctrine::getTable('Collections')->findOneByName('Aves');
 $collectionId = $collection->getId();
+$collection->setCodePrefix('AVES');
+$collection->setCodePrefixSeparator('/');
+$collection->setCodeSuffix('LOULOU');
+$collection->setCodeSuffixSeparator('-');
+$collection->save();
 
 $browser->
   info('1 - New Specimen screen')->
@@ -28,10 +33,23 @@ $browser->
     checkElement('.board_col:last .widget',4)->
     checkElement('.board_col:first .widget:first .widget_top_bar span','Collection')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Codes')->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr',2)->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr:first th',7)->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr:nth-child(2) th',5)->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td',7)->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td:first select option',3)->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td:first select option[selected="selected"]','Main')->
+    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td:nth-child(2) input',1)->
     checkElement('.board_col:last .widget:first .widget_top_bar span','Acquisition')->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','I.G. number')->
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Sampling location')->
+  end()->
+  info('1.2 - Fill in infos for this new specimen and for a code for this new specimen')->
+  click('Submit', array('collection_ref'=>$collectionId, 'taxon_ref'=>$taxonId, 'code'=>1, 'newCode'=>array('0'=>array('code_category'=>'secondary','referenced_relation'=>'specimens','code_prefix'=>'AVES','code_prefix_separator'=>'/','code'=>'blabla', 'code_suffix_separator'=>'-','code_suffix'=>'LOULOU'))))->
+  with('response')->begin()->
+    isStatusCode(200)->
+    matches('/ok/')->
   end();
 
 $browser->
