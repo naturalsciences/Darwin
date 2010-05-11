@@ -3351,8 +3351,8 @@ BEGIN
 	/** IF REVOKE ***/
 	IF NEW.db_user_type < OLD.db_user_type THEN
 		/*Each number of this suite represent a right on the collection: 1 for read, 2 for insert, 4 for update and 8 for delete*/
-		/*db user type 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,*/
-		IF OLD.db_user_type >= 3 THEN
+		/*db user type 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,*/
+		IF OLD.db_user_type >= 4 THEN
 			/** If retrograde from collection_man, remove all collection administrated **/
 			SELECT count(*) != 0 INTO still_mgr FROM collections WHERE main_manager_ref = NEW.id;
 			IF still_mgr THEN
@@ -6702,11 +6702,11 @@ BEGIN
 IF TG_OP = 'INSERT' THEN
 	INSERT INTO collections_admin(collection_ref, user_ref) VALUES (NEW.id, NEW.main_manager_ref);
 ELSIF NEW.main_manager_ref <> OLD.main_manager_ref THEN
-	SELECT collections_admin.id INTO ref_id FROM collections_admin ca WHERE ca.user_ref = NEW.main_manager_ref and ca.collection_ref = NEW.id  ;
+	SELECT id INTO ref_id FROM collections_admin WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id  ;
 	IF FOUND THEN
-		DELETE FROM collections_admin ca WHERE ca.user_ref = OLD.main_manager_ref and ca.collection_ref = OLD.id  ;
+		DELETE FROM collections_admin WHERE user_ref = OLD.main_manager_ref and collection_ref = OLD.id  ;
 	ELSE
-	     UPDATE collections_admin ca SET ca.user_ref = NEW.main_manager_ref WHERE ca.user_ref = OLD.main_manager_ref and ca.collection_ref = OLD.id  ;  
+	     UPDATE collections_admin SET user_ref = NEW.main_manager_ref WHERE user_ref = OLD.main_manager_ref and collection_ref = OLD.id  ;  
 	END IF;
 END IF;
 RETURN NEW;

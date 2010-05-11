@@ -330,7 +330,8 @@ CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();
 
-CREATE TRIGGER trg_cas_userType_users AFTER UPDATE
+/* trigger set BEFORE update, in order to avoid bad db_user_type to be set when this user is a collection manager */
+CREATE TRIGGER trg_cas_userType_users BEFORE UPDATE
 	ON users FOR EACH ROW
 	EXECUTE PROCEDURE fct_cas_userType();
 
