@@ -7,6 +7,8 @@ $browser->loadData($configuration)->login('root','evil');
 
 $taxon = Doctrine::getTable('Taxonomy')->findOneByName('Falco Peregrinus Tunstall, 1771');
 $taxonId = $taxon->getId();
+$secondTaxon = Doctrine::getTable('Taxonomy')->findOneByName('Eucaryota');
+$secondTaxonId = $secondTaxon->getId();
 $collection = Doctrine::getTable('Collections')->findOneByName('Aves');
 $collectionId = $collection->getId();
 $collection->setCodePrefix('AVES');
@@ -36,20 +38,22 @@ $browser->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr',2)->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr:first th',7)->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr:nth-child(2) th',5)->
-    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td',7)->
-    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td:first select option',3)->
-    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td:first select option[selected="selected"]','Main')->
-    checkElement('.board_col:first .widget:nth-child(2) .widget_content tbody#codes tr td:nth-child(2) input',1)->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td',7)->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:first select option',3)->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:first select option[selected="selected"]','Main')->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:nth-child(2) input',1)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 2)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td input#specimen_host_taxon_ref', 1)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', '-')->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:last td input#specimen_host_specimen_ref', 1)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:last td div#specimen_host_specimen_ref_name', '-')->
+    checkElement('.board_col:first #refIdentifications div.widget_content table tbody tr.spec_ident_data', 1)->
+    checkElement('.board_col:first #refIdentifications div.widget_content table tbody tr.spec_ident_identifiers', 1)->
+    checkElement('.board_col:first #refIdentifications div.widget_content table tbody tr:first td:nth-child(3) select#specimen_newIdentification_0_notion_concerned option', 5)->
     checkElement('.board_col:last .widget:first .widget_top_bar span','Acquisition')->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','I.G. number')->
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Sampling location')->
-  end()->
-  info('1.2 - Fill in infos for this new specimen and for a code for this new specimen')->
-  click('Submit', array('collection_ref'=>$collectionId, 'taxon_ref'=>$taxonId, 'code'=>1, 'newCode'=>array('0'=>array('code_category'=>'secondary','referenced_relation'=>'specimens','code_prefix'=>'AVES','code_prefix_separator'=>'/','code'=>'blabla', 'code_suffix_separator'=>'-','code_suffix'=>'LOULOU'))))->
-  with('response')->begin()->
-    isStatusCode(200)->
-    matches('/ok/')->
   end();
 
 $browser->
@@ -110,6 +114,15 @@ $browser->
     checkElement('.board_col:first .widget:first .widget_content div#specimen_collection_ref_name','Vertebrates')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Codes')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content div#specimen_taxon_ref_name','Falco Peregrinus')->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:first select option[selected="selected"]','Main')->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:first select option[selected="selected"]','Secondary')->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:first td:nth-child(2) input#specimen_Codes_0_code_prefix',1)->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:nth-child(2) input#specimen_Codes_1_code_prefix',1)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 2)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td input#specimen_host_taxon_ref', 1)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', '-')->
+    checkElement('.board_col:first #refIdentifications div.widget_content table#identifications', 1)->
+    checkElement('.board_col:first #refIdentifications div.widget_content table#identifications tr', 2)->
     checkElement('.board_col:last .widget:first .widget_top_bar span','Acquisition')->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','I.G. number')->
@@ -118,7 +131,8 @@ $browser->
   info('3 - Edit specimen - Change Taxon')->
   click('Submit', 
         array('specimen' => array('taxon_ref'  => $taxonId,
-                                  'collection_ref' => $collectionId
+                                  'collection_ref' => $collectionId,
+                                  'host_taxon_ref' => $secondTaxonId
                                  )
              )
        )->
@@ -132,6 +146,8 @@ $browser->
     isStatusCode(200)->
     checkElement('.board_col:first .widget:first .widget_content div#specimen_collection_ref_name','Aves')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content div#specimen_taxon_ref_name','Falco Peregrinus Tunstall, 1771')->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 2)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', 'Eucaryota')->
   end()->
   
   info('4 - Check sameTaxon action call')->
@@ -170,4 +186,17 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     matches('/","specimen_host_taxon_name":"Animalia"}/')->
+  end();
+
+$browser->
+  info('5 - Check AddCode method call')->
+  get('specimen/addCode', array('id'=>$specimens[0]->getId(), 'num'=>5, 'collectionId'=>$collectionId))->
+  with('response')->begin()->
+    isStatusCode()->
+    checkElement('tr td:first select#specimen_newCode_5_code_category',1)->
+    checkElement('tr td:nth-child(2) input#specimen_newCode_5_code_prefix',1)->
+    checkElement('tr td:nth-child(3) div#specimen_newCode_5_code_prefix_separator_parent',1)->
+    checkElement('tr td:nth-child(4) input#specimen_newCode_5_code',1)->
+    checkElement('tr td:nth-child(5) div#specimen_newCode_5_code_suffix_separator_parent',1)->
+    checkElement('tr td:nth-child(6) input#specimen_newCode_5_code_suffix',1)->
   end();

@@ -357,6 +357,42 @@ Codes:
         code: 85486846
         code_suffix_separator: "/"
 
+    cosp3-1:
+        referenced_relation: specimens
+        record_id: 3
+        code_category: main
+        code_prefix: TEST
+        code_prefix_separator: "-"
+        code: 12345
+        code_suffix: "AFTER"
+        code_suffix_separator: "-"
+
+    cosp4-1:
+        referenced_relation: specimens
+        record_id: 3
+        code_category: secondary
+        code_prefix: TEST
+        code_prefix_separator: "-"
+        code: 54321
+        code_suffix: "AFTER"
+        code_suffix_separator: "-"
+
+Identifications:
+    idsp1-1:
+        id: 1
+        referenced_relation: specimens
+        record_id: 3
+        notion_concerned: taxonomy
+        value_defined: Falco Peregrinus Tunstall, 1771
+
+    idsp1-2:
+        id: 2
+        referenced_relation: specimens
+        record_id: 3
+        notion_concerned: taxonomy
+        value_defined: Falco Peregrinus
+        order_by: 2
+
 MySavedSpecimens:
     ssp1:
         User: u1
