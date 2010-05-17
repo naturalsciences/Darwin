@@ -320,7 +320,8 @@ create table identifications
        (
         id integer not null default nextval('identifications_id_seq'),
         notion_concerned varchar not null,
-        notion_date timestamp,
+        notion_date timestamp not null default '0001-01-01 00:00:00'::timestamp,
+        notion_date_mask integer not null default 0,
         value_defined varchar,
         value_defined_indexed varchar not null,
         value_defined_ts tsvector,
@@ -336,6 +337,7 @@ comment on column identifications.referenced_relation is 'Reference of table an 
 comment on column identifications.record_id is 'Id of record concerned by an identification entry';
 comment on column identifications.notion_concerned is 'Type of entry: Identification on a specific concern';
 comment on column identifications.notion_date is 'Date of identification or preparation';
+comment on column identifications.notion_date_mask is 'Date/Time mask used for identification date fuzzyness';
 comment on column identifications.value_defined is 'When making identification, stores the value resulting of this identification';
 comment on column identifications.value_defined_ts is 'tsvector form of value_defined field';
 comment on column identifications.value_defined_indexed is 'Indexed form of value_defined field';
