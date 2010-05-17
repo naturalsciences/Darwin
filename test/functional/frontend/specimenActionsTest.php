@@ -42,7 +42,7 @@ $browser->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:first select option',3)->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:first select option[selected="selected"]','Main')->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:nth-child(2) input',1)->
-    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 2)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 3)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td input#specimen_host_taxon_ref', 1)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', '-')->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:last td input#specimen_host_specimen_ref', 1)->
@@ -118,7 +118,7 @@ $browser->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:first select option[selected="selected"]','Secondary')->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:first td:nth-child(2) input#specimen_Codes_0_code_prefix',1)->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:nth-child(2) input#specimen_Codes_1_code_prefix',1)->
-    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 2)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 3)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td input#specimen_host_taxon_ref', 1)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', '-')->
     checkElement('.board_col:first #refIdentifications div.widget_content table#identifications', 1)->
@@ -146,7 +146,7 @@ $browser->
     isStatusCode(200)->
     checkElement('.board_col:first .widget:first .widget_content div#specimen_collection_ref_name','Aves')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content div#specimen_taxon_ref_name','Falco Peregrinus Tunstall, 1771')->
-    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 2)->
+    checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 3)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', 'Eucaryota')->
   end()->
   

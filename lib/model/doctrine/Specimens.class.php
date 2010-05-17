@@ -21,14 +21,44 @@ class Specimens extends BaseSpecimens
   {
     if ($fd instanceof FuzzyDateTime)
     {
-      $this->_set('acquisition_date', $fd->format('Y/m/d'));
-      $this->_set('acquisition_date_mask', $fd->getMask());
+      if ($this->getAcquisitionDate() != $fd->getDateTimeMaskedAsArray())
+      {
+        $this->_set('acquisition_date', $fd->format('Y/m/d'));
+        $this->_set('acquisition_date_mask', $fd->getMask());
+      }
     }
     else
     {
       $dateTime = new FuzzyDateTime($fd, 56, true); 
-      $this->_set('acquisition_date', $dateTime->format('Y/m/d'));
-      $this->_set('acquisition_date_mask', $dateTime->getMask());
+      if ($this->getAcquisitionDate() != $dateTime->getDateTimeMaskedAsArray())
+      {
+        $this->_set('acquisition_date', $dateTime->format('Y/m/d'));
+        $this->_set('acquisition_date_mask', $dateTime->getMask());
+      }
+    }
+  }
+
+  public function setSpecimenCountMin($value)
+  {
+    if(is_numeric($value) && ($value != $this->_get('specimen_count_min')))
+    {
+      $this->_set('specimen_count_min', $value);
+    }
+  }
+
+  public function setSpecimenCountMax($value)
+  {
+    if(is_numeric($value) && ($value != $this->_get('specimen_count_max')))
+    {
+      $this->_set('specimen_count_max', $value);
+    }
+  }
+
+  public function setHostRelationship($value)
+  {
+    if($value != $this->_get('host_relationship'))
+    {
+      $this->_set('host_relationship', $value);
     }
   }
 

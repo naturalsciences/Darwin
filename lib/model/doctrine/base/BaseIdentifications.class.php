@@ -10,6 +10,7 @@
  * @property integer $record_id
  * @property string $notion_concerned
  * @property string $notion_date
+ * @property integer $notion_date_mask
  * @property string $value_defined
  * @property string $value_defined_indexed
  * @property string $value_defined_ts
@@ -21,6 +22,7 @@
  * @method integer         getRecordId()              Returns the current record's "record_id" value
  * @method string          getNotionConcerned()       Returns the current record's "notion_concerned" value
  * @method string          getNotionDate()            Returns the current record's "notion_date" value
+ * @method integer         getNotionDateMask()        Returns the current record's "notion_date_mask" value
  * @method string          getValueDefined()          Returns the current record's "value_defined" value
  * @method string          getValueDefinedIndexed()   Returns the current record's "value_defined_indexed" value
  * @method string          getValueDefinedTs()        Returns the current record's "value_defined_ts" value
@@ -31,6 +33,7 @@
  * @method Identifications setRecordId()              Sets the current record's "record_id" value
  * @method Identifications setNotionConcerned()       Sets the current record's "notion_concerned" value
  * @method Identifications setNotionDate()            Sets the current record's "notion_date" value
+ * @method Identifications setNotionDateMask()        Sets the current record's "notion_date_mask" value
  * @method Identifications setValueDefined()          Sets the current record's "value_defined" value
  * @method Identifications setValueDefinedIndexed()   Sets the current record's "value_defined_indexed" value
  * @method Identifications setValueDefinedTs()        Sets the current record's "value_defined_ts" value
@@ -66,6 +69,13 @@ abstract class BaseIdentifications extends sfDoctrineRecord
              ));
         $this->hasColumn('notion_date', 'string', null, array(
              'type' => 'string',
+             'notnull' => true,
+             'default' => '0001-01-01',
+             ));
+        $this->hasColumn('notion_date_mask', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              ));
         $this->hasColumn('value_defined', 'string', null, array(
              'type' => 'string',

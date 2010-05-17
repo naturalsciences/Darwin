@@ -12,7 +12,7 @@ class SpecimensForm extends BaseSpecimensForm
   public function configure()
   {
     
-    unset($this['acquisition_date_mask']
+    unset($this['acquisition_date_mask'], $this['multimedia_visible']
          );
 
     /* Set default values */
@@ -181,6 +181,16 @@ class SpecimensForm extends BaseSpecimensForm
            )
     );
 
+    $this->widgetSchema['host_relationship'] = new widgetFormSelectComplete(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctHostRelationships',
+        'method' => 'getHostRelationship',
+        'key_method' => 'getHostRelationship',
+        'add_empty' => true,
+        'change_label' => 'Pick a relationship in the list',
+        'add_label' => 'Add another relationship',
+    ));
+    
     /* Collecting method */
     $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
         'model' => 'Specimens',
@@ -269,11 +279,16 @@ class SpecimensForm extends BaseSpecimensForm
 
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
-                                         'host_taxon_ref' => 'Host taxon'
+                                         'host_relationship' => 'Relationship',
+                                         'host_taxon_ref' => 'Host taxon',
+                                         'gtu_ref' => 'Sampling location',
+                                         'station_visible' => 'Public sampling location ?'
                                         )
                                   );
     
     /* Validators */
+
+    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
 
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger(array('required'=>true));
 
