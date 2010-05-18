@@ -5655,7 +5655,7 @@ BEGIN
 	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 4)>0 )  THEN
 		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='identifier';
 		IF still_referenced !=0 THEN
-			RAISE EXCEPTION 'Author still used as identifier.';
+			RAISE EXCEPTION 'Identifier still used as identifier.';
 		END IF;
 	END IF;
 	
