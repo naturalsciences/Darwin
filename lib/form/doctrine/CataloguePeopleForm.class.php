@@ -26,12 +26,12 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
     );
 
     $this->widgetSchema['people_type'] = new sfWidgetFormChoice(array(
-      'choices'        => array('authors' => $this->getI18N()->__('Author'),
-      'experts' => $this->getI18N()->__('Expert') ),
+      'choices'        => array('author' => $this->getI18N()->__('Author'),
+      'expert' => $this->getI18N()->__('Expert') ),
     ));
 
     $this->validatorSchema['people_type'] = new sfValidatorChoice(array(
-      'choices'        => array('authors','experts')
+      'choices'        => array('author','expert')
     ));
 
     $this->widgetSchema['people_sub_type'] = new widgetFormSelectComplete(array(
@@ -40,7 +40,7 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
 	'add_label' => 'Add another type',
     ));
 
-    if($this->getObject()->isNew() && $this->getObject()->getPeopleType()=="authors")
+    if($this->getObject()->isNew() && $this->getObject()->getPeopleType()=="author")
       $this->widgetSchema['people_sub_type']->setDefault('Main Author');
     else
       $this->widgetSchema['people_sub_type']->setDefault('General');

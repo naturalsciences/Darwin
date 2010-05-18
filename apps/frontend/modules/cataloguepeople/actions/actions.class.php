@@ -41,7 +41,7 @@ class cataloguepeopleActions extends DarwinActions
 	}
     }
     $this->form->forceSubType();
-    $this->searchForm = new PeopleFormFilter(array('table'=> $request->getParameter('table') ));
+    $this->searchForm = new PeopleFormFilter(array('table'=> $request->getParameter('table')));
 
   }
 

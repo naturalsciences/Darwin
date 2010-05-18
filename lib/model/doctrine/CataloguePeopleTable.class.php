@@ -36,7 +36,7 @@ class CataloguePeopleTable extends DarwinTable
   */
   public function getDistinctSubType($type=null)
   {
-    if($type=="authors")
+    if($type=="author")
     {
       return CataloguePeople::getAuthorTypes();
     }
@@ -66,7 +66,7 @@ class CataloguePeopleTable extends DarwinTable
 	
   }
 
-  public function getIdentifiersRelated($table='identifications', $type='General', $identId)
+  public function getIdentifiersRelated($table='identifications', $type='identifier', $identId)
   {
     $q = Doctrine_Query::create()->
          from('CataloguePeople')->

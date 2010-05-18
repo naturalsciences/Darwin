@@ -298,6 +298,11 @@ input[type="text"].lsmall_size
   width:85px;
 }
 
+input[type="text"].xlsmall_size
+{
+  width:110px;
+}
+
 input[type="text"].small_size
 {
   width:120px;

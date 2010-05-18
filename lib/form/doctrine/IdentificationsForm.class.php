@@ -49,7 +49,7 @@ class IdentificationsForm extends BaseIdentificationsForm
       ));
     $this->validatorSchema['notion_concerned'] = new sfValidatorChoice(array('required' => true, 'choices'=>array_keys($choices)));
     $this->widgetSchema['value_defined'] = new sfWidgetFormInput();
-    $this->widgetSchema['value_defined']->setAttributes(array('class'=>'small_size'));
+    $this->widgetSchema['value_defined']->setAttributes(array('class'=>'xlsmall_size'));
     $this->validatorSchema['value_defined'] = new sfValidatorString(array('required' => false, 'trim'=>true));
     $this->widgetSchema['determination_status'] = new widgetFormSelectComplete(array(
         'model' => 'Identifications',

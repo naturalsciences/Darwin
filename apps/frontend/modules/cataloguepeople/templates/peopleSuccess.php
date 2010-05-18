@@ -52,7 +52,7 @@
 
 function toggleChangingChoice()
 {
-      if($('#catalogue_people_people_type').val() =='authors')
+      if($('#catalogue_people_people_type').val() =='author')
       {
 	$('#only_role').val(2);
 	$('#catalogue_people_people_sub_type_parent .change_item_button:visible').click();
@@ -60,7 +60,6 @@ function toggleChangingChoice()
 	
 	$('.both_search_institutions').addClass('disabled');
 	
-	//if($('.both_search_institutions').hasClass('activated'))
 	$('.both_search_people').click();
 
       }
