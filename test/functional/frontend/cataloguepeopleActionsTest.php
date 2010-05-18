@@ -30,7 +30,7 @@ $browser->
 $browser->
   click('Save',array(
     'catalogue_people' => array(
-      'people_type' => 'experts',
+      'people_type' => 'expert',
       'people_sub_type' => 'Main',
       'record_id' => '3',
       'people_ref' => $people->getId(),
@@ -52,7 +52,7 @@ $browser->
 
   click('Save',array(
     'catalogue_people' => array(
-      'people_type' => 'authors',
+      'people_type' => 'author',
       'people_sub_type' => 'Main',
       'record_id' => '3',
       'people_ref' => $rbins->getId(),
@@ -78,16 +78,16 @@ $browser->
 $rbins_recId = Doctrine_Query::create()
 	 ->from('CataloguePeople c')
 	  ->where('c.people_ref = ?',$rbins->getId())
-	  ->andWhere('c.people_type=?','authors')
+	  ->andWhere('c.people_type=?','author')
 	  ->fetchOne();
 
 $root_recId = Doctrine_Query::create()
 	 ->from('CataloguePeople c')
 	  ->where('c.people_ref = ?',$people->getId())
-	  ->andWhere('c.people_type=?','authors')
+	  ->andWhere('c.people_type=?','author')
 	  ->fetchOne();
 $browser->
-  get('/cataloguepeople/editOrder?table=taxonomy&rid=3&people_type=authors&order='.$rbins_recId->getId().','.$root_recId->getId().',')->
+  get('/cataloguepeople/editOrder?table=taxonomy&rid=3&people_type=author&order='.$rbins_recId->getId().','.$root_recId->getId().',')->
    with('response')->begin()->
     isStatusCode(200)->
   end();
@@ -104,7 +104,7 @@ $browser->
   end();
 
 $browser->
-  get('/cataloguepeople/getSubType?type=authors')->
+  get('/cataloguepeople/getSubType?type=author')->
     with('response')->begin()->
     isStatusCode(200)->
   end();
@@ -112,10 +112,8 @@ $browser->
   $browser->test()->like($browser->getResponse()->getContent(),'/Corrector/','Content is ok');
 
 $browser->
-  get('/cataloguepeople/getSubType?type=experts')->
+  get('/cataloguepeople/getSubType?type=expert')->
     with('response')->begin()->
     isStatusCode(200)->
   end();
   $browser->test()->like($browser->getResponse()->getContent(),'/Main/','Content is ok');
-
-  
