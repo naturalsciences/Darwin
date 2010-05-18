@@ -5645,15 +5645,23 @@ DECLARE
 BEGIN
 	/** AUTHOR FLAG IS 2 **/
 	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
-		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='authors';
+		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='author';
 		IF still_referenced !=0 THEN
 			RAISE EXCEPTION 'Author still used as author.';
 		END IF;
 	END IF;
 
-	/** Expert Flag is 8 **/
+	/** IDENTIFIER FLAG IS 4 **/
+	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 4)>0 )  THEN
+		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='identifier';
+		IF still_referenced !=0 THEN
+			RAISE EXCEPTION 'Author still used as identifier.';
+		END IF;
+	END IF;
+	
+        /** Expert Flag is 8 **/
         IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
-                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='experts';
+                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='expert';
                 IF still_referenced !=0 THEN
                         RAISE EXCEPTION 'Expert still used as expert.';
                 END IF;
