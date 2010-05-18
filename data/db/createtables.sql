@@ -108,7 +108,7 @@ create sequence catalogue_people_id_seq;
 create table catalogue_people 
        (
         id integer not null default nextval('catalogue_people_id_seq'),
-        people_type varchar not null default 'authors',
+        people_type varchar not null default 'author',
         people_sub_type varchar not null default '',
         order_by integer not null default 1,
         people_ref integer not null,
