@@ -78,7 +78,7 @@ class MyPreferencesTable extends DarwinTable
 	$file = MyPreferences::getFileByRight($right) ;
 	if($file)
 	{
-		$data = new Doctrine_Parser_Yml;
+		$data = new Doctrine_Parser_Yml();
 		$array = $data->loadData($file);
 		foreach ($array as $widget => $array_values) {
 		   if($array_values['mandatory']) continue ; //mandatory widget have already at true, and we don't want it could be changed
