@@ -14,11 +14,8 @@ class peopleActions extends DarwinActions
 
   public function executeChoose(sfWebRequest $request)
   {
-    $this->form = new PeopleFormFilter();
-    if( $request->getParameter('only_role','0') !=0)
-    {
-      $this->form->setDefault('only_role',$request->getParameter('only_role'));
-    }
+    $this->setPeopleRole($request);
+    $this->form = new PeopleFormFilter(array('only_role'=>$this->only_role));
   }
 
   public function executeIndex(sfWebRequest $request)

@@ -26,6 +26,15 @@ class People extends BasePeople
     return 0;
   }
 
+  public static function getCorrespondingTypeAsArray($typeKey)
+  {
+    foreach (self::getTypes() as $key=>$value)
+    {
+      if($key == $typeKey) return array($key=>$value);
+    }
+    return array(''=>'');
+  }
+
   public function __toString()
   {
         return $this->getFormatedName();

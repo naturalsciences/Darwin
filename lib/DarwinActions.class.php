@@ -28,6 +28,11 @@ class DarwinActions extends sfActions
     $this->caller_id = (!$request->hasParameter('caller_id'))?'':$request->getParameter('caller_id');
   }
 
+  protected function setPeopleRole(sfWebRequest $request)
+  {
+    $this->only_role = (!$request->hasParameter('only_role'))?'0':$request->getParameter('only_role');
+  }
+
   protected function loadWidgets($id = null)
   {
     $this->__set('widgetCategory',$this->widgetCategory);

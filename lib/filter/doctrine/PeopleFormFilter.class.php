@@ -22,9 +22,17 @@ class PeopleFormFilter extends BasePeopleFormFilter
     $this->widgetSchema['only_role']->setDefault(0);
     
     $db_people_types = array(''=>'');
-    foreach(People::getTypes() as $flag => $name)
+    $typeVal = (!isset($this->defaults['only_role']))?0:intval($this->defaults['only_role']);
+    if($typeVal == 0)
+    {
+      $peopleTypes = People::getTypes();
+    }
+    else
+    {
+      $peopleTypes = People::getCorrespondingTypeAsArray($typeVal);
+    }
+    foreach($peopleTypes as $flag => $name)
       $db_people_types[strval($flag)] = $name;
-    
     $this->widgetSchema['db_people_type'] = new sfWidgetFormChoice(array('choices' => $db_people_types ));
 
     $this->widgetSchema['is_physical'] = new sfWidgetFormInputHidden();

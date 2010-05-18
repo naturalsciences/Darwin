@@ -35,6 +35,7 @@ class IdentifiersForm extends BaseCataloguePeopleForm
     $this->validatorSchema['people_sub_type'] = new sfValidatorString(array('required'=>false));
     $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['order_by'] = new sfValidatorInteger();
+    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
 
     /*Identifiers post-validation to empty null values*/
     $this->mergePostValidator(new IdentifiersValidatorSchema());
