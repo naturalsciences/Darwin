@@ -67,6 +67,6 @@ $('.hide_value').click(function(){
 	'widgets' => $widgets,
 	'category' => 'userswidget',
 	'columns' => 1,
-	'options' => array('eid' => $user_id, 'table' => 'users')
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'users')
 	)); ?>
 </div>

@@ -5,13 +5,18 @@
  */
 class MyPreferences extends BaseMyPreferences
 {
-  public static function getFileByRight($right)
+  /**
+  * Get Widget list file for a given role
+  * @param int $role The Role of the user
+  * @see Users
+  */
+  public static function getFileByRight($role)
   {
      $file=sfConfig::get('sf_data_dir').'/widgets/' ; 
-  	switch ($right) {
-     	case 'Encoder' : $file .='encoderWidgetListPerScreen.yml' ; break ;
-     	case 'Collection manager' : $file .='collManagerWidgetListPerScreen.yml' ; break ;
-		case 'Registered user' : $file .='regUserWidgetListPerScreen.yml' ; break ;
+  	switch ($role) {
+     	case Users::ENCODER : $file .='encoderWidgetListPerScreen.yml' ; break ;
+     	case Users::MANAGER : $file .='collManagerWidgetListPerScreen.yml' ; break ;
+		case Users::REGISTERED_USER : $file .='regUserWidgetListPerScreen.yml' ; break ;
 		default : return(0);
      }  
      return($file) ;  
@@ -25,21 +30,6 @@ class MyPreferences extends BaseMyPreferences
   	   if ($this->getVisible()) return('visible') ;
   	   if ($this->getIsAvailable()) return('is_available') ;
   }
-
-  public function addWidget($options,$user_id = null)
-  {
-  		$this->category = $options['category'] ;
-		$this->col_num = $options['col_num'] ;
-          $this->user_ref = $user_id ;
-          $this->group_name = $options['group_name'];
-          $this->mandatory = $options['mandatory'] ;
-          $this->order_by = $options['order_by'] ;
-          $this->opened = $options['opened'] ;
-          $this->visible = $options['visible'] ;
-          $this->title_perso = $options['title_perso'] ;
-          if ($options['mandatory']) $this->is_available = true ;
-          $this->save() ;
-  }	
   
   public function getWidgetChoice()
   {

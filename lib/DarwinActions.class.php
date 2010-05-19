@@ -36,10 +36,25 @@ class DarwinActions extends sfActions
   protected function loadWidgets($id = null)
   {
     $this->__set('widgetCategory',$this->widgetCategory);
-    if($id == null) $id = $this->getUser()->getAttribute('db_user_id');
+    if($id == null) $id = $this->getUser()->getId();
     $this->widgets = Doctrine::getTable('MyPreferences')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->getWidgets($this->widgetCategory);
     if(! $this->widgets) $this->widgets=array();
+  }
+
+  /**
+   * Forwards the current request to the secure action.
+   *
+   * Copied from sfBasicSecurityFilter
+   *
+   * @see lib/vendor/symfony/lib/filter/sfBasicSecurityFilter.class.php
+   * @throws sfStopException
+   */
+  public function forwardToSecureAction()
+  {
+    sfContext::getInstance()->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+	$this->getResponse()->setStatusCode(403);
+    throw new sfStopException();
   }
 }

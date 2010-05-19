@@ -79,7 +79,8 @@ class collectionActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->forward404Unless(Doctrine::getTable('Users')->find( $this->getUser()->getAttribute('db_user_id'))->getDbUserType() > 2 , sprintf('You are not allowed to access to this page'));
+	$db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
+    if($db_user_type < Users::MANAGER) $this->forwardToSecureAction();
     $this->form = new CollectionsForm();
   }
 
@@ -97,7 +98,8 @@ class collectionActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
-//    $this->forward404Unless(Doctrine::getTable('Collections')->find( $this->getUser()->getAttribute('db_user_id')), sprintf('You are not allowed to edit this collection'));    
+//	$db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
+//    if($db_user_type < Users::MANAGER) $this->forwardToSecureAction();
     $this->form = new CollectionsForm($collections);
     $this->loadWidgets();
   }

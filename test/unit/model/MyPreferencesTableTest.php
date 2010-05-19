@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(24, new lime_output_color());
+$t = new lime_test(23, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
@@ -134,28 +134,28 @@ $t->is(count(Doctrine::getTable('MyPreferences')
         ->getWidgets('board_widget')),0,'All widget would have been deleted');
 
 $t->comment('->addWidgets()');        
-$widget = new Users() ;
-$widget->addUserWidgets($userEvil);
+
+$brol_user = new Users();
+$brol_user->setFamilyName('Brolus');
+$brol_user->setGivenName('Brolus');
+$brol_user->setDbUserType(Users::REGISTERED_USER);
+$brol_user->save();
+
+$brol_user->addUserWidgets();
 
 $q = Doctrine_Query::create()
     ->from('MyPreferences p')
-    ->Where('p.user_ref = ?', $userEvil)
+    ->Where('p.user_ref = ?', $brol_user->getId())
     ->execute();
-$t->is($q->count(),74,'Now Root has his 73 widgets') ; 
+$t->is($q->count(),73,'Now brolus has his 73 widgets') ; 
 
-Doctrine::getTable('Mypreferences')->setUserRef($userEvil)->setWidgets('Registered user',true) ;
-
-$t->comment('->setWidgets()');  
+$t->comment('->updateWigetsAvailabilityForRole()');  
 $t->is(count(Doctrine::getTable('MyPreferences')
-        ->setUserRef($userEvil)
+        ->setUserRef($brol_user->getId())
         ->getWidgets('board_widget')),2,'4 board widgets but only 2 visible for a registered user');
 
-Doctrine::getTable('Mypreferences')->setUserRef($userEvil)->setWidgets('Registered user',false) ;
+Doctrine::getTable('Mypreferences')->setUserRef($brol_user->getId())->updateWigetsAvailabilityForRole(Users::REGISTERED_USER, false) ;
 
 $t->is(count(Doctrine::getTable('MyPreferences')
-        ->setUserRef($userEvil)
+        ->setUserRef($brol_user->getId())
         ->getWidgets('board_widget')),0,'Removing \'Registered user\' right : 0 board widgets visible now');     
-
-$t->comment('->getWidgetsList()');
-$t->is(count(Doctrine::getTable('MyPreferences')
-		->getWidgetsList(2)),1,'Get a list of all available widgets (0 like above), but 1 mandatory !') ;

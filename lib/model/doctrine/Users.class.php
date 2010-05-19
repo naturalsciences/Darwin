@@ -5,62 +5,92 @@
  */
 class Users extends BaseUsers
 {
+	const REGISTERED_USER = 1;
+    const ENCODER = 2;
+	const MANAGER = 4;
+	const ADMIN = 8;
+
     public function __toString()
     {
         return $this->getFormatedName();
     }
     
-    //function getStatus, return a 'title' for a user : 'M' for a Male, 'F' for a female, and 'moral' for a non physical user
+    /**
+	* function getStatus
+	* @return string a 'title' for a user : 'M' for a Male, 'F' for a female, and 'moral' for a non physical user
+	*/
     public function getStatus()
     {
-       $gender = $this->getGender()  ;
-       if (!$this->getIsPhysical())
-       	return ("moral") ;
-       else 
-       	return (strtolower($gender)) ;
+	  if (!$this->getIsPhysical())
+		return ("moral") ;
+	  else
+	  {
+		$gender = $this->getGender();
+		return (strtolower( $gender=='' ? 'M' : $gender));
+	  }
     }
     
     public static function getTypes($options)
     {
-    	if (isset($options['screen']) && $options['screen'] == 1) return array(4=>Users::getTypeName(4)) ;
-     $db_user_type = array(
-      1 => Users::getTypeName(1),
-      2 => Users::getTypeName(2),
-      4 => Users::getTypeName(4),
-      8 => Users::getTypeName(8)
+	  if (isset($options['screen']) && $options['screen'] == 1)
+		return array( self::MANAGER => Users::getTypeName(self::MANAGER) );
+
+	  $db_user_type = array(
+		self::REGISTERED_USER => Users::getTypeName(self::REGISTERED_USER),
+		self::ENCODER => Users::getTypeName(self::ENCODER),
+		self::MANAGER => Users::getTypeName(self::MANAGER),
+		self::ADMIN => Users::getTypeName(self::ADMIN)
       );
-      if ($options['db_user_type'] != 8) { 
-      	array_pop($db_user_type) ;
-	     array_pop($db_user_type) ;
-	 }
-	 return $db_user_type ;
+	  
+      if ($options['db_user_type'] != self::ADMIN)
+	  { 
+		array_pop($db_user_type);
+	    array_pop($db_user_type);
+	  }
+	  return $db_user_type ;
     }
     
     public static function getTypeName($db_user_type)
     {
-    	  switch ($db_user_type) {
-    	  	case 1 : return 'Registered user';
-    	  	case 2 : return 'Encoder';
-    	  	case 4 : return 'Collection manager';
-          case 8 : return 'Administrator';   	  
-    	  }
-    
+	  switch ($db_user_type)
+	  {
+		case self::REGISTERED_USER : return 'Registered user';
+		case self::ENCODER : return 'Encoder';
+		case self::MANAGER : return 'Collection manager';
+		case self::ADMIN : return 'Administrator';   	  
+	  }
     }
-    // function to add all user's widgets in my_preference table
-    public static function addUserWidgets($user_id)
+
+    /**
+	* function to add all user's widgets in my_preference table
+	* use user id and db_user_type
+	* @return the number of widget added
+	*/
+    public function addUserWidgets()
     {
 	  $count_widget = 0;
-	  $array_right = Users::getTypes(array('db_user_type' => 8)) ;
+	  $array_right = Users::getTypes(array('db_user_type' => self::ADMIN)) ;
 	  foreach ($array_right as $key => $right)
 	  {
-		  $file = MyPreferences::getFileByRight($right) ;
+		  $file = MyPreferences::getFileByRight($key) ;
 		  if($file)
 		  {
-			  $data = new Doctrine_Parser_Yml;
+			  $data = new Doctrine_Parser_Yml();
 			  $array = $data->loadData($file);
-			  foreach ($array as $widget => $array_values) {
+			  foreach ($array as $widget => $array_values)
+			  {
 				$pref = new MyPreferences() ;
-				$pref->addWidget($array_values, $user_id) ;
+				$array_values['user_ref'] = $this->getId();
+				$pref->fromArray($array_values);
+				if($pref->getMandatory())
+				  $pref->setIsAvailable(true);
+
+				if($this->getDbUserType() < $key)
+				  $pref->setIsAvailable(false);
+				else
+				  $pref->setIsAvailable(true);
+
+				$pref->save();
 				$count_widget++;
 			  }
 		  }

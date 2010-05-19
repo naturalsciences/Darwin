@@ -73,21 +73,29 @@ class MyPreferencesTable extends DarwinTable
     $this->updateWidgetsOrder($col2, 2, $category);
   }
   
-  public function setWidgets($right,$val)
+
+  /**
+  * set or unset the availability of widgets for a user and a role
+  * @param string $role Group of widget for which the availability must be updated
+  * @param boolean $availability Is the $role must be set as available or not
+  */
+  public function updateWigetsAvailabilityForRole($role, $availability)
   {
-	$file = MyPreferences::getFileByRight($right) ;
+	$file = MyPreferences::getFileByRight($role) ;
 	if($file)
 	{
 		$data = new Doctrine_Parser_Yml();
 		$array = $data->loadData($file);
-		foreach ($array as $widget => $array_values) {
-		   if($array_values['mandatory']) continue ; //mandatory widget have already at true, and we don't want it could be changed
-		   $q = Doctrine_Query::create()
-             ->update('MyPreferences p') 
-             ->set('p.is_available',($val==1?"true":"false")) 
-		   ->where('p.group_name = ?',$array_values['group_name'])
-		   ->andWhere('p.category = ?', $array_values['category'])
-		   ->execute() ;
+		foreach ($array as $widget => $array_values)
+		{
+			if($array_values['mandatory']) continue ; //mandatory widget have already at true, and we don't want it could be changed
+			$q = Doctrine_Query::create()
+			  ->update('MyPreferences p') 
+			  ->set('p.is_available','?', $availability) 
+			  ->where('p.group_name = ?',$array_values['group_name']);
+
+			  $this->addCategoryUser($q, $array_values['category'])
+				->execute();
 		}
 	}  	
   }
@@ -113,25 +121,32 @@ class MyPreferencesTable extends DarwinTable
     return $q;
   }
  
-   public function getWidgetsList($level)
+  public function getWidgetsList($level)
   {
   	$q = Doctrine_Query::create()
             ->from('MyPreferences p')
   		  ->where('p.user_ref = ?', $this->user_ref) ;
-     if ($level < 4) $q->andWhere('p.is_available = true') ;
+     if ($level < Users::MANAGER) $q->andWhere('p.is_available = true') ;
      $q->orderBy('category,group_name');
    	return $q->execute() ;	
   }
  
   public function getAvailableWidgets()
   {
-  	$q = Doctrine_Query::create()
-            ->from('MyPreferences p')
-            ->where('p.is_available = true') 
-  		  ->Andwhere('p.user_ref = ?', $this->user_ref) ;
-   	return $q->execute() ;	
+	$q = Doctrine_Query::create()
+	  ->from('MyPreferences p')
+	  ->where('p.is_available = true') 
+	  ->andwhere('p.user_ref = ?', $this->user_ref) ;
+	return $q->execute() ;	
   }
 
+  /**
+  * Change the order of widgets in a screen column for a user_id
+  * @param array $widget_array An array of ids of widgets ordered
+  * @param int $col_num the number of the column
+  * @param string $category Screen's category name
+  * @see setUserRef
+  */
   public function updateWidgetsOrder($widget_array, $col_num, $category)
   {
     if(! is_array($widget_array))
@@ -143,6 +158,49 @@ class MyPreferencesTable extends DarwinTable
 	->andWhereIn('p.group_name',$widget_array);
 	
     $this->addCategoryUser($q,$category)->execute();
+  }
+
+  /**
+  * Update widgets for a user when there is a change in DbUserType
+  * @param int $old_type OLD Db user type of the user
+  * @param int $new_type New Db user type of the user
+  */
+  public function setWidgetsForNewUserType($old_type, $new_type)
+  {
+	if ($old_type != $new_type)
+	{
+	  if ($old_type > $new_type)
+	  {
+		// widget to delete
+		switch ($old_type)
+		{
+		  case 8: if ($new_type > 2) break ; /** @TODO: for now an admin and a CM have the same widgets**/
+				  if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
+				  if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
+				  break ;
+		  case 4: if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
+				  if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
+				  break ;
+		  case 2: $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
+				  break ;
+		  default: break ;
+		}
+	  }
+	  else
+	  {
+		// widget to add
+		switch ($old_type)
+		{
+		  case 1:$this->updateWigetsAvailabilityForRole(Users::ENCODER, true) ; 
+				  if ($new_type > 2) $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
+				  break ;
+		  case 2: $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
+				  break ;
+		  default: break ;
+		}
+	  }
+	}
+
   }
 
 }

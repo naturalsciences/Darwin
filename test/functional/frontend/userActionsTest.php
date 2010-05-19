@@ -218,33 +218,43 @@ $browser->
   get('/user/new')->
   with('response')->begin()->
     isStatusCode(200)->
-    click('#submit', array('users' => array(
-      'db_user_type'  => 1,
+  end()->
+
+  click('#submit', array('users' => array(
+      'db_user_type'  => Users::REGISTERED_USER,
       'gender' => 'M',
       'family_name' => 'Chambert',
       'given_name' => 'Yann',
       'is_physical' => true
-    )))
-  ->end() ;
+    )));
+
 $id = Doctrine::getTable("Users")->findOneByFamilyName('Chambert')->getId();
+
 $browser->
   get('user/loginInfo?user_ref='.$id)->
   with('response')->begin()->
     isStatusCode(200)->
-    click('#submit',array('users_login_infos' => array(
+  end()->
+  click('#submit',array('users_login_infos' =>
+	  array(
        'login_type' => 'local',
        'user_name' => 'ychambert',
        'new_password' => 'toto',
-       'confirm_password' => 'toto')))-> end();
+       'confirm_password' => 'toto')
+	  )
+	);
 
 $browser->get('account/logout')->
   with('response')->begin()->
     isRedirected()->
   end()->
+
   followRedirect()->
+
   with('user')->begin()->
-  isAuthenticated(false)->
+	isAuthenticated(false)->
   end()->
+
   login('ychambert','toto');
 
 $browser->
@@ -256,7 +266,7 @@ $browser->
     isParameter('action', 'index')->
   end()->
   with('response')->begin()->
-    isStatusCode(404)->
+    isStatusCode(403)->
   end();
 
 $browser->
@@ -265,7 +275,9 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('tbody[alt="board_widget"] tr',2)->
-    click('#submit', array('user_widget' => array(
+  end()->
+
+  click('#submit', array('user_widget' => array(
     'MyPreferences' => array(
 	  0 => array(
 	    'category'  => 'board_widget',
@@ -278,22 +290,21 @@ $browser->
 	    'group_name' => 'savedSpecimens',
 	    'user_ref' => $id,
 	    'widget_choice' => 'opened',
-	    'title_perso' => 'Spec'),
-	  2 => array(
-	    'category'  => 'specimen_widget',
-	    'group_name' => 'refCollection',
-	    'user_ref' => $id,
-	    'widget_choice' => 'opened',
-	    'title_perso' => 'Search',
-	    'mandatory' => true))
-    )))->
-  end()->
+	    'title_perso' => 'Spec')))
+  ))->
+
   with('request')->begin()->
     isParameter('module', 'user')->
     isParameter('action', 'widget')->
-end();
+  end()->
+
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
+  followRedirect();
 
 $browser->
   get('user/loginInfo?user_ref='.Doctrine::getTable("Users")->findOneByFamilyName('Evil')->getId())->
   with('response')->begin()->
-    isStatusCode(404)->info('users ychambert is not allowed to access to this page')->end() ;
+    isStatusCode(403)->info('users ychambert is not allowed to access to this page')->end() ;

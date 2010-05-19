@@ -7,6 +7,7 @@ bw1:
    opened: false
    visible: true
    title_perso: My saved searches
+
 bw2:
    col_num: 1
    category: board_widget
@@ -16,6 +17,7 @@ bw2:
    opened: false
    visible: true
    title_perso: My saved specimens
+
 bw3:
    col_num: 1
    category: users_widget
