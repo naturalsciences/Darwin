@@ -3350,9 +3350,8 @@ BEGIN
 	
 	/** IF REVOKE ***/
 	IF NEW.db_user_type < OLD.db_user_type THEN
-		/*Each number of this suite represent a right on the collection: 1 for read, 2 for insert, 4 for update and 8 for delete*/
 		/*db user type 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,*/
-		IF OLD.db_user_type >= 4 THEN
+		IF OLD.db_user_type >= 4  AND NEW.db_user_type < 4 THEN
 			/** If retrograde from collection_man, remove all collection administrated **/
 			SELECT count(*) != 0 INTO still_mgr FROM collections WHERE main_manager_ref = NEW.id;
 			IF still_mgr THEN
