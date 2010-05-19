@@ -38,7 +38,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
-	$user = Doctrine::getTable('MyPreferences p')->find($arguments['user_id']);
+	$user = Doctrine::getTable('Users')->find($arguments['user_id']);
 	
 	if($options['reset'])
 	{
