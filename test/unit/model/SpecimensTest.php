@@ -29,7 +29,6 @@ $specimens =  Doctrine_Query::create()
 	      ->execute();
 $t->is( $specimens->count() , 5, 'New "Vertebrate" specimen inserted');
 
-// print_r($specimens->toArray());
 $t->is( $specimens[1]->getAcquisitionDateMasked() , '<em>31/12</em>/2009', 'Correct date masked: "<em>31/12</em>/2009"');
 $t->is( $specimens[1]->getAcquisitionDate() , array('year'=>2009, 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
 $t->is( $specimens[1]->getName(), '[VERT. 12457]', 'This specimen has the formated name: "[VERT. 12457]"');

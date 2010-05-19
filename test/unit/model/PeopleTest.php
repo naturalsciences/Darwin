@@ -1,18 +1,29 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(22, new lime_output_color());
+$t = new lime_test(26, new lime_output_color());
 $p = new People();
 $p->setFormatedName('Mr Poilux Duchesne');
-$t->is($p->__toString(),'Mr Poilux Duchesne','to string get FormatedName');
+$t->info('Test "__toString" method to get formated name of given person');
+$t->is($p->__toString(),'Mr Poilux Duchesne','to string get "FormatedName": "Mr Poilux Duchesne"');
 
+$t->info('Get static list of people types');
 $types = People::getTypes();
-$t->is($types[4], 'Identifier','We have this as Type');
-$t->is($types[16], 'Collector','We have this as Type');
+$t->is($types[4], 'Identifier','We have "Identifier" as Type');
+$t->is($types[16], 'Collector','We have "Collector" as Type');
 
-$t->is($p->getDbPeopleType(),array(),'We have only the default type');
+$t->info('Get the people type value for a given key');
+$t->is(People::getCorrespondingType('author'), '2', '"Author" is of value "2"');
+$t->is(People::getCorrespondingType('identifier'), '4', '"Identifier" is of value "4"');
+
+$t->info('For a given key, get the array entry from the static list');
+$t->is(People::getCorrespondingTypeAsArray(2), array('2'=>'Author'), 'For key "2", the "array(2=>Author)" is well returned');
+$t->is(People::getCorrespondingTypeAsArray(4), array('4'=>'Identifier'), 'For key "4", the "array(4=>Identifier)" is well returned');
+
+$t->info('DB people types tests');
+$t->is($p->getDbPeopleType(),array(),'We have only the "default" type ("empty array")');
 
 $p->setDbPeopleType(array('8','32'));
-$t->is($p->getDbPeopleType(),array('8','32'),'We have set 2 types');
+$t->is($p->getDbPeopleType(),array('8','32'),'We have set "2" types');
 
 $p->setBirthDate('05/12/1908');
 $t->is($p->getBirthDate(), array('year' => '', 'month' => '', 'day' => '', 'hour' => '', 'minute' => '','second' => ''),'We have set a null birth date');

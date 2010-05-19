@@ -158,15 +158,15 @@ $browser->
   end();
 
 $specimens = Doctrine::getTable('Specimens')->findAll();
-  
+$specId = $specimens[0]->getId();
 $browser->
   info('4.2 - ...with a specimen id and a taxon id different from one associated to specimen called')->  
-  get('specimen/sameTaxon', array('specId'=>$specimens[0]->getId(), 'taxonId'=>'-1'))->
+  get('specimen/sameTaxon', array('specId'=>$specId, 'taxonId'=>'-1'))->
   with('response')->begin()->
     matches('/not ok/')->
   end()->
   info('4.3 - ...with a specimen id and a corresponding taxon id')->  
-  get('specimen/sameTaxon', array('specId'=>$specimens[0]->getId(), 'taxonId'=>$specimens[0]->Taxonomy->getId()))->
+  get('specimen/sameTaxon', array('specId'=>$specId, 'taxonId'=>$specimens[0]->Taxonomy->getId()))->
   with('response')->begin()->
     matches('/ok/')->
   end()->
@@ -182,21 +182,51 @@ $browser->
     isStatusCode(404)->
   end()->
   info('5.3 - ...with correct infos')->
-  get('specimen/getTaxon', array('specId'=>$specimens[0]->getId(), 'targetField'=>'specimen_host_taxon'))->
+  get('specimen/getTaxon', array('specId'=>$specId, 'targetField'=>'specimen_host_taxon'))->
   with('response')->begin()->
     isStatusCode(200)->
     matches('/","specimen_host_taxon_name":"Animalia"}/')->
   end();
 
+$num = 5;
+
 $browser->
   info('5 - Check AddCode method call')->
-  get('specimen/addCode', array('id'=>$specimens[0]->getId(), 'num'=>5, 'collectionId'=>$collectionId))->
+  get('specimen/addCode', array('id'=>$specId, 'num'=>$num, 'collectionId'=>$collectionId))->
   with('response')->begin()->
     isStatusCode()->
-    checkElement('tr td:first select#specimen_newCode_5_code_category',1)->
-    checkElement('tr td:nth-child(2) input#specimen_newCode_5_code_prefix',1)->
-    checkElement('tr td:nth-child(3) div#specimen_newCode_5_code_prefix_separator_parent',1)->
-    checkElement('tr td:nth-child(4) input#specimen_newCode_5_code',1)->
-    checkElement('tr td:nth-child(5) div#specimen_newCode_5_code_suffix_separator_parent',1)->
-    checkElement('tr td:nth-child(6) input#specimen_newCode_5_code_suffix',1)->
+    checkElement('tr td:first select#specimen_newCode_'.$num.'_code_category',1)->
+    checkElement('tr td:nth-child(2) input#specimen_newCode_'.$num.'_code_prefix',1)->
+    checkElement('tr td:nth-child(3) div#specimen_newCode_'.$num.'_code_prefix_separator_parent',1)->
+    checkElement('tr td:nth-child(4) input#specimen_newCode_'.$num.'_code',1)->
+    checkElement('tr td:nth-child(5) div#specimen_newCode_'.$num.'_code_suffix_separator_parent',1)->
+    checkElement('tr td:nth-child(6) input#specimen_newCode_'.$num.'_code_suffix',1)->
+  end();
+
+$num = 1;
+$identifier_num = 1;
+
+$browser->
+  info('6 - Check AddIdentification method call')->
+  get('specimen/addIdentification', array('spec_id'=>$specId, 'num'=>$num))->
+  with('response')->begin()->
+    isStatusCode()->
+    checkElement('tr:first td:first[class="spec_ident_handle"]',1)->
+    checkElement('tr:first td:nth-child(3) select#specimen_newIdentification_'.$num.'_notion_concerned option',5)->
+    checkElement('tr:first td:nth-child(3) select#specimen_newIdentification_'.$num.'_notion_concerned option:first','Taxon.')->
+    checkElement('tr:first td:last input:last[id="specimen_newIdentification_'.$num.'_order_by"][value="0"]',1)->
+    checkElement('tr:nth-child(2)[class="spec_ident_identifiers"]',1)->
+    checkElement('tr:nth-child(2)[class="spec_ident_identifiers"] td:nth-child(2) table#spec_ident_identifiers_'.$num,1)->
+    checkElement('tr:nth-child(2)[class="spec_ident_identifiers"] td:nth-child(2) table#spec_ident_identifiers_'.$num.' tfoot div a[href="/index.php/specimen/addIdentifier/spec_id/'.$specId.'/num/'.$num.'/identifier_num/"]',1)->
+  end();
+
+$browser->
+  info('7 - Check AddIdentifier method call')->
+  get('specimen/addIdentifier', array('spec_id'=>$specId, 'num'=>$num, 'identifier_num'=>$identifier_num))->
+  with('response')->begin()->
+    isStatusCode()->
+    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:first[class="spec_ident_identifiers_handle"]',1)->
+    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) input:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref"]',1)->
+    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref_name"]','-')->
+    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/4"]','Choose !')->
   end();

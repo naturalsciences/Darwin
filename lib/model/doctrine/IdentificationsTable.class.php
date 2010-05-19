@@ -23,5 +23,4 @@ class IdentificationsTable extends DarwinTable
     return $q->execute();
   }
 
-
 }

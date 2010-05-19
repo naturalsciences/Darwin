@@ -1,12 +1,12 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(20, new lime_output_color());
+$t = new lime_test(23, new lime_output_color());
 
 $taxon = Doctrine::getTable('taxonomy')->findOneByName('Falco Peregrinus');
 $person1 = Doctrine::getTable('People')->findOneByFamilyNameAndGivenName('Duchesne', 'Poilux');
 $person2 = Doctrine::getTable('People')->findOneByFamilyName('Root');
 $person3 = Doctrine::getTable('People')->findOneByFamilyNameAndGivenName('Duchesne', 'ML');
-$person1->setDbPeopleType(2);
+$person1->setDbPeopleType(6);
 $person1->save();
 $person3->setDbPeopleType(2);
 $person3->save();
@@ -76,3 +76,21 @@ Doctrine::getTable('CataloguePeople')->changeOrder($catpeo[1]->getReferencedRela
 $catpeo = Doctrine::getTable('CataloguePeople')->findForTableByType('taxonomy', $taxon->getId());
 $t->is($catpeo['author'][0]->getPeople()->getGivenName(), 'ML', 'Type author and first person well associated to "ML"');
 $t->is($catpeo['author'][1]->getPeople()->getGivenName(), 'Poilux', 'Type author and second person well associated to "Poilux"');
+$t->info('Testing the getIdentifiersRelated method');
+$specimen = Doctrine::getTable('Specimens')->findOneByTaxonRef($taxon->getId());
+$identification = new Identifications;
+$identification->setReferencedRelation('specimens');
+$identification->setRecordId($specimen->getId());
+$identification->setNotionConcerned('taxonomy');
+$identification->setValueDefined('Joli Test');
+$identification->save();
+$identifier = new CataloguePeople;
+$identifier->setReferencedRelation('identifications');
+$identifier->setRecordId($identification->getId());
+$identifier->setPeopleRef($person1->getId());
+$identifier->setPeopleType('identifier');
+$identifier->save();
+$identifiers = Doctrine::getTable('CataloguePeople')->getIdentifiersRelated('identifications', 'identifier', $identification->getId());
+$t->is($identifiers->count(), 1, '"One" identifier effectively created');
+$t->is($identifiers[0]->getPeopleType(), 'identifier', 'New person created in catalogue people is well "identifier"');
+$t->is($identifiers[0]->getPeople()->getGivenName(), 'Poilux', '"Poilux" is well the identifier created');

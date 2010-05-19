@@ -12,6 +12,19 @@ class specimenActions extends DarwinActions
 {
   protected $widgetCategory = 'specimen_widget';
 
+  /*
+  */
+  protected function getSpecimenForm(sfWebRequest $request)
+  {
+    $spec = null;
+
+    if($request->hasParameter('spec_id') && $request->getParameter('spec_id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id') );
+    
+    $form = new SpecimensForm($spec);
+    return $form;
+  }
+
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
@@ -25,17 +38,6 @@ class specimenActions extends DarwinActions
     $form = new SpecimensForm($spec);
     $form->addCodes($number, $collectionId);
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
-  }
-
-  protected function getSpecimenForm(sfWebRequest $request)
-  {
-    $spec = null;
-
-    if($request->hasParameter('spec_id') && $request->getParameter('spec_id'))
-      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id') );
-    
-    $form = new SpecimensForm($spec);
-    return $form;
   }
 
   public function executeAddIdentification(sfWebRequest $request)
@@ -149,7 +151,6 @@ class specimenActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->setLevelAndCaller($request);
-//     $this->searchForm = new TaxonomyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
     // Initialization of the Search expedition form
     $this->form = new SpecimensFormFilter(array('caller_id'=> $this->caller_id));
   }

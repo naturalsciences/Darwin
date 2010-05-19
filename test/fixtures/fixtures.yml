@@ -316,6 +316,7 @@ Specimens:
         acquisition_category: expedition
         HostSpecimen: sp2
         HostTaxon: ta2
+        host_relationship: Symbiosis
 
 Codes:
     cosp1:
