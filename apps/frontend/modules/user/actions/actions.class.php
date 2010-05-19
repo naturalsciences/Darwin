@@ -29,7 +29,7 @@ class userActions extends DarwinActions
 
     $this->forward404Unless($user_to_edit, sprintf('User does not exist (%s).', $request->getParameter('id')));
 
-    $this->form = new UsersForm($user_to_edit, array("db_user_type" => $this->getUser()->getId(), "is_physical" => $user_to_edit->getIsPhysical()));
+    $this->form = new UsersForm($user_to_edit, array("db_user_type" => $db_user_type, "is_physical" => $user_to_edit->getIsPhysical()));
   
     if($request->isMethod('post'))
     {
