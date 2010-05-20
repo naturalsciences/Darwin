@@ -10,7 +10,6 @@ class PartsValidatorSchema extends sfValidatorSchema
   {
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
-
     if (!$value['category'])
     {
       return array();

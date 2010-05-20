@@ -75,7 +75,6 @@ class PartsGroupedForm extends sfForm
 	$value = $this->getValue('SpecimenParts');
 	foreach($this->embeddedForms['SpecimenParts']->getEmbeddedForms() as $name => $form)
 	{
-	  
 	  if (!isset($value[$name]['category']))
 	  {
 	    $form->getObject()->delete();

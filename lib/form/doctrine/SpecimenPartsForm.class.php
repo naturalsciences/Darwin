@@ -137,6 +137,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	$this->widgetSchema['category'] = new sfWidgetFormChoice(array(
 	  'choices' => SpecimenParts::getCategories(),
 	));
+    $this->validatorSchema['category'] = new sfValidatorString(array('required' => false));
 
 
     $this->mergePostValidator(new PartsValidatorSchema());

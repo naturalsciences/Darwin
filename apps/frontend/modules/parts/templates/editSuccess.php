@@ -31,13 +31,20 @@
 
 <script  type="text/javascript">
 $(document).ready(function () {
-	$('#catalogue_properties_property_type').change(function() {
+	/*$('#catalogue_properties_property_type').change(function() {
 	  $.get("<?php echo url_for('property/getUnit');?>/type/"+$(this).val(), function (data) {
 		$("#catalogue_properties_property_unit_parent select").html(data);
 	  });
-	});
+	});*/
 
-  //  $('.clear_prop').live('click', clearPropertyValue);
+    $('.clear_prop').live('click', function()
+	{
+	  parent = $(this).closest('tbody');
+	  $(parent).find('input').val('');
+	  $(parent).find('select option').removeAttr('selected');
+	  $(parent).find("select[id$='_category']").html('');
+	  $(parent).hide();
+	});
 
     $('#add_value').click(function(){
 	  $.ajax({

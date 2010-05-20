@@ -141,8 +141,7 @@ function hideValues()
 function clearPropertyValue()
 {
   parent = $(this).closest('tr');
-  nvalue='';
-  $(parent).find('input').val(nvalue);
+  $(parent).find('input').val('');
   $(parent).hide();
 }
 
