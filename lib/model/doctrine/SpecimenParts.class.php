@@ -5,5 +5,12 @@
  */
 class SpecimenParts extends BaseSpecimenParts
 {
-
+  public static function getCategories()
+  {
+	return array(
+	  'physical' => 'Physical',
+	  'observation' => 'observation',
+	  'figurate' => 'figurate',
+	);
+  }
 }

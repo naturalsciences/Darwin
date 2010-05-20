@@ -4,5 +4,123 @@
  */
 class SpecimenPartsTable extends DarwinTable
 {
+  /**
+  * Get Distincts Buildings of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctBuildings()
+  {
+    return $this->createDistinct('SpecimenParts', 'building', 'buildings')->execute();
+  }
+
+  /**
+  * Get Distincts Floor of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctFloors()
+  {
+    return $this->createDistinct('SpecimenParts', 'floor', 'floors')->execute();
+  }
+
+  /**
+  * Get Distincts Row of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctRows()
+  {
+    return $this->createDistinct('SpecimenParts', 'row', 'rows')->execute();
+  }
+
+  /**
+  * Get Distincts Room of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctRooms()
+  {
+    return $this->createDistinct('SpecimenParts', 'room', 'rooms')->execute();
+  }
+
+  /**
+  * Get Distincts Shelve of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctShelfs()
+  {
+    return $this->createDistinct('SpecimenParts', 'shelf', 'shelfs')->execute();
+  }
+
+  /**
+  * Get Distincts Container of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctContainerTypes()
+  {
+    return $this->createDistinct('SpecimenParts', 'container_type', 'container_types')->execute();
+  }
+
+  /**
+  * Get Distincts Sub Container of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctSubContainerTypes()
+  {
+    return $this->createDistinct('SpecimenParts', 'sub_container_type', 'sub_container_types')->execute();
+  }
+
+  /**
+  * Get Distincts Sub Container of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctParts()
+  {
+	return $this->createDistinct('SpecimenParts', 'specimen_part', 'parts')->execute();
+  }
+
+  /**
+  * Get Distincts status of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctStatus()
+  {
+	return $this->createDistinct('SpecimenParts', 'specimen_status', 'status')->execute();
+  }
+
+  /**
+  * Get Distincts Container Storages of Part
+  * filter by type if one given
+  * @param string $type a type
+  * @return array an Array of types in keys
+  */
+  public function getDistinctContainerStorages($type)
+  {
+	$q = $this->createDistinct('SpecimenParts INDEXBY storage', 'container_storage', 'storage','');
+	if(! is_null($type))
+	  $q->addWhere('container_type = ?', $type);
+
+	$results = $q->fetchArray();
+    if(count($results))
+      $results = array_combine(array_keys($results),array_keys($results));
+
+    return array_merge(array(''=>''), $results);
+  }
+
+  /**
+  * Get Distincts Sub Container Storages of Part
+  * filter by type if one given
+  * @param string $type a type
+  * @return array an Array of types in keys
+  */
+  public function getDistinctSubContainerStorages($type)
+  {
+	$q = $this->createDistinct('SpecimenParts INDEXBY storage', 'sub_container_storage', 'storage','');
+	if(! is_null($type))
+	  $q->addWhere('container_type = ?', $type);
+
+	$results = $q->fetchArray();
+    if(count($results))
+      $results = array_combine(array_keys($results),array_keys($results));
+
+    return array_merge(array(''=>''), $results);
+  }
 
 }

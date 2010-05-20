@@ -18,13 +18,14 @@
  * @property string $sub_container
  * @property string $container_type
  * @property string $sub_container_type
- * @property string $storage
+ * @property string $container_storage
+ * @property string $sub_container_storage
  * @property boolean $surnumerary
  * @property string $specimen_status
  * @property integer $specimen_part_count_min
  * @property integer $specimen_part_count_max
  * @property string $category
- * @property SpecimenIndividuals $SpecimenIndividuals
+ * @property SpecimenIndividuals $Individual
  * 
  * @method integer             getId()                      Returns the current record's "id" value
  * @method integer             getSpecimenIndividualRef()   Returns the current record's "specimen_individual_ref" value
@@ -39,13 +40,14 @@
  * @method string              getSubContainer()            Returns the current record's "sub_container" value
  * @method string              getContainerType()           Returns the current record's "container_type" value
  * @method string              getSubContainerType()        Returns the current record's "sub_container_type" value
- * @method string              getStorage()                 Returns the current record's "storage" value
+ * @method string              getContainerStorage()        Returns the current record's "container_storage" value
+ * @method string              getSubContainerStorage()     Returns the current record's "sub_container_storage" value
  * @method boolean             getSurnumerary()             Returns the current record's "surnumerary" value
  * @method string              getSpecimenStatus()          Returns the current record's "specimen_status" value
  * @method integer             getSpecimenPartCountMin()    Returns the current record's "specimen_part_count_min" value
  * @method integer             getSpecimenPartCountMax()    Returns the current record's "specimen_part_count_max" value
  * @method string              getCategory()                Returns the current record's "category" value
- * @method SpecimenIndividuals getSpecimenIndividuals()     Returns the current record's "SpecimenIndividuals" value
+ * @method SpecimenIndividuals getIndividual()              Returns the current record's "Individual" value
  * @method SpecimenParts       setId()                      Sets the current record's "id" value
  * @method SpecimenParts       setSpecimenIndividualRef()   Sets the current record's "specimen_individual_ref" value
  * @method SpecimenParts       setSpecimenPart()            Sets the current record's "specimen_part" value
@@ -59,13 +61,14 @@
  * @method SpecimenParts       setSubContainer()            Sets the current record's "sub_container" value
  * @method SpecimenParts       setContainerType()           Sets the current record's "container_type" value
  * @method SpecimenParts       setSubContainerType()        Sets the current record's "sub_container_type" value
- * @method SpecimenParts       setStorage()                 Sets the current record's "storage" value
+ * @method SpecimenParts       setContainerStorage()        Sets the current record's "container_storage" value
+ * @method SpecimenParts       setSubContainerStorage()     Sets the current record's "sub_container_storage" value
  * @method SpecimenParts       setSurnumerary()             Sets the current record's "surnumerary" value
  * @method SpecimenParts       setSpecimenStatus()          Sets the current record's "specimen_status" value
  * @method SpecimenParts       setSpecimenPartCountMin()    Sets the current record's "specimen_part_count_min" value
  * @method SpecimenParts       setSpecimenPartCountMax()    Sets the current record's "specimen_part_count_max" value
  * @method SpecimenParts       setCategory()                Sets the current record's "category" value
- * @method SpecimenParts       setSpecimenIndividuals()     Sets the current record's "SpecimenIndividuals" value
+ * @method SpecimenParts       setIndividual()              Sets the current record's "Individual" value
  * 
  * @package    darwin
  * @subpackage model
@@ -127,7 +130,12 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
              'notnull' => true,
              'default' => 'container',
              ));
-        $this->hasColumn('storage', 'string', null, array(
+        $this->hasColumn('container_storage', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'dry',
+             ));
+        $this->hasColumn('sub_container_storage', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              'default' => 'dry',
@@ -161,7 +169,7 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('SpecimenIndividuals', array(
+        $this->hasOne('SpecimenIndividuals as Individual', array(
              'local' => 'specimen_individual_ref',
              'foreign' => 'id'));
     }

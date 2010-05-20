@@ -904,14 +904,16 @@ SpecimenParts:
         sub_container: { type: string}
         container_type: { type: string, notnull: true, default: container}
         sub_container_type: { type: string, notnull: true, default: container}
-        storage: { type: string, notnull: true, default: dry}
+        container_storage: { type: string, notnull: true, default: dry}
+        sub_container_storage: { type: string, notnull: true, default: dry}
         surnumerary: { type: boolean, notnull: true, default: false}
         specimen_status: { type: string, notnull: true, default: 'good state'}
         specimen_part_count_min: { type: integer, notnull: true, default:1}
         specimen_part_count_max: { type: integer, notnull: true, default:1}
         category: { type: string, default: physical}
     relations:
-        SpecimenIndividuals:
+        Individual:
+            class: SpecimenIndividuals
             local: specimen_individual_ref
             foreign: id
 

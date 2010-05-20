@@ -16,7 +16,7 @@ abstract class BaseSpecimenPartsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                      => new sfWidgetFormInputHidden(),
-      'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividuals'), 'add_empty' => false)),
+      'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'add_empty' => false)),
       'specimen_part'           => new sfWidgetFormTextarea(),
       'complete'                => new sfWidgetFormInputCheckbox(),
       'building'                => new sfWidgetFormTextarea(),
@@ -28,7 +28,8 @@ abstract class BaseSpecimenPartsForm extends BaseFormDoctrine
       'sub_container'           => new sfWidgetFormTextarea(),
       'container_type'          => new sfWidgetFormTextarea(),
       'sub_container_type'      => new sfWidgetFormTextarea(),
-      'storage'                 => new sfWidgetFormTextarea(),
+      'container_storage'       => new sfWidgetFormTextarea(),
+      'sub_container_storage'   => new sfWidgetFormTextarea(),
       'surnumerary'             => new sfWidgetFormInputCheckbox(),
       'specimen_status'         => new sfWidgetFormTextarea(),
       'specimen_part_count_min' => new sfWidgetFormInputText(),
@@ -38,7 +39,7 @@ abstract class BaseSpecimenPartsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                      => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividuals'))),
+      'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'))),
       'specimen_part'           => new sfValidatorString(array('required' => false)),
       'complete'                => new sfValidatorBoolean(array('required' => false)),
       'building'                => new sfValidatorString(array('required' => false)),
@@ -50,7 +51,8 @@ abstract class BaseSpecimenPartsForm extends BaseFormDoctrine
       'sub_container'           => new sfValidatorString(array('required' => false)),
       'container_type'          => new sfValidatorString(array('required' => false)),
       'sub_container_type'      => new sfValidatorString(array('required' => false)),
-      'storage'                 => new sfValidatorString(array('required' => false)),
+      'container_storage'       => new sfValidatorString(array('required' => false)),
+      'sub_container_storage'   => new sfValidatorString(array('required' => false)),
       'surnumerary'             => new sfValidatorBoolean(array('required' => false)),
       'specimen_status'         => new sfValidatorString(array('required' => false)),
       'specimen_part_count_min' => new sfValidatorInteger(array('required' => false)),

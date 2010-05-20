@@ -13,7 +13,7 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividuals'), 'add_empty' => true)),
+      'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'add_empty' => true)),
       'specimen_part'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'complete'                => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'building'                => new sfWidgetFormFilterInput(),
@@ -25,7 +25,8 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
       'sub_container'           => new sfWidgetFormFilterInput(),
       'container_type'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'sub_container_type'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'storage'                 => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'container_storage'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'sub_container_storage'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'surnumerary'             => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'specimen_status'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'specimen_part_count_min' => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -34,7 +35,7 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SpecimenIndividuals'), 'column' => 'id')),
+      'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Individual'), 'column' => 'id')),
       'specimen_part'           => new sfValidatorPass(array('required' => false)),
       'complete'                => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'building'                => new sfValidatorPass(array('required' => false)),
@@ -46,7 +47,8 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
       'sub_container'           => new sfValidatorPass(array('required' => false)),
       'container_type'          => new sfValidatorPass(array('required' => false)),
       'sub_container_type'      => new sfValidatorPass(array('required' => false)),
-      'storage'                 => new sfValidatorPass(array('required' => false)),
+      'container_storage'       => new sfValidatorPass(array('required' => false)),
+      'sub_container_storage'   => new sfValidatorPass(array('required' => false)),
       'surnumerary'             => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'specimen_status'         => new sfValidatorPass(array('required' => false)),
       'specimen_part_count_min' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -84,7 +86,8 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
       'sub_container'           => 'Text',
       'container_type'          => 'Text',
       'sub_container_type'      => 'Text',
-      'storage'                 => 'Text',
+      'container_storage'       => 'Text',
+      'sub_container_storage'   => 'Text',
       'surnumerary'             => 'Boolean',
       'specimen_status'         => 'Text',
       'specimen_part_count_min' => 'Number',
