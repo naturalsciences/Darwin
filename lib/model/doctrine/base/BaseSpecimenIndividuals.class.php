@@ -12,7 +12,7 @@
  * @property string $type_search
  * @property string $sex
  * @property string $stage
- * @property string $stat
+ * @property string $state
  * @property string $social_status
  * @property string $rock_form
  * @property integer $specimen_individuals_count_min
@@ -27,7 +27,7 @@
  * @method string              getTypeSearch()                     Returns the current record's "type_search" value
  * @method string              getSex()                            Returns the current record's "sex" value
  * @method string              getStage()                          Returns the current record's "stage" value
- * @method string              getStat()                           Returns the current record's "stat" value
+ * @method string              getState()                          Returns the current record's "state" value
  * @method string              getSocialStatus()                   Returns the current record's "social_status" value
  * @method string              getRockForm()                       Returns the current record's "rock_form" value
  * @method integer             getSpecimenIndividualsCountMin()    Returns the current record's "specimen_individuals_count_min" value
@@ -41,7 +41,7 @@
  * @method SpecimenIndividuals setTypeSearch()                     Sets the current record's "type_search" value
  * @method SpecimenIndividuals setSex()                            Sets the current record's "sex" value
  * @method SpecimenIndividuals setStage()                          Sets the current record's "stage" value
- * @method SpecimenIndividuals setStat()                           Sets the current record's "stat" value
+ * @method SpecimenIndividuals setState()                          Sets the current record's "state" value
  * @method SpecimenIndividuals setSocialStatus()                   Sets the current record's "social_status" value
  * @method SpecimenIndividuals setRockForm()                       Sets the current record's "rock_form" value
  * @method SpecimenIndividuals setSpecimenIndividualsCountMin()    Sets the current record's "specimen_individuals_count_min" value
@@ -89,7 +89,7 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
              'notnull' => true,
              'default' => 'undefined',
              ));
-        $this->hasColumn('stat', 'string', null, array(
+        $this->hasColumn('state', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              'default' => 'not applicable',

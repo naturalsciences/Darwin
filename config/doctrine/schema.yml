@@ -879,7 +879,7 @@ SpecimenIndividuals:
         type_search: { type: string}
         sex: { type: string, notnull: true, default: undefined}
         stage: { type: string, notnull: true, default: undefined}
-        stat: { type: string, notnull: true, default: 'not applicable'}
+        state: { type: string, notnull: true, default: 'not applicable'}
         social_status: { type: string, notnull: true, default: 'not applicable'}
         rock_form: { type: string, notnull: true, default: 'not applicable'}
         specimen_individuals_count_min: { type: integer, notnull: true, default:1}
