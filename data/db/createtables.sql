@@ -1850,7 +1850,8 @@ comment on column specimen_parts.container is 'Container the part/individual is 
 comment on column specimen_parts.sub_container is 'Sub-Container the part/individual is stored in';
 comment on column specimen_parts.container_type is 'Type of container: box, plateau-caisse,...';
 comment on column specimen_parts.sub_container_type is 'Type of sub-container: slide, needle,...';
-comment on column specimen_parts.storage is 'Conservative medium used: formol, alcohool, dry,...';
+comment on column specimen_parts.container_storage is 'Conservative medium used: formol, alcohool, dry,...';
+comment on column specimen_parts.sub_container_storage is 'Conservative medium used: formol, alcohool, dry,...';
 comment on column specimen_parts.surnumerary is 'Tells if this part/individual has been added after first inventory';
 comment on column specimen_parts.specimen_status is 'Specimen status: good state, lost, damaged,...';
 comment on column specimen_parts.specimen_part_count_min is 'Minimum number of parts/individuals';
