@@ -24,7 +24,7 @@ class partsActions extends DarwinActions
 		$this->redirect('parts/edit?id='.$this->individual->getId());
 	  }
 	}
-
+	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
   }
 
   public function executeAddNew(sfWebRequest $request)

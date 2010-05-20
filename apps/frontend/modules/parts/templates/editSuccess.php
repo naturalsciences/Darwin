@@ -1,7 +1,8 @@
+<?php slot('title', __('Edit Parts'));  ?>
 
-<div class="page">
+<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'part' => new SpecimenParts(),'form'=> $form) );?>
 
-<form class="edition" method="post" action="<?php echo url_for('parts/edit?id='.$individual->getId());?>">
+<form method="post" action="<?php echo url_for('parts/edit?id='.$individual->getId());?>">
 
 <table class="parts_grouped">
 
@@ -61,4 +62,6 @@ $(document).ready(function () {
 </script>
 
 </form>
-</div>
+
+
+<?php include_partial('specimen/specAfterTab');?>
