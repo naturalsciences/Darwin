@@ -677,3 +677,22 @@ gtu2:
    opened: true
    visible: true
    title_perso: Properties
+
+sp1:
+   col_num: 1
+   category: specimen_parts_widget
+   group_name: properties
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Properties
+sp2:
+   col_num: 1
+   category: specimen_parts_widget
+   group_name: comments
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Comments

@@ -26,6 +26,10 @@ class CommentsTable extends DarwinTable
                                                          ),
                                     'gtu' => array('position information' => 'Position information',
 						   'period information' => 'Period information',
+                                                         ),
+									'specimen_parts' => array('container' => 'Container',
+														 'disposal' => 'Disposal',
+														  'part' => 'Parts',
                                                          )
                                    );
 
@@ -50,6 +54,9 @@ class CommentsTable extends DarwinTable
   */
   public static function getNotionsFor($table_name)
   {
-    return self::$notions[$table_name];
+	if(isset( self::$notions[$table_name]))
+	  return self::$notions[$table_name];
+	else
+	   return array();
   }
 }

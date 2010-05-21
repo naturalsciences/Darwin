@@ -1,0 +1,1 @@
+<?php echo get_component('cataloguewidget', 'comment', array('table' => "specimen_parts", 'eid' => $eid));?>

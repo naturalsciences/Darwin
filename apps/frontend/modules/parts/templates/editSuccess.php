@@ -19,6 +19,7 @@
 	  <td colspan="7">
 		<a href="<?php echo url_for('parts/addNew?id='.$individual->getId());?>/num/" id="add_value"><?php echo __('Add New');?></a>
 	  </td>
+	  <td></td>	
 	</tr>
 
     <tr>
@@ -26,6 +27,7 @@
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
       </td>
+	  <td></td>
     </tr>
   </tfoot>
 </table>
