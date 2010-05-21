@@ -1,4 +1,3 @@
-DROP TRIGGER IF EXISTS tgr_clr_incrementMainCode_specimens ON specimens CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_specimensMainCode_specimenPartCode ON specimen_parts CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_idToCode_gtu ON gtu CASCADE;
 

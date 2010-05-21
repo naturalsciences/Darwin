@@ -52,7 +52,6 @@ DROP FUNCTION IF EXISTS fct_chk_one_pref_language(id people_languages.id%TYPE,pe
 DROP FUNCTION IF EXISTS fct_chk_one_pref_language(id people_languages.id%TYPE,person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE, table_prefix varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_idToCode() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_specimensMainCode() CASCADE;
-DROP FUNCTION IF EXISTS fct_clr_incrementMainCode() CASCADE;
 DROP FUNCTION IF EXISTS fct_trg_word() CASCADE;
 DROP FUNCTION IF EXISTS search_words_to_query(tbl_name words.referenced_relation%TYPE, fld_name words.field_name%TYPE, value varchar, op varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_nbr_in_synonym() CASCADE;

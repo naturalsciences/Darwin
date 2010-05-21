@@ -1,45 +1,4 @@
 /***
-* Trigger Function fct_clr_incrementMainCode
-* Automaticaly add a incremented "main" code for a specimen
-* When the collection of the specimen has the flag must_be_incremented
-*/
-CREATE OR REPLACE FUNCTION fct_clr_incrementMainCode() RETURNS trigger
-as $$
-DECLARE
-	last_line codes%ROWTYPE;
-	must_be_incremented collections.code_auto_increment%TYPE;
-BEGIN
-	SELECT collections.code_auto_increment INTO must_be_incremented FROM collections WHERE collections.id = NEW.collection_ref;
-	IF must_be_incremented = true THEN
-		SELECT * INTO last_line FROM codes WHERE code_category = 'main' AND referenced_relation = 'specimens' AND record_id = NEW.id;
-		IF FOUND THEN
-			RETURN NEW;
- 		END IF;
- 
- 		SELECT codes.* into last_line FROM codes
-				INNER JOIN specimens ON codes.record_id = specimens.id AND referenced_relation = 'specimens'
-				WHERE specimens.collection_ref =  NEW.collection_ref
-					AND code_category = 'main'
-					ORDER BY codes.code DESC
-					LIMIT 1;
-		IF NOT FOUND THEN
-			last_line.code := 0;
-			last_line.code_category := 'main';
-		END IF;
-		
-		last_line.code := (last_line.code::integer+1)::varchar;
-		INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code, code_suffix)
-			VALUES ('specimens',NEW.id, 'main', last_line.code_prefix, last_line.code, last_line.code_suffix );
-	END IF;
-	RETURN NEW;
-EXCEPTION
-  WHEN OTHERS THEN
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-
-/***
 * Trigger Function fct_cpy_specimensMainCode
 * Automaticaly copy the "main" code from the specimen to the specimen parts
 * When the collection of the specimen has the flag code_part_code_auto_copy
