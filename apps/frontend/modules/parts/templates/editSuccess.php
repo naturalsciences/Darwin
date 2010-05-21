@@ -34,11 +34,19 @@
 
 <script  type="text/javascript">
 $(document).ready(function () {
-	/*$('#catalogue_properties_property_type').change(function() {
-	  $.get("<?php echo url_for('property/getUnit');?>/type/"+$(this).val(), function (data) {
-		$("#catalogue_properties_property_unit_parent select").html(data);
-	  });
-	});*/
+	$('select[name$="[container_type]"]').change(function() {
+	  parent = $(this).closest('tr');
+	  $.get("<?php echo url_for('parts/getStorage');?>/item/container/type/"+$(this).val(), function (data) {
+		  parent.find('select[name$="[container_storage]"]').html(data);
+		});
+	});
+
+	$('select[name$="[sub_container_type]"]').change(function() {
+	  parent = $(this).closest('tr');
+	  $.get("<?php echo url_for('parts/getStorage');?>/item/sub_container/type/"+$(this).val(), function (data) {
+		  parent.find('select[name$="[sub_container_storage]"]').html(data);
+		});
+	});
 
     $('.clear_prop').live('click', function()
 	{

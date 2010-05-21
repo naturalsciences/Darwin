@@ -47,4 +47,13 @@ class partsActions extends DarwinActions
 
     $this->loadWidgets();
   }
+
+  public function executeGetStorage(sfWebRequest $request)
+  {
+	if($request->getParameter('item')=="container")
+	  $items = Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($request->getParameter('type'));
+	else
+	  $items = Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($request->getParameter('type'));
+	return $this->renderPartial('options', array('items'=> $items ));
+  }
 }
