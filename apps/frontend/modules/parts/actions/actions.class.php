@@ -9,6 +9,9 @@
  */
 class partsActions extends DarwinActions
 {
+  protected $widgetCategory = 'specimen_parts_widget';
+  protected $table = 'specimen_parts';
+
   public function executeEdit(sfWebRequest $request)
   {
 	$this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
@@ -42,5 +45,6 @@ class partsActions extends DarwinActions
 	$this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($this->parts->getSpecimenIndividualRef());
 	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
 
+    $this->loadWidgets();
   }
 }

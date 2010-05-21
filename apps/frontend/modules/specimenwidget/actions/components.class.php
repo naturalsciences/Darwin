@@ -110,4 +110,11 @@ class specimenwidgetComponents extends sfComponents
   public function executeLinkHabitat()
   {}
 
+  public function executeProperties()
+  {}
+
+  public function executeComments()
+  {
+
+  }
 }
