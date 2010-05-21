@@ -14,5 +14,7 @@
 	'options' => array('eid' =>  $parts->getId(), 'table' => 'specimen_parts')
 	)); ?>
 
+			<p class="clear"></p>
+
 <?php include_partial('specimen/specAfterTab');?>
 
