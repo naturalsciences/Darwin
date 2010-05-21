@@ -13,6 +13,7 @@ class CollectionsForm extends BaseCollectionsForm
   {
     unset($this['path'],
           $this['code_auto_increment'],
+          $this['code_last_value'],
           $this['code_prefix'],
           $this['code_prefix_separator'],
           $this['code_suffix'],

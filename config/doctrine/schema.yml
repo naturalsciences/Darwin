@@ -427,6 +427,7 @@ Collections:
         parent_ref: { type: integer}
         path: { type: string, notnull: true, default: '/'}
         code_auto_increment: { type: boolean, notnull: true, default: false}
+        code_last_value: { type: integer, notnull: true, default: 0}
         code_prefix: { type: string}
         code_prefix_separator: { type: string}
         code_suffix: { type: string}

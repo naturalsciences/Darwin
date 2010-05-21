@@ -21,10 +21,12 @@ class CodesForm extends BaseCodesForm
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);*/
+    
     $choices = array('main'=> 'Main', 'secondary' => 'Secondary', 'temporary' => 'Temporary') ;
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['deleted'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['code_category'] = new sfWidgetFormChoice(array(
         'choices' => $choices
       ));
@@ -77,6 +79,7 @@ class CodesForm extends BaseCodesForm
                                                                 );*/
     $this->validatorSchema['referenced_relation'] = new sfValidatorString();
     $this->validatorSchema['record_id'] = new sfValidatorInteger();
+    $this->validatorSchema['deleted'] = new sfValidatorPass();
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
     $this->mergePostValidator(new CodesValidatorSchema());
   }

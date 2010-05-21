@@ -11,7 +11,7 @@ class CodesValidatorSchema extends sfValidatorSchema
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
 
-    if (!$value['code_prefix'] && !$value['code'] && !$value['code_suffix'])
+    if ($value['deleted'])
     {
       return array();
     }

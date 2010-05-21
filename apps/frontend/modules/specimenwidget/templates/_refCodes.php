@@ -66,6 +66,7 @@ $(document).ready(function () {
       $(parent).find('input[id$=\"_code_prefix\"]').val(nvalue);
       $(parent).find('input[id$=\"_code\"]').val(nvalue);
       $(parent).find('input[id$=\"_code_suffix\"]').val(nvalue);
+      $(parent).find('input[id$=\"_deleted\"]').val(1);
       $(parent).hide();
       visibles = $(parent).closest('tbody').find('tr:visible').size();
       if(!visibles)

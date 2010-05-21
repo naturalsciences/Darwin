@@ -347,6 +347,7 @@ class SpecimensForm extends BaseSpecimensForm
   public function addCodes($num, $collectionId=null)
   {
       $options = array('referenced_relation' => 'specimens');
+      $form_options = array();
       if ($collectionId)
       {
         $collection = Doctrine::getTable('Collections')->findOneById($collectionId);
@@ -467,30 +468,6 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function saveEmbeddedForms($con = null, $forms = null)
   {
-    if (null === $forms && $this->getValue('code'))
-    {
-	$value = $this->getValue('newCode');
-	foreach($this->embeddedForms['newCode']->getEmbeddedForms() as $name => $form)
-	{
-	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
-	  {
-	    unset($this->embeddedForms['newCode'][$name]);
-	  }
-          else
-          {
-            $form->getObject()->setRecordId($this->getObject()->getId());
-          }
-	}
-	$value = $this->getValue('Codes');
-	foreach($this->embeddedForms['Codes']->getEmbeddedForms() as $name => $form)
-	{
-	  if (!isset($value[$name]['code_prefix']) && !isset($value[$name]['code']) && !isset($value[$name]['code_suffix']))
-	  {
-	    $form->getObject()->delete();
-	    unset($this->embeddedForms['Codes'][$name]);
-	  }
-	}
-    }
     if (null === $forms && $this->getValue('ident'))
     {
 	$value = $this->getValue('newIdentification');
@@ -550,6 +527,51 @@ class SpecimensForm extends BaseSpecimensForm
               }
             }
           }
+	}
+    }
+    if (null === $forms && $this->getValue('code'))
+    {
+	$value = $this->getValue('newCode');
+	$collectionId = $this->getValue('collection_ref');
+        $collection = Doctrine::getTable('Collections')->findOneById($collectionId);
+	foreach($this->embeddedForms['newCode']->getEmbeddedForms() as $name => $form)
+	{
+	  if(!isset($value[$name]['code']))
+	  {
+	    unset($this->embeddedForms['newCode'][$name]);
+	  }
+	  elseif($value[$name]['code']=='' && $value[$name]['code_prefix']=='' && $value[$name]['code_suffix']=='' && $collection)
+	  {
+	    if($collection->getCodeAutoIncrement())
+            {
+              $form->getObject()->setCode(Doctrine::getTable('Collections')->getAndUpdateLastCode($collectionId));
+	      $form->getObject()->setRecordId($this->getObject()->getId());
+            }
+	    else
+	    {
+	      unset($this->embeddedForms['newCode'][$name]);
+	    }
+	  }
+	  else
+	  {
+            if($value[$name]['code']=='' && $collection)
+            {
+              if($collection->getCodeAutoIncrement())
+              {
+                $form->getObject()->setCode(Doctrine::getTable('Collections')->getAndUpdateLastCode($collectionId));
+              }
+            }
+            $form->getObject()->setRecordId($this->getObject()->getId());
+	  }
+	}
+	$value = $this->getValue('Codes');
+	foreach($this->embeddedForms['Codes']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['code']) || ($value[$name]['code_prefix']=='' && $value[$name]['code']=='' && $value[$name]['code_suffix']==''))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Codes'][$name]);
+	  }
 	}
     }
     return parent::saveEmbeddedForms($con, $forms);

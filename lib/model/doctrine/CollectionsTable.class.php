@@ -65,4 +65,14 @@ class CollectionsTable extends DarwinTable
       return $q->execute();
     }
 
+    public function getAndUpdateLastCode($collectionId)
+    {
+      if (!isset($collectionId))
+	return 0;
+      $conn = Doctrine_Manager::connection();
+      $collId = $conn->quote($collectionId, 'integer');
+      $sql = "UPDATE collections SET code_last_value = code_last_value+1 WHERE id = $collId RETURNING code_last_value";
+      $returnedVal = $conn->fetchOne($sql);
+      return $returnedVal;
+    }
 }

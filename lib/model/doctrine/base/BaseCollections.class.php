@@ -14,6 +14,7 @@
  * @property integer $parent_ref
  * @property string $path
  * @property boolean $code_auto_increment
+ * @property integer $code_last_value
  * @property string $code_prefix
  * @property string $code_prefix_separator
  * @property string $code_suffix
@@ -38,6 +39,7 @@
  * @method integer             getParentRef()                     Returns the current record's "parent_ref" value
  * @method string              getPath()                          Returns the current record's "path" value
  * @method boolean             getCodeAutoIncrement()             Returns the current record's "code_auto_increment" value
+ * @method integer             getCodeLastValue()                 Returns the current record's "code_last_value" value
  * @method string              getCodePrefix()                    Returns the current record's "code_prefix" value
  * @method string              getCodePrefixSeparator()           Returns the current record's "code_prefix_separator" value
  * @method string              getCodeSuffix()                    Returns the current record's "code_suffix" value
@@ -61,6 +63,7 @@
  * @method Collections         setParentRef()                     Sets the current record's "parent_ref" value
  * @method Collections         setPath()                          Sets the current record's "path" value
  * @method Collections         setCodeAutoIncrement()             Sets the current record's "code_auto_increment" value
+ * @method Collections         setCodeLastValue()                 Sets the current record's "code_last_value" value
  * @method Collections         setCodePrefix()                    Sets the current record's "code_prefix" value
  * @method Collections         setCodePrefixSeparator()           Sets the current record's "code_prefix_separator" value
  * @method Collections         setCodeSuffix()                    Sets the current record's "code_suffix" value
@@ -130,6 +133,11 @@ abstract class BaseCollections extends sfDoctrineRecord
              'type' => 'boolean',
              'notnull' => true,
              'default' => false,
+             ));
+        $this->hasColumn('code_last_value', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'default' => 0,
              ));
         $this->hasColumn('code_prefix', 'string', null, array(
              'type' => 'string',
