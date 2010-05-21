@@ -34,6 +34,7 @@ ul.main_menu > li
 {
 	width: 171px;
 	border-left:1px solid white;
+	z-index: 500;
 }
 
 ul.main_menu > li > a[href]

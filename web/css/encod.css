@@ -53,7 +53,7 @@
 
 .tabs li.selected#tab_3
 {
-	height: 15px;
+	height: 20px;
 	z-index:5;
 }
 
@@ -155,7 +155,36 @@ td >.link_catalogue
 
 .add_item_button, .change_item_button
 {
- 
+ font-size:x-small;
 }
 
+.head_row th.rowspan
+{
+  border:1px solid #F3F4F3;
+  padding-left: 0.7em;
+}
+
+tr.head_row th
+{
+  border-bottom: 1px solid #C1CF56;
+  padding-top: 1em;
+}
+.parts_grouped tr td
+{
+  padding-bottom:0.5em;
+}
+.parts_grouped
+{
+  width:100%;
+}
+
+.parts_grouped tbody
+{
+  border:10px solid white;
+  background-color:#F3F4F3;
+}
+.part_detail_slide
+{
+  margin-left: 3em;
+}
 
