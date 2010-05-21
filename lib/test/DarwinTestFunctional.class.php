@@ -31,6 +31,8 @@ class DarwinTestFunctional extends sfTestFunctional
     $conn->exec("SELECT setval('gtu_id_seq',1)");
     $conn->exec("SELECT nextval('identifications_id_seq')");
     $conn->exec("SELECT setval('identifications_id_seq',10000)");
+    $conn->exec("SELECT nextval('specimens_id_seq')");
+    $conn->exec("SELECT setval('specimens_id_seq',100)");
 
   }
 

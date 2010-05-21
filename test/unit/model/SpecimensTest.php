@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(7, new lime_output_color());
+$t = new lime_test(8, new lime_output_color());
 
 $toDate = new FuzzyDateTime('2009/12/31', 32);
 
@@ -31,8 +31,9 @@ $t->is( $specimens->count() , 5, 'New "Vertebrate" specimen inserted');
 
 $t->is( $specimens[1]->getAcquisitionDateMasked() , '<em>31/12</em>/2009', 'Correct date masked: "<em>31/12</em>/2009"');
 $t->is( $specimens[1]->getAcquisitionDate() , array('year'=>2009, 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
-$t->is( $specimens[1]->getName(), '[VERT. 12457]', 'This specimen has the formated name: "[VERT. 12457]"');
-$t->is( $specimens[4]->Taxonomy->getNameWithFormat(), 'Falco Peregrinus Tunstall, 1771', 'The previous specimen has the formated name: "Falco Peregrinus Tunstall, 1771"');
+$t->is( $specimens[1]->getName(), '-', 'This specimen has the formated name: "-"');
+$t->is( $specimens[4]->getName(), '[TEST-12345-AFTER] [TEST-54321-AFTER]', 'Last specimen has the formated name: "[TEST-12345-AFTER] [TEST-54321-AFTER]"');
+$t->is( $specimens[4]->Taxonomy->getNameWithFormat(), 'Falco Peregrinus Tunstall, 1771', 'Last specimen has the formated name: "Falco Peregrinus Tunstall, 1771"');
 $specimens[4]->Taxonomy->setExtinct(true);
 $specimens[4]->Taxonomy->save();
 $t->is( $specimens[4]->Taxonomy->getNameWithFormat(), 'Falco Peregrinus Tunstall, 1771 †', 'Now this specimen with a taxon definition set at extinct has the formated name: "Falco Peregrinus Tunstall, 1771 †"');
