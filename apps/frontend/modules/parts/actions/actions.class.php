@@ -35,4 +35,12 @@ class partsActions extends DarwinActions
 	$form->addValue($number);
 	return $this->renderPartial('partform',array('form' => $form['newVal'][$number]));
   }
+
+  public function executeDetails(sfWebRequest $request)
+  {
+	$this->parts = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));
+	$this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($this->parts->getSpecimenIndividualRef());
+	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
+
+  }
 }

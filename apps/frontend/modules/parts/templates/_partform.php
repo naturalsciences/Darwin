@@ -10,6 +10,10 @@
 	<th rowspan="6" class="widget_row_delete">
 	  <?php // echo $form->renderHiddenFields();?>
       <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?>
+	  <?php $val = $form->getValue();
+		if($val['id']):?>
+		<?php echo link_to(image_tag('slide_right_enable.png'),'parts/details?id='.$val['id']);?>
+	  <?php endif;?>
     </th>
   </tr>
   <tr>

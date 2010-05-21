@@ -52,4 +52,4 @@ $(document).ready(function ()
 			  <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>
 			</p>
 		</form>
-<?php include_partial('specAfterTab');?>
+<?php include_partial('specAfterTab', array('specimen'=> $form->getObject()) );?>
