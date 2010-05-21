@@ -48,6 +48,21 @@
 	padding-top: 30px;
 	padding-left:21px;
 	padding-right: 21px;
+	background-color:white;
+}
+
+.tabs li.selected#tab_3
+{
+	height: 15px;
+	z-index:5;
+}
+
+#tab_3
+{
+  margin-top: 8px;
+  padding-top: 5px;
+  position:relative; 
+  z-index:-20;
 }
 
 /**** WIDGET ENCODING ****/
