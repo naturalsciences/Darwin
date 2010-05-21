@@ -7,7 +7,7 @@
 	<?php elseif($individual->isNew() ):?>
 	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'specimen/edit?id='.$specimen->getId());?>
 	<?php elseif($part->isNew()):?>
-	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'specimen_individuals/edit?id='.$specimen->getId());?>
+	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'individuals/edit?id='.$specimen->getId());?>
 	<?php else:?>
 	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'parts/edit?id='.$individual->getId());?>
 	<?php endif;?> 
@@ -24,28 +24,28 @@
 			  <?php elseif(! isset($individual) ):?>
 
 				<li class="enabled selected" id="tab_0"><?php echo $specimen->getName();?></li>
-				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals'), 'specimen_individuals/edit?id='.$specimen->getId());?></li>
+				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals'), 'individuals/edit?id='.$specimen->getId());?></li>
 				<li class="disabled" id="tab_2"><?php echo __('Parts');?></li>
 				<li class="disabled" id="tab_3"><?php echo __('Parts Details');?></li>
 
 			  <?php elseif($individual->isNew() ):?>
 
 				<li class="enabled" id="tab_0"><?php echo link_to($specimen->getName(), 'specimen/edit?id='.$specimen->getId());?></li>
-				<li class="enabled selected" id="tab_1"> &lt; <?php echo __('Individuals');?> &lt; </li>
+				<li class="enabled selected" id="tab_1"> &lt; <?php echo __('Individuals');?> &gt; </li>
 				<li class="disabled" id="tab_2"><?php echo __('Parts');?></li>
 				<li class="disabled" id="tab_3"><?php echo __('Parts Details');?></li>
 
 			  <?php elseif($part->isNew()):?>
 
 				<li class="enabled" id="tab_0"><?php echo link_to($specimen->getName(), 'specimen/edit?id='.$specimen->getId());?></li>
-				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals'), 'specimen_individuals/edit?id='.$specimen->getId());?></li>
+				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals'), 'individuals/edit?id='.$specimen->getId());?></li>
 				<li class="enabled selected" id="tab_2"><?php echo __('Parts');?></li>
 				<li class="disabled" id="tab_3"><?php echo __('Parts Details');?></li>
 
 			  <?php else:?>
 
 				<li class="enabled" id="tab_0"><?php echo link_to($specimen->getName(), 'specimen/edit?id='.$specimen->getId());?></li>
-				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals'), 'specimen_individuals/edit?id='.$specimen->getId());?></li>
+				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals'), 'individuals/edit?id='.$specimen->getId());?></li>
 				<li class="enabled" id="tab_2"><?php echo link_to(__('Parts'),'parts/edit?id='.$individual->getId());?></li>
 				<li class="enabled selected" id="tab_3"><?php echo __('Parts Details');?></li>
 			  <?php endif;?>
