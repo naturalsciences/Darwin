@@ -56,6 +56,7 @@ abstract class BaseUsersComm extends sfDoctrineRecord
         $this->hasColumn('tag', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
+             'default' => '',
              ));
     }
 

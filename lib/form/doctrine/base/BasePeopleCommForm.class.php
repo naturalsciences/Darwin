@@ -26,7 +26,7 @@ abstract class BasePeopleCommForm extends BaseFormDoctrine
       'id'              => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'person_user_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('People'))),
       'comm_type'       => new sfValidatorString(array('required' => false)),
-      'tag'             => new sfValidatorString(),
+      'tag'             => new sfValidatorString(array('required' => false)),
       'entry'           => new sfValidatorString(),
     ));
 
