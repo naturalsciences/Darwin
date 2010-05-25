@@ -591,7 +591,7 @@ create table people_comm
        (
         id integer not null default nextval('people_comm_id_seq'),
         comm_type varchar default 'phone/fax' not null,
-        tag varchar not null,
+        tag varchar not null default '',
         constraint pk_people_comm primary key (id),
         constraint fk_people_comm_people foreign key (person_user_ref) references people(id) on delete cascade
        )
@@ -609,7 +609,7 @@ create sequence people_addresses_id_seq;
 create table people_addresses
        (
         id integer not null default nextval('people_addresses_id_seq'),
-        tag varchar not null,
+        tag varchar not null default '',
         constraint pk_people_addresses primary key (id),
         constraint fk_people_addresses_people foreign key (person_user_ref) references people(id) on delete cascade
        )
@@ -633,7 +633,7 @@ create table users_comm
        (
         id integer not null default nextval('users_comm_id_seq'),
         comm_type varchar not null default 'phone/fax',
-        tag varchar not null,
+        tag varchar not null default '',
         constraint pk_users_comm primary key (id),
         constraint fk_users_comm_users foreign key (person_user_ref) references users(id) on delete cascade
        )
@@ -652,7 +652,7 @@ create table users_addresses
        (
         id integer not null default nextval('users_addresses_id_seq'),
         organization_unit varchar,
-        tag varchar not null,
+        tag varchar not null default '',
         constraint pk_users_addresses primary key (id),
         constraint fk_users_addresses_users foreign key (person_user_ref) references users(id) on delete cascade
        )
