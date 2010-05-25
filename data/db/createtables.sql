@@ -740,6 +740,7 @@ create table collections
         parent_ref integer,
         path varchar not null,
         code_auto_increment boolean not null default false,
+        code_last_value integer not null default 0,
         code_prefix varchar,
         code_prefix_separator varchar,
         code_suffix varchar,
@@ -761,6 +762,7 @@ comment on column collections.parent_ref is 'Recursive reference to collection t
 comment on column collections.path is 'Descriptive path for collection hierarchy, each level separated by a /';
 comment on column collections.main_manager_ref is 'Reference of collection main manager - id field of users table';
 comment on column collections.code_auto_increment is 'Flag telling if the numerical part of a code has to be incremented or not';
+comment on column collections.code_last_value is 'Value of the last numeric code given in this collection when auto increment is/was activated';
 comment on column collections.code_prefix is 'Default code prefix to be used for specimens encoded in this collection';
 comment on column collections.code_prefix_separator is 'Character chain used to separate code prefix from code core';
 comment on column collections.code_suffix is 'Default code suffix to be used for specimens encoded in this collection';
