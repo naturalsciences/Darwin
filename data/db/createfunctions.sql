@@ -5636,15 +5636,23 @@ AS $$
 DECLARE
 	are_not_author boolean;
 BEGIN
-	IF NEW.people_type = 'authors' THEN
+	IF NEW.people_type = 'author' THEN
 	
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id=NEW.people_ref;
 		
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Author must be defined as author.';
 		END IF;
+
+	ELSIF NEW.people_type = 'identifier' THEN
 		
-	ELSIF NEW.people_type = 'experts' THEN
+		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 4)=0 AND id=NEW.people_ref;
+
+                IF are_not_author THEN
+                        RAISE EXCEPTION 'Experts must be defined as identifier.';
+                END IF;
+		
+	ELSIF NEW.people_type = 'expert' THEN
 	
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 8)=0 AND id=NEW.people_ref;
 		
