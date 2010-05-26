@@ -914,7 +914,7 @@ tbody.spec_ident_identifiers_data tr td
   display:none !important;
 }
 
-.edit_mode
+.edit_mode, .edit_mode a
 {
   color:#C1CF56;
 }

@@ -12,9 +12,8 @@ class MyPreferencesForm extends BaseMyPreferencesForm
   public function configure()
   {
     $this->useFields(array('title_perso','user_ref','group_name', 'category'));
-    unset($this['id']);
     $w = $this->getObject() ;
-    if ($this->options['level'] > 4)
+    if ($this->options['level'] > Users::MANAGER)
 	    $choices = array('unused'=> '', 'is_available' => '', 'visible' => '', 'opened' => '') ;
     else
 	    $choices = array('is_available' => '', 'visible' => '', 'opened' => '') ;

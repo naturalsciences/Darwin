@@ -2,7 +2,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">
-  <h1 class="edit_mode"><?php echo __(sprintf("List of widgets available for %s", $user->getFormatedName())); ?></h1>
+  <h1 class="edit_mode"><?php echo __(sprintf("List of widgets available for <a href='%s'>%s</a>", url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()),$user->getFormatedName())); ?></h1>
   <form class="edition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <table>
   <thead class="title_widget">
@@ -50,8 +50,8 @@
   <?php endforeach ; ?>
 <tfoot>
   <tr>
-    <td colspan="5">
-      <a href="<?php echo url_for('@homepage') ?>"><?php echo __('Cancel');?></a>
+    <td colspan="5"> 
+      <a href="<?php echo url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()) ?>"><?php echo __('Cancel');?></a>
       <input id="reset" type="reset" value="<?php echo __('Reset');?>" />
       <input id="submit" type="submit" value="<?php echo __('Save');?>" />
     </td>
