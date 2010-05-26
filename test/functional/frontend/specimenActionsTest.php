@@ -83,7 +83,7 @@ $browser->
     checkElement('.pager li a span.nav_arrow', 0)->
     checkElement('div.paging_info table td:nth-child(2)', 1)->
     checkElement('div.paging_info table td:last-child select[id="searchSpecimen_rec_per_page"]', 1)->
-    checkElement('table.results tbody tr', 3)->
+    checkElement('table.results tbody tr', 4)->
     checkElement('table.results tbody tr td:nth-child(2)', 'Animalia')->
     checkElement('table.results thead th:nth-child(2) a.sort span.order_sign_down')->
   end()->  
