@@ -19,8 +19,7 @@ class ProfileForm extends BaseUsersForm
       $this['approval_level'],
       $this['birth_date_mask'],
       $this['is_physical'],
-      $this['db_user_type'],
-      $this['people_id']
+      $this['db_user_type']
     );
     if ($this->options['is_physical'])
     {
@@ -66,7 +65,13 @@ class ProfileForm extends BaseUsersForm
     $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
     $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
     $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
-    
+    $this->widgetSchema['people_id'] = new widgetFormButtonRef(array(
+	  'model' => 'People',
+	  'method' => 'getFormatedName',
+	  'link_url' => 'institution/choose',
+	  'nullable' => true,
+	  'box_title' => $this->getI18N()->__('Choose Yourself'),
+	));    
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorSchemaCompare('password', '==', 'password_again',

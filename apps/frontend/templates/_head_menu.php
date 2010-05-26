@@ -40,6 +40,7 @@
                 <li><?php echo link_to(__('Collections'),'collection/index');?></li>
             </ul>
         </li>
+        <?php if($sf_user->getDbUserType() >= Users::ENCODER) : ?>
         <li>
             <a href="#"><?php echo __('Add');?></a>
             <ul>
@@ -59,14 +60,20 @@
                     </ul>
                 </li>
                 <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
+                <?php if($sf_user->getDbUserType() >= Users::MANAGER) : ?>
                 <li><?php echo link_to(__('Collections'),'collection/new');?></li>
+                <?php endif ?>
             </ul>
         </li>
+        <?php endif ?>
+        <?php if($sf_user->getDbUserType() >= Users::MANAGER) : ?>
         <li>
             <a href=""><?php echo __('Administration');?></a>
             <ul>
-                <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>
+                <?php if($sf_user->getDbUserType() >= Users::ADMIN) : ?>
+                <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>                
                 <li><?php echo link_to('Big Brother','bigbro/index');?></li>
+                <?php endif ?>
                 <li>
                 	<a href="#"><?php echo __('User');?></a>
                 	<ul>
@@ -76,6 +83,7 @@
                 </li>
             </ul>
         </li>
+        <?php endif ?>
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>
     </ul>
 </div>

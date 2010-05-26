@@ -86,17 +86,15 @@ class MyPreferencesTable extends DarwinTable
 	{
 		$data = new Doctrine_Parser_Yml();
 		$array = $data->loadData($file);
-		foreach ($array as $widget => $array_values)
-		{
-			if($array_values['mandatory']) continue ; //mandatory widget have already at true, and we don't want it could be changed
-			$q = Doctrine_Query::create()
-			  ->update('MyPreferences p') 
-			  ->set('p.is_available','?', $availability) 
-			  ->where('p.group_name = ?',$array_values['group_name']);
-
-			  $this->addCategoryUser($q, $array_values['category'])
-				->execute();
-		}
+		$q = Doctrine_Query::create()
+		  ->update('MyPreferences p') 
+		  ->set('p.is_available','?', $availability) 
+		  ->where('p.user_ref = ?', $this->user_ref) ;
+		$list_group_name = array() ;
+		foreach ($array as $widget => $array_values) 
+                 $list_group_name[] = $array_values['group_name'] ;
+		$q->wherein('p.group_name',$list_group_name)
+		  ->execute() ;	
 	}  	
   }
 

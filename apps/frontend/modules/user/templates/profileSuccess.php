@@ -8,6 +8,21 @@
   <table>
   <tbody>
   <?php include_partial('profile', array('form' => $form)) ?>
+  <?php if ($sf_user->getAttribute('db_user_type') > Users::ENCODER) : ?>
+  <tr class="trusted_user_links">
+    <td colspan="2">
+	<a href="#" class="display_value">> <?php echo __('Show link with '.(isset($form['title'])?'people':'institution'));?> <</a>
+	<a href="#" class="hide_value hidden">< <?php echo __('Hide link with '.(isset($form['title'])?'people':'institution'));?>  ></a>
+    </td>
+  </tr>
+  <tr class="trusted_user hidden">
+    <th><?php echo $form['people_id']->renderLabel('Reference to a '.isset($form['title'])?'People':'Institution') ?></th>
+    <td class="trust_level_2">
+      <?php echo $form['people_id']->renderError() ?>
+      <?php echo $form['people_id'] ?>
+    </td>
+  </tr>
+  <?php endif ?>
   <tr class="trusted_user_links">
     <td colspan="2">
 	<a id="submit" href="<?php echo url_for('user/widget') ?>"><?php echo __('Edit your widgets');?></a>

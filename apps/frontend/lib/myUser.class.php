@@ -6,4 +6,8 @@ class myUser extends sfBasicSecurityUser
   {
     return $this->getAttribute('db_user_id');
   }
+  public function getDbUserType()
+  {
+    return $this->getAttribute('db_user_type');
+  }
 }
