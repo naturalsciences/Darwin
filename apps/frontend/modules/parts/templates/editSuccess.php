@@ -1,6 +1,6 @@
 <?php slot('title', __('Edit Parts'));  ?>
 
-<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'part' => new SpecimenParts(),'form'=> $form) );?>
+<?php include_partial('specimen/specBeforeTab', array('mode'=>'edit', 'specimen' => $specimen, 'individual'=> $individual, 'part' => new SpecimenParts(),'form'=> $form) );?>
 
 <form method="post" action="<?php echo url_for('parts/edit?id='.$individual->getId());?>">
 
