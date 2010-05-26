@@ -159,10 +159,9 @@ $browser->
   end()->
 
   with('form')->begin()->
-    hasErrors(3)->
+    hasErrors(2)->
     isError('locality', 'required')->
     isError('country', 'required')->
-    isError('tag', 'required')->
   end()->
 
   click('Save', array('people_addresses' => array(

@@ -106,7 +106,7 @@ $browser->
   with('response')->
   begin()->
     isStatusCode(200)->
-    checkElement('title','Edit Specimens')->
+    checkElement('title','Edit Specimen')->
     checkElement('.board_col',2)->
     checkElement('.board_col:first .widget',5)->
     checkElement('.board_col:last .widget',4)->

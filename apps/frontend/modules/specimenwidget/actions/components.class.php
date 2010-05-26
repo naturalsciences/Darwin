@@ -114,7 +114,10 @@ class specimenwidgetComponents extends sfComponents
   {}
 
   public function executeComments()
-  {
+  {}
 
-  }
+  public function executeInsurances()
+  {}
+  public function executeCataloguePeople()
+  {}
 }

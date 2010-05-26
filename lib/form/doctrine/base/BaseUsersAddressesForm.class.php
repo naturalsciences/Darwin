@@ -33,7 +33,7 @@ abstract class BaseUsersAddressesForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'                => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'person_user_ref'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
-      'tag'               => new sfValidatorString(),
+      'tag'               => new sfValidatorString(array('required' => false)),
       'entry'             => new sfValidatorString(array('required' => false)),
       'organization_unit' => new sfValidatorString(array('required' => false)),
       'person_user_role'  => new sfValidatorString(array('required' => false)),

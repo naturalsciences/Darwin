@@ -52,6 +52,7 @@ abstract class BasePeopleComm extends sfDoctrineRecord
         $this->hasColumn('tag', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
+             'default' => '',
              ));
         $this->hasColumn('entry', 'string', null, array(
              'type' => 'string',

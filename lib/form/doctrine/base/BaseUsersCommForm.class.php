@@ -27,7 +27,7 @@ abstract class BaseUsersCommForm extends BaseFormDoctrine
       'person_user_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Users'))),
       'comm_type'       => new sfValidatorString(array('required' => false)),
       'entry'           => new sfValidatorString(),
-      'tag'             => new sfValidatorString(),
+      'tag'             => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_comm[%s]');
