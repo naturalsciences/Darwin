@@ -4,11 +4,19 @@
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <title><?php include_slot('title') ?></title>
-    <?php //include_title() ?>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body>
     <?php include_partial('global/head_menu') ?>
     <?php echo $sf_content ?>
+
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript">
+onload=function(){
+var e=document.getElementById("refreshed");
+if(e.value=="no")e.value="yes";
+else{e.value="no";location.reload();}
+}
+</script>
   </body>
 </html>

@@ -50,6 +50,7 @@
 	padding-right: 21px;
 	padding-bottom: 20px;
 	background-color:white;
+	min-height:  300px;
 }
 
 .tabs li.selected#tab_3
