@@ -10,7 +10,8 @@
 class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 {
   public function configure()
-  {   
+  { 
+    $this->widgetSchema['specimen_ref'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['type'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctTypes',
@@ -40,22 +41,30 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     ));
     $this->widgetSchema['stage'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
-        'table_method' => 'getDistinctTypes',
-        'method' => 'getType',
-        'key_method' => 'getType',
+        'table_method' => 'getDistinctStages',
+        'method' => 'getStage',
+        'key_method' => 'getStage',
         'add_empty' => false,
         'change_label' => '',
         'add_label' => '',
     ));
-    $this->widgetSchema['type'] = new widgetFormSelectComplete(array(
+    $this->widgetSchema['social_status'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
-        'table_method' => 'getDistinctTypes',
-        'method' => 'getType',
-        'key_method' => 'getType',
+        'table_method' => 'getDistinctSocialStatuses',
+        'method' => 'getSocialStatus',
+        'key_method' => 'getSocialStatus',
         'add_empty' => false,
         'change_label' => '',
         'add_label' => '',
     ));
-    
+    $this->widgetSchema['rock_form'] = new widgetFormSelectComplete(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctRockForms',
+        'method' => 'getRockForm',
+        'key_method' => 'getRockForm',
+        'add_empty' => false,
+        'change_label' => '',
+        'add_label' => '',
+    ));
   }
 }
