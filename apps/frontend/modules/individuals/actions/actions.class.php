@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Parts actions.
+ * Individuals actions.
  *
  * @package    darwin
- * @subpackage parts
+ * @subpackage individuals
  * @author     DB team <collections@naturalsciences.be>
  */
 class individualsActions extends DarwinActions

@@ -2,7 +2,7 @@
 
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> new SpecimenIndividuals()));?>
 
-<h1> Hello World</h1>
+<h1>Hello World</h1>
 
 <ul>
 <?php foreach($individuals as $i => $individual):?>

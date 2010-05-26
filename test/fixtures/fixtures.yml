@@ -317,6 +317,7 @@ Specimens:
         HostSpecimen: sp2
         HostTaxon: ta2
         host_relationship: Symbiosis
+        Taxonomy: ta5
 
 Codes:
     cosp1:
