@@ -1678,6 +1678,7 @@ create sequence specimens_id_seq;
 create table specimens
        (
         id integer not null default nextval('specimens_id_seq'),
+        category varchar not null default 'physical',
         collection_ref integer not null default 0,
         expedition_ref integer not null default 0,
         gtu_ref integer not null default 0,
@@ -1738,6 +1739,7 @@ comment on column specimens.lithology_ref is 'Reference of a rock classification
 comment on column specimens.mineral_ref is 'Reference of a mineral classification unit associated to the specimen encoded - id field of mineralogy table';
 comment on column specimens.host_taxon_ref is 'Reference of taxon definition defining the host which holds the current specimen - id field of taxonomy table';
 comment on column specimens.ig_ref is 'Reference of ig number this specimen has been associated to';
+comment on column specimens.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 
 create sequence codes_id_seq;
 
@@ -1833,7 +1835,6 @@ create table specimen_parts
         specimen_status varchar not null default 'good state',
         specimen_part_count_min integer not null default 1,
         specimen_part_count_max integer not null default 1,
-        category varchar not null default 'physical',
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
@@ -1859,7 +1860,6 @@ comment on column specimen_parts.specimen_status is 'Specimen status: good state
 comment on column specimen_parts.specimen_part_count_min is 'Minimum number of parts/individuals';
 comment on column specimen_parts.specimen_part_count_max is 'Maximum number of parts/individuals';
 comment on column specimen_parts.complete is 'Flag telling if part/specimen is complete or not';
-comment on column specimen_parts.category is 'Type of specimen encoded: a physical object stored in collections, an observation, a figurate specimen,...';
 
 create sequence insurances_id_seq;
 
