@@ -1,21 +1,15 @@
 <?php slot('title', __('Edit Individuals'));  ?>
 
-<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> (count($individuals))?$individuals[0]:new SpecimenIndividuals(), 'mode'=>'edit'));?>
+<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual->getObject(), 'mode'=>'individual_edit'));?>
 
 <table>
-  <thead style="<?php echo (count($individuals))?'':'display: none;';?>">
-    <tr>
-    </tr>
-  </thead>
   <tbody>
-    <?php foreach($individuals as $i => $individual):?>
-      <tr>
-	<td>
-	  <?php echo $individual->getType();?> - <?php echo $individual->getSex();?>
-	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/edit?id='.$individual->getId(), array('class'=>'part_detail_slide'));?>
-	</td>
-      </tr>
-    <?php endforeach;?>
+    <tr>
+      <td>
+	<?php echo $individual['type']->render();?> - <?php echo $individual['sex']->render();?>
+	<?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getObject()->getId(), array('class'=>'part_detail_slide'));?>
+      </td>
+    </tr>
   </tbody>
 </table>
 

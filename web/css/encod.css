@@ -53,20 +53,6 @@
 	min-height:  300px;
 }
 
-.tabs li.selected#tab_3
-{
-	height: 20px;
-	z-index:5;
-}
-
-#tab_3
-{
-  margin-top: 8px;
-  padding-top: 5px;
-  position:relative; 
-  z-index:-20;
-}
-
 /**** WIDGET ENCODING ****/
 .encod_screen .widget .widget_top_bar
 {

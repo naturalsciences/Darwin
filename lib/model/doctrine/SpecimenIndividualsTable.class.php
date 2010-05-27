@@ -4,5 +4,57 @@
  */
 class SpecimenIndividualsTable extends DarwinTable
 {
+    /**
+    * Get distinct Types
+    * @return Doctrine_collection with distinct "types" as column
+    */
+    public function getDistinctTypes()
+    {
+      return $this->createDistinct('SpecimenIndividuals', 'type', 'type')->execute();
+    }
 
+    /**
+    * Get distinct Sexes
+    * @return Doctrine_collection with distinct "sexes" as column
+    */
+    public function getDistinctSexes()
+    {
+      return $this->createDistinct('SpecimenIndividuals', 'sex', 'sex')->execute();
+    }
+
+    /**
+    * Get distinct States
+    * @return Doctrine_collection with distinct "states" as column
+    */
+    public function getDistinctStates()
+    {
+      return $this->createDistinct('SpecimenIndividuals', 'state', 'state')->execute();
+    }
+
+    /**
+    * Get distinct Stages
+    * @return Doctrine_collection with distinct "stages" as column
+    */
+    public function getDistinctStages()
+    {
+      return $this->createDistinct('SpecimenIndividuals', 'stage', 'stage')->execute();
+    }
+
+    /**
+    * Get distinct Social statuses
+    * @return Doctrine_collection with distinct "social statuses" as column
+    */
+    public function getDistinctSocialStatuses()
+    {
+      return $this->createDistinct('SpecimenIndividuals', 'social_status', 'social_status')->execute();
+    }
+
+    /**
+    * Get distinct Rock forms
+    * @return Doctrine_collection with distinct "rock forms" as column
+    */
+    public function getDistinctRockForms()
+    {
+      return $this->createDistinct('SpecimenIndividuals', 'rock_form', 'rock_form')->execute();
+    }
 }
