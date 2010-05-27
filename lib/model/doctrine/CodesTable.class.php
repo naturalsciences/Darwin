@@ -41,20 +41,21 @@ class CodesTable extends DarwinTable
     return $response;
   }
 
-  public function getCodesRelated($table='specimens', $specId)
+  public function getCodesRelated($table='specimens', $specId = null)
   {
-    $q = Doctrine_Query::create()->
-         from('Codes')->
-         where('referenced_relation = ?', $table)->
-         andWhere('record_id = ?', $specId)->
-         orderBy('code_category ASC, code_date DESC, full_code_order_by ASC');
-    return $q->execute();
+	return $this->getCodesRelatedArray($table, $specId);
   }
 
-  public function getCodesRelatedArray($table='specimens', $specIds)
+  /**
+  * Get all codes related to an Array of id
+  * @param string $table Name of the table referenced
+  * @param array $specIds Array of id of related record
+  * @return Doctrine_Collection Collection of codes
+  */
+  public function getCodesRelatedArray($table='specimens', $specIds = array())
   {
     if(!is_array($specIds))
-      $specIds = array($specIds=>$specIds);
+      $specIds = array($specIds);
     $q = Doctrine_Query::create()->
          from('Codes')->
          where('referenced_relation = ?', $table)->

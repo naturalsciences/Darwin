@@ -123,4 +123,18 @@ class SpecimenPartsTable extends DarwinTable
     return array_merge(array(''=>''), $results);
   }
 
+  /**
+  * Get all parts for an individual with some details info
+  * @param int $individual Id of the individual
+  * @return Doctrine_Collection of parts
+  */
+  public function findForIndividual($individual)
+  {
+	$q = Doctrine_Query::create()
+		  ->from('SpecimenParts p')
+		  ->andWhere('p.specimen_individual_ref = ?',$individual)
+		  ->orderBy('p.specimen_part ASC, p.room ASC, p.row ASC, p.shelf ASC');
+	return $q->execute();
+  }
+
 }
