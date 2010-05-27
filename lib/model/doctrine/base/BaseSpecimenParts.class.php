@@ -24,7 +24,6 @@
  * @property string $specimen_status
  * @property integer $specimen_part_count_min
  * @property integer $specimen_part_count_max
- * @property string $category
  * @property SpecimenIndividuals $Individual
  * 
  * @method integer             getId()                      Returns the current record's "id" value
@@ -46,7 +45,6 @@
  * @method string              getSpecimenStatus()          Returns the current record's "specimen_status" value
  * @method integer             getSpecimenPartCountMin()    Returns the current record's "specimen_part_count_min" value
  * @method integer             getSpecimenPartCountMax()    Returns the current record's "specimen_part_count_max" value
- * @method string              getCategory()                Returns the current record's "category" value
  * @method SpecimenIndividuals getIndividual()              Returns the current record's "Individual" value
  * @method SpecimenParts       setId()                      Sets the current record's "id" value
  * @method SpecimenParts       setSpecimenIndividualRef()   Sets the current record's "specimen_individual_ref" value
@@ -67,7 +65,6 @@
  * @method SpecimenParts       setSpecimenStatus()          Sets the current record's "specimen_status" value
  * @method SpecimenParts       setSpecimenPartCountMin()    Sets the current record's "specimen_part_count_min" value
  * @method SpecimenParts       setSpecimenPartCountMax()    Sets the current record's "specimen_part_count_max" value
- * @method SpecimenParts       setCategory()                Sets the current record's "category" value
  * @method SpecimenParts       setIndividual()              Sets the current record's "Individual" value
  * 
  * @package    darwin
@@ -159,10 +156,6 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'default' => 1,
-             ));
-        $this->hasColumn('category', 'string', null, array(
-             'type' => 'string',
-             'default' => 'physical',
              ));
     }
 

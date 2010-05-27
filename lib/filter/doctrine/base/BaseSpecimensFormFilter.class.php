@@ -13,6 +13,7 @@ abstract class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'category'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'collection_ref'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'add_empty' => true)),
       'expedition_ref'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Expeditions'), 'add_empty' => true)),
       'gtu_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => true)),
@@ -37,6 +38,7 @@ abstract class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
+      'category'              => new sfValidatorPass(array('required' => false)),
       'collection_ref'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Collections'), 'column' => 'id')),
       'expedition_ref'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Expeditions'), 'column' => 'id')),
       'gtu_ref'               => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Gtu'), 'column' => 'id')),
@@ -78,6 +80,7 @@ abstract class BaseSpecimensFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                    => 'Number',
+      'category'              => 'Text',
       'collection_ref'        => 'ForeignKey',
       'expedition_ref'        => 'ForeignKey',
       'gtu_ref'               => 'ForeignKey',

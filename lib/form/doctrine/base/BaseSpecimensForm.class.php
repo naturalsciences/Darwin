@@ -16,6 +16,7 @@ abstract class BaseSpecimensForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
+      'category'              => new sfWidgetFormTextarea(),
       'collection_ref'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'add_empty' => false)),
       'expedition_ref'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Expeditions'), 'add_empty' => true)),
       'gtu_ref'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'add_empty' => true)),
@@ -41,6 +42,7 @@ abstract class BaseSpecimensForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'category'              => new sfValidatorString(array('required' => false)),
       'collection_ref'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'))),
       'expedition_ref'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Expeditions'), 'required' => false)),
       'gtu_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Gtu'), 'required' => false)),

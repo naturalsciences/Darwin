@@ -31,7 +31,6 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
       'specimen_status'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'specimen_part_count_min' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'specimen_part_count_max' => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'category'                => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -53,7 +52,6 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
       'specimen_status'         => new sfValidatorPass(array('required' => false)),
       'specimen_part_count_min' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'specimen_part_count_max' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'category'                => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimen_parts_filters[%s]');
@@ -92,7 +90,6 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
       'specimen_status'         => 'Text',
       'specimen_part_count_min' => 'Number',
       'specimen_part_count_max' => 'Number',
-      'category'                => 'Text',
     );
   }
 }

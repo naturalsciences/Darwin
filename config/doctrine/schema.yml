@@ -796,6 +796,7 @@ Igs:
 Specimens:
     columns:
         id: { type: integer, primary: true, autoincrement: true },
+        category: { type: string, notnull: true, default: physical },
         collection_ref: { type: integer, notnull: true }
         expedition_ref: { type: integer, default: 0}
         gtu_ref: { type: integer, default: 0}
@@ -911,7 +912,6 @@ SpecimenParts:
         specimen_status: { type: string, notnull: true, default: 'good state'}
         specimen_part_count_min: { type: integer, notnull: true, default:1}
         specimen_part_count_max: { type: integer, notnull: true, default:1}
-        category: { type: string, default: physical}
     relations:
         Individual:
             class: SpecimenIndividuals
