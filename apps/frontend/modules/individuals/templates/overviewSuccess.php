@@ -20,4 +20,3 @@
 </table>
 
 <?php include_partial('specimen/specAfterTab');?>
-
