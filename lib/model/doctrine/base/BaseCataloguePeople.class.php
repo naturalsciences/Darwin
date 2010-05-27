@@ -57,7 +57,7 @@ abstract class BaseCataloguePeople extends sfDoctrineRecord
         $this->hasColumn('people_type', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => 'authors',
+             'default' => 'author',
              ));
         $this->hasColumn('people_sub_type', 'string', null, array(
              'type' => 'string',

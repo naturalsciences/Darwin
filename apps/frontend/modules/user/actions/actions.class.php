@@ -38,7 +38,7 @@ class userActions extends DarwinActions
 		  setUserRef($user_to_edit->getId())->
 		  setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
 
-		//return $this->redirect('user/edit?id='.$user_to_edit->getId());
+		return $this->redirect('user/edit?id='.$user_to_edit->getId());
 	  }
     }
 
