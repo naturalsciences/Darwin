@@ -48,7 +48,7 @@ CataloguePeople:
         id: { type: integer, primary: true, autoincrement: true }
         referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
-        people_type: {  type: string, notnull: true , default: authors }
+        people_type: {  type: string, notnull: true , default: author }
         people_sub_type: {  type: string, notnull: true }
         order_by: { type: integer, notnull: true, default: 1}
         people_ref: { type: integer, notnull: true}
