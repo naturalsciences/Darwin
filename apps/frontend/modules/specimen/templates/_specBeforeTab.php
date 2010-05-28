@@ -67,7 +67,13 @@
 				<li class="enabled" id="tab_1"><?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id);?></li>
 				<li class="enabled" id="tab_2"><?php echo link_to($individual_name, 'individuals/edit?spec_id='.$specimen_id.'&individual_id='.$individual_id);?></li>
 				<li class="enabled" id="tab_3"><?php echo link_to(__('Parts overview'), 'parts/overview?id='.$individual_id); ?></li>
-				<li class="enabled selected" id="tab_4"><?php echo __('New/Edit Part'); ?></li>
+				<li class="enabled selected" id="tab_4">
+				  <?php if($part->isNew()):?>
+					<?php echo __('New Part'); ?>
+				  <?php else:?>
+					<?php echo __('Edit Part'); ?>
+				  <?php endif;?>
+				</li>
 
 			  <?php endif;?>
 		</ul>

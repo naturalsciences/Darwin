@@ -5,13 +5,13 @@
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'part','eid'=> $part->getId(), 'table' => 'specimen_parts')); ?>
 
-<?php include_partial('specimen/specBeforeTab', array('mode' => 'edit', 'specimen' => $specimen, 'individual'=> $individual, 'part' => new SpecimenParts()) );?>
+<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'part'=> $part ,'mode' => 'parts_edit') );?>
 
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
 
 
-	<form action="<?php echo url_for('parts/edit'. ($form->isNew() ? '' : '?id='.$form->getObject()->getId()));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+	<form action="<?php echo url_for('parts/edit'. ($form->isNew() ? '?indid='.$individual->getId() : '?id='.$form->getObject()->getId()));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 		<div>
 			<?php if($form->hasGlobalErrors()):?>
 				<ul class="spec_error_list">

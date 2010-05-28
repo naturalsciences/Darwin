@@ -760,42 +760,53 @@ MyPreferences:
         category: part_widget
         group_name: partCount
         mandatory: false
-        order_by: 1
+        order_by: 2
         opened: true
         visible: true
         is_available: true
         title_perso: Properties
-# 
-#     u1sp2:
-#         User: u1
-#         col_num: 1
-#         category: parts_widget
-#         group_name: comments
-#         mandatory: false
-#         order_by: 2
-#         opened: true
-#         visible: true
-#         is_available: true
-#         title_perso: Comments
-#     u1sp3:
-#         User: u1
-#         col_num: 1
-#         category: parts_widget
-#         group_name: insurances
-#         mandatory: false
-#         order_by: 3
-#         opened: true
-#         visible: true
-#         is_available: true
-#         title_perso: Insurances
-#     u1sp4:
-#         User: u1
-#         col_num: 1
-#         category: parts_widget
-#         group_name: cataloguePeople
-#         mandatory: false
-#         order_by: 4
-#         opened: true
-#         visible: true
-#         is_available: true
-#         title_perso: Peoples
+    u1sp2:
+        User: u1
+        col_num: 1
+        category: part_widget
+        group_name: specPart
+        mandatory: true
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Part
+    u1sp3:
+        User: u1
+        col_num: 2
+        category: part_widget
+        group_name: complete
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Complete
+    u1sp4:
+        User: u1
+        col_num: 2
+        category: part_widget
+        group_name: localisation
+        mandatory: false
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Localisation
+
+    u1sp5:
+        User: u1
+        col_num: 1
+        category: part_widget
+        group_name: container
+        mandatory: false
+        order_by: 3
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Container

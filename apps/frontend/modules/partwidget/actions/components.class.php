@@ -32,6 +32,26 @@ class partwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeSpecPart()
+  {
+    $this->defineForm();
+  }
+
+  public function executeComplete()
+  {
+    $this->defineForm();
+  }
+
+  public function executeLocalisation()
+  {
+    $this->defineForm();
+  }
+
+  public function executeContainer()
+  {
+    $this->defineForm();
+  }
+
   public function executeRefCodes()
   {
     $this->defineForm();

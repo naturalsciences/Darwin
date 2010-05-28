@@ -23,6 +23,7 @@ class partsActions extends DarwinActions
 	{
 	  $this->part= new SpecimenParts();
 	  $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('indid'));
+	  $this->part->Individual = $this->individual;
 	}
 
 	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());

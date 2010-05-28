@@ -680,37 +680,48 @@ gtu2:
 
 sp1:
    col_num: 1
-   category: specimen_parts_widget
-   group_name: properties
-   mandatory: false
+   category: part_widget
+   group_name: specPart
+   mandatory: true
    order_by: 1
    opened: true
    visible: true
-   title_perso: Properties
+   title_perso: Part
+
 sp2:
    col_num: 1
-   category: specimen_parts_widget
-   group_name: comments
+   category: part_widget
+   group_name: partCount
    mandatory: false
    order_by: 2
    opened: true
    visible: true
-   title_perso: Comments
+   title_perso: Count
+
 sp3:
+   col_num: 2
+   category: part_widget
+   group_name: complete
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Complete
+sp4:
+   col_num: 2
+   category: part_widget
+   group_name: localisation
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Localisation
+sp5:
    col_num: 1
-   category: specimen_parts_widget
-   group_name: insurances
+   category: part_widget
+   group_name: container
    mandatory: false
    order_by: 3
    opened: true
    visible: true
-   title_perso: Comments
-sp2:
-   col_num: 1
-   category: specimen_parts_widget
-   group_name: cataloguePeople
-   mandatory: false
-   order_by: 4
-   opened: true
-   visible: true
-   title_perso: Comments
+   title_perso: Container
