@@ -11,6 +11,14 @@ var chgorder_url='<?php echo url_for('widgets/changeOrder?category='.$category.$
 var reload_url='<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>';
 </script>
 
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript">
+onload=function(){
+var e=document.getElementById("refreshed");
+if(e.value=="no")e.value="yes";
+else{e.value="no";location.reload();}
+}
+</script>
 <div class="widget_collection_global">
 	<div class="widget_collection_container">
 	  <?php $has_one_visible = false;?>

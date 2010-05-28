@@ -28,9 +28,8 @@
 	'widgets' => $widgets,
 	'category' => 'partwidget',
 	'columns' => 2,
-	'options' => array('options' => array('form' => $form))
+	'options' => array('form' => $form)
 	)); ?>
-
 			<p class="clear"></p>
 			<p>
 			  <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>

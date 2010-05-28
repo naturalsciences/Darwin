@@ -13,18 +13,18 @@ class partwidgetComponents extends sfComponents
 
   protected function defineForm()
   {
-    if(! isset($this->form) )
-    {
-	if(isset($this->eid) && $this->eid != null)
+	if(! isset($this->form) )
 	{
-	  $spec = Doctrine::getTable('SpecimenParts')->find($this->eid);
-	  $this->form = new SpecimenPartsForm($spec);
+	  if(isset($this->eid) && $this->eid != null)
+	  {
+		$spec = Doctrine::getTable('SpecimenParts')->find($this->eid);
+		$this->form = new SpecimenPartsForm($spec);
+	  }
+	  else
+	  {
+		$this->form = new SpecimenPartsForm();
+	  }
 	}
-	else
-	{
-	  $this->form = new SpecimenPartsForm();
-	}
-    }
   }
 
   public function executePartCount()

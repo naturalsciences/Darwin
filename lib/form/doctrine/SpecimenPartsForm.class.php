@@ -13,12 +13,6 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
   {
 	unset( $this['specimen_individual_ref'] , $this['id']);
 
-	//Widget to see if the record is there
-// 	$this->widgetSchema['is_available'] = new sfWidgetFormInputHidden();
-// 	$this->widgetSchema['is_available']->setDefault('1');
-// 	$this->validatorSchema['is_available'] = new sfValidatorPass();
-
-
 	$this->widgetSchema['specimen_part'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
 	  'table_method' => 'getDistinctParts',
@@ -138,8 +132,5 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	  'choices' => SpecimenParts::getCategories(),
 	));
     $this->validatorSchema['category'] = new sfValidatorString(array('required' => false));
-
-
-    $this->mergePostValidator(new PartsValidatorSchema());
   }
 }
