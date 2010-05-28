@@ -247,14 +247,17 @@ class peopleActions extends DarwinActions
   public function executeRelation(sfWebRequest $request)
   {
 
-    if($request->hasParameter('id'))
+    if($request->hasParameter('id')) {
       $this->relation =  Doctrine::getTable('PeopleRelationships')->find($request->getParameter('id'));
+      $this->is_physical = Doctrine::getTable('people')->findExcept($request->getParameter('id'))->getIsPhysical();
+    }
     else
     {
      $this->relation = new PeopleRelationships();
      $this->relation->setPerson_2Ref($request->getParameter('ref_id'));
+     $this->is_physical = Doctrine::getTable('people')->findExcept($request->getParameter('ref_id'))->getIsPhysical();
     }
-     
+
     $this->form = new PeopleRelationshipsForm($this->relation);
     
     if($request->isMethod('post'))

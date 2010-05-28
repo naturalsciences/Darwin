@@ -7,7 +7,7 @@
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
         <tr>  
-          <th><?php echo $form['family_name']->renderLabel('Name');?></th>
+          <th><?php echo $form['family_name']->renderLabel('Institution Name');?></th>
           <th></th>
         </tr>
       </thead>

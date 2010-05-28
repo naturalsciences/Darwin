@@ -54,7 +54,10 @@ $(document).ready(function () {
         show: { when: 'click', ready: true },
         position: {
             target: $(document.body), // Position it via the document body...
-            corner: 'center' // ...at the center of the viewport
+            corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
+            adjust:{
+        	  	y: 150 // option set in case of the qtip become too big
+            },
         },
         hide: false,
         style: {

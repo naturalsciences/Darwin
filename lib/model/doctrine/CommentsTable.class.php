@@ -22,7 +22,7 @@ class CommentsTable extends DarwinTable
                                                          ),
                                     'collections' => array('collection information' => 'collection information',
                                                          ),
-                                    'people' => array('institution information' => 'institution information',
+                                    'people' => array('general information' => 'general information',
                                                          ),
                                     'gtu' => array('position information' => 'Position information',
 						   'period information' => 'Period information',

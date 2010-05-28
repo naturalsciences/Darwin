@@ -10,7 +10,7 @@
         </td>
     </tr>
     <tr>
-      <th><?php echo $form['entry']->renderLabel();?></th>
+      <th><?php echo $form['entry']->renderLabel('Address');?></th>
       <td>
         <?php echo $form['entry']->renderError(); ?>
         <?php echo $form['entry'];?>

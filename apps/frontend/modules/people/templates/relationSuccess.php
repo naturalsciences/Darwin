@@ -25,12 +25,15 @@
         <?php echo $form['relationship_type'];?>
       </td>
     </tr>
+    <?php if($is_physical) : ?>
     <tr>
       <th><?php echo $form['person_user_role']->renderLabel('Role in the organisation');?></th>
       <td>
         <?php echo $form['person_user_role']->renderError(); ?>
         <?php echo $form['person_user_role'];?>
       </td>
+    </tr>
+    <?php endif; ?>
     <tr>
       <th><?php echo $form['activity_date_from']->renderLabel();?></th>
       <td>
