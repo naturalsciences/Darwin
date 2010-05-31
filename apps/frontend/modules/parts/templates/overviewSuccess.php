@@ -19,7 +19,12 @@
   <tbody>
   <?php foreach($parts as $part):?>
 	<tr>
-	  <td><?php if(isset($codes[$part->getId()])) print_r($codes[$part->getId()]);?></td>
+	  <td><?php if(isset($codes[$part->getId()])):?>
+		  <ul><?php foreach($codes[$part->getId()] as $code):?>
+			<li><?php echo $code->getCodeFormated();?></li>
+		  <?php endforeach;?></ul>
+		<?php endif;?>
+	  </td>
 	  <td><?php echo $part->getSpecimenPart();?></td>
 	  <td><?php echo $part->getRoom();?></td>
 	  <td><?php echo $part->getRow();?></td>
@@ -43,23 +48,4 @@
   <div class="new_link">
 	<a href="<?php echo url_for('parts/edit?indid='.$individual->getId());?>"><?php echo __('Add New');?></a>
   </div>
-  <script  type="text/javascript">
-// $(document).ready(function () {
-// 	$('select[name$="[container_type]"]').change(function() {
-// 	  parent = $(this).closest('tr');
-// 	  $.get("<?php echo url_for('parts/getStorage');?>/item/container/type/"+$(this).val(), function (data) {
-// 		  parent.find('select[name$="[container_storage]"]').html(data);
-// 		});
-// 	});
-// 
-// 	$('select[name$="[sub_container_type]"]').change(function() {
-// 	  parent = $(this).closest('tr');
-// 	  $.get("<?php echo url_for('parts/getStorage');?>/item/sub_container/type/"+$(this).val(), function (data) {
-// 		  parent.find('select[name$="[sub_container_storage]"]').html(data);
-// 		});
-// 	});
-</script>
-
-
-
 <?php include_partial('specimen/specAfterTab');?>

@@ -40,17 +40,17 @@
   </thead>
   <tbody id="codes">
     <?php foreach($form['Codes'] as $form_value):?>
-      <?php include_partial('spec_codes', array('form' => $form_value));?>
+      <?php include_partial('specimen/spec_codes', array('form' => $form_value));?>
     <?php endforeach;?>
     <?php foreach($form['newCode'] as $form_value):?>
-      <?php include_partial('spec_codes', array('form' => $form_value));?>
+      <?php include_partial('specimen/spec_codes', array('form' => $form_value));?>
     <?php endforeach;?>
   </tbody>
   <tfoot>
     <tr>
       <td colspan='8'>
         <div class="add_code">
-          <a href="<?php echo url_for('specimen/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_code"><?php echo __('Add Code');?></a>
+          <a href="<?php echo url_for('parts/addCode'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_code"><?php echo __('Add Code');?></a>
         </div>
       </td>
     </tr>
@@ -81,7 +81,7 @@ $(document).ready(function () {
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
+          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/collection_id/' + $('#collection_id').val(),
           success: function(html)
           {
             $(parent).find('tbody').append(html);
