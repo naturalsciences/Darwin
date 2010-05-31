@@ -41,6 +41,12 @@ class Users extends BaseUsers
 		self::MANAGER => Users::getTypeName(self::MANAGER),
 		self::ADMIN => Users::getTypeName(self::ADMIN)
       );
+
+	 if (isset($options['screen']) && $options['screen'] == 3)
+	 {
+	    array_shift($db_user_type) ;
+	    return $db_user_type ;
+	 }	
 	  
       if ($options['db_user_type'] != self::ADMIN)
 	  { 
