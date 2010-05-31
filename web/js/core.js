@@ -118,7 +118,7 @@ function showAfterRefresh(el)
 
 function trim(myString) 
 { 
-  return myString.replace(/^\s+/g,'').replace(/\s+$/g,'');
+  return jQuery.trim(myString);
 }
 
 function showValues()
