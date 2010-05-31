@@ -765,6 +765,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Properties
+
     u1sp2:
         User: u1
         col_num: 1
@@ -776,6 +777,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Part
+
     u1sp3:
         User: u1
         col_num: 2
@@ -787,6 +789,7 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Complete
+
     u1sp4:
         User: u1
         col_num: 2
@@ -810,3 +813,75 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Container
+
+    u1spi1:
+        User: u1
+        col_num: 1
+        category: individuals_widget
+        group_name: type
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Type
+
+    u1spi2:
+        User: u1
+        col_num: 1
+        category: individuals_widget
+        group_name: sex
+        mandatory: false
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Sex
+
+    u1spi3:
+        User: u1
+        col_num: 1
+        category: individuals_widget
+        group_name: stage
+        mandatory: false
+        order_by: 3
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Stage
+
+    u1spi4:
+        User: u1
+        col_num: 1
+        category: individuals_widget
+        group_name: socialStatus
+        mandatory: false
+        order_by: 4
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Social Status
+
+    u1spi5:
+        User: u1
+        col_num: 1
+        category: individuals_widget
+        group_name: rockForm
+        mandatory: false
+        order_by: 5
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Rock form
+
+    u1spi6:
+        User: u1
+        col_num: 2
+        category: individuals_widget
+        group_name: specimenIndividualCount
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Count

@@ -46,10 +46,10 @@ $(document).ready(function ()
 			  'options' => array('form' => $form),
 			)); ?>
 
-			</div>
-			<p class="clear"></p>
-			<p>
-			  <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>
-			</p>
-		</form>
+		</div>
+		<p class="clear"></p>
+		<p>
+		  <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>
+		</p>
+	</form>
 <?php include_partial('specAfterTab', array('specimen'=> $form->getObject()) );?>

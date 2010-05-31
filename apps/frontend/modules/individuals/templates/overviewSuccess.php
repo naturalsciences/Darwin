@@ -1,14 +1,14 @@
-<?php slot('title', __('Edit Individuals'));  ?>
+<?php slot('title', __('Specimen individuals overview'));  ?>
 
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview'));?>
 
-<div class="widget_content">
-<ul id="individuals_error" class="error_list" style="display:none">
-  <li>Test</li>
+<div>
+<ul id="error_list" class="error_list" style="display:none">
+  <li></li>
 </ul>
 </div>
 
-<table class="catalogue_table">
+<table class="results">
   <thead style="<?php echo (count($individuals))?'':'display: none;';?>">
     <tr>
       <th>
@@ -37,22 +37,22 @@
     <?php foreach($individuals as $i => $individual):?>
       <tr>
 	<td>
-	  <?php echo $individual->getType();?>
+	  <?php echo $individual->getTypeFormated();?>
 	</td>
 	<td>
-	  <?php echo $individual->getSex();?>
+	  <?php echo $individual->getSexFormated();?>
 	</td>
 	<td>
-	  <?php echo $individual->getState();?>
+	  <?php echo $individual->getStateFormated();?>
 	</td>
 	<td>
-	  <?php echo $individual->getStage();?>
+	  <?php echo $individual->getStageFormated();?>
 	</td>
 	<td>
-	  <?php echo $individual->getSocialStatus();?>
+	  <?php echo $individual->getSocialStatusFormated();?>
 	</td>
 	<td>
-	  <?php echo $individual->getRockForm();?>
+	  <?php echo $individual->getRockFormFormated();?>
 	</td>
 	<td>
 	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?spec_id='.$specimen->getId().'&individual_id='.$individual->getId());?>
@@ -66,24 +66,32 @@
       </tr>
     <?php endforeach;?>
   </tbody>
-  <tfoot>
-    <tr>
-      <td colspan='9'>
-        <div class="add_spec_individual">
-          <a href="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId());?>" id="add_spec_individual"><?php echo __('Add Individual');?></a>
-        </div>
-      </td>
-    </tr>
-  </tfoot>
 </table>
+<br/>
+<div class="new_link">
+  <a href="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId());?>" id="add_spec_individual"><?php echo __('Add New');?></a>
+</div>
+
 <script  type="text/javascript">
+
+function addError(html)
+{
+  $('ul#error_list').find('li').text(html);
+  $('ul#error_list').show();
+}
+
+function removeError()
+{
+  $('ul#error_list').hide();
+  $('ul#error_list').find('li').text(' ');
+}
 
 $(document).ready(function () {
   $("a.row_delete").live('click', function(){
      if(confirm($(this).attr('title')))
      {
        currentElement = $(this);
-       removeError($(this));
+       removeError();
        $.ajax({
                url: $(this).attr('href'),
                success: function(html) {
@@ -94,7 +102,7 @@ $(document).ready(function () {
 		      }
 		      else
 		      {
-			addError(html, currentElement); //@TODO:change this!
+			addError(html); //@TODO:change this!
 		      }
 		},
                error: function(xhr){
