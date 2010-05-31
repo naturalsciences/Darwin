@@ -20,7 +20,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	  'table_method' => 'getDistinctParts',
 	  'method' => 'getParts',
 	  'key_method' => 'getParts',
-	  'add_empty' => true,
+	  'add_empty' => false,
 	  'change_label' => 'Pick parts in the list',
 	  'add_label' => 'Add another parts',
     ));
@@ -167,10 +167,21 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+
+
+    $this->validatorSchema['specimen_part'] = new sfValidatorString(array('required' => true, 'trim' => true, 'empty_value'=>'specimen'));
+
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
     $this->validatorSchema['code'] = new sfValidatorPass();
     $this->validatorSchema['ident'] = new sfValidatorPass();
+
+    $this->validatorSchema->setPostValidator(
+        new sfValidatorSchemaCompare('specimen_part_count_min', '<=', 'specimen_part_count_max',
+            array(),
+            array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
+            )
+        );
   }
 
 
