@@ -45,6 +45,25 @@ class individualsActions extends DarwinActions
     $this->setTemplate('edit');
   }
 
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()));
+    if ($form->isValid())
+    {
+      try
+      {
+        $individual = $form->save();
+        $this->redirect('individuals/edit?spec_id='.$individual->getSpecimenRef().'&individual_id='.$individual->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+	$e = new DarwinPgErrorParser($ne);
+	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	$form->getErrorSchema()->addError($error); 
+      }
+    }
+  }
+
   public function executeOverview(sfWebRequest $request)
   {
 	$this->forward404Unless($this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0)), sprintf('Specimen does not exist (%s).', $request->getParameter('spec_id',0)));
