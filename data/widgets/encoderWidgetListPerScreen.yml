@@ -178,6 +178,16 @@ sw17:
    visible: false
    title_perso: Collecting tools
 
+sw18:
+   col_num: 1
+   category: specimen_widget
+   group_name: refCollectors
+   mandatory: false
+   order_by: 7
+   opened: true
+   visible: true
+   title_perso: Collectors
+
 tw1:
    col_num: 1
    category: catalogue_taxonomy_widget
