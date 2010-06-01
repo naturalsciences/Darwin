@@ -11,7 +11,7 @@ $browser->
   with('response')->
   begin()->
     isStatusCode()->
-    checkElement('h1', 'Expedition List')->
+    checkElement('h1', 'Expedition Search')->
     checkElement('#searchExpedition_name', '')->
     checkElement('#searchExpedition_expedition_from_date_day > option:first_element', 'dd')->
     checkElement('#searchExpedition_expedition_from_date_month > option:first_element', 'mm')->
