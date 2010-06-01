@@ -36,7 +36,7 @@
 		<?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId());?>
 	  </td>
 	  <td>
-		<a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=specimens_type&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+		<a class="row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
 	  </td>
 	</tr>
   <?php endforeach;?>
@@ -44,7 +44,36 @@
 </table>
 
 <br />
+<script  type="text/javascript">
+$(document).ready(function () {
+  $("a.row_delete").click(function(){
 
+	if(confirm($(this).attr('title')))
+	{
+	  currentElement = $(this);
+	  $.ajax({
+		url: $(this).attr('href'),
+        success: function(html) {
+		  if(html == "ok" )
+		  {
+			currentElement.closest('tr').remove();
+		  }
+		  else
+		  {
+			//addError(html, currentElement); //@TODO:change this!
+			alert('Error: ' + html);
+		  }
+		},
+		error: function(xhr){
+		 // addError('Error!  Status = ' + xhr.status);
+		 alert('Error!  Status = ' + xhr.status);
+		}
+	  });
+	}
+    return false;
+  });
+});
+</script>
   <div class="new_link">
 	<a href="<?php echo url_for('parts/edit?indid='.$individual->getId());?>"><?php echo __('Add New');?></a>
   </div>
