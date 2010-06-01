@@ -2,16 +2,13 @@
 
 .tabs
 {
-/* 	border-bottom:1px solid #c0d147; */
 	list-style-type:none;
 	margin:0;
 	padding-bottom:34px;
 	padding-left: 25px;
-/* 	margin-bottom: 45px; */
 }
 
-.tabs li {
-/*	background-color:#CCFFCC;*/
+.tabs a{
 	width: 204px;
 	padding-top: 10px;
 	text-align:center;
@@ -21,20 +18,20 @@
 	cursor:pointer;
 }
 
-.tabs li.enabled
+.tabs a.enabled
 {
 	background-image:url(/images/encod_tab_enable.png);
 	background-repeat:no-repeat;
 	height:20px;
 }
 
-.tabs li.selected
+.tabs a.selected
 {
 	border-bottom:1px solid white;
 	height: 21px;
 }
 
-.tabs li.disabled
+.tabs a.disabled
 {
 	background-image:url(/images/encod_tab_disable.png);
 	background-repeat:no-repeat;

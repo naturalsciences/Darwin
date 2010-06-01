@@ -23,11 +23,12 @@ class partsActions extends DarwinActions
 	{
 	  $this->part= new SpecimenParts();
 	  $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('indid'));
+	  $this->forward404Unless($this->individual);
 	  $this->part->Individual = $this->individual;
 	}
 
 	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
-	$this->form = new SpecimenPartsForm($this->part);
+	$this->form = new SpecimenPartsForm($this->part, array( 'collection'=>$this->specimen->getCollectionRef() ));
 
 	if($request->isMethod('post'))
 	{
@@ -53,10 +54,10 @@ class partsActions extends DarwinActions
 	$this->codes = array();
 	foreach($codes_collection as $code)
 	{
-	  if(! isset($this->codes[$code->getRelatedRecord()]))
-		$this->codes[$code->getRelatedRecord()] = array();
-	  $this->codes[$code->getRelatedRecord()][] = $code;
-	}	
+	  if(! isset($this->codes[$code->getRecordId()]))
+		$this->codes[$code->getRecordId()] = array();
+	  $this->codes[$code->getRecordId()][] = $code;
+	}
 
   }
 
@@ -69,23 +70,18 @@ class partsActions extends DarwinActions
 	return $this->renderPartial('options', array('items'=> $items ));
   }
 
-/*
-  public function executeAddNew(sfWebRequest $request)
+  public function executeAddCode(sfWebRequest $request)
   {
-	$number = intval($request->getParameter('num'));
-	$individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
-	$form = new PartsGroupedForm(null,array('individual' =>$individual));
-	$form->addValue($number);
-	return $this->renderPartial('partform',array('form' => $form['newVal'][$number]));
-  }
+    $number = intval($request->getParameter('num'));
+    $spec = null;
 
-  public function executeDetails(sfWebRequest $request)
-  {
-	$this->parts = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));
-	$this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($this->parts->getSpecimenIndividualRef());
-	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $spec = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id') );
+    
+    $collectionId = $request->getParameter('collection_id', null);
 
-    $this->loadWidgets();
+    $form = new SpecimenPartsForm($spec, array( 'collection'=>$collectionId));
+    $form->addCodes($number, $collectionId);
+    return $this->renderPartial('specimen/spec_codes',array('form' => $form['newCode'][$number]));
   }
-*/
 }

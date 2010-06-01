@@ -10,7 +10,7 @@
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
 
-
+	<input id="collection_id" type="hidden" value="<?php echo $specimen->getCollectionRef();?>">
 	<form action="<?php echo url_for('parts/edit'. ($form->isNew() ? '?indid='.$individual->getId() : '?id='.$form->getObject()->getId()));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 		<div>
 			<?php if($form->hasGlobalErrors()):?>

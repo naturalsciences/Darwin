@@ -2,7 +2,13 @@
 
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview'));?>
 
-<table class="property_values">
+<div class="widget_content">
+<ul id="individuals_error" class="error_list" style="display:none">
+  <li>Test</li>
+</ul>
+</div>
+
+<table class="catalogue_table">
   <thead style="<?php echo (count($individuals))?'':'display: none;';?>">
     <tr>
       <th>
@@ -51,8 +57,8 @@
 	<td>
 	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?spec_id='.$specimen->getId().'&individual_id='.$individual->getId());?>
 	</td>
-	<td>
-	  <?php echo link_to(image_tag('remove.png'),'individuals/delete?individual_id='.$individual->getId());?>
+	<td class="row_delete">
+	  <?php echo link_to(image_tag('remove.png'),'individuals/delete?spec_id='.$specimen->getId().'&individual_id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
 	</td>
 	<td>
 	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/edit?id='.$individual->getId(), array('class'=>'part_detail_slide'));?>
@@ -70,5 +76,35 @@
     </tr>
   </tfoot>
 </table>
+<script  type="text/javascript">
 
+$(document).ready(function () {
+  $("a.row_delete").live('click', function(){
+     if(confirm($(this).attr('title')))
+     {
+       currentElement = $(this);
+       removeError($(this));
+       $.ajax({
+               url: $(this).attr('href'),
+               success: function(html) {
+		      if(html == "ok" )
+		      {
+			// Reload page
+			location.reload();
+		      }
+		      else
+		      {
+			addError(html, currentElement); //@TODO:change this!
+		      }
+		},
+               error: function(xhr){
+		  addError('Error!  Status = ' + xhr.status);
+               }
+             }
+            );
+    }
+    return false;
+  });
+});
+</script>
 <?php include_partial('specimen/specAfterTab');?>

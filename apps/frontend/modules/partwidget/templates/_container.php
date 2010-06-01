@@ -29,3 +29,21 @@
 	<td><?php echo $form['sub_container_storage']->render() ?></td>
   </tr>
 </table>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $('select[name$="[container_type]"]').change(function() {
+      parent = $(this).closest('.widget');
+      $.get("<?php echo url_for('parts/getStorage');?>/item/container/type/"+$(this).val(), function (data) {
+              parent.find('select[name$="[container_storage]"]').html(data);
+            });
+    });
+
+    $('select[name$="[sub_container_type]"]').change(function() {
+      parent = $(this).closest('.widget');
+      $.get("<?php echo url_for('parts/getStorage');?>/item/sub_container/type/"+$(this).val(), function (data) {
+             parent.find('select[name$="[sub_container_storage]"]').html(data);
+            });
+    });
+});
+</script>
