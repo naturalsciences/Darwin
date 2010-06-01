@@ -204,9 +204,4 @@ $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();
   });
-
-  o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
-  $('ul.main_menu').supersubs().superfish(o);
-  $('ul.main_menu > li:not(.house):not(.exit)').append('<img class="highlight" src="/images/menu_expand.png" alt="" />');
-
 });

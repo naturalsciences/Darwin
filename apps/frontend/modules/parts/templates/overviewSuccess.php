@@ -2,9 +2,10 @@
 
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'mode' => 'parts_overview') );?>
 
-<table class="parts_overview results">
+<table class="catalogue_table">
   <thead>
 	<tr>
+	  <th></th>
 	  <th><?php echo __('Code');?></th>
 	  <th><?php echo __('Part');?></th>
 	  <th><?php echo __('Room');?></th>
@@ -18,7 +19,8 @@
   </thead>
   <tbody>
   <?php foreach($parts as $part):?>
-	<tr>
+	<tr class="part_id_<?php echo $part->getId();?>">
+      <td class="info_cell"><?php echo image_tag('info.png',"title=info class=info");?></td>
 	  <td><?php if(isset($codes[$part->getId()])):?>
 		  <ul><?php foreach($codes[$part->getId()] as $code):?>
 			<li><?php echo $code->getCodeFormated();?></li>
@@ -41,6 +43,15 @@
 	</tr>
   <?php endforeach;?>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan='10'>
+        <div class="add_spec_individual">
+		  <a href="<?php echo url_for('parts/edit?indid='.$individual->getId());?>"><?php echo __('Add part');?></a>
+        </div>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 
 <br />
@@ -74,7 +85,5 @@ $(document).ready(function () {
   });
 });
 </script>
-  <div class="new_link">
-	<a href="<?php echo url_for('parts/edit?indid='.$individual->getId());?>"><?php echo __('Add New');?></a>
-  </div>
+
 <?php include_partial('specimen/specAfterTab');?>
