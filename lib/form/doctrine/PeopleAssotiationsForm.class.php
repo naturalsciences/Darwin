@@ -13,7 +13,7 @@ class PeopleAssotiationsForm extends BaseCataloguePeopleForm
   public function configure()
   {
 
-    $this->widgetSchema['people_type'] = new sfWidgetFormInputHidden(array('default'=>'identifier'));
+    $this->widgetSchema['people_type'] = new sfWidgetFormInputHidden(array('default'=>'collector'));
     $only_role = People::getCorrespondingType($this->getObject()->getPeopleType()); 
     $this->widgetSchema['people_ref'] = new widgetFormButtonRef(array(
        'model' => 'People',

@@ -40,6 +40,14 @@ class specimenActions extends DarwinActions
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
 
+  public function executeAddCollector(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $form = new SpecimensForm();
+    $form->addCollectors($number,0);
+    return $this->renderPartial('spec_people_assotiations',array('form' => $form['newCollectors'][$number]));
+  }
+
   public function executeAddIdentification(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
@@ -79,7 +87,7 @@ class specimenActions extends DarwinActions
     $this->loadWidgets();
     $this->form = new SpecimensForm();
     $this->form->addCodes(0, null);
-    $this->form->addIdentifications(0,0);
+    $this->form->addIdentifications(0,0); 
   }
 
   public function executeCreate(sfWebRequest $request)

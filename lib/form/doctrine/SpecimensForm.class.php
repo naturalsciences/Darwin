@@ -259,6 +259,23 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+    /* Collectors sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('Collectors',$subForm);   
+    foreach(Doctrine::getTable('CataloguePeople')->getIdentifiersRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new PeopleAssotiationsForm($vals);
+      $this->embeddedForms['Collectors']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Collectors', $this->embeddedForms['Collectors']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newCollectors',$subForm);
+    
+    $this->widgetSchema['collector'] = new sfWidgetFormInputHidden(array('default'=>1));
+    
     /* Identifications sub form */
     
     $subForm = new sfForm();
@@ -332,6 +349,7 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+    $this->validatorSchema['collector'] = new sfValidatorPass();
     $this->validatorSchema['code'] = new sfValidatorPass();
     $this->validatorSchema['ident'] = new sfValidatorPass();
 
@@ -368,6 +386,19 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
   }
 
+
+  public function addCollectors($num, $order_by=0)
+  {
+      $options = array('referenced_relation' => 'specimens', 'people_type' => 'collector', 'order_by' => $order_by);
+      $val = new CataloguePeople();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new PeopleAssotiationsForm($val);
+      $this->embeddedForms['newCollectors']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
+  }
+  
   public function addIdentifications($num, $order_by=0)
   {
       $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
@@ -405,7 +436,17 @@ class SpecimensForm extends BaseSpecimensForm
           $taintedValues['newCode'][$key]['record_id'] = 0;
 	}
     }
-
+    if(isset($taintedValues['newCollectors']) && isset($taintedValues['collector']))
+    {
+     foreach($taintedValues['newCollectors'] as $key=>$newVal)
+	{
+	  if (!isset($this['newCollectors'][$key]))
+	  {
+	    $this->addCollectors($key);
+	  }
+       $taintedValues['newCollectors'][$key]['record_id'] = 0;
+	}
+    }
     if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
     {
 	foreach($taintedValues['newIdentification'] as $key=>$newVal)
@@ -456,7 +497,11 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('Codes');
       unset($taintedValues['Codes']);
     }
-
+    if(!isset($taintedValues['collector']))
+    {
+      $this->offsetUnset('Collectors');
+      unset($taintedValues['Collectors']);
+    }
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');
@@ -574,6 +619,27 @@ class SpecimensForm extends BaseSpecimensForm
 	  }
 	}
     }
+    if (null === $forms && $this->getValue('collector'))
+    {
+	$value = $this->getValue('newCollectors');
+	foreach($this->embeddedForms['newCollectors']->getEmbeddedForms() as $name => $form)
+	{
+	  echo("<script>alert('salut')>/script>") ;
+	  if(!isset($value[$name]['people_ref']))
+	    unset($this->embeddedForms['newCollectors'][$name]);
+	  else
+         $form->getObject()->setRecordId($this->getObject()->getId());
+	}
+	$value = $this->getValue('Collectors');
+	foreach($this->embeddedForms['Collectors']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['people_ref']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Collectors'][$name]);
+	  }
+	}
+    }    
     return parent::saveEmbeddedForms($con, $forms);
-  }
+  }  
 }
