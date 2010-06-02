@@ -20,7 +20,12 @@
   <tbody>
   <?php foreach($parts as $part):?>
 	<tr class="part_id_<?php echo $part->getId();?>">
-      <td class="info_cell"><?php echo image_tag('info.png',"title=info class=info");?></td>
+      <td class="info_cell">
+	  <?php echo image_tag('info-green.png',"title=info class=extd_info");?>
+		<div class="extended_info" style="display:none;">
+		  <?php include_partial('extendedInfo', array('part' => $part, 'codes' => $codes) );?>
+		</div>
+	  </td>
 	  <td><?php if(isset($codes[$part->getId()])):?>
 		  <ul><?php foreach($codes[$part->getId()] as $code):?>
 			<li><?php echo $code->getCodeFormated();?></li>
@@ -34,7 +39,6 @@
 	  <td><?php echo $part->getContainer();?></td>
 	  <td><?php echo $part->getSubContainer();?></td>
 	  <td>
-		<?php //echo link_to(image_tag('slide_right_enable.png'),'parts/details?id='.$part->getId(), array('class'=>'part_detail_slide'));?>
 		<?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId());?>
 	  </td>
 	  <td>
@@ -83,6 +87,20 @@ $(document).ready(function () {
 	}
     return false;
   });
+
+
+  $('img.extd_info').each(function(){
+	   
+	tip_content = $(this).next().html();
+	$(this).qtip(
+	{
+         content: tip_content,
+         style: {
+            tip: true, // Give it a speech bubble tip with automatic corner detection
+            name: 'cream'
+         }
+      });
+    });
 });
 </script>
 
