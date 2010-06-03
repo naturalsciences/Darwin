@@ -624,11 +624,10 @@ class SpecimensForm extends BaseSpecimensForm
 	$value = $this->getValue('newCollectors');
 	foreach($this->embeddedForms['newCollectors']->getEmbeddedForms() as $name => $form)
 	{
-	  echo("<script>alert('salut')>/script>") ;
 	  if(!isset($value[$name]['people_ref']))
 	    unset($this->embeddedForms['newCollectors'][$name]);
 	  else
-         $form->getObject()->setRecordId($this->getObject()->getId());
+	    $form->getObject()->setRecordId($this->getObject()->getId());
 	}
 	$value = $this->getValue('Collectors');
 	foreach($this->embeddedForms['Collectors']->getEmbeddedForms() as $name => $form)
