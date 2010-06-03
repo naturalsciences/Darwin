@@ -5,5 +5,43 @@
  */
 class SpecimenIndividuals extends BaseSpecimenIndividuals
 {
+  public function getTypeFormated()
+  {
+    return ucfirst($this->_get('type'));
+  }
 
+  public function getSexFormated()
+  {
+    if ($this->_get('sex') == 'undefined')
+      return '-';
+    return ucfirst($this->_get('sex'));
+  }
+
+  public function getStateFormated()
+  {
+    if ($this->_get('state') == 'not applicable')
+      return '-';
+    return ucfirst($this->_get('state'));
+  }
+
+  public function getStageFormated()
+  {
+    if ($this->_get('stage') == 'undefined')
+      return '-';
+    return ucfirst($this->_get('stage'));
+  }
+
+  public function getSocialStatusFormated()
+  {
+    if ($this->_get('social_status') == 'not applicable')
+      return '-';
+    return ucfirst($this->_get('social_status'));
+  }
+
+  public function getRockFormFormated()
+  {
+    if ($this->_get('rock_form') == 'not applicable')
+      return '-';
+    return ucfirst($this->_get('rock_form'));
+  }
 }

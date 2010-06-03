@@ -43,6 +43,11 @@ class DarwinActions extends sfActions
     if(! $this->widgets) $this->widgets=array();
   }
 
+  protected function getI18N()
+  {
+     return sfContext::getInstance()->getI18N();
+  }
+
   /**
    * Forwards the current request to the secure action.
    *

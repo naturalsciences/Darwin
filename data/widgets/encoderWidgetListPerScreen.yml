@@ -717,6 +717,7 @@ sp3:
    opened: true
    visible: true
    title_perso: Complete
+
 sp4:
    col_num: 2
    category: part_widget
@@ -726,6 +727,7 @@ sp4:
    opened: true
    visible: true
    title_perso: Localisation
+
 sp5:
    col_num: 1
    category: part_widget
@@ -735,3 +737,63 @@ sp5:
    opened: true
    visible: true
    title_perso: Container
+
+spi1:
+   col_num: 1
+   category: individuals_widget
+   group_name: type
+   mandatory: true
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Type
+
+spi2:
+  col_num: 1
+  category: individuals_widget
+  group_name: sex
+  mandatory: false
+  order_by: 2
+  opened: true
+  visible: true
+  title_perso: Sex
+
+spi3:
+  col_num: 1
+  category: individuals_widget
+  group_name: stage
+  mandatory: false
+  order_by: 3
+  opened: true
+  visible: true
+  title_perso: Stage
+
+spi4:
+  col_num: 1
+  category: individuals_widget
+  group_name: socialStatus
+  mandatory: false
+  order_by: 4
+  opened: false
+  visible: false
+  title_perso: Social Status
+
+spi5:
+  col_num: 1
+  category: individuals_widget
+  group_name: rockForm
+  mandatory: false
+  order_by: 5
+  opened: false
+  visible: false
+  title_perso: Rock form
+
+spi6:
+  col_num: 2
+  category: individuals_widget
+  group_name: specimenIndividualCount
+  mandatory: false
+  order_by: 1
+  opened: true
+  visible: true
+  title_perso: Count
