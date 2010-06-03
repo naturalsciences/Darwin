@@ -56,6 +56,7 @@ class CodesTable extends DarwinTable
   {
     if(!is_array($specIds))
       $specIds = array($specIds);
+	if(empty($specIds)) return array();
     $q = Doctrine_Query::create()->
          from('Codes')->
          where('referenced_relation = ?', $table)->
