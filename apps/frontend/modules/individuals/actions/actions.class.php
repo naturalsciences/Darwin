@@ -17,7 +17,7 @@ class individualsActions extends DarwinActions
 	$this->loadWidgets();
 	$spec_individual = new SpecimenIndividuals(array('specimen_ref' => $this->specimen->getId()));
 	if($request->hasParameter('individual_id') && $request->getParameter('individual_id'))
-	  $spec_individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('individual_id'));
+	  $this->forward404Unless($spec_individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('individual_id')), sprintf('Specimen individual does not exist (%s).', $request->getParameter('individual_id')));
 	$this->individual = new SpecimenIndividualsForm($spec_individual);
   }
 
@@ -74,10 +74,10 @@ class individualsActions extends DarwinActions
   {
     $specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0));
     if(!$specimen)
-      return $this->renderText($this::getI18N()->__('Specimen does not exist'));
+      return $this->renderText($this->getI18N()->__('Specimen does not exist'));
     $individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('individual_id',0));
     if(!$individual)
-      return $this->renderText($this::getI18N()->__('Individual does not exist'));
+      return $this->renderText($this->getI18N()->__('Individual does not exist'));
     try
     {
       $individual->delete();

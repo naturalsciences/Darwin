@@ -50,8 +50,8 @@
 				<?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>
 				<?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_1'));?>
 				<a class="enabled selected" id="tab_2"> &lt; <?php echo $individual_name;?> &gt; </a>
-				<a class="<?php echo $part_tab_class;?>" id="tab_3"><?php if($individual_id ==''):?><?php echo __('Parts overview');?><?php else:?><?php echo link_to(__('Parts overview'), 'parts/overview?id='.$individual_id); ?><?php endif;?></a>
-				<a class="<?php echo $part_tab_class;?>" id="tab_4"><?php if($individual_id ==''):?><?php echo __('New Part');?><?php else:?><?php echo link_to(__('New Part'), 'parts/edit?id='.$individual_id); ?><?php endif;?></a>
+				<?php echo link_to(__('Parts overview'), ($individual_id=='')?'':'parts/overview?id='.$individual_id, array('id'=>'tab_3', 'class'=>$part_tab_class)); ?>
+				<?php echo link_to(__('New Part'), ($individual_id=='')?'':'parts/edit?indid='.$individual_id, array('id'=>'tab_4', 'class'=>$part_tab_class)); ?>
 
 			  <?php elseif($mode == 'parts_overview'):?>
 
