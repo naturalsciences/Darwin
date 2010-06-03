@@ -4,14 +4,13 @@
 <?php use_javascript('widgets.js') ?>
 <?php use_javascript('catalogue.js') ?>
 
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'individuals', 'table' => 'specimen_individuals', 'eid'=> (! $individual->getObject()->isNew() ? $individual->getObject()->getId() : null ))); ?>
-
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'individuals', 'table' => 'specimen_individuals', 'eid'=> ($individual->getObject()->isNew() ?null: $individual->getObject()->getId()))); ?>
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual->getObject(), 'mode'=>'individual_edit'));?>
 
 <?php include_stylesheets_for_form($individual) ?>
 <?php include_javascripts_for_form($individual) ?>
 
-<form action="<?php echo url_for('individuals/'.($individual->getObject()->isNew() ? 'create' : 'update').(!$individual->getObject()->isNew() ? '?id='.$individual->getObject()->getId() : ''). ($individual->getObject()->isNew() ? '': '&rid='.$individual->getObject()->getId() )) ?>" method="post" <?php $individual->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<form action="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId().(($individual->getObject()->isNew())?'':'&individual_id='.$individual->getObject()->getId())); ?>" method="post" <?php $individual->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <div>
     <?php echo $individual['id']->render(); ?>
     <?php echo $individual['specimen_ref']->render(); ?>
@@ -39,4 +38,3 @@
 </form>
 
 <?php include_partial('specimen/specAfterTab');?>
-

@@ -4,13 +4,16 @@
  */
 class SpecimenIndividualsTable extends DarwinTable
 {
+
     /**
     * Get distinct Types
     * @return Doctrine_collection with distinct "types" as column
     */
     public function getDistinctTypes()
     {
-      return $this->createDistinct('SpecimenIndividuals', 'type', 'type')->execute();
+      $types = $this->createDistinct('SpecimenIndividuals', 'type', 'type', 't', 'specimen')->execute();
+      $types->add(new SpecimenIndividuals);
+      return $types;
     }
 
     /**
@@ -19,7 +22,9 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctSexes()
     {
-      return $this->createDistinct('SpecimenIndividuals', 'sex', 'sex')->execute();
+      $sexes = $this->createDistinct('SpecimenIndividuals', 'sex', 'sex')->execute();
+      $sexes->add(new SpecimenIndividuals);
+      return $sexes;
     }
 
     /**
@@ -28,7 +33,9 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctStates()
     {
-      return $this->createDistinct('SpecimenIndividuals', 'state', 'state')->execute();
+      $states = $this->createDistinct('SpecimenIndividuals', 'state', 'state')->execute();
+      $states->add(new SpecimenIndividuals);
+      return $states;
     }
 
     /**
@@ -37,7 +44,9 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctStages()
     {
-      return $this->createDistinct('SpecimenIndividuals', 'stage', 'stage')->execute();
+      $stages = $this->createDistinct('SpecimenIndividuals', 'stage', 'stage')->execute();
+      $stages->add(new SpecimenIndividuals);
+      return $stages;
     }
 
     /**
@@ -46,7 +55,9 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctSocialStatuses()
     {
-      return $this->createDistinct('SpecimenIndividuals', 'social_status', 'social_status')->execute();
+      $social_statuses = $this->createDistinct('SpecimenIndividuals', 'social_status', 'social_status')->execute();
+      $social_statuses->add(new SpecimenIndividuals);
+      return $social_statuses;
     }
 
     /**
@@ -55,6 +66,8 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctRockForms()
     {
-      return $this->createDistinct('SpecimenIndividuals', 'rock_form', 'rock_form')->execute();
+      $rock_forms = $this->createDistinct('SpecimenIndividuals', 'rock_form', 'rock_form')->execute();
+      $rock_forms->add(new SpecimenIndividuals);
+      return $rock_forms;
     }
 }
