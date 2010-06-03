@@ -45,7 +45,7 @@ class specimenActions extends DarwinActions
     $number = intval($request->getParameter('num'));
     $form = new SpecimensForm();
     $form->addCollectors($number,0);
-    return $this->renderPartial('spec_people_assotiations',array('form' => $form['newCollectors'][$number]));
+    return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number]));
   }
 
   public function executeAddIdentification(sfWebRequest $request)

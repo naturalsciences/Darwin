@@ -265,7 +265,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->embedForm('Collectors',$subForm);   
     foreach(Doctrine::getTable('CataloguePeople')->getIdentifiersRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
     {
-      $form = new PeopleAssotiationsForm($vals);
+      $form = new PeopleAssociationsForm($vals);
       $this->embeddedForms['Collectors']->embedForm($key, $form);
     }
     //Re-embedding the container
@@ -393,7 +393,7 @@ class SpecimensForm extends BaseSpecimensForm
       $val = new CataloguePeople();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
-      $form = new PeopleAssotiationsForm($val);
+      $form = new PeopleAssociationsForm($val);
       $this->embeddedForms['newCollectors']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);

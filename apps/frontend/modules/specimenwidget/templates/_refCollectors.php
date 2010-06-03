@@ -7,10 +7,10 @@
 	</tr>
    </thead>
    <?php foreach($form['Collectors'] as $form_value):?>
-     <?php include_partial('spec_people_assotiations', array('form' => $form_value));?>
+     <?php include_partial('spec_people_associations', array('form' => $form_value));?>
    <?php endforeach;?>
    <?php foreach($form['newCollectors'] as $form_value):?>
-     <?php include_partial('spec_people_assotiations', array('form' => $form_value));?>
+     <?php include_partial('spec_people_associations', array('form' => $form_value));?>
    <?php endforeach;?>
    <tfoot>
      <tr>
