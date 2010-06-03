@@ -29,7 +29,7 @@
       <th>
 	<?php echo __('Rock form');?>
       </th>
-      <th colspan="3">
+      <th colspan="4">
       </th>
     </tr>
   </thead>
@@ -61,7 +61,10 @@
 	  <?php echo link_to(image_tag('remove.png'),'individuals/delete?spec_id='.$specimen->getId().'&individual_id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
 	</td>
 	<td>
-	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/edit?id='.$individual->getId(), array('class'=>'part_detail_slide'));?>
+	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId(), array('class'=>'part_detail_slide'));?>
+	</td>
+	<td>
+	  <?php echo link_to(image_tag('slide_right_enable_new.png'),'parts/edit?indid='.$individual->getId(), array('class'=>'part_detail_slide'));?>
 	</td>
       </tr>
     <?php endforeach;?>
