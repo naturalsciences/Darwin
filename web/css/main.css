@@ -954,7 +954,7 @@ table.edit_synon td
   text-align:right;
 }
 
-.edition input[type="submit"], .edition button, .edition input[type="reset"], .edition tfoot a, .renamed input[type="submit"], .renamed button, .renamed tfoot a, .bt_close_green a
+.edition input[type="submit"], .edition button, .edition input[type="reset"], .edition tfoot a, .renamed input[type="submit"], .renamed button, .renamed tfoot a, .bt_close_green a, .form_buttons a
 {
   border:1px solid #C1CC33;
   background-color:#C1CF56;
@@ -1213,6 +1213,11 @@ table.classifications_edit tbody td:nth-child(2)
 img.info:hover
 {
   cursor:pointer;
+}
+
+.info_cell
+{
+  width: 20px;
 }
 /** Profile Page **/
 .trusted_user_links td

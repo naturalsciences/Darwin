@@ -31,8 +31,14 @@
 	'options' => array('form' => $form)
 	)); ?>
 			<p class="clear"></p>
-			<p>
-			  <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_f1"/>
+			<p class="form_buttons">
+          <?php if (!$form->getObject()->isNew()): ?>
+            <?php echo link_to(__('New part'), 'parts/edit?indid='.$individual->getId()) ?>
+          <?php endif?>
+
+          &nbsp;<a href="<?php echo url_for('parts/overview?id='.$individual->getId()) ?>"><?php echo __('Cancel');?></a>
+
+		  <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
 			</p>
 <?php include_partial('specimen/specAfterTab');?>
 
