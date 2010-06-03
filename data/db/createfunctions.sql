@@ -5624,7 +5624,14 @@ BEGIN
                         RAISE EXCEPTION 'Expert still used as expert.';
                 END IF;
         END IF;
-
+        
+        /** COLLECTOR Flag is 16 **/
+        IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 16)>0 )  THEN
+                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='collector';
+                IF still_referenced !=0 THEN
+                        RAISE EXCEPTION 'Collector still used as collector.';
+                END IF;
+        END IF;
 	RETURN NEW;
 END;
 $$
@@ -5658,6 +5665,13 @@ BEGIN
 		
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Experts must be defined as expert.';
+		END IF;
+	ELSIF NEW.people_type = 'collector' THEN
+	
+		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 16)=0 AND id=NEW.people_ref;
+		
+		IF are_not_author THEN
+			RAISE EXCEPTION 'Collectors must be defined as collector.';
 		END IF;
 	END IF;
 
