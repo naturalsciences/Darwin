@@ -146,5 +146,17 @@ $(document).ready(function () {
         return false;
     });
     
+    $('.spec_ident_identifiers_data input[id$=\"people_ref\"]').live('change', function()
+    {    	
+     ref_element_id = $(this).closest('table').attr('id') ;
+	ref_element_value = $(this).attr('value');
+	$cpt = 0 ;
+	$('.spec_ident_identifiers_data input[id$=\"people_ref\"]').each(function() {
+	    if($(this).closest('table').attr('id') == ref_element_id) 
+	    {
+		    if($(this).attr('value') == ref_element_value) $cpt++ ;
+	    }
+	});
+	if($cpt > 1) $(this).closest('tr').find('.clear_identifier').trigger('click') });     
 });
 </script>
