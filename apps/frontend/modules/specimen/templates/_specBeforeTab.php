@@ -45,8 +45,8 @@
 				<?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>
 				<a class="enabled selected" id="tab_1"> &lt; <?php echo __('Individuals overview');?> &gt; </a>
 				<?php echo link_to(__('New Individual'), 'individuals/edit?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
-				<a class="disabled" id="tab_2"><?php echo __('Parts overview');?></a>
-				<a class="disabled" id="tab_3"><?php echo __('New Part');?></a>
+				<a class="disabled" id="tab_3"><?php echo __('Parts overview');?></a>
+				<a class="disabled" id="tab_4"><?php echo __('New Part');?></a>
 
 			  <?php elseif($mode == 'individual_edit'):?>
 

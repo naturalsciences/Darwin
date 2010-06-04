@@ -10,6 +10,12 @@
 <?php include_stylesheets_for_form($individual) ?>
 <?php include_javascripts_for_form($individual) ?>
 
+<div>
+<ul id="error_list" class="error_list" style="display:none">
+  <li></li>
+</ul>
+</div>
+
 <form action="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId().(($individual->getObject()->isNew())?'':'&individual_id='.$individual->getObject()->getId())); ?>" method="post" <?php $individual->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <div>
     <?php echo $individual['id']->render(); ?>
@@ -34,7 +40,57 @@
 
   </div>
   <p class="clear"></p>
-  <p><input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_individual_f1"/></p>
+  <p class="form_buttons">
+    <?php if (!$individual->getObject()->isNew()): ?>
+      <?php echo link_to(__('New individual'), 'individuals/edit?spec_id='.$specimen->getId()) ?>
+      &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" class="row_delete"><?php echo __('Delete');?></a>
+    <?php endif?>
+    &nbsp;<a href="<?php echo url_for('individuals/overview?spec_id='.$specimen->getId()) ?>"><?php echo __('Cancel');?></a>
+    <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_individual_f1"/>
+  </p>
 </form>
+<script  type="text/javascript">
+
+function addError(html)
+{
+  $('ul#error_list').find('li').text(html);
+  $('ul#error_list').show();
+}
+
+function removeError()
+{
+  $('ul#error_list').hide();
+  $('ul#error_list').find('li').text(' ');
+}
+
+$(document).ready(function () {
+  $("a.row_delete").click(function(){
+     if(confirm($(this).attr('title')))
+     {
+       currentElement = $(this);
+       removeError();
+       $.ajax({
+               url: $(this).attr('href'),
+               success: function(html) {
+		      if(html == "ok" )
+		      {
+			// Reload page
+			$(location).attr('href',$('a#tab_1').attr('href'));
+		      }
+		      else
+		      {
+			addError(html); //@TODO:change this!
+		      }
+		},
+               error: function(xhr){
+		  addError('Error!  Status = ' + xhr.status);
+               }
+             }
+            );
+    }
+    return false;
+  });
+});
+</script>
 
 <?php include_partial('specimen/specAfterTab');?>

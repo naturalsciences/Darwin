@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-<table class="results">
+<table class="catalogue_table">
   <thead style="<?php echo (count($individuals))?'':'display: none;';?>">
     <tr>
       <th>
@@ -58,7 +58,7 @@
 	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?spec_id='.$specimen->getId().'&individual_id='.$individual->getId());?>
 	</td>
 	<td class="row_delete">
-	  <?php echo link_to(image_tag('remove.png'),'individuals/delete?spec_id='.$specimen->getId().'&individual_id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
+	  <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
 	</td>
 	<td>
 	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId(), array('class'=>'part_detail_slide'));?>
@@ -69,11 +69,16 @@
       </tr>
     <?php endforeach;?>
   </tbody>
+  <tfoot>
+    <tr>
+      <td colspan='10'>
+	<div class="add_spec_individual">
+	  <a href="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId());?>" id="add_spec_individual"><?php echo __('Add New');?></a>
+	</div>
+      </td>
+    </tr>
+  </tfoot>
 </table>
-<br/>
-<div class="new_link">
-  <a href="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId());?>" id="add_spec_individual"><?php echo __('Add New');?></a>
-</div>
 
 <script  type="text/javascript">
 
