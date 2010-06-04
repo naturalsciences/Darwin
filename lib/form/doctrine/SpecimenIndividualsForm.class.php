@@ -14,7 +14,6 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     unset($this['type_group'], $this['type_search']);
     $this->widgetSchema['id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['specimen_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['type_widget'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['type'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctTypes',
@@ -24,7 +23,6 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'change_label' => 'Pick a type in the list',
         'add_label' => 'Add an other type',
     ));
-    $this->widgetSchema['sex_widget'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['sex'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctSexes',
@@ -43,7 +41,6 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'change_label' => 'Pick a "sexual" state in the list',
         'add_label' => 'Add an other "sexual" state',
     ));
-    $this->widgetSchema['stage_widget'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['stage'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctStages',
@@ -53,7 +50,6 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'change_label' => 'Pick a stage in the list',
         'add_label' => 'Add an other stage',
     ));
-    $this->widgetSchema['social_status_widget'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['social_status'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctSocialStatuses',
@@ -63,7 +59,6 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'change_label' => 'Pick a social status in the list',
         'add_label' => 'Add an other social status',
     ));
-    $this->widgetSchema['rock_form_widget'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['rock_form'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctRockForms',
@@ -85,59 +80,16 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
     $this->validatorSchema['specimen_ref'] = new sfValidatorInteger(array('required'=>false));
-    $this->validatorSchema['type_widget'] = new sfValidatorPass();
     $this->validatorSchema['type'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('type')));
-    $this->validatorSchema['sex_widget'] = new sfValidatorPass();
     $this->validatorSchema['sex'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('sex')));
-    $this->validatorSchema['stage_widget'] = new sfValidatorPass();
     $this->validatorSchema['stage'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('stage')));
     $this->validatorSchema['state'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('state')));
-    $this->validatorSchema['social_status_widget'] = new sfValidatorPass();
     $this->validatorSchema['social_status'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('social_status')));
-    $this->validatorSchema['rock_form_widget'] = new sfValidatorPass();
     $this->validatorSchema['rock_form'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('rock_form')));
     $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
         'choices' => array(0,1),
         'required' => false,
         ));
-  }
-
-  public function bind(array $taintedValues = null, array $taintedFiles = null)
-  {
-    if(!isset($taintedValues['type_widget']))
-    {
-      $this->offsetUnset('type');
-      unset($taintedValues['type']);
-    }
-    if(!isset($taintedValues['sex_widget']))
-    {
-      $this->offsetUnset('sex');
-      unset($taintedValues['sex']);
-      $this->offsetUnset('state');
-      unset($taintedValues['state']);
-    }
-    if(!isset($taintedValues['stage_widget']))
-    {
-      $this->offsetUnset('stage');
-      unset($taintedValues['stage']);
-    }
-    if(!isset($taintedValues['social_status_widget']))
-    {
-      $this->offsetUnset('social_status');
-      unset($taintedValues['social_status']);
-    }
-    if(!isset($taintedValues['rock_form_widget']))
-    {
-      $this->offsetUnset('rock_form');
-      unset($taintedValues['rock_form']);
-    }
-    if(!isset($taintedValues['accuracy']))
-    {
-      $this->offsetUnset('specimen_individuals_count_min');
-      unset($taintedValues['specimen_individuals_count_min']);
-      $this->offsetUnset('specimen_individuals_count_max');
-      unset($taintedValues['specimen_individuals_count_max']);
-    }
-    parent::bind($taintedValues, $taintedFiles);
+	$this->setEmptyToObjectValue();
   }
 }

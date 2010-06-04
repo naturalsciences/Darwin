@@ -31,6 +31,20 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   }
 
 
+  public function setEmptyToObjectValue()
+  {
+	if($this->getObject()->isNew())
+	  return;
+	$obj = $this->getObject();
+	$fields = $this->validatorSchema->getFields();
+	foreach($fields as $name => $field)
+	{
+	  if(isset($obj[$name]))
+		$field->setOption('empty_value', $obj[$name]);
+	}
+	$this->setDefaults($this->getObject()->toArray());
+  }
+
   public function addKeywordsRelation($table)
   {
     $subForm = new sfForm();

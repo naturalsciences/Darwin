@@ -13,7 +13,9 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
   {
 	unset( $this['specimen_individual_ref'] , $this['id']);
 
-	$this->collection = $this->options['collection'];
+	$this->collection = null;
+	if(isset($this->options['collection']))
+	  $this->collection = $this->options['collection'];
 
 	$this->widgetSchema['specimen_part'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
@@ -137,7 +139,6 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
 
 
-
     /* Codes sub form */
     $prefixes = Doctrine::getTable('Codes')->getDistinctSepVals();
     $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
@@ -169,7 +170,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
 
 
-    $this->validatorSchema['specimen_part'] = new sfValidatorString(array('required' => true, 'trim' => true, 'empty_value'=>'specimen'));
+    $this->validatorSchema['specimen_part'] = new sfValidatorString(array('required' => false, 'trim' => true));
 
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
@@ -182,8 +183,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
             array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
             )
         );
+	$this->setEmptyToObjectValue();
   }
-
 
   public function addCodes($num, $collectionId=null)
   {

@@ -360,6 +360,7 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
+	$this->setEmptyToObjectValue();
   }
 
   public function addCodes($num, $collectionId=null)
