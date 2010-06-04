@@ -75,6 +75,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     ));
 
     $this->setDefault('accuracy', 1);
+    $this->widgetSchema['accuracy']->setLabel('Accuracy');
 
     /* Validators */
 
