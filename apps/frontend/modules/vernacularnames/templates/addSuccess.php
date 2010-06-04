@@ -25,7 +25,7 @@
       <th colspan="2"><label><?php echo __('Vernacular name');?></label></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="property">
     <?php foreach($form['VernacularNames'] as $form_value):?>
       <?php include_partial('vernacular_names_values', array('form' => $form_value));?>
     <?php endforeach;?>

@@ -6,7 +6,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="property">
     <?php foreach($vernacular_names as $vernacular_name):?>
     <tr>
       <td>

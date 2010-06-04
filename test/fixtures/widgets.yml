@@ -232,7 +232,17 @@ MyPreferences:
         opened: true
         visible: true
         is_available: true
-        title_perso: Collectors        
+        title_perso: Collectors   
+    u1ws18:
+        User: u1
+        col_num: 2
+        category: specimen_widget
+        group_name: refProperties
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Properties                      
     u1wtax0:
         User: u1
         col_num: 1
@@ -774,7 +784,7 @@ MyPreferences:
         opened: true
         visible: true
         is_available: true
-        title_perso: Properties
+        title_perso: Count
 
     u1sp2:
         User: u1
@@ -823,7 +833,18 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Container
-
+        
+    u1sp6:
+        User: u1
+        col_num: 2
+        category: part_widget
+        group_name: refProperties
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Properties
+        
     u1spi1:
         User: u1
         col_num: 1

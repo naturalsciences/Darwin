@@ -71,7 +71,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="property">
     <?php foreach($form['PropertiesValues'] as $form_value):?>
       <?php include_partial('prop_value', array('form' => $form_value));?>
     <?php endforeach;?>

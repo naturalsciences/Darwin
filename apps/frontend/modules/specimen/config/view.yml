@@ -1,6 +1,6 @@
 newSuccess:
   stylesheets: [widgets.css]
-  javascripts: [jquery.ui.all.min.js, widgets.js]
+  javascripts: [jquery.ui.all.min.js, widgets.js, catalogue.js]
 editSuccess:
   stylesheets: [widgets.cs]
-  javascripts: [jquery.ui.all.min.js, widgets.js]
+  javascripts: [jquery.ui.all.min.js, widgets.js, catalogue.js]

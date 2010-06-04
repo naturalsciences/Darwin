@@ -150,10 +150,10 @@ function addPropertyValue()
   $.ajax(
   {
     type: "GET",
-    url: $(this).attr('href')+ (0+$('.property_values tbody tr').length),
+    url: $(this).attr('href')+ (0+$('.property_values tbody#property tr').length),
     success: function(html)
     {
-      $('.property_values tbody').append(html);
+      $('.property_values tbody#property').append(html);
     }
   });
   return false;

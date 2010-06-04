@@ -81,7 +81,7 @@ $(document).ready(function () {
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
+          url: $(this).attr('href')+ (0+$('.property_values tbody#code tr').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
           success: function(html)
           {
             $(parent).find('tbody').append(html);
