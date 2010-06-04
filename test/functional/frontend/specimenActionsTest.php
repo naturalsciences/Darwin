@@ -129,7 +129,7 @@ $browser->
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Sampling location')->
   end()->
   info('3 - Edit specimen - Change Taxon')->
-  click('Submit', 
+  click('Save', 
         array('specimen' => array('taxon_ref'  => $taxonId,
                                   'collection_ref' => $collectionId,
                                   'host_taxon_ref' => $secondTaxonId

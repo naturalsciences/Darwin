@@ -88,6 +88,7 @@ class specimenActions extends DarwinActions
     $this->form = new SpecimensForm();
     $this->form->addCodes(0, null);
     $this->form->addIdentifications(0,0); 
+    $this->form->addCollectors(0,0); 
   }
 
   public function executeCreate(sfWebRequest $request)

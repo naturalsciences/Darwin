@@ -10,12 +10,11 @@
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
 
-<div>
-<ul id="error_list" class="error_list" style="display:none">
-  <li></li>
-</ul>
-</div>
-
+  <div>
+    <ul id="error_list" class="error_list" style="display:none">
+      <li></li>
+    </ul>
+  </div>
 
 	<input id="collection_id" type="hidden" value="<?php echo $specimen->getCollectionRef();?>">
 	<form action="<?php echo url_for('parts/edit'. ($form->isNew() ? '?indid='.$individual->getId() : '?id='.$form->getObject()->getId()));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
@@ -41,7 +40,7 @@
 			<p class="form_buttons">
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New part'), 'parts/edit?indid='.$individual->getId()) ?>
-            &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>" class="row_delete"><?php echo __('Delete');?></a>
+            &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_part_delete"><?php echo __('Delete');?></a>
           <?php endif?>
 
           &nbsp;<a href="<?php echo url_for('parts/overview?id='.$individual->getId()) ?>"><?php echo __('Cancel');?></a>
@@ -62,7 +61,7 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $("a.row_delete").click(function(){
+  $("a#spec_part_delete").click(function(){
      if(confirm($(this).attr('title')))
      {
        currentElement = $(this);
