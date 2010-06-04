@@ -194,7 +194,7 @@ sw17:
    title_perso: Collecting tools
 
 sw18:
-   col_num: 1
+   col_num: 2
    category: specimen_widget
    group_name: refCollectors
    mandatory: false
@@ -768,7 +768,7 @@ sp6:
    category: part_widget
    group_name: refProperties
    mandatory: false
-   order_by: 8
+   order_by: 3
    opened: true
    visible: true
    title_perso: Properties
