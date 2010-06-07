@@ -916,3 +916,27 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Count
+
+    u1spi7:
+        User: u1
+        col_num: 2
+        category: individuals_widget
+        group_name: refProperties
+        mandatory: false
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Properties
+
+    u1spi8:
+        User: u1
+        col_num: 2
+        category: individuals_widget
+        group_name: refIdentifications
+        mandatory: false
+        order_by: 3
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Identifications

@@ -38,16 +38,16 @@
           </tr>
         </thead>
         <?php foreach($form['Identifiers'] as $form_value):?>
-          <?php include_partial('spec_identification_identifiers', array('form' => $form_value));?>
+          <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value));?>
         <?php endforeach;?>
         <?php foreach($form['newIdentifier'] as $form_value):?>
-          <?php include_partial('spec_identification_identifiers', array('form' => $form_value));?>
+          <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value));?>
         <?php endforeach;?>
         <tfoot>
           <tr>
             <td colspan="3">
               <div class="add_code">
-                <a href="<?php echo url_for('specimen/addIdentifier'.((!$spec_id)?'':'?spec_id='.$spec_id)).'/num/'.$row_num.((!isset($form['id']) || (isset($form['id']) && $form['id']->getValue() == ''))?'':'/identification_id/'.$form['id']->getValue());?>/identifier_num/" class="add_identifier"><?php echo __('Add Ident.');?></a>
+                <a href="<?php echo url_for($module.'/addIdentifier'.(($spec_id == 0) ? '': '?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id))).'/num/'.$row_num.((!isset($form['id']) || (isset($form['id']) && $form['id']->getValue() == ''))?'':'/identification_id/'.$form['id']->getValue());?>/identifier_num/" class="add_identifier"><?php echo __('Add Ident.');?></a>
               </div>
             </td>
           </tr>

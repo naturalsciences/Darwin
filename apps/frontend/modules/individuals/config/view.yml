@@ -1,0 +1,3 @@
+editSuccess:
+  stylesheets: [widgets.css]
+  javascripts: [jquery.ui.all.min.js, widgets.js, catalogue.js, button_ref.js]

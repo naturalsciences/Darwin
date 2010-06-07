@@ -19,11 +19,24 @@ class individualswidgetComponents extends sfComponents
 	{
 	  $spec_individual = Doctrine::getTable('SpecimenIndividuals')->find($this->eid);
 	  $this->form = new SpecimenIndividualsForm($spec_individual);
+	  $this->individual_id = $this->form->getObject()->getId();
+	  $this->spec_id = $this->form->getObject()->getSpecimenRef();
 	}
 	else
 	{
 	  $this->form = new SpecimenIndividualsForm();
+	  $this->individual_id = 0;
+	  $this->spec_id = 0;
 	}
+    }
+    else
+    {
+      $this->individual_id = $this->form->getObject()->getId();
+      $this->spec_id = $this->form->getObject()->getSpecimenRef();
+    }
+    if(! isset($this->module) )
+    {
+      $this->module = 'individuals';
     }
   }
 
@@ -55,6 +68,17 @@ class individualswidgetComponents extends sfComponents
   public function executeSpecimenIndividualCount()
   {
     $this->defineForm();
+  }
+
+  public function executeRefIdentifications()
+  {
+    $this->defineForm();
+  }
+
+  public function executeRefProperties()
+  {
+    if(isset($this->form) )
+      $this->eid = $this->form->getObject()->getId() ;
   }
 
 }

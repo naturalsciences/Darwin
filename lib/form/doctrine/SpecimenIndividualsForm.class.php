@@ -77,6 +77,24 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     $this->setDefault('accuracy', 1);
     $this->widgetSchema['accuracy']->setLabel('Accuracy');
 
+    /* Identifications sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('Identifications',$subForm);   
+    foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimen_individuals', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new IdentificationsForm($vals);
+      $this->embeddedForms['Identifications']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newIdentification',$subForm);
+
+
+    $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
+
     /* Validators */
 
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
@@ -92,5 +110,151 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'required' => false,
         ));
 	$this->setEmptyToObjectValue();
+    $this->validatorSchema['ident'] = new sfValidatorPass();
   }
+  public function addIdentifications($num, $order_by=0)
+  {
+      $options = array('referenced_relation' => 'specimen_individuals', 'order_by' => $order_by);
+      $val = new Identifications();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new IdentificationsForm($val);
+      $this->embeddedForms['newIdentification']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
+  }
+
+  public function reembedIdentifications ($identification, $identification_number)
+  {
+      $this->getEmbeddedForm('Identifications')->embedForm($identification_number, $identification);
+      $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
+  }
+
+  public function reembedNewIdentification ($identification, $identification_number)
+  {
+      $this->getEmbeddedForm('newIdentification')->embedForm($identification_number, $identification);
+      $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
+    {
+	foreach($taintedValues['newIdentification'] as $key=>$newVal)
+	{
+	  if (!isset($this['newIdentification'][$key]))
+	  {
+	    $this->addIdentifications($key);
+            if(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
+            {
+              foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
+              {
+                if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
+	        {
+                  $identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+                  $identification->addIdentifiers($ikey, $ival['order_by']);
+                  $this->reembedNewIdentification($identification, $key);
+                }
+                $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+              }
+	    }
+          }
+          $taintedValues['newIdentification'][$key]['record_id'] = 0;
+	}
+    }
+
+    if(isset($taintedValues['Identifications']) && isset($taintedValues['ident']))
+    {
+	foreach($taintedValues['Identifications'] as $key=>$newval)
+	{
+          if(isset($newval['newIdentifier']))
+            {
+              foreach($taintedValues['Identifications'][$key]['newIdentifier'] as $ikey=>$ival)
+              {
+                if(!isset($this['Identifications'][$key]['newIdentifier'][$ikey]))
+	        {
+                  $identification = $this->getEmbeddedForm('Identifications')->getEmbeddedForm($key);
+                  $identification->addIdentifiers($ikey, $ival['order_by']);
+                  $this->reembedIdentifications($identification, $key);
+                }
+                $taintedValues['Identifications'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+              }
+            }
+	}
+    }
+
+    if(!isset($taintedValues['ident']))
+    {
+      $this->offsetUnset('Identifications');
+      unset($taintedValues['Identifications']);
+    }
+
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    if (null === $forms && $this->getValue('ident'))
+    {
+	$value = $this->getValue('newIdentification');
+	foreach($this->embeddedForms['newIdentification']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['value_defined']))
+	  {
+	    unset($this->embeddedForms['newIdentification'][$name]);
+	  }
+          else
+          {
+            $form->getObject()->setRecordId($this->getObject()->getId());
+            $form->getObject()->save();
+            $subvalue = $value[$name]['newIdentifier'];
+            foreach($form->embeddedForms['newIdentifier']->getEmbeddedForms() as $subname => $subform)
+            {
+              if (!isset($subvalue[$subname]['people_ref']))
+              {
+                unset($form->embeddedForms['newIdentifier'][$subname]);
+              }
+              else
+              {
+                $subform->getObject()->setRecordId($form->getObject()->getId());
+              }
+            }
+          }
+	}
+	$value = $this->getValue('Identifications');
+	foreach($this->embeddedForms['Identifications']->getEmbeddedForms() as $name => $form)
+	{
+	  if (!isset($value[$name]['value_defined']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Identifications'][$name]);
+	  }
+          else
+          {
+            $subvalue = $value[$name]['newIdentifier'];
+            foreach($form->embeddedForms['newIdentifier']->getEmbeddedForms() as $subname => $subform)
+            {
+              if (!isset($subvalue[$subname]['people_ref']))
+              {
+                unset($form->embeddedForms['newIdentifier'][$subname]);
+              }
+              else
+              {
+                $subform->getObject()->setRecordId($form->getObject()->getId());
+              }
+            }
+            $subvalue = $value[$name]['Identifiers'];
+            foreach($form->embeddedForms['Identifiers']->getEmbeddedForms() as $subname => $subform)
+            {
+              if (!isset($subvalue[$subname]['people_ref']))
+              {
+                $subform->getObject()->delete();
+                unset($form->embeddedForms['Identifiers'][$subname]);
+              }
+            }
+          }
+	}
+    }
+    return parent::saveEmbeddedForms($con, $forms);
+  }  
 }

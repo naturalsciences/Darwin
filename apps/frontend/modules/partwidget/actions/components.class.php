@@ -62,8 +62,4 @@ class partwidgetComponents extends sfComponents
     if(isset($this->form) )
       $this->eid = $this->form->getObject()->getId() ;
   }
-//   public function executeRefIdentifications()
-//   {
-//     $this->defineForm();
-//   }
 }

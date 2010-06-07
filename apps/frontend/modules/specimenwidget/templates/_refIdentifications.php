@@ -23,7 +23,6 @@ function reOrderIdentifiers(tableId)
   });
 }
 </script>
-<?php $spec_id = ($form->getObject()->isNew() ? 0: $form->getObject()->getId());?>
 <table class="property_values" id="identifications">
   <thead style="<?php echo ($form['Identifications']->count() || $form['newIdentification']->count())?'':'display: none;';?>" class="spec_ident_head">
     <tr>
@@ -47,16 +46,16 @@ function reOrderIdentifiers(tableId)
     </tr>
   </thead>
     <?php foreach($form['Identifications'] as $form_key=>$form_value):?>
-      <?php include_partial('spec_identifications', array('form' => $form_value, 'row_num'=>$form_key, 'spec_id'=>$spec_id));?>
+      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$form_key, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>
     <?php endforeach;?>
     <?php foreach($form['newIdentification'] as $form_key=>$form_value):?>
-      <?php include_partial('spec_identifications', array('form' => $form_value, 'row_num'=>$form_key, 'spec_id'=>$spec_id));?>
+      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$form_key, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>
     <?php endforeach;?>
   <tfoot>
     <tr>
       <td colspan='6'>
         <div class="add_code">
-          <a href="<?php echo url_for('specimen/addIdentification'. ($form->getObject()->isNew() ? '': '?spec_id='.$form->getObject()->getId()) );?>/num/" id="add_identification"><?php echo __('Add Ident.');?></a>
+          <a href="<?php echo url_for($module.'/addIdentification'. (($spec_id == 0) ? '': '?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id)));?>/num/" id="add_identification"><?php echo __('Add Ident.');?></a>
         </div>
       </td>
     </tr>
@@ -147,8 +146,8 @@ $(document).ready(function () {
     });
     
     $('.spec_ident_identifiers_data input[id$=\"people_ref\"]').live('change', function()
-    {    	
-     ref_element_id = $(this).closest('table').attr('id') ;
+    {
+	ref_element_id = $(this).closest('table').attr('id') ;
 	ref_element_value = $(this).attr('value');
 	$cpt = 0 ;
 	$('.spec_ident_identifiers_data input[id$=\"people_ref\"]').each(function() {

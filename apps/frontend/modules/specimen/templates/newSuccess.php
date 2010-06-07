@@ -26,7 +26,6 @@ $(document).ready(function ()
       <li></li>
     </ul>
   </div>
-
 	<form action="<?php echo url_for('specimen/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : ''). ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() )) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 		<div>
 			<?php echo $form['id']->render() ?>

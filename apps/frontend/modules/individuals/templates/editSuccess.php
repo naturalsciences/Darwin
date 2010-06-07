@@ -1,9 +1,5 @@
 <?php slot('title', __( $individual->getObject()->isNew() ? 'Add specimen individual' : 'Edit specimen individual'));  ?>
 
-<?php use_stylesheet('widgets.css') ?>
-<?php use_javascript('widgets.js') ?>
-<?php use_javascript('catalogue.js') ?>
-
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'individuals', 'table' => 'specimen_individuals', 'eid'=> ($individual->getObject()->isNew() ?null: $individual->getObject()->getId()))); ?>
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual->getObject(), 'mode'=>'individual_edit'));?>
 
