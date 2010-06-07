@@ -115,7 +115,7 @@ $browser->
     checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Codes')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content div#specimen_taxon_ref_name','Falco Peregrinus')->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr td:first select option[selected="selected"]','Main')->
-    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:first select option[selected="selected"]','Secondary')->
+    checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:first select option[selected="selected"]','Second.')->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:first td:nth-child(2) input#specimen_Codes_0_code_prefix',1)->
     checkElement('.board_col:first #refCodes div.widget_content tbody#codes tr:last td:nth-child(2) input#specimen_Codes_1_code_prefix',1)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 3)->
