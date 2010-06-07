@@ -137,6 +137,14 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	));
     $this->validatorSchema['category'] = new sfValidatorString(array('required' => false));
 
+    $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
+        'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
+        'expanded' => true,
+    ));
+
+    $this->setDefault('accuracy', 1);
+    $this->widgetSchema['accuracy']->setLabel('Accuracy');
+
 
 
     /* Codes sub form */

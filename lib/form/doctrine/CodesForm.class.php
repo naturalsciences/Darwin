@@ -22,7 +22,7 @@ class CodesForm extends BaseCodesForm
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);*/
     
-    $choices = array('main'=> 'Main', 'secondary' => 'Secondary', 'temporary' => 'Temporary') ;
+    $choices = array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.') ;
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();

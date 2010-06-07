@@ -27,6 +27,10 @@ class individualsActions extends DarwinActions
   {
 	$this->individual = $this->getSpecimenIndividualsForm($request);
 
+	if($this->individual->getObject()->isNew())
+	{
+	  $this->individual->addIdentifications(0,0); 
+	}
 	if($request->isMethod('post'))
 	{
 	  $this->individual->bind( $request->getParameter('specimen_individuals') );

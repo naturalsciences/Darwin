@@ -883,10 +883,9 @@ tbody.spec_ident_identifiers_data tr td
 .add_code
 {
   height:24px;
-  width:74px;
+  width:10em;
   text-align:center;
   font-size:small;
-  background: #F6F6F6 url(/images/widget_button_green.png) no-repeat;
   float:right;
   padding-top:0.1em;
   margin-top:0.5em;

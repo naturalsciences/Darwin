@@ -47,7 +47,7 @@
           <tr>
             <td colspan="3">
               <div class="add_code">
-                <a href="<?php echo url_for($module.'/addIdentifier'.(($spec_id == 0) ? '': '?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id))).'/num/'.$row_num.((!isset($form['id']) || (isset($form['id']) && $form['id']->getValue() == ''))?'':'/identification_id/'.$form['id']->getValue());?>/identifier_num/" class="add_identifier"><?php echo __('Add Ident.');?></a>
+                <a href="<?php echo url_for($module.'/addIdentifier'.(($spec_id == 0) ? '': '?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id))).'/num/'.$row_num.((!isset($form['id']) || (isset($form['id']) && $form['id']->getValue() == ''))?'':'/identification_id/'.$form['id']->getValue());?>/identifier_num/" class="add_identifier"><?php echo __('Add identifier');?></a>
               </div>
             </td>
           </tr>

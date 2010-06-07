@@ -15,8 +15,8 @@
    <tfoot>
      <tr>
        <td colspan="3">
-         <div class="add_collectors">
-           <a href="<?php echo url_for('specimen/addCollector'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_collectors"><?php echo __('Add Coll.');?></a>
+         <div class="add_code">
+           <a href="<?php echo url_for('specimen/addCollector'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_collectors"><?php echo __('Add collector');?></a>
          </div>
        </td>
      </tr>

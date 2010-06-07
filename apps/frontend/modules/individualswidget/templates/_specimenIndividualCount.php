@@ -1,24 +1,3 @@
-<script>
-jQuery(function(){
-    if($('input#specimen_individuals_accuracy_0:checked').length)
-    {
-        $('tr#specimen_individuals_count_max').hide();
-    }
-    $("input[name=specimen_individuals\\[accuracy\\]]").click(function ()
-    {
-        if($('input#specimen_individuals_accuracy_0:checked').length)
-        {
-            $('tr#specimen_individuals_count_max').hide();
-        }
-        else
-        {
-            $('tr#specimen_individuals_count_max').show();
-        }
-        if($('#specimen_individuals_specimen_individuals_count_max').val() < $('#specimen_individuals_specimen_individuals_count_min').val())
-            $('#specimen_individuals_specimen_individuals_count_max').val($('#specimen_individuals_specimen_individuals_count_min').val());
-    });
-});
-</script>
 <table>
   <tr>
 	<th class="top_aligned"><?php echo $form['accuracy']->renderLabel();?></th>
@@ -42,3 +21,24 @@ jQuery(function(){
 	</td>
   </tr>
 </table>
+<script>
+jQuery(function(){
+    if($('input#specimen_individuals_accuracy_0:checked').length)
+    {
+        $('tr#specimen_individuals_count_max').hide();
+    }
+    $("input[name=specimen_individuals\\[accuracy\\]]").click(function ()
+    {
+        if($('input#specimen_individuals_accuracy_0:checked').length)
+        {
+            $('tr#specimen_individuals_count_max').hide();
+        }
+        else
+        {
+            $('tr#specimen_individuals_count_max').show();
+        }
+        if($('#specimen_individuals_specimen_individuals_count_max').val() < $('#specimen_individuals_specimen_individuals_count_min').val())
+            $('#specimen_individuals_specimen_individuals_count_max').val($('#specimen_individuals_specimen_individuals_count_min').val());
+    });
+});
+</script>
