@@ -39,10 +39,11 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
 	$fields = $this->validatorSchema->getFields();
 	foreach($fields as $name => $field)
 	{
-	  if(isset($obj[$name]))
+	  if($obj->getTable()->hasField($name))
+	  {
 		$field->setOption('empty_value', $obj[$name]);
+	  }
 	}
-	$this->setDefaults($this->getObject()->toArray());
   }
 
   public function addKeywordsRelation($table)
