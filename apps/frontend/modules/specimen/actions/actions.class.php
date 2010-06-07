@@ -54,7 +54,7 @@ class specimenActions extends DarwinActions
     $order_by = intval($request->getParameter('order_by',0));
     $spec_form = $this->getSpecimenForm($request);
     $spec_form->addIdentifications($number, $order_by);
-    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'spec_id'=>$request->getParameter('spec_id',0)));
+    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'specimen', 'spec_id'=>$request->getParameter('spec_id',0), 'individual_id'=>0));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
