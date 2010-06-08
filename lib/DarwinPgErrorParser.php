@@ -16,6 +16,8 @@ class DarwinPgErrorParser
     '/Maximum number of recombined item reach/i' => 'Maximum number of "recombination" reach',
     '/set this synonym twice/i' => 'You can\'t attach a synonym twice',
     '/Error in datesOverlaps function/i' => 'Error in dates overlaping',
+    '/Duplicate key value violates unique constraint "unq_comments"/i' => 'You cannot add a particular notion comment twice',
+    '/duplicate key value violates unique constraint "unq_specimens"/i' => 'This specimen already exist'
   );
 
 
@@ -28,20 +30,13 @@ class DarwinPgErrorParser
   public function getMessage()
   {
     $original_message = $this->nat_exception->getMessage();
-    if($this->nat_exception->getPortableCode() == null)
+    foreach (self::$errorRegexps as $regexp => $message)
     {
-      foreach (self::$errorRegexps as $regexp => $message)
-      {
-	if(preg_match($regexp, $original_message))
-	{
-                return $message;
-        }
-      }
-      return 'Unknown Error : '.$original_message;
+	  if(preg_match($regexp, $original_message))
+	  {
+	      return $message;
+	  }
     }
-    else
-    {
-      return $this->nat_exception->getPortableMessage();
-    }
+    return 'Unknown Error : '.$original_message;
   }
 }

@@ -16,7 +16,7 @@ class CommentsTable extends DarwinTable
                                     'mineralogy' => array('unit information' => 'unit information',
                                                                  ),
                                     'igs' => array('ig definition' => 'ig definition',
-                                                   'diverse' => 'diverse'
+                                             'diverse' => 'diverse'
                                                   ),
                                     'expeditions' => array('expedition information' => 'expedition information',
                                                          ),
@@ -25,12 +25,22 @@ class CommentsTable extends DarwinTable
                                     'people' => array('general information' => 'general information',
                                                          ),
                                     'gtu' => array('position information' => 'Position information',
-						   'period information' => 'Period information',
+						   			'period information' => 'Period information',
                                                          ),
-									'specimen_parts' => array('container' => 'Container',
-														 'disposal' => 'Disposal',
-														  'part' => 'Parts',
-                                                         )
+							 'specimen_parts' => array('container' => 'Container',
+									'disposal' => 'Disposal',
+									'part' => 'Parts',
+                                                         ),
+                                    'specimens' => array('general' => 'General', 'taxonomy' => 'Taxonomy', 'chronostratigraphy' => 'Chronostratigraphy',
+                                    		'lithostratigraphy' => 'Lithostratigraphy', 'lithology' => 'Lithology', 'mineralogy' => 'Mineralogy',
+                                    		'sampling_locations' => 'Sampling locations', 'igs' => 'IGs', 'identifications' => 'Identifications',
+                                    		'collectors' => 'Collectors'
+                                    		            ),
+                                    'individuals' => array('general' => 'General', 'type' => 'Type', 'stage' => 'Stage', 'sex' => 'Sex',
+                                    		'social_status' => 'Social status', 'rock_form' => 'Rock form', 'identifications' => 'Identifications'
+                                    		            ),
+                                    'parts' => array('general' => 'General', 'description' => 'Description', 'conservation_mean' => 'Conservation mean',
+                                              'conservation_location' => 'Conservation location', 'preparation' => 'Preparation')
                                    );
 
   /**

@@ -242,7 +242,17 @@ MyPreferences:
         opened: true
         visible: true
         is_available: true
-        title_perso: Properties                      
+        title_perso: Properties  
+    u1ws19:
+        User: u1
+        col_num: 2
+        category: specimen_widget
+        group_name: refComment
+        order_by: 9
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Comments                            
     u1wtax0:
         User: u1
         col_num: 1

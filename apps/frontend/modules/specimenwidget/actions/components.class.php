@@ -124,6 +124,11 @@ class specimenwidgetComponents extends sfComponents
       $this->eid = $this->form->getObject()->getId() ;
   }
 
+  public function executeRefComment()
+  {    
+    $this->defineForm();
+  }
+  
   public function executeRefIdentifications()
   {
     $this->defineForm();

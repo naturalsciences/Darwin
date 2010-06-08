@@ -213,6 +213,16 @@ sw19:
    visible: true
    title_perso: Properties
 
+sw20:
+   col_num: 2
+   category: specimen_widget
+   group_name: refComment
+   mandatory: false
+   order_by: 8
+   opened: true
+   visible: true
+   title_perso: Comments   
+
 tw1:
    col_num: 1
    category: catalogue_taxonomy_widget

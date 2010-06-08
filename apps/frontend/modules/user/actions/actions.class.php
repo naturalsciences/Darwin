@@ -114,9 +114,9 @@ class userActions extends DarwinActions
     {
 	$e = new DarwinPgErrorParser($ne);
         $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$this->form = new UserForm($user);
+	$this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $user->getIsPhysical()));
 	$this->form->getErrorSchema()->addError($error); 
-	//$this->loadWidgets();
+	$this->loadWidgets();
 	$this->setTemplate('edit');
     }
   }

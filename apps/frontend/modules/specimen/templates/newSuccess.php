@@ -31,11 +31,8 @@ $(document).ready(function ()
 			<?php echo $form['id']->render() ?>
 			<?php if($form->hasGlobalErrors()):?>
 				<ul class="spec_error_list">
-					<?php foreach ($form->getGlobalErrors() as $name => $error): ?>
-						<li><?php echo __($name." ".$error); ?></li>
-					<?php endforeach; ?>
 					<?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
-						<li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
+						<li class="error_fld_<?php echo $name;?>"><?php echo __($error) ?></li>
 					<?php endforeach; ?>
 				</ul>
 			<?php endif;?>

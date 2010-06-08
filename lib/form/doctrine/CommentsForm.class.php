@@ -18,8 +18,6 @@ class CommentsForm extends BaseCommentsForm
     $this->widgetSchema['notion_concerned'] =  new sfWidgetFormChoice(array(
       'choices' =>  CommentsTable::getNotionsFor($this->options['table']),  
     ));
-    $this->validatorSchema['notion_concerned'] =  new sfValidatorChoice(array(
-      'choices' =>  CommentsTable::getNotionsFor($this->options['table']),  
-    ));
+
   }
 }

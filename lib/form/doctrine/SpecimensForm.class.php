@@ -294,6 +294,23 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+    /* Comments sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('Comments',$subForm);   
+    foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CommentsForm($vals,array('table' => 'specimens'));
+      $this->embeddedForms['Comments']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Comments', $this->embeddedForms['Comments']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newComments',$subForm);
+    
+    $this->widgetSchema['comment'] = new sfWidgetFormInputHidden(array('default'=>1));
+    
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
                                          'host_relationship' => 'Relationship',
@@ -350,6 +367,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
     $this->validatorSchema['collector'] = new sfValidatorPass();
+    $this->validatorSchema['comment'] = new sfValidatorPass();    
     $this->validatorSchema['code'] = new sfValidatorPass();
     $this->validatorSchema['ident'] = new sfValidatorPass();
 
@@ -399,6 +417,18 @@ class SpecimensForm extends BaseSpecimensForm
       //Re-embedding the container
       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
   }
+
+  public function addComments($num)
+  {
+      $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
+      $val = new Comments();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new CommentsForm($val,array('table' => 'specimens'));
+      $this->embeddedForms['newComments']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newComments', $this->embeddedForms['newComments']);
+  }
   
   public function addIdentifications($num, $order_by=0)
   {
@@ -446,6 +476,17 @@ class SpecimensForm extends BaseSpecimensForm
 	    $this->addCollectors($key);
 	  }
        $taintedValues['newCollectors'][$key]['record_id'] = 0;
+	}
+    }
+    if(isset($taintedValues['newComments']) && isset($taintedValues['comment']))
+    {
+     foreach($taintedValues['newComments'] as $key=>$newVal)
+	{
+	  if (!isset($this['newComments'][$key]))
+	  {
+	    $this->addComments($key);
+	  }
+       $taintedValues['newComments'][$key]['record_id'] = 0;
 	}
     }
     if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
@@ -503,6 +544,11 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('Collectors');
       unset($taintedValues['Collectors']);
     }
+    if(!isset($taintedValues['comment']))
+    {
+      $this->offsetUnset('Comments');
+      unset($taintedValues['Comments']);
+    }    
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');
@@ -640,6 +686,29 @@ class SpecimensForm extends BaseSpecimensForm
 	  }
 	}
     }    
+    if (null === $forms && $this->getValue('comment'))
+    {
+	$value = $this->getValue('newComments');
+	foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
+	{
+	  if($value[$name]['referenced_relation'] == "0")
+	    unset($this->embeddedForms['newComments'][$name]);
+	  else
+	  {
+	    $form->getObject()->setRecordId($this->getObject()->getId());
+	    $form->getObject()->setReferencedRelation('specimens') ;      
+	  }
+	}
+	$value = $this->getValue('Comments');
+	foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
+	{	
+	  if ($value[$name]['referenced_relation'] == "0")
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Comments'][$name]);
+	  }
+	}
+    } 
     return parent::saveEmbeddedForms($con, $forms);
   }  
 }

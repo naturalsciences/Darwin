@@ -43,9 +43,26 @@ class specimenActions extends DarwinActions
   public function executeAddCollector(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
-    $form = new SpecimensForm();
+    $spec = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
+          
+    $form = new SpecimensForm($spec);
     $form->addCollectors($number,0);
     return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number]));
+  }
+
+  public function executeAddComments(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $spec = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
+    $form = new SpecimensForm($spec);
+    $form->addComments($number);
+    return $this->renderPartial('spec_comments',array('form' => $form['newComments'][$number]));
   }
 
   public function executeAddIdentification(sfWebRequest $request)
