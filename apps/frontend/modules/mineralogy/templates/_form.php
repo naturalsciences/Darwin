@@ -85,7 +85,7 @@
           <?php echo $form['id']->render() ?><?php echo $form['table']->render() ?><?php echo link_to('', 'catalogue/searchPUL', array('id' => 'searchPUL', 'class' => 'hidden'));?>  &nbsp;<a href="<?php echo url_for('mineralogy/index') ?>"><?php echo __('Cancel');?></a>
 
           <?php if (!$form->getObject()->isNew()): ?>
-            <?php echo link_to(__('Delete'), 'mineralogy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
+            &nbsp;<?php echo link_to(__('Delete'), 'mineralogy/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
           <?php endif; ?>
 
           <input id="submit" type="submit" value="<?php echo __('Save');?>" />

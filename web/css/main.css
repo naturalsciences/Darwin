@@ -966,20 +966,15 @@ table.edit_synon td
   background-color:#C1CF56;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  padding:1px;
+  padding:2px;
   color:white;
   text-decoration: none;
+  font-size:90%;
 }
 
 .edition input[type="submit"], .renamed input[type="submit"]
 {
-  padding-top:2px;
-  padding-bottom:2px;
-}
-
-div .edition tfoot a, div .renamed tfoot a  
-{
-  padding:2px;
+  margin-left:0.4em;
 }
 
 .edition input[type="submit"]:hover, .edition button, .edition input[type="reset"], .renamed input[type="submit"]:hover, .renamed button
@@ -1353,14 +1348,12 @@ li.tag_size_5 { font-size: 20px; }
   margin-left: 0.7em;
 
 }
-.gtu_groups_add a[href]
-{
-/*   color:white; */
-}
+
 #gtu_filter .datesNum
 {
   vertical-align:top;
 }
+
 .tag_parts_screen
 {
   width:60%;
