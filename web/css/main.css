@@ -1124,7 +1124,7 @@ tr.details .details_info tr:hover
 
 .tag_selected li img
 {
-  margin-left: 5px;
+  margin-left: 5px;action_maintenance
 }
 
 .tag
@@ -1498,7 +1498,7 @@ input.tag_line
   background-color:white;
 }
 
-#myChangesPlotted a, #myChangesPlotted a[href]
+#myChangesPlotted a, #myChangesPlotted a[href], .maintenace_form table a
 {
   background-color: #55AFC5;
   -moz-border-radius: 5px;
@@ -1512,4 +1512,25 @@ ul.graph_range
 {
 	padding-bottom:1em;
 /* 	text-align:center; */
+}
+
+.maintenace_form
+{
+  padding:0.5em;
+  max-width: 600px;
+}
+
+.maintenace_form table
+{
+ width:100%; 
+}
+.action_maintenance
+{
+  margin-top:2em;
+  max-width: 600px;
+}
+div#maintenance h2
+{
+  margin: 1em;
+  text-decoration:underline;
 }

@@ -4,5 +4,8 @@
  */
 class CollectionMaintenanceTable extends DarwinTable
 {
-
+  public function getDistinctActions()
+  {
+    return $this->createDistinct('CollectionMaintenance', 'action_observation', 'action')->execute();
+  }
 }

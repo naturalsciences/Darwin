@@ -5,5 +5,45 @@
  */
 class CollectionMaintenance extends BaseCollectionMaintenance
 {
+  /**
+  * Set Modification Date field and mask if a fuzzyDateTime is passed
+  * @param string|fuzzyDateTime $fd a fuzzyDateTime object or a string to pass to postgres
+  * @return $this
+  */
+  public function setDateFrom($fd)
+  {
+	if(is_string($fd))
+	{
+	  $this->_set('modification_date_time',$fd);
+	}
+	else
+	{
+	  $this->_set('modification_date_time', $fd->format('Y/m/d H:i:s') );
+	  $this->_set('modification_date_mask', $fd->getMask() );
+	}
+	return $this;
+  }
 
+ 
+  /**
+  * Get the Modification Date masked with tag $tag depending on the mask value
+  * @param string $tag Tag wich will be arround fuzzy values (default < em >)
+  * @return string the Date masked
+  */
+  public function getToDateMasked($tag='em')
+  {
+    $dateTime = new FuzzyDateTime($this->_get('modification_date_time'), $this->_get('modification_date_mask'),true,true);
+    return $dateTime->getDateMasked($tag);
+  }
+
+  /** 
+  * Get Modification Date as array with masked values
+  * @return array an array of masked elements with key year,month,day,hour,minute,second
+  * @see FuzzyDateTime::getDateTimeMaskedAsArray
+  */
+  public function getDateTo()
+  {
+    $date = new FuzzyDateTime($this->_get('modification_date_time'),$this->_get('modification_date_mask'),true, true);
+    return $date->getDateTimeMaskedAsArray();
+  }
 }

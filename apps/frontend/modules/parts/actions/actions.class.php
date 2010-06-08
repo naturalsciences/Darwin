@@ -50,6 +50,7 @@ class partsActions extends DarwinActions
 	}
     $this->loadWidgets();
   }
+
   public function executeOverview(sfWebRequest $request)
   {
 	$this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));

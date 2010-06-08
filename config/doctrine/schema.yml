@@ -553,13 +553,13 @@ UsersTracking:
 CollectionMaintenance:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
+        record_id: { type: integer, notnull: true},
         referenced_relation: { type: string, notnull: true}
         people_ref: { type: integer, notnull: true},
         category: { type: string, notnull: true, default: action}
         action_observation: { type: string, notnull: true}
         description: { type: string }
         description_ts: { type: string }
-        language_full_text: { type: string }
         modification_date_time: { type: string, notnull: true }
         modification_date_mask : { type: integer, notnull: true, default: 0}
     relations:

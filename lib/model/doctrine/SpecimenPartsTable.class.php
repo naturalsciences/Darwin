@@ -17,36 +17,68 @@ class SpecimenPartsTable extends DarwinTable
   * Get Distincts Floor of Part
   * @return array an Array of types in keys
   */
-  public function getDistinctFloors()
+  public function getDistinctFloors($building = null)
   {
-    return $this->createDistinct('SpecimenParts', 'floor', 'floors')->execute();
-  }
-
-  /**
-  * Get Distincts Row of Part
-  * @return array an Array of types in keys
-  */
-  public function getDistinctRows()
-  {
-    return $this->createDistinct('SpecimenParts', 'row', 'rows')->execute();
+    $q = $this->createDistinct('SpecimenParts', 'floor', 'floors');
+	if(! is_null($building))
+	  $q->addWhere('building = ?', $building);
+	return $q->execute();
   }
 
   /**
   * Get Distincts Room of Part
   * @return array an Array of types in keys
   */
-  public function getDistinctRooms()
+  public function getDistinctRooms($building = null, $floor = null)
   {
-    return $this->createDistinct('SpecimenParts', 'room', 'rooms')->execute();
+    $q = $this->createDistinct('SpecimenParts', 'room', 'rooms');
+	if(! is_null($building))
+	  $q->addWhere('building = ?', $building);
+
+	if(! is_null($floor))
+	  $q->addWhere('floor = ?', $floor);
+
+	return $q->execute();
+  }
+
+  /**
+  * Get Distincts Row of Part
+  * @return array an Array of types in keys
+  */
+  public function getDistinctRows($building = null, $floor = null, $room = null)
+  {
+    $q = $this->createDistinct('SpecimenParts', 'row', 'rows');
+	if(! is_null($building))
+	  $q->addWhere('building = ?', $building);
+
+	if(! is_null($floor))
+	  $q->addWhere('floor = ?', $floor);
+
+	if(! is_null($room))
+	  $q->addWhere('room = ?', $room);
+
+	return $q->execute();
   }
 
   /**
   * Get Distincts Shelve of Part
   * @return array an Array of types in keys
   */
-  public function getDistinctShelfs()
+  public function getDistinctShelfs($building = null, $floor = null, $room = null, $rows = null)
   {
-    return $this->createDistinct('SpecimenParts', 'shelf', 'shelfs')->execute();
+    $q = $this->createDistinct('SpecimenParts', 'shelf', 'shelfs');
+	if(! is_null($building))
+	  $q->addWhere('building = ?', $building);
+
+	if(! is_null($floor))
+	  $q->addWhere('floor = ?', $floor);
+
+	if(! is_null($room))
+	  $q->addWhere('room = ?', $room);
+
+	if(! is_null($rows))
+	  $q->addWhere('row = ?', $rows);
+	return $q->execute();
   }
 
   /**

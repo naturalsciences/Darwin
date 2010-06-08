@@ -95,7 +95,7 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $("a.row_delete").live('click', function(){
+  $("a.row_delete").click(function(){
      if(confirm($(this).attr('title')))
      {
        currentElement = $(this);

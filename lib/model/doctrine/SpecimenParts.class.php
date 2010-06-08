@@ -13,4 +13,9 @@ class SpecimenParts extends BaseSpecimenParts
 	  'figurate' => 'figurate',
 	);
   }
+  
+  public function getName()
+  {
+	return $this->_get('id');
+  }
 }
