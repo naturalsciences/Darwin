@@ -3206,7 +3206,7 @@ BEGIN
 		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
 			NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
 		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
-			NEW.description_ts := to_tsvector(NEW.language_full_text::regconfig,NEW.description);
+			NEW.description_ts := to_tsvector('simple',NEW.description);
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
 			NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
 		ELSEIF TG_TABLE_NAME = 'habitats' THEN
@@ -3240,8 +3240,8 @@ BEGIN
 				NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
-			IF OLD.description != NEW.description OR OLD.language_full_text != NEW.language_full_text THEN
-				NEW.description_ts := to_tsvector(NEW.language_full_text::regconfig, NEW.description);
+			IF OLD.description != NEW.description THEN
+				NEW.description_ts := to_tsvector('simple', NEW.description);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
 			IF OLD.name != NEW.name OR OLD.name_language_full_text != NEW.name_language_full_text THEN
