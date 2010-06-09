@@ -25,7 +25,7 @@
 jQuery(function(){
     if($('input#specimen_accuracy_0:checked').length || ( $('#specimen_specimen_count_max').val() == $('#specimen_specimen_count_min').val()) )
     {
-		$('input#specimen_accuracy_0').click();
+	$('input#specimen_accuracy_0').click();
         $('tr#specimen_count_max').hide();
     }
     $("input[name=specimen\\[accuracy\\]]").click(function ()

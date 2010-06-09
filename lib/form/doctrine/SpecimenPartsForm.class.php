@@ -181,7 +181,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->embedForm('Comments',$subForm);   
     foreach(Doctrine::getTable('comments')->findForTable('specimen_parts', $this->getObject()->getId()) as $key=>$vals)
     {
-      $form = new CommentsForm($vals,array('table' => 'parts'));
+      $form = new CommentsSubForm($vals,array('table' => 'parts'));
       $this->embeddedForms['Comments']->embedForm($key, $form);
     }
     //Re-embedding the container
@@ -270,7 +270,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       $val = new Comments();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
-      $form = new CommentsForm($val,array('table' => 'parts'));
+      $form = new CommentsSubForm($val,array('table' => 'parts'));
       $this->embeddedForms['newComments']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
@@ -278,6 +278,13 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
+    if(isset($taintedValues['accuracy']))
+    {
+      if($taintedValues['accuracy'] == 0 ) //exact
+      {
+	$taintedValues['specimen_part_count_max'] = $taintedValues['specimen_part_count_min'];
+      }
+    }
 	if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
 	{
 	  foreach($taintedValues['newCode'] as $key=>$newVal)
@@ -397,23 +404,23 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	      }
 	    }
 	}    
-     if (null === $forms && $this->getValue('comment'))
-     {
-	 $value = $this->getValue('newComments');
-	 foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
-	 {
-	  if($value[$name]['referenced_relation'] == "0")
+    if (null === $forms && $this->getValue('comment'))
+    {
+	$value = $this->getValue('newComments');
+	foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
+	{
+	  if(!isset($value[$name]['comment'] ))
 	    unset($this->embeddedForms['newComments'][$name]);
 	  else
 	  {
 	    $form->getObject()->setRecordId($this->getObject()->getId());
-	    $form->getObject()->setReferencedRelation('specimen_parts') ;      
+	    $form->getObject()->setReferencedRelation('specimens') ;      
 	  }
 	}
 	$value = $this->getValue('Comments');
 	foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
 	{	
-	  if ($value[$name]['referenced_relation'] == "0")
+	  if (!isset($value[$name]['comment'] ))
 	  {
 	    $form->getObject()->delete();
 	    unset($this->embeddedForms['Comments'][$name]);

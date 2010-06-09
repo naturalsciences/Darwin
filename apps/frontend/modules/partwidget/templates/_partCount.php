@@ -23,8 +23,9 @@
 </table>
 <script>
 jQuery(function(){
-    if($('input#specimen_parts_accuracy_0:checked').length)
+    if($('input#specimen_parts_accuracy_0:checked').length || ( $('#specimen_parts_specimen_part_count_max').val() == $('#specimen_parts_specimen_part_count_min').val()) )
     {
+	$('input#specimen_parts_accuracy_0').click();
         $('tr#specimen_parts_count_max').hide();
     }
     $("input[name=specimen_parts\\[accuracy\\]]").click(function ()
@@ -37,8 +38,7 @@ jQuery(function(){
         {
             $('tr#specimen_parts_count_max').show();
         }
-        if($('#specimen_parts_specimen_part_count_max').val() < $('#specimen_parts_specimen_part_count_min').val())
+        if(parseInt($('#specimen_parts_specimen_part_count_max').val()) < parseInt($('#specimen_parts_specimen_part_count_min').val()) )
             $('#specimen_parts_specimen_part_count_max').val($('#specimen_parts_specimen_part_count_min').val());
     });
-});
-</script>
+});</script>

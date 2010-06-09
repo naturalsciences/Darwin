@@ -16,7 +16,7 @@
      <tr>
        <td colspan="3">
          <div class="add_collectors">
-           <a href="<?php echo url_for('individuals/addComments'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_comment"><?php echo __('Add Comm.');?></a>
+           <a href="<?php echo url_for('individuals/addComments'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_comment"><?php echo __('Add comment');?></a>
          </div>
        </td>
      </tr>
@@ -46,8 +46,7 @@ $(document).ready(function () {
     {
       parent = $(this).closest('tbody');
       parentTableId = $(parent).closest('table').attr('id');
-      nvalue="0";
-      $(parent).find('input[id$=\"_referenced_relation\"]').val(nvalue);
+      nvalue="";
       $(parent).find('textarea[id$=\"_comment\"]').html(nvalue);      
       $(parent).hide();
       reOrderIdentifiers(parentTableId);

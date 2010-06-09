@@ -300,7 +300,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->embedForm('Comments',$subForm);   
     foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
     {
-      $form = new CommentsForm($vals,array('table' => 'specimens'));
+      $form = new CommentsSubForm($vals,array('table' => 'specimens'));
       $this->embeddedForms['Comments']->embedForm($key, $form);
     }
     //Re-embedding the container
@@ -424,7 +424,7 @@ class SpecimensForm extends BaseSpecimensForm
       $val = new Comments();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
-      $form = new CommentsForm($val,array('table' => 'specimens'));
+      $form = new CommentsSubForm($val,array('table' => 'specimens'));
       $this->embeddedForms['newComments']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
@@ -456,10 +456,13 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-	if($taintedValues['accuracy'] == 0 ) //exact
-	{
-	  $taintedValues['specimen_count_max'] = $taintedValues['specimen_count_min'];
-	}
+    if(isset($taintedValues['accuracy']))
+    {
+      if($taintedValues['accuracy'] == 0 ) //exact
+      {
+	$taintedValues['specimen_count_max'] = $taintedValues['specimen_count_min'];
+      }
+    }
 
     if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
     {
@@ -491,7 +494,7 @@ class SpecimensForm extends BaseSpecimensForm
 	  {
 	    $this->addComments($key);
 	  }
-       $taintedValues['newComments'][$key]['record_id'] = 0;
+	  $taintedValues['newComments'][$key]['record_id'] = 0;
 	}
     }
     if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
@@ -696,7 +699,7 @@ class SpecimensForm extends BaseSpecimensForm
 	$value = $this->getValue('newComments');
 	foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
 	{
-	  if($value[$name]['referenced_relation'] == "0")
+	  if(!isset($value[$name]['comment'] ))
 	    unset($this->embeddedForms['newComments'][$name]);
 	  else
 	  {
@@ -707,7 +710,7 @@ class SpecimensForm extends BaseSpecimensForm
 	$value = $this->getValue('Comments');
 	foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
 	{	
-	  if ($value[$name]['referenced_relation'] == "0")
+	  if (!isset($value[$name]['comment'] ))
 	  {
 	    $form->getObject()->delete();
 	    unset($this->embeddedForms['Comments'][$name]);

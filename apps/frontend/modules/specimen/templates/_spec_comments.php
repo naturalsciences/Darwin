@@ -1,6 +1,6 @@
   <tbody  class="spec_ident_comments_data">
    <tr class="spec_ident_comments_data">
-      <td>
+      <td class="top_aligned">
           <?php echo $form['notion_concerned']->renderError(); ?>
           <?php echo $form['notion_concerned'];?>
       </td>

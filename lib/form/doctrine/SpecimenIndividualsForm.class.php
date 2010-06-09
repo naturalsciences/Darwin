@@ -101,7 +101,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     $this->embedForm('Comments',$subForm);   
     foreach(Doctrine::getTable('comments')->findForTable('specimen_individuals', $this->getObject()->getId()) as $key=>$vals)
     {
-      $form = new CommentsForm($vals,array('table' => 'individuals'));
+      $form = new CommentsSubForm($vals,array('table' => 'individuals'));
       $this->embeddedForms['Comments']->embedForm($key, $form);
     }
     //Re-embedding the container
@@ -160,7 +160,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
       $val = new Comments();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
-      $form = new CommentsForm($val,array('table' => 'individuals'));
+      $form = new CommentsSubForm($val,array('table' => 'individuals'));
       $this->embeddedForms['newComments']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
@@ -168,6 +168,13 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
   
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
+    if(isset($taintedValues['accuracy']))
+    {
+      if($taintedValues['accuracy'] == 0 ) //exact
+      {
+	$taintedValues['specimen_individuals_count_max'] = $taintedValues['specimen_individuals_count_min'];
+      }
+    }
     if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
     {
 	foreach($taintedValues['newIdentification'] as $key=>$newVal)
@@ -304,24 +311,24 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 	$value = $this->getValue('newComments');
 	foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
 	{
-	  if($value[$name]['referenced_relation'] == "0")
+	  if(!isset($value[$name]['comment'] ))
 	    unset($this->embeddedForms['newComments'][$name]);
 	  else
 	  {
 	    $form->getObject()->setRecordId($this->getObject()->getId());
-	    $form->getObject()->setReferencedRelation('specimen_individuals') ;      
+	    $form->getObject()->setReferencedRelation('specimens') ;      
 	  }
 	}
 	$value = $this->getValue('Comments');
 	foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
 	{	
-	  if ($value[$name]['referenced_relation'] == "0")
+	  if (!isset($value[$name]['comment'] ))
 	  {
 	    $form->getObject()->delete();
 	    unset($this->embeddedForms['Comments'][$name]);
 	  }
 	}
-    }    
+    } 
     return parent::saveEmbeddedForms($con, $forms);
   }  
 }

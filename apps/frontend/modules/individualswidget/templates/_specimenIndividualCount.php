@@ -23,8 +23,9 @@
 </table>
 <script>
 jQuery(function(){
-    if($('input#specimen_individuals_accuracy_0:checked').length)
+    if($('input#specimen_individuals_accuracy_0:checked').length || ( $('#specimen_individuals_specimen_individuals_count_max').val() == $('#specimen_individuals_specimen_individuals_count_min').val()) )
     {
+	$('input#specimen_individuals_accuracy_0').click();
         $('tr#specimen_individuals_count_max').hide();
     }
     $("input[name=specimen_individuals\\[accuracy\\]]").click(function ()
@@ -37,7 +38,7 @@ jQuery(function(){
         {
             $('tr#specimen_individuals_count_max').show();
         }
-        if($('#specimen_individuals_specimen_individuals_count_max').val() < $('#specimen_individuals_specimen_individuals_count_min').val())
+        if(parseInt($('#specimen_individuals_specimen_individuals_count_max').val()) < parseInt($('#specimen_individuals_specimen_individuals_count_min').val()) )
             $('#specimen_individuals_specimen_individuals_count_max').val($('#specimen_individuals_specimen_individuals_count_min').val());
     });
 });
