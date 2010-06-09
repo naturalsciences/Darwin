@@ -15,7 +15,7 @@
  * @property string $description_ts
  * @property string $modification_date_time
  * @property integer $modification_date_mask
- * @property Users $Users
+ * @property People $People
  * 
  * @method integer               getId()                     Returns the current record's "id" value
  * @method integer               getRecordId()               Returns the current record's "record_id" value
@@ -27,7 +27,7 @@
  * @method string                getDescriptionTs()          Returns the current record's "description_ts" value
  * @method string                getModificationDateTime()   Returns the current record's "modification_date_time" value
  * @method integer               getModificationDateMask()   Returns the current record's "modification_date_mask" value
- * @method Users                 getUsers()                  Returns the current record's "Users" value
+ * @method People                getPeople()                 Returns the current record's "People" value
  * @method CollectionMaintenance setId()                     Sets the current record's "id" value
  * @method CollectionMaintenance setRecordId()               Sets the current record's "record_id" value
  * @method CollectionMaintenance setReferencedRelation()     Sets the current record's "referenced_relation" value
@@ -38,7 +38,7 @@
  * @method CollectionMaintenance setDescriptionTs()          Sets the current record's "description_ts" value
  * @method CollectionMaintenance setModificationDateTime()   Sets the current record's "modification_date_time" value
  * @method CollectionMaintenance setModificationDateMask()   Sets the current record's "modification_date_mask" value
- * @method CollectionMaintenance setUsers()                  Sets the current record's "Users" value
+ * @method CollectionMaintenance setPeople()                 Sets the current record's "People" value
  * 
  * @package    darwin
  * @subpackage model
@@ -96,8 +96,8 @@ abstract class BaseCollectionMaintenance extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Users', array(
-             'local' => 'user_ref',
+        $this->hasOne('People', array(
+             'local' => 'people_ref',
              'foreign' => 'id'));
     }
 }

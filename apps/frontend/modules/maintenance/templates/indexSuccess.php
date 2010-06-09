@@ -46,7 +46,7 @@
   </form>
  
   <div class="action_maintenance">
-	<?php include_partial('maintenance', array('form' => $form) );?>
+	<?php include_partial('form', array('form' => $form) );?>
   </div>
   
 </div>
@@ -55,6 +55,21 @@
 <script  type="text/javascript">
 
 $(document).ready(function () {
+
+  $('form#collection_maintenance').submit(function () {
+      $('form#collection_maintenance input[type=submit]').attr('disabled','disabled');
+      //hideForRefresh($('form#collection_maintenance').parent());
+      $.ajax({
+          type: "POST",
+          url: $(this).attr('action'),
+          data: $(this).serialize(),
+          success: function(html){
+            $('form#collection_maintenance').before(html).remove();
+          }
+      });
+      return false;
+    });
+
  
   parent = $('#maintenance_table');
   $('.action_maintenance table').hide();

@@ -67,4 +67,15 @@ class partwidgetComponents extends sfComponents
     if(isset($this->form) )
       $this->eid = $this->form->getObject()->getId() ;
   }
+
+  public function executeMaintenance()
+  {
+    if(isset($this->form) )
+      $this->eid = $this->form->getObject()->getId();
+
+	if($this->eid)
+	{
+	  $this->maintenances = Doctrine::getTable('CollectionMaintenance')->getRelatedArray('specimen_parts', array($this->eid));
+	}
+  }
 }

@@ -10,6 +10,32 @@
 class maintenanceActions extends DarwinActions
 {
 
+  public function executeEdit(sfWebRequest $request)
+  {
+	$main = Doctrine::getTable('CollectionMaintenance')->find($request->getParameter('id'));
+	$this->forward404unless($main);
+	$this->form = new CollectionMaintenanceForm($main);
+	if($request->isMethod('post'))
+	{
+	  $this->form->bind($request->getParameter('collection_maintenance'));
+
+	  if($this->form->isValid())
+	  {
+		try
+		{
+		  $this->form->save();
+		  return $this->redirect('maintenance/index');
+		}
+		catch(Doctrine_Exception $ne)
+		{
+		  $e = new DarwinPgErrorParser($ne);
+		  $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+		  $this->form->getErrorSchema()->addError($error); 
+		}
+	  }
+	}
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
 	$this->search_form = new SpecimenPartsFormFilter();
@@ -43,7 +69,7 @@ class maintenanceActions extends DarwinActions
 		  $this->form->getErrorSchema()->addError($error); 
 		}
 	  }
-	  return $this->renderPartial('maintenance',array('form'=> $this->form ));
+	  return $this->renderPartial('form',array('form'=> $this->form ));
 	}
   }
 

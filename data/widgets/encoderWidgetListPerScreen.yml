@@ -792,6 +792,15 @@ sp7:
    opened: true
    visible: true
    title_perso: Insurances
+   
+sp8:
+   col_num: 2
+   category: part_widget
+   group_name: maintenance
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: Maintenance
 
 spi1:
    col_num: 1

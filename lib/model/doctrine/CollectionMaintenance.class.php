@@ -10,7 +10,7 @@ class CollectionMaintenance extends BaseCollectionMaintenance
   * @param string|fuzzyDateTime $fd a fuzzyDateTime object or a string to pass to postgres
   * @return $this
   */
-  public function setDateFrom($fd)
+  public function setModificationDateTime($fd)
   {
 	if(is_string($fd))
 	{
@@ -30,7 +30,7 @@ class CollectionMaintenance extends BaseCollectionMaintenance
   * @param string $tag Tag wich will be arround fuzzy values (default < em >)
   * @return string the Date masked
   */
-  public function getToDateMasked($tag='em')
+  public function getModificationDateTimeMasked($tag='em')
   {
     $dateTime = new FuzzyDateTime($this->_get('modification_date_time'), $this->_get('modification_date_mask'),true,true);
     return $dateTime->getDateMasked($tag);
@@ -41,7 +41,7 @@ class CollectionMaintenance extends BaseCollectionMaintenance
   * @return array an array of masked elements with key year,month,day,hour,minute,second
   * @see FuzzyDateTime::getDateTimeMaskedAsArray
   */
-  public function getDateTo()
+  public function getModificationDateTime()
   {
     $date = new FuzzyDateTime($this->_get('modification_date_time'),$this->_get('modification_date_mask'),true, true);
     return $date->getDateTimeMaskedAsArray();

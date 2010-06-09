@@ -83,6 +83,15 @@
                 </li>
             </ul>
         </li>
+		<li>
+            <a href=""><?php echo __('Help');?></a>
+            <ul>
+                <li><?php echo link_to('Help','help/index');?></li>                
+                <li><?php echo link_to('Contacts','help/contact');?></li>
+                <li><?php echo link_to('Contribute','help/contrib');?></li>
+                <li><?php echo link_to('About','help/about');?></li>
+            </ul>
+        </li>
         <?php endif ?>
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>
     </ul>

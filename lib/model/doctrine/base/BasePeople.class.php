@@ -33,6 +33,7 @@
  * @property Doctrine_Collection $PeopleAddresses
  * @property Doctrine_Collection $PeopleMultimedia
  * @property Doctrine_Collection $Collections
+ * @property Doctrine_Collection $CollectionMaintenance
  * @property Doctrine_Collection $Insurances
  * 
  * @method integer             getId()                      Returns the current record's "id" value
@@ -63,6 +64,7 @@
  * @method Doctrine_Collection getPeopleAddresses()         Returns the current record's "PeopleAddresses" collection
  * @method Doctrine_Collection getPeopleMultimedia()        Returns the current record's "PeopleMultimedia" collection
  * @method Doctrine_Collection getCollections()             Returns the current record's "Collections" collection
+ * @method Doctrine_Collection getCollectionMaintenance()   Returns the current record's "CollectionMaintenance" collection
  * @method Doctrine_Collection getInsurances()              Returns the current record's "Insurances" collection
  * @method People              setId()                      Sets the current record's "id" value
  * @method People              setIsPhysical()              Sets the current record's "is_physical" value
@@ -92,6 +94,7 @@
  * @method People              setPeopleAddresses()         Sets the current record's "PeopleAddresses" collection
  * @method People              setPeopleMultimedia()        Sets the current record's "PeopleMultimedia" collection
  * @method People              setCollections()             Sets the current record's "Collections" collection
+ * @method People              setCollectionMaintenance()   Sets the current record's "CollectionMaintenance" collection
  * @method People              setInsurances()              Sets the current record's "Insurances" collection
  * 
  * @package    darwin
@@ -227,6 +230,10 @@ abstract class BasePeople extends sfDoctrineRecord
         $this->hasMany('Collections', array(
              'local' => 'id',
              'foreign' => 'institution_ref'));
+
+        $this->hasMany('CollectionMaintenance', array(
+             'local' => 'id',
+             'foreign' => 'people_ref'));
 
         $this->hasMany('Insurances', array(
              'local' => 'id',

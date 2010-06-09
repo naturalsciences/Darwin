@@ -34,7 +34,6 @@
  * @property Doctrine_Collection $RecordVisibilities
  * @property Doctrine_Collection $UsersWorkflow
  * @property Doctrine_Collection $UsersTracking
- * @property Doctrine_Collection $CollectionMaintenance
  * @property Doctrine_Collection $MySavedSearches
  * @property Doctrine_Collection $MyPreferences
  * @property Doctrine_Collection $MySavedSpecimens
@@ -68,7 +67,6 @@
  * @method Doctrine_Collection getRecordVisibilities()            Returns the current record's "RecordVisibilities" collection
  * @method Doctrine_Collection getUsersWorkflow()                 Returns the current record's "UsersWorkflow" collection
  * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
- * @method Doctrine_Collection getCollectionMaintenance()         Returns the current record's "CollectionMaintenance" collection
  * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
  * @method Doctrine_Collection getMyPreferences()                 Returns the current record's "MyPreferences" collection
  * @method Doctrine_Collection getMySavedSpecimens()              Returns the current record's "MySavedSpecimens" collection
@@ -101,7 +99,6 @@
  * @method Users               setRecordVisibilities()            Sets the current record's "RecordVisibilities" collection
  * @method Users               setUsersWorkflow()                 Sets the current record's "UsersWorkflow" collection
  * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
- * @method Users               setCollectionMaintenance()         Sets the current record's "CollectionMaintenance" collection
  * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
  * @method Users               setMyPreferences()                 Sets the current record's "MyPreferences" collection
  * @method Users               setMySavedSpecimens()              Sets the current record's "MySavedSpecimens" collection
@@ -234,10 +231,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              'foreign' => 'user_ref'));
 
         $this->hasMany('UsersTracking', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('CollectionMaintenance', array(
              'local' => 'id',
              'foreign' => 'user_ref'));
 

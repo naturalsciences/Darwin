@@ -15,7 +15,7 @@ abstract class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrin
     $this->setWidgets(array(
       'record_id'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'referenced_relation'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'people_ref'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'people_ref'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('People'), 'add_empty' => true)),
       'category'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'action_observation'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'description'            => new sfWidgetFormFilterInput(),
@@ -27,7 +27,7 @@ abstract class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrin
     $this->setValidators(array(
       'record_id'              => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'referenced_relation'    => new sfValidatorPass(array('required' => false)),
-      'people_ref'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'people_ref'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('People'), 'column' => 'id')),
       'category'               => new sfValidatorPass(array('required' => false)),
       'action_observation'     => new sfValidatorPass(array('required' => false)),
       'description'            => new sfValidatorPass(array('required' => false)),
@@ -56,7 +56,7 @@ abstract class BaseCollectionMaintenanceFormFilter extends BaseFormFilterDoctrin
       'id'                     => 'Number',
       'record_id'              => 'Number',
       'referenced_relation'    => 'Text',
-      'people_ref'             => 'Number',
+      'people_ref'             => 'ForeignKey',
       'category'               => 'Text',
       'action_observation'     => 'Text',
       'description'            => 'Text',

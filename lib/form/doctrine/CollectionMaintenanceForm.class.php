@@ -11,7 +11,7 @@ class CollectionMaintenanceForm extends BaseCollectionMaintenanceForm
 {
   public function configure()
   {
-	$this->useFields(array('people_ref', 'category', 'action_observation', 'description','modification_date_time'));
+	$this->useFields(array('id','people_ref', 'category', 'action_observation', 'description','modification_date_time'));
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);

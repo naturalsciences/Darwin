@@ -563,8 +563,8 @@ CollectionMaintenance:
         modification_date_time: { type: string, notnull: true }
         modification_date_mask : { type: integer, notnull: true, default: 0}
     relations:
-        Users:
-            local: user_ref
+        People:
+            local: people_ref
             foreign: id
 
 MySavedSearches:

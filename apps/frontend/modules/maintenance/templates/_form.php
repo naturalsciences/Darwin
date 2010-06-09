@@ -1,4 +1,4 @@
-<form class="edition" method="post" id="collection_maintenance" action="<?php echo url_for('maintenance/index');?>">
+<form class="edition" method="post" id="collection_maintenance" action="">
 	<h2><?php echo __('2. Add Maintenance item : ');?></h2>
 	<?php include_stylesheets_for_form($form) ?>
 	<?php include_javascripts_for_form($form) ?>
@@ -46,28 +46,14 @@
     <tfoot>
       <tr>
         <td colspan="2">
-		  <?php echo $form['parts_ids'];?>
-          <input id="submit" type="submit" value="<?php echo __('Add Maintenance');?>" />
+		  <?php echo $form['parts_ids'];?><?php echo $form['id'];?>
+		  <?php if($form->isNew()):?>
+			<input id="submit" type="submit" value="<?php echo __('Add Maintenance');?>" />
+		  <?php else:?>
+			<input id="submit" type="submit" value="<?php echo __('Save');?>" />
+		  <?php endif;?>
         </td>
       </tr>
     </tfoot>
 	</table>
-<script  type="text/javascript">
-
-$(document).ready(function () {
-  $('form#collection_maintenance').submit(function () {
-      $('form#collection_maintenance input[type=submit]').attr('disabled','disabled');
-      //hideForRefresh($('form#collection_maintenance').parent());
-      $.ajax({
-          type: "POST",
-          url: $(this).attr('action'),
-          data: $(this).serialize(),
-          success: function(html){
-            $('form#collection_maintenance').before(html).remove();
-          }
-      });
-      return false;
-    });
-});
-</script>
 </form>
