@@ -147,7 +147,7 @@ $q = Doctrine_Query::create()
     ->from('MyPreferences p')
     ->Where('p.user_ref = ?', $brol_user->getId())
     ->execute();
-$t->is($q->count(),93,'Now brolus has his 87 widgets') ; 
+$t->is($q->count(),94,'Now brolus has his "94" widgets') ; 
 
 $t->comment('->updateWigetsAvailabilityForRole()');  
 $t->is(count(Doctrine::getTable('MyPreferences')
