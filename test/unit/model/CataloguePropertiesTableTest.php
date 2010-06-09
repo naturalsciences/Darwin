@@ -5,7 +5,7 @@ $t = new lime_test(12, new lime_output_color());
 $properties = Doctrine::getTable('CatalogueProperties')->findForTable('taxonomy',4);
 $t->is( count($properties) , 2, 'There is properties for this table / record_id');
 $t->is( $properties[0]->getPropertyType() , 'physical measurement', 'ordered correcty');
-$t->is( count($properties[0]->PropertiesValues) , 2, 'There is also 2 properties values');
+$t->is( count($properties[0]->PropertiesValues) , 3, 'There is also 3 properties values');
 
 $types = Doctrine::getTable('CatalogueProperties')->getDistinctType();
 $t->is( count($types) , 2, 'There is 2 different type');

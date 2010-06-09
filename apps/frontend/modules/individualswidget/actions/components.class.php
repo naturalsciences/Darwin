@@ -70,6 +70,11 @@ class individualswidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeSpecimenIndividualComments()
+  {
+    $this->defineForm();
+  }
+  
   public function executeRefIdentifications()
   {
     $this->defineForm();

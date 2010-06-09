@@ -950,3 +950,15 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Identifications
+
+    u1spi9:
+        User: u1
+        col_num: 2
+        category: individuals_widget
+        group_name: specimenIndividualComments
+        mandatory: false
+        order_by: 4
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Comments        

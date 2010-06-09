@@ -429,6 +429,20 @@ CatalogueProperties:
         date_to: '0001-01-01 0:0:0'
         property_unit: cm
         property_accuracy_unit: mm
+    cprop3:
+        referenced_relation: specimens
+        record_id: 1
+        property_type: protection status
+        property_sub_type: top
+        property_unit: ''
+        property_accuracy_unit: ''  
+    cprop4:
+        referenced_relation: specimens
+        record_id: 1
+        property_type: physical measurement
+        property_sub_type: length
+        property_unit: mm
+        property_accuracy_unit: mm                 
 
 PropertiesValues:
     prop1val1:
@@ -445,6 +459,21 @@ PropertiesValues:
         property_value: 8
         property_accuracy: 1.5
 
+    prop3val1:
+        CatalogueProperties: cprop3
+        property_value: 18
+        property_accuracy: 15  
+
+    prop3val2:
+        CatalogueProperties: cprop4
+        property_value: 120
+        property_accuracy: 45    
+
+    prop3val3:
+        CatalogueProperties: cprop4
+        property_value: 1900
+        property_accuracy: 1                    
+
 Comments:
     comment1:
         referenced_relation: taxonomy
@@ -454,6 +483,14 @@ Comments:
           This is bullshit... 
           None of this is right!
           Ok?
+    comment2:
+        referenced_relation: specimens
+        record_id: 1
+        notion_concerned: collectors
+        comment: |
+          This collector works 
+          only if you give him a dog
+          to eat !
 
 ClassificationSynonymies:
     csynon1:

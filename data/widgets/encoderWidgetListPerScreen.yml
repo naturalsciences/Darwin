@@ -842,3 +842,32 @@ spi6:
   opened: true
   visible: true
   title_perso: Count
+
+spi7:
+  col_num: 1
+  category: individuals_widget
+  group_name: refProperties
+  mandatory: false
+  order_by: 2
+  opened: false
+  visible: false
+  title_perso: Rock form
+
+spi8:
+  col_num: 2
+  category: individuals_widget
+  group_name: RefIdentifications
+  mandatory: false
+  order_by: 3
+  opened: true
+  visible: true
+  title_perso: Count
+spi9:
+  col_num: 2
+  category: individuals_widget
+  group_name: specimenIndividualComments
+  mandatory: false
+  order_by: 4
+  opened: true
+  visible: true
+  title_perso: Comments  

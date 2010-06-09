@@ -95,6 +95,23 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
     $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+    /* Comments sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('Comments',$subForm);   
+    foreach(Doctrine::getTable('comments')->findForTable('specimen_individuals', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CommentsForm($vals,array('table' => 'individuals'));
+      $this->embeddedForms['Comments']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Comments', $this->embeddedForms['Comments']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newComments',$subForm);
+    
+    $this->widgetSchema['comment'] = new sfWidgetFormInputHidden(array('default'=>1));
+
     /* Validators */
 
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
@@ -111,6 +128,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         ));
 	$this->setEmptyToObjectValue();
     $this->validatorSchema['ident'] = new sfValidatorPass();
+    $this->validatorSchema['comment'] = new sfValidatorPass();
   }
   public function addIdentifications($num, $order_by=0)
   {
@@ -136,6 +154,18 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
       $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
   }
 
+  public function addComments($num)
+  {
+      $options = array('referenced_relation' => 'specimen_individuals', 'record_id' => $this->getObject()->getId());
+      $val = new Comments();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new CommentsForm($val,array('table' => 'individuals'));
+      $this->embeddedForms['newComments']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newComments', $this->embeddedForms['newComments']);
+  }
+  
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
@@ -182,13 +212,27 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
             }
 	}
     }
-
+    if(isset($taintedValues['newComments']) && isset($taintedValues['comment']))
+    {
+     foreach($taintedValues['newComments'] as $key=>$newVal)
+	{
+	  if (!isset($this['newComments'][$key]))
+	  {
+	    $this->addComments($key);
+	  }
+       $taintedValues['newComments'][$key]['record_id'] = 0;
+	}
+    }
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');
       unset($taintedValues['Identifications']);
     }
-
+    if(!isset($taintedValues['comment']))
+    {
+      $this->offsetUnset('Comments');
+      unset($taintedValues['Comments']);
+    }
     parent::bind($taintedValues, $taintedFiles);
   }
 
@@ -255,6 +299,29 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
           }
 	}
     }
+    if (null === $forms && $this->getValue('comment'))
+    {
+	$value = $this->getValue('newComments');
+	foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
+	{
+	  if($value[$name]['referenced_relation'] == "0")
+	    unset($this->embeddedForms['newComments'][$name]);
+	  else
+	  {
+	    $form->getObject()->setRecordId($this->getObject()->getId());
+	    $form->getObject()->setReferencedRelation('specimen_individuals') ;      
+	  }
+	}
+	$value = $this->getValue('Comments');
+	foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
+	{	
+	  if ($value[$name]['referenced_relation'] == "0")
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['Comments'][$name]);
+	  }
+	}
+    }    
     return parent::saveEmbeddedForms($con, $forms);
   }  
 }

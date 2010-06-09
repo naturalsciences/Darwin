@@ -18,11 +18,8 @@
     <?php echo $individual['specimen_ref']->render(); ?>
     <?php if($individual->hasGlobalErrors()):?>
       <ul class="spec_error_list">
-      <?php foreach ($individual->getGlobalErrors() as $name => $error): ?>
-	<li><?php echo __($name." ".$error); ?></li>
-      <?php endforeach; ?>
       <?php foreach ($individual->getErrorSchema()->getErrors() as $name => $error): ?>
-	<li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
+	<li class="error_fld_<?php echo $name;?>"><?php echo __($error) ?></li>
       <?php endforeach; ?>
       </ul>
     <?php endif;?>

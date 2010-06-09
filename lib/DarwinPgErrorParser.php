@@ -17,7 +17,9 @@ class DarwinPgErrorParser
     '/set this synonym twice/i' => 'You can\'t attach a synonym twice',
     '/Error in datesOverlaps function/i' => 'Error in dates overlaping',
     '/Duplicate key value violates unique constraint "unq_comments"/i' => 'You cannot add a particular notion comment twice',
-    '/duplicate key value violates unique constraint "unq_specimens"/i' => 'This specimen already exist'
+    '/duplicate key value violates unique constraint "unq_specimens"/i' => 'This specimen already exist',
+    '/duplicate key value violates unique constraint "unq_specimen_individuals"/i' => 'This individual already exist for this specimen',
+    '/violates check constraint "chk_chk_specimen_individuals_minmax"/i' => 'Max count value must be superior or equal to Min count value'
   );
 
 
