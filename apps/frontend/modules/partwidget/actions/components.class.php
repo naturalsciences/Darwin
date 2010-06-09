@@ -68,6 +68,10 @@ class partwidgetComponents extends sfComponents
       $this->eid = $this->form->getObject()->getId() ;
   }
 
+  public function executeComments()
+  {
+    $this->defineForm();
+  }
   public function executeMaintenance()
   {
     if(isset($this->form) )

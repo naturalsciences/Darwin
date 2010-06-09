@@ -112,4 +112,17 @@ class partsActions extends DarwinActions
     $form->addInsurances($number);
     return $this->renderPartial('parts/insurances',array('form' => $form['newInsurance'][$number]));
   }
+  
+  
+  public function executeAddComments(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $spec = null;
+
+    if($request->hasParameter('indid') && $request->getParameter('indid'))
+      $spec = Doctrine::getTable('SpecimensParts')->findExcept($request->getParameter('indid') );
+    $form = new SpecimenPartsForm($spec);
+    $form->addComments($number);
+    return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number]));
+  }
 }

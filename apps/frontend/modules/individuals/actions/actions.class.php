@@ -98,7 +98,7 @@ class individualsActions extends DarwinActions
     $spec = null;
 
     if($request->hasParameter('individual_id') && $request->getParameter('individual_id'))
-      $spec = Doctrine::getTable('Comments')->findExcept($request->getParameter('individual_id') );
+      $spec = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('individual_id') );
     $form = new SpecimenIndividualsForm($spec);
     $form->addComments($number);
     return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number]));

@@ -797,10 +797,21 @@ sp8:
    col_num: 2
    category: part_widget
    group_name: maintenance
+   mandatory: false   
    order_by: 3
    opened: true
    visible: true
    title_perso: Maintenance
+   
+sp9:
+   col_num: 2
+   category: part_widget
+   group_name: comments
+   mandatory: false   
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Comments
 
 spi1:
    col_num: 1
