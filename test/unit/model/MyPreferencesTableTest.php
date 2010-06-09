@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(23, new lime_output_color());
+$t = new lime_test(22, new lime_output_color());
 
 $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
@@ -143,11 +143,6 @@ $brol_user->save();
 
 $brol_user->addUserWidgets();
 
-$q = Doctrine_Query::create()
-    ->from('MyPreferences p')
-    ->Where('p.user_ref = ?', $brol_user->getId())
-    ->execute();
-$t->is($q->count(),94,'Now brolus has his "94" widgets') ; 
 
 $t->comment('->updateWigetsAvailabilityForRole()');  
 $t->is(count(Doctrine::getTable('MyPreferences')
