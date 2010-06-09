@@ -29,7 +29,8 @@ class individualsActions extends DarwinActions
 
 	if($this->individual->getObject()->isNew())
 	{
-	  $this->individual->addIdentifications(0,0); 
+	  $this->individual->addIdentifications(0,0);
+	  $this->individual->addComments(0);
 	}
 	if($request->isMethod('post'))
 	{

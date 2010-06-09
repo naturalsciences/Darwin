@@ -30,6 +30,11 @@ class partsActions extends DarwinActions
 	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
 	$this->form = new SpecimenPartsForm($this->part, array( 'collection'=>$this->specimen->getCollectionRef() ));
 
+	if($this->form->getObject()->isNew())
+	{
+	  $this->form->addInsurances(0);
+	  $this->form->addComments(0);
+	}
 	if($request->isMethod('post'))
 	{
 	  $this->form->bind( $request->getParameter('specimen_parts') );
