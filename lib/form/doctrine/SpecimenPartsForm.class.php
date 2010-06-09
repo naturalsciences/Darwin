@@ -414,7 +414,6 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	  else
 	  {
 	    $form->getObject()->setRecordId($this->getObject()->getId());
-	    $form->getObject()->setReferencedRelation('specimens') ;      
 	  }
 	}
 	$value = $this->getValue('Comments');
