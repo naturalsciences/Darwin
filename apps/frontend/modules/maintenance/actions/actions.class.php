@@ -82,6 +82,17 @@ class maintenanceActions extends DarwinActions
 	{
 	  $this->parts = $this->form->getQuery()->execute();
 	}
-	else return $this->renderText($this->form);
+	else
+	  return $this->renderText($this->form);
+	$partsIds = array();
+	foreach($this->parts as $part)
+	{
+	  $partsIds[] = $part->getId();
+	}
+
+	$this->maint = Doctrine::getTable('CollectionMaintenance')->getCountRelated("specimen_parts", $partsIds);
+	$this->maintenances =array();
+	foreach($this->maint as $key=>$val)
+	  $this->maintenances[$val[0]] = $val[1];
   }
 }

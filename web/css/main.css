@@ -1534,3 +1534,8 @@ div#maintenance h2
   margin: 1em;
   text-decoration:underline;
 }
+sup
+{
+font-size: smaller;
+vertical-align: super;
+}
