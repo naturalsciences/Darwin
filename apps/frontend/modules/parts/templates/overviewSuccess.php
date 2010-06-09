@@ -3,7 +3,7 @@
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'mode' => 'parts_overview') );?>
 
 <table class="catalogue_table">
-  <thead>
+  <thead style="<?php echo (count($parts))?'':'display: none;';?>">
 	<tr>
 	  <th></th>
 	  <th><?php echo __('Code');?></th>
@@ -72,6 +72,10 @@ $(document).ready(function () {
 		  if(html == "ok" )
 		  {
 			currentElement.closest('tr').remove();
+			if($('table.catalogue_table').find('tbody').find('tr[class^=\"part_id\"]').size() == 0)
+			{
+			  $('table.catalogue_table').find('thead').hide();
+			}
 		  }
 		  else
 		  {

@@ -105,8 +105,11 @@ $(document).ready(function () {
                success: function(html) {
 		      if(html == "ok" )
 		      {
-			// Reload page
-			location.reload();
+			currentElement.closest('tr').remove();
+			if($('table.catalogue_table').find('tbody').find('tr[class^=\"part_id\"]').size() == 0)
+			{
+			  $('table.catalogue_table').find('thead').hide();
+			}
 		      }
 		      else
 		      {
