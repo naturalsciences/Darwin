@@ -456,6 +456,11 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
+	if($taintedValues['accuracy'] == 0 ) //exact
+	{
+	  $taintedValues['specimen_count_max'] = $taintedValues['specimen_count_min'];
+	}
+
     if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
     {
 	foreach($taintedValues['newCode'] as $key=>$newVal)
