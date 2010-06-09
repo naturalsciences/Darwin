@@ -157,6 +157,11 @@ ul.spec_error_list, ul.error_list
   vertical-align: bottom;
 }
 
+.ref_clear:hover
+{
+  cursor:pointer;
+}
+
 .but_text
 {
   background-image: url(/images/button_grey_center.png);
@@ -751,6 +756,17 @@ table.encoding tbody
 .property_values tbody#codes input, #identifications tbody input
 {
   margin:0;
+}
+
+.property_values tbody tr td label
+{
+  font-weight:bold;
+  margin-right:0.5em;
+}
+
+td.left_tabed
+{
+  padding-left:0.5em;
 }
 
 .property_values .unit_col

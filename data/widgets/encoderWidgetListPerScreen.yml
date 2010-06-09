@@ -218,7 +218,7 @@ sw20:
    category: specimen_widget
    group_name: refComment
    mandatory: false
-   order_by: 8
+   order_by: 9
    opened: true
    visible: true
    title_perso: Comments   
@@ -783,6 +783,16 @@ sp6:
    visible: true
    title_perso: Properties
 
+sp7:
+   col_num: 2
+   category: part_widget
+   group_name: refInsurances
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Insurances
+
 spi1:
    col_num: 1
    category: individuals_widget
@@ -856,12 +866,13 @@ spi7:
 spi8:
   col_num: 2
   category: individuals_widget
-  group_name: RefIdentifications
+  group_name: refIdentifications
   mandatory: false
   order_by: 3
   opened: true
   visible: true
   title_perso: Count
+
 spi9:
   col_num: 2
   category: individuals_widget
@@ -870,4 +881,4 @@ spi9:
   order_by: 4
   opened: true
   visible: true
-  title_perso: Comments  
+  title_perso: Comments

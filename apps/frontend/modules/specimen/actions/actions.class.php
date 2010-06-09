@@ -1,10 +1,10 @@
 <?php
 
 /**
- * board actions.
+ * Specimens actions.
  *
  * @package    darwin
- * @subpackage board
+ * @subpackage specimen
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
@@ -14,12 +14,14 @@ class specimenActions extends DarwinActions
 
   /*
   */
-  protected function getSpecimenForm(sfWebRequest $request)
+  protected function getSpecimenForm(sfWebRequest $request, $fwd404=false, $parameter='id')
   {
     $spec = null;
 
-    if($request->hasParameter('spec_id') && $request->getParameter('spec_id'))
-      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id') );
+    if ($fwd404)
+      $this->forward404Unless($spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter,0)), $this->getI18N('Specimen not found'));
+    elseif($request->hasParameter($parameter) && $request->getParameter($parameter))
+      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter) );
     
     $form = new SpecimensForm($spec);
     return $form;
@@ -28,14 +30,8 @@ class specimenActions extends DarwinActions
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
-    $spec = null;
-
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
-    
+    $form = $this->getSpecimenForm($request);
     $collectionId = $request->getParameter('collection_id', null);
-
-    $form = new SpecimensForm($spec);
     $form->addCodes($number, $collectionId);
     return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
   }
@@ -43,12 +39,7 @@ class specimenActions extends DarwinActions
   public function executeAddCollector(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
-    $spec = null;
-
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
-          
-    $form = new SpecimensForm($spec);
+    $form = $this->getSpecimenForm($request);
     $form->addCollectors($number,0);
     return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number]));
   }
@@ -56,11 +47,7 @@ class specimenActions extends DarwinActions
   public function executeAddComments(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
-    $spec = null;
-
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id') );
-    $form = new SpecimensForm($spec);
+    $form = $this->getSpecimenForm($request);
     $form->addComments($number);
     return $this->renderPartial('spec_comments',array('form' => $form['newComments'][$number]));
   }
@@ -69,14 +56,14 @@ class specimenActions extends DarwinActions
   {
     $number = intval($request->getParameter('num'));
     $order_by = intval($request->getParameter('order_by',0));
-    $spec_form = $this->getSpecimenForm($request);
+    $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $spec_form->addIdentifications($number, $order_by);
     return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'specimen', 'spec_id'=>$request->getParameter('spec_id',0), 'individual_id'=>0));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
-    $spec_form = $this->getSpecimenForm($request);
+    $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $number = intval($request->getParameter('num'));
     $identifier_number = intval($request->getParameter('identifier_num'));
     $identifier_order_by = intval($request->getParameter('iorder_by',0));
@@ -121,9 +108,7 @@ class specimenActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->loadWidgets();
-    $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
-    $this->forward404Unless($specimen,'Specimen not Found');
-    $this->form = new SpecimensForm($specimen);
+    $this->form = $this->getSpecimenForm($request, true);
     $this->setTemplate('new');
   }
 
@@ -132,9 +117,7 @@ class specimenActions extends DarwinActions
     $this->loadWidgets();
 
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
-    $specimen = Doctrine::getTable('Specimens')->find($request->getParameter('id'));
-    $this->forward404Unless($specimen,'Specimen not Found');
-    $this->form = new SpecimensForm($specimen);
+    $this->form = $this->getSpecimenForm($request,true);
 
     $this->processForm($request, $this->form);
 

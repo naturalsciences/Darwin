@@ -30,4 +30,28 @@ class InsurancesTable extends DarwinTable
     return $this->createDistinct('Insurances', 'insurance_currency', 'currencies')->execute();
   }
 
+  public function getInsurancesRelated($table='specimen_parts', $partId = null)
+  {
+	return $this->getInsurancesRelatedArray($table, $partId);
+  }
+
+  /**
+  * Get all insurances related to an Array of id
+  * @param string $table Name of the table referenced
+  * @param array $partIds Array of id of related record
+  * @return Doctrine_Collection Collection of insurances
+  */
+  public function getInsurancesRelatedArray($table='specimen_parts', $partIds = array())
+  {
+    if(!is_array($partIds))
+      $partIds = array($partIds);
+	if(empty($partIds)) return array();
+    $q = Doctrine_Query::create()->
+         from('Insurances')->
+         where('referenced_relation = ?', $table)->
+         andWhereIn('record_id', $partIds)->
+         orderBy('record_id, insurance_year ASC');
+    return $q->execute();
+  }
+
 }

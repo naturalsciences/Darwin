@@ -2,6 +2,7 @@
 <?php use_stylesheet('widgets.css') ?>
 <?php use_javascript('widgets.js') ?>
 <?php use_javascript('catalogue.js') ?>
+<?php use_javascript('button_ref.js') ?>
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'part','eid'=> $part->getId(), 'table' => 'specimen_parts')); ?>
 

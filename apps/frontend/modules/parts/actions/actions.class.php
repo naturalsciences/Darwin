@@ -35,8 +35,17 @@ class partsActions extends DarwinActions
 	  $this->form->bind( $request->getParameter('specimen_parts') );
 	  if( $this->form->isValid() )
 	  {
+	    try
+	    {
 		$this->form->save();
 		$this->redirect('parts/overview?id='.$this->individual->getId());
+	    }
+	    catch(Doctrine_Exception $ne)
+	    {
+		$e = new DarwinPgErrorParser($ne);
+		$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+		$this->form->getErrorSchema()->addError($error);
+	    }
 	  }
 	}
     $this->loadWidgets();
@@ -70,18 +79,36 @@ class partsActions extends DarwinActions
 	return $this->renderPartial('options', array('items'=> $items ));
   }
 
+  protected function getSpecimenPartForm(sfWebRequest $request, $fwd404=false, $parameter='id')
+  {
+    $part = null;
+
+    $collectionId = $request->getParameter('collection_id', null);
+
+    if ($fwd404)
+      $this->forward404Unless($part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter($parameter,0)), $this->getI18N('Specimen not found'));
+    elseif($request->hasParameter($parameter) && $request->getParameter($parameter))
+      $part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter($parameter));
+    
+    $form = new SpecimenPartsForm($part, array('collection'=>$collectionId));
+    return $form;
+  }
+
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
-    $spec = null;
-
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $spec = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id') );
-    
     $collectionId = $request->getParameter('collection_id', null);
-
-    $form = new SpecimenPartsForm($spec, array( 'collection'=>$collectionId));
+    $form = $this->getSpecimenPartForm($request);
     $form->addCodes($number, $collectionId);
     return $this->renderPartial('specimen/spec_codes',array('form' => $form['newCode'][$number]));
+  }
+
+  public function executeAddInsurance(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $collectionId = $request->getParameter('collection_id', null);
+    $form = $this->getSpecimenPartForm($request);
+    $form->addInsurances($number);
+    return $this->renderPartial('parts/insurances',array('form' => $form['newInsurance'][$number]));
   }
 }

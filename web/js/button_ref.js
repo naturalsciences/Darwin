@@ -45,6 +45,7 @@ $(document).ready(function () {
 		  parent_el.text(ref_element_name);
 		  parent_el.prev().val(ref_element_id);
 		  $(this.elements.target).parent().prevAll('.ref_clear').show();
+		  $(this.elements.target).parent().prevAll('.ref_clear').removeClass('hidden');
 		  $(this.elements.target).text('Change !');
 		  parent_el.prev().trigger('change');
 		}

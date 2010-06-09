@@ -144,8 +144,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
     $this->setDefault('accuracy', 1);
     $this->widgetSchema['accuracy']->setLabel('Accuracy');
-
-
+    $this->validatorSchema['accuracy'] = new sfValidatorPass();
 
     /* Codes sub form */
     $prefixes = Doctrine::getTable('Codes')->getDistinctSepVals();
@@ -183,7 +182,25 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
     $this->validatorSchema['code'] = new sfValidatorPass();
-    $this->validatorSchema['ident'] = new sfValidatorPass();
+
+    /* Insurances sub form */
+
+    $subForm = new sfForm();
+    $this->embedForm('Insurances',$subForm);   
+    foreach(Doctrine::getTable('Insurances')->getInsurancesRelated('specimen_parts', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new InsurancesSubForm($vals);
+      $this->embeddedForms['Insurances']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Insurances', $this->embeddedForms['Insurances']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newInsurance',$subForm);
+
+    $this->widgetSchema['insurance'] = new sfWidgetFormInputHidden(array('default'=>1));
+    $this->validatorSchema['insurance'] = new sfValidatorPass();
+
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_part_count_min', '<=', 'specimen_part_count_max',
@@ -218,6 +235,18 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
   }
   
+  public function addInsurances($num)
+  {
+      $options = array('referenced_relation' => 'specimen_parts');
+      $val = new Insurances();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new InsurancesSubForm($val);
+      $this->embeddedForms['newInsurance']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newInsurance', $this->embeddedForms['newInsurance']);
+  }
+  
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
 	if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
@@ -231,11 +260,27 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 		$taintedValues['newCode'][$key]['record_id'] = 0;
 	  }
 	}
+	if(isset($taintedValues['newInsurance']) && isset($taintedValues['insurance']))
+	{
+	  foreach($taintedValues['newInsurance'] as $key=>$newVal)
+	  {
+		if (!isset($this['newInsurance'][$key]))
+		{
+		  $this->addInsurances($key);
+		}
+		$taintedValues['newInsurance'][$key]['record_id'] = 0;
+	  }
+	}
 
 	if(!isset($taintedValues['code']))
 	{
 	  $this->offsetUnset('Codes');
 	  unset($taintedValues['Codes']);
+	}
+	if(!isset($taintedValues['insurance']))
+	{
+	  $this->offsetUnset('Insurances');
+	  unset($taintedValues['Insurances']);
 	}
 	parent::bind($taintedValues, $taintedFiles);
   }
@@ -287,6 +332,27 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 		}
 	  }
 	}
+	if (null === $forms && $this->getValue('insurance'))
+	{
+	    $value = $this->getValue('newInsurance');
+	    foreach($this->embeddedForms['newInsurance']->getEmbeddedForms() as $name => $form)
+	    {
+	      if(!isset($value[$name]['insurance_value']))
+		unset($this->embeddedForms['newInsurance'][$name]);
+	      else
+		$form->getObject()->setRecordId($this->getObject()->getId());
+	    }
+	    $value = $this->getValue('Insurances');
+	    foreach($this->embeddedForms['Insurances']->getEmbeddedForms() as $name => $form)
+	    {
+	      if (!isset($value[$name]['insurance_value']))
+	      {
+		$form->getObject()->delete();
+		unset($this->embeddedForms['Insurances'][$name]);
+	      }
+	    }
+	}    
+
 	return parent::saveEmbeddedForms($con, $forms);
   }
 }

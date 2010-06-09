@@ -57,6 +57,11 @@ class partwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeRefInsurances()
+  {
+    $this->defineForm();
+  }
+
   public function executeRefProperties()
   {
     if(isset($this->form) )
