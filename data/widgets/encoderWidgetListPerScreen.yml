@@ -223,6 +223,16 @@ sw20:
    visible: true
    title_perso: Comments   
 
+sw21:
+   col_num: 2
+   category: specimen_widget
+   group_name: specimensAccompanying
+   mandatory: false
+   order_by: 10
+   opened: true
+   visible: true
+   title_perso: Accompanying elements
+
 tw1:
    col_num: 1
    category: catalogue_taxonomy_widget

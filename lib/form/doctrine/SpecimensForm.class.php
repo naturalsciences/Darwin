@@ -232,6 +232,14 @@ class SpecimensForm extends BaseSpecimensForm
         'expanded' => true,
     ));
 
+    /* Accompanying elements sub form */
+
+    $this->embedRelation('SpecimensAccompanying');
+    
+    $subForm = new sfForm();
+    $this->embedForm('newSpecimensAccompanying',$subForm);
+    $this->widgetSchema['accompanying'] = new sfWidgetFormInputHidden(array('default'=>1));
+
     /* Codes sub form */
     
     $subForm = new sfForm();
@@ -370,6 +378,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['comment'] = new sfValidatorPass();    
     $this->validatorSchema['code'] = new sfValidatorPass();
     $this->validatorSchema['ident'] = new sfValidatorPass();
+    $this->validatorSchema['accompanying'] = new sfValidatorPass();
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
@@ -378,7 +387,7 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
-	$this->setEmptyToObjectValue();
+    $this->setEmptyToObjectValue();
   }
 
   public function addCodes($num, $collectionId=null)
@@ -416,6 +425,19 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embeddedForms['newCollectors']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
+  }
+
+  public function addSpecimensAccompanying($num)
+  {
+      $options = array('unit' => '%');
+      $val = new SpecimensAccompanying();
+      $val->fromArray($options);
+      $val->Specimens = $this->getObject();
+//       $val->setRecordId($this->getObject()->getId());
+      $form = new SpecimensAccompanyingForm($val);
+      $this->embeddedForms['newSpecimensAccompanying']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newSpecimensAccompanying', $this->embeddedForms['newSpecimensAccompanying']);
   }
 
   public function addComments($num)
@@ -497,6 +519,16 @@ class SpecimensForm extends BaseSpecimensForm
 	  $taintedValues['newComments'][$key]['record_id'] = 0;
 	}
     }
+    if(isset($taintedValues['newSpecimensAccompanying']) && isset($taintedValues['accompanying']))
+    {
+     foreach($taintedValues['newSpecimensAccompanying'] as $key=>$newVal)
+	{
+	  if (!isset($this['newSpecimensAccompanying'][$key]))
+	  {
+	    $this->addSpecimensAccompanying($key);
+	  }
+	}
+    }
     if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
     {
 	foreach($taintedValues['newIdentification'] as $key=>$newVal)
@@ -551,6 +583,11 @@ class SpecimensForm extends BaseSpecimensForm
     {
       $this->offsetUnset('Collectors');
       unset($taintedValues['Collectors']);
+    }
+    if(!isset($taintedValues['accompanying']))
+    {
+      $this->offsetUnset('SpecimensAccompanying');
+      unset($taintedValues['SpecimensAccompanying']);
     }
     if(!isset($taintedValues['comment']))
     {
@@ -691,6 +728,24 @@ class SpecimensForm extends BaseSpecimensForm
 	  {
 	    $form->getObject()->delete();
 	    unset($this->embeddedForms['Collectors'][$name]);
+	  }
+	}
+    }    
+    if (null === $forms && $this->getValue('accompanying'))
+    {
+	$value = $this->getValue('newSpecimensAccompanying');
+	foreach($this->embeddedForms['newSpecimensAccompanying']->getEmbeddedForms() as $name => $form)
+	{
+	  if(!isset($value[$name]['taxon_ref']) && !isset($value[$name]['mineral_ref']))
+	    unset($this->embeddedForms['newSpecimensAccompanying'][$name]);
+	}
+	$value = $this->getValue('SpecimensAccompanying');
+	foreach($this->embeddedForms['SpecimensAccompanying']->getEmbeddedForms() as $name => $form)
+	{
+	  if(!isset($value[$name]['taxon_ref']) && !isset($value[$name]['mineral_ref']))
+	  {
+	    $form->getObject()->delete();
+	    unset($this->embeddedForms['SpecimensAccompanying'][$name]);
 	  }
 	}
     }    

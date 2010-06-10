@@ -19,7 +19,7 @@ abstract class BaseSpecimensAccompanyingFormFilter extends BaseFormFilterDoctrin
       'mineral_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Mineralogy'), 'add_empty' => true)),
       'form'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'quantity'          => new sfWidgetFormFilterInput(),
-      'unit'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'unit'              => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(

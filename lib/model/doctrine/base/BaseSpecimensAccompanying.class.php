@@ -78,7 +78,6 @@ abstract class BaseSpecimensAccompanying extends sfDoctrineRecord
              ));
         $this->hasColumn('unit', 'string', null, array(
              'type' => 'string',
-             'notnull' => true,
              'default' => '%',
              ));
     }
