@@ -11,6 +11,7 @@
   <div class="results_container">
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
+		<tr>
         <th></th>
         <?php if(isset($items[0]['code'])): ?>
           <th>
@@ -47,6 +48,7 @@
           </th>
         <?php endif;?>
         <th></th>
+	   </tr>
       </thead>
       <tbody>
         <?php foreach($items as $item):?>
