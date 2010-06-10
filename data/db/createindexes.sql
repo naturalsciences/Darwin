@@ -145,6 +145,8 @@ CREATE INDEX CONCURRENTLY idx_associated_multimedia_multimedia_ref on associated
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_specimen_ref on specimens_accompanying(specimen_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_taxon_ref on specimens_accompanying(taxon_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_mineral_ref on specimens_accompanying(mineral_ref);
+CREATE INDEX CONCURRENTLY idx_specimens_accompanying_form on specimens_accompanying(form);
+CREATE INDEX CONCURRENTLY idx_specimens_accompanying_unit on specimens_accompanying(unit);
 CREATE INDEX CONCURRENTLY idx_insurances_referenced_relation on insurances(referenced_relation);
 CREATE INDEX CONCURRENTLY idx_insurances_record_id on insurances(record_id);
 CREATE INDEX CONCURRENTLY idx_insurances_insurance_currency on insurances(insurance_currency);
@@ -162,6 +164,7 @@ CREATE INDEX CONCURRENTLY idx_lithostratigraphy_name_order_by on lithostratigrap
 CREATE INDEX CONCURRENTLY idx_lithology_name_order_by on lithology(name_order_by);
 CREATE INDEX CONCURRENTLY idx_mineralogy_name_order_by on mineralogy(name_order_by);
 CREATE INDEX CONCURRENTLY idx_codes_full_code_order_by on codes(full_code_order_by);
+CREATE INDEX CONCURRENTLY idx_comments_notion_concerned on comments(notion_concerned);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 

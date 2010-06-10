@@ -147,6 +147,8 @@ DROP INDEX IF EXISTS idx_associated_multimedia_multimedia_ref;
 DROP INDEX IF EXISTS idx_specimens_accompanying_specimen_ref;
 DROP INDEX IF EXISTS idx_specimens_accompanying_taxon_ref;
 DROP INDEX IF EXISTS idx_specimens_accompanying_mineral_ref;
+DROP INDEX IF EXISTS idx_specimens_accompanying_unit;
+DROP INDEX IF EXISTS idx_specimens_accompanying_form;
 DROP INDEX IF EXISTS idx_insurances_referenced_relation;
 DROP INDEX IF EXISTS idx_insurances_record_id;
 DROP INDEX IF EXISTS idx_insurances_insurance_currency;
@@ -164,7 +166,7 @@ DROP INDEX IF EXISTS idx_lithostratigraphy_name_order_by;
 DROP INDEX IF EXISTS idx_lithology_name_order_by;
 DROP INDEX IF EXISTS idx_mineralogy_name_order_by;
 DROP INDEX IF EXISTS idx_codes_full_code_order_by;
-
+DROP INDEX IF EXISTS idx_comments_notion_concerned;
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 

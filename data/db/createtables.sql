@@ -1906,13 +1906,13 @@ create sequence specimens_accompanying_id_seq;
 create table specimens_accompanying
        (
         id integer not null default nextval('specimens_accompanying_id_seq'),
-        type varchar not null default 'secondary',
+	accompanying_type varchar not null default 'biological',
         specimen_ref integer not null,
         taxon_ref integer not null default 0,
         mineral_ref integer not null default 0,
-        form varchar,
+        form varchar not null default 'isolated',
         quantity numeric(16,2),
-        unit varchar not null default '%',
+        unit varchar default '%',
         constraint pk_specimens_accompanying primary key (id),
         constraint unq_specimens_accompanying unique (specimen_ref, taxon_ref, mineral_ref),
         constraint fk_specimens_accompanying_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
@@ -1922,7 +1922,7 @@ create table specimens_accompanying
 comment on table specimens_accompanying is 'List all the objects/specimens accompanying the current specimen';
 comment on column specimens_accompanying.specimen_ref is 'Reference of specimen concerned - id field of specimens table';
 comment on column specimens_accompanying.mineral_ref is 'Reference of accompanying mineral (if it''s an inhert unit accompanying - id field of mineralogy table';
-comment on column specimens_accompanying.type is 'Type of accompanying specimen: main or secondary';
+comment on column specimens_accompanying.accompanying_type is 'Type of accompanying specimen: biological or mineral';
 comment on column specimens_accompanying.quantity is 'Quantity of accompanying specimens';
 comment on column specimens_accompanying.unit is 'Unit used for quantity of accompanying specimen presence';
 comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxonomy table';
