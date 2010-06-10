@@ -57,12 +57,16 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 
   public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values)
   {
+     $conn = Doctrine_Manager::connection();
      if ($values != "" && $table != "" && $field != "")
      {
        $words = explode(" ", $values);
        foreach($words as $word)
        {
-         $query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ? , 'contains') ",$word);
+   	 $qWord = $conn->quote($word, 'string');
+         $query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ".$qWord. " , 'contains') ");
+//UGLY HAckish hack...
+//         $query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ? , 'contains') ",$word);
        }
      }
      return $query;
