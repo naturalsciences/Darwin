@@ -934,7 +934,6 @@ create table collection_maintenance
         action_observation varchar not null,
         description varchar,
         description_ts tsvector,
-        language_full_text full_text_language,
         modification_date_time update_date_time,
         modification_date_mask int not null default '0',
         constraint pk_collection_maintenance primary key (id),
@@ -950,7 +949,6 @@ comment on column collection_maintenance.category is 'Action or Observation';
 comment on column collection_maintenance.action_observation is 'Action or observation done';
 comment on column collection_maintenance.description is 'Complementary description';
 comment on column collection_maintenance.description_ts is 'tsvector form of description field';
-comment on column collection_maintenance.language_full_text is 'Language used by to_tsvector full text search function';
 comment on column collection_maintenance.modification_date_time is 'Last update date/time';
 
 create sequence my_saved_searches_id_seq;

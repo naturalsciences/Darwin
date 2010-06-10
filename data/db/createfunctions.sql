@@ -3206,7 +3206,7 @@ BEGIN
 		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
 			NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
 		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
-			NEW.description_ts := to_tsvector(NEW.language_full_text::regconfig,NEW.description);
+			NEW.description_ts := to_tsvector('simple',NEW.description);
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
 			NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
 		ELSEIF TG_TABLE_NAME = 'habitats' THEN
@@ -3240,8 +3240,8 @@ BEGIN
 				NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
-			IF OLD.description != NEW.description OR OLD.language_full_text != NEW.language_full_text THEN
-				NEW.description_ts := to_tsvector(NEW.language_full_text::regconfig, NEW.description);
+			IF OLD.description != NEW.description THEN
+				NEW.description_ts := to_tsvector('simple', NEW.description);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
 			IF OLD.name != NEW.name OR OLD.name_language_full_text != NEW.name_language_full_text THEN
@@ -5624,7 +5624,14 @@ BEGIN
                         RAISE EXCEPTION 'Expert still used as expert.';
                 END IF;
         END IF;
-
+        
+        /** COLLECTOR Flag is 16 **/
+        IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 16)>0 )  THEN
+                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='collector';
+                IF still_referenced !=0 THEN
+                        RAISE EXCEPTION 'Collector still used as collector.';
+                END IF;
+        END IF;
 	RETURN NEW;
 END;
 $$
@@ -5658,6 +5665,13 @@ BEGIN
 		
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Experts must be defined as expert.';
+		END IF;
+	ELSIF NEW.people_type = 'collector' THEN
+	
+		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 16)=0 AND id=NEW.people_ref;
+		
+		IF are_not_author THEN
+			RAISE EXCEPTION 'Collectors must be defined as collector.';
 		END IF;
 	END IF;
 
