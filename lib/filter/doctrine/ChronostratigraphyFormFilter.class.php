@@ -66,6 +66,7 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['name']);
     $this->addBoundRangeColumnQuery($query, $values['lower_bound'], $values['upper_bound']);
     $query->andWhere("id != 0 ")
+	  ->innerJoin("Level")
           ->limit($this->getCatalogueRecLimits());
     return $query;
   }
