@@ -54,6 +54,9 @@ $browser->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','I.G. number')->
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Sampling location')->
+    checkElement('.board_col:last .widget:nth-child(5) .widget_top_bar span','Collectors')->    
+    checkElement('.board_col:last .widget:nth-child(6) .widget_top_bar span','Properties')->    
+    checkElement('.board_col:last .widget:nth-child(7) .widget_top_bar span','Comments')->    
   end();
 
 $browser->
@@ -127,6 +130,9 @@ $browser->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Expedition')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','I.G. number')->
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Sampling location')->
+    checkElement('.board_col:last .widget:nth-child(5) .widget_top_bar span','Collectors')->    
+    checkElement('.board_col:last .widget:nth-child(6) .widget_top_bar span','Properties')->    
+    checkElement('.board_col:last .widget:nth-child(7) .widget_top_bar span','Comments')->        
   end()->
   info('3 - Edit specimen - Change Taxon')->
   click('Save', 
@@ -240,4 +246,25 @@ $browser->
     checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:nth-child(2) input:first[id="specimen_newCollectors_'.$num.'_newCollectors_'.$identifier_num.'_people_ref"]',1)->
     checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:nth-child(2) div:first[id="specimen_newCollectors_'.$num.'_newCollectors_'.$identifier_num.'_people_ref_name"]','-')->
     checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/16"]','Choose !')->
+  end();
+
+$browser->
+  info('9 - add a property')->
+  get('property/add/table/specimens/id/'.$specId)->
+  with('response')->begin()->
+    isStatusCode(200)->
+    click('#submit',
+          array('catalogue_properties' => array('property_type' => 'physical measurement',
+          							   'property_sub_type' => 'wideness',
+          							   'newVal' => array(0 => array('property_value' => 120,
+  	                                   				       'property_accuracy' => 10)
+                                                      			 ,
+                                                      			 1 => array('property_value' => 70,
+  	                                   				       'property_accuracy' => 7)
+                                                      			 )
+                                                      )
+             )
+       )->end()->       
+  with('response')->begin()->
+    isStatusCode(200)->
   end();
