@@ -8,7 +8,7 @@
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
 abstract class BaseCodesForm extends BaseFormDoctrine
 {
@@ -31,7 +31,7 @@ abstract class BaseCodesForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'referenced_relation'   => new sfValidatorString(),
       'record_id'             => new sfValidatorInteger(),
       'code_category'         => new sfValidatorString(array('required' => false)),

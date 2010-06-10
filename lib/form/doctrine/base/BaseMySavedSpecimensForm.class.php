@@ -8,7 +8,7 @@
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
 abstract class BaseMySavedSpecimensForm extends BaseFormDoctrine
 {
@@ -23,8 +23,8 @@ abstract class BaseMySavedSpecimensForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'               => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_ref', 'required' => false)),
-      'name'                   => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'name', 'required' => false)),
+      'user_ref'               => new sfValidatorChoice(array('choices' => array($this->getObject()->get('user_ref')), 'empty_value' => $this->getObject()->get('user_ref'), 'required' => false)),
+      'name'                   => new sfValidatorChoice(array('choices' => array($this->getObject()->get('name')), 'empty_value' => $this->getObject()->get('name'), 'required' => false)),
       'specimen_ids'           => new sfValidatorString(),
       'favorite'               => new sfValidatorBoolean(array('required' => false)),
       'modification_date_time' => new sfValidatorString(),
