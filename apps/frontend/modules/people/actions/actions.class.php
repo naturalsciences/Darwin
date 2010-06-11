@@ -145,7 +145,7 @@ class peopleActions extends DarwinActions
   {
 
     if($request->hasParameter('id'))
-      $this->address =  Doctrine::getTable('PeopleAddresses')->find($request->getParameter('id'));
+      $this->address =  Doctrine::getTable('PeopleAddresses')->findExcept($request->getParameter('id'));
     else
     {
      $this->address = new PeopleAddresses();
