@@ -21,7 +21,7 @@ class widgetFormTagEntry extends sfWidgetFormInput
     {
       if(isset($array_possible[$item]))
       {
-	$input .= '<li class="a_'.$item;
+	$input .= '<li alt="a_'.$item;
 	$input .= '">'.$array_possible[$item].'<img src="/images/widget_help_close.png"></li>';
 
       }
@@ -33,9 +33,9 @@ class widgetFormTagEntry extends sfWidgetFormInput
 
     foreach($array_possible as $i => $item)
     {
-      $input .= '<li class="a_'.$i;
+      $input .= '<li alt="a_'.$i.'"';
       if(array_search($i, $array_selected) !== false)
-	$input .= " hidden ";
+         $input .= ' class="hidden"';
       $input .= '">'.$item.'</li>';
     }
 
@@ -44,22 +44,29 @@ class widgetFormTagEntry extends sfWidgetFormInput
 <script type="text/javascript"> 
 $(document).ready(function () {
    //ADD
-  $('#%1\$s li').live('click',function() {
-    $('#%2\$s').append('<li class="'+$(this).attr('class')+'">'+$(this).text()+'<img src="/images/widget_help_close.png"></li>');
-    value = trim($(this).attr('class').substr(2));
+  $('#%1\$s li').bind('click',function() {
+	new_elem = $('<li class="'+$(this).attr('class')+'" alt="'+$(this).attr('alt')+'">'+$(this).text()+'<img src="/images/widget_help_close.png"></li>');
+    $('#%2\$s').append(new_elem);
+    value = trim($(this).attr('alt').substr(2));
     $(this).addClass('hidden');
     if($('#%3\$s').val() =='')
       $('#%3\$s').val(value)
     else
       $('#%3\$s').val( $('#%3\$s').val() + ',' + value);
+	new_elem.find('img').click(remove_tag);
   });
   
+  
   //REMOVE
-  $('#%2\$s li img').live('click',function() {
-    avail_el = $('#%1\$s .'+$(this).parent().attr('class'));
+//  $('#%2\$s li img').live('click',remove_tag);
+  $('#%2\$s img').click(remove_tag);
+
+  function remove_tag() {
+    avail_el = $('#%1\$s [alt$="'+$(this).parent().attr('alt')+'"]');
+
     $(this).parent().remove();
     avail_el.removeClass('hidden');
-    value = trim(avail_el.attr('class').substr(2));
+    value = trim(avail_el.attr('alt').substr(2));
     console.log(value);
     old_value = $('#%3\$s').val();
     old_value = old_value.replace(value,'');
@@ -67,7 +74,7 @@ $(document).ready(function () {
     old_value = old_value.replace(/^,/,'');
     old_value = old_value.replace(/,$/,'');
     $('#%3\$s').val(old_value);
-  });
+  }
 });
 </script>                                                                                                                            
 EOF
