@@ -11,6 +11,15 @@ class SpecimensAccompanyingValidatorSchema extends sfValidatorSchema
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
 
+    if($value['accompanying_type']=='biological')
+    {
+      $value['mineral_ref'] = 0;
+    }
+    else
+    {
+      $value['taxon_ref'] = 0;
+    }
+    
     if (!$value['taxon_ref'] && !$value['mineral_ref'])
     {
       return array();
@@ -25,7 +34,7 @@ class SpecimensAccompanyingValidatorSchema extends sfValidatorSchema
     {
       throw new sfValidatorErrorSchema($this, $errorSchema);
     }
- 
+
     return $value;
   }
 }

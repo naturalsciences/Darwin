@@ -61,7 +61,8 @@ class SpecimensAccompanyingForm extends BaseSpecimensAccompanyingForm
                                         )
                                   );
 
-    $this->widgetSchema['quantity']->setAttributes(array('class'=>'vsmall_size'));
+    $this->widgetSchema['quantity']->setAttributes(array('class'=>'small_size'));
+    $this->widgetSchema['form']->setAttributes(array('class'=>'small_size'));
 
     /*Specimens accompanying post-validation to empty null values*/
     $this->mergePostValidator(new SpecimensAccompanyingValidatorSchema());

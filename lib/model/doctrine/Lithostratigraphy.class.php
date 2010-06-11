@@ -7,7 +7,7 @@ class Lithostratigraphy extends BaseLithostratigraphy
 {
   public function getNameWithFormat()
   {
-    return $this->_get('name');
+    return $this->getName();
   }
 
   public function getName()

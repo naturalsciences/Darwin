@@ -57,7 +57,7 @@ class specimenActions extends DarwinActions
     $number = intval($request->getParameter('num'));
     $form = $this->getSpecimenForm($request);
     $form->addSpecimensAccompanying($number);
-    return $this->renderPartial('specimens_accompanying',array('form' => $form['newSpecimensAccompanying'][$number]));
+    return $this->renderPartial('specimens_accompanying',array('form' => $form['newSpecimensAccompanying'][$number], 'rownum'=>$number));
   }
 
   public function executeAddIdentification(sfWebRequest $request)

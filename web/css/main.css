@@ -758,6 +758,12 @@ table.encoding tbody
   margin:0;
 }
 
+.property_values tbody[id^="specimens_accompanying"] input
+{
+  margin-left:0.5em;
+  margin-right:0.1em;
+}
+
 .property_values tbody tr td label
 {
   font-weight:bold;
@@ -900,7 +906,7 @@ tbody.spec_ident_identifiers_data tr td
 {
   height:24px;
   width:10em;
-  text-align:center;
+  text-align:right;
   font-size:small;
   float:right;
   padding-top:0.1em;
