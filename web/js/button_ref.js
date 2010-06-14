@@ -3,7 +3,6 @@ var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
- jQuery.fx.off = true;
   $("a.but_text").live('click', function(){
 
     $(this).parent().parent().find('input[type="hidden"]').trigger({ type:"loadref"});

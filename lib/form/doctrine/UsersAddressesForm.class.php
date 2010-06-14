@@ -26,7 +26,7 @@ class UsersAddressesForm extends BaseUsersAddressesForm
                                                                         'table_method' => 'getDistinctCountries',
                                                                         'method' => 'getCountries',
                                                                         'key_method' => 'getCountries',
-                                                                        'add_empty' => false,
+                                                                        'add_empty' => true,
                                                                         'change_label' => 'Pick a country in the list',
                                                                         'add_label' => 'Add another country',
                                                                        )

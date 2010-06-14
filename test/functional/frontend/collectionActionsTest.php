@@ -72,14 +72,14 @@ $browser->
   
   with('request')->begin()->
     isParameter('module', 'collection')->
-    isParameter('action', 'index')->
+    isParameter('action', 'edit')->
   end()->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.treelist:first > ul > li',2)->
   end()->
   
+  get('/collection/index')->
   info('Edit')->
   click('span > a', array(), array('position' => 5))->
   with('request')->begin()->
@@ -104,9 +104,10 @@ $browser->
 
   with('request')->begin()->
     isParameter('module', 'collection')->
-    isParameter('action', 'index')->
+    isParameter('action', 'edit')->
   end()->
 
+  get('/collection/index')->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.treelist:first > ul > li',1)->

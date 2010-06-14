@@ -8,7 +8,7 @@
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
 abstract class BaseTagsForm extends BaseFormDoctrine
 {
@@ -24,12 +24,12 @@ abstract class BaseTagsForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'gtu_ref'        => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'gtu_ref', 'required' => false)),
-      'group_ref'      => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'group_ref', 'required' => false)),
+      'gtu_ref'        => new sfValidatorChoice(array('choices' => array($this->getObject()->get('gtu_ref')), 'empty_value' => $this->getObject()->get('gtu_ref'), 'required' => false)),
+      'group_ref'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('group_ref')), 'empty_value' => $this->getObject()->get('group_ref'), 'required' => false)),
       'tag'            => new sfValidatorString(),
       'group_type'     => new sfValidatorString(),
       'sub_group_type' => new sfValidatorString(),
-      'tag_indexed'    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'tag_indexed', 'required' => false)),
+      'tag_indexed'    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('tag_indexed')), 'empty_value' => $this->getObject()->get('tag_indexed'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('tags[%s]');

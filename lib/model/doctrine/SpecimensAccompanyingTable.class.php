@@ -4,5 +4,12 @@
  */
 class SpecimensAccompanyingTable extends DarwinTable
 {
-
+  /**
+  * Get Distincts Forms
+  * @return array an Array of forms in keys
+  */
+  public function getDistinctForms()
+  {
+    return $this->createDistinct('SpecimensAccompanying', 'form', 'form')->execute();
+  }
 }

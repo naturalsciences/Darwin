@@ -86,6 +86,7 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['name']);
     $query->andWhere("id != 0 ")
+	  ->innerJoin($query->getRootAlias().".Level")
           ->limit($this->getCatalogueRecLimits());
     return $query;
   }

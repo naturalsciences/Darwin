@@ -31,8 +31,8 @@ $(document).ready(function () {
             <?php endif;?>
         <?php endif;?>
         <li class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
-        <?php echo image_tag ('individual_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
-        <?php echo image_tag ('individual_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
+        <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
+        <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
         <span><?php echo $col_item->getName();?>
         <?php if(! $is_choose):?>
 	  <?php echo link_to(image_tag('edit.png'),'collection/edit?id='.$col_item->getId());?>

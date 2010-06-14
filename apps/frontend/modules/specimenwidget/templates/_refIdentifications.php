@@ -45,11 +45,14 @@ function reOrderIdentifiers(tableId)
       </th>
     </tr>
   </thead>
-    <?php foreach($form['Identifications'] as $form_key=>$form_value):?>
-      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$form_key, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>
+    <?php $retainedKey = 0;?>
+    <?php foreach($form['Identifications'] as $form_value):?>
+      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$retainedKey, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>
+      <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
-    <?php foreach($form['newIdentification'] as $form_key=>$form_value):?>
-      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$form_key, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>
+    <?php foreach($form['newIdentification'] as $form_value):?>
+      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$retainedKey, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>
+      <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
   <tfoot>
     <tr>

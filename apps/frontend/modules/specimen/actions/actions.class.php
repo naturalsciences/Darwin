@@ -52,6 +52,14 @@ class specimenActions extends DarwinActions
     return $this->renderPartial('spec_comments',array('form' => $form['newComments'][$number]));
   }
 
+  public function executeAddSpecimensAccompanying(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $form = $this->getSpecimenForm($request);
+    $form->addSpecimensAccompanying($number);
+    return $this->renderPartial('specimens_accompanying',array('form' => $form['newSpecimensAccompanying'][$number], 'rownum'=>$number));
+  }
+
   public function executeAddIdentification(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));

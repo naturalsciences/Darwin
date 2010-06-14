@@ -57,15 +57,22 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 
   public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values)
   {
-     if ($values != "" && $table != "" && $field != "")
-     {
-       $words = explode(" ", $values);
-       foreach($words as $word)
-       {
-         $query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ? , 'contains') ",$word);
-       }
-     }
-     return $query;
+	$conn = Doctrine_Manager::connection();
+	if ($values != "" && $table != "" && $field != "")
+	{
+	  $values = preg_replace('/[^A-Za-z0-9\-_]/', ' ', $values);
+	  $words = explode(" ", $values);
+	  foreach($words as $word)
+	  {
+		if($word=='') continue;
+
+		$qWord = $conn->quote($word, 'string');
+		$query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ".$qWord. " , 'contains') ");
+		//UGLY HAckish hack...
+		//$query->andWhere($field . " @@ search_words_to_query('" . $table . "' , '" . $field . "', ? , 'contains') ",$word);
+	  }
+	}
+	return $query;
   }
 
   public function addDateFromToColumnQuery(Doctrine_Query $query, array $dateFields, $val_from, $val_to)

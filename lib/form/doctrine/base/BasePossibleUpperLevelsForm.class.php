@@ -8,7 +8,7 @@
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
 abstract class BasePossibleUpperLevelsForm extends BaseFormDoctrine
 {
@@ -20,8 +20,8 @@ abstract class BasePossibleUpperLevelsForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'level_ref'       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'level_ref', 'required' => false)),
-      'level_upper_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'level_upper_ref', 'required' => false)),
+      'level_ref'       => new sfValidatorChoice(array('choices' => array($this->getObject()->get('level_ref')), 'empty_value' => $this->getObject()->get('level_ref'), 'required' => false)),
+      'level_upper_ref' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('level_upper_ref')), 'empty_value' => $this->getObject()->get('level_upper_ref'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('possible_upper_levels[%s]');

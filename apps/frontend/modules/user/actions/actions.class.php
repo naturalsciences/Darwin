@@ -197,12 +197,13 @@ class userActions extends DarwinActions
 	{
 	  try{
 	    $this->form->save();
+	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
+	  catch(Doctrine_Exception $ne)
 	  {
+	    $e = new DarwinPgErrorParser($ne);
 	    return $this->renderText($e->getMessage());
 	  }
-	  return $this->renderText('ok');
 	}
     }
   }
