@@ -25,4 +25,14 @@ class InstitutionsTable extends DarwinTable
 
     return $q->fetchOne(); 
   }
+  
+  public function getInstitutionByName($name)
+  {
+    $q = Doctrine_Query::create()
+	 ->from('Institutions p')
+	 ->where('p.family_name = ?', $name)
+	 ->andWhere('p.is_physical = ?', false);
+
+    return $q->fetchOne();  	
+  } 
 }

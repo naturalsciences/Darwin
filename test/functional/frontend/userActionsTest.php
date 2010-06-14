@@ -211,38 +211,8 @@ $browser->
     isStatusCode(200)->
   end();
 
-  $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
-
-$browser->
-  get('/user/new')->
-  with('response')->begin()->
-    isStatusCode(200)->
-  end()->
-
-  click('#submit', array('users' => array(
-      'db_user_type'  => Users::REGISTERED_USER,
-      'gender' => 'M',
-      'family_name' => 'Chambert',
-      'given_name' => 'Yann',
-      'is_physical' => true
-    )));
-
-$id = Doctrine::getTable("Users")->findOneByFamilyName('Chambert')->getId();
-
-$browser->
-  get('user/loginInfo?user_ref='.$id)->
-  with('response')->begin()->
-    isStatusCode(200)->
-  end()->
-  click('#submit',array('users_login_infos' =>
-	  array(
-       'login_type' => 'local',
-       'user_name' => 'ychambert',
-       'new_password' => 'toto',
-       'confirm_password' => 'toto')
-	  )
-	);
-
+$browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
+$browser->addCustomUserAndLogin('ychambert',Users::REGISTERED_USER,'toto');	
 $browser->get('account/logout')->
   with('response')->begin()->
     isRedirected()->
@@ -295,15 +265,9 @@ $browser->
   with('request')->begin()->
     isParameter('module', 'user')->
     isParameter('action', 'widget')->
-  end()->
-
-  with('response')->begin()->
-    isRedirected()->
-  end()->
-
-  followRedirect();
+  end();
 
 $browser->
   get('user/loginInfo?user_ref='.Doctrine::getTable("Users")->findOneByFamilyName('Evil')->getId())->
   with('response')->begin()->
-    isStatusCode(403)->info('users ychambert is not allowed to access to this page')->end() ;
+    isStatusCode(403)->info('users ychambert is not allowed to access to this page')->end();

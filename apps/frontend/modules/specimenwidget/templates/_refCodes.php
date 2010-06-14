@@ -75,7 +75,7 @@ $(document).ready(function () {
       }
     });
 
-    $('#add_code').click(function()
+    $('#add_code').click(function add_code()
     {
         parent = $(this).closest('table.property_values');
         $.ajax(

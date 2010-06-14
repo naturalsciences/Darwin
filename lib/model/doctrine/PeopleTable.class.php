@@ -42,4 +42,20 @@ class PeopleTable extends DarwinTable
 
     return $q->fetchOne(); 
   }
+  
+  /**
+  * Find Only people with specified family name
+  * @param string the name of the people
+  * @return Doctrine_Record 
+  */
+    public function getPeopleByName($name)
+    {
+	   $q = Doctrine_Query::create()
+		->from('people p')
+		->where('p.family_name = ?', $name);
+
+	   return $q->fetchOne(); 
+    }
+    
+
 }

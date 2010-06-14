@@ -54,5 +54,4 @@ class Institutions extends BaseInstitutions
       $this->_set('db_people_type', $db_types);
 
   }
-
 }
