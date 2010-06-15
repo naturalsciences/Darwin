@@ -38,14 +38,15 @@
       </th>
     </tr>
   </thead>
-  <tbody id="codes">
+    <?php $retainedKey = 0;?>
     <?php foreach($form['Codes'] as $form_value):?>
-      <?php include_partial('spec_codes', array('form' => $form_value));?>
+      <?php include_partial('spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+      <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
     <?php foreach($form['newCode'] as $form_value):?>
-      <?php include_partial('spec_codes', array('form' => $form_value));?>
+      <?php include_partial('spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+      <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
-  </tbody>
   <tfoot>
     <tr>
       <td colspan='8'>
@@ -59,32 +60,16 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-    $('.clear_code').live('click', function()
-    {
-      parent = $(this).closest('tr');
-      nvalue='';
-      $(parent).find('input[id$=\"_code_prefix\"]').val(nvalue);
-      $(parent).find('input[id$=\"_code\"]').val(nvalue);
-      $(parent).find('input[id$=\"_code_suffix\"]').val(nvalue);
-      $(parent).find('input[id$=\"_deleted\"]').val(1);
-      $(parent).hide();
-      visibles = $(parent).closest('tbody').find('tr:visible').size();
-      if(!visibles)
-      {
-        $(this).closest('table.property_values').find('thead').hide();
-      }
-    });
-
-    $('#add_code').click(function add_code()
+    $('#add_code').click(function()
     {
         parent = $(this).closest('table.property_values');
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody#code tr').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
+          url: $(this).attr('href')+ (0+$(parent).find('tbody').length) + '/collection_id/' + $('input#specimen_collection_ref').val(),
           success: function(html)
           {
-            $(parent).find('tbody').append(html);
+            $(parent).append(html);
             $(parent).find('thead:hidden').show();
           }
         });

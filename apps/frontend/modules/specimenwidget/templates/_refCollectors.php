@@ -6,17 +6,20 @@
 	   </th>
 	</tr>
    </thead>
+   <?php $retainedKey = 0;?>
    <?php foreach($form['Collectors'] as $form_value):?>
-     <?php include_partial('spec_people_associations', array('form' => $form_value));?>
+     <?php include_partial('spec_people_associations', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+     <?php $retainedKey = $retainedKey+1;?>
    <?php endforeach;?>
    <?php foreach($form['newCollectors'] as $form_value):?>
-     <?php include_partial('spec_people_associations', array('form' => $form_value));?>
+     <?php include_partial('spec_people_associations', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+     <?php $retainedKey = $retainedKey+1;?>
    <?php endforeach;?>
    <tfoot>
      <tr>
        <td colspan="3">
          <div class="add_code">
-           <a href="<?php echo url_for('specimen/addCollector'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_collectors"><?php echo __('Add collector');?></a>
+           <a href="<?php echo url_for('specimen/addCollector'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_collector"><?php echo __('Add collector');?></a>
          </div>
        </td>
      </tr>
@@ -36,26 +39,7 @@ $(document).ready(function () {
                   reOrderIdentifiers($(this).attr('id'));
                 }
     });
-    $('.clear_collectors').live('click', function()
-    {
-      parent = $(this).closest('tbody');
-      parentTableId = $(parent).closest('table').attr('id');
-      nvalue='';
-      tvalue='-';
-      bvalue='Choose !';
-      $(parent).find('input[id$=\"_people_ref\"]').val(nvalue);
-      $(parent).find('div[id$=\"_people_ref_name\"]').text(tvalue);
-      $(parent).find('div[id$=\"_people_ref_button\"]').find('a').text(bvalue);
-      $(parent).hide();
-      reOrderIdentifiers(parentTableId);
-      visibles = $('table#'+parentTableId+' tbody.spec_ident_collectors_data:visible').size();
-      if(!visibles)
-      {
-        $(this).closest('table#'+parentTableId).find('thead').hide();
-      }
-    });
-
-    $('#add_collectors').live('click', function()
+    $('#add_collector').click( function()
     {
         parent = $(this).closest('table.collectors');
         parentId = $(parent).attr('id');

@@ -6,16 +6,19 @@
       <th><?php echo $form['comment'];?></th>
     </tr>
   </thead>
+  <?php $retainedKey = 0;?>
   <?php foreach($form['Comments'] as $form_value):?>
-     <?php include_partial('spec_comments', array('form' => $form_value));?>
+     <?php include_partial('spec_comments', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+     <?php $retainedKey = $retainedKey+1;?>
   <?php endforeach;?>
   <?php foreach($form['newComments'] as $form_value):?>
-     <?php include_partial('spec_comments', array('form' => $form_value));?>
+     <?php include_partial('spec_comments', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+     <?php $retainedKey = $retainedKey+1;?>
   <?php endforeach;?>
    <tfoot>
      <tr>
        <td colspan="3">
-         <div class="add_collectors">
+         <div class="add_comments">
            <a href="<?php echo url_for('specimen/addComments'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_comment"><?php echo __('Add comment');?></a>
          </div>
        </td>
@@ -26,7 +29,7 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-    $('#add_comment').live('click', function()
+    $('#add_comment').click( function()
     {
         parent = $(this).closest('table.comments');
         parentId = $(parent).attr('id');
@@ -42,19 +45,5 @@ $(document).ready(function () {
         $(this).closest('table.comments').find('thead').show();
         return false;
     }); 
-    $('.clear_comment').live('click', function()
-    {
-      parent = $(this).closest('tbody');
-      parentTableId = $(parent).closest('table').attr('id');
-      nvalue="";
-      $(parent).find('textarea[id$=\"_comment\"]').html(nvalue);      
-      $(parent).hide();
-      reOrderIdentifiers(parentTableId);
-      visibles = $('table#'+parentTableId+' tbody.spec_ident_comments_data:visible').size();
-      if(!visibles)
-      {
-        $(this).closest('table#'+parentTableId).find('thead').hide();
-      }
-    });
 });
 </script>

@@ -81,7 +81,7 @@ class individualsActions extends DarwinActions
       $ident = $individual_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
       $ident->addIdentifiers($identifier_number, $identifier_order_by);
       $individual_form->reembedIdentifications($ident, $number);
-      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['Identifications'][$number]['newIdentifier'][$identifier_number]));
+      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['Identifications'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
     }
     else
     {
@@ -89,7 +89,7 @@ class individualsActions extends DarwinActions
       $ident = $individual_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
       $ident->addIdentifiers($identifier_number, $identifier_order_by);
       $individual_form->reembedNewIdentification($ident, $number);
-      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['newIdentification'][$number]['newIdentifier'][$identifier_number]));
+      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
     }
   }
 
@@ -102,7 +102,7 @@ class individualsActions extends DarwinActions
       $spec = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('individual_id') );
     $form = new SpecimenIndividualsForm($spec);
     $form->addComments($number);
-    return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number]));
+    return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
 
 }

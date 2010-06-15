@@ -15,14 +15,15 @@
       </th>
     </tr>
   </thead>
-  <tbody id="insurances">
+    <?php $retainedKey = 0;?>
     <?php foreach($form['Insurances'] as $form_value):?>
-      <?php include_partial('parts/insurances', array('form' => $form_value));?>
+      <?php include_partial('parts/insurances', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+      <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
     <?php foreach($form['newInsurance'] as $form_value):?>
-      <?php include_partial('parts/insurances', array('form' => $form_value));?>
+      <?php include_partial('parts/insurances', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+      <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
-  </tbody>
   <tfoot>
     <tr>
       <td colspan='4'>
@@ -34,37 +35,21 @@
   </tfoot>
 </table>
 <script  type="text/javascript">
-$(document).ready(function () {
-
-    $('.clear_code').live('click', function()
-    {
-      parent = $(this).closest('tr');
-      nvalue='';
-      $(parent).find('input[id$=\"_insurance_value\"]').val(nvalue);
-      $(parent).hide();
-      $(parent).next('tr').hide();
-      visibles = $(parent).closest('tbody').find('tr:visible').size();
-      if(!visibles)
-      {
-        $(this).closest('table.property_values').find('thead').hide();
-      }
-    });
-
+  $(document).ready(function () {
     $('#add_insurance').click(function()
     {
         parent = $(this).closest('table.property_values');
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody tr').length),
+          url: $(this).attr('href')+ (0+$(parent).find('tbody').length),
           success: function(html)
           {
-            $(parent).find('tbody').append(html);
+            $(parent).append(html);
             $(parent).find('thead:hidden').show();
           }
         });
         return false;
     });
-
-});
+  });
 </script>

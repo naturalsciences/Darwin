@@ -20,7 +20,7 @@
       <?php echo $form['unit'];?>
     </td>
     <td class="widget_row_delete">
-      <?php echo image_tag('remove.png', 'alt=Delete class=clear_code id=clear_code_'.$rownum); ?>
+      <?php echo image_tag('remove.png', 'alt=Delete class=clear_code id=clear_accompanying_unit_'.$rownum); ?>
       <?php echo $form->renderHiddenFields();?>
     </td>    
   </tr>
@@ -46,8 +46,8 @@
   </tr>
 </tbody>
 <script type="text/javascript">
-
-    $("#clear_code_<?php echo $rownum;?>").click( function()
+  $(document).ready(function () {
+    $("#clear_accompanying_unit_<?php echo $rownum;?>").click( function()
     {
       parent = $(this).closest('tbody');
       nvalue='';
@@ -72,4 +72,5 @@
     {
       $(this).closest('tbody').find('tr.accompanying_unit').toggle();
     });
+  });
 </script>

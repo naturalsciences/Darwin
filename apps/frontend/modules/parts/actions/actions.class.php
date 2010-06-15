@@ -106,7 +106,7 @@ class partsActions extends DarwinActions
     $collectionId = $request->getParameter('collection_id', null);
     $form = $this->getSpecimenPartForm($request);
     $form->addCodes($number, $collectionId);
-    return $this->renderPartial('specimen/spec_codes',array('form' => $form['newCode'][$number]));
+    return $this->renderPartial('specimen/spec_codes',array('form' => $form['newCode'][$number], 'rownum'=>$number));
   }
 
   public function executeAddInsurance(sfWebRequest $request)
@@ -115,7 +115,7 @@ class partsActions extends DarwinActions
     $collectionId = $request->getParameter('collection_id', null);
     $form = $this->getSpecimenPartForm($request);
     $form->addInsurances($number);
-    return $this->renderPartial('parts/insurances',array('form' => $form['newInsurance'][$number]));
+    return $this->renderPartial('parts/insurances',array('form' => $form['newInsurance'][$number], 'rownum'=>$number));
   }
   
   
@@ -128,6 +128,6 @@ class partsActions extends DarwinActions
       $spec = Doctrine::getTable('SpecimensParts')->findExcept($request->getParameter('indid') );
     $form = new SpecimenPartsForm($spec);
     $form->addComments($number);
-    return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number]));
+    return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
 }

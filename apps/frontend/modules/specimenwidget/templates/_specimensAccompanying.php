@@ -43,7 +43,7 @@ $(document).ready(function () {
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$('.property_values tbody').length),
+          url: $(this).attr('href')+ (0+$(parent).find('tbody').length),
           success: function(html)
           {
             $(parent).append(html);

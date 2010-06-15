@@ -68,20 +68,6 @@ function reOrderIdentifiers(tableId)
 
 $(document).ready(function () {
 
-    $('.clear_identification').live('click', function()
-    {
-      parent = $(this).closest('tbody');
-      nvalue='';
-      $(parent).find('input[id$=\"_value_defined\"]').val(nvalue);
-      $(parent).hide();
-      reOrderIdent();
-      visibles = $('table#identifications tbody.spec_ident_data:visible').size();
-      if(!visibles)
-      {
-        $(this).closest('table#identifications').find('thead.spec_ident_head').hide();
-      }
-    });
-
     $('#add_identification').click(function()
     {
         parent = $(this).closest('table#identifications');
@@ -110,44 +96,6 @@ $(document).ready(function () {
          }
        });
 
-    $('.clear_identifier').live('click', function()
-    {
-      parent = $(this).closest('tbody');
-      parentTableId = $(parent).closest('table').attr('id');
-      nvalue='';
-      tvalue='-';
-      bvalue='Choose !';
-      $(parent).find('input[id$=\"_people_ref\"]').val(nvalue);
-      $(parent).find('div[id$=\"_people_ref_name\"]').text(tvalue);
-      $(parent).find('div[id$=\"_people_ref_button\"]').find('a').text(bvalue);
-      $(parent).hide();
-      reOrderIdentifiers(parentTableId);
-      visibles = $('table#'+parentTableId+' tbody.spec_ident_identifiers_data:visible').size();
-      if(!visibles)
-      {
-        $(this).closest('table#'+parentTableId).find('thead').hide();
-        $('table#'+parentTableId).toggleClass('green_border',false);
-      }
-    });
-
-    $('.add_identifier').live('click', function()
-    {
-        parent = $(this).closest('table.identifiers');
-        parentId = $(parent).attr('id');
-        $.ajax(
-        {
-          type: "GET",
-          url: $(this).attr('href')+ ($('table#'+parentId+' tbody.spec_ident_identifiers_data').length) + '/iorder_by/' + ($('table#'+parentId+' tbody.spec_ident_identifiers_data:visible').length+1),
-          success: function(html)
-          {
-            $(parent).append(html);
-            $(parent).find('thead:hidden').show();
-            $('table#'+parentId).toggleClass('green_border',true);
-          }
-        });
-        return false;
-    });
-    
     $('.spec_ident_identifiers_data input[id$=\"people_ref\"]').live('change', function()
     {
 	ref_element_id = $(this).closest('table').attr('id') ;
