@@ -57,7 +57,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
   {
     if ($values != "")
     {
-      $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values);
+      $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values, 't');
     }
     return $query;
   }

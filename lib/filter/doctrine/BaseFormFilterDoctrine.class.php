@@ -61,13 +61,15 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   * @param string $table a table where we should look at
   * @param string $field The field searched
   * @param string $values The value of the search field
+  * @param string $alias The Alias for the searched table if null the root alias is taken
   * @return Doctrine_Query the modified doctrine query
   */
-  public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values)
+  public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values, $alias = null)
   {
 	if ($values != "" && $table != "" && $field != "")
 	{
-	  $alias = $query->getRootAlias();
+	  if(! $alias)
+		$alias = $query->getRootAlias();
 	  $search = self::splitNameQuery($values);
 	  $terms = self::getAllTerms($search);
 	  if(empty($terms)) return $query;
