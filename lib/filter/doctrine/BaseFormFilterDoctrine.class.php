@@ -84,7 +84,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 		LEFT JOIN words on word % vt.anyelement
 		WHERE referenced_relation = :table
 		AND field_name = :field
-		AND word like '%' || vt.anyelement || '%'
+		AND word ilike '%' || vt.anyelement || '%'
 		GROUP BY word,  vt.anyelement");
 
 	  $statement->execute(array(':table' => $table, ':field' => $field));
