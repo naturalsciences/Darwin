@@ -2,7 +2,10 @@
   <tbody>
     <?php if($form['acquisition_category']->hasError()):?>
       <tr>
-        <td colspan="2"><?php echo $form['acquisition_category']->renderError(); ?><td>
+        <td colspan="2">
+		  <?php echo $form['acquisition_category']->renderError(); ?>
+		  <?php echo $form['acquisition_date']->renderError(); ?>
+		<td>
       </tr>
     <?php endif; ?>
     <tr>
