@@ -126,9 +126,16 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'choices' => array(0,1),
         'required' => false,
         ));
-	$this->setEmptyToObjectValue();
+    $this->validatorSchema->setPostValidator(
+        new sfValidatorSchemaCompare('specimen_individuals_count_min', '<=', 'specimen_individuals_count_max',
+            array(),
+            array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
+            )
+        );
+
     $this->validatorSchema['ident'] = new sfValidatorPass();
     $this->validatorSchema['comment'] = new sfValidatorPass();
+    $this->setEmptyToObjectValue();
   }
   public function addIdentifications($num, $order_by=0)
   {

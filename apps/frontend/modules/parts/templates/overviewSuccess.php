@@ -45,7 +45,7 @@
 	  <td><?php echo $part->getContainer();?></td>
 	  <td><?php echo $part->getSubContainer();?></td>
 	  <td>
-		<?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId());?>
+		<?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
 	  </td>
 	  <td>
 		<a class="row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>

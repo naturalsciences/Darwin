@@ -884,14 +884,14 @@ spi6:
   title_perso: Count
 
 spi7:
-  col_num: 1
+  col_num: 2
   category: individuals_widget
   group_name: refProperties
   mandatory: false
   order_by: 2
   opened: false
   visible: false
-  title_perso: Rock form
+  title_perso: Properties
 
 spi8:
   col_num: 2
@@ -901,7 +901,7 @@ spi8:
   order_by: 3
   opened: true
   visible: true
-  title_perso: Count
+  title_perso: Identifications
 
 spi9:
   col_num: 2
