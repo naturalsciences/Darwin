@@ -136,6 +136,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 		  $str .= $separator.$result['word'];
 	  }
 	}
+	if($str == '') $str = $term;
 	return $str;
   }
 
