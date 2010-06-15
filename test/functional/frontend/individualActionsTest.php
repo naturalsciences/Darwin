@@ -4,16 +4,11 @@ include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new DarwinTestFunctional(new sfBrowser());
 $browser->loadData($configuration)->login('root','evil');
-$Specimen = Doctrine::getTable('Specimens')->findAll();
-$specId = $Specimen[0]->getId();
-$browser->
-  get('/individuals/edit/spec_id/'.$specId)->
-
-  with('request')->begin()->
-    isParameter('module', 'individuals')->
-    isParameter('action', 'edit')->
-  end()->
-  info('1.1 - is everything ok on screen')->
+$browser->addCustomSpecimen('777','Collection test for individual','Taxon test for individual',1)->
+	with('response')->isRedirected()->followRedirect()->
+	with('request')->begin()->
+	     click('#tab_2')->
+     end()->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('title','Add specimen individual')->
@@ -27,5 +22,8 @@ $browser->
     checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','Properties')->
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','Identifications')->   
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Comments')->        
-  end()
-;
+  end();
+$collection_id = Doctrine::getTable('Collections')->getCollectionByName('Collection test for individual')->getId();
+$taxon_id = Doctrine::getTable('Taxonomy')->getTaxonByName('Taxon test for individual',1,'/')->getId() ;
+$specimen_id = Doctrine::getTable('Specimens')->GetSpecimenByRef($collection_id,$taxon_id)->getId();
+$browser->addCustomIndividual($specimen_id);

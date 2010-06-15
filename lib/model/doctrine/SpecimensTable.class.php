@@ -61,5 +61,15 @@ class SpecimensTable extends DarwinTable
     {
 	return $this->createDistinct('Specimens', 'host_relationship', 'host_relationship')->execute();
     }
+    
+    public function getSpecimenByRef($collection_id,$taxon_id)
+    {
+	   $q = Doctrine_Query::create()
+		->from('specimens s')
+		->where('s.collection_ref = ?', $collection_id)
+		->andWhere('s.taxon_ref = ?', $taxon_id);
+
+	   return $q->fetchOne(); 
+    }
 
 }

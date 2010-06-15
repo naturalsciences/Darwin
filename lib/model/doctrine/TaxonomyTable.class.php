@@ -4,4 +4,16 @@
  */
 class TaxonomyTable extends DarwinTable
 {
+  
+  public function getTaxonByName($name,$level,$path)
+  {
+    $q = Doctrine_Query::create()
+	 ->from('Taxonomy t')
+	 ->where('t.name = ?', $name)
+	 ->andWhere('t.level_ref = ?', $level)
+	 ->andWhere('t.path = ?', $path);
+
+    return $q->fetchOne();  	
+  }
+
 }

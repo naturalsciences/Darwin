@@ -4,7 +4,7 @@ include(dirname(__FILE__).'/../../bootstrap/functional.php');
 
 $browser = new DarwinTestFunctional(new sfBrowser());
 $browser->loadData($configuration)->login('root','evil');
-
+$browser->setTester('doctrine', 'sfTesterDoctrine');
 $taxon = Doctrine::getTable('Taxonomy')->findOneByName('Falco Peregrinus Tunstall, 1771');
 $taxonId = $taxon->getId();
 $secondTaxon = Doctrine::getTable('Taxonomy')->findOneByName('Eucaryota');
@@ -265,6 +265,8 @@ $browser->
                                                       )
              )
        )->end()->       
-  with('response')->begin()->
-    isStatusCode(200)->
-  end();
+with('doctrine')->begin()
+   ->check('catalogueProperties', array('property_type' => 'physical measurement',
+          							   'property_sub_type' => 'wideness'))
+   ->end();          							  
+$browser->addCustomSpecimen('666','Collection test for specimen','Taxon test for specimen',1);

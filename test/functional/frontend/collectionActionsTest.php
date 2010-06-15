@@ -223,3 +223,4 @@ $browser->
 $vertebrates = Doctrine::getTable('Collections')->findOneByName('Vertebrates');
 
 $browser->test()->is($vertebrates->getCodePrefix(), '', 'The code prefix has been well reset');
+$browser->addCustomCollection('12345','Collection for test');
