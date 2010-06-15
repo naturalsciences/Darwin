@@ -40,7 +40,7 @@ class specimenActions extends DarwinActions
   {
     $number = intval($request->getParameter('num'));
     $form = $this->getSpecimenForm($request);
-    $form->addCollectors($number,0);
+    $form->addCollectors($number,$request->getParameter('iorder_by',0));
     return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number], 'rownum'=>$number));
   }
 

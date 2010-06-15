@@ -28,7 +28,7 @@
 	      $(parent).find('div[id$=\"_people_ref_name\"]').text(tvalue);
 	      $(parent).find('div[id$=\"_people_ref_button\"]').find('a').text(bvalue);
 	      $(parent).hide();
-	      reOrderIdentifiers(parentTableId);
+	      reOrderCollectors(parentTableId);
 	      visibles = $('table#'+parentTableId+' tbody.spec_ident_collectors_data:visible').size();
 	      if(!visibles)
 	      {

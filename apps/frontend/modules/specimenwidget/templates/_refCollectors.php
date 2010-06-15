@@ -1,3 +1,16 @@
+<script  type="text/javascript">
+function forceCollectorsHelper(e,ui)
+{
+   $(".ui-state-highlight").html("<td colspan='3' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
+}
+
+function reOrderCollectors(tableId)
+{
+  $('table#'+tableId).find('tbody.spec_ident_collectors_data:visible').each(function (index, item){
+    $(item).find('tr.spec_ident_collectors_data input[id$=\"_order_by\"]').val(index+1);
+  });
+}
+</script>
  <table class="property_values collectors" id="spec_ident_collectors">
    <thead style="<?php echo ($form['Collectors']->count() || $form['newCollectors']->count())?'':'display: none;';?>" class="spec_ident_collectors_head">
 	<tr>
@@ -33,10 +46,10 @@ $(document).ready(function () {
      handle: '.spec_ident_collectors_handle',
      axis: 'y',
      change: function(e, ui) {
-              forceIdentifiersHelper(e,ui);
+              forceCollectorsHelper(e,ui);
             },
      deactivate: function(event, ui) {
-                  reOrderIdentifiers($(this).attr('id'));
+                  reOrderCollectors($(this).attr('id'));
                 }
     });
     $('#add_collector').click( function()

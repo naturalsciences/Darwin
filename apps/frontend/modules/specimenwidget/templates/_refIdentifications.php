@@ -1,5 +1,5 @@
 <script  type="text/javascript">
-function forceHelper(e,ui)
+function forceIdentificationHelper(e,ui)
 {
    $(".ui-state-highlight").html("<td colspan='6' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
 }
@@ -89,7 +89,7 @@ $(document).ready(function () {
          handle: '.spec_ident_handle',
          axis: 'y',
          change: function(e, ui) {
-           forceHelper(e,ui);
+           forceIdentificationHelper(e,ui);
          },
          deactivate: function(event, ui) {
            reOrderIdent();
