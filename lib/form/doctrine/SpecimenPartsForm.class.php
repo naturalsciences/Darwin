@@ -20,8 +20,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	$this->widgetSchema['specimen_part'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
 	  'table_method' => 'getDistinctParts',
-	  'method' => 'getParts',
-	  'key_method' => 'getParts',
+	  'method' => 'getSpecimenPart',
+	  'key_method' => 'getSpecimenPart',
 	  'add_empty' => false,
 	  'change_label' => 'Pick parts in the list',
 	  'add_label' => 'Add another parts',
@@ -80,8 +80,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	$this->widgetSchema['container_type'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
 	  'table_method' => 'getDistinctContainerTypes',
-	  'method' => 'getContainerTypes',
-	  'key_method' => 'getContainerTypes',
+	  'method' => 'getContainerType',
+	  'key_method' => 'getContainerType',
 	  'add_empty' => true,
 	  'change_label' => 'Pick a container in the list',
 	  'add_label' => 'Add another container',
@@ -90,8 +90,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	$this->widgetSchema['sub_container_type'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
 	  'table_method' => 'getDistinctSubContainerTypes',
-	  'method' => 'getSubContainerTypes',
-	  'key_method' => 'getSubContainerTypes',
+	  'method' => 'getSubContainerType',
+	  'key_method' => 'getSubContainerType',
 	  'add_empty' => true,
 	  'change_label' => 'Pick a sub container type in the list',
 	  'add_label' => 'Add another sub container type',
@@ -100,8 +100,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	$this->widgetSchema['specimen_status'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
 	  'table_method' => 'getDistinctStatus',
-	  'method' => 'getStatus',
-	  'key_method' => 'getStatus',
+	  'method' => 'getSpecimenStatus',
+	  'key_method' => 'getSpecimenStatus',
 	  'add_empty' => true,
 	  'change_label' => 'Pick a status in the list',
 	  'add_label' => 'Add another status',

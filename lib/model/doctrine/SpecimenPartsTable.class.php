@@ -87,7 +87,9 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctContainerTypes()
   {
-    return $this->createDistinct('SpecimenParts', 'container_type', 'container_types')->execute();
+    $contTypes = $this->createDistinct('SpecimenParts', 'container_type', 'container_type')->execute();
+    $contTypes->add(new SpecimenParts);
+    return $contTypes;
   }
 
   /**
@@ -96,7 +98,9 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctSubContainerTypes()
   {
-    return $this->createDistinct('SpecimenParts', 'sub_container_type', 'sub_container_types')->execute();
+    $subContTypes = $this->createDistinct('SpecimenParts', 'sub_container_type', 'sub_container_type')->execute();
+    $subContTypes->add(new SpecimenParts);
+    return $subContTypes;
   }
 
   /**
@@ -105,7 +109,9 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctParts()
   {
-	return $this->createDistinct('SpecimenParts', 'specimen_part', 'parts')->execute();
+    $parts = $this->createDistinct('SpecimenParts', 'specimen_part', 'specimen_part')->execute();
+    $parts->add(new SpecimenParts);
+    return $parts;
   }
 
   /**
@@ -114,7 +120,9 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctStatus()
   {
-	return $this->createDistinct('SpecimenParts', 'specimen_status', 'status')->execute();
+    $statuses = $this->createDistinct('SpecimenParts', 'specimen_status', 'specimen_status')->execute();
+    $statuses->add(new SpecimenParts);
+    return $statuses;
   }
 
   /**
@@ -125,15 +133,14 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctContainerStorages($type)
   {
-	$q = $this->createDistinct('SpecimenParts INDEXBY storage', 'container_storage', 'storage','');
-	if(! is_null($type))
-	  $q->addWhere('container_type = ?', $type);
-
-	$results = $q->fetchArray();
+    $q = $this->createDistinct('SpecimenParts INDEXBY storage', 'container_storage', 'container_storage','');
+    if(! is_null($type))
+      $q->addWhere('container_type = ?', $type);
+    $results = $q->fetchArray();
     if(count($results))
       $results = array_combine(array_keys($results),array_keys($results));
 
-    return array_merge(array(''=>''), $results);
+    return array_merge(array('dry'=>'dry'), $results);
   }
 
   /**
@@ -144,7 +151,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctSubContainerStorages($type)
   {
-	$q = $this->createDistinct('SpecimenParts INDEXBY storage', 'sub_container_storage', 'storage','');
+	$q = $this->createDistinct('SpecimenParts INDEXBY storage', 'sub_container_storage', 'sub_container_storage','');
 	if(! is_null($type))
 	  $q->addWhere('container_type = ?', $type);
 
@@ -152,7 +159,7 @@ class SpecimenPartsTable extends DarwinTable
     if(count($results))
       $results = array_combine(array_keys($results),array_keys($results));
 
-    return array_merge(array(''=>''), $results);
+    return array_merge(array('dry'=>'dry'), $results);
   }
 
   /**
