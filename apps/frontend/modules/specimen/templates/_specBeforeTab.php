@@ -10,18 +10,6 @@
   <?php $part_tab_class = ($individual_id == '')?'disabled':'enabled';?>
 <?php endif;?>
 <div class="encoding">
-	<?php if ($specimen->isNew() || $mode == 'specimen_edit'):?>
-	  <?php echo image_tag('encod_left_disable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"');?>
-	<?php elseif($mode == 'individuals_overview'):?>
-	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'specimen/edit?id='.$specimen_id);?>
-	<?php elseif($mode == 'individual_edit'):?>
-	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'individuals/overview?spec_id='.$specimen_id);?>
-	<?php elseif($mode == 'parts_overview'):?>
-	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'individuals/edit?spec_id='.$specimen_id.'&individual_id='.$individual_id);?>
-	<?php else:?>
-	  <?php echo link_to(image_tag('encod_left_enable.png','id="arrow_left" alt="'.__("Go Previous").'" class="scrollButtons left"'),'parts/overview?id='.$individual_id);?>
-	<?php endif;?> 
-
 	<div class="page">
 		<div class="tabs">
 			  <?php if($specimen->isNew()):?>
