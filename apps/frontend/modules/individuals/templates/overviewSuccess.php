@@ -35,7 +35,7 @@
   </thead>
   <tbody>
     <?php foreach($individuals as $i => $individual):?>
-      <tr>
+      <tr class="spec_individuals">
 	<td>
 	  <?php echo $individual->getTypeFormated();?>
 	</td>
@@ -106,7 +106,7 @@ $(document).ready(function () {
 		      if(html == "ok" )
 		      {
 			currentElement.closest('tr').remove();
-			if($('table.catalogue_table').find('tbody').find('tr[class^=\"part_id\"]').size() == 0)
+			if($('table.catalogue_table').find('tbody').find('tr.spec_individuals:visible').size() == 0)
 			{
 			  $('table.catalogue_table').find('thead').hide();
 			}

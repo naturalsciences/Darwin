@@ -2,6 +2,12 @@
 
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'mode' => 'parts_overview') );?>
 
+<div>
+<ul id="error_list" class="error_list" style="display:none">
+  <li></li>
+</ul>
+</div>
+
 <table class="catalogue_table">
   <thead style="<?php echo (count($parts))?'':'display: none;';?>">
 	<tr>
@@ -19,7 +25,7 @@
   </thead>
   <tbody>
   <?php foreach($parts as $part):?>
-	<tr class="part_id_<?php echo $part->getId();?>">
+	<tr class="parts">
       <td class="info_cell">
 	  <?php echo image_tag('info-green.png',"title=info class=extd_info");?>
 		<div class="extended_info" style="display:none;">
@@ -60,6 +66,19 @@
 
 <br />
 <script  type="text/javascript">
+
+function addError(html)
+{
+  $('ul#error_list').find('li').text(html);
+  $('ul#error_list').show();
+}
+
+function removeError()
+{
+  $('ul#error_list').hide();
+  $('ul#error_list').find('li').text(' ');
+}
+
 $(document).ready(function () {
   $("a.row_delete").click(function(){
 
@@ -72,20 +91,20 @@ $(document).ready(function () {
 		  if(html == "ok" )
 		  {
 			currentElement.closest('tr').remove();
-			if($('table.catalogue_table').find('tbody').find('tr[class^=\"part_id\"]').size() == 0)
+			if($('table.catalogue_table').find('tbody').find('tr.parts:visible').size() == 0)
 			{
 			  $('table.catalogue_table').find('thead').hide();
 			}
 		  }
 		  else
 		  {
-			//addError(html, currentElement); //@TODO:change this!
-			alert('Error: ' + html);
+			addError(html, currentElement); //@TODO:change this!
+// 			alert('Error: ' + html);
 		  }
 		},
 		error: function(xhr){
-		 // addError('Error!  Status = ' + xhr.status);
-		 alert('Error!  Status = ' + xhr.status);
+		 addError('Error!  Status = ' + xhr.status);
+// 		 alert('Error!  Status = ' + xhr.status);
 		}
 	  });
 	}
