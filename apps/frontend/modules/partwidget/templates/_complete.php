@@ -1,6 +1,6 @@
 <table>
   <tr>
-	<th><?php echo $form['specimen_status']->renderLabel();?></th>
+	<th class="top_aligned"><?php echo $form['specimen_status']->renderLabel();?></th>
 	<td><?php echo $form['specimen_status']->render() ?></td>
   </tr>
   <tr>
