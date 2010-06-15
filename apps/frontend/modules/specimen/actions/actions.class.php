@@ -228,15 +228,13 @@ class specimenActions extends DarwinActions
           $specs[$specimen->getId()] = $specimen->getId();
         }
         $specCodes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens', $specs);
-        foreach($this->specimens as $specimen)
+		$this->codes = array();
+        foreach($specCodes as $code)
         {
-          $codes = array();
-          foreach($specCodes as $code)
-          {
-            if($specimen->getId()==$code->getRecordId())
-              $codes[] = $code->toArray();
-          }
-          $specimen->SpecimensCodes->fromArray($codes);
+          if(! isset($this->codes[$code->getRecordId()]) ) 
+			$this->codes[$code->getRecordId()] = array();
+
+		  $this->codes[$code->getRecordId()][] = $code;
         }
       }
     }

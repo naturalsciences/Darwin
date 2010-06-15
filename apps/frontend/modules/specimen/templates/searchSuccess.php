@@ -35,16 +35,17 @@
             <tr class="rid_<?php echo $specimen->getId(); ?>">
               <td>
                 <ul>
-                  <?php if (!$specimen->SpecimensCodes->count()): ?>
+                  <?php if (!isset($codes[$specimen->getId()])): ?>
                     <li>
                       <?php echo '-';?>
                     </li>
-                  <?php endif;?>
-                  <?php foreach($specimen->SpecimensCodes as $code):?>
-                    <li style="font-weight:<?php echo ($code->getCodeCategory()=='main')?'bold':'normal';?>">
-                      <?php echo $code->getCodeFormated(); ?>
-                    </li>
-                  <?php endforeach;?>
+                  <?php else:?>
+					<?php foreach($codes[$specimen->getId()] as $code):?>
+					  <li style="font-weight:<?php echo ($code->getCodeCategory()=='main')?'bold':'normal';?>">
+						<?php echo $code->getCodeFormated(); ?>
+					  </li>
+					<?php endforeach;?>
+				  <?php endif;?>
                 </ul>
               </td>
               <td class="top_aligned"><?php echo $specimen->Taxonomy->getName();?></td>
