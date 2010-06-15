@@ -48,7 +48,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
           ->andWhere("referenced_relation = ?", array('specimens'));
     if ($values != "")
     {
-      $this->addNamingColumnQuery($query, 'codes', 'full_code_indexed', $values);
+      $this->addNamingColumnQuery($query, 'codes', 'full_code_indexed', $values , 'cod');
     }
     return $query;
   }
