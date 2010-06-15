@@ -108,8 +108,8 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 		  $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
 		}
 		$tsquery = implode(' & ',$tsquery_arr);
-		$tsquery = $conn_MGR->quote('!('.$tsquery.')','string');
-		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
+		$tsquery = $conn_MGR->quote($tsquery,'string');
+		$query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
 	  }
 	  
 	}
