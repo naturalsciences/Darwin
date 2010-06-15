@@ -39,6 +39,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
                                                                 );
     $this->validatorSchema['taxon_level'] = new sfValidatorString(array('required' => false));
     $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
+	$this->hasJoinTaxa = false;
   }
 
   public function addCodeColumnQuery(Doctrine_Query $query, $field, $values)
@@ -53,8 +54,18 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
     return $query;
   }
 
+  protected function joinTaxa(Doctrine_Query $query)
+  {
+	if($this->hasJoinTaxa)
+	  return;
+	$alias = $query->getRootAlias();
+	$query->innerJoin($alias.'.Taxonomy t')
+          ->innerJoin('t.Level cl');
+	$this->hasJoinTaxa = true;
+  }
   public function addTaxonNameColumnQuery(Doctrine_Query $query, $field, $values)
   {
+	$this->joinTaxa($query);
     if ($values != "")
     {
       $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values, 't');
@@ -64,6 +75,7 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 
   public function addTaxonLevelColumnQuery(Doctrine_Query $query, $field, $values)
   {
+	$this->joinTaxa($query);
     if ($values != "")
     {
       $query->addWhere('level_ref = ?', $values);
@@ -74,10 +86,8 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
-    $alias = $query->getRootAlias();
-    $query->innerJoin($alias.'.Taxonomy t')
-          ->innerJoin('t.Level cl')
-          ->andWhere("t.id != 0 ")
+	$this->joinTaxa($query);
+    $query->andWhere("t.id != 0 ")
           ->limit($this->getCatalogueRecLimits());
     return $query;
   }
