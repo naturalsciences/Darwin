@@ -62,9 +62,9 @@ class ClassificationSynonymiesTable extends DarwinTable
 	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id ' .
 	    ($table_name=='taxonomy' ? ', t.extinct' : '') )
 	 ->from('ClassificationSynonymies s, '.DarwinTable::getModelForTable($table_name). ' t')
-	 ->whereIn('s.group_id', $groups)
-	 ->andWhere('t.id=s.record_id')
-	 ->andWhere('s.referenced_relation = ?',$table_name) //Not really necessay but....
+	 ->where('s.referenced_relation = ?',$table_name) //Not really necessay but....
+	 ->andWhere('s.record_id=t.id')
+	 ->andwhereIn('s.group_id', $groups)
 	 ->orderBy('s.group_name ASC, s.order_by ASC')
 	 ->setHydrationMode(Doctrine::HYDRATE_NONE);
     $items = $q->execute();

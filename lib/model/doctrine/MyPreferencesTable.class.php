@@ -11,8 +11,8 @@ class MyPreferencesTable extends DarwinTable
          ->select('p.title_perso as title')
          ->from('MyPreferences p')
          ->andWhere('p.user_ref = ?', $userId)
-         ->andWhere('p.group_name = ?', $widget)
          ->andWhere('p.category = ?', $category)
+         ->andWhere('p.group_name = ?', $widget)
          ->andWhere('p.is_available = true') ;
     return $q->execute();
   }

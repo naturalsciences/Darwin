@@ -12,7 +12,6 @@ class TagGroupsForm extends BaseTagGroupsForm
   public function configure()
   {
      unset(
-      $this['id'],
       $this['group_name_indexed'],
       $this['sub_group_name_indexed'],
       $this['gtu_ref'],

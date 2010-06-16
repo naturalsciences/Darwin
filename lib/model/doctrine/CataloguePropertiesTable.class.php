@@ -58,7 +58,7 @@ class CataloguePropertiesTable extends DarwinTable
     $q = $this->createDistinct('CatalogueProperties', 'property_qualifier', 'qualifier','');
 
     if(! is_null($sub_type))
-      $q->addWhere('property_sub_type = ?',$sub_type);
+      $q->addWhere('property_sub_type_indexed = fullToIndex(?)',$sub_type);
     $results = $q->fetchArray();
     $rez=array(''=>''); //@TODO: don't know why but doctrine doesnt like it otherwise
     foreach($results as $item)

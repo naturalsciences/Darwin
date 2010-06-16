@@ -10,9 +10,9 @@ class CatalogueRelationshipsTable extends DarwinTable
     $q = Doctrine_Query::create()
 	    ->select('r.id, r.referenced_relation, r.record_id_1, r.record_id_2, r.relationship_type , t.id, t.name' . ($table == 'taxonomy' ? ', t.extinct' : '') )
 	    ->from('CatalogueRelationships r, '.$model. ' t')
-	    ->andWhere('t.id=r.record_id_2')
 	    ->andwhere('r.referenced_relation = ?', $table)
 	    ->andWhere('r.record_id_1=?', $id)
+	    ->andWhere('t.id=r.record_id_2')
 	    ->setHydrationMode(Doctrine::HYDRATE_NONE);
     if($type != null)
       $q->andWhere('r.relationship_type = ?',$type);

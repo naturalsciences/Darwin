@@ -11,7 +11,7 @@ class IgsTable extends DarwinTable
          ->from('Igs i')
          ->where("i.ig_num_indexed like concat (fullToIndex(?), '%') ", $ig_num)
          ->limit($limit)
-         ->orderBy("i.ig_num ASC");
+         ->orderBy("i.ig_num_indexed ASC");
     return $q->execute();
   }
 

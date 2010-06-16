@@ -22,7 +22,7 @@ class CollectionMaintenanceTable extends DarwinTable
 		from('CollectionMaintenance m')->
 		where('m.referenced_relation = ?', $table)->
 		andWhereIn('m.record_id', $ids)->
-		groupBy('m.record_id');
+		groupBy('m.referenced_relation, m.record_id');
     return $q->execute(array(), Doctrine_Core::HYDRATE_NONE);
   }
 
@@ -42,7 +42,7 @@ class CollectionMaintenanceTable extends DarwinTable
 		 innerJoin('m.People')->
          where('referenced_relation = ?', $table)->
          andWhereIn('record_id', $ids)->
-         orderBy('record_id ASC, modification_date_time DESC, id ASC');
+         orderBy('referenced_relation ASC, record_id ASC, modification_date_time DESC, id ASC');
     return $q->execute();
   }
 }

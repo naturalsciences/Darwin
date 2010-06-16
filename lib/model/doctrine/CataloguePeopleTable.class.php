@@ -60,8 +60,8 @@ class CataloguePeopleTable extends DarwinTable
 
       $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
 
-      $q->andWhereIn('c.id',$order)
-	->andWhere('c.people_type = ?', $people_type)
+      $q->andWhere('c.people_type = ?', $people_type)
+	->andWhereIn('c.id',$order)
 	->execute();
 	
   }
@@ -71,8 +71,8 @@ class CataloguePeopleTable extends DarwinTable
     $q = Doctrine_Query::create()->
          from('CataloguePeople')->
          where('referenced_relation = ?', $table)->
-         andWhere('people_type = ?', $type)->
          andWhere('record_id = ?', $identId)->
+         andWhere('people_type = ?', $type)->
          orderBy('order_by ASC');
     return $q->execute();
   }

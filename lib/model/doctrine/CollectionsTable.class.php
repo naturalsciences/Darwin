@@ -8,9 +8,9 @@ class CollectionsTable extends DarwinTable
     public function fetchByInstitutionList($institutionId = null)
     {
       $q = Doctrine_Query::create()
+            ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->from('People p')
             ->innerJoin('p.Collections col')
-            ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->andWhere('p.is_physical = false')
             ->orderBy('p.id ASC, col_path_id ASC');
       if($institutionId != null)
@@ -58,8 +58,8 @@ class CollectionsTable extends DarwinTable
     {
       $expr = "%/$ParentId/%" ;
       $q = Doctrine_Query::create()
+	    ->select('c.id, c.name, c.path, CONCAT(c.path,c.id,E\'/\') as coll_path_id')
             ->from('Collections c')
-      	  ->select('c.id, c.name, c.path, CONCAT(c.path,c.id,E\'/\') as coll_path_id')
             ->andWhere('c.path like ?', $expr)
             ->orderBy('coll_path_id ASC');
       return $q->execute();
