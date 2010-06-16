@@ -1,6 +1,6 @@
 <?php use_stylesheet('encod.css') ?>
 <?php $specimen_id = ($specimen->isNew())?'':$specimen->getId();?>
-<?php $specimen_name = ($specimen->isNew())?'':$specimen->getName();?>
+<?php $specimen_name = ($specimen->isNew())?'': sprintf(__('Specimen %d'),$specimen->getId());?>
 <?php $individual_id = '';?>
 <?php $individual_name = '';?>
 <?php $part_tab_class = 'disabled';?>
@@ -22,7 +22,7 @@
 
 			  <?php elseif($mode == 'specimen_edit'):?>
 
-				<a class="enabled selected" id="tab_0"><?php echo $specimen_name;?></a>
+				<a class="enabled selected" id="tab_0"> &lt; <?php echo $specimen_name;?> &gt; </a>
 				<?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_1'));?>
 				<?php echo link_to(__('New Individual'), 'individuals/edit?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
 				<a class="disabled" id="tab_3"><?php echo __('Parts overview');?></a>
