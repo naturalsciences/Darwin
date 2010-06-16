@@ -135,8 +135,24 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
     $this->validatorSchema['ident'] = new sfValidatorPass();
     $this->validatorSchema['comment'] = new sfValidatorPass();
-    $this->setEmptyToObjectValue();
   }
+
+  protected function getFieldsByGroup()
+  {
+	return array(
+	  'Type' => array('type'),
+	  'Sex' => array('sex', 'state'),
+	  'Stage' => array('stage'),
+	  'Social' => array('social_status'),
+	  'Rock' => array('rock_form'),
+	  'Count' => array(
+		'accuracy',
+		'specimen_individuals_count_min',
+		'specimen_individuals_count_max',
+	  ),
+	);
+  }
+
   public function addIdentifications($num, $order_by=0)
   {
       $options = array('referenced_relation' => 'specimen_individuals', 'order_by' => $order_by);

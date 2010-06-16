@@ -225,7 +225,6 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
             array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
             )
         );
-	$this->setEmptyToObjectValue();
   }
 
   public function addCodes($num, $collectionId=null)
@@ -275,7 +274,39 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       //Re-embedding the container
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
   }
-    
+
+  protected function getFieldsByGroup()
+  {
+	return array(
+	  'Part' => array('specimen_part'),
+	  'Complete' => array(
+		'specimen_status',
+		'complete',
+	  ),
+	  'Localisation' => array(
+		'building',
+		'floor',
+		'room',
+		'row',
+		'shelf',
+	  ),
+	  'Container' => array(
+		'surnumerary',
+		'container',
+		'container_type',
+		'container_storage',
+		'sub_container',
+		'sub_container_type',
+		'sub_container_storage',
+	  ),
+	  'Count' => array(
+		'accuracy',
+		'specimen_part_count_min',
+		'specimen_part_count_max',
+	  ),
+	);
+  }
+
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     if(isset($taintedValues['accuracy']))

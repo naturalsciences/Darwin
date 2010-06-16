@@ -387,7 +387,7 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
-    $this->setEmptyToObjectValue();
+    
   }
 
   public function addCodes($num, $collectionId=null)
@@ -476,6 +476,47 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
   }
 
+  protected function getFieldsByGroup()
+  {
+	return array(
+	  'Acquisition' => array(
+		'acquisition_category',
+		'acquisition_date',
+	  ),
+	  'Expedition' => array(
+		'expedition_ref',
+	  ),
+	  'Taxonomy' => array('taxon_ref'),
+	  'Chrono' => array('chrono_ref'),
+	  'Lithology' => array('lithology_ref'),
+	  'Lithostratigraphy' => array('litho_ref'),
+	  'Mineralogy' => array('mineral_ref'),
+
+	  'Host' => array(
+		'host_relationship',
+		'host_specimen_ref',
+		'host_taxon_ref',
+	  ),
+	  'Ig' => array(
+		'ig_ref',
+	  ),
+	  'Gtu' => array(
+		'gtu_ref',
+		'station_visible',
+	  ),
+	  'Count' => array(
+		'accuracy',
+		'specimen_count_min',
+		'specimen_count_max',
+	  ),
+	  'Collecting_meth' => array(
+		'collecting_method',
+	  ),
+	  'Collecting_Tool' => array(
+		'collecting_tool',
+	  ),
+	);
+  }
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     if(isset($taintedValues['accuracy']))

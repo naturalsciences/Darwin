@@ -30,20 +30,40 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
     return $javascripts;
   }
 
-
-  public function setEmptyToObjectValue()
+  /**
+  * Bind
+  * @see getFieldsByGroup
+  */
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-	if($this->getObject()->isNew())
-	  return;
-	$obj = $this->getObject();
-	$fields = $this->validatorSchema->getFields();
-	foreach($fields as $name => $field)
+	$fields_groups = $this->getFieldsByGroup();
+	foreach($fields_groups as $group)
 	{
-	  if($obj->getTable()->hasField($name))
+	  foreach($group as $field)
 	  {
-		$field->setOption('empty_value', $obj[$name]);
+		if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox")
+		{
+		  foreach($group as $ufield)
+		  {
+			$this->offsetUnset($ufield);
+		  }
+		  break;
+		}
 	  }
 	}
+	parent::bind($taintedValues, $taintedFiles);
+  }
+
+  /**
+  * Get fields by widget
+  * In the bind function if 1 field (or more) of the group is not sended in tainted values,
+  * we remove the whole group from the form
+  * @return array of widget name with array of widgets
+  * @see bind
+  */
+  protected function getFieldsByGroup()
+  {
+	return array();
   }
 
   public function addKeywordsRelation($table)
