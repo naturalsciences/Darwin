@@ -93,7 +93,11 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	  $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 	  //print_r($results);
-	  if(count($results) == 0) return $query;
+	  if(count($results) == 0)
+	  {
+		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
+		return $query;
+	  }
 
 	  foreach ($search['with'] as $search_term)
 	  {
