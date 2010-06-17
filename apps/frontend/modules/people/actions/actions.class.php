@@ -28,6 +28,7 @@ class peopleActions extends DarwinActions
     $this->forward404Unless($request->isMethod('post'));
     $this->setCommonValues('people', 'family_name', $request);
     $this->form = new PeopleFormFilter();
+    $this->only_role = intval($request->getParameter('only_role'));
     $this->is_choose = ($request->getParameter('is_choose', '') == '') ? 0 : intval($request->getParameter('is_choose') );
 
     if($request->getParameter('people_filters','') !== '')

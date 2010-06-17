@@ -415,9 +415,9 @@ class SpecimensForm extends BaseSpecimensForm
   }
 
 
-  public function addCollectors($num, $order_by=0)
+  public function addCollectors($num, $people_ref,$order_by=0)
   {
-      $options = array('referenced_relation' => 'specimens', 'people_type' => 'collector', 'order_by' => $order_by);
+      $options = array('referenced_relation' => 'specimens', 'people_type' => 'collector', 'people_ref' => $people_ref, 'order_by' => $order_by);
       $val = new CataloguePeople();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
@@ -544,7 +544,7 @@ class SpecimensForm extends BaseSpecimensForm
 	{
 	  if (!isset($this['newCollectors'][$key]))
 	  {
-	    $this->addCollectors($key);
+	    $this->addCollectors($key,$newVal['people_ref']);
 	  }
        $taintedValues['newCollectors'][$key]['record_id'] = 0;
 	}

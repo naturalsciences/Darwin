@@ -74,7 +74,7 @@
                 <?php if(! $is_choose):?>
 	          <?php echo link_to(image_tag('edit.png'),'people/edit?id='.$item->getId());?>
                 <?php else:?>
-                  <div class="result_choose"><?php echo __('Choose');?></div>
+                  <div class="result_choose<?php if($form['only_role']->getValue() == '16') echo ('_collector') ?>"><?php echo __('Choose');?></div>
                 <?php endif;?>
             </td>
           </tr>
