@@ -591,6 +591,19 @@ class SpecimensForm extends BaseSpecimensForm
               }
 	    }
           }
+	  elseif(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
+	  {
+	    foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
+	    {
+	      if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
+	      {
+		$identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+		$identification->addIdentifiers($ikey, $ival['order_by']);
+		$this->reembedNewIdentification($identification, $key);
+	      }
+	      $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+	    }
+	  }
           $taintedValues['newIdentification'][$key]['record_id'] = 0;
 	}
     }
@@ -619,26 +632,36 @@ class SpecimensForm extends BaseSpecimensForm
     {
       $this->offsetUnset('Codes');
       unset($taintedValues['Codes']);
+      $this->offsetUnset('newCode');
+      unset($taintedValues['newCode']);
     }
     if(!isset($taintedValues['collector']))
     {
       $this->offsetUnset('Collectors');
       unset($taintedValues['Collectors']);
+      $this->offsetUnset('newCollectors');
+      unset($taintedValues['newCollectors']);
     }
     if(!isset($taintedValues['accompanying']))
     {
       $this->offsetUnset('SpecimensAccompanying');
       unset($taintedValues['SpecimensAccompanying']);
+      $this->offsetUnset('newSpecimensAccompanying');
+      unset($taintedValues['newSpecimensAccompanying']);
     }
     if(!isset($taintedValues['comment']))
     {
       $this->offsetUnset('Comments');
       unset($taintedValues['Comments']);
+      $this->offsetUnset('newComments');
+      unset($taintedValues['newComments']);
     }    
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');
       unset($taintedValues['Identifications']);
+      $this->offsetUnset('newIdentification');
+      unset($taintedValues['newIdentification']);
     }
 
     parent::bind($taintedValues, $taintedFiles);

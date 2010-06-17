@@ -165,6 +165,13 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
       $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
   }
 
+  public function reembedNewIdentifier ($identification, $identifier, $identifier_number)
+  {
+    $identification->embedForm($identifier_number, $identifier);
+    $identification->embedForm('newIdentifier', $identification->embeddedForms['newIdentifier']);
+  }
+
+
   public function reembedIdentifications ($identification, $identification_number)
   {
       $this->getEmbeddedForm('Identifications')->embedForm($identification_number, $identification);
@@ -219,6 +226,19 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
               }
 	    }
           }
+	  elseif(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
+	  {
+	    foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
+	    {
+	      if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
+	      {
+		$identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+		$identification->addIdentifiers($ikey, $ival['order_by']);
+		$this->reembedNewIdentification($identification, $key);
+	      }
+	      $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+	    }
+	  }
           $taintedValues['newIdentification'][$key]['record_id'] = 0;
 	}
     }
@@ -250,18 +270,22 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 	  {
 	    $this->addComments($key);
 	  }
-       $taintedValues['newComments'][$key]['record_id'] = 0;
+	  $taintedValues['newComments'][$key]['record_id'] = 0;
 	}
     }
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');
       unset($taintedValues['Identifications']);
+      $this->offsetUnset('newIdentification');
+      unset($taintedValues['newIdentification']);
     }
     if(!isset($taintedValues['comment']))
     {
       $this->offsetUnset('Comments');
       unset($taintedValues['Comments']);
+      $this->offsetUnset('newComments');
+      unset($taintedValues['newComments']);
     }
     parent::bind($taintedValues, $taintedFiles);
   }
