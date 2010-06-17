@@ -27,3 +27,15 @@ $collection_id = Doctrine::getTable('Collections')->getCollectionByName('Collect
 $taxon_id = Doctrine::getTable('Taxonomy')->getTaxonByName('Taxon test for individual',1,'/')->getId() ;
 $specimen_id = Doctrine::getTable('Specimens')->GetSpecimenByRef($collection_id,$taxon_id)->getId();
 $browser->addCustomIndividual($specimen_id);
+
+$browser->
+     get('individuals/overview/spec_id/'.$specimen_id)-> 
+     with('response')->begin()->
+     isStatusCode(200)->
+     checkElement('title', 'Specimen individuals overview')->
+     checkElement('table.catalogue_table tr.spec_individuals',1)->
+     checkElement('table.catalogue_table tr.spec_individuals td:first','Specimen')->
+     end();
+
+ 
+     

@@ -236,20 +236,9 @@ $browser->
     checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref_name"]','-')->
     checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/4"]','Choose !')->
   end();
- 
-$browser->
-  info('8 - Check AddCollectors method call')->
-  get('specimen/addCollector', array('spec_id'=>$specId, 'num'=>$num))->
-  with('response')->begin()->
-    isStatusCode()->
-    checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:first[class="spec_ident_collectors_handle"]',1)->
-    checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:nth-child(2) input:first[id="specimen_newCollectors_'.$num.'_newCollectors_'.$identifier_num.'_people_ref"]',1)->
-    checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:nth-child(2) div:first[id="specimen_newCollectors_'.$num.'_newCollectors_'.$identifier_num.'_people_ref_name"]','-')->
-    checkElement('tbody.spec_ident_collectors_data tr:first[class="spec_ident_collectors_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/16"]','Choose !')->
-  end();
 
 $browser->
-  info('9 - add a property')->
+  info('8 - add a property')->
   get('property/add/table/specimens/id/'.$specId)->
   with('response')->begin()->
     isStatusCode(200)->
@@ -270,3 +259,4 @@ with('doctrine')->begin()
           							   'property_sub_type' => 'wideness'))
    ->end();          							  
 $browser->addCustomSpecimen('666','Collection test for specimen','Taxon test for specimen',1);
+$browser->addCustomSpecimen() ;

@@ -31,3 +31,15 @@ $browser->
     checkElement('.board_col:last .widget:nth-child(6) .widget_top_bar span','Comments')->        
   end()
 ;
+
+$browser->addCustomPart($indivId);
+	
+$browser->
+     get('parts/overview/id/'.$indivId)-> 
+     with('response')->begin()->
+     isStatusCode(200)->
+     checkElement('title', 'Parts overview')->
+     checkElement('table.catalogue_table tr.parts',1)->
+     checkElement('table.catalogue_table tr.parts td:nth-child(3)','specimen')->
+     checkElement('table.catalogue_table tr.parts td:nth-child(7)','Test for parts')->
+     end();

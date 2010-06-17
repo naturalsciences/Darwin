@@ -54,8 +54,9 @@ class DarwinTestFunctional extends sfTestFunctional
     return $this;
   }
   
-  public function addCustomUserAndLogin($name,$db_user_type,$password)
+  public function addCustomUserAndLogin($name = '' ,$db_user_type = 2 ,$password = 'nothing')
   {
+  	if ($name == '') $name = 'user_test_'.rand(1,1000) ;
   	$this->setTester('doctrine', 'sfTesterDoctrine');
   	$this->
   	  info('** add a custom user **')->
@@ -80,12 +81,19 @@ class DarwinTestFunctional extends sfTestFunctional
 		   
   }
   
-  public function addCustomCollection($code,$name)
+  public function addCustomCollection($code = 'code_test',$name = '')
   {
-     
+    if ($name == "") $name = 'collection_test_'.rand(1,1000) ;  
     $institution_id = $this->addCustomInstitution('Institution for test', 'ITF') ;
-    $manager_id = $this->addCustomUserAndLogin('Super Collection Manager',Users::MANAGER,'nothing');    
-    $encoder_id = $this->addCustomUserAndLogin('Super Encoder',Users::ENCODER,'nothing');        
+    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('Super Collection Manager')) 
+        $manager_id = $record->getId() ;
+    else
+    	   $manager_id = $this->addCustomUserAndLogin('Super Collection Manager',Users::MANAGER,'nothing');    
+    
+    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('Super Encoder')) 
+        $encoder_id = $record->getId() ;
+    else
+        $encoder_id = $this->addCustomUserAndLogin('Super Encoder',Users::ENCODER,'nothing');        
     $this->
   	  info('** add a custom collection **')->
   	  get('collection/new')->
@@ -108,8 +116,9 @@ class DarwinTestFunctional extends sfTestFunctional
   
   }
   
-  public function addCustomInstitution($name, $add_name)
+  public function addCustomInstitution($name = '', $add_name = 'more_intitution_test')
   {
+     if ($name == "") $name = 'intitution_test_'.rand(1,1000) ;
   	$this->setTester('doctrine', 'sfTesterDoctrine');
   	$this->
   	  info('** add a custom institution **')->
@@ -125,9 +134,10 @@ class DarwinTestFunctional extends sfTestFunctional
 	  return(Doctrine::getTable('Institutions')->getInstitutionByName($name)->getId()) ; 
   }
   
-  public function addCustomTaxon($name, $level)
+  public function addCustomTaxon($name = '', $level = 1)
   {
-  	$this->setTester('doctrine', 'sfTesterDoctrine');
+     if ($name == "") $name = 'taxon_test_'.rand(1,1000) ;
+     $this->setTester('doctrine', 'sfTesterDoctrine');
   	$this->
   	  info('** add a custom Taxon **')->
     	  get('taxonomy/new')->
@@ -141,8 +151,9 @@ class DarwinTestFunctional extends sfTestFunctional
 	  return (Doctrine::getTable('Taxonomy')->getTaxonByName($name,$level,'/')->getId()) ;	
   }  
   
-  public function addCustomExpedition($name)
+  public function addCustomExpedition($name = '')
   {
+     if ($name == "") $name = 'expedition_test_'.rand(1,1000) ;
   	$this->setTester('doctrine', 'sfTesterDoctrine');
   	$this->
   	  info('** add a custom Expedition **')->
@@ -157,12 +168,12 @@ class DarwinTestFunctional extends sfTestFunctional
        	check('Expeditions', array('name' => $name))->
 	  end();  
   } 
-  
-  public function addCustomSpecimen($collection_code,$collection_name,$taxon_name,$taxon_level)
+
+  public function addCustomSpecimen($collection_code = 'test_code' ,$collection_name = '',$taxon_name = '' ,$taxon_level = 1)
   {
+  	$this->setTester('doctrine', 'sfTesterDoctrine');
   	$collection_id = $this->addCustomCollection($collection_code,$collection_name);
-  	$taxon_id = $this->addCustomTaxon($taxon_name,$taxon_level);
-  	$collector_id = $this->addCustomPeople('PeopleCollector') ;  	  	 
+  	$taxon_id = $this->addCustomTaxon($taxon_name,$taxon_level);  	  
   	$this->
   	  info('** add a custom specimen **')->
   	  get('specimen/new')->
@@ -173,9 +184,6 @@ class DarwinTestFunctional extends sfTestFunctional
   	  	  'newCode' => array(
   	  	  			0 => array('code_category' => 'secondary','code_prefix' => 'sec', 'code_prefix_separator' => '/','code' => '987', 'code_suffix' => 'ary', 								 'code_suffix_separator' => '/')
   	  	  			),
-  	  	  'newCollectors' => array( 
-  	  	  			0 => array('people_ref' => $collector_id)
-  	  	  			),
   	  	  'newIdentification' => array(
   	  	  			0 => array('notion_date' => array('day' => 10, 'month' => 02,'year' => 1945),
   	  	  					 'notion_concerned' => 'taxonomy',
@@ -183,9 +191,7 @@ class DarwinTestFunctional extends sfTestFunctional
   	  	  					)),
 		  'acquisition_category' => 'Mission',
 		  'acquisition_date' => array('day' => 01, 'month' => 06, 'year' => 1984)  	  	  			
-  	       )))->end()->	
-  	  with('response')->begin()->
-  	  	isValid()->end()->    					   
+  	       )))->end()->	 					   
        with('doctrine')->begin()->		    
        	check('Specimens', array('collection_ref' => $collection_id,
        						'taxon_ref' => $taxon_id,
@@ -194,15 +200,16 @@ class DarwinTestFunctional extends sfTestFunctional
 	  return ($this) ;
   }  
 
-  public function addCustomPeople($name)
+  public function addCustomPeople($name = '',$type = 127)
   {
+     if ($name == "") $name = 'people_test_'.rand(1,1000) ;
   	$this->setTester('doctrine', 'sfTesterDoctrine');
   	$this->
   	  info('** add a custom people **')->
     	  get('people/new')->  	
     	  with('response')->begin()->
   	  click('#submit', array('people' => array('family_name' => $name,
-  	  								 'db_people_type' => array(16))
+  	  								 'db_people_type' => array($type))
   	  				    ))->end()->
        with('doctrine')->begin()->		    
        	check('People', array('family_name' => $name))->
@@ -223,9 +230,31 @@ class DarwinTestFunctional extends sfTestFunctional
        with('doctrine')->begin()->		    
        	check('SpecimenIndividuals', array('specimen_ref' => $specimen_id))->
 	  end();   
-//	return (Doctrine::getTable("SpecimenIndividuals")->findOneByFamilyName($name)->getId()) ;
-     														        
-     	  
-  
   }
+  
+  public function addCustomPart($individual_id)
+  {
+     $institution = Doctrine::getTable('People')->getPeopleByName('Institut Royal des Sciences Naturelles de Belgique')->getId();
+     $this->setTester('doctrine', 'sfTesterDoctrine');
+     $this->
+     	info('** add a custom Individual **')->
+     	get('parts/edit/indid/'.$individual_id)->
+     	with('response')->begin()->  	
+     	click('#submit_spec_f1', array('specimen_parts' => array(
+     										'container' => 'Test for parts',
+     										'surnumerary' => true,
+     										'sub_container' => 'Sub test for parts',
+     										'newInsurance' => array(
+     													0 => array(
+     															'insurance_year' => 1977,
+     															'insurance_value' => 666,
+     															'insurance_currency' => '120€',
+     															'insurer_ref' => $institution))	
+     						)))->end()->
+       with('doctrine')->begin()->		    
+       	check('SpecimenParts', array('specimen_individual_ref' => $individual_id,
+       							'container' => 'Test for parts',
+       							'sub_container' => 'Sub test for parts'))->
+	  end();
+  } 
 }

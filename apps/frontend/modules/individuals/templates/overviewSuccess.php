@@ -36,9 +36,7 @@
   <tbody>
     <?php foreach($individuals as $i => $individual):?>
       <tr class="spec_individuals">
-	<td>
-	  <?php echo $individual->getTypeFormated();?>
-	</td>
+	<td><?php echo $individual->getTypeFormated();?></td>
 	<td>
 	  <?php echo $individual->getSexFormated();?>
 	</td>
