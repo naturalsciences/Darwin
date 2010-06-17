@@ -542,9 +542,9 @@ class SpecimensForm extends BaseSpecimensForm
     {
      foreach($taintedValues['newCollectors'] as $key=>$newVal)
 	{
-	  if (!isset($this['newCollectors'][$key]))
+	  if (!isset($this['newCollectors'][$key]) && $newVal['people_ref'] != "")
 	  {
-	    $this->addCollectors($key,$newVal['people_ref']);
+	    $this->addCollectors($key,$newVal['people_ref'],$newVal['order_by']);
 	  }
        $taintedValues['newCollectors'][$key]['record_id'] = 0;
 	}

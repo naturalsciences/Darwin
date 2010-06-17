@@ -19,7 +19,7 @@ $(document).ready(function () {
 	$('#spec_ident_collectors tbody tr').each(function() {
 	    if($(this).find('input[id$=\"_people_ref\"]').val() == ref_element_id) $info = 'bad' ;
 	});
-	if($info == 'good') addCollRightValue(ref_element_id);
+	if($info == 'good') addCollectorValue(ref_element_id);
     });
 });
 </script>

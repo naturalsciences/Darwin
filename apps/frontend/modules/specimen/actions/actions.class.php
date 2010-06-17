@@ -41,8 +41,8 @@ class specimenActions extends DarwinActions
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref')) ;
     $form = $this->getSpecimenForm($request);
-    $form->addCollectors($number,$request->getParameter('iorder_by',0));
-    return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number], 'rownum'=>$number));
+    $form->addCollectors($number,$people_ref,$request->getParameter('iorder_by',0));
+    return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number], 'row_num'=>$number));
   }
 
   public function executeAddComments(sfWebRequest $request)

@@ -23,6 +23,7 @@ $(document).ready(function () {
         api: {
             beforeShow: function()
             {
+                alert("show !!!") ;
                 // Fade in the modal "blanket" using the defined show speed
 			 ref_element_id = null;
 			 ref_element_name = null;
@@ -31,11 +32,14 @@ $(document).ready(function () {
             },
             beforeHide: function()
             {
+                alert("Hide !!!") ;
                 // Fade out the modal "blanket" using the defined hide speed
                 $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+                alert("Hide bis !!!") ;
             },
 	       onHide: function()
 	       {
+	          alert("Pouf !!!") ;
                $('.result_choose_collector').die('click') ;
 	          $(this.elements.target).qtip("destroy");
 	       }
@@ -44,7 +48,7 @@ $(document).ready(function () {
     return false;
  });
 });
-function addCollRightValue(people_ref)
+function addCollectorValue(people_ref)
 {
   parent = $(this).closest('table.collectors');
   parentId = $(parent).attr('id');
