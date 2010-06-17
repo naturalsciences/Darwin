@@ -12,6 +12,15 @@ $(document).ready(function () {
 	$('.result_choose').die('click');
         $('.qtip-button').click();
     });
+    $('.result_choose_collector').live('click',function () {
+	el = $(this).closest('tr');
+	ref_element_id = getIdInClasses(el);
+	$info = 'good' ;
+	$('#spec_ident_collectors tbody tr').each(function() {
+	    if($(this).find('input[id$=\"_people_ref\"]').val() == ref_element_id) $info = 'bad' ;
+	});
+	if($info == 'good') addCollRightValue(ref_element_id);
+    });
 });
 </script>
 <?php endif;?>

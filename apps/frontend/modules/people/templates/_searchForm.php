@@ -30,5 +30,8 @@
       </div>
     </div> 
     <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('people/new') ?>"><?php echo __('New');?></a></div>
+    <?php if ($form['only_role']->getValue() == '16') : ?>
+       <div class="new_link"><a class="cancel_qtip bt_close" href="#"><?php echo __('Close'); ?></a></div>
+    <?php endif; ?>
   </div>
 </form> 

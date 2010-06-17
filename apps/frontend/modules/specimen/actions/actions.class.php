@@ -33,15 +33,16 @@ class specimenActions extends DarwinActions
     $form = $this->getSpecimenForm($request);
     $collectionId = $request->getParameter('collection_id', null);
     $form->addCodes($number, $collectionId);
-    return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number]));
+    return $this->renderPartial('spec_codes',array('form' => $form['newCode'][$number], 'rownum'=>$number));
   }
 
   public function executeAddCollector(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
+    $people_ref = intval($request->getParameter('people_ref')) ;
     $form = $this->getSpecimenForm($request);
-    $form->addCollectors($number,0);
-    return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number]));
+    $form->addCollectors($number,$people_ref,$request->getParameter('iorder_by',0));
+    return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number],'row_num'=>$number));
   }
 
   public function executeAddComments(sfWebRequest $request)
@@ -49,7 +50,7 @@ class specimenActions extends DarwinActions
     $number = intval($request->getParameter('num'));
     $form = $this->getSpecimenForm($request);
     $form->addComments($number);
-    return $this->renderPartial('spec_comments',array('form' => $form['newComments'][$number]));
+    return $this->renderPartial('spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
 
   public function executeAddSpecimensAccompanying(sfWebRequest $request)
@@ -82,7 +83,7 @@ class specimenActions extends DarwinActions
       $ident = $spec_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
       $ident->addIdentifiers($identifier_number, $identifier_order_by);
       $spec_form->reembedIdentifications($ident, $number);
-      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['Identifications'][$number]['newIdentifier'][$identifier_number]));
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['Identifications'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
     }
     else
     {
@@ -90,7 +91,7 @@ class specimenActions extends DarwinActions
       $ident = $spec_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
       $ident->addIdentifiers($identifier_number, $identifier_order_by);
       $spec_form->reembedNewIdentification($ident, $number);
-      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number]));
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
     }
   }
 
@@ -101,7 +102,6 @@ class specimenActions extends DarwinActions
     $this->form->addCodes(0, null);
     $this->form->addIdentifications(0,0); 
     $this->form->addComments(0); 
-    $this->form->addCollectors(0,0); 
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -228,15 +228,13 @@ class specimenActions extends DarwinActions
           $specs[$specimen->getId()] = $specimen->getId();
         }
         $specCodes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens', $specs);
-        foreach($this->specimens as $specimen)
+		$this->codes = array();
+        foreach($specCodes as $code)
         {
-          $codes = array();
-          foreach($specCodes as $code)
-          {
-            if($specimen->getId()==$code->getRecordId())
-              $codes[] = $code->toArray();
-          }
-          $specimen->SpecimensCodes->fromArray($codes);
+          if(! isset($this->codes[$code->getRecordId()]) ) 
+			$this->codes[$code->getRecordId()] = array();
+
+		  $this->codes[$code->getRecordId()][] = $code;
         }
       }
     }
