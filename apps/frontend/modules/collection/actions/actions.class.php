@@ -79,7 +79,7 @@ class collectionActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-	$db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
+    $db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
     if($db_user_type < Users::MANAGER) $this->forwardToSecureAction();
     $this->form = new CollectionsForm();
   }

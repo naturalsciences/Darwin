@@ -36,9 +36,6 @@ else{e.value="no";location.reload();}
         <br />
 	</div>	
 	<div class="widget_collection_top">
-		<div class="help_message"><a class="close_button" href=""><?php echo image_tag('widget_help_close.png','alt=Close class=help_close');?></a>
-		<?php echo __('Customise your interface !');?>
-		</div>
 	</div>
 	<div class="widget_collection_button"><a href="#"><?php echo image_tag('widget_expand_button.png','alt=Expand');?></a></div>
 </div>

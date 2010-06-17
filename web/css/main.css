@@ -880,6 +880,12 @@ td.left_tabed
   padding-top:0.1em;
 }
 
+.set_rights
+{
+  margin-top:0.3em;
+  background: url(/images/widget_button_green.png) no-repeat;
+}
+
 table.green_border
 {
   border:1px solid #c1cf56;
