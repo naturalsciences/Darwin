@@ -543,7 +543,7 @@ input[type="text"].xlarge_size
   -webkit-border-radius: 5px;
 }
 
-.result_choose:hover, .result_choose_coll_rights:hover, .result_choose_collector:hover
+.result_choose:hover, .result_choose_coll_rights:hover, .result_choose_collector:hover, .cancel_qtip
 {
   cursor:pointer;
 }

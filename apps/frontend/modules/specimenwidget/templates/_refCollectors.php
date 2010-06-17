@@ -1,3 +1,4 @@
+<?php echo javascript_include_tag('collectors.js') ?>
 <script  type="text/javascript">
 function forceCollectorsHelper(e,ui)	
 {
