@@ -14,65 +14,70 @@ class partsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
-	$this->part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));
-	if($this->part)
-	{
-	  $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($this->part->getSpecimenIndividualRef());
-	}
-	else
-	{
-	  $this->part= new SpecimenParts();
-	  $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('indid'));
-	  $this->forward404Unless($this->individual);
-	  $this->part->Individual = $this->individual;
-	}
+    $this->part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));
+    if($this->part)
+    {
+      $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($this->part->getSpecimenIndividualRef());
+    }
+    else
+    {
+      $this->part= new SpecimenParts();
+      $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('indid'));
+      $this->forward404Unless($this->individual);
+      $this->part->Individual = $this->individual;
+    }
 
-	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
-	$this->form = new SpecimenPartsForm($this->part, array( 'collection'=>$this->specimen->getCollectionRef() ));
+    $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
+    $this->form = new SpecimenPartsForm($this->part, array( 'collection'=>$this->specimen->getCollectionRef() ));
 
-	if($this->form->getObject()->isNew())
-	{
-	  $this->form->addInsurances(0);
-	  $this->form->addComments(0);
-	}
-	if($request->isMethod('post'))
-	{
-	  $this->form->bind( $request->getParameter('specimen_parts') );
-	  if( $this->form->isValid() )
-	  {
-	    try
-	    {
-		$this->form->save();
-		$this->redirect('parts/overview?id='.$this->individual->getId());
-	    }
-	    catch(Doctrine_Exception $ne)
-	    {
-		$e = new DarwinPgErrorParser($ne);
-		$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-		$this->form->getErrorSchema()->addError($error);
-	    }
-	  }
-	}
+    if($this->form->getObject()->isNew())
+    {
+      $this->form->addInsurances(0);
+      $this->form->addComments(0);
+    }
+    if($request->isMethod('post'))
+    {
+      $this->form->bind( $request->getParameter('specimen_parts') );
+      if( $this->form->isValid() )
+      {
+        try
+        {
+          $this->form->save();
+          $this->redirect('parts/overview?id='.$this->individual->getId());
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
+      }
+    }
     $this->loadWidgets();
   }
 
   public function executeOverview(sfWebRequest $request)
   {
-	$this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
-	$this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
-	$this->forward404Unless($this->individual);
-	$this->parts = Doctrine::getTable('SpecimenParts')->findForIndividual($this->individual->getId());
-	$parts_ids = array();
-	foreach($this->parts as $part)
-	  $parts_ids[] = $part->getId();
-	$codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray($this->table, $parts_ids);
-	$this->codes = array();
-	foreach($codes_collection as $code)
-	{
-	  if(! isset($this->codes[$code->getRecordId()]))
-		$this->codes[$code->getRecordId()] = array();
-	  $this->codes[$code->getRecordId()][] = $code;
-	}
+    $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($this->individual);
+
+    $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
+    $this->forward404Unless($this->specimen);
+
+    $this->parts = Doctrine::getTable('SpecimenParts')->findForIndividual($this->individual->getId());
+
+    $parts_ids = array();
+    foreach($this->parts as $part)
+      $parts_ids[] = $part->getId();
+
+    $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray($this->table, $parts_ids);
+    $this->codes = array();
+    foreach($codes_collection as $code)
+    {
+      if(! isset($this->codes[$code->getRecordId()]))
+        $this->codes[$code->getRecordId()] = array();
+      $this->codes[$code->getRecordId()][] = $code;
+    }
 
   }
 
