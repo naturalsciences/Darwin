@@ -172,8 +172,10 @@ class DarwinTestFunctional extends sfTestFunctional
   public function addCustomSpecimen($collection_code = 'test_code' ,$collection_name = '',$taxon_name = '' ,$taxon_level = 1)
   {
   	$this->setTester('doctrine', 'sfTesterDoctrine');
-  	$collection_id = $this->addCustomCollection($collection_code,$collection_name);
-  	$taxon_id = $this->addCustomTaxon($taxon_name,$taxon_level);  	  
+	$collections = Doctrine::getTable('Collections')->findAll();
+	$collection_id = $collections[0]->getId(); 
+	$taxonomy = Doctrine::getTable('Taxonomy')->findAll();
+	$taxon_id = $taxonomy[0]->getId();	 		  
   	$this->
   	  info('** add a custom specimen **')->
   	  get('specimen/new')->

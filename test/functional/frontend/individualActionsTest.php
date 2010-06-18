@@ -23,9 +23,8 @@ $browser->addCustomSpecimen('777','Collection test for individual','Taxon test f
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','Identifications')->   
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Comments')->        
   end();
-$collection_id = Doctrine::getTable('Collections')->getCollectionByName('Collection test for individual')->getId();
-$taxon_id = Doctrine::getTable('Taxonomy')->getTaxonByName('Taxon test for individual',1,'/')->getId() ;
-$specimen_id = Doctrine::getTable('Specimens')->GetSpecimenByRef($collection_id,$taxon_id)->getId();
+$specimen = Doctrine::getTable('Specimens')->findAll();
+$specimen_id = $specimen[0]->getId();
 $browser->addCustomIndividual($specimen_id);
 
 $browser->
