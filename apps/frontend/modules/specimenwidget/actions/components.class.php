@@ -15,17 +15,18 @@ class specimenwidgetComponents extends sfComponents
   {
     if(! isset($this->form) )
     {
-	if(isset($this->eid) && $this->eid != null)
-	{
-	  $spec = Doctrine::getTable('Specimens')->find($this->eid);
-	  $this->form = new SpecimensForm($spec);
-	  $this->spec_id = $this->eid;
-	}
-	else
-	{
-	  $this->form = new SpecimensForm();
-	  $this->spec_id = 0;
-	}
+      if(isset($this->eid) && $this->eid != null)
+      {
+        $spec = Doctrine::getTable('Specimens')->find($this->eid);
+        $this->form = new SpecimensForm($spec);
+        $this->spec_id = $this->eid;
+      }
+      else
+      {
+        $this->form = new SpecimensForm();
+        $this->spec_id = 0;
+      }
+      if(!isset($this->individual_id)) $this->individual_id = 0;
     }
     elseif(! isset($this->individual_id) )
     {

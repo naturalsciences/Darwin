@@ -15,19 +15,19 @@ class individualswidgetComponents extends sfComponents
   {
     if(! isset($this->form) )
     {
-	if(isset($this->eid) && $this->eid != null)
-	{
-	  $spec_individual = Doctrine::getTable('SpecimenIndividuals')->find($this->eid);
-	  $this->form = new SpecimenIndividualsForm($spec_individual);
-	  $this->individual_id = $this->form->getObject()->getId();
-	  $this->spec_id = $this->form->getObject()->getSpecimenRef();
-	}
-	else
-	{
-	  $this->form = new SpecimenIndividualsForm();
-	  $this->individual_id = 0;
-	  $this->spec_id = 0;
-	}
+      if(isset($this->eid) && $this->eid != null)
+      {
+        $spec_individual = Doctrine::getTable('SpecimenIndividuals')->find($this->eid);
+        $this->form = new SpecimenIndividualsForm($spec_individual);
+        $this->individual_id = $this->form->getObject()->getId();
+        $this->spec_id = $this->form->getObject()->getSpecimenRef();
+      }
+      else
+      {
+        $this->form = new SpecimenIndividualsForm();
+        $this->individual_id = 0;
+        $this->spec_id = 0;
+      }
     }
     else
     {

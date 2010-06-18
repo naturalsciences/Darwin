@@ -15,6 +15,21 @@ class widgetsActions extends DarwinActions
   *
   * @param sfRequest $request A request object
  */
+  public function executeGetWidgetPosition(sfWebRequest $request)
+  {
+    $this->forward404unless($request->getParameter('widget',false));
+    //get widget position and order by in json parseable structure
+    $defaultResponse = array('col_num'=>'1', 'order_by'=>'0');
+    $position = Doctrine::getTable('MyPreferences')->getWidgetPosition($this->getUser()->getAttribute('db_user_id'),
+                                                                       $request->getParameter('widget'),
+                                                                       $request->getParameter('category')."_widget");
+    if($position)
+    {
+      return $this->renderText(json_encode($position[0]->toArray()));
+    }
+    return $this->renderText(json_encode($defaultResponse));
+  }
+
   public function executeAddWidget(sfWebRequest $request)
   {
     $this->forward404unless($request->getParameter('widget',false));
@@ -30,16 +45,16 @@ class widgetsActions extends DarwinActions
     {
       $title = $title[0]['title'];
     }
-
+    
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
             'category' => $this->getComponentFromCategory($request->getParameter('category')),
             'title' => $title,
-	    'options' => array(
-		'eid' =>  $request->getParameter('eid',null),
-		'table' => $this->getTableFromCategory($request->getParameter('category')),
-	      ),
+      'options' => array(
+    'eid' =>  $request->getParameter('eid',null),
+    'table' => $this->getTableFromCategory($request->getParameter('category')),
+        ),
         ));
   }
 

@@ -1,12 +1,12 @@
 <?php $widget_content = get_component($category, $widget, $options); ?>
 <li class="widget" id="<?php echo $widget;?>">
-    <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
+  <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
         <?php if($category=='boardwidget'):?>
             <?php echo image_tag('widget_box_expand_button.png', 'alt=Close');?>
         <?php else:?>
             <?php echo image_tag('widget_box_expand_green_button.png', 'alt=Close');?>
         <?php endif;?>
-    </div>
+  </div>
 	<div class="widget_top_bar">
 		<div class="widget_top_bar_button">
             <?php if($category=='boardwidget'):?>

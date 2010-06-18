@@ -17,6 +17,18 @@ class MyPreferencesTable extends DarwinTable
     return $q->execute();
   }
 
+  public function getWidgetPosition($userId, $widget, $category)
+  {
+    $q = Doctrine_Query::create()
+         ->select('p.col_num, p.order_by')
+         ->from('MyPreferences p')
+         ->andWhere('p.user_ref = ?', $userId)
+         ->andWhere('p.category = ?', $category)
+         ->andWhere('p.group_name = ?', $widget)
+         ->andWhere('p.is_available = true') ;
+    return $q->execute();
+  }
+
   public function getWidgets($category)
   {
       $q = Doctrine_Query::create()
@@ -37,8 +49,8 @@ class MyPreferencesTable extends DarwinTable
 
 
     $q = Doctrine_Query::create()
-	->update('MyPreferences p');
-	if($status == "open" || $status == "close")
+         ->update('MyPreferences p');
+    if($status == "open" || $status == "close")
     {
         $q->set('p.opened', $status=="open" ? 'true' : 'false' );
     }
@@ -46,16 +58,16 @@ class MyPreferencesTable extends DarwinTable
     {
         $q->set('p.visible', 'true');
         $q->set('p.opened', 'true');
-        $q->set('p.col_num', 1);
+//         $q->set('p.col_num', 1);
         
-        $q2 = Doctrine_Query::create()
-	    ->select('MAX(p.order_by) as ord')
-            ->from('MyPreferences p')
-	    ->andWhere('p.visible=?','true');
+//         $q2 = Doctrine_Query::create()
+//               ->select('MAX(p.order_by) as ord')
+//               ->from('MyPreferences p')
+//               ->andWhere('p.visible=?','true');
 
-	$this->addCategoryUser($q2,$category);
-	$result = $q2->execute()->getFirst();
-	$q->set('p.order_by', (isset($result['ord'])) ? $result['ord']+1 : 1);
+//         $this->addCategoryUser($q2,$category);
+/*        $result = $q2->execute()->getFirst();
+        $q->set('p.order_by', (isset($result['ord'])) ? $result['ord']+1 : 1);*/
     }
     elseif($status == "hidden")
     {
@@ -103,7 +115,7 @@ class MyPreferencesTable extends DarwinTable
     if (sfConfig::get('sf_logging_enabled') && !$this->user_ref)
     {
      sfContext::getInstance()->getLogger()->warning("No User defined with setUserRef");
-	throw new Exception('No User defined for query');
+      throw new Exception('No User defined for query');
     }
     if (is_null($q))
     {
@@ -150,11 +162,11 @@ class MyPreferencesTable extends DarwinTable
     if(! is_array($widget_array))
         throw new Exception ('Widgets must be an array');
     $q = Doctrine_Query::create()
-	->update('MyPreferences p')
-	->set('p.col_num','?',$col_num)
-	->set('p.order_by',"fct_array_find(?,group_name::text) ",implode(",",$widget_array))
-	->andWhereIn('p.group_name',$widget_array);
-	
+          ->update('MyPreferences p')
+          ->set('p.col_num','?',$col_num)
+          ->set('p.order_by',"fct_array_find(?,group_name::text) ",implode(",",$widget_array))
+          ->andWhereIn('p.group_name',$widget_array);
+
     $this->addCategoryUser($q,$category)->execute();
   }
 

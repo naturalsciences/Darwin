@@ -22,11 +22,11 @@ function reOrderCollectors(tableId)
    <tbody id="spec_ident_collectors_body">
    <?php $retainedKey = 0;?>
    <?php foreach($form['Collectors'] as $form_value):?>
-     <?php include_partial('spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
+     <?php include_partial('specimen/spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
      <?php $retainedKey = $retainedKey+1;?>
    <?php endforeach;?>
    <?php foreach($form['newCollectors'] as $form_value):?>
-     <?php include_partial('spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
+     <?php include_partial('specimen/spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
      <?php $retainedKey = $retainedKey+1;?>
    <?php endforeach;?>
    </tbody>

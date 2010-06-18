@@ -8,11 +8,11 @@
   </thead>
   <?php $retainedKey = 0;?>
   <?php foreach($form['Comments'] as $form_value):?>
-     <?php include_partial('spec_comments', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+     <?php include_partial('specimen/spec_comments', array('form' => $form_value, 'rownum'=>$retainedKey));?>
      <?php $retainedKey = $retainedKey+1;?>
   <?php endforeach;?>
   <?php foreach($form['newComments'] as $form_value):?>
-     <?php include_partial('spec_comments', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+     <?php include_partial('specimen/spec_comments', array('form' => $form_value, 'rownum'=>$retainedKey));?>
      <?php $retainedKey = $retainedKey+1;?>
   <?php endforeach;?>
    <tfoot>

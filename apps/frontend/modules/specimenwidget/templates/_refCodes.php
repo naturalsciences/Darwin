@@ -40,11 +40,11 @@
   </thead>
     <?php $retainedKey = 0;?>
     <?php foreach($form['Codes'] as $form_value):?>
-      <?php include_partial('spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+      <?php include_partial('specimen/spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
       <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
     <?php foreach($form['newCode'] as $form_value):?>
-      <?php include_partial('spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+      <?php include_partial('specimen/spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
       <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
   <tfoot>
