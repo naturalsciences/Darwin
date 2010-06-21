@@ -56,10 +56,10 @@
 	    </td>
 	    <td><?php echo $change['referenced_relation'];?></td>
 	    <td>
-	      <?php if($change['action'] != 'delete'):?>
-		<?php echo link_to($change['record_id'], $change['referenced_relation'].'/edit?id='.$change['record_id']);?>
-	      <?php else:?>
-		<?php echo $change['record_id'];?>
+	      <?php if($change['action'] != 'delete' && $change->getLink() != ''):?>
+          <?php echo link_to($change['record_id'], $change->getLink());?>
+        <?php else:?>
+          <?php echo $change['record_id'];?>
 	      <?php endif;?>
 	      <?php echo image_tag('next.png','class=search_with_record alt='.$change['record_id'].' ref='.$change['referenced_relation']);?>
 	    </td>
