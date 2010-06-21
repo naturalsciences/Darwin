@@ -22,7 +22,7 @@
 	  <td><?php $date = new DateTime($item['modification_date_time']);
 		echo $date->format('d M Y ( a )'); ?></td>
 	  <td><?php echo $item['referenced_relation'];?></td>
-	  <td><?php if($item['action'] != 'delete'):?>
+	  <td><?php if($item['action'] != 'delete' && $item->getLink() != ''):?>
 		    <?php echo link_to($item['record_id'], $item->getLink());?>
 		  <?php else:?>
 		    <?php echo $item['record_id'];?>
