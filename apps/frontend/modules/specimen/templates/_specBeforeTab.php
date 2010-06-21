@@ -48,14 +48,14 @@
 
 				<?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>
 				<?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_1'));?>
-				<?php echo link_to($individual_name, 'individuals/edit?spec_id='.$specimen_id.'&individual_id='.$individual_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
+				<?php echo link_to($individual_name, 'individuals/edit?id='.$individual_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
 				<a class="enabled selected" id="tab_3"> &lt; <?php echo __('Parts overview');?> &gt; </a>
 				<?php echo link_to(__('New Part'), 'parts/edit?indid='.$individual_id, array('class'=>'enabled', 'id' => 'tab_4'));?>
 			  <?php else:?>
 
 				<?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>
 				<?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_1'));?>
-				<?php echo link_to($individual_name, 'individuals/edit?spec_id='.$specimen_id.'&individual_id='.$individual_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
+				<?php echo link_to($individual_name, 'individuals/edit?id='.$individual_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
 				<?php echo link_to(__('Parts overview'), 'parts/overview?id='.$individual_id, array('class'=>'enabled', 'id' => 'tab_3'));?>
 				<a class="enabled selected" id="tab_4">
 				   &lt; <?php if($part->isNew()):?>

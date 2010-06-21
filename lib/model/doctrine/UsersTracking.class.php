@@ -15,6 +15,10 @@ class UsersTracking extends BaseUsersTracking
 		  $link = 'collection/edit?id='.$id; break;
 	  case 'specimens':
 		  $link = 'specimen/edit?id='.$id; break;
+    case 'specimen_individuals':
+      $link = 'individuals/edit?id='.$id; break;
+    case 'specimen_parts':
+      $link = 'parts/edit?id='.$id; break;
 	  case 'comments':
 		  break;
 	  case 'tag_groups':
@@ -25,8 +29,6 @@ class UsersTracking extends BaseUsersTracking
 	  case 'mineralogy':
 	  case 'people':
 	  case 'insurances':
-	  case 'specimen_individuals':
-	  case 'specimen_parts':
 	  case 'gtu':
 	  default:
 	      $link = $this->_get('referenced_relation').'/edit?id='.$id; break;

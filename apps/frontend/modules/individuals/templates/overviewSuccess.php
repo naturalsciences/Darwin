@@ -53,7 +53,7 @@
 	  <?php echo $individual->getRockFormFormated();?>
 	</td>
 	<td>
-	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?spec_id='.$specimen->getId().'&individual_id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
+	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
 	</td>
 	<td class="row_delete">
 	  <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>

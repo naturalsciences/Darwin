@@ -12,7 +12,8 @@
 </ul>
 </div>
 
-<form action="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId().(($individual->getObject()->isNew())?'':'&individual_id='.$individual->getObject()->getId())); ?>" method="post" <?php $individual->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<form action="<?php echo url_for('individuals/edit'. ($individual->isNew() ? '?spec_id='.$specimen->getId() : '?id='.$individual->getObject()->getId()));?>" method="post" <?php $individual->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+
   <div>
     <?php echo $individual['id']->render(); ?>
     <?php echo $individual['specimen_ref']->render(); ?>
