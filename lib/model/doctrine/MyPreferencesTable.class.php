@@ -60,14 +60,14 @@ class MyPreferencesTable extends DarwinTable
         $q->set('p.opened', 'true');
 //         $q->set('p.col_num', 1);
         
-//         $q2 = Doctrine_Query::create()
-//               ->select('MAX(p.order_by) as ord')
-//               ->from('MyPreferences p')
-//               ->andWhere('p.visible=?','true');
+        $q2 = Doctrine_Query::create()
+              ->select('MIN(p.order_by) as ord')
+              ->from('MyPreferences p')
+              ->andWhere('p.visible=?','true');
 
-//         $this->addCategoryUser($q2,$category);
-/*        $result = $q2->execute()->getFirst();
-        $q->set('p.order_by', (isset($result['ord'])) ? $result['ord']+1 : 1);*/
+        $this->addCategoryUser($q2,$category);
+        $result = $q2->execute()->getFirst();
+        $q->set('p.order_by', (isset($result['ord'])) ? $result['ord']-1 : 1);
     }
     elseif($status == "hidden")
     {

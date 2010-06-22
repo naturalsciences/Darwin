@@ -70,7 +70,7 @@ jQuery(function(){
                 if(position.col_num == 2)
                 {
                   $('.board_col:last li.widget').each(function(intIndex){
-                    if(intIndex+1 >= position.order_by)
+                    if($(this).find('div.widget_top_bar_button').find('a.widget_close').size())
                     {
                       $(msg).insertBefore($(this));
                       insertionDone = true;
@@ -84,7 +84,7 @@ jQuery(function(){
                 else
                 {
                   $('.board_col:first li.widget').each(function(intIndex){
-                    if(intIndex+1 >= position.order_by)
+                    if($(this).find('div.widget_top_bar_button').find('a.widget_close').size())
                     {
                       $(msg).insertBefore($(this));
                       insertionDone = true;
