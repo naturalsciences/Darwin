@@ -15,5 +15,14 @@ class TaxonomyTable extends DarwinTable
 
     return $q->fetchOne();  	
   }
+  
+  public function getRealTaxon()
+  {
+    $q = Doctrine_Query::create()
+	 ->from('Taxonomy t')
+	 ->where('t.id > 0') ;  
+	 return $q->execute() ;  
+  }
+  
 
 }

@@ -257,6 +257,27 @@ $browser->
 with('doctrine')->begin()
    ->check('catalogueProperties', array('property_type' => 'physical measurement',
           							   'property_sub_type' => 'wideness'))
-   ->end();          							  
-$browser->addCustomSpecimen('666','Collection test for specimen','Taxon test for specimen',1);
-$browser->addCustomSpecimen() ;
+   ->end(); 
+          							  
+$browser->addCustomSpecimen();
+$browser->with('response')->begin()->
+      isRedirected()->
+      followredirect()->
+  end()->
+  with('response')->begin()->
+  isStatusCode()->
+  checkElement('.board_col:first .widget:nth-child(2) tbody',2)->
+  checkElement('.board_col:first .widget:nth-child(5) tr.spec_ident_identifiers_data',2)->
+  checkElement('table.collectors tr.spec_ident_collectors_data',2)->
+  checkElement('#specimen_Comments_0_comment','Test comment for a collector')-> 
+  checkElement('.board_col:first .widget:nth-child(8) li#specimensAccompanying',1)->
+  click('#spec_delete')->
+  end() ;
+
+$browser->  
+  info('9 - check if specimen is well deleted')->
+  get('specimens/edit/id/'.$specId)->
+  with('response')->begin()->
+    isStatusCode(404)->
+    end();
+

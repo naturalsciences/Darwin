@@ -25,7 +25,7 @@ $browser->addCustomSpecimen('777','Collection test for individual','Taxon test f
   end();
 $specimen = Doctrine::getTable('Specimens')->findAll();
 $specimen_id = $specimen[0]->getId();
-$browser->addCustomIndividual($specimen_id);
+$indiv_id = $browser->addCustomIndividual($specimen_id);
 
 $browser->
      get('individuals/overview/spec_id/'.$specimen_id)-> 
@@ -36,5 +36,17 @@ $browser->
      checkElement('table.catalogue_table tr.spec_individuals td:first','Specimen')->
      end();
 
- 
+$browser->
+     get('individuals/edit/id/'.$indiv_id)-> 
+     with('response')->begin()->
+       checkElement('tr.spec_ident_identifiers_data',1)->
+       click('a#spec_ind_delete')->end();
+$browser->
+      info('check if the individual is well deleted')->       
+      get('individuals/edit/id/'.$indiv_id)-> 
+      with('response')->begin()->
+      isStatusCode(404)->
+      end();
+
+     
      
