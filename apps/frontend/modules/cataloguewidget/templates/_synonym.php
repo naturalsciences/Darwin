@@ -73,45 +73,49 @@ $(document).ready(function()
 
   $("#synonym td.basio_cell a").click(function ()
   {
-    if(! $(this).hasClass('checked'))
-    {
-      clicked_el = $(this);
-      $.ajax({
-	type: "POST",
-	url: "<?php echo url_for('synonym/setBasionym?table='.$table.'&rid='.$eid); ?>",
-	data: { id:  getIdInClasses($(this).parent().parent()), group_id: getIdInClasses($(this).closest('.widget_sub_table')) },
-	success: function(html){
-	  if(html=='ok')
-	  {
-	    clicked_el.closest('table').find('.checked').removeClass('checked');
-	    clicked_el.addClass('checked');
-	  }
-	}
-      });
-    }
+    was_basio = false;
+    if($(this).hasClass('checked')) was_basio = true;
+    clicked_el = $(this);
+    s_data = { id:  getIdInClasses($(this).parent().parent()), group_id: getIdInClasses($(this).closest('.widget_sub_table')) };
+    
+    if(was_basio) s_data['uncheck'] = 'true';
+    $.ajax({
+      type: "POST",
+      url: "<?php echo url_for('synonym/setBasionym?table='.$table.'&rid='.$eid); ?>",
+      data: s_data,
+      success: function(html) {
+        if(html=='ok')
+        {
+          clicked_el.closest('table').find('.checked').removeClass('checked');
+          if(!was_basio)
+            clicked_el.addClass('checked');
+        }
+      }
+    });
     return false;
   });
 
   $("#synonym .widget_sub_table tbody").sortable({
-      placeholder: 'ui-state-highlight',
-      handle: '.handle',
-      axis: 'y',
-      change: function(e, ui) {
-	forceHelper(e,ui);
-      },
-      deactivate: function(event, ui) {
-	  el_Array = $(this).sortable('toArray');
-	  result='';
-	  for(item in el_Array)
-	  {
-	    result += getIdInClasses( $('#'+el_Array[item]) )+',';
-	  }
-	  $.ajax({
-	    type: "POST",
-	    url: "<?php echo url_for('synonym/editOrder?table='.$table.'&rid='.$eid); ?>",
-	    data: { order: result, synonym_type: $(this).parent().attr('alt') }
-	  });
+    placeholder: 'ui-state-highlight',
+    handle: '.handle',
+    axis: 'y',
+    change: function(e, ui) {
+      forceHelper(e,ui);
+    },
+    deactivate: function(event, ui) {
+      el_Array = $(this).sortable('toArray');
+      result='';
+      for(item in el_Array)
+      {
+        result += getIdInClasses( $('#'+el_Array[item]) )+',';
       }
-    });
+      $.ajax({
+        type: "POST",
+        url: "<?php echo url_for('synonym/editOrder?table='.$table.'&rid='.$eid); ?>",
+        data: { order: result, synonym_type: $(this).parent().attr('alt') }
+      });
+    }
+  });
+
 });
 </script>

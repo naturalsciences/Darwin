@@ -178,7 +178,7 @@ class ClassificationSynonymiesTable extends DarwinTable
   * Reset the basionym for a given groupId
   * @param int Group Id
   */
-  protected function resetBasionym($group_id)
+  public function resetBasionym($group_id)
   {
     $q = Doctrine_Query::create()
       ->update('ClassificationSynonymies')

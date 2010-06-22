@@ -91,7 +91,10 @@ class synonymActions extends DarwinActions
   public function executeSetBasionym(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
-    Doctrine::getTable('ClassificationSynonymies')->setBasionym($request->getParameter('group_id'), $request->getParameter('id'));
+    if($request->getParameter('uncheck'))
+      Doctrine::getTable('ClassificationSynonymies')->resetBasionym($request->getParameter('group_id'));
+    else
+      Doctrine::getTable('ClassificationSynonymies')->setBasionym($request->getParameter('group_id'), $request->getParameter('id'));
     return $this->renderText('ok');
   }
 
