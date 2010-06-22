@@ -40,7 +40,7 @@
       &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_ind_delete"><?php echo __('Delete');?></a>
     <?php endif?>
     &nbsp;<a href="<?php echo url_for('individuals/overview?spec_id='.$specimen->getId()) ?>"><?php echo __('Cancel');?></a>
-    <input type="submit" value="<?php echo __('Submit');?>" id="submit_spec_individual_f1"/>
+    <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_individual_f1"/>
   </p>
 </form>
 <script  type="text/javascript">
