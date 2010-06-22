@@ -107,6 +107,12 @@ foreach($form['newVal'] as $group)
 
 <script  type="text/javascript">
 $(document).ready(function () {
+    $('#gtu_parent_ref').change(function()
+    {
+      $("#gtu_parent_ref_name").html(trim(ref_element_name));
+    });
+
+
     $('.clear_prop').live('click', function()
     {
       parent = $(this).closest('li');

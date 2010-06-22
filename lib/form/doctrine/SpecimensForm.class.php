@@ -147,7 +147,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['gtu_ref'] = new widgetFormButtonRef(array(
        'model' => 'Gtu',
        'link_url' => 'gtu/choose',
-       'method' => 'getCode',
+       'method' => 'getName',
        'box_title' => $this->getI18N()->__('Choose Sampling Location'),
        'nullable' => true,
        'button_class'=>'',

@@ -57,12 +57,6 @@ class gtuActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
-	$gtu_ids = array();
-	foreach($this->items as $item)
-	{
-	  $gtu_ids[] = $item->getId();
-	}
-	$this->tags = Doctrine::getTable('TagGroups')->fetchTag($gtu_ids);
       }
     }    
   }

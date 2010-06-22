@@ -35,23 +35,9 @@
       <tbody>
         <?php foreach($items as $item):?>
           <tr class="rid_<?php echo $item->getId();?>">
-            <td class="item_name"><?php echo $item->getCode();?></td>
-	    <td>
-	      <ul class="search_tags">
-		<?php if(isset($tags[$item->getId()])):?>
-		  <?php foreach($tags[$item->getId()] as $tag_group):?>	
-		     <li>
-		      <label><?php echo $tag_group->getSubGroupName();?> <span class="gtu_group"> - <?php echo TagGroups::getGroup($tag_group->getGroupName());?></span></label>
-		      <ul class="name_tags">
-			<?php foreach($tag_group->Tags as $tag):?>
-			  <li><?php echo $tag->getTag();?></li>
-			<?php endforeach;?>
-		      </ul>
-		      <div class="clear" />
-		     </li>
-		  <?php endforeach;?>
-		<?php endif;?>
-	      </ul>
+            <td><?php echo $item->getCode();?></td>
+	    <td class="item_name"><?php echo $item->getName();?>
+
 	    </td>
             <td class="datesNum"><?php echo $item->getGtuFromDateMasked();?></td>
             <td class="datesNum"><?php echo $item->getGtuToDateMasked();?></td>

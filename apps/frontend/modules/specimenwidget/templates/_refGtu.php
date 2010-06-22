@@ -27,4 +27,13 @@
       </td>
     </tr>
   </tbody>
+<script language="javascript" type="text/javascript"> 
+$(document).ready(function () {
+    $('#specimen_gtu_ref').change(function()
+    {
+      $("#specimen_gtu_ref_name").html(trim(ref_element_name));
+    });
+
+});
+</script>
 </table>
