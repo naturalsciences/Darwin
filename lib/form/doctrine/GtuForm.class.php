@@ -17,7 +17,7 @@ class GtuForm extends BaseGtuForm
 
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
        'model' => 'Gtu',
-       'method' => 'getCode',
+       'method' => 'getName',
        'link_url' => 'gtu/choose',
        'box_title' => $this->getI18N()->__('Choose Parent'),
        'nullable' => true,

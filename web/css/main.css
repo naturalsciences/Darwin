@@ -1116,7 +1116,10 @@ tr.details .details_info tr:hover
 {
   float:none;
 }
-
+#specimen_gtu_ref_name, #gtu_parent_ref_name
+{
+  line-height: 100%;
+}
 .tag_selected, .tag_available, .name_tags li, .purposed_tags li
 {
   background-color: #FAFAFA;
@@ -1136,7 +1139,7 @@ tr.details .details_info tr:hover
 
 .tag_selected li img
 {
-  margin-left: 5px;action_maintenance
+  margin-left: 5px;
 }
 
 .tag

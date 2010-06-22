@@ -59,6 +59,23 @@ class Gtu extends BaseGtu
     }
   }
 
+  public function getName()
+  {
+    if($this->_get('id')==0) return '-';
+    $nbr = count($this->TagGroups);
+    if(! $nbr) return "No Tags";
+    $str = '<ul  class="search_tags">';
+    foreach($this->TagGroups as $group)
+    {
+      $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label><ul class="name_tags">';
+      foreach($group->Tags as $value)
+        $str .=  '<li>' . $value->getTag().'</li>';
+      $str .= '</ul><div class="clear" />';
+    }
+    $str .= '</ul>';
+    return $str;
+  }
+
   public function getCode()
   {
     if(! $this->isNew() && $this->_get('id')==0)
