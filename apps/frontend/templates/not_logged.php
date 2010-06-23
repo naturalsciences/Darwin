@@ -9,5 +9,13 @@
   <body id="login_page">
     <h2>Not LOGGED</h2>
     <?php echo $sf_content ?>
+
+<script language="javascript" type="text/javascript"> 
+$(document).ready(function () {
+
+  if($('.menu_top .house').length)
+        location.reload();
+});
+  </script>
   </body>
 </html>
