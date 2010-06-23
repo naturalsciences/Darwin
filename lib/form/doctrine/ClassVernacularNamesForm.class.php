@@ -29,7 +29,8 @@ public function configure()
     ));
     
     $this->embedRelation('VernacularNames');
-    
+    $this->embedForm('VernacularNames', $this->embeddedForms['VernacularNames']);
+
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
   }

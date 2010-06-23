@@ -77,6 +77,8 @@ class GtuForm extends BaseGtuForm
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
     $this->embedRelation('TagGroups');
+    $this->embedForm('TagGroups', $this->embeddedForms['TagGroups']);
+
   }
   
   public function addValue($num, $group="")
