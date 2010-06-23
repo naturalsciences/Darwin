@@ -38,10 +38,6 @@ $browser->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr',2)->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr:first th',7)->
     checkElement('.board_col:first .widget:nth-child(2) .widget_content thead tr:nth-child(2) th',5)->
-    checkElement('.board_col:first #refCodes div.widget_content tbody#code_0 tr td',7)->
-    checkElement('.board_col:first #refCodes div.widget_content tbody#code_0 tr td:first select option',3)->
-    checkElement('.board_col:first #refCodes div.widget_content tbody#code_0 tr td:first select option[selected="selected"]','Main')->
-    checkElement('.board_col:first #refCodes div.widget_content tbody#code_0 tr td:nth-child(2) input',1)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr', 3)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td input#specimen_host_taxon_ref', 1)->
     checkElement('.board_col:first #refHosts div.widget_content table tbody tr:first td div#specimen_host_taxon_ref_name', '-')->
@@ -234,9 +230,8 @@ $browser->
     checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:first[class="spec_ident_identifiers_handle"]',1)->
     checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) input:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref"]',1)->
     checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref_name"]','-')->
-    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/4"]','Choose !')->
+    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/4"]',html_entity_decode('Choose&nbsp;!',ENT_COMPAT,'utf-8'))->
   end();
-
 $browser->
   info('8 - add a property')->
   get('property/add/table/specimens/id/'.$specId)->

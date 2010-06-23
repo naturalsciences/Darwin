@@ -39,8 +39,8 @@ $browser->
   end()->
   get('/board/index')->
   with('response')->begin()->
-    checkElement('.board_col:first .widget',3)->
-    checkElement('.board_col:last .widget',1)->
+    checkElement('.board_col:first .widget',2)->
+    checkElement('.board_col:last .widget',2)->
   end()->
 
 //-------------------- 
