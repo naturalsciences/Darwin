@@ -56,8 +56,18 @@ class CollectionsForm extends BaseCollectionsForm
      $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'checkSelfAttached')))
      );
- 
-    $this->embedRelation('CollectionsRights');
+
+    $subForm = new sfForm();
+    $this->embedForm('CollectionsRights',$subForm);   
+    foreach(Doctrine::getTable('CollectionsRights')->getAllUserRef($this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CollectionsRightsForm($vals);
+      $this->embeddedForms['CollectionsRights']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('CollectionsRights', $this->embeddedForms['CollectionsRights']); 
+    
+//    $this->embedRelation('CollectionsRights');
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
   
@@ -81,7 +91,7 @@ class CollectionsForm extends BaseCollectionsForm
     {
       if($values['parent_ref'] == $values['id'])
       {
-	   $error = new sfValidatorError($validator, "A collection can't be attached to itself");
+	      $error = new sfValidatorError($validator, "A collection can't be attached to itself");
         throw new sfValidatorErrorSchema($validator, array('parent_ref' => $error));
       }
     }
@@ -90,32 +100,32 @@ class CollectionsForm extends BaseCollectionsForm
   
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-      if(isset($taintedValues['newVal']))
-      {
-		foreach($taintedValues['newVal'] as $key=>$newVal)
-		{
-		  if (!isset($this['newVal'][$key]))
+    if(isset($taintedValues['newVal']))
+    {
+		  foreach($taintedValues['newVal'] as $key=>$newVal)
 		  {
-		    $this->addValue($key,$newVal['user_ref']);
+		    if (!isset($this['newVal'][$key]))
+		    {
+		      $this->addValue($key,$newVal['user_ref']);
+		    }
 		  }
-		}
-      }
-      parent::bind($taintedValues, $taintedFiles);
+    }
+    parent::bind($taintedValues, $taintedFiles);
   }
 
   public function saveEmbeddedForms($con = null, $forms = null)
   {
    if (null === $forms)
    {
-	$value = $this->getValue('CollectionsRights');
-	foreach($this->embeddedForms['CollectionsRights']->getEmbeddedForms() as $name => $form)
-	{
-	  if (!isset($value[$name]['user_ref']))
-	  {
-	    $form->getObject()->delete();
-	    unset($this->embeddedForms['CollectionsRights'][$name]);
-	  } 
-	}	
+	    $value = $this->getValue('CollectionsRights');
+	    foreach($this->embeddedForms['CollectionsRights']->getEmbeddedForms() as $name => $form)
+    	{
+    	  if (!isset($value[$name]['user_ref']))
+	      {
+	        $form->getObject()->delete();
+	        unset($this->embeddedForms['CollectionsRights'][$name]);
+	      } 
+	    }	
    }
    return parent::saveEmbeddedForms($con, $forms);
   }

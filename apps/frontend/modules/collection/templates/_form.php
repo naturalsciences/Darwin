@@ -3,18 +3,18 @@
 <script type="text/javascript">
 $(document).ready(function () 
 {
-    $("#collections_institution_ref").change(function() {
+  $("#collections_institution_ref").change(function() {
       $.get("<?php echo url_for('collection/completeOptions');?>/institution/"+$(this).val(), function (data) {
-	$("#collections_parent_ref").html(data);
+	      $("#collections_parent_ref").html(data);
       });
     });
-    $("#collections_main_manager_ref").change(function() {
-	ref_element_id = $(this).val();
-	$info = 'good' ;
-	$('.collections_rights tbody tr').each(function() {
-	    if($(this).attr('id') == ref_element_id) $info = 'bad' ;
-	});
-	if($info == 'good') addCollRightValue(ref_element_id);
+  $("#collections_main_manager_ref").change(function() {
+	  ref_element_id = $(this).val();
+	  $info = 'good' ;
+	  $('.collections_rights tbody tr').each(function() {
+	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
+	  });
+	  if($info == 'good') addCollRightValue(ref_element_id);
   });
 });
 </script>

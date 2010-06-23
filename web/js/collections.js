@@ -90,7 +90,7 @@ function addCollRightValue(user_ref)
   $.ajax(
   {
     type: "GET",
-    url: $('a.hidden').attr('href')+ (0+$('.collections_rights tbody tr').length)+'/user_ref/'+user_ref,
+    url: $('.add_value a.hidden').attr('href')+ (0+$('.collections_rights tbody tr').length)+'/user_ref/'+user_ref,
     success: function(html)
     {
       $('.collections_rights tbody').append(html);

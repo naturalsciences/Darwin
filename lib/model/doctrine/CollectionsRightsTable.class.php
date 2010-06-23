@@ -12,4 +12,12 @@ class CollectionsRightsTable extends DarwinTable
 		   ->andWhere('user_ref = ?', $user) ;
 		return $q->execute() ;
 	}
+	
+	public function getAllUserRef($collection_id = null)
+	{  
+	  $q = Doctrine_Query::create()
+	    ->from('CollectionsRights')
+	    ->andWhere('collection_ref = ?', $collection_id);
+	  return $q->execute() ;
+	}
 }

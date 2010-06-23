@@ -106,13 +106,18 @@ class DarwinTestFunctional extends sfTestFunctional
   					     				                     1 => array('user_ref' => $encoder_id)
   					     				                    ))))->
   	  end()->
-       with('doctrine')->begin()->		    
+      with('doctrine')->begin()->		    
        	check('Collections', array('code' => $code,
 	  					       'name' => $name,
 		     				  'institution_ref' => $institution_id,
-		     				  'main_manager_ref' => $manager_id,))->
+		     				  'main_manager_ref' => $manager_id))->
+  	  end();
+  	$collection_id = Doctrine::getTable('Collections')->getCollectionByName($name)->getId() ;
+    $this->
+       with('doctrine')->begin()->		    
+       	check('CollectionsRights', array('user_ref' => $encoder_id, 'collection_ref' => $collection_id))->		     				  
 	  end();   	  
-	  return(Doctrine::getTable('Collections')->getCollectionByName($name)->getId()) ;	       	
+	  return($collection_id) ;	       	
   
   }
   

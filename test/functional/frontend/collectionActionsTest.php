@@ -223,4 +223,25 @@ $browser->
 $vertebrates = Doctrine::getTable('Collections')->findOneByName('Vertebrates');
 
 $browser->test()->is($vertebrates->getCodePrefix(), '', 'The code prefix has been well reset');
-$browser->addCustomCollection('12345','Collection for test');
+$collection_id = $browser->addCustomCollection('12345','Collection for test');
+
+$browser->
+  info('test if the two collector exist')->
+  get('collection/edit?id='.$collection_id)->
+  with('response')->
+  begin()->
+    isStatusCode(200)->
+    checkElement('table.collections_rights tbody tr', 2)->
+    click('#submit', array(
+      'collections' => array(
+        'CollectionsRights' => array(
+          0 => array ('user_ref' => '')
+        )
+      )
+    ))->//end()->with('form')->debug()->
+//  with('response')->
+//  begin()->
+ //   isStatusCode(200)->
+ //   checkElement('table.collections_rights tbody tr', 1)->
+  end();
+  

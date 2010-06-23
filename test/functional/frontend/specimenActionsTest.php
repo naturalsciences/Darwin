@@ -238,16 +238,19 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     click('#submit',
-          array('catalogue_properties' => array('property_type' => 'physical measurement',
-          							   'property_sub_type' => 'wideness',
-          							   'newVal' => array(0 => array('property_value' => 120,
-  	                                   				       'property_accuracy' => 10)
-                                                      			 ,
-                                                      			 1 => array('property_value' => 70,
-  	                                   				       'property_accuracy' => 7)
-                                                      			 )
-                                                      )
+          array('catalogue_properties' => array(
+            'property_type' => 'physical measurement',
+            'property_sub_type' => 'wideness',
+          	'newVal' => array(
+          	  0 => array(
+          	    'property_value' => 120,
+  	            'property_accuracy' => 10),
+  	          1 => array(
+  	            'property_value' => 70,
+                'property_accuracy' => 7)
              )
+          )
+        )
        )->end()->       
 with('doctrine')->begin()
    ->check('catalogueProperties', array('property_type' => 'physical measurement',
