@@ -76,6 +76,11 @@ class Gtu extends BaseGtu
     return $str;
   }
 
+  public function getTagsWithCode()
+  {
+    return '<b>'.$this->getCode().'</b>'.$this->getName();
+  }
+
   public function getCode()
   {
     if(! $this->isNew() && $this->_get('id')==0)

@@ -6,6 +6,9 @@
       </tr>
     <?php endif; ?>
     <tr>
+      <th><label><?php echo __('Sampling location code');?></label></th>
+      <td id="specimen_gtu_ref_code"></td>
+    <tr>
       <th>
         <?php echo $form['gtu_ref']->renderLabel() ?>
       </th>
@@ -29,10 +32,20 @@
   </tbody>
 <script language="javascript" type="text/javascript"> 
 $(document).ready(function () {
+    
+    el_name = $("#specimen_gtu_ref_name b");
+    if(el_name.length)
+    {
+      $("#specimen_gtu_ref_code").html(el_name.html());
+      el_name.remove();
+    }
+  
     $('#specimen_gtu_ref').change(function()
     {
       $("#specimen_gtu_ref_name").html(trim(ref_element_name));
+      $("#specimen_gtu_ref_code").html(ref_element_code);
     });
+   
 
 });
 </script>
