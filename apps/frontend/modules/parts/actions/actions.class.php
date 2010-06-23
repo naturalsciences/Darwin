@@ -86,7 +86,7 @@ class partsActions extends DarwinActions
 	if($request->getParameter('item')=="container")
 	  $items = Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($request->getParameter('type'));
 	else
-	  $items = Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($request->getParameter('type'));
+	  $items = Doctrine::getTable('SpecimenParts')->getDistinctSubContainerStorages($request->getParameter('type'));
 	return $this->renderPartial('options', array('items'=> $items ));
   }
 

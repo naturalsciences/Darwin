@@ -75,13 +75,11 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
 	  array('invalid'=>'The "from" date cannot be above the "to" date.')
 	)
       );
-
-
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    
     $this->widgetSchema['property_type'] = new widgetFormSelectComplete(array(
         'model' => 'CatalogueProperties',
-        'table_method' => 'getDistinctType',
+        'table_method' => array('method' => 'getDistinctType', 'parameters' => array($this->options['ref_relation'])),
         'method' => 'getType',
         'key_method' => 'getType',
         'add_empty' => true,

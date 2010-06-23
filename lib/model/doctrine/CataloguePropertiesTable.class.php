@@ -25,9 +25,12 @@ class CataloguePropertiesTable extends DarwinTable
   * Get Distincts type of properties
   * @return array an Array of types in keys
   */
-  public function getDistinctType()
+  public function getDistinctType($ref_relation=null)
   {
-    return $this->createDistinct('CatalogueProperties', 'property_type', 'type')->execute();
+    $q = $this->createDistinct('CatalogueProperties', 'property_type', 'type');
+    if(! is_null($ref_relation))
+      $q->addWhere('referenced_relation = ?', $ref_relation) ;
+    return $q->execute() ;
   }
 
   /**

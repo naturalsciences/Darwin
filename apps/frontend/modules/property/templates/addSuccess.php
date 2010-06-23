@@ -64,9 +64,9 @@
 <table class="encoding property_values">
   <thead>
     <tr>
-      <th><label>Value</label></th>
+      <th><label>Value units</label></th>
       <th class="unit_col"><?php echo $form['property_unit'];?></th>
-      <th><label>Accuracy</label></th>
+      <th><label>Accuracy units</label></th>
       <th class="unit_col"><?php echo $form['property_accuracy_unit'];?></th>
       <th></th>
     </tr>

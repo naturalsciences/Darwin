@@ -1,6 +1,6 @@
 <?php
 
-class widgetFormSelectComplete extends sfWidgetFormDoctrineChoice
+class widgetFormSelectComplete extends sfWidgetFormDarwinDoctrineChoice
 {
   protected function configure($options = array(), $attributes = array())
   {
