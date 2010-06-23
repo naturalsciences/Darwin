@@ -57,8 +57,17 @@ class CollectionsForm extends BaseCollectionsForm
       new sfValidatorCallback(array('callback' => array($this, 'checkSelfAttached')))
      );
 
-    $this->embedRelation('CollectionsRights');
-    $this->embedForm('CollectionsRights', $this->embeddedForms['CollectionsRights']);
+    $subForm = new sfForm();
+    $this->embedForm('CollectionsRights',$subForm);   
+    foreach(Doctrine::getTable('CollectionsRights')->getAllUserRef($this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CollectionsRightsForm($vals);
+      $this->embeddedForms['CollectionsRights']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('CollectionsRights', $this->embeddedForms['CollectionsRights']); 
+    
+//    $this->embedRelation('CollectionsRights');
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
   

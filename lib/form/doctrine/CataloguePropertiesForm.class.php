@@ -133,8 +133,6 @@ class CataloguePropertiesForm extends BaseCataloguePropertiesForm
     $this->widgetSchema['property_tool']->setAttributes(array('class'=>'medium_size'));
 
     $this->embedRelation('PropertiesValues');
-    $this->embedForm('PropertiesValues', $this->embeddedForms['PropertiesValues']);
-
     
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);

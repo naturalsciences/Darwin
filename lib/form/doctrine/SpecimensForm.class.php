@@ -235,8 +235,7 @@ class SpecimensForm extends BaseSpecimensForm
     /* Accompanying elements sub form */
 
     $this->embedRelation('SpecimensAccompanying');
-    $this->embedForm('SpecimensAccompanying', $this->embeddedForms['SpecimensAccompanying']);
-
+    
     $subForm = new sfForm();
     $this->embedForm('newSpecimensAccompanying',$subForm);
     $this->widgetSchema['accompanying'] = new sfWidgetFormInputHidden(array('default'=>1));
