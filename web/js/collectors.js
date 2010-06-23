@@ -16,7 +16,7 @@ $(document).ready(function () {
         },
         hide: false,
         style: {
-            width: { min: 620, max: 1000},
+            width: { min: 876, max: 1000},
             border: {radius:3},
             title: { background: '#5BABBD', color:'white'}
         },
@@ -24,10 +24,10 @@ $(document).ready(function () {
             beforeShow: function()
             {
                 // Fade in the modal "blanket" using the defined show speed
-			 ref_element_id = null;
-			 ref_element_name = null;
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+              ref_element_id = null;
+              ref_element_name = null;
+              addBlackScreen()
+              $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
             beforeHide: function()
             {
@@ -36,7 +36,7 @@ $(document).ready(function () {
             },
 	       onHide: function()
 	       {
-               $('.result_choose_collector').die('click') ;
+            $('.result_choose_collector').die('click') ;
 	          $(this.elements.target).qtip("destroy");
 	       }
          }
@@ -44,14 +44,16 @@ $(document).ready(function () {
     return false;
  });
 });
+
 function addCollectorValue(people_ref)
 {
-  parent = $(this).closest('table.collectors');
+  parent = $('table.collectors');
   parentId = $(parent).attr('id');
+  targetUrl = $('table#'+parentId+' tfoot div.add_code a.hidden').attr('href');
   $.ajax(
   {
-    type: "GET",    
-    url: $('a.hidden').attr('href')+ (0+$('#spec_ident_collectors tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + ($('table#'+parentId+' .spec_ident_collectors_data:visible').length+1),
+    type: "GET",
+    url: targetUrl+ (0+$('table#'+parentId+'tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + ($('table#'+parentId+' .spec_ident_collectors_data:visible').length+1),
     success: function(html)
     {
       $('#spec_ident_collectors_body').append(html);

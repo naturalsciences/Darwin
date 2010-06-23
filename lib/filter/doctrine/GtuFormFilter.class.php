@@ -67,7 +67,7 @@ class GtuFormFilter extends BaseGtuFormFilter
       $line_val = $line['tag'];
       if( $line_val != '')
       {
-	$query->andWhere("id in (select DISTINCT(gtu_ref) FROM tags WHERE tag_indexed in  (select lineToTagRows(?) ) )", $line_val);
+        $query->andWhere("id in (select DISTINCT(gtu_ref) FROM tags WHERE tag_indexed in  (select lineToTagRows(?) ) )", $line_val);
       }
     }
     return $query;
@@ -79,10 +79,10 @@ class GtuFormFilter extends BaseGtuFormFilter
     {
       foreach($taintedValues['Tags'] as $key=>$newVal)
       {
-	if (!isset($this['Tags'][$key]))
-	{
-	  $this->addValue($key);
-	}
+        if (!isset($this['Tags'][$key]))
+        {
+          $this->addValue($key);
+        }
       }
     }
     parent::bind($taintedValues, $taintedFiles);

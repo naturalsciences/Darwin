@@ -35,7 +35,7 @@ function reOrderCollectors(tableId)
        <td colspan="3">
          <div class="add_code">
            <a href="<?php echo url_for('specimen/AddCollector'.($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-           <a class='add_collector' href="<?php echo url_for('people/choose');?>?only_role=16"><?php echo __('Add collector');?></a>
+           <a class='add_collector' href="<?php echo url_for('people/choose?only_role=16');?>"><?php echo __('Add collector');?></a>
          </div>
        </td>
      </tr>

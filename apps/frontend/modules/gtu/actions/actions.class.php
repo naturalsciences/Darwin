@@ -41,16 +41,16 @@ class gtuActions extends DarwinActions
       {
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $this->pagerLayout = new PagerLayoutWithArrows(
-	  new Doctrine_Pager(
-	    $query,
-	    $this->currentPage,
-	    $this->form->getValue('rec_per_page')
-	  ),
-	  new Doctrine_Pager_Range_Sliding(
-	    array('chunk' => $this->pagerSlidingSize)
-	    ),
-	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-	);
+                              new Doctrine_Pager(
+                                $query,
+                                $this->currentPage,
+                                $this->form->getValue('rec_per_page')
+                              ),
+                              new Doctrine_Pager_Range_Sliding(
+                                array('chunk' => $this->pagerSlidingSize)
+                              ),
+                              $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+                            );
 
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);
@@ -58,7 +58,7 @@ class gtuActions extends DarwinActions
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
       }
-    }    
+    }
   }
 
   public function executeNew(sfWebRequest $request)
