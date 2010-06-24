@@ -62,13 +62,21 @@ class GtuFormFilter extends BaseGtuFormFilter
   public function addTagsColumnQuery($query, $field, $val)
   {
     $alias = $query->getRootAlias();
+    $conn_MGR = Doctrine_Manager::connection();
+    $tagList = '';
+
     foreach($val as $line)
     {
       $line_val = $line['tag'];
       if( $line_val != '')
       {
-        $query->andWhere("id in (select DISTINCT(gtu_ref) FROM tags WHERE tag_indexed in  (select lineToTagRows(?) ) )", $line_val);
+        $tagList .= $conn_MGR->quote($line_val, 'string').',';
       }
+    }
+    if(strlen($tagList))
+    {
+      $tagList = substr($tagList, 0, -1); //remove last ','
+      $query->andWhere("id in (select getGtusForTags(array[$tagList]))");
     }
     return $query;
   }
