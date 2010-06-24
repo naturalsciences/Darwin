@@ -135,7 +135,7 @@ $browser->
     checkElement('.treelist:first > ul > li',1)->
   end()
 ;
-$user_id = Doctrine::getTable('users')->getUserByPassword('root','evil')->getId() ;
+$user_id = $browser->addCustomUserAndLogin();
 $collection_id = Doctrine::getTable('collections')->getCollectionByName('Vertebrates')->getId() ;
 
 $browser->
@@ -238,10 +238,6 @@ $browser->
           0 => array ('user_ref' => '')
         )
       )
-    ))->//end()->with('form')->debug()->
-//  with('response')->
-//  begin()->
- //   isStatusCode(200)->
- //   checkElement('table.collections_rights tbody tr', 1)->
+    ))->
   end();
   
