@@ -68,3 +68,4 @@ DROP FUNCTION IF EXISTS sha1(bytea) CASCADE;
 DROP FUNCTION IF EXISTS get_setting(IN param text, OUT value text) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updateCollectionAdmin() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updatecollectionadmin() CASCADE;
+DROP FUNCTION IF EXISTS getGtusForTags(in_array anyarray) CASCADE;

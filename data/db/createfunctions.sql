@@ -6699,4 +6699,29 @@ ELSIF NEW.main_manager_ref <> OLD.main_manager_ref THEN
 END IF;
 RETURN NEW;
 END;
+$$;
+
+CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
 $$
+DECLARE
+  sqlString varchar := '';
+BEGIN
+  IF array_lower(in_array,1) THEN
+    FOR i IN array_lower(in_array,1)..array_upper(in_array,1) LOOP
+      sqlString := sqlString || ' SELECT gtu_ref FROM tags WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(in_array[i]) || ')) INTERSECT';
+    END LOOP;
+    IF LENGTH(sqlString)>0 THEN
+      sqlString := TRIM(SUBSTR(sqlString,1,LENGTH(sqlString)-9));
+      RETURN QUERY EXECUTE sqlString;
+    END IF;
+  END IF;
+  RETURN;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE EXCEPTION 'Error in getGtusForTags: %', SQLERRM;
+    RETURN;
+END;
+$$
+LANGUAGE plpgsql;
+
+
