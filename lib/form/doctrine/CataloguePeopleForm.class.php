@@ -12,15 +12,15 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
   public function configure()
   {
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    
+    $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
 
     $this->widgetSchema['people_ref'] = new widgetFormJQueryDLookup(
       array(
-	'model' => 'People',
-	'method' => 'getFormatedName',
-	'nullable' => false,
-        'fieldsHidders' => array('catalogue_people_people_type', 
-                                 'catalogue_people_people_sub_type',),
+            'model' => 'People',
+            'method' => 'getFormatedName',
+            'nullable' => false,
+            'fieldsHidders' => array('catalogue_people_people_type', 
+                                     'catalogue_people_people_sub_type',),
       ),
       array('class' => 'hidden',)
     );
@@ -36,8 +36,8 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
 
     $this->widgetSchema['people_sub_type'] = new widgetFormSelectComplete(array(
         'model' => 'CataloguePeople',
-	'change_label' => 'Pick a type in the list',
-	'add_label' => 'Add another type',
+        'change_label' => 'Pick a type in the list',
+        'add_label' => 'Add another type',
     ));
 
     if($this->getObject()->isNew() && $this->getObject()->getPeopleType()=="author")

@@ -37,7 +37,7 @@ class People extends BasePeople
 
   public function __toString()
   {
-        return $this->getFormatedName();
+    return $this->getFormatedName();
   }
 
   public function getDbPeopleType()
@@ -47,7 +47,7 @@ class People extends BasePeople
     {
       if($k & $this->_get('db_people_type'))
       {
-	$result[] = $k;
+        $result[] = $k;
       }
     }
     return $result;
@@ -61,8 +61,8 @@ class People extends BasePeople
     {
       foreach($db_types as $value)
       {
-	if(isset($types[$value]))
-	  $result += $value;
+        if(isset($types[$value]))
+        $result += $value;
       }
       $this->_set('db_people_type', $result);
     }
@@ -75,7 +75,7 @@ class People extends BasePeople
   {
      if(is_string($fd))
      {
-	$this->_set('birth_date',$fd);
+      $this->_set('birth_date',$fd);
      }
      else
      {
@@ -90,7 +90,7 @@ class People extends BasePeople
   {
      if(is_string($fd))
      {
-	$this->_set('end_date',$fd);
+      $this->_set('end_date',$fd);
      }
      else
      {
@@ -137,7 +137,7 @@ class People extends BasePeople
   {
      if(is_string($fd))
      {
-	$this->_set('activity_date_from',$fd);
+      $this->_set('activity_date_from',$fd);
      }
      else
      {
@@ -151,7 +151,7 @@ class People extends BasePeople
   {
      if(is_string($fd))
      {
-	$this->_set('activity_date_to',$fd);
+      $this->_set('activity_date_to',$fd);
      }
      else
      {
@@ -176,7 +176,7 @@ class People extends BasePeople
   {
     return $this->getActivityDateFromObject()->getDateMasked($tag);
   }
-  
+
   public function getActivityDateToMasked($tag='em')
   {
     return $this->getActivityDateToObject()->getDateMasked($tag);

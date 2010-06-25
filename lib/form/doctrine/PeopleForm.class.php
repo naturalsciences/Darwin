@@ -60,24 +60,24 @@ class PeopleForm extends BasePeopleForm
   {
     if(! empty($values['birth_date']) )
     {
-	if($values['birth_date']->getMask() !=0 && $values['activity_date_from']->getMask() !=0)
-	{
-	  if($values['birth_date'] >= $values['activity_date_from'])
-	  {
-            $error = new sfValidatorError($validator, 'The start of the activity must be after the birth');
-            // throw an error bound to the password field
-            throw new sfValidatorErrorSchema($validator, array('activity_date_from' => $error));
-	  }
-	}
-	if($values['end_date']->getMask() !=0 && $values['activity_date_to']->getMask() !=0)
-	{
-	  if($values['end_date'] <= $values['activity_date_to'])
-	  {
-            $error = new sfValidatorError($validator,'The end of the activity must be before the death');
-            // throw an error bound to the password field
-            throw new sfValidatorErrorSchema($validator, array('activity_date_to' => $error));
-	  }
-	}
+      if($values['birth_date']->getMask() !=0 && $values['activity_date_from']->getMask() !=0)
+      {
+        if($values['birth_date'] >= $values['activity_date_from'])
+        {
+                $error = new sfValidatorError($validator, 'The start of the activity must be after the birth');
+                // throw an error bound to the password field
+                throw new sfValidatorErrorSchema($validator, array('activity_date_from' => $error));
+        }
+      }
+      if($values['end_date']->getMask() !=0 && $values['activity_date_to']->getMask() !=0)
+      {
+        if($values['end_date'] <= $values['activity_date_to'])
+        {
+                $error = new sfValidatorError($validator,'The end of the activity must be before the death');
+                // throw an error bound to the password field
+                throw new sfValidatorErrorSchema($validator, array('activity_date_to' => $error));
+        }
+      }
     }
     return $values;
   }
