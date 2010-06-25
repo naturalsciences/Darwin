@@ -9,7 +9,7 @@
       <th><label><?php echo __('Sampling location code');?></label></th>
       <td id="specimen_gtu_ref_code"></td>
     <tr>
-      <th>
+      <th class="top_aligned">
         <?php echo $form['gtu_ref']->renderLabel() ?>
       </th>
       <td>
