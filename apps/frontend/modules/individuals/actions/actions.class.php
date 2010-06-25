@@ -74,13 +74,14 @@ class individualsActions extends DarwinActions
     $order_by = intval($request->getParameter('order_by',0));
     $individual_form = $this->getSpecimenIndividualsForm($request);
     $individual_form->addIdentifications($number, $order_by);
-    return $this->renderPartial('specimen/spec_identifications',array('form' => $individual_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'individuals', 'spec_id'=>$individual_form->getObject()->getSpecimenRef(), 'id'=>$request->getParameter('id',0)));
+    return $this->renderPartial('specimen/spec_identifications',array('form' => $individual_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'individuals', 'spec_id'=>$individual_form->getObject()->getSpecimenRef(), 'id'=>$request->getParameter('id',0), 'individual_id'=>0));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
     $individual_form = $this->getSpecimenIndividualsForm($request);
     $number = intval($request->getParameter('num'));
+    $people_ref = intval($request->getParameter('people_ref')) ; 
     $identifier_number = intval($request->getParameter('identifier_num'));
     $identifier_order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
@@ -88,17 +89,17 @@ class individualsActions extends DarwinActions
     if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))
     {
       $ident = $individual_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
-      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $ident->addIdentifiers($identifier_number,$people_ref, $identifier_order_by);
       $individual_form->reembedIdentifications($ident, $number);
-      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['Identifications'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
+      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['Identifications'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number, 'identnum' => $number));
     }
     else
     {
       $individual_form->addIdentifications($number, 0);
       $ident = $individual_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
-      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $ident->addIdentifiers($identifier_number,$people_ref, $identifier_order_by);
       $individual_form->reembedNewIdentification($ident, $number);
-      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
+      return $this->renderPartial('specimen/spec_identification_identifiers',array('form' => $individual_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number, 'identnum' => $number));
     }
   }
 

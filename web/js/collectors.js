@@ -2,6 +2,7 @@ var ref_element_id = null;
 var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
+var only_role = 0 ;
 $(document).ready(function () {
  $("a.add_collector").click(function(){
     $(this).qtip({
@@ -26,6 +27,7 @@ $(document).ready(function () {
                 // Fade in the modal "blanket" using the defined show speed
               ref_element_id = null;
               ref_element_name = null;
+              only_role = 16 ;
               addBlackScreen()
               $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
@@ -53,7 +55,7 @@ function addCollectorValue(people_ref)
   $.ajax(
   {
     type: "GET",
-    url: targetUrl+ (0+$('table#'+parentId+'tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + ($('table#'+parentId+' .spec_ident_collectors_data:visible').length+1),
+    url: targetUrl+ (0+$('table#'+parentId+' tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + ($('table#'+parentId+' .spec_ident_collectors_data:visible').length+1),
     success: function(html)
     {
       $('#spec_ident_collectors_body').append(html);

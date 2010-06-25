@@ -86,9 +86,9 @@ class IdentificationsForm extends BaseIdentificationsForm
     $this->mergePostValidator(new IdentificationsValidatorSchema());
   }
 
-  public function addIdentifiers($num, $order_by=0)
+  public function addIdentifiers($num,$people_ref, $order_by=0)
   {
-      $options = array('referenced_relation' => 'identifications', 'people_type' => 'identifier', 'order_by' => $order_by);
+      $options = array('referenced_relation' => 'identifications', 'people_type' => 'identifier', 'order_by' => $order_by, 'people_ref' => $people_ref);
       $val = new CataloguePeople();
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());

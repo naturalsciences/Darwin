@@ -74,6 +74,7 @@ class specimenActions extends DarwinActions
   {
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $number = intval($request->getParameter('num'));
+    $people_ref = intval($request->getParameter('people_ref')) ; 
     $identifier_number = intval($request->getParameter('identifier_num'));
     $identifier_order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
@@ -81,17 +82,17 @@ class specimenActions extends DarwinActions
     if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))
     {
       $ident = $spec_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
-      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $ident->addIdentifiers($identifier_number,$people_ref, $identifier_order_by);
       $spec_form->reembedIdentifications($ident, $number);
-      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['Identifications'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['Identifications'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number, 'identnum' => $number));
     }
     else
     {
       $spec_form->addIdentifications($number, 0);
       $ident = $spec_form->getEmbeddedForm('newIdentification')->getEmbeddedForm($number);
-      $ident->addIdentifiers($identifier_number, $identifier_order_by);
+      $ident->addIdentifiers($identifier_number,$people_ref, $identifier_order_by);
       $spec_form->reembedNewIdentification($ident, $number);
-      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number));
+      return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number, 'identnum' => $number));
     }
   }
 

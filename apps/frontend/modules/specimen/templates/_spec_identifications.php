@@ -39,18 +39,19 @@
         </thead>
 	<?php $retainedKey = 0;?>
         <?php foreach($form['Identifiers'] as $form_value):?>
-          <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+          <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey, 'identnum' => $row_num));?>
 	  <?php $retainedKey = $retainedKey+1;?>
         <?php endforeach;?>
         <?php foreach($form['newIdentifier'] as $form_value):?>
-          <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey));?>
+          <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey, 'identnum' => $row_num));?>
 	  <?php $retainedKey = $retainedKey+1;?>
         <?php endforeach;?>
         <tfoot>
           <tr>
             <td colspan="3">
               <div class="add_code">
-                <a href="<?php echo url_for($module.'/addIdentifier'.(($spec_id == 0) ? '': '?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id))).'/num/'.$row_num.((!isset($form['id']) || (isset($form['id']) && $form['id']->getValue() == ''))?'':'/identification_id/'.$form['id']->getValue());?>/identifier_num/" class="add_identifier" id="add_identifier_<?php echo $row_num;?>"><?php echo __('Add identifier');?></a>
+                <a href="<?php echo url_for($module.'/addIdentifier'.(($spec_id == 0) ? '': '?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id))).'/num/'.$row_num;?>/identifier_num/" class="hidden"></a>
+                <a class="add_identifier_<?php echo $row_num ;?>" href="<?php echo url_for('people/choose?only_role=4');?>"><?php echo __('Add identifier');?></a>              
               </div>
             </td>
           </tr>
@@ -76,34 +77,60 @@
       }
     });
 
-    $("#add_identifier_<?php echo $row_num;?>").click( function()
-    {
-        parent = $(this).closest('table.identifiers');
-        parentId = $(parent).attr('id');
-        $.ajax(
-        {
-          type: "GET",
-          url: $(this).attr('href')+ ($('table#'+parentId+' tbody.spec_ident_identifiers_data').length) + '/iorder_by/' + ($('table#'+parentId+' tbody.spec_ident_identifiers_data:visible').length+1),
-          success: function(html)
-          {
-            $(parent).append(html);
-            $(parent).find('thead:hidden').show();
-            $('table#'+parentId).toggleClass('green_border',true);
-          }
-        });
-        return false;
+    $("#spec_ident_identifiers_<?php echo $row_num; ?>").sortable({
+      placeholder: 'ui-state-highlight',
+      handle: '.spec_ident_identifiers_handle',
+      axis: 'y',
+      change: function(e, ui) {
+                forceIdentifiersHelper(e,ui);
+              },
+      deactivate: function(event, ui) {
+                    reOrderIdentifiers($(this).attr('id'));
+                  }
     });
-
-  $("#spec_ident_identifiers_<?php echo $row_num; ?>").sortable({
-    placeholder: 'ui-state-highlight',
-    handle: '.spec_ident_identifiers_handle',
-    axis: 'y',
-    change: function(e, ui) {
-              forceIdentifiersHelper(e,ui);
-            },
-    deactivate: function(event, ui) {
-                  reOrderIdentifiers($(this).attr('id'));
-                }
-    });
+    
+    $("a.add_identifier_<?php echo $row_num ;?>").click(function(){
+      only_role = 0 ;
+      $(this).qtip({
+          content: {
+              title: { text : 'Choose an identifier', button: 'X' },
+              url: $(this).attr('href')
+          },
+          show: { when: 'click', ready: true },
+          position: {
+              target: $(document.body), // Position it via the document body...
+              corner: 'center' // ...at the center of the viewport
+          },
+          hide: false,
+          style: {
+              width: { min: 876, max: 1000},
+              border: {radius:3},
+              title: { background: '#5BABBD', color:'white'}
+          },
+          api: {
+              beforeShow: function()
+              {
+                  // Fade in the modal "blanket" using the defined show speed
+                ref_element_id = null;
+                ref_element_name = null;
+                only_role = 4 ;
+                ref_table = 'table#spec_ident_identifiers_<?php echo $row_num;?>';
+                addBlackScreen()
+                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+              },
+              beforeHide: function()
+              {
+                  // Fade out the modal "blanket" using the defined hide speed
+                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+              },
+	         onHide: function()
+	         {
+              $('.result_choose_identifier').die('click') ;
+	            $(this.elements.target).qtip("destroy");
+	         }
+           }
+      });
+      return false;
+   });
   });
 </script>

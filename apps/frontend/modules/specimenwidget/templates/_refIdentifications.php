@@ -22,6 +22,24 @@ function reOrderIdentifiers(tableId)
     $(item).find('tr.spec_ident_identifiers_data input[id$=\"_order_by\"]').val(index+1);
   });
 }
+
+function addIdentifierValue(people_ref,ref_table)
+{
+  targetUrl = $(ref_table+' tfoot div.add_code a.hidden').attr('href');
+  $.ajax(
+  {
+    type: "GET",
+    url: targetUrl+ (0+$(ref_table+' tbody').length)+'/people_ref/'+people_ref + '/iorder_by/' + ($(ref_table+' .spec_ident_identifiers_data:visible').length+1),
+    success: function(html)
+    {
+      $(ref_table).append(html);
+      $(ref_table).find('thead:hidden').show();
+      $(ref_table).toggleClass('green_border',true);
+    }
+  });
+  return false;
+}
+
 </script>
 <table class="property_values" id="identifications">
   <thead style="<?php echo ($form['Identifications']->count() || $form['newIdentification']->count())?'':'display: none;';?>" class="spec_ident_head">
@@ -95,18 +113,5 @@ $(document).ready(function () {
            reOrderIdent();
          }
        });
-
-    $('.spec_ident_identifiers_data input[id$=\"people_ref\"]').live('change', function()
-    {
-	ref_element_id = $(this).closest('table').attr('id') ;
-	ref_element_value = $(this).attr('value');
-	$cpt = 0 ;
-	$('.spec_ident_identifiers_data input[id$=\"people_ref\"]').each(function() {
-	    if($(this).closest('table').attr('id') == ref_element_id) 
-	    {
-		    if($(this).attr('value') == ref_element_value) $cpt++ ;
-	    }
-	});
-	if($cpt > 1) $(this).closest('tr').find('.clear_identifier').trigger('click') });     
 });
 </script>

@@ -219,7 +219,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
                 if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
 	        {
                   $identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
-                  $identification->addIdentifiers($ikey, $ival['order_by']);
+                  $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
                   $this->reembedNewIdentification($identification, $key);
                 }
                 $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
@@ -233,7 +233,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 	      if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
 	      {
 		$identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
-		$identification->addIdentifiers($ikey, $ival['order_by']);
+		$identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
 		$this->reembedNewIdentification($identification, $key);
 	      }
 	      $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
@@ -254,7 +254,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
                 if(!isset($this['Identifications'][$key]['newIdentifier'][$ikey]))
 	        {
                   $identification = $this->getEmbeddedForm('Identifications')->getEmbeddedForm($key);
-                  $identification->addIdentifiers($ikey, $ival['order_by']);
+                  $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
                   $this->reembedIdentifications($identification, $key);
                 }
                 $taintedValues['Identifications'][$key]['newIdentifier'][$ikey]['record_id'] = 0;

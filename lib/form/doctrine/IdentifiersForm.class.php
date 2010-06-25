@@ -14,18 +14,11 @@ class IdentifiersForm extends BaseCataloguePeopleForm
   {
 
     $this->widgetSchema['people_type'] = new sfWidgetFormInputHidden(array('default'=>'identifier'));
-    $only_role = People::getCorrespondingType($this->getObject()->getPeopleType()); 
-    $this->widgetSchema['people_ref'] = new widgetFormButtonRef(array(
-       'model' => 'People',
-       'link_url' => 'people/choose?only_role='.$only_role,
-       'method' => 'getFormatedName',
-       'box_title' => $this->getI18N()->__('Choose Identifier'),
-       'nullable' => false,
-       'button_class'=>'',
-     ),
-      array('class'=>'inline',
-           )
-    );
+    $people_id= $this->getObject()->getPeopleRef() ;
+    $this->widgetSchema['people_ref'] = new sfWidgetFormInputHidden();
+    if($people_id) $this->widgetSchema['people_ref']->setLabel(Doctrine::getTable('People')->findPeople($people_id)->getFormatedName()) ;
+    else $this->widgetSchema['people_ref']->setAttribute('class','hidden_record');
+    
     $this->validatorSchema['people_ref'] = new sfValidatorInteger(array('required'=>false));
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['referenced_relation'] = new sfValidatorString();

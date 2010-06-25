@@ -10,7 +10,6 @@ class IdentifiersValidatorSchema extends sfValidatorSchema
   {
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
-
     if (!$value['people_ref'])
     {
       return array();
