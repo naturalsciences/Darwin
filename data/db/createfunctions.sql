@@ -6724,4 +6724,35 @@ END;
 $$
 LANGUAGE plpgsql;
 
-
+-- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
+-- $$
+-- DECLARE
+--   sqlString varchar ;
+--   tempArray varchar[] := in_array;
+--   tempTagList varchar := array_to_string(tempArray, ';');
+-- BEGIN
+--   IF array_lower(in_array,1) THEN
+--     FOR i IN array_lower(in_array,1)..array_upper(in_array,1) LOOP
+--       IF i = 1 THEN
+--         sqlString := 'SELECT gtu_ref, tag_indexed FROM tags WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(tempTagList) || '))';
+--       ELSE
+--         sqlString := 'SELECT gtu_ref, tag_indexed FROM (' || sqlString || ') as subQuery' || i || ' WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(tempTagList) || '))';
+--       END IF;
+--       IF i < array_upper(in_array,1) THEN
+--         tempArray := in_array[i+1:array_upper(in_array,1)];
+--         tempTagList := array_to_string(tempArray, ';');
+--       END IF;
+--     END LOOP;
+--     IF LENGTH(sqlString)>0 THEN
+--       sqlString := regexp_replace(sqlString, ', tag_indexed', '');
+--       RETURN QUERY EXECUTE sqlString;
+--     END IF;
+--   END IF;
+--   RETURN;
+-- EXCEPTION
+--   WHEN OTHERS THEN
+--     RAISE EXCEPTION 'Error in getGtusForTags: %', SQLERRM;
+--     RETURN;
+-- END;
+-- $$
+-- LANGUAGE plpgsql;

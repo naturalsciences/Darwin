@@ -1791,7 +1791,6 @@ create table specimen_individuals
         specimen_individuals_count_min integer not null default 1,
         specimen_individuals_count_max integer not null default 1,
         constraint pk_specimen_individuals primary key (id),
-        constraint unq_specimen_individuals unique (specimen_ref, type, sex, stage, state, social_status, rock_form),
         constraint fk_specimen_individuals_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint chk_chk_specimen_individuals_minmax check (specimen_individuals_count_min <= specimen_individuals_count_max),
         constraint chk_chk_specimens_individuals_min check (specimen_individuals_count_min >= 0)
