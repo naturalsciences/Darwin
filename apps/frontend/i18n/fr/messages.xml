@@ -393,7 +393,7 @@
       <trans-unit id="21">
         <source>Prefix</source> <target>Préfixe</target> </trans-unit>
       <trans-unit id="22">
-        <source>sep.</source> <target>Séparateur</target> </trans-unit>
+        <source>sep.</source> <target>sep.</target> </trans-unit>
       <trans-unit id="23">
         <source>Code</source>
         <target/>
