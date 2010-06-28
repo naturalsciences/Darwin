@@ -34,8 +34,9 @@ class propertyActions extends DarwinActions
 	    $this->form->save();
 	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
+	  catch(Exception $ne)
 	  {
+	          $e = new DarwinPgErrorParser($ne);
             $error = new sfValidatorError(new savedValidator(),$e->getMessage());
             $this->form->getErrorSchema()->addError($error); 
 	  }

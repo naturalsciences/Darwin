@@ -54,15 +54,44 @@
     $('#users_comm_comm_type').change(function () {
       $('form#lang_form input[type=submit]').attr('disabled','disabled');
       $.ajax({
-	  type: "get",
-	  url: "<?php echo url_for('user/getTags');?>/type/" + $('#users_comm_comm_type').val(),
-	  success: function(html){
-	    $('#users_comm_tag').val('');
-	    $('#users_comm_tag_selected').html('');
-	    $('#users_comm_tag_available').html(html);
-	  }
+	      type: "get",
+	      url: "<?php echo url_for('user/getTags');?>/type/" + $('#users_comm_comm_type').val(),
+	      success: function(html){
+	        $('#users_comm_tag').val('');
+	        $('#users_comm_tag_selected').html('');
+	        $('#users_comm_tag_available').html(html);
+	        $('#users_comm_tag_available li').bind('click',function() {	   
+	          new_elem = $('<li class="'+$(this).attr('class')+'" alt="'+$(this).attr('alt')+'">'+$(this).text()+'<img src="/images/widget_help_close.png"></li>');
+            $('#users_comm_tag_selected').append(new_elem);
+            value = trim($(this).attr('alt').substr(2));
+            $(this).addClass('hidden');
+            if($('#users_comm_tag').val() =='')
+              $('#users_comm_tag').val(value) ;
+            else
+              $('#users_comm_tag').val( $('#users_comm_tag').val() + ',' + value);
+	          new_elem.find('img').click(remove_tag);
+          });    	  
+	      }
       });
+      $('#users_comm_tag_selected li').each(function() {	   
+        $(this).remove_tag ;
+       });
     });
   });
+  
+function remove_tag() {
+  avail_el = $('#users_comm_tag_available [alt$="'+$(this).parent().attr('alt')+'"]');
+
+  $(this).parent().remove();
+  avail_el.removeClass('hidden');
+  value = trim(avail_el.attr('alt').substr(2));
+  console.log(value);
+  old_value = $('#users_comm_tag').val();
+  old_value = old_value.replace(value,'');
+  old_value = old_value.replace(/,,/g, ',');
+  old_value = old_value.replace(/^,/,'');
+  old_value = old_value.replace(/,$/,'');
+  $('#users_comm_tag').val(old_value);
+}
 </script>
 </div>
