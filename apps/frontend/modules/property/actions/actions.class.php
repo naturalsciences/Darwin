@@ -69,7 +69,7 @@ class propertyActions extends DarwinActions
     if($request->hasParameter('id') && $request->getParameter('id'))
       $prop = Doctrine::getTable('CatalogueProperties')->findExcept($request->getParameter('id') );
 
-    $form = new CataloguePropertiesForm($prop);
+    $form = new CataloguePropertiesForm($prop, array('ref_relation' => $request->getParameter('table')));
     $form->addValue($number);
     return $this->renderPartial('prop_value',array('form' => $form['newVal'][$number]));
   }
