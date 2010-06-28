@@ -81,7 +81,7 @@
   </tbody>
 </table>
 <div class='add_value'>
-  <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/table/<?php $sf_request->getParameter('table');?>/num/" id="add_prop_value"><?php echo __('Add Value');?></a>
+  <a href="<?php echo url_for('property/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/table/<?php echo $sf_request->getParameter('table');?>/num/" id="add_prop_value"><?php echo __('Add Value');?></a>
 </div>
 <table class="bottom_actions">
   <tfoot>
