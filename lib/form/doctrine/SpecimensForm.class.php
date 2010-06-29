@@ -271,7 +271,7 @@ class SpecimensForm extends BaseSpecimensForm
     
     $subForm = new sfForm();
     $this->embedForm('Collectors',$subForm);   
-    foreach(Doctrine::getTable('CataloguePeople')->getIdentifiersRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
+    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
     {
       $form = new PeopleAssociationsForm($vals);
       $this->embeddedForms['Collectors']->embedForm($key, $form);

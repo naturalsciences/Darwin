@@ -92,7 +92,7 @@ $t->is($catpeo['author'][0]->getPeople()->getGivenName(), 'ML', 'Type author and
 $t->is($catpeo['author'][1]->getPeople()->getGivenName(), 'Poilux', 'Type author and second person well associated to "Poilux"');
 
 
-$t->info('Testing the getIdentifiersRelated method');
+$t->info('Testing the getPeopleRelated method');
 $specimen = Doctrine::getTable('Specimens')->findOneByTaxonRef($taxon->getId());
 $identification = new Identifications;
 $identification->setReferencedRelation('specimens');
@@ -108,7 +108,7 @@ $identifier->setPeopleRef($person1->getId());
 $identifier->setPeopleType('identifier');
 $identifier->save();
 
-$identifiers = Doctrine::getTable('CataloguePeople')->getIdentifiersRelated('identifications', 'identifier', $identification->getId());
+$identifiers = Doctrine::getTable('CataloguePeople')->getPeopleRelated('identifications', 'identifier', $identification->getId());
 $t->is($identifiers->count(), 1, '"One" identifier effectively created');
 $t->is($identifiers[0]->getPeopleType(), 'identifier', 'New person created in catalogue people is well "identifier"');
 $t->is($identifiers[0]->getPeople()->getGivenName(), 'Poilux', '"Poilux" is well the identifier created');

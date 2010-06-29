@@ -66,12 +66,12 @@ class CataloguePeopleTable extends DarwinTable
 	
   }
 
-  public function getIdentifiersRelated($table='identifications', $type='identifier', $identId)
+  public function getPeopleRelated($table, $type, $rec_id)
   {
     $q = Doctrine_Query::create()->
          from('CataloguePeople')->
          where('referenced_relation = ?', $table)->
-         andWhere('record_id = ?', $identId)->
+         andWhere('record_id = ?', $rec_id)->
          andWhere('people_type = ?', $type)->
          orderBy('order_by ASC');
     return $q->execute();

@@ -11,6 +11,8 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
 {
   public function configure()
   {
+    unset($this['people_ref']);
+
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
 
@@ -25,14 +27,20 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
       array('class' => 'hidden',)
     );
 
-    $this->widgetSchema['people_type'] = new sfWidgetFormChoice(array(
+    $types = array(
       'choices'        => array('author' => $this->getI18N()->__('Author'),
       'expert' => $this->getI18N()->__('Expert') ),
-    ));
+      );
 
-    $this->validatorSchema['people_type'] = new sfValidatorChoice(array(
-      'choices'        => array('author','expert')
-    ));
+    if($this->getObject()->getReferencedRelation()=='expeditions')
+    {
+      $types = array('member' => $this->getI18N()->__('Members'));
+      $this->getObject()->setPeopleType('member');
+    }
+
+    $this->widgetSchema['people_type'] = new sfWidgetFormChoice(array('choices'=>$types));
+
+    $this->validatorSchema['people_type'] = new sfValidatorChoice(array('choices'=>array_keys($types)));
 
     $this->widgetSchema['people_sub_type'] = new widgetFormSelectComplete(array(
         'model' => 'CataloguePeople',
@@ -51,7 +59,7 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
                                          'people_ref' => 'Associated:',
                                         )
                                   );
-
+    
   }
   
   public function forceSubType()
