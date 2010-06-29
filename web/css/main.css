@@ -68,7 +68,7 @@ table td.centered, table th.centered
 h1
 {
   color:#3390a1;
-  text-decoration: underline;
+/*   text-decoration: underline; */
   font-size:large;
   margin-bottom: 1em;
 }
