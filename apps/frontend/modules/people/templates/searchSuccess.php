@@ -74,13 +74,14 @@
                 <?php if(! $is_choose):?>
 	          <?php echo link_to(image_tag('edit.png'),'people/edit?id='.$item->getId());?>
                 <?php else:?>
-                <?php if($form['only_role']->getValue() == '16') : ?>
-                  <div class="result_choose_collector"><?php echo __('Choose');?></div>
-                <?php endif;?>
-                <?php if($form['only_role']->getValue() == '4') : ?>
-                  <div class="result_choose_identifier"><?php echo __('Choose');?></div>
-                <?php endif;?>               
-                <?php endif;?>
+                  <?php if($form['only_role']->getValue() == '16') : ?>
+                    <div class="result_choose_collector"><?php echo __('Choose');?></div>
+                  <?php elseif($form['only_role']->getValue() == '4') : ?>
+                    <div class="result_choose_identifier"><?php echo __('Choose');?></div>
+                  <?php else:?>
+                    <div class="result_choose"><?php echo __('Choose');?></div>
+                  <?php endif;?>
+               <?php endif;?>
             </td>
           </tr>
           <tr class="hidden details details_rid_<?php echo $item->getId();?>" >

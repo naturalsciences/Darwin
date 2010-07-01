@@ -3,7 +3,7 @@ var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
- $("a.coll_right").live('click', function(){
+ $("a.coll_right").click(function(){
 
     $(this).qtip({
         content: {
@@ -44,6 +44,7 @@ $(document).ready(function () {
     });
     return false;
  });
+ 
  $("a.set_rights").live('click', function(){
     $(this).qtip({
         content: {

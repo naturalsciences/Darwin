@@ -137,6 +137,15 @@ class expeditionActions extends DarwinActions
     $this->searchResults($this->form, $request);    
   }
 
+  public function executeAddMember(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $people_ref = intval($request->getParameter('people_ref'));
+    $this->form = new ExpeditionsForm();
+    $this->form->addMember($number,$people_ref,$request->getParameter('iorder_by',0));
+    return $this->renderPartial('member_row',array('form' =>  $this->form['newMember'][$number], 'row_num'=>$number));
+  }
+
   /**
     * Method executed when searching an expedition - trigger by the click on the search button
     * @param SearchExpeditionForm $form    The search expedition form instantiated that will be binded with the data contained in request
@@ -186,16 +195,15 @@ class expeditionActions extends DarwinActions
     {
       try
       {
-	$item = $form->save();
-	$this->redirect('expedition/edit?id='.$item->getId());
+        $item = $form->save();
+        $this->redirect('expedition/edit?id='.$item->getId());
       }
       catch(Doctrine_Exception $ne)
       {
-	$e = new DarwinPgErrorParser($ne);
-	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$form->getErrorSchema()->addError($error); 
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
       }
     }
   }
-
 }

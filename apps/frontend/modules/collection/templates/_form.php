@@ -74,7 +74,7 @@ $(document).ready(function ()
 		    <tr>
 			 <th><label><?php echo __("User") ; ?></label></th>
 			 <?php if(!$form->getObject()->isNew()) : ?>
-			 <th>Set rights for sub-collections</th>
+			 <th><?php echo __('Set rights for sub-collections');?></th>
 			 <?php endif ; ?>
 			 <th>&nbsp;</th>
 		    </tr>

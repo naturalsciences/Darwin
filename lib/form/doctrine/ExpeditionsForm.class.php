@@ -85,6 +85,77 @@ class ExpeditionsForm extends BaseExpeditionsForm
                                                                           array('invalid'=>'The "begin" date cannot be above the "end" date.')
                                                                          )
                                             );
+
+    $subForm = new sfForm();
+    $this->embedForm('Members',$subForm);   
+    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('expeditions','member',$this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new PeopleAssociationsForm($vals);
+      $this->embeddedForms['Members']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Members', $this->embeddedForms['Members']); 
+    
+    $subForm = new sfForm();
+    $this->embedForm('newMember',$subForm);
   }
 
+  public function addMember($num, $people_ref,$order_by=0)
+  {
+      $options = array('referenced_relation' => 'expeditions', 'people_type' => 'member', 'people_ref' => $people_ref, 'order_by' => $order_by);
+      $val = new CataloguePeople();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new PeopleAssociationsForm($val);
+      $this->embeddedForms['newMember']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newMember', $this->embeddedForms['newMember']);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['newMember']))
+    {
+      foreach($taintedValues['newMember'] as $key=>$newVal)
+      {
+        if (!isset($this['newMember'][$key]))
+        {
+          $this->addMember($key,$newVal['people_ref']);
+        }
+        $taintedValues['newMember'][$key]['record_id'] = 0;
+        $taintedValues['newMember'][$key]['referenced_relation'] = 'expeditions';
+
+      }
+    }
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+   if (null === $forms)
+   {
+      $value = $this->getValue('Members');
+      foreach($this->embeddedForms['Members']->getEmbeddedForms() as $name => $form)
+      {
+        if (!isset($value[$name]['people_ref']))
+        {
+          $form->getObject()->delete();
+          unset($this->embeddedForms['Members'][$name]);
+        }
+        else
+        {
+          $form->getObject()->setRecordId($this->getObject()->getId());
+          $form->getObject()->setReferencedRelation('expeditions');
+        }
+      }
+
+      $value = $this->getValue('newMember');
+      foreach($this->embeddedForms['newMember']->getEmbeddedForms() as $name => $form)
+      {
+        $form->getObject()->setRecordId($this->getObject()->getId());
+        $form->getObject()->setReferencedRelation('expeditions');
+      } 
+   }
+   return parent::saveEmbeddedForms($con, $forms);
+  }
 }
