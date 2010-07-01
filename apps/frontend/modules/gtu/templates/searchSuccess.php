@@ -35,13 +35,11 @@
       <tbody>
         <?php foreach($items as $item):?>
           <tr class="rid_<?php echo $item->getId();?>">
-            <td><?php echo $item->getCode();?></td>
-	    <td class="item_name"><?php echo $item->getName();?>
-
-	    </td>
+            <td class="top_aligned"><?php echo $item->getCode();?></td>
+            <td class="item_name"><?php echo $item->getName();?></td>
             <td class="datesNum"><?php echo $item->getGtuFromDateMasked();?></td>
             <td class="datesNum"><?php echo $item->getGtuToDateMasked();?></td>
-            <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
+            <td class="<?php echo (! $is_choose)?'edit':'choose';?> top_aligned">
               <?php if(! $is_choose):?>
                 <?php echo link_to(image_tag('edit.png'),'gtu/edit?id='.$item->getId());?>
               <?php else:?>

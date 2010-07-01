@@ -109,8 +109,8 @@ class GtuFormFilter extends BaseGtuFormFilter
     $query = parent::doBuildQuery($values);
     $alias = $query->getRootAlias();
     $query
-      ->leftJoin($alias.'.TagGroups g')
-      ->leftJoin('g.Tags');
+      ->leftJoin($alias.'.TagGroups g');
+//       ->leftJoin('g.Tags');
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
     $query->andWhere("id > 0 ");

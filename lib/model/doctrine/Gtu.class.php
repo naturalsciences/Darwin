@@ -68,8 +68,10 @@ class Gtu extends BaseGtu
     foreach($this->TagGroups as $group)
     {
       $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label><ul class="name_tags">';
-      foreach($group->Tags as $value)
-        $str .=  '<li>' . $value->getTag().'</li>';
+      $tags = explode(";",$group->getTagValue());
+      foreach($tags as $value)
+        if (strlen($value))
+          $str .=  '<li>' . trim($value).'</li>';
       $str .= '</ul><div class="clear" />';
     }
     $str .= '</ul>';
