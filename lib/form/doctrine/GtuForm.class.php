@@ -97,13 +97,13 @@ class GtuForm extends BaseGtuForm
     {
       if(isset($taintedValues['newVal']))
       {
-	foreach($taintedValues['newVal'] as $key=>$newVal)
-	{
-	  if (!isset($this['newVal'][$key]))
-	  {
-	    $this->addValue($key);
-	  }
-	}
+        foreach($taintedValues['newVal'] as $key=>$newVal)
+        {
+          if (!isset($this['newVal'][$key]))
+          {
+            $this->addValue($key);
+          }
+        }
       }
       parent::bind($taintedValues, $taintedFiles);
     }
@@ -113,25 +113,25 @@ class GtuForm extends BaseGtuForm
 
       if (null === $forms)
       {
-	$value = $this->getValue('newVal');
-	foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
-	{
-	  if (!isset($value[$name]['tag_value'])  || $value[$name]['tag_value'] == '')
-	  {
-	    unset($this->embeddedForms['newVal'][$name]);
-	  }
-	}
+        $value = $this->getValue('newVal');
+        foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
+        {
+          if (!isset($value[$name]['tag_value'])  || $value[$name]['tag_value'] == '')
+          {
+            unset($this->embeddedForms['newVal'][$name]);
+          }
+        }
 
-	$value = $this->getValue('TagGroups');
-	foreach($this->embeddedForms['TagGroups']->getEmbeddedForms() as $name => $form)
-	{
-	  
-	  if (!isset($value[$name]['tag_value']) || $value[$name]['tag_value'] == '' )
-	  {
-	    $form->getObject()->delete();
-	    unset($this->embeddedForms['TagGroups'][$name]);
-	  }
-	}
+        $value = $this->getValue('TagGroups');
+        foreach($this->embeddedForms['TagGroups']->getEmbeddedForms() as $name => $form)
+        {
+          
+          if (!isset($value[$name]['tag_value']) || $value[$name]['tag_value'] == '' )
+          {
+            $form->getObject()->delete();
+            unset($this->embeddedForms['TagGroups'][$name]);
+          }
+        }
       }
       return parent::saveEmbeddedForms($con, $forms);
     }

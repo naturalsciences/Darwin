@@ -22,17 +22,30 @@ class TagGroupsTable extends DarwinTable
     $q_group = $conn->quote($group, 'string');
     $q_sub_group = $conn->quote($sub_group, 'string');
 
-    $sql = "SELECT tag, sum(cnt) as cnt FROM tags as t RIGHT JOIN (SELECT x.group_ref,COUNT(*) as cnt FROM
-(
-	SELECT group_ref from tags where tag_indexed in (SELECT distinct(fulltoIndex(tags)) as u_tag FROM regexp_split_to_table($tags, ';') as tags WHERE fulltoIndex(tags) != '')
-) as x GROUP BY x.group_ref
-ORDER BY cnt DESC) AS y on t.group_ref = y.group_ref 
-WHERE tag_indexed not in (SELECT distinct(fulltoIndex(tags)) as u_tag FROM regexp_split_to_table($tags, ';') as tags WHERE fulltoIndex(tags) != '')";
+    $sql = "SELECT tag, sum(cnt) as cnt 
+            FROM tags as t RIGHT JOIN 
+              (SELECT x.group_ref,COUNT(*) as cnt 
+               FROM 
+                (SELECT group_ref 
+                 FROM tags 
+                 WHERE tag_indexed IN 
+                  (SELECT distinct(fulltoIndex(tags)) as u_tag 
+                   FROM regexp_split_to_table($tags, ';') as tags 
+                   WHERE fulltoIndex(tags) != ''
+                  )
+                ) as x GROUP BY x.group_ref
+               ORDER BY cnt DESC
+              ) AS y ON t.group_ref = y.group_ref
+            WHERE tag_indexed NOT IN 
+              (SELECT distinct(fulltoIndex(tags)) as u_tag 
+               FROM regexp_split_to_table($tags, ';') as tags 
+               WHERE fulltoIndex(tags) != ''
+              )";
 
     if($group !="")
-	$sql .= " AND group_type = $q_group";
+      $sql .= " AND group_type = $q_group";
     if($sub_group != "")
-	$sql .= " AND sub_group_type = $q_sub_group";
+      $sql .= " AND sub_group_type = $q_sub_group";
 
     $sql .= " GROUP by tag ORDER BY tag asc LIMIT 10";
     $result = $conn->fetchAssoc($sql);
@@ -43,9 +56,9 @@ WHERE tag_indexed not in (SELECT distinct(fulltoIndex(tags)) as u_tag FROM regex
     foreach($result as $i => $item)
     {
       if($max < $item['cnt'])
-	$max = $item['cnt'];
+        $max = $item['cnt'];
       if($min > $item['cnt'])
-	$min = $item['cnt'];
+        $min = $item['cnt'];
     }
     $step = ($max - $min) / $nbr_of_steps;
     foreach($result as $i => $item)
@@ -59,17 +72,17 @@ WHERE tag_indexed not in (SELECT distinct(fulltoIndex(tags)) as u_tag FROM regex
   public function fetchTag($ids)
   {
     $q = Doctrine_Query::create()
-	 ->from('TagGroups g')
-	 ->innerJoin('g.Tags t')
-	 ->andWherein('g.gtu_ref', $ids);
+         ->from('TagGroups g')
+         ->innerJoin('g.Tags t')
+         ->andWherein('g.gtu_ref', $ids);
     $r = $q->execute();
     $results = array();
     foreach($r as $i)
     {
       if(!isset($results[$i->getGtuRef()]))
-	$results[$i->getGtuRef()] = array();
+        $results[$i->getGtuRef()] = array();
 
-      $results[$i->getGtuRef()][] = $i;      
+      $results[$i->getGtuRef()][] = $i;
     }
     return $results;
   }

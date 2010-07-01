@@ -70,14 +70,15 @@ class GtuFormFilter extends BaseGtuFormFilter
       $line_val = $line['tag'];
       if( $line_val != '')
       {
-        $tagList .= $conn_MGR->quote($line_val, 'string').',';
+        $tagList = $conn_MGR->quote($line_val, 'string');
+        $query->andWhere("tag_values_indexed && getTagsIndexedAsArray($tagList)");
       }
     }
-    if(strlen($tagList))
+/*    if(strlen($tagList))
     {
       $tagList = substr($tagList, 0, -1); //remove last ','
       $query->andWhere("id in (select getGtusForTags(array[$tagList]))");
-    }
+    }*/
     return $query;
   }
 
