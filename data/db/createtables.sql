@@ -190,6 +190,7 @@ create table gtu
         gtu_to_date_mask integer not null default 0,
         gtu_to_date timestamp not null default '01/01/0001 00:00:00',
         path varchar not null default '/',
+        tag_values_indexed varchar[],
         constraint pk_gtu primary key (id),
         constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
        );
@@ -202,6 +203,7 @@ comment on column gtu.gtu_from_date_mask is 'Mask Flag to know wich part of the 
 comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day, 4 for hour, 2 for minutes, 1 for seconds';
 comment on column gtu.gtu_to_date is 'composed to date of the GTU';
 comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
+comment on column gtu.tag_values_indexed is 'Array of all tags associated to gtu (indexed form)';
 
 create sequence tag_groups_id_seq;
 
@@ -232,13 +234,13 @@ comment on column tag_groups.tag_value is 'Ensemble of Tags';
 create table tags
       (
         gtu_ref integer not null,
-	group_ref integer not null,
-	group_type varchar not null,
-	sub_group_type varchar not null,
-	tag varchar not null,
+        group_ref integer not null,
+        group_type varchar not null,
+        sub_group_type varchar not null,
+        tag varchar not null,
         tag_indexed varchar not null,
         constraint fk_tags_gtu foreign key (gtu_ref) references gtu(id) on delete cascade,
-	constraint fk_tags_tag_groups foreign key (group_ref) references tag_groups(id) on delete cascade
+        constraint fk_tags_tag_groups foreign key (group_ref) references tag_groups(id) on delete cascade
       );
 
 comment on table tags is 'List of calculated tags for a groups. This is only for query purpose (filled by triggers)';
@@ -386,7 +388,7 @@ create table expeditions
        (
         id integer not null default nextval('expeditions_id_seq'),
         name varchar not null,
-	name_ts tsvector not null,
+        name_ts tsvector not null,
         name_indexed varchar not null,
         name_language_full_text full_text_language,
         expedition_from_date_mask integer not null default 0,
@@ -780,7 +782,7 @@ create sequence collections_admin_id_seq;
 create table collections_admin
        (
         id integer not null default nextval('collections_admin_id_seq'),
-	constraint pk_collections_admin primary key (id),
+        constraint pk_collections_admin primary key (id),
         constraint unq_collections_admin unique (collection_ref, user_ref),
         constraint fk_collections_admin_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint fk_collections_admin_users foreign key (user_ref) references users(id) on delete cascade
@@ -796,7 +798,7 @@ create sequence collections_rights_id_seq;
 create table collections_rights
        (
         id integer not null default nextval('collections_rights_id_seq'),
-	constraint pk_collections_right primary key (id),
+        constraint pk_collections_right primary key (id),
         constraint fk_collections_rights_users foreign key (user_ref) references users(id) on delete cascade,
         constraint fk_collections_rights_collections foreign key (collection_ref) references collections(id) on delete cascade,
         constraint unq_collections_rights unique (collection_ref, user_ref)
@@ -910,8 +912,8 @@ create table users_tracking
         record_id integer not null,
         user_ref integer not null,
         action varchar not null default 'insert',
-	old_value hstore,
-	new_value hstore,
+        old_value hstore,
+        new_value hstore,
         modification_date_time update_date_time,
         constraint pk_users_tracking_pk primary key (id),
         constraint fk_users_tracking_users foreign key (user_ref) references users(id)
@@ -977,7 +979,7 @@ create sequence my_preferences_id_seq;
 
 create table my_preferences
        (
-	id integer not null default nextval('my_preferences_id_seq'),
+        id integer not null default nextval('my_preferences_id_seq'),
         user_ref integer not null,
         category varchar not null default 'board_widget',
         group_name varchar not null,
@@ -987,7 +989,7 @@ create table my_preferences
         visible boolean not null default true,
         opened boolean not null default true,
         color varchar not null default '#5BAABD',
-	is_available boolean not null default false,
+        is_available boolean not null default false,
         icon_ref integer,
         title_perso varchar(32),
         constraint pk_my_preferences primary key (id),
@@ -1052,13 +1054,13 @@ comment on column template_classifications.parent_ref is 'Id of parent - id fiel
 create sequence classification_keywords_id_seq;
 
 create table classification_keywords
-	(
-         id integer not null default nextval('classification_keywords_id_seq'),
-	 keyword_type varchar not null default 'name',
-	 keyword varchar not null,
-	 keyword_indexed varchar not null,
-         constraint pk_classification_keywords_id primary key (id)
-	)
+  (
+    id integer not null default nextval('classification_keywords_id_seq'),
+    keyword_type varchar not null default 'name',
+    keyword varchar not null,
+    keyword_indexed varchar not null,
+    constraint pk_classification_keywords_id primary key (id)
+  )
 inherits (template_table_record_ref);
 
 comment on table classification_keywords is 'Help user to tag-label each part of full name in classifications';
@@ -1071,13 +1073,13 @@ create sequence classification_synonymies_id_seq;
 create sequence classification_synonymies_group_id_seq;
 create table classification_synonymies
 	(
-         id integer not null default nextval('classification_synonymies_id_seq'),
-	 group_id integer not null,
-	 group_name varchar not null,
-	 is_basionym boolean DEFAULT false,
-	 order_by integer not null default 0,
-	 constraint unq_synonym unique (referenced_relation, record_id, group_id),
-         constraint pk_synonym_id primary key (id)
+    id integer not null default nextval('classification_synonymies_id_seq'),
+    group_id integer not null,
+    group_name varchar not null,
+    is_basionym boolean DEFAULT false,
+    order_by integer not null default 0,
+    constraint unq_synonym unique (referenced_relation, record_id, group_id),
+    constraint pk_synonym_id primary key (id)
 	)
 inherits (template_table_record_ref);
 
@@ -1827,7 +1829,7 @@ create table specimen_parts
         container_type varchar not null default 'container',
         sub_container_type varchar not null default 'container',
         container_storage varchar not null default 'dry',
-	sub_container_storage varchar not null default 'dry',
+        sub_container_storage varchar not null default 'dry',
         surnumerary boolean not null default false,
         specimen_status varchar not null default 'good state',
         specimen_part_count_min integer not null default 1,
@@ -1835,7 +1837,7 @@ create table specimen_parts
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
-	constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
+        constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
 comment on table specimen_parts is 'List of individuals or parts of individuals stored in conservatories';
 comment on column specimen_parts.id is 'Unique identifier of a specimen part/individual';
@@ -1903,7 +1905,7 @@ create sequence specimens_accompanying_id_seq;
 create table specimens_accompanying
        (
         id integer not null default nextval('specimens_accompanying_id_seq'),
-	accompanying_type varchar not null default 'biological',
+        accompanying_type varchar not null default 'biological',
         specimen_ref integer not null,
         taxon_ref integer not null default 0,
         mineral_ref integer not null default 0,
@@ -1936,3 +1938,137 @@ comment on table words is 'List all trigram used with pg_trgm to match similarit
 comment on column words.referenced_relation is 'Reference of table concerned';
 comment on column words.field_name is 'Reference of field in the table';
 comment on column words.word is 'word founded';
+
+create sequence darwin_flat_id_seq;
+
+create table darwin_flat
+  (
+    id integer not null default nextval('darwin_flat_id_seq'),
+    spec_ref integer not null,
+    category varchar,
+    collection_ref integer not null,
+    collection_type varchar,
+    collection_code varchar,
+    collection_name varchar,
+    collection_institution_ref integer not null,
+    collection_institution_formated_name varchar,
+    collection_institution_formated_name_ts tsvector,
+    collection_institution_formated_name_indexed varchar,
+    collection_institution_sub_type varchar,
+    collection_main_manager_ref integer not null,
+    collection_main_manager_formated_name varchar,
+    collection_main_manager_formated_name_ts tsvector,
+    collection_main_manager_formated_name_indexed varchar,
+    collection_parent_ref integer,
+    collection_path varchar,
+    expedition_ref integer not null,
+    expedition_name varchar,
+    expedition_name_ts tsvector,
+    expedition_name_indexed varchar,
+    station_visible boolean,
+    gtu_ref integer not null,
+    gtu_code varchar,
+    gtu_parent_ref integer,
+    gtu_path varchar,
+    gtu_from_date_mask integer,
+    gtu_from_date timestamp,
+    gtu_to_date_mask integer,
+    gtu_to_date timestamp,
+    gtu_tag_values_indexed varchar[],
+    gtu_country_tag_value varchar,
+    taxon_ref integer not null,
+    taxon_name varchar,
+    taxon_name_indexed tsvector,
+    taxon_name_order_by varchar,
+    taxon_level_ref integer not null,
+    taxon_level_name varchar,
+    taxon_status varchar,
+    taxon_path varchar,
+    taxon_parent_ref integer,
+    taxon_extinct boolean,
+    litho_ref integer not null,
+    litho_name varchar,
+    litho_name_indexed tsvector,
+    litho_name_order_by varchar,
+    litho_level_ref integer not null,
+    litho_level_name varchar,
+    litho_status varchar,
+    litho_path varchar,
+    litho_parent_ref integer,
+    chrono_ref integer not null,
+    chrono_name varchar,
+    chrono_name_indexed tsvector,
+    chrono_name_order_by varchar,
+    chrono_level_ref integer not null,
+    chrono_level_name varchar,
+    chrono_status varchar,
+    chrono_path varchar,
+    chrono_parent_ref integer,
+    lithology_ref integer not null,
+    lithology_name varchar,
+    lithology_name_indexed tsvector,
+    lithology_name_order_by varchar,
+    lithology_level_ref integer not null,
+    lithology_level_name varchar,
+    lithology_status varchar,
+    lithology_path varchar,
+    lithology_parent_ref integer,
+    mineral_ref integer not null,
+    mineral_name varchar,
+    mineral_name_indexed tsvector,
+    mineral_name_order_by varchar,
+    mineral_level_ref integer not null,
+    mineral_level_name varchar,
+    mineral_status varchar,
+    mineral_path varchar,
+    mineral_parent_ref integer,
+    host_taxon_ref integer not null,
+    host_relationship varchar,
+    host_taxon_name varchar,
+    host_taxon_name_indexed tsvector,
+    host_taxon_name_order_by varchar,
+    host_taxon_level_ref integer not null,
+    host_taxon_level_name varchar,
+    host_taxon_status varchar,
+    host_taxon_path varchar,
+    host_taxon_parent_ref integer,
+    host_taxon_extinct boolean,
+    ig_ref integer,
+    ig_num varchar,
+    ig_num_indexed varchar,
+    ig_date_mask integer,
+    ig_date date,
+    acquisition_category varchar,
+    acquisition_date_mask integer,
+    acquisition_date date,
+    specimen_count_min integer,
+    specimen_count_max integer,
+    CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
+    CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_collection_institution_ref FOREIGN KEY (collection_institution_ref) REFERENCES people (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_collection_main_manager_ref FOREIGN KEY (collection_main_manager_ref) REFERENCES people (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_collection_parent_ref FOREIGN KEY (collection_parent_ref) REFERENCES collections (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_expedition_ref FOREIGN KEY (expedition_ref) REFERENCES expeditions (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_gtu_ref FOREIGN KEY (gtu_ref) REFERENCES gtu (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_gtu_parent_ref FOREIGN KEY (gtu_parent_ref) REFERENCES gtu (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_taxon_ref FOREIGN KEY (taxon_ref) REFERENCES taxonomy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_taxon_parent_ref FOREIGN KEY (taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_taxon_level_ref FOREIGN KEY (taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_chrono_ref FOREIGN KEY (chrono_ref) REFERENCES chronostratigraphy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_chrono_parent_ref FOREIGN KEY (chrono_parent_ref) REFERENCES chronostratigraphy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_chrono_level_ref FOREIGN KEY (chrono_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_litho_ref FOREIGN KEY (litho_ref) REFERENCES lithostratigraphy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_litho_parent_ref FOREIGN KEY (litho_parent_ref) REFERENCES lithostratigraphy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_litho_level_ref FOREIGN KEY (litho_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_lithology_ref FOREIGN KEY (lithology_ref) REFERENCES lithology (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_lithology_parent_ref FOREIGN KEY (lithology_parent_ref) REFERENCES lithology (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_lithology_level_ref FOREIGN KEY (lithology_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_mineral_ref FOREIGN KEY (mineral_ref) REFERENCES mineralogy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_mineral_parent_ref FOREIGN KEY (mineral_parent_ref) REFERENCES mineralogy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_mineral_level_ref FOREIGN KEY (mineral_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_host_taxon_ref FOREIGN KEY (host_taxon_ref) REFERENCES taxonomy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE CASCADE
+  );

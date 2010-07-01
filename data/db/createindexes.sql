@@ -282,7 +282,7 @@ CREATE INDEX CONCURRENTLY idx_gin_chronostratigraphy_naming on chronostratigraph
 CREATE INDEX CONCURRENTLY idx_gin_lithostratigraphy_naming on lithostratigraphy using gin(name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_mineralogy_naming on mineralogy using gin(name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_lithology_naming on lithology using gin(name_indexed);
-
+CREATE INDEX CONCURRENTLY idx_gin_gtu_tags_values on gtu using gin(tag_values_indexed);
 /*
 
 @TODO: Remove what's here when performance search checked...

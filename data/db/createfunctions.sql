@@ -6621,7 +6621,9 @@ DECLARE
   entry_row RECORD;
   seen_el varchar[];
 BEGIN
-    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag, trim(tags) as tags FROM regexp_split_to_table(NEW.tag_value, ';') as tags WHERE fulltoIndex(tags) != '';
+    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag, trim(tags) as tags 
+                        FROM regexp_split_to_table(NEW.tag_value, ';') as tags 
+                        WHERE fulltoIndex(tags) != '';
 
     LOOP
       FETCH curs_entry INTO entry_row;
@@ -6629,21 +6631,44 @@ BEGIN
       
       seen_el := array_append(seen_el, entry_row.u_tag);
 
-      PERFORM * FROM tags WHERE gtu_ref = NEW.gtu_ref AND group_ref = NEW.id AND tag_indexed = entry_row.u_tag LIMIT 1;
+      PERFORM * FROM tags 
+                WHERE gtu_ref = NEW.gtu_ref 
+                  AND group_ref = NEW.id 
+                  AND tag_indexed = entry_row.u_tag 
+                LIMIT 1;
       IF FOUND THEN
-	IF OLD.sub_group_name = NEW.sub_group_name THEN
-	  UPDATE tags SET sub_group_type = NEW.sub_group_name WHERE group_ref = NEW.id;
-	END IF;
+        IF OLD.sub_group_name = NEW.sub_group_name THEN
+          UPDATE tags 
+          SET sub_group_type = NEW.sub_group_name 
+          WHERE group_ref = NEW.id;
+        END IF;
         CONTINUE;
       ELSE
         INSERT INTO tags (gtu_ref, group_ref, tag_indexed, tag, group_type, sub_group_type )
-	VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags, NEW.group_name, NEW.sub_group_name);
+        VALUES ( NEW.gtu_ref, NEW.id, entry_row.u_tag, entry_row.tags, NEW.group_name, NEW.sub_group_name);
       END IF;
     END LOOP;
 
     CLOSE curs_entry;
 
-    DELETE FROM tags WHERE group_ref = NEW.id AND gtu_ref = NEW.gtu_ref AND fct_array_find(seen_el, tag_indexed ) IS NULL;
+    UPDATE gtu
+    SET tag_values_indexed = (SELECT array_agg(tags_list)
+                              FROM (SELECT lineToTagRows(tag_agg) AS tags_list
+                                    FROM (SELECT tag_value AS tag_agg
+                                          FROM tag_groups
+                                          WHERE id <> NEW.id
+                                            AND gtu_ref = NEW.gtu_ref
+                                          UNION
+                                          SELECT NEW.tag_value
+                                         ) as tag_list_selection
+                                   ) as tags_rows
+                             )
+    WHERE id = NEW.gtu_ref;
+
+    DELETE FROM tags 
+           WHERE group_ref = NEW.id 
+              AND gtu_ref = NEW.gtu_ref 
+              AND fct_array_find(seen_el, tag_indexed ) IS NULL;
     RETURN NEW;
 END;
 $$;
@@ -6699,6 +6724,11 @@ ELSIF NEW.main_manager_ref <> OLD.main_manager_ref THEN
 END IF;
 RETURN NEW;
 END;
+$$;
+
+CREATE OR REPLACE FUNCTION getTagsIndexedAsArray(IN tagList varchar) returns varchar[] LANGUAGE SQL IMMUTABLE AS
+$$
+  SELECT array_agg(tags) FROM (SELECT lineToTagRows($1) as tags) as subQuery;
 $$;
 
 CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
