@@ -18,7 +18,7 @@
            nvalue='';
            $(parent).find('input[id$=\"_people_ref\"]').val(nvalue);
            $(parent).hide();
-           reOrderCollectors(parentTableId);
+           $.fn.catalogue_people.reorder( $(parent).closest('table') );
            visibles = $('table#'+parentTableId+' .spec_ident_collectors_data:visible').size();
            if(!visibles)
            {

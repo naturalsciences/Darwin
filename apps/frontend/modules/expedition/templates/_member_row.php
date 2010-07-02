@@ -14,20 +14,10 @@
       $(document).ready(function () {
         $("#clear_collector_<?php echo $row_num;?>").click( function()
         {
-           /*parentTableId = $(parent).closest('table').attr('id')
-           nvalue='';
-           $(parent).find('input[id$=\"_people_ref\"]').val(nvalue);
-           $(parent).hide();
-           reOrderCollectors(parentTableId);
-           visibles = $('table#'+parentTableId+' .spec_ident_collectors_data:visible').size();
-           if(!visibles)
-           {
-            $(this).closest('table#'+parentTableId).find('thead').hide();
-           }*/
            parent = $(this).closest('tr');
            parent.find('input[id$=\"_people_ref\"]').val('');
            parent.hide();
-           reOrderCollectors(parent.closest('table'));
+           $.fn.catalogue_people.reorder(parent.closest('table'));
         });
       });
     </script>

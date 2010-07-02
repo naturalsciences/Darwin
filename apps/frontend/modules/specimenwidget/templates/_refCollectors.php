@@ -47,7 +47,7 @@ function addCollector(people_ref, people_name)
   $.ajax(
   {
     type: "GET",
-    url: $('.add_code a.hidden').attr('href')+ (0+$('#spec_ident_collectors tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_collectors tbody tr').length),
+    url: $('#spec_ident_collectors .add_code a.hidden').attr('href')+ (0+$('#spec_ident_collectors tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_collectors tbody tr').length),
     success: function(html)
     {
       $('#spec_ident_collectors tbody').append(html);
@@ -57,9 +57,7 @@ function addCollector(people_ref, people_name)
   return true;
 }
 
-fct_update = addCollector;
-
-$("#spec_ident_collectors").catalogue_people({ add_button: 'a.add_collector', q_tip_text: 'Choose a Collector' });
+$("#spec_ident_collectors").catalogue_people({ add_button: '#spec_ident_collectors a.add_collector', q_tip_text: 'Choose a Collector',update_row_fct: addCollector });
 
 
 });

@@ -30,13 +30,12 @@
   <tr class="spec_ident_identifiers">
     <td></td>
     <td colspan="4">
-      <?php $borderClass = (!$form['Identifiers']->count() && !$form['newIdentifier']->count())?'':'green_border';?>
-      <table class="property_values identifiers <?php echo $borderClass;?>" id="spec_ident_identifiers_<?php echo $row_num;?>">
-        <thead style="<?php echo ($form['Identifiers']->count() || $form['newIdentifier']->count())?'':'display: none;';?>" class="spec_ident_identifiers_head">
+      <table class="property_values identifiers green_border" id="spec_ident_identifiers_<?php echo $row_num;?>">
+        <thead class="spec_ident_identifiers_head">
           <tr>
             <td colspan="3"><?php echo __('Identifiers');?></td>
           </tr>
-        </thead>
+        </thead><tbody>
 	<?php $retainedKey = 0;?>
         <?php foreach($form['Identifiers'] as $form_value):?>
           <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey, 'identnum' => $row_num));?>
@@ -46,6 +45,7 @@
           <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey, 'identnum' => $row_num));?>
 	  <?php $retainedKey = $retainedKey+1;?>
         <?php endforeach;?>
+        </tbody>
         <tfoot>
           <tr>
             <td colspan="3">
@@ -58,9 +58,7 @@
         </tfoot>
       </table>
     </td>
-    <td></td>
-  </tr>
-</tbody>
+    <td>
 <script  type="text/javascript">
   $(document).ready(function () {
     $("#clear_identification_<?php echo $row_num;?>").click( function()
@@ -77,60 +75,36 @@
       }
     });
 
-    $("#spec_ident_identifiers_<?php echo $row_num; ?>").sortable({
-      placeholder: 'ui-state-highlight',
-      handle: '.spec_ident_identifiers_handle',
-      axis: 'y',
-      change: function(e, ui) {
-                forceIdentifiersHelper(e,ui);
-              },
-      deactivate: function(event, ui) {
-                    reOrderIdentifiers($(this).attr('id'));
-                  }
-    });
-    
-    $("a.add_identifier_<?php echo $row_num ;?>").click(function(){
-      only_role = 0 ;
-      $(this).qtip({
-          content: {
-              title: { text : 'Choose an identifier', button: 'X' },
-              url: $(this).attr('href')
-          },
-          show: { when: 'click', ready: true },
-          position: {
-              target: $(document.body), // Position it via the document body...
-              corner: 'center' // ...at the center of the viewport
-          },
-          hide: false,
-          style: {
-              width: { min: 876, max: 1000},
-              border: {radius:3},
-              title: { background: '#5BABBD', color:'white'}
-          },
-          api: {
-              beforeShow: function()
-              {
-                  // Fade in the modal "blanket" using the defined show speed
-                ref_element_id = null;
-                ref_element_name = null;
-                only_role = 4 ;
-                ref_table = 'table#spec_ident_identifiers_<?php echo $row_num;?>';
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-              },
-              beforeHide: function()
-              {
-                  // Fade out the modal "blanket" using the defined hide speed
-                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-              },
-	         onHide: function()
-	         {
-              $('.result_choose_identifier').die('click') ;
-	            $(this.elements.target).qtip("destroy");
-	         }
-           }
-      });
-      return false;
-   });
+function addIdentifier(people_ref, people_name)
+{ 
+
+  info = 'ok';
+  $('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').each(function() {
+    if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
   });
-</script>
+  if(info != 'ok') return false;
+
+    
+  $.ajax({
+    type: "GET",
+    url: $('.add_code a.hidden').attr('href')+ (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length),
+    success: function(html)
+    {
+      $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> tbody').append(html);
+      $.fn.catalogue_people.reorder($('#spec_ident_identifiers_<?php echo $row_num;?>'));
+    }
+  });
+  return true;
+}
+
+  $("#spec_ident_identifiers_<?php echo $row_num;?>").catalogue_people({
+    add_button: '.add_identifier_<?php echo $row_num ;?>',
+    handle: '.spec_ident_identifiers_handle',
+    update_row_fct: addIdentifier
+    });
+
+
+});
+</script></td>
+  </tr>
+</tbody>

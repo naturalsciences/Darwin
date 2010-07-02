@@ -20,7 +20,7 @@ $(document).ready(function () {
         $('.qtip-button').click();
     }
   });
-
+/*
   if(typeof only_role=='undefined')
     only_role=0;
   /*if(only_role == 16)
@@ -34,7 +34,7 @@ $(document).ready(function () {
       });
       if(info == 'good') addCollectorValue(ref_element_id);
     });
-   }*/
+   }*//*
    if (only_role == 4)
    {
     $('.result_choose_identifier').live('click',function () {
@@ -46,7 +46,7 @@ $(document).ready(function () {
       });
       if(info == 'good') addIdentifierValue(ref_element_id,ref_table);
     });
-   }
+   }*/
 });
 </script>
 <?php endif;?>

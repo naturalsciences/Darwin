@@ -37,6 +37,7 @@
                 // Fade in the modal "blanket" using the defined show speed
               ref_element_id = null;
               ref_element_name = null;
+              fct_update = options['update_row_fct'];
               addBlackScreen()
               $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
@@ -47,7 +48,7 @@
             },
             onHide: function()
             {
-              $('.result_choose_collector').die('click') ;
+              $('.result_choose').die('click') ;
               $(this.elements.target).qtip("destroy");
             }
           }
@@ -78,7 +79,8 @@
     table_col_num: 3,
     handle: '.spec_ident_collectors_handle',
     add_button: 'a#add_button',
-    q_tip_text: 'Choose a Member'    
+    q_tip_text: 'Choose a Member',
+    update_row_fct: undefined
   }
 
 })(jQuery);

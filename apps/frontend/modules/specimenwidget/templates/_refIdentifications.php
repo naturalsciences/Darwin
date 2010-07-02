@@ -44,23 +44,12 @@ function addIdentifierValue(people_ref,ref_table)
 <table class="property_values" id="identifications">
   <thead style="<?php echo ($form['Identifications']->count() || $form['newIdentification']->count())?'':'display: none;';?>" class="spec_ident_head">
     <tr>
-      <th>
-        <?php echo $form['ident'];?>
-      </th>
-      <th>
-        <?php echo __('Date'); ?>
-      </th>
-      <th>
-        <?php echo __('Subject'); ?>
-      </th>
-      <th>
-        <?php echo __('Value'); ?>
-      </th>
-      <th>
-        <?php echo __('Det. St.'); ?>
-      </th>
-      <th>
-      </th>
+      <th><?php echo $form['ident'];?></th>
+      <th><?php echo __('Date'); ?></th>
+      <th><?php echo __('Subject');?></th>
+      <th><?php echo __('Value'); ?></th>
+      <th><?php echo __('Det. St.'); ?></th>
+      <th></th>
     </tr>
   </thead>
     <?php $retainedKey = 0;?>

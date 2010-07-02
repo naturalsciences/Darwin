@@ -105,9 +105,8 @@ function addMember(people_ref, people_name)
   return true;
 }
 
-fct_update = addMember;
 
-$("#exp_member_table").catalogue_people({add_button: 'a.add_member'});
+$("#exp_member_table").catalogue_people({add_button: 'a.add_member',update_row_fct: addMember });
 
 
 });
