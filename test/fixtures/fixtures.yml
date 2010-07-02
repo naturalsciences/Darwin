@@ -801,27 +801,27 @@ CataloguePeople:
 TagGroups:
     tg1:
         Gtu: gtu3
-        group_name: administrative
+        group_name: administrative area
         sub_group_name:  country
         tag_value: Belgique; Belgium; Belgïe; belgien
     tg2:
         Gtu: gtu3
-        group_name: administrative
+        group_name: administrative area
         sub_group_name:  city
         tag_value: Brussels; Bruxelles; Bruselas; 
     tg3:
         Gtu: gtu4
-        group_name: administrative
+        group_name: administrative area
         sub_group_name:  city
         tag_value: Brussels;Bruselo
     tg4:
         Gtu: gtu4
-        group_name: administrative
+        group_name: administrative area
         sub_group_name:  country
         tag_value: Belgique;Belgio
     tg5:
         Gtu: gtu2
-        group_name: administrative
+        group_name: administrative area
         sub_group_name:  country
         tag_value: Antartica;Terre Marie Byrd ; Marie-Byrd-Land
     tg6:

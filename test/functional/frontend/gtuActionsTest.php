@@ -84,7 +84,7 @@ $browser->
       'code' => 'Brol2',
       'newVal' => array(2 =>
 	array(
-	  'group_name' => 'administrative',
+	  'group_name' => 'administrative area',
 	  'sub_group_name' => 'City',
 	  'tag_value' => 'Brussels; Ici',
 	))
@@ -103,7 +103,7 @@ $browser->
   end()->
 
   info('Tags')->
-  get('gtu/purposeTag?group_name=administrative&sub_group_name=city&value=Brussels;Bruxelles')->
+  get('gtu/purposeTag?group_name=administrative%20area&sub_group_name=city&value=Brussels;Bruxelles')->
 
   with('response')->begin()->
     isStatusCode(200)->
@@ -111,7 +111,7 @@ $browser->
     checkElement('li.tag_size_3','Bruselo')->
   end()->
   
-  get('gtu/purposeTag?group_name=administrative&sub_group_name=city&value=Brussels;Bruxelles;Bruselas')->
+  get('gtu/purposeTag?group_name=administrative%20area&sub_group_name=city&value=Brussels;Bruxelles;Bruselas')->
 
   with('response')->begin()->
     isStatusCode(200)->
