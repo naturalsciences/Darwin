@@ -6731,28 +6731,346 @@ $$
   SELECT array_agg(tags) FROM (SELECT lineToTagRows($1) as tags) as subQuery;
 $$;
 
-CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
+
+CREATE OR REPLACE FUNCTION fct_update_darwin_flat() returns TRIGGER
+language plpgsql
+AS
 $$
-DECLARE
-  sqlString varchar := '';
 BEGIN
-  IF array_lower(in_array,1) THEN
-    FOR i IN array_lower(in_array,1)..array_upper(in_array,1) LOOP
-      sqlString := sqlString || ' SELECT gtu_ref FROM tags WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(in_array[i]) || ')) INTERSECT';
-    END LOOP;
-    IF LENGTH(sqlString)>0 THEN
-      sqlString := TRIM(SUBSTR(sqlString,1,LENGTH(sqlString)-9));
-      RETURN QUERY EXECUTE sqlString;
+  IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
+    UPDATE darwin_flat 
+    SET (expedition_name, expedition_name_ts, expedition_name_indexed) = 
+        (SELECT NEW.expedition_name, NEW.expedition_name_ts, NEW.expedition_name_indexed) 
+    WHERE expedition_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'collections' THEN
+    UPDATE darwin_flat 
+    SET (collection_type, collection_code, collection_name, 
+         collection_institution_ref, collection_institution_formated_name, collection_institution_formated_name_ts,
+         collection_institution_formated_name_indexed, collection_institution_sub_type, collection_main_manager_ref,
+         collection_main_manager_formated_name, collection_main_manager_formated_name_ts, collection_main_manager_formated_name_indexed,
+         collection_parent_ref, collection_path
+        ) =
+        (SELECT NEW.collection_type, NEW.code, NEW.name, 
+                NEW.institution_ref, ins.formated_name, ins.formated_name_ts,
+                ins.formated_name_indexed, ins.sub_type, NEW.main_manager_ref,
+                peo.formated_name, peo.formated_name_ts, peo.formated_name_indexed,
+                NEW.parent_ref, NEW.path
+         FROM people ins, people people
+         WHERE ins.id = NEW.institution_ref
+           AND peo.id = NEW.main_manager_ref
+         LIMIT 1
+        )
+    WHERE collection_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'people' THEN
+    IF NEW.is_physical THEN
+      UPDATE darwin_flat
+      SET (collection_main_manager_formated_name, 
+           collection_main_manager_formated_name_ts, 
+           collection_main_manager_formated_name_indexed
+          ) = 
+          (SELECT NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
+      WHERE collection_main_manager_ref = NEW.id;
+    ELSE
+      UPDATE darwin_flat
+      SET (collection_institution_formated_name, 
+           collection_institution_formated_name_ts, 
+           collection_institution_formated_name_indexed,
+           collection_institution_sub_type
+          ) = 
+          (SELECT NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed, NEW.sub_type)
+      WHERE collection_institution_ref = NEW.id;
+    END IF;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'gtu' THEN
+    UPDATE darwin_flat
+    SET (gtu_code, gtu_parent_ref, gtu_path, gtu_from_date, gtu_from_date_mask, 
+         gtu_to_date, gtu_to_date_mask, gtu_tag_values_indexed
+        ) =
+        (SELECT NEW.code, NEW.parent_ref, NEW.path, NEW.gtu_from_date, NEW.gtu_from_date_mask, 
+                NEW.gtu_to_date, NEW.gtu_to_date_mask, NEW.tag_values_indexed
+        )
+    WHERE gtu_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'tag_groups' THEN
+    IF NEW.group_name_indexed = 'administrativearea' and NEW.sub_group_name_indexed = 'country' THEN
+      UPDATE darwin_flat
+      SET gtu_country_tag_value = NEW.tag_value
+      WHERE gtu_ref = NEW.gtu_ref;
+    END IF;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'igs' THEN
+    UPDATE darwin_flat
+    SET (ig_num, ig_num_indexed, ig_date, ig_date_mask) = 
+        (SELECT NEW.ig_num, NEW.ig_num_indexed, NEW.ig_date, NEW.ig_date_mask)
+    WHERE ig_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'taxonomy' THEN
+    UPDATE darwin_flat
+    SET (taxon_name, taxon_name_indexed, taxon_name_order_by,
+         taxon_level_ref, taxon_level_name,
+         taxon_status, taxon_path, taxon_parent_ref, taxon_extinct
+        ) =
+        (SELECT NEW.name, NEW.name_indexed, NEW.name_order_by,
+                NEW.level_ref, level_name,
+                NEW.status, NEW.path, NEW.parent_ref, NEW.extinct
+         FROM catalogue_levels
+         WHERE id = NEW.level_ref
+        )
+    WHERE taxon_ref = NEW.id;
+    UPDATE darwin_flat
+    SET (host_taxon_name, host_taxon_name_indexed, host_taxon_name_order_by,
+         host_taxon_level_ref, host_taxon_level_name,
+         host_taxon_status, host_taxon_path, host_taxon_parent_ref, host_taxon_extinct
+        ) =
+        (SELECT NEW.name, NEW.name_indexed, NEW.name_order_by,
+                NEW.level_ref, level_name,
+                NEW.status, NEW.path, NEW.parent_ref, NEW.extinct
+         FROM catalogue_levels
+         WHERE id = NEW.level_ref
+        )
+    WHERE host_taxon_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'chronostratigraphy' THEN
+    UPDATE darwin_flat
+    SET (chrono_name, chrono_name_indexed, chrono_name_order_by,
+         chrono_level_ref, chrono_level_name,
+         chrono_status, chrono_path, chrono_parent_ref
+        ) =
+        (SELECT NEW.name, NEW.name_indexed, NEW.name_order_by,
+                NEW.level_ref, level_name,
+                NEW.status, NEW.path, NEW.parent_ref
+         FROM catalogue_levels
+         WHERE id = NEW.level_ref
+        )
+    WHERE chrono_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'lithostratigraphy' THEN
+    UPDATE darwin_flat
+    SET (litho_name, litho_name_indexed, litho_name_order_by,
+         litho_level_ref, litho_level_name,
+         litho_status, litho_path, litho_parent_ref
+        ) =
+        (SELECT NEW.name, NEW.name_indexed, NEW.name_order_by,
+                NEW.level_ref, level_name,
+                NEW.status, NEW.path, NEW.parent_ref
+         FROM catalogue_levels
+         WHERE id = NEW.level_ref
+        )
+    WHERE litho_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'lithology' THEN
+    UPDATE darwin_flat
+    SET (lithology_name, lithology_name_indexed, lithology_name_order_by,
+         lithology_level_ref, lithology_level_name,
+         lithology_status, lithology_path, lithology_parent_ref
+        ) =
+        (SELECT NEW.name, NEW.name_indexed, NEW.name_order_by,
+                NEW.level_ref, level_name,
+                NEW.status, NEW.path, NEW.parent_ref
+         FROM catalogue_levels
+         WHERE id = NEW.level_ref
+        )
+    WHERE lithology_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'mineralogy' THEN
+    UPDATE darwin_flat
+    SET (mineral_name, mineral_name_indexed, mineral_name_order_by,
+         mineral_level_ref, mineral_level_name,
+         mineral_status, mineral_path, mineral_parent_ref
+        ) =
+        (SELECT NEW.name, NEW.name_indexed, NEW.name_order_by,
+                NEW.level_ref, level_name,
+                NEW.status, NEW.path, NEW.parent_ref
+         FROM catalogue_levels
+         WHERE id = NEW.level_ref
+        )
+    WHERE mineral_ref = NEW.id;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'specimens' THEN
+    UPDATE darwin_flat
+    SET (category,
+         collection_ref,collection_type,collection_code,collection_name,
+         collection_institution_ref,collection_institution_formated_name,
+         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
+         collection_main_manager_ref,collection_main_manager_formated_name,
+         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
+         collection_parent_ref,collection_path,
+         expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
+         station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,
+         gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
+         gtu_tag_values_indexed,gtu_country_tag_value,
+         taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
+         taxon_path,taxon_parent_ref,taxon_extinct,
+         litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_path,litho_parent_ref,
+         chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_path,chrono_parent_ref,
+         lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_path,lithology_parent_ref,
+         mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_path,mineral_parent_ref,
+         host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
+         host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         acquisition_category,acquisition_date_mask,acquisition_date,
+         specimen_count_min,specimen_count_max
+        )=
+        (SELECT NEW.category,
+                NEW.collection_ref, coll.collection_type, coll.code, coll.name, 
+                coll.institution_ref, ins.formated_name, 
+                ins.formated_name_ts, ins.formated_name_indexed, ins.sub_type,
+                coll.main_manager_ref, peo.formated_name, 
+                peo.formated_name_ts, peo.formated_name_indexed,
+                coll.parent_ref, coll.path,
+                NEW.expedition_ref, expe.name, expe.name_ts, expe.name_indexed,
+                NEW.station_visible, NEW.gtu_ref, gtu.code, gtu.parent_ref, gtu.path, 
+                gtu.gtu_from_date_mask, gtu.gtu_from_date, gtu.gtu_to_date_mask, gtu.gtu_to_date,
+                gtu.tag_values_indexed, taggr.tag_value,
+                NEW.taxon_ref, taxon.name, taxon.name_indexed, taxon.name_order_by, taxon.level_ref, taxon_level.level_name, taxon.status,
+                taxon.path, taxon.parent_ref, taxon.extinct,
+                NEW.chrono_ref, chrono.name, chrono.name_indexed, chrono.name_order_by, chrono.level_ref, chrono_level.level_name, chrono.status,
+                chrono.path, chrono.parent_ref,
+                NEW.litho_ref, litho.name, litho.name_indexed, litho.name_order_by, litho.level_ref, litho_level.level_name, litho.status,
+                litho.path, litho.parent_ref,
+                NEW.lithology_ref, lithology.name, lithology.name_indexed, lithology.name_order_by, lithology.level_ref, lithology_level.level_name, lithology.status,
+                lithology.path, lithology.parent_ref,
+                NEW.mineral_ref, mineral.name, mineral.name_indexed, mineral.name_order_by, mineral.level_ref, mineral_level.level_name, mineral.status,
+                mineral.path, mineral.parent_ref,
+                NEW.host_taxon_ref, NEW.host_relationship, host_taxon.name, host_taxon.name_indexed, host_taxon.name_order_by, host_taxon.level_ref, host_taxon_level.level_name, host_taxon.status,
+                host_taxon.path, host_taxon.parent_ref, host_taxon.extinct,
+                NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date,
+                NEW.specimen_count_min, NEW.specimen_count_max
+         FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
+                                INNER JOIN people peo ON coll.main_manager_ref = peo.id
+              ),
+              expeditions expe,
+              (gtu LEFT JOIN tag_groups taggr ON gtu.id = taggr.gtu_ref AND taggr.group_name_indexed = 'administrativearea' AND taggr.sub_group_name_indexed = 'country'),
+              (taxonomy taxon INNER JOIN catalogue_levels taxon_level ON taxon.level_ref = taxon_level.id),
+              (taxonomy host_taxon INNER JOIN catalogue_levels host_taxon_level ON host_taxon.level_ref = host_taxon_level.id),
+              (chronostratigraphy chrono INNER JOIN catalogue_levels chrono_level ON chrono.level_ref = chrono_level.id),
+              (lithostratigraphy litho INNER JOIN catalogue_levels litho_level ON litho.level_ref = litho_level.id),
+              (lithology INNER JOIN catalogue_levels lithology_level ON lithology.level_ref = lithology_level.id),
+              (mineralogy mineral INNER JOIN catalogue_levels mineral_level ON mineral.level_ref = mineral_level.id)
+         WHERE coll.id = NEW.collection_ref
+           AND expe.id = NEW.expedition_ref
+           AND gtu.id = NEW.gtu_ref
+           AND taxon.id = NEW.taxon_ref
+           AND host_taxon.id = NEW.host_taxon_ref
+           AND chrono.id = NEW.chrono_ref
+           AND litho.id = NEW.litho_ref
+           AND lithology.id = NEW.lithology_ref
+           AND mineral.id = NEW.mineral_ref
+         LIMIT 1
+        )
+    WHERE spec_ref = NEW.id;
+  ELSIF TG_OP = 'INSERT' AND TG_TABLE_NAME = 'specimens' THEN
+    INSERT INTO darwin_flat
+    (spec_ref,category,
+     collection_ref,collection_type,collection_code,collection_name,
+     collection_institution_ref,collection_institution_formated_name,
+     collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
+     collection_main_manager_ref,collection_main_manager_formated_name,
+     collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
+     collection_parent_ref,collection_path,
+     expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
+     station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,
+     gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
+     gtu_tag_values_indexed,gtu_country_tag_value,
+     taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
+     taxon_path,taxon_parent_ref,taxon_extinct,
+     litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+     litho_path,litho_parent_ref,
+     chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+     chrono_path,chrono_parent_ref,
+     lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+     lithology_path,lithology_parent_ref,
+     mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+     mineral_path,mineral_parent_ref,
+     host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
+     host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+     acquisition_category,acquisition_date_mask,acquisition_date,
+     specimen_count_min,specimen_count_max
+    )
+    (SELECT NEW.id, NEW.category,
+            NEW.collection_ref, coll.collection_type, coll.code, coll.name, 
+            coll.institution_ref, ins.formated_name, 
+            ins.formated_name_ts, ins.formated_name_indexed, ins.sub_type,
+            coll.main_manager_ref, peo.formated_name, 
+            peo.formated_name_ts, peo.formated_name_indexed,
+            coll.parent_ref, coll.path,
+            NEW.expedition_ref, expe.name, expe.name_ts, expe.name_indexed,
+            NEW.station_visible, NEW.gtu_ref, gtu.code, gtu.parent_ref, gtu.path, 
+            gtu.gtu_from_date_mask, gtu.gtu_from_date, gtu.gtu_to_date_mask, gtu.gtu_to_date,
+            gtu.tag_values_indexed, taggr.tag_value,
+            NEW.taxon_ref, taxon.name, taxon.name_indexed, taxon.name_order_by, taxon.level_ref, taxon_level.level_name, taxon.status,
+            taxon.path, taxon.parent_ref, taxon.extinct,
+            NEW.chrono_ref, chrono.name, chrono.name_indexed, chrono.name_order_by, chrono.level_ref, chrono_level.level_name, chrono.status,
+            chrono.path, chrono.parent_ref,
+            NEW.litho_ref, litho.name, litho.name_indexed, litho.name_order_by, litho.level_ref, litho_level.level_name, litho.status,
+            litho.path, litho.parent_ref,
+            NEW.lithology_ref, lithology.name, lithology.name_indexed, lithology.name_order_by, lithology.level_ref, lithology_level.level_name, lithology.status,
+            lithology.path, lithology.parent_ref,
+            NEW.mineral_ref, mineral.name, mineral.name_indexed, mineral.name_order_by, mineral.level_ref, mineral_level.level_name, mineral.status,
+            mineral.path, mineral.parent_ref,
+            NEW.host_taxon_ref, NEW.host_relationship, host_taxon.name, host_taxon.name_indexed, host_taxon.name_order_by, host_taxon.level_ref, host_taxon_level.level_name, host_taxon.status,
+            host_taxon.path, host_taxon.parent_ref, host_taxon.extinct,
+            NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date,
+            NEW.specimen_count_min, NEW.specimen_count_max
+     FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
+                            INNER JOIN people peo ON coll.main_manager_ref = peo.id
+          ),
+          expeditions expe,
+          (gtu LEFT JOIN tag_groups taggr ON gtu.id = taggr.gtu_ref AND taggr.group_name_indexed = 'administrativearea' AND taggr.sub_group_name_indexed = 'country'),
+          (taxonomy taxon INNER JOIN catalogue_levels taxon_level ON taxon.level_ref = taxon_level.id),
+          (taxonomy host_taxon INNER JOIN catalogue_levels host_taxon_level ON host_taxon.level_ref = host_taxon_level.id),
+          (chronostratigraphy chrono INNER JOIN catalogue_levels chrono_level ON chrono.level_ref = chrono_level.id),
+          (lithostratigraphy litho INNER JOIN catalogue_levels litho_level ON litho.level_ref = litho_level.id),
+          (lithology INNER JOIN catalogue_levels lithology_level ON lithology.level_ref = lithology_level.id),
+          (mineralogy mineral INNER JOIN catalogue_levels mineral_level ON mineral.level_ref = mineral_level.id)
+     WHERE coll.id = NEW.collection_ref
+       AND expe.id = NEW.expedition_ref
+       AND gtu.id = NEW.gtu_ref
+       AND taxon.id = NEW.taxon_ref
+       AND host_taxon.id = NEW.host_taxon_ref
+       AND chrono.id = NEW.chrono_ref
+       AND litho.id = NEW.litho_ref
+       AND lithology.id = NEW.lithology_ref
+       AND mineral.id = NEW.mineral_ref
+     LIMIT 1
+    );
+  END IF;
+  IF TG_TABLE_NAME = 'specimens' THEN
+    IF COALESCE(NEW.ig_ref,0) = 0 THEN
+      UPDATE darwin_flat
+      SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) = 
+          (SELECT NULL, NULL, NULL, NULL, NULL)
+      WHERE spec_ref = NEW.id;
+    ELSIF NEW.ig_ref <> OLD.ig_ref THEN
+      UPDATE darwin_flat
+      SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) = 
+          (SELECT NEW.ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date
+           FROM igs
+           WHERE id = NEW.ig_ref
+          )
+      WHERE spec_ref = NEW.id;
     END IF;
   END IF;
-  RETURN;
-EXCEPTION
-  WHEN OTHERS THEN
-    RAISE EXCEPTION 'Error in getGtusForTags: %', SQLERRM;
-    RETURN;
+  RETURN NEW;
 END;
-$$
-LANGUAGE plpgsql;
+$$;
+
+-- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
+-- $$
+-- DECLARE
+--   sqlString varchar := '';
+-- BEGIN
+--   IF array_lower(in_array,1) THEN
+--     FOR i IN array_lower(in_array,1)..array_upper(in_array,1) LOOP
+--       sqlString := sqlString || ' SELECT gtu_ref FROM tags WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(in_array[i]) || ')) INTERSECT';
+--     END LOOP;
+--     IF LENGTH(sqlString)>0 THEN
+--       sqlString := TRIM(SUBSTR(sqlString,1,LENGTH(sqlString)-9));
+--       RETURN QUERY EXECUTE sqlString;
+--     END IF;
+--   END IF;
+--   RETURN;
+-- EXCEPTION
+--   WHEN OTHERS THEN
+--     RAISE EXCEPTION 'Error in getGtusForTags: %', SQLERRM;
+--     RETURN;
+-- END;
+-- $$
+-- LANGUAGE plpgsql;
 
 -- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
 -- $$

@@ -151,6 +151,37 @@ CREATE INDEX CONCURRENTLY idx_tags_gtu_ref on tags(gtu_ref);
 CREATE INDEX CONCURRENTLY idx_tags_group_ref on tags(group_ref);
 CREATE INDEX CONCURRENTLY idx_users_tracking_user_ref on users_tracking(user_ref);
 
+/*** BTree indexes for foreign keys in Darwin Flat table ***/
+
+CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref on darwin_flat(spec_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_ref on darwin_flat(collection_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_institution_ref on darwin_flat(collection_institution_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_main_manager_ref on darwin_flat(collection_main_manager_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_parent_ref on darwin_flat(collection_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_expedition_ref on darwin_flat(expedition_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_ref on darwin_flat(gtu_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_parent_ref on darwin_flat(gtu_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_ref on darwin_flat(taxon_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_parent_ref on darwin_flat(taxon_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_level_ref on darwin_flat(taxon_level_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_ref on darwin_flat(host_taxon_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_parent_ref on darwin_flat(host_taxon_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_level_ref on darwin_flat(host_taxon_level_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_ref on darwin_flat(chrono_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_parent_ref on darwin_flat(chrono_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_level_ref on darwin_flat(chrono_level_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_ref on darwin_flat(litho_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_parent_ref on darwin_flat(litho_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_level_ref on darwin_flat(litho_level_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_ref on darwin_flat(lithology_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_parent_ref on darwin_flat(lithology_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_level_ref on darwin_flat(lithology_level_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_ref on darwin_flat(mineral_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_parent_ref on darwin_flat(mineral_parent_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_level_ref on darwin_flat(mineral_level_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(ig_ref);
+
+
 /*** BTree Indexes for fields used for searches purposes ***/
 
 CREATE INDEX CONCURRENTLY idx_catalogue_levels_level_type on catalogue_levels(level_type);
@@ -263,6 +294,40 @@ CREATE INDEX CONCURRENTLY idx_users_login_infos_user_name on users_login_infos(u
 CREATE INDEX CONCURRENTLY idx_users_workflow_user_status on users_workflow(user_ref, status);
 CREATE INDEX CONCURRENTLY idx_vernacular_names_name_indexed on vernacular_names (name_indexed);
 
+/*** BTree indexes for search purposes in Darwin flat table ***/
+
+CREATE INDEX CONCURRENTLY idx_darwin_flat_category on darwin_flat(category);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_type on darwin_flat(collection_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_code on darwin_flat(collection_code);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_institution_formated_name_indexed on darwin_flat(collection_institution_formated_name_indexed);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_main_manager_formated_name_indexed on darwin_flat(collection_main_manager_formated_name_indexed);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_path on darwin_flat(collection_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_station_visible on darwin_flat(station_visible);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_code on darwin_flat(gtu_code);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_path on darwin_flat(gtu_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_from_date_mask on darwin_flat(gtu_from_date_mask);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_to_date_mask on darwin_flat(gtu_to_date_mask);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_to_date on darwin_flat(gtu_to_date);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_from_date on darwin_flat(gtu_from_date);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_name_order_by on darwin_flat(taxon_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_name_order_by on darwin_flat(host_taxon_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_name_order_by on darwin_flat(chrono_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_name_order_by on darwin_flat(litho_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_name_order_by on darwin_flat(lithology_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_name_order_by on darwin_flat(mineral_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_path on darwin_flat(taxon_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_path on darwin_flat(host_taxon_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_path on darwin_flat(chrono_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_path on darwin_flat(litho_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_path on darwin_flat(lithology_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_path on darwin_flat(mineral_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_extinct on darwin_flat(taxon_extinct);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_extinct on darwin_flat(host_taxon_extinct);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_num on darwin_flat(ig_num);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_acquisition_category on darwin_flat(acquisition_category);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_specimen_count_min on darwin_flat(specimen_count_min);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_specimen_count_max on darwin_flat(specimen_count_max);
+
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 
 CREATE INDEX CONCURRENTLY idx_gist_comments_comment_ts on comments using gist(comment_ts);
@@ -283,6 +348,16 @@ CREATE INDEX CONCURRENTLY idx_gin_lithostratigraphy_naming on lithostratigraphy 
 CREATE INDEX CONCURRENTLY idx_gin_mineralogy_naming on mineralogy using gin(name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_lithology_naming on lithology using gin(name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_gtu_tags_values on gtu using gin(tag_values_indexed);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_collection_institution_formated_name_ts on darwin_flat using gin(collection_institution_formated_name_ts);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_collection_main_manager_formated_name_ts on darwin_flat using gin(collection_main_manager_formated_name_ts);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_expedition_name_ts on darwin_flat using gin(expedition_name_ts);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_taxon_name_indexed on darwin_flat using gin(taxon_name_indexed);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_chrono_name_indexed on darwin_flat using gin(chrono_name_indexed);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_litho_name_indexed on darwin_flat using gin(litho_name_indexed);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_lithology_name_indexed on darwin_flat using gin(lithology_name_indexed);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_mineral_name_indexed on darwin_flat using gin(mineral_name_indexed);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_gtu_tag_values_indexed on darwin_flat using gin(gtu_tag_values_indexed);
+
 /*
 
 @TODO: Remove what's here when performance search checked...
@@ -377,6 +452,7 @@ CREATE INDEX CONCURRENTLY idx_lithology_unit_rock_indexed on lithology(unit_rock
 
 /*** FullText ***/
 CREATE INDEX CONCURRENTLY idx_words_trgm ON words USING gin(word gin_trgm_ops);
+CREATE INDEX CONCURRENTLY idx_tags_trgm ON tags USING gin(tag gin_trgm_ops);
 CREATE INDEX CONCURRENTLY idx_words_table_field on words(referenced_relation,field_name);
 
 /*** Dates ***/

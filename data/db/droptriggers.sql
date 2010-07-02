@@ -190,3 +190,42 @@ DROP TRIGGER trg_trk_log_table_comments
 	ON comments;
 DROP TRIGGER trg_trk_log_table_expeditions
 	ON expeditions;
+
+
+/*** darwin flat synchro triggers ***/
+
+DROP TRIGGER trg_update_expeditions_darwin_flat
+  ON expeditions;
+
+DROP TRIGGER trg_update_collections_darwin_flat
+        ON collections;
+
+DROP TRIGGER trg_update_gtu_darwin_flat
+        ON gtu;
+
+DROP TRIGGER trg_update_tag_groups_darwin_flat
+        ON tag_groups;
+
+DROP TRIGGER trg_update_people_darwin_flat
+        ON people;
+
+DROP TRIGGER trg_update_igs_darwin_flat
+        ON igs;
+
+DROP TRIGGER trg_update_taxonomy_darwin_flat
+        ON taxonomy;
+
+DROP TRIGGER trg_update_chronostratigraphy_darwin_flat
+        ON chronostratigraphy;
+
+DROP TRIGGER trg_update_lithostratigraphy_darwin_flat
+        ON lithostratigraphy;
+
+DROP TRIGGER trg_update_lithology_darwin_flat
+        ON lithology;
+
+DROP TRIGGER trg_update_mineralogy_darwin_flat
+        ON mineralogy;
+
+DROP TRIGGER trg_update_specimens_darwin_flat
+        ON specimens;

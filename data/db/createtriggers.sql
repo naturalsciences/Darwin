@@ -528,3 +528,54 @@ CREATE TRIGGER trg_cpy_updateHosts AFTER UPDATE
 CREATE TRIGGER trg_cpy_updateSpecHostImpact BEFORE UPDATE
         ON specimens FOR EACH ROW
         EXECUTE PROCEDURE fct_cpy_updateSpecHostImpact();
+
+/**** Darwin Flat Synchronisation triggers ****/
+
+CREATE TRIGGER trg_update_expeditions_darwin_flat AFTER UPDATE
+        ON expeditions FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_collections_darwin_flat AFTER UPDATE
+        ON collections FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_gtu_darwin_flat AFTER UPDATE
+        ON gtu FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_tag_groups_darwin_flat AFTER UPDATE
+        ON tag_groups FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_people_darwin_flat AFTER UPDATE
+        ON people FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_igs_darwin_flat AFTER UPDATE
+        ON igs FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_taxonomy_darwin_flat AFTER UPDATE
+        ON taxonomy FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_chronostratigraphy_darwin_flat AFTER UPDATE
+        ON chronostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_lithostratigraphy_darwin_flat AFTER UPDATE
+        ON lithostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_lithology_darwin_flat AFTER UPDATE
+        ON lithology FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_mineralogy_darwin_flat AFTER UPDATE
+        ON mineralogy FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
+CREATE TRIGGER trg_update_specimens_darwin_flat AFTER INSERT OR UPDATE
+        ON specimens FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
