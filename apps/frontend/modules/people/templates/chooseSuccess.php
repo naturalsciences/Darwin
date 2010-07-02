@@ -10,9 +10,9 @@ $(document).ready(function () {
     el = $(this).closest('tr');
     ref_element_id = getIdInClasses(el);
     ref_element_name = el.find('td.item_name').text();
-    if(fct_update)
+    if(typeof fct_update=="function")
     {
-      fct_update(ref_element_id,ref_element_name);
+      fct_update(ref_element_id, ref_element_name);
     }
     else
     {
@@ -21,9 +21,9 @@ $(document).ready(function () {
     }
   });
 
-  if(only_role ==undefined)
+  if(typeof only_role=='undefined')
     only_role=0;
-  if(only_role == 16)
+  /*if(only_role == 16)
   {
     $('.result_choose_collector').live('click',function () {
       el = $(this).closest('tr');
@@ -34,7 +34,7 @@ $(document).ready(function () {
       });
       if(info == 'good') addCollectorValue(ref_element_id);
     });
-   }
+   }*/
    if (only_role == 4)
    {
     $('.result_choose_identifier').live('click',function () {

@@ -1,16 +1,4 @@
-<?php echo javascript_include_tag('collectors.js') ?>
-<script  type="text/javascript">
-function forceCollectorsHelper(e,ui)	
-{
-   $(".ui-state-highlight").html("<td colspan='3' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");	
-}
-function reOrderCollectors(tableId)	
-{
-  $('table#'+tableId).find('tbody.spec_ident_collectors_data tr:visible').each(function (index, item){
-    $(item).find('tr.spec_ident_collectors_data input[id$=\"_order_by\"]').val(index+1);
-  });
-}
-</script>
+<?php echo javascript_include_tag('catalogue_people.js') ?>
  <table class="property_values collectors" id="spec_ident_collectors">
    <thead style="<?php echo ($form['Collectors']->count() || $form['newCollectors']->count())?'':'display: none;';?>" class="spec_ident_collectors_head">
 	<tr>
@@ -42,19 +30,38 @@ function reOrderCollectors(tableId)
    </tfoot>
  </table>
 	
- 
+
 <script  type="text/javascript">
 $(document).ready(function () {
-   $("#spec_ident_collectors_body").sortable({
-     placeholder: 'ui-state-highlight',
-     handle: '.spec_ident_collectors_handle',
-     axis: 'y',
-     change: function(e, ui) {
-              forceCollectorsHelper(e,ui);
-            },
-     deactivate: function(event, ui) {
-                  reOrderCollectors($(this).attr('id'));
-                }
-    });	
+
+
+function addCollector(people_ref, people_name)
+{ 
+  info = 'ok';
+  $('#spec_ident_collectors tbody tr').each(function() {
+    if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
+  });
+  if(info != 'ok') return false;
+
+
+  $.ajax(
+  {
+    type: "GET",
+    url: $('.add_code a.hidden').attr('href')+ (0+$('#spec_ident_collectors tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_collectors tbody tr').length),
+    success: function(html)
+    {
+      $('#spec_ident_collectors tbody').append(html);
+      $.fn.catalogue_people.reorder($('#spec_ident_collectors'));
+    }
+  });
+  return true;
+}
+
+fct_update = addCollector;
+
+$("#spec_ident_collectors").catalogue_people({ add_button: 'a.add_collector', q_tip_text: 'Choose a Collector' });
+
+
 });
+
 </script>
