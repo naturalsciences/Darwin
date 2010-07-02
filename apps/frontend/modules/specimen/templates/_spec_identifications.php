@@ -30,9 +30,10 @@
   <tr class="spec_ident_identifiers">
     <td></td>
     <td colspan="4">
-      <table class="property_values identifiers green_border" id="spec_ident_identifiers_<?php echo $row_num;?>">
-        <thead class="spec_ident_identifiers_head">
-          <tr>
+      <?php $borderClass = (!$form['Identifiers']->count() && !$form['newIdentifier']->count())?'':'green_border';?>
+      <table class="property_values identifiers <?php echo $borderClass;?>" id="spec_ident_identifiers_<?php echo $row_num;?>">
+        <thead style="<?php echo ($form['Identifiers']->count() || $form['newIdentifier']->count())?'':'display: none;';?>" class="spec_ident_identifiers_head">
+         <tr>
             <td colspan="3"><?php echo __('Identifiers');?></td>
           </tr>
         </thead><tbody>
@@ -92,6 +93,8 @@ function addIdentifier(people_ref, people_name)
     {
       $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> tbody').append(html);
       $.fn.catalogue_people.reorder($('#spec_ident_identifiers_<?php echo $row_num;?>'));
+      $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> thead').show();
+      $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?>').addClass('green_border');
     }
   });
   return true;

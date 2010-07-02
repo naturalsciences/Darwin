@@ -16,9 +16,11 @@
                   $(parent).find('input[id$=\"_people_ref\"]').val('');
                   $(parent).hide();
                   $.fn.catalogue_people.reorder($(parent).closest('table'));
-                });
-                $('table.identifiers .hidden_record').each(function() {
-                    $(this).closest('tr').hide() ;
+                  if(!$('table#'+parentTableId+' .spec_ident_collectors_data:visible').size())
+                  {
+                    $(this).closest('table#'+parentTableId).find('thead').hide();
+                    $(this).closest('table#'+parentTableId).removeClass('green_border');
+                  }
                 });
               });
             </script>
