@@ -551,6 +551,10 @@ CREATE TRIGGER trg_update_people_darwin_flat AFTER UPDATE
         ON people FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();
 
+CREATE TRIGGER trg_update_users_darwin_flat AFTER UPDATE
+        ON users FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();
+
 CREATE TRIGGER trg_update_igs_darwin_flat AFTER UPDATE
         ON igs FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();

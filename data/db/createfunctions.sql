@@ -6761,22 +6761,14 @@ BEGIN
                 ins.formated_name_indexed as ins_formated_name_indexed, ins.sub_type as ins_sub_type, 
                 peo.formated_name as peo_formated_name, peo.formated_name_ts as peo_formated_name_ts, 
                 peo.formated_name_indexed as peo_formated_name_indexed
-         FROM people ins, people peo
+         FROM people ins, users peo
          WHERE ins.id = NEW.institution_ref
            AND peo.id = NEW.main_manager_ref
          LIMIT 1
         ) subq
     WHERE collection_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'people' THEN
-    IF NEW.is_physical THEN
-      UPDATE darwin_flat
-      SET (collection_main_manager_formated_name, 
-           collection_main_manager_formated_name_ts, 
-           collection_main_manager_formated_name_indexed
-          ) = 
-          (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
-      WHERE collection_main_manager_ref = NEW.id;
-    ELSE
+    IF NOT NEW.is_physical THEN
       UPDATE darwin_flat
       SET (collection_institution_formated_name, 
            collection_institution_formated_name_ts, 
@@ -6786,6 +6778,14 @@ BEGIN
           (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed, NEW.sub_type)
       WHERE collection_institution_ref = NEW.id;
     END IF;
+  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'users' THEN
+    UPDATE darwin_flat
+    SET (collection_main_manager_formated_name, 
+         collection_main_manager_formated_name_ts, 
+         collection_main_manager_formated_name_indexed
+        ) = 
+        (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
+    WHERE collection_main_manager_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'gtu' THEN
     UPDATE darwin_flat
     SET (gtu_code, gtu_parent_ref, gtu_path, gtu_from_date, gtu_from_date_mask, 
@@ -6991,7 +6991,7 @@ BEGIN
                 host_taxon.level_ref host_taxon_level_ref, host_taxon_level.level_name host_taxon_level_level_name, host_taxon.status host_taxon_status,
                 host_taxon.path host_taxon_path, host_taxon.parent_ref host_taxon_parent_ref, host_taxon.extinct host_taxon_extinct
          FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
-                                INNER JOIN people peo ON coll.main_manager_ref = peo.id
+                                INNER JOIN users peo ON coll.main_manager_ref = peo.id
               ),
               expeditions expe,
               (gtu LEFT JOIN tag_groups taggr ON gtu.id = taggr.gtu_ref AND taggr.group_name_indexed = 'administrativearea' AND taggr.sub_group_name_indexed = 'country'),
@@ -7028,10 +7028,10 @@ BEGIN
      gtu_tag_values_indexed,gtu_country_tag_value,
      taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
      taxon_path,taxon_parent_ref,taxon_extinct,
-     litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
-     litho_path,litho_parent_ref,
      chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
      chrono_path,chrono_parent_ref,
+     litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+     litho_path,litho_parent_ref,
      lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
      lithology_path,lithology_parent_ref,
      mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
@@ -7067,7 +7067,7 @@ BEGIN
             NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date,
             NEW.specimen_count_min, NEW.specimen_count_max
      FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
-                            INNER JOIN people peo ON coll.main_manager_ref = peo.id
+                            INNER JOIN users peo ON coll.main_manager_ref = peo.id
           ),
           expeditions expe,
           (gtu LEFT JOIN tag_groups taggr ON gtu.id = taggr.gtu_ref AND taggr.group_name_indexed = 'administrativearea' AND taggr.sub_group_name_indexed = 'country'),
@@ -7095,7 +7095,7 @@ BEGIN
       SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) = 
           (NULL, NULL, NULL, NULL, NULL)
       WHERE spec_ref = NEW.id;
-    ELSIF NEW.ig_ref <> OLD.ig_ref THEN
+    ELSE
       UPDATE darwin_flat
       SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) = 
           (NEW.ig_ref, subq.ig_num, subq.ig_num_indexed, subq.ig_date_mask, subq.ig_date)

@@ -2047,7 +2047,7 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_institution_ref FOREIGN KEY (collection_institution_ref) REFERENCES people (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_collection_main_manager_ref FOREIGN KEY (collection_main_manager_ref) REFERENCES people (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_collection_main_manager_ref FOREIGN KEY (collection_main_manager_ref) REFERENCES users (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_parent_ref FOREIGN KEY (collection_parent_ref) REFERENCES collections (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_expedition_ref FOREIGN KEY (expedition_ref) REFERENCES expeditions (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_gtu_ref FOREIGN KEY (gtu_ref) REFERENCES gtu (id) ON DELETE CASCADE,
