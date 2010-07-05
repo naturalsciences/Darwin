@@ -368,6 +368,10 @@ CREATE TRIGGER trg_cpy_path_gtu BEFORE INSERT OR UPDATE
 	ON gtu FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 
+CREATE TRIGGER trg_cpy_path_specimen_parts BEFORE INSERT OR UPDATE
+        ON specimen_parts FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path();
+
 CREATE TRIGGER trg_cpy_path_habitats BEFORE INSERT OR UPDATE
 	ON habitats FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
