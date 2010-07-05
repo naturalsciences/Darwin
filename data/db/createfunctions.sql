@@ -6767,10 +6767,10 @@ BEGIN
         )
         FROM
         (SELECT ins.formated_name as ins_formated_name, ins.formated_name_ts as ins_formated_name_ts, 
-                ins.formated_name_indexed as ins_formated_name_indexed, ins.sub_type as ins_sub_type,
+                ins.formated_name_indexed as ins_formated_name_indexed, ins.sub_type as ins_sub_type, 
                 peo.formated_name as peo_formated_name, peo.formated_name_ts as peo_formated_name_ts, 
                 peo.formated_name_indexed as peo_formated_name_indexed
-         FROM people ins, people people
+         FROM people ins, people peo
          WHERE ins.id = NEW.institution_ref
            AND peo.id = NEW.main_manager_ref
          LIMIT 1
