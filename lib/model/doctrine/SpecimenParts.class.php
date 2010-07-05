@@ -18,4 +18,14 @@ class SpecimenParts extends BaseSpecimenParts
   {
 	return $this->_get('id');
   }
+
+  public function getLevel()
+  {
+    return  substr_count($this->getPath(),'/');
+  }
+    
+  public function getSpacing()
+  {
+    return str_repeat('&nbsp;&nbsp;&nbsp;',$this->getLevel()-1);
+  }
 }

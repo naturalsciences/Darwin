@@ -894,6 +894,8 @@ SpecimenIndividuals:
 SpecimenParts:
     columns:
         id: { type: integer, primary: true, autoincrement: true },
+        path: { type: string, notnull: true, default: '/'}
+        parent_ref:  {type: integer, default:null}
         specimen_individual_ref: { type: integer, notnull: true }
         specimen_part: { type: string, notnull: true, default: specimen}
         complete: { type: boolean, notnull: true, default: true}

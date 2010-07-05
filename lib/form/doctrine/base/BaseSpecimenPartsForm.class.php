@@ -16,6 +16,8 @@ abstract class BaseSpecimenPartsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                      => new sfWidgetFormInputHidden(),
+      'path'                    => new sfWidgetFormTextarea(),
+      'parent_ref'              => new sfWidgetFormInputText(),
       'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'add_empty' => false)),
       'specimen_part'           => new sfWidgetFormTextarea(),
       'complete'                => new sfWidgetFormInputCheckbox(),
@@ -38,6 +40,8 @@ abstract class BaseSpecimenPartsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'path'                    => new sfValidatorString(array('required' => false)),
+      'parent_ref'              => new sfValidatorInteger(array('required' => false)),
       'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'))),
       'specimen_part'           => new sfValidatorString(array('required' => false)),
       'complete'                => new sfValidatorBoolean(array('required' => false)),

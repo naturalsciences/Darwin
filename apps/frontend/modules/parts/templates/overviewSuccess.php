@@ -26,11 +26,11 @@
   <tbody>
   <?php foreach($parts as $part):?>
 	<tr class="parts">
-      <td class="info_cell">
-	  <?php echo image_tag('info-green.png',"title=info class=extd_info");?>
-		<div class="extended_info" style="display:none;">
-		  <?php include_partial('extendedInfo', array('part' => $part, 'codes' => $codes) );?>
-		</div>
+    <td style="padding-left: <?php echo 20*($part->getLevel()-1);?>px; ">
+      <?php echo image_tag('info-green.png',"title=info class=extd_info");?>
+      <div class="extended_info" style="display:none;">
+        <?php include_partial('extendedInfo', array('part' => $part, 'codes' => $codes) );?>
+      </div>
 	  </td>
 	  <td><?php if(isset($codes[$part->getId()])):?>
 		  <ul><?php foreach($codes[$part->getId()] as $code):?>

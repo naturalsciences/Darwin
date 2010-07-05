@@ -170,8 +170,9 @@ class SpecimenPartsTable extends DarwinTable
   {
 	$q = Doctrine_Query::create()
 		  ->from('SpecimenParts p')
+      ->select('p.*, CONCAT(p.path,p.id,E\'/\') as spec_path_id')
 		  ->andWhere('p.specimen_individual_ref = ?',$individual)
-		  ->orderBy('p.specimen_part ASC, p.room ASC, p.row ASC, p.shelf ASC');
+		  ->orderBy('spec_path_id ASC, p.specimen_part ASC, p.room ASC, p.row ASC, p.shelf ASC');
 	return $q->execute();
   }
 

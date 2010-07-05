@@ -20,33 +20,6 @@ $(document).ready(function () {
         $('.qtip-button').click();
     }
   });
-/*
-  if(typeof only_role=='undefined')
-    only_role=0;
-  /*if(only_role == 16)
-  {
-    $('.result_choose_collector').live('click',function () {
-      el = $(this).closest('tr');
-      ref_element_id = getIdInClasses(el);
-      info = 'good' ;
-      $('table#spec_ident_collectors tbody tr').each(function() {
-	      if($(this).find('input[id$=\"_people_ref\"]').val() == ref_element_id) info = 'bad' ;
-      });
-      if(info == 'good') addCollectorValue(ref_element_id);
-    });
-   }*//*
-   if (only_role == 4)
-   {
-    $('.result_choose_identifier').live('click',function () {
-      el = $(this).closest('tr');
-      ref_element_id = getIdInClasses(el);
-      info = 'good' ;
-      $(ref_table+' tbody.spec_ident_identifiers_data').each(function() {
-	      if($(this).find('input[id$=\"_people_ref\"]').val() == ref_element_id) info = 'bad' ;
-      });
-      if(info == 'good') addIdentifierValue(ref_element_id,ref_table);
-    });
-   }*/
 });
 </script>
 <?php endif;?>
