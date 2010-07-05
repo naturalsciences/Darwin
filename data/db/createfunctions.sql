@@ -5858,7 +5858,7 @@ CREATE OR REPLACE FUNCTION fct_cpy_path() RETURNS TRIGGER
 AS $$
 BEGIN
 	IF TG_OP = 'INSERT' THEN
-		IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats') THEN
+		IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats' OR TG_TABLE_NAME::text = 'specimen_parts') THEN
 		    IF NEW.id = 0 THEN
 			NEW.parent_ref = null;
 		    END IF;
@@ -5874,6 +5874,10 @@ BEGIN
 			ELSIF TG_TABLE_NAME::text = 'gtu' THEN
 			    SELECT path || id || '/' INTO STRICT NEW.path FROM gtu WHERE
                                 id=NEW.parent_ref;
+	                ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
+                            SELECT path || id || '/' INTO STRICT NEW.path FROM specimen_parts WHERE
+                                id=NEW.parent_ref;
+
 			ELSE
 			    SELECT path || id || '/' INTO STRICT NEW.path FROM habitats WHERE
                                 id=NEW.parent_ref;
@@ -5887,7 +5891,7 @@ BEGIN
 		        END IF;
 		END IF;
 	ELSIF TG_OP = 'UPDATE' THEN
-        IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats') THEN
+        IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats'  OR TG_TABLE_NAME::text = 'specimen_parts') THEN
             IF NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
                 IF NEW.parent_ref IS NULL THEN
                     NEW.path ='/';
@@ -5904,6 +5908,9 @@ BEGIN
 		    ELSIF TG_TABLE_NAME::text = 'gtu' THEN
 			SELECT path || id || '/' INTO STRICT NEW.path FROM gtu WHERE
                             id=NEW.parent_ref;
+                    ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
+                        SELECT path || id || '/' INTO STRICT NEW.path FROM specimen_parts WHERE
+                            id=NEW.parent_ref;
 		    ELSE
 			SELECT path || id || '/' INTO STRICT NEW.path FROM habitats WHERE
                             id=NEW.parent_ref;
@@ -5916,6 +5923,8 @@ BEGIN
                     UPDATE collections SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/'), institution_ref=NEW.institution_ref WHERE path like OLD.path || OLD.id || '/%';
 		ELSIF TG_TABLE_NAME::text = 'gtu' THEN
 		    UPDATE gtu SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
+                ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
+                    UPDATE specimen_parts SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
 		ELSE
 		    UPDATE habitats SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
                 END IF;

@@ -1816,6 +1816,8 @@ create sequence specimen_parts_id_seq;
 create table specimen_parts
        (
         id integer not null default nextval('specimen_parts_id_seq'),
+	parent_ref integer,
+	path varchar not null default '/',
         specimen_individual_ref integer not null,
         specimen_part varchar not null default 'specimen',
         complete boolean not null default true,
@@ -1836,6 +1838,7 @@ create table specimen_parts
         specimen_part_count_max integer not null default 1,
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
+	constraint fk_specimen_parts_parent_ref foreign key (parent_ref) references specimen_parts(id) on delete cascade,
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
         constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
