@@ -2072,3 +2072,12 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL
   );
+
+comment on table darwin_flat is 'Flat table compiling all specimens data (catalogues data included - used for search purposes';
+comment on column darwin_flat.id is 'Unique identifier of a darwin flat entry';
+comment on column darwin_flat.spec_ref is 'Reference of specimen concerned';
+comment on column darwin_flat.category is 'Specimen concerned category: physical, observation,...';
+comment on column darwin_flat.collection_ref is 'Reference of collection the specimen concerned belongs to';
+comment on column darwin_flat.collection_code is 'Collection code';
+comment on column darwin_flat.collection_name is 'Collection name - i.e.: Vertebrates,...';
+comment on column darwin_flat.collection_institution_ref is 'Institution the collection referenced belongs to';
