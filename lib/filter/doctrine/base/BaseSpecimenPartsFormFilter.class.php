@@ -14,7 +14,7 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'path'                    => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'parent_ref'              => new sfWidgetFormFilterInput(),
+      'parent_ref'              => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'specimen_individual_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Individual'), 'add_empty' => true)),
       'specimen_part'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'complete'                => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
@@ -37,7 +37,7 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'path'                    => new sfValidatorPass(array('required' => false)),
-      'parent_ref'              => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'parent_ref'              => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Parent'), 'column' => 'id')),
       'specimen_individual_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Individual'), 'column' => 'id')),
       'specimen_part'           => new sfValidatorPass(array('required' => false)),
       'complete'                => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
@@ -77,7 +77,7 @@ abstract class BaseSpecimenPartsFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'                      => 'Number',
       'path'                    => 'Text',
-      'parent_ref'              => 'Number',
+      'parent_ref'              => 'ForeignKey',
       'specimen_individual_ref' => 'ForeignKey',
       'specimen_part'           => 'Text',
       'complete'                => 'Boolean',

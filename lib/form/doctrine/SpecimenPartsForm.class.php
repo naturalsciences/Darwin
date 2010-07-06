@@ -11,7 +11,16 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 {
   public function configure()
   {
-	unset( $this['specimen_individual_ref'] , $this['id']);
+	unset( $this['specimen_individual_ref'] , $this['id'],$this['path']);
+
+  $individual = $this->options['individual'];
+  $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
+    'model' => 'SpecimenParts',
+    'method' => 'getName',
+    'link_url' => 'parts/choose?id='.$individual,
+    'box_title' => $this->getI18N()->__('Choose Parent'),
+    'nullable' => true,
+  ));
 
 	$this->collection = null;
 	if(isset($this->options['collection']))
@@ -219,12 +228,22 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->validatorSchema['insurance'] = new sfValidatorPass();
 
 
-    $this->validatorSchema->setPostValidator(
-        new sfValidatorSchemaCompare('specimen_part_count_min', '<=', 'specimen_part_count_max',
-            array(),
-            array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
-            )
-        );
+    $this->validatorSchema->setPostValidator(new sfValidatorCallback(array('callback' => array($this, 'checkSelfAttached'))));
+    $this->mergePostValidator(new sfValidatorSchemaCompare('specimen_part_count_min', '<=', 'specimen_part_count_max',
+      array(),
+      array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
+    ));
+
+  }
+
+  public function checkSelfAttached($validator, $values)
+  {
+    if(!$this->getObject()->isNew() && $values['parent_ref'] == $this->getObject()->getId())
+    {
+      $error = new sfValidatorError($validator, "A Part can't be attached to itself");
+      throw new sfValidatorErrorSchema($validator, array('parent_ref' => $error));
+    }
+    return $values;
   }
 
   public function addCodes($num, $collectionId=null)

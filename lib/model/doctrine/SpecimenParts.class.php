@@ -16,7 +16,7 @@ class SpecimenParts extends BaseSpecimenParts
   
   public function getName()
   {
-	return $this->_get('id');
+    return $this->getSpecimenPart();
   }
 
   public function getLevel()

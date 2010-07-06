@@ -28,7 +28,7 @@ class partsActions extends DarwinActions
     }
 
     $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());
-    $this->form = new SpecimenPartsForm($this->part, array( 'collection'=>$this->specimen->getCollectionRef() ));
+    $this->form = new SpecimenPartsForm($this->part, array( 'collection'=>$this->specimen->getCollectionRef(),'individual'=>$this->individual->getId()));
 
     if($this->form->getObject()->isNew())
     {
@@ -54,6 +54,25 @@ class partsActions extends DarwinActions
       }
     }
     $this->loadWidgets();
+  }
+
+  public function executeChoose(sfWebRequest $request)
+  {
+    $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($this->individual);
+    $this->parts = Doctrine::getTable('SpecimenParts')->findForIndividual($this->individual->getId());
+    $parts_ids = array();
+    foreach($this->parts as $part)
+      $parts_ids[] = $part->getId();
+
+    $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray($this->table, $parts_ids);
+    $this->codes = array();
+    foreach($codes_collection as $code)
+    {
+      if(! isset($this->codes[$code->getRecordId()]))
+        $this->codes[$code->getRecordId()] = array();
+      $this->codes[$code->getRecordId()][] = $code;
+    }
   }
 
   public function executeOverview(sfWebRequest $request)

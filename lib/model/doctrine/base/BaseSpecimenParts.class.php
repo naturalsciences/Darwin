@@ -27,6 +27,8 @@
  * @property integer $specimen_part_count_min
  * @property integer $specimen_part_count_max
  * @property SpecimenIndividuals $Individual
+ * @property SpecimenParts $Parent
+ * @property Doctrine_Collection $SpecimenParts
  * 
  * @method integer             getId()                      Returns the current record's "id" value
  * @method string              getPath()                    Returns the current record's "path" value
@@ -50,6 +52,8 @@
  * @method integer             getSpecimenPartCountMin()    Returns the current record's "specimen_part_count_min" value
  * @method integer             getSpecimenPartCountMax()    Returns the current record's "specimen_part_count_max" value
  * @method SpecimenIndividuals getIndividual()              Returns the current record's "Individual" value
+ * @method SpecimenParts       getParent()                  Returns the current record's "Parent" value
+ * @method Doctrine_Collection getSpecimenParts()           Returns the current record's "SpecimenParts" collection
  * @method SpecimenParts       setId()                      Sets the current record's "id" value
  * @method SpecimenParts       setPath()                    Sets the current record's "path" value
  * @method SpecimenParts       setParentRef()               Sets the current record's "parent_ref" value
@@ -72,6 +76,8 @@
  * @method SpecimenParts       setSpecimenPartCountMin()    Sets the current record's "specimen_part_count_min" value
  * @method SpecimenParts       setSpecimenPartCountMax()    Sets the current record's "specimen_part_count_max" value
  * @method SpecimenParts       setIndividual()              Sets the current record's "Individual" value
+ * @method SpecimenParts       setParent()                  Sets the current record's "Parent" value
+ * @method SpecimenParts       setSpecimenParts()           Sets the current record's "SpecimenParts" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -179,5 +185,13 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
         $this->hasOne('SpecimenIndividuals as Individual', array(
              'local' => 'specimen_individual_ref',
              'foreign' => 'id'));
+
+        $this->hasOne('SpecimenParts as Parent', array(
+             'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasMany('SpecimenParts', array(
+             'local' => 'id',
+             'foreign' => 'parent_ref'));
     }
 }

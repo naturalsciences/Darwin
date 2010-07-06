@@ -919,6 +919,10 @@ SpecimenParts:
             class: SpecimenIndividuals
             local: specimen_individual_ref
             foreign: id
+        Parent:
+            class: SpecimenParts
+            local: parent_ref
+            foreign: id
 
 Insurances:
     columns:

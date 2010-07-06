@@ -904,6 +904,16 @@ MyPreferences:
         visible: true
         is_available: true
         title_perso: Codes
+    u1sp11:
+        User: u1
+        col_num: 2
+        category: part_widget
+        group_name: parent
+        order_by: 5
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Parent
         
     u1spi1:
         User: u1

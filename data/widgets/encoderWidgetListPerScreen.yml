@@ -822,7 +822,18 @@ sp9:
    opened: true
    visible: true
    title_perso: Comments
-sw10:
+
+sp10:
+   col_num: 2
+   category: part_widget
+   group_name: parent
+   mandatory: false   
+   order_by: 5
+   opened: true
+   visible: true
+   title_perso: Parent
+
+sp11:
    col_num: 1
    category: part_widget
    group_name: refCodes
