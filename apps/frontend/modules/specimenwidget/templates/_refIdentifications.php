@@ -71,6 +71,7 @@ function addIdentifierValue(people_ref,ref_table)
     </tr>
   </tfoot>
 </table>
+<?php echo javascript_include_tag('catalogue_people.js') ?>
 <script  type="text/javascript">
 
 $(document).ready(function () {

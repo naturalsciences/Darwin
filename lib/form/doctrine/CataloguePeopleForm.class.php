@@ -11,8 +11,6 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
 {
   public function configure()
   {
-    unset($this['people_ref']);
-
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
 
@@ -28,8 +26,8 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
     );
 
     $types = array(
-      'choices'        => array('author' => $this->getI18N()->__('Author'),
-      'expert' => $this->getI18N()->__('Expert') ),
+       'author' => $this->getI18N()->__('Author'),
+      'expert' => $this->getI18N()->__('Expert'),
       );
 
     if($this->getObject()->getReferencedRelation()=='expeditions')

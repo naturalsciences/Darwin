@@ -111,7 +111,7 @@ $browser->
     checkElement('#expeditions_expedition_to_date_day > option:first_element', 'dd')->
     checkElement('#expeditions_expedition_to_date_month > option:first_element', 'mm')->
     checkElement('#expeditions_expedition_to_date_year > option:first_element', 'yyyy')->
-    checkElement('form a', 'Cancel')->
+    checkElement('form tfoot a', 'Cancel')->
     checkElement('form input[type="submit"][value="Save"]', 1)->
   end()->
   info('Try to save without data')->

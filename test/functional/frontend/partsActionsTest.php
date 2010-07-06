@@ -19,7 +19,7 @@ $browser->
     checkElement('title','Add Part')->
     checkElement('.board_col',2)->
     checkElement('.board_col:first .widget',4)->
-    checkElement('.board_col:last .widget',6)->
+    checkElement('.board_col:last .widget',7)->
     checkElement('.board_col:first .widget:first .widget_top_bar span','Part')->
     checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','Count')->
     checkElement('.board_col:first .widget:nth-child(3) .widget_top_bar span','Container')->    
@@ -39,9 +39,9 @@ $browser->
   with('response')->begin()->
      isStatusCode(200)->
      checkElement('title', 'Parts overview')->
-     checkElement('table.catalogue_table tr.parts',1)->
-     checkElement('table.catalogue_table tr.parts td:nth-child(3)','specimen')->
-     checkElement('table.catalogue_table tr.parts td:nth-child(7)','Test for parts')->
+     checkElement('table.catalogue_table > tbody > tr',1)->
+     checkElement('table.catalogue_table > tbody > tr td:nth-child(3)','specimen')->
+     checkElement('table.catalogue_table > tbody > tr td:nth-child(7)','Test for parts')->
   end()->
   
   info('Add a new part')->
@@ -67,13 +67,13 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('title', 'Parts overview')->
-    checkElement('table.catalogue_table tr.parts',2)->
-    checkElement('table.catalogue_table tr.parts:last td:nth-child(3)','specimen')->
-    checkElement('table.catalogue_table tr.parts:last td:nth-child(7)','')->
-    checkElement('table.catalogue_table tr.parts:last td:nth-child(4)','14')->
+    checkElement('table.catalogue_table > tbody > tr',2)->
+    checkElement('table.catalogue_table > tbody > tr:last td:nth-child(3)','specimen')->
+    checkElement('table.catalogue_table > tbody > tr:last td:nth-child(7)','')->
+    checkElement('table.catalogue_table > tbody > tr:last td:nth-child(4)','14')->
   end()->
 
-  click('table.catalogue_table tr.parts:last td:nth-child(9) a')->
+  click('table.catalogue_table > tbody > tr:last td:nth-child(9) a')->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('title','Edit part')->
@@ -94,9 +94,9 @@ $browser->
   with('response')->begin()->
      isStatusCode(200)->
      checkElement('title', 'Parts overview')->
-     checkElement('table.catalogue_table tr.parts',1)->
-     checkElement('table.catalogue_table tr.parts td:nth-child(3)','specimen')->
-     checkElement('table.catalogue_table tr.parts td:nth-child(7)','Test for parts')->
+     checkElement('table.catalogue_table > tbody > tr',1)->
+     checkElement('table.catalogue_table > tbody > tr td:nth-child(3)','specimen')->
+     checkElement('table.catalogue_table > tbody > tr td:nth-child(7)','Test for parts')->
   end()
 
 ;

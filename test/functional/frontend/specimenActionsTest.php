@@ -228,7 +228,7 @@ $browser->
   get('specimen/addIdentifier', array('spec_id'=>$specId,'people_ref' => $people_ref, 'num'=>$num, 'identifier_num'=>$identifier_num))->
   with('response')->begin()->
     isStatusCode()->
-    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:first[class="spec_ident_identifiers_handle"]',1)->
+    checkElement('.spec_ident_identifiers_handle',1)->
 //    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) input:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref"]',1)->
 //    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:first[id="specimen_newIdentification_'.$num.'_newIdentifier_'.$identifier_num.'_people_ref_name"]','-')->
 //    checkElement('tbody.spec_ident_identifiers_data tr:first[class="spec_ident_identifiers_data"] td:nth-child(2) div:last a[href="/index.php/people/choose/only_role/4"]',html_entity_decode('Choose&nbsp;!',ENT_COMPAT,'utf-8'))->
@@ -266,7 +266,7 @@ $browser->with('response')->begin()->
   with('response')->begin()->
   isStatusCode()->
   checkElement('.board_col:first .widget:nth-child(2) tbody',2)->
-  checkElement('.board_col:first .widget:nth-child(5) tr.spec_ident_identifiers_data',2)->
+  checkElement('.board_col:first .widget:nth-child(5) .spec_ident_identifiers_handle',2)->
   checkElement('table.collectors tr.spec_ident_collectors_data',2)->
   checkElement('#specimen_Comments_0_comment','Test comment for a collector')-> 
   checkElement('.board_col:first .widget:nth-child(8) li#specimensAccompanying',1)->

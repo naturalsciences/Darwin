@@ -39,7 +39,7 @@ $browser->
 $browser->
      get('individuals/edit/id/'.$indiv_id)-> 
      with('response')->begin()->
-       checkElement('tr.spec_ident_identifiers_data',1)->
+       checkElement('.spec_ident_identifiers_handle',1)->//debug()->
        click('a#spec_ind_delete')->end();
 $browser->
       info('check if the individual is well deleted')->       
@@ -48,5 +48,3 @@ $browser->
       isStatusCode(404)->
       end();
 
-     
-     
