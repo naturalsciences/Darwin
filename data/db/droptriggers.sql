@@ -209,6 +209,9 @@ DROP TRIGGER trg_update_tag_groups_darwin_flat
 DROP TRIGGER trg_update_people_darwin_flat
         ON people;
 
+DROP TRIGGER trg_update_users_darwin_flat
+        ON users;
+
 DROP TRIGGER trg_update_igs_darwin_flat
         ON igs;
 
