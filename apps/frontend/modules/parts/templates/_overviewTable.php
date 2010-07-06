@@ -50,7 +50,8 @@
   </tr>
   <?php endforeach;?>
   </tbody>
-  <tfoot>
+  <?php if(!isset($is_choose) || $is_choose==false):?>
+    <tfoot>
     <tr>
       <td colspan='10'>
         <div class="add_spec_individual">
@@ -58,7 +59,8 @@
         </div>
       </td>
     </tr>
-  </tfoot>
+    </tfoot>
+    <?php endif;?>
 </table>
 <script  type="text/javascript">
 
