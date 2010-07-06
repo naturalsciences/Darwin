@@ -43,8 +43,6 @@ INSERT INTO specimens (id, collection_ref, expedition_ref, gtu_ref, taxon_ref, c
 INSERT INTO specimens (id, collection_ref, expedition_ref, gtu_ref, taxon_ref, chrono_ref, litho_ref, lithology_ref, mineral_ref, ig_ref, host_relationship, host_taxon_ref) 
        VALUES (100001,100005,100001,100002,100001,100001,100001,100001,100001,100001,'Parasit',100000);
 
-SELECT gtu_tag_values_indexed, gtu_country_tag_value from darwin_flat;
-
 SELECT ok(100000 = (SELECT spec_ref FROM darwin_flat WHERE id = 1), 'First specimen inserted is well the specimen "100000".');
 SELECT ok('physical' = (SELECT category FROM darwin_flat WHERE id = 1), 'It''s well a "physical" specimen.');
 SELECT ok(100001 = (SELECT collection_ref FROM darwin_flat WHERE id = 1), 'Collection referenced is well "100001".');
@@ -147,7 +145,6 @@ SELECT ok('240275' = (SELECT ig_num FROM darwin_flat WHERE id = 2), 'ig num "240
 DELETE FROM igs where ig_num = '240275';
 
 SELECT ok('0' = (SELECT coalesce(ig_num,'0') FROM darwin_flat WHERE id = 2), 'ig num reset to null for specimen 2.');
-
 
 SELECT * FROM finish();
 ROLLBACK;
