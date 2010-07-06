@@ -2046,6 +2046,7 @@ create table darwin_flat
     acquisition_date date,
     specimen_count_min integer,
     specimen_count_max integer,
+    with_types boolean default false,
     CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id) ON DELETE CASCADE,
@@ -2175,3 +2176,4 @@ comment on column darwin_flat.acquisition_date_mask is 'Specimen acquisition dat
 comment on column darwin_flat.acquisition_date is 'Specimen acquisition date';
 comment on column darwin_flat.specimen_count_min is 'Specimen count (minimum value if in a range)';
 comment on column darwin_flat.specimen_count_max is 'Specimen count (maximum value if in a range - equal to min value if not)';
+comment on column darwin_flat.with_types is 'Flag telling if specimen has types or not - Triggerly composed';

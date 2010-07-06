@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(64);
+SELECT plan(69);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -166,6 +166,27 @@ SELECT ok('240275' = (SELECT ig_num FROM darwin_flat WHERE id = 2), 'ig num "240
 DELETE FROM igs where ig_num = '240275';
 
 SELECT ok('0' = (SELECT coalesce(ig_num,'0') FROM darwin_flat WHERE id = 2), 'ig num reset to null for specimen 2.');
+
+-- Test with_types values triggered
+
+SELECT ok(FALSE = (SELECT with_types FROM darwin_flat WHERE id = 1), 'At start, no individuals yet encoded so with_types value is "FALSE".');
+
+INSERT INTO specimen_individuals (id, specimen_ref, type) (SELECT 100000, spec_ref, 'topotype' FROM darwin_flat WHERE id = 1);
+
+SELECT ok(TRUE = (SELECT with_types FROM darwin_flat WHERE id = 1), 'Inserted a topotype individual so with_types value is "TRUE".');
+
+INSERT INTO specimen_individuals (id, specimen_ref, type) (SELECT 100001, spec_ref, 'caratype' FROM darwin_flat WHERE id = 1);
+UPDATE specimen_individuals SET type = 'specimen' WHERE specimen_ref = (SELECT spec_ref FROM darwin_flat WHERE id = 1 LIMIT 1) AND type = 'topotype';
+
+SELECT ok(TRUE = (SELECT with_types FROM darwin_flat WHERE id = 1), 'Replaced topotype individual by specimen but after insertion of a caratype so with_types value is still "TRUE".');
+
+DELETE FROM specimen_individuals WHERE specimen_ref = (SELECT spec_ref FROM darwin_flat WHERE id = 1 LIMIT 1) AND type = 'specimen';
+
+SELECT ok(TRUE = (SELECT with_types FROM darwin_flat WHERE id = 1), 'Deleted the specimen but after caratype individual still present so with_types value is still "TRUE".');
+
+UPDATE specimen_individuals SET type = 'specimen' WHERE specimen_ref = (SELECT spec_ref FROM darwin_flat WHERE id = 1 LIMIT 1) AND type = 'caratype';
+
+SELECT ok(FALSE = (SELECT with_types FROM darwin_flat WHERE id = 1), 'Replaced caratype individual by specimen so with_types value is now "FALSE".');
 
 SELECT * FROM finish();
 ROLLBACK;

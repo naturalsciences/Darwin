@@ -7130,6 +7130,25 @@ BEGIN
       END IF;
     END IF;
   END IF;
+  IF TG_TABLE_NAME = 'specimen_individuals' THEN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+      IF NEW.type != 'specimen' THEN
+        UPDATE darwin_flat
+        SET with_types = TRUE
+        WHERE spec_ref = NEW.specimen_ref;
+      ELSE
+        PERFORM 1 FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref AND type <> 'specimen' LIMIT 1;
+        UPDATE darwin_flat
+        SET with_types = FOUND
+        WHERE spec_ref = NEW.specimen_ref;
+      END IF;
+    ELSIF TG_OP = 'DELETE' THEN
+      PERFORM 1 FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref AND type <> 'specimen' LIMIT 1;
+      UPDATE darwin_flat
+      SET with_types = FOUND
+      WHERE spec_ref = OLD.specimen_ref;
+    END IF;
+  END IF;
   IF TG_TABLE_NAME = 'specimens' THEN
     IF COALESCE(NEW.ig_ref,0) = 0 THEN
       UPDATE darwin_flat
