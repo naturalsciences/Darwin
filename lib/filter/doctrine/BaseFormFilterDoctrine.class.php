@@ -29,10 +29,10 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   {
       if(isset($this->hasPager) && $this->hasPager)
       {
-	if(! isset($taintedValues['rec_per_page']))
-	{
-	  $taintedValues['rec_per_page'] = $this['rec_per_page']->getValue();
-	}
+        if(! isset($taintedValues['rec_per_page']))
+        {
+          $taintedValues['rec_per_page'] = $this['rec_per_page']->getValue();
+        }
       }
       parent::bind($taintedValues, $taintedFiles);
   }
@@ -42,12 +42,12 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
-    return array('culture'=>$this->getCurrentCulture(), 
-            'image'=>'/images/calendar.gif',       
-            'format' => '%day%/%month%/%year%',    
-            'years' => $years,                     
-            'empty_values' => $dateText,           
-      ); 
+    return array('culture'=>$this->getCurrentCulture(),
+                 'image'=>'/images/calendar.gif',
+                 'format' => '%day%/%month%/%year%',
+                 'years' => $years,
+                 'empty_values' => $dateText,
+                ); 
   }
 
   protected function getCatalogueRecLimits()
@@ -78,16 +78,18 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	  $conn = $conn_MGR->getDbh();
 	  $pg_array_string  = '';
 	  foreach($terms as $term)
-		$pg_array_string .= $conn_MGR->quote($term, 'string').',';
+      $pg_array_string .= $conn_MGR->quote($term, 'string').',';
 
 	  $pg_array_string = substr($pg_array_string, 0, -1); //remove last ','
 
-	  $statement = $conn->prepare("SELECT vt.anyelement as search, word from fct_explode_array(array[$pg_array_string]) as vt  
-		LEFT JOIN words on word % vt.anyelement
-		WHERE referenced_relation = :table
-		AND field_name = :field
-		AND word ilike '%' || vt.anyelement || '%'
-		GROUP BY word,  vt.anyelement");
+	  $statement = $conn->prepare("SELECT vt.anyelement as search, word 
+                                 FROM fct_explode_array(array[$pg_array_string]) as vt  
+                                 LEFT JOIN words on word % vt.anyelement
+                                 WHERE referenced_relation = :table
+                                  AND field_name = :field
+                                  AND word ilike '%' || vt.anyelement || '%'
+                                 GROUP BY word,  vt.anyelement"
+                               );
 
 	  $statement->execute(array(':table' => $table, ':field' => $field));
 	  $results = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -95,27 +97,27 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	  //print_r($results);
 	  if(count($results) == 0)
 	  {
-		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
-		return $query;
+      $query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
+      return $query;
 	  }
 
 	  foreach ($search['with'] as $search_term)
 	  {
-		$tsquery =  self::getWordsForTerms($search_term, $results);
-		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$tsquery);
+      $tsquery =  self::getWordsForTerms($search_term, $results);
+      $query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$tsquery);
 	  }
 
 	  unset($search['with']);
 	  foreach($search as $search_group)
 	  {
-		$tsquery_arr = array();
-		foreach($search_group as $search_term)
-		{
-		  $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
-		}
-		$tsquery = implode(' & ',$tsquery_arr);
-		$tsquery = $conn_MGR->quote($tsquery,'string');
-		$query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
+      $tsquery_arr = array();
+      foreach($search_group as $search_term)
+      {
+        $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
+      }
+      $tsquery = implode(' & ',$tsquery_arr);
+      $tsquery = $conn_MGR->quote($tsquery,'string');
+      $query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
 	  }
 	  
 	}
@@ -131,19 +133,19 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   */
   protected static function getWordsForTerms($term, $propositions, $separator = '|' )
   {
-	$str = '';
-	foreach($propositions as $i => $result)
-	{
-	  if($result['search'] == $term)
-	  {
-		if($str == '')
-		  $str = $result['word'];
-		else
-		  $str .= $separator.$result['word'];
-	  }
-	}
-	if($str == '') $str = $term;
-	return $str;
+    $str = '';
+    foreach($propositions as $i => $result)
+    {
+      if($result['search'] == $term)
+      {
+        if($str == '')
+          $str = $result['word'];
+        else
+          $str .= $separator.$result['word'];
+      }
+    }
+    if($str == '') $str = $term;
+    return $str;
   }
 
   /**
@@ -168,41 +170,39 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   */
   public static function splitNameQuery($query_string)
   {
-	$results = preg_split('/--/',$query_string);
-	$query_array = array('with'=>'', 'without'=>array());
-	foreach($results as $i => $query_part)
-	{
-	  if(trim($query_part) == '')
-		continue;
-	  
-	  $query_part = preg_replace('/[^A-Za-z0-9\-_]/', ' ', $query_part);
+    $results = preg_split('/--/',$query_string);
+    $query_array = array('with'=>'', 'without'=>array());
+    foreach($results as $i => $query_part)
+    {
+      if(trim($query_part) == '')
+      continue;
 
-	  if($i == 0)
-		$query_array['with'] = trim($query_part);
-	  else
-		$query_array['without'][] = trim($query_part);
-	}
+      $query_part = preg_replace('/[^A-Za-z0-9\-_]/', ' ', $query_part);
 
-	$searched_terms = array();
-	foreach(array_merge(array('with'=>$query_array['with']),$query_array['without']) as $i => $query_words)
-	{
-	  $words = explode(" ", $query_words);
-	  $searched_terms[$i] = array();
-	  foreach($words as $word)
-	  {
-		$word = trim($word);
-		
-		if($word == '') continue;
-		
-		$searched_terms[$i][] = $word;
-	  }
-	  if(empty($searched_terms[$i]))
-		unset($searched_terms[$i]);
-	}
-	if(!isset($searched_terms['with']))
-	  $searched_terms['with'] = array();
+      if($i == 0)
+        $query_array['with'] = trim($query_part);
+      else
+        $query_array['without'][] = trim($query_part);
+    }
 
-	return $searched_terms;
+    $searched_terms = array();
+    foreach(array_merge(array('with'=>$query_array['with']),$query_array['without']) as $i => $query_words)
+    {
+      $words = explode(" ", $query_words);
+      $searched_terms[$i] = array();
+      foreach($words as $word)
+      {
+        $word = trim($word);
+        if($word == '') continue;
+        $searched_terms[$i][] = $word;
+      }
+      if(empty($searched_terms[$i]))
+        unset($searched_terms[$i]);
+    }
+    if(!isset($searched_terms['with']))
+      $searched_terms['with'] = array();
+
+    return $searched_terms;
   }
 
   /**
@@ -212,15 +212,15 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   */
   protected static function getAllTerms($analysed_array)
   {
-	$terms = array();
-	foreach($analysed_array as $key => $analysed)
-	{
-	  foreach($analysed as $query)
-	  {
-		$terms[] = $query;
-	  }
-	}
-	return $terms;
+    $terms = array();
+    foreach($analysed_array as $key => $analysed)
+    {
+      foreach($analysed as $query)
+      {
+      $terms[] = $query;
+      }
+    }
+    return $terms;
   }
 
   public function addDateFromToColumnQuery(Doctrine_Query $query, array $dateFields, $val_from, $val_to)
