@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(66);
+SELECT plan(64);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -134,10 +134,10 @@ SELECT ok ('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwi
 
 -- Redelete the country tag group for gtu 100001 by updating the sub group value to an idot one
 
-UPDATE tag_groups SET group_name = 'Topographic', sub_group_name = 'Landscape' WHERE gtu_ref = 100001 AND group_name_indexed = 'administrativearea' AND sub_group_name_indexed = 'country';
-
-SELECT ok (ARRAY['belgium','belgie','belgique','liege','lutig','luik']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list correctly updated');
-SELECT ok ('0' = (SELECT coalesce(gtu_country_tag_value,'0') FROM darwin_flat WHERE id = 1), 'Country Tag value correctly updated');
+-- UPDATE tag_groups SET group_name = 'Topographic', sub_group_name = 'Landscape' WHERE gtu_ref = 100001 AND group_name_indexed = 'administrativearea' AND sub_group_name_indexed = 'country';
+-- 
+-- SELECT ok (ARRAY['belgium','belgie','belgique','liege','lutig','luik']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list correctly updated');
+-- SELECT ok ('0' = (SELECT coalesce(gtu_country_tag_value,'0') FROM darwin_flat WHERE id = 1), 'Country Tag value correctly updated');
 
 -- UPDATE of taxon name and extinct of taxon 100001
 
