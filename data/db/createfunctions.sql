@@ -6630,14 +6630,14 @@ DECLARE
   entry_row RECORD;
   seen_el varchar[];
 BEGIN
+  IF TG_OP != 'DELETE' THEN
     OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag, trim(tags) as tags 
                         FROM regexp_split_to_table(NEW.tag_value, ';') as tags 
                         WHERE fulltoIndex(tags) != '';
-
     LOOP
       FETCH curs_entry INTO entry_row;
       EXIT WHEN NOT FOUND;
-      
+
       seen_el := array_append(seen_el, entry_row.u_tag);
 
       PERFORM * FROM tags 
@@ -6679,9 +6679,22 @@ BEGIN
               AND gtu_ref = NEW.gtu_ref 
               AND fct_array_find(seen_el, tag_indexed ) IS NULL;
     RETURN NEW;
+  ELSE
+    UPDATE gtu
+    SET tag_values_indexed = (SELECT array_agg(tags_list)
+                              FROM (SELECT lineToTagRows(tag_agg) AS tags_list
+                                    FROM (SELECT tag_value AS tag_agg
+                                          FROM tag_groups
+                                          WHERE id <> OLD.id
+                                            AND gtu_ref = OLD.gtu_ref
+                                         ) as tag_list_selection
+                                   ) as tags_rows
+                             )
+    WHERE id = OLD.gtu_ref;
+    RETURN NULL;
+  END IF;
 END;
 $$;
-
 
 CREATE OR REPLACE FUNCTION fct_cpy_updateHosts() RETURNS TRIGGER
 language plpgsql
@@ -6804,12 +6817,6 @@ BEGIN
          NEW.gtu_to_date, NEW.gtu_to_date_mask, NEW.tag_values_indexed
         )
     WHERE gtu_ref = NEW.id;
-  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'tag_groups' THEN
-    IF NEW.group_name_indexed = 'administrativearea' and NEW.sub_group_name_indexed = 'country' THEN
-      UPDATE darwin_flat
-      SET gtu_country_tag_value = NEW.tag_value
-      WHERE gtu_ref = NEW.gtu_ref;
-    END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'igs' THEN
     UPDATE darwin_flat
     SET (ig_num, ig_num_indexed, ig_date, ig_date_mask) = 
@@ -7097,6 +7104,31 @@ BEGIN
        AND mineral.id = NEW.mineral_ref
      LIMIT 1
     );
+  END IF;
+  IF TG_TABLE_NAME = 'tag_groups' THEN
+    IF TG_OP = 'INSERT' THEN
+      IF NEW.group_name_indexed = 'administrativearea' AND NEW.sub_group_name_indexed = 'country' THEN
+        UPDATE darwin_flat
+        SET gtu_country_tag_value = NEW.tag_value
+        WHERE gtu_ref = NEW.gtu_ref;
+      END IF;
+    ELSIF TG_OP = 'UPDATE' THEN
+      IF NEW.group_name_indexed = 'administrativearea' AND NEW.sub_group_name_indexed = 'country' THEN
+        UPDATE darwin_flat
+        SET gtu_country_tag_value = NEW.tag_value
+        WHERE gtu_ref = NEW.gtu_ref;
+      ELSIF OLD.group_name_indexed = 'administrativearea' AND OLD.sub_group_name_indexed = 'country' THEN
+        UPDATE darwin_flat
+        SET gtu_country_tag_value = NULL
+        WHERE gtu_ref = NEW.gtu_ref;
+      END IF;
+    ELSIF TG_OP = 'DELETE' THEN
+      IF OLD.group_name_indexed = 'administrativearea' AND OLD.sub_group_name_indexed = 'country' THEN
+        UPDATE darwin_flat
+        SET gtu_country_tag_value = NULL
+        WHERE gtu_ref = OLD.gtu_ref;
+      END IF;
+    END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimens' THEN
     IF COALESCE(NEW.ig_ref,0) = 0 THEN

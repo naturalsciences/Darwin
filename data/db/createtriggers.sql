@@ -175,7 +175,7 @@ CREATE TRIGGER trg_clr_specialstatus_specimenindividuals BEFORE INSERT OR UPDATE
 	ON specimen_individuals FOR EACH ROW
 	EXECUTE PROCEDURE fct_clr_specialstatus();
 	
-CREATE TRIGGER trg_cpy_gtuTags_TagGroups AFTER INSERT OR UPDATE
+CREATE TRIGGER trg_cpy_gtuTags_TagGroups AFTER INSERT OR UPDATE OR DELETE
 	ON tag_groups FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_gtuTags();
 
@@ -547,7 +547,7 @@ CREATE TRIGGER trg_update_gtu_darwin_flat AFTER UPDATE
         ON gtu FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();
 
-CREATE TRIGGER trg_update_tag_groups_darwin_flat AFTER UPDATE
+CREATE TRIGGER trg_update_tag_groups_darwin_flat AFTER INSERT OR UPDATE OR DELETE
         ON tag_groups FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();
 

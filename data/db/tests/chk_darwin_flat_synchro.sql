@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(59);
+SELECT plan(66);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -117,6 +117,27 @@ SELECT ok (ARRAY['liege','lutig','luik','belgium','belgo','belgie','belgique']::
 SELECT ok ('Belgique;Belgium;Belgïe;Belgo' = (SELECT gtu_country_tag_value FROM darwin_flat WHERE id = 1), 'Country Tag value is correct');
 SELECT ok (ARRAY['belgium','belgie','belgique','brugge','bruge']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 2), 'Tag list is correct');
 SELECT ok ('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwin_flat WHERE id = 2), 'Country Tag value is correct');
+
+-- Delete the country tag group for gtu 100001
+
+DELETE FROM tag_groups WHERE gtu_ref = 100001 AND group_name_indexed = 'administrativearea' AND sub_group_name_indexed = 'country';
+
+SELECT ok (ARRAY['liege','lutig','luik']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list correctly updated');
+SELECT ok ('0' = (SELECT coalesce(gtu_country_tag_value,'0') FROM darwin_flat WHERE id = 1), 'Country Tag value correctly updated');
+
+-- Reset country sub group of gtu 100001 to Belgique;Belgïe;Belgium
+
+INSERT INTO tag_groups (gtu_ref, group_name, sub_group_name, tag_value) VALUES (100001, 'Administrative area', 'Country', 'Belgique;Belgium;Belgïe');
+
+SELECT ok (ARRAY['belgium','belgie','belgique','liege','lutig','luik']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list is correct');
+SELECT ok ('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwin_flat WHERE id = 1), 'Country Tag value is correct');
+
+-- Redelete the country tag group for gtu 100001 by updating the sub group value to an idot one
+
+UPDATE tag_groups SET group_name = 'Topographic', sub_group_name = 'Landscape' WHERE gtu_ref = 100001 AND group_name_indexed = 'administrativearea' AND sub_group_name_indexed = 'country';
+
+SELECT ok (ARRAY['belgium','belgie','belgique','liege','lutig','luik']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list correctly updated');
+SELECT ok ('0' = (SELECT coalesce(gtu_country_tag_value,'0') FROM darwin_flat WHERE id = 1), 'Country Tag value correctly updated');
 
 -- UPDATE of taxon name and extinct of taxon 100001
 
