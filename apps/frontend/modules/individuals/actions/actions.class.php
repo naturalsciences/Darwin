@@ -14,7 +14,11 @@ class individualsActions extends DarwinActions
 
   protected function getSpecimenIndividualsForm(sfWebRequest $request)
   {
-    $this->spec_individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
+    if($request->getParameter('id')==0)
+      $this->spec_individual = new SpecimenIndividuals();
+    else
+      $this->spec_individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
+
     if($this->spec_individual)
     {
       $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->spec_individual->getSpecimenRef());
