@@ -5,10 +5,13 @@ include(dirname(__FILE__).'/../../bootstrap/functional.php');
 $browser = new DarwinTestFunctional(new sfBrowser());
 $browser->loadData($configuration)->login('root','evil');
 $browser->addCustomSpecimen('777','Collection test for individual','Taxon test for individual',1)->
-	with('response')->isRedirected()->followRedirect()->
-	with('request')->begin()->
-	     click('#tab_2')->
-     end()->
+	with('response')->
+    isRedirected()->
+    followRedirect()->
+  
+  with('request')->begin()->
+    click('#tab_2')->
+  end()->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('title','Add specimen individual')->

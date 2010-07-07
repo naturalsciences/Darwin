@@ -14,21 +14,28 @@ class individualsActions extends DarwinActions
 
   protected function getSpecimenIndividualsForm(sfWebRequest $request)
   {
-    if($request->getParameter('id')==0)
-      $this->spec_individual = new SpecimenIndividuals();
-    else
-      $this->spec_individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
-
-    if($this->spec_individual)
+    if(! $request->hasParameter('id'))
     {
-      $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->spec_individual->getSpecimenRef());
+      $this->spec_individual = new SpecimenIndividuals();
     }
     else
     {
-      $this->spec_individual = new SpecimenIndividuals();
+      $this->spec_individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));
+      $this->forward404Unless($this->spec_individual);
+    }
+
+    if($this->spec_individual->isNew())
+    {
       $this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id'));
-      $this->forward404Unless($this->specimen);
+
+      if(! $this->specimen) // PROTECT
+        $this->specimen = new Specimens();
+
       $this->spec_individual->Specimens = $this->specimen;
+    }
+    else
+    {
+      $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->spec_individual->getSpecimenRef());
     }
 
     $individual = new SpecimenIndividualsForm($this->spec_individual);
@@ -38,38 +45,39 @@ class individualsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
-	$this->individual = $this->getSpecimenIndividualsForm($request);
+    $this->individual = $this->getSpecimenIndividualsForm($request);  
 
-	if($this->individual->getObject()->isNew())
-	{
-	  $this->individual->addIdentifications(0,0);
-	  $this->individual->addComments(0);
-	}
-	if($request->isMethod('post'))
-	{
-	  $this->individual->bind( $request->getParameter('specimen_individuals') );
-	  if( $this->individual->isValid())
-	  {
-	    try
-	    {
-		$this->individual->save();
-		$this->redirect('individuals/overview?spec_id='.$this->individual->getObject()->getSpecimenRef());
-	    }
-	    catch(Doctrine_Exception $ne)
-	    {
-	      $e = new DarwinPgErrorParser($ne);
-	      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	      $this->individual->getErrorSchema()->addError($error); 
-	    }
-	  }
-	}
-	$this->loadWidgets();
+    if($this->individual->getObject()->isNew())
+    {
+      $this->individual->addIdentifications(0,0);
+      $this->individual->addComments(0);
+    }
+    if($request->isMethod('post'))
+    {
+      $this->individual->bind( $request->getParameter('specimen_individuals') );
+      if( $this->individual->isValid())
+      {
+        try
+        {
+          $this->individual->save();
+          $this->redirect('individuals/overview?spec_id='.$this->individual->getObject()->getSpecimenRef());
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->individual->getErrorSchema()->addError($error); 
+        }
+      }
+    }
+    $this->loadWidgets();
   }
 
   public function executeOverview(sfWebRequest $request)
   {
-	$this->forward404Unless($this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0)), sprintf('Specimen does not exist (%s).', $request->getParameter('spec_id',0)));
-	$this->individuals = Doctrine::getTable('SpecimenIndividuals')->findBySpecimenRef($this->specimen->getId());
+    $this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0));
+    $this->forward404Unless($this->specimen, sprintf('Specimen does not exist (%s).', $request->getParameter('spec_id',0)));
+    $this->individuals = Doctrine::getTable('SpecimenIndividuals')->findBySpecimenRef($this->specimen->getId());
   }
 
   public function executeAddIdentification(sfWebRequest $request)
@@ -78,7 +86,15 @@ class individualsActions extends DarwinActions
     $order_by = intval($request->getParameter('order_by',0));
     $individual_form = $this->getSpecimenIndividualsForm($request);
     $individual_form->addIdentifications($number, $order_by);
-    return $this->renderPartial('specimen/spec_identifications',array('form' => $individual_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'individuals', 'spec_id'=>$individual_form->getObject()->getSpecimenRef(), 'id'=>$request->getParameter('id',0), 'individual_id'=>0));
+    return $this->renderPartial('specimen/spec_identifications',
+      array(
+        'form' => $individual_form['newIdentification'][$number],
+        'row_num' => $number,
+        'module' => 'individuals',
+        'spec_id' => $individual_form->getObject()->getSpecimenRef(),
+        'id' => $request->getParameter('id',0),
+        'individual_id' => 0,
+    ));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
