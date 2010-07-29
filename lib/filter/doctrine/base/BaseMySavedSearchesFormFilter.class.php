@@ -13,6 +13,8 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'user_ref'                 => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => true)),
+      'name'                     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'search_criterias'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'favorite'                 => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'modification_date_time'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -20,6 +22,8 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
+      'user_ref'                 => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('User'), 'column' => 'id')),
+      'name'                     => new sfValidatorPass(array('required' => false)),
       'search_criterias'         => new sfValidatorPass(array('required' => false)),
       'favorite'                 => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'modification_date_time'   => new sfValidatorPass(array('required' => false)),
@@ -43,7 +47,8 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'user_ref'                 => 'Number',
+      'id'                       => 'Number',
+      'user_ref'                 => 'ForeignKey',
       'name'                     => 'Text',
       'search_criterias'         => 'Text',
       'favorite'                 => 'Boolean',

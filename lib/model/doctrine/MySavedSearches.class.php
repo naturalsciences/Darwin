@@ -5,5 +5,15 @@
  */
 class MySavedSearches extends BaseMySavedSearches
 {
-
+  public function getDefaultMDT() 
+  {
+    $q = Doctrine_Query::create()
+        ->select('s.modification_date_time')
+        ->from('MySavedSearches s')
+        ->where('s.user_ref = ?',$this->getUserRef())
+        ->orderBy('s.modification_date_time DESC')
+        ->fetchOne() ;
+    if($q) return ("last saved on ".substr($q->getModificationDateTime(),0,19)) ;
+    else return ("Not yet saved") ;
+  }
 }

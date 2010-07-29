@@ -1011,4 +1011,88 @@ MyPreferences:
         opened: true
         visible: true
         is_available: true
-        title_perso: Comments        
+        title_perso: Comments  
+           
+    u1sps1:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: refCollection
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Collection  
+           
+    u1sps2:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: refTaxon
+        mandatory: false
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Taxonomy  
+           
+    u1sps3:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: refGtu
+        mandatory: false
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Sampling Location  
+           
+    u1sps4:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: refChrono
+        mandatory: false
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Chrono  
+           
+    u1sps5:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: refLitho
+        mandatory: false
+        order_by: 3
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Litho  
+           
+    u1sps6:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: refLithology
+        mandatory: false
+        order_by: 4
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Lithology    
+           
+    u1sps7:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: refMineral
+        mandatory: false
+        order_by: 3
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Mineral         

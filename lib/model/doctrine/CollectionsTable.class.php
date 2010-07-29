@@ -64,7 +64,15 @@ class CollectionsTable extends DarwinTable
             ->orderBy('coll_path_id ASC');
       return $q->execute();
     }
-
+    
+    public function getAllCollectionsId()
+    {
+      $q = Doctrine_Query::create()
+            ->from('Collections c')
+            ->orderBy('path,name ASC');
+      return $q->execute();
+    }
+    
     public function getAndUpdateLastCode($collectionId)
     {
       if (!isset($collectionId))

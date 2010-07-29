@@ -46,8 +46,6 @@ class MyPreferencesTable extends DarwinTable
     
   public function changeWidgetStatus($category, $widget, $status)
   {
-
-
     $q = Doctrine_Query::create()
          ->update('MyPreferences p');
     if($status == "open" || $status == "close")
@@ -93,21 +91,21 @@ class MyPreferencesTable extends DarwinTable
   */
   public function updateWigetsAvailabilityForRole($role, $availability)
   {
-	$file = MyPreferences::getFileByRight($role) ;
-	if($file)
-	{
-		$data = new Doctrine_Parser_Yml();
-		$array = $data->loadData($file);
-		$q = Doctrine_Query::create()
-		  ->update('MyPreferences p') 
-		  ->set('p.is_available','?', $availability) 
-		  ->where('p.user_ref = ?', $this->user_ref) ;
-		$list_group_name = array() ;
-		foreach ($array as $widget => $array_values) 
-                 $list_group_name[] = $array_values['group_name'] ;
-		$q->wherein('p.group_name',$list_group_name)
-		  ->execute() ;	
-	}  	
+	  $file = MyPreferences::getFileByRight($role) ;
+	  if($file)
+	  {
+		  $data = new Doctrine_Parser_Yml();
+		  $array = $data->loadData($file);
+		  $q = Doctrine_Query::create()
+		    ->update('MyPreferences p') 
+		    ->set('p.is_available','?', $availability) 
+		    ->where('p.user_ref = ?', $this->user_ref) ;
+		  $list_group_name = array() ;
+		  foreach ($array as $widget => $array_values) 
+                   $list_group_name[] = $array_values['group_name'] ;
+		  $q->wherein('p.group_name',$list_group_name)
+		    ->execute() ;	
+	  }  	
   }
 
   public function addCategoryUser(Doctrine_Query $q = null, $category)
@@ -177,40 +175,56 @@ class MyPreferencesTable extends DarwinTable
   */
   public function setWidgetsForNewUserType($old_type, $new_type)
   {
-	if ($old_type != $new_type)
-	{
-	  if ($old_type > $new_type)
+	  if ($old_type != $new_type)
 	  {
-		// widget to delete
-		switch ($old_type)
-		{
-		  case 8: if ($new_type > 2) break ; /** @TODO: for now an admin and a CM have the same widgets**/
-				  if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
-				  if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				  break ;
-		  case 4: if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
-				  if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				  break ;
-		  case 2: $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				  break ;
-		  default: break ;
-		}
+	    if ($old_type > $new_type)
+	    {
+		  // widget to delete
+		    switch ($old_type)
+		    {
+		      case 8: if ($new_type > 2) break ; /** @TODO: for now an admin and a CM have the same widgets**/
+				      if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
+				      if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
+				      break ;
+		      case 4: if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
+				      if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
+				      break ;
+		      case 2: $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
+				      break ;
+		      default: break ;
+		    }
+	    }
+	    else
+	    {
+		  // widget to add
+		    switch ($old_type)
+		    {
+		      case 1:$this->updateWigetsAvailabilityForRole(Users::ENCODER, true) ; 
+				      if ($new_type > 2) $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
+				      break ;
+		      case 2: $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
+				      break ;
+		      default: break ;
+		    }
+	    }
 	  }
-	  else
-	  {
-		// widget to add
-		switch ($old_type)
-		{
-		  case 1:$this->updateWigetsAvailabilityForRole(Users::ENCODER, true) ; 
-				  if ($new_type > 2) $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
-				  break ;
-		  case 2: $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
-				  break ;
-		  default: break ;
-		}
-	  }
-	}
-
   }
-
+  
+  /**
+  * Set all widget saved in a MySavedSearch visible in order see all parameter
+  * @param string $user user for witch widget to be updated
+  * @param string $category category widget to upgate (ex : specimensearch)
+  * @parem array $widget_array list of widgets witch status 'opened' is required
+  */
+  public function forceWidgetOpened($user, $category,$widget_array)
+  {
+    $q = Doctrine_Query::create()
+          ->update('MyPreferences p')
+          ->set('p.visible','true')
+          ->set('p.opened','true')
+          ->where('p.user_ref = ?',$user)
+          ->andWhere('category = ?',$category)
+          ->andWhereIn('p.group_name',$widget_array);
+    return $q->execute() ;
+  }
 }

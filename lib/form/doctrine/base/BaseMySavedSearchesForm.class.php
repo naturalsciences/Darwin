@@ -15,8 +15,9 @@ abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'user_ref'                 => new sfWidgetFormInputHidden(),
-      'name'                     => new sfWidgetFormInputHidden(),
+      'id'                       => new sfWidgetFormInputHidden(),
+      'user_ref'                 => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
+      'name'                     => new sfWidgetFormTextarea(),
       'search_criterias'         => new sfWidgetFormTextarea(),
       'favorite'                 => new sfWidgetFormInputCheckbox(),
       'modification_date_time'   => new sfWidgetFormTextarea(),
@@ -24,8 +25,9 @@ abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'user_ref'                 => new sfValidatorChoice(array('choices' => array($this->getObject()->get('user_ref')), 'empty_value' => $this->getObject()->get('user_ref'), 'required' => false)),
-      'name'                     => new sfValidatorChoice(array('choices' => array($this->getObject()->get('name')), 'empty_value' => $this->getObject()->get('name'), 'required' => false)),
+      'id'                       => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'user_ref'                 => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
+      'name'                     => new sfValidatorString(),
       'search_criterias'         => new sfValidatorString(),
       'favorite'                 => new sfValidatorBoolean(array('required' => false)),
       'modification_date_time'   => new sfValidatorString(),
