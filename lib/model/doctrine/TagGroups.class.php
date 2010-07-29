@@ -8,7 +8,7 @@ class TagGroups extends BaseTagGroups
   static public function getGroups()
   {
     return array(
-      'administrative' => 'Administrative area',
+      'administrative area' => 'Administrative area',
       'topographic' => 'Topographic structure',
       'hydrographic' => 'Hydrographic',
       'orography' => 'Orography',
