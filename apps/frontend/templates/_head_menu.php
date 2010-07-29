@@ -36,7 +36,7 @@
                         <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
                     </ul>
                 </li>
-                <li><?php echo link_to(__('Specimens'),'specimen/index');?></li>
+                <li><?php echo link_to(__('Specimens'),'specimensearch/index');?></li>
                 <li><?php echo link_to(__('Collections'),'collection/index');?></li>
             </ul>
         </li>

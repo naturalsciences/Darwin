@@ -70,4 +70,13 @@ class SpecimenIndividualsTable extends DarwinTable
       $rock_forms->add(new SpecimenIndividuals);
       return $rock_forms;
     }
+    
+    public function getIndividualBySpecimen($id)
+    {
+      $q = Doctrine_Query::create()
+        ->from('SpecimenIndividuals s');
+      $alias = $q->getRootAlias() ;
+      $q->andWhere($alias . '.specimen_ref = ?', $id);
+      return $q->execute() ;      
+    }
 }

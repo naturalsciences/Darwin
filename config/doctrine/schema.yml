@@ -539,7 +539,7 @@ UsersTracking:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         referenced_relation: { type: string, notnull: true}
-        record_id: { type: integer, notnull: true},
+        record_id: { type: integer, notnull: true}
         user_ref: { type: integer, notnull: true}
         action: { type: string, notnull: true, default: insert}
         modification_date_time: { type: string, notnull: true }
@@ -555,7 +555,7 @@ CollectionMaintenance:
         id: { type: integer, primary: true, autoincrement: true }
         record_id: { type: integer, notnull: true},
         referenced_relation: { type: string, notnull: true}
-        people_ref: { type: integer, notnull: true},
+        people_ref: { type: integer, notnull: true}
         category: { type: string, notnull: true, default: action}
         action_observation: { type: string, notnull: true}
         description: { type: string }
@@ -569,8 +569,9 @@ CollectionMaintenance:
 
 MySavedSearches:
     columns:
-        user_ref: { type: integer, notnull: true, primary: true },
-        name: { type: string, notnull: true, default: default, primary: true }
+        id: { type: integer, primary: true, autoincrement: true }
+        user_ref: { type: integer, notnull: true }
+        name: { type: string, notnull: true }
         search_criterias: { type: string, notnull: true}
         favorite: { type: boolean, notnull: true, default: false}
         modification_date_time: { type: string, notnull: true }

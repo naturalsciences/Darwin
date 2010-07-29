@@ -931,3 +931,74 @@ spi9:
   opened: true
   visible: true
   title_perso: Comments
+
+sps1:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: refCollection
+   mandatory: true
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Collection
+
+sps2:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: refTaxon
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Taxonomy
+
+sps3:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: refGtu
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Sampling Location
+
+sps4:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: refChrono
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Chonostratigraphy
+
+sps5:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: refLithology
+   mandatory: false
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: Lithology
+
+sps6:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: refLitho
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Lithostratigraphy
+
+sps7:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: refMineral
+   mandatory: false
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: Mineralogy
+      

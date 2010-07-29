@@ -1,0 +1,227 @@
+.panel
+{
+	margin-top:-2px;
+	border:1px solid #5BAABD;
+	padding-top: 30px;
+	padding-left:21px;
+	padding-right: 21px;
+	padding-bottom: 20px;
+	background-color:white;
+	min-height:  300px;
+}
+
+.encod_screen .widget .widget_top_bar
+{
+	background-color:#5BAABD;
+}
+
+.encod_screen .widget .widget_content {
+	background-color:#F6F6F6;
+	border:1px solid #5BAABD;
+}
+
+/** Table of results **/
+
+.tree table
+{
+  vertical-align: middle;
+  width:100%;
+}
+
+.tree thead
+{
+  background-color: #5BAABD;
+  color: white;
+}
+.tree thead th
+{
+  background-color: #5BAABD;
+  color: white;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+
+}
+
+.tree tbody tr:nth-child(even) {background: #E9F2F7}
+.tree tbody tr:nth-child(odd) {background: white}
+
+.tree tbody th, .tree tbody td
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+  margin-bottom:0.2em;
+}
+
+/** Table of results **/
+
+.spec_results
+{
+  background-color:white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: middle;
+  width:100%;
+  border: 1px solid #5BAABD;
+}
+
+.spec_results thead
+{
+  background-color: #5BAABD;
+  text-align: left;
+  color: white;
+}
+
+.spec_results thead a
+{
+  text-decoration:none;
+  color:white;
+}
+
+.spec_results thead a:hover
+{
+  text-decoration:underline;
+}
+
+.spec_results tbody:nth-child(even) tr {background: #E9F2F7}
+.spec_results tbody:nth-child(odd) tr {background: white}
+
+.spec_results th, .spec_results td
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+  vertical-align: top;
+}
+
+.spec_results_container
+{
+  padding-right: 0.5em;
+  margin-bottom:0.3em;
+  margin-top:0.3em;
+  margin-left:0.05em;
+}
+
+/* Style for choose column menu */
+ul.column_menu > li
+{
+  margin-bottom:1.3em;
+	width: 181px;
+	height: 20px;
+	z-index: 500;	
+  display: list-item;		
+}
+
+ul.column_menu li
+{
+	width: 181px;
+	height: 20px;
+  background: #5BAABD	;
+  border-left: 1px solid #ebf5f5;  
+  border-right: 1px solid #ebf5f5;    
+	font-size:10pt; 
+  display: list-item;			
+  font-stretch: ultra-expanded;	
+}
+
+ul.column_menu > li > ul > li
+{
+  vertical-align:middle;
+	z-index: 500;
+	margin:0;
+	padding:0;
+  display: inline-block;
+}
+
+ul.column_menu li > ul > li:hover
+{
+	background-color:#ebf5f5;
+}
+
+ul.column_menu > li > ul > li
+{
+	background-color:#a9d4db;	
+	min-width:168px;
+/* 	max-width: 300px !important; */
+}
+li.head
+{
+	background-color:#ebf5f5;
+	color:white;  
+}
+
+li.check
+{
+  color: green;  
+}
+
+li.uncheck
+{
+  color: red;
+}
+
+div.aligned_fields
+{
+  width:400px;
+  text-align: right ;		 
+}
+
+img#favorite_on, img#favorite_off
+{
+  cursor:pointer;
+}
+/** Fields Table for saved searches **/
+
+.fields
+{
+  background-color:white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: middle;
+  width:400px;
+  border: 1px solid #5BAABD;
+}
+
+.fields thead
+{
+  background-color: #5BAABD;
+  color: white;
+}
+
+.fields tbody tr:nth-child(even) {background: #E9F2F7}
+.fields tbody tr:nth-child(odd) {background: white}
+.fields tbody tr:hover {background: #5BAABD; color:white}
+
+.fields th, .fields td
+{
+  text-align: left;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+}
+
+.fields th:nth-child(2), .fields td:nth-child(2)
+{
+  text-align: right;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+}
+
+input[type="button"][class="save_search"]
+{
+  background: #5BAABD  ;
+  border-right: 2px double white;    
+  border-bottom: 2px double white;    
+  width:123px;
+  height:21px;
+  color:white;
+  margin-top:1px;
+  padding-bottom:10px;
+}
+
+input[type="button"][class="save_search"]:hover
+{
+  cursor:pointer;
+}
