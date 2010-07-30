@@ -44,6 +44,7 @@ $(document).ready(function () {
         content: {
             title: { text : 'Save your search', button: 'X' },        
             url: 'saveSearch',
+            data: $('.search_form').serialize(),            
             method: 'post'
         },
         show: { when: 'click', ready: true },
@@ -56,7 +57,7 @@ $(document).ready(function () {
         },
         hide: false,
         style: {
-            width: { min: 620, max: 1000},
+            width: { min: 620, max: 800},
             border: {radius:3},
             title: { background: '#5BABBD', color:'white'}
         },

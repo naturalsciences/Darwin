@@ -5,3 +5,4 @@ indexSuccess:
 searchResultSuccess:
   stylesheets: [specimensearch.css]
   javascripts: [specimensearch.js, searchForm.js]
+
