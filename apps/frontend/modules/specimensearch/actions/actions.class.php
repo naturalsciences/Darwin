@@ -85,50 +85,8 @@ class specimensearchActions extends DarwinActions
   
   public function executeSearch(sfWebRequest $request)
   {
-    // Forward to a 404 page if the method used is not a post
-    //$this->forward404Unless($request->isMethod('post'));
-    $this->setCommonValues('specimensearch', 'collection_name', $request);
-    $this->form = new SpecimenSearchFormFilter();    
-    if($request->getParameter('specimen_search_filters','') !== '')
-    {
-      // Bind form with data contained in specimensearch array
-     // die(print_r($request->getParameter('specimen_search_filters')));
-      $this->form->bind($request->getParameter('specimen_search_filters'));
-      // Test that the form binded is still valid (no errors)
-      if ($this->form->isValid())
-      {
-        // Define all properties that will be either used by the data query or by the pager
-        // They take their values from the request. If not present, a default value is defined
-        $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-        // Define in one line a pager Layout based on a pagerLayoutWithArrows object
-        // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-        $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
-                                                                          $this->currentPage,
-                                                                          $this->form->getValue('rec_per_page')
-                                                                         ),
-                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
-                                                       $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-                                                      );
-        // Sets the Pager Layout templates
-        $this->setDefaultPaggingLayout($this->pagerLayout);
-        // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->pagerLayout->getPager()->getExecuted())
-           $this->specimensearch = $this->pagerLayout->execute();   
-        $this->field_to_show = array('category' => 'uncheck','collection' => 'uncheck','taxon' => 'uncheck','type' => 'uncheck','gtu' => 'uncheck','chrono' => 'uncheck',
-            'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');   
-        if ($request->getParameter('fields_to_show') != '') 
-        {
-           $tabs = explode('|',$request->getParameter('fields_to_show')) ;
-          // set the fields to show
-          foreach ($tabs as $tab)
-            $this->field_to_show[$tab] = 'check' ;       
-        }
-        else
-          $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
-            'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');             
-        return $this->renderPartial('searchSuccess');
-      }
-    }
+    $this->executeSearchResult($request) ;      
+    return $this->renderPartial('searchSuccess');
   }  
 
   public function executeIndividualTree(sfWebRequest $request)
