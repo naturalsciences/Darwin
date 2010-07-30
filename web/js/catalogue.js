@@ -57,32 +57,32 @@ $(document).ready(function () {
        currentElement = $(this);
        removeError($(this));
        $.ajax({
-               url: $(this).attr('href'),
-               success: function(html) {
-		      if(html == "ok" )
-		      {
-			//We are in a widget
-			if(currentElement.parent().hasClass('widget_row_delete'))
-			{
-			  widget_parent = currentElement.closest('li.widget');
-			  widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
-			  hideForRefresh(widget_parent.find('.widget_content'));
-			}
-			else //We are into a qtip element
-			{
-			  $('.qtip-button').click();
-			}
-		      }
-		      else
-		      {
-			addError(html, currentElement); //@TODO:change this!
-		      }
-		},
-               error: function(xhr){
-		  addError('Error!  Status = ' + xhr.status);
-               }
-             }
-            );
+          url: $(this).attr('href'),
+          success: function(html) {
+		        if(html == "ok" )
+		        {
+			        //We are in a widget
+			        if(currentElement.parent().hasClass('widget_row_delete'))
+			        {
+			          widget_parent = currentElement.closest('li.widget');
+			          widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
+			          hideForRefresh(widget_parent.find('.widget_content'));
+			        }
+			        else //We are into a qtip element
+			        {
+			          $('.qtip-button').click();
+			        }
+		        }
+		        else
+		        {
+			        addError(html, currentElement); //@TODO:change this!
+		        }
+		      },
+          error: function(xhr){
+		        addError('Error!  Status = ' + xhr.status);
+          }
+        }
+      );
     }
     return false;
  });

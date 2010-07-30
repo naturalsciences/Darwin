@@ -13,7 +13,7 @@
   <?php foreach($form_pref as $category=>$record) :?>
   	<thead alt="<?php echo $category ?>" class='head_widget'>
   		<tr>
-  			<td colspan="3" class='head_widget'>&nbsp;</td>
+  			<td colspan="2" class='head_widget'>&nbsp;</td>
   			<?php if ($level > 2) : ?>
 			<th class='head_widget'><?php echo __("Deactivated");?><br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="unused"></th>
   			<?php endif ; ?>
@@ -34,12 +34,10 @@
 		      <?php echo $widget->renderHiddenFields(); ?>
 		    </th>
 		    <?php if ($form->getEmbeddedForm('MyPreferences')->getEmbeddedForm($widget->getName())->getObject()->getMandatory() ) : ?>
-			    <th colspan="<?php echo ($level>2?5:4) ?>" class='widget_selection'>-----   Mandatory  -----</th>
+			    <th colspan="<?php echo ($level>2?4:3) ?>" class='widget_selection'>-----   Mandatory  -----</th>
 		    <?php else : ?>
-			    <td>
 			      <?php echo $widget['widget_choice']->renderError() ?>
 			      <?php echo $widget['widget_choice'] ?>
-			    </td>
 		    <?php endif ; ?>	
 		    <td class='widget_selection'><?php echo $widget['title_perso']->renderError() ?>
 			<?php echo $widget['title_perso'] ?>

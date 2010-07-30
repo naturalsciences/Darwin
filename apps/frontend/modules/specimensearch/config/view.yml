@@ -2,6 +2,6 @@ indexSuccess:
   stylesheets: [widgets.css,specimensearch.css]
   javascripts: [jquery.ui.all.min.js, widgets.js, catalogue.js, specimensearch.js]
   
-searchSuccess:
+searchResultSuccess:
   stylesheets: [specimensearch.css]
-  javascripts: [specimensearch.js]
+  javascripts: [specimensearch.js, searchForm.js]
