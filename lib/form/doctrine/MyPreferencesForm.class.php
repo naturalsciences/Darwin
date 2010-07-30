@@ -39,13 +39,12 @@ class MyPreferencesForm extends BaseMyPreferencesForm
     foreach ($inputs as $i => $input)
     {
       $rows[] = $widget->renderContentTag(
-   	  'td', 
-             $input['input'].$widget->getOption('label_separator').$input['label'],
-		   array('class' => 'widget_selection')
-           );
+   	    'td', 
+        $input['input'].$widget->getOption('label_separator').$input['label'],
+		    array('class' => 'widget_selection')
+      );
     }
- 
-    return $widget->renderContentTag('ul', implode($widget->getOption('separator'), $rows), array('class' => 'radio_list'));
+    return(implode('', $rows));    
   }
   
   

@@ -2,7 +2,7 @@
 <ul class="saved_search_widget">
 <?php foreach($searches as $search):?>
     <li>
-        <div class="w_search_label">
+        <div class="w_search_label widget_row_delete">
             <?php echo __('Specimens');?>
                     <a id='edit_info' class="widget_row_delete" href="<?php echo url_for('specimensearch/deleteSavedSearch?table=my_saved_searches&id='.$search->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?></a>
         </div>
