@@ -1,5 +1,5 @@
 <div>
-  <?php if(isset($specimensearch) && $specimensearch->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>   
+  <?php if(isset($specimensearch) && $specimensearch->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
     <?php
       if($orderDir=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';

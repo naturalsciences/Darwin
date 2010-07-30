@@ -19,16 +19,16 @@ function hide_or_show(li)
   val = li.attr('class') ;
   if(val == 'uncheck')
   {
-    $("li #"+field).find('span:first').addClass('hidden');
-    $("li #"+field).find('span:nth-child(2)').removeClass('hidden');
-    $('table.spec_results thead tr th.col_'+column).addClass('hidden');
-    $('table.spec_results tbody tr td.col_'+column).addClass('hidden');
+    $("li #"+field).find('span:first').hide();
+    $("li #"+field).find('span:nth-child(2)').show();
+    $('table.spec_results thead tr th.col_'+column).hide();
+    $('table.spec_results tbody tr td.col_'+column).hide();
   }
   else
   {
-    $("li #"+field).find('span:first').removeClass('hidden');
-    $("li #"+field).find('span:nth-child(2)').addClass('hidden');
-    $('table.spec_results thead tr th.col_'+column).removeClass('hidden');
-    $('table.spec_results tbody tr td.col_'+column).removeClass('hidden');
+    $("li #"+field).find('span:first').show();
+    $("li #"+field).find('span:nth-child(2)').hide();
+    $('table.spec_results thead tr th.col_'+column).show();
+    $('table.spec_results tbody tr td.col_'+column).show();
   }
 }

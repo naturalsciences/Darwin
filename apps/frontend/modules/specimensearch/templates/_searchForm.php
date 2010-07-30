@@ -2,9 +2,9 @@
 <?php include_javascripts_for_form($form) ?>
 
 <div class="page" id="search_div">
-  <div class="check_right hidden" id="back_button"> 
+<!--  <div class="check_right hidden" id="back_button"> 
     <input type="submit" name="back" id="back_to_search" value="<?php echo __('Back'); ?>" class="search_submit">
-  </div>   
+  </div>   -->
   <h1 id="title"><?php echo __('Specimens Search');?></h1>
   <form id="specimen_filter" class="search_form" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
     <div class="panel encod_screen" id="intro">
@@ -32,11 +32,11 @@
 </div>
 <script>
 $(document).ready(function () {
- $("#submit").click(function(){ 
+/* $("#submit").click(function(){ 
     $('div#intro').addClass('hidden') ;
     $('h1#title').html('<?php echo __("Search result");?>') ;
     $('div#back_button').removeClass('hidden') ;
-    $('form').attr('action','<?php echo url_for('specimensearch/search');?>').submit();      
+    $('form').attr('action','<?php echo url_for('specimensearch/search');?>').submit();
  });
  $('#back_to_search').click(function(){
     $('div#back_button').addClass('hidden') ;
@@ -44,13 +44,13 @@ $(document).ready(function () {
     $('div#save_button').removeClass('hidden') ;
     $('h1#title').html('<?php echo __("Specimens Search");?>') ;
     $('div.search_results_content').html('') 
- }); 
+ }); */
  $('#save_search').click(function() {
     $('div#intro').addClass('hidden') ;
     $('div#save_button').addClass('hidden') ;    
     $('h1#title').html('<?php echo ("Save your search criterias") ; ?>');
     $('div#back_button').removeClass('hidden') ;
-    $('form').attr('action','<?php echo url_for('specimensearch/saveSearch');?>').submit();    
+    $('form').attr('action','<?php echo url_for('specimensearch/saveSearch');?>').submit();
  });
 });
 </script>

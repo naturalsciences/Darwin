@@ -41,11 +41,11 @@ class specimensearchActions extends DarwinActions
     // Forward to a 404 page if the method used is not a post
     //$this->forward404Unless($request->isMethod('post'));
     $this->setCommonValues('specimensearch', 'collection_name', $request);
-    $this->form = new SpecimenSearchFormFilter();    
+    $this->form = new SpecimenSearchFormFilter();
     if($request->getParameter('specimen_search_filters','') !== '')
     {
       // Bind form with data contained in specimensearch array
-     // die(print_r($request->getParameter('specimen_search_filters')));
+      //  die(print_r($request->getParameter('specimen_search_filters')));
       $this->form->bind($request->getParameter('specimen_search_filters'));
       // Test that the form binded is still valid (no errors)
       if ($this->form->isValid())
@@ -66,7 +66,7 @@ class specimensearchActions extends DarwinActions
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
-           $this->specimensearch = $this->pagerLayout->execute();   
+           $this->specimensearch = $this->pagerLayout->execute();
         $this->field_to_show = array('category' => 'uncheck','collection' => 'uncheck','taxon' => 'uncheck','type' => 'uncheck','gtu' => 'uncheck','chrono' => 'uncheck',
             'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');   
         if ($request->getParameter('fields_to_show') != '') 
@@ -74,7 +74,7 @@ class specimensearchActions extends DarwinActions
            $tabs = explode('|',$request->getParameter('fields_to_show')) ;
           // set the fields to show
           foreach ($tabs as $tab)
-            $this->field_to_show[$tab] = 'check' ;       
+            $this->field_to_show[$tab] = 'check' ;
         }
         else
           $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
@@ -126,7 +126,7 @@ class specimensearchActions extends DarwinActions
         else
           $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
             'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');             
-         return $this->renderPartial('searchSuccess');
+        return $this->renderPartial('searchSuccess');
       }
     }
   }  
