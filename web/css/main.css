@@ -1544,3 +1544,8 @@ sup
 font-size: smaller;
 vertical-align: super;
 }
+
+img#column_display_expand
+{
+  padding-top:0.6em;
+}

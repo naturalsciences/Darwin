@@ -1,5 +1,5 @@
   <div class="container">
-    <table class="search" id="search">
+    <table>
       <thead>
         <tr>  
         <tr>

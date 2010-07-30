@@ -4,8 +4,8 @@
         <li>
             <a href="#"><?php echo __('My Preferences');?></a>
             <ul>
-		<li><?php echo link_to(__('My Profile'),'user/profile');?></li>
-                <li><?php echo link_to(__('My Widgets'),'user/widget');?></li>
+              <li><?php echo link_to(__('My Profile'),'user/profile');?></li>
+              <li><?php echo link_to(__('My Widgets'),'user/widget');?></li>
             </ul>
         </li>
         <li>
@@ -102,6 +102,5 @@ $(document).ready(function () {
   o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
   $('ul.main_menu').supersubs().superfish(o);
   $('ul.main_menu > li:not(.house):not(.exit)').append('<img class="highlight" src="/images/menu_expand.png" alt="" />');
-
 });
 </script>

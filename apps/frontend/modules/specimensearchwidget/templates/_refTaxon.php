@@ -1,4 +1,4 @@
-<table class="search" id="search">
+<table>
   <thead>
     <tr>
       <th><?php echo $form['taxon_name']->renderLabel();?></th>

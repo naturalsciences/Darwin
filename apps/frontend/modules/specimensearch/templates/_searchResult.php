@@ -1,4 +1,4 @@
-<div class="page">
+<div>
   <?php if(isset($specimensearch) && $specimensearch->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage) && isset($is_choose)):?>   
     <?php echo $specimensearch->count() ;  ?>
     <?php
@@ -225,7 +225,7 @@
                  });              
                 </script>
               </td>
-            <tr>
+            </tr>
           </tbody>
           <?php endforeach;?>
       </table>
