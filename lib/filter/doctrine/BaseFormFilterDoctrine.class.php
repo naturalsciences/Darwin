@@ -65,63 +65,64 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   * @param string $alias The Alias for the searched table if null the root alias is taken
   * @return Doctrine_Query the modified doctrine query
   */
-  public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values, $alias = null)
+  public function addNamingColumnQuery(Doctrine_Query $query, $table, $field, $values, $alias = null, $flat_field = null)
   {
-    if ($values != "" && $table != "" && $field != "")
-    {
-      if(! $alias)
-      $alias = $query->getRootAlias();
-      $search = self::splitNameQuery($values);
-      $terms = self::getAllTerms($search);
-      if(empty($terms)) return $query;
-      
-      $conn_MGR = Doctrine_Manager::connection();
-      $conn = $conn_MGR->getDbh();
-      $pg_array_string  = '';
-      foreach($terms as $term)
-        $pg_array_string .= $conn_MGR->quote($term, 'string').',';
+	if ($values != "" && $table != "" && $field != "")
+	{
+	  if(! $alias)
+		$alias = $query->getRootAlias();
+	  $search = self::splitNameQuery($values);
+	  $terms = self::getAllTerms($search);
+	  if(empty($terms)) return $query;
+	  
+	  $conn_MGR = Doctrine_Manager::connection();
+	  $conn = $conn_MGR->getDbh();
+	  $pg_array_string  = '';
+	  foreach($terms as $term)
+		$pg_array_string .= $conn_MGR->quote($term, 'string').',';
 
-      $pg_array_string = substr($pg_array_string, 0, -1); //remove last ','
+	  $pg_array_string = substr($pg_array_string, 0, -1); //remove last ','
 
-      $statement = $conn->prepare("SELECT vt.anyelement as search, word 
-                                  FROM fct_explode_array(array[$pg_array_string]) as vt  
-                                  LEFT JOIN words on word % vt.anyelement
-                                  WHERE referenced_relation = :table
-                                    AND field_name = :field
-                                    AND word ilike '%' || vt.anyelement || '%'
-                                  GROUP BY word,  vt.anyelement"
-                                );
+	  $statement = $conn->prepare("SELECT vt.anyelement as search, word from fct_explode_array(array[$pg_array_string]) as vt  
+		LEFT JOIN words on word % vt.anyelement
+		WHERE referenced_relation = :table
+		AND field_name = :field
+		AND word ilike '%' || vt.anyelement || '%'
+		GROUP BY word,  vt.anyelement");
 
-      $statement->execute(array(':table' => $table, ':field' => $field));
-      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	  $statement->execute(array(':table' => $table, ':field' => $field));
+	  $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    
+    //if $flat_field is not null then we want to use the fla table, change the $field value by $flat_field 
+    if ($flat_field != null) $field = $flat_field ;
+	  //print_r($results);
+	  if(count($results) == 0)
+	  {
+		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
+		return $query;
+	  }
 
-      //print_r($results);
-      if(count($results) == 0)
-      {
-        $query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
-        return $query;
-      }
+	  foreach ($search['with'] as $search_term)
+	  {
+		$tsquery =  self::getWordsForTerms($search_term, $results);
+		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$tsquery);
+	  }
 
-      foreach ($search['with'] as $search_term)
-      {
-        $tsquery =  self::getWordsForTerms($search_term, $results);
-        $query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$tsquery);
-      }
-
-      unset($search['with']);
-      foreach($search as $search_group)
-      {
-        $tsquery_arr = array();
-        foreach($search_group as $search_term)
-        {
-          $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
-        }
-        $tsquery = implode(' & ',$tsquery_arr);
-        $tsquery = $conn_MGR->quote($tsquery,'string');
-        $query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
-      }
-    }
-    return $query;
+	  unset($search['with']);
+	  foreach($search as $search_group)
+	  {
+		$tsquery_arr = array();
+		foreach($search_group as $search_term)
+		{
+		  $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
+		}
+		$tsquery = implode(' & ',$tsquery_arr);
+		$tsquery = $conn_MGR->quote($tsquery,'string');
+		$query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
+	  }
+	  
+	}
+	return $query;
   }
 
   /**
