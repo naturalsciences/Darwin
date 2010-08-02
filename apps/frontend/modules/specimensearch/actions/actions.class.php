@@ -36,11 +36,12 @@ class specimensearchActions extends DarwinActions
     * Action executed when searching a specimen - trigger by the click on the search button
     * @param sfWebRequest $request Request coming from browser
     */ 
-  public function executeSearchResult(sfWebRequest $request)
+  public function executeSearch(sfWebRequest $request)
   {
     // Forward to a 404 page if the method used is not a post
     //$this->forward404Unless($request->isMethod('post'));
     $this->setCommonValues('specimensearch', 'collection_name', $request);
+    $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
     if($request->getParameter('specimen_search_filters','') !== '')
     {
@@ -83,9 +84,9 @@ class specimensearchActions extends DarwinActions
     }
   }
   
-  public function executeSearch(sfWebRequest $request)
+  public function executeSearchResult(sfWebRequest $request)
   {
-    $this->executeSearchResult($request) ;      
+    $this->executeSearch($request) ;      
     return $this->renderPartial('searchSuccess');
   }  
 
