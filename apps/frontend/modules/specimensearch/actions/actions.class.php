@@ -43,7 +43,7 @@ class specimensearchActions extends DarwinActions
     $this->setCommonValues('specimensearch', 'collection_name', $request);
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
-    if($request->getParameter('specimen_search_filters','') !== '')
+    if($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '')
     {
       // Bind form with data contained in specimensearch array
       //  die(print_r($request->getParameter('specimen_search_filters')));
@@ -79,9 +79,11 @@ class specimensearchActions extends DarwinActions
         }
         else
           $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
-            'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');      
+            'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');
+        return;
       }
     }
+    $this->redirect('specimensearch/index');
   }
   
   public function executeSearchResult(sfWebRequest $request)
