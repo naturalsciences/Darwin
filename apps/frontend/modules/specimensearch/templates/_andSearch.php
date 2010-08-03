@@ -1,6 +1,6 @@
 <tr>
   <td colspan="3">
-  <?php echo $form['tag'];?>
+    <?php echo $form['tag'];?>
     <div class="purposed_tags">
     </div>
   </td>
