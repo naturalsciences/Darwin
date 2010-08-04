@@ -42,12 +42,23 @@ class specimensearchActions extends DarwinActions
     $this->setCommonValues('specimensearch', 'collection_name', $request);
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
+
     if($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '')
     {
-      // Bind form with data contained in specimensearch array
-      //  die(print_r($request->getParameter('specimen_search_filters')));
       $this->form->bind($request->getParameter('specimen_search_filters'));
-      // Test that the form binded is still valid (no errors)
+      $requested_fields_to_show = $request->getParameter('fields_to_show');
+    }
+    elseif($request->getParameter('search_id','') != '')
+    {
+      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id')) ;
+      $criterias = unserialize($saved_search->getSearchCriterias());
+      $requested_fields_to_show = $saved_search->getVisibleFieldsInResult() ;
+      Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'],$saved_search->getUserRef(),'specimensearch_widget');
+      $this->form->bind($criterias['specimen_search_filters']) ;
+    }
+
+    if($this->form->isBound())
+    {
       if ($this->form->isValid())
       {
         // Define all properties that will be either used by the data query or by the pager
@@ -69,9 +80,9 @@ class specimensearchActions extends DarwinActions
            $this->specimensearch = $this->pagerLayout->execute();
         $this->field_to_show = array('category' => 'uncheck','collection' => 'uncheck','taxon' => 'uncheck','type' => 'uncheck','gtu' => 'uncheck','chrono' => 'uncheck',
             'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');   
-        if ($request->getParameter('fields_to_show') != '') 
+        if ( $requested_fields_to_show != '') 
         {
-           $tabs = explode('|',$request->getParameter('fields_to_show')) ;
+           $tabs = explode('|', $requested_fields_to_show) ;
           // set the fields to show
           foreach ($tabs as $tab)
             $this->field_to_show[$tab] = 'check' ;

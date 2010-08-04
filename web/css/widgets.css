@@ -196,11 +196,11 @@ ul.saved_search_widget span
 
 .w_search_label
 {
-	font-size:x-small;
+  float:right;
+/*font-size:x-small;
 	color:#004A6A;
 	border:1px solid #00A2D8;
-	float:right;
-	width:9em;	
+	width:9em;	*/
 	padding-left:1em;
 }
 
