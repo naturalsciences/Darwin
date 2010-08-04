@@ -159,4 +159,27 @@ class gtuActions extends DarwinActions
     $form->addValue($number);
     return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number]));
   }
+
+  /**
+  * Return tags for a GTU without the country part
+  */
+  public function executeCompleteTag(sfWebRequest $request)
+  {
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id') );
+    $this->forward404Unless($gtu);
+    
+    $str = '<ul  class="search_tags">';
+    foreach($gtu->TagGroups as $group)
+    {
+      $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label><ul class="name_tags">';
+      $tags = explode(";",$group->getTagValue());
+      foreach($tags as $value)
+        if (strlen($value))
+          $str .=  '<li>' . trim($value).'</li>';
+      $str .= '</ul><div class="clear" />';
+    }
+    $str .= '</ul><div class="clear" />';
+    return $this->renderText($str); 
+  }
 }

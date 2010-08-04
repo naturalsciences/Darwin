@@ -193,24 +193,29 @@
                         $('#gtu_ctr_<?php echo $specimen->getId();?>_info').click(function() 
                         {
                           item_row = $(this).closest('tr');
-                          elem = item_row.find('#gtu_<?php echo $specimen->getId();?>_tree');
+                          elem = item_row.find('#gtu_<?php echo $specimen->getId();?>_details');
                           if(elem.is(":hidden"))
-                          {
-                            //$.get('<?php echo url_for("catalogue/tree?table=gtu&id=".$specimen->getGtuRef()) ;?>',function (html){
-                            //  elem.html(html).slideDown();
-                            //});
-                            elem.slideDown();
+                          { 
+                            $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
+                              item_row.find('.general_gtu').slideUp();
+                              elem.html(html).slideDown();
+                            });
+                            //elem.slideDown();
                           }
                           else
                           {
                             elem.slideUp();
+                            item_row.find('.general_gtu').slideDown();
                           }
                         });
                       });
                   </script>
-                  <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getId()."_info");?> <strong><?php echo __('Country');?> :</strong>
-                 <?php echo $specimen->getCountryTags();?><div class="clear" />
-                 <div id="gtu_<?php echo $specimen->getId();?>_tree" class="tree"><?php echo $specimen->getOtherGtuTags();?><div class="clear" /></div>
+                  <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getId()."_info");?>
+                  <div class="general_gtu">
+                    <strong><?php echo __('Country');?> :</strong>
+                    <?php echo $specimen->getCountryTags();?><div class="clear" ></div>
+                  </div>
+                 <div id="gtu_<?php echo $specimen->getId();?>_details" style="display:none;"></div>
                 <?php endif ; ?>          
               </td>                      
               <td  class="col_chrono">
