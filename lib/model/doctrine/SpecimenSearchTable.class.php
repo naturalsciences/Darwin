@@ -26,6 +26,7 @@ class SpecimenSearchTable extends Doctrine_Table
       'mineral_level_ref' => 'refMineral',
       'mineral_level_name' => 'refMineral'
     );
+
     public static function getInstance()
     {
         return Doctrine_Core::getTable('SpecimenSearch');
@@ -36,15 +37,17 @@ class SpecimenSearchTable extends Doctrine_Table
       return widget_flat_array($field) ;
     }
     
-    public function getRequiredWidget($criterias,$user,$category)
+    public function getRequiredWidget($criterias, $user, $category)
     {
       $req_widget = array() ;
       foreach($criterias as $key => $fields)
       {
         if ($key == "rec_per_page") continue ;
         if ($fields == "") continue ;
-        $req_widget[self::$widget_flat_array[$key]] = 1 ;
+
+        if(isset(self::$widget_flat_array[$key]))
+          $req_widget[] = 1 ;
       }
-      doctrine::getTable('MyPreferences')->forceWidgetOpened($user, $category ,array_keys($req_widget));
+      Doctrine::getTable('MyPreferences')->forceWidgetOpened($user, $category ,array_keys($req_widget));
     }
 }

@@ -14,8 +14,6 @@ class specimensearchActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
-
-    // Initialization of the Search expedition form    
     $this->form = new SpecimenSearchFormFilter();      
     $this->fields = '' ; //eventualy we can create a function called getDefaultFieldsToShow(), where we can set witch fields we want to be shown 
     // if Parameter name exist, so the referer is mysavedsearch
@@ -23,6 +21,7 @@ class specimensearchActions extends DarwinActions
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id')) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
+      //print_r($saved_search->getSearchCriterias());
       $this->fields = $saved_search->getVisibleFieldsInResult() ;
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'],$saved_search->getUserRef(),'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;
