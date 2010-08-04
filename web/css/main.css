@@ -1529,18 +1529,26 @@ ul.graph_range
 {
  width:100%; 
 }
+
 .action_maintenance
 {
   margin-top:2em;
   max-width: 600px;
 }
+
 div#maintenance h2
 {
   margin: 1em;
   text-decoration:underline;
 }
+
 sup
 {
 font-size: smaller;
 vertical-align: super;
+}
+
+.purposed_tags li.unprecise_tag
+{
+  border-left: 6px solid #CCCCCC;
 }

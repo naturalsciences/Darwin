@@ -100,9 +100,10 @@ class gtuActions extends DarwinActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id')), sprintf('Object gtu does not exist (%s).', $request->getParameter('id')));
-    try{
+    try
+    {
         $gtu->delete();
-	$this->redirect('gtu/index');
+        $this->redirect('gtu/index');
     }
     catch(Doctrine_Exception $ne)
     {
@@ -120,14 +121,15 @@ class gtuActions extends DarwinActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      try{
+      try
+      {
         $item = $form->save();
-	$this->redirect('gtu/edit?id='.$item->getId());
+        $this->redirect('gtu/edit?id='.$item->getId());
       }
       catch(Doctrine_Exception $ne)
       {
-	$e = new DarwinPgErrorParser($ne);
-	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
         $form->getErrorSchema()->addError($error); 
       }
     }

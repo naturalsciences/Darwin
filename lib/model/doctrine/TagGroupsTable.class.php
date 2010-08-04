@@ -20,9 +20,12 @@ class TagGroupsTable extends DarwinTable
     $conn = Doctrine_Manager::connection();
     $tags = $conn->quote($value, 'string');
     $q_group = $conn->quote($group, 'string');
+    $grouping_clause = " AND group_type = $q_group";
     $q_sub_group = $conn->quote($sub_group, 'string');
+    $sub_grouping_clause = " AND sub_group_type = $q_sub_group";
+    $group_by_and_limit = " GROUP by tag ORDER BY tag asc LIMIT 10";
 
-    $sql = "SELECT tag, sum(cnt) as cnt 
+    $sql = "SELECT tag, sum(cnt) as cnt, 1 as precision
             FROM tags as t RIGHT JOIN 
               (SELECT x.group_ref,COUNT(*) as cnt 
                FROM 
@@ -43,11 +46,11 @@ class TagGroupsTable extends DarwinTable
               )";
 
     if($group !="")
-      $sql .= " AND group_type = $q_group";
+      $sql .= $grouping_clause;
     if($sub_group != "")
-      $sql .= " AND sub_group_type = $q_sub_group";
+      $sql .= $sub_grouping_clause;
 
-    $sql .= " GROUP by tag ORDER BY tag asc LIMIT 10";
+    $sql .= $group_by_and_limit;
     $result = $conn->fetchAssoc($sql);
 
     $max = 0;
@@ -63,9 +66,36 @@ class TagGroupsTable extends DarwinTable
     $step = ($max - $min) / $nbr_of_steps;
     foreach($result as $i => $item)
     {
+      $value .= ';'.$item['tag'];
       $result[$i]['size'] = round($item['cnt'] / $step);
     }
+    /* @TODO: Modifiy this hard coded value to use an application parameter instead*/
+    if (count($result) < 4)
+    {
+      $tags_excluded = $conn->quote($value, 'string');
+      $sql = "select tag, 2 as size, 0 as precision
+              from tags as t inner join 
+                   (select distinct (tagsi) as u_tags
+                    from regexp_split_to_table($tags, ';') as tagsi
+                    where fulltoIndex(tagsi) != ''
+                   ) as taglist on t.tag % u_tags
+              where tag_indexed NOT IN 
+              (SELECT distinct(fulltoIndex(tags)) as u_tag 
+               FROM regexp_split_to_table($tags_excluded, ';') as tags 
+               WHERE fulltoIndex(tags) != ''
+              )";
 
+      if($group !="")
+        $sql .= $grouping_clause;
+      if($sub_group != "")
+        $sql .= $sub_grouping_clause;
+
+      $sql .= $group_by_and_limit;
+
+      $fuzzyResults = $conn->fetchAssoc($sql);
+      $result = array_merge($result, $fuzzyResults);
+    }
+    
     return $result;
   }
 
