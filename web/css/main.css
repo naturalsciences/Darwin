@@ -1110,6 +1110,12 @@ tr.details .details_info tr:hover
 {
   line-height: 100%;
 }
+
+.purposed_tags
+{
+  max-width:600px;
+}
+
 .tag_selected, .tag_available, .name_tags li, .purposed_tags li
 {
   background-color: #FAFAFA;
@@ -1430,7 +1436,7 @@ a.sub_group
 #gtu_filter .widget_row_delete
 {
   text-align:left;
-  vertical-align:middle;
+/*  vertical-align:middle;*/
 }
 
 #gtu_filter .item_name
