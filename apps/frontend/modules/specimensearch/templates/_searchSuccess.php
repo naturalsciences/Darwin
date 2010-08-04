@@ -63,7 +63,7 @@
           <tr>
             <th></th>
             <th>
-               <?php echo image_tag('thumbtack.png', array('alt' =>  __('Save this result'))) ; ?>
+               <?php echo image_tag('white_pin_off.png', array('alt' =>  __('Save this result'))) ; ?>
             </th>
             <th class="col_category">
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=category'.( ($orderBy=='category' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
@@ -148,7 +148,7 @@
                 <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
               </td>
               <td>
-                <?php echo image_tag('thumbtack.png', array('alt' =>  __('Save this result'))) ; ?>
+                <?php echo image_tag('blue_pin_on.png', array('alt' =>  __('Save this result'))) ; ?>
               </td>              
               <td class="col_category">
                 <?php echo $specimen->getCategory() == 'physical'? image_tag('physical.png', array('alt' => __('physical'))):
@@ -181,30 +181,37 @@
               </td>
               <td class="col_type">
                 <?php if($specimen->getWithTypes()) : ?>
-                  <?php echo image_tag('favorite_on.png', array('class'=> 'tree_cmd with_type')) ; ?>
+                  <?php echo image_tag('blue_favorite_on.png', array('class'=> 'tree_cmd with_type')) ; ?>
                 <?php else : ?>
-                  <?php echo image_tag('favorite_off.png', array('class'=> 'tree_cmd with_type')) ; ?>
+                  <?php echo image_tag('blue_favorite_off.png', array('class'=> 'tree_cmd with_type')) ; ?>
                 <?php endif ; ?>&nbsp;
               </td>        
               <td class="col_gtu">
                 <?php if($specimen->getGtuRef() > 0) : ?>
-                  <?php image_tag('info.png',"title=info class=info id=gtu_".$specimen->getId()."_info");?>                 
-                  <div id="gtu_<?php echo $specimen->getId();?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#gtu_<?php echo $specimen->getId();?>_info').click(function() 
-                     {
-                       item_row=$(this).closest('tr');
-                       if(item_row.find('#gtu_<?php echo $specimen->getId();?>_tree').is(":hidden"))
-                       {
-                         $.get('<?php echo url_for("catalogue/tree?table=gtu&id=".$specimen->getGtuRef()) ;?>',function (html){
-                           item_row.find('#gtu_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
-                           });
-                       }
-                       $('#gtu_<?php echo $specimen->getId();?>_tree').slideUp();
-                     });
+                      $(document).ready(function () {
+                        $('#gtu_ctr_<?php echo $specimen->getId();?>_info').click(function() 
+                        {
+                          item_row = $(this).closest('tr');
+                          elem = item_row.find('#gtu_<?php echo $specimen->getId();?>_tree');
+                          if(elem.is(":hidden"))
+                          {
+                            //$.get('<?php echo url_for("catalogue/tree?table=gtu&id=".$specimen->getGtuRef()) ;?>',function (html){
+                            //  elem.html(html).slideDown();
+                            //});
+                            elem.slideDown();
+                          }
+                          else
+                          {
+                            elem.slideUp();
+                          }
+                        });
+                      });
                   </script>
-                  <a href="gtu/edit/id/<?php echo $specimen->getGtuRef();?>"><?php echo $specimen->getGtuName();?></a>
-                <?php endif ; ?>&nbsp;                
+                  <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getId()."_info");?> <strong><?php echo __('Country');?> :</strong>
+                 <?php echo $specimen->getCountryTags();?><div class="clear" />
+                 <div id="gtu_<?php echo $specimen->getId();?>_tree" class="tree"><?php echo $specimen->getOtherGtuTags();?><div class="clear" /></div>
+                <?php endif ; ?>          
               </td>                      
               <td  class="col_chrono">
                 <?php if($specimen->getChronoRef() > 0) : ?>              

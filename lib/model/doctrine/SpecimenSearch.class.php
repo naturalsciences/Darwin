@@ -12,4 +12,32 @@
  */
 class SpecimenSearch extends BaseSpecimenSearch
 {
+
+    public function getCountryTags()
+    {
+      $tags = explode(';',$this->getGtuCountryTagValue(''));
+      $nbr = count($tags);
+      if(! $nbr) return "-";
+      $str = '<ul class="name_tags">';
+      foreach($tags as $value)
+        if (strlen($value))
+          $str .=  '<li>' . trim($value).'</li>';
+      $str .= '</ul>';
+      
+      return $str;
+    }
+
+    public function getOtherGtuTags()
+    {
+      $tags = explode(';',$this->getGtuCountryTagValue(''));
+      $nbr = count($tags);
+      if(! $nbr) return "-";
+      $str = '<ul class="name_tags">';
+      foreach($tags as $value)
+        if (strlen($value))
+          $str .=  '<li>' . trim($value).'</li>';
+      $str .= '</ul>';
+      
+      return $str;
+    }
 }
