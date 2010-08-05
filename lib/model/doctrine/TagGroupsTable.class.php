@@ -77,7 +77,7 @@ class TagGroupsTable extends DarwinTable
       $tags_excluded = $conn->quote($value, 'string');
       $group_by = " GROUP BY similarity(tag, u_tags), tag";
       $order_by = " ORDER BY similarity(tag, u_tags) desc, tag asc";
-      $sql = "select tag, 2 as size, 0 as precision, similarity(tag, u_tags) as sims
+      $sql = "select tag, similarity(tag, u_tags) as sims
               from tags as t inner join 
                    (select distinct (tagsi) as u_tags
                     from regexp_split_to_table($tags, ';') as tagsi
@@ -94,8 +94,10 @@ class TagGroupsTable extends DarwinTable
       if($sub_group != "")
         $sql .= $sub_grouping_clause;
 
-      $sql .= $order_by . $limit;
+      $sql .= $order_by;
 
+      $sql = "select distinct tag, 2 as size, 0 as precision
+              from (" .$sql.") as subquery ".$limit;
       $fuzzyResults = $conn->fetchAssoc($sql);
       $result = array_merge($result, $fuzzyResults);
     }
