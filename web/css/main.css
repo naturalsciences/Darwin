@@ -1162,6 +1162,16 @@ tr.details .details_info tr:hover
   border-color:#C1CF56;
 }
 
+.purposed_tags li.unprecise_tag
+{
+  border-left: 6px solid #CCCCCC;
+}
+
+.purposed_tags img
+{
+  margin-top:0.5em;
+}
+
 table.classifications_edit tbody td:nth-child(2)
 {
   width:41%;
@@ -1552,9 +1562,4 @@ sup
 {
 font-size: smaller;
 vertical-align: super;
-}
-
-.purposed_tags li.unprecise_tag
-{
-  border-left: 6px solid #CCCCCC;
 }
