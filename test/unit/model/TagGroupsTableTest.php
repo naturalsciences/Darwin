@@ -16,12 +16,12 @@ $t->info('getPropositions');
 
 $props = Doctrine::getTable('TagGroups')->getPropositions('brussels');
 $t->is(count($props),4, 'We got 4 props');
-$t->is(count($props[0]),3, 'With 3 property in each');
+$t->is(count($props[0]),4, 'With 4 property in each');
 $t->is($props[0]['tag'],'Big White Mountain', 'Purpose from all groups is showed');
 
 
 $props = Doctrine::getTable('TagGroups')->getPropositions('Bruselo');
-$t->is(count($props),1, 'Got 1 prop');
+$t->is(count($props),2, 'Got 2 prop');
 $t->is($props[0]['tag'],'Brussels', 'Brussels is showed');
 
 
