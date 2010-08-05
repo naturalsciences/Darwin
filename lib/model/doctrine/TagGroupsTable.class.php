@@ -23,7 +23,9 @@ class TagGroupsTable extends DarwinTable
     $grouping_clause = " AND group_type = $q_group";
     $q_sub_group = $conn->quote($sub_group, 'string');
     $sub_grouping_clause = " AND sub_group_type = $q_sub_group";
-    $group_by_and_limit = " GROUP by tag ORDER BY tag asc LIMIT 10";
+    $group_by = " GROUP by tag";
+    $order_by = " ORDER BY tag asc";
+    $limit = " LIMIT 10";
 
     $sql = "SELECT tag, sum(cnt) as cnt, 1 as precision
             FROM tags as t RIGHT JOIN 
@@ -50,7 +52,7 @@ class TagGroupsTable extends DarwinTable
     if($sub_group != "")
       $sql .= $sub_grouping_clause;
 
-    $sql .= $group_by_and_limit;
+    $sql .= $group_by . $order_by . $limit;
     $result = $conn->fetchAssoc($sql);
 
     $max = 0;
@@ -73,7 +75,9 @@ class TagGroupsTable extends DarwinTable
     if (count($result) < 4)
     {
       $tags_excluded = $conn->quote($value, 'string');
-      $sql = "select tag, 2 as size, 0 as precision
+      $group_by = " GROUP BY similarity(tag, u_tags), tag";
+      $order_by = " ORDER BY similarity(tag, u_tags) desc, tag asc";
+      $sql = "select tag, 2 as size, 0 as precision, similarity(tag, u_tags) as sims
               from tags as t inner join 
                    (select distinct (tagsi) as u_tags
                     from regexp_split_to_table($tags, ';') as tagsi
@@ -90,7 +94,7 @@ class TagGroupsTable extends DarwinTable
       if($sub_group != "")
         $sql .= $sub_grouping_clause;
 
-      $sql .= $group_by_and_limit;
+      $sql .= $order_by . $limit;
 
       $fuzzyResults = $conn->fetchAssoc($sql);
       $result = array_merge($result, $fuzzyResults);
