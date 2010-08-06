@@ -812,8 +812,6 @@ Specimens:
         acquisition_category: { type: string, default: expedition}
         acquisition_date_mask: { type: integer, notnull: true, default:0}
         acquisition_date: { type: string, default: '0001-01-01'}
-        collecting_method: { type: string}
-        collecting_tool: { type: string}
         specimen_count_min: { type: integer, default: 1}
         specimen_count_max: { type: integer, default: 1}
         station_visible: { type: boolean, default: true}
@@ -990,3 +988,45 @@ SpecimensCodes:
         Specimens:
             local: record_id
             foreign: id
+
+CollectingMethods:
+    tableName: collecting_methods
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        method: { type:string, notnull: true }
+        method_indexed: { type: string}
+
+CollectingTools:
+    tableName: collecting_tools
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        tool: { type:string, notnull: true }
+        tool_indexed: { type: string}
+      
+SpecimensMethods:
+    tableName: specimen_collecting_methods
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        specimen_ref: { type: integer, notnull: true}
+        collecting_method_ref: { type: integer, notnull: true}
+    relations:
+        Specimens:
+          local: specimen_ref
+          foreign: id
+        CollectingMethods:
+          local: collecting_method_ref
+          foreign: id
+
+SpecimensTools:
+    tableName: specimen_collecting_tools
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        specimen_ref: { type: integer, notnull: true}
+        collecting_tool_ref: { type: integer, notnull: true}
+    relations:
+        Specimens:
+          local: specimen_ref
+          foreign: id
+        CollectingTools:
+          local: collecting_tool_ref
+          foreign: id

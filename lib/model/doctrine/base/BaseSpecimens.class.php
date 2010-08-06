@@ -21,8 +21,6 @@
  * @property string $acquisition_category
  * @property integer $acquisition_date_mask
  * @property string $acquisition_date
- * @property string $collecting_method
- * @property string $collecting_tool
  * @property integer $specimen_count_min
  * @property integer $specimen_count_max
  * @property boolean $station_visible
@@ -43,6 +41,8 @@
  * @property Doctrine_Collection $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimensAccompanying
  * @property Doctrine_Collection $SpecimensCodes
+ * @property Doctrine_Collection $SpecimensMethods
+ * @property Doctrine_Collection $SpecimensTools
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getCategory()              Returns the current record's "category" value
@@ -60,8 +60,6 @@
  * @method string              getAcquisitionCategory()   Returns the current record's "acquisition_category" value
  * @method integer             getAcquisitionDateMask()   Returns the current record's "acquisition_date_mask" value
  * @method string              getAcquisitionDate()       Returns the current record's "acquisition_date" value
- * @method string              getCollectingMethod()      Returns the current record's "collecting_method" value
- * @method string              getCollectingTool()        Returns the current record's "collecting_tool" value
  * @method integer             getSpecimenCountMin()      Returns the current record's "specimen_count_min" value
  * @method integer             getSpecimenCountMax()      Returns the current record's "specimen_count_max" value
  * @method boolean             getStationVisible()        Returns the current record's "station_visible" value
@@ -82,6 +80,8 @@
  * @method Doctrine_Collection getSpecimenIndividuals()   Returns the current record's "SpecimenIndividuals" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
  * @method Doctrine_Collection getSpecimensCodes()        Returns the current record's "SpecimensCodes" collection
+ * @method Doctrine_Collection getSpecimensMethods()      Returns the current record's "SpecimensMethods" collection
+ * @method Doctrine_Collection getSpecimensTools()        Returns the current record's "SpecimensTools" collection
  * @method Specimens           setId()                    Sets the current record's "id" value
  * @method Specimens           setCategory()              Sets the current record's "category" value
  * @method Specimens           setCollectionRef()         Sets the current record's "collection_ref" value
@@ -98,8 +98,6 @@
  * @method Specimens           setAcquisitionCategory()   Sets the current record's "acquisition_category" value
  * @method Specimens           setAcquisitionDateMask()   Sets the current record's "acquisition_date_mask" value
  * @method Specimens           setAcquisitionDate()       Sets the current record's "acquisition_date" value
- * @method Specimens           setCollectingMethod()      Sets the current record's "collecting_method" value
- * @method Specimens           setCollectingTool()        Sets the current record's "collecting_tool" value
  * @method Specimens           setSpecimenCountMin()      Sets the current record's "specimen_count_min" value
  * @method Specimens           setSpecimenCountMax()      Sets the current record's "specimen_count_max" value
  * @method Specimens           setStationVisible()        Sets the current record's "station_visible" value
@@ -120,6 +118,8 @@
  * @method Specimens           setSpecimenIndividuals()   Sets the current record's "SpecimenIndividuals" collection
  * @method Specimens           setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
  * @method Specimens           setSpecimensCodes()        Sets the current record's "SpecimensCodes" collection
+ * @method Specimens           setSpecimensMethods()      Sets the current record's "SpecimensMethods" collection
+ * @method Specimens           setSpecimensTools()        Sets the current record's "SpecimensTools" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -195,12 +195,6 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasColumn('acquisition_date', 'string', null, array(
              'type' => 'string',
              'default' => '0001-01-01',
-             ));
-        $this->hasColumn('collecting_method', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collecting_tool', 'string', null, array(
-             'type' => 'string',
              ));
         $this->hasColumn('specimen_count_min', 'integer', null, array(
              'type' => 'integer',
@@ -285,5 +279,13 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasMany('SpecimensCodes', array(
              'local' => 'id',
              'foreign' => 'record_id'));
+
+        $this->hasMany('SpecimensMethods', array(
+             'local' => 'id',
+             'foreign' => 'specimen_ref'));
+
+        $this->hasMany('SpecimensTools', array(
+             'local' => 'id',
+             'foreign' => 'specimen_ref'));
     }
 }
