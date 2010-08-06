@@ -56,5 +56,9 @@ class savesearchActions extends sfActions
     return $this->renderText("ok");
     //$this->redirect('@homepage');
   }
-
+  
+  public function executeIndex(sfWebRequest $request)
+  {
+    $this->searches = Doctrine::getTable('MySavedSearches')->addUserOrder($this->getUser()->getId())->execute();
+  }
 }

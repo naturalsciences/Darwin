@@ -19,11 +19,11 @@ class specimensearchActions extends DarwinActions
     // if Parameter name exist, so the referer is mysavedsearch
     if ($request->getParameter('search_id','') != '')
     {
-      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id')) ;
+      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
       //print_r($saved_search->getSearchCriterias());
       $this->fields = $saved_search->getVisibleFieldsInResult() ;
-      Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'],$saved_search->getUserRef(),'specimensearch_widget');
+      Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;
     }    
     else $this->form->addGtuTagValue(0);    
@@ -50,13 +50,16 @@ class specimensearchActions extends DarwinActions
     }
     elseif($request->getParameter('search_id','') != '')
     {
-      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id')) ;
+      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
+
+      $this->forward404Unless($saved_search);
+
       $criterias = unserialize($saved_search->getSearchCriterias());
       $requested_fields_to_show = $saved_search->getVisibleFieldsInResult() ;
 
       if(isset($criterias['specimen_search_filters']))
       {
-        Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $saved_search->getUserRef(), 'specimensearch_widget');
+        Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
         $this->form->bind($criterias['specimen_search_filters']) ;
       }
     }

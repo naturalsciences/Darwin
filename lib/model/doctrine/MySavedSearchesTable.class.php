@@ -17,14 +17,10 @@ class MySavedSearchesTable extends DarwinTable
     return $q;
   }
   
-  public function getSavedSearchByKey($id)
+  public function getSavedSearchByKey($id, $user )
   {       
-    $q = Doctrine_Query::create()
-      ->from('MySavedSearches s');
-    $alias = $q->getRootAlias();
-    $q->andWhere($alias . '.id = ?', $id)
-      ->orderBy($alias . '.favorite DESC');
-    return($q->fetchOne()) ;
+    return $this->addUserOrder(null, $user)
+      ->fetchOne();
   }
   
   public function getAllFields()
