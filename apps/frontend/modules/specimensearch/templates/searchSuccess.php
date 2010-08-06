@@ -25,9 +25,7 @@
                                ); ?>
         </div>
       </div>
-      <div class="check_right" id="save_button"> 
-        <input type="button" name="save" id="save_search" value="<?php echo __('Save this search'); ?>" class="save_search">
-      </div>
+        <?php include_partial('savesearch/savebut');?>
     </form>
   </div>
 </div>

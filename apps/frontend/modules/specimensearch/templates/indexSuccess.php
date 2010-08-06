@@ -6,7 +6,7 @@
 <?php include_javascripts_for_form($form) ?>
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search');?></h1>
-    <form id="specimen_filter" action="specimensearch/search" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+    <form id="specimen_filter" class="search_form" action="specimensearch/search" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
       <div class="panel encod_screen" id="intro">
         <input id="fields_to_show" type="hidden" name="fields_to_show" value="<?php echo $fields ;?>">
         <?php include_partial('widgets/screen', array(
@@ -21,9 +21,7 @@
             <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">
           </div>
       </div>      
-      <div class="check_right" id="save_button"> 
-        <input type="button" name="save" id="save_search" value="<?php echo __('Save this search'); ?>" class="save_search">
-      </div>   
+      <?php include_partial('savesearch/savebut');?>
     </form>
   </div>
 </div>

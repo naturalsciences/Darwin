@@ -53,8 +53,12 @@ class specimensearchActions extends DarwinActions
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id')) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
       $requested_fields_to_show = $saved_search->getVisibleFieldsInResult() ;
-      Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'],$saved_search->getUserRef(),'specimensearch_widget');
-      $this->form->bind($criterias['specimen_search_filters']) ;
+
+      if(isset($criterias['specimen_search_filters']))
+      {
+        Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $saved_search->getUserRef(), 'specimensearch_widget');
+        $this->form->bind($criterias['specimen_search_filters']) ;
+      }
     }
 
     if($this->form->isBound())
@@ -140,49 +144,5 @@ class specimensearchActions extends DarwinActions
     $form = new SpecimenSearchFormFilter();
     $form->addGtuTagValue($number);
     return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number]));
-  }  
-  
-  public function executeSaveSearch(sfWebRequest $request)
-  {
-    $criterias = serialize($request->getPostParameters())  ;
-    $saved_searches = new MySavedsearches() ;
-    $saved_searches->setSearchCriterias($criterias) ;
-    $saved_searches->setUserRef($this->getUser()->getId()) ;
-    $saved_searches->setVisibleFieldsInResult('collection_name');
-    $this->form = new MySavedSearchesForm($saved_searches) ;
-    
-  }
-  
-  public function executeProcessSave(sfWebRequest $request)
-  {
-    $this->form = new MySavedSearchesForm();    
-    $this->form->bind($request->getParameter('my_saved_searches'));
-    if ($this->form->isValid())
-    {
-      try{
-        $this->form->save();
-      	return $this->redirect('specimensearch/index');
-      }
-      catch(Doctrine_Exception $ne)
-      {
-        $e = new DarwinPgErrorParser($ne);
-        return $this->renderText($e->getMessage());
-      }      
-    }
-  }
-  public function executeDeleteSavedSearch(sfWebRequest $request)
-  {
-    $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
-    $this->forward404Unless($r,'No such item');
-    try{
-      $r->delete();
-    }
-    catch(Doctrine_Exception $ne)
-    {
-      $e = new DarwinPgErrorParser($ne);
-      $this->renderText($e->getMessage());
-    }
-    return $this->renderText("ok");
-    //$this->redirect('@homepage');
   }  
 }
