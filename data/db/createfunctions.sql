@@ -2320,6 +2320,10 @@ BEGIN
 		NEW.name_indexed := fullToIndex(NEW.name);
 	ELSIF TG_TABLE_NAME = 'igs' THEN
 		NEW.ig_num_indexed := fullToIndex(NEW.ig_num);
+  ELSIF TG_TABLE_NAME = 'collecting_methods' THEN
+    NEW.method_indexed := fullToIndex(NEW.method);
+  ELSIF TG_TABLE_NAME = 'collecting_tools' THEN
+    NEW.tool_indexed := fullToIndex(NEW.tool);
 	END IF;
 	RETURN NEW;
 END;

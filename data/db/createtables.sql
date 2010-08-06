@@ -1816,8 +1816,8 @@ create sequence specimen_parts_id_seq;
 create table specimen_parts
        (
         id integer not null default nextval('specimen_parts_id_seq'),
-	parent_ref integer,
-	path varchar not null default '/',
+        parent_ref integer,
+        path varchar not null default '/',
         specimen_individual_ref integer not null,
         specimen_part varchar not null default 'specimen',
         complete boolean not null default true,
@@ -1838,7 +1838,7 @@ create table specimen_parts
         specimen_part_count_max integer not null default 1,
         constraint pk_specimen_parts primary key (id),
         constraint fk_specimen_parts_specimen_individuals foreign key (specimen_individual_ref) references specimen_individuals(id) on delete cascade,
-	constraint fk_specimen_parts_parent_ref foreign key (parent_ref) references specimen_parts(id) on delete cascade,
+        constraint fk_specimen_parts_parent_ref foreign key (parent_ref) references specimen_parts(id) on delete cascade,
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
         constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
@@ -1929,6 +1929,72 @@ comment on column specimens_accompanying.quantity is 'Quantity of accompanying s
 comment on column specimens_accompanying.unit is 'Unit used for quantity of accompanying specimen presence';
 comment on column specimens_accompanying.taxon_ref is 'Reference of the accompanying taxon (if it''s a biological unit accompanying) - id field of taxonomy table';
 comment on column specimens_accompanying.form is 'Form of accompanying specimen presence: colony, aggregate, isolated,...';
+
+create sequence collecting_tools_id_seq;
+
+create table collecting_tools
+       (
+        id integer not null default nextval('collecting_tools_id_seq'),
+        tool varchar not null,
+        tool_indexed varchar not null,
+        constraint pk_collecting_tools primary key (id),
+        constraint unq_collecting_tools unique (tool_indexed)
+       );
+comment on table collecting_tools is 'List of all available collecting tools';
+comment on column collecting_tools.id is 'Unique identifier of a collecting tool';
+comment on column collecting_tools.tool is 'Tool used';
+comment on column collecting_tools.tool_indexed is 'Indexed form of tool used - for ordering and filtering purposes';
+
+create sequence specimen_collecting_tools_id_seq;
+
+create table specimen_collecting_tools
+  (
+    id integer not null default nextval('specimen_collecting_tools_id_seq'),
+    specimen_ref integer not null,
+    collecting_tool_ref integer not null,
+    constraint pk_specimen_collecting_tools primary key (id),
+    constraint unq_specimen_collecting_tools unique (specimen_ref, collecting_tool_ref),
+    constraint fk_specimen_collecting_tools_specimen foreign key (specimen_ref) references specimens (id) on delete cascade,
+    constraint fk_specimen_collecting_tools_tool foreign key (collecting_tool_ref) references collecting_tools (id)
+  );
+
+comment on table specimen_collecting_tools is 'Association of collecting tools with specimens';
+comment on column specimen_collecting_tools.id is 'Unique identifier of an association';
+comment on column specimen_collecting_tools.specimen_ref is 'Identifier of a specimen - comes from specimens table (id field)';
+comment on column specimen_collecting_tools.collecting_tool_ref is 'Identifier of a collecting tool - comes from collecting_tools table (id field)';
+
+create sequence collecting_methods_id_seq;
+
+create table collecting_methods
+       (
+        id integer not null default nextval('collecting_methods_id_seq'),
+        method varchar not null,
+        method_indexed varchar not null,
+        constraint pk_collecting_methods primary key (id),
+        constraint unq_collecting_methods unique (method_indexed)
+       );
+comment on table collecting_methods is 'List of all available collecting methods';
+comment on column collecting_methods.id is 'Unique identifier of a collecting method';
+comment on column collecting_methods.method is 'Method used';
+comment on column collecting_methods.method_indexed is 'Indexed form of method used - for ordering and filtering purposes';
+
+create sequence specimen_collecting_methods_id_seq;
+
+create table specimen_collecting_methods
+  (
+    id integer not null default nextval('specimen_collecting_methods_id_seq'),
+    specimen_ref integer not null,
+    collecting_method_ref integer not null,
+    constraint pk_specimen_collecting_methods primary key (id),
+    constraint unq_specimen_collecting_methods unique (specimen_ref, collecting_method_ref),
+    constraint fk_specimen_collecting_methods_specimen foreign key (specimen_ref) references specimens (id) on delete cascade,
+    constraint fk_specimen_collecting_methods_method foreign key (collecting_method_ref) references collecting_methods (id)
+  );
+
+comment on table specimen_collecting_methods is 'Association of collecting methods with specimens';
+comment on column specimen_collecting_methods.id is 'Unique identifier of an association';
+comment on column specimen_collecting_methods.specimen_ref is 'Identifier of a specimen - comes from specimens table (id field)';
+comment on column specimen_collecting_methods.collecting_method_ref is 'Identifier of a collecting method - comes from collecting_methods table (id field)';
 
 create table words
   (

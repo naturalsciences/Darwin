@@ -145,6 +145,10 @@ CREATE INDEX CONCURRENTLY idx_associated_multimedia_multimedia_ref on associated
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_specimen_ref on specimens_accompanying(specimen_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_taxon_ref on specimens_accompanying(taxon_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_mineral_ref on specimens_accompanying(mineral_ref);
+CREATE INDEX CONCURRENTLY idx_specimen_collecting_methods_specimen_ref on specimen_collecting_methods(specimen_ref);
+CREATE INDEX CONCURRENTLY idx_specimen_collecting_methods_method_ref on specimen_collecting_methods(collecting_method_ref);
+CREATE INDEX CONCURRENTLY idx_specimen_collecting_tools_specimen_ref on specimen_collecting_tools(specimen_ref);
+CREATE INDEX CONCURRENTLY idx_specimen_collecting_tools_tool_ref on specimen_collecting_tools(collecting_tool_ref);
 CREATE INDEX CONCURRENTLY idx_insurances_insurer_ref on insurances(insurer_ref);
 CREATE INDEX CONCURRENTLY idx_specimens_ig_ref on specimens(ig_ref);
 CREATE INDEX CONCURRENTLY idx_tags_gtu_ref on tags(gtu_ref);
@@ -215,6 +219,8 @@ CREATE INDEX CONCURRENTLY idx_codes_code_prefix_separator on codes(code_prefix_s
 CREATE INDEX CONCURRENTLY idx_codes_code_suffix_separator on codes(code_suffix_separator) WHERE NOT code_suffix_separator IS NULL;
 CREATE INDEX CONCURRENTLY idx_codes_code on codes(code) WHERE NOT code IS NULL;
 CREATE INDEX CONCURRENTLY idx_codes_referenced_record on codes(referenced_relation, record_id, code_category, code_date, full_code_order_by);
+CREATE INDEX CONCURRENTLY idx_collecting_methods_method_indexed on collecting_methods(method_indexed);
+CREATE INDEX CONCURRENTLY idx_collecting_tools_tool_indexed on collecting_tools(tool_indexed);
 CREATE INDEX CONCURRENTLY idx_collection_maintenance_action on collection_maintenance(action_observation);
 CREATE INDEX CONCURRENTLY idx_collection_maintenance_referenced_record on collection_maintenance(referenced_relation, record_id);
 CREATE INDEX CONCURRENTLY idx_collections_collection_type on collections(collection_type);
@@ -453,6 +459,8 @@ CREATE INDEX CONCURRENTLY idx_lithology_unit_rock_indexed on lithology(unit_rock
 /*** FullText ***/
 CREATE INDEX CONCURRENTLY idx_words_trgm ON words USING gin(word gin_trgm_ops);
 CREATE INDEX CONCURRENTLY idx_tags_trgm ON tags USING gin(tag gin_trgm_ops);
+CREATE INDEX CONCURRENTLY idx_tool_trgm ON collecting_tools USING gin(tool gin_trgm_ops);
+CREATE INDEX CONCURRENTLY idx_method_trgm ON collecting_methods USING gin(method gin_trgm_ops);
 CREATE INDEX CONCURRENTLY idx_words_table_field on words(referenced_relation,field_name);
 
 /*** Dates ***/

@@ -15,7 +15,8 @@ DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taggroups ON tag_groups CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxonomy CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_classvernacularnames ON class_vernacular_names CASCADE;
 DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_vernacularnames ON vernacular_names CASCADE;
-
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_collecting_tools ON collecting_tools CASCADE;
+DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_collecting_methods ON collecting_methods CASCADE;
 DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividuals ON specimen_individuals CASCADE;
 
 /*** REPERCUTION record_id ****/

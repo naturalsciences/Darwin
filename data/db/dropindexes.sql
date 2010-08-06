@@ -287,6 +287,14 @@
  DROP INDEX IF EXISTS idx_tags_group_type;
  DROP INDEX IF EXISTS idx_tags_sub_group_type;
  
+  /*** Gin indexes ***/
+  
+  DROP INDEX IF EXISTS idx_words_trgm;
+  DROP INDEX IF EXISTS idx_tags_trgm;
+  DROP INDEX IF EXISTS idx_tools_trgm;
+  DROP INDEX IF EXISTS idx_methods_trgm;
+  DROP INDEX IF EXISTS idx_words_table_field;
+
   /*** BTree indexes in Darwin flat table to be dropped ***/
 
   DROP INDEX IF EXISTS idx_darwin_flat_category;
