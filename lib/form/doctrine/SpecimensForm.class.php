@@ -192,26 +192,26 @@ class SpecimensForm extends BaseSpecimensForm
     ));
     
     /* Collecting method */
-    $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
-        'model' => 'Specimens',
-        'table_method' => 'getDistinctMethods',
-        'method' => 'getMethod',
-        'key_method' => 'getMethod',
-        'add_empty' => true,
-        'change_label' => 'Pick a method in the list',
-        'add_label' => 'Add another method',
-    ));
-    
-    /* Collecting tool */
-    $this->widgetSchema['collecting_tool'] = new widgetFormSelectComplete(array(
-        'model' => 'Specimens',
-        'table_method' => 'getDistinctTools',
-        'method' => 'getTool',
-        'key_method' => 'getTool',
-        'add_empty' => true,
-        'change_label' => 'Pick a tool in the list',
-        'add_label' => 'Add another tool',
-    ));
+//     $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
+//         'model' => 'Specimens',
+//         'table_method' => 'getDistinctMethods',
+//         'method' => 'getMethod',
+//         'key_method' => 'getMethod',
+//         'add_empty' => true,
+//         'change_label' => 'Pick a method in the list',
+//         'add_label' => 'Add another method',
+//     ));
+//     
+//     /* Collecting tool */
+//     $this->widgetSchema['collecting_tool'] = new widgetFormSelectComplete(array(
+//         'model' => 'Specimens',
+//         'table_method' => 'getDistinctTools',
+//         'method' => 'getTool',
+//         'key_method' => 'getTool',
+//         'add_empty' => true,
+//         'change_label' => 'Pick a tool in the list',
+//         'add_label' => 'Add another tool',
+//     ));
 
     /* Acquisition categories */
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
@@ -509,12 +509,12 @@ class SpecimensForm extends BaseSpecimensForm
 		'specimen_count_min',
 		'specimen_count_max',
 	  ),
-	  'Collecting_meth' => array(
+/*	  'Collecting_meth' => array(
 		'collecting_method',
 	  ),
 	  'Collecting_Tool' => array(
 		'collecting_tool',
-	  ),
+	  ),*/
 	);
   }
   public function bind(array $taintedValues = null, array $taintedFiles = null)

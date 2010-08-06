@@ -284,8 +284,8 @@ Specimens:
         specimen_count_min: 1
         acquisition_date: '2001-01-01'
         acquisition_category: expedition
-        collecting_tool: Fish Net
-        collecting_method: Hunting
+#         collecting_tool: Fish Net
+#         collecting_method: Hunting
         Taxonomy: ta1
     sp2:
         id: 2
@@ -293,8 +293,8 @@ Specimens:
         specimen_count_min: 1
         acquisition_date: '2001-03-01'
         acquisition_category: theft
-        collecting_tool: fish Pas net
-        collecting_method: Hunting
+#         collecting_tool: fish Pas net
+#         collecting_method: Hunting
         Taxonomy: ta2
     sp3:
         id: 3
@@ -302,8 +302,8 @@ Specimens:
         specimen_count_min: 1
         acquisition_date: '2001-02-01'
         acquisition_category: expedition
-        collecting_tool: Fish Net
-        collecting_method: Fishing
+#         collecting_tool: Fish Net
+#         collecting_method: Fishing
         Taxonomy: ta3
         HostSpecimen: sp1
         HostTaxon: ta1
