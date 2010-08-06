@@ -854,6 +854,42 @@ Specimens:
             class: Igs
             local: ig_ref
             foreign: id
+        CollectingMethods:
+            class: CollectingMethods
+            refClass: SpecimensMethods
+            local: specimen_ref
+            foreign: collecting_method_ref
+        CollectingTools:
+            class: CollectingTools
+            refClass: SpecimensTools
+            local: specimen_ref
+            foreign: collecting_tool_ref
+
+CollectingMethods:
+    tableName: collecting_methods
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        method: { type:string, notnull: true }
+        method_indexed: { type: string}
+    relations:
+        Specimens:
+            class: Specimens
+            refClass: SpecimensMethods
+            local: collecting_method_ref
+            foreign: specimen_ref
+
+CollectingTools:
+    tableName: collecting_tools
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        tool: { type:string, notnull: true }
+        tool_indexed: { type: string}
+    relations:
+        Specimens:
+            class: Specimens
+            refClass: SpecimensTools
+            local: collecting_tool_ref
+            foreign: specimen_ref
 
 Codes:
   columns:
@@ -988,20 +1024,6 @@ SpecimensCodes:
         Specimens:
             local: record_id
             foreign: id
-
-CollectingMethods:
-    tableName: collecting_methods
-    columns:
-        id: { type: integer, primary: true, autoincrement: true}
-        method: { type:string, notnull: true }
-        method_indexed: { type: string}
-
-CollectingTools:
-    tableName: collecting_tools
-    columns:
-        id: { type: integer, primary: true, autoincrement: true}
-        tool: { type:string, notnull: true }
-        tool_indexed: { type: string}
       
 SpecimensMethods:
     tableName: specimen_collecting_methods

@@ -276,7 +276,13 @@ CollectionsRights:
     cr1:
         Users: u1
         Collections : c2
-                           
+
+CollectingMethods:
+    cm1:
+        method: Trappist catch
+    cm2:
+        method: Lie
+
 Specimens:
     sp1:
         id: 1

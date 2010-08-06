@@ -8,15 +8,18 @@
  * @property integer $id
  * @property string $tool
  * @property string $tool_indexed
+ * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimensTools
  * 
  * @method integer             getId()             Returns the current record's "id" value
  * @method string              getTool()           Returns the current record's "tool" value
  * @method string              getToolIndexed()    Returns the current record's "tool_indexed" value
+ * @method Doctrine_Collection getSpecimens()      Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimensTools() Returns the current record's "SpecimensTools" collection
  * @method CollectingTools     setId()             Sets the current record's "id" value
  * @method CollectingTools     setTool()           Sets the current record's "tool" value
  * @method CollectingTools     setToolIndexed()    Sets the current record's "tool_indexed" value
+ * @method CollectingTools     setSpecimens()      Sets the current record's "Specimens" collection
  * @method CollectingTools     setSpecimensTools() Sets the current record's "SpecimensTools" collection
  * 
  * @package    darwin
@@ -46,6 +49,11 @@ abstract class BaseCollectingTools extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('Specimens', array(
+             'refClass' => 'SpecimensTools',
+             'local' => 'collecting_tool_ref',
+             'foreign' => 'specimen_ref'));
+
         $this->hasMany('SpecimensTools', array(
              'local' => 'id',
              'foreign' => 'collecting_tool_ref'));

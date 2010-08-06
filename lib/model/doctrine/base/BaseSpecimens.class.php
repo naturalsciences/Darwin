@@ -37,6 +37,8 @@
  * @property Taxonomy $HostTaxon
  * @property Specimens $HostSpecimen
  * @property Igs $Igs
+ * @property Doctrine_Collection $CollectingMethods
+ * @property Doctrine_Collection $CollectingTools
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenIndividuals
  * @property Doctrine_Collection $SpecimensAccompanying
@@ -76,6 +78,8 @@
  * @method Taxonomy            getHostTaxon()             Returns the current record's "HostTaxon" value
  * @method Specimens           getHostSpecimen()          Returns the current record's "HostSpecimen" value
  * @method Igs                 getIgs()                   Returns the current record's "Igs" value
+ * @method Doctrine_Collection getCollectingMethods()     Returns the current record's "CollectingMethods" collection
+ * @method Doctrine_Collection getCollectingTools()       Returns the current record's "CollectingTools" collection
  * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenIndividuals()   Returns the current record's "SpecimenIndividuals" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
@@ -114,6 +118,8 @@
  * @method Specimens           setHostTaxon()             Sets the current record's "HostTaxon" value
  * @method Specimens           setHostSpecimen()          Sets the current record's "HostSpecimen" value
  * @method Specimens           setIgs()                   Sets the current record's "Igs" value
+ * @method Specimens           setCollectingMethods()     Sets the current record's "CollectingMethods" collection
+ * @method Specimens           setCollectingTools()       Sets the current record's "CollectingTools" collection
  * @method Specimens           setSpecimens()             Sets the current record's "Specimens" collection
  * @method Specimens           setSpecimenIndividuals()   Sets the current record's "SpecimenIndividuals" collection
  * @method Specimens           setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
@@ -263,6 +269,16 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasOne('Igs', array(
              'local' => 'ig_ref',
              'foreign' => 'id'));
+
+        $this->hasMany('CollectingMethods', array(
+             'refClass' => 'SpecimensMethods',
+             'local' => 'specimen_ref',
+             'foreign' => 'collecting_method_ref'));
+
+        $this->hasMany('CollectingTools', array(
+             'refClass' => 'SpecimensTools',
+             'local' => 'specimen_ref',
+             'foreign' => 'collecting_tool_ref'));
 
         $this->hasMany('Specimens', array(
              'local' => 'id',

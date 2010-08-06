@@ -8,15 +8,18 @@
  * @property integer $id
  * @property string $method
  * @property string $method_indexed
+ * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimensMethods
  * 
  * @method integer             getId()               Returns the current record's "id" value
  * @method string              getMethod()           Returns the current record's "method" value
  * @method string              getMethodIndexed()    Returns the current record's "method_indexed" value
+ * @method Doctrine_Collection getSpecimens()        Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimensMethods() Returns the current record's "SpecimensMethods" collection
  * @method CollectingMethods   setId()               Sets the current record's "id" value
  * @method CollectingMethods   setMethod()           Sets the current record's "method" value
  * @method CollectingMethods   setMethodIndexed()    Sets the current record's "method_indexed" value
+ * @method CollectingMethods   setSpecimens()        Sets the current record's "Specimens" collection
  * @method CollectingMethods   setSpecimensMethods() Sets the current record's "SpecimensMethods" collection
  * 
  * @package    darwin
@@ -46,6 +49,11 @@ abstract class BaseCollectingMethods extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasMany('Specimens', array(
+             'refClass' => 'SpecimensMethods',
+             'local' => 'collecting_method_ref',
+             'foreign' => 'specimen_ref'));
+
         $this->hasMany('SpecimensMethods', array(
              'local' => 'id',
              'foreign' => 'collecting_method_ref'));

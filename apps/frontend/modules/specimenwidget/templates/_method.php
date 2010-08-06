@@ -1,1 +1,1 @@
-<?php echo /*$form['collecting_method']->renderRow()*/ 'Method'; ?>
+<?php echo $form['collecting_methods_list']->render() /*'Method'*/; ?>
