@@ -1,1 +1,1 @@
-<?php echo /*$form['collecting_tool']->renderRow()*/ 'Tools' ?>
+<?php echo $form['collecting_tools_list']->render();?>

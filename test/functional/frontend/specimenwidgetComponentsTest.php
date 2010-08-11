@@ -22,15 +22,15 @@ $browser->
     get('/widgets/reloadContent?widget=tool&category=specimen')->
     with('response')->begin()->
         isStatusCode(200)->
-        checkElement('#specimen_collecting_tool option',3)->
-        checkElement('#specimen_collecting_tool option:first','')->
-        checkElement('.add_item_button')->
+        checkElement('#unassociated_specimen_collecting_tools_list option',0)->
+        checkElement('#associated_specimen_collecting_tools_list option',0)->
+//         checkElement('.add_item_button')->
     end()->
 
     get('/widgets/reloadContent?widget=method&category=specimen')->
     with('response')->begin()->
         isStatusCode(200)->
-        checkElement('#specimen_collecting_method option',3)->
-        checkElement('#specimen_collecting_method option:first','')->
-        checkElement('.add_item_button')->
+        checkElement('#unassociated_specimen_collecting_methods_list option',2)->
+        checkElement('#associated_specimen_collecting_methods_list option',0)->
+//         checkElement('.add_item_button')->
     end();

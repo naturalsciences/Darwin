@@ -191,48 +191,29 @@ class SpecimensForm extends BaseSpecimensForm
         'add_label' => 'Add another relationship',
     ));
 
-    $this->widgetSchema['collecting_methods_list'] = new sfWidgetFormChoice(
+    /* Collecting methods */
+
+    $this->widgetSchema['collecting_methods_list'] = new sfWidgetFormSelectDoubleList(
       array(
             'choices' => Doctrine::getTable('CollectingMethods')->fetchMethods(),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available'),
            )
     );
-    $this->widgetSchema['collecting_methods_list']->setOption('renderer_class', 'sfWidgetFormSelectDoubleList');
-    $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
-//     $this->widgetSchema['collecting_method_ref'] = new sfWidgetFormDarwinDoctrineChoice(
-//       array(
-//             'model' => 'CatalogueLevels',
-//             'table_method' => array('method'=>'getLevelsByTypes', 'parameters'=>array(array('table'=>'taxonomy'))),
-//             'add_empty' => true
-//            ),
-//       array('class'=>'catalogue_level')
-//       );
-//     $this->widgetSchema['collecting_method_ref'] = new sfWidgetFormChoice(array(
-//       'choices'        => Doctrine::getTable('CollectingMethods')->getMethod() ,
-//       'renderer_class' => 'sfWidgetFormSelectDoubleList',
-//     ));
-//     $this->validatorSchema['collecting_method_ref'] = new sfValidatorChoice(array('choices' => array_keys(CollectingMethods::getMethods()), 'required' => false, 'multiple' => true));
+//     $this->widgetSchema['collecting_methods_list']->setOption('renderer_option',$this->getI18N()->__('Available'));
 
-    /* Collecting method */
-//     $this->widgetSchema['collecting_method'] = new widgetFormSelectComplete(array(
-//         'model' => 'Specimens',
-//         'table_method' => 'getDistinctMethods',
-//         'method' => 'getMethod',
-//         'key_method' => 'getMethod',
-//         'add_empty' => true,
-//         'change_label' => 'Pick a method in the list',
-//         'add_label' => 'Add another method',
-//     ));
-//     
-//     /* Collecting tool */
-//     $this->widgetSchema['collecting_tool'] = new widgetFormSelectComplete(array(
-//         'model' => 'Specimens',
-//         'table_method' => 'getDistinctTools',
-//         'method' => 'getTool',
-//         'key_method' => 'getTool',
-//         'add_empty' => true,
-//         'change_label' => 'Pick a tool in the list',
-//         'add_label' => 'Add another tool',
-//     ));
+    $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
+
+    /* Collecting tools */
+
+    $this->widgetSchema['collecting_tools_list'] = new sfWidgetFormSelectDoubleList(
+      array(
+            'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available'),
+           )
+    );
+    $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
 
     /* Acquisition categories */
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
