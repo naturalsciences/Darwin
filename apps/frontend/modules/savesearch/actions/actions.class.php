@@ -22,6 +22,9 @@ class savesearchActions extends sfActions
       $criterias = serialize($request->getPostParameters());
 
       $saved_searches = new MySavedsearches() ;
+      $cols_str = $request->getParameter('cols');
+      $cols = explode('|',$cols_str);
+      $saved_searches->setVisibleFieldsInResult($cols);
       $saved_searches->setSearchCriterias($criterias) ;
     }
     $saved_searches->setUserRef($this->getUser()->getId()) ;

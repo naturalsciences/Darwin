@@ -56,7 +56,7 @@ $(document).ready(function () {
   $('#favorite_on').click(function(){
     $('#favorite_off').attr('class','show') ; 
     $(this).attr('class','hidden') ;
-    $('#my_saved_searches_favorite').removeAttr('checked','');
+    $('#my_saved_searches_favorite').removeAttr('checked');
   });
 
   $('#favorite_off').click(function(){

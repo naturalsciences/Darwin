@@ -21,8 +21,8 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     $default_name ="My search on ".date('Y/m/d H:i:s') ;
 
     if($this->getObject()->isNew())
-      $this->widgetSchema['modification_date_time']->setDefault($this->getI18N('Not Saved Yet'));
-    else
+      $this->widgetSchema['modification_date_time']->setDefault($this->getI18N()->__('Not Saved Yet'));
+
     $this->widgetSchema['modification_date_time']->setAttribute('class','medium_size');    
     $this->widgetSchema['modification_date_time']->setAttribute('disabled','disabled');
     

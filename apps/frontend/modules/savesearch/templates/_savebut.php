@@ -4,11 +4,21 @@
 
 <script  type="text/javascript">
 $(document).ready(function () {
+
   $("#save_search").click(function(){
+
+    column_str = '';
+    $('.column_menu ul > li.check').each(function (index)
+      {
+        if(column_str != '') column_str += '|';
+        column_str += $(this).attr('id').substr(3);
+      });
+
+
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
-            url: '<?php echo url_for('savesearch/saveSearch');?>',
+            url: '<?php echo url_for('savesearch/saveSearch');?>'+ '/cols/' + column_str,
             data: $('.search_form').serialize(),
             method: 'post'
         },
