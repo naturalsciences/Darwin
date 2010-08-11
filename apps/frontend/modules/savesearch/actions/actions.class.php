@@ -11,26 +11,42 @@
 class savesearchActions extends sfActions
 {
 
+  public function executeFavorite(sfWebRequest $request)
+  {
+    if($request->getParameter('id'))
+    {
+      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('id'), $this->getUser()->getId());
+    }
+    $this->forward404Unless($saved_search);
+    if($request->getParameter('status') === '1')
+      $saved_search->setFavorite(true);
+    else
+      $saved_search->setFavorite(false);
+
+    $saved_search->save();
+    return $this->renderText('ok');
+  }
+  
   public function executeSaveSearch(sfWebRequest $request)
   {
     if($request->getParameter('id'))
     {
-      $saved_searches = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('id'), $this->getUser()->getId());
+      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('id'), $this->getUser()->getId());
     }
     else
     {
       $criterias = serialize($request->getPostParameters());
 
-      $saved_searches = new MySavedsearches() ;
+      $saved_search = new MySavedsearches() ;
       $cols_str = $request->getParameter('cols');
       $cols = explode('|',$cols_str);
-      $saved_searches->setVisibleFieldsInResult($cols);
-      $saved_searches->setSearchCriterias($criterias) ;
+      $saved_search->setVisibleFieldsInResult($cols);
+      $saved_search->setSearchCriterias($criterias) ;
     }
-    $saved_searches->setUserRef($this->getUser()->getId()) ;
+    $saved_search->setUserRef($this->getUser()->getId()) ;
     
-    //$saved_searches->setVisibleFieldsInResult('collection_name');
-    $this->form = new MySavedSearchesForm($saved_searches);
+    //$saved_search->setVisibleFieldsInResult('collection_name');
+    $this->form = new MySavedSearchesForm($saved_search);
 
     if($request->getParameter('my_saved_searches') != '')
     {

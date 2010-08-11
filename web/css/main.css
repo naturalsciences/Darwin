@@ -1581,12 +1581,18 @@ table.saved_searches
   width: 600px;
 }
 
-table.saved_searches td.fav_col
+table.saved_searches_board
+{
+  width: 100%;
+  margin-bottom:1em;
+}
+
+table.saved_searches td.fav_col,  table.saved_searches_board td.fav_col
 {
   width: 30px;
 }
 
-table.saved_searches tr
+table.saved_searches tr , table.saved_searches_board tr
 {
   line-height: 150%;
   border-bottom: 1px dashed #E0E0E0;

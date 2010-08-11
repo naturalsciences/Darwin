@@ -6,9 +6,11 @@
   <?php foreach($searches as $search):?>
     <tr class="r_id_<?php echo $search->getId();?>">
         <td class="fav_col"><?php if($search->getFavorite()):?>
-            <?php echo image_tag('favorite_on.png', 'alt=Favorite class=fav_img');?>
+            <?php echo image_tag('favorite_on.png', 'alt=Favorite class="fav_img favorite_on"');?>
+            <?php echo image_tag('favorite_off.png', 'alt=Favorite class="fav_img favorite_off hidden"');?>
         <?php else:?>
-            <?php echo image_tag('favorite_off.png', 'alt=Favorite class=fav_img');?>
+            <?php echo image_tag('favorite_on.png', 'alt=Favorite class="fav_img favorite_on hidden"');?>
+            <?php echo image_tag('favorite_off.png', 'alt=Favorite class="fav_img favorite_off"');?>
         <?php endif;?>
         </td>
         <td>
@@ -32,28 +34,27 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
-  if($('#my_saved_searches_favorite').attr('checked') == 'checked')
-  {
-    $('#favorite_on').attr('class','show') ;
-    $('#favorite_off').attr('class','hidden') ;      
-  }
-  else
-  {
-    $('#favorite_on').attr('class','hidden') ;  
-    $('#favorite_off').attr('class','show') ;      
-  }
 
-  $('#favorite_on').click(function(){
-    $('#favorite_off').attr('class','show') ; 
-    $(this).attr('class','hidden') ;
-    $('#my_saved_searches_favorite').attr('checked','');
+  $('.saved_searches .fav_img').click(function(){
+    if($(this).hasClass('favorite_on'))
+    {
+      $(this).parent().find('.favorite_off').removeClass('hidden'); 
+      $(this).addClass('hidden') ;
+      fav_status = 0;
+    }
+    else
+    {
+      $(this).parent().find('.favorite_on').removeClass('hidden');
+      $(this).addClass('hidden') ;
+      fav_status = 1;
+    }
+    rid = getIdInClasses($(this).closest('tr'));
+    console.log(fav_status);
+    $.get('<?php echo url_for('savesearch/favorite');?>/id/' + rid + '/status/' + fav_status,function (html){
+    });
   });
 
-  $('#favorite_off').click(function(){
-    $('#favorite_on').attr('class','show') ; 
-    $(this).attr('class','hidden') ;
-    $('#my_saved_searches_favorite').attr('checked','checked');
-  });
+
 
   $(".edit_request").click(function(){
     $(this).qtip({
