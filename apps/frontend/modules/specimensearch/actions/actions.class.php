@@ -22,7 +22,7 @@ class specimensearchActions extends DarwinActions
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
       //print_r($saved_search->getSearchCriterias());
-      $this->fields = $saved_search->getVisibleFieldsInResult() ;
+      $this->fields = $saved_search->getVisibleFieldsInResultStr() ;
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;
     }    
@@ -55,7 +55,7 @@ class specimensearchActions extends DarwinActions
       $this->forward404Unless($saved_search);
 
       $criterias = unserialize($saved_search->getSearchCriterias());
-      $requested_fields_to_show = $saved_search->getVisibleFieldsInResult() ;
+      $requested_fields_to_show = $saved_search->getVisibleFieldsInResultStr() ;
 
       if(isset($criterias['specimen_search_filters']))
       {

@@ -36,6 +36,11 @@ table td.centered, table th.centered
   clear:both;
 }
 
+.hidden
+{
+  display:none;
+}
+
 .page
 {
   margin-top: 30px;
@@ -504,6 +509,13 @@ input[type="text"].xlarge_size
 .edit
 {
   text-align:right;
+}
+
+/** Board more Buttons **/
+.action_button a[href]
+{
+  color:white;
+  text-decoration:none;
 }
 
 .order_sign_down 
@@ -1562,4 +1574,27 @@ sup
 {
 font-size: smaller;
 vertical-align: super;
+}
+
+table.saved_searches
+{
+  width: 600px;
+}
+
+table.saved_searches td.fav_col
+{
+  width: 30px;
+}
+
+table.saved_searches tr
+{
+  line-height: 150%;
+  border-bottom: 1px dashed #E0E0E0;
+}
+
+table.saved_searches div.date
+{
+  font-size:x-small;
+/*   text-align:right; */
+  color:gray;
 }

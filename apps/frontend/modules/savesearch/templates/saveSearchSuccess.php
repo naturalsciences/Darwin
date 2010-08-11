@@ -1,5 +1,5 @@
 <div class="panel">
-  <form id="save_search" class="search_form" action="<?php echo url_for('savesearch/saveSearch');?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+  <form id="save_search" class="search_form" action="<?php echo url_for('savesearch/saveSearch'. ( $form->getObject()->isNew() ? '' : '?id='.$form->getObject()->getId()) );?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <h1><?php echo("Title :") ; ?></h1>
   <?php echo $form->renderHiddenFields(); ?>
   <table>
@@ -24,6 +24,7 @@
   </table>
   <br />
   <h1><?php echo("Visibility of fields in results :") ; ?></h1>
+    <?php echo $form['visible_fields_in_result']->renderError(); ?>
   <table class="fields">
     <thead>
       <tr>
@@ -31,10 +32,7 @@
         <th><?php echo ('Visible ?') ; ?></th>
       </tr>
     </thead>
-    <tbody>
-    <?php echo $form['visible_fields_in_result']->renderError(); ?>
     <?php echo $form['visible_fields_in_result'] ; ?>
-    </tbody>
   </table>
   <div class="aligned_fields"> 
     <input type="submit" name="save" id="save" value="<?php echo __('Save'); ?>" class="search_submit">
@@ -44,7 +42,7 @@
 <script  type="text/javascript">
 
 $(document).ready(function () {
-  if($('#my_saved_searches_favorite').attr('checked') == 'checked')
+  if($('#my_saved_searches_favorite').is(':checked'))
   {
     $('#favorite_on').attr('class','show') ;
     $('#favorite_off').attr('class','hidden') ;      
@@ -58,7 +56,7 @@ $(document).ready(function () {
   $('#favorite_on').click(function(){
     $('#favorite_off').attr('class','show') ; 
     $(this).attr('class','hidden') ;
-    $('#my_saved_searches_favorite').attr('checked','');
+    $('#my_saved_searches_favorite').removeAttr('checked','');
   });
 
   $('#favorite_off').click(function(){
@@ -78,7 +76,6 @@ $(document).ready(function () {
               $('.qtip-button').click();
             }
             $('form#save_search').parent().before(html).remove();
-            console.log( $('form#save_search').parent().html());
           }
       });
       return false;

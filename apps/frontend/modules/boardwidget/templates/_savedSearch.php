@@ -17,6 +17,6 @@
 </ul>
 <br />
 <div class="actions">
-    <div class="action_button"><?php echo __("More");?></div>
+    <div class="action_button"><?php echo link_to(__("More"),'savesearch/index');?></div>
     <div style="clear:right"></div>
 </div>

@@ -20,6 +20,7 @@ class MySavedSearchesTable extends DarwinTable
   public function getSavedSearchByKey($id, $user )
   {       
     return $this->addUserOrder(null, $user)
+      ->andWhere('id = ?', $id )
       ->fetchOne();
   }
   

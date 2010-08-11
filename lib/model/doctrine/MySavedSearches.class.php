@@ -16,4 +16,28 @@ class MySavedSearches extends BaseMySavedSearches
     if($q) return ("last saved on ".substr($q->getModificationDateTime(),0,19)) ;
     else return ("Not yet saved") ;
   }
+
+  public function getModificationDate()
+  {
+    return new DateTime($this->getModificationDateTime());
+  }
+  
+  public function getVisibleFieldsInResult()
+  {
+    return $fields_as_str = explode('|', $this->_get('visible_fields_in_result'));
+  }
+
+  public function getVisibleFieldsInResultStr()
+  {
+    return $this->_get('visible_fields_in_result');
+  }
+
+  public function setVisibleFieldsInResult($val)
+  {
+    if(is_array($val))
+      $this->_set('visible_fields_in_result', implode('|',$val) );
+    else
+      $this->_set('visible_fields_in_result',$val);
+  }
+
 }

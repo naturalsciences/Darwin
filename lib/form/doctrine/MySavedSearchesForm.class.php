@@ -19,10 +19,16 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     $this->widgetSchema['favorite']->setAttribute('class','hidden');    
     $this->widgetSchema['modification_date_time'] = new sfWidgetFormInputText() ;    
     $default_name ="My search on ".date('Y/m/d H:i:s') ;
-    $this->widgetSchema['modification_date_time']->setDefault($this->getObject()->getDefaultMDT()) ;
+
+    if($this->getObject()->isNew())
+      $this->widgetSchema['modification_date_time']->setDefault($this->getI18N('Not Saved Yet'));
+    else
     $this->widgetSchema['modification_date_time']->setAttribute('class','medium_size');    
-    $this->widgetSchema['modification_date_time']->setAttribute('disabled','disabled');        
-    if ($this->getObject()->getName() == "") $this->widgetSchema['name']->setDefault($default_name) ;
+    $this->widgetSchema['modification_date_time']->setAttribute('disabled','disabled');
+    
+    if($this->getObject()->getName() == "")
+      $this->widgetSchema['name']->setDefault($default_name) ;
+
     $choices = Doctrine::getTable('MySavedSearches')->getAllFields() ;
     $this->widgetSchema['visible_fields_in_result'] = new sfWidgetFormChoice(array(
 	  'choices' => $choices, 
@@ -31,7 +37,7 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
 	  'renderer_options' => array('formatter' => array($this, 'formatter'))     
     ));
     
-    
+
     $this->validatorSchema['visible_fields_in_result'] = new sfValidatorChoice(array('choices' => $choices,'multiple' => true));
 //    $this->validatorSchema['visible_fields_in_result']->cleanMultiple($choices) ;
     $this->validatorSchema['name'] = new sfValidatorString() ;

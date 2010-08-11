@@ -13,10 +13,17 @@ class savesearchActions extends sfActions
 
   public function executeSaveSearch(sfWebRequest $request)
   {
-    $criterias = serialize($request->getPostParameters());
+    if($request->getParameter('id'))
+    {
+      $saved_searches = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('id'), $this->getUser()->getId());
+    }
+    else
+    {
+      $criterias = serialize($request->getPostParameters());
 
-    $saved_searches = new MySavedsearches() ;
-    $saved_searches->setSearchCriterias($criterias) ;
+      $saved_searches = new MySavedsearches() ;
+      $saved_searches->setSearchCriterias($criterias) ;
+    }
     $saved_searches->setUserRef($this->getUser()->getId()) ;
     
     //$saved_searches->setVisibleFieldsInResult('collection_name');
@@ -47,6 +54,8 @@ class savesearchActions extends sfActions
     $this->forward404Unless($r,'No such item');
     try{
       $r->delete();
+      if(! $request->isXmlHttpRequest())
+        return $this->redirect('savesearch/index');
     }
     catch(Doctrine_Exception $ne)
     {
@@ -59,6 +68,6 @@ class savesearchActions extends sfActions
   
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searches = Doctrine::getTable('MySavedSearches')->addUserOrder($this->getUser()->getId())->execute();
+    $this->searches = Doctrine::getTable('MySavedSearches')->addUserOrder(null,$this->getUser()->getId())->execute();
   }
 }
