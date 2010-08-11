@@ -26,6 +26,15 @@
         </div>
       </div>
         <?php include_partial('savesearch/savebut');?>
+        <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
+        <script  type="text/javascript">
+$(document).ready(function () {
+
+  $("#criteria_butt").click(function(){
+    $(this).closest('form').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
+  });
+});
+      </script>
     </form>
   </div>
 </div>

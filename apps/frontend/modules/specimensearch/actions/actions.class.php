@@ -45,6 +45,7 @@ class specimensearchActions extends DarwinActions
 
     if($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '')
     {
+      $criterias = $request;
       $this->form->bind($request->getParameter('specimen_search_filters'));
       $requested_fields_to_show = $request->getParameter('fields_to_show');
     }
@@ -68,36 +69,47 @@ class specimensearchActions extends DarwinActions
     {
       if ($this->form->isValid())
       {
-        // Define all properties that will be either used by the data query or by the pager
-        // They take their values from the request. If not present, a default value is defined
-        $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-        // Define in one line a pager Layout based on a pagerLayoutWithArrows object
-        // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-        $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
-                                                                          $this->currentPage,
-                                                                          $this->form->getValue('rec_per_page')
-                                                                         ),
-                                                       new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
-                                                       $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-                                                      );
-        // Sets the Pager Layout templates
-        $this->setDefaultPaggingLayout($this->pagerLayout);
-        // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->pagerLayout->getPager()->getExecuted())
-           $this->specimensearch = $this->pagerLayout->execute();
-        $this->field_to_show = array('category' => 'uncheck','collection' => 'uncheck','taxon' => 'uncheck','type' => 'uncheck','gtu' => 'uncheck','chrono' => 'uncheck',
-            'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');   
-        if ( $requested_fields_to_show != '') 
+        if($request->hasParameter('criteria'))
         {
-           $tabs = explode('|', $requested_fields_to_show) ;
-          // set the fields to show
-          foreach ($tabs as $tab)
-            $this->field_to_show[$tab] = 'check' ;
+          $this->fields = '' ;
+          $this->setTemplate('index');
+          Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
+          $this->loadWidgets();
+          return;
         }
         else
-          $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
-            'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');
-        return;
+        {
+          // Define all properties that will be either used by the data query or by the pager
+          // They take their values from the request. If not present, a default value is defined
+          $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
+          // Define in one line a pager Layout based on a pagerLayoutWithArrows object
+          // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
+          $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+                                                                            $this->currentPage,
+                                                                            $this->form->getValue('rec_per_page')
+                                                                          ),
+                                                        new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
+                                                        $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+                                                        );
+          // Sets the Pager Layout templates
+          $this->setDefaultPaggingLayout($this->pagerLayout);
+          // If pager not yet executed, this means the query has to be executed for data loading
+          if (! $this->pagerLayout->getPager()->getExecuted())
+            $this->specimensearch = $this->pagerLayout->execute();
+          $this->field_to_show = array('category' => 'uncheck','collection' => 'uncheck','taxon' => 'uncheck','type' => 'uncheck','gtu' => 'uncheck','chrono' => 'uncheck',
+              'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');   
+          if ( $requested_fields_to_show != '') 
+          {
+            $tabs = explode('|', $requested_fields_to_show) ;
+            // set the fields to show
+            foreach ($tabs as $tab)
+              $this->field_to_show[$tab] = 'check' ;
+          }
+          else
+            $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
+              'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');
+          return;
+        }
       }
     }
     $this->redirect('specimensearch/index');
