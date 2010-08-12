@@ -975,11 +975,11 @@ comment on column my_saved_searches.favorite is 'Flag telling if saved search co
 comment on column my_saved_searches.modification_date_time is 'Last modification or entry date and time';
 comment on column my_saved_searches.visible_fields_in_result is 'Array of fields that were set visible in the result table at the time the search was saved';
 
-create sequence my_preferences_id_seq;
+create sequence my_widgets_id_seq;
 
-create table my_preferences
+create table my_widgets
        (
-        id integer not null default nextval('my_preferences_id_seq'),
+        id integer not null default nextval('my_widgets_id_seq'),
         user_ref integer not null,
         category varchar not null default 'board_widget',
         group_name varchar not null,
@@ -992,24 +992,24 @@ create table my_preferences
         is_available boolean not null default false,
         icon_ref integer,
         title_perso varchar(32),
-        constraint pk_my_preferences primary key (id),
-        constraint unq_my_preferences unique (user_ref, category, group_name),
-        constraint fk_my_preferences_users foreign key (user_ref) references users(id) on delete cascade,
-        constraint fk_my_preferences_multimedia foreign key (icon_ref) references multimedia(id)
+        constraint pk_my_widgets primary key (id),
+        constraint unq_my_widgets unique (user_ref, category, group_name),
+        constraint fk_my_widgets_users foreign key (user_ref) references users(id) on delete cascade,
+        constraint fk_my_widgets_multimedia foreign key (icon_ref) references multimedia(id)
        );
-comment on table my_preferences is 'Stores user''s preferences for customizable page elements - widgets mainly';
-comment on column my_preferences.user_ref is 'Reference of user concerned - id field of users table';
-comment on column my_preferences.category is 'Customizable page element category: board widget, encoding widget,...';
-comment on column my_preferences.group_name is 'Customizable page element name';
-comment on column my_preferences.order_by is 'Absolute order by between page element name';
-comment on column my_preferences.col_num is 'Column number - tells in which column the page element concerned is';
-comment on column my_preferences.mandatory is 'Flag telling if the page element can be closed or not';
-comment on column my_preferences.visible is 'Flag telling if the page element is on the board or in the widget chooser';
-comment on column my_preferences.opened is 'Flag telling if the page element is opened by default or not';
-comment on column my_preferences.color is 'Color given to page element by user';
-comment on column my_preferences.is_available is 'Flag telling if the widget can be used or not';
-comment on column my_preferences.icon_ref is 'Reference of multimedia icon to be used before page element title';
-comment on column my_preferences.title_perso is 'Page element title given by user';
+comment on table my_widgets is 'Stores user''s preferences for customizable page elements - widgets mainly';
+comment on column my_widgets.user_ref is 'Reference of user concerned - id field of users table';
+comment on column my_widgets.category is 'Customizable page element category: board widget, encoding widget,...';
+comment on column my_widgets.group_name is 'Customizable page element name';
+comment on column my_widgets.order_by is 'Absolute order by between page element name';
+comment on column my_widgets.col_num is 'Column number - tells in which column the page element concerned is';
+comment on column my_widgets.mandatory is 'Flag telling if the page element can be closed or not';
+comment on column my_widgets.visible is 'Flag telling if the page element is on the board or in the widget chooser';
+comment on column my_widgets.opened is 'Flag telling if the page element is opened by default or not';
+comment on column my_widgets.color is 'Color given to page element by user';
+comment on column my_widgets.is_available is 'Flag telling if the widget can be used or not';
+comment on column my_widgets.icon_ref is 'Reference of multimedia icon to be used before page element title';
+comment on column my_widgets.title_perso is 'Page element title given by user';
 
 create sequence my_saved_specimens_id_seq;
 

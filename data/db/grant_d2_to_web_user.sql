@@ -55,7 +55,7 @@
  GRANT select, insert, update, delete on darwin2.collections_fields_visibilities to cebmpad;
  GRANT select, insert, update, delete on darwin2.collections to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_tracking to cebmpad;
- GRANT select, insert, update, delete on darwin2.my_preferences to cebmpad;
+ GRANT select, insert, update, delete on darwin2.my_widgets to cebmpad;
  GRANT select, insert, update, delete on darwin2.my_saved_specimens to cebmpad;
  GRANT select, insert, update, delete on darwin2.my_saved_searches to cebmpad;
  GRANT select, insert, update, delete on darwin2.record_visibilities to cebmpad;

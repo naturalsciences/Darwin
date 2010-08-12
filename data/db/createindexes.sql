@@ -34,8 +34,8 @@ CREATE INDEX CONCURRENTLY idx_record_visibilities on record_visibilities(user_re
 CREATE INDEX CONCURRENTLY idx_users_workflow_user_ref on users_workflow(user_ref);
 CREATE INDEX CONCURRENTLY idx_collection_maintenance_user_ref on collection_maintenance(people_ref);
 CREATE INDEX CONCURRENTLY idx_my_saved_searches_user_ref on my_saved_searches(user_ref);
-CREATE INDEX CONCURRENTLY idx_my_preferences_user_ref on my_preferences(user_ref);
-CREATE INDEX CONCURRENTLY idx_my_preferences_icon_ref on my_preferences(icon_ref);
+CREATE INDEX CONCURRENTLY idx_my_widgets_user_ref on my_widgets(user_ref);
+CREATE INDEX CONCURRENTLY idx_my_widgets_icon_ref on my_widgets(icon_ref);
 CREATE INDEX CONCURRENTLY idx_my_saved_specimens_user_ref on my_saved_specimens(user_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_level_ref on taxonomy(level_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_parent_ref on taxonomy(parent_ref);
@@ -245,11 +245,11 @@ CREATE INDEX CONCURRENTLY idx_mineralogy_cristal_system on mineralogy(cristal_sy
 CREATE INDEX CONCURRENTLY idx_multimedia_is_digital on multimedia(is_digital);
 CREATE INDEX CONCURRENTLY idx_multimedia_type on multimedia(type);
 CREATE INDEX CONCURRENTLY idx_multimedia_keywords_keyword_indexed on multimedia_keywords(keyword_indexed);
-CREATE INDEX CONCURRENTLY idx_my_preferences_user_category on my_preferences(user_ref, category, group_name);
-CREATE INDEX CONCURRENTLY idx_my_preferences_group_name on my_preferences(user_ref, group_name);
-CREATE INDEX CONCURRENTLY idx_my_preferences_is_available on my_preferences(is_available);
-CREATE INDEX CONCURRENTLY idx_my_preferences_order_by on my_preferences(order_by);
-CREATE INDEX CONCURRENTLY idx_my_preferences_visible on my_preferences(visible);
+CREATE INDEX CONCURRENTLY idx_my_widgets_user_category on my_widgets(user_ref, category, group_name);
+CREATE INDEX CONCURRENTLY idx_my_widgets_group_name on my_widgets(user_ref, group_name);
+CREATE INDEX CONCURRENTLY idx_my_widgets_is_available on my_widgets(is_available);
+CREATE INDEX CONCURRENTLY idx_my_widgets_order_by on my_widgets(order_by);
+CREATE INDEX CONCURRENTLY idx_my_widgets_visible on my_widgets(visible);
 CREATE INDEX CONCURRENTLY idx_people_title on people(title) WHERE title <> '';
 CREATE INDEX CONCURRENTLY idx_people_is_physical on people(is_physical);
 CREATE INDEX CONCURRENTLY idx_people_sub_type on people(sub_type) WHERE NOT sub_type IS NULL;

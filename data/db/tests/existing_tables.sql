@@ -47,7 +47,7 @@ SELECT has_table('users_workflow','users_workflow exists');
 SELECT has_table('users_tracking','users_tracking exists');
 SELECT has_table('collection_maintenance','collection_maintenance exists');
 SELECT has_table('my_saved_searches','my_saved_searches exists');
-SELECT has_table('my_preferences','my_preferences exists');
+SELECT has_table('my_widgets','my_widgets exists');
 SELECT has_table('my_saved_specimens','my_saved_specimens exists');
 SELECT has_table('template_classifications','template_classifications exists');
 SELECT has_table('taxonomy','taxonomy exists');
