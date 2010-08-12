@@ -152,7 +152,7 @@ ul.spec_error_list, ul.error_list
   vertical-align: bottom;
 }
 
-.ref_clear:hover
+.ref_clear:hover, img.filter_clear:hover
 {
   cursor:pointer;
 }
@@ -766,7 +766,7 @@ table.encoding tbody
   margin-right:0.1em;
 }
 
-.property_values tbody tr td label
+.property_values tbody tr td label, .double_list_filter_add label
 {
   font-weight:bold;
   margin-right:0.5em;
@@ -1576,6 +1576,51 @@ font-size: smaller;
 vertical-align: super;
 }
 
+.double_list_label
+{
+  margin-bottom: 1em;
+  font-weight:bold;
+}
+
+.double_list_select, .double_list_select-selected, .double_list_filter
+{
+  width:15em;
+}
+
+.double_list_select, .double_list_select-selected
+{
+  height:15em;
+}
+
+.double_list_filter
+{
+  position:relative;
+  top:1.5em;
+}
+
+.double_list_filter_input
+{
+  width:14.8em !important;
+}
+
+.double_list_filter_label
+{
+  margin-top:-1em;
+  margin-bottom: 2em;
+  font-weight:bold;
+}
+
+.double_list_filter_add
+{
+  float: left;
+  margin-top:1em;
+  width:30em;
+}
+
+.double_list_add_input
+{
+  margin-right:0.3em;
+}
 table.saved_searches
 {
   width: 600px;

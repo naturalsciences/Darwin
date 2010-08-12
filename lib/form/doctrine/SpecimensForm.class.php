@@ -193,24 +193,24 @@ class SpecimensForm extends BaseSpecimensForm
 
     /* Collecting methods */
 
-    $this->widgetSchema['collecting_methods_list'] = new sfWidgetFormSelectDoubleList(
+    $this->widgetSchema['collecting_methods_list'] = new widgetFormSelectDoubleListFilterable(
       array(
             'choices' => Doctrine::getTable('CollectingMethods')->fetchMethods(),
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available'),
+            'add_active'=>true,
            )
     );
-//     $this->widgetSchema['collecting_methods_list']->setOption('renderer_option',$this->getI18N()->__('Available'));
-
     $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
 
     /* Collecting tools */
 
-    $this->widgetSchema['collecting_tools_list'] = new sfWidgetFormSelectDoubleList(
+    $this->widgetSchema['collecting_tools_list'] = new widgetFormSelectDoubleListFilterable(
       array(
             'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available'),
+            'add_active'=>true,
            )
     );
     $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
