@@ -12,6 +12,31 @@ function update_list(li)
     li.addClass('check') ; 
   }
 }
+
+/**
+* Notify the application about the visible column in the search
+*/
+function store_list(element, url)
+{
+  query_str = '';
+  element.find('>li').each(function(index) {
+    if( $(this).hasClass('check'))
+    {
+      if(query_str !='')
+        query_str += '|';
+      
+      query_str += $(this).attr('id').substr(3); // extract from id the column name : li_colname ==> colname
+    }
+  });
+  
+  $.ajax({
+    url: url + '/cols/'+query_str,
+    success: function(data) {
+    }
+  });
+  $('#specimen_search_filters_fields').val(query_str);
+}
+
 function hide_or_show(li)
 {
   field = li.attr('id') ;

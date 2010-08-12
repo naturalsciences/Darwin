@@ -54,7 +54,15 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                          'taxon_level_ref' => 'Level'
                                         )
                                   );
-    $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array())) ;    
+    $this->widgetSchema['fields'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['fields']->setDefault('category|taxon|collection|type|gtu');
+
+    $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array())) ; 
+
+    $this->validatorSchema['fields'] = new sfValidatorString(array('required' => false,
+                                                                 'trim' => true
+                                                                ));
+
     $this->validatorSchema['gtu_code'] = new sfValidatorString(array('required' => false,
                                                                  'trim' => true
                                                                 )

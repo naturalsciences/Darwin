@@ -8,7 +8,6 @@
     <h1 id="title"><?php echo __('Specimens Search');?></h1>
     <form id="specimen_filter" class="search_form" action="<?php echo url_for('specimensearch/search');?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
       <div class="panel encod_screen" id="intro">
-        <input id="fields_to_show" type="hidden" name="fields_to_show" value="<?php echo $fields ;?>">
         <?php include_partial('widgets/screen', array(
           'widgets' => $widgets,
           'category' => 'specimensearchwidget',
@@ -17,7 +16,9 @@
         )); ?>  
         <p class="clear"> </p>
         <p class="form_buttons">
-          <div class="check_right"> 
+          <div class="check_right">
+            <?php echo $form['fields'];?>
+            <?php echo $form['rec_per_page']->render(array('class'=>'hidden'));?>
             <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">
           </div>
       </div>      

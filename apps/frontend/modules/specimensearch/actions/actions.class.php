@@ -12,17 +12,30 @@ class specimensearchActions extends DarwinActions
 {
   protected $widgetCategory = 'specimensearch_widget';
 
+  /**
+   * Save the state of each col (visible / hidden ) in session 
+   *
+  */
+  public function executeSaveCol(sfWebRequest $request)
+  {
+    $columns = explode('|',$request->getParameter('cols',''));
+    $this->getUser()->storeVisibleCols($columns);
+    return $this->renderText('ok');
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
-    $this->form = new SpecimenSearchFormFilter();      
-    $this->fields = '' ; //eventualy we can create a function called getDefaultFieldsToShow(), where we can set witch fields we want to be shown 
+    $this->form = new SpecimenSearchFormFilter();
+    $this->form->setDefault('fields', $this->getVisibleColumns($this->getUser(), $this->form, true));
+    $this->form->setDefault('rec_per_page',$this->getUser()->fetchRecPerPage());
+
     // if Parameter name exist, so the referer is mysavedsearch
     if ($request->getParameter('search_id','') != '')
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
-      //print_r($saved_search->getSearchCriterias());
-      $this->fields = $saved_search->getVisibleFieldsInResultStr() ;
+
+      $this->fields = $saved_search->getVisibleFieldsInResultStr();
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;
     }    
@@ -47,7 +60,6 @@ class specimensearchActions extends DarwinActions
     {
       $criterias = $request;
       $this->form->bind($request->getParameter('specimen_search_filters'));
-      $requested_fields_to_show = $request->getParameter('fields_to_show');
     }
     elseif($request->getParameter('search_id','') != '')
     {
@@ -56,7 +68,6 @@ class specimensearchActions extends DarwinActions
       $this->forward404Unless($saved_search);
 
       $criterias = unserialize($saved_search->getSearchCriterias());
-      $requested_fields_to_show = $saved_search->getVisibleFieldsInResultStr() ;
 
       if(isset($criterias['specimen_search_filters']))
       {
@@ -69,9 +80,9 @@ class specimensearchActions extends DarwinActions
     {
       if ($this->form->isValid())
       {
+        $this->getUser()->storeRecPerPage( $this->form->getValue('rec_per_page'));
         if($request->hasParameter('criteria'))
         {
-          $this->fields = '' ;
           $this->setTemplate('index');
           Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
           $this->loadWidgets();
@@ -96,18 +107,9 @@ class specimensearchActions extends DarwinActions
           // If pager not yet executed, this means the query has to be executed for data loading
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
-          $this->field_to_show = array('category' => 'uncheck','collection' => 'uncheck','taxon' => 'uncheck','type' => 'uncheck','gtu' => 'uncheck','chrono' => 'uncheck',
-              'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');   
-          if ( $requested_fields_to_show != '') 
-          {
-            $tabs = explode('|', $requested_fields_to_show) ;
-            // set the fields to show
-            foreach ($tabs as $tab)
-              $this->field_to_show[$tab] = 'check' ;
-          }
-          else
-            $this->field_to_show = array('category' => 'check','collection' => 'check','taxon' => 'check','type' => 'check','gtu' => 'check','chrono' => 'uncheck',
-              'litho' => 'uncheck','lithologic' => 'uncheck','mineral' => 'uncheck','expedition' => 'uncheck','count' => 'uncheck');
+
+          $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
+
           return;
         }
       }
@@ -115,6 +117,45 @@ class specimensearchActions extends DarwinActions
     $this->redirect('specimensearch/index');
   }
   
+  /**
+  * Compute different sources to get the columns that must be showed
+  * 1) from form request 2) from session 3) from default value
+  * @param sfBasicSecurityUser $user the user
+  * @param sfForm $form The SpecimenSearch form with the 'fields' field defined
+  * @param bool $as_string specify if you want the return to be a string (concat of visible cols)
+  * @return array of fields with check or uncheck or a list of visible fields separated by |
+  */
+  private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
+  {
+    $flds = array('category','collection','taxon','type','gtu','chrono',
+              'litho','lithologic','mineral','expedition','count');
+    $flds = array_fill_keys($flds, 'uncheck');
+    if($form->isBound())
+    {
+      $req_fields = $form->getValue('fields');
+      $req_fields_array = explode('|',$req_fields);
+
+    }
+    else
+    {
+      $req_fields_array = $user->fetchVisibleCols();
+    }
+
+    if(empty($req_fields_array))
+      $req_fields_array = explode('|', $form->getDefault('fields'));
+
+    if($as_string)
+    {
+      return  implode('|',$req_fields_array);
+    }
+
+    foreach($req_fields_array as $k => $val)
+    {
+      $flds[$val] = 'check';
+    }
+    return $flds;
+  }
+
   public function executeSearchResult(sfWebRequest $request)
   {
     $this->executeSearch($request) ;      

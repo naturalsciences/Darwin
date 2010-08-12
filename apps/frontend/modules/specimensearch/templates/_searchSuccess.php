@@ -280,13 +280,19 @@
   <?php endif;?>
 </div>  
 <script type="text/javascript">
- o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
- $('ul.column_menu').supersubs().superfish(o);
- $('ul.column_menu > li > ul > li').each(function(){
-  hide_or_show($(this));
- });
- $("ul.column_menu > li > ul > li").click(function(){
-  update_list($(this));
-  hide_or_show($(this));
- });
+$(document).ready(function () {
+
+  o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
+  $('ul.column_menu').supersubs().superfish(o);
+
+  $('ul.column_menu > li > ul > li').each(function(){
+    hide_or_show($(this));
+  });
+
+  $("ul.column_menu > li > ul > li").click(function(){
+    update_list($(this));
+    hide_or_show($(this));
+    store_list($(this).parent(), '<?php echo url_for('specimensearch/saveCol');?>')
+  });
+});
 </script> 
