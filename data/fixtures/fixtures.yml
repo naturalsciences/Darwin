@@ -267,7 +267,7 @@ MySavedSpecimens:
         favorite: true
         modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
 
-MyPreferences:
+MyWidgets:
     u1wb1:
         User: u1
         col_num: 1

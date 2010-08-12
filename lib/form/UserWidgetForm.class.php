@@ -15,11 +15,11 @@ class UserWidgetForm extends sfForm
      $subForm = new sfForm();
      foreach ($this->options['collection'] as $index=>$record)
      {
-      $form = new MyPreferencesForm($record,array('level' => $this->options['level']));
+      $form = new MyWidgetsForm($record,array('level' => $this->options['level']));
       $subForm->embedForm($index, $form);
 
      }
-     $this->embedForm('MyPreferences',$subForm);
+     $this->embedForm('MyWidgets',$subForm);
      $this->widgetSchema->setNameFormat('user_widget[%s]');
   }
 
@@ -27,9 +27,9 @@ class UserWidgetForm extends sfForm
   {
     $values = $this->getValues();
     
-    foreach($this->embeddedForms['MyPreferences']->getEmbeddedForms() as $key => $prefs)
+    foreach($this->embeddedForms['MyWidgets']->getEmbeddedForms() as $key => $prefs)
     {
-      $prefs->updateObject($values['MyPreferences'][$key]);
+      $prefs->updateObject($values['MyWidgets'][$key]);
       $prefs->getObject()->save();
     }
   }

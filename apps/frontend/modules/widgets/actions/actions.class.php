@@ -20,7 +20,7 @@ class widgetsActions extends DarwinActions
     $this->forward404unless($request->getParameter('widget',false));
     //get widget position and order by in json parseable structure
     $defaultResponse = array('col_num'=>'1', 'order_by'=>'0');
-    $position = Doctrine::getTable('MyPreferences')->getWidgetPosition($this->getUser()->getAttribute('db_user_id'),
+    $position = Doctrine::getTable('MyWidgets')->getWidgetPosition($this->getUser()->getAttribute('db_user_id'),
                                                                        $request->getParameter('widget'),
                                                                        $request->getParameter('category')."_widget");
     if($position)
@@ -34,11 +34,11 @@ class widgetsActions extends DarwinActions
   {
     $this->forward404unless($request->getParameter('widget',false));
     //mark widget as visible
-    Doctrine::getTable('MyPreferences')
+    Doctrine::getTable('MyWidgets')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), 'visible');
 
-    $title = Doctrine::getTable('MyPreferences')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
+    $title = Doctrine::getTable('MyWidgets')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
                                                                  $request->getParameter('widget'),
                                                                  $request->getParameter('category')."_widget");
     if($title)
@@ -60,7 +60,7 @@ class widgetsActions extends DarwinActions
 
   public function executeChangeStatus(sfWebRequest $request)
   {
-    Doctrine::getTable('MyPreferences')
+    Doctrine::getTable('MyWidgets')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), $request->getParameter('status'));
     return $this->renderText("ok");
@@ -70,7 +70,7 @@ class widgetsActions extends DarwinActions
   {
     $col1 = explode(',', $request->getParameter('col1'));
     $col2 = explode(',', $request->getParameter('col2'));
-    Doctrine::getTable('MyPreferences')
+    Doctrine::getTable('MyWidgets')
       ->setUserRef($this->getUser()->getAttribute('db_user_id'))
       ->changeOrder($request->getParameter('category')."_widget", $col1, $col2);
     return $this->renderText(var_export($col1,true).var_export($col2,true));

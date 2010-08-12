@@ -1,14 +1,14 @@
 <?php
 
 /**
- * MyPreferences filter form base class.
+ * MyWidgets filter form base class.
  *
  * @package    darwin
  * @subpackage filter
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 29570 2010-05-21 14:49:47Z Kris.Wallsmith $
  */
-abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
+abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
@@ -42,7 +42,7 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
       'title_perso'  => new sfValidatorPass(array('required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('my_preferences_filters[%s]');
+    $this->widgetSchema->setNameFormat('my_widgets_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -53,7 +53,7 @@ abstract class BaseMyPreferencesFormFilter extends BaseFormFilterDoctrine
 
   public function getModelName()
   {
-    return 'MyPreferences';
+    return 'MyWidgets';
   }
 
   public function getFields()

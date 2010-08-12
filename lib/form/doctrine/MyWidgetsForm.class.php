@@ -1,13 +1,13 @@
 <?php
 
 /**
- * MyPreferences form.
+ * MyWidgets form.
  *
  * @package    form
- * @subpackage MyPreferences
+ * @subpackage MyWidgets
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class MyPreferencesForm extends BaseMyPreferencesForm
+class MyWidgetsForm extends BaseMyWidgetsForm
 {
   public function configure()
   {

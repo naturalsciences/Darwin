@@ -34,7 +34,7 @@ class userActions extends DarwinActions
       {
 		$old_db_user_type = $user_to_edit->getDbUserType() ;
 		$this->form->save();
-		Doctrine::getTable('MyPreferences')->
+		Doctrine::getTable('MyWidgets')->
 		  setUserRef($user_to_edit->getId())->
 		  setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
 
@@ -133,7 +133,7 @@ class userActions extends DarwinActions
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
  	$this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
    }
-   $widget = Doctrine::getTable('MyPreferences')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
+   $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
    $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
    $this->level = $this->getUser()->getAttribute('db_user_type') ; 
    if($request->isMethod('post'))
@@ -146,7 +146,7 @@ class userActions extends DarwinActions
      }
    }
    $this->form_pref = array();
-   foreach($this->form['MyPreferences'] as $keyword)
+   foreach($this->form['MyWidgets'] as $keyword)
    {	
       $type = $keyword['category']->getValue();
       if(!isset($this->form_pref[$type]))

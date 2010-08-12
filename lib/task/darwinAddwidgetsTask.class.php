@@ -43,7 +43,7 @@ EOF;
 	if($options['reset'])
 	{
 	  Doctrine_Query::create()
-             ->delete('MyPreferences p') 
+             ->delete('MyWidgets p') 
 			 ->where('p.user_ref = ?', $user->getId())
 			 ->execute();
 	  $this->logSection('add-widgets', sprintf('Remove old widgets successfully!',$cnt));

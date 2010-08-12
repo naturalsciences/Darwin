@@ -582,7 +582,7 @@ MySavedSearches:
             local: user_ref
             foreign: id
 
-MyPreferences:
+MyWidgets:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         user_ref: { type: integer, notnull: true}

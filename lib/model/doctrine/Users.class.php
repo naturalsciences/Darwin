@@ -78,14 +78,14 @@ class Users extends BaseUsers
 	  $array_right = Users::getTypes(array('db_user_type' => self::ADMIN)) ;
 	  foreach ($array_right as $key => $right)
 	  {
-		  $file = MyPreferences::getFileByRight($key) ;
+		  $file = MyWidgets::getFileByRight($key) ;
 		  if($file)
 		  {
 			  $data = new Doctrine_Parser_Yml();
 			  $array = $data->loadData($file);
 			  foreach ($array as $widget => $array_values)
 			  {
-				$pref = new MyPreferences() ;
+				$pref = new MyWidgets() ;
 				$array_values['user_ref'] = $this->getId();
 				$pref->fromArray($array_values);
 				if($pref->getMandatory())

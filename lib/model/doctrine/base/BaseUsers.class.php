@@ -35,7 +35,7 @@
  * @property Doctrine_Collection $UsersWorkflow
  * @property Doctrine_Collection $UsersTracking
  * @property Doctrine_Collection $MySavedSearches
- * @property Doctrine_Collection $MyPreferences
+ * @property Doctrine_Collection $MyWidgets
  * @property Doctrine_Collection $MySavedSpecimens
  * 
  * @method integer             getId()                            Returns the current record's "id" value
@@ -68,7 +68,7 @@
  * @method Doctrine_Collection getUsersWorkflow()                 Returns the current record's "UsersWorkflow" collection
  * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
  * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
- * @method Doctrine_Collection getMyPreferences()                 Returns the current record's "MyPreferences" collection
+ * @method Doctrine_Collection getMyWidgets()                 Returns the current record's "MyWidgets" collection
  * @method Doctrine_Collection getMySavedSpecimens()              Returns the current record's "MySavedSpecimens" collection
  * @method Users               setId()                            Sets the current record's "id" value
  * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
@@ -100,7 +100,7 @@
  * @method Users               setUsersWorkflow()                 Sets the current record's "UsersWorkflow" collection
  * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
  * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
- * @method Users               setMyPreferences()                 Sets the current record's "MyPreferences" collection
+ * @method Users               setMyWidgets()                 Sets the current record's "MyWidgets" collection
  * @method Users               setMySavedSpecimens()              Sets the current record's "MySavedSpecimens" collection
  * 
  * @package    darwin
@@ -238,7 +238,7 @@ abstract class BaseUsers extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'user_ref'));
 
-        $this->hasMany('MyPreferences', array(
+        $this->hasMany('MyWidgets', array(
              'local' => 'id',
              'foreign' => 'user_ref'));
 

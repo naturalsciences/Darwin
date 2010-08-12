@@ -32,7 +32,7 @@
  * @property Doctrine_Collection $Multimedia
  * @property Doctrine_Collection $PeopleMultimedia
  * @property Doctrine_Collection $UsersMultimedia
- * @property Doctrine_Collection $MyPreferences
+ * @property Doctrine_Collection $MyWidgets
  * @property Doctrine_Collection $MultimediaKeywords
  * @property Doctrine_Collection $AssociatedMultimedia
  * 
@@ -63,7 +63,7 @@
  * @method Doctrine_Collection getMultimedia()                     Returns the current record's "Multimedia" collection
  * @method Doctrine_Collection getPeopleMultimedia()               Returns the current record's "PeopleMultimedia" collection
  * @method Doctrine_Collection getUsersMultimedia()                Returns the current record's "UsersMultimedia" collection
- * @method Doctrine_Collection getMyPreferences()                  Returns the current record's "MyPreferences" collection
+ * @method Doctrine_Collection getMyWidgets()                  Returns the current record's "MyWidgets" collection
  * @method Doctrine_Collection getMultimediaKeywords()             Returns the current record's "MultimediaKeywords" collection
  * @method Doctrine_Collection getAssociatedMultimedia()           Returns the current record's "AssociatedMultimedia" collection
  * @method Multimedia          setId()                             Sets the current record's "id" value
@@ -93,7 +93,7 @@
  * @method Multimedia          setMultimedia()                     Sets the current record's "Multimedia" collection
  * @method Multimedia          setPeopleMultimedia()               Sets the current record's "PeopleMultimedia" collection
  * @method Multimedia          setUsersMultimedia()                Sets the current record's "UsersMultimedia" collection
- * @method Multimedia          setMyPreferences()                  Sets the current record's "MyPreferences" collection
+ * @method Multimedia          setMyWidgets()                  Sets the current record's "MyWidgets" collection
  * @method Multimedia          setMultimediaKeywords()             Sets the current record's "MultimediaKeywords" collection
  * @method Multimedia          setAssociatedMultimedia()           Sets the current record's "AssociatedMultimedia" collection
  * 
@@ -221,7 +221,7 @@ abstract class BaseMultimedia extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'object_ref'));
 
-        $this->hasMany('MyPreferences', array(
+        $this->hasMany('MyWidgets', array(
              'local' => 'id',
              'foreign' => 'icon_ref'));
 

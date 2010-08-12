@@ -33,7 +33,7 @@
 		      <?php echo $widget['widget_choice']->renderLabel() ?>
 		      <?php echo $widget->renderHiddenFields(); ?>
 		    </th>
-		    <?php if ($form->getEmbeddedForm('MyPreferences')->getEmbeddedForm($widget->getName())->getObject()->getMandatory() ) : ?>
+		    <?php if ($form->getEmbeddedForm('MyWidgets')->getEmbeddedForm($widget->getName())->getObject()->getMandatory() ) : ?>
 			    <th colspan="<?php echo ($level>2?4:3) ?>" class='widget_selection'>-----   Mandatory  -----</th>
 		    <?php else : ?>
 			      <?php echo $widget['widget_choice']->renderError() ?>

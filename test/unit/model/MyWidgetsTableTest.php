@@ -6,7 +6,7 @@ $userEvil = Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId();
 
 try
 {
-  Doctrine::getTable('MyPreferences')->getWidgets('board_widget');
+  Doctrine::getTable('MyWidgets')->getWidgets('board_widget');
   $t->fail('Must throw an exception for not giving user id');
 }
 catch (Exception $e)
@@ -15,18 +15,18 @@ catch (Exception $e)
 }
 
 $t->info('->getWidgets()');
-$t->isnt(Doctrine::getTable('MyPreferences')->setUserRef($userEvil)->addCategoryUser(null,'board_widget'), null,'It\'s not null');
+$t->isnt(Doctrine::getTable('MyWidgets')->setUserRef($userEvil)->addCategoryUser(null,'board_widget'), null,'It\'s not null');
 
-$t->is(count(Doctrine::getTable('MyPreferences')
+$t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($userEvil)
         ->getWidgets('board_widget')),4,'Get all board widget');
-$t->is(count(Doctrine::getTable('MyPreferences')
+$t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($userEvil)
         ->getWidgets('specimen_widget')),20,'Get all specimen widget');
 
 $t->comment('->changeWidgetStatus()');
 
-$widget = Doctrine::getTable('MyPreferences')
+$widget = Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->createQuery()
     ->andWhere("group_name = ?","savedSpecimens")
@@ -34,11 +34,11 @@ $widget = Doctrine::getTable('MyPreferences')
 
 $t->is($widget->getOpened(),false, "Status is Open");
 
-Doctrine::getTable('MyPreferences')
+Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->changeWidgetStatus("board_widget","savedSpecimens","close");
 
-$widget = Doctrine::getTable('MyPreferences')
+$widget = Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->createQuery()
     ->andWhere("group_name = ?","savedSpecimens")
@@ -46,11 +46,11 @@ $widget = Doctrine::getTable('MyPreferences')
 
 $t->is($widget->getOpened(),false, "Status Open/Close changing");
 
-Doctrine::getTable('MyPreferences')
+Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->changeWidgetStatus("board_widget","savedSpecimens","hidden");
 
-$widget = Doctrine::getTable('MyPreferences')
+$widget = Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->createQuery()
     ->andWhere("group_name = ?","savedSpecimens")
@@ -58,11 +58,11 @@ $widget = Doctrine::getTable('MyPreferences')
 
 $t->is($widget->getVisible(),false, "Set status hidden");
 
-Doctrine::getTable('MyPreferences')
+Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->changeWidgetStatus("board_widget","savedSpecimens","visible");
 
-$widget = Doctrine::getTable('MyPreferences')
+$widget = Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->createQuery()
     ->andWhere("group_name = ?","savedSpecimens")
@@ -76,7 +76,7 @@ $t->is($widget->getColNum(),1, "Is colnum changed to 1");
 $t->comment('->updateWidgetsOrder()');
 
 try {
-Doctrine::getTable('MyPreferences')
+Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->updateWidgetsOrder("savedSpecimens,savedSearch", 2, "board_widget");
     $t->fail('updateWidgetsOrder must throw a exception for bad arguments');
@@ -87,11 +87,11 @@ catch(Exception $e)
 }
 
 
-Doctrine::getTable('MyPreferences')
+Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->updateWidgetsOrder(array("savedSpecimens","savedSearch"), 2, "board_widget");
 
-$widgets = Doctrine::getTable('MyPreferences')
+$widgets = Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->createQuery()
     ->andWhereIn("group_name",array("savedSpecimens","savedSearch"))
@@ -103,11 +103,11 @@ $t->is($widgets[0]->getOrderBy(),2, "Is order set for everyone");
 $t->is($widgets[0]->getColNum(),2, "Is col_num set correctly");
 
 $t->comment('->changeOrder()');
-Doctrine::getTable('MyPreferences')
+Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->changeOrder('board_widget',array("savedSpecimens"), array("savedSearch"));
 
-$widgets = Doctrine::getTable('MyPreferences')
+$widgets = Doctrine::getTable('MyWidgets')
     ->setUserRef($userEvil)
     ->createQuery()
     ->andWhereIn("group_name",array("savedSpecimens","savedSearch"))
@@ -119,17 +119,17 @@ $t->is($widgets[1]->getOrderBy(),1, "Is order set for everyone");
 $t->is($widgets[0]->getColNum(),2, "Is col_num set correctly");
 $t->is($widgets[1]->getColNum(),1, "Is col_num for everyone");
 
-$title = Doctrine::getTable('MyPreferences')->getWidgetTitle($userEvil, $widgets[0]->getGroupName(), $widgets[0]->getCategory());
+$title = Doctrine::getTable('MyWidgets')->getWidgetTitle($userEvil, $widgets[0]->getGroupName(), $widgets[0]->getCategory());
 $title = $title->toArray();
 
 $t->is($widgets[0]->getTitlePerso(), $title[0]['title'], 'Title perso is well what is coming from "getWidgetTitle" method');
 
 $q = Doctrine_Query::create()
-    ->delete('MyPreferences p')
+    ->delete('MyWidgets p')
     ->Where('p.user_ref = ?', $userEvil)
     ->execute();
     
-$t->is(count(Doctrine::getTable('MyPreferences')
+$t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($userEvil)
         ->getWidgets('board_widget')),0,'All widget would have been deleted');
 
@@ -145,12 +145,12 @@ $brol_user->addUserWidgets();
 
 
 $t->comment('->updateWigetsAvailabilityForRole()');  
-$t->is(count(Doctrine::getTable('MyPreferences')
+$t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($brol_user->getId())
         ->getWidgets('board_widget')),2,'4 board widgets but only 2 visible for a registered user');
 
-Doctrine::getTable('Mypreferences')->setUserRef($brol_user->getId())->updateWigetsAvailabilityForRole(Users::REGISTERED_USER, false) ;
+Doctrine::getTable('MyWidgets')->setUserRef($brol_user->getId())->updateWigetsAvailabilityForRole(Users::REGISTERED_USER, false) ;
 
-$t->is(count(Doctrine::getTable('MyPreferences')
+$t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($brol_user->getId())
         ->getWidgets('board_widget')),0,'Removing \'Registered user\' right : 0 board widgets visible now');     

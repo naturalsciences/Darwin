@@ -247,7 +247,7 @@ $browser->
   end()->
 
   click('#submit', array('user_widget' => array(
-    'MyPreferences' => array(
+    'MyWidgets' => array(
 	  0 => array(
 	    'category'  => 'board_widget',
 	    'group_name' => 'savedSearch',

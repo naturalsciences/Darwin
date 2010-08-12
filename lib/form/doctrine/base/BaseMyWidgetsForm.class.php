@@ -1,16 +1,16 @@
 <?php
 
 /**
- * MyPreferences form base class.
+ * MyWidgets form base class.
  *
- * @method MyPreferences getObject() Returns the current form's model object
+ * @method MyWidgets getObject() Returns the current form's model object
  *
  * @package    darwin
  * @subpackage form
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
-abstract class BaseMyPreferencesForm extends BaseFormDoctrine
+abstract class BaseMyWidgetsForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -46,7 +46,7 @@ abstract class BaseMyPreferencesForm extends BaseFormDoctrine
       'title_perso'  => new sfValidatorString(array('required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('my_preferences[%s]');
+    $this->widgetSchema->setNameFormat('my_widgets[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -57,7 +57,7 @@ abstract class BaseMyPreferencesForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'MyPreferences';
+    return 'MyWidgets';
   }
 
 }
