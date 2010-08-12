@@ -68,7 +68,7 @@
  * @method Doctrine_Collection getUsersWorkflow()                 Returns the current record's "UsersWorkflow" collection
  * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
  * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
- * @method Doctrine_Collection getMyWidgets()                 Returns the current record's "MyWidgets" collection
+ * @method Doctrine_Collection getMyWidgets()                     Returns the current record's "MyWidgets" collection
  * @method Doctrine_Collection getMySavedSpecimens()              Returns the current record's "MySavedSpecimens" collection
  * @method Users               setId()                            Sets the current record's "id" value
  * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
@@ -100,7 +100,7 @@
  * @method Users               setUsersWorkflow()                 Sets the current record's "UsersWorkflow" collection
  * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
  * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
- * @method Users               setMyWidgets()                 Sets the current record's "MyWidgets" collection
+ * @method Users               setMyWidgets()                     Sets the current record's "MyWidgets" collection
  * @method Users               setMySavedSpecimens()              Sets the current record's "MySavedSpecimens" collection
  * 
  * @package    darwin

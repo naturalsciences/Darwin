@@ -63,7 +63,7 @@
  * @method Doctrine_Collection getMultimedia()                     Returns the current record's "Multimedia" collection
  * @method Doctrine_Collection getPeopleMultimedia()               Returns the current record's "PeopleMultimedia" collection
  * @method Doctrine_Collection getUsersMultimedia()                Returns the current record's "UsersMultimedia" collection
- * @method Doctrine_Collection getMyWidgets()                  Returns the current record's "MyWidgets" collection
+ * @method Doctrine_Collection getMyWidgets()                      Returns the current record's "MyWidgets" collection
  * @method Doctrine_Collection getMultimediaKeywords()             Returns the current record's "MultimediaKeywords" collection
  * @method Doctrine_Collection getAssociatedMultimedia()           Returns the current record's "AssociatedMultimedia" collection
  * @method Multimedia          setId()                             Sets the current record's "id" value
@@ -93,7 +93,7 @@
  * @method Multimedia          setMultimedia()                     Sets the current record's "Multimedia" collection
  * @method Multimedia          setPeopleMultimedia()               Sets the current record's "PeopleMultimedia" collection
  * @method Multimedia          setUsersMultimedia()                Sets the current record's "UsersMultimedia" collection
- * @method Multimedia          setMyWidgets()                  Sets the current record's "MyWidgets" collection
+ * @method Multimedia          setMyWidgets()                      Sets the current record's "MyWidgets" collection
  * @method Multimedia          setMultimediaKeywords()             Sets the current record's "MultimediaKeywords" collection
  * @method Multimedia          setAssociatedMultimedia()           Sets the current record's "AssociatedMultimedia" collection
  * 

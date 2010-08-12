@@ -21,36 +21,36 @@
  * @property Users $User
  * @property Multimedia $Multimedia
  * 
- * @method integer       getId()           Returns the current record's "id" value
- * @method integer       getUserRef()      Returns the current record's "user_ref" value
- * @method string        getCategory()     Returns the current record's "category" value
- * @method string        getGroupName()    Returns the current record's "group_name" value
- * @method integer       getOrderBy()      Returns the current record's "order_by" value
- * @method integer       getColNum()       Returns the current record's "col_num" value
- * @method boolean       getMandatory()    Returns the current record's "mandatory" value
- * @method boolean       getVisible()      Returns the current record's "visible" value
- * @method boolean       getIsAvailable()  Returns the current record's "is_available" value
- * @method boolean       getOpened()       Returns the current record's "opened" value
- * @method string        getColor()        Returns the current record's "color" value
- * @method integer       getIconRef()      Returns the current record's "icon_ref" value
- * @method string        getTitlePerso()   Returns the current record's "title_perso" value
- * @method Users         getUser()         Returns the current record's "User" value
- * @method Multimedia    getMultimedia()   Returns the current record's "Multimedia" value
- * @method MyWidgets setId()           Sets the current record's "id" value
- * @method MyWidgets setUserRef()      Sets the current record's "user_ref" value
- * @method MyWidgets setCategory()     Sets the current record's "category" value
- * @method MyWidgets setGroupName()    Sets the current record's "group_name" value
- * @method MyWidgets setOrderBy()      Sets the current record's "order_by" value
- * @method MyWidgets setColNum()       Sets the current record's "col_num" value
- * @method MyWidgets setMandatory()    Sets the current record's "mandatory" value
- * @method MyWidgets setVisible()      Sets the current record's "visible" value
- * @method MyWidgets setIsAvailable()  Sets the current record's "is_available" value
- * @method MyWidgets setOpened()       Sets the current record's "opened" value
- * @method MyWidgets setColor()        Sets the current record's "color" value
- * @method MyWidgets setIconRef()      Sets the current record's "icon_ref" value
- * @method MyWidgets setTitlePerso()   Sets the current record's "title_perso" value
- * @method MyWidgets setUser()         Sets the current record's "User" value
- * @method MyWidgets setMultimedia()   Sets the current record's "Multimedia" value
+ * @method integer    getId()           Returns the current record's "id" value
+ * @method integer    getUserRef()      Returns the current record's "user_ref" value
+ * @method string     getCategory()     Returns the current record's "category" value
+ * @method string     getGroupName()    Returns the current record's "group_name" value
+ * @method integer    getOrderBy()      Returns the current record's "order_by" value
+ * @method integer    getColNum()       Returns the current record's "col_num" value
+ * @method boolean    getMandatory()    Returns the current record's "mandatory" value
+ * @method boolean    getVisible()      Returns the current record's "visible" value
+ * @method boolean    getIsAvailable()  Returns the current record's "is_available" value
+ * @method boolean    getOpened()       Returns the current record's "opened" value
+ * @method string     getColor()        Returns the current record's "color" value
+ * @method integer    getIconRef()      Returns the current record's "icon_ref" value
+ * @method string     getTitlePerso()   Returns the current record's "title_perso" value
+ * @method Users      getUser()         Returns the current record's "User" value
+ * @method Multimedia getMultimedia()   Returns the current record's "Multimedia" value
+ * @method MyWidgets  setId()           Sets the current record's "id" value
+ * @method MyWidgets  setUserRef()      Sets the current record's "user_ref" value
+ * @method MyWidgets  setCategory()     Sets the current record's "category" value
+ * @method MyWidgets  setGroupName()    Sets the current record's "group_name" value
+ * @method MyWidgets  setOrderBy()      Sets the current record's "order_by" value
+ * @method MyWidgets  setColNum()       Sets the current record's "col_num" value
+ * @method MyWidgets  setMandatory()    Sets the current record's "mandatory" value
+ * @method MyWidgets  setVisible()      Sets the current record's "visible" value
+ * @method MyWidgets  setIsAvailable()  Sets the current record's "is_available" value
+ * @method MyWidgets  setOpened()       Sets the current record's "opened" value
+ * @method MyWidgets  setColor()        Sets the current record's "color" value
+ * @method MyWidgets  setIconRef()      Sets the current record's "icon_ref" value
+ * @method MyWidgets  setTitlePerso()   Sets the current record's "title_perso" value
+ * @method MyWidgets  setUser()         Sets the current record's "User" value
+ * @method MyWidgets  setMultimedia()   Sets the current record's "Multimedia" value
  * 
  * @package    darwin
  * @subpackage model
