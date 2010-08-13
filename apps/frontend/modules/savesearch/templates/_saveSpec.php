@@ -1,8 +1,15 @@
-<!-- <label><?php echo format_number_choice('[1] Save my pinned specimen|(1,+Inf] Save my %1% pinned specimens', array('%1%' =>  count($sf_user->getAllPinned())), count($sf_user->getAllPinned()) );?></label> -->
+<!-- <label><?php //echo format_number_choice('[1] Save my pinned specimen|(1,+Inf] Save my %1% pinned specimens', array('%1%' =>  count($sf_user->getAllPinned())), count($sf_user->getAllPinned()) );?></label> -->
 <label><?php echo __('Save my pinned specimens');?></label>
-<select id="save_specs_choice">  <option value=""></option>
-<!--  <option value="add"><?php echo __('To an existing list');?></option>-->
-  <option value="create"><?php echo __('To a new list');?></option>
+<select id="save_specs_choice">
+    <option value="" selected="selected"></option>
+    <optgroup label="<?php echo __('New');?>">
+      <option value="create"><?php echo __('To a new list');?></option>
+    </optgroup>
+    <optgroup label="<?php echo __('Existing');?>">
+      <?php foreach($spec_lists as $list):?>
+        <option value="<?php echo $list->getId();?>"><?php echo $list->getName();?></option>
+      <?php endforeach;?>
+    </optgroup>
 </select>
 <input type="button" name="save" id="save_specs" value="<?php echo __('Go'); ?>">
 <script  type="text/javascript">
@@ -21,7 +28,7 @@ $(document).ready(function () {
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
-            url: '<?php echo url_for('savesearch/saveSearch?type=pin');?>'+ '/cols/' + column_str + '/action/' + $('#save_specs_choice').val(),
+            url: '<?php echo url_for('savesearch/saveSearch?type=pin');?>'+ '/cols/' + column_str + '/list_nr/' + $('#save_specs_choice').val(),
             data: $('.search_form').serialize(),
             method: 'post'
         },

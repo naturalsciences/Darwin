@@ -91,6 +91,13 @@ class specimensearchActions extends DarwinActions
         }
         else
         {
+          $q = Doctrine::getTable('MySavedSearches')
+            ->addUserOrder(null, $this->getUser()->getId());
+          $this->spec_lists = Doctrine::getTable('MySavedSearches')
+            ->addIsSearch($q, false)
+            ->execute();
+
+
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);

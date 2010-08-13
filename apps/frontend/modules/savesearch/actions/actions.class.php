@@ -56,10 +56,23 @@ class savesearchActions extends sfActions
 
       if($request->getParameter('type') == 'pin')
       {
-        $ids=implode(',',$this->getUser()->getAllPinned() );
-        $criterias = serialize( array('specimen_search_filters'=> array('spec_ids' => $ids)) );
-        $saved_search->setIsOnlyId(true);
-      }
+        if($request->getParameter('list_nr') == 'create')
+        {
+          $ids=implode(',',$this->getUser()->getAllPinned() );
+          $criterias = serialize( array('specimen_search_filters'=> array('spec_ids' => $ids)) );
+          $saved_search->setIsOnlyId(true);
+        }
+        else
+        {
+          $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('list_nr'), $this->getUser()->getId());
+          $prev_req = unserialize($saved_search->getSearchCriterias());
+          $old_ids = explode(',',$prev_req['specimen_search_filters']['spec_ids']);
+          $new_ids = array_merge($old_ids,$this->getUser()->getAllPinned());
+          $new_ids = array_unique($new_ids);
+          $prev_req['specimen_search_filters']['spec_ids'] = implode(',',$new_ids);
+          $criterias = serialize($prev_req);
+        }
+      } 
       else
       {
         $criterias = serialize($request->getPostParameters());

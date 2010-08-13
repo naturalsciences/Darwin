@@ -36,7 +36,7 @@ $(document).ready(function () {
       </script>
     </form>
       <div class="check_right" id="save_button"> 
-        <?php include_partial('savesearch/saveSpec');?>
+        <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
         <?php include_partial('savesearch/saveSearch');?>
       </div>
     <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">

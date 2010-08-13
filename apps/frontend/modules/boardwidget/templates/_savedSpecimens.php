@@ -7,7 +7,7 @@
         <?php else:?>
             <?php echo image_tag('favorite_off.png', 'alt=Favorite class=fav_img');?>
         <?php endif;?>
-        <span><?php echo $specimen->getName()?></span>
+        <?php echo link_to($specimen->getName(),'specimensearch/search?search_id='.$specimen->getId(),array('title'=>__('Go to your search')) ); ?>
     </li>
 <?php endforeach;?>
 </ul>
