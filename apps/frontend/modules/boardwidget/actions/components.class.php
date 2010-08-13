@@ -12,7 +12,7 @@ class boardwidgetComponents extends sfComponents
 {
   public function executeSavedSearch()
   {
-    $this->searches = Doctrine::getTable('MySavedSearches')
+    $this->searches = Doctrine::getTable('MySavedSpecimens')
         ->addUserOrder(null, $this->getUser()->getId())
         ->execute();
   }

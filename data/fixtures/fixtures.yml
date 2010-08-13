@@ -253,20 +253,6 @@ Specimens:
         collecting_tool: Fish Net
         collecting_method: Fishing
 
-MySavedSpecimens:
-    ssp1:
-        User: u1
-        name: Spec just corrected
-        specimen_ids: ""
-        favorite: false
-        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
-    ssp2:
-        User: u1
-        name: Some Awesome bugs
-        specimen_ids: ""
-        favorite: true
-        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
-
 MyWidgets:
     u1wb1:
         User: u1

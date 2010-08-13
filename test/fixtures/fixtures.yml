@@ -401,19 +401,6 @@ Identifications:
         value_defined: Falco Peregrinus
         order_by: 2
 
-MySavedSpecimens:
-    ssp1:
-        User: u1
-        name: Spec just corrected
-        specimen_ids: ""
-        favorite: false
-        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
-    ssp2:
-        User: u1
-        name: Some Awesome bugs
-        specimen_ids: ""
-        favorite: true
-        modification_date_time: "<?php echo date('Y-m-d H:i:s');?>"
 
 CatalogueProperties:
     cprop1:
