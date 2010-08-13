@@ -49,17 +49,27 @@ class savesearchActions extends sfActions
     }
     else
     {
-      $criterias = serialize($request->getPostParameters());
-
       $saved_search = new MySavedsearches() ;
       $cols_str = $request->getParameter('cols');
       $cols = explode('|',$cols_str);
       $saved_search->setVisibleFieldsInResult($cols);
+
+      if($request->getParameter('type') == 'pin')
+      {
+        $ids=implode(',',$this->getUser()->getAllPinned() );
+        $criterias = serialize( array('specimen_search_filters'=> array('spec_ids' => $ids)) );
+        $saved_search->setIsOnlyId(true);
+      }
+      else
+      {
+        $criterias = serialize($request->getPostParameters());
+        $saved_search->setIsOnlyId(false);
+      }
       $saved_search->setSearchCriterias($criterias) ;
     }
+
     $saved_search->setUserRef($this->getUser()->getId()) ;
     
-    //$saved_search->setVisibleFieldsInResult('collection_name');
     $this->form = new MySavedSearchesForm($saved_search);
 
     if($request->getParameter('my_saved_searches') != '')

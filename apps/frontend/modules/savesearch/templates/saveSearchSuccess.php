@@ -35,6 +35,7 @@
     <?php echo $form['visible_fields_in_result'] ; ?>
   </table>
   <div class="aligned_fields"> 
+    <?php echo $form['is_only_id']->render(array('class'=>'hidden')) ; ?>
     <input type="submit" name="save" id="save" value="<?php echo __('Save'); ?>" class="search_submit">
   </div>      
   </form>

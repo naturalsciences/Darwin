@@ -36,9 +36,8 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
 	  'renderer_options' => array('formatter' => array($this, 'formatter'))     
     ));
     
-
     $this->validatorSchema['visible_fields_in_result'] = new sfValidatorChoice(array('choices' => $choices,'multiple' => true));
-//    $this->validatorSchema['visible_fields_in_result']->cleanMultiple($choices) ;
+
     $this->validatorSchema['name'] = new sfValidatorString() ;
     $this->validatorSchema['modification_date_time'] = new sfValidatorString(array('required' => false)) ;
     $this->validatorSchema['user_ref'] = new sfValidatorString(array('required' => false)) ;
