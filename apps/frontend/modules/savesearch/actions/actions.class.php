@@ -11,6 +11,20 @@
 class savesearchActions extends sfActions
 {
 
+  public function executePin(sfWebRequest $request)
+  {
+    if($request->getParameter('id') && ctype_digit($request->getParameter('id')) )
+    {
+      if($request->getParameter('status') === '1')
+        $this->getUser()->addPinTo($request->getParameter('id'));
+      else
+        $this->getUser()->removePinTo($request->getParameter('id'));
+
+      return $this->renderText('ok');
+    }
+    $this->forward404();
+  }
+  
   public function executeFavorite(sfWebRequest $request)
   {
     if($request->getParameter('id'))

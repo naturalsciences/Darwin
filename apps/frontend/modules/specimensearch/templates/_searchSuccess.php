@@ -142,13 +142,19 @@
         </thead>
         <?php foreach($specimensearch as $specimen):?>
           <tbody>
-            <tr class="rid_<?php echo $specimen->getId(); ?>">
+            <tr class="rid_<?php echo $specimen->getSpecRef(); ?>">
               <td rowspan="2">
                 <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
                 <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
               </td>
-              <td>
-                <?php echo image_tag('blue_pin_on.png', array('alt' =>  __('Save this result'))) ; ?>
+              <td >
+                <?php if($sf_user->isPinned($specimen->getSpecRef())):?>
+                  <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on','alt' =>  __('Un-Save this result'))) ; ?>
+                  <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off hidden', 'alt' =>  __('Save this result'))) ; ?>
+                <?php else:?>
+                  <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on hidden','alt' =>  __('Un-Save this result'))) ; ?>
+                  <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
+                <?php endif;?>
               </td>              
               <td class="col_category">
                 <?php echo $specimen->getCategory() == 'physical'? image_tag('physical.png', array('alt' => __('physical'))):
@@ -161,20 +167,20 @@
               </td>
               <td class="col_taxon">
                 <?php if($specimen->getTaxonRef() > 0) : ?>
-                  <?php echo image_tag('info.png',"title=info class=info id=taxon_".$specimen->getId()."_info");?>
+                  <?php echo image_tag('info.png',"title=info class=info id=taxon_".$specimen->getSpecRef()."_info");?>
                   <a href="<?php echo url_for('taxonomy/edit?id='.$specimen->getTaxonRef());?>"><?php echo $specimen->getTaxonName();?></a>
-                  <div id="taxon_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="taxon_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#taxon_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#taxon_<?php echo $specimen->getSpecRef();?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#taxon_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#taxon_<?php echo $specimen->getSpecRef();?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("catalogue/tree?table=taxonomy&id=".$specimen->getTaxonRef()) ;?>',function (html){
-                           item_row.find('#taxon_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#taxon_<?php echo $specimen->getSpecRef();?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#taxon_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#taxon_<?php echo $specimen->getSpecRef();?>_tree').slideUp();
                      });
                   </script>                  
                 <?php endif ; ?>&nbsp;
@@ -190,10 +196,10 @@
                 <?php if($specimen->getGtuRef() > 0) : ?>
                   <script type="text/javascript">
                       $(document).ready(function () {
-                        $('#gtu_ctr_<?php echo $specimen->getId();?>_info').click(function() 
+                        $('#gtu_ctr_<?php echo $specimen->getSpecRef();?>_info').click(function() 
                         {
                           item_row = $(this).closest('tr');
-                          elem = item_row.find('#gtu_<?php echo $specimen->getId();?>_details');
+                          elem = item_row.find('#gtu_<?php echo $specimen->getSpecRef();?>_details');
                           if(elem.is(":hidden"))
                           { 
                             $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
@@ -210,12 +216,12 @@
                         });
                       });
                   </script>
-                  <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getId()."_info");?>
+                  <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getSpecRef()."_info");?>
                   <div class="general_gtu">
                     <strong><?php echo __('Country');?> :</strong>
                     <?php echo $specimen->getCountryTags();?><div class="clear" ></div>
                   </div>
-                 <div id="gtu_<?php echo $specimen->getId();?>_details" style="display:none;"></div>
+                 <div id="gtu_<?php echo $specimen->getSpecRef();?>_details" style="display:none;"></div>
                 <?php endif ; ?>          
               </td>                      
               <td  class="col_chrono">
@@ -250,23 +256,23 @@
                   <?php echo link_to(image_tag('edit.png'),'specimen/edit?id='.$specimen->getSpecRef());?>
               </td>
             </tr>
-            <tr id="tr_individual_<?php echo $specimen->getId();?>">
+            <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>">
               <td colspan="7">
-                <div id="container_individual_<?php echo $specimen->getId();?>" class="tree"></div>
+                <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
                 <script type="text/javascript">
-                 $('tr.rid_<?php echo $specimen->getId(); ?> img.collapsed').click(function() 
+                 $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
                  {
                     $(this).hide();
                     $(this).siblings('.expanded').show();
                     $.get('<?php echo url_for("specimensearch/individualTree?id=".$specimen->getSpecRef()) ;?>',function (html){
-                           $('#container_individual_<?php echo $specimen->getId();?>').html(html).slideDown();
+                           $('#container_individual_<?php echo $specimen->getSpecRef();?>').html(html).slideDown();
                            });
                  });  
-                 $('tr.rid_<?php echo $specimen->getId(); ?> img.expanded').click(function() 
+                 $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.expanded').click(function() 
                  {
                     $(this).hide();
                     $(this).siblings('.collapsed').show();
-                    $('#container_individual_<?php echo $specimen->getId();?>').slideUp();
+                    $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
                  });
                 </script>
               </td>
@@ -293,6 +299,25 @@ $(document).ready(function () {
     update_list($(this));
     hide_or_show($(this));
     store_list($(this).parent(), '<?php echo url_for('specimensearch/saveCol');?>')
+  });
+
+  /**PIN management **/
+  $('.spec_results .pin_but').click(function(){
+    if($(this).hasClass('pin_on'))
+    {
+      $(this).parent().find('.pin_off').removeClass('hidden'); 
+      $(this).addClass('hidden') ;
+      pin_status = 0;
+    }
+    else
+    {
+      $(this).parent().find('.pin_on').removeClass('hidden');
+      $(this).addClass('hidden') ;
+      pin_status = 1;
+    }
+    rid = getIdInClasses($(this).closest('tr'));
+    $.get('<?php echo url_for('savesearch/pin');?>/id/' + rid + '/status/' + pin_status,function (html){
+    });
   });
 });
 </script> 
