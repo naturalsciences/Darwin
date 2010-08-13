@@ -152,7 +152,7 @@ ul.spec_error_list, ul.error_list
   vertical-align: bottom;
 }
 
-.ref_clear:hover, img.filter_clear:hover
+.ref_clear:hover, img.filter_clear:hover, img.add_option:hover
 {
   cursor:pointer;
 }

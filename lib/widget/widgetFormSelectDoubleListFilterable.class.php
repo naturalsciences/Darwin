@@ -22,10 +22,12 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
   {
     parent::configure($options, $attributes);
     $this->addOption('filter_class', 'double_list_filter_input');
+    /* Flag for add option input box activation */
     $this->addOption('add_active', false);
+    /* Class used for add option input stylin' */
     $this->addOption('add_class', 'double_list_add_input');
-    $this->addOption('add_model', '');
-    $this->addOption('add_method', '');
+    /* Add action url */
+    $this->addOption('add_url', '');
     $this->addOption('template', <<<EOF
 <div class="%class%">
   <div class="double_list_filter">%filter%%filter_reset%</div>
@@ -121,41 +123,42 @@ EOF
     }
 
     $size = isset($attributes['size']) ? $attributes['size'] : (isset($this->attributes['size']) ? $this->attributes['size'] : 10);
-
+    $id = $this->generateId($name);
     $associatedWidget = new sfWidgetFormSelect(array('multiple' => true, 'choices' => $associated), array('size' => $size, 'class' => $this->getOption('class_select').'-selected'));
     $unassociatedWidget = new sfWidgetFormSelect(array('multiple' => true, 'choices' => $unassociated), array('size' => $size, 'class' => $this->getOption('class_select')));
     $filterWidget = new sfWidgetFormInputText(array(), array('class'=>$this->getOption('filter_class')));
     $filterResetOptions = array('src' => '/images/remove.png',
-                                'id' => 'filter_'.$this->generateId($name)."_clear",
+                                'id' => 'filter_'.$id."_clear",
                                 'class' => 'filter_clear',
                                 'alt' => __('Reset filter'),
                                 'title' => __('Reset filter')
                                );
+    $addOptionHTML = '';
     if ($this->getOption('add_active'))
     {
-      $addOptionWidget = new sfWidgetFormInputText(array(), array('id' => 'add_'.$this->generateId($name).'_input', 'class'=>$this->getOption('add_class')));
+      $addOptionWidget = new sfWidgetFormInputText(array(), array('id' => 'add_'.$id.'_input', 'class'=>$this->getOption('add_class')));
       $addOptionWidget->setLabel(__('Add new value:'));
       $addImageOptions = array('src' => '/images/add_green.png',
-                               'id' => 'add_'.$this->generateId($name).'_image',
-                               'class' => 'add_option',
-                               'alt' => __('Add value'),
-                               'title' => __('Add value')
+                              'id' => 'add_'.$id.'_image',
+                              'class' => 'add_option',
+                              'alt' => __('Add value'),
+                              'title' => __('Add value')
                               );
-      $addOptionHTML = '<label for="add_'.$this->generateId($name).'_input">'.$addOptionWidget->getLabel().'</label>'.$addOptionWidget->render('add_'.$name).$this->renderTag('img', $addImageOptions);
-    }
-    else
-    {
-      $addOptionHTML = '';
+      $addLinkOptions = array('id'=> 'add_'.$id.'_link',
+                              'class' => 'add_option',
+                              'href' => url_for($this->getOption('add_url'))
+                              );
+      $addOptionHTML = $this->renderContentTag('label',$addOptionWidget->getLabel(), array('for'=>'add_'.$id.'_input')).$addOptionWidget->render('add_'.$name).$this->renderContentTag('a',$this->renderTag('img', $addImageOptions), $addLinkOptions);
     }
 
     return strtr($this->getOption('template'), array(
       '%class%'              => $this->getOption('class'),
       '%class_select%'       => $this->getOption('class_select'),
-      '%id%'                 => $this->generateId($name),
+      '%id%'                 => $id,
       '%label_associated%'   => $this->getOption('label_associated'),
       '%label_unassociated%' => $this->getOption('label_unassociated'),
-      '%associate%'          => sprintf('<a href="#" onclick="%s">%s</a>', 'sfDoubleList.move(\'unassociated_'.$this->generateId($name).'\', \''.$this->generateId($name).'\'); return false;', $this->getOption('associate')),
-      '%unassociate%'        => sprintf('<a href="#" onclick="%s">%s</a>', 'sfDoubleList.move(\''.$this->generateId($name).'\', \'unassociated_'.$this->generateId($name).'\'); return false;', $this->getOption('unassociate')),
+      '%associate%'          => sprintf('<a href="#" onclick="%s">%s</a>', 'sfDoubleList.move(\'unassociated_'.$id.'\', \''.$id.'\'); return false;', $this->getOption('associate')),
+      '%unassociate%'        => sprintf('<a href="#" onclick="%s">%s</a>', 'sfDoubleList.move(\''.$id.'\', \'unassociated_'.$id.'\'); return false;', $this->getOption('unassociate')),
       '%associated%'         => $associatedWidget->render($name),
       '%unassociated%'       => $unassociatedWidget->render('unassociated_'.$name),
       '%filter%'             => $filterWidget->render('filter_'.$name),
