@@ -55,11 +55,10 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                         )
                                   );
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['col_fields']->setDefault('category|taxon|collection|type|gtu');
+    $this->setDefault('col_fields','category|taxon|collection|type|gtu');
+    $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
 
-    $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array())) ; 
-
-    $this->validatorSchema['fields'] = new sfValidatorString(array('required' => false,
+    $this->validatorSchema['col_fields'] = new sfValidatorString(array('required' => false,
                                                                  'trim' => true
                                                                 ));
 

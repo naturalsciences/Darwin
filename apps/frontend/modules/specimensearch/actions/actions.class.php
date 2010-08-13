@@ -26,7 +26,7 @@ class specimensearchActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new SpecimenSearchFormFilter();
-    print_r($this->form->hasDefault('col_fields'));
+
     $this->form->setDefault('col_fields', $this->getVisibleColumns($this->getUser(), $this->form, true));
     $this->form->setDefault('rec_per_page',$this->getUser()->fetchRecPerPage());
 
@@ -115,7 +115,11 @@ class specimensearchActions extends DarwinActions
         }
       }
     }
-    $this->redirect('specimensearch/index');
+
+    $this->setTemplate('index');
+    if(isset($criterias['specimen_search_filters']))
+      Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
+    $this->loadWidgets();
   }
   
   /**
@@ -145,7 +149,6 @@ class specimensearchActions extends DarwinActions
 
     if(empty($req_fields_array))
       $req_fields_array = explode('|', $form->getDefault('col_fields'));
-    print_r($form->getDefault('col_fields'));
     if($as_string)
     {
       return  implode('|',$req_fields_array);

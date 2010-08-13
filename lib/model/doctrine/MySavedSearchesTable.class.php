@@ -16,6 +16,12 @@ class MySavedSearchesTable extends DarwinTable
         ->orderBy($alias . '.favorite DESC');
     return $q;
   }
+
+  public function addIsSearch(Doctrine_Query $q, $is_search = false)
+  {
+    $q->andWhere($q->getRootAlias() . '.is_only_id = ?', !$is_search);
+    return $q;
+  }
   
   public function getSavedSearchByKey($id, $user )
   {       

@@ -87,6 +87,10 @@ class savesearchActions extends sfActions
   
   public function executeIndex(sfWebRequest $request)
   {
-    $this->searches = Doctrine::getTable('MySavedSearches')->addUserOrder(null,$this->getUser()->getId())->execute();
+    $q = Doctrine::getTable('MySavedSearches')
+        ->addUserOrder(null, $this->getUser()->getId());
+    $this->searches = Doctrine::getTable('MySavedSearches')
+        ->addIsSearch($q, true)
+        ->execute();
   }
 }
