@@ -1106,3 +1106,14 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Mineral         
+    u1sps7:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: specIds
+        mandatory: false
+        order_by: 4
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Advanced: Search By ID

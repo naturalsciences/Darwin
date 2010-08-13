@@ -11,7 +11,6 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
 {
   public function configure()
   {
-
     $this->widgetSchema['search_criterias'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['user_ref'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['name'] = new sfWidgetFormInputText() ;
