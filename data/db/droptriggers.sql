@@ -65,7 +65,6 @@ DROP TRIGGER trg_chk_AreRole ON catalogue_people;
 DROP TRIGGER trg_cpy_FormattedName ON people;
 DROP TRIGGER trg_cpy_FormattedName ON users;
 
-DROP TRIGGER trg_clr_SavedSpecimense ON specimens;
 DROP TRIGGER trg_cpy_gtuTags_TagGroups ON tag_groups;
 
 /*** Copy Hierarchy from parents triggers ***/

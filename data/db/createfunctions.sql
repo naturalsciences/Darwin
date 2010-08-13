@@ -5721,20 +5721,6 @@ $$
 LANGUAGE plpgsql;
 
 /*
-fct_clr_SavedSpecimens
-Remove specimen in saved specimen.
-*/
-CREATE OR REPLACE FUNCTION fct_clr_SavedSpecimens() RETURNS TRIGGER
-As $$
-BEGIN
-	UPDATE my_saved_specimens SET specimen_ids = array_to_string(fct_remove_array_elem(string_to_array(specimen_ids,',')::integer[],OLD.id),',')
-		WHERE string_to_array(specimen_ids,',')::integer[] @> ARRAY[OLD.id];
-	RETURN OLD;
-END;
-$$
-LANGUAGE plpgsql;
-
-/*
 fct_cpy_update_path
 When insertion of a new hierarchical unit is done, construct automatically the path of this unit.
 When <levels_structures>_ref of a unit are updated, the path have to be reconstructed

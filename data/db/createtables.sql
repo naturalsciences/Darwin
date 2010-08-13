@@ -963,6 +963,7 @@ create table my_saved_searches
         favorite boolean not null default false,
         modification_date_time update_date_time,
         visible_fields_in_result varchar not null,
+	is_only_id boolean not null default false,
         constraint pk_my_saved_searches primary key (id),
         constraint unq_my_saved_searches unique (user_ref, name),
         constraint fk_my_saved_searches_users foreign key (user_ref) references users(id) on delete cascade
@@ -974,6 +975,7 @@ comment on column my_saved_searches.search_criterias is 'String field containing
 comment on column my_saved_searches.favorite is 'Flag telling if saved search concerned is one of the favorites or not';
 comment on column my_saved_searches.modification_date_time is 'Last modification or entry date and time';
 comment on column my_saved_searches.visible_fields_in_result is 'Array of fields that were set visible in the result table at the time the search was saved';
+comment on column my_saved_searches.is_only_id is 'Tell if the search only contains saved specimen (ids) or it is a normal saved search';
 
 create sequence my_widgets_id_seq;
 
@@ -1011,27 +1013,6 @@ comment on column my_widgets.is_available is 'Flag telling if the widget can be 
 comment on column my_widgets.icon_ref is 'Reference of multimedia icon to be used before page element title';
 comment on column my_widgets.title_perso is 'Page element title given by user';
 
-create sequence my_saved_specimens_id_seq;
-
-create table my_saved_specimens
-       (
-	id integer not null default nextval('my_saved_specimens_id_seq'),
-        user_ref integer not null,
-        name varchar not null,
-        specimen_ids varchar not null,
-        favorite boolean not null default false,
-        modification_date_time update_date_time,
-        constraint unq_my_saved_specimens unique (user_ref, name),
-        constraint pk_my_saved_specimens primary key (id),
-        constraint fk_my_saved_specimens_users foreign key (user_ref) references users(id) on delete cascade
-       );
-
-comment on table my_saved_specimens is 'List of specimens selection made by users - sort of suitcases for personal selections';
-comment on column my_saved_specimens.user_ref is 'Reference of user - id field of users table';
-comment on column my_saved_specimens.name is 'Name given to this selection by user';
-comment on column my_saved_specimens.specimen_ids is 'list of ids of all specimens selected';
-comment on column my_saved_specimens.favorite is 'Flag telling the selection is one of the favorites or not';
-comment on column my_saved_specimens.modification_date_time is 'Last update date and time';
 create table template_classifications
        (
         name varchar not null,

@@ -76,7 +76,6 @@
  DROP INDEX IF EXISTS idx_taxonomy_domain_ref;
  DROP INDEX IF EXISTS idx_my_widgets_user_ref;
  DROP INDEX IF EXISTS idx_my_widgets_icon_ref;
- DROP INDEX IF EXISTS idx_my_saved_specimens_user_ref;
  DROP INDEX IF EXISTS idx_taxonomy_kingdom_ref;
  DROP INDEX IF EXISTS idx_taxonomy_level_ref;
  DROP INDEX IF EXISTS idx_taxonomy_cohort_botany_ref;

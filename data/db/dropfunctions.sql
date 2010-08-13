@@ -30,7 +30,6 @@ DROP FUNCTION IF EXISTS lineToTagRows(line text) CASCADE;
 
 DROP FUNCTION IF EXISTS fct_cpy_path() CASCADE;
 
-DROP FUNCTION IF EXISTS fct_clr_SavedSpecimens() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_AreRole() CASCADE;

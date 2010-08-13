@@ -36,7 +36,6 @@ CREATE INDEX CONCURRENTLY idx_collection_maintenance_user_ref on collection_main
 CREATE INDEX CONCURRENTLY idx_my_saved_searches_user_ref on my_saved_searches(user_ref);
 CREATE INDEX CONCURRENTLY idx_my_widgets_user_ref on my_widgets(user_ref);
 CREATE INDEX CONCURRENTLY idx_my_widgets_icon_ref on my_widgets(icon_ref);
-CREATE INDEX CONCURRENTLY idx_my_saved_specimens_user_ref on my_saved_specimens(user_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_level_ref on taxonomy(level_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_parent_ref on taxonomy(parent_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_domain_ref on taxonomy(domain_ref);
