@@ -60,14 +60,28 @@ class collecting_methodsActions extends sfActions
     $this->redirect('collecting_methods/index');
   }
 
+  public function executeAddMethod(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->getParameter('method', '')!='');
+    return $this->renderText(Doctrine::getTable('CollectingMethods')->addMethod($request->getParameter('method')));
+  }
+
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $collecting_methods = $form->save();
-
-      $this->redirect('collecting_methods/edit?id='.$collecting_methods->getId());
+      try
+      {
+        $form->save();
+        $this->redirect('collecting_methods/edit?id='.$form->getObject()->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error);
+      }
     }
   }
 }

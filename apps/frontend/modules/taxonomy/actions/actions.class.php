@@ -93,16 +93,16 @@ class taxonomyActions extends DarwinActions
     $form->bind( $request->getParameter($form->getName()) );
     if ($form->isValid())
     {
-      try{
-	$form->save();
-
-	$this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
+      try
+      {
+        $form->save();
+        $this->redirect('taxonomy/edit?id='.$form->getObject()->getId());
       }
       catch(Doctrine_Exception $ne)
       {
-	$e = new DarwinPgErrorParser($ne);
-	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$form->getErrorSchema()->addError($error); 
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
       }
     }
   }

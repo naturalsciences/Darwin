@@ -60,14 +60,28 @@ class collecting_toolsActions extends sfActions
     $this->redirect('collecting_tools/index');
   }
 
+  public function executeAddTool(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->getParameter('tool', '')!='');
+    return $this->renderText(Doctrine::getTable('CollectingTools')->addTool($request->getParameter('tool')));
+  }
+
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $collecting_tools = $form->save();
-
-      $this->redirect('collecting_tools/edit?id='.$collecting_tools->getId());
+      try
+      {
+        $form->save();
+        $this->redirect('collecting_tools/edit?id='.$form->getObject()->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
+      }
     }
   }
 }
