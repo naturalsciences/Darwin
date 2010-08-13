@@ -574,6 +574,7 @@ MySavedSearches:
         name: { type: string, notnull: true }
         search_criterias: { type: string, notnull: true}
         favorite: { type: boolean, notnull: true, default: false}
+        is_only_id: { type: boolean, notnull: true, default: false}
         modification_date_time: { type: string, notnull: true }
         visible_fields_in_result: { type: string, notnull: true}
     relations:
@@ -607,18 +608,6 @@ MyWidgets:
             local: icon_ref
             foreign: id
 
-MySavedSpecimens:
-    columns:
-        user_ref: { type: integer, notnull: true, primary: true }
-        name: { type: string, notnull: true, primary: true}
-        specimen_ids: { type: string, notnull: true}
-        favorite: { type: boolean, notnull: true, default: false}
-        modification_date_time: { type: string, notnull: true }
-    relations:
-        User:
-            class: Users
-            local: user_ref
-            foreign: id
 Taxonomy:
     columns:
         id: { type: integer, primary: true, autoincrement: true }

@@ -26,7 +26,8 @@ class specimensearchActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new SpecimenSearchFormFilter();
-    $this->form->setDefault('fields', $this->getVisibleColumns($this->getUser(), $this->form, true));
+    print_r($this->form->hasDefault('col_fields'));
+    $this->form->setDefault('col_fields', $this->getVisibleColumns($this->getUser(), $this->form, true));
     $this->form->setDefault('rec_per_page',$this->getUser()->fetchRecPerPage());
 
     // if Parameter name exist, so the referer is mysavedsearch
@@ -130,9 +131,10 @@ class specimensearchActions extends DarwinActions
     $flds = array('category','collection','taxon','type','gtu','chrono',
               'litho','lithologic','mineral','expedition','count');
     $flds = array_fill_keys($flds, 'uncheck');
+
     if($form->isBound())
     {
-      $req_fields = $form->getValue('fields');
+      $req_fields = $form->getValue('col_fields');
       $req_fields_array = explode('|',$req_fields);
 
     }
@@ -142,8 +144,8 @@ class specimensearchActions extends DarwinActions
     }
 
     if(empty($req_fields_array))
-      $req_fields_array = explode('|', $form->getDefault('fields'));
-
+      $req_fields_array = explode('|', $form->getDefault('col_fields'));
+    print_r($form->getDefault('col_fields'));
     if($as_string)
     {
       return  implode('|',$req_fields_array);

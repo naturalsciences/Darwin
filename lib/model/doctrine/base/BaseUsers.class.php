@@ -36,7 +36,6 @@
  * @property Doctrine_Collection $UsersTracking
  * @property Doctrine_Collection $MySavedSearches
  * @property Doctrine_Collection $MyWidgets
- * @property Doctrine_Collection $MySavedSpecimens
  * 
  * @method integer             getId()                            Returns the current record's "id" value
  * @method boolean             getIsPhysical()                    Returns the current record's "is_physical" value
@@ -69,7 +68,6 @@
  * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
  * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
  * @method Doctrine_Collection getMyWidgets()                     Returns the current record's "MyWidgets" collection
- * @method Doctrine_Collection getMySavedSpecimens()              Returns the current record's "MySavedSpecimens" collection
  * @method Users               setId()                            Sets the current record's "id" value
  * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
  * @method Users               setSubType()                       Sets the current record's "sub_type" value
@@ -101,7 +99,6 @@
  * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
  * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
  * @method Users               setMyWidgets()                     Sets the current record's "MyWidgets" collection
- * @method Users               setMySavedSpecimens()              Sets the current record's "MySavedSpecimens" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -239,10 +236,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              'foreign' => 'user_ref'));
 
         $this->hasMany('MyWidgets', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('MySavedSpecimens', array(
              'local' => 'id',
              'foreign' => 'user_ref'));
     }

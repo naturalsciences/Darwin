@@ -17,6 +17,7 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
       'name'                     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'search_criterias'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'favorite'                 => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'is_only_id'               => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'modification_date_time'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'visible_fields_in_result' => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
@@ -26,6 +27,7 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
       'name'                     => new sfValidatorPass(array('required' => false)),
       'search_criterias'         => new sfValidatorPass(array('required' => false)),
       'favorite'                 => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'is_only_id'               => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'modification_date_time'   => new sfValidatorPass(array('required' => false)),
       'visible_fields_in_result' => new sfValidatorPass(array('required' => false)),
     ));
@@ -52,6 +54,7 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
       'name'                     => 'Text',
       'search_criterias'         => 'Text',
       'favorite'                 => 'Boolean',
+      'is_only_id'               => 'Boolean',
       'modification_date_time'   => 'Text',
       'visible_fields_in_result' => 'Text',
     );

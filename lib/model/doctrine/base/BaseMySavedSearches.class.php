@@ -10,6 +10,7 @@
  * @property string $name
  * @property string $search_criterias
  * @property boolean $favorite
+ * @property boolean $is_only_id
  * @property string $modification_date_time
  * @property string $visible_fields_in_result
  * @property Users $User
@@ -19,6 +20,7 @@
  * @method string          getName()                     Returns the current record's "name" value
  * @method string          getSearchCriterias()          Returns the current record's "search_criterias" value
  * @method boolean         getFavorite()                 Returns the current record's "favorite" value
+ * @method boolean         getIsOnlyId()                 Returns the current record's "is_only_id" value
  * @method string          getModificationDateTime()     Returns the current record's "modification_date_time" value
  * @method string          getVisibleFieldsInResult()    Returns the current record's "visible_fields_in_result" value
  * @method Users           getUser()                     Returns the current record's "User" value
@@ -27,6 +29,7 @@
  * @method MySavedSearches setName()                     Sets the current record's "name" value
  * @method MySavedSearches setSearchCriterias()          Sets the current record's "search_criterias" value
  * @method MySavedSearches setFavorite()                 Sets the current record's "favorite" value
+ * @method MySavedSearches setIsOnlyId()                 Sets the current record's "is_only_id" value
  * @method MySavedSearches setModificationDateTime()     Sets the current record's "modification_date_time" value
  * @method MySavedSearches setVisibleFieldsInResult()    Sets the current record's "visible_fields_in_result" value
  * @method MySavedSearches setUser()                     Sets the current record's "User" value
@@ -59,6 +62,11 @@ abstract class BaseMySavedSearches extends sfDoctrineRecord
              'notnull' => true,
              ));
         $this->hasColumn('favorite', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => false,
+             ));
+        $this->hasColumn('is_only_id', 'boolean', null, array(
              'type' => 'boolean',
              'notnull' => true,
              'default' => false,

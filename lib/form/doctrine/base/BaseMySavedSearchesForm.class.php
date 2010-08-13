@@ -20,6 +20,7 @@ abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
       'name'                     => new sfWidgetFormTextarea(),
       'search_criterias'         => new sfWidgetFormTextarea(),
       'favorite'                 => new sfWidgetFormInputCheckbox(),
+      'is_only_id'               => new sfWidgetFormInputCheckbox(),
       'modification_date_time'   => new sfWidgetFormTextarea(),
       'visible_fields_in_result' => new sfWidgetFormTextarea(),
     ));
@@ -30,6 +31,7 @@ abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
       'name'                     => new sfValidatorString(),
       'search_criterias'         => new sfValidatorString(),
       'favorite'                 => new sfValidatorBoolean(array('required' => false)),
+      'is_only_id'               => new sfValidatorBoolean(array('required' => false)),
       'modification_date_time'   => new sfValidatorString(),
       'visible_fields_in_result' => new sfValidatorString(),
     ));
