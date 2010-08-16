@@ -93,7 +93,8 @@ class savesearchActions extends sfActions
       {
         try{
           $this->form->save();
-          return $this->renderText('ok');
+          $search = $this->form->getObject();
+          return $this->renderText('ok,' . $search->getId());
         }
         catch(Doctrine_Exception $ne)
         {

@@ -41,7 +41,7 @@
   </form>
 
 <script  type="text/javascript">
-
+spec_list_saved = null;
 $(document).ready(function () {
   if($('#my_saved_searches_favorite').is(':checked'))
   {
@@ -72,8 +72,11 @@ $(document).ready(function () {
           url: $(this).attr('action'),
           data: $(this).serialize(),
           success: function(html){
-            if(html == 'ok')
+            if(/^ok/.test(html))
             {
+              id_arr = html.split(',');
+              spec_list_saved = id_arr[1];
+
               $('.qtip-button').click();
             }
             $('form#save_search').parent().before(html).remove();
