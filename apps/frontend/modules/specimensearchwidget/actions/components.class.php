@@ -35,6 +35,11 @@ class specimensearchwidgetComponents extends sfComponents
   public function executeRefMineral()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+  }
+
+  public function executeSpecIds()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
   }        
   public function executeRefGtu()
   {
@@ -43,6 +48,6 @@ class specimensearchwidgetComponents extends sfComponents
       $this->form = new SpecimenSearchFormFilter() ;  
       $this->form->addGtuTagValue(0);
     }
-  }  
+  }
 
 }

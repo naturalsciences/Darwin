@@ -21,8 +21,10 @@
             <?php echo $form['rec_per_page']->render(array('class'=>'hidden'));?>
             <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">
           </div>
-      </div>      
-      <?php include_partial('savesearch/savebut');?>
+      </div>
+      <div class="check_right" id="save_button"> 
+        <?php include_partial('savesearch/saveSearch');?>
+      </div>
     </form>
   </div>
 </div>

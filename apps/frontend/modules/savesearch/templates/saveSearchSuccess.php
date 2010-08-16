@@ -35,12 +35,13 @@
     <?php echo $form['visible_fields_in_result'] ; ?>
   </table>
   <div class="aligned_fields"> 
+    <?php echo $form['is_only_id']->render(array('class'=>'hidden')) ; ?>
     <input type="submit" name="save" id="save" value="<?php echo __('Save'); ?>" class="search_submit">
   </div>      
   </form>
 
 <script  type="text/javascript">
-
+spec_list_saved = null;
 $(document).ready(function () {
   if($('#my_saved_searches_favorite').is(':checked'))
   {
@@ -71,8 +72,11 @@ $(document).ready(function () {
           url: $(this).attr('action'),
           data: $(this).serialize(),
           success: function(html){
-            if(html == 'ok')
+            if(/^ok/.test(html))
             {
+              id_arr = html.split(',');
+              spec_list_saved = id_arr[1];
+
               $('.qtip-button').click();
             }
             $('form#save_search').parent().before(html).remove();

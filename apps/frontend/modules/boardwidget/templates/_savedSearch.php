@@ -39,7 +39,6 @@ $(document).ready(function () {
       fav_status = 1;
     }
     rid = getIdInClasses($(this).closest('tr'));
-    console.log(fav_status);
     $.get('<?php echo url_for('savesearch/favorite');?>/id/' + rid + '/status/' + fav_status,function (html){
     });
   });

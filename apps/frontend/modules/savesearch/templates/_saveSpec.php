@@ -1,13 +1,23 @@
-      <div class="check_right" id="save_button"> 
-        <input type="button" name="save" id="save_search" value="<?php echo __('Save this search'); ?>" class="save_search">
-      </div>
-
+<!-- <label><?php //echo format_number_choice('[1] Save my pinned specimen|(1,+Inf] Save my %1% pinned specimens', array('%1%' =>  count($sf_user->getAllPinned())), count($sf_user->getAllPinned()) );?></label> -->
+<label><?php echo __('Save my pinned specimens');?></label>
+<select id="save_specs_choice">
+    <option value="" selected="selected"></option>
+    <optgroup label="<?php echo __('New');?>">
+      <option value="create"><?php echo __('To a new list');?></option>
+    </optgroup>
+    <optgroup label="<?php echo __('Existing');?>">
+      <?php foreach($spec_lists as $list):?>
+        <option value="<?php echo $list->getId();?>"><?php echo $list->getName();?></option>
+      <?php endforeach;?>
+    </optgroup>
+</select>
+<input type="button" name="save" id="save_specs" value="<?php echo __('Go'); ?>">
 <script  type="text/javascript">
 $(document).ready(function () {
 
-  $("#save_search").click(function(){
-
-    column_str = '';
+  $("#save_specs").click(function(){
+    if($('#save_specs_choice').val()=="") return;
+    column_str = ' ';
     $('.column_menu ul > li.check').each(function (index)
       {
         if(column_str != '') column_str += '|';
@@ -18,7 +28,7 @@ $(document).ready(function () {
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
-            url: '<?php echo url_for('savesearch/saveSearch');?>'+ '/cols/' + column_str,
+            url: '<?php echo url_for('savesearch/saveSearch?type=pin');?>'+ '/cols/' + column_str + '/list_nr/' + $('#save_specs_choice').val(),
             data: $('.search_form').serialize(),
             method: 'post'
         },
@@ -54,6 +64,8 @@ $(document).ready(function () {
          {
             $(this).attr('value','Search Saved') ;
             $(this.elements.target).qtip("destroy");
+            if(spec_list_saved)
+              window.location.replace('<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved);
          }
          }
     });

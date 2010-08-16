@@ -263,6 +263,11 @@ input[type="submit"][class="search_submit"]
   padding-bottom:10px;
 }
 
+.check_right input[type="button"][class="save_search"]
+{
+  padding-bottom:0px;
+}
+
 input[type="submit"][class="search_submit"]:hover
 {
   cursor:pointer;

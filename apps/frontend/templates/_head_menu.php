@@ -37,6 +37,7 @@
                     </ul>
                 </li>
                 <li><?php echo link_to(__('Specimens'),'specimensearch/index');?></li>
+                <li><?php echo link_to(__('Pinned Specimens'),'specimensearch/search?pinned=true');?></li>
                 <li><?php echo link_to(__('Collections'),'collection/index');?></li>
             </ul>
         </li>

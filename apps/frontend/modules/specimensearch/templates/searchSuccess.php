@@ -7,9 +7,12 @@
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
     <form id="specimen_filter" class="specimensearch_form" action="<?php echo url_for('specimensearch/searchResult'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-      <ul id="intro" style="display:none">
+      <ul id="intro" class="hidden">
         <?php echo $form->render() ; ?>
       </ul>
+      <?php if($sf_request->hasParameter('pinned')):?>
+        <input type="hidden" name="pinned" value="true" />
+      <?php endif;?>
       <div class="search_results">
         <div class="search_results_content">
           <?php include_partial('searchSuccess',
@@ -25,16 +28,20 @@
                                ); ?>
         </div>
       </div>
-        <?php include_partial('savesearch/savebut');?>
-        <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
+        
         <script  type="text/javascript">
 $(document).ready(function () {
 
   $("#criteria_butt").click(function(){
-    $(this).closest('form').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
+    $('.search_form').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
   });
 });
       </script>
     </form>
+      <div class="check_right" id="save_button"> 
+        <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
+        <?php include_partial('savesearch/saveSearch');?>
+      </div>
+    <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
   </div>
 </div>

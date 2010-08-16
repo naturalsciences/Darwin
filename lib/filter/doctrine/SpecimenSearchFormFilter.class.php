@@ -49,7 +49,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => 'All'
       ));      
-    $this->widgetSchema->setLabels(array('gtu_code' => 'Specimen code(s)',
+    $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
                                          'taxon_name' => 'Taxon',
                                          'taxon_level_ref' => 'Level'
                                         )
@@ -58,6 +58,9 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->setDefault('col_fields','category|taxon|collection|type|gtu');
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
 
+    $this->widgetSchema['spec_ids'] = new sfWidgetFormTextarea(array('label'=>'#ID list'));
+    
+    $this->validatorSchema['spec_ids'] = new sfValidatorString( array('required' => false,'trim' => true));
     $this->validatorSchema['col_fields'] = new sfValidatorString(array('required' => false,
                                                                  'trim' => true
                                                                 ));
@@ -129,6 +132,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);
+    sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
 
   public function addTagsColumnQuery($query, $field, $val)
@@ -172,7 +176,21 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     parent::bind($taintedValues, $taintedFiles);
   }
-   
+  
+  public function addSpecIdsColumnQuery($query, $field, $val)
+  {
+    $ids = explode(',', $val);
+    $clean_ids =array();
+    foreach($ids as $id)
+    {
+      if(ctype_digit($id))
+        $clean_ids[] = $id;
+    }
+    if(! empty($clean_ids))
+      $query->andWhereIn("spec_ref", $clean_ids);
+    return $query ;
+  }
+  
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);

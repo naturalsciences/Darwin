@@ -40,4 +40,36 @@ class myUser extends sfBasicSecurityUser
   {
     return $this->getAttribute('rec_per_page',10);
   }
+
+
+  public function removePinTo($id)
+  {
+    $pins = $this->getAttribute('spec_pinned',array());
+    if( ($key = array_search($id, $pins)) !== false)
+      unset($pins[$key]);
+
+    $this->setAttribute('spec_pinned',$pins);
+    
+  }
+  
+  public function addPinTo($id)
+  {
+    $pins = $this->getAttribute('spec_pinned',array());
+    if(array_search($id, $pins) === false)
+      $pins[] = $id;
+    $pins = array_unique($pins);
+    $this->setAttribute('spec_pinned',$pins);
+    
+  }
+
+  public function getAllPinned()
+  {
+    return $this->getAttribute('spec_pinned',array());
+  }
+  
+  public function isPinned($id)
+  {
+    $pins = $this->getAttribute('spec_pinned',array());
+    return (array_search($id, $pins) === false) ? false : true;
+  }
 }

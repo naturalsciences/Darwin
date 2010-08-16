@@ -57,10 +57,15 @@ class specimensearchActions extends DarwinActions
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
 
-    if($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '')
+    if( ($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ) || $request->hasParameter('pinned') )
     {
-      $criterias = $request;
-      $this->form->bind($request->getParameter('specimen_search_filters'));
+      $criterias = $request->getPostParameters();
+      if($request->hasParameter('pinned'))
+      {
+        $ids=implode(',',$this->getUser()->getAllPinned() );
+        $criterias['specimen_search_filters']['spec_ids'] = $ids;
+      }
+      $this->form->bind($criterias['specimen_search_filters']) ;
     }
     elseif($request->getParameter('search_id','') != '')
     {
@@ -91,6 +96,13 @@ class specimensearchActions extends DarwinActions
         }
         else
         {
+          $q = Doctrine::getTable('MySavedSearches')
+            ->addUserOrder(null, $this->getUser()->getId());
+          $this->spec_lists = Doctrine::getTable('MySavedSearches')
+            ->addIsSearch($q, false)
+            ->execute();
+
+
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
