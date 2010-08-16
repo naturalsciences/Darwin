@@ -132,6 +132,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);
+    sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
 
   public function addTagsColumnQuery($query, $field, $val)

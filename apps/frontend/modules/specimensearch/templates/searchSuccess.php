@@ -7,9 +7,9 @@
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
     <form id="specimen_filter" class="search_form" action="<?php echo url_for('specimensearch/searchResult'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-      <table id="intro" class="hidden">
+      <ul id="intro" class="hidden">
         <?php echo $form->render() ; ?>
-      </table>
+      </ul>
       <?php if($sf_request->hasParameter('pinned')):?>
         <input type="hidden" name="pinned" value="true" />
       <?php endif;?>
