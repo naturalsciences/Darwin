@@ -62,8 +62,8 @@ class collecting_toolsActions extends sfActions
 
   public function executeAddTool(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->getParameter('tool', '')!='');
-    return $this->renderText(Doctrine::getTable('CollectingTools')->addTool($request->getParameter('tool')));
+    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->hasParameter('value'));
+    return $this->renderText(Doctrine::getTable('CollectingTools')->addTool($request->getParameter('value')));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

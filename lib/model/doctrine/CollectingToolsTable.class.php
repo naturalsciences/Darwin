@@ -26,24 +26,17 @@ class CollectingToolsTable extends Doctrine_Table
 
     public function addTool($tool)
     {
-      $q = Doctrine_Query::create()
-           ->select('id')
-           ->from('CollectingTools')
-           ->where('tool_indexed = fullToIndex(?)', $tool);
-      if ($tool!='' && !$q->count())
+      $newTool = new CollectingTools;
+      $newTool->setMethod($tool);
+      try
       {
-        $newTool = new CollectingTools;
-        $newTool->setMethod($tool);
-        try
-        {
-          $newTool->save();
-        }
-        catch (Doctrine_Exception $ne)
-        {
-          $e = new DarwinPgErrorParser($ne);
-          return $e->getMessage();
-        }
+        $newTool->save();
       }
-      return 'ok';
+      catch (Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        return $e->getMessage();
+      }
+      return $newTool->getId();
     }
 }

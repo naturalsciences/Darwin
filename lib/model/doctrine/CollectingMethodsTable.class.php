@@ -26,24 +26,17 @@ class CollectingMethodsTable extends Doctrine_Table
 
     public function addMethod($method)
     {
-      $q = Doctrine_Query::create()
-           ->select('id')
-           ->from('CollectingMethods')
-           ->where('method_indexed = fullToIndex(?)', $method);
-      if ($method!='' && !$q->count())
+      $newMethod = new CollectingMethods;
+      $newMethod->setMethod($method);
+      try
       {
-        $newMethod = new CollectingMethods;
-        $newMethod->setMethod($method);
-        try
-        {
-          $newMethod->save();
-        }
-        catch (Doctrine_Exception $ne)
-        {
-          $e = new DarwinPgErrorParser($ne);
-          return $e->getMessage();
-        }
+        $newMethod->save();
       }
-      return 'ok';
+      catch (Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        return $e->getMessage();
+      }
+      return $newMethod->getId();
     }
 }

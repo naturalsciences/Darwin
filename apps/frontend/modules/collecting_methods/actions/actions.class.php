@@ -62,8 +62,8 @@ class collecting_methodsActions extends sfActions
 
   public function executeAddMethod(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->getParameter('method', '')!='');
-    return $this->renderText(Doctrine::getTable('CollectingMethods')->addMethod($request->getParameter('method')));
+    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->hasParameter('value'));
+    return $this->renderText(Doctrine::getTable('CollectingMethods')->addMethod($request->getParameter('value')));
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
