@@ -52,6 +52,11 @@ class myUser extends sfBasicSecurityUser
     
   }
   
+  public function clearPinned()
+  {
+     $this->setAttribute('spec_pinned',array());
+  }
+  
   public function addPinTo($id)
   {
     $pins = $this->getAttribute('spec_pinned',array());

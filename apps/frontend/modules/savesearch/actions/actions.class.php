@@ -94,6 +94,9 @@ class savesearchActions extends sfActions
         try{
           $this->form->save();
           $search = $this->form->getObject();
+          if($search->getIsOnlyId()==true)
+            $this->getUser()->clearPinned();
+
           return $this->renderText('ok,' . $search->getId());
         }
         catch(Doctrine_Exception $ne)
