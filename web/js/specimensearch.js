@@ -28,7 +28,7 @@ function store_list(element, url)
       query_str += $(this).attr('id').substr(3); // extract from id the column name : li_colname ==> colname
     }
   });
-  
+  $('#specimen_search_filters_col_fields').attr('value',query_str) ;
   $.ajax({
     url: url + '/cols/'+query_str,
     success: function(data) {

@@ -14,11 +14,17 @@ $(document).ready(function () {
         $(this).siblings('.collapsed').show();
         $(this).parent().siblings('ul').hide();
     });
-    
+    $('.treelist li input[type=checkbox]').click(function()
+    {
+	    class_val = $(this).closest('li').attr('class');
+   	  val = $(this).attr('checked') ;
+	    alt_val = $(this).closest('ul .'+class_val).find(':checkbox').attr('checked',val);
+    });    
     $('#clear_collections').click(function()
     {
   	  $('table.widget_sub_table').find(':checkbox').attr('checked','');    
     });
+    
 });
 </script>
 <table class="widget_sub_table">
