@@ -5,7 +5,7 @@ $(document).ready(function () {
 
   $("#save_search").click(function(){
 
-    column_str = '';
+    column_str = ' ';
     $('.column_menu ul > li.check').each(function (index)
       {
         if(column_str != '') column_str += '|';

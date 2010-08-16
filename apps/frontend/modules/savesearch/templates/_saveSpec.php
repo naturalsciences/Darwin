@@ -17,7 +17,7 @@ $(document).ready(function () {
 
   $("#save_specs").click(function(){
     if($('#save_specs_choice').val()=="") return;
-    column_str = '';
+    column_str = ' ';
     $('.column_menu ul > li.check').each(function (index)
       {
         if(column_str != '') column_str += '|';
