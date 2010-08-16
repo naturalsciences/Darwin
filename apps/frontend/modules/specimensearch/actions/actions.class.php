@@ -62,6 +62,12 @@ class specimensearchActions extends DarwinActions
       $criterias = $request;
       $this->form->bind($request->getParameter('specimen_search_filters'));
     }
+    elseif($request->hasParameter('pinned'))
+    {
+      $ids=implode(',',$this->getUser()->getAllPinned() );
+      $criterias = array('specimen_search_filters'=> array('spec_ids' => $ids));
+      $this->form->bind($criterias['specimen_search_filters']) ;
+    }
     elseif($request->getParameter('search_id','') != '')
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
