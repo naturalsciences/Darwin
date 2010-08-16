@@ -37,6 +37,18 @@ function store_list(element, url)
   $('#specimen_search_filters_fields').val(query_str);
 }
 
+function initIndividualColspan()
+{
+  cpt = 1 ;
+  $('ul.column_menu > li > ul').find('>li').each(function() {
+    if( $(this).hasClass('check'))
+    {
+      cpt++ ;
+    }
+   });  
+  $('table.spec_results tbody tr:nth-child(2) td').attr('colspan', cpt) ;    
+}
+
 function hide_or_show(li)
 {
   field = li.attr('id') ;

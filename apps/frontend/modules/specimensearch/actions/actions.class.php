@@ -69,7 +69,7 @@ class specimensearchActions extends DarwinActions
       $this->forward404Unless($saved_search);
 
       $criterias = unserialize($saved_search->getSearchCriterias());
-
+      $criterias['specimen_search_filters']['col_fields'] = implode('|',$saved_search->getVisibleFieldsInResult()) ;
       if(isset($criterias['specimen_search_filters']))
       {
         Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
