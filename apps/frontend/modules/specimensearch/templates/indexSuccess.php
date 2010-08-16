@@ -6,7 +6,7 @@
 <?php include_javascripts_for_form($form) ?>
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search');?></h1>
-    <form id="specimen_filter" class="search_form" action="<?php echo url_for('specimensearch/search');?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+    <form id="specimen_filter" class="specimensearch_form" action="<?php echo url_for('specimensearch/search');?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
       <div class="panel encod_screen" id="intro">
         <?php include_partial('widgets/screen', array(
           'widgets' => $widgets,

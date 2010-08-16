@@ -1,6 +1,6 @@
 jQuery(function () 
 {
-  /*$(".search_form").submit(function ()
+  $(".search_form").submit(function ()
   {
     $(".tree").slideUp().html("");
     $.ajax({
@@ -15,7 +15,7 @@ jQuery(function ()
           );
     $(".search_results_content").html('<img src="/images/loader.gif" />');
     return false;
-  });*/
+  });
 
   $("a.sort").live('click',function ()
   {

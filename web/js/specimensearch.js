@@ -1,3 +1,38 @@
+jQuery(function() {
+  $("a.sort").live('click',function ()
+  {
+    $.ajax({
+            type: "POST",
+            url: $(this).attr("href"),
+            data: $('.specimensearch_form').serialize(),
+            success: function(html){
+                                    $(".search_results_content").html(html);
+                                    $('.search_results').slideDown();
+                                   }
+           }
+          );
+    $(".search_results_content").html('<img src="/images/loader.gif" />');
+    $(".specimensearch_form").attr('action', $(this).attr("href"))
+    return false;
+  });
+
+  $(".pager a").live('click',function ()
+  {
+    $.ajax({
+            type: "POST",
+            url: $(this).attr("href"),
+            data: $('.specimensearch_form').serialize(),
+            success: function(html){
+                                    $(".search_results_content").html(html);
+                                    $('.search_results').slideDown();
+                                   }
+           }
+          );
+    $(".search_results_content").html('<img src="/images/loader.gif" />');
+    return false;
+  });
+});
+
 function update_list(li)
 {
   val = li.attr('class') ;
@@ -37,6 +72,9 @@ function store_list(element, url)
   $('#specimen_search_filters_fields').val(query_str);
 }
 
+/**
+* set the individual colspan depending on how many fields are visible
+*/
 function initIndividualColspan()
 {
   cpt = 1 ;

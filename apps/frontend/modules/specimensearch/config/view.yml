@@ -4,5 +4,5 @@ indexSuccess:
   
 searchSuccess:
   stylesheets: [specimensearch.css]
-  javascripts: [searchForm.js, specimensearch.js]
+  javascripts: [specimensearch.js]
 
