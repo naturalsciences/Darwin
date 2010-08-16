@@ -65,6 +65,7 @@
             <th>
                <?php echo image_tag('white_pin_off.png', array('alt' =>  __('Save this result'))) ; ?>
             </th>
+            <th></th>
             <th class="col_category">
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=category'.( ($orderBy=='category' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                  $currentPage);?>">
@@ -155,7 +156,8 @@
                   <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on hidden','alt' =>  __('Un-Save this result'))) ; ?>
                   <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
                 <?php endif;?>
-              </td>              
+              </td>
+              <td><?php if($is_pinned_search):?><?php echo image_tag('blue_pin_del.png',array('class' => 'pin_del'));?><?php endif;?></td>
               <td class="col_category">
                 <?php echo $specimen->getCategory() == 'physical'? image_tag('physical.png', array('alt' => __('physical'))):
                                                              image_tag('non_physical.gif', array('alt' => __('other'))) ;?>
@@ -257,7 +259,7 @@
               </td>
             </tr>
             <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>">
-              <td colspan="7">
+              <td colspan="8">
                 <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
                 <script type="text/javascript">
                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
@@ -318,6 +320,15 @@ $(document).ready(function () {
     rid = getIdInClasses($(this).closest('tr'));
     $.get('<?php echo url_for('savesearch/pin');?>/id/' + rid + '/status/' + pin_status,function (html){
     });
+  });
+
+  <?php if($is_pinned_search):?>
+  $('.spec_results .pin_del').click(function(){
+    rid = getIdInClasses($(this).closest('tr'));
+    $.get('<?php echo url_for('savesearch/removePin?search='.$is_pinned_search);?>/id/' + rid ,function (html){
+      $('.rid_'+rid).closest('tbody').remove();
+    });
+  <?php endif;?>
   });
 });
 </script> 

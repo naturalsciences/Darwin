@@ -53,6 +53,7 @@ class specimensearchActions extends DarwinActions
   {
     // Forward to a 404 page if the method used is not a post
     //$this->forward404Unless($request->isMethod('post'));
+    $this->is_pinned = false;
     $this->setCommonValues('specimensearch', 'collection_name', $request);
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
@@ -72,7 +73,8 @@ class specimensearchActions extends DarwinActions
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
 
       $this->forward404Unless($saved_search);
-
+      if($saved_search->getisOnlyId())
+        $this->is_pinned = $saved_search->getId();
       $criterias = unserialize($saved_search->getSearchCriterias());
       $criterias['specimen_search_filters']['col_fields'] = implode('|',$saved_search->getVisibleFieldsInResult()) ;
       if(isset($criterias['specimen_search_filters']))

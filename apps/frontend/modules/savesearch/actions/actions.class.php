@@ -10,6 +10,25 @@
  */
 class savesearchActions extends sfActions
 {
+  public function executeRemovePin(sfWebRequest $request)
+  {
+    if($request->getParameter('search') && ctype_digit($request->getParameter('search')) )
+    {
+      $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search'), $this->getUser()->getId());
+      $this->forward404Unless($saved_search);
+      $prev_req = unserialize( $saved_search->getSearchCriterias() );
+      $old_ids = explode(',',$prev_req['specimen_search_filters']['spec_ids']);
+      
+      if( ($key_num = array_search($request->getParameter('id'),$old_ids)) !== false)
+        unset($old_ids[$key_num]);
+      $old_ids = array_unique($old_ids);
+      $prev_req['specimen_search_filters']['spec_ids'] = implode(',',$old_ids);
+      $saved_search->setSearchCriterias( serialize($prev_req));
+      $saved_search->save();
+      return $this->renderText('ok');  
+    }
+    return $this->renderText('nok');
+  }
 
   public function executePin(sfWebRequest $request)
   {

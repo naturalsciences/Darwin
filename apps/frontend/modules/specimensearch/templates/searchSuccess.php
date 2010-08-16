@@ -10,7 +10,7 @@
       <ul id="intro" class="hidden">
         <?php echo $form->render() ; ?>
       </ul>
-      <?php if($sf_request->hasParameter('pinned')):?>
+      <?php if($is_pinned):?>
         <input type="hidden" name="pinned" value="true" />
       <?php endif;?>
       <div class="search_results">
@@ -23,7 +23,8 @@
                                       'orderDir' => $orderDir,
                                       'field_to_show' => $field_to_show,
                                       'currentPage' => $currentPage,
-                                      'pagerLayout' => $pagerLayout
+                                      'pagerLayout' => $pagerLayout,
+                                      'is_pinned_search' => $is_pinned
                                      )
                                ); ?>
         </div>
