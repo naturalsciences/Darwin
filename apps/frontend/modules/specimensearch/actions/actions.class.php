@@ -57,15 +57,14 @@ class specimensearchActions extends DarwinActions
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
 
-    if($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '')
+    if( ($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ) || $request->hasParameter('pinned') )
     {
-      $criterias = $request;
-      $this->form->bind($request->getParameter('specimen_search_filters'));
-    }
-    elseif($request->hasParameter('pinned'))
-    {
-      $ids=implode(',',$this->getUser()->getAllPinned() );
-      $criterias = array('specimen_search_filters'=> array('spec_ids' => $ids));
+      $criterias = $request->getPostParameters();
+      if($request->hasParameter('pinned'))
+      {
+        $ids=implode(',',$this->getUser()->getAllPinned() );
+        $criterias['specimen_search_filters']['spec_ids'] = $ids;
+      }
       $this->form->bind($criterias['specimen_search_filters']) ;
     }
     elseif($request->getParameter('search_id','') != '')
