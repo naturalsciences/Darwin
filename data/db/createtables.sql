@@ -1919,7 +1919,8 @@ create table collecting_tools
         tool varchar not null,
         tool_indexed varchar not null,
         constraint pk_collecting_tools primary key (id),
-        constraint unq_collecting_tools unique (tool_indexed)
+        constraint unq_collecting_tools unique (tool_indexed),
+        constraint chk_collecting_tools_tool check (tool <> '')
        );
 comment on table collecting_tools is 'List of all available collecting tools';
 comment on column collecting_tools.id is 'Unique identifier of a collecting tool';
@@ -1952,7 +1953,8 @@ create table collecting_methods
         method varchar not null,
         method_indexed varchar not null,
         constraint pk_collecting_methods primary key (id),
-        constraint unq_collecting_methods unique (method_indexed)
+        constraint unq_collecting_methods unique (method_indexed),
+        constraint chk_collecting_methods_method check (method <> '')
        );
 comment on table collecting_methods is 'List of all available collecting methods';
 comment on column collecting_methods.id is 'Unique identifier of a collecting method';
