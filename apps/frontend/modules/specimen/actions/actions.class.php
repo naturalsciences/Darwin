@@ -146,9 +146,9 @@ class specimenActions extends DarwinActions
       }
       catch(Doctrine_Exception $ne)
       {
-	$e = new DarwinPgErrorParser($ne);
-	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$form->getErrorSchema()->addError($error); 
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
       }
     }
   }
@@ -228,13 +228,12 @@ class specimenActions extends DarwinActions
           $specs[$specimen->getId()] = $specimen->getId();
         }
         $specCodes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens', $specs);
-		$this->codes = array();
+        $this->codes = array();
         foreach($specCodes as $code)
         {
           if(! isset($this->codes[$code->getRecordId()]) ) 
-			$this->codes[$code->getRecordId()] = array();
-
-		  $this->codes[$code->getRecordId()][] = $code;
+            $this->codes[$code->getRecordId()] = array();
+          $this->codes[$code->getRecordId()][] = $code;
         }
       }
     }

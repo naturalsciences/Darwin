@@ -39,13 +39,13 @@ $(document).ready(function () {
                 // Fade out the modal "blanket" using the defined hide speed
                 $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
             },
-	    onHide: function()
-	    {
-		widget_parent = $(this.elements.target).closest('li.widget');
-		widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
-		$(this.elements.target).qtip("destroy");
-		hideForRefresh(widget_parent.find('.widget_content'));
-	    }
+            onHide: function()
+            {
+              widget_parent = $(this.elements.target).closest('li.widget');
+              widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
+              $(this.elements.target).qtip("destroy");
+              hideForRefresh(widget_parent.find('.widget_content'));
+            }
         }
     });
     return false;

@@ -88,20 +88,22 @@ class catalogueActions extends DarwinActions
       $form->bind($request->getParameter('searchCatalogue'));
       if ($form->isValid())
       {
-        $query = $form->getQuery()
-	  ->orderBy($this->orderBy .' '.$this->orderDir);
-	if($this->is_choose == 0)
-	  $query->andWhere('id != 0');
+        $query = $form
+                 ->getQuery()
+                 ->orderBy($this->orderBy .' '.$this->orderDir);
+        if($this->is_choose == 0)
+          $query->andWhere('id != 0');
         $this->pagerLayout = new PagerLayoutWithArrows(
-	  new Doctrine_Pager($query,
-                             $this->currentPage,
-                             $form->getValue('rec_per_page')
-	                    ),
-	  new Doctrine_Pager_Range_Sliding(
-	    array('chunk' => $this->pagerSlidingSize)
-	    ),
-	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-	);
+                              new Doctrine_Pager(
+                                $query,
+                                $this->currentPage,
+                                $form->getValue('rec_per_page')
+                              ),
+                             new Doctrine_Pager_Range_Sliding(
+                              array('chunk' => $this->pagerSlidingSize)
+                             ),
+                             $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+                            );
 
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);

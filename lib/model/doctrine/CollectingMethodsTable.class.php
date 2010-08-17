@@ -8,6 +8,7 @@ class CollectingMethodsTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('CollectingMethods');
     }
+
     public function fetchMethods()
     {
       $response = array();
@@ -21,5 +22,21 @@ class CollectingMethodsTable extends Doctrine_Table
         $response[$value['id']] = $value['method'];
       }
       return $response;
+    }
+
+    public function addMethod($method)
+    {
+      $newMethod = new CollectingMethods;
+      $newMethod->setMethod($method);
+      try
+      {
+        $newMethod->save();
+      }
+      catch (Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        return $e->getMessage();
+      }
+      return $newMethod->getId();
     }
 }

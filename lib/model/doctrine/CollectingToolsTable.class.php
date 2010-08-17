@@ -8,6 +8,7 @@ class CollectingToolsTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('CollectingTools');
     }
+
     public function fetchTools()
     {
       $response = array();
@@ -21,5 +22,21 @@ class CollectingToolsTable extends Doctrine_Table
         $response[$value['id']] = $value['tool'];
       }
       return $response;
+    }
+
+    public function addTool($tool)
+    {
+      $newTool = new CollectingTools;
+      $newTool->setMethod($tool);
+      try
+      {
+        $newTool->save();
+      }
+      catch (Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        return $e->getMessage();
+      }
+      return $newTool->getId();
     }
 }

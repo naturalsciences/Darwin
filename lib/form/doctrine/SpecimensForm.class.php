@@ -199,6 +199,7 @@ class SpecimensForm extends BaseSpecimensForm
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available'),
             'add_active'=>true,
+            'add_url'=>'collecting_methods/addMethod',
            )
     );
     $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
@@ -211,6 +212,7 @@ class SpecimensForm extends BaseSpecimensForm
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available'),
             'add_active'=>true,
+            'add_url'=>'collecting_tools/addTool',
            )
     );
     $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
