@@ -64,6 +64,8 @@ class specimensearchActions extends DarwinActions
       if($request->hasParameter('pinned'))
       {
         $ids=implode(',',$this->getUser()->getAllPinned() );
+        if($ids=='')
+          $ids = '0';
         $criterias['specimen_search_filters']['spec_ids'] = $ids;
       }
       $this->form->bind($criterias['specimen_search_filters']) ;
@@ -80,6 +82,8 @@ class specimensearchActions extends DarwinActions
       if(isset($criterias['specimen_search_filters']))
       {
         Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
+        if($saved_search->getisOnlyId() && $criterias['specimen_search_filters']['spec_ids']=='')
+          $criterias['specimen_search_filters']['spec_ids'] = '0';
         $this->form->bind($criterias['specimen_search_filters']) ;
       }
     }
