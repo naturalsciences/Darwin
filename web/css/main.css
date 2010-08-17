@@ -1646,6 +1646,65 @@ vertical-align: super;
 {
   margin-right:0.3em;
 }
+
+
+
+
+/** Fields Table for saved searches **/
+
+.fields
+{
+  background-color:white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: middle;
+  width:400px;
+  border: 1px solid #5BAABD;
+}
+
+.fields thead
+{
+  background-color: #5BAABD;
+  color: white;
+}
+
+.fields tbody tr:nth-child(even) {background: #E9F2F7}
+.fields tbody tr:nth-child(odd) {background: white}
+.fields tbody tr:hover {background: #5BAABD; color:white}
+
+.fields th, .fields td
+{
+  text-align: left;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+}
+
+.fields th:nth-child(2), .fields td:nth-child(2)
+{
+  text-align: right;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+}
+
+input[type="button"][class="save_search"]
+{
+  background: #5BAABD  ;
+  border-right: 2px double white;    
+  border-bottom: 2px double white;    
+  width:123px;
+  height:21px;
+  color:white;
+  margin-top:1px;
+  padding-bottom:10px;
+}
+
+input[type="button"][class="save_search"]:hover
+{
+  cursor:pointer;
+}
+
 table.saved_searches
 {
   width: 600px;

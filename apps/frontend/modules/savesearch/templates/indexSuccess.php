@@ -80,7 +80,7 @@ $(document).ready(function () {
   $(".edit_request").click(function(){
     $(this).qtip({
         content: {
-            title: { text : '<?php echo __('Edit your search')?>', button: 'X' },        
+            title: { text : '<?php echo ($is_only_spec ? __('Edit your specimens') : __('Edit your search') ) ;?>', button: 'X' },        
             url: '<?php echo url_for('savesearch/saveSearch');?>/id/' + getIdInClasses($(this).closest('tr')),
             method: 'get'
         },
