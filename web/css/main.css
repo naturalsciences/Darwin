@@ -1017,6 +1017,13 @@ table.edit_synon td
   cursor:pointer;
 }
 
+td.row_delete
+{
+  vertical-align:top;
+  text-align:right;
+  width:18px;
+}
+
 td.widget_row_delete
 {
   vertical-align:top;
@@ -1631,13 +1638,13 @@ table.saved_searches
   width: 600px;
 }
 
-table.saved_searches_board
+table.saved_searches_board ,  table.saved_spec_board
 {
   width: 100%;
   margin-bottom:1em;
 }
 
-table.saved_searches td.fav_col,  table.saved_searches_board td.fav_col
+table.saved_searches td.fav_col,  table.saved_searches_board td.fav_col , table.saved_spec_board td.fav_col
 {
   width: 30px;
 }
@@ -1652,5 +1659,10 @@ table.saved_searches div.date
 {
   font-size:x-small;
 /*   text-align:right; */
+  color:gray;
+}
+table.saved_spec_board .saved_count, table.saved_searches .saved_count
+{
+  font-size:x-small;
   color:gray;
 }

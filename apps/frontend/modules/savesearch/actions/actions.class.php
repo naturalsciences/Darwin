@@ -16,8 +16,10 @@ class savesearchActions extends sfActions
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search'), $this->getUser()->getId());
       $this->forward404Unless($saved_search);
+      
       $prev_req = unserialize( $saved_search->getSearchCriterias() );
-      $old_ids = explode(',',$prev_req['specimen_search_filters']['spec_ids']);
+      $old_ids = $saved_search->getAllSearchedId();
+
       
       if( ($key_num = array_search($request->getParameter('id'),$old_ids)) !== false)
         unset($old_ids[$key_num]);
@@ -84,8 +86,10 @@ class savesearchActions extends sfActions
         else
         {
           $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('list_nr'), $this->getUser()->getId());
-          $prev_req = unserialize($saved_search->getSearchCriterias());
-          $old_ids = explode(',',$prev_req['specimen_search_filters']['spec_ids']);
+          
+          $prev_req = unserialize( $saved_search->getSearchCriterias() );
+          $old_ids = $saved_search->getAllSearchedId();
+
           $new_ids = array_merge($old_ids,$this->getUser()->getAllPinned());
           $new_ids = array_unique($new_ids);
           $prev_req['specimen_search_filters']['spec_ids'] = implode(',',$new_ids);
@@ -149,8 +153,13 @@ class savesearchActions extends sfActions
   {
     $q = Doctrine::getTable('MySavedSearches')
         ->addUserOrder(null, $this->getUser()->getId());
+
+    $this->is_only_spec = false;
+
+    if($request->getParameter('specimen') != '')
+      $this->is_only_spec = true;
     $this->searches = Doctrine::getTable('MySavedSearches')
-        ->addIsSearch($q, true)
+        ->addIsSearch($q, ! $this->is_only_spec)
         ->execute();
   }
 }

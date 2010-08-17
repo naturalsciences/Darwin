@@ -1,4 +1,7 @@
 <div>
+      <?php if($is_pinned_search):?>
+        <input type="hidden" name="pinned_search" value="<?php echo $is_pinned_search;?>" />
+      <?php endif;?>
   <?php if(isset($specimensearch) && $specimensearch->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
     <?php
       if($orderDir=='asc')
@@ -323,12 +326,13 @@ $(document).ready(function () {
   });
 
   <?php if($is_pinned_search):?>
-  $('.spec_results .pin_del').click(function(){
-    rid = getIdInClasses($(this).closest('tr'));
-    $.get('<?php echo url_for('savesearch/removePin?search='.$is_pinned_search);?>/id/' + rid ,function (html){
-      $('.rid_'+rid).closest('tbody').remove();
+    $('.spec_results .pin_del').click(function(){
+      rid = getIdInClasses($(this).closest('tr'));
+      $.get('<?php echo url_for('savesearch/removePin?search='.$is_pinned_search);?>/id/' + rid ,function (html){
+        $('.rid_'+rid).closest('tbody').remove();
+      });
     });
   <?php endif;?>
-  });
+
 });
 </script> 

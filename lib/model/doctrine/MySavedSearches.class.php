@@ -40,4 +40,24 @@ class MySavedSearches extends BaseMySavedSearches
       $this->_set('visible_fields_in_result',$val);
   }
 
+  public function getRequest()
+  {
+    return unserialize($this->getSearchCriterias());
+  }
+
+  public function getAllSearchedId()
+  {
+    $prev_req = $this->getRequest();
+    if(isset($prev_req['specimen_search_filters']['spec_ids']) && $prev_req['specimen_search_filters']['spec_ids'] != "")
+      $old_ids = explode(',',$prev_req['specimen_search_filters']['spec_ids']);
+    else
+      $old_ids = array();
+    return $old_ids;
+  }
+
+  public function getNumberOfIds()
+  {
+    $ids = $this->getAllSearchedId();
+    return count($ids);
+  }
 }

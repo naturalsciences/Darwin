@@ -10,9 +10,6 @@
       <ul id="intro" class="hidden">
         <?php echo $form->render() ; ?>
       </ul>
-      <?php if($is_pinned):?>
-        <input type="hidden" name="pinned" value="true" />
-      <?php endif;?>
       <div class="search_results">
         <div class="search_results_content">
           <?php include_partial('searchSuccess',
@@ -24,7 +21,7 @@
                                       'field_to_show' => $field_to_show,
                                       'currentPage' => $currentPage,
                                       'pagerLayout' => $pagerLayout,
-                                      'is_pinned_search' => $is_pinned
+                                      'is_pinned_search' => $is_pinned_search
                                      )
                                ); ?>
         </div>
