@@ -64,6 +64,7 @@ class savesearchActions extends sfActions
   
   public function executeSaveSearch(sfWebRequest $request)
   {
+    $this->is_spec_search = false;
     if($request->getParameter('id'))
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('id'), $this->getUser()->getId());
@@ -77,6 +78,7 @@ class savesearchActions extends sfActions
 
       if($request->getParameter('type') == 'pin')
       {
+        $this->is_spec_search=true;
         if($request->getParameter('list_nr') == 'create')
         {
           $ids=implode(',',$this->getUser()->getAllPinned() );
@@ -106,7 +108,7 @@ class savesearchActions extends sfActions
 
     $saved_search->setUserRef($this->getUser()->getId()) ;
     
-    $this->form = new MySavedSearchesForm($saved_search);
+    $this->form = new MySavedSearchesForm($saved_search,array('type'=>$request->getParameter('type')));
 
     if($request->getParameter('my_saved_searches') != '')
     {
@@ -136,9 +138,15 @@ class savesearchActions extends sfActions
     $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
     $this->forward404Unless($r,'No such item');
     try{
+      $is_spec_search = $r->setIsOnlyId();
       $r->delete();
       if(! $request->isXmlHttpRequest())
-        return $this->redirect('savesearch/index');
+      {
+        if($is_spec_search)
+          return $this->redirect('savesearch/index?specimen=true');
+        else
+          return $this->redirect('savesearch/index');
+      }
     }
     catch(Doctrine_Exception $ne)
     {
@@ -146,7 +154,6 @@ class savesearchActions extends sfActions
       $this->renderText($e->getMessage());
     }
     return $this->renderText("ok");
-    //$this->redirect('@homepage');
   }
   
   public function executeIndex(sfWebRequest $request)

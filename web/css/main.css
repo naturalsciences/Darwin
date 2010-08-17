@@ -267,6 +267,19 @@ input[type="submit"][class="search_submit"]
 {
   padding-bottom:0px;
 }
+form#save_search label.spec_nbr
+{
+  width: 7em;
+  font-weight: bold;
+}
+
+form#save_search .form_table label, form#save_search  h2
+{
+  color:#3390a1;
+/*   text-decoration: underline; */
+  font-size:large;
+  margin-bottom: 1em;
+}
 
 input[type="submit"][class="search_submit"]:hover
 {

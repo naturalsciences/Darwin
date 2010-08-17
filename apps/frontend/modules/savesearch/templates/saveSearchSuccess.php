@@ -1,9 +1,12 @@
 <div class="panel">
   <form id="save_search" class="search_form" action="<?php echo url_for('savesearch/saveSearch'. ( $form->getObject()->isNew() ? '' : '?id='.$form->getObject()->getId()) );?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-  <h1><?php echo("Title :") ; ?></h1>
   <?php echo $form->renderHiddenFields(); ?>
-  <table>
+  <table class="form_table">
     <tbody>
+    <tr>
+      <td><?php echo $form['name']->renderLabel() ; ?></td>
+      <td></td>
+    </tr>
     <tr>
       <td align="left">
         <?php echo $form['name'] ; ?>
@@ -13,17 +16,31 @@
         <?php echo image_tag('favorite_on.png', array('id'=> 'favorite_on', 'alt' => 'Set a bookmark')) ; ?>
         <?php echo image_tag('favorite_off.png', array('id'=> 'favorite_off', 'alt' => 'Set a bookmark')) ; ?>          
       </td>
-    </tr>  
+    </tr>
+    <tr>
+      <td><?php echo $form['modification_date_time']->renderLabel() ; ?></td>
+      <td></td>
+    </tr>
     <tr>
       <td colspan="2">
         <?php echo $form['modification_date_time']->renderError(); ?>
         <?php echo $form['modification_date_time'] ; ?>
       </td>
-    </tr>    
+    </tr>
+    <?php if($is_spec_search):?>
+    <tr>
+      <td colspan="2"><label><?php echo __("Number of specimens ") ; ?></label></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="medium_size" disabled="disabled" type="text" value="<?php echo $form->getObject()->getNumberOfIds();?>">
+      </td>
+    </tr>
+    <?php endif;?>
     </tbody>
   </table>
   <br />
-  <h1><?php echo("Visibility of fields in results :") ; ?></h1>
+  <h2><?php echo("Visibility of fields in results :") ; ?></h2>
     <?php echo $form['visible_fields_in_result']->renderError(); ?>
   <table class="fields">
     <thead>
