@@ -45,6 +45,12 @@ class MySavedSearches extends BaseMySavedSearches
     return unserialize($this->getSearchCriterias());
   }
 
+  public function getSearchedIdString()
+  {
+    $prev_req = $this->getRequest();
+    return $prev_req['specimen_search_filters']['spec_ids'];
+  }
+
   public function getAllSearchedId()
   {
     $prev_req = $this->getRequest();

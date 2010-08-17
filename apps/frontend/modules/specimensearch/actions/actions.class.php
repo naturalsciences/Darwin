@@ -72,9 +72,12 @@ class specimensearchActions extends DarwinActions
       }
       elseif($request->hasParameter('spec_search'))
       {
-        $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId()) ;
-
+        $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
         $this->forward404Unless($saved_search);
+
+        $criterias['specimen_search_filters']['spec_ids'] = $saved_search->getSearchedIdString();
+        if($criterias['specimen_search_filters']['spec_ids']=='')
+          $criterias['specimen_search_filters']['spec_ids'] = '0';
         $this->is_specimen_search = $saved_search->getId();
       }
       $this->form->bind($criterias['specimen_search_filters']) ;
