@@ -1,6 +1,6 @@
 <div>
-      <?php if($is_pinned_search):?>
-        <input type="hidden" name="pinned_search" value="<?php echo $is_pinned_search;?>" />
+      <?php if($is_specimen_search):?>
+        <input type="hidden" name="spec_search" value="<?php echo $is_specimen_search;?>" />
       <?php endif;?>
   <?php if(isset($specimensearch) && $specimensearch->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
     <?php
@@ -160,7 +160,7 @@
                   <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
                 <?php endif;?>
               </td>
-              <td><?php if($is_pinned_search):?><?php echo image_tag('blue_pin_del.png',array('class' => 'pin_del'));?><?php endif;?></td>
+              <td><?php if($is_specimen_search):?><?php echo image_tag('blue_pin_del.png',array('class' => 'pin_del'));?><?php endif;?></td>
               <td class="col_category">
                 <?php echo $specimen->getCategory() == 'physical'? image_tag('physical.png', array('alt' => __('physical'))):
                                                              image_tag('non_physical.gif', array('alt' => __('other'))) ;?>
@@ -325,10 +325,10 @@ $(document).ready(function () {
     });
   });
 
-  <?php if($is_pinned_search):?>
+  <?php if($is_specimen_search):?>
     $('.spec_results .pin_del').click(function(){
       rid = getIdInClasses($(this).closest('tr'));
-      $.get('<?php echo url_for('savesearch/removePin?search='.$is_pinned_search);?>/id/' + rid ,function (html){
+      $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/id/' + rid ,function (html){
         $('.rid_'+rid).closest('tbody').remove();
       });
     });

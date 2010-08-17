@@ -21,12 +21,14 @@
                                       'field_to_show' => $field_to_show,
                                       'currentPage' => $currentPage,
                                       'pagerLayout' => $pagerLayout,
-                                      'is_pinned_search' => $is_pinned_search
+                                      'is_specimen_search' => $is_specimen_search
                                      )
                                ); ?>
         </div>
       </div>
-        
+      <?php if(isset($is_pinned_only_search)):?>
+        <input type="hidden" name="pinned" value="true" />
+      <?php endif;?>
         <script  type="text/javascript">
 $(document).ready(function () {
 
@@ -40,6 +42,8 @@ $(document).ready(function () {
         <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
         <?php include_partial('savesearch/saveSearch');?>
       </div>
-    <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
+      <?php if(!isset($is_pinned_only_search) && ! $is_specimen_search):?>
+        <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
+      <?php endif;?>     
   </div>
 </div>
