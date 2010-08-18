@@ -23,6 +23,7 @@
  * @property Doctrine_Collection $Mineralogy
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimensAccompanying
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getName()                  Returns the current record's "name" value
@@ -42,6 +43,7 @@
  * @method Doctrine_Collection getMineralogy()            Returns the current record's "Mineralogy" collection
  * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
+ * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
  * @method Mineralogy          setId()                    Sets the current record's "id" value
  * @method Mineralogy          setName()                  Sets the current record's "name" value
  * @method Mineralogy          setNameIndexed()           Sets the current record's "name_indexed" value
@@ -60,6 +62,7 @@
  * @method Mineralogy          setMineralogy()            Sets the current record's "Mineralogy" collection
  * @method Mineralogy          setSpecimens()             Sets the current record's "Specimens" collection
  * @method Mineralogy          setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
+ * @method Mineralogy          setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -144,6 +147,10 @@ abstract class BaseMineralogy extends sfDoctrineRecord
              'foreign' => 'mineral_ref'));
 
         $this->hasMany('SpecimensAccompanying', array(
+             'local' => 'id',
+             'foreign' => 'mineral_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
              'local' => 'id',
              'foreign' => 'mineral_ref'));
     }

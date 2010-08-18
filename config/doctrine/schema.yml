@@ -1,4 +1,4 @@
-Institutions:                                                                        
+Institutions:
   tableName: people                                                           
   columns:
         id: { type: integer, notnull: true,primary: true, autoincrement: true}
@@ -1146,3 +1146,107 @@ SpecimenSearch:
         specimen_count_min: { type: integer }       
         specimen_count_max: { type: integer }
         with_types: { type: boolean}      
+    relations:
+        Specimen:
+            class: Specimens
+            local: spec_ref
+            foreign: id
+        Collection:
+            class: Collections
+            local: collection_ref
+            foreign: id
+        CollectionInstitution:
+            class: Institutions
+            local: collection_institution_ref
+            foreign: id
+        CollectionMainManager:
+            class: Users
+            local: collection_main_manager_ref
+            foreign: id
+        CollectionParent:
+            local: collection_parent_ref
+            foreign: id
+            class: Collections
+        Expedition:
+            local: expedition_ref
+            foreign: id
+            class: Expeditions
+        Gtu:
+            local: gtu_ref
+            foreign: id
+        GtuParent:
+            local: gtu_parent_ref
+            foreign: id
+            class: Gtu 
+        Taxonomy:
+            local: taxon_ref
+            foreign: id
+        TaxonomyLevel:
+            local: taxon_level_ref
+            foreign: id
+            class: CatalogueLevels
+        TaxonomyParent:
+            local: taxon_parent_ref
+            foreign: id
+            class: Taxonomy
+        Lithostratigraphy:
+            local: litho_ref
+            foreign: id
+        LithostratigraphyLevel:
+            local: litho_level_ref
+            foreign: id
+            class: CatalogueLevels
+        LithostratigraphyParent:
+            local: litho_parent_ref
+            foreign: id
+            class: Lithostratigraphy
+        Chronostratigraphy:
+            local: chrono_ref
+            foreign: id
+        ChronostratigraphyLevel:
+            local: chrono_level_ref
+            foreign: id
+            class: CatalogueLevels
+        ChronostratigraphyParent:
+            local: chrono_parent_ref
+            foreign: id
+            class: Chronostratigraphy
+        Lithology:
+            local: lithology_ref
+            foreign: id
+        LithologyLevel:
+            local: lithology_level_ref
+            foreign: id
+            class: CatalogueLevels
+        LithologyParent:
+            local: lithology_parent_ref
+            foreign: id
+            class: Lithology
+        Mineralogy:
+            local: mineral_ref
+            foreign: id
+        MineralogyLevel:
+            local: mineral_level_ref
+            foreign: id
+            class: CatalogueLevels
+        MineralogyParent:
+            local: mineral_parent_ref
+            foreign: id
+            class: Mineralogy
+        HostTaxon:            
+            local: host_taxon_ref
+            foreign: id
+            class: Taxonomy
+        HostTaxonLevel:
+            local: host_taxon_level_ref
+            foreign: id
+            class: CatalogueLevels
+        HostTaxonParent:
+            local: host_taxon_parent_ref
+            foreign: id
+            class: Taxonomy
+        Ig:
+            local: ig_ref
+            foreign: id
+            class: Igs
+            

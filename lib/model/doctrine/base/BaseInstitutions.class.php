@@ -15,6 +15,7 @@
  * @property string $additional_names
  * @property integer $db_people_type
  * @property Doctrine_Collection $PeopleRelationships
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method boolean             getIsPhysical()            Returns the current record's "is_physical" value
@@ -26,6 +27,7 @@
  * @method string              getAdditionalNames()       Returns the current record's "additional_names" value
  * @method integer             getDbPeopleType()          Returns the current record's "db_people_type" value
  * @method Doctrine_Collection getPeopleRelationships()   Returns the current record's "PeopleRelationships" collection
+ * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
  * @method Institutions        setId()                    Sets the current record's "id" value
  * @method Institutions        setIsPhysical()            Sets the current record's "is_physical" value
  * @method Institutions        setSubType()               Sets the current record's "sub_type" value
@@ -36,6 +38,7 @@
  * @method Institutions        setAdditionalNames()       Sets the current record's "additional_names" value
  * @method Institutions        setDbPeopleType()          Sets the current record's "db_people_type" value
  * @method Institutions        setPeopleRelationships()   Sets the current record's "PeopleRelationships" collection
+ * @method Institutions        setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -88,5 +91,9 @@ abstract class BaseInstitutions extends sfDoctrineRecord
         $this->hasMany('PeopleRelationships', array(
              'local' => 'id',
              'foreign' => 'person_1_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_institution_ref'));
     }
 }

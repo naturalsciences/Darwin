@@ -106,209 +106,290 @@
  * @property integer $specimen_count_min
  * @property integer $specimen_count_max
  * @property boolean $with_types
+ * @property Specimens $Specimen
+ * @property Collections $Collection
+ * @property Institutions $CollectionInstitution
+ * @property Users $CollectionMainManager
+ * @property Collections $CollectionParent
+ * @property Expeditions $Expedition
+ * @property Gtu $Gtu
+ * @property Gtu $GtuParent
+ * @property Taxonomy $Taxonomy
+ * @property CatalogueLevels $TaxonomyLevel
+ * @property Taxonomy $TaxonomyParent
+ * @property Lithostratigraphy $Lithostratigraphy
+ * @property CatalogueLevels $LithostratigraphyLevel
+ * @property Lithostratigraphy $LithostratigraphyParent
+ * @property Chronostratigraphy $Chronostratigraphy
+ * @property CatalogueLevels $ChronostratigraphyLevel
+ * @property Chronostratigraphy $ChronostratigraphyParent
+ * @property Lithology $Lithology
+ * @property CatalogueLevels $LithologyLevel
+ * @property Lithology $LithologyParent
+ * @property Mineralogy $Mineralogy
+ * @property CatalogueLevels $MineralogyLevel
+ * @property Mineralogy $MineralogyParent
+ * @property Taxonomy $HostTaxon
+ * @property CatalogueLevels $HostTaxonLevel
+ * @property Taxonomy $HostTaxonParent
+ * @property Igs $Ig
  * 
- * @method integer        getId()                                            Returns the current record's "id" value
- * @method integer        getSpecRef()                                       Returns the current record's "spec_ref" value
- * @method string         getCategory()                                      Returns the current record's "category" value
- * @method integer        getCollectionRef()                                 Returns the current record's "collection_ref" value
- * @method string         getCollectionType()                                Returns the current record's "collection_type" value
- * @method string         getCollectionCode()                                Returns the current record's "collection_code" value
- * @method string         getCollectionName()                                Returns the current record's "collection_name" value
- * @method integer        getCollectionInstitutionRef()                      Returns the current record's "collection_institution_ref" value
- * @method string         getCollectionInstitutionFormatedName()             Returns the current record's "collection_institution_formated_name" value
- * @method string         getCollectionInstitutionFormatedNameTs()           Returns the current record's "collection_institution_formated_name_ts" value
- * @method string         getCollectionInstitutionFormatedNameIndexed()      Returns the current record's "collection_institution_formated_name_indexed" value
- * @method string         getCollectionInstitutionSubType()                  Returns the current record's "collection_institution_sub_type" value
- * @method integer        getCollectionMainManagerRef()                      Returns the current record's "collection_main_manager_ref" value
- * @method string         getCollectionMainManagerFormatedName()             Returns the current record's "collection_main_manager_formated_name" value
- * @method string         getCollectionMainManagerFormatedNameTs()           Returns the current record's "collection_main_manager_formated_name_ts" value
- * @method string         getCollectionMainManagerFormatedNameIndexed()      Returns the current record's "collection_main_manager_formated_name_indexed" value
- * @method integer        getCollectionParentRef()                           Returns the current record's "collection_parent_ref" value
- * @method string         getCollectionPath()                                Returns the current record's "collection_path" value
- * @method integer        getExpeditionRef()                                 Returns the current record's "expedition_ref" value
- * @method string         getExpeditionName()                                Returns the current record's "expedition_name" value
- * @method string         getExpeditionNameTs()                              Returns the current record's "expedition_name_ts" value
- * @method string         getExpeditionNameIndexed()                         Returns the current record's "expedition_name_indexed" value
- * @method boolean        getStationVisible()                                Returns the current record's "station_visible" value
- * @method integer        getGtuRef()                                        Returns the current record's "gtu_ref" value
- * @method string         getGtuCode()                                       Returns the current record's "gtu_code" value
- * @method integer        getGtuParentRef()                                  Returns the current record's "gtu_parent_ref" value
- * @method string         getGtuPath()                                       Returns the current record's "gtu_path" value
- * @method integer        getGtuFromDateMask()                               Returns the current record's "gtu_from_date_mask" value
- * @method string         getGtuFromDate()                                   Returns the current record's "gtu_from_date" value
- * @method integer        getGtuToDateMask()                                 Returns the current record's "gtu_to_date_mask" value
- * @method string         getGtuToDate()                                     Returns the current record's "gtu_to_date" value
- * @method string         getGtuTagValuesIndexed()                           Returns the current record's "gtu_tag_values_indexed" value
- * @method string         getGtuCountryTagValue()                            Returns the current record's "gtu_country_tag_value" value
- * @method integer        getTaxonRef()                                      Returns the current record's "taxon_ref" value
- * @method string         getTaxonName()                                     Returns the current record's "taxon_name" value
- * @method string         getTaxonNameIndexed()                              Returns the current record's "taxon_name_indexed" value
- * @method string         getTaxonNameOrderBy()                              Returns the current record's "taxon_name_order_by" value
- * @method integer        getTaxonLevelRef()                                 Returns the current record's "taxon_level_ref" value
- * @method string         getTaxonLevelName()                                Returns the current record's "taxon_level_name" value
- * @method string         getTaxonStatus()                                   Returns the current record's "taxon_status" value
- * @method string         getTaxonPath()                                     Returns the current record's "taxon_path" value
- * @method integer        getTaxonParentRef()                                Returns the current record's "taxon_parent_ref" value
- * @method boolean        getTaxonExtinct()                                  Returns the current record's "taxon_extinct" value
- * @method integer        getLithoRef()                                      Returns the current record's "litho_ref" value
- * @method string         getLithoName()                                     Returns the current record's "litho_name" value
- * @method string         getLithoNameIndexed()                              Returns the current record's "litho_name_indexed" value
- * @method string         getLithoNameOrderBy()                              Returns the current record's "litho_name_order_by" value
- * @method integer        getLithoLevelRef()                                 Returns the current record's "litho_level_ref" value
- * @method string         getLithoLevelName()                                Returns the current record's "litho_level_name" value
- * @method string         getLithoStatus()                                   Returns the current record's "litho_status" value
- * @method string         getLithoPath()                                     Returns the current record's "litho_path" value
- * @method integer        getLithoParentRef()                                Returns the current record's "litho_parent_ref" value
- * @method integer        getChronoRef()                                     Returns the current record's "chrono_ref" value
- * @method string         getChronoName()                                    Returns the current record's "chrono_name" value
- * @method string         getChronoNameIndexed()                             Returns the current record's "chrono_name_indexed" value
- * @method string         getChronoNameOrderBy()                             Returns the current record's "chrono_name_order_by" value
- * @method integer        getChronoLevelRef()                                Returns the current record's "chrono_level_ref" value
- * @method string         getChronoLevelName()                               Returns the current record's "chrono_level_name" value
- * @method string         getChronoStatus()                                  Returns the current record's "chrono_status" value
- * @method string         getChronoPath()                                    Returns the current record's "chrono_path" value
- * @method integer        getChronoParentRef()                               Returns the current record's "chrono_parent_ref" value
- * @method integer        getLithologyRef()                                  Returns the current record's "lithology_ref" value
- * @method string         getLithologyName()                                 Returns the current record's "lithology_name" value
- * @method string         getLithologyNameIndexed()                          Returns the current record's "lithology_name_indexed" value
- * @method string         getLithologyNameOrderBy()                          Returns the current record's "lithology_name_order_by" value
- * @method integer        getLithologyLevelRef()                             Returns the current record's "lithology_level_ref" value
- * @method string         getLithologyLevelName()                            Returns the current record's "lithology_level_name" value
- * @method string         getLithologyStatus()                               Returns the current record's "lithology_status" value
- * @method string         getLithologyPath()                                 Returns the current record's "lithology_path" value
- * @method integer        getLithologyParentRef()                            Returns the current record's "lithology_parent_ref" value
- * @method integer        getMineralRef()                                    Returns the current record's "mineral_ref" value
- * @method string         getMineralName()                                   Returns the current record's "mineral_name" value
- * @method string         getMineralNameIndexed()                            Returns the current record's "mineral_name_indexed" value
- * @method string         getMineralNameOrderBy()                            Returns the current record's "mineral_name_order_by" value
- * @method integer        getMineralLevelRef()                               Returns the current record's "mineral_level_ref" value
- * @method string         getMineralLevelName()                              Returns the current record's "mineral_level_name" value
- * @method string         getMineralStatus()                                 Returns the current record's "mineral_status" value
- * @method string         getMineralPath()                                   Returns the current record's "mineral_path" value
- * @method integer        getMineralParentRef()                              Returns the current record's "mineral_parent_ref" value
- * @method integer        getHostTaxonRef()                                  Returns the current record's "host_taxon_ref" value
- * @method string         getHostRelationship()                              Returns the current record's "host_relationship" value
- * @method string         getHostTaxonName()                                 Returns the current record's "host_taxon_name" value
- * @method string         getHostTaxonNameIndexed()                          Returns the current record's "host_taxon_name_indexed" value
- * @method string         getHostTaxonNameOrderBy()                          Returns the current record's "host_taxon_name_order_by" value
- * @method integer        getHostTaxonLevelRef()                             Returns the current record's "host_taxon_level_ref" value
- * @method string         getHostTaxonLevelName()                            Returns the current record's "host_taxon_level_name" value
- * @method string         getHostTaxonStatus()                               Returns the current record's "host_taxon_status" value
- * @method string         getHostTaxonPath()                                 Returns the current record's "host_taxon_path" value
- * @method integer        getHostTaxonParentRef()                            Returns the current record's "host_taxon_parent_ref" value
- * @method boolean        getHostTaxonExtinct()                              Returns the current record's "host_taxon_extinct" value
- * @method integer        getIgRef()                                         Returns the current record's "ig_ref" value
- * @method string         getIgNum()                                         Returns the current record's "ig_num" value
- * @method string         getIgNumIndexed()                                  Returns the current record's "ig_num_indexed" value
- * @method integer        getIgDateMask()                                    Returns the current record's "ig_date_mask" value
- * @method string         getIgDate()                                        Returns the current record's "ig_date" value
- * @method string         getAcquisitionCategory()                           Returns the current record's "acquisition_category" value
- * @method integer        getAcquisitionDateMask()                           Returns the current record's "acquisition_date_mask" value
- * @method string         getAcquisitionDate()                               Returns the current record's "acquisition_date" value
- * @method integer        getSpecimenCountMin()                              Returns the current record's "specimen_count_min" value
- * @method integer        getSpecimenCountMax()                              Returns the current record's "specimen_count_max" value
- * @method boolean        getWithTypes()                                     Returns the current record's "with_types" value
- * @method SpecimenSearch setId()                                            Sets the current record's "id" value
- * @method SpecimenSearch setSpecRef()                                       Sets the current record's "spec_ref" value
- * @method SpecimenSearch setCategory()                                      Sets the current record's "category" value
- * @method SpecimenSearch setCollectionRef()                                 Sets the current record's "collection_ref" value
- * @method SpecimenSearch setCollectionType()                                Sets the current record's "collection_type" value
- * @method SpecimenSearch setCollectionCode()                                Sets the current record's "collection_code" value
- * @method SpecimenSearch setCollectionName()                                Sets the current record's "collection_name" value
- * @method SpecimenSearch setCollectionInstitutionRef()                      Sets the current record's "collection_institution_ref" value
- * @method SpecimenSearch setCollectionInstitutionFormatedName()             Sets the current record's "collection_institution_formated_name" value
- * @method SpecimenSearch setCollectionInstitutionFormatedNameTs()           Sets the current record's "collection_institution_formated_name_ts" value
- * @method SpecimenSearch setCollectionInstitutionFormatedNameIndexed()      Sets the current record's "collection_institution_formated_name_indexed" value
- * @method SpecimenSearch setCollectionInstitutionSubType()                  Sets the current record's "collection_institution_sub_type" value
- * @method SpecimenSearch setCollectionMainManagerRef()                      Sets the current record's "collection_main_manager_ref" value
- * @method SpecimenSearch setCollectionMainManagerFormatedName()             Sets the current record's "collection_main_manager_formated_name" value
- * @method SpecimenSearch setCollectionMainManagerFormatedNameTs()           Sets the current record's "collection_main_manager_formated_name_ts" value
- * @method SpecimenSearch setCollectionMainManagerFormatedNameIndexed()      Sets the current record's "collection_main_manager_formated_name_indexed" value
- * @method SpecimenSearch setCollectionParentRef()                           Sets the current record's "collection_parent_ref" value
- * @method SpecimenSearch setCollectionPath()                                Sets the current record's "collection_path" value
- * @method SpecimenSearch setExpeditionRef()                                 Sets the current record's "expedition_ref" value
- * @method SpecimenSearch setExpeditionName()                                Sets the current record's "expedition_name" value
- * @method SpecimenSearch setExpeditionNameTs()                              Sets the current record's "expedition_name_ts" value
- * @method SpecimenSearch setExpeditionNameIndexed()                         Sets the current record's "expedition_name_indexed" value
- * @method SpecimenSearch setStationVisible()                                Sets the current record's "station_visible" value
- * @method SpecimenSearch setGtuRef()                                        Sets the current record's "gtu_ref" value
- * @method SpecimenSearch setGtuCode()                                       Sets the current record's "gtu_code" value
- * @method SpecimenSearch setGtuParentRef()                                  Sets the current record's "gtu_parent_ref" value
- * @method SpecimenSearch setGtuPath()                                       Sets the current record's "gtu_path" value
- * @method SpecimenSearch setGtuFromDateMask()                               Sets the current record's "gtu_from_date_mask" value
- * @method SpecimenSearch setGtuFromDate()                                   Sets the current record's "gtu_from_date" value
- * @method SpecimenSearch setGtuToDateMask()                                 Sets the current record's "gtu_to_date_mask" value
- * @method SpecimenSearch setGtuToDate()                                     Sets the current record's "gtu_to_date" value
- * @method SpecimenSearch setGtuTagValuesIndexed()                           Sets the current record's "gtu_tag_values_indexed" value
- * @method SpecimenSearch setGtuCountryTagValue()                            Sets the current record's "gtu_country_tag_value" value
- * @method SpecimenSearch setTaxonRef()                                      Sets the current record's "taxon_ref" value
- * @method SpecimenSearch setTaxonName()                                     Sets the current record's "taxon_name" value
- * @method SpecimenSearch setTaxonNameIndexed()                              Sets the current record's "taxon_name_indexed" value
- * @method SpecimenSearch setTaxonNameOrderBy()                              Sets the current record's "taxon_name_order_by" value
- * @method SpecimenSearch setTaxonLevelRef()                                 Sets the current record's "taxon_level_ref" value
- * @method SpecimenSearch setTaxonLevelName()                                Sets the current record's "taxon_level_name" value
- * @method SpecimenSearch setTaxonStatus()                                   Sets the current record's "taxon_status" value
- * @method SpecimenSearch setTaxonPath()                                     Sets the current record's "taxon_path" value
- * @method SpecimenSearch setTaxonParentRef()                                Sets the current record's "taxon_parent_ref" value
- * @method SpecimenSearch setTaxonExtinct()                                  Sets the current record's "taxon_extinct" value
- * @method SpecimenSearch setLithoRef()                                      Sets the current record's "litho_ref" value
- * @method SpecimenSearch setLithoName()                                     Sets the current record's "litho_name" value
- * @method SpecimenSearch setLithoNameIndexed()                              Sets the current record's "litho_name_indexed" value
- * @method SpecimenSearch setLithoNameOrderBy()                              Sets the current record's "litho_name_order_by" value
- * @method SpecimenSearch setLithoLevelRef()                                 Sets the current record's "litho_level_ref" value
- * @method SpecimenSearch setLithoLevelName()                                Sets the current record's "litho_level_name" value
- * @method SpecimenSearch setLithoStatus()                                   Sets the current record's "litho_status" value
- * @method SpecimenSearch setLithoPath()                                     Sets the current record's "litho_path" value
- * @method SpecimenSearch setLithoParentRef()                                Sets the current record's "litho_parent_ref" value
- * @method SpecimenSearch setChronoRef()                                     Sets the current record's "chrono_ref" value
- * @method SpecimenSearch setChronoName()                                    Sets the current record's "chrono_name" value
- * @method SpecimenSearch setChronoNameIndexed()                             Sets the current record's "chrono_name_indexed" value
- * @method SpecimenSearch setChronoNameOrderBy()                             Sets the current record's "chrono_name_order_by" value
- * @method SpecimenSearch setChronoLevelRef()                                Sets the current record's "chrono_level_ref" value
- * @method SpecimenSearch setChronoLevelName()                               Sets the current record's "chrono_level_name" value
- * @method SpecimenSearch setChronoStatus()                                  Sets the current record's "chrono_status" value
- * @method SpecimenSearch setChronoPath()                                    Sets the current record's "chrono_path" value
- * @method SpecimenSearch setChronoParentRef()                               Sets the current record's "chrono_parent_ref" value
- * @method SpecimenSearch setLithologyRef()                                  Sets the current record's "lithology_ref" value
- * @method SpecimenSearch setLithologyName()                                 Sets the current record's "lithology_name" value
- * @method SpecimenSearch setLithologyNameIndexed()                          Sets the current record's "lithology_name_indexed" value
- * @method SpecimenSearch setLithologyNameOrderBy()                          Sets the current record's "lithology_name_order_by" value
- * @method SpecimenSearch setLithologyLevelRef()                             Sets the current record's "lithology_level_ref" value
- * @method SpecimenSearch setLithologyLevelName()                            Sets the current record's "lithology_level_name" value
- * @method SpecimenSearch setLithologyStatus()                               Sets the current record's "lithology_status" value
- * @method SpecimenSearch setLithologyPath()                                 Sets the current record's "lithology_path" value
- * @method SpecimenSearch setLithologyParentRef()                            Sets the current record's "lithology_parent_ref" value
- * @method SpecimenSearch setMineralRef()                                    Sets the current record's "mineral_ref" value
- * @method SpecimenSearch setMineralName()                                   Sets the current record's "mineral_name" value
- * @method SpecimenSearch setMineralNameIndexed()                            Sets the current record's "mineral_name_indexed" value
- * @method SpecimenSearch setMineralNameOrderBy()                            Sets the current record's "mineral_name_order_by" value
- * @method SpecimenSearch setMineralLevelRef()                               Sets the current record's "mineral_level_ref" value
- * @method SpecimenSearch setMineralLevelName()                              Sets the current record's "mineral_level_name" value
- * @method SpecimenSearch setMineralStatus()                                 Sets the current record's "mineral_status" value
- * @method SpecimenSearch setMineralPath()                                   Sets the current record's "mineral_path" value
- * @method SpecimenSearch setMineralParentRef()                              Sets the current record's "mineral_parent_ref" value
- * @method SpecimenSearch setHostTaxonRef()                                  Sets the current record's "host_taxon_ref" value
- * @method SpecimenSearch setHostRelationship()                              Sets the current record's "host_relationship" value
- * @method SpecimenSearch setHostTaxonName()                                 Sets the current record's "host_taxon_name" value
- * @method SpecimenSearch setHostTaxonNameIndexed()                          Sets the current record's "host_taxon_name_indexed" value
- * @method SpecimenSearch setHostTaxonNameOrderBy()                          Sets the current record's "host_taxon_name_order_by" value
- * @method SpecimenSearch setHostTaxonLevelRef()                             Sets the current record's "host_taxon_level_ref" value
- * @method SpecimenSearch setHostTaxonLevelName()                            Sets the current record's "host_taxon_level_name" value
- * @method SpecimenSearch setHostTaxonStatus()                               Sets the current record's "host_taxon_status" value
- * @method SpecimenSearch setHostTaxonPath()                                 Sets the current record's "host_taxon_path" value
- * @method SpecimenSearch setHostTaxonParentRef()                            Sets the current record's "host_taxon_parent_ref" value
- * @method SpecimenSearch setHostTaxonExtinct()                              Sets the current record's "host_taxon_extinct" value
- * @method SpecimenSearch setIgRef()                                         Sets the current record's "ig_ref" value
- * @method SpecimenSearch setIgNum()                                         Sets the current record's "ig_num" value
- * @method SpecimenSearch setIgNumIndexed()                                  Sets the current record's "ig_num_indexed" value
- * @method SpecimenSearch setIgDateMask()                                    Sets the current record's "ig_date_mask" value
- * @method SpecimenSearch setIgDate()                                        Sets the current record's "ig_date" value
- * @method SpecimenSearch setAcquisitionCategory()                           Sets the current record's "acquisition_category" value
- * @method SpecimenSearch setAcquisitionDateMask()                           Sets the current record's "acquisition_date_mask" value
- * @method SpecimenSearch setAcquisitionDate()                               Sets the current record's "acquisition_date" value
- * @method SpecimenSearch setSpecimenCountMin()                              Sets the current record's "specimen_count_min" value
- * @method SpecimenSearch setSpecimenCountMax()                              Sets the current record's "specimen_count_max" value
- * @method SpecimenSearch setWithTypes()                                     Sets the current record's "with_types" value
+ * @method integer            getId()                                            Returns the current record's "id" value
+ * @method integer            getSpecRef()                                       Returns the current record's "spec_ref" value
+ * @method string             getCategory()                                      Returns the current record's "category" value
+ * @method integer            getCollectionRef()                                 Returns the current record's "collection_ref" value
+ * @method string             getCollectionType()                                Returns the current record's "collection_type" value
+ * @method string             getCollectionCode()                                Returns the current record's "collection_code" value
+ * @method string             getCollectionName()                                Returns the current record's "collection_name" value
+ * @method integer            getCollectionInstitutionRef()                      Returns the current record's "collection_institution_ref" value
+ * @method string             getCollectionInstitutionFormatedName()             Returns the current record's "collection_institution_formated_name" value
+ * @method string             getCollectionInstitutionFormatedNameTs()           Returns the current record's "collection_institution_formated_name_ts" value
+ * @method string             getCollectionInstitutionFormatedNameIndexed()      Returns the current record's "collection_institution_formated_name_indexed" value
+ * @method string             getCollectionInstitutionSubType()                  Returns the current record's "collection_institution_sub_type" value
+ * @method integer            getCollectionMainManagerRef()                      Returns the current record's "collection_main_manager_ref" value
+ * @method string             getCollectionMainManagerFormatedName()             Returns the current record's "collection_main_manager_formated_name" value
+ * @method string             getCollectionMainManagerFormatedNameTs()           Returns the current record's "collection_main_manager_formated_name_ts" value
+ * @method string             getCollectionMainManagerFormatedNameIndexed()      Returns the current record's "collection_main_manager_formated_name_indexed" value
+ * @method integer            getCollectionParentRef()                           Returns the current record's "collection_parent_ref" value
+ * @method string             getCollectionPath()                                Returns the current record's "collection_path" value
+ * @method integer            getExpeditionRef()                                 Returns the current record's "expedition_ref" value
+ * @method string             getExpeditionName()                                Returns the current record's "expedition_name" value
+ * @method string             getExpeditionNameTs()                              Returns the current record's "expedition_name_ts" value
+ * @method string             getExpeditionNameIndexed()                         Returns the current record's "expedition_name_indexed" value
+ * @method boolean            getStationVisible()                                Returns the current record's "station_visible" value
+ * @method integer            getGtuRef()                                        Returns the current record's "gtu_ref" value
+ * @method string             getGtuCode()                                       Returns the current record's "gtu_code" value
+ * @method integer            getGtuParentRef()                                  Returns the current record's "gtu_parent_ref" value
+ * @method string             getGtuPath()                                       Returns the current record's "gtu_path" value
+ * @method integer            getGtuFromDateMask()                               Returns the current record's "gtu_from_date_mask" value
+ * @method string             getGtuFromDate()                                   Returns the current record's "gtu_from_date" value
+ * @method integer            getGtuToDateMask()                                 Returns the current record's "gtu_to_date_mask" value
+ * @method string             getGtuToDate()                                     Returns the current record's "gtu_to_date" value
+ * @method string             getGtuTagValuesIndexed()                           Returns the current record's "gtu_tag_values_indexed" value
+ * @method string             getGtuCountryTagValue()                            Returns the current record's "gtu_country_tag_value" value
+ * @method integer            getTaxonRef()                                      Returns the current record's "taxon_ref" value
+ * @method string             getTaxonName()                                     Returns the current record's "taxon_name" value
+ * @method string             getTaxonNameIndexed()                              Returns the current record's "taxon_name_indexed" value
+ * @method string             getTaxonNameOrderBy()                              Returns the current record's "taxon_name_order_by" value
+ * @method integer            getTaxonLevelRef()                                 Returns the current record's "taxon_level_ref" value
+ * @method string             getTaxonLevelName()                                Returns the current record's "taxon_level_name" value
+ * @method string             getTaxonStatus()                                   Returns the current record's "taxon_status" value
+ * @method string             getTaxonPath()                                     Returns the current record's "taxon_path" value
+ * @method integer            getTaxonParentRef()                                Returns the current record's "taxon_parent_ref" value
+ * @method boolean            getTaxonExtinct()                                  Returns the current record's "taxon_extinct" value
+ * @method integer            getLithoRef()                                      Returns the current record's "litho_ref" value
+ * @method string             getLithoName()                                     Returns the current record's "litho_name" value
+ * @method string             getLithoNameIndexed()                              Returns the current record's "litho_name_indexed" value
+ * @method string             getLithoNameOrderBy()                              Returns the current record's "litho_name_order_by" value
+ * @method integer            getLithoLevelRef()                                 Returns the current record's "litho_level_ref" value
+ * @method string             getLithoLevelName()                                Returns the current record's "litho_level_name" value
+ * @method string             getLithoStatus()                                   Returns the current record's "litho_status" value
+ * @method string             getLithoPath()                                     Returns the current record's "litho_path" value
+ * @method integer            getLithoParentRef()                                Returns the current record's "litho_parent_ref" value
+ * @method integer            getChronoRef()                                     Returns the current record's "chrono_ref" value
+ * @method string             getChronoName()                                    Returns the current record's "chrono_name" value
+ * @method string             getChronoNameIndexed()                             Returns the current record's "chrono_name_indexed" value
+ * @method string             getChronoNameOrderBy()                             Returns the current record's "chrono_name_order_by" value
+ * @method integer            getChronoLevelRef()                                Returns the current record's "chrono_level_ref" value
+ * @method string             getChronoLevelName()                               Returns the current record's "chrono_level_name" value
+ * @method string             getChronoStatus()                                  Returns the current record's "chrono_status" value
+ * @method string             getChronoPath()                                    Returns the current record's "chrono_path" value
+ * @method integer            getChronoParentRef()                               Returns the current record's "chrono_parent_ref" value
+ * @method integer            getLithologyRef()                                  Returns the current record's "lithology_ref" value
+ * @method string             getLithologyName()                                 Returns the current record's "lithology_name" value
+ * @method string             getLithologyNameIndexed()                          Returns the current record's "lithology_name_indexed" value
+ * @method string             getLithologyNameOrderBy()                          Returns the current record's "lithology_name_order_by" value
+ * @method integer            getLithologyLevelRef()                             Returns the current record's "lithology_level_ref" value
+ * @method string             getLithologyLevelName()                            Returns the current record's "lithology_level_name" value
+ * @method string             getLithologyStatus()                               Returns the current record's "lithology_status" value
+ * @method string             getLithologyPath()                                 Returns the current record's "lithology_path" value
+ * @method integer            getLithologyParentRef()                            Returns the current record's "lithology_parent_ref" value
+ * @method integer            getMineralRef()                                    Returns the current record's "mineral_ref" value
+ * @method string             getMineralName()                                   Returns the current record's "mineral_name" value
+ * @method string             getMineralNameIndexed()                            Returns the current record's "mineral_name_indexed" value
+ * @method string             getMineralNameOrderBy()                            Returns the current record's "mineral_name_order_by" value
+ * @method integer            getMineralLevelRef()                               Returns the current record's "mineral_level_ref" value
+ * @method string             getMineralLevelName()                              Returns the current record's "mineral_level_name" value
+ * @method string             getMineralStatus()                                 Returns the current record's "mineral_status" value
+ * @method string             getMineralPath()                                   Returns the current record's "mineral_path" value
+ * @method integer            getMineralParentRef()                              Returns the current record's "mineral_parent_ref" value
+ * @method integer            getHostTaxonRef()                                  Returns the current record's "host_taxon_ref" value
+ * @method string             getHostRelationship()                              Returns the current record's "host_relationship" value
+ * @method string             getHostTaxonName()                                 Returns the current record's "host_taxon_name" value
+ * @method string             getHostTaxonNameIndexed()                          Returns the current record's "host_taxon_name_indexed" value
+ * @method string             getHostTaxonNameOrderBy()                          Returns the current record's "host_taxon_name_order_by" value
+ * @method integer            getHostTaxonLevelRef()                             Returns the current record's "host_taxon_level_ref" value
+ * @method string             getHostTaxonLevelName()                            Returns the current record's "host_taxon_level_name" value
+ * @method string             getHostTaxonStatus()                               Returns the current record's "host_taxon_status" value
+ * @method string             getHostTaxonPath()                                 Returns the current record's "host_taxon_path" value
+ * @method integer            getHostTaxonParentRef()                            Returns the current record's "host_taxon_parent_ref" value
+ * @method boolean            getHostTaxonExtinct()                              Returns the current record's "host_taxon_extinct" value
+ * @method integer            getIgRef()                                         Returns the current record's "ig_ref" value
+ * @method string             getIgNum()                                         Returns the current record's "ig_num" value
+ * @method string             getIgNumIndexed()                                  Returns the current record's "ig_num_indexed" value
+ * @method integer            getIgDateMask()                                    Returns the current record's "ig_date_mask" value
+ * @method string             getIgDate()                                        Returns the current record's "ig_date" value
+ * @method string             getAcquisitionCategory()                           Returns the current record's "acquisition_category" value
+ * @method integer            getAcquisitionDateMask()                           Returns the current record's "acquisition_date_mask" value
+ * @method string             getAcquisitionDate()                               Returns the current record's "acquisition_date" value
+ * @method integer            getSpecimenCountMin()                              Returns the current record's "specimen_count_min" value
+ * @method integer            getSpecimenCountMax()                              Returns the current record's "specimen_count_max" value
+ * @method boolean            getWithTypes()                                     Returns the current record's "with_types" value
+ * @method Specimens          getSpecimen()                                      Returns the current record's "Specimen" value
+ * @method Collections        getCollection()                                    Returns the current record's "Collection" value
+ * @method Institutions       getCollectionInstitution()                         Returns the current record's "CollectionInstitution" value
+ * @method Users              getCollectionMainManager()                         Returns the current record's "CollectionMainManager" value
+ * @method Collections        getCollectionParent()                              Returns the current record's "CollectionParent" value
+ * @method Expeditions        getExpedition()                                    Returns the current record's "Expedition" value
+ * @method Gtu                getGtu()                                           Returns the current record's "Gtu" value
+ * @method Gtu                getGtuParent()                                     Returns the current record's "GtuParent" value
+ * @method Taxonomy           getTaxonomy()                                      Returns the current record's "Taxonomy" value
+ * @method CatalogueLevels    getTaxonomyLevel()                                 Returns the current record's "TaxonomyLevel" value
+ * @method Taxonomy           getTaxonomyParent()                                Returns the current record's "TaxonomyParent" value
+ * @method Lithostratigraphy  getLithostratigraphy()                             Returns the current record's "Lithostratigraphy" value
+ * @method CatalogueLevels    getLithostratigraphyLevel()                        Returns the current record's "LithostratigraphyLevel" value
+ * @method Lithostratigraphy  getLithostratigraphyParent()                       Returns the current record's "LithostratigraphyParent" value
+ * @method Chronostratigraphy getChronostratigraphy()                            Returns the current record's "Chronostratigraphy" value
+ * @method CatalogueLevels    getChronostratigraphyLevel()                       Returns the current record's "ChronostratigraphyLevel" value
+ * @method Chronostratigraphy getChronostratigraphyParent()                      Returns the current record's "ChronostratigraphyParent" value
+ * @method Lithology          getLithology()                                     Returns the current record's "Lithology" value
+ * @method CatalogueLevels    getLithologyLevel()                                Returns the current record's "LithologyLevel" value
+ * @method Lithology          getLithologyParent()                               Returns the current record's "LithologyParent" value
+ * @method Mineralogy         getMineralogy()                                    Returns the current record's "Mineralogy" value
+ * @method CatalogueLevels    getMineralogyLevel()                               Returns the current record's "MineralogyLevel" value
+ * @method Mineralogy         getMineralogyParent()                              Returns the current record's "MineralogyParent" value
+ * @method Taxonomy           getHostTaxon()                                     Returns the current record's "HostTaxon" value
+ * @method CatalogueLevels    getHostTaxonLevel()                                Returns the current record's "HostTaxonLevel" value
+ * @method Taxonomy           getHostTaxonParent()                               Returns the current record's "HostTaxonParent" value
+ * @method Igs                getIg()                                            Returns the current record's "Ig" value
+ * @method SpecimenSearch     setId()                                            Sets the current record's "id" value
+ * @method SpecimenSearch     setSpecRef()                                       Sets the current record's "spec_ref" value
+ * @method SpecimenSearch     setCategory()                                      Sets the current record's "category" value
+ * @method SpecimenSearch     setCollectionRef()                                 Sets the current record's "collection_ref" value
+ * @method SpecimenSearch     setCollectionType()                                Sets the current record's "collection_type" value
+ * @method SpecimenSearch     setCollectionCode()                                Sets the current record's "collection_code" value
+ * @method SpecimenSearch     setCollectionName()                                Sets the current record's "collection_name" value
+ * @method SpecimenSearch     setCollectionInstitutionRef()                      Sets the current record's "collection_institution_ref" value
+ * @method SpecimenSearch     setCollectionInstitutionFormatedName()             Sets the current record's "collection_institution_formated_name" value
+ * @method SpecimenSearch     setCollectionInstitutionFormatedNameTs()           Sets the current record's "collection_institution_formated_name_ts" value
+ * @method SpecimenSearch     setCollectionInstitutionFormatedNameIndexed()      Sets the current record's "collection_institution_formated_name_indexed" value
+ * @method SpecimenSearch     setCollectionInstitutionSubType()                  Sets the current record's "collection_institution_sub_type" value
+ * @method SpecimenSearch     setCollectionMainManagerRef()                      Sets the current record's "collection_main_manager_ref" value
+ * @method SpecimenSearch     setCollectionMainManagerFormatedName()             Sets the current record's "collection_main_manager_formated_name" value
+ * @method SpecimenSearch     setCollectionMainManagerFormatedNameTs()           Sets the current record's "collection_main_manager_formated_name_ts" value
+ * @method SpecimenSearch     setCollectionMainManagerFormatedNameIndexed()      Sets the current record's "collection_main_manager_formated_name_indexed" value
+ * @method SpecimenSearch     setCollectionParentRef()                           Sets the current record's "collection_parent_ref" value
+ * @method SpecimenSearch     setCollectionPath()                                Sets the current record's "collection_path" value
+ * @method SpecimenSearch     setExpeditionRef()                                 Sets the current record's "expedition_ref" value
+ * @method SpecimenSearch     setExpeditionName()                                Sets the current record's "expedition_name" value
+ * @method SpecimenSearch     setExpeditionNameTs()                              Sets the current record's "expedition_name_ts" value
+ * @method SpecimenSearch     setExpeditionNameIndexed()                         Sets the current record's "expedition_name_indexed" value
+ * @method SpecimenSearch     setStationVisible()                                Sets the current record's "station_visible" value
+ * @method SpecimenSearch     setGtuRef()                                        Sets the current record's "gtu_ref" value
+ * @method SpecimenSearch     setGtuCode()                                       Sets the current record's "gtu_code" value
+ * @method SpecimenSearch     setGtuParentRef()                                  Sets the current record's "gtu_parent_ref" value
+ * @method SpecimenSearch     setGtuPath()                                       Sets the current record's "gtu_path" value
+ * @method SpecimenSearch     setGtuFromDateMask()                               Sets the current record's "gtu_from_date_mask" value
+ * @method SpecimenSearch     setGtuFromDate()                                   Sets the current record's "gtu_from_date" value
+ * @method SpecimenSearch     setGtuToDateMask()                                 Sets the current record's "gtu_to_date_mask" value
+ * @method SpecimenSearch     setGtuToDate()                                     Sets the current record's "gtu_to_date" value
+ * @method SpecimenSearch     setGtuTagValuesIndexed()                           Sets the current record's "gtu_tag_values_indexed" value
+ * @method SpecimenSearch     setGtuCountryTagValue()                            Sets the current record's "gtu_country_tag_value" value
+ * @method SpecimenSearch     setTaxonRef()                                      Sets the current record's "taxon_ref" value
+ * @method SpecimenSearch     setTaxonName()                                     Sets the current record's "taxon_name" value
+ * @method SpecimenSearch     setTaxonNameIndexed()                              Sets the current record's "taxon_name_indexed" value
+ * @method SpecimenSearch     setTaxonNameOrderBy()                              Sets the current record's "taxon_name_order_by" value
+ * @method SpecimenSearch     setTaxonLevelRef()                                 Sets the current record's "taxon_level_ref" value
+ * @method SpecimenSearch     setTaxonLevelName()                                Sets the current record's "taxon_level_name" value
+ * @method SpecimenSearch     setTaxonStatus()                                   Sets the current record's "taxon_status" value
+ * @method SpecimenSearch     setTaxonPath()                                     Sets the current record's "taxon_path" value
+ * @method SpecimenSearch     setTaxonParentRef()                                Sets the current record's "taxon_parent_ref" value
+ * @method SpecimenSearch     setTaxonExtinct()                                  Sets the current record's "taxon_extinct" value
+ * @method SpecimenSearch     setLithoRef()                                      Sets the current record's "litho_ref" value
+ * @method SpecimenSearch     setLithoName()                                     Sets the current record's "litho_name" value
+ * @method SpecimenSearch     setLithoNameIndexed()                              Sets the current record's "litho_name_indexed" value
+ * @method SpecimenSearch     setLithoNameOrderBy()                              Sets the current record's "litho_name_order_by" value
+ * @method SpecimenSearch     setLithoLevelRef()                                 Sets the current record's "litho_level_ref" value
+ * @method SpecimenSearch     setLithoLevelName()                                Sets the current record's "litho_level_name" value
+ * @method SpecimenSearch     setLithoStatus()                                   Sets the current record's "litho_status" value
+ * @method SpecimenSearch     setLithoPath()                                     Sets the current record's "litho_path" value
+ * @method SpecimenSearch     setLithoParentRef()                                Sets the current record's "litho_parent_ref" value
+ * @method SpecimenSearch     setChronoRef()                                     Sets the current record's "chrono_ref" value
+ * @method SpecimenSearch     setChronoName()                                    Sets the current record's "chrono_name" value
+ * @method SpecimenSearch     setChronoNameIndexed()                             Sets the current record's "chrono_name_indexed" value
+ * @method SpecimenSearch     setChronoNameOrderBy()                             Sets the current record's "chrono_name_order_by" value
+ * @method SpecimenSearch     setChronoLevelRef()                                Sets the current record's "chrono_level_ref" value
+ * @method SpecimenSearch     setChronoLevelName()                               Sets the current record's "chrono_level_name" value
+ * @method SpecimenSearch     setChronoStatus()                                  Sets the current record's "chrono_status" value
+ * @method SpecimenSearch     setChronoPath()                                    Sets the current record's "chrono_path" value
+ * @method SpecimenSearch     setChronoParentRef()                               Sets the current record's "chrono_parent_ref" value
+ * @method SpecimenSearch     setLithologyRef()                                  Sets the current record's "lithology_ref" value
+ * @method SpecimenSearch     setLithologyName()                                 Sets the current record's "lithology_name" value
+ * @method SpecimenSearch     setLithologyNameIndexed()                          Sets the current record's "lithology_name_indexed" value
+ * @method SpecimenSearch     setLithologyNameOrderBy()                          Sets the current record's "lithology_name_order_by" value
+ * @method SpecimenSearch     setLithologyLevelRef()                             Sets the current record's "lithology_level_ref" value
+ * @method SpecimenSearch     setLithologyLevelName()                            Sets the current record's "lithology_level_name" value
+ * @method SpecimenSearch     setLithologyStatus()                               Sets the current record's "lithology_status" value
+ * @method SpecimenSearch     setLithologyPath()                                 Sets the current record's "lithology_path" value
+ * @method SpecimenSearch     setLithologyParentRef()                            Sets the current record's "lithology_parent_ref" value
+ * @method SpecimenSearch     setMineralRef()                                    Sets the current record's "mineral_ref" value
+ * @method SpecimenSearch     setMineralName()                                   Sets the current record's "mineral_name" value
+ * @method SpecimenSearch     setMineralNameIndexed()                            Sets the current record's "mineral_name_indexed" value
+ * @method SpecimenSearch     setMineralNameOrderBy()                            Sets the current record's "mineral_name_order_by" value
+ * @method SpecimenSearch     setMineralLevelRef()                               Sets the current record's "mineral_level_ref" value
+ * @method SpecimenSearch     setMineralLevelName()                              Sets the current record's "mineral_level_name" value
+ * @method SpecimenSearch     setMineralStatus()                                 Sets the current record's "mineral_status" value
+ * @method SpecimenSearch     setMineralPath()                                   Sets the current record's "mineral_path" value
+ * @method SpecimenSearch     setMineralParentRef()                              Sets the current record's "mineral_parent_ref" value
+ * @method SpecimenSearch     setHostTaxonRef()                                  Sets the current record's "host_taxon_ref" value
+ * @method SpecimenSearch     setHostRelationship()                              Sets the current record's "host_relationship" value
+ * @method SpecimenSearch     setHostTaxonName()                                 Sets the current record's "host_taxon_name" value
+ * @method SpecimenSearch     setHostTaxonNameIndexed()                          Sets the current record's "host_taxon_name_indexed" value
+ * @method SpecimenSearch     setHostTaxonNameOrderBy()                          Sets the current record's "host_taxon_name_order_by" value
+ * @method SpecimenSearch     setHostTaxonLevelRef()                             Sets the current record's "host_taxon_level_ref" value
+ * @method SpecimenSearch     setHostTaxonLevelName()                            Sets the current record's "host_taxon_level_name" value
+ * @method SpecimenSearch     setHostTaxonStatus()                               Sets the current record's "host_taxon_status" value
+ * @method SpecimenSearch     setHostTaxonPath()                                 Sets the current record's "host_taxon_path" value
+ * @method SpecimenSearch     setHostTaxonParentRef()                            Sets the current record's "host_taxon_parent_ref" value
+ * @method SpecimenSearch     setHostTaxonExtinct()                              Sets the current record's "host_taxon_extinct" value
+ * @method SpecimenSearch     setIgRef()                                         Sets the current record's "ig_ref" value
+ * @method SpecimenSearch     setIgNum()                                         Sets the current record's "ig_num" value
+ * @method SpecimenSearch     setIgNumIndexed()                                  Sets the current record's "ig_num_indexed" value
+ * @method SpecimenSearch     setIgDateMask()                                    Sets the current record's "ig_date_mask" value
+ * @method SpecimenSearch     setIgDate()                                        Sets the current record's "ig_date" value
+ * @method SpecimenSearch     setAcquisitionCategory()                           Sets the current record's "acquisition_category" value
+ * @method SpecimenSearch     setAcquisitionDateMask()                           Sets the current record's "acquisition_date_mask" value
+ * @method SpecimenSearch     setAcquisitionDate()                               Sets the current record's "acquisition_date" value
+ * @method SpecimenSearch     setSpecimenCountMin()                              Sets the current record's "specimen_count_min" value
+ * @method SpecimenSearch     setSpecimenCountMax()                              Sets the current record's "specimen_count_max" value
+ * @method SpecimenSearch     setWithTypes()                                     Sets the current record's "with_types" value
+ * @method SpecimenSearch     setSpecimen()                                      Sets the current record's "Specimen" value
+ * @method SpecimenSearch     setCollection()                                    Sets the current record's "Collection" value
+ * @method SpecimenSearch     setCollectionInstitution()                         Sets the current record's "CollectionInstitution" value
+ * @method SpecimenSearch     setCollectionMainManager()                         Sets the current record's "CollectionMainManager" value
+ * @method SpecimenSearch     setCollectionParent()                              Sets the current record's "CollectionParent" value
+ * @method SpecimenSearch     setExpedition()                                    Sets the current record's "Expedition" value
+ * @method SpecimenSearch     setGtu()                                           Sets the current record's "Gtu" value
+ * @method SpecimenSearch     setGtuParent()                                     Sets the current record's "GtuParent" value
+ * @method SpecimenSearch     setTaxonomy()                                      Sets the current record's "Taxonomy" value
+ * @method SpecimenSearch     setTaxonomyLevel()                                 Sets the current record's "TaxonomyLevel" value
+ * @method SpecimenSearch     setTaxonomyParent()                                Sets the current record's "TaxonomyParent" value
+ * @method SpecimenSearch     setLithostratigraphy()                             Sets the current record's "Lithostratigraphy" value
+ * @method SpecimenSearch     setLithostratigraphyLevel()                        Sets the current record's "LithostratigraphyLevel" value
+ * @method SpecimenSearch     setLithostratigraphyParent()                       Sets the current record's "LithostratigraphyParent" value
+ * @method SpecimenSearch     setChronostratigraphy()                            Sets the current record's "Chronostratigraphy" value
+ * @method SpecimenSearch     setChronostratigraphyLevel()                       Sets the current record's "ChronostratigraphyLevel" value
+ * @method SpecimenSearch     setChronostratigraphyParent()                      Sets the current record's "ChronostratigraphyParent" value
+ * @method SpecimenSearch     setLithology()                                     Sets the current record's "Lithology" value
+ * @method SpecimenSearch     setLithologyLevel()                                Sets the current record's "LithologyLevel" value
+ * @method SpecimenSearch     setLithologyParent()                               Sets the current record's "LithologyParent" value
+ * @method SpecimenSearch     setMineralogy()                                    Sets the current record's "Mineralogy" value
+ * @method SpecimenSearch     setMineralogyLevel()                               Sets the current record's "MineralogyLevel" value
+ * @method SpecimenSearch     setMineralogyParent()                              Sets the current record's "MineralogyParent" value
+ * @method SpecimenSearch     setHostTaxon()                                     Sets the current record's "HostTaxon" value
+ * @method SpecimenSearch     setHostTaxonLevel()                                Sets the current record's "HostTaxonLevel" value
+ * @method SpecimenSearch     setHostTaxonParent()                               Sets the current record's "HostTaxonParent" value
+ * @method SpecimenSearch     setIg()                                            Sets the current record's "Ig" value
  * 
  * @package    darwin
  * @subpackage model
@@ -672,6 +753,112 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        
+        $this->hasOne('Specimens as Specimen', array(
+             'local' => 'spec_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Collections as Collection', array(
+             'local' => 'collection_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Institutions as CollectionInstitution', array(
+             'local' => 'collection_institution_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Users as CollectionMainManager', array(
+             'local' => 'collection_main_manager_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Collections as CollectionParent', array(
+             'local' => 'collection_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Expeditions as Expedition', array(
+             'local' => 'expedition_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Gtu', array(
+             'local' => 'gtu_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Gtu as GtuParent', array(
+             'local' => 'gtu_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Taxonomy', array(
+             'local' => 'taxon_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as TaxonomyLevel', array(
+             'local' => 'taxon_level_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Taxonomy as TaxonomyParent', array(
+             'local' => 'taxon_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Lithostratigraphy', array(
+             'local' => 'litho_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as LithostratigraphyLevel', array(
+             'local' => 'litho_level_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Lithostratigraphy as LithostratigraphyParent', array(
+             'local' => 'litho_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Chronostratigraphy', array(
+             'local' => 'chrono_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as ChronostratigraphyLevel', array(
+             'local' => 'chrono_level_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Chronostratigraphy as ChronostratigraphyParent', array(
+             'local' => 'chrono_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Lithology', array(
+             'local' => 'lithology_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as LithologyLevel', array(
+             'local' => 'lithology_level_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Lithology as LithologyParent', array(
+             'local' => 'lithology_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Mineralogy', array(
+             'local' => 'mineral_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as MineralogyLevel', array(
+             'local' => 'mineral_level_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Mineralogy as MineralogyParent', array(
+             'local' => 'mineral_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Taxonomy as HostTaxon', array(
+             'local' => 'host_taxon_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('CatalogueLevels as HostTaxonLevel', array(
+             'local' => 'host_taxon_level_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Taxonomy as HostTaxonParent', array(
+             'local' => 'host_taxon_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Igs as Ig', array(
+             'local' => 'ig_ref',
+             'foreign' => 'id'));
     }
 }

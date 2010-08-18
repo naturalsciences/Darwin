@@ -20,6 +20,7 @@
  * @property Doctrine_Collection $Soortenregister
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimensAccompanying
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getName()                  Returns the current record's "name" value
@@ -36,6 +37,7 @@
  * @method Doctrine_Collection getSoortenregister()       Returns the current record's "Soortenregister" collection
  * @method Doctrine_Collection getSpecimens()             Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimensAccompanying() Returns the current record's "SpecimensAccompanying" collection
+ * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
  * @method Taxonomy            setId()                    Sets the current record's "id" value
  * @method Taxonomy            setName()                  Sets the current record's "name" value
  * @method Taxonomy            setNameIndexed()           Sets the current record's "name_indexed" value
@@ -51,6 +53,7 @@
  * @method Taxonomy            setSoortenregister()       Sets the current record's "Soortenregister" collection
  * @method Taxonomy            setSpecimens()             Sets the current record's "Specimens" collection
  * @method Taxonomy            setSpecimensAccompanying() Sets the current record's "SpecimensAccompanying" collection
+ * @method Taxonomy            setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -126,6 +129,10 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
              'foreign' => 'taxon_ref'));
 
         $this->hasMany('SpecimensAccompanying', array(
+             'local' => 'id',
+             'foreign' => 'taxon_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
              'local' => 'id',
              'foreign' => 'taxon_ref'));
     }

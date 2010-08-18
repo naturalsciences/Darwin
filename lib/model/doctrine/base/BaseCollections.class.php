@@ -29,6 +29,7 @@
  * @property Doctrine_Collection $CollectionsFieldsVisibilities
  * @property Doctrine_Collection $UsersCollRightsAsked
  * @property Doctrine_Collection $Specimens
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                            Returns the current record's "id" value
  * @method enum                getCollectionType()                Returns the current record's "collection_type" value
@@ -54,6 +55,7 @@
  * @method Doctrine_Collection getCollectionsFieldsVisibilities() Returns the current record's "CollectionsFieldsVisibilities" collection
  * @method Doctrine_Collection getUsersCollRightsAsked()          Returns the current record's "UsersCollRightsAsked" collection
  * @method Doctrine_Collection getSpecimens()                     Returns the current record's "Specimens" collection
+ * @method Doctrine_Collection getSpecimenSearch()                Returns the current record's "SpecimenSearch" collection
  * @method Collections         setId()                            Sets the current record's "id" value
  * @method Collections         setCollectionType()                Sets the current record's "collection_type" value
  * @method Collections         setCode()                          Sets the current record's "code" value
@@ -78,6 +80,7 @@
  * @method Collections         setCollectionsFieldsVisibilities() Sets the current record's "CollectionsFieldsVisibilities" collection
  * @method Collections         setUsersCollRightsAsked()          Sets the current record's "UsersCollRightsAsked" collection
  * @method Collections         setSpecimens()                     Sets the current record's "Specimens" collection
+ * @method Collections         setSpecimenSearch()                Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -194,6 +197,10 @@ abstract class BaseCollections extends sfDoctrineRecord
              'foreign' => 'collection_ref'));
 
         $this->hasMany('Specimens', array(
+             'local' => 'id',
+             'foreign' => 'collection_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
              'local' => 'id',
              'foreign' => 'collection_ref'));
     }
