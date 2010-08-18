@@ -43,6 +43,22 @@ class savesearchActions extends sfActions
 
       return $this->renderText('ok');
     }
+    if($request->getParameter('mid','') != '')
+    {
+      $ids = explode(',',$request->getParameter('mid'));
+      foreach($ids as $id)
+      {
+        $id = trim($id);
+        if(ctype_digit($id))
+        {
+          if($request->getParameter('status') === '1')
+            $this->getUser()->addPinTo($id);
+          else
+            $this->getUser()->removePinTo($id);
+        }
+      }
+      return $this->renderText('ok');
+    }
     $this->forward404();
   }
   
