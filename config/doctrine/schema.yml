@@ -1041,3 +1041,108 @@ SpecimensTools:
         CollectingTools:
           local: collecting_tool_ref
           foreign: id
+
+SpecimenSearch:
+    tableName: darwin_flat
+    columns:
+        id: { type: integer, primary: true, autoincrement: true}
+        spec_ref: { type: integer, notnull: true }
+        category: { type: string}
+        collection_ref: { type: integer, notnull: true, default:0} 
+        collection_type: { type: string}    
+        collection_code: { type: string}
+        collection_name: { type: string}
+        collection_institution_ref: { type: integer, notnull: true, default:0}
+        collection_institution_formated_name: { type: string}
+        collection_institution_formated_name_ts: { type: string}
+        collection_institution_formated_name_indexed: { type: string}
+        collection_institution_sub_type: { type: string}
+        collection_main_manager_ref: { type: integer, notnull: true, default:0}
+        collection_main_manager_formated_name: { type: string}
+        collection_main_manager_formated_name_ts: { type: string}
+        collection_main_manager_formated_name_indexed: { type: string}
+        collection_parent_ref: { type: integer, default:0}
+        collection_path: { type: string}
+        expedition_ref: { type: integer, notnull: true, default:0}
+        expedition_name: { type: string}
+        expedition_name_ts: { type: string}
+        expedition_name_indexed: { type: string}
+        station_visible: { type: boolean}
+        gtu_ref: { type: integer, notnull: true, default:0}      
+        gtu_code: { type: string}
+        gtu_parent_ref: { type: integer, default:0}
+        gtu_path: { type: string}
+        gtu_from_date_mask: { type: integer }
+        gtu_from_date: { type: string}        
+        gtu_to_date_mask: { type: integer }             
+        gtu_to_date: { type: string}                  
+        gtu_tag_values_indexed: { type: string}
+        gtu_country_tag_value: { type: string}
+        taxon_ref: { type: integer, notnull: true, default:0}
+        taxon_name:  { type: string}
+        taxon_name_indexed: { type: string}    
+        taxon_name_order_by: { type: string}
+        taxon_level_ref: { type: integer, notnull: true }
+        taxon_level_name: { type: string}
+        taxon_status: { type: string}
+        taxon_path: { type: string}
+        taxon_parent_ref: { type: integer, default:0}
+        taxon_extinct: { type: boolean}
+        litho_ref: { type: integer, notnull: true, default:0} 
+        litho_name: { type: string}
+        litho_name_indexed: { type: string}
+        litho_name_order_by: { type: string}
+        litho_level_ref: { type: integer, notnull: true, default:0}    
+        litho_level_name: { type: string}
+        litho_status: { type: string}
+        litho_path: { type: string}                
+        litho_parent_ref: { type: integer, default:0}
+        chrono_ref: { type: integer, notnull: true, default:0}
+        chrono_name: { type: string}
+        chrono_name_indexed: { type: string}
+        chrono_name_order_by: { type: string}
+        chrono_level_ref: { type: integer, notnull: true, default:0}
+        chrono_level_name: { type: string}
+        chrono_status: { type: string}
+        chrono_path: { type: string}
+        chrono_parent_ref: { type: integer, default:0}
+        lithology_ref: { type: integer, notnull: true, default:0}    
+        lithology_name: { type: string}
+        lithology_name_indexed: { type: string}
+        lithology_name_order_by: { type: string}
+        lithology_level_ref: { type: integer, notnull: true, default:0}
+        lithology_level_name: { type: string}
+        lithology_status: { type: string}
+        lithology_path: { type: string}
+        lithology_parent_ref: { type: integer, default:0}
+        mineral_ref: { type: integer, notnull: true, default:0}
+        mineral_name: { type: string}
+        mineral_name_indexed: { type: string}
+        mineral_name_order_by: { type: string}
+        mineral_level_ref: { type: integer, notnull: true, default:0}
+        mineral_level_name: { type: string}
+        mineral_status: { type: string}
+        mineral_path: { type: string}
+        mineral_parent_ref: { type: integer, default:0}
+        host_taxon_ref: { type: integer, notnull: true, default:0}   
+        host_relationship: { type: string}
+        host_taxon_name: { type: string}
+        host_taxon_name_indexed: { type: string}
+        host_taxon_name_order_by: { type: string}
+        host_taxon_level_ref: { type: integer, notnull: true, default:0}
+        host_taxon_level_name: { type: string}
+        host_taxon_status: { type: string}
+        host_taxon_path: { type: string}
+        host_taxon_parent_ref: { type: integer, default:0}
+        host_taxon_extinct: { type: boolean}      
+        ig_ref: { type: integer }                  
+        ig_num: { type: string}           
+        ig_num_indexed: { type: string}
+        ig_date_mask: { type: integer }                 
+        ig_date: { type: string}                      
+        acquisition_category: { type: string}     
+        acquisition_date_mask: { type: integer }        
+        acquisition_date: { type: string}             
+        specimen_count_min: { type: integer }       
+        specimen_count_max: { type: integer }
+        with_types: { type: boolean}      

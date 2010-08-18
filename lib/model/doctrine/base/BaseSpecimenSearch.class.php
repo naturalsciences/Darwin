@@ -89,7 +89,7 @@
  * @property string $host_taxon_name
  * @property string $host_taxon_name_indexed
  * @property string $host_taxon_name_order_by
- * @property integer notnull: true $host_taxon_level_ref
+ * @property integer $host_taxon_level_ref
  * @property string $host_taxon_level_name
  * @property string $host_taxon_status
  * @property string $host_taxon_path
@@ -191,6 +191,7 @@
  * @method string         getHostTaxonName()                                 Returns the current record's "host_taxon_name" value
  * @method string         getHostTaxonNameIndexed()                          Returns the current record's "host_taxon_name_indexed" value
  * @method string         getHostTaxonNameOrderBy()                          Returns the current record's "host_taxon_name_order_by" value
+ * @method integer        getHostTaxonLevelRef()                             Returns the current record's "host_taxon_level_ref" value
  * @method string         getHostTaxonLevelName()                            Returns the current record's "host_taxon_level_name" value
  * @method string         getHostTaxonStatus()                               Returns the current record's "host_taxon_status" value
  * @method string         getHostTaxonPath()                                 Returns the current record's "host_taxon_path" value
@@ -291,6 +292,7 @@
  * @method SpecimenSearch setHostTaxonName()                                 Sets the current record's "host_taxon_name" value
  * @method SpecimenSearch setHostTaxonNameIndexed()                          Sets the current record's "host_taxon_name_indexed" value
  * @method SpecimenSearch setHostTaxonNameOrderBy()                          Sets the current record's "host_taxon_name_order_by" value
+ * @method SpecimenSearch setHostTaxonLevelRef()                             Sets the current record's "host_taxon_level_ref" value
  * @method SpecimenSearch setHostTaxonLevelName()                            Sets the current record's "host_taxon_level_name" value
  * @method SpecimenSearch setHostTaxonStatus()                               Sets the current record's "host_taxon_status" value
  * @method SpecimenSearch setHostTaxonPath()                                 Sets the current record's "host_taxon_path" value
@@ -320,7 +322,7 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
         $this->setTableName('darwin_flat');
         $this->hasColumn('id', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
+             'primary' => true,
              'autoincrement' => true,
              ));
         $this->hasColumn('spec_ref', 'integer', null, array(
@@ -611,8 +613,9 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
         $this->hasColumn('host_taxon_name_order_by', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('host_taxon_level_ref', 'integer notnull: true', null, array(
-             'type' => 'integer notnull: true',
+        $this->hasColumn('host_taxon_level_ref', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
              'default' => 0,
              ));
         $this->hasColumn('host_taxon_level_name', 'string', null, array(

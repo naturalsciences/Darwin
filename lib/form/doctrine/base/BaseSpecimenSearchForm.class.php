@@ -15,7 +15,7 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                                            => new sfWidgetFormInputText(),
+      'id'                                            => new sfWidgetFormInputHidden(),
       'spec_ref'                                      => new sfWidgetFormInputText(),
       'category'                                      => new sfWidgetFormTextarea(),
       'collection_ref'                                => new sfWidgetFormInputText(),
@@ -119,7 +119,7 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                                            => new sfValidatorInteger(),
+      'id'                                            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'spec_ref'                                      => new sfValidatorInteger(),
       'category'                                      => new sfValidatorString(array('required' => false)),
       'collection_ref'                                => new sfValidatorInteger(array('required' => false)),
@@ -203,7 +203,7 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
       'host_taxon_name'                               => new sfValidatorString(array('required' => false)),
       'host_taxon_name_indexed'                       => new sfValidatorString(array('required' => false)),
       'host_taxon_name_order_by'                      => new sfValidatorString(array('required' => false)),
-      'host_taxon_level_ref'                          => new sfValidatorPass(array('required' => false)),
+      'host_taxon_level_ref'                          => new sfValidatorInteger(array('required' => false)),
       'host_taxon_level_name'                         => new sfValidatorString(array('required' => false)),
       'host_taxon_status'                             => new sfValidatorString(array('required' => false)),
       'host_taxon_path'                               => new sfValidatorString(array('required' => false)),

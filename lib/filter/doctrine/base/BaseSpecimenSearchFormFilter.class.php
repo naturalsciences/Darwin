@@ -13,7 +13,6 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                                            => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'spec_ref'                                      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'category'                                      => new sfWidgetFormFilterInput(),
       'collection_ref'                                => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -97,7 +96,7 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
       'host_taxon_name'                               => new sfWidgetFormFilterInput(),
       'host_taxon_name_indexed'                       => new sfWidgetFormFilterInput(),
       'host_taxon_name_order_by'                      => new sfWidgetFormFilterInput(),
-      'host_taxon_level_ref'                          => new sfWidgetFormFilterInput(),
+      'host_taxon_level_ref'                          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'host_taxon_level_name'                         => new sfWidgetFormFilterInput(),
       'host_taxon_status'                             => new sfWidgetFormFilterInput(),
       'host_taxon_path'                               => new sfWidgetFormFilterInput(),
@@ -117,7 +116,6 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                                            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'spec_ref'                                      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'category'                                      => new sfValidatorPass(array('required' => false)),
       'collection_ref'                                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -201,7 +199,7 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
       'host_taxon_name'                               => new sfValidatorPass(array('required' => false)),
       'host_taxon_name_indexed'                       => new sfValidatorPass(array('required' => false)),
       'host_taxon_name_order_by'                      => new sfValidatorPass(array('required' => false)),
-      'host_taxon_level_ref'                          => new sfValidatorPass(array('required' => false)),
+      'host_taxon_level_ref'                          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'host_taxon_level_name'                         => new sfValidatorPass(array('required' => false)),
       'host_taxon_status'                             => new sfValidatorPass(array('required' => false)),
       'host_taxon_path'                               => new sfValidatorPass(array('required' => false)),
@@ -321,7 +319,7 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
       'host_taxon_name'                               => 'Text',
       'host_taxon_name_indexed'                       => 'Text',
       'host_taxon_name_order_by'                      => 'Text',
-      'host_taxon_level_ref'                          => 'Text',
+      'host_taxon_level_ref'                          => 'Number',
       'host_taxon_level_name'                         => 'Text',
       'host_taxon_status'                             => 'Text',
       'host_taxon_path'                               => 'Text',
