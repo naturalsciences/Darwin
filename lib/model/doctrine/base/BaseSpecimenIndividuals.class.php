@@ -19,6 +19,7 @@
  * @property integer $specimen_individuals_count_max
  * @property Specimens $Specimens
  * @property Doctrine_Collection $SpecimenParts
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                             Returns the current record's "id" value
  * @method integer             getSpecimenRef()                    Returns the current record's "specimen_ref" value
@@ -34,6 +35,7 @@
  * @method integer             getSpecimenIndividualsCountMax()    Returns the current record's "specimen_individuals_count_max" value
  * @method Specimens           getSpecimens()                      Returns the current record's "Specimens" value
  * @method Doctrine_Collection getSpecimenParts()                  Returns the current record's "SpecimenParts" collection
+ * @method Doctrine_Collection getSpecimenSearch()                 Returns the current record's "SpecimenSearch" collection
  * @method SpecimenIndividuals setId()                             Sets the current record's "id" value
  * @method SpecimenIndividuals setSpecimenRef()                    Sets the current record's "specimen_ref" value
  * @method SpecimenIndividuals setType()                           Sets the current record's "type" value
@@ -48,6 +50,7 @@
  * @method SpecimenIndividuals setSpecimenIndividualsCountMax()    Sets the current record's "specimen_individuals_count_max" value
  * @method SpecimenIndividuals setSpecimens()                      Sets the current record's "Specimens" value
  * @method SpecimenIndividuals setSpecimenParts()                  Sets the current record's "SpecimenParts" collection
+ * @method SpecimenIndividuals setSpecimenSearch()                 Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -126,5 +129,9 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
         $this->hasMany('SpecimenParts', array(
              'local' => 'id',
              'foreign' => 'specimen_individual_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
+             'local' => 'specimen_ref',
+             'foreign' => 'spec_ref'));
     }
 }

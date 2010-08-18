@@ -13,7 +13,7 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'), 'add_empty' => true)),
+      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividual'), 'add_empty' => true)),
       'category'                                      => new sfWidgetFormFilterInput(),
       'collection_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'add_empty' => true)),
       'collection_type'                               => new sfWidgetFormFilterInput(),
@@ -116,7 +116,7 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Specimen'), 'column' => 'id')),
+      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SpecimenIndividual'), 'column' => 'id')),
       'category'                                      => new sfValidatorPass(array('required' => false)),
       'collection_ref'                                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Collection'), 'column' => 'id')),
       'collection_type'                               => new sfValidatorPass(array('required' => false)),

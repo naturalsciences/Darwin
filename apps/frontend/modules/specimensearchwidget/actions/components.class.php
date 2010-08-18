@@ -50,4 +50,24 @@ class specimensearchwidgetComponents extends sfComponents
     }
   }
 
+  public function executeSex()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
+  public function executeStage()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  } 
+  public function executeStatus()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
+  public function executeSocial()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
+  public function executeRockform()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
 }

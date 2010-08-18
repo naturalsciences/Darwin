@@ -1106,7 +1106,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Mineral         
-    u1sps7:
+    u1sps8:
         User: u1
         col_num: 2
         category: specimensearch_widget
@@ -1117,3 +1117,59 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Advanced: Search By ID
+
+    u1sps9:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: sex
+        mandatory: false
+        order_by: 5
+        opened: false
+        visible: true
+        is_available: true
+        title_perso: Sex
+    u1sps10:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: stage
+        mandatory: false
+        order_by: 5
+        opened: false
+        visible: true
+        is_available: true
+        title_perso: Stage
+    u1sps11:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: status
+        mandatory: false
+        order_by: 6
+        opened: false
+        visible: true
+        is_available: true
+        title_perso: States
+    u1sps12:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: social
+        mandatory: false
+        order_by: 6
+        opened: false
+        visible: true
+        is_available: true
+        title_perso: Social Status
+    u1sps13:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: rockform
+        mandatory: false
+        order_by: 7
+        opened: false
+        visible: true
+        is_available: true
+        title_perso: Rock Form
