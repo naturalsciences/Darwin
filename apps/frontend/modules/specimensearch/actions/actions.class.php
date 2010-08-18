@@ -53,6 +53,7 @@ class specimensearchActions extends DarwinActions
   {
     // Forward to a 404 page if the method used is not a post
     //$this->forward404Unless($request->isMethod('post'));
+    $this->is_specimen_search = false;
     $this->setCommonValues('specimensearch', 'collection_name', $request);
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
     $this->form = new SpecimenSearchFormFilter();
@@ -63,7 +64,21 @@ class specimensearchActions extends DarwinActions
       if($request->hasParameter('pinned'))
       {
         $ids=implode(',',$this->getUser()->getAllPinned() );
+        if($ids=='')
+          $ids = '0';
+        $this->is_pinned_only_search=true;
         $criterias['specimen_search_filters']['spec_ids'] = $ids;
+        $criterias['specimen_search_filters']['col_fields'] = $this->form->getDefault('col_fields');
+      }
+      elseif($request->hasParameter('spec_search'))
+      {
+        $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
+        $this->forward404Unless($saved_search);
+
+        $criterias['specimen_search_filters']['spec_ids'] = $saved_search->getSearchedIdString();
+        if($criterias['specimen_search_filters']['spec_ids']=='')
+          $criterias['specimen_search_filters']['spec_ids'] = '0';
+        $this->is_specimen_search = $saved_search->getId();
       }
       $this->form->bind($criterias['specimen_search_filters']) ;
     }
@@ -73,11 +88,15 @@ class specimensearchActions extends DarwinActions
 
       $this->forward404Unless($saved_search);
 
+      if($saved_search->getisOnlyId())
+        $this->is_specimen_search = $saved_search->getId();
       $criterias = unserialize($saved_search->getSearchCriterias());
       $criterias['specimen_search_filters']['col_fields'] = implode('|',$saved_search->getVisibleFieldsInResult()) ;
       if(isset($criterias['specimen_search_filters']))
       {
         Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
+        if($saved_search->getisOnlyId() && $criterias['specimen_search_filters']['spec_ids']=='')
+          $criterias['specimen_search_filters']['spec_ids'] = '0';
         $this->form->bind($criterias['specimen_search_filters']) ;
       }
     }

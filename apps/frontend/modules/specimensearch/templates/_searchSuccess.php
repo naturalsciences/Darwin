@@ -1,4 +1,7 @@
 <div>
+      <?php if($is_specimen_search):?>
+        <input type="hidden" name="spec_search" value="<?php echo $is_specimen_search;?>" />
+      <?php endif;?>
   <?php if(isset($specimensearch) && $specimensearch->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
     <?php
       if($orderDir=='asc')
@@ -11,50 +14,25 @@
       <ul class="sf-menu column_menu">
         <li class="head"><?php echo __('Choose columns to display') ; ?><br/><?php echo image_tag('column_display_expand.png', array('id'=>'column_display_expand','alt' => __('expand'))) ; ?>
           <ul>
-            <li class="<?php echo $field_to_show['category']; ?>" id="li_category">
-              <span class="<?php echo($field_to_show['category']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['category']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Category");?>
-            </li>
-            <li class="<?php echo $field_to_show['collection']; ?>" id="li_collection">
-              <span class="<?php echo($field_to_show['collection']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['collection']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Collection");?>
-            </li>
-            <li class="<?php echo $field_to_show['taxon']; ?>" id="li_taxon">
-              <span class="<?php echo($field_to_show['taxon']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['taxon']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Taxon");?>
-            </li>
-            <li class="<?php echo $field_to_show['type']; ?>" id="li_type">
-              <span class="<?php echo($field_to_show['type']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['type']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Type ?");?>
-            </li>       
-            <li class="<?php echo $field_to_show['gtu']; ?>" id="li_gtu">
-              <span class="<?php echo($field_to_show['gtu']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['gtu']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Sampling location");?>
-            </li>
-            <li class="<?php echo $field_to_show['chrono']; ?>" id="li_chrono">
-              <span class="<?php echo($field_to_show['chrono']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['chrono']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Chronostratigraphic unit");?>
-            </li>
-            <li class="<?php echo $field_to_show['litho']; ?>" id="li_litho">
-              <span class="<?php echo($field_to_show['litho']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['litho']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Lithostratigraphic unit");?>
-            </li>
-            <li class="<?php echo $field_to_show['lithologic']; ?>" id="li_lithologic">
-              <span class="<?php echo($field_to_show['lithologic']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['lithologic']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Lithologic unit");?>
-            </li>
-            <li class="<?php echo $field_to_show['mineral']; ?>" id="li_mineral">
-              <span class="<?php echo($field_to_show['mineral']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['mineral']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Mineralogic unit");?>
-            </li>
-            <li class="<?php echo $field_to_show['expedition']; ?>" id="li_expedition">
-              <span class="<?php echo($field_to_show['expedition']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['expedition']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Expedition");?>
-            </li>
-            <li class="<?php echo $field_to_show['count']; ?>" id="li_count">
-              <span class="<?php echo($field_to_show['count']=='uncheck'?'hidden':''); ?>">&#10003</span>
-              <span class="<?php echo($field_to_show['count']=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?= __("Counts");?>
-            </li>
+            <?php
+            $cols = array(
+              'category' => __("Category"),
+              'collection' => __("Collection"),
+              'taxon' => __("Taxon"),
+              'type' => __("Type ?"),
+              'gtu' => __("Sampling location"),
+              'chrono' => __("Chronostratigraphic unit"),
+              'litho' => __("Lithostratigraphic unit"),
+              'lithologic' => __("Lithologic unit"),
+              'mineral' => __("Mineralogic"),
+              'expedition' => __("Expedition"),
+              'count' => __("Counts"));
+            foreach($cols as $c_name => $c_title):?>
+              <li class="<?php echo $field_to_show[$c_name]; ?>" id="li_<?php echo $c_name;?>">
+                <span class="<?php echo($field_to_show[$c_name]=='uncheck'?'hidden':''); ?>">&#10003</span>
+                <span class="<?php echo($field_to_show[$c_name]=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?php echo $c_title;?>
+              </li>
+            <?php endforeach;?>
           </ul>
         </li>
       </ul>
@@ -63,8 +41,10 @@
           <tr>
             <th></th>
             <th>
-               <?php echo image_tag('white_pin_off.png', array('alt' =>  __('Save this result'))) ; ?>
+               <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
+               <?php echo image_tag('white_pin_on.png', array('class'=>'top_pin_but pin_on', 'alt' =>  __('Save this result'))) ; ?>
             </th>
+            <th></th>
             <th class="col_category">
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=category'.( ($orderBy=='category' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                  $currentPage);?>">
@@ -155,7 +135,8 @@
                   <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on hidden','alt' =>  __('Un-Save this result'))) ; ?>
                   <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
                 <?php endif;?>
-              </td>              
+              </td>
+              <td><?php if($is_specimen_search):?><?php echo image_tag('blue_pin_del.png',array('class' => 'pin_del'));?><?php endif;?></td>
               <td class="col_category">
                 <?php echo $specimen->getCategory() == 'physical'? image_tag('physical.png', array('alt' => __('physical'))):
                                                              image_tag('non_physical.gif', array('alt' => __('other'))) ;?>
@@ -256,8 +237,8 @@
                   <?php echo link_to(image_tag('edit.png'),'specimen/edit?id='.$specimen->getSpecRef());?>
               </td>
             </tr>
-            <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>">
-              <td colspan="7">
+            <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">
+              <td colspan="8">
                 <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
                 <script type="text/javascript">
                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
@@ -316,8 +297,64 @@ $(document).ready(function () {
       pin_status = 1;
     }
     rid = getIdInClasses($(this).closest('tr'));
-    $.get('<?php echo url_for('savesearch/pin');?>/id/' + rid + '/status/' + pin_status,function (html){
-    });
+    $.get('<?php echo url_for('savesearch/pin');?>/id/' + rid + '/status/' + pin_status,function (html){});
   });
+
+  if($('.spec_results tbody .pin_on').not('.hidden').length == $('.spec_results tbody .pin_on').length)
+  {
+      $('.top_pin_but').parent().find('.pin_on').removeClass('hidden');
+      $('.top_pin_but').parent().find('.pin_off').addClass('hidden') ;
+  }
+  else
+  {
+      $('.top_pin_but').parent().find('.pin_off').removeClass('hidden');
+      $('.top_pin_but').parent().find('.pin_on').addClass('hidden') ;
+  }
+  
+  $('.spec_results .top_pin_but').click(function(){
+    /** Multiple pin behavior ***/
+    if($(this).hasClass('pin_on'))
+    {
+      $(this).parent().find('.pin_off').removeClass('hidden'); 
+      $(this).addClass('hidden') ;
+      pin_status = 0;
+    }
+    else
+    {
+      $(this).parent().find('.pin_on').removeClass('hidden');
+      $(this).addClass('hidden') ;
+      pin_status = 1;
+    }
+    pins = '';
+    $('.spec_results tbody tr').not('.ind_row').each(function(){
+      rid = getIdInClasses($(this));
+      if(pins == '')
+        pins = rid;
+      else
+        pins += ','+rid;
+    });
+
+    if(pin_status == 0)
+    {
+        $('.spec_results tbody tr .pin_off').removeClass('hidden');
+        $('.spec_results tbody tr .pin_on').addClass('hidden') ;
+    }
+    else
+    {
+        $('.spec_results tbody tr .pin_off').addClass('hidden');
+        $('.spec_results tbody tr .pin_on').removeClass('hidden') ;
+    }
+    $.get('<?php echo url_for('savesearch/pin');?>/mid/' + pins + '/status/' + pin_status,function (html){});
+  });
+
+  <?php if($is_specimen_search):?>
+    $('.spec_results .pin_del').click(function(){
+      rid = getIdInClasses($(this).closest('tr'));
+      $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/id/' + rid ,function (html){
+        $('.rid_'+rid).closest('tbody').remove();
+      });
+    });
+  <?php endif;?>
+
 });
 </script> 

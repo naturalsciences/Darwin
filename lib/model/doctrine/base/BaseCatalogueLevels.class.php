@@ -16,6 +16,7 @@
  * @property Doctrine_Collection $Lithostratigraphy
  * @property Doctrine_Collection $Mineralogy
  * @property Doctrine_Collection $Lithology
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                  Returns the current record's "id" value
  * @method string              getLevelType()           Returns the current record's "level_type" value
@@ -28,6 +29,7 @@
  * @method Doctrine_Collection getLithostratigraphy()   Returns the current record's "Lithostratigraphy" collection
  * @method Doctrine_Collection getMineralogy()          Returns the current record's "Mineralogy" collection
  * @method Doctrine_Collection getLithology()           Returns the current record's "Lithology" collection
+ * @method Doctrine_Collection getSpecimenSearch()      Returns the current record's "SpecimenSearch" collection
  * @method CatalogueLevels     setId()                  Sets the current record's "id" value
  * @method CatalogueLevels     setLevelType()           Sets the current record's "level_type" value
  * @method CatalogueLevels     setLevelName()           Sets the current record's "level_name" value
@@ -39,6 +41,7 @@
  * @method CatalogueLevels     setLithostratigraphy()   Sets the current record's "Lithostratigraphy" collection
  * @method CatalogueLevels     setMineralogy()          Sets the current record's "Mineralogy" collection
  * @method CatalogueLevels     setLithology()           Sets the current record's "Lithology" collection
+ * @method CatalogueLevels     setSpecimenSearch()      Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -100,5 +103,9 @@ abstract class BaseCatalogueLevels extends sfDoctrineRecord
         $this->hasMany('Lithology', array(
              'local' => 'id',
              'foreign' => 'level_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'taxon_level_ref'));
     }
 }

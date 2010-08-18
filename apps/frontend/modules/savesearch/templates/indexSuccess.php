@@ -1,7 +1,14 @@
-<?php slot('title', __('My saved searches'));  ?>
 <?php use_helper('Date');?>
 <div class="page">
-  <h1><?php echo __('My saved searches');?></h1>
+
+  <?php if($is_only_spec):?>
+    <?php slot('title', __('My saved specimens'));?>
+    <h1><?php echo __('My saved specimens');?></h1>
+  <?php else:?>
+    <?php slot('title', __('My saved searches'));?>
+    <h1><?php echo __('My saved searches');?></h1>
+  <?php endif;?>
+
   <table class="saved_searches">
   <?php foreach($searches as $search):?>
     <tr class="r_id_<?php echo $search->getId();?>">
@@ -16,15 +23,18 @@
         <td>
           <div class="search_name">
             <?php echo link_to($search->getName(),'specimensearch/search?search_id='.$search->getId(),array('title'=>__('Go to your search')) ); ?>
+            <?php if($is_only_spec):?>
+              <span class="saved_count">(<?php echo format_number_choice('[0] No Items|[1] 1 Item |(1,+Inf] %1% Items', array('%1%' =>  $search->getNumberOfIds()), $search->getNumberOfIds());?>)</span>
+            <?php endif;?>
           </div>
           <div class="date">
             <?php echo format_datetime($search->getModificationDateTime(),'f');?>
           </div>
         </td>
-        <td><?php echo link_to(image_tag('criteria.png'),'specimensearch/index?search_id='.$search->getId());?></td>
+        <td><?php if(!$is_only_spec):?><?php echo link_to(image_tag('criteria.png'),'specimensearch/index?search_id='.$search->getId());?><?php endif;?></td>
         <td><a href="" class="edit_request"><?php echo image_tag('edit.png');?></a></td>
         <td>
-         <?php echo link_to(image_tag('remove.png'), 'savesearch/deleteSavedSearch?table=my_saved_searches&id='.$search->getId(), array('confirm' =>  __('Are you sure ?')));?>
+         <?php echo link_to(image_tag('remove.png'), 'savesearch/deleteSavedSearch?table=my_saved_searches&id='.$search->getId(), array('class'=>'del_butt'));?>
         </td>
     </tr>
 <?php endforeach;?>
@@ -34,6 +44,18 @@
 <script type="text/javascript">
 
 $(document).ready(function () {
+
+  $('.saved_searches .del_butt').click(function(event)
+  {
+    event.preventDefault();  
+    var answer = confirm('<?php echo __('Are you sure ?');?>');
+    if( answer )
+    {
+      $.get($(this).attr('href'),function (html){
+        $(this).closest('tr').remove();
+      });
+    }
+  });
 
   $('.saved_searches .fav_img').click(function(){
     if($(this).hasClass('favorite_on'))
@@ -58,7 +80,7 @@ $(document).ready(function () {
   $(".edit_request").click(function(){
     $(this).qtip({
         content: {
-            title: { text : '<?php echo __('Edit your search')?>', button: 'X' },        
+            title: { text : '<?php echo ($is_only_spec ? __('Edit your specimens') : __('Edit your search') ) ;?>', button: 'X' },        
             url: '<?php echo url_for('savesearch/saveSearch');?>/id/' + getIdInClasses($(this).closest('tr')),
             method: 'get'
         },

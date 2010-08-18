@@ -26,17 +26,20 @@ class CollectingToolsTable extends Doctrine_Table
 
     public function addTool($tool)
     {
+      // Define a new object and try to add and save new value passed
       $newTool = new CollectingTools;
-      $newTool->setMethod($tool);
+      $newTool->setTool($tool);
       try
       {
         $newTool->save();
       }
       catch (Doctrine_Exception $ne)
       {
+        // Return database error if occurs
         $e = new DarwinPgErrorParser($ne);
         return $e->getMessage();
       }
+      // Return id of new record saved
       return $newTool->getId();
     }
 }

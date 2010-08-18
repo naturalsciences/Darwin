@@ -152,7 +152,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     return $query ;
   }
-  
+
+  public function addGtuCodeColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+      $query->andWhere("gtu_code = ?", $val);
+    return $query ;  
+  }
+
   public function addGtuTagValue($num)
   {
       $form = new TagLineForm();

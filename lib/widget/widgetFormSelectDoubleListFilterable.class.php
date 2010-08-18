@@ -53,6 +53,7 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
   <br style="clear: both" />
   <script type="text/javascript">
     sfDoubleList.init(document.getElementById('%id%'), '%class_select%');
+    // Filter unassociated select box based on matching of text entered as a part of option text
     function search_list()
     {
       $('#unassociated_%id% option').each(function()
@@ -69,6 +70,7 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
         }
       });
     }
+    // Reset the filter and redisplay all unassociated select options
     function reset_list()
     {
       $('#unassociated_%id% option').each(function()
@@ -77,50 +79,90 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
           $('#filter_%id%').val('');
       });
     }
+    // Bind the filter function to keyUp event of filter input
     $('#filter_%id%').bind('keyup', search_list );
+    // Bind the remove filter function to click event of filter clear image
     $('#filter_%id%_clear').bind('click', reset_list );
+
     $(document).ready(function () {
-      $('a#add_%id%_link').live('click', function(){
+      // Click on add option link try to add an option in the corresponding table providing values to this widget
+      $('a#add_%id%_link').click(function(){
+        // Hide and empty errors list first
         $('#%error_id%').hide();
         $('#%error_id%').find('li').text(' ');
         var input_value = $('#add_%id%').val();
+        // Trigger the insertion only if there is a value
         if(input_value.length)
         {
+          // Create and fill an array with all the unassociated select options values
           var unassociatedList = new Array();
           $('#unassociated_%id% option').each(function()
           {
             unassociatedList.push($(this).text());
           });
+          // Add the potential new value to the list
           unassociatedList.push(input_value);
+          // And resort alphabetically the array
           unassociatedList.sort();
           var unassociatedListIndex;
+          // Create an array that will be used as data to be posted
           var addItem = {"value": input_value};
+          $('#add_%id%_loader').show();
           $.ajax({
             type: "POST",
             url: $(this).attr('href'),
             data: $.param(addItem),
             success: function(html) 
             {
+              // Test what is returned is well the id of the new record inserted
               if(!isNaN(html))
               {
-                for (unassociatedListIndex in unassociatedList)
+                // Depending of the cases the new option will be inserted:
+                // - at first position
+                // - as very first option
+                // - after a previous option
+                if(unassociatedList.length)
                 {
-                  if(unassociatedList[unassociatedListIndex] == input_value)
+                  if(unassociatedList.length > 1)
                   {
-                    $('#unassociated_%id% option:nth-child('+unassociatedListIndex+')').after('<option value='+html+'>'+input_value+'</option>');
-                    search_list();
+                    for (unassociatedListIndex in unassociatedList)
+                    {
+                      if(unassociatedList[unassociatedListIndex] == input_value)
+                      {
+                        if(unassociatedListIndex == 0)
+                        {
+                          $('#unassociated_%id% option:first').before('<option value='+html+'>'+input_value+'</option>');
+                        }
+                        else
+                        {
+                          $('#unassociated_%id% option:nth-child('+unassociatedListIndex+')').after('<option value='+html+'>'+input_value+'</option>');
+                        }
+                      }
+                    }
                   }
+                  else
+                  {
+                    $('#unassociated_%id%').append('<option value='+html+'>'+input_value+'</option>');
+                  }
+                  // After insertion of new option retrigger the eventual filter applied
+                  search_list();
+                  // Than remove value from add input
+                  $('#add_%id%').val('');
                 }
               }
               else
               {
+                // If an error is encountered, display it
+                // Usually, it is a duplicate error
                 $('#%error_id%').find('li').text(html);
                 $('#%error_id%').show();
               }
+              $('#add_%id%_loader').hide();
             },
             error: function(xhr)
             {
               addError('Error!  Status = ' + xhr.status);
+              $('#add_%id%_loader').hide();
             }
           });
         }
@@ -177,9 +219,12 @@ EOF
     $size = isset($attributes['size']) ? $attributes['size'] : (isset($this->attributes['size']) ? $this->attributes['size'] : 10);
     $id = $this->generateId($name);
     $error_id = 'error_'.$id;
+    // The two select boxes
     $associatedWidget = new sfWidgetFormSelect(array('multiple' => true, 'choices' => $associated), array('size' => $size, 'class' => $this->getOption('class_select').'-selected'));
     $unassociatedWidget = new sfWidgetFormSelect(array('multiple' => true, 'choices' => $unassociated), array('size' => $size, 'class' => $this->getOption('class_select')));
+    // The input box used to filter content of unassociated select box
     $filterWidget = new sfWidgetFormInputText(array(), array('class'=>$this->getOption('filter_class')));
+    // Options to be passed to the renderTag of reset filter image
     $filterResetOptions = array('src' => '/images/remove.png',
                                 'id' => 'filter_'.$id."_clear",
                                 'class' => 'filter_clear',
@@ -187,21 +232,29 @@ EOF
                                 'title' => __('Reset filter')
                                );
     $addOptionHTML = '';
+    // If add of a value in distant table is possible and activated
     if ($this->getOption('add_active'))
     {
+      // Define the add value input box
       $addOptionWidget = new sfWidgetFormInputText(array(), array('id' => 'add_'.$id, 'class'=>$this->getOption('add_class')));
       $addOptionWidget->setLabel(__('Add new value:'));
+      // Options to be passed to the renderTag of add option image
       $addImageOptions = array('src' => '/images/add_green.png',
-                              'id' => 'add_'.$id.'_image',
-                              'class' => 'add_option',
-                              'alt' => __('Add value'),
-                              'title' => __('Add value')
+                               'id' => 'add_'.$id.'_image',
+                               'class' => 'add_option',
+                               'alt' => __('Add value'),
+                               'title' => __('Add value')
                               );
+      // Options to be passed to the timer displayed while tryin' to insert a value
+      $addTimerImageOptions = array('src' => '/images/loader.gif',
+                                    'id' => 'add_'.$id.'_loader',
+                                    'style' => 'display:none;'
+                                   );
       $addLinkOptions = array('id'=> 'add_'.$id.'_link',
                               'class' => 'add_option',
                               'href' => url_for($this->getOption('add_url'))
                               );
-      $addOptionHTML = $this->renderContentTag('label',$addOptionWidget->getLabel(), array('for'=>'add_'.$id)).$addOptionWidget->render('add_'.$name).$this->renderContentTag('a',$this->renderTag('img', $addImageOptions), $addLinkOptions);
+      $addOptionHTML = $this->renderContentTag('label',$addOptionWidget->getLabel(), array('for'=>'add_'.$id)).$addOptionWidget->render('add_'.$name).$this->renderContentTag('a',$this->renderTag('img', $addImageOptions), $addLinkOptions).$this->renderTag('img', $addTimerImageOptions);
     }
 
     return strtr($this->getOption('template'), array(

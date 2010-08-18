@@ -77,7 +77,7 @@ function store_list(element, url)
 */
 function initIndividualColspan()
 {
-  cpt = 1 ;
+  cpt = 2 ;
   $('ul.column_menu > li > ul').find('>li').each(function() {
     if( $(this).hasClass('check'))
     {

@@ -36,6 +36,7 @@
  * @property Doctrine_Collection $UsersTracking
  * @property Doctrine_Collection $MySavedSearches
  * @property Doctrine_Collection $MyWidgets
+ * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer             getId()                            Returns the current record's "id" value
  * @method boolean             getIsPhysical()                    Returns the current record's "is_physical" value
@@ -68,6 +69,7 @@
  * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
  * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
  * @method Doctrine_Collection getMyWidgets()                     Returns the current record's "MyWidgets" collection
+ * @method Doctrine_Collection getSpecimenSearch()                Returns the current record's "SpecimenSearch" collection
  * @method Users               setId()                            Sets the current record's "id" value
  * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
  * @method Users               setSubType()                       Sets the current record's "sub_type" value
@@ -99,6 +101,7 @@
  * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
  * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
  * @method Users               setMyWidgets()                     Sets the current record's "MyWidgets" collection
+ * @method Users               setSpecimenSearch()                Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -238,5 +241,9 @@ abstract class BaseUsers extends sfDoctrineRecord
         $this->hasMany('MyWidgets', array(
              'local' => 'id',
              'foreign' => 'user_ref'));
+
+        $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_main_manager_ref'));
     }
 }

@@ -14,10 +14,14 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     $this->widgetSchema['search_criterias'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['user_ref'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['name'] = new sfWidgetFormInputText() ;
-    $this->widgetSchema['name']->setAttribute('class','medium_size');      
+    $this->widgetSchema['name']->setAttribute('class','medium_size');
+    $this->widgetSchema['name']->setLabel('Title');
     $this->widgetSchema['favorite']->setAttribute('class','hidden');    
-    $this->widgetSchema['modification_date_time'] = new sfWidgetFormInputText() ;    
-    $default_name ="My search on ".date('Y/m/d H:i:s') ;
+    $this->widgetSchema['modification_date_time'] = new sfWidgetFormInputText() ;
+    $this->widgetSchema['modification_date_time']->setLabel('Last modification');
+    $default_name = sprintf($this->getI18N()->__("My search on %s"),date('Y/m/d H:i:s'));
+    if(isset($this->options['type']) && $this->options['type']=='pin')
+      $default_name = sprintf($this->getI18N()->__("My specimens on %s"),date('Y/m/d H:i:s'));
 
     if($this->getObject()->isNew())
       $this->widgetSchema['modification_date_time']->setDefault($this->getI18N()->__('Not Saved Yet'));

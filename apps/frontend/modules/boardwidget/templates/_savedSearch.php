@@ -15,8 +15,8 @@
           <?php echo link_to($search->getName(),'specimensearch/search?search_id='.$search->getId(),array('title'=>__('Go to your search')) ); ?>
         </td>
         <td><?php echo link_to(image_tag('criteria.png'),'specimensearch/index?search_id='.$search->getId());?></td>
-        <td>
-         <?php echo link_to(image_tag('remove.png'), 'savesearch/deleteSavedSearch?table=my_saved_searches&id='.$search->getId(), array('confirm' =>  __('Are you sure ?')));?>
+        <td class="row_delete">
+         <?php echo link_to(image_tag('remove.png'), 'savesearch/deleteSavedSearch?table=my_saved_searches&id='.$search->getId(), array('class'=>'del_butt'));?>
         </td>
     </tr>
     <?php endforeach;?>
@@ -43,6 +43,18 @@ $(document).ready(function () {
     });
   });
 
+  $('.saved_searches_board .del_butt').click(function(event)
+  {
+
+    event.preventDefault();  
+    var answer = confirm('<?php echo __('Are you sure ?');?>');
+    if( answer )
+    {
+      $.get($(this).attr('href'),function (html){
+        $('#savedSearch').find('.widget_refresh').click();
+      });
+    }
+  });
 });
 </script>
 <div class="actions">
