@@ -18,7 +18,30 @@ class SpecimensTable extends DarwinTable
         'Exploration' => 'Exploration',
         'Collect' => 'Collect',
         );
-
+    
+    protected static $widget_array = array(
+      'collection_ref' => 'refCollection' ,
+      'category' => 'refCollection' ,      
+      'gtu_ref' => 'refGtu' ,
+      'station_visible' => 'refGtu' ,
+      'taxon_ref' => 'refTaxon' ,
+      'host_taxon_ref' => 'refHosts' ,            
+      'host_specimen_ref' => 'refHosts' ,
+      'host_relationship' => 'refHost' ,
+      'litho_ref' => 'refLitho' ,
+      'chrono_ref' => 'refChrono' ,
+      'lithology_ref' => 'refLithology' ,
+      'mineral_ref' => 'refMineral' ,
+      'ig_ref' => 'refIgs' ,
+      'expedition_ref' => 'refExpedition' ,
+      'acquisition_category' => 'acquisitionCategory' ,
+      'acquisition_date_mask' => 'acquisitionCategory' ,
+      'acquisition_date' => 'acquisitionCategory' ,   
+      'collecting_method' => 'tool' ,
+      'collecting_tool' => 'tool' ,
+      'specimen_count_min' => 'specimenCount' ,
+      'specimen_count_max' => 'specimenCount'
+    );
     /**
     * Get differents acquisition categories
     * @return array of key/value of acquisition categories
@@ -71,5 +94,21 @@ class SpecimensTable extends DarwinTable
 
 	   return $q->fetchOne(); 
     }
+    
+    /**
+    * Set required widget visible and opened 
+    */   
+    public function getRequiredWidget($criterias, $user, $category)
+    {
+      $req_widget = array() ;
+      foreach($criterias as $key => $fields)
+      {
+        if ($key == "rec_per_page") continue ;
+        if (!$fields) continue ;
 
+        if(isset(self::$widget_array[$key]) && $fields != 0)
+          $req_widget[self::$widget_array[$key]] = 1 ;
+      }
+      Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
+    }
 }

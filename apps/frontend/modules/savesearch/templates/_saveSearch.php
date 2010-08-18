@@ -17,7 +17,7 @@ $(document).ready(function () {
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
             url: '<?php echo url_for('savesearch/saveSearch');?>'+ '/cols/' + column_str,
-            data: $('.search_form').serialize(),
+            data: $('.specimensearch_form').serialize(),
             method: 'post'
         },
         show: { when: 'click', ready: true },

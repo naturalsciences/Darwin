@@ -25,6 +25,13 @@ class partsActions extends DarwinActions
       $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('indid'));
       $this->forward404Unless($this->individual);
       $this->part->Individual = $this->individual;
+      if ($request->hasParameter('duplicate_id')) // then it's a duplicate part
+      {
+        $part = $this->getRecordIfDuplicate('SpecimenParts', $request);    
+        // set all necessary widgets to visible 
+        Doctrine::getTable('SpecimenParts')->getRequiredWidget($part, $this->getUser()->getId(), 'part_widget');      
+        $this->part->fromArray($part) ;
+      }      
     }
 
     $this->specimen = Doctrine::getTable('Specimens')->findExcept($this->individual->getSpecimenRef());

@@ -45,7 +45,11 @@ class lithologyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new LithologyForm();
+    $new_litho = new Lithology() ;
+    $litho = $this->getRecordIfDuplicate('Lithology', $request);
+    // if there is no duplicate $litho is an empty array
+    $new_litho->fromArray($litho) ;
+    $this->form = new LithologyForm($new_litho);
   }
 
   public function executeCreate(sfWebRequest $request)

@@ -66,6 +66,7 @@
         <td colspan="2">
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New Unit'), 'chronostratigraphy/new') ?>
+            &nbsp;<?php echo link_to(__('Duplicate Unit'), 'chronostratigraphy/new?duplicate_id='.$form->getObject()->getId()) ?>
           <?php endif?>
 
           <?php echo $form['id']->render() ?><?php echo $form['table']->render() ?><?php echo link_to('', 'catalogue/searchPUL', array('id' => 'searchPUL', 'class' => 'hidden'));?>  &nbsp;<a href="<?php echo url_for('chronostratigraphy/index') ?>"><?php echo __('Cancel');?></a>

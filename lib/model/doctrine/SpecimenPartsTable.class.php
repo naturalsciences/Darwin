@@ -4,6 +4,25 @@
  */
 class SpecimenPartsTable extends DarwinTable
 {
+  protected static $widget_array = array(
+    'specimen_part' => 'specPart' ,
+    'complete' => 'complete' ,
+    'specimen_status' => 'complete',      
+    'building' => 'localisation' ,
+    'floor' => 'localisation' ,
+    'room' => 'localisation' ,
+    'row' => 'localisation' ,
+    'shelf' => 'localisation' ,
+    'container' => 'container' ,
+    'sub_container' => 'container' ,
+    'container_type' => 'container',    
+    'sub_container_type' => 'container',
+    'container_storage' => 'container',
+    'sub_container_storage' => 'container',
+    'surnumerary' => 'container',            
+    'specimen_individuals_count_min' => 'partCount' ,
+    'specimen_individuals_count_min' => 'partCount' 
+  );
   /**
   * Get Distincts Buildings of Part
   * @return array an Array of types in keys
@@ -175,5 +194,21 @@ class SpecimenPartsTable extends DarwinTable
 		  ->orderBy('spec_path_id ASC, p.specimen_part ASC, p.room ASC, p.row ASC, p.shelf ASC');
 	return $q->execute();
   }
+    
+  /**
+  * Set required widget visible and opened 
+  */   
+  public function getRequiredWidget($criterias, $user, $category)
+  {
+    $req_widget = array() ;
+    foreach($criterias as $key => $fields)
+    {
+      if ($key == "rec_per_page") continue ;
+      if ($fields == "") continue ;
 
+      if(isset(self::$widget_array[$key]))
+        $req_widget[self::$widget_array[$key]] = 1 ;
+    }
+    Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
+  }
 }

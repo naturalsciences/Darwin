@@ -63,7 +63,11 @@ class institutionActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new InstitutionsForm();
+    $new_instit = new Institutions() ;
+    $instit = $this->getRecordIfDuplicate('Institutions', $request);
+    // if there is no duplicate $instit is an empty array
+    $new_instit->fromArray($instit) ;
+    $this->form = new InstitutionsForm($new_instit);
   }
 
   public function executeCreate(sfWebRequest $request)

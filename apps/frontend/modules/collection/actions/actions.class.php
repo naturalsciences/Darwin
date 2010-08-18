@@ -81,7 +81,11 @@ class collectionActions extends DarwinActions
   {
     $db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
     if($db_user_type < Users::MANAGER) $this->forwardToSecureAction();
-    $this->form = new CollectionsForm();
+    $new_collection = new Collections();
+    $collection = $this->getRecordIfDuplicate('Collections', $request);
+    // if there is no duplicate $collection is an empty array
+    $new_collection->fromArray($collection) ;
+    $this->form = new CollectionsForm($new_collection);    
   }
 
   public function executeCreate(sfWebRequest $request)

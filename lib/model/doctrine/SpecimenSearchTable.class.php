@@ -46,7 +46,7 @@ class SpecimenSearchTable extends Doctrine_Table
         if ($fields == "") continue ;
 
         if(isset(self::$widget_flat_array[$key]))
-          $req_widget[] = 1 ;
+          $req_widget[self::$widget_flat_array[$key]] = 1 ;
       }
       Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
     }

@@ -234,7 +234,8 @@
                   <?php echo $specimen->getSpecimenCountMax();?>
               </td>
               <td rowspan="2">
-                  <?php echo link_to(image_tag('edit.png'),'specimen/edit?id='.$specimen->getSpecRef());?>
+                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
+                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'specimen/new?duplicate_id='.$specimen->getSpecRef());?>
               </td>
             </tr>
             <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">

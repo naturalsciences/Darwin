@@ -1,5 +1,5 @@
   <div class="container">
-    <table>
+    <table id="gtu_search">
       <thead>
         <tr>
           <th colspan="4"><?php echo $form['gtu_code']->renderLabel() ?></th>
@@ -41,7 +41,7 @@
           url: $(this).attr('href') + '/num/' + (num_fld++) ,
           success: function(html)
           {
-            $('table.search > tbody .and_row').before(html);
+            $('table#gtu_search > tbody .and_row').before(html);
           }
         });
           return false;

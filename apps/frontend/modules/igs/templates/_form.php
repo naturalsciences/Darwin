@@ -30,6 +30,7 @@
 
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New I.G.'), 'igs/new') ?>
+            &nbsp;<?php echo link_to(__('Duplicate I.G.'), 'igs/new?duplicate_id='.$form->getObject()->getId()) ?>
           <?php endif?>
 
           &nbsp;<a href="<?php echo url_for('igs/index') ?>"><?php echo __('Cancel');?></a>

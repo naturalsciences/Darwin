@@ -98,10 +98,22 @@ class specimenActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->loadWidgets();
-    $this->form = new SpecimensForm();
-    $this->form->addIdentifications(0,0); 
-    $this->form->addComments(0); 
+    if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
+    {
+      $new_specimen = new Specimens() ;
+      $specimen = $this->getRecordIfDuplicate('Specimens', $request);    
+      // set all necessary widgets to visible 
+      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget');      
+      $new_specimen->fromArray($specimen) ;
+      $this->form = new SpecimensForm($new_specimen); 
+    }        
+    else
+    {  
+      $this->form = new SpecimensForm(); 
+      $this->form->addIdentifications(0,0); 
+      $this->form->addComments(0); 
+    }
+    $this->loadWidgets();     
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -109,7 +121,6 @@ class specimenActions extends DarwinActions
     $this->forward404Unless($request->isMethod('post'),'You must submit your data with Post Method');
     $this->form = new SpecimensForm();
     $this->processForm($request, $this->form);
-
     $this->loadWidgets();
 
     $this->setTemplate('new');

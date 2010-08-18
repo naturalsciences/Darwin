@@ -37,6 +37,8 @@
   <p class="form_buttons">
     <?php if (!$individual->getObject()->isNew()): ?>
       <?php echo link_to(__('New individual'), 'individuals/edit?spec_id='.$specimen->getId()) ?>
+      &nbsp;<?php echo link_to(__('Duplicate individual'), 'individuals/edit?spec_id='.$individual->getObject()->getSpecimenRef().
+      '&duplicate_id='.$individual->getObject()->getId()) ?>
       &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_ind_delete"><?php echo __('Delete');?></a>
     <?php endif?>
     &nbsp;<a href="<?php echo url_for('individuals/overview?spec_id='.$specimen->getId()) ?>"><?php echo __('Cancel');?></a>

@@ -41,7 +41,8 @@
             <td class="datesNum"><?php echo $item->getGtuToDateMasked();?></td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?> top_aligned">
               <?php if(! $is_choose):?>
-                <?php echo link_to(image_tag('edit.png'),'gtu/edit?id='.$item->getId());?>
+                <?php echo link_to(image_tag('edit.png',array('title' => 'Edit')),'gtu/edit?id='.$item->getId());?>
+                <?php echo link_to(image_tag('duplicate.png',array('title' => 'Duplicate')),'gtu/new?duplicate_id='.$item->getId());?>
               <?php else:?>
                 <div class="result_choose"><?php echo __('Choose');?></div>
               <?php endif;?>

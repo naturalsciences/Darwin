@@ -40,8 +40,12 @@ class expeditionActions extends DarwinActions
     */ 
   public function executeNew(sfWebRequest $request)
   {
+    $new_expedition = new Expeditions() ;
+    $expedition = $this->getRecordIfDuplicate('Expeditions', $request);
+    // if there is no duplicate $expedition is an empty array
+    $new_expedition->fromArray($expedition) ;
     // Initialization of a new encoding expedition form
-    $this->form = new ExpeditionsForm();
+    $this->form = new ExpeditionsForm($new_expedition);
   }
 
   /**

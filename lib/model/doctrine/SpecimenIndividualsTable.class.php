@@ -4,7 +4,18 @@
  */
 class SpecimenIndividualsTable extends DarwinTable
 {
-
+    protected static $widget_array = array(
+      'type' => 'type' ,
+      'type_group' => 'type' ,      
+      'type_search' => 'type' ,
+      'sex' => 'sex' ,
+      'state' => 'sex' ,
+      'stage' => 'stage' ,            
+      'social_status' => 'socialStatus' ,
+      'rock_form' => 'rockForm' ,
+      'specimen_individuals_count_min' => 'specimenIndividualCount' ,
+      'specimen_individuals_count_min' => 'specimenIndividualCount' 
+    );
     /**
     * Get distinct Types
     * @return Doctrine_collection with distinct "types" as column
@@ -79,4 +90,21 @@ class SpecimenIndividualsTable extends DarwinTable
       $q->andWhere($alias . '.specimen_ref = ?', $id);
       return $q->execute() ;      
     }
+    
+    /**
+    * Set required widget visible and opened 
+    */   
+    public function getRequiredWidget($criterias, $user, $category)
+    {
+      $req_widget = array() ;
+      foreach($criterias as $key => $fields)
+      {
+        if ($key == "rec_per_page") continue ;
+        if ($fields == "") continue ;
+
+        if(isset(self::$widget_array[$key]))
+          $req_widget[self::$widget_array[$key]] = 1 ;
+      }
+      Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
+    }    
 }

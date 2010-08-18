@@ -63,7 +63,11 @@ class gtuActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new GtuForm();
+    $new_gtu = new Gtu() ;
+    $gtu = $this->getRecordIfDuplicate('Gtu', $request);
+    // if there is no duplicate $gtu is an empty array
+    $new_gtu->fromArray($gtu) ;
+    $this->form = new GtuForm($new_gtu);
   }
 
   public function executeCreate(sfWebRequest $request)

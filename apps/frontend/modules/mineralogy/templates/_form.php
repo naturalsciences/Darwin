@@ -80,6 +80,7 @@
         <td colspan="2">
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New Unit'), 'mineralogy/new') ?>
+            &nbsp;<?php echo link_to(__('Duplicate Unit'), 'mineralogy/new?duplicate_id='.$form->getObject()->getId()) ?>            
           <?php endif?>
 
           <?php echo $form['id']->render() ?><?php echo $form['table']->render() ?><?php echo link_to('', 'catalogue/searchPUL', array('id' => 'searchPUL', 'class' => 'hidden'));?>  &nbsp;<a href="<?php echo url_for('mineralogy/index') ?>"><?php echo __('Cancel');?></a>

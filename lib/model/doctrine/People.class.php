@@ -77,10 +77,16 @@ class People extends BasePeople
      {
       $this->_set('birth_date',$fd);
      }
+     elseif ($fd instanceof FuzzyDateTime)
+     {
+      $this->_set('birth_date', $fd->format('Y/m/d'));
+      $this->_set('birth_date_mask', $fd->getMask());
+     }
      else
      {
-      $this->_set('birth_date', $fd->format('Y/m/d') );
-      $this->_set('birth_date_mask', $fd->getMask() );
+      $dateTime = new FuzzyDateTime($fd, 56, false); 
+      $this->_set('birth_date', $dateTime->format('Y/m/d'));
+      $this->_set('birth_date_mask', $dateTime->getMask());
      }
      return $this;
   }
@@ -92,10 +98,16 @@ class People extends BasePeople
      {
       $this->_set('end_date',$fd);
      }
+     elseif ($fd instanceof FuzzyDateTime)
+     {
+      $this->_set('end_date', $fd->format('Y/m/d'));
+      $this->_set('end_date_mask', $fd->getMask());
+     }
      else
      {
-      $this->_set('end_date', $fd->format('Y/m/d') );
-      $this->_set('end_date_mask', $fd->getMask() );
+      $dateTime = new FuzzyDateTime($fd, 56, false); 
+      $this->_set('end_date', $dateTime->format('Y/m/d'));
+      $this->_set('end_date_mask', $dateTime->getMask());
      }
      return $this;
   }
@@ -139,10 +151,16 @@ class People extends BasePeople
      {
       $this->_set('activity_date_from',$fd);
      }
+     elseif ($fd instanceof FuzzyDateTime)
+     {
+      $this->_set('activity_date_from', $fd->format('Y/m/d'));
+      $this->_set('activity_date_from_mask', $fd->getMask());
+     }
      else
      {
-      $this->_set('activity_date_from', $fd->format('Y/m/d') );
-      $this->_set('activity_date_from_mask', $fd->getMask() );
+      $dateTime = new FuzzyDateTime($fd, 56, false); 
+      $this->_set('activity_date_from', $dateTime->format('Y/m/d'));
+      $this->_set('activity_date_from_mask', $dateTime->getMask());
      }
   }
 
@@ -153,10 +171,16 @@ class People extends BasePeople
      {
       $this->_set('activity_date_to',$fd);
      }
+     elseif ($fd instanceof FuzzyDateTime)
+     {
+      $this->_set('activity_date_to', $fd->format('Y/m/d'));
+      $this->_set('activity_date_to_mask', $fd->getMask());
+     }
      else
      {
-      $this->_set('activity_date_to', $fd->format('Y/m/d') );
-      $this->_set('activity_date_to_mask', $fd->getMask() );
+      $dateTime = new FuzzyDateTime($fd, 56, false); 
+      $this->_set('activity_date_to', $dateTime->format('Y/m/d'));
+      $this->_set('activity_date_to_mask', $dateTime->getMask());
      }
   }
  

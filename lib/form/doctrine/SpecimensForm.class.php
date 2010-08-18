@@ -15,7 +15,8 @@ class SpecimensForm extends BaseSpecimensForm
     unset($this['acquisition_date_mask'], $this['multimedia_visible']
          );
 
-    /* Set default values */
+    /* Set default values 
+    * commented for now because it prevent specimen to be duplicated
     $this->setDefaults(array(
         'expedition_ref' => 0,
         'taxon_ref' => 0,
@@ -25,7 +26,7 @@ class SpecimensForm extends BaseSpecimensForm
         'chrono_ref' => 0,
         'gtu_ref' => 0,
         'host_taxon_ref' => 0,
-    ));
+    )); */
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);

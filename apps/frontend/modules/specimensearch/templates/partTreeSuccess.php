@@ -35,7 +35,9 @@
 	  <td><?php echo $part->getContainer();?></td>
 	  <td><?php echo $part->getSubContainer();?></td>
 	  <td>
-		<?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
+		<?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
+		<?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this part"))),'parts/edit?indid='.$part->getSpecimenIndividualRef().
+		'&duplicate_id='.$part->getId(), array('title'=>__('Duplicate this part')));?>
 	  </td>
 	</tr>
   <?php endforeach;?>

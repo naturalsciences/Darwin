@@ -68,7 +68,11 @@ class peopleActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new PeopleForm();
+    $new_people = new People() ;
+    $people = $this->getRecordIfDuplicate('People', $request);
+    // if there is no duplicate $people is an empty array
+    $new_people->fromArray($people) ;
+    $this->form = new PeopleForm($new_people);
   }
 
   public function executeCreate(sfWebRequest $request)

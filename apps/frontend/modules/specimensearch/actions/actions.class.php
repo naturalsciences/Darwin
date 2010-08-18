@@ -35,7 +35,7 @@ class specimensearchActions extends DarwinActions
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
-
+      
       $this->fields = $saved_search->getVisibleFieldsInResultStr();
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;

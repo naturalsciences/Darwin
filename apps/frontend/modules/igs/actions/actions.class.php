@@ -37,7 +37,11 @@ class igsActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new igsForm();
+    $new_igs = new igs() ;
+    $igs = $this->getRecordIfDuplicate('igs', $request);
+    // if there is no duplicate $igs is an empty array
+    $new_igs->fromArray($igs) ;
+    $this->form = new igsForm($new_igs);
   }
 
   public function executeCreate(sfWebRequest $request)

@@ -65,6 +65,7 @@
 
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New Expedition'), 'expedition/new') ?>
+            &nbsp;<?php echo link_to(__('Duplicate Expedition'), 'expedition/new?duplicate_id='.$form->getObject()->getId()) ?>
           <?php endif?>
 
           &nbsp;<a href="<?php echo url_for('expedition/index') ?>"><?php echo __('Cancel');?></a>

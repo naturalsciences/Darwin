@@ -91,6 +91,7 @@ foreach($form['newVal'] as $group)
 
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New Gtu'), 'gtu/new') ?>
+            &nbsp;<?php echo link_to(__('Duplicate Gtu'), 'gtu/new?duplicate_id='.$form->getObject()->getId()) ?>
           <?php endif?>
 
           &nbsp;<a href="<?php echo url_for('gtu/index') ?>"><?php echo __('Cancel');?></a>
