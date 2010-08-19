@@ -45,11 +45,9 @@ class mineralogyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $new_mineral = new Mineralogy() ;
-    $mineral = $this->getRecordIfDuplicate('Mineralogy', $request);
-    // if there is no duplicate $mineral is an empty array
-    $new_mineral->fromArray($mineral) ;
-    $this->form = new MineralogyForm($new_mineral);
+    $mineral = new Mineralogy() ;
+    $mineral = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $mineral);
+    $this->form = new MineralogyForm($mineral);
   }
 
   public function executeCreate(sfWebRequest $request)

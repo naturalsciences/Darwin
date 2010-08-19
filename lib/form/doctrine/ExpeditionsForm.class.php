@@ -100,10 +100,13 @@ class ExpeditionsForm extends BaseExpeditionsForm
     $this->embedForm('newMember',$subForm);
   }
 
-  public function addMember($num, $people_ref,$order_by=0)
+  public function addMember($num, $people_ref,$order_by=0 , $user = null)
   {
       $options = array('referenced_relation' => 'expeditions', 'people_type' => 'member', 'people_ref' => $people_ref, 'order_by' => $order_by);
-      $val = new CataloguePeople();
+      if(!$user)
+       $val = new CataloguePeople();
+      else
+       $val = $user ; 
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new PeopleAssociationsForm($val);

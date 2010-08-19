@@ -72,16 +72,10 @@
             </td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
-	                <?php echo link_to(image_tag('edit.png'),'people/edit?id='.$item->getId());?>
+	                <?php echo link_to(image_tag('edit.png',array('title'=>'Edit People')),'people/edit?id='.$item->getId());?>
+	                <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate People')),'people/new?duplicate_id='.$item->getId());?>
                 <?php else:?>
-                  <?php if($form['only_role']->getValue() == '16') : ?>
-                    <div class="result_choose_collector"><?php echo __('Choose');?></div>
-                  <?php endif;?>
-                  <?php if($form['only_role']->getValue() == '4') : ?>
-                    <div class="result_choose_identifier"><?php echo __('Choose');?></div>
-                  <?php else :?>
-                    <div class="result_choose"><?php echo __('Choose');?></div>
-                  <?php endif;?>               
+                    <div class="result_choose"><?php echo __('Choose');?></div>           
                 <?php endif;?>
             </td>
           </tr>

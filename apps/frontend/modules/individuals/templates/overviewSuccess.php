@@ -29,7 +29,7 @@
       <th>
 	<?php echo __('Rock form');?>
       </th>
-      <th colspan="4">
+      <th colspan="5">
       </th>
     </tr>
   </thead>
@@ -54,6 +54,10 @@
 	</td>
 	<td>
 	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
+	</td>
+	<td>
+    <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
+      '&duplicate_id='.$individual->getId()) ?>	
 	</td>
 	<td class="row_delete">
 	  <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>

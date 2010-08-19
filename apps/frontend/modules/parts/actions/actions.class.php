@@ -25,12 +25,13 @@ class partsActions extends DarwinActions
       $this->individual = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('indid'));
       $this->forward404Unless($this->individual);
       $this->part->Individual = $this->individual;
-      if ($request->hasParameter('duplicate_id')) // then it's a duplicate part
+      $duplic = $request->getParameter('duplicate_id') ;
+      if ($duplic) // then it's a duplicate part
       {
-        $part = $this->getRecordIfDuplicate('SpecimenParts', $request);    
+        $this->part = $this->getRecordIfDuplicate($duplic, $this->part);    
         // set all necessary widgets to visible 
-        Doctrine::getTable('SpecimenParts')->getRequiredWidget($part, $this->getUser()->getId(), 'part_widget');      
-        $this->part->fromArray($part) ;
+        Doctrine::getTable('SpecimenParts')->getRequiredWidget($this->part, $this->getUser()->getId(), 'part_widget');      
+        
       }      
     }
 
@@ -41,6 +42,33 @@ class partsActions extends DarwinActions
     {
       $this->form->addInsurances(0);
       $this->form->addComments(0);
+      if($duplic)
+      {
+        // reembed duplicated comment
+        $Comments = Doctrine::getTable('Comments')->findForTable('specimen_parts',$duplic) ;
+        foreach ($Comments as $key=>$val)
+        {
+          $comment = new Comments() ;
+          $comment = $this->getRecordIfDuplicate($val->getId(),$comment); 
+          $this->form->addComments($key, $comment) ;          
+        }
+        // reembed duplicated codes
+        $Codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts',$duplic) ;
+        foreach ($Codes as $key=>$val)
+        {
+           $code = new Codes() ;
+           $code = $this->getRecordIfDuplicate($val->getId(),$code);  
+           $this->form->addCodes($key,null,$code);
+        } 
+        // reembed duplicated insurances
+        $Insurances = Doctrine::getTable('Insurances')->findForTable('specimen_parts',$duplic) ;
+        foreach ($Insurances as $key=>$val)
+        {
+          $insurance = new Insurances() ;
+          $insurance = $this->getRecordIfDuplicate($val->getId(),$insurance); 
+          $this->form->addInsurances($key, $insurance) ;          
+        }      
+      }
     }
     if($request->isMethod('post'))
     {

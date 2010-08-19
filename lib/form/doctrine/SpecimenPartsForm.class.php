@@ -246,7 +246,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     return $values;
   }
 
-  public function addCodes($num, $collectionId=null)
+  public function addCodes($num, $collectionId=null, $obj=null)
   {
       $options = array('referenced_relation' => 'specimen_parts');
       $form_options = array();
@@ -261,7 +261,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
           $options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
         }
       }
-      $val = new Codes();
+      if(!$obj) $val = new Codes();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new CodesForm($val);
@@ -270,10 +271,11 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       $this->embedForm('newCode', $this->embeddedForms['newCode']);
   }
   
-  public function addInsurances($num)
+  public function addInsurances($num, $obj=null)
   {
       $options = array('referenced_relation' => 'specimen_parts');
-      $val = new Insurances();
+      if(!$obj) $val = new Insurances();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new InsurancesSubForm($val);
@@ -282,10 +284,11 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       $this->embedForm('newInsurance', $this->embeddedForms['newInsurance']);
   }
 
-  public function addComments($num)
+  public function addComments($num,$obj=null)
   {
       $options = array('referenced_relation' => 'specimen_parts', 'record_id' => $this->getObject()->getId());
-      $val = new Comments();
+      if(!$obj) $val = new Comments();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new CommentsSubForm($val,array('table' => 'parts'));

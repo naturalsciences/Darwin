@@ -12,4 +12,12 @@ class SpecimensAccompanyingTable extends DarwinTable
   {
     return $this->createDistinct('SpecimensAccompanying', 'form', 'form')->execute();
   }
+  
+  public function findBySpecimen($spec_id)
+  {
+    $q = Doctrine_Query::create()->
+         from('SpecimensAccompanying')->
+         where('specimen_ref = ?', $spec_id);
+    return $q->execute();  
+  }
 }

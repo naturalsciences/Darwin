@@ -63,11 +63,25 @@ class gtuActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $new_gtu = new Gtu() ;
-    $gtu = $this->getRecordIfDuplicate('Gtu', $request);
+    $gtu = new Gtu() ;
+    $duplic = $request->getParameter('duplicate_id','0');
+    $gtu = $this->getRecordIfDuplicate($duplic, $gtu);
     // if there is no duplicate $gtu is an empty array
-    $new_gtu->fromArray($gtu) ;
-    $this->form = new GtuForm($new_gtu);
+    $this->form = new GtuForm($gtu);
+    if ($duplic)
+    {
+      $Tag = Doctrine::getTable('TagGroups')->fetchTag($duplic) ;
+      if(count($Tag))
+      {
+        foreach ($Tag[$duplic] as $key=>$val)
+        {
+           $tag = new TagGroups() ;
+           $tag = $this->getRecordIfDuplicate($val->getId(), $tag);
+           $this->form->addValue($key, $val->getGroupName(), $tag);
+
+        }
+      }
+    }
   }
 
   public function executeCreate(sfWebRequest $request)

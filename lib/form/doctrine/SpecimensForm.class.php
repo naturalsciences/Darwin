@@ -395,7 +395,7 @@ class SpecimensForm extends BaseSpecimensForm
     
   }
 
-  public function addCodes($num, $collectionId=null)
+  public function addCodes($num, $collectionId=null, $code=null)
   {
       $options = array('referenced_relation' => 'specimens');
       $form_options = array();
@@ -410,7 +410,8 @@ class SpecimensForm extends BaseSpecimensForm
           $options['code_suffix_separator'] = $collection->getCodeSuffixSeparator();
         }
       }
-      $val = new Codes();
+      if(!$code) $val = new Codes();
+      else $val = $code ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new CodesForm($val);
@@ -432,10 +433,11 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
   }
 
-  public function addSpecimensAccompanying($num)
+  public function addSpecimensAccompanying($num, $obj=null)
   {
       $options = array('unit' => '%');
-      $val = new SpecimensAccompanying();
+      if (!$obj) $val = new SpecimensAccompanying();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->Specimens = $this->getObject();
 //       $val->setRecordId($this->getObject()->getId());
@@ -445,10 +447,11 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newSpecimensAccompanying', $this->embeddedForms['newSpecimensAccompanying']);
   }
 
-  public function addComments($num)
+  public function addComments($num, $obj=null)
   {
       $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
-      $val = new Comments();
+      if (!$obj) $val = new Comments();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new CommentsSubForm($val,array('table' => 'specimens'));
@@ -457,10 +460,11 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
   }
   
-  public function addIdentifications($num, $order_by=0)
+  public function addIdentifications($num, $order_by=0, $obj)
   {
       $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
-      $val = new Identifications();
+      if (!$obj) $val = new Identifications();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new IdentificationsForm($val);

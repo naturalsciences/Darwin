@@ -153,10 +153,11 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 	);
   }
 
-  public function addIdentifications($num, $order_by=0)
+  public function addIdentifications($num, $order_by=0, $obj=null)
   {
       $options = array('referenced_relation' => 'specimen_individuals', 'order_by' => $order_by);
-      $val = new Identifications();
+      if(!$obj) $val = new Identifications();
+      else $val = $obj ;
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new IdentificationsForm($val);
@@ -184,10 +185,11 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
       $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
   }
 
-  public function addComments($num)
+  public function addComments($num, $obj=null)
   {
       $options = array('referenced_relation' => 'specimen_individuals', 'record_id' => $this->getObject()->getId());
-      $val = new Comments();
+      if(!$obj) $val = new Comments();
+      else $val = $obj ;      
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new CommentsSubForm($val,array('table' => 'individuals'));

@@ -40,12 +40,25 @@ class expeditionActions extends DarwinActions
     */ 
   public function executeNew(sfWebRequest $request)
   {
-    $new_expedition = new Expeditions() ;
-    $expedition = $this->getRecordIfDuplicate('Expeditions', $request);
-    // if there is no duplicate $expedition is an empty array
-    $new_expedition->fromArray($expedition) ;
+    $expedition = new Expeditions() ;
+    $duplic = $request->getParameter('duplicate_id','0') ;
+    $expedition = $this->getRecordIfDuplicate($duplic, $expedition);
     // Initialization of a new encoding expedition form
-    $this->form = new ExpeditionsForm($new_expedition);
+    $this->form = new ExpeditionsForm($expedition);
+    if ($duplic)
+    {
+      $User = Doctrine::getTable('CataloguePeople')->findForTableByType('expeditions',$duplic) ;
+      if(count($User))
+      {
+        foreach ($User['member'] as $key=>$val)
+        {
+           $user = new CataloguePeople() ;
+           $user = $this->getRecordIfDuplicate($val->getRecordId(), $user);
+           $this->form->addMember($key, $val->getPeopleRef(), $val->getOrderBy(), $user);
+        }
+      }
+    }
+    
   }
 
   /**

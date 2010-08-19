@@ -45,11 +45,10 @@ class taxonomyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $new_taxa = new Taxonomy() ;
-    $taxa = $this->getRecordIfDuplicate('Taxonomy', $request);
+    $taxa = new Taxonomy() ;
+    $taxa = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $taxa);
     // if there is no duplicate $taxa is an empty array
-    $new_taxa->fromArray($taxa) ; 
-    $this->form = new TaxonomyForm($new_taxa);
+    $this->form = new TaxonomyForm($taxa);
   }
 
   public function executeCreate(sfWebRequest $request)

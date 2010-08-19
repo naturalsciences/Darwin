@@ -100,12 +100,57 @@ class specimenActions extends DarwinActions
   {
     if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
     {
-      $new_specimen = new Specimens() ;
-      $specimen = $this->getRecordIfDuplicate('Specimens', $request);    
+      $specimen = new Specimens() ;
+      $duplic = $request->getParameter('duplicate_id','0') ;     
+      $specimen = $this->getRecordIfDuplicate($duplic,$specimen);    
       // set all necessary widgets to visible 
       Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget');      
-      $new_specimen->fromArray($specimen) ;
-      $this->form = new SpecimensForm($new_specimen); 
+      $this->form = new SpecimensForm($specimen); 
+      if($duplic)
+      {
+        // reembed duplicated codes
+        $Codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$duplic) ;
+        foreach ($Codes as $key=>$val)
+        {
+           $code = new Codes() ;
+           $code = $this->getRecordIfDuplicate($val->getId(),$code);  
+           $this->form->addCodes($key,null,$code);
+        }     
+        // reembed duplicated specimen Accompanying
+        $spec_a = Doctrine::getTable('SpecimensAccompanying')->findBySpecimen($duplic) ;
+        foreach ($spec_a as $key=>$val)
+        {
+          $spec = new SpecimensAccompanying() ;
+          $spec = $this->getRecordIfDuplicate($val->getId(),$spec); 
+          $this->form->addSpecimensAccompanying($key, $spec) ;          
+        }
+        // reembed duplicated comment
+        $Comments = Doctrine::getTable('Comments')->findForTable('specimens',$duplic) ;
+        foreach ($Comments as $key=>$val)
+        {
+          $comment = new Comments() ;
+          $comment = $this->getRecordIfDuplicate($val->getId(),$comment); 
+          $this->form->addComments($key, $comment) ;          
+        }
+        
+        $Catalogue = Doctrine::getTable('CataloguePeople')->findForTableByType('specimens',$duplic) ;        
+        // reembed duplicated collector
+        if(count($Catalogue))
+        {
+          foreach ($Catalogue['collector'] as $key=>$val)
+          {
+             $this->form->addCollectors($key, $val->getPeopleRef(),$val->getOrderBy());
+          }   
+        }    
+        //reembed identification
+         $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens',$duplic) ;
+        foreach ($Identifications as $key=>$val)
+        {
+          $identification = new Identifications() ;
+          $identification = $this->getRecordIfDuplicate($val->getId(),$identification); 
+          $this->form->addIdentifications($key, $val->getOrderBy(), $val);
+        }                          
+      }
     }        
     else
     {  

@@ -79,11 +79,14 @@ class GtuForm extends BaseGtuForm
     $this->embedRelation('TagGroups');
   }
   
-  public function addValue($num, $group="")
+  public function addValue($num, $group="", $TagGroup = null)
   {
-      $val = new TagGroups();
+      if(!$TagGroup)
+        $val = new TagGroups();
+      else
+        $val = $TagGroup;
       if($group != '')
-	$val->setGroupName($group);
+      	$val->setGroupName($group);
 
       $val->Gtu = $this->getObject();
       $form = new TagGroupsForm($val);

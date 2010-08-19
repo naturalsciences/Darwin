@@ -63,14 +63,16 @@ class DarwinActions extends sfActions
     throw new sfStopException();
   }
   
-  protected function getRecordIfDuplicate($table ,$request)
+  protected function getRecordIfDuplicate($id = 0, $obj)
   {
-    $record = array() ;
-    if ($request->hasParameter('duplicate_id')) // then it's a duplicate taxon
+    if ($id)
     {
-      $record = Doctrine::getTable($table)->findExcept($request->getParameter('duplicate_id'))->toArray();
+      $check = $obj->getTable()->findExcept($id);
+      if(!$check) return $obj ;
+      else $record = $check->toArray();
       unset($record['id']) ;          
+      $obj->fromArray($record) ;      
     }
-    return $record ;
+    return $obj ;
   }
 }

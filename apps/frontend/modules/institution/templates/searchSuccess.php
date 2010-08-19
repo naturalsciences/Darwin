@@ -39,6 +39,7 @@
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
               <?php if(! $is_choose):?>
                 <?php echo link_to(image_tag('edit.png'),'institution/edit?id='.$item->getId());?>
+                <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Institution')),'institution/new?duplicate_id='.$item->getId());?>
               <?php else:?>
                 <div class="result_choose"><?php echo __('Choose');?></div>
               <?php endif;?>

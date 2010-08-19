@@ -46,11 +46,11 @@ class chronostratigraphyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $new_chrono = new Chronostratigraphy();
-    $chrono = $this->getRecordIfDuplicate('Chronostratigraphy', $request);
+    $chrono = new Chronostratigraphy();
+    $duplic = $request->getParameter('duplicate_id','0');    
+    $chrono = $this->getRecordIfDuplicate($duplic, $chrono);
     // if there is no duplicate $chrono is an empty array
-    $new_chrono->fromArray($chrono) ;
-    $this->form = new ChronostratigraphyForm($new_chrono);
+    $this->form = new ChronostratigraphyForm($chrono);
   }
 
   public function executeCreate(sfWebRequest $request)

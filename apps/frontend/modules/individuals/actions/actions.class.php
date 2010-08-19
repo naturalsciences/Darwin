@@ -17,12 +17,12 @@ class individualsActions extends DarwinActions
     if(! $request->hasParameter('id'))
     {
       $this->spec_individual = new SpecimenIndividuals(); 
-      if ($request->hasParameter('duplicate_id')) // then it's a duplicate individual
+      $duplic = $request->getParameter('duplicate_id','0') ;          
+      if ($duplic) // then it's a duplicate individual
       {
-        $individual = $this->getRecordIfDuplicate('SpecimenIndividuals', $request);    
+        $this->spec_individual = $this->getRecordIfDuplicate($duplic,$this->spec_individual);    
         // set all necessary widgets to visible 
-        Doctrine::getTable('SpecimenIndividuals')->getRequiredWidget($individual, $this->getUser()->getId(), 'individuals_widget');      
-        $this->spec_individual->fromArray($individual) ;
+        Doctrine::getTable('SpecimenIndividuals')->getRequiredWidget($this->spec_individual, $this->getUser()->getId(), 'individuals_widget');               
       }    
     }
     else
@@ -58,6 +58,26 @@ class individualsActions extends DarwinActions
     {
       $this->individual->addIdentifications(0,0);
       $this->individual->addComments(0);
+      $duplic = $request->getParameter('duplicate_id') ;
+      if($duplic)
+      {
+        // reembed duplicated comment
+        $Comments = Doctrine::getTable('Comments')->findForTable('specimen_individuals',$duplic) ;
+        foreach ($Comments as $key=>$val)
+        {
+          $comment = new Comments() ;
+          $comment = $this->getRecordIfDuplicate($val->getId(),$comment); 
+          $this->individual->addComments($key, $comment) ;          
+        }
+        //reembed identification
+        $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimen_individuals',$duplic) ;
+        foreach ($Identifications as $key=>$val)
+        {
+          $identification = new Identifications() ;
+          $identification = $this->getRecordIfDuplicate($val->getId(),$identification); 
+          $this->individual->addIdentifications($key, $val->getOrderBy(), $val);
+        }         
+      }
     }
     if($request->isMethod('post'))
     {
