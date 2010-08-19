@@ -98,7 +98,7 @@ sps7:
    opened: true
    visible: true
    title_perso: Mineralogy
-      
+
 sps8:
    col_num: 2
    category: specimensearch_widget
@@ -108,3 +108,53 @@ sps8:
    opened: false
    visible: false
    title_perso: Advanced: Search By ID
+
+sps9:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: social
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Social Status
+
+sps10:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: sex
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Sex
+
+sps11:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: stage
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Stage
+
+sps12:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: status
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: State
+
+sps13:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: rockform
+   mandatory: false
+   order_by: 7
+   opened: false
+   visible: false
+   title_perso: Rock Form

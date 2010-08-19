@@ -16,7 +16,7 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                                            => new sfWidgetFormInputHidden(),
-      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'), 'add_empty' => false)),
+      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividual'), 'add_empty' => false)),
       'category'                                      => new sfWidgetFormTextarea(),
       'collection_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'add_empty' => false)),
       'collection_type'                               => new sfWidgetFormTextarea(),
@@ -120,7 +120,7 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                                            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'))),
+      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividual'))),
       'category'                                      => new sfValidatorString(array('required' => false)),
       'collection_ref'                                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'required' => false)),
       'collection_type'                               => new sfValidatorString(array('required' => false)),

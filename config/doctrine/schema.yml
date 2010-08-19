@@ -1147,6 +1147,10 @@ SpecimenSearch:
         specimen_count_max: { type: integer }
         with_types: { type: boolean}      
     relations:
+        SpecimenIndividual:
+            class: SpecimenIndividuals
+            local: spec_ref
+            foreign: specimen_ref
         Specimen:
             class: Specimens
             local: spec_ref

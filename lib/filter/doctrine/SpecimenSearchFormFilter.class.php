@@ -132,9 +132,147 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);
+
+  /**
+  * Individuals Fields
+  */
+    $this->is_individual_joined = false;
+    $this->widgetSchema['sex'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctSexes',
+        'method' => 'getSex',
+        'key_method' => 'getSex',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['sex'] = new sfValidatorPass();
+
+    $this->widgetSchema['stage'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctStages',
+        'method' => 'getStage',
+        'key_method' => 'getStage',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['stage'] = new sfValidatorPass();
+
+    $this->widgetSchema['status'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctStates',
+        'method' => 'getState',
+        'key_method' => 'getState',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['status'] = new sfValidatorPass();
+
+    $this->widgetSchema['social'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctSocialStatuses',
+        'method' => 'getSocialStatus',
+        'key_method' => 'getSocialStatus',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['social'] = new sfValidatorPass();
+
+    $this->widgetSchema['rockform'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctRockForms',
+        'method' => 'getRockForm',
+        'key_method' => 'getRockForm',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['rockform'] = new sfValidatorPass();
+
+    unset($this['SpecimenIndividual'], $this['Specimen'], $this['Collection'], $this['CollectionInstitution'], $this['CollectionMainManager'], 
+$this['CollectionParent'], $this['Expedition'], $this['Gtu'], $this['GtuParent'], $this['Taxonomy'], $this['TaxonomyLevel'], $this['TaxonomyParent'], 
+$this['Lithostratigraphy'], $this['LithostratigraphyLevel'], $this['LithostratigraphyParent'], $this['Chronostratigraphy'], $this['ChronostratigraphyLevel'], 
+$this['ChronostratigraphyParent'], $this['Lithology'], $this['LithologyLevel'], $this['LithologyParent'], $this['Mineralogy'], $this['MineralogyLevel'],
+$this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['HostTaxonParent'], $this['Ig']);
+
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
 
+  public function joinIndividual($query)
+  {
+    $alias = $query->getRootAlias();
+     if(! $this->is_individual_joined)
+        $query->leftJoin($alias.'.SpecimenIndividual i');
+    $this->is_individual_joined = true;
+  }
+
+  public function addSexColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      $this->joinIndividual($query);
+      if(is_array($val))
+        $query->andWhereIn('i.sex',$val);
+      else
+        $query->andWhere('i.sex = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addStageColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      $this->joinIndividual($query);
+      if(is_array($val))
+        $query->andWhereIn('i.stage',$val);
+      else
+        $query->andWhere('i.stage = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addStatusColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      $this->joinIndividual($query);
+      if(is_array($val))
+        $query->andWhereIn('i.state',$val);
+      else
+        $query->andWhere('i.state = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addSocialColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      $this->joinIndividual($query);
+      if(is_array($val))
+        $query->andWhereIn('i.social_status',$val);
+      else
+        $query->andWhere('i.social_status = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addRockformColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      $this->joinIndividual($query);
+      if(is_array($val))
+        $query->andWhereIn('i.rock_form',$val);
+      else
+        $query->andWhere('i.rock_form = ?',$val);
+    }
+    return $query ;
+  }
   public function addTagsColumnQuery($query, $field, $val)
   {
     $alias = $query->getRootAlias();
