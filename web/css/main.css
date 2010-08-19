@@ -1648,6 +1648,8 @@ vertical-align: super;
   margin-right:0.3em;
 }
 
+
+/* Check if it must stay or not ->*/
 /** Fields Table for saved searches **/
 
 .fields
@@ -1702,7 +1704,7 @@ input[type="button"][class="save_search"]:hover
 {
   cursor:pointer;
 }
-
+/*<- Check if must stay*/
 table.saved_searches
 {
   width: 600px;
