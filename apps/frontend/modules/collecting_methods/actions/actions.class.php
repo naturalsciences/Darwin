@@ -60,13 +60,6 @@ class collecting_methodsActions extends sfActions
     $this->redirect('collecting_methods/index');
   }
 
-  public function executeAddMethod(sfWebRequest $request)
-  {
-    // Test well action is Ajaxly called and that value parameter exist
-    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->hasParameter('value'));
-    return $this->renderText(Doctrine::getTable('CollectingMethods')->addMethod($request->getParameter('value')));
-  }
-
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

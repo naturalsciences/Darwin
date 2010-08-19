@@ -60,13 +60,6 @@ class collecting_toolsActions extends sfActions
     $this->redirect('collecting_tools/index');
   }
 
-  public function executeAddTool(sfWebRequest $request)
-  {
-    // Test well action is Ajaxly called and that value parameter exist
-    $this->forward404Unless($request->isMethod(sfRequest::POST) && $request->isXmlHttpRequest() && $request->hasParameter('value'));
-    return $this->renderText(Doctrine::getTable('CollectingTools')->addTool($request->getParameter('value')));
-  }
-
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

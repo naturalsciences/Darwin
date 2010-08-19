@@ -22,7 +22,7 @@ $browser->
     get('/widgets/reloadContent?widget=tool&category=specimen')->
     with('response')->begin()->
         isStatusCode(200)->
-        checkElement('#unassociated_specimen_collecting_tools_list option',0)->
+        checkElement('#unassociated_specimen_collecting_tools_list option',2)->
         checkElement('#associated_specimen_collecting_tools_list option',0)->
 //         checkElement('.add_item_button')->
     end()->

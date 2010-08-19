@@ -154,4 +154,5 @@ class catalogueActions extends DarwinActions
 
     return $this->renderPartial('nameValue',array('form' => $form['newVal'][$number]));
   }
+
 }

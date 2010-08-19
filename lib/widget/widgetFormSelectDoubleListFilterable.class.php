@@ -33,12 +33,12 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
   <li></li>
 </ul>
 <div class="%class%">
-  <div class="double_list_filter">%filter%%filter_reset%</div>
   <div style="float: left">
     <div class="double_list_filter_label">%label_unassociated%</div>
+    <div class="double_list_filter">%filter%%filter_reset%</div>
     %unassociated%
   </div>
-  <div style="float: left; margin-top: 2em">
+  <div style="float: left; margin-top: 3em">
     %unassociate%
     <br />
     %associate%
@@ -53,58 +53,40 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
   <br style="clear: both" />
   <script type="text/javascript">
     sfDoubleList.init(document.getElementById('%id%'), '%class_select%');
-    // Filter unassociated select box based on matching of text entered as a part of option text
-    function search_list()
-    {
-      $('#unassociated_%id% option').each(function()
-      {
-        exp='.*'+$('#filter_%id%').val()+'.*';
-        Expression = new RegExp(exp,'gi');
-        if(!Expression.test(this.innerHTML))
-        {
-          $(this).hide();
-        }
-        else
-        {
-          $(this).show();
-        }
-      });
-    }
-    // Reset the filter and redisplay all unassociated select options
-    function reset_list()
-    {
-      $('#unassociated_%id% option').each(function()
-      {
-          $(this).show();
-          $('#filter_%id%').val('');
-      });
-    }
-    // Bind the filter function to keyUp event of filter input
-    $('#filter_%id%').bind('keyup', search_list );
-    // Bind the remove filter function to click event of filter clear image
-    $('#filter_%id%_clear').bind('click', reset_list );
 
     $(document).ready(function () {
+
+      // Generate two arrays: one for the list corresponding to what's in unassociated (displayed or not)
+      // and an other one for the list currently displayed in unassociated
+      var unassociated_array_%id% = array_from_options($('#unassociated_%id%'));
+      var unassociated_array_displayed_%id% = unassociated_array_%id%.slice(0);
+
+      // Bind to on change of unassociated select the update of unassociated_array_%id% array "selected" option
+      $('#unassociated_%id%').bind('change',function()
+        {
+          var i;
+          $(this).find('option').each(function()
+            {
+              for (i in unassociated_array_%id%)
+              {
+                if($(this).val() == unassociated_array_%id%[i]["value"])
+                {
+                  unassociated_array_%id%[i]["selected"] = $(this).attr('selected');
+                }
+              }
+            });
+          console.log(unassociated_array_%id%[0]);
+          console.log(unassociated_array_%id%[5]);
+        });
       // Click on add option link try to add an option in the corresponding table providing values to this widget
       $('a#add_%id%_link').click(function(){
         // Hide and empty errors list first
         $('#%error_id%').hide();
-        $('#%error_id%').find('li').text(' ');
-        var input_value = $('#add_%id%').val();
+        $('#%error_id% li').text('');
+        var input_value = $('#add_%id%').val().trim();
         // Trigger the insertion only if there is a value
         if(input_value.length)
         {
-          // Create and fill an array with all the unassociated select options values
-          var unassociatedList = new Array();
-          $('#unassociated_%id% option').each(function()
-          {
-            unassociatedList.push($(this).text());
-          });
-          // Add the potential new value to the list
-          unassociatedList.push(input_value);
-          // And resort alphabetically the array
-          unassociatedList.sort();
-          var unassociatedListIndex;
           // Create an array that will be used as data to be posted
           var addItem = {"value": input_value};
           $('#add_%id%_loader').show();
@@ -117,38 +99,11 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
               // Test what is returned is well the id of the new record inserted
               if(!isNaN(html))
               {
-                // Depending of the cases the new option will be inserted:
-                // - at first position
-                // - as very first option
-                // - after a previous option
-                if(unassociatedList.length)
-                {
-                  if(unassociatedList.length > 1)
-                  {
-                    for (unassociatedListIndex in unassociatedList)
-                    {
-                      if(unassociatedList[unassociatedListIndex] == input_value)
-                      {
-                        if(unassociatedListIndex == 0)
-                        {
-                          $('#unassociated_%id% option:first').before('<option value='+html+'>'+input_value+'</option>');
-                        }
-                        else
-                        {
-                          $('#unassociated_%id% option:nth-child('+unassociatedListIndex+')').after('<option value='+html+'>'+input_value+'</option>');
-                        }
-                      }
-                    }
-                  }
-                  else
-                  {
-                    $('#unassociated_%id%').append('<option value='+html+'>'+input_value+'</option>');
-                  }
+                  $('#unassociated_%id%').append('<option value='+html+'>'+input_value+'</option>');
                   // After insertion of new option retrigger the eventual filter applied
                   search_list();
                   // Than remove value from add input
                   $('#add_%id%').val('');
-                }
               }
               else
               {
@@ -272,6 +227,16 @@ EOF
       '%add_option%'         => $addOptionHTML,
       '%error_id%'           => $error_id
     ));
+  }
+
+  /**
+   * Gets the JavaScript paths associated with the widget.
+   *
+   * @return array An array of JavaScript paths
+   */
+  public function getJavascripts()
+  {
+    return array('/js/double_list_filter.js');
   }
 
 }
