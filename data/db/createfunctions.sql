@@ -7189,11 +7189,10 @@ BEGIN
 	END IF;
 
 	IF code_part != '' THEN
-	     FOR word IN (SELECT words FROM regexp_split_to_table(code_from, E'\\s+') as words) LOOP
+	     FOR word IN (SELECT words FROM regexp_split_to_table(code_part, E'\\s+') as words) LOOP
 		sqlString := sqlString || E' AND full_code_order_by like \'%\' || ' || quote_literal(word) || E' || \'%\' ';
              END LOOP;
 
---	     sqlString := sqlString || E' AND full_code_order_by like \'%\' || ' || quote_literal(code_from) || E' || \'%\' ';
 	END IF;
 
     END LOOP;
