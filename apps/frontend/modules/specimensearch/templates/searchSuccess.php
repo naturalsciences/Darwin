@@ -33,7 +33,7 @@
 $(document).ready(function () {
 
   $("#criteria_butt").click(function(){
-    $('.search_form').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
+    $('#specimen_filter').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
   });
 });
       </script>
