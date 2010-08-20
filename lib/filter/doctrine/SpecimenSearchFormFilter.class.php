@@ -12,6 +12,23 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 {
   public function configure()
   {
+
+    unset($this['SpecimenIndividual'], $this['Specimen'], $this['Collection'], $this['CollectionInstitution'], $this['CollectionMainManager'], 
+$this['CollectionParent'], $this['Expedition'], $this['Gtu'], $this['GtuParent'], $this['Taxonomy'], $this['TaxonomyLevel'], $this['TaxonomyParent'], 
+$this['Lithostratigraphy'], $this['LithostratigraphyLevel'], $this['LithostratigraphyParent'], $this['Chronostratigraphy'], $this['ChronostratigraphyLevel'], 
+$this['ChronostratigraphyParent'], $this['Lithology'], $this['LithologyLevel'], $this['LithologyParent'], $this['Mineralogy'], $this['MineralogyLevel'],
+$this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['HostTaxonParent'], $this['Ig'],
+
+$this['litho_ref'],$this['litho_name_indexed'],$this['litho_name_order_by'],$this['litho_level_name'],$this['litho_status'],$this['litho_path'],$this['litho_parent_ref'],
+$this['taxon_ref'],$this['taxon_name_indexed'],$this['taxon_name_order_by'],$this['taxon_level_name'],$this['taxon_status'],$this['taxon_path'],$this['taxon_parent_ref'],$this['taxon_extinct'],
+$this['lithology_ref'],$this['lithology_name_indexed'],$this['lithology_name_order_by'],$this['lithology_level_name'],$this['lithology_status'],$this['lithology_path'],$this['lithology_parent_ref'],
+$this['chrono_ref'],$this['chrono_name_indexed'],$this['chrono_name_order_by'],$this['chrono_level_name'],$this['chrono_status'],$this['chrono_path'],$this['chrono_parent_ref'], 
+$this['mineral_ref'],$this['mineral_name_indexed'],$this['mineral_name_order_by'],$this['mineral_level_name'],$this['mineral_status'],$this['mineral_path'],$this['mineral_parent_ref'],
+$this['gtu_ref'],$this['gtu_to_date'],$this['gtu_ref'],$this['gtu_path'],$this['gtu_parent_ref'],$this['gtu_from_date_mask'],$this['gtu_to_date_mask'],$this['gtu_tag_values_indexed'],$this['gtu_country_tag_value']
+
+);
+
+
     $this->addPagerItems();
     
     $this->widgetSchema['gtu_code'] = new sfWidgetFormInputText();
@@ -34,8 +51,9 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'lithostratigraphy'))),
         'add_empty' => 'All'
-      ));   
-         
+      ));
+
+
     $this->widgetSchema['chrono_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['chrono_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
@@ -195,11 +213,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $subForm = new sfForm();
     $this->embedForm('Codes',$subForm);
 
-    unset($this['SpecimenIndividual'], $this['Specimen'], $this['Collection'], $this['CollectionInstitution'], $this['CollectionMainManager'], 
-$this['CollectionParent'], $this['Expedition'], $this['Gtu'], $this['GtuParent'], $this['Taxonomy'], $this['TaxonomyLevel'], $this['TaxonomyParent'], 
-$this['Lithostratigraphy'], $this['LithostratigraphyLevel'], $this['LithostratigraphyParent'], $this['Chronostratigraphy'], $this['ChronostratigraphyLevel'], 
-$this['ChronostratigraphyParent'], $this['Lithology'], $this['LithologyLevel'], $this['LithologyParent'], $this['Mineralogy'], $this['MineralogyLevel'],
-$this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['HostTaxonParent'], $this['Ig']);
+
 
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }

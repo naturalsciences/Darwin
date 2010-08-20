@@ -38,11 +38,6 @@ class SpecimenSearchTable extends Doctrine_Table
         return Doctrine_Core::getTable('SpecimenSearch');
     }
     
-    public static function getWidgetByField($field)
-    {
-      return widget_flat_array($field) ;
-    }
-    
     public function getRequiredWidget($criterias, $user, $category)
     {
       $req_widget = array() ;
@@ -52,7 +47,9 @@ class SpecimenSearchTable extends Doctrine_Table
         if ($fields == "") continue ;
 
         if(isset(self::$widget_flat_array[$key]))
+        { 
           $req_widget[self::$widget_flat_array[$key]] = 1 ;
+        }
       }
       Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
     }
