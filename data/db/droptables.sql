@@ -70,7 +70,7 @@ DROP TABLE  IF EXISTS collecting_methods CASCADE;
 DROP TABLE  IF EXISTS collecting_tools CASCADE;
 DROP TABLE  IF EXISTS specimen_collecting_methods CASCADE;
 DROP TABLE  IF EXISTS specimen_collecting_tools CASCADE;
-
+DROP TABLE  IF EXISTS preferences CASCADE;
 DROP SEQUENCE IF EXISTS people_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_relationships_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_people_id_seq  CASCADE;
@@ -127,4 +127,5 @@ DROP SEQUENCE IF EXISTS collecting_methods_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS collecting_tools_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS specimen_collecting_methods_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS specimen_collecting_tools_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS preferences_id_seq CASCADE;
 

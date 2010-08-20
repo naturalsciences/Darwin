@@ -1992,6 +1992,22 @@ comment on column words.referenced_relation is 'Reference of table concerned';
 comment on column words.field_name is 'Reference of field in the table';
 comment on column words.word is 'word founded';
 
+create sequence preferences_id_seq;
+
+create table preferences
+  (
+    id integer not null default nextval('preferences_id_seq'),
+    user_ref integer not null,
+    pref_key varchar not null,
+    pref_value varchar not null,
+    constraint fk_users_preferences foreign key (user_ref) references users(id) on delete cascade
+  );
+
+comment on table preferences is 'Table to handle users preferences';
+comment on column preferences.user_ref is 'The referenced user id';
+comment on column preferences.pref_key is 'The classification key of the preference. eg: color';
+comment on column preferences.pref_value is 'The value of the preference for this user eg: red';
+
 create sequence darwin_flat_id_seq;
 
 create table darwin_flat
