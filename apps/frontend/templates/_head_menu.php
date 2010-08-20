@@ -34,6 +34,8 @@
                         <li><?php echo link_to(__('Institutions'),'institution/index');?></li>
                         <li><?php echo link_to(__('People'),'people/index');?></li>
                         <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
+                        <li><?php echo link_to(__('Collecting Methods'),'methods_and_tools/methodsIndex');?></li>
+                        <li><?php echo link_to(__('Collecting Tools'),'methods_and_tools/toolsIndex');?></li>
                     </ul>
                 </li>
                 <li><?php echo link_to(__('Specimens'),'specimensearch/index');?></li>

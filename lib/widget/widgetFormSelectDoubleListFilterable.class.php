@@ -1,20 +1,21 @@
 <?php
 
 /*
- * This file is part of the symfony package.
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
- * (c) Jonathan H. Wage <jonwage@gmail.com>
+ * This file is part of the DaRWIN package.
+ * (c) Paul-André Duchesne <paul-andre.duchesne@naturalsciences.be>
+ * (c) Brice Maron <brice.maron@naturalsciences.be>
+ * (c) Yann Chambert <yann.chambert@naturalsciences.be>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
- * sfWidgetFormDoctrineChoice represents a choice widget for a model.
+ * widgetFormSelectDoubleListFilterable a choice widget for a model.
  *
  * @package    symfony
  * @subpackage doctrine
- * @author     Paul-André Duchesne <Paul-Andre.Duchesne@naturalsciences.be>
+ * @author     DaRWIN Team <collections@naturalsciences.be>
  */
 class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
 {
