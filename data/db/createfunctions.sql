@@ -2302,6 +2302,11 @@ BEGIN
 	ELSIF TG_TABLE_NAME = 'people' THEN
 		NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 	ELSIF TG_TABLE_NAME = 'codes' THEN
+		IF NEW.code ~ '[0-9]+' THEN
+		   NEW.code_num := NEW.code;
+		ELSE
+    		   NEW.code_num := null;
+		END IF;
                 NEW.full_code_indexed := to_tsvector('simple', COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,''));
 		NEW.full_code_order_by := fullToIndex(COALESCE(NEW.code_prefix,'') || COALESCE(NEW.code::text,'') || COALESCE(NEW.code_suffix,'') );
 	ELSIF TG_TABLE_NAME = 'tag_groups' THEN
@@ -7160,6 +7165,42 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+
+CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
+DECLARE
+  sqlString varchar := E'select record_id from codes where referenced_relation=\'specimens\'';
+  code_part varchar;
+  code_from varchar;
+  code_to varchar;
+  code_category varchar;
+  word varchar;
+BEGIN
+    FOR i in 1..array_upper( $1, 1 ) BY 4 LOOP
+	code_category := $1[i];
+	code_part := $1[i+1];
+	code_from := $1[i+2];
+	code_to := $1[i+3];
+	
+	sqlString := sqlString || ' AND code_category = ' || quote_literal(code_category) ;
+
+	IF code_from ~ '^[0-9]+$' and code_to ~ '^[0-9]+$' THEN
+	    sqlString := sqlString || ' AND code_num BETWEEN ' || quote_literal(code_from) || ' AND ' || quote_literal(code_to) ;
+	END IF;
+
+	IF code_part != '' THEN
+	     FOR word IN (SELECT words FROM regexp_split_to_table(code_from, E'\\s+') as words) LOOP
+		sqlString := sqlString || E' AND full_code_order_by like \'%\' || ' || quote_literal(word) || E' || \'%\' ';
+             END LOOP;
+
+--	     sqlString := sqlString || E' AND full_code_order_by like \'%\' || ' || quote_literal(code_from) || E' || \'%\' ';
+	END IF;
+
+    END LOOP;
+    RETURN QUERY EXECUTE sqlString;
+END;
+$$ LANGUAGE plpgSQL;
+
 
 -- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
 -- $$
