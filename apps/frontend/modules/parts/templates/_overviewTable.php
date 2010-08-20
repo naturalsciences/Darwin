@@ -1,6 +1,8 @@
-
+<?php if(count($parts)==0):?>
+  <h2><?php echo __('There a currently no part. Please add one');?></h2>
+<?php else:?>
 <table class="catalogue_table">
-  <thead style="<?php echo (count($parts))?'':'display: none;';?>">
+  <thead>
   <tr>
     <th></th>
     <th><?php echo __('Code');?></th>
@@ -81,3 +83,4 @@
       });
     });
 </script>
+<?php endif;?>
