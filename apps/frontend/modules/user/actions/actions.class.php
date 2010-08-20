@@ -195,19 +195,20 @@ class userActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('users_addresses'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-	    $e = new DarwinPgErrorParser($ne);
-	    return $this->renderText($e->getMessage());
-	  }
-	}
+      $this->form->bind($request->getParameter('users_addresses'));
+      if($this->form->isValid())
+      {
+        try
+        {
+          $this->form->save();
+          return $this->renderText('ok');
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          return $this->renderText($e->getMessage());
+        }
+      }
     }
   }
 
@@ -232,18 +233,18 @@ class userActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('users_comm'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	  }
-	  catch(Exception $e)
-	  {
-	    return $this->renderText($e->getMessage());
-	  }
-	  return $this->renderText('ok');
-	}
+      $this->form->bind($request->getParameter('users_comm'));
+      if($this->form->isValid())
+      {
+        try{
+          $this->form->save();
+        }
+        catch(Exception $e)
+        {
+          return $this->renderText($e->getMessage());
+        }
+        return $this->renderText('ok');
+      }
     }
   }
   public function executeCreate(sfWebRequest $request)
@@ -258,50 +259,52 @@ class userActions extends DarwinActions
 
     if ($this->form->isValid())
     {
-	  try{
-		$user = $this->form->save();
-		$user->addUserWidgets();
-		$this->redirect('user/edit?id='.$user->getId());
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-		$e = new DarwinPgErrorParser($ne);
-		$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-		$this->form->getErrorSchema()->addError($error);
-	  }
+      try{
+        $user = $this->form->save();
+        $user->addUserWidgets();
+        $this->redirect('user/edit?id='.$user->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $this->form->getErrorSchema()->addError($error);
+      }
     }
     $this->setTemplate('new');
   }
 
   public function executeLoginInfo(sfWebRequest $request)
   {
-     $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
-     if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
-     {
-     	if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-     }
-	$this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
-	if( ! $this->loginInfo )
-	{
-		$this->loginInfo = new UsersLoginInfos() ;
-		$this->loginInfo->setUserRef($request->getParameter('user_ref')) ;
-	}
-	$this->form = new UsersLoginInfosForm($this->loginInfo);
-	if($request->isMethod('post'))
-	{
-    	     $this->form->bind($request->getParameter('users_login_infos'));
-		if($this->form->isValid())
-		{
-		  try{
-		    $this->form->save();
-		  }
-		  catch(Exception $e)
-		  {
-		    return $this->renderText($e->getMessage());
-		  }
-		  return $this->renderText('ok');
-		}
-	}
+    $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
+    if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
+    {
+      if($this->getUser()->getDbUserType() < Users::MANAGER)
+        $this->forwardToSecureAction();
+    }
+    $this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
+
+    if( ! $this->loginInfo )
+    {
+      $this->loginInfo = new UsersLoginInfos() ;
+      $this->loginInfo->setUserRef($request->getParameter('user_ref')) ;
+    }
+    $this->form = new UsersLoginInfosForm($this->loginInfo);
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('users_login_infos'));
+      if($this->form->isValid())
+      {
+        try{
+          $this->form->save();
+        }
+        catch(Exception $e)
+        {
+          return $this->renderText($e->getMessage());
+        }
+        return $this->renderText('ok');
+      }
+    }
   }
 
   public function executeLang(sfWebRequest $request)
@@ -319,29 +322,30 @@ class userActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('users_languages'));
-	if($this->form->isValid())
-	{
-	  try {
-	    if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage() )
-	    {
-	      Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->getUser()->getAttribute('db_user_id'));
-	    }
-	    
-	    $this->form->save();
-	    if($this->form->getValue('preferred_language'))
-	    {
-	      $this->getUser()->setCulture($this->form->getValue('language_country'));
-	    }
-	    
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $e)
-	  {
-	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	    $this->form->getErrorSchema()->addError($error); 
-	  }
-	}
+      $this->form->bind($request->getParameter('users_languages'));
+      if($this->form->isValid())
+      {
+        try
+        {
+          if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage() )
+          {
+            Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->getUser()->getAttribute('db_user_id'));
+          }
+          
+          $this->form->save();
+          if($this->form->getValue('preferred_language'))
+          {
+            $this->getUser()->setCulture($this->form->getValue('language_country'));
+          }
+          
+          return $this->renderText('ok');
+        }
+        catch(Doctrine_Exception $e)
+        {
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error); 
+        }
+      }
     }
   }
 }
