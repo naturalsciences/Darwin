@@ -22,15 +22,13 @@ class CodesForm extends BaseCodesForm
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);*/
     
-    $choices = array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.') ;
-
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['deleted'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['code_category'] = new sfWidgetFormChoice(array(
-        'choices' => $choices
+        'choices' => Codes::getCategories()
       ));
-    $this->validatorSchema['code_category'] = new sfValidatorChoice(array('required' => true, 'choices'=>array_keys($choices)));
+    $this->validatorSchema['code_category'] = new sfValidatorChoice(array('required' => true, 'choices'=>array_keys(Codes::getCategories())));
     $this->widgetSchema['code_prefix'] = new sfWidgetFormInput();
     $this->widgetSchema['code_prefix']->setAttributes(array('class'=>'lsmall_size'));
     $this->validatorSchema['code_prefix'] = new sfValidatorString(array('required' => false, 'trim'=>true));

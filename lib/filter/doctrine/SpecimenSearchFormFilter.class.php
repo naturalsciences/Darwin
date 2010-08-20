@@ -192,6 +192,9 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     ));
     $this->validatorSchema['rockform'] = new sfValidatorPass();
 
+    $subForm = new sfForm();
+    $this->embedForm('Codes',$subForm);
+
     unset($this['SpecimenIndividual'], $this['Specimen'], $this['Collection'], $this['CollectionInstitution'], $this['CollectionMainManager'], 
 $this['CollectionParent'], $this['Expedition'], $this['Gtu'], $this['GtuParent'], $this['Taxonomy'], $this['TaxonomyLevel'], $this['TaxonomyParent'], 
 $this['Lithostratigraphy'], $this['LithostratigraphyLevel'], $this['LithostratigraphyParent'], $this['Chronostratigraphy'], $this['ChronostratigraphyLevel'], 
@@ -199,6 +202,13 @@ $this['ChronostratigraphyParent'], $this['Lithology'], $this['LithologyLevel'], 
 $this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['HostTaxonParent'], $this['Ig']);
 
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
+  }
+
+  public function addCodeValue($num)
+  {
+      $form = new CodeLineForm();
+      $this->embeddedForms['Codes']->embedForm($num, $form);
+      $this->embedForm('Codes', $this->embeddedForms['Codes']);
   }
 
   public function joinIndividual($query)
@@ -291,6 +301,24 @@ $this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['H
     return $query ;
   }
 
+  public function addCodesColumnQuery($query, $field, $val)
+  {
+    $str_params = '';
+    $params = array();
+    foreach($val as $i => $code)
+    {
+      if($str_params != '')
+        $str_params .= ',';
+      $str_params .= '?,?,?,?';
+      $params[] = $code['category'];
+      $params[] = $code['code_part'];
+      $params[] = $code['code_from'];
+      $params[] = $code['code_to'];
+    }
+    $query->andWhere("spec_ref in  (select fct_searchCodes($str_params) )", $params);
+    return $query ;
+  }
+
   public function addGtuCodeColumnQuery($query, $field, $val)
   {
     if($val != '')
@@ -307,6 +335,17 @@ $this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['H
   
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
+    if(isset($taintedValues['Codes']))
+    {
+      foreach($taintedValues['Codes'] as $key=>$newVal)
+      {
+        if (!isset($this['Codes'][$key]))
+        {
+          $this->addCodeValue($key);
+        }
+      }
+    }
+
     if(isset($taintedValues['collection_ref']))
       $this->widgetSchema['collection_ref']->addOption('listCheck',$taintedValues['collection_ref']) ;
     if(isset($taintedValues['Tags']))

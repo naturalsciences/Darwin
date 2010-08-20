@@ -237,4 +237,13 @@ class specimensearchActions extends DarwinActions
     $form->addGtuTagValue($number);
     return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number]));
   }  
+
+  public function executeAddCode(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+
+    $form = new SpecimenSearchFormFilter();
+    $form->addCodeValue($number);
+    return $this->renderPartial('specimensearchwidget/codeline',array('code' => $form['Codes'][$number]));
+  }
 }

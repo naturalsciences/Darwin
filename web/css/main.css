@@ -548,7 +548,7 @@ input[type="text"].xlarge_size
   font-size:0.8em;
 }
 
-.choose
+.choose, .centered
 {
   text-align:center;
 }
@@ -1710,7 +1710,7 @@ table.saved_searches
   width: 600px;
 }
 
-table.saved_searches_board ,  table.saved_spec_board
+table.saved_searches_board ,  table.saved_spec_board, table.full_size
 {
   width: 100%;
   margin-bottom:1em;
@@ -1737,4 +1737,11 @@ table.saved_spec_board .saved_count, table.saved_searches .saved_count
 {
   font-size:x-small;
   color:gray;
+}
+
+
+td.and_col
+{
+  width: 15px;
+  text-align:right;
 }

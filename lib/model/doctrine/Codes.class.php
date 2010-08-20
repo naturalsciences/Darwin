@@ -5,6 +5,10 @@
  */
 class Codes extends BaseCodes
 {
+  public static function getCategories()
+  {
+    return array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.');
+  }
   public function getCodeFormated()
   {
     $code_prefix = $this->_get('code_prefix');

@@ -24,7 +24,8 @@ class SpecimenSearchTable extends Doctrine_Table
       'lithology_level_name' => 'refLithology' ,
       'mineral_name' => 'refMineral' ,
       'mineral_level_ref' => 'refMineral',
-      'mineral_level_name' => 'refMineral'
+      'mineral_level_name' => 'refMineral',
+      'Codes' => 'codes',
     );
 
     public static function getInstance()

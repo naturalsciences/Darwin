@@ -158,3 +158,12 @@ sps13:
    opened: false
    visible: false
    title_perso: Rock Form
+sps14:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: codes
+   mandatory: false
+   order_by: 7
+   opened: false
+   visible: false
+   title_perso: Codes
