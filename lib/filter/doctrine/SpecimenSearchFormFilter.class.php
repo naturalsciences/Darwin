@@ -307,6 +307,7 @@ $this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['H
     $params = array();
     foreach($val as $i => $code)
     {
+      if(empty($code)) continue;
       if($str_params != '')
         $str_params .= ',';
       $str_params .= '?,?,?,?';
@@ -315,7 +316,7 @@ $this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['H
       $params[] = $code['code_from'];
       $params[] = $code['code_to'];
     }
-    $query->andWhere("spec_ref in  (select fct_searchCodes($str_params) )", $params);
+    if(! empty($params)) $query->andWhere("spec_ref in  (select fct_searchCodes($str_params) )", $params);
     return $query ;
   }
 

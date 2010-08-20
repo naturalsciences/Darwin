@@ -26,6 +26,11 @@ class SpecimenSearchTable extends Doctrine_Table
       'mineral_level_ref' => 'refMineral',
       'mineral_level_name' => 'refMineral',
       'Codes' => 'codes',
+      'sex' => 'sex',
+      'stage' => 'stage',
+      'status' => 'status',
+      'social' => 'social',
+      'rockform' => 'rockform',
     );
 
     public static function getInstance()
