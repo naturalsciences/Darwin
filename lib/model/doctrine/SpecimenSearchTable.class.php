@@ -44,8 +44,9 @@ class SpecimenSearchTable extends Doctrine_Table
       foreach($criterias as $key => $fields)
       {
         if ($key == "rec_per_page") continue ;
+        if($key == "gtu_from_date" && $fields == array('day'=>'','month'=>'','year'=>'')) continue;
+        if($key == "gtu_to_date" && $fields == array('day'=>'','month'=>'','year'=>'')) continue;
         if ($fields == "") continue ;
-
         if(isset(self::$widget_flat_array[$key]))
         { 
           $req_widget[self::$widget_flat_array[$key]] = 1 ;
