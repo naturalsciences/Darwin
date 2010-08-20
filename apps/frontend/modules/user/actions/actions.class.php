@@ -107,53 +107,56 @@ class userActions extends DarwinActions
 
     $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
     try{
-        $user->delete();
-	$this->redirect('user/index');
+      $user->delete();
+      $this->redirect('user/index');
     }
     catch(Doctrine_Exception $ne)
     {
-	$e = new DarwinPgErrorParser($ne);
-        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $user->getIsPhysical()));
-	$this->form->getErrorSchema()->addError($error); 
-	$this->loadWidgets();
-	$this->setTemplate('edit');
+      $e = new DarwinPgErrorParser($ne);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $user->getIsPhysical()));
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
     }
   }
   
   public function executeWidget(sfWebRequest $request)
   {
-   $id = $request->getparameter('id') ;
-   $url = "user/widget?id=".$id ;
-   if (!$id) {
-   	$id = $this->getUser()->getId();
-   	$url = "user/widget" ;
-   }
-   else { 
-    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
- 	$this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
-   }
-   $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
-   $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
-   $this->level = $this->getUser()->getAttribute('db_user_type') ; 
-   if($request->isMethod('post'))
-   {
-     $this->form->bind($request->getParameter('user_widget')) ;
-     if($this->form->isValid())
-     {
-     	$this->form->save();
-     	return $this->redirect($url);
-     }
-   }
-   $this->form_pref = array();
-   foreach($this->form['MyWidgets'] as $keyword)
-   {	
+    $id = $request->getparameter('id') ;
+    $url = "user/widget?id=".$id ;
+    if (!$id)
+    {
+      $id = $this->getUser()->getId();
+      $url = "user/widget" ;
+    }
+    else
+    { 
+      if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
+      $this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+    }
+    $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
+    $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
+    $this->level = $this->getUser()->getAttribute('db_user_type') ; 
+
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('user_widget')) ;
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->redirect($url);
+      }
+    }
+    $this->form_pref = array();
+    foreach($this->form['MyWidgets'] as $keyword)
+    {
       $type = $keyword['category']->getValue();
       if(!isset($this->form_pref[$type]))
         $this->form_pref[$type] = array();
       $this->form_pref[$type][] = $keyword;
-   }
-   $this->user = Doctrine::getTable("Users")->findUser($id) ;
+    }
+    $this->user = Doctrine::getTable("Users")->findUser($id) ;
   }
   
   public function executeProfile(sfWebRequest $request)
