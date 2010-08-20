@@ -59,7 +59,7 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
       // Generate two arrays: one for the list corresponding to what's in unassociated (displayed or not)
       // and an other one for the list currently displayed in unassociated
       var unassociated_array_%id% = array_from_options($('#unassociated_%id%'));
-      var unassociated_array_displayed_%id% = unassociated_array_%id%.slice(0);
+      //var unassociated_array_displayed_%id% = unassociated_array_%id%.slice(0);
 
       // Bind to on change of unassociated select the update of unassociated_array_%id% array "selected" option
       $('#unassociated_%id%').bind('change',function()
@@ -75,9 +75,16 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
                 }
               }
             });
-          console.log(unassociated_array_%id%[0]);
-          console.log(unassociated_array_%id%[5]);
+          /*console.log(unassociated_array_%id%[0]);
+          console.log(unassociated_array_%id%[1]);*/
         });
+
+      // Bind the filter function to keyUp event of filter input
+      $('#filter_%id%').bind('keyup', function(){jQuery('#unassociated_%id%').html(html_options_from_array(filter_array(unassociated_array_%id% , jQuery('#filter_%id%').val())));});
+
+      // Bind the remove filter function to click event of filter clear image
+      $('#filter_%id%_clear').bind('click', function(){jQuery('#filter_%id%').val('');jQuery('#unassociated_%id%').html(html_options_from_array(filter_array(unassociated_array_%id%, jQuery('#filter_%id%').val())));});
+
       // Click on add option link try to add an option in the corresponding table providing values to this widget
       $('a#add_%id%_link').click(function(){
         // Hide and empty errors list first

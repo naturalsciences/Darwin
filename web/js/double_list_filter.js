@@ -112,7 +112,7 @@ function filter_array(list_array, filter_text)
   {
     if(Expression.test(list_array[i]["text"]))
     {
-      $results[j]=list_array[i];
+      results[j]=list_array[i];
       j++;
     }
   }
@@ -168,6 +168,18 @@ function remove_from_array(list_array, criteria, value_based)
     }
   }
   return list_array;
+}
+
+function html_options_from_array(list_array)
+{
+  var response = '';
+  var i;
+  for (i in list_array)
+  {
+    var selectedOption = (list_array[i]["selected"])?'selected="selected"':'';
+    response = response+'<option value="'+list_array[i]["value"]+'" '+selectedOption+'>'+list_array[i]["text"]+'</option>';
+  }
+  return response;
 }
 
 // Filter unassociated select box based on matching of text entered as a part of option text

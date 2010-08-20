@@ -460,7 +460,7 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
   }
   
-  public function addIdentifications($num, $order_by=0, $obj)
+  public function addIdentifications($num, $order_by=0, $obj=null)
   {
       $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
       if (!$obj) $val = new Identifications();
