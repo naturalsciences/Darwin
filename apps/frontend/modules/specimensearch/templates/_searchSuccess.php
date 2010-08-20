@@ -287,7 +287,6 @@ $(document).ready(function () {
   $("ul.column_menu > li > ul > li").click(function(){
     update_list($(this));
     hide_or_show($(this));
-    store_list($(this).parent(), '<?php echo url_for('specimensearch/saveCol');?>')
   });
 
   /**PIN management **/
