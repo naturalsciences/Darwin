@@ -138,8 +138,15 @@
               </td>
               <td><?php if($is_specimen_search):?><?php echo image_tag('blue_pin_del.png',array('class' => 'pin_del'));?><?php endif;?></td>
               <td class="col_category">
-                <?php echo $specimen->getCategory() == 'physical'? image_tag('physical.png', array('alt' => __('physical'))):
-                                                             image_tag('non_physical.gif', array('alt' => __('other'))) ;?>
+                <?php if($specimen->getCategory() == 'physical' || $specimen->getCategory() == 'mixed' ):?>
+                  <?php echo image_tag('sp_in.png', array('alt' => __('Physical'), 'title'=> __('Physical')));?>
+                <?php endif;?>
+                <?php if($specimen->getCategory() == 'mixed' ):?>
+                 <?php echo __('+');?>
+                <?php endif;?>
+                <?php if($specimen->getCategory() == ''  || $specimen->getCategory() == 'mixed' ):?>
+                  <?php echo image_tag('blue_eyel.png', array('alt' => __('Other'), 'title'=> __('Other')));?>
+                <?php endif;?>
               </td>
               <td  class="col_collection">
                 <?php if($specimen->getCollectionRef() > 0) : ?>
