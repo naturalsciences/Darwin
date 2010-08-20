@@ -89,7 +89,7 @@ $browser->
 
    with('response')->begin()->
     isStatusCode(200)->
-    checkElement('input[value="Paléonotologie"]')->
+    checkElement('input[value="Aves"]')->
   end()->
   click('Save',array('collections' => 
     array(
@@ -110,14 +110,14 @@ $browser->
   get('/collection/index')->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.treelist:first > ul > li',1)->
+    checkElement('.treelist:first > ul > li',2)->
     checkElement('.treelist:last > ul > li',1)->
     checkElement('.treelist:last > ul > li > ul > li',1)->
   end()->
 
 
  info('Delete')->
-  click('span > a', array(), array('position' => 6))->
+  click('span > a', array(), array('position' => 5))->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
@@ -133,8 +133,8 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.treelist:first > ul > li',1)->
-  end()
-;
+  end();
+
 $user_id = $browser->addCustomUserAndLogin();
 $collection_id = Doctrine::getTable('collections')->getCollectionByName('Vertebrates')->getId() ;
 
