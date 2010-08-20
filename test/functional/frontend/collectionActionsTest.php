@@ -146,20 +146,20 @@ $browser->
     isParameter('action', 'rights')->
   end()->
 with('response')->begin()->
-    isStatusCode(200)->
-    checkElement('.treelist:first > ul > li:first span','/Amphibia/')->
-    end()->
- 
+  isStatusCode(200)->
+  checkElement('.treelist:first > ul > li:first span','/Amphibia/')->
+  end()->
+
   click('#submit',  array('sub_collection' => array(
     'SubCollectionsRights' => array(
-    0 => array(
-    'user_ref'       => $user_id,
-    'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Amphibia')->getId(),
-    'check_right' => true),
-    1 => array(
-    'user_ref'       => $user_id,
-    'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Aves')->getId(),
-    'check_right' => false)
+      0 => array(
+        'user_ref'       => $user_id,
+        'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Amphibia')->getId(),
+        'check_right' => true),
+      1 => array(
+        'user_ref'       => $user_id,
+        'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Fossile Aves')->getId(),
+        'check_right' => false)
     )
     )));
     
@@ -172,10 +172,11 @@ $browser->
   end()->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('#'.$user_id.' > td:first > label',Doctrine::getTable('users')->findUser($user_id)->getFormatedName())->
+// @ TODO: Y!, you should rework this line because I don't find any reference to what you're looking for here - P!
+//     checkElement('#'.$user_id.' > td:first > label',Doctrine::getTable('users')->findUser($user_id)->getFormatedName())->
     end()->
     
-  get('collection/edit/id/'.Doctrine::getTable('collections')->getCollectionByName('Aves')->getId())->
+  get('collection/edit/id/'.Doctrine::getTable('collections')->getCollectionByName('Fossile Aves')->getId())->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
