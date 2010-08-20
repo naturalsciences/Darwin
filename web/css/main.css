@@ -686,7 +686,7 @@ input[type="text"].xlarge_size
 
 #login_page input#login_username
 {
-  background: white url(/images/user_suit_m.png) no-repeat 3px 3px;
+  background: white url(/images/user.png) no-repeat 3px 3px;
   padding-left:2em;
 }
 
