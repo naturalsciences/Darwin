@@ -32,14 +32,14 @@ class userActions extends DarwinActions
       $this->form->bind($request->getParameter('users'));
       if($this->form->isValid())
       {
-		$old_db_user_type = $user_to_edit->getDbUserType() ;
-		$this->form->save();
-		Doctrine::getTable('MyWidgets')->
-		  setUserRef($user_to_edit->getId())->
-		  setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
+        $old_db_user_type = $user_to_edit->getDbUserType() ;
+        $this->form->save();
+        Doctrine::getTable('MyWidgets')->
+          setUserRef($user_to_edit->getId())->
+          setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
 
-		return $this->redirect('user/edit?id='.$user_to_edit->getId());
-	  }
+        return $this->redirect('user/edit?id='.$user_to_edit->getId());
+      }
     }
 
     $this->loadWidgets();
@@ -81,16 +81,17 @@ class userActions extends DarwinActions
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         // if this is not an admin, make sure no admin and collection manager are visible in the search form
         $this->pagerLayout = new PagerLayoutWithArrows(
-	  new Doctrine_Pager(
-	    $query,
-	    $this->currentPage,
-	    $this->form->getValue('rec_per_page')
-	  ),
-	  new Doctrine_Pager_Range_Sliding(
-	    array('chunk' => $this->pagerSlidingSize)
-	    ),
-	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-	);
+          new Doctrine_Pager(
+            $query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          ),
+          new Doctrine_Pager_Range_Sliding(
+            array('chunk' => $this->pagerSlidingSize)
+          ),
+          $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+        );
+
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
@@ -345,6 +346,20 @@ class userActions extends DarwinActions
           $error = new sfValidatorError(new savedValidator(),$e->getMessage());
           $this->form->getErrorSchema()->addError($error); 
         }
+      }
+    }
+  }
+
+  public function executePreferences(sfWebRequest $request)
+  {
+    $this->form = new PreferencesForm(null, array('user'=>$this->getUser()));
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('preferences'));
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->redirect('user/preferences');
       }
     }
   }

@@ -6,6 +6,7 @@
             <ul>
               <li><?php echo link_to(__('My Profile'),'user/profile');?></li>
               <li><?php echo link_to(__('My Widgets'),'user/widget');?></li>
+              <li><?php echo link_to(__('My Preferences'),'user/preferences');?></li>
             </ul>
         </li>
         <li>

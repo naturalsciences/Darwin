@@ -820,22 +820,26 @@ td.left_tabed
   padding-right:2.8em;
 }
 
-.catalogue_table
+.catalogue_table, .user_table
 {
   width:100%;
   text-align:left;
 }
 
-.catalogue_table thead
+.catalogue_table thead, .user_table thead
 {
   border-bottom: 1px solid #C1CF56;
 }
 
-.catalogue_table thead th
+.catalogue_table thead th, .user_table thead th
 {
   padding: 0.3em;
 }
 
+.user_table tbody th
+{
+  width: 200px;
+}
 .catalogue_table tbody tr:hover
 {
   background-color: #E9EDBE;
@@ -1763,4 +1767,11 @@ td.and_col
 {
   width: 15px;
   text-align:right;
+}
+
+
+.spec_search_cols_pref
+{
+  max-height: 200px;
+  overflow-y: scroll;
 }
