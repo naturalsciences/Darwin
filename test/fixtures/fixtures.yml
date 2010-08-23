@@ -300,6 +300,7 @@ Specimens:
     sp2:
         id: 2
         Collections: c2
+        category: observation
         specimen_count_min: 1
         acquisition_date: '2001-03-01'
         acquisition_category: theft

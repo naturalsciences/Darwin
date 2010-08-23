@@ -335,6 +335,11 @@ input[type="text"].small_size
   width:120px;
 }
 
+input[type="text"].medium_small_size
+{
+  width:180px;
+}
+
 input[type="text"].medium_size
 {
   width:320px;
