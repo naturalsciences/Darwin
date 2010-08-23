@@ -11,21 +11,25 @@
 class boardwidgetComponents extends sfComponents
 {
   public function executeSavedSearch()
-  {
-    $q = Doctrine::getTable('MySavedSearches')
-        ->addUserOrder(null, $this->getUser()->getId());
+  {        
     $this->searches = Doctrine::getTable('MySavedSearches')
-        ->addIsSearch($q, true)
-        ->execute();
+      ->fetchSearch(
+        $this->getUser()->getId(),
+        Doctrine::getTable('Preferences')->getPreference(
+          $this->getUser()->getId(),'board_search_rec_pp','10'
+        )
+      );
   }
 
   public function executeSavedSpecimens()
   {
-    $q = Doctrine::getTable('MySavedSearches')
-        ->addUserOrder(null, $this->getUser()->getId());
-    $this->specimens = Doctrine::getTable('MySavedSearches')
-        ->addIsSearch($q, false)
-        ->execute();
+    $this->specimens =  = Doctrine::getTable('MySavedSearches')
+      ->fetchSpecimens(
+        $this->getUser()->getId(),
+        Doctrine::getTable('Preferences')->getPreference(
+          $this->getUser()->getId(),'board_spec_rec_pp','10'
+        )
+      );
   }
   
   public function executeAddTaxon()

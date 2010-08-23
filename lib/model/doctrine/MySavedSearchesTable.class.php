@@ -29,7 +29,25 @@ class MySavedSearchesTable extends DarwinTable
       ->andWhere('id = ?', $id )
       ->fetchOne();
   }
-  
+
+  public function fetchSearch($user_ref, $num_per_page)
+  {
+    $q = $this->addUserOrder(null,$user_ref);
+    $this->addIsSearch($q, true);
+    $q->setLimit($num_per_page);
+
+    return $q->execute();
+  }
+
+  public function fetchSpecimens($user_ref, $num_per_page)
+  {
+    $q = $this->addUserOrder(null,$user_ref);
+    $this->addIsSearch($q, false);
+    $q->setLimit($num_per_page);
+
+    return $q->execute();
+  }
+
   public function getAllFields()
   {
     return array('category'=>'category',
