@@ -21,7 +21,7 @@ jQuery(function() {
     $.ajax({
             type: "POST",
             url: $(this).attr("href"),
-            data: $('.specimensearch_form').serialize(),
+            data: $(this).closest('form').serialize(),
             success: function(html){
                                     $(".search_results_content").html(html);
                                     $('.search_results').slideDown();
@@ -31,7 +31,9 @@ jQuery(function() {
     $(".search_results_content").html('<img src="/images/loader.gif" />');
     return false;
   });
+
 });
+
 
 function update_list(li)
 {

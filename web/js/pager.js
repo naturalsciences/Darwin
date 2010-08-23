@@ -4,8 +4,8 @@ jQuery(function ()
          {
            $.ajax({
                    type: "POST",
-                   url: $(".search_form").attr('action'),
-                   data: $('.search_form').serialize(),
+                   url: $(this).closest('form').attr('action'),
+                   data: $(this).closest('form').serialize(),
                    success: function(html){
                                            $(".search_results_content").html(html);
                                            $('.search_results').slideDown();
