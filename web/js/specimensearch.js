@@ -68,7 +68,6 @@ function hide_or_show(li)
   field = li.attr('id') ;
   column = field.substr(3) ;
   val = li.attr('class') ;
-  colspan = $('table.spec_results tbody tr:nth-child(2) td').attr('colspan') ;
   if(val == 'uncheck')
   {
     $("li #"+field).find('span:first').hide();
@@ -76,7 +75,6 @@ function hide_or_show(li)
     $('table.spec_results thead tr th.col_'+column).hide();
     $('table.spec_results tbody tr td.col_'+column).hide();
     //this line below is neccessary to avoid table border to be cut
-    $('table.spec_results tbody tr:nth-child(2) td').attr('colspan',colspan-1) ;
   }
   else
   {
@@ -85,6 +83,7 @@ function hide_or_show(li)
     $('table.spec_results thead tr th.col_'+column).show();
     $('table.spec_results tbody tr td.col_'+column).show();
     //this line below is neccessary to avoid table border to be cut    
-    $('table.spec_results tbody tr:nth-child(2) td').attr('colspan',colspan+1) ;    
   }
+  initIndividualColspan();
+
 }
