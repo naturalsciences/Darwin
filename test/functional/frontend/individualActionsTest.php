@@ -26,8 +26,8 @@ $browser->addCustomSpecimen('777','Collection test for individual','Taxon test f
     checkElement('.board_col:last .widget:nth-child(3) .widget_top_bar span','Identifications')->   
     checkElement('.board_col:last .widget:nth-child(4) .widget_top_bar span','Comments')->        
   end();
-$specimen = Doctrine::getTable('Specimens')->findAll();
-$specimen_id = $specimen[0]->getId();
+
+$specimen_id = 3;
 $indiv_id = $browser->addCustomIndividual($specimen_id);
 
 $browser->
