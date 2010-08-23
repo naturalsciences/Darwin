@@ -67,7 +67,9 @@ h1
   font-size:large;
   margin-bottom: 1em;
 }
-
+.edition h1 {
+  color:#C1CF56;
+}
 /* Errors style */
 
 /** Used for main spec errors and errors generated with renderErrors **/
@@ -245,6 +247,13 @@ input, textarea
 input:focus, textarea:focus
 {
   border:1px solid #C1CF56;
+}
+
+
+
+ .login input:focus, .login textarea:focus
+{
+  border:1px solid #3390A1;
 }
 
 form.search_form input:focus
