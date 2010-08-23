@@ -34,7 +34,7 @@ class MySavedSearchesTable extends DarwinTable
   {
     $q = $this->addUserOrder(null,$user_ref);
     $this->addIsSearch($q, true);
-    $q->setLimit($num_per_page);
+    $q->limit($num_per_page);
 
     return $q->execute();
   }
@@ -43,7 +43,7 @@ class MySavedSearchesTable extends DarwinTable
   {
     $q = $this->addUserOrder(null,$user_ref);
     $this->addIsSearch($q, false);
-    $q->setLimit($num_per_page);
+    $q->limit($num_per_page);
 
     return $q->execute();
   }

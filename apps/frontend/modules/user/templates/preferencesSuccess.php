@@ -19,24 +19,24 @@
           <td><div > <!--class="spec_search_cols_pref"--><table><?php echo $form['spec_search_cols'];?></table></div></td>
         </tr>
       </tbody>
-<!--
       <thead>
         <tr>
-          <th  colspan="2"><?php echo __("Board Widgets");?></th>
+          <th colspan="2"><?php echo __("Board Widgets");?></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><?php //echo $form['pref_key']->renderLabel();?></td>
-          <td><?php //echo $form['pref_key'];?></td>
+          <th><?php echo $form['board_spec_rec_pp']->renderLabel();?>
+          <?php echo image_tag('help_icon_grey.png',array('alt'=> $form['board_spec_rec_pp']->renderHelp(),'class'=>'help_ico'));?></div>
+          </th>
+          <td><?php echo $form['board_spec_rec_pp'];?></td>
         </tr>
         <tr>
-          <td><?php //echo $form['pref_value']->renderLabel();?></td>
-          <td><?php // $form['pref_value'];?></td>
+          <th><?php echo $form['board_search_rec_pp']->renderLabel();?>
+          <?php echo image_tag('help_icon_grey.png',array('alt'=> $form['board_search_rec_pp']->renderHelp(),'class'=>'help_ico'));?></div>
+          </th>
+          <td><?php echo $form['board_search_rec_pp'];?></td>
         </tr>
-      </tbody>-->
-
-
       <tfoot>
         <tr>
           <td colspan='2'>

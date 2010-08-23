@@ -23,7 +23,7 @@ class boardwidgetComponents extends sfComponents
 
   public function executeSavedSpecimens()
   {
-    $this->specimens =  = Doctrine::getTable('MySavedSearches')
+    $this->specimens = Doctrine::getTable('MySavedSearches')
       ->fetchSpecimens(
         $this->getUser()->getId(),
         Doctrine::getTable('Preferences')->getPreference(

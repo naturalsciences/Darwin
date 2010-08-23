@@ -34,7 +34,8 @@ class PreferencesTable extends Doctrine_Table
       $result = new Preferences();
       $result->fromArray(array(
         'user_ref' => $user_id,
-	'pref_key' => $key,
+        'pref_key' => $key,
+      ));
     }
 
     $result->setPrefValue($value);
