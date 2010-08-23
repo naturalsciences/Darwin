@@ -28,10 +28,16 @@ class PreferencesTable extends Doctrine_Table
       ->andwhere('p.user_ref = ?', $user_id)
       ->andWhere('p.pref_key = ?',$key)
       ->fetchOne();
-    if($result)
-       $result->setPrefValue($value);
-    else
-      return false;
+
+    if(!$result)
+    {
+      $result = new Preferences();
+      $result->fromArray(array(
+        'user_ref' => $user_id,
+	'pref_key' => $key,
+    }
+
+    $result->setPrefValue($value);
     $result->save();
     return true;
   }
@@ -65,3 +71,4 @@ class PreferencesTable extends Doctrine_Table
     }
   }
 }
+

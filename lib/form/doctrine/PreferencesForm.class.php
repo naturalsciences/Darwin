@@ -24,7 +24,11 @@ class PreferencesForm extends sfForm
       'renderer_options' => array('formatter' => array($this, 'formatter'))     
     ));
     $this->widgetSchema['spec_search_cols']->setLabel('Default visible columns');
-    $this->widgetSchema['spec_search_cols']->setDefault(explode('|',$this->db_keys['spec_search_cols']));
+    $defaut = $this->db_keys['spec_search_cols'];
+    if($default == '')
+      $default = 'category|taxon|collection|type|gtu';
+    $this->widgetSchema['spec_search_cols']->setDefault(explode('|',$default));
+    
     $this->widgetSchema->setHelp('spec_search_cols', 'Define which field will be available by default into the specimen search');
 
     $this->validatorSchema['spec_search_cols'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
