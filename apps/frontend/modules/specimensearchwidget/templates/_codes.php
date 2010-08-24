@@ -36,10 +36,18 @@ $(document).ready(function () {
     });
   });
 
-  $('.widget_row_delete').live('click',function(event)
+  $('.clear_prop').live('click',function(event)
   {
     event.preventDefault();
-    $(this).closest('tr').remove();
+    console.log($(this).closest('tbody').find('tr').length);
+    if($(this).closest('tbody').find('tr').length == 2)
+    {
+      $(this).closest('tr').find('td input').val('');
+    }
+    else
+    {
+      $(this).closest('tr').remove();
+    }
     checkBetween();
   });
 
@@ -50,6 +58,7 @@ $(document).ready(function () {
     else
       $('#code_search thead .between_col').hide();
   }
+
   $('#code_search .code_between.prev').live('click',function (event)
   {
     event.preventDefault();
