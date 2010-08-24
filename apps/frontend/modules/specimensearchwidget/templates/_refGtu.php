@@ -24,7 +24,7 @@
           <th colspan="2"></th>
         </tr>
         <?php foreach($form['Tags'] as $i=>$form_value):?>
-          <?php include_partial('specimensearch/andSearch',array('form' => $form['Tags'][$i]));?>
+          <?php include_partial('specimensearch/andSearch',array('form' => $form['Tags'][$i], 'row_line'=>$i));?>
         <?php endforeach;?>
         <tr class="and_row">
           <td colspan="3"></td>
@@ -33,10 +33,10 @@
       </tbody>
     </table>
     <script  type="text/javascript">
-        var num_fld = 1;
-        $('.and_tag').click(function()
-        {
-      $.ajax({
+      var num_fld = 1;
+      $('.and_tag').click(function()
+      {
+        $.ajax({
           type: "GET",
           url: $(this).attr('href') + '/num/' + (num_fld++) ,
           success: function(html)
@@ -44,13 +44,7 @@
             $('table#gtu_search > tbody .and_row').before(html);
           }
         });
-          return false;
-        });
-      $('.widget_row_delete').live('click',function(){
-        if($('.tag_line').length == 1)
-          $(this).closest('tr').find('.tag_line').val('');
-        else
-        $(this).closest('tr').remove();
+        return false;
       });
     </script>
   </div>

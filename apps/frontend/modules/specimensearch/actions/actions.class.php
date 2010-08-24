@@ -224,7 +224,7 @@ class specimensearchActions extends DarwinActions
 
     $form = new SpecimenSearchFormFilter();
     $form->addGtuTagValue($number);
-    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number]));
+    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number], 'row_line'=>$number));
   }  
 
   public function executeAddCode(sfWebRequest $request)
@@ -233,6 +233,6 @@ class specimensearchActions extends DarwinActions
 
     $form = new SpecimenSearchFormFilter();
     $form->addCodeValue($number);
-    return $this->renderPartial('specimensearchwidget/codeline',array('code' => $form['Codes'][$number]));
+    return $this->renderPartial('specimensearchwidget/codeline',array('code' => $form['Codes'][$number], 'row_line'=>$number));
   }
 }

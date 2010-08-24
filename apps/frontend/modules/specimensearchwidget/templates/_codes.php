@@ -36,21 +36,6 @@ $(document).ready(function () {
     });
   });
 
-  $('.clear_prop').live('click',function(event)
-  {
-    event.preventDefault();
-    console.log($(this).closest('tbody').find('tr').length);
-    if($(this).closest('tbody').find('tr').length == 2)
-    {
-      $(this).closest('tr').find('td input').val('');
-    }
-    else
-    {
-      $(this).closest('tr').remove();
-    }
-    checkBetween();
-  });
-
   function checkBetween()
   { 
     if( $('#code_search tbody .between_col:visible').length)
