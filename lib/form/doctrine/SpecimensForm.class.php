@@ -39,6 +39,7 @@ class SpecimensForm extends BaseSpecimensForm
     $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
 
     /* Define name format */
+    $this->widgetSchema->setNameFormat('specimen[%s]');    
     /* Fields */
     
     $this->widgetSchema['category'] = new widgetFormSelectComplete(array(
