@@ -64,7 +64,7 @@ $(document).ready(function () {
          {
             $(this).attr('value','Search Saved') ;
             $(this.elements.target).qtip("destroy");
-            if(spec_list_saved)
+            if(typeof(spec_list_saved) !='undefined')
               window.location.replace('<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved);
          }
          }

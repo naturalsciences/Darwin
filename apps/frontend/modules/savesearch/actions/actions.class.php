@@ -98,6 +98,7 @@ class savesearchActions extends sfActions
         if($request->getParameter('list_nr') == 'create')
         {
           $ids=implode(',',$this->getUser()->getAllPinned() );
+          if($ids=="") return $this->renderText('<ul class="error_list"><li>'.$this->getContext()->getI18N()->__('You must select a least 1 specimen').'</li></ul>');
           $criterias = serialize( array('specimen_search_filters'=> array('spec_ids' => $ids)) );
           $saved_search->setIsOnlyId(true);
         }
