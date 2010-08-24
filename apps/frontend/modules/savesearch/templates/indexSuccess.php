@@ -10,6 +10,7 @@
   <?php endif;?>
 
   <table class="saved_searches">
+  <tbody>
   <?php foreach($searches as $search):?>
     <tr class="r_id_<?php echo $search->getId();?>">
         <td class="fav_col"><?php if($search->getFavorite()):?>
@@ -38,6 +39,7 @@
         </td>
     </tr>
 <?php endforeach;?>
+    </tbody>
     </table>
 </div>
 

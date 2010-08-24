@@ -362,9 +362,12 @@ $(document).ready(function () {
   <?php if($is_specimen_search):?>
     $('.spec_results .pin_del').click(function(){
       rid = getIdInClasses($(this).closest('tr'));
-      $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/id/' + rid ,function (html){
-        $('.rid_'+rid).closest('tbody').remove();
-      });
+      if(confirm('<?php echo __('Are you sure?');?>'))
+      {
+        $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/id/' + rid ,function (html){
+          $('.rid_'+rid).closest('tbody').remove();
+        });
+      }
     });
   <?php endif;?>
 
