@@ -39,9 +39,18 @@ class SpecimensForm extends BaseSpecimensForm
     $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
 
     /* Define name format */
-    $this->widgetSchema->setNameFormat('specimen[%s]');
-
     /* Fields */
+    
+    $this->widgetSchema['category'] = new widgetFormSelectComplete(array(
+        'model' => 'Specimens',
+        'table_method' => 'getDistinctCategory',
+        'method' => 'getCategory',
+        'key_method' => 'getCategory',
+        'add_empty' => true,
+        'change_label' => 'Pick a category in the list',
+        'add_label' => 'Add another category',
+    ));
+
     /* Collection Reference */
     $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(
       array('model' => 'Collections',

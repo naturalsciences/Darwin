@@ -204,37 +204,42 @@
                         });
                       });
                   </script>
-                  <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getSpecRef()."_info");?>
-                  <div class="general_gtu">
-                    <strong><?php echo __('Country');?> :</strong>
-                    <?php echo $specimen->getCountryTags();?><div class="clear" ></div>
-                  </div>
-                 <div id="gtu_<?php echo $specimen->getSpecRef();?>_details" style="display:none;"></div>
+                  <?php if($specimen->getGtuCountryTagValue() != "") : ?>                  
+                    <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getSpecRef()."_info");?>                    
+                    <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
+                    <div class="general_gtu">
+                      <strong><?php echo __('Country');?> :</strong>
+                      <?php echo $specimen->getCountryTags();?>
+                    </div>
+                    <div id="gtu_<?php echo $specimen->getSpecRef();?>_details" style="display:none;"></div>
+                  <?php else : ?>
+                    <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef());?>"><?php echo $specimen->getGtuCode();?></a>
+                  <?php endif ; ?>                 
                 <?php endif ; ?>          
               </td>                      
               <td  class="col_chrono">
                 <?php if($specimen->getChronoRef() > 0) : ?>              
-                  <a href="chronostratigraphy/edit/id/<?php echo $specimen->getChronoRef();?>"><?php echo $specimen->getChronoName();?></a>
+                  <a href="<?php echo url_for('chronostratigraphy/edit?id='.$specimen->getChronoRef());?>"><?php echo $specimen->getChronoName();?></a>
                 <?php endif ; ?>&nbsp;                
               </td>
               <td  class="col_litho">
                 <?php if($specimen->getLithoRef() > 0) : ?>              
-                  <a href="lithostratigraphy/edit/id/<?php echo $specimen->getLithoRef();?>"><?php echo $specimen->getLithoName();?></a>
+                  <a href="<?php echo url_for('lithostratigraphy/edit?id='.$specimen->getLithoRef());?>"><?php echo $specimen->getLithoName();?></a>
                 <?php endif ; ?>&nbsp;                
               </td> 
               <td class="col_lithologic">
                 <?php if($specimen->getLithologyRef() > 0) : ?>              
-                  <a href="lithology/edit/id/<?php echo $specimen->getLithologyRef();?>"><?php echo $specimen->getLithologyName();?></a>
+                  <a href="<?php echo url_for('lithology/edit?id='.$specimen->getLithologyRef());?>"><?php echo $specimen->getLithologyName();?></a>
                 <?php endif ; ?>&nbsp;
               </td>
               <td class="col_mineral">
                 <?php if($specimen->getMineralRef() > 0) : ?>
-                  <a href="Mineralogy/edit/id/<?php echo $specimen->getMineralRef();?>"><?php echo $specimen->getMineralName();?></a>
+                  <a href="<?php echo url_for('mineralogy/edit?id='.$specimen->getMineralRef());?>"><?php echo $specimen->getMineralName();?></a>
                 <?php endif ; ?>&nbsp;
               </td>              
               <td class="col_expedition">
                 <?php if($specimen->getExpeditionRef() > 0) : ?>
-                  <a href="expedition/edit/id/<?php echo $specimen->getExpeditionRef();?>"><?php echo $specimen->getExpeditionName();?></a>
+                  <a href="<?php echo url_for('expedition/edit?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
                 <?php endif ; ?>&nbsp;
               </td> 
               <td class="col_count">
