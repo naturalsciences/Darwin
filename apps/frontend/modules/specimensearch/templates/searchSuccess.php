@@ -8,7 +8,17 @@
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
     <form id="specimen_filter" class="specimensearch_form" action="<?php echo url_for('specimensearch/searchResult'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
       <ul id="intro" class="hidden">
-        <?php echo $form->render() ; ?>
+        <?php 
+          // Render all the form fields as hidden input if possible. if the value is an array or and object render them as usual
+          foreach($form as $row)
+        { 
+          $w = new sfWidgetFormInputHidden();
+          $attributes = $form->getWidget($row->getName())->getAttributes();
+          if(is_string($row->getValue()) || is_null($row->getValue()))
+            echo '<li>'.$w->render( $form->getWidgetSchema()->generateName($row->getName()),$row->getValue(),$attributes).'</li>';
+          else
+            echo '<li>'.$row.'</li>';
+        }?>
       </ul>
       <div class="search_results">
         <div class="search_results_content">
