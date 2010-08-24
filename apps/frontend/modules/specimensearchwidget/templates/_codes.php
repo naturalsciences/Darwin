@@ -32,7 +32,6 @@ $(document).ready(function () {
       {
         $('#code_search > tbody .and_row').before(html);
         $('#code_search > tbody tr:not(.and_row):last .between_col').hide();
-        $('#code_search thead .between_col').show();
       }
     });
   });
