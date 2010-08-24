@@ -2,8 +2,9 @@
   <thead>
     <tr>
       <th><?php echo __('Category');?></th>
-      <th></th><th></th>
-      <th colspan="2" class="centered between_col"><?php echo __('Between');?></th>
+      <th colspan="2"></th>
+      <th class="between_col"><?php echo __('Between');?></th>
+      <th class="between_col"><?php echo __('and');?></th>
       <th></th>
     </tr>
   </thead>
@@ -12,8 +13,8 @@
       <?php include_partial('specimensearchwidget/codeline',array('code' => $code,'row_line'=>$i));?>
     <?php endforeach;?>
       <tr class="and_row">
-        <td colspan="5"></td>
-        <td class="and_col"><?php echo link_to(image_tag('add_blue.png'),'specimensearch/addCode', array('class'=>'add_code'));?></td>
+        <td colspan="3"></td>
+        <td colspan="3" class="and_col"><?php echo link_to(image_tag('add_blue.png'),'specimensearch/addCode', array('class'=>'add_code'));?></td>
       </tr>
   </tbody>
 </table>

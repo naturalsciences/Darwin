@@ -218,6 +218,7 @@ class MyWidgetsTable extends DarwinTable
   */
   public function forceWidgetOpened($user, $category,$widget_array)
   {
+    if(empty($widget_array)) return;
     $q = Doctrine_Query::create()
           ->update('MyWidgets p')
           ->set('p.visible','true')

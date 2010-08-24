@@ -12,17 +12,6 @@ class specimensearchActions extends DarwinActions
 {
   protected $widgetCategory = 'specimensearch_widget';
 
-  /**
-   * Save the state of each col (visible / hidden ) in session 
-   *
-  */
-  public function executeSaveCol(sfWebRequest $request)
-  {
-    $columns = explode('|',$request->getParameter('cols',''));
-    $this->getUser()->storeVisibleCols($columns);
-    return $this->renderText('ok');
-  }
-
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new SpecimenSearchFormFilter();

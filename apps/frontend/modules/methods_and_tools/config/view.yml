@@ -1,0 +1,6 @@
+newSuccess:
+  stylesheets: [widgets.css, encod.css, jquery-ui-1.7.2.edit.css]
+  javascripts: [jquery.ui.all.min.js]
+editSuccess:
+  stylesheets: [widgets.css, encod.css, jquery-ui-1.7.2.edit.css]
+  javascripts: [jquery.ui.all.min.js, widgets.js, catalogue.js]

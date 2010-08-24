@@ -22,7 +22,9 @@ $t->is($codes[1]->getCodeFormated(), 'VERT./1548548 Abou', 'The Code is well "VE
 $t->is($codes[2]->getCodeFormated(), 'VERT./85486846', 'The Code is well "VERT./85486846"');
 $t->is($codes[3]->getCodeFormated(), 'VERT./-*AFTER', 'The Code is well "VERT./-*AFTER"');
 
-$specimens = Doctrine::getTable('Specimens')->findAll();
+$specimens = Doctrine_Query::create()
+            ->from('Specimens')
+            ->orderBy('collection_ref ASC, id ASC')->execute();
 $specIds = array();
 foreach ($specimens as $key=>$value)
 {

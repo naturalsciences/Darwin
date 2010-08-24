@@ -81,7 +81,11 @@ $t->is($catpeo['author'][1]->getPeople()->getGivenName(), 'ML', 'Type author and
 
 
 $t->info('Interverting order of "Poilux Duchesne" and "ML Duchesne"');
-$catpeo = Doctrine::getTable('CataloguePeople')->findAll();
+ 
+$catpeo = Doctrine_Query::create()
+            ->from('CataloguePeople c')
+            ->orderBy('referenced_relation ASC, order_by ASC, id ASC')->execute();
+
 Doctrine::getTable('CataloguePeople')->changeOrder($catpeo[1]->getReferencedRelation(),
                                                    $catpeo[1]->getRecordId(),
                                                    'author',

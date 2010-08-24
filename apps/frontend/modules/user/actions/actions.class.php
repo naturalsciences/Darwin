@@ -32,14 +32,14 @@ class userActions extends DarwinActions
       $this->form->bind($request->getParameter('users'));
       if($this->form->isValid())
       {
-		$old_db_user_type = $user_to_edit->getDbUserType() ;
-		$this->form->save();
-		Doctrine::getTable('MyWidgets')->
-		  setUserRef($user_to_edit->getId())->
-		  setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
+        $old_db_user_type = $user_to_edit->getDbUserType() ;
+        $this->form->save();
+        Doctrine::getTable('MyWidgets')->
+          setUserRef($user_to_edit->getId())->
+          setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
 
-		return $this->redirect('user/edit?id='.$user_to_edit->getId());
-	  }
+        return $this->redirect('user/edit?id='.$user_to_edit->getId());
+      }
     }
 
     $this->loadWidgets();
@@ -81,16 +81,17 @@ class userActions extends DarwinActions
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         // if this is not an admin, make sure no admin and collection manager are visible in the search form
         $this->pagerLayout = new PagerLayoutWithArrows(
-	  new Doctrine_Pager(
-	    $query,
-	    $this->currentPage,
-	    $this->form->getValue('rec_per_page')
-	  ),
-	  new Doctrine_Pager_Range_Sliding(
-	    array('chunk' => $this->pagerSlidingSize)
-	    ),
-	  $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-	);
+          new Doctrine_Pager(
+            $query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          ),
+          new Doctrine_Pager_Range_Sliding(
+            array('chunk' => $this->pagerSlidingSize)
+          ),
+          $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+        );
+
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
@@ -107,53 +108,56 @@ class userActions extends DarwinActions
 
     $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
     try{
-        $user->delete();
-	$this->redirect('user/index');
+      $user->delete();
+      $this->redirect('user/index');
     }
     catch(Doctrine_Exception $ne)
     {
-	$e = new DarwinPgErrorParser($ne);
-        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $user->getIsPhysical()));
-	$this->form->getErrorSchema()->addError($error); 
-	$this->loadWidgets();
-	$this->setTemplate('edit');
+      $e = new DarwinPgErrorParser($ne);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $user->getIsPhysical()));
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
     }
   }
   
   public function executeWidget(sfWebRequest $request)
   {
-   $id = $request->getparameter('id') ;
-   $url = "user/widget?id=".$id ;
-   if (!$id) {
-   	$id = $this->getUser()->getId();
-   	$url = "user/widget" ;
-   }
-   else { 
-    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
- 	$this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
-   }
-   $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
-   $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
-   $this->level = $this->getUser()->getAttribute('db_user_type') ; 
-   if($request->isMethod('post'))
-   {
-     $this->form->bind($request->getParameter('user_widget')) ;
-     if($this->form->isValid())
-     {
-     	$this->form->save();
-     	return $this->redirect($url);
-     }
-   }
-   $this->form_pref = array();
-   foreach($this->form['MyWidgets'] as $keyword)
-   {	
+    $id = $request->getparameter('id') ;
+    $url = "user/widget?id=".$id ;
+    if (!$id)
+    {
+      $id = $this->getUser()->getId();
+      $url = "user/widget" ;
+    }
+    else
+    { 
+      if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
+      $this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+    }
+    $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
+    $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
+    $this->level = $this->getUser()->getAttribute('db_user_type') ; 
+
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('user_widget')) ;
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->redirect($url);
+      }
+    }
+    $this->form_pref = array();
+    foreach($this->form['MyWidgets'] as $keyword)
+    {
       $type = $keyword['category']->getValue();
       if(!isset($this->form_pref[$type]))
         $this->form_pref[$type] = array();
       $this->form_pref[$type][] = $keyword;
-   }
-   $this->user = Doctrine::getTable("Users")->findUser($id) ;
+    }
+    $this->user = Doctrine::getTable("Users")->findUser($id) ;
   }
   
   public function executeProfile(sfWebRequest $request)
@@ -192,19 +196,20 @@ class userActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('users_addresses'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-	    $e = new DarwinPgErrorParser($ne);
-	    return $this->renderText($e->getMessage());
-	  }
-	}
+      $this->form->bind($request->getParameter('users_addresses'));
+      if($this->form->isValid())
+      {
+        try
+        {
+          $this->form->save();
+          return $this->renderText('ok');
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          return $this->renderText($e->getMessage());
+        }
+      }
     }
   }
 
@@ -229,18 +234,18 @@ class userActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('users_comm'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	  }
-	  catch(Exception $e)
-	  {
-	    return $this->renderText($e->getMessage());
-	  }
-	  return $this->renderText('ok');
-	}
+      $this->form->bind($request->getParameter('users_comm'));
+      if($this->form->isValid())
+      {
+        try{
+          $this->form->save();
+        }
+        catch(Exception $e)
+        {
+          return $this->renderText($e->getMessage());
+        }
+        return $this->renderText('ok');
+      }
     }
   }
   public function executeCreate(sfWebRequest $request)
@@ -255,50 +260,52 @@ class userActions extends DarwinActions
 
     if ($this->form->isValid())
     {
-	  try{
-		$user = $this->form->save();
-		$user->addUserWidgets();
-		$this->redirect('user/edit?id='.$user->getId());
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-		$e = new DarwinPgErrorParser($ne);
-		$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-		$this->form->getErrorSchema()->addError($error);
-	  }
+      try{
+        $user = $this->form->save();
+        $user->addUserWidgets();
+        $this->redirect('user/edit?id='.$user->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $this->form->getErrorSchema()->addError($error);
+      }
     }
     $this->setTemplate('new');
   }
 
   public function executeLoginInfo(sfWebRequest $request)
   {
-     $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
-     if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
-     {
-     	if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-     }
-	$this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
-	if( ! $this->loginInfo )
-	{
-		$this->loginInfo = new UsersLoginInfos() ;
-		$this->loginInfo->setUserRef($request->getParameter('user_ref')) ;
-	}
-	$this->form = new UsersLoginInfosForm($this->loginInfo);
-	if($request->isMethod('post'))
-	{
-    	     $this->form->bind($request->getParameter('users_login_infos'));
-		if($this->form->isValid())
-		{
-		  try{
-		    $this->form->save();
-		  }
-		  catch(Exception $e)
-		  {
-		    return $this->renderText($e->getMessage());
-		  }
-		  return $this->renderText('ok');
-		}
-	}
+    $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
+    if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
+    {
+      if($this->getUser()->getDbUserType() < Users::MANAGER)
+        $this->forwardToSecureAction();
+    }
+    $this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
+
+    if( ! $this->loginInfo )
+    {
+      $this->loginInfo = new UsersLoginInfos() ;
+      $this->loginInfo->setUserRef($request->getParameter('user_ref')) ;
+    }
+    $this->form = new UsersLoginInfosForm($this->loginInfo);
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('users_login_infos'));
+      if($this->form->isValid())
+      {
+        try{
+          $this->form->save();
+        }
+        catch(Exception $e)
+        {
+          return $this->renderText($e->getMessage());
+        }
+        return $this->renderText('ok');
+      }
+    }
   }
 
   public function executeLang(sfWebRequest $request)
@@ -316,29 +323,44 @@ class userActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('users_languages'));
-	if($this->form->isValid())
-	{
-	  try {
-	    if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage() )
-	    {
-	      Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->getUser()->getAttribute('db_user_id'));
-	    }
-	    
-	    $this->form->save();
-	    if($this->form->getValue('preferred_language'))
-	    {
-	      $this->getUser()->setCulture($this->form->getValue('language_country'));
-	    }
-	    
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $e)
-	  {
-	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	    $this->form->getErrorSchema()->addError($error); 
-	  }
-	}
+      $this->form->bind($request->getParameter('users_languages'));
+      if($this->form->isValid())
+      {
+        try
+        {
+          if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage() )
+          {
+            Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->getUser()->getAttribute('db_user_id'));
+          }
+          
+          $this->form->save();
+          if($this->form->getValue('preferred_language'))
+          {
+            $this->getUser()->setCulture($this->form->getValue('language_country'));
+          }
+          
+          return $this->renderText('ok');
+        }
+        catch(Doctrine_Exception $e)
+        {
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error); 
+        }
+      }
+    }
+  }
+
+  public function executePreferences(sfWebRequest $request)
+  {
+    $this->form = new PreferencesForm(null, array('user'=>$this->getUser()));
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('preferences'));
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->redirect('user/preferences');
+      }
     }
   }
 }

@@ -2,7 +2,9 @@
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
 $t = new lime_test(6, new lime_output_color());
 
-$identifications = Doctrine::getTable('Identifications')->findAll();
+$identifications = Doctrine_Query::create()
+            ->from('Identifications')
+            ->orderBy('referenced_relation ASC, record_id ASC,order_by asc , id asc')->execute();
 $identifications[0]->setDeterminationStatus('D1C1');
 $identifications[1]->setDeterminationStatus('D1C2');
 $identifications->save();

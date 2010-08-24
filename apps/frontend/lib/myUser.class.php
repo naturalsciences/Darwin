@@ -27,7 +27,7 @@ class myUser extends sfBasicSecurityUser
    */
   public function fetchVisibleCols()
   {
-    return $this->getAttribute('spec_search_columns',array());
+    return explode('|',Doctrine::getTable('Preferences')->getPreference($this->getId(),'spec_search_cols','category|taxon|collection|type|gtu'));
   }
 
 

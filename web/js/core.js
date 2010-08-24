@@ -203,4 +203,12 @@ $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();
   });
+  
+  $('.help_ico').live('mouseover mouseout', function(event) {
+    if (event.type == 'mouseover') {
+      $(this).attr('src','/images/help_icon_green.png');
+    } else {
+      $(this).attr('src','/images/help_icon_grey.png');
+    }
+  });
 });

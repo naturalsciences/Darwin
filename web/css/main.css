@@ -67,7 +67,9 @@ h1
   font-size:large;
   margin-bottom: 1em;
 }
-
+.edition h1 {
+  color:#C1CF56;
+}
 /* Errors style */
 
 /** Used for main spec errors and errors generated with renderErrors **/
@@ -247,6 +249,13 @@ input:focus, textarea:focus
   border:1px solid #C1CF56;
 }
 
+
+
+ .login input:focus, .login textarea:focus
+{
+  border:1px solid #3390A1;
+}
+
 form.search_form input:focus
 {
   border:1px solid #5BAABD;
@@ -324,6 +333,11 @@ input[type="text"].xlsmall_size
 input[type="text"].small_size
 {
   width:120px;
+}
+
+input[type="text"].medium_small_size
+{
+  width:180px;
 }
 
 input[type="text"].medium_size
@@ -690,6 +704,11 @@ input[type="text"].xlarge_size
   padding-left:2em;
 }
 
+#login_page input[type=password]:focus, #login_page input#login_username:focus
+{
+  border: 1px solid #3390A1 !important;
+}
+
 #login_page input[type=submit]
 {
   width:auto;
@@ -801,22 +820,26 @@ td.left_tabed
   padding-right:2.8em;
 }
 
-.catalogue_table
+.catalogue_table, .user_table
 {
   width:100%;
   text-align:left;
 }
 
-.catalogue_table thead
+.catalogue_table thead, .user_table thead
 {
   border-bottom: 1px solid #C1CF56;
 }
 
-.catalogue_table thead th
+.catalogue_table thead th, .user_table thead th
 {
   padding: 0.3em;
 }
 
+.user_table tbody th
+{
+  width: 300px;
+}
 .catalogue_table tbody tr:hover
 {
   background-color: #E9EDBE;
@@ -1744,4 +1767,11 @@ td.and_col
 {
   width: 15px;
   text-align:right;
+}
+
+
+.spec_search_cols_pref
+{
+  max-height: 200px;
+  overflow-y: scroll;
 }

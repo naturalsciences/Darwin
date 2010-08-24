@@ -20,20 +20,20 @@ class collectionActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('collections'));
-	if($this->form->isValid())
-	{
-	  try
-          {
-	    $this->form->save();
-	    return $this->renderText('ok');
-	  }
-	  catch(Exception $e)
-	  {
-            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-            $this->form->getErrorSchema()->addError($error); 
-	  }
-	}
+      $this->form->bind($request->getParameter('collections'));
+      if($this->form->isValid())
+      {
+        try
+        {
+          $this->form->save();
+          return $this->renderText('ok');
+        }
+        catch(Exception $e)
+        {
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error); 
+        }
+      }
     }
   }
 
@@ -169,28 +169,28 @@ class collectionActions extends DarwinActions
 
   public function executeRights(sfWebRequest $request)
   {
-  	$id = $request->getParameter('collection_ref') ;
-  	$user = $request->getParameter('user_ref') ;
-	$this->forward404Unless($collections = Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
-  	$this->user_formated_name = Doctrine::getTable('Users')->findUser($user)->getFormatedName() ;
-  	$old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user) ;
-	$this->form = new SubCollectionsForm(null,array('collection' => $collections,'user_ref' => $user,'old_rights' => $old_rights));
-	$this->sub_coll = array();
-     if($request->isMethod('post'))
-     {
-       $this->form->bind($request->getParameter('sub_collection')) ;
-       if($this->form->isValid())
-       {
-     	$this->form->save();
-     	return $this->renderText('ok') ;
-       }
-     }	
-     foreach($collections as $key => $keyword)
-     {	
-       $this->sub_coll[$key] = array();
-       $this->sub_coll[$key]['level'] = substr_count($keyword->getPath(),'/') ;
-       $this->sub_coll[$key][] = $keyword ;
-     }
+    $id = $request->getParameter('collection_ref') ;
+    $user = $request->getParameter('user_ref') ;
+    $this->forward404Unless($collections = Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
+    $this->user_formated_name = Doctrine::getTable('Users')->findUser($user)->getFormatedName() ;
+    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user) ;
+    $this->form = new SubCollectionsForm(null,array('collection' => $collections,'user_ref' => $user,'old_rights' => $old_rights));
+    $this->sub_coll = array();
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('sub_collection')) ;
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->renderText('ok') ;
+      }
+    }
+    foreach($collections as $key => $keyword)
+    {	
+      $this->sub_coll[$key] = array();
+      $this->sub_coll[$key]['level'] = substr_count($keyword->getPath(),'/') ;
+      $this->sub_coll[$key][] = $keyword ;
+    }
   }
   
   protected function processForm(sfWebRequest $request, sfForm $form)

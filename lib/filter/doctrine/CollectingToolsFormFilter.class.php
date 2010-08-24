@@ -12,5 +12,18 @@ class CollectingToolsFormFilter extends BaseCollectingToolsFormFilter
 {
   public function configure()
   {
+    $this->useFields(array('tool'));
+    $this->addPagerItems();
+    $this->widgetSchema['tool'] = new sfWidgetFormInputText();
+    $this->widgetSchema->setNameFormat('searchCollectingTools[%s]');
+    $this->validatorSchema['tool'] = new sfValidatorString(array('required' => false, 'trim' => true));
+  }
+
+  public function doBuildQuery(array $values)
+  {
+    $query = parent::doBuildQuery($values);
+    $this->addNamingColumnQuery($query, 'collecting_tools', 'tool_indexed', $values['tool']);
+    $query->andWhere("id > 0 ");
+    return $query;
   }
 }

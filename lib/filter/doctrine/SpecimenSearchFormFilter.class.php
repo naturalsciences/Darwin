@@ -13,21 +13,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   public function configure()
   {
 
-    unset($this['SpecimenIndividual'], $this['Specimen'], $this['Collection'], $this['CollectionInstitution'], $this['CollectionMainManager'], 
-$this['CollectionParent'], $this['Expedition'], $this['Gtu'], $this['GtuParent'], $this['Taxonomy'], $this['TaxonomyLevel'], $this['TaxonomyParent'], 
-$this['Lithostratigraphy'], $this['LithostratigraphyLevel'], $this['LithostratigraphyParent'], $this['Chronostratigraphy'], $this['ChronostratigraphyLevel'], 
-$this['ChronostratigraphyParent'], $this['Lithology'], $this['LithologyLevel'], $this['LithologyParent'], $this['Mineralogy'], $this['MineralogyLevel'],
-$this['MineralogyParent'], $this['HostTaxon'], $this['HostTaxonLevel'], $this['HostTaxonParent'], $this['Ig'],
 
-$this['litho_ref'],$this['litho_name_indexed'],$this['litho_name_order_by'],$this['litho_level_name'],$this['litho_status'],$this['litho_path'],$this['litho_parent_ref'],
-$this['taxon_ref'],$this['taxon_name_indexed'],$this['taxon_name_order_by'],$this['taxon_level_name'],$this['taxon_status'],$this['taxon_path'],$this['taxon_parent_ref'],$this['taxon_extinct'],
-$this['lithology_ref'],$this['lithology_name_indexed'],$this['lithology_name_order_by'],$this['lithology_level_name'],$this['lithology_status'],$this['lithology_path'],$this['lithology_parent_ref'],
-$this['chrono_ref'],$this['chrono_name_indexed'],$this['chrono_name_order_by'],$this['chrono_level_name'],$this['chrono_status'],$this['chrono_path'],$this['chrono_parent_ref'], 
-$this['mineral_ref'],$this['mineral_name_indexed'],$this['mineral_name_order_by'],$this['mineral_level_name'],$this['mineral_status'],$this['mineral_path'],$this['mineral_parent_ref'],
-$this['gtu_ref'],$this['gtu_to_date'],$this['gtu_ref'],$this['gtu_path'],$this['gtu_parent_ref'],$this['gtu_from_date_mask'],$this['gtu_to_date_mask'],$this['gtu_tag_values_indexed'],$this['gtu_country_tag_value']
-
-);
-
+      $this->useFields(array('gtu_ref','gtu_code','gtu_from_date','gtu_to_date',
+        'taxon_name', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
+        'chrono_level_name', 'lithology_name', 'lithology_level_ref', 'lithology_level_name', 'mineral_name', 'mineral_level_ref',
+        'mineral_level_name'));
 
     $this->addPagerItems();
     
@@ -75,7 +65,7 @@ $this['gtu_ref'],$this['gtu_to_date'],$this['gtu_ref'],$this['gtu_path'],$this['
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
     $this->setDefault('col_fields','category|taxon|collection|type|gtu');
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
-
+    $this->validatorSchema['collection_ref'] = new sfValidatorPass(); //Avoid duplicate the query
     $this->widgetSchema['spec_ids'] = new sfWidgetFormTextarea(array('label'=>'#ID list'));
     
     $this->validatorSchema['spec_ids'] = new sfValidatorString( array('required' => false,'trim' => true));
@@ -350,6 +340,7 @@ $this['gtu_ref'],$this['gtu_to_date'],$this['gtu_ref'],$this['gtu_path'],$this['
   
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
+
     if(isset($taintedValues['Codes']))
     {
       foreach($taintedValues['Codes'] as $key=>$newVal)
@@ -389,15 +380,20 @@ $this['gtu_ref'],$this['gtu_to_date'],$this['gtu_ref'],$this['gtu_path'],$this['
       $query->andWhereIn("spec_ref", $clean_ids);
     return $query ;
   }
-  
+
+  public function addCollectionRefColumnQuery($query, $field, $val)
+  {
+    if (count($val) > 0) 
+    {
+      $query->andWhereIn('collection_ref',$val) ;
+    }
+    return $query;
+  }
+
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
-    if (count($values['collection_ref']) > 0) 
-    {
-      array_pop($values['collection_ref']) ;      
-      $query->WhereIn('collection_ref',$values['collection_ref']) ;
-    }  
+
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));    
@@ -413,4 +409,14 @@ $this['gtu_ref'],$this['gtu_to_date'],$this['gtu_ref'],$this['gtu_path'],$this['
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }
+
+  public function getJavascripts()
+  {
+    $javascripts=parent::getJavascripts();
+    if(($key = array_search('/js/searchForm.js',$javascripts) ) !== false)
+      unset($javascripts[$key]);
+       
+    return $javascripts;
+  }
+
 }

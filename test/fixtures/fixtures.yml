@@ -300,10 +300,12 @@ Specimens:
     sp2:
         id: 2
         Collections: c2
+        category: observation
         specimen_count_min: 1
         acquisition_date: '2001-03-01'
         acquisition_category: theft
         Taxonomy: ta2
+        Gtu: gtu1
     sp3:
         id: 3
         Collections: c3
@@ -313,6 +315,7 @@ Specimens:
         Taxonomy: ta3
         HostSpecimen: sp1
         HostTaxon: ta1
+        Gtu: gtu2
     sp4:
         id: 4
         Collections: c3

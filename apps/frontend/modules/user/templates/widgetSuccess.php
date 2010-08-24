@@ -1,4 +1,4 @@
-<?php slot('Title', __('Edit User widgets'));  ?>        
+<?php slot('title', __('Edit User widgets'));  ?>        
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">

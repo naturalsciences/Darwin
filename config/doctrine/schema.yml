@@ -917,7 +917,7 @@ SpecimenIndividuals:
 
 SpecimenParts:
     columns:
-        id: { type: integer, primary: true, autoincrement: true },
+        id: { type: integer, primary: true, autoincrement: true }
         path: { type: string, notnull: true, default: '/'}
         parent_ref:  {type: integer, default:null}
         specimen_individual_ref: { type: integer, notnull: true }
@@ -946,6 +946,18 @@ SpecimenParts:
         Parent:
             class: SpecimenParts
             local: parent_ref
+            foreign: id
+
+Preferences:
+    columns:
+        id: { type: integer, primary: true, autoincrement: true }
+        pref_key: { type: string, notnull: true}
+        pref_value: { type: string, notnull: true}
+        user_ref: { type: integer, notnull: true}
+    relations:
+        User:
+            class: Users
+            local: user_ref
             foreign: id
 
 Insurances:

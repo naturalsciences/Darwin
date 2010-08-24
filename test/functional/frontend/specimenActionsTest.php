@@ -159,7 +159,9 @@ $browser->
     matches('/ok/')->
   end();
 
-$specimens = Doctrine::getTable('Specimens')->findAll();
+$specimens =  Doctrine_Query::create()
+            ->from('Specimens')
+            ->orderBy('collection_ref ASC, taxon_ref ASC, id ASC')->execute();
 $specId = $specimens[0]->getId();
 $people_ref = Doctrine::getTable('People')->getPeopleByName('Root')->getId();
 $browser->
