@@ -6,11 +6,18 @@ $(document).ready(function () {
   $("#save_search").click(function(){
 
     column_str = ' ';
-    $('.column_menu ul > li.check').each(function (index)
+    if($('.column_menu ul > li.check').length)
+    {
+      $('.column_menu ul > li.check').each(function (index)
       {
         if(column_str != '') column_str += '|';
         column_str += $(this).attr('id').substr(3);
       });
+    }
+    else
+    {
+      column_str = $('#specimen_search_filters_col_fields').val();
+    }
 
 
     $(this).qtip({
