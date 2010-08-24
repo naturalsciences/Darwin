@@ -95,7 +95,22 @@ class specimenActions extends DarwinActions
       return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number, 'identnum' => $number));
     }
   }
-
+  
+  protected function getRecordIfDuplicate($id = 0, $obj)
+  {
+    if ($id)
+    {
+      $check = $obj->getTable()->findExcept($id);      
+      if(!$check) return $obj ;
+      $check->SpecimensMethods->count() ;
+      $check->SpecimensTools->count() ;      
+      $record = $check->toArray(true);     
+      unset($record['id']) ;       
+      $obj->fromArray($record,true) ;      
+    }
+    return $obj ;
+  }
+  
   public function executeNew(sfWebRequest $request)
   {
     if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
@@ -148,8 +163,25 @@ class specimenActions extends DarwinActions
         {
           $identification = new Identifications() ;
           $identification = $this->getRecordIfDuplicate($val->getId(),$identification); 
-          $this->form->addIdentifications($key, $val->getOrderBy(), $val);
+          $this->form->addIdentifications($key, $val->getOrderBy(), $val);          
         }                          
+        $tools = $specimen->SpecimensTools->toArray() ;
+        if(count($tools))
+        {
+          $tab = array() ;
+          foreach ($tools as $key=>$tool)
+            $tab[] = $tool['collecting_tool_ref'] ;
+          $this->form->setDefault('collecting_tools_list',$tab); 
+        }
+          
+        $methods = $specimen->SpecimensMethods->toArray() ;
+        if(count($methods))
+        {
+          $tab = array() ;
+          foreach ($methods as $key=>$method)
+            $tab[] = $method['collecting_method_ref'] ;
+          $this->form->setDefault('collecting_methods_list',$tab);   
+        }
       }
     }        
     else
@@ -157,7 +189,7 @@ class specimenActions extends DarwinActions
       $this->form = new SpecimensForm(); 
       $this->form->addIdentifications(0,0); 
       $this->form->addComments(0); 
-    }
+    }  
     $this->loadWidgets();     
   }
 
