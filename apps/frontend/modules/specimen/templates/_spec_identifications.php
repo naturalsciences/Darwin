@@ -36,23 +36,24 @@
          <tr>
             <td colspan="3"><?php echo __('Identifiers');?></td>
           </tr>
-        </thead><tbody>
-	<?php $retainedKey = 0;?>
+        </thead>
+        <tbody>
+        <?php $retainedKey = 0;?>
         <?php foreach($form['Identifiers'] as $form_value):?>
           <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey, 'identnum' => $row_num));?>
-	  <?php $retainedKey = $retainedKey+1;?>
+          <?php $retainedKey = $retainedKey+1;?>
         <?php endforeach;?>
         <?php foreach($form['newIdentifier'] as $form_value):?>
           <?php include_partial('specimen/spec_identification_identifiers', array('form' => $form_value, 'rownum'=>$retainedKey, 'identnum' => $row_num));?>
-	  <?php $retainedKey = $retainedKey+1;?>
+          <?php $retainedKey = $retainedKey+1;?>
         <?php endforeach;?>
         </tbody>
         <tfoot>
           <tr>
             <td colspan="3">
               <div class="add_code">
-                <a href="<?php echo url_for($module.'/addIdentifier?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id)).'/num/'.$row_num;?>/identifier_num/" class="hidden"></a>
-                <a class="add_identifier_<?php echo $row_num ;?>" href="<?php echo url_for('people/choose?only_role=4');?>"><?php echo __('Add identifier');?></a>              
+                <a href="<?php echo url_for($module.'/addIdentifier?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id).((!isset($identification_id))?'':'&identification_id='.$identification_id)).'/num/'.$row_num;?>/identifier_num/" class="hidden"></a>
+                <a id="add_identifier_<?php echo $row_num ;?>" href="<?php echo url_for('people/choose?only_role=4');?>"><?php echo __('Add identifier');?></a>              
               </div>
             </td>
           </tr>
@@ -76,35 +77,34 @@
       }
     });
 
-function addIdentifier(people_ref, people_name)
-{ 
-
-  info = 'ok';
-  $('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').each(function() {
-    if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
-  });
-  if(info != 'ok') return false;
-
-    
-  $.ajax({
-    type: "GET",
-    url: $('.add_code a.hidden').attr('href')+ (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length),
-    success: function(html)
+    function addIdentifierForIdentification<?php echo $row_num;?>(people_ref, people_name)
     {
-      $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> tbody').append(html);
-      $.fn.catalogue_people.reorder($('#spec_ident_identifiers_<?php echo $row_num;?>'));
-      $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> thead').show();
-      $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?>').addClass('green_border');
-    }
-  });
-  return true;
-}
+      info = 'ok';
+      $('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').each(function() {
+        if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
+      });
+      if(info != 'ok') return false;
 
-  $("#spec_ident_identifiers_<?php echo $row_num;?>").catalogue_people({
-    add_button: '.add_identifier_<?php echo $row_num ;?>',
-    handle: '.spec_ident_identifiers_handle',
-    update_row_fct: addIdentifier
-    });
+        
+      $.ajax({
+        type: "GET",
+        url: $('a#add_identifier_<?php echo $row_num;?>').prev('a.hidden').attr('href')+ (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length),
+        success: function(html)
+        {
+          $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> tbody').append(html);
+          $.fn.catalogue_people.reorder($('#spec_ident_identifiers_<?php echo $row_num;?>'));
+          $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> thead').show();
+          $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?>').addClass('green_border');
+        }
+      });
+      return true;
+    }
+
+    $("#spec_ident_identifiers_<?php echo $row_num;?>").catalogue_people({
+      add_button: '#add_identifier_<?php echo $row_num ;?>',
+      handle: '.spec_ident_identifiers_handle',
+      update_row_fct: addIdentifierForIdentification<?php echo $row_num;?>
+      });
 
 
 });

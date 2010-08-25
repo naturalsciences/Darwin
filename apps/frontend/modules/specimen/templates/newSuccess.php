@@ -52,7 +52,7 @@ $(document).ready(function ()
 		    &nbsp;<a href="<?php echo url_for('specimen/new?duplicate_id='.$form->getObject()->getId());?>"><?php echo __('Duplicate specimen');?></a>
 		    &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimens&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_delete"><?php echo __('Delete');?></a>
 		  <?php endif?>
-		  &nbsp;<a href="<?php echo url_for('specimen/index') ?>" id="spec_cancel"><?php echo __('Cancel');?></a>
+		  &nbsp;<a href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Cancel');?></a>
 		  <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
 		</p>
 	</form>

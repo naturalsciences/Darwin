@@ -67,7 +67,7 @@ class specimenActions extends DarwinActions
     $order_by = intval($request->getParameter('order_by',0));
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $spec_form->addIdentifications($number, $order_by);
-    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'specimen', 'spec_id'=>$request->getParameter('spec_id',0), 'individual_id'=>0));
+    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'specimen', 'spec_id'=>$request->getParameter('spec_id',0)));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
@@ -79,7 +79,7 @@ class specimenActions extends DarwinActions
     $identifier_order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
 
-    if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))
+    if($request->hasParameter('identification_id'))
     {
       $ident = $spec_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
       $ident->addIdentifiers($identifier_number,$people_ref, $identifier_order_by);
