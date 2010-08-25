@@ -248,18 +248,18 @@ $browser->
 
   click('#submit', array('user_widget' => array(
     'MyWidgets' => array(
-	  0 => array(
-	    'category'  => 'board_widget',
-	    'group_name' => 'savedSearch',
-	    'user_ref' => $id,
-	    'widget_choice' => 'opened',
-	    'title_perso' => 'Search'),
-       1 => array(
-	    'category'  => 'board_widget',
-	    'group_name' => 'savedSpecimens',
-	    'user_ref' => $id,
-	    'widget_choice' => 'opened',
-	    'title_perso' => 'Spec')))
+      0 => array(
+      'category'  => 'board_widget',
+        'group_name' => 'savedSearch',
+        'user_ref' => $id,
+        'widget_choice' => 'opened',
+        'title_perso' => 'Search'),
+        1 => array(
+        'category'  => 'board_widget',
+        'group_name' => 'savedSpecimens',
+        'user_ref' => $id,
+        'widget_choice' => 'opened',
+        'title_perso' => 'Spec')))
   ))->
 
   with('request')->begin()->
@@ -268,6 +268,42 @@ $browser->
   end();
 
 $browser->
+  info('users ychambert is not allowed to access to this page')->
   get('user/loginInfo?user_ref='.Doctrine::getTable("Users")->findOneByFamilyName('Evil')->getId())->
   with('response')->begin()->
-    isStatusCode(403)->info('users ychambert is not allowed to access to this page')->end();
+    isStatusCode(403)->
+  end()->
+
+  info('Prerences')->
+  
+  get('user/preferences')->
+  with('response')->begin()->
+    isStatusCode()->
+    checkElement('h1','/My Preferences/')->
+    checkElement('.user_table > thead',2)->
+    checkElement('.user_table > tbody',2)->
+    checkElement('.user_table > tbody > tr',3)->
+    checkElement('.user_table > tbody > tr #preferences_spec_search_cols_category')->
+    checkElement('#preferences_board_spec_rec_pp option[selected]','10')->
+    checkElement('#preferences_board_search_rec_pp option[selected]','10')->
+  end()->
+
+  click('input[type="submit"]', array('preferences' => array(
+    'board_spec_rec_pp' => 5,
+    'board_search_rec_pp' => 5))
+  )->
+
+  with('response')->begin()->
+    isRedirected()->
+  end()->
+
+  followRedirect()->
+
+  with('response')->begin()->
+    isStatusCode()->
+    checkElement('h1','/My Preferences/')->
+    checkElement('#preferences_board_spec_rec_pp option[selected]','5')->
+    checkElement('#preferences_board_search_rec_pp option[selected]','5')->
+  end();
+
+  
