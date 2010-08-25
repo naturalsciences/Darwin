@@ -45,6 +45,41 @@
           }
         });
         return false;
+      });      
+
+      $('input.tag_line').live('keydown click',purposeTags);
+
+      function purposeTags(event)
+      {
+        if (event.type == 'keydown')
+        {
+          var code = (event.keyCode ? event.keyCode : event.which);
+          if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
+        }        
+        parent_el = $(this).closest('tr');
+
+        if($(this).val() == '') return;
+        $('.purposed_tags').html('<img src="/images/loader.gif" />');
+        $.ajax({
+          type: "GET",
+          url: "<?php echo url_for('gtu/purposeTag');?>" + '/value/'+ $(this).val(),
+          success: function(html)
+          {
+            parent_el.find('.purposed_tags').html(html);
+            parent_el.find('.purposed_tags').show();
+          }
+        });
+      }
+
+      $('.purposed_tags li').live('click', function()
+      {
+        input_el = $(this).closest('tr').find('input.tag_line');
+        if(input_el.val().match("\;\s*$"))
+          input_el.val( input_el.val() + $(this).text() );
+        else
+          input_el.val( input_el.val() + " ; " +$(this).text() );
+        input_el.trigger('click');
       });
+      
     </script>
   </div>

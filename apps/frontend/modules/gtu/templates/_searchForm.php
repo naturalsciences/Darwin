@@ -70,12 +70,11 @@
         {
           var code = (event.keyCode ? event.keyCode : event.which);
           if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
-        }
-        $('.purposed_tags').html('<img src="/images/loader.gif" />');
+        }        
         parent_el = $(this).closest('tr');
 
         if($(this).val() == '') return;
-
+        $('.purposed_tags').html('<img src="/images/loader.gif" />');
         $.ajax({
           type: "GET",
           url: "<?php echo url_for('gtu/purposeTag');?>" + '/value/'+ $(this).val(),

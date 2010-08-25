@@ -124,8 +124,8 @@ $(document).ready(function () {
       sub_groups  = parent.parent();
       if(sub_groups.find("li:visible").length == 0)
       {
-	sub_groups.closest('fieldset').hide();
-	disableUsedGroups();
+	      sub_groups.closest('fieldset').hide();
+      	disableUsedGroups();
       }
     });
 
@@ -135,10 +135,10 @@ $(document).ready(function () {
       $('#groups_select option').removeAttr('disabled');
       $('.tag_parts_screen fieldset:visible').each(function()
       {
-	var cur_group = $(this).attr('alt');
-	$("#groups_select option[value='"+cur_group+"']").attr('disabled','disabled');
-	if($("#groups_select option[value='"+cur_group+"']:selected"))
-	  $('#groups_select').val("");
+	      var cur_group = $(this).attr('alt');
+	      $("#groups_select option[value='"+cur_group+"']").attr('disabled','disabled');
+	      if($("#groups_select option[value='"+cur_group+"']:selected"))
+	        $('#groups_select').val("");
       });
     }
     disableUsedGroups();

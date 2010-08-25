@@ -9,7 +9,7 @@
   </td>
 </tr>
 <script  type="text/javascript">
-  $('#clear_tag_<?php echo $row_line;?>').live('click',function(){
+  $('#clear_tag_<?php echo $row_line;?>').click(function(){
     if($(this).closest('tbody').find('tr.tag_line').length == 1)
     {
       $(this).closest('tr').find('td input').val('');
