@@ -59,6 +59,6 @@ $(document).ready(function () {
 </script>
 <br />
 <div class="actions">
-    <div class="action_button"><?php echo link_to(__("More"),'savesearch/index?specimen=1');?></div>
+    <div class="action_button"><?php echo link_to(__("Manage"),'savesearch/index?specimen=1');?></div>
     <div style="clear:right"></div>
 </div>

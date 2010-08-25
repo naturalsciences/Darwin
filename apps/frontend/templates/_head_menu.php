@@ -7,21 +7,13 @@
               <li><?php echo link_to(__('My Profile'),'user/profile');?></li>
               <li><?php echo link_to(__('My Widgets'),'user/widget');?></li>
               <li><?php echo link_to(__('My Preferences'),'user/preferences');?></li>
+              <li><?php echo link_to(__('Saved Specimens list'),'savesearch/index?specimen=1');?></li>
+              <li><?php echo link_to(__('Saved search'),'savesearch/index');?></li>
             </ul>
         </li>
         <li>
             <a href="#"><?php echo __('Searches');?></a>
             <ul>
-                <!--<li>
-                    <a href="#aa">My Searches</a>
-                    <ul>
-                        <li><a href="#">menu item</a></li>
-                        <li><a href="#">menu item</a></li>
-                        <li><a href="#">menu item</a></li>
-                        <li><a href="#">menu item</a></li>
-                        <li><a href="#">menu item</a></li>
-                    </ul>
-                </li>-->
                 <li>
                     <a href="#"><?php echo __('Catalogues');?></a>
                     <ul>

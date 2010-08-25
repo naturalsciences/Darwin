@@ -58,6 +58,6 @@ $(document).ready(function () {
 });
 </script>
 <div class="actions">
-    <div class="action_button"><?php echo link_to(__("More"),'savesearch/index');?></div>
+    <div class="action_button"><?php echo link_to(__("Manage"),'savesearch/index');?></div>
     <div style="clear:right"></div>
 </div>
