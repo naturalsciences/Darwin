@@ -19,6 +19,14 @@
   </tbody>
 </table>
 <script  type="text/javascript">
+function checkBetween()
+{ 
+  if( $('#code_search tbody .between_col:visible').length)
+    $('#code_search thead .between_col').show();
+  else
+    $('#code_search thead .between_col').hide();
+}
+
 $(document).ready(function () {
 
   var num_fld = $('#code_search tbody tr').length;
@@ -35,14 +43,6 @@ $(document).ready(function () {
       }
     });
   });
-
-  function checkBetween()
-  { 
-    if( $('#code_search tbody .between_col:visible').length)
-      $('#code_search thead .between_col').show();
-    else
-      $('#code_search thead .between_col').hide();
-  }
 
   $('#code_search .code_between.prev').live('click',function (event)
   {
