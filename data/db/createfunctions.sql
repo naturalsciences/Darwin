@@ -7170,33 +7170,41 @@ $$;
 CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
 DECLARE
   sqlString varchar := E'select record_id from codes where referenced_relation=\'specimens\'';
+  sqlWhere varchar := '';
   code_part varchar;
   code_from varchar;
   code_to varchar;
   code_category varchar;
   word varchar;
 BEGIN
-    FOR i in 1..array_upper( $1, 1 ) BY 4 LOOP
-	code_category := $1[i];
-	code_part := $1[i+1];
-	code_from := $1[i+2];
-	code_to := $1[i+3];
-	
-	sqlString := sqlString || ' AND code_category = ' || quote_literal(code_category) ;
+  FOR i in 1..array_upper( $1, 1 ) BY 4 LOOP
+    code_category := $1[i];
+    code_part := $1[i+1];
+    code_from := $1[i+2];
+    code_to := $1[i+3];
+    
+    sqlWhere := sqlWhere || ' (code_category = ' || quote_literal(code_category) ;
 
-	IF code_from ~ '^[0-9]+$' and code_to ~ '^[0-9]+$' THEN
-	    sqlString := sqlString || ' AND code_num BETWEEN ' || quote_literal(code_from) || ' AND ' || quote_literal(code_to) ;
-	END IF;
+    IF code_from ~ '^[0-9]+$' and code_to ~ '^[0-9]+$' THEN
+      sqlWhere := sqlWhere || ' AND code_num BETWEEN ' || quote_literal(code_from) || ' AND ' || quote_literal(code_to) ;
+    END IF;
 
-	IF code_part != '' THEN
-	     FOR word IN (SELECT words FROM regexp_split_to_table(code_part, E'\\s+') as words) LOOP
-		sqlString := sqlString || E' AND full_code_order_by like \'%\' || ' || quote_literal(word) || E' || \'%\' ';
-             END LOOP;
+    IF code_part != '' THEN
+      sqlWhere := sqlWhere || ' AND (';
+      FOR word IN (SELECT words FROM regexp_split_to_table(code_part, E'\\s+') as words) LOOP
+        sqlWhere := sqlWhere || E' full_code_order_by like \'%\' || fullToIndex(' || quote_literal(word) || E') || \'%\' OR';
+      END LOOP;
+      sqlWhere := substr(sqlWhere,0,length(sqlWhere)-2) || ')';
+    END IF;
+    
+    sqlWhere := sqlWhere || ') OR ';
 
-	END IF;
-
-    END LOOP;
-    RETURN QUERY EXECUTE sqlString;
+  END LOOP;
+  
+  sqlString := sqlString || ' AND (' || substr(sqlWhere,0, length(sqlWhere)-2) || ')';
+  /*sqlString := sqlString || ' AND (' || substr(sqlWhere,0,length(sqlWhere)-2) || ')';*/
+  
+  RETURN QUERY EXECUTE sqlString;
 END;
 $$ LANGUAGE plpgSQL;
 
