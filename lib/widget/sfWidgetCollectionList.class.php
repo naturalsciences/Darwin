@@ -82,12 +82,12 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     if($this->hasOption('collection_parent'))
     {
       $img_expand = 'individual_expand.png';
-      $img_expand_up = 'individual_expand.png' ;
+      $img_expand_up = 'individual_expand_up.png' ;
     }
     else
     {
       $img_expand = 'blue_expand.png';
-      $img_expand_up = 'blue_expand.png' ;
+      $img_expand_up = 'blue_expand_up.png' ;
     }    
     foreach ($choices as $key => $option)
     {    
