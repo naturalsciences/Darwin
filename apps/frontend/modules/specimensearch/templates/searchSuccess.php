@@ -45,15 +45,51 @@ $(document).ready(function () {
   $("#criteria_butt").click(function(){
     $('#specimen_filter').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
   });
+
+  <?php if($is_specimen_search):?>
+    $('#del_from_spec').click(function(){
+      pins = '';
+      pins_array = new Array();
+      $('.spec_results tbody tr input.spec_selected:checked').each(function(){
+        rid = getIdInClasses($(this).closest('tr'));
+        pins_array.push(rid);
+      });
+      if(pins_array.length == 0)
+      {
+        alert("<?php echo __('You must select at least one specimen.');?>");
+      }
+      else
+      {
+        if(confirm('<?php echo __('Are you sure?');?>'))
+        {
+          $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/ids/' + pins_array.join(',') ,function (html){
+            //$('.rid_'+rid).closest('tbody').remove();
+            for(var i = 0; i < pins_array.length; ++i)
+            {
+              $('.rid_' + pins_array[i]).closest('tbody').remove();
+            }
+          });
+        }
+      }
+    });
+  <?php endif;?>
+
 });
       </script>
     </form>
       <div class="check_right" id="save_button"> 
-        <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
-        <?php include_partial('savesearch/saveSearch');?>
+
+        <?php if($is_specimen_search):?>
+          <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
+
+        <?php else:?>
+          <?php include_partial('savesearch/saveSearch');?>
+        <?php endif;?>
       </div>
       <?php if(!isset($is_pinned_only_search) && ! $is_specimen_search):?>
         <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
+      <?php else:?>
+        <input type="button" id="del_from_spec" value="<?php echo __('Remove selected'); ?>">
       <?php endif;?>     
   </div>
 </div>

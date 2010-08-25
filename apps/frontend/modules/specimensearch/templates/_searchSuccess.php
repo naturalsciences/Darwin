@@ -40,11 +40,11 @@
         <thead>
           <tr>
             <th></th>
+            <th></th>
             <th>
                <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
                <?php echo image_tag('white_pin_on.png', array('class'=>'top_pin_but pin_on', 'alt' =>  __('Save this result'))) ; ?>
             </th>
-            <th></th>
             <th class="col_category">
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=category'.( ($orderBy=='category' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                  $currentPage);?>">
@@ -124,6 +124,11 @@
           <tbody>
             <tr class="rid_<?php echo $specimen->getSpecRef(); ?>">
               <td rowspan="2">
+                <?php if($is_specimen_search):?>
+                  <input type="checkbox" value="<?php echo $specimen->getSpecRef();?>" class="spec_selected"/>
+                <?php endif;?>
+              </td>
+              <td rowspan="2">
                 <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
                 <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
               </td>
@@ -136,7 +141,6 @@
                   <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
                 <?php endif;?>
               </td>
-              <td><?php if($is_specimen_search):?><?php echo image_tag('blue_pin_del.png',array('class' => 'pin_del'));?><?php endif;?></td>
               <td class="col_category">
                 <?php if($specimen->getCategory() == 'physical' || $specimen->getCategory() == 'mixed' ):?>
                   <?php echo image_tag('sp_in.png', array('alt' => __('Physical'), 'title'=> __('Physical')));?>
@@ -251,7 +255,7 @@
               </td>
             </tr>
             <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">
-              <td colspan="8">
+              <td colspan="6"> 
                 <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
                 <script type="text/javascript">
                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
@@ -357,19 +361,7 @@ $(document).ready(function () {
         $('.spec_results tbody tr .pin_on').removeClass('hidden') ;
     }
     $.get('<?php echo url_for('savesearch/pin');?>/mid/' + pins + '/status/' + pin_status,function (html){});
-  });
-
-  <?php if($is_specimen_search):?>
-    $('.spec_results .pin_del').click(function(){
-      rid = getIdInClasses($(this).closest('tr'));
-      if(confirm('<?php echo __('Are you sure?');?>'))
-      {
-        $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/id/' + rid ,function (html){
-          $('.rid_'+rid).closest('tbody').remove();
-        });
-      }
-    });
-  <?php endif;?>
+  }); 
 
 });
 </script> 
