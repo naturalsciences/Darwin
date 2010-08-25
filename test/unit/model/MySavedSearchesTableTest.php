@@ -10,5 +10,5 @@ $q = Doctrine::getTable('MySavedSearches')->addUserOrder(null,$userEvil);
 
 $t->is(get_class($q),'Doctrine_Query','We got a query not null');
 $results = $q->execute();
-$t->is(count($results),2,'We and we got the right number or record');
+$t->is(count($results),3,'We and we got the right number or record');
 
