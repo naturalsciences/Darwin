@@ -79,10 +79,9 @@ $(document).ready(function () {
     </form>
       <div class="check_right" id="save_button"> 
 
-        <?php if($is_specimen_search):?>
-          <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
+        <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
 
-        <?php else:?>
+        <?php if(! $is_specimen_search):?>
           <?php include_partial('savesearch/saveSearch');?>
         <?php endif;?>
       </div>
