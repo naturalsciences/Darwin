@@ -156,7 +156,7 @@ class savesearchActions extends sfActions
     $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
     $this->forward404Unless($r,'No such item');
     try{
-      $is_spec_search = $r->setIsOnlyId();
+      $is_spec_search = $r->getIsOnlyId();
       $r->delete();
       if(! $request->isXmlHttpRequest())
       {
