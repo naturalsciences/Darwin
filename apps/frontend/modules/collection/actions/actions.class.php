@@ -171,11 +171,13 @@ class collectionActions extends DarwinActions
   {
     $id = $request->getParameter('collection_ref') ;
     $user = $request->getParameter('user_ref') ;
-    $this->forward404Unless($collections = Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
+    $this->forward404Unless(Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
     $this->user_formated_name = Doctrine::getTable('Users')->findUser($user)->getFormatedName() ;
-    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user) ;
-    $this->form = new SubCollectionsForm(null,array('collection' => $collections,'user_ref' => $user,'old_rights' => $old_rights));
-    $this->sub_coll = array();
+    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user)->toArray() ;
+    foreach($old_rights as $key=>$right)
+      $old_right[] = $right['collection_ref'] ;
+    $this->form = new SubCollectionsForm(null,array('collection_ref' => $id ,'user_ref' => $user,'old_right' => $old_right));
+    $this->form->user = $user ;
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('sub_collection')) ;
@@ -184,12 +186,6 @@ class collectionActions extends DarwinActions
         $this->form->save();
         return $this->renderText('ok') ;
       }
-    }
-    foreach($collections as $key => $keyword)
-    {	
-      $this->sub_coll[$key] = array();
-      $this->sub_coll[$key]['level'] = substr_count($keyword->getPath(),'/') ;
-      $this->sub_coll[$key][] = $keyword ;
     }
   }
   
