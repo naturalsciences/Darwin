@@ -11,42 +11,45 @@ class SubCollectionsForm extends sfForm
 {
   public function configure()
   {
-    $subForm = new sfForm();
-    foreach ($this->options['collection'] as $index=>$record)
+    $this->widgetSchema['CollectionsRights'] = new sfWidgetCollectionList(array('choices' => array()));
+    if(isset($this->options['collection_ref'])) 
     {
-      $val = new CollectionsRights();
-	 $val->setUserRef($this->options['user_ref']) ;
-	 $val->setCollectionRef($record->getId());
-      $form = new SubCollectionsRightsForm($val,array('collection_ref' => $record->getId(),'old_rights' => $this->options['old_rights']));
-      $subForm->embedForm($index, $form);
+      $this->widgetSchema['CollectionsRights']->addOption('collection_parent',$this->options['collection_ref']) ;    
+      $this->widgetSchema['CollectionsRights']->addOption('old_right',$this->options['old_right']) ;
     }
-    $this->embedForm('SubCollectionsRights',$subForm);
+    $this->validatorSchema['CollectionsRights'] = new sfValidatorPass();    
     $this->widgetSchema->setNameFormat('sub_collection[%s]');
   }
   
   public function save()
   {
-	$value = $this->getValue('SubCollectionsRights');
-	foreach($this->embeddedForms['SubCollectionsRights']->getEmbeddedForms() as $name => $form)
-	{
-	  if($value[$name]['check_right'])
+	  $value = $this->getValue('CollectionsRights'); // checked by user values
+    $old_right = $this->getWidget('CollectionsRights')->getOption('old_right'); // old checked values
+    $obj_to_save = array('collection_ref'=>'','user_ref' => $this->user) ;
+	  foreach($this->getWidget('CollectionsRights')->getChoices() as $key => $form)
 	  {
-	  	if(!$form->getWidget('check_right')->getAttribute('old_right')) //false ? so user don't have right on this collection yet
-	  	{
-		    $form->updateObject($value[$name]);
-     	    $form->getObject()->save();	
-	    	}
-	    	//else nothing to do  	 
-	  } 
-	  else
-	  {
-	  	if($form->getWidget('check_right')->getAttribute('old_right')) //true ? so user has right but no for long
-	  	{
-		    $form->getObject()->deleteCollectionRight();
-   		    unset($this->embeddedForms['SubCollectionsRights'][$name]);
-	     }
-	    	//else nothing to do  
-	  }
+	    if(in_array($key,$value)) // then this collection is checked 
+	    {
+	    	if(!in_array($key,$old_right)) //false ? so it's a new right
+	    	{
+		        $collectionRights = new CollectionsRights() ;
+		        $obj_to_save['collection_ref'] = $key ;
+		        $collectionRights->fromArray($obj_to_save);
+       	    $collectionRights->save();	
+	      }
+	      //else nothing to do  	 
+	    } 
+	    else
+	    {
+	    	if(in_array($key,$old_right)) //true ? so user has right but not for long
+	    	{
+	    	  $this->collectionRights = new CollectionsRights() ;	
+	    	  $obj_to_save['collection_ref'] = $key ;  	  
+	    	  $this->collectionRights->fromArray($obj_to_save);
+		      $this->collectionRights->deleteCollectionRight();
+	       }
+	      	//else nothing to do  
+	    }
     }
   }
   public function getJavascripts()

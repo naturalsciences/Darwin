@@ -31,10 +31,7 @@ $(document).ready(function () {
   <tr>
     <td>
       <div class="treelist">
-		    <?php echo $form['collection_ref'] ; ?>
-	    </div>
-	    <div class="check_right">
-        <input type="button" class="result_choose" value="clear" id="clear_collections">
+		    <?php echo $form['collection_ref'] ; ?>        
       </div>
 	  </td>
 	</tr>
