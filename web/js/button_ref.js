@@ -4,6 +4,7 @@ var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
   $("a.but_text").live('click', function(){
+        scroll(0,0) ;
 
     $(this).parent().parent().find('input[type="hidden"]').trigger({ type:"loadref"});
     $(this).qtip({
@@ -14,7 +15,8 @@ $(document).ready(function () {
         show: { when: 'click', ready: true },
         position: {
             target: $(document.body), // Position it via the document body...
-            corner: 'topMiddle' // ...at the center of the viewport
+            adjust: { y: 210 },
+            corner: 'topMiddle' // ...at the topMiddle of the viewport
         },
         hide: false,
         style: {

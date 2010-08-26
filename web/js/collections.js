@@ -4,7 +4,7 @@ var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
  $("a.coll_right").click(function(){
-
+    scroll(0,0) ;
     $(this).qtip({
         content: {
             title: { text : 'Choose a User', button: 'X' },
@@ -13,7 +13,8 @@ $(document).ready(function () {
         show: { when: 'click', ready: true },
         position: {
             target: $(document.body), // Position it via the document body...
-            corner: 'topMiddle' // ...at the center of the viewport
+            adjust: { y: 210 },
+            corner: 'topMiddle' // ...at the topMiddle of the viewport
         },
         hide: false,
         style: {
@@ -46,6 +47,7 @@ $(document).ready(function () {
  });
  
  $("a.set_rights").live('click', function(){
+    scroll(0,0) ;
     $(this).qtip({
         content: {
             title: { text : 'List of sub collections', button: 'X' },
@@ -54,6 +56,7 @@ $(document).ready(function () {
         show: { when: 'click', ready: true },
         position: {
             target: $(document.body), // Position it via the document body...
+            adjust: { y: 210 },
             corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
             adjust:{
         	  	y: 150 // option set in case of the qtip become too big

@@ -12,6 +12,7 @@ function removeError(element)
 
 $(document).ready(function () {
  $("a.link_catalogue").live('click', function(){
+        scroll(0,0) ;
     $(this).qtip({
         content: {
             title: { text : $(this).attr('title'), button: 'X' },
@@ -20,7 +21,8 @@ $(document).ready(function () {
         show: { when: 'click', ready: true },
         position: {
             target: $(document.body), // Position it via the document body...
-            corner: 'topMiddle' // ...at the center of the viewport
+            adjust: { y: 210 },
+            corner: 'topMiddle' // ...at the topMiddle of the viewport
         },
         hide: false,
         style: {

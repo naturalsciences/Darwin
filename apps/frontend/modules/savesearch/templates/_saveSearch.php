@@ -19,7 +19,7 @@ $(document).ready(function () {
       column_str = $('#specimen_search_filters_col_fields').val();
     }
 
-
+    scroll(0,0) ;
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        

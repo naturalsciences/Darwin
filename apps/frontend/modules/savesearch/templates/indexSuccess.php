@@ -80,6 +80,7 @@ $(document).ready(function () {
 
 
   $(".edit_request").click(function(){
+    scroll(0,0) ;  
     $(this).qtip({
         content: {
             title: { text : '<?php echo ($is_only_spec ? __('Edit your specimens') : __('Edit your search') ) ;?>', button: 'X' },        

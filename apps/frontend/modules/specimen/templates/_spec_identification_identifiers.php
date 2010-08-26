@@ -16,7 +16,8 @@
                   $(parent).find('input[id$=\"_people_ref\"]').val('');
                   $(parent).hide();
                   $.fn.catalogue_people.reorder($(parent).closest('table'));
-                  if(!$('table#'+parentTableId+' .spec_ident_collectors_data:visible').size())
+                  alert($('table#'+parentTableId+' .spec_ident_identifiers_head:visible').size());
+                  if(!$('table#'+parentTableId+' .spec_ident_identifiers_head:visible').size())
                   {
                     $(this).closest('table#'+parentTableId).find('thead').hide();
                     $(this).closest('table#'+parentTableId).removeClass('green_border');
