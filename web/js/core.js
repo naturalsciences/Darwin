@@ -199,14 +199,6 @@ function result_choose ()
         $('.qtip-button').click();
 }
 
-function adjust_qtip()
-{
-  $(this).css("max-height",$(window).height()*0.3) ;
-  $(this).css("y-overflow","scroll") ;
-  $(this).css("background",'#000') ;
-  alert($(this).css("max-height"));
-}
-
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();

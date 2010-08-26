@@ -24,7 +24,7 @@ $(document).ready(function () {
         column_str += $(this).attr('id').substr(3);
       });
 
-
+    scroll(0,0) ;
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your specimens')?>', button: 'X' },        
