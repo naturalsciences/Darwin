@@ -486,9 +486,9 @@ MyWidgets:
             class: Users
             local: user_ref
             foreign: id
-        Multimedia:
-            local: icon_ref
-            foreign: id
+#         Multimedia:
+#             local: icon_ref
+#             foreign: id
 
 Taxonomy:
     columns:

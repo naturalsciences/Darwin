@@ -38,8 +38,9 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
       $objects = Doctrine_Core::getTable('Collections')->fetchByCollectionParent($parent);
     }
     else      
-      $objects = Doctrine_Core::getTable('Collections')->getAllCollectionsId() ;
+      $objects = Doctrine_Core::getTable('Collections')->getAllCollections() ;
     if(!$objects->count()) return(array());
+
     foreach ($objects as $object)
     {
       $choices[$object->getId()] = array() ;

@@ -7,46 +7,47 @@ class UsersTracking extends BaseUsersTracking
 {
   public function getLink()
   {
-	$id = $this->_get('record_id');
-	$link = '';
-	switch($this->_get('referenced_relation'))
-	{
-	  case 'collections':
-		  $link = 'collection/edit?id='.$id; break;
-	  case 'specimens':
-		  $link = 'specimen/edit?id='.$id; break;
-    case 'specimen_individuals':
-      $link = 'individuals/edit?id='.$id; break;
-    case 'specimen_parts':
-      $link = 'parts/edit?id='.$id; break;
-	  case 'comments':
-		  break;
-	  case 'tag_groups':
-		  break;
-	  case 'taxonomy':
-	  case 'lithology':
-	  case 'chronostratigraphy':
-	  case 'mineralogy':
-	  case 'people':
-	  case 'insurances':
-	  case 'gtu':
-	  default:
-	      $link = $this->_get('referenced_relation').'/edit?id='.$id; break;
-	}
-	return $link;
+    $id = $this->_get('record_id');
+    $link = '';
+    switch($this->_get('referenced_relation'))
+    {
+      case 'collections':
+        $link = 'collection/edit?id='.$id; break;
+      case 'specimens':
+        $link = 'specimen/edit?id='.$id; break;
+      case 'specimen_individuals':
+        $link = 'individuals/edit?id='.$id; break;
+      case 'specimen_parts':
+        $link = 'parts/edit?id='.$id; break;
+      case 'comments':
+        break;
+      case 'tag_groups':
+        break;
+      case 'taxonomy':
+      case 'lithology':
+      case 'chronostratigraphy':
+      case 'mineralogy':
+      case 'people':
+      case 'insurances':
+      case 'gtu':
+      default:
+        $link = $this->_get('referenced_relation').'/edit?id='.$id; break;
+    }
+    return $link;
   }
   
+  /** When using the form filter **/
   public function getDiffAsArray($is_old = true)
   {
     if($is_old)
-      $hstore = $this->_get('old_diff');
+      $hstore = $this->_get('old_value');
     else
-      $hstore = $this->_get('new_diff');
+      $hstore = $this->_get('new_value');
     eval("\$diff = array({$hstore});");
     foreach($diff as $key=>$value)
     {
       if(preg_match("/_indexed$/", $key) || preg_match("/_name_ts$/", $key) || preg_match("/_order_by$/", $key))
-	unset($diff[$key]);
+        unset($diff[$key]);
     }
     return $diff;
   }
