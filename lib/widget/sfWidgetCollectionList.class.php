@@ -55,7 +55,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
           $choices[$list]['checked'] = 1 ;
       }
     }  
-    elseif($this->hasOption('old_right'))
+    elseif($this->hasOption('old_right') && is_array($this->hasOption('old_right')))
     {
       foreach ($this->getOption('old_right') as $list)
       {

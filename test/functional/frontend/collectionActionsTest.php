@@ -145,12 +145,12 @@ $browser->
     isParameter('module', 'collection')->
     isParameter('action', 'rights')->
   end()->
-with('response')->begin()->
-  isStatusCode(200)->
-  checkElement('.treelist:first > ul > li:first span','/Amphibia/')->
+  with('response')->begin()->
+    isStatusCode(200)->//debug()->
+    checkElement('.treelist:first > ul > li:first span','/Amphibia/')->
   end()->
 
-  click('#submit',  array('sub_collection' => array(
+  click('Save',  array('sub_collection' => array(
     'SubCollectionsRights' => array(
       0 => array(
         'user_ref'       => $user_id,
