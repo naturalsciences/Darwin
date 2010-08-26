@@ -26,7 +26,7 @@ abstract class BaseMyWidgetsForm extends BaseFormDoctrine
       'is_available' => new sfWidgetFormInputCheckbox(),
       'opened'       => new sfWidgetFormInputCheckbox(),
       'color'        => new sfWidgetFormTextarea(),
-      'icon_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'add_empty' => true)),
+      'icon_ref'     => new sfWidgetFormInputText(),
       'title_perso'  => new sfWidgetFormTextarea(),
     ));
 
@@ -42,7 +42,7 @@ abstract class BaseMyWidgetsForm extends BaseFormDoctrine
       'is_available' => new sfValidatorBoolean(array('required' => false)),
       'opened'       => new sfValidatorBoolean(array('required' => false)),
       'color'        => new sfValidatorString(array('required' => false)),
-      'icon_ref'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'required' => false)),
+      'icon_ref'     => new sfValidatorInteger(array('required' => false)),
       'title_perso'  => new sfValidatorString(array('required' => false)),
     ));
 

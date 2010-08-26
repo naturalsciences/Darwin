@@ -16,7 +16,6 @@
  * @property Doctrine_Collection $TagGroups
  * @property Doctrine_Collection $Tags
  * @property Doctrine_Collection $Gtu
- * @property Doctrine_Collection $Soortenregister
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenSearch
  * 
@@ -31,7 +30,6 @@
  * @method Doctrine_Collection getTagGroups()          Returns the current record's "TagGroups" collection
  * @method Doctrine_Collection getTags()               Returns the current record's "Tags" collection
  * @method Doctrine_Collection getGtu()                Returns the current record's "Gtu" collection
- * @method Doctrine_Collection getSoortenregister()    Returns the current record's "Soortenregister" collection
  * @method Doctrine_Collection getSpecimens()          Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenSearch()     Returns the current record's "SpecimenSearch" collection
  * @method Gtu                 setId()                 Sets the current record's "id" value
@@ -45,7 +43,6 @@
  * @method Gtu                 setTagGroups()          Sets the current record's "TagGroups" collection
  * @method Gtu                 setTags()               Sets the current record's "Tags" collection
  * @method Gtu                 setGtu()                Sets the current record's "Gtu" collection
- * @method Gtu                 setSoortenregister()    Sets the current record's "Soortenregister" collection
  * @method Gtu                 setSpecimens()          Sets the current record's "Specimens" collection
  * @method Gtu                 setSpecimenSearch()     Sets the current record's "SpecimenSearch" collection
  * 
@@ -113,10 +110,6 @@ abstract class BaseGtu extends sfDoctrineRecord
         $this->hasMany('Gtu', array(
              'local' => 'id',
              'foreign' => 'parent_ref'));
-
-        $this->hasMany('Soortenregister', array(
-             'local' => 'id',
-             'foreign' => 'gtu_ref'));
 
         $this->hasMany('Specimens', array(
              'local' => 'id',
