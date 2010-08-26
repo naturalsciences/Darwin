@@ -6757,7 +6757,7 @@ BEGIN
   IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
     UPDATE darwin_flat 
     SET (expedition_name, expedition_name_ts, expedition_name_indexed) = 
-        (NEW.expedition_name, NEW.expedition_name_ts, NEW.expedition_name_indexed)
+        (NEW.name, NEW.name_ts, NEW.name_indexed)
     WHERE expedition_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'collections' THEN
     UPDATE darwin_flat 
