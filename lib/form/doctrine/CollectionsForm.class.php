@@ -48,7 +48,7 @@ class CollectionsForm extends BaseCollectionsForm
 
     $this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
 
-   if(! $this->getObject()->isNew())
+   if(! $this->getObject()->isNew() || isset($this->options['duplicate']))
       $this->widgetSchema['parent_ref']->setOption('choices', Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($this->getObject()->getInstitutionRef()) );
    elseif(isset($this->options['new_with_error']))
       $this->widgetSchema['parent_ref']->setOption('choices', Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($this->options['institution']));   	

@@ -84,10 +84,10 @@ class collectionActions extends DarwinActions
     $collection = new Collections();
     $duplic = $request->getParameter('duplicate_id','0') ;
     $collection = $this->getRecordIfDuplicate($duplic, $collection);
-    $this->form = new CollectionsForm($collection);    
+    $this->form = new CollectionsForm($collection,array('duplicate'=> true));    
     if ($duplic)
     {
-      $User = Doctrine::getTable('CollectionsRights')->getAllUserRef($duplic) ;
+      $User = Doctrine::getTable('CollectionsRights')->getAllUserRef($duplic) ;      
       foreach ($User as $key=>$val)
       {
          $this->form->addValue($key, $val->getUserRef());
