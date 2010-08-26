@@ -140,6 +140,7 @@ class specimensearchActions extends DarwinActions
     if(isset($criterias['specimen_search_filters']))
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
     $this->loadWidgets();
+//    $this->form->addGtuTagValue(0); 
   }
   
   /**

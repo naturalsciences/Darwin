@@ -32,33 +32,35 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
   { 
     $parent = $this->getOption('collection_parent');
     $choices = array() ;    
-    if ($parent)
+    $old_right = $this->getOption('old_right') ;
+    if($parent)
     {
       $objects = Doctrine_Core::getTable('Collections')->fetchByCollectionParent($parent);
     }
     else      
       $objects = Doctrine_Core::getTable('Collections')->getAllCollectionsId() ;
+    if(!$objects->count()) return(array());
     foreach ($objects as $object)
     {
       $choices[$object->getId()] = array() ;
       $choices[$object->getId()]['level'] = substr_count($object->getPath(),'/') ;
-      $choices[$object->getId()]['label'] = $object->getName() ;    
+      $choices[$object->getId()]['label'] = $object->getName() ;  
+    //  if ($this->hasOption('old_right') && in_array($object->getId(),$old_right)) $choices[$object->getId()]['checked'] = 1 ;
     }      
     if($this->getOption('listCheck'))
     {
       foreach ($this->getOption('listCheck') as $list)
       {
-        $choices[$list]['checked'] = 1 ;
+          $choices[$list]['checked'] = 1 ;
       }
-    } 
-    elseif ($parent)
+    }  
+    elseif($this->hasOption('old_right'))
     {
       foreach ($this->getOption('old_right') as $list)
       {
-        if ($list != $parent)
-          $choices[$list]['checked'] = 1 ;
-      }
-    }     
+          if(in_array($list,array_keys($choices))) $choices[$list]['checked'] = 1 ;
+      }      
+    }
     return $choices;
   }
   
@@ -76,6 +78,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     $options = array();
     $this->addOption('listCheck',$value) ; 
     $choices = $this->getChoices();
+ //   die(print_r($choices)) ;
     $html = "" ;
     $prev_level = 0 ;
     if(count($choices) == 0) return ('No existing Sub collections');
@@ -110,13 +113,14 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
         $prev_level = $option['level'] ;
     }
     $html .= str_repeat('</li></ul>',$option['level']);    
-    $html .= "</div><div class=\"check_right\">";
+
 	  if ($this->hasOption('collection_parent'))
 	  {
+	    $html .= "<div class=\"check_right\">" ;
       $html .= "<input id=\"reset\" type=\"reset\" value=\"Reset\" />" ;
       $html .= "<input id=\"submit\" type=\"submit\" value=\"".__('Save')."\" />" ;
+      $html .= "</div>" ;
     }
-    else $html .= "<input type=\"button\" class=\"result_choose\" value=\"clear\" id=\"clear_collections\">" ;
     return($html) ;
   }
 }

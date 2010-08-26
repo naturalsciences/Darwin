@@ -24,7 +24,9 @@ class SubCollectionsForm extends sfForm
   public function save()
   {
 	  $value = $this->getValue('CollectionsRights'); // checked by user values
+	  if(!$value) $value = array() ;
     $old_right = $this->getWidget('CollectionsRights')->getOption('old_right'); // old checked values
+	  if(!$old_right) $old_right = array() ;    
     $obj_to_save = array('collection_ref'=>'','user_ref' => $this->user) ;
 	  foreach($this->getWidget('CollectionsRights')->getChoices() as $key => $form)
 	  {

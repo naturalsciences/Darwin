@@ -14,7 +14,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
 
 
-      $this->useFields(array('gtu_ref','gtu_code','gtu_from_date','gtu_to_date',
+      $this->useFields(array('gtu_code','gtu_from_date','gtu_to_date',
         'taxon_name', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
         'chrono_level_name', 'lithology_name', 'lithology_level_ref', 'lithology_level_name', 'mineral_name', 'mineral_level_ref',
         'mineral_level_name'));
@@ -340,9 +340,9 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-
-    if(isset($taintedValues['Codes']))
+    if(isset($taintedValues['Codes'])&& is_array($taintedValues['Codes']))
     {
+
       foreach($taintedValues['Codes'] as $key=>$newVal)
       {
         if (!isset($this['Codes'][$key]))
@@ -351,10 +351,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         }
       }
     }
+    else $this->offsetUnset('Codes') ;
 
     if(isset($taintedValues['collection_ref']))
       $this->widgetSchema['collection_ref']->addOption('listCheck',$taintedValues['collection_ref']) ;
-    if(isset($taintedValues['Tags']))
+    if(isset($taintedValues['Tags'])&& is_array($taintedValues['Tags']))
     {
       foreach($taintedValues['Tags'] as $key=>$newVal)
       {
@@ -364,6 +365,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         }
       }
     }
+    else $this->offsetUnset('Tags') ;
     parent::bind($taintedValues, $taintedFiles);
   }
   

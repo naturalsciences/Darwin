@@ -19,10 +19,6 @@
           <td><?php echo $form['gtu_to_date']->render() ?></td>
           <td colspan="2"></td>
         </tr>
-        <tr>
-          <th colspan="2"><?php echo $form['tags']->renderLabel() ?></th>
-          <th colspan="2"></th>
-        </tr>
         <?php foreach($form['Tags'] as $i=>$form_value):?>
           <?php include_partial('specimensearch/andSearch',array('form' => $form['Tags'][$i], 'row_line'=>$i));?>
         <?php endforeach;?>
