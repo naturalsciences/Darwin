@@ -78,7 +78,6 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     $options = array();
     $this->addOption('listCheck',$value) ; 
     $choices = $this->getChoices();
- //   die(print_r($choices)) ;
     $html = "" ;
     $prev_level = 0 ;
     if(count($choices) == 0) return ('No existing Sub collections');

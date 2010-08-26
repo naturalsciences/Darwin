@@ -14,7 +14,7 @@ $(document).ready(function () {
         show: { when: 'click', ready: true },
         position: {
             target: $(document.body), // Position it via the document body...
-            corner: 'center' // ...at the center of the viewport
+            corner: 'topMiddle' // ...at the center of the viewport
         },
         hide: false,
         style: {
