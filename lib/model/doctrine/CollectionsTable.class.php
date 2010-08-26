@@ -40,16 +40,8 @@ class CollectionsTable extends DarwinTable
     {
       $q = Doctrine_Query::create()
             ->from('collections c')
-            ->where('c.name = ?', $name);
-
-      return $q->fetchOne(); 
-    }
-    
-    public function findCollection($id)
-    {
-      $q = Doctrine_Query::create()
-            ->from('collections c')
-            ->where('c.id = ?', $id);
+            ->where('c.name = ?', $name)
+            ->orderBy('c.code ASC');
 
       return $q->fetchOne(); 
     }
@@ -65,7 +57,7 @@ class CollectionsTable extends DarwinTable
       return $q->execute();
     }
     
-    public function getAllCollectionsId()
+    public function getAllCollections()
     {
       $q = Doctrine_Query::create()
             ->from('Collections c')

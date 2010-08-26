@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(11, new lime_output_color());
+$t = new lime_test(12, new lime_output_color());
 
 $t->info('fetchByInstitutionList');
 $list = Doctrine::getTable('Collections')->fetchByInstitutionList();
@@ -15,10 +15,14 @@ $t->is($collections[3]->getName(),'Fossile Aves','The childrens item are also fe
 
 $t->is($list[1]->getFormatedName(),'UGMM','Thre list give institutions');
 
-$collections = $list[1]->Collections;
+$collections = Doctrine::getTable('Collections')->getAllCollections();
 
 $t->is($collections[0]->getName(),'Molusca','The last item is molusca (correctly order)');
 
+$t->info('getCollectionByName');
+
+$col = Doctrine::getTable('Collections')->getCollectionByName('Molusca');
+$t->is($col->getId(), $collections[0]->getId(),'Got the good collection');
 
 $t->info('getDistinctCollectionByInstitution');
 
