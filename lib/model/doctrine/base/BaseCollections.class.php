@@ -26,61 +26,55 @@
  * @property Doctrine_Collection $Collections
  * @property Doctrine_Collection $CollectionsAdmin
  * @property Doctrine_Collection $CollectionsRights
- * @property Doctrine_Collection $CollectionsFieldsVisibilities
- * @property Doctrine_Collection $UsersCollRightsAsked
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenSearch
  * 
- * @method integer             getId()                            Returns the current record's "id" value
- * @method enum                getCollectionType()                Returns the current record's "collection_type" value
- * @method string              getCode()                          Returns the current record's "code" value
- * @method string              getName()                          Returns the current record's "name" value
- * @method integer             getInstitutionRef()                Returns the current record's "institution_ref" value
- * @method integer             getMainManagerRef()                Returns the current record's "main_manager_ref" value
- * @method integer             getParentRef()                     Returns the current record's "parent_ref" value
- * @method string              getPath()                          Returns the current record's "path" value
- * @method boolean             getCodeAutoIncrement()             Returns the current record's "code_auto_increment" value
- * @method integer             getCodeLastValue()                 Returns the current record's "code_last_value" value
- * @method string              getCodePrefix()                    Returns the current record's "code_prefix" value
- * @method string              getCodePrefixSeparator()           Returns the current record's "code_prefix_separator" value
- * @method string              getCodeSuffix()                    Returns the current record's "code_suffix" value
- * @method string              getCodeSuffixSeparator()           Returns the current record's "code_suffix_separator" value
- * @method boolean             getCodePartCodeAutoCopy()          Returns the current record's "code_part_code_auto_copy" value
- * @method People              getInstitution()                   Returns the current record's "Institution" value
- * @method Users               getManager()                       Returns the current record's "Manager" value
- * @method Collections         getParent()                        Returns the current record's "Parent" value
- * @method Doctrine_Collection getCollections()                   Returns the current record's "Collections" collection
- * @method Doctrine_Collection getCollectionsAdmin()              Returns the current record's "CollectionsAdmin" collection
- * @method Doctrine_Collection getCollectionsRights()             Returns the current record's "CollectionsRights" collection
- * @method Doctrine_Collection getCollectionsFieldsVisibilities() Returns the current record's "CollectionsFieldsVisibilities" collection
- * @method Doctrine_Collection getUsersCollRightsAsked()          Returns the current record's "UsersCollRightsAsked" collection
- * @method Doctrine_Collection getSpecimens()                     Returns the current record's "Specimens" collection
- * @method Doctrine_Collection getSpecimenSearch()                Returns the current record's "SpecimenSearch" collection
- * @method Collections         setId()                            Sets the current record's "id" value
- * @method Collections         setCollectionType()                Sets the current record's "collection_type" value
- * @method Collections         setCode()                          Sets the current record's "code" value
- * @method Collections         setName()                          Sets the current record's "name" value
- * @method Collections         setInstitutionRef()                Sets the current record's "institution_ref" value
- * @method Collections         setMainManagerRef()                Sets the current record's "main_manager_ref" value
- * @method Collections         setParentRef()                     Sets the current record's "parent_ref" value
- * @method Collections         setPath()                          Sets the current record's "path" value
- * @method Collections         setCodeAutoIncrement()             Sets the current record's "code_auto_increment" value
- * @method Collections         setCodeLastValue()                 Sets the current record's "code_last_value" value
- * @method Collections         setCodePrefix()                    Sets the current record's "code_prefix" value
- * @method Collections         setCodePrefixSeparator()           Sets the current record's "code_prefix_separator" value
- * @method Collections         setCodeSuffix()                    Sets the current record's "code_suffix" value
- * @method Collections         setCodeSuffixSeparator()           Sets the current record's "code_suffix_separator" value
- * @method Collections         setCodePartCodeAutoCopy()          Sets the current record's "code_part_code_auto_copy" value
- * @method Collections         setInstitution()                   Sets the current record's "Institution" value
- * @method Collections         setManager()                       Sets the current record's "Manager" value
- * @method Collections         setParent()                        Sets the current record's "Parent" value
- * @method Collections         setCollections()                   Sets the current record's "Collections" collection
- * @method Collections         setCollectionsAdmin()              Sets the current record's "CollectionsAdmin" collection
- * @method Collections         setCollectionsRights()             Sets the current record's "CollectionsRights" collection
- * @method Collections         setCollectionsFieldsVisibilities() Sets the current record's "CollectionsFieldsVisibilities" collection
- * @method Collections         setUsersCollRightsAsked()          Sets the current record's "UsersCollRightsAsked" collection
- * @method Collections         setSpecimens()                     Sets the current record's "Specimens" collection
- * @method Collections         setSpecimenSearch()                Sets the current record's "SpecimenSearch" collection
+ * @method integer             getId()                       Returns the current record's "id" value
+ * @method enum                getCollectionType()           Returns the current record's "collection_type" value
+ * @method string              getCode()                     Returns the current record's "code" value
+ * @method string              getName()                     Returns the current record's "name" value
+ * @method integer             getInstitutionRef()           Returns the current record's "institution_ref" value
+ * @method integer             getMainManagerRef()           Returns the current record's "main_manager_ref" value
+ * @method integer             getParentRef()                Returns the current record's "parent_ref" value
+ * @method string              getPath()                     Returns the current record's "path" value
+ * @method boolean             getCodeAutoIncrement()        Returns the current record's "code_auto_increment" value
+ * @method integer             getCodeLastValue()            Returns the current record's "code_last_value" value
+ * @method string              getCodePrefix()               Returns the current record's "code_prefix" value
+ * @method string              getCodePrefixSeparator()      Returns the current record's "code_prefix_separator" value
+ * @method string              getCodeSuffix()               Returns the current record's "code_suffix" value
+ * @method string              getCodeSuffixSeparator()      Returns the current record's "code_suffix_separator" value
+ * @method boolean             getCodePartCodeAutoCopy()     Returns the current record's "code_part_code_auto_copy" value
+ * @method People              getInstitution()              Returns the current record's "Institution" value
+ * @method Users               getManager()                  Returns the current record's "Manager" value
+ * @method Collections         getParent()                   Returns the current record's "Parent" value
+ * @method Doctrine_Collection getCollections()              Returns the current record's "Collections" collection
+ * @method Doctrine_Collection getCollectionsAdmin()         Returns the current record's "CollectionsAdmin" collection
+ * @method Doctrine_Collection getCollectionsRights()        Returns the current record's "CollectionsRights" collection
+ * @method Doctrine_Collection getSpecimens()                Returns the current record's "Specimens" collection
+ * @method Doctrine_Collection getSpecimenSearch()           Returns the current record's "SpecimenSearch" collection
+ * @method Collections         setId()                       Sets the current record's "id" value
+ * @method Collections         setCollectionType()           Sets the current record's "collection_type" value
+ * @method Collections         setCode()                     Sets the current record's "code" value
+ * @method Collections         setName()                     Sets the current record's "name" value
+ * @method Collections         setInstitutionRef()           Sets the current record's "institution_ref" value
+ * @method Collections         setMainManagerRef()           Sets the current record's "main_manager_ref" value
+ * @method Collections         setParentRef()                Sets the current record's "parent_ref" value
+ * @method Collections         setPath()                     Sets the current record's "path" value
+ * @method Collections         setCodeAutoIncrement()        Sets the current record's "code_auto_increment" value
+ * @method Collections         setCodeLastValue()            Sets the current record's "code_last_value" value
+ * @method Collections         setCodePrefix()               Sets the current record's "code_prefix" value
+ * @method Collections         setCodePrefixSeparator()      Sets the current record's "code_prefix_separator" value
+ * @method Collections         setCodeSuffix()               Sets the current record's "code_suffix" value
+ * @method Collections         setCodeSuffixSeparator()      Sets the current record's "code_suffix_separator" value
+ * @method Collections         setCodePartCodeAutoCopy()     Sets the current record's "code_part_code_auto_copy" value
+ * @method Collections         setInstitution()              Sets the current record's "Institution" value
+ * @method Collections         setManager()                  Sets the current record's "Manager" value
+ * @method Collections         setParent()                   Sets the current record's "Parent" value
+ * @method Collections         setCollections()              Sets the current record's "Collections" collection
+ * @method Collections         setCollectionsAdmin()         Sets the current record's "CollectionsAdmin" collection
+ * @method Collections         setCollectionsRights()        Sets the current record's "CollectionsRights" collection
+ * @method Collections         setSpecimens()                Sets the current record's "Specimens" collection
+ * @method Collections         setSpecimenSearch()           Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -185,14 +179,6 @@ abstract class BaseCollections extends sfDoctrineRecord
              'foreign' => 'collection_ref'));
 
         $this->hasMany('CollectionsRights', array(
-             'local' => 'id',
-             'foreign' => 'collection_ref'));
-
-        $this->hasMany('CollectionsFieldsVisibilities', array(
-             'local' => 'id',
-             'foreign' => 'collection_ref'));
-
-        $this->hasMany('UsersCollRightsAsked', array(
              'local' => 'id',
              'foreign' => 'collection_ref'));
 

@@ -25,86 +25,71 @@
  * @property Doctrine_Collection $UsersComm
  * @property Doctrine_Collection $UsersAddresses
  * @property Doctrine_Collection $UsersLoginInfos
- * @property Doctrine_Collection $UsersMultimedia
  * @property Doctrine_Collection $Collections
  * @property Doctrine_Collection $CollectionsAdmin
  * @property Doctrine_Collection $CollectionsRights
- * @property Doctrine_Collection $CollectionsFieldsVisibilities
- * @property Doctrine_Collection $UsersCollRightsAsked
- * @property Doctrine_Collection $RecordVisibilities
- * @property Doctrine_Collection $UsersWorkflow
  * @property Doctrine_Collection $UsersTracking
  * @property Doctrine_Collection $MySavedSearches
  * @property Doctrine_Collection $MyWidgets
  * @property Doctrine_Collection $Preferences
  * @property Doctrine_Collection $SpecimenSearch
  * 
- * @method integer             getId()                            Returns the current record's "id" value
- * @method boolean             getIsPhysical()                    Returns the current record's "is_physical" value
- * @method string              getSubType()                       Returns the current record's "sub_type" value
- * @method string              getFormatedName()                  Returns the current record's "formated_name" value
- * @method string              getFormatedNameIndexed()           Returns the current record's "formated_name_indexed" value
- * @method string              getFormatedNameTs()                Returns the current record's "formated_name_ts" value
- * @method string              getTitle()                         Returns the current record's "title" value
- * @method string              getFamilyName()                    Returns the current record's "family_name" value
- * @method string              getGivenName()                     Returns the current record's "given_name" value
- * @method string              getAdditionalNames()               Returns the current record's "additional_names" value
- * @method integer             getBirthDateMask()                 Returns the current record's "birth_date_mask" value
- * @method string              getBirthDate()                     Returns the current record's "birth_date" value
- * @method enum                getGender()                        Returns the current record's "gender" value
- * @method integer             getDbUserType()                    Returns the current record's "db_user_type" value
- * @method integer             getPeopleId()                      Returns the current record's "people_id" value
- * @method People              getPeople()                        Returns the current record's "People" value
- * @method Doctrine_Collection getUsersLanguages()                Returns the current record's "UsersLanguages" collection
- * @method Doctrine_Collection getUsersComm()                     Returns the current record's "UsersComm" collection
- * @method Doctrine_Collection getUsersAddresses()                Returns the current record's "UsersAddresses" collection
- * @method Doctrine_Collection getUsersLoginInfos()               Returns the current record's "UsersLoginInfos" collection
- * @method Doctrine_Collection getUsersMultimedia()               Returns the current record's "UsersMultimedia" collection
- * @method Doctrine_Collection getCollections()                   Returns the current record's "Collections" collection
- * @method Doctrine_Collection getCollectionsAdmin()              Returns the current record's "CollectionsAdmin" collection
- * @method Doctrine_Collection getCollectionsRights()             Returns the current record's "CollectionsRights" collection
- * @method Doctrine_Collection getCollectionsFieldsVisibilities() Returns the current record's "CollectionsFieldsVisibilities" collection
- * @method Doctrine_Collection getUsersCollRightsAsked()          Returns the current record's "UsersCollRightsAsked" collection
- * @method Doctrine_Collection getRecordVisibilities()            Returns the current record's "RecordVisibilities" collection
- * @method Doctrine_Collection getUsersWorkflow()                 Returns the current record's "UsersWorkflow" collection
- * @method Doctrine_Collection getUsersTracking()                 Returns the current record's "UsersTracking" collection
- * @method Doctrine_Collection getMySavedSearches()               Returns the current record's "MySavedSearches" collection
- * @method Doctrine_Collection getMyWidgets()                     Returns the current record's "MyWidgets" collection
- * @method Doctrine_Collection getPreferences()                   Returns the current record's "Preferences" collection
- * @method Doctrine_Collection getSpecimenSearch()                Returns the current record's "SpecimenSearch" collection
- * @method Users               setId()                            Sets the current record's "id" value
- * @method Users               setIsPhysical()                    Sets the current record's "is_physical" value
- * @method Users               setSubType()                       Sets the current record's "sub_type" value
- * @method Users               setFormatedName()                  Sets the current record's "formated_name" value
- * @method Users               setFormatedNameIndexed()           Sets the current record's "formated_name_indexed" value
- * @method Users               setFormatedNameTs()                Sets the current record's "formated_name_ts" value
- * @method Users               setTitle()                         Sets the current record's "title" value
- * @method Users               setFamilyName()                    Sets the current record's "family_name" value
- * @method Users               setGivenName()                     Sets the current record's "given_name" value
- * @method Users               setAdditionalNames()               Sets the current record's "additional_names" value
- * @method Users               setBirthDateMask()                 Sets the current record's "birth_date_mask" value
- * @method Users               setBirthDate()                     Sets the current record's "birth_date" value
- * @method Users               setGender()                        Sets the current record's "gender" value
- * @method Users               setDbUserType()                    Sets the current record's "db_user_type" value
- * @method Users               setPeopleId()                      Sets the current record's "people_id" value
- * @method Users               setPeople()                        Sets the current record's "People" value
- * @method Users               setUsersLanguages()                Sets the current record's "UsersLanguages" collection
- * @method Users               setUsersComm()                     Sets the current record's "UsersComm" collection
- * @method Users               setUsersAddresses()                Sets the current record's "UsersAddresses" collection
- * @method Users               setUsersLoginInfos()               Sets the current record's "UsersLoginInfos" collection
- * @method Users               setUsersMultimedia()               Sets the current record's "UsersMultimedia" collection
- * @method Users               setCollections()                   Sets the current record's "Collections" collection
- * @method Users               setCollectionsAdmin()              Sets the current record's "CollectionsAdmin" collection
- * @method Users               setCollectionsRights()             Sets the current record's "CollectionsRights" collection
- * @method Users               setCollectionsFieldsVisibilities() Sets the current record's "CollectionsFieldsVisibilities" collection
- * @method Users               setUsersCollRightsAsked()          Sets the current record's "UsersCollRightsAsked" collection
- * @method Users               setRecordVisibilities()            Sets the current record's "RecordVisibilities" collection
- * @method Users               setUsersWorkflow()                 Sets the current record's "UsersWorkflow" collection
- * @method Users               setUsersTracking()                 Sets the current record's "UsersTracking" collection
- * @method Users               setMySavedSearches()               Sets the current record's "MySavedSearches" collection
- * @method Users               setMyWidgets()                     Sets the current record's "MyWidgets" collection
- * @method Users               setPreferences()                   Sets the current record's "Preferences" collection
- * @method Users               setSpecimenSearch()                Sets the current record's "SpecimenSearch" collection
+ * @method integer             getId()                    Returns the current record's "id" value
+ * @method boolean             getIsPhysical()            Returns the current record's "is_physical" value
+ * @method string              getSubType()               Returns the current record's "sub_type" value
+ * @method string              getFormatedName()          Returns the current record's "formated_name" value
+ * @method string              getFormatedNameIndexed()   Returns the current record's "formated_name_indexed" value
+ * @method string              getFormatedNameTs()        Returns the current record's "formated_name_ts" value
+ * @method string              getTitle()                 Returns the current record's "title" value
+ * @method string              getFamilyName()            Returns the current record's "family_name" value
+ * @method string              getGivenName()             Returns the current record's "given_name" value
+ * @method string              getAdditionalNames()       Returns the current record's "additional_names" value
+ * @method integer             getBirthDateMask()         Returns the current record's "birth_date_mask" value
+ * @method string              getBirthDate()             Returns the current record's "birth_date" value
+ * @method enum                getGender()                Returns the current record's "gender" value
+ * @method integer             getDbUserType()            Returns the current record's "db_user_type" value
+ * @method integer             getPeopleId()              Returns the current record's "people_id" value
+ * @method People              getPeople()                Returns the current record's "People" value
+ * @method Doctrine_Collection getUsersLanguages()        Returns the current record's "UsersLanguages" collection
+ * @method Doctrine_Collection getUsersComm()             Returns the current record's "UsersComm" collection
+ * @method Doctrine_Collection getUsersAddresses()        Returns the current record's "UsersAddresses" collection
+ * @method Doctrine_Collection getUsersLoginInfos()       Returns the current record's "UsersLoginInfos" collection
+ * @method Doctrine_Collection getCollections()           Returns the current record's "Collections" collection
+ * @method Doctrine_Collection getCollectionsAdmin()      Returns the current record's "CollectionsAdmin" collection
+ * @method Doctrine_Collection getCollectionsRights()     Returns the current record's "CollectionsRights" collection
+ * @method Doctrine_Collection getUsersTracking()         Returns the current record's "UsersTracking" collection
+ * @method Doctrine_Collection getMySavedSearches()       Returns the current record's "MySavedSearches" collection
+ * @method Doctrine_Collection getMyWidgets()             Returns the current record's "MyWidgets" collection
+ * @method Doctrine_Collection getPreferences()           Returns the current record's "Preferences" collection
+ * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
+ * @method Users               setId()                    Sets the current record's "id" value
+ * @method Users               setIsPhysical()            Sets the current record's "is_physical" value
+ * @method Users               setSubType()               Sets the current record's "sub_type" value
+ * @method Users               setFormatedName()          Sets the current record's "formated_name" value
+ * @method Users               setFormatedNameIndexed()   Sets the current record's "formated_name_indexed" value
+ * @method Users               setFormatedNameTs()        Sets the current record's "formated_name_ts" value
+ * @method Users               setTitle()                 Sets the current record's "title" value
+ * @method Users               setFamilyName()            Sets the current record's "family_name" value
+ * @method Users               setGivenName()             Sets the current record's "given_name" value
+ * @method Users               setAdditionalNames()       Sets the current record's "additional_names" value
+ * @method Users               setBirthDateMask()         Sets the current record's "birth_date_mask" value
+ * @method Users               setBirthDate()             Sets the current record's "birth_date" value
+ * @method Users               setGender()                Sets the current record's "gender" value
+ * @method Users               setDbUserType()            Sets the current record's "db_user_type" value
+ * @method Users               setPeopleId()              Sets the current record's "people_id" value
+ * @method Users               setPeople()                Sets the current record's "People" value
+ * @method Users               setUsersLanguages()        Sets the current record's "UsersLanguages" collection
+ * @method Users               setUsersComm()             Sets the current record's "UsersComm" collection
+ * @method Users               setUsersAddresses()        Sets the current record's "UsersAddresses" collection
+ * @method Users               setUsersLoginInfos()       Sets the current record's "UsersLoginInfos" collection
+ * @method Users               setCollections()           Sets the current record's "Collections" collection
+ * @method Users               setCollectionsAdmin()      Sets the current record's "CollectionsAdmin" collection
+ * @method Users               setCollectionsRights()     Sets the current record's "CollectionsRights" collection
+ * @method Users               setUsersTracking()         Sets the current record's "UsersTracking" collection
+ * @method Users               setMySavedSearches()       Sets the current record's "MySavedSearches" collection
+ * @method Users               setMyWidgets()             Sets the current record's "MyWidgets" collection
+ * @method Users               setPreferences()           Sets the current record's "Preferences" collection
+ * @method Users               setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -201,10 +186,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'user_ref'));
 
-        $this->hasMany('UsersMultimedia', array(
-             'local' => 'id',
-             'foreign' => 'person_user_ref'));
-
         $this->hasMany('Collections', array(
              'local' => 'id',
              'foreign' => 'main_manager_ref'));
@@ -214,22 +195,6 @@ abstract class BaseUsers extends sfDoctrineRecord
              'foreign' => 'user_ref'));
 
         $this->hasMany('CollectionsRights', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('CollectionsFieldsVisibilities', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('UsersCollRightsAsked', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('RecordVisibilities', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('UsersWorkflow', array(
              'local' => 'id',
              'foreign' => 'user_ref'));
 

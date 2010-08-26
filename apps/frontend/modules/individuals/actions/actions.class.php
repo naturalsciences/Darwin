@@ -133,7 +133,7 @@ class individualsActions extends DarwinActions
     $identifier_order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
 
-    if($request->hasParameter('identification_id') && $request->getParameter('identification_id'))
+    if($request->hasParameter('identification_id'))
     {
       $ident = $individual_form->getEmbeddedForm('Identifications')->getEmbeddedForm($number);
       $ident->addIdentifiers($identifier_number,$people_ref, $identifier_order_by);

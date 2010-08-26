@@ -8,7 +8,12 @@ $types = $institution->getTypes();
 $t->is(count($types), 1, 'There are "1" differents types');
 $t->is($types[8], 'Expert', 'the type "Expert"');
 $t->info('Test types for Institutions encoded');
+
 $institutions = Doctrine::getTable('Institutions')->findByIsPhysical(false);
+$institutions = Doctrine_Query::create()
+            ->from('Institutions')
+            ->andWhere('is_physical = false')
+            ->orderBy('formated_name_indexed ASC, id ASC')->execute();
 $dbTypes = $institutions[0]->getDbPeopleType();
 $t->is(count($dbTypes), 0, 'There is "1" type encoded for "'.$institutions[0]->getFormatedName().'"');
 

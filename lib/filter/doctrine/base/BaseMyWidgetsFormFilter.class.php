@@ -23,7 +23,7 @@ abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
       'is_available' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'opened'       => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'color'        => new sfWidgetFormFilterInput(),
-      'icon_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Multimedia'), 'add_empty' => true)),
+      'icon_ref'     => new sfWidgetFormFilterInput(),
       'title_perso'  => new sfWidgetFormFilterInput(),
     ));
 
@@ -38,7 +38,7 @@ abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
       'is_available' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'opened'       => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'color'        => new sfValidatorPass(array('required' => false)),
-      'icon_ref'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Multimedia'), 'column' => 'id')),
+      'icon_ref'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'title_perso'  => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -70,7 +70,7 @@ abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
       'is_available' => 'Boolean',
       'opened'       => 'Boolean',
       'color'        => 'Text',
-      'icon_ref'     => 'ForeignKey',
+      'icon_ref'     => 'Number',
       'title_perso'  => 'Text',
     );
   }
