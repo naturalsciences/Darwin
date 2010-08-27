@@ -14,13 +14,13 @@ function hideWidgetContent(widget)
 
 jQuery(function(){
     
-    $('.widget_top_button img').live('click',function(){
+    $('.widget').delegate('.widget_top_button img', 'click', function(){
         showWidgetContent($(this).closest('.widget'));
         $.post(chgstatus_url+'/widget/'+$(this).closest('.widget').attr('id')+'/status/open' );
         return false;
     });
     
-    $('.widget_bottom_button img').live('click',function(){
+    $('.widget').delegate('.widget_bottom_button img', 'click', function(){
         hideWidgetContent($(this).closest('.widget'));
         $.post(chgstatus_url+'/widget/'+$(this).closest('.widget').attr('id')+'/status/close' );
         return false;
@@ -36,8 +36,6 @@ jQuery(function(){
       col_2 = String($(".board_col:last").sortable('toArray'));
       if(notified_col1 != col_1 || notified_col2 != col_2)
       {
-//         console.log(notified_col1+'-----'+col_1);
-//         console.log(notified_col2+'-----'+col_2);
         $.post(chgorder_url, { "col1": col_1, "col2": col_2 } );
         notified_col1 = col_1;
         notified_col2 = col_2;
@@ -110,13 +108,13 @@ jQuery(function(){
         return false;
     });
 
-    $('.widget_refresh').live('click',function(){
+    $('.widget').delegate('.widget_refresh', 'click', function(){
         widget = $(this).parent().parent().parent();
         widget.find('.widget_content').load(reload_url+'/widget/'+widget.attr('id'));
         return false;
     });
 
-    $('.widget_close').live('click',function(){
+    $('.widget').delegate('.widget_close', 'click', function(){
         widget = $(this).parent().parent().parent();
         $.post(chgstatus_url+'/widget/'+widget.attr('id')+'/status/hidden' );
         $('.widget_collection_container .no_more').addClass('hidden');
@@ -124,11 +122,6 @@ jQuery(function(){
         widget.remove();
         if($('.board_col li').length == 0)
           $('.no_more_wigets').removeClass('hidden');
-        return false;
-    });
-
-    $('.help_close').click(function(){
-        $(this).parent().parent().fadeOut();
         return false;
     });
 

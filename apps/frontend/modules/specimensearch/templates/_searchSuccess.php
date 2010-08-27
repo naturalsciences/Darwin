@@ -303,8 +303,8 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-  o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
-  $('ul.column_menu').supersubs().superfish(o);
+  o = {"dropShadows":false, "autoArrows":false,  "delay":400};
+  $('ul.column_menu').superfish(o);
 
   $('ul.column_menu > li > ul > li').each(function(){
     hide_or_show($(this));

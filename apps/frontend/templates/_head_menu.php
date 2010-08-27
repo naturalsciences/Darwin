@@ -95,7 +95,7 @@
 <script  type="text/javascript">
 
 $(document).ready(function () {
-  o = {"dropShadows":false, "autoArrows":true, "firstOnClick":true, "delay":400};
+  o = {"dropShadows":false, "autoArrows":true,"delay":400};
   $('ul.main_menu').supersubs().superfish(o);
   $('ul.main_menu > li:not(.house):not(.exit)').append('<img class="highlight" src="/images/menu_expand.png" alt="" />');
 });
