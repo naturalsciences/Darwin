@@ -453,13 +453,4 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     return $query;
   }
 
-  public function getJavascripts()
-  {
-    $javascripts=parent::getJavascripts();
-    if(($key = array_search('/js/searchForm.js',$javascripts) ) !== false)
-      unset($javascripts[$key]);
-       
-    return $javascripts;
-  }
-
 }
