@@ -55,6 +55,7 @@ class MySavedSearchesTable extends DarwinTable
                  'taxon'=>'taxon',
                  'type'=>'type',                 
                  'gtu'=>'gtu',
+                 'codes'=>'codes',
                  'chrono'=>'chrono',
                  'litho'=>'litho',
                  'lithologic'=>'lithologic',

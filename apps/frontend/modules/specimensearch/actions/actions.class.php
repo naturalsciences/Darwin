@@ -40,8 +40,6 @@ class specimensearchActions extends DarwinActions
     */ 
   public function executeSearch(sfWebRequest $request)
   {
-    // Forward to a 404 page if the method used is not a post
-    //$this->forward404Unless($request->isMethod('post'));
     $this->is_specimen_search = false;
     $this->setCommonValues('specimensearch', 'collection_name', $request);
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
@@ -128,7 +126,9 @@ class specimensearchActions extends DarwinActions
           // If pager not yet executed, this means the query has to be executed for data loading
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
-
+          foreach($this->specimensearch as $key=>$specimen)
+            $spec_list[] = $specimen->getId() ;
+          $this->codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
 
           return;
@@ -153,7 +153,7 @@ class specimensearchActions extends DarwinActions
   */
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
-    $flds = array('category','collection','taxon','type','gtu','chrono',
+    $flds = array('category','collection','taxon','type','gtu','codes','chrono',
               'litho','lithologic','mineral','expedition','count');
     $flds = array_fill_keys($flds, 'uncheck');
 

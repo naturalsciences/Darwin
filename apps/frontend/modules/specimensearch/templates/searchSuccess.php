@@ -24,6 +24,7 @@
         <div class="search_results_content">
           <?php include_partial('searchSuccess',
                                 array('specimensearch' => $specimensearch,
+                                      'codes' => $codes,
                                       'form' => $form, 
                                       'orderBy' => $orderBy,
                                       's_url' => $s_url,

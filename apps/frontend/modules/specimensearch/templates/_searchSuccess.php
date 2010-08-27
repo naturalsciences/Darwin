@@ -21,6 +21,7 @@
               'taxon' => __("Taxon"),
               'type' => __("Type ?"),
               'gtu' => __("Sampling location"),
+              'codes' => __("Codes"),
               'chrono' => __("Chronostratigraphic unit"),
               'litho' => __("Lithostratigraphic unit"),
               'lithologic' => __("Lithologic unit"),
@@ -70,10 +71,13 @@
                 <a class="sort" href="<?php echo url_for($s_url.'&orderby=with_types'.( ($orderBy=='with_types' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                  $currentPage);?>">
               <?php echo __('Type ?');?>
-                <?php if($orderBy=='with_types') echo $orderSign ?>              
+              <?php if($orderBy=='with_types') echo $orderSign ?>              
             </th> 
             <th class="col_gtu">                          
               <?php echo __('Sampling locations');?>
+            </th>            
+            <th class="col_codes">
+              <?php echo __('Codes');?>
             </th>            
             <th class="col_chrono">
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=chrono_name'.( ($orderBy=='chrono_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
@@ -220,7 +224,20 @@
                     <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef());?>"><?php echo $specimen->getGtuCode();?></a>
                   <?php endif ; ?>                 
                 <?php endif ; ?>          
-              </td>                      
+              </td> 
+              <td class="col_codes">     
+                <?php foreach($codes as $key=>$code):?>
+                  <?php if ($code->getRecordId() === $specimen->getId()) : ?>
+                    <?php if ($code->getCodeCategory() == 'main' ) : ?>
+                      <?php echo ('<b>'.$code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().
+                      $code->getCodeSuffix()."</b><br />") ; ?>
+                    <?php else : ?>
+                      <?php echo ($code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().
+                      $code->getCodeSuffix()."<br />") ; ?>  
+                    <?php endif ; ?>
+                  <?php endif ; ?>
+                <?php endforeach; ?>
+              </td>                
               <td  class="col_chrono">
                 <?php if($specimen->getChronoRef() > 0) : ?>              
                   <a href="<?php echo url_for('chronostratigraphy/edit?id='.$specimen->getChronoRef());?>"><?php echo $specimen->getChronoName();?></a>
