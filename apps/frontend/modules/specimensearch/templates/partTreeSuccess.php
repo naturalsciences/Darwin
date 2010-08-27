@@ -44,19 +44,6 @@
   </tbody>
 </table>
 <script  type="text/javascript">
-
-function addError(html)
-{
-  $('ul#error_list').find('li').text(html);
-  $('ul#error_list').show();
-}
-
-function removeError()
-{
-  $('ul#error_list').hide();
-  $('ul#error_list').find('li').text(' ');
-}
-
 $(document).ready(function () {
   $('img.extd_info').each(function(){
 	   

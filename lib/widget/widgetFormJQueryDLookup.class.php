@@ -45,6 +45,12 @@ class widgetFormJQueryDLookup extends sfWidgetFormInputText
                                       }
                                       jQuery("div.search_box table#search_and_choose tbody td:first input:first").focus();
                                     });
+                                    
+                                    $(".reference_clear").click(function()
+                                    {
+                                      $(this).prevAll("input").val("");
+                                      $(this).hide();
+                                    });
                                    ',
                                    $obj_id
                                   );
@@ -67,11 +73,6 @@ class widgetFormJQueryDLookup extends sfWidgetFormInputText
                $script_header .
                $script_formated .
                $script_footer;
-    }
-
-    public function getJavaScripts()
-    {
-      return array('/js/DLookup.js');
     }
     
     public function getName($value)
