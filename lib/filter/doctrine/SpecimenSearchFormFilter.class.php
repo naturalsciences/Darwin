@@ -141,6 +141,28 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);
 
+
+    $this->widgetSchema['tools'] = new sfWidgetFormDarwinDoctrineChoice(array(
+        'model' => 'CollectingTools',
+        'table_method' => 'getAll',
+        'method' => 'getTool',
+        'key_method' => 'getId',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->widgetSchema['methods'] = new sfWidgetFormDarwinDoctrineChoice(array(
+        'model' => 'CollectingMethods',
+        'table_method' => 'getAll',
+        'method' => 'getMethod',
+        'key_method' => 'getId',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['methods'] = new sfValidatorPass();
+    $this->validatorSchema['tools'] = new sfValidatorPass();
+
   /**
   * Individuals Fields
   */
@@ -223,6 +245,24 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->is_individual_joined = true;
   }
 
+  public function addToolsColumnQuery($query, $field, $val)
+  {
+    if($val != '' && is_array($val) && !empty($val))
+    {
+      $query->andWhere('spec_ref in (select fct_search_tools (?))',implode(',', $val));
+    }
+    return $query ;
+  }
+
+  public function addMethodsColumnQuery($query, $field, $val)
+  {
+    if($val != '' && is_array($val) && !empty($val))
+    {
+      $query->andWhere('spec_ref in (select fct_search_methods (?))',implode(',', $val));
+    }
+    return $query ;
+  }
+
   public function addSexColumnQuery($query, $field, $val)
   {
     if($val != '')
@@ -287,6 +327,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     return $query ;
   }
+
   public function addTagsColumnQuery($query, $field, $val)
   {
     $alias = $query->getRootAlias();

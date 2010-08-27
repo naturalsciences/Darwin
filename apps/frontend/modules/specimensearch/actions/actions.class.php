@@ -126,6 +126,7 @@ class specimensearchActions extends DarwinActions
           // If pager not yet executed, this means the query has to be executed for data loading
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
+          $spec_list = array();
           foreach($this->specimensearch as $key=>$specimen)
             $spec_list[] = $specimen->getId() ;
           $this->codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;

@@ -1184,3 +1184,25 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Codes
+    u1sps15:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: tools
+        mandatory: false
+        order_by: 7
+        opened: false
+        visible: false
+        is_available: false
+        title_perso: Tools
+    u1sps16:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: methods
+        mandatory: false
+        order_by: 8
+        opened: false
+        visible: false
+        is_available: false
+        title_perso: Methods

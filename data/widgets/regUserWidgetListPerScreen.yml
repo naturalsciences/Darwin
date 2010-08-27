@@ -167,3 +167,21 @@ sps14:
    opened: false
    visible: false
    title_perso: Codes
+sps15:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: tools
+   mandatory: false
+   order_by: 7
+   opened: false
+   visible: false
+   title_perso: Tools
+sps16:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: methods
+   mandatory: false
+   order_by: 7
+   opened: false
+   visible: false
+   title_perso: Methods

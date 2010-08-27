@@ -24,6 +24,14 @@ class CollectingToolsTable extends Doctrine_Table
       return $response;
     }
 
+  public function getAll()
+  {
+    $q = Doctrine_Query::create()
+      ->from('CollectingTools')
+      ->orderBy('tool_indexed');
+    return $q->execute();
+  }
+
     public function addTool($tool)
     {
       // Define a new object and try to add and save new value passed

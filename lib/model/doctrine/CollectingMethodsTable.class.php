@@ -9,6 +9,14 @@ class CollectingMethodsTable extends Doctrine_Table
         return Doctrine_Core::getTable('CollectingMethods');
     }
 
+  public function getAll()
+  {
+    $q = Doctrine_Query::create()
+      ->from('CollectingMethods')
+      ->orderBy('method_indexed');
+    return $q->execute();
+  }
+
     public function fetchMethods()
     {
       $response = array();
