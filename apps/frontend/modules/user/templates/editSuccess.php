@@ -21,8 +21,8 @@
   </tr>
   <tr class="trusted_user_links">
     <td colspan="2">
-	<a href="#" class="display_value">> <?php echo __('Show link with '.(isset($form['title'])?'people':'institution'));?> <</a>
-	<a href="#" class="hide_value hidden">< <?php echo __('Hide link with '.(isset($form['title'])?'people':'institution'));?>  ></a>
+	<a href="#" class="display_value"> &gt; <?php echo __('Show link with '.(isset($form['title'])?'people':'institution'));?> &lt;</a>
+	<a href="#" class="hide_value hidden"> &lt; <?php echo __('Hide link with '.(isset($form['title'])?'people':'institution'));?> &gt;</a>
     </td>
   </tr>
   <tr class="trusted_user hidden">
@@ -51,13 +51,15 @@
 </form>
 
 <script type="text/javascript">
-$('.display_value').click(function(){
+$('.display_value').click(function(event){
+  event.preventDefault();
   $('.trusted_user').show();
   $(this).hide();
   $('.hide_value').show();
 });
 
-$('.hide_value').click(function(){
+$('.hide_value').click(function(event){
+  event.preventDefault();
   $('.trusted_user').hide();
   $(this).hide();
   $('.display_value').show();

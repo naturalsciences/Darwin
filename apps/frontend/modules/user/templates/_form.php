@@ -79,7 +79,7 @@
     </tfoot>
   </table>
 </form>
-<script>
+<script type="text/javascript">
 $(document).ready(function () {
 	$(':checkbox#users_is_physical').change(function(){
 	if ($(this).attr("checked"))

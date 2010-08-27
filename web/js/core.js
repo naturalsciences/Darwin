@@ -80,14 +80,9 @@ function addBlackScreen()
     {
         $('<div id=\"qtip-blanket\">')
             .css({
-                position: 'absolute',
                 top: $(document).scrollTop(), // Use document scrollTop so it's on-screen even if the window is scrolled
                 left: 0,
                 height: $(document).height(), // Span the full document height...
-                width: '100%', // ...and full width
-                opacity: 0.7, // Make it slightly transparent
-                backgroundColor: 'black',
-                zIndex: 5000  // Make sure the zIndex is below 6000 to keep it below tooltips!
             })
             .appendTo(document.body) // Append to the document body
             .hide(); // Hide it initially
@@ -98,17 +93,6 @@ function hideForRefresh(el)
 {
   $(el).css({position: 'relative'})
   $(el).append('<div id="loading_screen" />')
-  $('#loading_screen').css({
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%', 
-                height: '100%',
-                opacity: 0.3,
-                backgroundColor: 'black',
-		cursor: 'wait',
-                zIndex: 10000
-            });
 }
 
 function showAfterRefresh(el)
