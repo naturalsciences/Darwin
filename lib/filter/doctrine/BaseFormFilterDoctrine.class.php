@@ -313,7 +313,6 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   {
     $javascripts=parent::getJavascripts();
     $javascripts[]='/js/searchForm.js';
-    $javascripts[]='/js/pager.js';
     return $javascripts;
   }
 
