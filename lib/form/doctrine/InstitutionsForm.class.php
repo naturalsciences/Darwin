@@ -28,7 +28,8 @@ class InstitutionsForm extends BaseInstitutionsForm
 
     $this->widgetSchema['db_people_type'] = new sfWidgetFormChoice(array(
       'choices'        => Institutions::getTypes(),
-      'renderer_class' => 'sfWidgetFormSelectDoubleList',
+      'expanded'       => true,
+      'multiple'       => true
     ));
     $this->widgetSchema['db_people_type']->setLabel('Role');
     $this->widgetSchema['sub_type']->setLabel('Type');
