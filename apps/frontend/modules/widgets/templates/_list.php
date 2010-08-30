@@ -6,10 +6,18 @@ if(!isset($table)) $table = '';
 else $table = '&table='.$table;
 ?>
 <script type="text/javascript">
-var chgstatus_url='<?php echo url_for('widgets/changeStatus?category='.$category.$record_ref);?>';
-var chgorder_url='<?php echo url_for('widgets/changeOrder?category='.$category.$record_ref);?>';
-var reload_url='<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>';
+
+$(document).ready(function () {
+  $('body').widgets_screen(
+  {
+    change_order_url: '<?php echo url_for('widgets/changeOrder?category='.$category.$record_ref);?>',
+    change_status_url: '<?php echo url_for('widgets/changeStatus?category='.$category.$record_ref);?>',
+    reload_url: '<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>',
+    position_url: '<?php echo url_for('widgets/getWidgetPosition?category='.$category.$record_ref);?>'
+  });
+});
 </script>
+
 <?php use_stylesheet('widgets.css'); ?>
 <?php use_javascript('widgets.js'); ?>
 <input type="hidden" id="refreshed" value="no">
@@ -31,7 +39,6 @@ else{e.value="no";location.reload();}
                 <?php echo image_tag('widged_preview_1.png','alt='.$widget->getGroupName());?>
                 <span class="widget_prev_title"><?php echo $widget->getTitlePerso();?></span>
               </a>
-              <a href="<?php echo url_for('widgets/getWidgetPosition?widget='.$widget->getGroupName()."&category=".$category.$record_ref.$table);?>" class="hidden"></a>
             </div>
   
 	  <?php endforeach;?>
