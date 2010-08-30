@@ -56,7 +56,6 @@ class MineralogyForm extends BaseMineralogyForm
                                                                                'add_label' => 'Add another system',
                                                                               )
                                                                         );
-
     $this->widgetSchema->setLabels(array('cristal_system' => 'Cristalographic system',
                                          'level_ref' => 'Level',
                                          'parent_ref' => 'Parent'

@@ -68,7 +68,7 @@
         </td>
       </tr>
       <tr id="parent_ref">
-        <th class="ref_name"><?php echo $form['parent_ref']->renderLabel() ?></th>
+        <th class="ref_name"><?php echo $form['cristal_system']->renderLabel() ?></th>
         <td>
           <?php echo $form['cristal_system']->renderError() ?>
           <?php echo $form['cristal_system'] ?>
