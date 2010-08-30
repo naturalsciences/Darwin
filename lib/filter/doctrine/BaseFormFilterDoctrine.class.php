@@ -306,7 +306,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 
   public function getCurrentCulture()
   {
-    return isset($this->options['culture']) ? $this->options['culture'] : 'en';
+    return sfContext::getInstance()->getUser()->getCulture();
   }
 
   public function getJavascripts()

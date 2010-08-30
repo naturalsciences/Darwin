@@ -38,7 +38,7 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
     $this->addOption('wrap_class', 'edition');
     parent::configure($options, $attributes);
 
-    if ('en' == $this->getOption('culture'))
+    if ('' == $this->getOption('culture'))
     {
       $this->setOption('culture', 'en');
     }
@@ -46,7 +46,7 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
 
   public function getJavaScripts()
   {
-    return array('/js/jquery-datepicker-'.$this->getOption('culture').'.js');
+    return array('/js/jquery-datepicker-lang.js');
   }
 
   public function getStylesheets()

@@ -36,22 +36,22 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   */
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-	$fields_groups = $this->getFieldsByGroup();
-	foreach($fields_groups as $group)
-	{
-	  foreach($group as $field)
-	  {
-		if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox")
-		{
-		  foreach($group as $ufield)
-		  {
-			$this->offsetUnset($ufield);
-		  }
-		  break;
-		}
-	  }
-	}
-	parent::bind($taintedValues, $taintedFiles);
+    $fields_groups = $this->getFieldsByGroup();
+    foreach($fields_groups as $group)
+    {
+      foreach($group as $field)
+      {
+        if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox")
+        {
+          foreach($group as $ufield)
+          {
+            $this->offsetUnset($ufield);
+          }
+          break;
+        }
+      }
+    }
+    parent::bind($taintedValues, $taintedFiles);
   }
 
   /**
@@ -63,7 +63,7 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   */
   protected function getFieldsByGroup()
   {
-	return array();
+    return array();
   }
 
   public function addKeywordsRelation($table)
