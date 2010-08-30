@@ -1,5 +1,0 @@
-newSuccess:
-  javascripts: [jquery.ui.all.min.js]
-editSuccess:
-  stylesheets: [encod.css]
-  javascripts: [catalogue.js]

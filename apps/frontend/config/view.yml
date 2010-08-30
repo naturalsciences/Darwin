@@ -15,3 +15,8 @@ default:
 
   has_layout:     true
   layout:         layout
+
+editSuccess:
+  stylesheets: [encod.css]
+newSuccess:
+  stylesheets: [encod.css]

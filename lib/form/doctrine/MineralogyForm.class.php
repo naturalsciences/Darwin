@@ -82,4 +82,11 @@ class MineralogyForm extends BaseMineralogyForm
     return parent::saveEmbeddedForms($con, $forms);
   }
 
+  public function getJavascripts()
+  {
+    $javascripts = parent::getJavascripts();
+    $javascripts[]='/js/catalogue_level_edit.js';
+    return $javascripts;    
+  }
+
 }

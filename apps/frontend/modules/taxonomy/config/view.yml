@@ -1,5 +1,0 @@
-newSuccess:
-  javascripts: [jquery.ui.all.min.js, catalogue_level_edit.js]
-editSuccess:
-  stylesheets: [encod.css]
-  javascripts: [jquery.ui.all.min.js, catalogue.js, catalogue_level_edit.js]

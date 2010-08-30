@@ -46,6 +46,13 @@ class LithologyForm extends BaseLithologyForm
     $this->embedForm('newVal',$subForm);
   }
 
+  public function getJavascripts()
+  {
+    $javascripts = parent::getJavascripts();
+    $javascripts[]='/js/catalogue_level_edit.js';
+    return $javascripts;    
+  }
+
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     parent::bindKeywords($taintedValues,$taintedFiles);
