@@ -26,60 +26,72 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
     return array('/js/jquery.autocomplete.min.js');
   }
 
-    public function getName($value)
-    {
-        if(is_numeric($value))
-            $object = Doctrine::getTable($this->getOption('model'))->find($value);
-        else
-            return '';
-        if(! $object)
-            return '';
-        $method = $this->getOption('method');
-        try
-        {
-            return  $object->$method();
-        } catch (Exception $e) {
-            throw $e;
-        }
-    }
+  public function getStylesheets()
+  {
+    return array('/css/jquery.autocomplete.css' => 'all');
+  }
 
-    public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function getName($value)
+  {
+    if(is_numeric($value))
+      $object = Doctrine::getTable($this->getOption('model'))->find($value);
+    else
+      return '';
+    if(! $object)
+      return '';
+
+    $method = $this->getOption('method');
+    try
     {
-        $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
-        $obj_name = $this->getName($value);
-        $showedInputName = $this->generateId($name);
-        $inputTagAttributes = array('type' => 'text', 'value' => $this->escapeOnce($obj_name), 'name' => $name);
-        $input = '<ul><li>';
-        if($this->getOption('behindScene'))
-        {
-          $input .= parent::render($name, $value, $attributes, $errors);
-          array_splice($inputTagAttributes, 2);
-          $showedInputName .= "_name";
-        }
-        $inputTagAttributes['id'] = $showedInputName;
-        $input .= $this->renderTag('input',
-                                   $inputTagAttributes
-                                  );
-        $input .= '</li>';
-        if($this->getOption('notExistingAddDisplay'))
-        {
-          $input .= '<li id="toggledMsg" class="hidden">'.
-                    '<label for="'.$this->generateId($name).'_check">'.$this->getOption('notExistingAddTitle').':</label>'.
-                    '<select id="'.$this->generateId($name).'_check">';
-          foreach ($this->getOption('notExistingAddValues') as $key => $option)
-          {
-            $input .= $this->renderContentTag('option',
-                                              $option,
-                                              array('selected' => ($this->getOption('notExistingAddSelected') == $key)?"selected":"",
-                                                    'value' => $key,
-                                                   )
-                                             );
-          }
-        }
-        $input .= '</select></li></ul>';
-	if(!function_exists('url_for'))
-	  sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
-        $input .= sprintf(<<<EOF
+      return  $object->$method();
+    }
+    catch (Exception $e)
+    {
+      throw $e;
+    }
+  }
+
+  public function render($name, $value = null, $attributes = array(), $errors = array())
+  {
+    $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
+    $obj_name = $this->getName($value);
+    $showedInputName = $this->generateId($name);
+    $inputTagAttributes = array('type' => 'text', 'value' => $this->escapeOnce($obj_name), 'name' => $name);
+    $input = '<ul><li>';
+    if($this->getOption('behindScene'))
+    {
+      $input .= parent::render($name, $value, $attributes, $errors);
+      array_splice($inputTagAttributes, 2);
+      $showedInputName .= "_name";
+    }
+    $inputTagAttributes['id'] = $showedInputName;
+    $input .= $this->renderTag(
+      'input',
+      $inputTagAttributes
+    );
+    $input .= '</li>';
+    if($this->getOption('notExistingAddDisplay'))
+    {
+      $input .= '<li id="toggledMsg" class="hidden">'.
+        '<label for="'.$this->generateId($name).'_check">'.$this->getOption('notExistingAddTitle').':</label>'.
+        '<select id="'.$this->generateId($name).'_check">';
+      foreach ($this->getOption('notExistingAddValues') as $key => $option)
+      {
+        $input .= $this->renderContentTag(
+          'option',
+          $option,
+          array(
+            'selected' => ($this->getOption('notExistingAddSelected') == $key) ? "selected" : "",
+            'value' => $key,
+          )
+        );
+      }
+    }
+    $input .= '</select></li></ul>';
+    if(!function_exists('url_for'))
+      sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+
+    $input .= sprintf(<<<EOF
 <script type="text/javascript">
   var lastCaller;
   function updateHiddenId (value, link_url)
@@ -129,14 +141,15 @@ $(document).ready(function () {
 });
 </script>
 EOF
-    , $showedInputName,
-      url_for($this->getOption('link_url')),
-      url_for($this->getOption('link_url').'Limited'),
-      $this->getOption('autocomplete'),
-      $this->getOption('autocomplete_max'),
-      $this->getOption('autocomplete_minChars'),
-      $this->getOption('autocomplete_autoFill'),
-      $this->generateId($name));
-        return $input;
-     }  
+    ,
+    $showedInputName,
+    url_for($this->getOption('link_url')),
+    url_for($this->getOption('link_url').'Limited'),
+    $this->getOption('autocomplete'),
+    $this->getOption('autocomplete_max'),
+    $this->getOption('autocomplete_minChars'),
+    $this->getOption('autocomplete_autoFill'),
+    $this->generateId($name));
+    return $input;
+  }  
 }
