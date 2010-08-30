@@ -96,14 +96,17 @@ class specimenActions extends DarwinActions
     }
   }
   
-  protected function getRecordIfDuplicate($id = 0, $obj)
+  protected function getRecordIfDuplicate($id = 0, $obj, $is_spec = false)
   {
     if ($id)
     {
       $check = $obj->getTable()->findExcept($id);      
       if(!$check) return $obj ;
-      $check->SpecimensMethods->count() ;
-      $check->SpecimensTools->count() ;      
+      if($is_spec)
+      {
+        $check->SpecimensMethods->count() ;
+        $check->SpecimensTools->count() ;  
+      }    
       $record = $check->toArray(true);     
       unset($record['id']) ;       
       $obj->fromArray($record,true) ;      
@@ -117,7 +120,7 @@ class specimenActions extends DarwinActions
     {
       $specimen = new Specimens() ;
       $duplic = $request->getParameter('duplicate_id','0') ;     
-      $specimen = $this->getRecordIfDuplicate($duplic,$specimen);    
+      $specimen = $this->getRecordIfDuplicate($duplic,$specimen,true);    
       // set all necessary widgets to visible 
       Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget');      
       $this->form = new SpecimensForm($specimen); 
@@ -128,7 +131,7 @@ class specimenActions extends DarwinActions
         foreach ($Codes as $key=>$val)
         {
            $code = new Codes() ;
-           $code = $this->getRecordIfDuplicate($val->getId(),$code);  
+           $code = $this->getRecordIfDuplicate($val->getId(),$code);             
            $this->form->addCodes($key,null,$code);
         }     
         // reembed duplicated specimen Accompanying
