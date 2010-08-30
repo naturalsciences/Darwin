@@ -35,6 +35,7 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
     $this->addOption('culture', '');
     $this->addOption('with_time', false);
     $this->addOption('with_seconds', true);
+    $this->addOption('wrap_class', 'edition');
     parent::configure($options, $attributes);
 
     if ('en' == $this->getOption('culture'))
@@ -46,6 +47,11 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
   public function getJavaScripts()
   {
     return array('/js/jquery-datepicker-'.$this->getOption('culture').'.js');
+  }
+
+  public function getStylesheets()
+  {
+    return array('/css/ui.datepicker.css' => 'all');
   }
 
   /**
@@ -73,8 +79,8 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
     if($this->getOption('with_time'))
     {
       $widget = new sfWidgetFormTime(array(
- 	'empty_values' => array_merge(array('hour'=>'','minute'=>'','second'=>''), $this->getOption('empty_values')),
-	'with_seconds' => $this->getOption('with_seconds')
+        'empty_values' => array_merge(array('hour'=>'','minute'=>'','second'=>''), $this->getOption('empty_values')),
+        'with_seconds' => $this->getOption('with_seconds')
       ));
       $time_str = $widget->render($name, $value, $attributes, $errors);
     }
@@ -161,11 +167,16 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
                                changeMonth: true,
                                changeYear: true,
                                showButtonPanel: false,
+                               beforeShow: function(input, inst) { 
+                                 var newclass = "%13$s"; 
+                                 if (newclass != "" && !inst.dpDiv.parent().hasClass(newclass) && jQuery("#%7$s").closest("form").hasClass(newclass)){ 
+                                   inst.dpDiv.wrap("<div class=\""+newclass+"\"></div>") 
+                                 }
+                               },
                                showOn:     "button"
                                %10$s
                              }, jQuery.datepicker.regional["%11$s"], %12$s, {dateFormat: "yy-mm-dd"}));
                            });
-                         
                            jQuery("#%6$s, #%5$s, #%3$s").change(wfd_%1$s_check_linked_days);
                          </script>';
     return parent::render($name, $value, $attributes, $errors).
@@ -182,7 +193,8 @@ class widgetFormJQueryFuzzyDate extends sfWidgetFormDate
                    max($this->getOption('years')),
                    $image, 
                    $this->getOption('culture'), 
-                   $this->getOption('config')
+                   $this->getOption('config'),
+                   $this->getOption('wrap_class')
                   ).
            $time_str;
   }

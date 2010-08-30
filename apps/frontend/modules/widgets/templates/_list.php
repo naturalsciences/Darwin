@@ -10,7 +10,8 @@ var chgstatus_url='<?php echo url_for('widgets/changeStatus?category='.$category
 var chgorder_url='<?php echo url_for('widgets/changeOrder?category='.$category.$record_ref);?>';
 var reload_url='<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>';
 </script>
-
+<?php use_stylesheet('widgets.css'); ?>
+<?php use_javascript('widgets.js'); ?>
 <input type="hidden" id="refreshed" value="no">
 <script type="text/javascript">
 onload=function(){
