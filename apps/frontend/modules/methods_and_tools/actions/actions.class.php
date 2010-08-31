@@ -83,7 +83,6 @@ class methods_and_toolsActions extends DarwinActions
     $this->s_url = 'methods_and_tools/search?notion=method&is_choose='.$this->is_choose;
     //  Initialization of the Search methods form
     $this->form = new CollectingMethodsFormFilter();
-    $this->searchResults($this->form, $request);
   }
 
   /**
@@ -96,6 +95,31 @@ class methods_and_toolsActions extends DarwinActions
     $this->s_url = 'methods_and_tools/search?notion=tool&is_choose='.$this->is_choose;
     //  Initialization of the Search methods form
     $this->form = new CollectingToolsFormFilter();
+  }
+
+  /**
+    * Action executed when searching an expedition - trigger by the click on the search button
+    * @param sfWebRequest $request Request coming from browser
+    */ 
+  public function executeSearch(sfWebRequest $request)
+  {
+    // Forward to a 404 page if the method used is not a post
+    $this->forward404Unless($request->isMethod('post') && 
+                            ($request->getParameter('notion','')=='method' || $request->getParameter('notion','')=='tool')
+                           );
+    $this->notion = $request->getParameter('notion');
+    $this->setCommonValues('methods_and_tools', $this->notion, $request);
+    $this->s_url = 'methods_and_tools/search?notion='.$this->notion.'&is_choose='.$this->is_choose;
+    // Instantiate a new form
+    if($this->notion=='method')
+    {
+      $this->form = new CollectingMethodsFormFilter();
+    }
+    else
+    {
+      $this->form = new CollectingToolsFormFilter();
+    }
+    // Triggers the search result function
     $this->searchResults($this->form, $request);
   }
 
