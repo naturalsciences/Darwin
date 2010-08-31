@@ -15,7 +15,7 @@ class CollectingMethodsFormFilter extends BaseCollectingMethodsFormFilter
     $this->useFields(array('method'));
     $this->addPagerItems();
     $this->widgetSchema['method'] = new sfWidgetFormInputText();
-    $this->widgetSchema->setNameFormat('searchCollectingMethods[%s]');
+    $this->widgetSchema->setNameFormat('searchMethodsAndTools[%s]');
     $this->validatorSchema['method'] = new sfValidatorString(array('required' => false, 'trim' => true));
   }
 

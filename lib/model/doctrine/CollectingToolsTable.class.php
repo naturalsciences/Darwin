@@ -1,7 +1,7 @@
 <?php
 
 
-class CollectingToolsTable extends Doctrine_Table
+class CollectingToolsTable extends DarwinTable
 {
     
   public static function getInstance()

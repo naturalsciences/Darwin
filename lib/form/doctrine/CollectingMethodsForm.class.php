@@ -12,5 +12,9 @@ class CollectingMethodsForm extends BaseCollectingMethodsForm
 {
   public function configure()
   {
+    $this->useFields(array('id', 'method'));
+    $this->widgetSchema['method'] = new sfWidgetFormInputText();
+    $this->widgetSchema['method']->setAttributes(array('class'=>'medium_size'));
+    $this->validatorSchema['method'] = new sfValidatorString(array('required' => true, 'trim' => true));
   }
 }

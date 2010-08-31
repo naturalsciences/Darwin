@@ -5,7 +5,7 @@
       $('.results tbody tr').live('click', function () {
           ref_element_id = getIdInClasses($(this));
           ref_element_name = $(this).children("td:first").text();
-	  $('.results tbody tr').die('click');
+          $('.results tbody tr').die('click');
           $('.qtip-button').click();
       });
     });
