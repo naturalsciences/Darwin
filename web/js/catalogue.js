@@ -1,3 +1,113 @@
+(function($){
+    $.catalogue = function(el, options){
+        // To avoid scope issues, use 'base' instead of 'this'
+        // to reference this class from internal events and functions.
+        var base = this;
+        
+        // Access to jQuery and DOM versions of element
+        base.$el = $(el);
+        base.el = el;
+        
+        // Add a reverse reference to the DOM object
+        base.$el.data("catalogue", base);
+        
+        base.init = function(){
+            base.options = $.extend({},$.catalogue.defaultOptions, options);
+            $(base.options['link_catalogue']).live('click', base.catalogueLinkEdit);
+            $(base.options['delete_link']).live('click', base.deleteItem);
+            // Put your initialization code here
+        };
+        
+        base.catalogueLinkEdit = function(event)
+        {
+          event.preventDefault();
+          scroll(0,0);
+          
+          $(this).qtip({
+            content: {
+              title: { text : $(this).attr('title'), button: 'X' },
+              url: $(this).attr('href')
+            },
+            show: { when: 'click', ready: true },
+            position: {
+              target: $(document.body), // Position it via the document body...
+              adjust: { y: 210 },
+              corner: 'topMiddle' // ...at the topMiddle of the viewport
+            },
+            hide: false,
+            style: {
+              width: { min: 876, max: 1000},
+              border: {radius:3},
+              title: { background: '#C1CF56', color:'white'}
+            },
+            api: {
+              beforeShow: function()
+              {
+                  addBlackScreen()
+                  $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+              },
+              beforeHide: function()
+              {
+                // Fade out the modal "blanket" using the defined hide speed
+                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+              },
+              onHide: function(event)
+              {
+                $('body').data('widgets_screen').refreshWidget(event, $(this.elements.target));
+              }
+            }
+          });
+        };
+        
+        base.deleteItem = function(event)
+        {
+          event.preventDefault();
+          if(confirm($(this).attr('title')))
+          {
+            currentElement = $(this);
+            removeError($(this));
+            $.ajax({
+              url: $(this).attr('href'),
+              success: function(html)
+              {
+                if(html == "ok" )
+                {
+                  $('body').data('widgets_screen').refreshWidget(event, currentElement);
+                }
+                else
+                {
+                  addError(html, currentElement); //@TODO:change this!
+                }
+              },
+              error: function(xhr)
+              {
+                addError('Error!  Status = ' + xhr.status);
+              }
+            });
+          }
+        };
+       
+        // Run initializer
+        base.init();
+    };
+    
+    $.catalogue.defaultOptions = {
+      link_catalogue: "a.link_catalogue",
+      delete_link: "a.widget_row_delete"
+    };
+    
+    $.fn.catalogue = function(options){
+        return this.each(function(){
+            (new $.catalogue(this, options));
+        });
+    };
+    
+})(jQuery);
+
+
+/******************************************
+ * TO BE REMOVED
+ * *****************************************/
 function addError(html, element)
 {
   $(element).closest('.widget_content').find('.error_list li').text(html);
@@ -10,86 +120,10 @@ function removeError(element)
   $(element).closest('.widget_content').find('.error_list li').text(' ');
 }
 
-$(document).ready(function () {
- $("a.link_catalogue").live('click', function(){
-        scroll(0,0) ;
-    $(this).qtip({
-        content: {
-            title: { text : $(this).attr('title'), button: 'X' },
-            url: $(this).attr('href')
-        },
-        show: { when: 'click', ready: true },
-        position: {
-            target: $(document.body), // Position it via the document body...
-            adjust: { y: 210 },
-            corner: 'topMiddle' // ...at the topMiddle of the viewport
-        },
-        hide: false,
-        style: {
-            width: { min: 876, max: 1000},
-            border: {radius:3},
-            title: { background: '#C1CF56', color:'white'}
-        },
-        api: {
-            beforeShow: function()
-            {
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-            },
-            beforeHide: function()
-            {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-            },
-            onHide: function()
-            {
-              widget_parent = $(this.elements.target).closest('li.widget');
-              widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
-              $(this.elements.target).qtip("destroy");
-              hideForRefresh(widget_parent.find('.widget_content'));
-            }
-        }
-    });
-    return false;
- });
+/*****************************************
+ * END TO BE REMOVED
+ * *****************************************/
 
- $("a.widget_row_delete").live('click', function(){
-     if(confirm($(this).attr('title')))
-     {
-       currentElement = $(this);
-       removeError($(this));
-       $.ajax({
-          url: $(this).attr('href'),
-          success: function(html) {
-		        if(html == "ok" )
-		        {
-			        //We are in a widget
-			        if(currentElement.parent().hasClass('widget_row_delete'))
-			        {
-			          widget_parent = currentElement.closest('li.widget');
-			          widget_parent.find('.widget_content').load(reload_url+'/widget/'+widget_parent.attr("id"));
-			          hideForRefresh(widget_parent.find('.widget_content'));
-			        }
-			        else //We are into a qtip element
-			        {
-			          $('.qtip-button').click();
-			        }
-		        }
-		        else
-		        {
-			        addError(html, currentElement); //@TODO:change this!
-		        }
-		      },
-          error: function(xhr){
-		        addError('Error!  Status = ' + xhr.status);
-          }
-        }
-      );
-    }
-    return false;
- });
-
-});
 
 /** CATALOGUE LEVEL CHECKING ****/
 (function($){

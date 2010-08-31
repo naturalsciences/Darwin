@@ -1,7 +1,9 @@
 <table class="catalogue_table">
   <thead>
-    <th><?php echo __('Renamed to');?></th>
-    <th></th>
+    <tr>
+      <th><?php echo __('Renamed to');?></th>
+      <th></th>
+    </tr>
   </thead>
   <tbody>
   <?php foreach($relations as $renamed):?>

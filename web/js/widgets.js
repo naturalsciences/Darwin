@@ -61,9 +61,12 @@
       last_notified = notification;
     };
     
-    base.refreshWidget = function(event){
+    base.refreshWidget = function(event, element){
       event.preventDefault();
-      widget = $(this).closest('.widget');
+      if(element == null)
+        element = $(this);
+      widget = element.closest('.widget');
+      hideForRefresh(widget.find('.widget_content'));
       widget.find('.widget_content').load(base.options['reload_url'] + '/widget/' + widget.attr('id') );
       return false;
     };
