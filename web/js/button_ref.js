@@ -3,8 +3,9 @@ var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
-  $("a.but_text").live('click', function(){
-        scroll(0,0) ;
+  $("a.but_text").live('click', function(event){
+    event.preventDefault();
+    scroll(0,0) ;
 
     $(this).parent().parent().find('input[type="hidden"]').trigger({ type:"loadref"});
     $(this).qtip({
@@ -42,18 +43,18 @@ $(document).ready(function () {
         {
             if(ref_element_id != null && ref_element_name != null)
             {
-              parent_el = $(this.elements.target).parent().prevall('.ref_name');
+              parent_el = $(this.elements.target).parent().prevAll('.ref_name');
               parent_el.text(ref_element_name);
               parent_el.prev().val(ref_element_id);
-              $(this.elements.target).parent().prevall('.ref_clear').show();
-              $(this.elements.target).parent().prevall('.ref_clear').removeclass('hidden');
+              $(this.elements.target).parent().prevAll('.ref_clear').show();
+              $(this.elements.target).parent().prevAll('.ref_clear').removeClass('hidden');
               $(this.elements.target).text('change !');
               parent_el.prev().trigger('change');
             }
-                  $('.result_choose_coll_rights').die('click') ;
+            $('.result_choose_coll_rights').die('click') ;
             $(this.elements.target).qtip("destroy");
-              }
         }
+      }
     });
     return false;
   });

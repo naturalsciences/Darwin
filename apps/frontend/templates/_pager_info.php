@@ -45,7 +45,7 @@
       $(this).closest('form').attr('action', $(this).attr("href"))
     });
   
-    $(".pager a").live('click',function (event)
+    $(".pager a").click(function (event)
     {
       event.preventDefault();
       $.ajax({

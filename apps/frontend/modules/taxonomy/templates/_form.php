@@ -2,6 +2,8 @@
 <?php include_javascripts_for_form($form) ?>
 
 <form class="edition" action="<?php echo url_for('taxonomy/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<?php include_partial('catalogue/commonJs');?>
+
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />
 <?php endif; ?>
@@ -13,15 +15,15 @@
         <td>
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
-	</td>
-	<td rowspan="6" class="keyword_row">
-	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'taxonomy','field_name' => 'taxonomy_name')); ?>
-	</td>
+        </td>
+        <td rowspan="6" class="keyword_row">
+          <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'taxonomy','field_name' => 'taxonomy_name')); ?>
+        </td>
       </tr>
       <tr>
-	<th></th>
-	<td>
-	   <?php include_partial('catalogue/keywordsList');?>
+        <th></th>
+        <td>
+          <?php include_partial('catalogue/keywordsList');?>
         </td>
       </tr>
       <tr>
@@ -50,7 +52,7 @@
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
           <?php echo $form['parent_ref'] ?>
-	  <div class="warn_message ref_name button hidden" id="taxonomy_parent_ref_warning"><?php echo __('The parenty does not follow the possible upper level rule');?></div>
+          <div class="warn_message ref_name button hidden" id="taxonomy_parent_ref_warning"><?php echo __('The parenty does not follow the possible upper level rule');?></div>
         </td>
       </tr>
     </tbody>

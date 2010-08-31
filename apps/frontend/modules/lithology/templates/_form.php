@@ -3,6 +3,8 @@
 
 <form class="edition" action="<?php echo url_for('lithology/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 <?php if (!$form->getObject()->isNew()): ?>
+<?php include_partial('catalogue/commonJs');?>
+
 <input type="hidden" name="sf_method" value="put" />
 <?php endif; ?>
   <table class="classifications_edit">
