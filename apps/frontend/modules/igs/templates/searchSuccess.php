@@ -34,7 +34,8 @@
               <td class="datesNum"><?php echo $igs->getIgDateMasked();?></td>
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
-                  <?php echo link_to(image_tag('edit.png'),'igs/edit?id='.$igs->getId());?>
+                  <?php echo link_to(image_tag('edit.png',array('title'=>'Edit IGS')),'igs/edit?id='.$igs->getId());?>
+                  <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate IGS')),'igs/new?duplicate_id='.$igs->getId());?>
                 <?php else:?>
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>

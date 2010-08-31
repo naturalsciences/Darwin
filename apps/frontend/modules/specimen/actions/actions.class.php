@@ -173,7 +173,7 @@ class specimenActions extends DarwinActions
           {
             $ident = $this->form->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
             $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);   
-            $this->individual->reembedNewIdentification($ident, $key);                       
+            $this->form->reembedNewIdentification($ident, $key);                       
           }
         }                          
         $tools = $specimen->SpecimensTools->toArray() ;

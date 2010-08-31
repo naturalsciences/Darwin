@@ -70,8 +70,29 @@ class DarwinActions extends sfActions
       $check = $obj->getTable()->findExcept($id);
       if(!$check) return $obj ;
       else $record = $check->toArray();
-      unset($record['id']) ;          
+      unset($record['id']) ;                
       $obj->fromArray($record) ;      
+    }
+    switch(get_class($obj))
+    {
+     case 'Expeditions' : 
+      $obj->setExpeditionFromDate(new FuzzyDateTime($check->getExpeditionFromDate(),$check->getExpeditionFromDateMask()) );
+      $obj->setExpeditionToDate(new FuzzyDateTime($check->getExpeditionToDate(),$check->getExpeditionToDateMask()) );          
+      break ; 
+     case 'People' :            
+      $obj->setBirthDate(new FuzzyDateTime($check->getBirthDate(),$check->getBirthDateMask()) );
+      $obj->setEndDate(new FuzzyDateTime($check->getEndDate(),$check->getEndDateMask()) );
+      $obj->setActivityDateFrom(new FuzzyDateTime($check->getActivityDateFrom(),$check->getActivityDateFromMask()) );
+      $obj->setActivityDateTo(new FuzzyDateTime($check->getActivityDateTo(),$check->getActivityDateToMask()) );         
+      break ;
+     case 'Gtu' :
+      $obj->setGtuFromDate(new FuzzyDateTime($check->getGtuFromDate(),$check->getGtuFromDateMask()) );
+      $obj->setGtuToDate(new FuzzyDateTime($check->getGtuToDate(),$check->getGtuToDateMask()) );       
+      break ;
+     case 'Igs' :
+      $obj->setIgDate(new FuzzyDateTime($check->getIgDate(),$check->getIgDateMask()) );     
+      break ;
+     default: break ;
     }
     return $obj ;
   }
