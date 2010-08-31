@@ -56,13 +56,12 @@ class individualsActions extends DarwinActions
 
     if($this->individual->getObject()->isNew())
     {
-      $this->individual->addIdentifications(0,0);
-      $this->individual->addComments(0);
       $duplic = $request->getParameter('duplicate_id') ;
       if($duplic)
       {
         // reembed duplicated comment
         $Comments = Doctrine::getTable('Comments')->findForTable('specimen_individuals',$duplic) ;
+        if(!$Comments) $this->individual->addComments(0);
         foreach ($Comments as $key=>$val)
         {
           $comment = new Comments() ;
@@ -71,12 +70,25 @@ class individualsActions extends DarwinActions
         }
         //reembed identification
         $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimen_individuals',$duplic) ;
+        if(!$Identifications) $this->individual->addIdentifications(0,0);
         foreach ($Identifications as $key=>$val)
         {
           $identification = new Identifications() ;
           $identification = $this->getRecordIfDuplicate($val->getId(),$identification); 
-          $this->individual->addIdentifications($key, $val->getOrderBy(), $val);
-        }         
+          $this->individual->addIdentifications($key, $val->getOrderBy(), $identification);
+          $Identifier = Doctrine::getTable('CataloguePeople')->getPeopleRelated('identifications', 'identifier', $val->getId()) ;     
+          foreach ($Identifier as $key2=>$val2)
+          {
+            $ident = $this->individual->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+            $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);        
+            $this->individual->reembedNewIdentification($ident, $key);    
+          }         
+        }                 
+      }
+      else
+      {
+        $this->individual->addIdentifications(0,0);
+        $this->individual->addComments(0);      
       }
     }
     if($request->isMethod('post'))

@@ -52,7 +52,7 @@
           <tr>
             <td colspan="3">
               <div class="add_code">
-                <a href="<?php echo url_for($module.'/addIdentifier?spec_id='.$spec_id.(($individual_id == 0) ? '': '&individual_id='.$individual_id).((!isset($identification_id))?'':'&identification_id='.$identification_id)).'/num/'.$row_num;?>/identifier_num/" class="hidden"></a>
+                <a href="<?php echo url_for($module.'/addIdentifier?spec_id='.($spec_id?$spec_id:'0').(($individual_id ==0 ) ? '': '&individual_id='.$individual_id).((!isset($identification_id))?'':'&identification_id='.$identification_id)).'/num/'.$row_num;?>/identifier_num/" class="hidden"></a>
                 <a id="add_identifier_<?php echo $row_num ;?>" href="<?php echo url_for('people/choose?only_role=4');?>"><?php echo __('Add identifier');?></a>              
               </div>
             </td>
@@ -84,8 +84,6 @@
         if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
       });
       if(info != 'ok') return false;
-
-        
       $.ajax({
         type: "GET",
         url: $('a#add_identifier_<?php echo $row_num;?>').prev('a.hidden').attr('href')+ (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length),

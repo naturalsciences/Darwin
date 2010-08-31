@@ -77,7 +77,7 @@ function addIdentifierValue(people_ref,ref_table)
 $(document).ready(function () {
 
     $('#add_identification').click(function()
-    {
+    {                  
         parent = $(this).closest('table#identifications');
         $.ajax(
         {

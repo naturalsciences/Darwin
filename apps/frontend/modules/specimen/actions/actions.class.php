@@ -67,11 +67,12 @@ class specimenActions extends DarwinActions
     $order_by = intval($request->getParameter('order_by',0));
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $spec_form->addIdentifications($number, $order_by);
-    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'specimen', 'spec_id'=>$request->getParameter('spec_id',0)));
+    return $this->renderPartial('spec_identifications',array('form' => $spec_form['newIdentification'][$number], 'row_num' => $number, 'module'=>'specimen', 'spec_id'=>$request->getParameter('spec_id',0),'individual_id'=>$request->getParameter('individual_id',0)));
   }
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
+ //  die("ref : ".$request->getParameter('people_ref')) ; 
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref')) ; 
@@ -166,7 +167,14 @@ class specimenActions extends DarwinActions
         {
           $identification = new Identifications() ;
           $identification = $this->getRecordIfDuplicate($val->getId(),$identification); 
-          $this->form->addIdentifications($key, $val->getOrderBy(), $val);          
+          $this->form->addIdentifications($key, $val->getOrderBy(), $identification);  
+          $Identifier = Doctrine::getTable('CataloguePeople')->getPeopleRelated('identifications', 'identifier', $val->getId()) ;        
+          foreach ($Identifier as $key2=>$val2)
+          {
+            $ident = $this->form->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+            $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);   
+            $this->individual->reembedNewIdentification($ident, $key);                       
+          }
         }                          
         $tools = $specimen->SpecimensTools->toArray() ;
         if(count($tools))
