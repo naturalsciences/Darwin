@@ -794,6 +794,27 @@ MyWidgets:
         is_available: true
         title_perso: Comments
 
+    u1wmetto1:
+        User: u1
+        col_num: 1
+        category: catalogue_methods_and_tools_widget
+        group_name: properties
+        order_by: 1
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Properties
+    u1wmetto2:
+        User: u1
+        col_num: 1
+        category: catalogue_methods_and_tools_widget
+        group_name: comment
+        order_by: 2
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Comments
+
     u1sp1:
         User: u1
         col_num: 1
