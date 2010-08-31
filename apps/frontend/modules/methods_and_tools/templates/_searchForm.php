@@ -3,7 +3,7 @@
 <?php if(isset($notion) && (($notion == 'method' || $notion =='tool'))):?>
   <form id="methods_and_tools_filter" class="search_form" action="<?php echo url_for('methods_and_tools/search?notion='.$notion.((!isset($is_choose))?'':'&is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
     <div class="container">
-      <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
+      <table class="search hidden" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
         <thead>
           <tr>
             <th><?php echo $form[$notion]->renderLabel() ?></th>
@@ -27,3 +27,8 @@
 <?php else:?>
   <?php echo __('You need to precise if you wish to work on tools or methods');?>
 <?php endif;?>
+<script language="javascript">
+$(document).ready(function () {
+  $('form#methods_and_tools_filter').submit();
+});
+</script>
