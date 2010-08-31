@@ -8,7 +8,7 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class methods_and_toolsActions extends sfActions
+class methods_and_toolsActions extends DarwinActions
 {
   
   protected $widgetCategory = 'catalogue_methods_and_tools_widget';
@@ -79,8 +79,11 @@ class methods_and_toolsActions extends sfActions
     */ 
   public function executeMethodsIndex(sfWebRequest $request)
   {
+    $this->setCommonValues('methods_and_tools', 'method', $request);
+    $this->s_url = 'methods_and_tools/search?notion=method&is_choose='.$this->is_choose;
     //  Initialization of the Search methods form
     $this->form = new CollectingMethodsFormFilter();
+    $this->searchResults($this->form, $request);
   }
 
   /**
@@ -89,23 +92,11 @@ class methods_and_toolsActions extends sfActions
     */ 
   public function executeToolsIndex(sfWebRequest $request)
   {
+    $this->setCommonValues('methods_and_tools', 'tool', $request);
+    $this->s_url = 'methods_and_tools/search?notion=tool&is_choose='.$this->is_choose;
     //  Initialization of the Search methods form
     $this->form = new CollectingToolsFormFilter();
-  }
-
-  /**
-    * Action executed when searching an expedition - trigger by the click on the search button
-    * @param sfWebRequest $request Request coming from browser
-    */ 
-  public function executeSearch(sfWebRequest $request)
-  {
-    // Forward to a 404 page if the method used is not a post
-    $this->forward404Unless($request->isMethod('post'));
-    $this->setCommonValues('expedition', 'name', $request);
-    // Instantiate a new expedition form
-    $this->form = new ExpeditionsFormFilter();
-    // Triggers the search result function
-    $this->searchResults($this->form, $request);    
+    $this->searchResults($this->form, $request);
   }
 
   /**
@@ -114,12 +105,12 @@ class methods_and_toolsActions extends sfActions
     * @param sfWebRequest         $request Request coming from browser
     * @var   int                  $pagerSlidingSize: Get the config value to define the range size of pager to be displayed in numbers (i.e.: with a value of 5, it will give this: << < 1 2 3 4 5 > >>)
     */
-  protected function searchResults(ExpeditionsFormFilter $form, sfWebRequest $request)
+  protected function searchResults($form, sfWebRequest $request)
   {
-    if($request->getParameter('searchExpedition','') !== '')
+    if($request->getParameter('searchMethodsAndTools','') !== '')
     {
       // Bind form with data contained in searchExpedition array
-      $form->bind($request->getParameter('searchExpedition'));
+      $form->bind($request->getParameter('searchMethodsAndTools'));
       // Test that the form binded is still valid (no errors)
       if ($form->isValid())
       {
@@ -139,7 +130,7 @@ class methods_and_toolsActions extends sfActions
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
-           $this->expeditions = $this->pagerLayout->execute();
+           $this->methods_and_tools = $this->pagerLayout->execute();
       }
     }
   }

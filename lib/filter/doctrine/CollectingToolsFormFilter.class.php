@@ -15,7 +15,7 @@ class CollectingToolsFormFilter extends BaseCollectingToolsFormFilter
     $this->useFields(array('tool'));
     $this->addPagerItems();
     $this->widgetSchema['tool'] = new sfWidgetFormInputText();
-    $this->widgetSchema->setNameFormat('searchCollectingTools[%s]');
+    $this->widgetSchema->setNameFormat('searchMethodsAndTools[%s]');
     $this->validatorSchema['tool'] = new sfValidatorString(array('required' => false, 'trim' => true));
   }
 

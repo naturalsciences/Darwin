@@ -12,4 +12,11 @@
  */
 class CollectingMethods extends BaseCollectingMethods
 {
+  public function getName()
+  {
+    if(! $this->isNew() && $this->_get('id')==0)
+      return '-';
+    return $this->_get('method');
+  }
+
 }
