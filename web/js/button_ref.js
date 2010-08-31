@@ -28,8 +28,8 @@ $(document).ready(function () {
             beforeShow: function()
             {
                 // Fade in the modal "blanket" using the defined show speed
-			 ref_element_id = null;
-			 ref_element_name = null;
+                ref_element_id = null;
+                ref_element_name = null;
                 addBlackScreen()
                 $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
@@ -38,21 +38,21 @@ $(document).ready(function () {
                 // Fade out the modal "blanket" using the defined hide speed
                 $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
             },
-	    onHide: function()
-	    {
-		if(ref_element_id != null && ref_element_name != null)
-		{
-		  parent_el = $(this.elements.target).parent().prevAll('.ref_name');
-		  parent_el.text(ref_element_name);
-		  parent_el.prev().val(ref_element_id);
-		  $(this.elements.target).parent().prevAll('.ref_clear').show();
-		  $(this.elements.target).parent().prevAll('.ref_clear').removeClass('hidden');
-		  $(this.elements.target).text('Change !');
-		  parent_el.prev().trigger('change');
-		}
-          $('.result_choose_coll_rights').die('click') ;
-		$(this.elements.target).qtip("destroy");
-	    }
+        onHide: function()
+        {
+            if(ref_element_id != null && ref_element_name != null)
+            {
+              parent_el = $(this.elements.target).parent().prevall('.ref_name');
+              parent_el.text(ref_element_name);
+              parent_el.prev().val(ref_element_id);
+              $(this.elements.target).parent().prevall('.ref_clear').show();
+              $(this.elements.target).parent().prevall('.ref_clear').removeclass('hidden');
+              $(this.elements.target).text('change !');
+              parent_el.prev().trigger('change');
+            }
+                  $('.result_choose_coll_rights').die('click') ;
+            $(this.elements.target).qtip("destroy");
+              }
         }
     });
     return false;

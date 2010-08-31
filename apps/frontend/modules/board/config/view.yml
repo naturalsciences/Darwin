@@ -1,3 +1,0 @@
-indexSuccess:
-  stylesheets: [widgets.css]
-  javascripts: [jquery.ui.all.min.js, widgets.js]

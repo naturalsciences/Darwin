@@ -9,7 +9,7 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [reset.css, main.css, superfish.css, menu.css, jquery-ui-1.7.2.search.css, ui.datepicker.css, jquery.autocomplete.css]
+  stylesheets:    [reset.css, main.css, menu.css]
 
   javascripts:    [jquery-1.4.2.min.js, jquery.ui.all.min.js, core.js, jquery.hoverIntent.minified.js, superfish.js, supersubs.js, jquery.qtip-1.0.0-rc3.min.js, catalogue.js]
 
@@ -17,6 +17,6 @@ default:
   layout:         layout
 
 editSuccess:
-  stylesheets: [jquery-ui-1.7.2.edit.css]
+  stylesheets: [encod.css]
 newSuccess:
-  stylesheets: [jquery-ui-1.7.2.edit.css]
+  stylesheets: [encod.css]

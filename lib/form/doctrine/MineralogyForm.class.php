@@ -56,7 +56,6 @@ class MineralogyForm extends BaseMineralogyForm
                                                                                'add_label' => 'Add another system',
                                                                               )
                                                                         );
-
     $this->widgetSchema->setLabels(array('cristal_system' => 'Cristalographic system',
                                          'level_ref' => 'Level',
                                          'parent_ref' => 'Parent'
@@ -81,6 +80,13 @@ class MineralogyForm extends BaseMineralogyForm
   {
     parent::saveKeywordsEmbeddedForms($con, $forms);
     return parent::saveEmbeddedForms($con, $forms);
+  }
+
+  public function getJavascripts()
+  {
+    $javascripts = parent::getJavascripts();
+    $javascripts[]='/js/catalogue_level_edit.js';
+    return $javascripts;    
   }
 
 }

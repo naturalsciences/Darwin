@@ -49,6 +49,7 @@ class GtuForm extends BaseGtuForm
                                                                                    ),
                                                                               array('class' => 'to_date')
                                                                              );
+    $this->widgetSchema->setLabels(array('parent_ref' => 'Parent'));
     $this->validatorSchema['gtu_from_date'] = new fuzzyDateValidator(array('required' => false,
                                                                                   'from_date' => true,
                                                                                   'min' => $minDate,

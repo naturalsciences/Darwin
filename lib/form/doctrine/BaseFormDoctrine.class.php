@@ -36,22 +36,22 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   */
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-	$fields_groups = $this->getFieldsByGroup();
-	foreach($fields_groups as $group)
-	{
-	  foreach($group as $field)
-	  {
-		if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox")
-		{
-		  foreach($group as $ufield)
-		  {
-			$this->offsetUnset($ufield);
-		  }
-		  break;
-		}
-	  }
-	}
-	parent::bind($taintedValues, $taintedFiles);
+    $fields_groups = $this->getFieldsByGroup();
+    foreach($fields_groups as $group)
+    {
+      foreach($group as $field)
+      {
+        if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox")
+        {
+          foreach($group as $ufield)
+          {
+            $this->offsetUnset($ufield);
+          }
+          break;
+        }
+      }
+    }
+    parent::bind($taintedValues, $taintedFiles);
   }
 
   /**
@@ -63,7 +63,7 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   */
   protected function getFieldsByGroup()
   {
-	return array();
+    return array();
   }
 
   public function addKeywordsRelation($table)
@@ -82,58 +82,58 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
   
   public function addKeyword($num, $type="", $key="")
   {
-      $val = new ClassificationKeywords();
-      $val->setReferencedRelation( sfInflector::tableize($this->getModelName()) );
-      $val->setRecordId($this->getObject());
-      $val->setKeywordType($type);
-      $val->setKeyword($key);
+    $val = new ClassificationKeywords();
+    $val->setReferencedRelation( sfInflector::tableize($this->getModelName()) );
+    $val->setRecordId($this->getObject());
+    $val->setKeywordType($type);
+    $val->setKeyword($key);
 
-      $form = new ClassificationKeywordsForm($val);
+    $form = new ClassificationKeywordsForm($val);
   
-      $this->embeddedForms['newVal']->embedForm($num, $form);
-      //Re-embedding the container
-      $this->embedForm('newVal', $this->embeddedForms['newVal']);
+    $this->embeddedForms['newVal']->embedForm($num, $form);
+    //Re-embedding the container
+    $this->embedForm('newVal', $this->embeddedForms['newVal']);
   }
 
-    public function bindKeywords(array $taintedValues = null, array $taintedFiles = null)
+  public function bindKeywords(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['newVal']))
     {
-      if(isset($taintedValues['newVal']))
+      foreach($taintedValues['newVal'] as $key=>$newVal)
       {
-	foreach($taintedValues['newVal'] as $key=>$newVal)
-	{
-	  $taintedValues['newVal'][$key]['record_id'] = $this->getObject();
-	  if (!isset($this['newVal'][$key]))
-	  {
-	    $this->addKeyword($key);
-	  }
-	}
-      }
-      parent::bind($taintedValues, $taintedFiles);
-    }
-
-    public function saveKeywordsEmbeddedForms($con = null, $forms = null)
-    {
-      if (null === $forms)
-      {
-	$value = $this->getValue('newVal');
-	foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
-	{
-	  if (!isset($value[$name]['keyword_type']) || $value[$name]['keyword_type']=='' )
-	  {
-	    unset($this->embeddedForms['newVal'][$name]);
-	  }
-	}
-
-	$value = $this->getValue('ClassificationKeywords');
-	foreach($this->embeddedForms['ClassificationKeywords']->getEmbeddedForms() as $name => $form)
-	{
-	  
-	   if (!isset($value[$name]['keyword_type']) || $value[$name]['keyword_type']=='' )
-	  {
-	    $form->getObject()->delete();
-	    unset($this->embeddedForms['ClassificationKeywords'][$name]);
-	  }
-	}
+        $taintedValues['newVal'][$key]['record_id'] = $this->getObject();
+        if (!isset($this['newVal'][$key]))
+        {
+          $this->addKeyword($key);
+        }
       }
     }
+    parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveKeywordsEmbeddedForms($con = null, $forms = null)
+  {
+    if (null === $forms)
+    {
+      $value = $this->getValue('newVal');
+      foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
+      {
+        if (!isset($value[$name]['keyword_type']) || $value[$name]['keyword_type']=='' )
+        {
+          unset($this->embeddedForms['newVal'][$name]);
+        }
+      }
+
+      $value = $this->getValue('ClassificationKeywords');
+      foreach($this->embeddedForms['ClassificationKeywords']->getEmbeddedForms() as $name => $form)
+      {
+  
+        if (!isset($value[$name]['keyword_type']) || $value[$name]['keyword_type']=='' )
+        {
+          $form->getObject()->delete();
+          unset($this->embeddedForms['ClassificationKeywords'][$name]);
+        }
+      }
+    }
+  }
 }

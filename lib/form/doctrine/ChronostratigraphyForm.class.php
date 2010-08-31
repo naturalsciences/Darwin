@@ -70,4 +70,11 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
     parent::saveKeywordsEmbeddedForms($con, $forms);
     return parent::saveEmbeddedForms($con, $forms);
   }
+
+  public function getJavascripts()
+  {
+    $javascripts = parent::getJavascripts();
+    $javascripts[]='/js/catalogue_level_edit.js';
+    return $javascripts;    
+  }
 }

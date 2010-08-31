@@ -77,7 +77,6 @@
     };
     
   $.fn.catalogue_people.defaultOptions = {
-    order_field: 'input[id$=\"_order_by\"]',
     table_col_num: 3,
     handle: '.spec_ident_collectors_handle',
     add_button: 'a#add_button',

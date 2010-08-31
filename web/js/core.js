@@ -183,6 +183,17 @@ function result_choose ()
         $('.qtip-button').click();
 }
 
+function objectsAreSame(x, y) {
+   var objectsAreSame = true;
+   for(var propertyName in x) {
+      if(x[propertyName] !== y[propertyName]) {
+         objectsAreSame = false;
+         break;
+      }
+   }
+   return objectsAreSame;
+}
+
 $(document).ready(function () {
   $('.cancel_qtip').live('click',function () {
     $('.qtip-button').click();
