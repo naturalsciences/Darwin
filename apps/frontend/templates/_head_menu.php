@@ -53,6 +53,8 @@
                         <li><?php echo link_to(__('Institutions'),'institution/new');?></li>
                         <li><?php echo link_to(__('People'),'people/new');?></li>
                         <li><?php echo link_to(__('Sampling location'),'gtu/new');?></li>
+                        <li><?php echo link_to(__('Collecting Methods'),'methods_and_tools/new?notion=method');?></li>
+                        <li><?php echo link_to(__('Collecting Tools'),'methods_and_tools/new?notion=tool');?></li>
                     </ul>
                 </li>
                 <li><?php echo link_to(__('Specimens'),'specimen/new');?></li>
