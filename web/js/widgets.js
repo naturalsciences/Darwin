@@ -20,12 +20,12 @@
         update: base.changeOrder
       });
       
-      $('.widget').delegate('.widget_refresh', 'click', base.refreshWidget);
-      $('.widget').delegate('.widget_close', 'click', base.closeWidget);
+      $('.widget_refresh').live('click', base.refreshWidget);
+      $('.widget_close').live('click', base.closeWidget);
       $('.widget_collection_button a').click(base.showWidgetCollection);
       $('.widget_collection_container a').click(base.addWidget);
-      $('.widget').delegate('.widget_top_button img', 'click', base.showWidgetContent);
-      $('.widget').delegate('.widget_bottom_button img', 'click',base.hideWidgetContent);
+      $('.widget_top_button img').live('click', base.showWidgetContent);
+      $('.widget_bottom_button img').live('click',base.hideWidgetContent);
     };
     
     base.showWidgetContent = function()
