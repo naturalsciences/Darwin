@@ -158,13 +158,27 @@ function objectsAreSame(x, y) {
    return objectsAreSame;
 }
 
-$(document).ready(function () {
-  
-  $('.help_ico').live('mouseover mouseout', function(event) {
-    if (event.type == 'mouseover') {
-      $(this).attr('src','/images/help_icon_green.png');
-    } else {
-      $(this).attr('src','/images/help_icon_grey.png');
-    }
-  });
-});
+function attachHelpQtip(element)
+{
+        $(element).find(".help_ico").qtip({
+          style: { 
+              width: 200,
+              padding: 5,
+              background: '#95bd4c',
+              color: 'black',
+              border: {
+                  width: 7,
+                  radius: 5,
+                  color: '#95bd4c'
+              },
+              tip: 'bottomLeft',
+              name: 'dark', // Inherit the rest of the attributes from the preset dark style
+          },
+          position: {
+              corner: {
+                  target: 'topRight',
+                  tooltip: 'bottomLeft'
+              }
+          },
+      });
+}

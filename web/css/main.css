@@ -1798,3 +1798,20 @@ td.and_col
   max-height: 200px;
   overflow-y: scroll;
 }
+
+
+.help_ico:hover
+{
+  width: 16px;
+  height: 16px;
+  background-image: url('/images/help_icon_green.png');
+  display:inline-block;
+}
+
+.help_ico
+{
+  width: 16px;
+  height: 16px;
+  background-image: url('/images/help_icon_grey.png');
+  display:inline-block;
+}
