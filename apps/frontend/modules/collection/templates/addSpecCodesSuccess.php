@@ -56,14 +56,17 @@
         <td colspan="2">
           <?php echo $form->renderHiddenFields() ?>
           &nbsp;<a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
-          <a class="widget_row_delete" href="<?php echo url_for('collection/deleteSpecCodes?id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
-            <?php echo __('Delete');?>
-          </a>
+          <?php echo link_to(__('Delete'),'collection/deleteSpecCodes?id='.$form->getObject()->getId(),array('class'=>'delete_button','title'=>__('Are you sure ?')));?>
+
           <input id="save" name="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>
       </tr>
   </tfoot>  
 </table>
 </form>
-
+<script  type="text/javascript">
+$(document).ready(function () {
+  $('form.qtiped_form').modal_screen();
+});
+</script>
 </div>

@@ -102,22 +102,24 @@
 
 <script  type="text/javascript">
 $(document).ready(function () {
+  $('form.qtiped_form').modal_screen();
+
     $('#catalogue_properties_property_type').change(function() {
       $.get("<?php echo url_for('property/getUnit');?>/type/"+$(this).val(), function (data) {
-	$("#catalogue_properties_property_unit_parent select").html(data);
-	$("#catalogue_properties_property_accuracy_unit_parent select").html(data);
-	$("#catalogue_properties_property_qualifier_parent select").html(' ');
+      $("#catalogue_properties_property_unit_parent select").html(data);
+      $("#catalogue_properties_property_accuracy_unit_parent select").html(data);
+      $("#catalogue_properties_property_qualifier_parent select").html(' ');
       });
 
       $.get("<?php echo url_for('property/getSubtype');?>/type/"+$(this).val(), function (data) {
-	$("#catalogue_properties_property_sub_type_parent select").html(data);
+        $("#catalogue_properties_property_sub_type_parent select").html(data);
       });
 
     });
 
     $('#catalogue_properties_property_sub_type').change(function() {
       $.get("<?php echo url_for('property/getQualifier');?>/subtype/"+$(this).val(), function (data) {
-	$("#catalogue_properties_property_qualifier_parent select").html(data);
+        $("#catalogue_properties_property_qualifier_parent select").html(data);
       });
     });
 

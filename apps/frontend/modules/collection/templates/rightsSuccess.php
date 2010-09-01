@@ -2,6 +2,8 @@
 <?php include_javascripts_for_form($form) ?>
 <script type="text/javascript">
 $(document).ready(function () {
+    $('form.qtiped_form').modal_screen();
+
     $('.treelist li:not(li:has(ul)) img.tree_cmd').hide();
     $('.collapsed').click(function()
     {

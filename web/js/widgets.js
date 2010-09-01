@@ -89,12 +89,12 @@
       if($('.widget_collection_container').is(":hidden"))
         {
             $('.widget_collection_container').slideDown();
-            $('.widget_collection_button img').attr('src','/images/widgets_expand_up_button.png');
+            $('.widget_collection_button img').attr('src',base.options['collection_img_up']);
         }
         else
         {
             $('.widget_collection_container').slideUp();
-            $('.widget_collection_button img').attr('src','/images/widget_expand_button.png');
+            $('.widget_collection_button img').attr('src',base.options['collection_img_down']);
         }
     };
     
@@ -140,7 +140,9 @@
     change_order_url: '',
     change_status_url: '',
     reload_url: '',
-    position_url: ''
+    position_url: '',
+    collection_img_up: '/images/widgets_expand_up_button.png',
+    collection_img_down: '/images/widget_expand_button.png'
   };
   
   $.fn.widgets_screen = function(options){

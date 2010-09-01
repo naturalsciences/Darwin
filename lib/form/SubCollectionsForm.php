@@ -54,10 +54,4 @@ class SubCollectionsForm extends sfForm
 	    }
     }
   }
-  public function getJavascripts()
-  {
-    $javascripts=parent::getJavascripts();
-    $javascripts[]='/js/qtiped_forms.js';
-    return $javascripts; 
-  }
 }

@@ -23,13 +23,6 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
     return sfContext::getInstance()->getUser()->getCulture();
   }
 
-  public function getJavascripts()
-  {
-    $javascripts=parent::getJavascripts();
-    $javascripts[]='/js/qtiped_forms.js';
-    return $javascripts;
-  }
-
   /**
   * Bind
   * @see getFieldsByGroup
