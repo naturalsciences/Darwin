@@ -212,12 +212,14 @@
                         });
                       });
                   </script>
-                  <?php if($specimen->getGtuCountryTagValue() != "") : ?>                  
+                  <?php if($specimen->getGtuTagValuesIndexed() != "") : ?>                  
                     <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getSpecRef()."_info");?>                    
-                    <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
+                    <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>  
                     <div class="general_gtu">
+                    <?php if($specimen->getGtuCountryTagValue() != "") : ?>                    
                       <strong><?php echo __('Country');?> :</strong>
                       <?php echo $specimen->getCountryTags();?>
+                    <?php endif ; ?>
                     </div>
                     <div id="gtu_<?php echo $specimen->getSpecRef();?>_details" style="display:none;"></div>
                   <?php else : ?>
