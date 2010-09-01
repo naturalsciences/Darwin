@@ -190,28 +190,6 @@
               </td>        
               <td class="col_gtu">
                 <?php if($specimen->getGtuRef() > 0) : ?>
-                  <script type="text/javascript">
-                      $(document).ready(function () {
-                        $('#gtu_ctr_<?php echo $specimen->getSpecRef();?>_info').click(function() 
-                        {
-                          item_row = $(this).closest('tr');
-                          elem = item_row.find('#gtu_<?php echo $specimen->getSpecRef();?>_details');
-                          if(elem.is(":hidden"))
-                          { 
-                            $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
-                              item_row.find('.general_gtu').slideUp();
-                              elem.html(html).slideDown();
-                            });
-                            //elem.slideDown();
-                          }
-                          else
-                          {
-                            elem.slideUp();
-                            item_row.find('.general_gtu').slideDown();
-                          }
-                        });
-                      });
-                  </script>
                   <?php if($specimen->getGtuTagValuesIndexed() != "") : ?>                  
                     <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getSpecRef()."_info");?>                    
                     <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>  
@@ -225,6 +203,26 @@
                   <?php else : ?>
                     <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef());?>"><?php echo $specimen->getGtuCode();?></a>
                   <?php endif ; ?>                 
+                   <script type="text/javascript">
+                    $('#gtu_ctr_<?php echo $specimen->getSpecRef();?>_info').click(function() 
+                    {
+                      item_row = $(this).closest('tr');
+                      elem = item_row.find('#gtu_<?php echo $specimen->getSpecRef();?>_details');
+                      if(elem.is(":hidden"))
+                      { 
+                        $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
+                          item_row.find('.general_gtu').slideUp();
+                          elem.html(html).slideDown();
+                        });
+                        //elem.slideDown();
+                      }
+                      else
+                      {
+                        elem.slideUp();
+                        item_row.find('.general_gtu').slideDown();
+                      }
+                    });
+                  </script>
                 <?php endif ; ?>          
               </td> 
               <td class="col_codes">     
