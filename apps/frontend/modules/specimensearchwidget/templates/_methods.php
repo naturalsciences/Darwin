@@ -3,7 +3,6 @@
     <tr>
       <th>
       <?php echo $form['methods']->renderError();?>
-      <?php echo $form['methods']->renderLabel();?></th>
     </tr>
   </thead>
   <tbody>

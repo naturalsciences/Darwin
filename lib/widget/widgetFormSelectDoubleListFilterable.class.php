@@ -214,7 +214,6 @@ EOF
     {
       $value = array();
     }
-
     $choices = $this->getOption('choices');
     if ($choices instanceof sfCallable)
     {
@@ -223,6 +222,7 @@ EOF
 
     $associated = array();
     $unassociated = array();
+
     foreach ($choices as $key => $option)
     {
       if (in_array(strval($key), $value))
