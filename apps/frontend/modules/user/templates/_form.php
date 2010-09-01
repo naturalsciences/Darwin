@@ -81,22 +81,28 @@
 </form>
 <script type="text/javascript">
 $(document).ready(function () {
-	$(':checkbox#users_is_physical').change(function(){
-	if ($(this).attr("checked"))
-	{
-		$('tr#is_not_physical').hide();
-		$('tr#is_physical').fadeIn();
-		$('label[for="users_family_name"]').html("Family Name") ;
-		$('label[for="users_given_name"]').html("Given Name") ;
-	}
-	else
-	{
-		$('tr#is_physical').hide();
-		$('tr#is_not_physical').fadeIn();
-		$('label[for="users_family_name"]').html("Name") ;
-		$('label[for="users_given_name"]').html("Abbreviation") ;
-    	}
-	})  ;
-	$(':checkbox#users_is_physical').change();
+
+  $('body').catalogue({});
+
+  $(':checkbox#users_is_physical').change(function(){
+    if ($(this).attr("checked"))
+    {
+      $('tr#is_not_physical').hide();
+      $('tr#is_physical').fadeIn();
+      $('label[for="users_family_name"]').html("Family Name") ;
+      $('label[for="users_given_name"]').html("Given Name") ;
+    }
+    else
+    {
+      $('tr#is_physical').hide();
+      $('tr#is_not_physical').fadeIn();
+      $('label[for="users_family_name"]').html("Name") ;
+      $('label[for="users_given_name"]').html("Abbreviation") ;
+    }
+  });
+
+  $(':checkbox#users_is_physical').change();
+
+
 });
 </script>

@@ -42,16 +42,22 @@
 </form>
 
 <script type="text/javascript">
-$('.display_value').click(function(){
-  $('.trusted_user').show();
-  $(this).hide();
-  $('.hide_value').show();
-});
+$(document).ready(function () {
+  $('.display_value').click(function(event){
+    event.preventDefault();
+    $('.trusted_user').show();
+    $(this).hide();
+    $('.hide_value').show();
+  });
 
-$('.hide_value').click(function(){
-  $('.trusted_user').hide();
-  $(this).hide();
-  $('.display_value').show();
+  $('.hide_value').click(function(event){
+    event.preventDefault();
+    $('.trusted_user').hide();
+    $(this).hide();
+    $('.display_value').show();
+  });
+
+  $('body').catalogue({});
 });
 </script>
   <?php include_partial('widgets/screen', array(

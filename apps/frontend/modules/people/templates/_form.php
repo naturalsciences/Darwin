@@ -98,4 +98,9 @@
       </tr>
     </tfoot>
   </table>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('body').catalogue({});
+});
+</script>
 </form>

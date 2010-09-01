@@ -8,7 +8,6 @@ else $table = '&table='.$table;
 <script type="text/javascript">
 
 $(document).ready(function () {
-  reload_url = '<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>';
   $('body').widgets_screen(
   {
     change_order_url: '<?php echo url_for('widgets/changeOrder?category='.$category.$record_ref);?>',
