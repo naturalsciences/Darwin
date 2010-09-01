@@ -55,35 +55,37 @@ function checkGroup()
   $.ajax({
       url: '<?php echo url_for('synonym/checks?table='.$sf_request->getParameter('table'))?>/id/'+$("#classification_synonymies_record_id").val()+'/type/'+$("#classification_synonymies_group_name").val(),
       success: function(html){
-	$('#save').removeAttr("disabled");
-	$('.merge_question .error_list').hide();
-	if(html == "0" )
-	{
-	  $(".merge_question").hide();
-	  $(".merge_question input").attr('checked', true);
-	}
-	else
-	{
-	  $(".merge_question input").attr('checked', false);
-	  $(".merge_question").show();
-	}
+        $('#save').removeAttr("disabled");
+        $('.merge_question .error_list').hide();
+        if(html == "0" )
+        {
+          $(".merge_question").hide();
+          $(".merge_question input").attr('checked', true);
+        }
+        else
+        {
+          $(".merge_question input").attr('checked', false);
+          $(".merge_question").show();
+        }
       },
       error: function(xhr)
       {
-	$('#save').removeAttr("disabled");
+        $('#save').removeAttr("disabled");
       }
    });
 }
 
 $(document).ready(function () 
 {
+  $('form.qtiped_form').modal_screen();
+
     $('.result_choose').live('click',function () {
-	el = $(this).closest('tr');
-        $("#classification_synonymies_record_id").val(getIdInClasses(el));
-        $("#classification_synonymies_record_id_name").val(el.find('.item_name').text()).show();
-        $('.reference_clear').show();
-        $('div.search_box').slideUp();
-	checkGroup();
+      el = $(this).closest('tr');
+      $("#classification_synonymies_record_id").val(getIdInClasses(el));
+      $("#classification_synonymies_record_id_name").val(el.find('.item_name').text()).show();
+      $('.reference_clear').show();
+      $('div.search_box').slideUp();
+      checkGroup();
     });
 
     $('#classification_synonymies_group_name').change(checkGroup);

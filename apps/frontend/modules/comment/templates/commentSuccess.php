@@ -28,15 +28,19 @@
           <?php echo $form->renderHiddenFields() ?>
           &nbsp;<a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
           <?php if (!$form->getObject()->isNew()): ?>
-	    <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=comments&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
-	      <?php echo __('Delete');?>
-	    </a>
+            <?php echo link_to(__('Delete'),'catalogue/deleteRelated?table=comments&id='.$form->getObject()->getId(),array('class'=>'delete_button','title'=>__('Are you sure ?')));?>
           <?php endif; ?>
           <input id="save" name="submit" type="submit" value="<?php echo __('Save');?>" />
         </td>
       </tr>
   </tfoot>  
 </table>
+<script  type="text/javascript">
+$(document).ready(function () {
+    $('form.qtiped_form').modal_screen();
+
+});
+</script>
 </form>
 
 </div>

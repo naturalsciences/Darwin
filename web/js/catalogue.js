@@ -241,3 +241,91 @@ function removeError(element)
     
 })(jQuery);
 
+
+/**********************************
+ *  Modal screen 
+ * ***************************/
+
+(function($){
+    $.modal_screen = function(el, options){
+        // To avoid scope issues, use 'base' instead of 'this'
+        // to reference this class from internal events and functions.
+        var base = this;
+        
+        // Access to jQuery and DOM versions of element
+        base.$el = $(el);
+        base.el = el;
+        
+        // Add a reverse reference to the DOM object
+        base.$el.data("modal_screen", base);
+        
+        base.init = function(){
+            base.options = $.extend({},$.modal_screen.defaultOptions, options);
+            base.$el.submit(base.onSubmit);
+            base.$el.find(base.options['delete_button']).click(base.deleteRecord);
+            // Put your initialization code here
+        };
+        
+        base.onSubmit = function(event){
+          event.preventDefault();
+          form_el = $(this);
+          form_el.find('input[type=submit]').attr('disabled','disabled');
+          hideForRefresh( form_el.parent() );
+          $.ajax({
+            type: "POST",
+            url: form_el.attr('action'),
+            data: form_el.serialize(),
+            success: function(html){
+              if(html == 'ok')
+              {
+                $(base.options['qtip_button']).click();
+              }
+              form_el.parent().before(html).remove();
+            }
+          });
+        };
+        
+        base.deleteRecord = function (event)
+        {
+          event.preventDefault();
+          if(confirm($(this).attr('title')))
+          {
+            hideForRefresh( base.$el );
+            currentElement = $(this);
+            removeError($(this));
+            $.ajax({
+              url: $(this).attr('href'),
+              success: function(html)
+              {
+                if(html == "ok" )
+                {
+                  $(base.options['qtip_button']).click();
+                }
+                else
+                {
+                  addError(html, currentElement); //@TODO:change this!
+                }
+              },
+              error: function(xhr)
+              {
+                addError('Error!  Status = ' + xhr.status);
+              }
+            });
+          }
+        };
+        // Run initializer
+        base.init();
+    };
+    
+    $.modal_screen.defaultOptions = {
+        qtip_button: '.qtip-button',
+        delete_button: '.delete_button',
+    };
+    
+    $.fn.modal_screen = function(options){
+        return this.each(function(){
+            (new $.modal_screen(this, options));
+        });
+    };
+    
+})(jQuery);

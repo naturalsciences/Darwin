@@ -24,9 +24,7 @@
       <td colspan="2">
         <a href="#" class="cancel_qtip"><?php echo __('Cancel');?></a>
         <?php if(! $form->getObject()->isNew()):?>
-	  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>">
-	    <?php echo __('Delete');?>
-	  </a>
+          <?php echo link_to(__('Delete'),'catalogue/deleteRelated?table=catalogue_relationships&id='.$form->getObject()->getId(),array('class'=>'delete_button','title'=>__('Are you sure ?')));?>
         <?php endif;?> 
         <input id="submit" type="submit" value="<?php echo __('Save');?>" />
       </td>
@@ -37,12 +35,13 @@
 </form>
 <script  type="text/javascript">
    $(document).ready(function () {
+    $('form.qtiped_form').modal_screen();
 
-    $('.result_choose').live('click',function () {
+    $('.result_choose').live('click',function(event) {
+       event.preventDefault();
        el = $(this).closest('tr');
        $("#catalogue_relationships_record_id_2").val(getIdInClasses(el));
        $("#catalogue_relationships_record_id_2_name").val(el.find('.item_name').text()).show();
-       console.log($("#catalogue_relationships_record_id_2").val());
        $('.reference_clear').show();
        $('div.search_box, ul.tab_choice').slideUp();
     });

@@ -13,7 +13,9 @@ $(document).ready(function () {
     change_order_url: '<?php echo url_for('widgets/changeOrder?category='.$category.$record_ref);?>',
     change_status_url: '<?php echo url_for('widgets/changeStatus?category='.$category.$record_ref);?>',
     reload_url: '<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>',
-    position_url: '<?php echo url_for('widgets/getWidgetPosition?category='.$category.$record_ref);?>'
+    position_url: '<?php echo url_for('widgets/getWidgetPosition?category='.$category.$record_ref);?>',
+    collection_img_up: '<?php echo  image_path('widgets_expand_up_button.png');?>',
+    collection_img_down: '<?php echo  image_path('widget_expand_button.png');?>'
   });
 });
 </script>

@@ -13,7 +13,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
   {
 	unset( $this['specimen_individual_ref'] , $this['id'],$this['path']);
 
-  $individual = $this->options['individual'];
+  $individual = $this->getOption('individual', '');
   $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
     'model' => 'SpecimenParts',
     'method' => 'getName',
@@ -23,8 +23,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
   ));
 
 	$this->collection = null;
-	if(isset($this->options['collection']))
-	  $this->collection = $this->options['collection'];
+  if($this->getOption('collection', '') != '')
+	  $this->collection = $this->getOption('collection');
 
 	$this->widgetSchema['specimen_part'] = new widgetFormSelectComplete(array(
 	  'model' => 'SpecimenParts',
