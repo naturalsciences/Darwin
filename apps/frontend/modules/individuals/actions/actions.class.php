@@ -105,7 +105,7 @@ class individualsActions extends DarwinActions
         {
           $e = new DarwinPgErrorParser($ne);
           $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-          $this->individual->getErrorSchema()->addError($error); 
+          $this->individual->getErrorSchema()->addError($error, 'Darwin2 :'); 
         }
       }
     }

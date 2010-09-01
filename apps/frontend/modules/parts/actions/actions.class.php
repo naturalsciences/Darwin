@@ -84,7 +84,7 @@ class partsActions extends DarwinActions
         {
           $e = new DarwinPgErrorParser($ne);
           $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-          $this->form->getErrorSchema()->addError($error);
+          $this->form->getErrorSchema()->addError($error, 'Darwin2 :');
         }
       }
     }

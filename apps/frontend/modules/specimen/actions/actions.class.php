@@ -247,7 +247,7 @@ class specimenActions extends DarwinActions
       {
         $e = new DarwinPgErrorParser($ne);
         $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-        $form->getErrorSchema()->addError($error); 
+        $form->getErrorSchema()->addError($error, 'Darwin2 :'); 
       }
     }
   }
