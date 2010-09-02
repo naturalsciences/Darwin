@@ -29,8 +29,8 @@ $browser->
      get('/widgets/reloadContent?widget=relationRename&category=catalogue_taxonomy&eid=4')->
      with('response')->begin()->
         isStatusCode(200)->
-        checkElement('table tr',1)->
-        checkElement('table tr td:first a.link_catalogue','/Falco Peregrinus Tunstall/')->
+        checkElement('table tbody tr',1)->
+        checkElement('table tbody tr td:first a.link_catalogue','/Falco Peregrinus Tunstall/')->
 	checkElement('img', 2)->
     end()->
 
@@ -38,8 +38,8 @@ $browser->
      get('/widgets/reloadContent?widget=relationRecombination&category=catalogue_taxonomy&eid=4')->
      with('response')->begin()->
         isStatusCode(200)->
-        checkElement('table tr',1)->
-        checkElement('table tr td:first a.link_catalogue','/recombinus/')->
+        checkElement('table tbody tr',1)->
+        checkElement('table tbody tr td:first a.link_catalogue','/recombinus/')->
 	checkElement('img',2)->
     end();
 
@@ -54,7 +54,7 @@ $browser->
      get('/widgets/reloadContent?widget=relationRename&category=catalogue_taxonomy&eid=4')->
      with('response')->begin()->
         isStatusCode(200)->
-        checkElement('table tr',0)->
+        checkElement('table tbody tr',0)->
 	checkElement('img',1)->
     end();
 

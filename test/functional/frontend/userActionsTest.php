@@ -99,7 +99,7 @@ $browser->
     checkElement('input[value="Bruxelles"]')->
   end()->
   
-  click('#address table tbody td.widget_row_delete a.widget_row_delete')->
+  click('a.delete_button')->
    with('response')->begin()->
     isStatusCode(200)->
   end();
@@ -160,7 +160,7 @@ $browser->
     checkElement('input[value="+32478.254415"]')->
   end()->
   
-  click('.widget_row_delete')->
+  click('.delete_button')->
    with('response')->begin()->
     isStatusCode(200)->
   end();

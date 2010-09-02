@@ -198,7 +198,7 @@ $browser->
     checkElement('input[value="Bruxelles"]')->
   end()->
   
-  click('.widget_row_delete')->
+  click('.delete_button')->
    with('response')->begin()->
     isStatusCode(200)->
   end();
@@ -271,7 +271,7 @@ $browser->
     checkElement('input[value="+32478.254415"]')->
   end()->
   
-  click('.widget_row_delete')->
+  click('.delete_button')->
    with('response')->begin()->
     isStatusCode(200)->
   end();
@@ -346,7 +346,7 @@ $browser->
     checkElement('input[value="Manager"]')->
   end()->
   
-  click('.widget_row_delete')->
+  click('.delete_button')->
    with('response')->begin()->
     isStatusCode(200)->
   end();
@@ -457,7 +457,7 @@ $browser->
     checkElement('input[checked="checked"]')->
   end()->
   
-  click('.widget_row_delete')->
+  click('.delete_button')->
    with('response')->begin()->
     isStatusCode(200)->
   end();
