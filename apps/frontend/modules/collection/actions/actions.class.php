@@ -174,6 +174,7 @@ class collectionActions extends DarwinActions
     $this->forward404Unless(Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
     $this->user_formated_name = Doctrine::getTable('Users')->findUser($user)->getFormatedName() ;
     $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user)->toArray() ;
+    $old_right = array() ;
     foreach($old_rights as $key=>$right)
       $old_right[] = $right['collection_ref'] ;
     $this->form = new SubCollectionsForm(null,array('collection_ref' => $id ,'user_ref' => $user,'old_right' => $old_right));
