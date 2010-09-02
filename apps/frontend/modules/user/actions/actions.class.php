@@ -16,19 +16,18 @@ class userActions extends DarwinActions
   {
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $this->mode = 'new' ;
-    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType()));
+    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode));
   }
   
   public function executeEdit(sfWebRequest $request)
   {
     $this->user = Doctrine::getTable('Users')->findExcept( $request->getparameter('id') );
     $this->forward404Unless($this->user, sprintf('User does not exist (%s).', $request->getParameter('id')));
-    if($this->getUser()->getId() == $this->user->getId()) $this->redirect('user/profile'); 
+    if($this->getUser()->getId() == $this->user->getId() && !$request->isMethod('post')) $this->redirect('user/profile'); 
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) $this->forwardToSecureAction();
     $this->mode = 'edit' ;
-    $this->form = new UsersForm($this->user, array("db_user_type" => $this->getUser()->getDbUserType()));
-  
+    $this->form = new UsersForm($this->user, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users'));
@@ -51,7 +50,7 @@ class userActions extends DarwinActions
     $this->user =  Doctrine::getTable('Users')->findExcept( $this->getUser()->getId() );
     $this->forward404Unless($this->user);
     $this->mode = 'profile' ;
-    $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getDbUserType()));
+    $this->form = new UsersForm($this->user,array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
  /*   if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users'));
@@ -251,17 +250,16 @@ class userActions extends DarwinActions
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
     if($this->getUser()->getDbUserType()  < Users::MANAGER) $this->forwardToSecureAction();
-
-    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType()));
+    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => 'new'));
 
     $this->form->bind($request->getParameter($this->form->getName()));
 
     if ($this->form->isValid())
     {
       try{
-        $user = $this->form->save();
-        $user->addUserWidgets();
-        $this->redirect('user/edit?id='.$user->getId());
+        $this->user = $this->form->save();
+        $this->user->addUserWidgets();
+        $this->redirect('user/edit?id='.$this->user->getId());
       }
       catch(Doctrine_Exception $ne)
       {

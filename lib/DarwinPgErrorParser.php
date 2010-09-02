@@ -27,7 +27,8 @@ class DarwinPgErrorParser
     '/violates check constraint ".*_minmax"/i' => 'Max count value must be superior or equal to Min count value',
     '/violates check constraint ".*_min"/i' => 'Min count value must be a positive number',
     '/violates check constraint "chk_collecting_methods_method"/i' => 'Method inserted cannot be empty',
-    '/violates check constraint "chk_collecting_tools_tool"/i' => 'Tool inserted cannot be empty'
+    '/violates check constraint "chk_collecting_tools_tool"/i' => 'Tool inserted cannot be empty',
+    '/unq_users/i' => 'This user already exist'
   );
 
 

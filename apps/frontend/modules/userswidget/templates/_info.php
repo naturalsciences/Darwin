@@ -32,7 +32,7 @@
   </tbody>
 </table>
 <br />
-<?php if(Doctrine::getTable('Users')->findUser($sf_user->getAttribute('db_user_id'))->getDbUserType() > 2) : ?>
+<?php if($sf_user->getAttribute('db_user_type') > 2) : ?>
 <?php echo image_tag('add_green.png');?>
 <a id='add_info' title="<?php echo __('Add Login');?>" class="link_catalogue" href="<?php echo url_for('user/loginInfo?user_ref='.$eid);?>"> 
 <?php echo __('Add');?>
