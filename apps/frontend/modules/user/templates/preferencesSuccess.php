@@ -13,8 +13,9 @@
       </thead>
       <tbody>
         <tr>
-          <th><?php echo $form['spec_search_cols']->renderLabel();?>
-          <?php echo image_tag('help_icon_grey.png',array('alt'=> $form['spec_search_cols']->renderHelp(),'class'=>'help_ico'));?></div>
+          <th>
+          <?php echo $form['spec_search_cols']->renderLabel();?>
+          <div class="help_ico" alt="<?php echo $form['spec_search_cols']->renderHelp();?>"></div>
           </th>
           <td><div > <!--class="spec_search_cols_pref"--><table><?php echo $form['spec_search_cols'];?></table></div></td>
         </tr>
@@ -26,14 +27,16 @@
       </thead>
       <tbody>
         <tr>
-          <th><?php echo $form['board_spec_rec_pp']->renderLabel();?>
-          <?php echo image_tag('help_icon_grey.png',array('alt'=> $form['board_spec_rec_pp']->renderHelp(),'class'=>'help_ico'));?></div>
+          <th>
+            <?php echo $form['board_spec_rec_pp']->renderLabel();?>
+            <div class="help_ico" alt="<?php echo $form['board_spec_rec_pp']->renderHelp();?>"></div>
           </th>
           <td><?php echo $form['board_spec_rec_pp'];?></td>
         </tr>
         <tr>
-          <th><?php echo $form['board_search_rec_pp']->renderLabel();?>
-          <?php echo image_tag('help_icon_grey.png',array('alt'=> $form['board_search_rec_pp']->renderHelp(),'class'=>'help_ico'));?></div>
+          <th>
+            <?php echo $form['board_search_rec_pp']->renderLabel();?>
+            <div class="help_ico" alt="<?php echo $form['board_search_rec_pp']->renderHelp();?>"></div>
           </th>
           <td><?php echo $form['board_search_rec_pp'];?></td>
         </tr>
@@ -47,29 +50,3 @@
     </table>
   </form>
 </div>
-<script type="text/javascript">
-$(document).ready(function () {
-  $(".help_ico").qtip({
-      content: $(this).attr('tooltip'),
-      style: { 
-          width: 200,
-          padding: 5,
-          background: '#95bd4c',
-          color: 'black',
-          border: {
-              width: 7,
-              radius: 5,
-              color: '#95bd4c'
-          },
-          tip: 'bottomLeft',
-          name: 'dark', // Inherit the rest of the attributes from the preset dark style
-      },
-      position: {
-          corner: {
-              target: 'topRight',
-              tooltip: 'bottomLeft'
-          }
-      },
-  });
-});
-</script>

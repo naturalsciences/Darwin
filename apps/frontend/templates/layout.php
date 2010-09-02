@@ -9,5 +9,10 @@
   <body>
     <?php include_partial('global/head_menu') ?>
     <?php echo $sf_content ?>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      attachHelpQtip('body');
+    });
+    </script>
   </body>
 </html>

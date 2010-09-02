@@ -26,42 +26,6 @@ function getElInClasses(element,prefix)
     }
 }
 
-function addFormError(form_el, message)
-{
-    if( $(form_el).is(':visible') )
-    {
-        $(form_el).qtip({
-            content: message,
-            show: { ready: true, when : { event: 'none'} },
-            hide: { when: { event: 'change' } },
-            style: { 
-                width: 200,
-                padding: 5,
-                background: '#ec9593',
-                color: 'black',
-                border: {
-                    width: 7,
-                    radius: 5,
-                    color: '#c36b70'
-                },
-                tip: 'bottomLeft',
-                name: 'dark', // Inherit the rest of the attributes from the preset dark style
-            },
-            position: {
-                corner: {
-                    target: 'topRight',
-                    tooltip: 'bottomLeft'
-                }
-            },
-        });
-        return true
-    }
-    else
-    {
-        return false;
-    }
-}
-
 function removeAllQtip()
 {
     var i = $.fn.qtip.interfaces.length; while(i--)
@@ -194,16 +158,27 @@ function objectsAreSame(x, y) {
    return objectsAreSame;
 }
 
-$(document).ready(function () {
-  $('.cancel_qtip').live('click',function () {
-    $('.qtip-button').click();
-  });
-  
-  $('.help_ico').live('mouseover mouseout', function(event) {
-    if (event.type == 'mouseover') {
-      $(this).attr('src','/images/help_icon_green.png');
-    } else {
-      $(this).attr('src','/images/help_icon_grey.png');
-    }
-  });
-});
+function attachHelpQtip(element)
+{
+        $(element).find(".help_ico").qtip({
+          style: { 
+              width: 200,
+              padding: 5,
+              background: '#95bd4c',
+              color: 'black',
+              border: {
+                  width: 7,
+                  radius: 5,
+                  color: '#95bd4c'
+              },
+              tip: 'bottomLeft',
+              name: 'dark', // Inherit the rest of the attributes from the preset dark style
+          },
+          position: {
+              corner: {
+                  target: 'topRight',
+                  tooltip: 'bottomLeft'
+              }
+          },
+      });
+}

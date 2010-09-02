@@ -60,6 +60,7 @@ function removeError()
 }
 
 $(document).ready(function () {
+   $('body').catalogue({});
   $("a#spec_ind_delete").click(function(){
      if(confirm($(this).attr('title')))
      {

@@ -263,6 +263,7 @@ function removeError(element)
             base.options = $.extend({},$.modal_screen.defaultOptions, options);
             base.$el.submit(base.onSubmit);
             base.$el.find(base.options['delete_button']).click(base.deleteRecord);
+            base.$el.find(base.options['cancel_button']).click(base.cancelButton);
             // Put your initialization code here
         };
         
@@ -283,6 +284,12 @@ function removeError(element)
               form_el.parent().before(html).remove();
             }
           });
+        };
+        
+        base.cancelButton = function (event)
+        {
+            event.preventDefault();
+            $('.qtip-button').click();
         };
         
         base.deleteRecord = function (event)
@@ -320,6 +327,7 @@ function removeError(element)
     $.modal_screen.defaultOptions = {
         qtip_button: '.qtip-button',
         delete_button: '.delete_button',
+        cancel_button: '.cancel_qtip'
     };
     
     $.fn.modal_screen = function(options){

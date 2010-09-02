@@ -71,6 +71,7 @@ function removeError()
 }
 
 $(document).ready(function () {
+    $('body').catalogue({});
   $("a#spec_delete").click(function(){
      if(confirm($(this).attr('title')))
      {
