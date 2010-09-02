@@ -99,7 +99,7 @@ $browser->
     checkElement('input[value="Bruxelles"]')->
   end()->
   
-  click('.widget_row_delete')->
+  click('#address table tbody td.widget_row_delete a.widget_row_delete')->
    with('response')->begin()->
     isStatusCode(200)->
   end();

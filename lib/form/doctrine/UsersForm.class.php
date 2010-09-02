@@ -19,79 +19,37 @@ class UsersForm extends BaseUsersForm
       $this['approval_level'],
       $this['birth_date_mask']
     );
-    if (isset($this->options['is_physical'])) 
-    {
-    	if ($this->options['is_physical'])
-    	{
-    		$this->widgetSchema['title'] = new widgetFormSelectComplete(array('model' => 'Users',
-                                                                        'table_method' => 'getDistinctTitle',
-                                                                        'method' => 'getTitle',
-                                                                        'key_method' => 'getTitle',
-                                                                        'add_empty' => true,
-                                                                        'change_label' => 'Pick a title in the list',
-                                                                        'add_label' => 'Add another title',
+    $this->widgetSchema['people_id'] = new widgetFormButtonRef(array('model' => 'People',
+                                                              'method' => 'getFormatedName',
+                                                              'link_url' => 'people/choose',
+                                                              'nullable' => true,
+                                                              'box_title' => $this->getI18N()->__('Choose Yourself'),
+                                                                    )
+                                                              ); 
+    $this->widgetSchema['is_physical'] = new sfWidgetFormInputCheckbox(array ('default' => 'true'));  
+    $this->widgetSchema['sub_type'] = new widgetFormSelectComplete(array('model' => 'Users',
+                                                                 'table_method' => 'getDistinctSubType',
+                                                                 'method' => 'getSubType',
+                                                                 'key_method' => 'getSubType',
+                                                                 'add_empty' => true,
+                                                                 'change_label' => 'Pick a sub type in the list',
+                                                                 'add_label' => 'Add another sub type',
+                                                                        )
+                                                                  );      
+    $this->widgetSchema['title'] = new widgetFormSelectComplete(array('model' => 'Users',
+                                                                      'table_method' => 'getDistinctTitle',
+                                                                      'method' => 'getTitle',
+                                                                      'key_method' => 'getTitle',
+                                                                      'add_empty' => true,
+                                                                      'change_label' => 'Pick a title in the list',
+                                                                      'add_label' => 'Add another title',
                                                                        )
-                                                                 );   
-	     $this->widgetSchema['people_id'] = new widgetFormButtonRef(array(
-		  'model' => 'People',
-		  'method' => 'getFormatedName',
-		  'link_url' => 'people/choose',
-		  'nullable' => true,
-		  'box_title' => $this->getI18N()->__('Choose Yourself'),
-		));
-          $this->widgetSchema['title']->setAttributes(array('class'=>'small_size')) ;   
-          $this->validatorSchema['title'] =  new sfValidatorString(array('required' => false));   
-      	$this->widgetSchema['gender'] = new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))) ; 
-      	$this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));	
-    		unset($this['sub_type'],$this['is_physical']) ;
-    	}
-    	else
-    	{
-	    $this->widgetSchema['sub_type'] = new widgetFormSelectComplete(array('model' => 'Users',
-                                                                   'table_method' => 'getDistinctSubType',
-                                                                   'method' => 'getSubType',
-                                                                   'key_method' => 'getSubType',
-                                                                   'add_empty' => true,
-                                                                   'change_label' => 'Pick a sub type in the list',
-                                                                   'add_label' => 'Add another sub type',
-                                                                  )
-                                                            ); 
-	    $this->widgetSchema['people_id'] = new widgetFormButtonRef(array(
-		  'model' => 'People',
-		  'method' => 'getFormatedName',
-		  'link_url' => 'institution/choose',
-		  'nullable' => true,
-		  'box_title' => $this->getI18N()->__('Choose Yourself'),
-		));
-	    unset($this['title'],$this['gender'],$this['is_physical']) ;    	
-    	}
-    }
-    else
-    {
-    	    $this->widgetSchema['is_physical'] = new sfWidgetFormInputCheckbox(array ('default' => 'true'));   
- 	    $this->widgetSchema['title'] = new widgetFormSelectComplete(array('model' => 'Users',
-                                                                        'table_method' => 'getDistinctTitle',
-                                                                        'method' => 'getTitle',
-                                                                        'key_method' => 'getTitle',
-                                                                        'add_empty' => true,
-                                                                        'change_label' => 'Pick a title in the list',
-                                                                        'add_label' => 'Add another title',
-                                                                       )
-                                                                 );   
-	    $this->widgetSchema['sub_type'] = new widgetFormSelectComplete(array('model' => 'Users',
-                                                                   'table_method' => 'getDistinctSubType',
-                                                                   'method' => 'getSubType',
-                                                                   'key_method' => 'getSubType',
-                                                                   'add_empty' => true,
-                                                                   'change_label' => 'Pick a sub type in the list',
-                                                                   'add_label' => 'Add another sub type',
-                                                                  )
-                                                            );  
-          $this->widgetSchema['title']->setAttributes(array('class'=>'small_size')) ;   
-          $this->widgetSchema['gender'] = new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))) ;
-          $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
-          $this->validatorSchema['title'] =  new sfValidatorString(array('required' => false));                                                          
-    }
+                                                                 );     
+    $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));                                                               
+    $this->widgetSchema['gender'] = new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))) ;
+    $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));    
+    $this->widgetSchema['title']->setAttributes(array('class'=>'small_size')) ;     
+    $this->validatorSchema['title'] =  new sfValidatorString(array('required' => false));
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['family_name'] = new sfWidgetFormInput();
     $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
@@ -113,13 +71,12 @@ class UsersForm extends BaseUsersForm
     $this->validatorSchema['db_user_type'] = new sfValidatorChoice(array('choices' => array_keys(Users::getTypes($this->options)), 'required' => false));
     
     $this->validatorSchema->setPostValidator(
-      new sfValidatorSchemaCompare('password', '==', 'password_again',
-	array(),
-	array('invalid' => 'Passwords must be equals and can not contains spaces')
-      )
-    );
-
-
+                                  new sfValidatorSchemaCompare('password', '==', 'password_again',
+	                                array(),
+                                	array('invalid' => 'Passwords must be equals and can not contains spaces')
+                                                              )
+                                            );
+                                            
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');
