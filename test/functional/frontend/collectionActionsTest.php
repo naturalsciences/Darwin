@@ -214,7 +214,7 @@ $browser->
     checkElement('div#collections_codes_screen form#collections_codes_form table tbody tr:nth-child(6) td input#collections_code_auto_increment', 1)->
     checkElement('div#collections_codes_screen form#collections_codes_form table tbody tr:last td input#collections_code_part_code_auto_copy', 1)->
   end()->
-  click('div#collections_codes_screen form#collections_codes_form table tfoot tr td a.widget_row_delete')->
+  click('a.delete_button')->
   with('response')->
   begin()->
     isStatusCode(200)->
