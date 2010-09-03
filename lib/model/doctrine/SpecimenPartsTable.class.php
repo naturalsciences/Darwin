@@ -198,17 +198,22 @@ class SpecimenPartsTable extends DarwinTable
   /**
   * Set required widget visible and opened 
   */   
-  public function getRequiredWidget($criterias, $user, $category)
+  public function getRequiredWidget($criterias, $user, $category,$all = 0)
   {
-    $req_widget = array() ;
-    foreach($criterias as $key => $fields)
+    if(!$all)
     {
-      if ($key == "rec_per_page") continue ;
-      if ($fields == "") continue ;
+      $req_widget = array() ;
+      foreach($criterias as $key => $fields)
+      {
+        if ($key == "rec_per_page") continue ;
+        if ($fields == "") continue ;
 
-      if(isset(self::$widget_array[$key]))
-        $req_widget[self::$widget_array[$key]] = 1 ;
+        if(isset(self::$widget_array[$key]))
+          $req_widget[self::$widget_array[$key]] = 1 ;
+      }
+      Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
     }
-    Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
+    else
+      Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,1);
   }
 }

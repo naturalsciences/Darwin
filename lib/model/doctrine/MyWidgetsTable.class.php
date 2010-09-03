@@ -224,8 +224,9 @@ class MyWidgetsTable extends DarwinTable
           ->set('p.visible','true')
           ->set('p.opened','true')
           ->where('p.user_ref = ?',$user)
-          ->andWhere('category = ?',$category)
-          ->andWhereIn('p.group_name',$widget_array);
+          ->andWhere('category = ?',$category);
+    if (is_array($widget_array)) 
+      $q->andWhereIn('p.group_name',$widget_array);
     return $q->execute() ;
   }
 }

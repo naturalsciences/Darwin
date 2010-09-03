@@ -43,7 +43,7 @@
         <?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
       </td>
       <td>
-        <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this part')), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId()) ?>
+        <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this part','class' => 'duplicate_link')), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId()) ?>
       </td>      
       <td>
         <a class="row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
@@ -69,7 +69,7 @@
     <?php endif;?>
 </table>
 <script  type="text/javascript">
-
+  
   $('img.extd_info').each(function(){
      
   tip_content = $(this).next().html();

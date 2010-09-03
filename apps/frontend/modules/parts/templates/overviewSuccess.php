@@ -26,6 +26,10 @@ function removeError()
 }
 
 $(document).ready(function () {
+  $('.duplicate_link').click(function(){
+    ask_for_duplicate($(this).closest('a'),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
+  });  
+
   $("a.row_delete").click(function(){
 
 	if(confirm($(this).attr('title')))

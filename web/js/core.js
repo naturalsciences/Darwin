@@ -26,6 +26,13 @@ function getElInClasses(element,prefix)
     }
 }
 
+function ask_for_duplicate(duplic_link,msg)
+{
+  mavar = duplic_link.attr('href') + '/all_duplicate/1' ;
+  if(confirm(msg))
+    duplic_link.attr('href',mavar) ; 
+}
+
 function removeAllQtip()
 {
     var i = $.fn.qtip.interfaces.length; while(i--)

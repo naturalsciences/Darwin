@@ -123,7 +123,7 @@ class specimenActions extends DarwinActions
       $duplic = $request->getParameter('duplicate_id','0') ;     
       $specimen = $this->getRecordIfDuplicate($duplic,$specimen,true);    
       // set all necessary widgets to visible 
-      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget');      
+      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',($request->hasParameter('all_duplicate')?1:0));      
       $this->form = new SpecimensForm($specimen); 
       if($duplic)
       {

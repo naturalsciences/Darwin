@@ -43,7 +43,7 @@
       <p class="form_buttons">
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New part'), 'parts/edit?indid='.$individual->getId()) ?>
-            &nbsp;<?php echo link_to(__('Duplicate part'), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId()) ?>
+            &nbsp;<?php echo link_to(__('Duplicate part'), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId(),array('class' => 'duplicate_link')) ?>
             &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_part_delete"><?php echo __('Delete');?></a>
           <?php endif?>
 
@@ -65,6 +65,9 @@ function removeError()
 }
 
 $(document).ready(function () {
+  $('.duplicate_link').click(function(){
+    ask_for_duplicate($(this),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
+  }); 
     $('body').catalogue({});
   $("a#spec_part_delete").click(function(){
      if(confirm($(this).attr('title')))

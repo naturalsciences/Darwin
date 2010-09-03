@@ -37,7 +37,7 @@
     <?php if (!$individual->getObject()->isNew()): ?>
       <?php echo link_to(__('New individual'), 'individuals/edit?spec_id='.$specimen->getId()) ?>
       &nbsp;<?php echo link_to(__('Duplicate individual'), 'individuals/edit?spec_id='.$individual->getObject()->getSpecimenRef().
-      '&duplicate_id='.$individual->getObject()->getId()) ?>
+      '&duplicate_id='.$individual->getObject()->getId(),array('class' => 'duplicate_link')) ?>
       &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_ind_delete"><?php echo __('Delete');?></a>
     <?php endif?>
     &nbsp;<a href="<?php echo url_for('individuals/overview?spec_id='.$specimen->getId()) ?>"><?php echo __('Cancel');?></a>
@@ -59,6 +59,9 @@ function removeError()
 }
 
 $(document).ready(function () {
+  $('.duplicate_link').click(function(){
+    ask_for_duplicate($(this),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
+  });
    $('body').catalogue({});
   $("a#spec_ind_delete").click(function(){
      if(confirm($(this).attr('title')))
