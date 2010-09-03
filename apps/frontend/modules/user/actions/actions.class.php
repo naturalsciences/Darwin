@@ -326,11 +326,11 @@ class userActions extends DarwinActions
         {
           if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage() )
           {
-            Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->getUser()->getAttribute('db_user_id'));
+            Doctrine::getTable('UsersLanguages')->removeOldPreferredLang($this->lang->getUsersRef());
           }
           
           $this->form->save();
-          if($this->form->getValue('preferred_language'))
+          if($this->form->getValue('preferred_language')&&($this->getUser()->getAttribute('db_user_id') == $this->lang->getUsersRef()))
           {
             $this->getUser()->setCulture($this->form->getValue('language_country'));
           }

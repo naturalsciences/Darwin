@@ -30,6 +30,7 @@ abstract class BaseCollectionsForm extends BaseFormDoctrine
       'code_suffix'              => new sfWidgetFormTextarea(),
       'code_suffix_separator'    => new sfWidgetFormTextarea(),
       'code_part_code_auto_copy' => new sfWidgetFormInputCheckbox(),
+      'is_public'                => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -48,6 +49,7 @@ abstract class BaseCollectionsForm extends BaseFormDoctrine
       'code_suffix'              => new sfValidatorString(array('required' => false)),
       'code_suffix_separator'    => new sfValidatorString(array('required' => false)),
       'code_part_code_auto_copy' => new sfValidatorBoolean(array('required' => false)),
+      'is_public'                => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('collections[%s]');

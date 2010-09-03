@@ -20,6 +20,8 @@ class CollectionsForm extends BaseCollectionsForm
           $this['code_suffix_separator'],
           $this['code_part_code_auto_copy']
          );
+    $this->widgetSchema['is_public'] = new sfWidgetFormInputCheckbox(array ('default' => 'true'), array('title' => 'checked = public'));          
+    $this->validatorSchema['is_public'] = new sfValidatorBoolean() ;
     $this->widgetSchema['code'] = new sfWidgetFormInputText();
     $this->widgetSchema['code']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['name'] = new sfWidgetFormInputText();

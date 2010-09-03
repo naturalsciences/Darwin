@@ -27,6 +27,7 @@ abstract class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
       'code_suffix'              => new sfWidgetFormFilterInput(),
       'code_suffix_separator'    => new sfWidgetFormFilterInput(),
       'code_part_code_auto_copy' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'is_public'                => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -44,6 +45,7 @@ abstract class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
       'code_suffix'              => new sfValidatorPass(array('required' => false)),
       'code_suffix_separator'    => new sfValidatorPass(array('required' => false)),
       'code_part_code_auto_copy' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'is_public'                => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('collections_filters[%s]');
@@ -78,6 +80,7 @@ abstract class BaseCollectionsFormFilter extends BaseFormFilterDoctrine
       'code_suffix'              => 'Text',
       'code_suffix_separator'    => 'Text',
       'code_part_code_auto_copy' => 'Boolean',
+      'is_public'                => 'Boolean',
     );
   }
 }

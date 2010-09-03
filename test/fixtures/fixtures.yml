@@ -241,6 +241,13 @@ People:
         given_name: Evil
         gender: M
         db_people_type: 127
+    p6:
+        is_physical: true
+        title: Mr
+        family_name: Chambert
+        given_name: Yann
+        gender: M
+        db_people_type: 127        
   
 Collections:
     c1:
@@ -273,6 +280,7 @@ Collections:
         Institution: p1
         Manager: u1
         Parent: c2
+        is_public: false
     c5: 
         code: fav
         name: Fossile Aves

@@ -28,6 +28,13 @@ $(document).ready(function ()
   <table>
     <tbody>
       <tr>
+        <th><?php echo $form['is_public']->renderLabel(__("Public collection")) ?></th>
+        <td>
+          <?php echo $form['is_public']->renderError() ?>
+          <?php echo $form['is_public'] ?>
+        </td>
+      </tr>    
+      <tr>
         <th><?php echo $form['code']->renderLabel() ?></th>
         <td>
           <?php echo $form['code']->renderError() ?>

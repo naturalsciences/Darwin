@@ -197,6 +197,12 @@ People:
         family_name: Duchesne
         given_name: ML
         gender: F
+    p5: 
+        is_physical: true
+        title: Mr
+        family_name: Chambert
+        given_name: yann
+        gender: M            
 
 Collections:
     c2:
