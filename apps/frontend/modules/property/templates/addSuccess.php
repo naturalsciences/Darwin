@@ -1,6 +1,7 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="property_screen">
-<form class="edition qtiped_form" action="<?php echo url_for('property/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post" id="property_form">
+<?php echo form_tag('property/add?table='.$sf_params->get('table').'&id='.$sf_params->get('id').($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ), array('class'=>'edition qtiped_form', 'id'=>'property_form'));?>
+
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>

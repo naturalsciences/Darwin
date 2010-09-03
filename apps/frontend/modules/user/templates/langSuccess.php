@@ -1,6 +1,6 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="lang_screen">
-<form class="edition qtiped_form" action="<?php echo url_for('user/lang?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="lang_form">
+<?php echo form_tag('user/lang?ref_id='.$sf_request->getParameter('ref_id') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ), array('class'=>'edition qtiped_form','id'=>'lang_form'));?>
 <?php echo $form['users_ref'];?>
 <table>
   <tbody>

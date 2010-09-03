@@ -1,7 +1,7 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="catalogue_relation_screen">
 
-<form class="edition qtiped_form" action="<?php echo url_for('catalogue/relation?table='.$sf_params->get('table').'&rid='.$sf_request->getParameter('rid'). '&type='.$sf_request->getParameter('type') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="relation_form">
+<?php echo form_tag('catalogue/relation?table='.$sf_params->get('table').'&rid='.$sf_params->get('rid').'&type='.$sf_params->get('type').($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ), array('class'=>'edition qtiped_form', 'id' => 'relation_form') );?>
 <?php echo $form->renderHiddenFields();?>
 <table>
   <tbody>

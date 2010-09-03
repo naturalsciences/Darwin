@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 });
 </script>
-<form id="collection_right_form" class="edition qtiped_form" action="<?php echo url_for('collection/rights?user_ref='.$sf_request->getParameter('user_ref').'&collection_ref='.$sf_request->getParameter('collection_ref')); ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<?php echo form_tag('collection/rights?user_ref='.$sf_params->get('user_ref').'&collection_ref='.$sf_params->get('collection_ref'), array('class'=>'edition qtiped_form', 'id' => 'collection_right_form') );?>
   <table class="widget_sub_table">
     <tr>
       <td>

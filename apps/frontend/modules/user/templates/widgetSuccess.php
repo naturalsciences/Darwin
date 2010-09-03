@@ -3,7 +3,7 @@
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">
   <h1 class="edit_mode"><?php echo __(sprintf("List of widgets available for <a href='%s'>%s</a>", url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()),$user->getFormatedName())); ?></h1>
-  <form class="edition" action="" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+  <form class="edition" action="" method="post">
   <table>
   <thead class="title_widget">
   <tr>

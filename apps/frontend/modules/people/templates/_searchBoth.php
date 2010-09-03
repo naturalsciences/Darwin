@@ -15,18 +15,18 @@
       institution_search_url = '<?php echo url_for('institution/choose?with_js=0' . ($is_choose?'&is_choose=1' : '') );?>';
 
       if( $('input[name="type_search"]:checked').val() == 'people' )
-	search_url = people_search_url;
+        search_url = people_search_url;
       else
-	search_url = institution_search_url
+        search_url = institution_search_url
 
       $.ajax({
-	  type: "POST",
-	  url: search_url + 'only_role='+$("#only_role").val(),
-	  success: function(html){
-	    $('.search_both_item').html(html);
-	  }});
-	  return false;
-      });
+        type: "POST",
+        url: search_url + 'only_role='+$("#only_role").val(),
+        success: function(html){
+          $('.search_both_item').html(html);
+        }});
+        return false;
+    });
   });
 
 </script> 

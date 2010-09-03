@@ -4,7 +4,8 @@
 <?php if (isset($message)): ?>
   <div class="flash_save"><?php echo __($message); ?></div>
 <?php endif; ?>
-<form id="insurances_form" class="edition qtiped_form" action="<?php echo url_for('insurances/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id') . ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ) );?>" method="post">
+<?php echo form_tag('insurances/add?table='.$sf_params->get('table').'&id='.$sf_params->get('id').($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() ), array('class'=>'edition qtiped_form', 'id'=>'insurances_form'));?>
+
 <?php echo $form['referenced_relation'];?>
 <?php echo $form['record_id'];?>
 <table>

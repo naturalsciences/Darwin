@@ -18,7 +18,8 @@ $(document).ready(function ()
 });
 </script>
 
-<form id="catalogue_filter" class="search_form" method="post" action="<?php echo url_for('catalogue/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">  <div class="container">
+<?php echo form_tag('catalogue/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'search_form','id'=>'catalogue_filter'));?>
+<div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
         <tr>

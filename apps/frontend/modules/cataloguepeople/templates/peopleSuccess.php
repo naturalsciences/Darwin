@@ -1,6 +1,6 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="catalogue_people_screen">
-<form class="edition qtiped_form" method="post" action="<?php echo url_for('cataloguepeople/people?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&id='.$form->getObject()->getId() ) );?>" id="cataloguepeople_form">
+<?php echo form_tag('cataloguepeople/people?table='.$sf_params->get('table').($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ), array('class'=>'edition qtiped_form','id'=>'cataloguepeople_form'));?>
 <table >
   <tr>
       <td colspan="2">

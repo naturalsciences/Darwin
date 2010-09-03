@@ -26,36 +26,37 @@ $(document).ready(function ()
       <li></li>
     </ul>
   </div>
-	<form action="<?php echo url_for('specimen/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : ''). ($form->getObject()->isNew() ? '': '&rid='.$form->getObject()->getId() )) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-		<div>
-			<?php echo $form['id']->render() ?>
-			<?php if($form->hasGlobalErrors()):?>
-				<ul class="spec_error_list">
-					<?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
-						<li class="error_fld_<?php echo $name;?>"><?php echo __($error) ?></li>
-					<?php endforeach; ?>
-				</ul>
-			<?php endif;?>
+
+  <?php echo form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
+    <div>
+      <?php echo $form['id']->render() ?>
+      <?php if($form->hasGlobalErrors()):?>
+        <ul class="spec_error_list">
+          <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
+            <li class="error_fld_<?php echo $name;?>"><?php echo __($error) ?></li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif;?>
 
 
-			<?php include_partial('widgets/screen', array(
-			  'widgets' => $widgets,
-			  'category' => 'specimenwidget',
-			  'columns' => 2,
-			  'options' => array('form' => $form),
-			)); ?>
-		</div>
-		<p class="clear"></p>
-		<p class="form_buttons">
-		  <?php if (!$form->getObject()->isNew()): ?>
-		    <?php echo link_to(__('New specimen'), 'specimen/new') ?>
-		    &nbsp;<a href="<?php echo url_for('specimen/new?duplicate_id='.$form->getObject()->getId());?>"><?php echo __('Duplicate specimen');?></a>
-		    &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimens&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_delete"><?php echo __('Delete');?></a>
-		  <?php endif?>
-		  &nbsp;<a href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Cancel');?></a>
-		  <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
-		</p>
-	</form>
+      <?php include_partial('widgets/screen', array(
+        'widgets' => $widgets,
+        'category' => 'specimenwidget',
+        'columns' => 2,
+        'options' => array('form' => $form),
+      )); ?>
+    </div>
+    <p class="clear"></p>
+    <p class="form_buttons">
+      <?php if (!$form->getObject()->isNew()): ?>
+        <?php echo link_to(__('New specimen'), 'specimen/new') ?>
+        &nbsp;<a href="<?php echo url_for('specimen/new?duplicate_id='.$form->getObject()->getId());?>"><?php echo __('Duplicate specimen');?></a>
+        &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimens&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_delete"><?php echo __('Delete');?></a>
+      <?php endif?>
+      &nbsp;<a href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Cancel');?></a>
+      <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
+    </p>
+  </form>
 <script  type="text/javascript">
 
 function addError(html)

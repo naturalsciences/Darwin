@@ -1,7 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
-<form id="users_filter" class="search_form" method="post" action="<?php echo url_for('user/search'.((!isset($is_choose))?'':'?is_choose='.$is_choose));?>">
+<?php echo form_tag('user/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'search_form','id'=>'users_filter'));?>
   <div class="container">
     <?php echo $form['screen']->render() ?>
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">

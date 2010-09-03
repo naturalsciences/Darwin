@@ -12,25 +12,24 @@
 </ul>
 </div>
 
-<form action="<?php echo url_for('individuals/edit'. ($individual->isNew() ? '?spec_id='.$specimen->getId() : '?id='.$individual->getObject()->getId()));?>" method="post" <?php $individual->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-
+<?php echo form_tag('individuals/edit'. ($individual->isNew() ? '?spec_id='.$specimen->getId() : '?id='.$individual->getObject()->getId()) );?>
   <div>
     <?php echo $individual['id']->render(); ?>
     <?php echo $individual['specimen_ref']->render(); ?>
     <?php if($individual->hasGlobalErrors()):?>
       <ul class="spec_error_list">
       <?php foreach ($individual->getErrorSchema()->getErrors() as $name => $error): ?>
-	      <li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
+        <li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
       <?php endforeach; ?>
       </ul>
     <?php endif;?>
 
     <?php include_partial('widgets/screen', array(
-			  'widgets' => $widgets,
-			  'category' => 'individualswidget',
-			  'columns' => 2,
-			  'options' => array('form' => $individual),
-			)); ?>
+        'widgets' => $widgets,
+        'category' => 'individualswidget',
+        'columns' => 2,
+        'options' => array('form' => $individual),
+      )); ?>
 
   </div>
   <p class="clear"></p>

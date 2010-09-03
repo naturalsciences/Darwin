@@ -17,30 +17,30 @@
     </ul>
   </div>
 
-	<input id="collection_id" type="hidden" value="<?php echo $specimen->getCollectionRef();?>">
-	<form action="<?php echo url_for('parts/edit'. ($form->isNew() ? '?indid='.$individual->getId() : '?id='.$form->getObject()->getId()));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-		<div>
-			<?php if($form->hasGlobalErrors()):?>
-				<ul class="spec_error_list">
-					<?php foreach ($form->getGlobalErrors() as $name => $error): ?>
-					  <?php if(!in_array($error,$form->getErrorSchema()->getErrors())) : ?>					  
-						  <li><?php echo __($name." ".$error); ?></li>
-					  <?php endif ; ?>
-					<?php endforeach; ?>
-					<?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
-					  <li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
-					<?php endforeach; ?>
-				</ul>
-			<?php endif;?>
+  <input id="collection_id" type="hidden" value="<?php echo $specimen->getCollectionRef();?>">
+  <?php echo form_tag('parts/edit'. ($form->isNew() ? '?indid='.$individual->getId() : '?id='.$form->getObject()->getId()) );?>
+    <div>
+      <?php if($form->hasGlobalErrors()):?>
+        <ul class="spec_error_list">
+          <?php foreach ($form->getGlobalErrors() as $name => $error): ?>
+            <?php if(!in_array($error,$form->getErrorSchema()->getErrors())) : ?>					  
+              <li><?php echo __($name." ".$error); ?></li>
+            <?php endif ; ?>
+          <?php endforeach; ?>
+          <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>
+            <li class="error_fld_<?php echo $name;?>"><?php echo __($name." ".$error) ?></li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif;?>
 
-  <?php include_partial('widgets/screen', array(
-	'widgets' => $widgets,
-	'category' => 'partwidget',
-	'columns' => 2,
-	'options' => array('form' => $form)
-	)); ?>
-			<p class="clear"></p>
-			<p class="form_buttons">
+      <?php include_partial('widgets/screen', array(
+        'widgets' => $widgets,
+        'category' => 'partwidget',
+        'columns' => 2,
+        'options' => array('form' => $form)
+      )); ?>
+      <p class="clear"></p>
+      <p class="form_buttons">
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New part'), 'parts/edit?indid='.$individual->getId()) ?>
             &nbsp;<?php echo link_to(__('Duplicate part'), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId()) ?>
@@ -48,8 +48,8 @@
           <?php endif?>
 
           &nbsp;<a href="<?php echo url_for('parts/overview?id='.$individual->getId()) ?>"><?php echo __('Cancel');?></a>
-		  <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
-			</p>
+        <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
+      </p>
 <script  type="text/javascript">
 
 function addError(html)

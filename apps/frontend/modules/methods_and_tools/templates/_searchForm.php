@@ -1,7 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <?php if(isset($notion) && (($notion == 'method' || $notion =='tool'))):?>
-  <form id="methods_and_tools_filter" class="search_form" action="<?php echo url_for('methods_and_tools/search?notion='.$notion.((!isset($is_choose))?'':'&is_choose='.$is_choose));?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+  <?php echo form_tag('methods_and_tools/search?notion='.$notion.( isset($is_choose) ? '&is_choose='.$is_choose : '') , array('class'=>'search_form','id'=>'methods_and_tools_filter'));?>
     <div class="container">
       <table class="search hidden" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
         <thead>

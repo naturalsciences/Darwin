@@ -1,6 +1,6 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="collections_codes_screen">
-<form id="collections_codes_form" class="edition qtiped_form" method="post" action="<?php echo url_for('collection/addSpecCodes?id='.$form->getObject()->getId() );?>">
+<?php echo form_tag('collection/addSpecCodes?id='.$form->getObject()->getId(), array('class'=>'edition qtiped_form', 'id' => 'collections_codes_form') );?>
 <table>
   <tbody>
     <tr>

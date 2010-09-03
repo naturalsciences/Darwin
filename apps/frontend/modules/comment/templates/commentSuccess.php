@@ -1,6 +1,7 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="comment_screen">
-<form class="edition qtiped_form" method="post" action="<?php echo url_for('comment/comment?table='.$sf_params->get('table'). ($form->getObject()->isNew() ? '' : '&cid='.$form->getObject()->getId() ) );?>" id="comment_form">
+
+<?php echo form_tag('comment/comment?table='.$sf_params->get('table') . ($form->getObject()->isNew() ? '': '&cid='.$form->getObject()->getId()), array('class'=>'edition qtiped_form', 'id' => 'comment_form'));?>
 <table>
   <tbody>
     <tr>

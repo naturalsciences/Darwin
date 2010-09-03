@@ -1,7 +1,8 @@
 <?php include_javascripts_for_form($form) ?>
 <?php slot('title',__('Add a new login'));  ?>     
 <div id="login_info_screen">
-<form class="edition qtiped_form" action="<?php echo url_for('user/loginInfo?user_ref='.$sf_request->getParameter('user_ref') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId() ) );?>" method="post" id="login_info_form">
+<?php echo form_tag('user/loginInfo?user_ref='.$sf_params->get('user_ref') . ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()), array('class'=>'edition qtiped_form', 'id'=>'login_info_form'));?>
+
 <?php echo $form['user_ref'];?>
 <table>
   <tbody>

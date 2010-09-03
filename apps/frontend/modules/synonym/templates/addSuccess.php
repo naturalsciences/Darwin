@@ -1,6 +1,7 @@
 <?php include_javascripts_for_form($form) ?>
 <div id="syn_screen">
-<form class="edition qtiped_form" action="<?php echo url_for('synonym/add?table='.$sf_request->getParameter('table').'&id='.$sf_request->getParameter('id'));?>" method="post" id="synonym_form">
+
+<?php echo form_tag('synonym/add?table='.$sf_params->get('table'). '&id='.$form->getObject()->getId() , array('class'=>'edition qtiped_form','id'=>'synonym_form'));?>
 <table >
   <tr>
       <td colspan="2">

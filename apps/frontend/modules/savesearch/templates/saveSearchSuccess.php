@@ -1,5 +1,5 @@
 <div class="panel">
-  <form id="save_search" class="search_form" action="<?php echo url_for('savesearch/saveSearch'. ( $form->getObject()->isNew() ? '' : '?id='.$form->getObject()->getId()) );?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+  <?php echo form_tag('savesearch/saveSearch'.($form->getObject()->isNew() ? '' : '?id='.$form->getObject()->getId()), array('class'=>'search_form','id'=>'save_search'));?>
   <?php echo $form->renderHiddenFields(); ?>
   <table class="form_table">
     <tbody>

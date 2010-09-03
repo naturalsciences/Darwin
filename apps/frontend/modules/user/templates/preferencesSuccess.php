@@ -3,8 +3,7 @@
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page edition">
  <h1><?php echo __('My Preferences');?></h1>
-  <form action="<?php url_for('user/preferences');?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-
+  <?php echo form_tag('user/preferences');?>
     <table class="user_table">
       <thead>
         <tr>

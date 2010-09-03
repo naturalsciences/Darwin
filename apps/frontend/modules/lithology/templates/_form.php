@@ -1,12 +1,8 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
-<form class="edition" action="<?php echo url_for('lithology/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-<?php if (!$form->getObject()->isNew()): ?>
-<?php include_partial('catalogue/commonJs');?>
-
-<input type="hidden" name="sf_method" value="put" />
-<?php endif; ?>
+<?php echo form_tag('lithology/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
+  <?php include_partial('catalogue/commonJs');?>
   <table class="classifications_edit">
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
@@ -16,14 +12,14 @@
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
         </td>
-	<td rowspan="5" class="keyword_row">
-	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'lithology','field_name' => 'lithology_name')); ?>
-	</td>
+        <td rowspan="5" class="keyword_row">
+          <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'lithology','field_name' => 'lithology_name')); ?>
+        </td>
       </tr>
       <tr>
-	<th></th>
-	<td>
-	   <?php include_partial('catalogue/keywordsList');?>
+        <th></th>
+        <td>
+          <?php include_partial('catalogue/keywordsList');?>
         </td>
       </tr>
       <tr>
