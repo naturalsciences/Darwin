@@ -1676,15 +1676,13 @@ create table specimens
         acquisition_category varchar not null default '',
         acquisition_date_mask integer not null default 0,
         acquisition_date date not null default '01/01/0001',
-        collecting_method varchar not null default '',
-        collecting_tool varchar not null default '',
         specimen_count_min integer not null default 1,
         specimen_count_max integer not null default 1,
         station_visible boolean not null default true,
         multimedia_visible boolean not null default true,
         ig_ref integer,
         constraint pk_specimens primary key (id),
-        constraint unq_specimens unique (collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, host_taxon_ref, acquisition_category, acquisition_date, collecting_method, collecting_tool),
+        constraint unq_specimens unique (collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, host_taxon_ref, acquisition_category, acquisition_date),
         constraint fk_specimens_expeditions foreign key (expedition_ref) references expeditions(id),
         constraint fk_specimens_gtu foreign key (gtu_ref) references gtu(id) on delete set default,
         constraint fk_specimens_collections foreign key (collection_ref) references collections(id) on delete set default,
@@ -1712,8 +1710,6 @@ comment on column specimens.host_specimen_ref is 'When current specimen encoded 
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
 comment on column specimens.acquisition_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
 comment on column specimens.acquisition_date is 'Date Composed (if possible) of the acquisition';
-comment on column specimens.collecting_method is 'Collecting method used to collect the specimen';
-comment on column specimens.collecting_tool is 'Collecting tool used to collect the specimen';
 comment on column specimens.specimen_count_min is 'Minimum number of individuals in batch';
 comment on column specimens.specimen_count_max is 'Maximum number of individuals in batch';
 comment on column specimens.multimedia_visible is 'Flag telling if the multimedia attached to this specimen can be visible or not';
@@ -2115,6 +2111,33 @@ create table darwin_flat
     specimen_count_min integer,
     specimen_count_max integer,
     with_types boolean default false,
+    individual_ref integer,
+    individual_type varchar not null default 'specimen',
+    individual_type_group varchar not null default 'specimen',
+    individual_type_search varchar not null default 'specimen',
+    individual_sex  varchar not null default 'undefined',
+    individual_state varchar not null default 'not applicable',
+    individual_stage varchar not null default 'undefined',
+    individual_social_status varchar not null default 'not applicable',
+    individual_rock_form varchar not null default 'not applicable',
+    individual_count_min integer,
+    individual_count_max integer,
+    part_ref integer,
+    part varchar,
+    part_status varchar,
+    building varchar,
+    floor varchar,
+    room varchar,
+    row varchar,
+    shelf varchar,
+    container_type varchar,
+    container_storage varchar,
+    container varchar,
+    sub_container_type varchar,
+    sub_container_storage varchar,
+    sub_container varchar,
+    part_count_min integer,
+    part_count_max integer,
     CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id) ON DELETE CASCADE,
@@ -2142,7 +2165,9 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_host_taxon_ref FOREIGN KEY (host_taxon_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL
+    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL,
+    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL,
+    CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL
   );
 
 comment on table darwin_flat is 'Flat table compiling all specimens data (catalogues data included - used for search purposes';
@@ -2245,3 +2270,30 @@ comment on column darwin_flat.acquisition_date is 'Specimen acquisition date';
 comment on column darwin_flat.specimen_count_min is 'Specimen count (minimum value if in a range)';
 comment on column darwin_flat.specimen_count_max is 'Specimen count (maximum value if in a range - equal to min value if not)';
 comment on column darwin_flat.with_types is 'Flag telling if specimen has types or not - Triggerly composed';
+comment on column darwin_flat.individual_ref is 'Reference of specimen individual - references to id of individual in specimen_individuals table - Null if nothing referenced';
+comment on column darwin_flat.individual_type is 'Type';
+comment on column darwin_flat.individual_type_group is 'Type group - Grouping of types appelations used for internal search';
+comment on column darwin_flat.individual_type_search is 'Type search - Grouping of types appelations used for external searches';
+comment on column darwin_flat.individual_sex  is 'Sex: Male, Female, Hermaphrodit,...';
+comment on column darwin_flat.individual_state is 'Sex state if applicable: Ovigerous, Pregnant,...';
+comment on column darwin_flat.individual_stage is 'Stage: Adult, Nymph, Larvae,...';
+comment on column darwin_flat.individual_social_status is 'Social status if applicable: Worker, Queen, King, Fighter,...';
+comment on column darwin_flat.individual_rock_form is 'Rock form if applicable: Cubic, Orthorhombic,...';
+comment on column darwin_flat.individual_count_min is 'Minimum number of individuals';
+comment on column darwin_flat.individual_count_max is 'Maximum number of individuals';
+comment on column darwin_flat.part_ref is 'Reference of part - coming from specimen_parts table (id field) - set to null if no references';
+comment on column darwin_flat.part is 'Part name: wing, tail, toes,...';
+comment on column darwin_flat.part_status is 'Part status: intact, lost, stolen,...';
+comment on column darwin_flat.building is 'Building where the current part is stored';
+comment on column darwin_flat.floor is 'Floor where the current part is stored';
+comment on column darwin_flat.room is 'Room where the current part is stored';
+comment on column darwin_flat.row is 'Row of the conservatory where the current part is stored';
+comment on column darwin_flat.shelf is 'Shelf where the current part is stored';
+comment on column darwin_flat.container_type is 'Container type: box, slide,...';
+comment on column darwin_flat.container_storage is 'Container storage: dry, alcohool, formol,...';
+comment on column darwin_flat.container is 'Container code';
+comment on column darwin_flat.sub_container_type is 'Sub-Container type: box, slide,...';
+comment on column darwin_flat.sub_container_storage is 'Sub-Container storage: dry, alcohool, formol,...';
+comment on column darwin_flat.sub_container is 'Sub container code';
+comment on column darwin_flat.part_count_min is 'Minimum number of parts stored';
+comment on column darwin_flat.part_count_max is 'Maximum number of parts stored';

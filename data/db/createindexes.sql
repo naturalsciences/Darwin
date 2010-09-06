@@ -183,6 +183,8 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_ref on darwin_flat(mineral_ref
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_parent_ref on darwin_flat(mineral_parent_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_level_ref on darwin_flat(mineral_level_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(ig_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(individual_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(part_ref);
 
 
 /*** BTree Indexes for fields used for searches purposes ***/
@@ -259,8 +261,6 @@ CREATE INDEX CONCURRENTLY idx_people_languages_language_country on people_langua
 CREATE INDEX CONCURRENTLY idx_record_visibilities_visible on record_visibilities(visible) WHERE visible is true;
 CREATE INDEX CONCURRENTLY idx_specimens_host_relationship on specimens(host_relationship) WHERE NOT host_relationship IS NULL;
 CREATE INDEX CONCURRENTLY idx_specimens_category on specimens(category);
-CREATE INDEX CONCURRENTLY idx_specimens_collecting_method on specimens(collecting_method) WHERE collecting_method <> '';
-CREATE INDEX CONCURRENTLY idx_specimens_collecting_tool on specimens(collecting_tool) WHERE collecting_tool <> '';
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_form on specimens_accompanying(form);
 CREATE INDEX CONCURRENTLY idx_specimens_accompanying_unit on specimens_accompanying(unit);
 CREATE INDEX CONCURRENTLY idx_specimen_individuals_type_search on specimen_individuals(type_search) WHERE type_search <> '';
@@ -332,6 +332,30 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_num on darwin_flat(ig_num);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_acquisition_category on darwin_flat(acquisition_category);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_specimen_count_min on darwin_flat(specimen_count_min);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_specimen_count_max on darwin_flat(specimen_count_max);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_count_min on darwin_flat(individual_count_min);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_count_max on darwin_flat(individual_count_max);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_count_min on darwin_flat(part_count_min);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_count_max on darwin_flat(part_count_max);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_type_group on darwin_flat(individual_type_group);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_type_search on darwin_flat(individual_type_search);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_sex on darwin_flat(individual_sex);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_state on darwin_flat(individual_state);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_stage on darwin_flat(individual_stage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_social_status on darwin_flat(individual_social_status);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_rock_form on darwin_flat(individual_rock_form);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part on darwin_flat(part);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_status on darwin_flat(part_status);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_building on darwin_flat(building);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_floor on darwin_flat(floor);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_room on darwin_flat(room);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_row on darwin_flat(row);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_shelf on darwin_flat(shelf);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_container on darwin_flat(container);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container on darwin_flat(sub_container);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_container_type on darwin_flat(container_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container_type on darwin_flat(sub_container_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_container_storage on darwin_flat(container_storage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container_storage on darwin_flat(sub_container_storage);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 
