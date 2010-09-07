@@ -98,7 +98,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                 );
     $this->validatorSchema['mineral_level_ref'] = new sfValidatorString(array('required' => false));              
 //    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
-  	$this->hasJoinTaxa = false;
+    $this->hasJoinTaxa = false;
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));
     $maxDate->setStart(false);
@@ -137,7 +137,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->embedForm('Tags',$subForm);
 
 
-    $this->widgetSchema['tools'] = new sfWidgetFormDarwinDoctrineChoice(array(
+/*    $this->widgetSchema['tools'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CollectingTools',
         'table_method' => 'getAll',
         'method' => 'getTool',
@@ -154,7 +154,19 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'multiple' => true,
         'expanded' => true,
         'add_empty' => false,
-    ));
+    ));*/
+    $this->widgetSchema['tools'] = new widgetFormSelectDoubleListFilterable(
+      array(
+            'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available')
+           ));
+    $this->widgetSchema['methods'] = new widgetFormSelectDoubleListFilterable(
+      array(
+            'choices' => Doctrine::getTable('CollectingMethods')->fetchMethods(),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available')
+           ));
     $this->validatorSchema['methods'] = new sfValidatorPass();
     $this->validatorSchema['tools'] = new sfValidatorPass();
 
