@@ -62,7 +62,7 @@ class individualsActions extends DarwinActions
       {
         // reembed duplicated comment
         $Comments = Doctrine::getTable('Comments')->findForTable('specimen_individuals',$duplic) ;
-        if(!$Comments) $this->individual->addComments(0);
+        if(!$Comments->count()) $this->individual->addComments(0);
         foreach ($Comments as $key=>$val)
         {
           $comment = new Comments() ;
@@ -71,7 +71,7 @@ class individualsActions extends DarwinActions
         }
         //reembed identification
         $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimen_individuals',$duplic) ;
-        if(!$Identifications) $this->individual->addIdentifications(0,0);
+        if(!$Identifications->count()) $this->individual->addIdentifications(0,0);
         foreach ($Identifications as $key=>$val)
         {
           $identification = new Identifications() ;
