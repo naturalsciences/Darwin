@@ -989,15 +989,45 @@ SpecimenSearch:
         acquisition_date: { type: string}             
         specimen_count_min: { type: integer }       
         specimen_count_max: { type: integer }
-        with_types: { type: boolean}      
+        individual_ref: {type: integer}
+        individual_type: {type: string, notnull: true, default:'specimen'}
+        individual_type_group: {type: string, notnull: true, default: 'specimen'}
+        individual_type_search: {type: string, notnull: true, default: 'specimen'}
+        individual_sex:  {type: string, notnull: true, default: 'undefined'}
+        individual_state: {type: string, notnull: true, default: 'not applicable'}
+        individual_stage: {type: string, notnull: true, default: 'undefined'}
+        individual_social_status: {type: string, notnull: true, default: 'not applicable'}
+        individual_rock_form: {type: string, notnull: true, default: 'not applicable'}
+        individual_count_min: {type: integer }
+        individual_count_max: {type: integer }
+        part_ref: {type: integer }
+        part: {type: string }
+        part_status: {type: string }
+        building: {type: string }
+        floor: {type: string }
+        room: {type: string }
+        row: {type: string }
+        shelf: {type: string }
+        container_type: {type: string }
+        container_storage: {type: string }
+        container: {type: string }
+        sub_container_type: {type: string }
+        sub_container_storage: {type: string}
+        sub_container: {type: string }
+        part_count_min: {type: integer }
+        part_count_max: {type:integer}
     relations:
-        SpecimenIndividual:
-            class: SpecimenIndividuals
-            local: spec_ref
-            foreign: specimen_ref
         Specimen:
             class: Specimens
             local: spec_ref
+            foreign: id
+        SpecimenIndividual:
+            class: SpecimenIndividuals
+            local: individual_ref
+            foreign: id
+        Part:
+            class: SpecimenParts
+            local: part_ref
             foreign: id
         Collection:
             class: Collections
@@ -1097,7 +1127,6 @@ SpecimenSearch:
             local: ig_ref
             foreign: id
             class: Igs
-
 
 
 # CollectionsFieldsVisibilities:
