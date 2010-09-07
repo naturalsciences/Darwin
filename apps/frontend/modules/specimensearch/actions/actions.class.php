@@ -41,27 +41,40 @@ class specimensearchActions extends DarwinActions
   public function executeSearch(sfWebRequest $request)
   {
     $this->is_specimen_search = false;
+    // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('specimensearch', 'collection_name', $request);
+    // Modify the s_url to call the searchResult action when on result page and playing with pager
     $this->s_url = 'specimensearch/searchResult'.'?is_choose='.$this->is_choose;
+    // Initialize filter
     $this->form = new SpecimenSearchFormFilter();
-
-    if( ($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ) || $request->hasParameter('pinned') )
+    // If the search has been triggered by clicking on the search button or with pinned specimens
+    if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ) || 
+       $request->hasParameter('pinned') 
+      )
     {
+      // Store all post parameters
       $criterias = $request->getPostParameters();
+      // If pinned specimens called
       if($request->hasParameter('pinned'))
       {
+        // Store all ids pinned
         $ids=implode(',',$this->getUser()->getAllPinned() );
         if($ids=='')
           $ids = '0';
         $this->is_pinned_only_search=true;
+        // Set the list of specimen ids
         $criterias['specimen_search_filters']['spec_ids'] = $ids;
+        // and the list of visible fields from the list of default visible fields defined in form configuration
         $criterias['specimen_search_filters']['col_fields'] = $this->form->getDefault('col_fields');
       }
+      // If instead it's a call to a stored specimen search
       elseif($request->hasParameter('spec_search'))
       {
+        // Get the saved search concerned
         $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
+        // Forward 404 if we don't get the search requested
         $this->forward404Unless($saved_search);
-
+        
         $criterias['specimen_search_filters']['spec_ids'] = $saved_search->getSearchedIdString();
         if($criterias['specimen_search_filters']['spec_ids']=='')
           $criterias['specimen_search_filters']['spec_ids'] = '0';
@@ -185,7 +198,9 @@ class specimensearchActions extends DarwinActions
 
   public function executeSearchResult(sfWebRequest $request)
   {
-    $this->executeSearch($request) ;      
+    // Do the same as a executeSearch...
+    $this->executeSearch($request) ;
+    // ... and render partial searchSuccess
     return $this->renderPartial('searchSuccess');
   }  
 
