@@ -595,3 +595,6 @@ CREATE TRIGGER trg_update_specimen_individuals_darwin_flat AFTER INSERT OR UPDAT
         ON specimen_individuals FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();
 
+CREATE TRIGGER trg_update_specimen_parts_darwin_flat AFTER INSERT OR UPDATE OR DELETE
+        ON specimen_parts FOR EACH ROW
+        EXECUTE PROCEDURE fct_update_darwin_flat();

@@ -183,8 +183,8 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_ref on darwin_flat(mineral_ref
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_parent_ref on darwin_flat(mineral_parent_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_level_ref on darwin_flat(mineral_level_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(ig_ref);
-CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(individual_ref);
-CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_ref on darwin_flat(part_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref on darwin_flat(individual_ref);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref on darwin_flat(part_ref);
 
 
 /*** BTree Indexes for fields used for searches purposes ***/

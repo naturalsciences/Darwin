@@ -354,4 +354,31 @@
   DROP INDEX IF EXISTS idx_darwin_flat_mineral_parent_ref;
   DROP INDEX IF EXISTS idx_darwin_flat_mineral_level_ref;
   DROP INDEX IF EXISTS idx_darwin_flat_ig_ref;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_ref;
+  DROP INDEX IF EXISTS idx_darwin_flat_part_ref;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_count_min;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_count_max;
+  DROP INDEX IF EXISTS idx_darwin_flat_part_count_min;
+  DROP INDEX IF EXISTS idx_darwin_flat_part_count_max;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_type_group;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_type_search;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_sex;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_state;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_stage;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_social_status;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_rock_form;
+  DROP INDEX IF EXISTS idx_darwin_flat_part;
+  DROP INDEX IF EXISTS idx_darwin_flat_part_status;
+  DROP INDEX IF EXISTS idx_darwin_flat_building;
+  DROP INDEX IF EXISTS idx_darwin_flat_floor;
+  DROP INDEX IF EXISTS idx_darwin_flat_room;
+  DROP INDEX IF EXISTS idx_darwin_flat_row;
+  DROP INDEX IF EXISTS idx_darwin_flat_shelf;
+  DROP INDEX IF EXISTS idx_darwin_flat_container;
+  DROP INDEX IF EXISTS idx_darwin_flat_sub_container;
+  DROP INDEX IF EXISTS idx_darwin_flat_container_type;
+  DROP INDEX IF EXISTS idx_darwin_flat_sub_container_type;
+  DROP INDEX IF EXISTS idx_darwin_flat_container_storage;
+  DROP INDEX IF EXISTS idx_darwin_flat_sub_container_storage;
+
 
