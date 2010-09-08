@@ -105,9 +105,36 @@
  * @property string $acquisition_date
  * @property integer $specimen_count_min
  * @property integer $specimen_count_max
- * @property boolean $with_types
- * @property SpecimenIndividuals $SpecimenIndividual
+ * @property integer $individual_ref
+ * @property string $individual_type
+ * @property string $individual_type_group
+ * @property string $individual_type_search
+ * @property string $individual_sex
+ * @property string $individual_state
+ * @property string $individual_stage
+ * @property string $individual_social_status
+ * @property string $individual_rock_form
+ * @property integer $individual_count_min
+ * @property integer $individual_count_max
+ * @property integer $part_ref
+ * @property string $part
+ * @property string $part_status
+ * @property string $building
+ * @property string $floor
+ * @property string $room
+ * @property string $row
+ * @property string $shelf
+ * @property string $container_type
+ * @property string $container_storage
+ * @property string $container
+ * @property string $sub_container_type
+ * @property string $sub_container_storage
+ * @property string $sub_container
+ * @property integer $part_count_min
+ * @property integer $part_count_max
  * @property Specimens $Specimen
+ * @property SpecimenIndividuals $SpecimenIndividual
+ * @property SpecimenParts $Part
  * @property Collections $Collection
  * @property Institutions $CollectionInstitution
  * @property Users $CollectionMainManager
@@ -235,9 +262,36 @@
  * @method string              getAcquisitionDate()                               Returns the current record's "acquisition_date" value
  * @method integer             getSpecimenCountMin()                              Returns the current record's "specimen_count_min" value
  * @method integer             getSpecimenCountMax()                              Returns the current record's "specimen_count_max" value
- * @method boolean             getWithTypes()                                     Returns the current record's "with_types" value
- * @method SpecimenIndividuals getSpecimenIndividual()                            Returns the current record's "SpecimenIndividual" value
+ * @method integer             getIndividualRef()                                 Returns the current record's "individual_ref" value
+ * @method string              getIndividualType()                                Returns the current record's "individual_type" value
+ * @method string              getIndividualTypeGroup()                           Returns the current record's "individual_type_group" value
+ * @method string              getIndividualTypeSearch()                          Returns the current record's "individual_type_search" value
+ * @method string              getIndividualSex()                                 Returns the current record's "individual_sex" value
+ * @method string              getIndividualState()                               Returns the current record's "individual_state" value
+ * @method string              getIndividualStage()                               Returns the current record's "individual_stage" value
+ * @method string              getIndividualSocialStatus()                        Returns the current record's "individual_social_status" value
+ * @method string              getIndividualRockForm()                            Returns the current record's "individual_rock_form" value
+ * @method integer             getIndividualCountMin()                            Returns the current record's "individual_count_min" value
+ * @method integer             getIndividualCountMax()                            Returns the current record's "individual_count_max" value
+ * @method integer             getPartRef()                                       Returns the current record's "part_ref" value
+ * @method string              getPart()                                          Returns the current record's "part" value
+ * @method string              getPartStatus()                                    Returns the current record's "part_status" value
+ * @method string              getBuilding()                                      Returns the current record's "building" value
+ * @method string              getFloor()                                         Returns the current record's "floor" value
+ * @method string              getRoom()                                          Returns the current record's "room" value
+ * @method string              getRow()                                           Returns the current record's "row" value
+ * @method string              getShelf()                                         Returns the current record's "shelf" value
+ * @method string              getContainerType()                                 Returns the current record's "container_type" value
+ * @method string              getContainerStorage()                              Returns the current record's "container_storage" value
+ * @method string              getContainer()                                     Returns the current record's "container" value
+ * @method string              getSubContainerType()                              Returns the current record's "sub_container_type" value
+ * @method string              getSubContainerStorage()                           Returns the current record's "sub_container_storage" value
+ * @method string              getSubContainer()                                  Returns the current record's "sub_container" value
+ * @method integer             getPartCountMin()                                  Returns the current record's "part_count_min" value
+ * @method integer             getPartCountMax()                                  Returns the current record's "part_count_max" value
  * @method Specimens           getSpecimen()                                      Returns the current record's "Specimen" value
+ * @method SpecimenIndividuals getSpecimenIndividual()                            Returns the current record's "SpecimenIndividual" value
+ * @method SpecimenParts       getPart()                                          Returns the current record's "Part" value
  * @method Collections         getCollection()                                    Returns the current record's "Collection" value
  * @method Institutions        getCollectionInstitution()                         Returns the current record's "CollectionInstitution" value
  * @method Users               getCollectionMainManager()                         Returns the current record's "CollectionMainManager" value
@@ -364,9 +418,36 @@
  * @method SpecimenSearch      setAcquisitionDate()                               Sets the current record's "acquisition_date" value
  * @method SpecimenSearch      setSpecimenCountMin()                              Sets the current record's "specimen_count_min" value
  * @method SpecimenSearch      setSpecimenCountMax()                              Sets the current record's "specimen_count_max" value
- * @method SpecimenSearch      setWithTypes()                                     Sets the current record's "with_types" value
- * @method SpecimenSearch      setSpecimenIndividual()                            Sets the current record's "SpecimenIndividual" value
+ * @method SpecimenSearch      setIndividualRef()                                 Sets the current record's "individual_ref" value
+ * @method SpecimenSearch      setIndividualType()                                Sets the current record's "individual_type" value
+ * @method SpecimenSearch      setIndividualTypeGroup()                           Sets the current record's "individual_type_group" value
+ * @method SpecimenSearch      setIndividualTypeSearch()                          Sets the current record's "individual_type_search" value
+ * @method SpecimenSearch      setIndividualSex()                                 Sets the current record's "individual_sex" value
+ * @method SpecimenSearch      setIndividualState()                               Sets the current record's "individual_state" value
+ * @method SpecimenSearch      setIndividualStage()                               Sets the current record's "individual_stage" value
+ * @method SpecimenSearch      setIndividualSocialStatus()                        Sets the current record's "individual_social_status" value
+ * @method SpecimenSearch      setIndividualRockForm()                            Sets the current record's "individual_rock_form" value
+ * @method SpecimenSearch      setIndividualCountMin()                            Sets the current record's "individual_count_min" value
+ * @method SpecimenSearch      setIndividualCountMax()                            Sets the current record's "individual_count_max" value
+ * @method SpecimenSearch      setPartRef()                                       Sets the current record's "part_ref" value
+ * @method SpecimenSearch      setPart()                                          Sets the current record's "part" value
+ * @method SpecimenSearch      setPartStatus()                                    Sets the current record's "part_status" value
+ * @method SpecimenSearch      setBuilding()                                      Sets the current record's "building" value
+ * @method SpecimenSearch      setFloor()                                         Sets the current record's "floor" value
+ * @method SpecimenSearch      setRoom()                                          Sets the current record's "room" value
+ * @method SpecimenSearch      setRow()                                           Sets the current record's "row" value
+ * @method SpecimenSearch      setShelf()                                         Sets the current record's "shelf" value
+ * @method SpecimenSearch      setContainerType()                                 Sets the current record's "container_type" value
+ * @method SpecimenSearch      setContainerStorage()                              Sets the current record's "container_storage" value
+ * @method SpecimenSearch      setContainer()                                     Sets the current record's "container" value
+ * @method SpecimenSearch      setSubContainerType()                              Sets the current record's "sub_container_type" value
+ * @method SpecimenSearch      setSubContainerStorage()                           Sets the current record's "sub_container_storage" value
+ * @method SpecimenSearch      setSubContainer()                                  Sets the current record's "sub_container" value
+ * @method SpecimenSearch      setPartCountMin()                                  Sets the current record's "part_count_min" value
+ * @method SpecimenSearch      setPartCountMax()                                  Sets the current record's "part_count_max" value
  * @method SpecimenSearch      setSpecimen()                                      Sets the current record's "Specimen" value
+ * @method SpecimenSearch      setSpecimenIndividual()                            Sets the current record's "SpecimenIndividual" value
+ * @method SpecimenSearch      setPart()                                          Sets the current record's "Part" value
  * @method SpecimenSearch      setCollection()                                    Sets the current record's "Collection" value
  * @method SpecimenSearch      setCollectionInstitution()                         Sets the current record's "CollectionInstitution" value
  * @method SpecimenSearch      setCollectionMainManager()                         Sets the current record's "CollectionMainManager" value
@@ -748,20 +829,118 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
         $this->hasColumn('specimen_count_max', 'integer', null, array(
              'type' => 'integer',
              ));
-        $this->hasColumn('with_types', 'boolean', null, array(
-             'type' => 'boolean',
+        $this->hasColumn('individual_ref', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('individual_type', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'specimen',
+             ));
+        $this->hasColumn('individual_type_group', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'specimen',
+             ));
+        $this->hasColumn('individual_type_search', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'specimen',
+             ));
+        $this->hasColumn('individual_sex', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'undefined',
+             ));
+        $this->hasColumn('individual_state', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'not applicable',
+             ));
+        $this->hasColumn('individual_stage', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'undefined',
+             ));
+        $this->hasColumn('individual_social_status', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'not applicable',
+             ));
+        $this->hasColumn('individual_rock_form', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => 'not applicable',
+             ));
+        $this->hasColumn('individual_count_min', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('individual_count_max', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('part_ref', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('part', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('part_status', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('building', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('floor', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('room', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('row', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('shelf', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('container_type', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('container_storage', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('container', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('sub_container_type', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('sub_container_storage', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('sub_container', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('part_count_min', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('part_count_max', 'integer', null, array(
+             'type' => 'integer',
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('SpecimenIndividuals as SpecimenIndividual', array(
-             'local' => 'spec_ref',
-             'foreign' => 'specimen_ref'));
-
         $this->hasOne('Specimens as Specimen', array(
              'local' => 'spec_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('SpecimenIndividuals as SpecimenIndividual', array(
+             'local' => 'individual_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('SpecimenParts as Part', array(
+             'local' => 'part_ref',
              'foreign' => 'id'));
 
         $this->hasOne('Collections as Collection', array(

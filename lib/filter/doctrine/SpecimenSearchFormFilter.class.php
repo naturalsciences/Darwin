@@ -267,11 +267,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-      $this->joinIndividual($query);
+//       $this->joinIndividual($query);
       if(is_array($val))
-        $query->andWhereIn('i.sex',$val);
+        $query->andWhereIn('individual_sex',$val);
       else
-        $query->andWhere('i.sex = ?',$val);
+        $query->andWhere('individual_sex = ?',$val);
     }
     return $query ;
   }
@@ -280,11 +280,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-      $this->joinIndividual($query);
+//       $this->joinIndividual($query);
       if(is_array($val))
-        $query->andWhereIn('i.stage',$val);
+        $query->andWhereIn('individual_stage',$val);
       else
-        $query->andWhere('i.stage = ?',$val);
+        $query->andWhere('individual_stage = ?',$val);
     }
     return $query ;
   }
@@ -293,11 +293,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-      $this->joinIndividual($query);
+//       $this->joinIndividual($query);
       if(is_array($val))
-        $query->andWhereIn('i.state',$val);
+        $query->andWhereIn('individual_state',$val);
       else
-        $query->andWhere('i.state = ?',$val);
+        $query->andWhere('individual_state = ?',$val);
     }
     return $query ;
   }
@@ -306,11 +306,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-      $this->joinIndividual($query);
+//       $this->joinIndividual($query);
       if(is_array($val))
-        $query->andWhereIn('i.social_status',$val);
+        $query->andWhereIn('individual_social_status',$val);
       else
-        $query->andWhere('i.social_status = ?',$val);
+        $query->andWhere('individual_social_status = ?',$val);
     }
     return $query ;
   }
@@ -319,11 +319,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-      $this->joinIndividual($query);
+//       $this->joinIndividual($query);
       if(is_array($val))
-        $query->andWhereIn('i.rock_form',$val);
+        $query->andWhereIn('individual_rock_form',$val);
       else
-        $query->andWhere('i.rock_form = ?',$val);
+        $query->andWhere('individual_rock_form = ?',$val);
     }
     return $query ;
   }

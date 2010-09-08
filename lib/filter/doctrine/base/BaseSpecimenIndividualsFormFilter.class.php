@@ -15,8 +15,8 @@ abstract class BaseSpecimenIndividualsFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'specimen_ref'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimens'), 'add_empty' => true)),
       'type'                           => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'type_group'                     => new sfWidgetFormFilterInput(),
-      'type_search'                    => new sfWidgetFormFilterInput(),
+      'type_group'                     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'type_search'                    => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'sex'                            => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'stage'                          => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'state'                          => new sfWidgetFormFilterInput(array('with_empty' => false)),
