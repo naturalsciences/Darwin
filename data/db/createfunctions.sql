@@ -6753,6 +6753,9 @@ CREATE OR REPLACE FUNCTION fct_update_darwin_flat() returns TRIGGER
 language plpgsql
 AS
 $$
+DECLARE
+  indCount INTEGER := 0;
+  partCount INTEGER := 0;
 BEGIN
   IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
     UPDATE darwin_flat 
@@ -7126,22 +7129,289 @@ BEGIN
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimen_individuals' THEN
-    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-      IF NEW.type != 'specimen' THEN
+    IF TG_OP = 'INSERT' THEN
+      SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref;
+      IF indCount = 0 THEN
         UPDATE darwin_flat
-        SET with_types = TRUE
+        SET
+        (individual_ref,
+         individual_type, individual_type_group, individual_type_search,
+         individual_sex, individual_state, individual_stage,
+         individual_social_status, individual_rock_form,
+         individual_count_min, individual_count_max
+        )
+        =
+        (NEW.id,
+         NEW.type, NEW.type_group, NEW.type_search, 
+         NEW.sex, NEW.state, NEW.stage
+         NEW.social_status, NEW.rock_form,
+         NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
+        )
         WHERE spec_ref = NEW.specimen_ref;
       ELSE
-        PERFORM 1 FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref AND type <> 'specimen' LIMIT 1;
-        UPDATE darwin_flat
-        SET with_types = FOUND
-        WHERE spec_ref = NEW.specimen_ref;
+        INSERT INTO darwin_flat
+        (spec_ref,category,
+         collection_ref,collection_type,collection_code,collection_name,
+         collection_institution_ref,collection_institution_formated_name,
+         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
+         collection_main_manager_ref,collection_main_manager_formated_name,
+         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
+         collection_parent_ref,collection_path,
+         expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
+         station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,
+         gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
+         gtu_tag_values_indexed,gtu_country_tag_value,
+         taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
+         taxon_path,taxon_parent_ref,taxon_extinct,
+         chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_path,chrono_parent_ref,
+         litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_path,litho_parent_ref,
+         lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_path,lithology_parent_ref,
+         mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_path,mineral_parent_ref,
+         host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
+         host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         acquisition_category,acquisition_date_mask,acquisition_date,
+         specimen_count_min,specimen_count_max,
+         ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         individual_ref,
+         individual_type, individual_type_group, individual_type_search,
+         individual_sex, individual_state, individual_stage,
+         individual_social_status, individual_rock_form,
+         individual_count_min, individual_count_max
+        )
+        (SELECT
+         spec_ref,category,
+         collection_ref,collection_type,collection_code,collection_name,
+         collection_institution_ref,collection_institution_formated_name,
+         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
+         collection_main_manager_ref,collection_main_manager_formated_name,
+         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
+         collection_parent_ref,collection_path,
+         expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
+         station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,
+         gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
+         gtu_tag_values_indexed,gtu_country_tag_value,
+         taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
+         taxon_path,taxon_parent_ref,taxon_extinct,
+         chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_path,chrono_parent_ref,
+         litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_path,litho_parent_ref,
+         lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_path,lithology_parent_ref,
+         mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_path,mineral_parent_ref,
+         host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
+         host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         acquisition_category,acquisition_date_mask,acquisition_date,
+         specimen_count_min,specimen_count_max,
+         ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         NEW.id,
+         NEW.type, NEW.type_group, NEW.type_search,
+         NEW.sex, NEW.state, NEW.stage,
+         NEW.social_status, NEW.rock_form,
+         NEW.specimen_indiviuals_count_min, NEW.specimen_indiviuals_count_max
+         FROM darwin_flat
+         WHERE spec_ref = NEW.specimen_ref
+         LIMIT 1
+        );
       END IF;
-    ELSIF TG_OP = 'DELETE' THEN
-      PERFORM 1 FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref AND type <> 'specimen' LIMIT 1;
+    ELSIF TG_OP = 'UPDATE' THEN
       UPDATE darwin_flat
-      SET with_types = FOUND
-      WHERE spec_ref = OLD.specimen_ref;
+      SET
+      (individual_ref,
+       individual_type, individual_type_group, individual_type_search,
+       individual_sex, individual_state, individual_stage,
+       individual_social_status, individual_rock_form,
+       individual_count_min, individual_count_max
+      )
+      =
+      (NEW.id,
+       NEW.type, NEW.type_group, NEW.type_search, 
+       NEW.sex, NEW.state, NEW.stage
+       NEW.social_status, NEW.rock_form,
+       NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
+      )
+      WHERE individual_ref = NEW.id;
+    ELSE
+      SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref;
+      IF indCount < 2 THEN
+        UPDATE darwin_flat
+        SET
+        (individual_ref,
+         individual_type, individual_type_group, individual_type_search,
+         individual_sex, individual_state, individual_stage,
+         individual_social_status, individual_rock_form,
+         individual_count_min, individual_count_max,
+         part_ref, part, part_status,
+         building, "floor", room, "row", shelf,
+         container_type, container_storage, "container",
+         sub_container_type, sub_container_storage, "sub_container",
+         part_count_min, part_count_max
+        )
+        =
+        (DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT
+        )
+        WHERE individual_ref = OLD.id;
+      ELSE
+        DELETE FROM darwin_flat
+        WHERE individual_ref = OLD.id;
+      END IF;
+    END IF;
+  END IF;
+  IF TG_TABLE_NAME = 'specimen_parts' THEN
+    IF TG_OP = 'INSERT' THEN
+      SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE individual_ref = NEW.individual_ref;
+      IF partCount = 0 THEN
+        UPDATE darwin_flat
+        SET
+        (part_ref, part, part_status
+         building, "floor", room, "row", shelf,
+         container_type, container_storage, "container",
+         sub_container_type, sub_container_storage, sub_container,
+         part_count_min, part_count_max
+        )
+        =
+        (NEW.id, NEW.specimen_part, NEW.specimen_status,
+         NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
+         NEW.container_type, NEW.container_storage, NEW.container,
+         NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
+         NEW.specimen_part_count_min, NEW.specimen_part_count_max
+        )
+        WHERE individual_ref = NEW.specimen_individual_ref;
+      ELSE
+        INSERT INTO darwin_flat
+        (spec_ref,category,
+         collection_ref,collection_type,collection_code,collection_name,
+         collection_institution_ref,collection_institution_formated_name,
+         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
+         collection_main_manager_ref,collection_main_manager_formated_name,
+         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
+         collection_parent_ref,collection_path,
+         expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
+         station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,
+         gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
+         gtu_tag_values_indexed,gtu_country_tag_value,
+         taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
+         taxon_path,taxon_parent_ref,taxon_extinct,
+         chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_path,chrono_parent_ref,
+         litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_path,litho_parent_ref,
+         lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_path,lithology_parent_ref,
+         mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_path,mineral_parent_ref,
+         host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
+         host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         acquisition_category,acquisition_date_mask,acquisition_date,
+         specimen_count_min,specimen_count_max,
+         ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         individual_ref,
+         individual_type, individual_type_group, individual_type_search,
+         individual_sex, individual_state, individual_stage,
+         individual_social_status, individual_rock_form,
+         individual_count_min, individual_count_max,
+         part_ref, part, part_status,
+         building, "floor", room, "row", shelf,
+         container_type, container_storage, "container",
+         sub_container_type, sub_container_storage, sub_container,
+         part_count_min, part_count_max
+        )
+        (SELECT
+         spec_ref,category,
+         collection_ref,collection_type,collection_code,collection_name,
+         collection_institution_ref,collection_institution_formated_name,
+         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
+         collection_main_manager_ref,collection_main_manager_formated_name,
+         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
+         collection_parent_ref,collection_path,
+         expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
+         station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,
+         gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
+         gtu_tag_values_indexed,gtu_country_tag_value,
+         taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
+         taxon_path,taxon_parent_ref,taxon_extinct,
+         chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_path,chrono_parent_ref,
+         litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_path,litho_parent_ref,
+         lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_path,lithology_parent_ref,
+         mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_path,mineral_parent_ref,
+         host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
+         host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         acquisition_category,acquisition_date_mask,acquisition_date,
+         specimen_count_min,specimen_count_max,
+         ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         individual_ref,
+         individual_type, individual_type_group, individual_type_search,
+         individual_sex, individual_state, individual_stage,
+         individual_social_status, individual_rock_form,
+         individual_count_min, individual_count_max,
+         NEW.id, NEW.specimen_part, NEW.specimen_status,
+         NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
+         NEW.container_type, NEW.container_storage, NEW.container,
+         NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
+         NEW.specimen_part_count_min, NEW.specimen_part_count_max
+         FROM darwin_flat
+         WHERE individual_ref = NEW.specimen_individual_ref
+         LIMIT 1
+        );
+      END IF;
+    ELSIF TG_OP = 'UPDATE' THEN
+      UPDATE darwin_flat
+      SET
+      (part_ref, part, part_status
+       building, "floor", room, "row", shelf,
+       container_type, container_storage, "container",
+       sub_container_type, sub_container_storage, sub_container,
+       part_count_min, part_count_max
+      )
+      =
+      (NEW.id, NEW.specimen_part, NEW.specimen_status,
+       NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
+       NEW.container_type, NEW.container_storage, NEW.container,
+       NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
+       NEW.specimen_part_count_min, NEW.specimen_part_count_max
+      )
+      WHERE part_ref = NEW.id;
+    ELSE
+      SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE individual_ref = OLD.specimen_individual_ref;
+      IF partCount < 2 THEN
+        UPDATE darwin_flat
+        SET
+        (part_ref, part, part_status,
+         building, "floor", room, "row", shelf,
+         container_type, container_storage, "container",
+         sub_container_type, container_storage, "sub_container",
+         part_count_min, part_count_max
+        )
+        =
+        (DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT
+        )
+        WHERE part_ref = OLD.id;
+      ELSE
+        DELETE FROM darwin_flat
+        WHERE part_ref = OLD.id;
+      END IF;
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimens' THEN
@@ -7202,7 +7472,6 @@ BEGIN
   END LOOP;
   
   sqlString := sqlString || ' AND (' || substr(sqlWhere,0, length(sqlWhere)-2) || ')';
-  /*sqlString := sqlString || ' AND (' || substr(sqlWhere,0,length(sqlWhere)-2) || ')';*/
   
   RETURN QUERY EXECUTE sqlString;
 END;
