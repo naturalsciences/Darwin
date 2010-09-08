@@ -268,7 +268,7 @@
               </td>
               <td rowspan="2">
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
-                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"), 'class' => 'duplicate_link')),'specimen/new?duplicate_id='.$specimen->getSpecRef());?>
+                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'specimen/new?duplicate_id='.$specimen->getSpecRef(), array('class' => 'duplicate_link'));?>
               </td>
             </tr>
             <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">
@@ -302,7 +302,7 @@
 </div>  
 <script type="text/javascript">
 $(document).ready(function () {
-
+  $('body').catalogue({},link=$('div.check_right').find('a.hidden').attr('href')); 
   o = {"dropShadows":false, "autoArrows":false,  "delay":400};
   $('ul.column_menu').superfish(o);
 
@@ -315,9 +315,6 @@ $(document).ready(function () {
     hide_or_show($(this));
   });
   
-  $('.duplicate_link').click(function(){
-    ask_for_duplicate($(this).closest('a'),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
-  });  
   /**PIN management **/
   $('.spec_results .pin_but').click(function(){
     if($(this).hasClass('pin_on'))

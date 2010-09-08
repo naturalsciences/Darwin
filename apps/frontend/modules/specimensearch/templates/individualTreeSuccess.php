@@ -65,8 +65,8 @@
               </td>                                                                
               <td rowspan="2">                
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit this individual"))),'individuals/edit?id='.$item->getId());?>
-                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this individual"), 'class' => 'duplicate_link')),'individuals/edit?spec_id='.$item->getSpecimenRef().
-                  '&duplicate_id='.$item->getId());?>               
+                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this individual"))),'individuals/edit?spec_id='.$item->getSpecimenRef().
+                  '&duplicate_id='.$item->getId(), array('class' => 'duplicate_link'));?>               
               </td>
             </tr>
             <tr>
@@ -87,12 +87,7 @@
                     $(this).hide();
                     $(this).siblings('.collapsed').show();
                     $('#container_part_<?php echo $item->getId();?>').slideUp();
-                 });  
-                 $(document).ready(function () {
-                  $('.duplicate_link').click(function(){
-                    ask_for_duplicate($(this).closest('a'),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
-                  });
-                 });            
+                 });             
                 </script>
               </td>
             </tr>

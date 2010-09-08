@@ -90,7 +90,8 @@ h1
   font-size:large;
   margin-bottom: 1em;
 }
-.edition h1 {
+
+.edition h1, .edition h2 {
   color:#C1CF56;
 }
 /* Errors style */

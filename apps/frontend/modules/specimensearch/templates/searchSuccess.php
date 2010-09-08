@@ -79,7 +79,7 @@ $(document).ready(function () {
       </script>
     </form>
       <div class="check_right" id="save_button"> 
-
+        <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>	           
         <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
 
         <?php if(! $is_specimen_search):?>

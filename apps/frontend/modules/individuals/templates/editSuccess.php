@@ -35,6 +35,7 @@
   <p class="clear"></p>
   <p class="form_buttons">
     <?php if (!$individual->getObject()->isNew()): ?>
+      <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>
       <?php echo link_to(__('New individual'), 'individuals/edit?spec_id='.$specimen->getId()) ?>
       &nbsp;<?php echo link_to(__('Duplicate individual'), 'individuals/edit?spec_id='.$individual->getObject()->getSpecimenRef().
       '&duplicate_id='.$individual->getObject()->getId(),array('class' => 'duplicate_link')) ?>
@@ -59,10 +60,7 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $('.duplicate_link').click(function(){
-    ask_for_duplicate($(this),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
-  });
-   $('body').catalogue({});
+  $('body').catalogue({},link=$('p.form_buttons').find('a.hidden').attr('href'));
   $("a#spec_ind_delete").click(function(){
      if(confirm($(this).attr('title')))
      {

@@ -27,6 +27,11 @@ class specimenActions extends DarwinActions
     return $form;
   }
 
+  public function executeConfirm(sfWebRequest $request)
+  {
+  
+  }
+
   public function executeAddCode(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));

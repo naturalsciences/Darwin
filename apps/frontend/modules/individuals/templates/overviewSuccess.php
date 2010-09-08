@@ -56,8 +56,8 @@
 	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
 	</td>
 	<td>
-    <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual', 'class' => 'duplicate_link')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
-      '&duplicate_id='.$individual->getId()) ?>	
+    <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
+      '&duplicate_id='.$individual->getId(),array('class' => 'duplicate_link')) ?>	
 	</td>
 	<td class="row_delete">
 	  <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
@@ -75,6 +75,7 @@
     <tr>
       <td colspan='10'>
 	<div class="add_spec_individual">
+    <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>	
 	  <a href="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId());?>" id="add_spec_individual"><?php echo __('Add New');?></a>
 	</div>
       </td>
@@ -97,9 +98,7 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $('.duplicate_link').click(function(){
-    ask_for_duplicate($(this).closest('a'),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
-  });  
+  $('body').catalogue({},link=$('div.add_spec_individual').find('a.hidden').attr('href')); 
   $("a.row_delete").click(function(){
      if(confirm($(this).attr('title')))
      {

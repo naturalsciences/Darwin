@@ -36,8 +36,8 @@
 	  <td><?php echo $part->getSubContainer();?></td>
 	  <td>
 		<?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
-		<?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this part"), 'class' => 'duplicate_link')),'parts/edit?indid='.$part->getSpecimenIndividualRef().
-		'&duplicate_id='.$part->getId(), array('title'=>__('Duplicate this part')));?>
+		<?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this part"))),'parts/edit?indid='.$part->getSpecimenIndividualRef().
+		'&duplicate_id='.$part->getId(), array('title'=>__('Duplicate this part'), 'class' => 'duplicate_link'));?>
 	  </td>
 	</tr>
   <?php endforeach;?>
@@ -45,9 +45,6 @@
 </table>
 <script  type="text/javascript">
 $(document).ready(function () {
-  $('.duplicate_link').click(function(){
-    ask_for_duplicate($(this).closest('a'),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
-  });
 
   $('img.extd_info').each(function(){
 	   

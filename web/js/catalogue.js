@@ -15,6 +15,7 @@
             base.options = $.extend({},$.catalogue.defaultOptions, options);
             $(base.options['link_catalogue']).live('click', base.catalogueLinkEdit);
             $(base.options['delete_link']).live('click', base.deleteItem);
+            $(base.options['duplicate_link']).live('click',base.duplicateItem);
             // Put your initialization code here
         };
         
@@ -59,6 +60,59 @@
           });
         };
         
+        base.duplicateItem = function(event)
+        {
+          self = this ;
+          event.preventDefault();
+          scroll(0,0);
+
+          $(this).qtip({
+            content: {
+              title: { text : 'duplicate', button: 'X' },
+              url: link 
+            },
+            show: { when: 'click', ready: true },
+            position: {
+              target: $(document.body), // Position it via the document body...
+              adjust: { y: 210 },
+              corner: 'topMiddle' // ...at the topMiddle of the viewport
+            },
+            hide: false,
+            style: {
+              width: { min: 200, max: 500},
+              border: {radius:3},
+              title: { background: '#C1CF56', color:'white'}
+            },
+            api: {
+              beforeShow: function()
+              {
+                  // Fade in the modal "blanket" using the defined show speed
+                element_name = null;
+                addBlackScreen()
+                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+              },
+              beforeHide: function()
+              {
+                  // Fade out the modal "blanket" using the defined hide speed
+                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+              },
+              onHide: function()
+              {
+                $(this.elements.target).qtip("destroy");        
+                if (element_name==null)
+                {
+                  return false ;
+                }
+                else
+                {
+                  new_link = $(self).attr('href') + element_name ;        
+                  $(location).attr('href',new_link);
+		            }
+              }
+            }
+          });       
+        }
+        
         base.deleteItem = function(event)
         {
           event.preventDefault();
@@ -93,7 +147,8 @@
     
     $.catalogue.defaultOptions = {
       link_catalogue: "a.link_catalogue",
-      delete_link: "a.widget_row_delete"
+      delete_link: "a.widget_row_delete",
+      duplicate_link: "a.duplicate_link"
     };
     
     $.fn.catalogue = function(options){

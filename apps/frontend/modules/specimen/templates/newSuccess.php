@@ -49,6 +49,7 @@ $(document).ready(function ()
     <p class="clear"></p>
     <p class="form_buttons">
       <?php if (!$form->getObject()->isNew()): ?>
+        <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>
         <?php echo link_to(__('New specimen'), 'specimen/new') ?>
         &nbsp;<a href="<?php echo url_for('specimen/new?duplicate_id='.$form->getObject()->getId());?>" class="duplicate_link"><?php echo __('Duplicate specimen');?></a>
         &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimens&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_delete"><?php echo __('Delete');?></a>
@@ -72,10 +73,7 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $('.duplicate_link').click(function(){
-    ask_for_duplicate($(this),'<?php echo __("Do you want to also duplicate hidden widgets informations ?") ;?>') ;
-  }); 
-  $('body').catalogue({});
+  $('body').catalogue({},link=$('p.form_buttons').find('a.hidden').attr('href'));
   $("a#spec_delete").click(function(){
      if(confirm($(this).attr('title')))
      {
@@ -84,20 +82,20 @@ $(document).ready(function () {
        $.ajax({
                url: $(this).attr('href'),
                success: function(html) {
-		      if(html == "ok" )
-		      {
-			// Reload page
-			$(location).attr('href',$('a#spec_cancel').attr('href'));
-		      }
-		      else
-		      {
-			addError(html); //@TODO:change this!
-		      }
-		},
-               error: function(xhr){
-		  addError('Error!  Status = ' + xhr.status);
-               }
-             }
+		            if(html == "ok" )
+		            {
+			            // Reload page
+			            $(location).attr('href',$('a#spec_cancel').attr('href'));
+		                  }
+		                  else
+		                  {
+			            addError(html); //@TODO:change this!
+		                  }
+		            },
+                error: function(xhr){
+		              addError('Error!  Status = ' + xhr.status);
+                }
+              }
             );
     }
     return false;
