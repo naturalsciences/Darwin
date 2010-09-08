@@ -7213,7 +7213,7 @@ BEGIN
          NEW.type, NEW.type_group, NEW.type_search,
          NEW.sex, NEW.state, NEW.stage,
          NEW.social_status, NEW.rock_form,
-         NEW.specimen_indiviuals_count_min, NEW.specimen_indiviuals_count_max
+         NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
          FROM darwin_flat
          WHERE spec_ref = NEW.specimen_ref
          LIMIT 1
