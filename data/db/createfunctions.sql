@@ -7131,7 +7131,7 @@ BEGIN
   IF TG_TABLE_NAME = 'specimen_individuals' THEN
     IF TG_OP = 'INSERT' THEN
       SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref;
-      IF indCount = 0 THEN
+      IF indCount = 1 THEN
         UPDATE darwin_flat
         SET
         (individual_ref,
@@ -7236,45 +7236,12 @@ BEGIN
        NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
       )
       WHERE individual_ref = NEW.id;
-    ELSE
-      SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref;
-      IF indCount < 2 THEN
-        UPDATE darwin_flat
-        SET
-        (individual_ref,
-         individual_type, individual_type_group, individual_type_search,
-         individual_sex, individual_state, individual_stage,
-         individual_social_status, individual_rock_form,
-         individual_count_min, individual_count_max,
-         part_ref, part, part_status,
-         building, "floor", room, "row", shelf,
-         container_type, container_storage, "container",
-         sub_container_type, sub_container_storage, "sub_container",
-         part_count_min, part_count_max
-        )
-        =
-        (DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT
-        )
-        WHERE individual_ref = OLD.id;
-      ELSE
-        DELETE FROM darwin_flat
-        WHERE individual_ref = OLD.id;
-      END IF;
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimen_parts' THEN
     IF TG_OP = 'INSERT' THEN
-      SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE individual_ref = NEW.individual_ref;
-      IF partCount = 0 THEN
+      SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = NEW.specimen_individual_ref;
+      IF partCount = 1 THEN
         UPDATE darwin_flat
         SET
         (part_ref, part, part_status,
@@ -7389,29 +7356,6 @@ BEGIN
        NEW.specimen_part_count_min, NEW.specimen_part_count_max
       )
       WHERE part_ref = NEW.id;
-    ELSE
-      SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE individual_ref = OLD.specimen_individual_ref;
-      IF partCount < 2 THEN
-        UPDATE darwin_flat
-        SET
-        (part_ref, part, part_status,
-         building, "floor", room, "row", shelf,
-         container_type, container_storage, "container",
-         sub_container_type, container_storage, "sub_container",
-         part_count_min, part_count_max
-        )
-        =
-        (DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT
-        )
-        WHERE part_ref = OLD.id;
-      ELSE
-        DELETE FROM darwin_flat
-        WHERE part_ref = OLD.id;
-      END IF;
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimens' THEN
@@ -7436,6 +7380,74 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION fct_delete_darwin_flat_ind_part() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+DECLARE
+  indCount INTEGER := 0;
+  partCount INTEGER := 0;
+BEGIN
+  IF TG_TABLE_NAME = 'specimen_individuals' THEN
+    SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref;
+    IF indCount < 2 THEN
+      UPDATE darwin_flat
+      SET
+      (individual_ref,
+       individual_type, individual_type_group, individual_type_search,
+       individual_sex, individual_state, individual_stage,
+       individual_social_status, individual_rock_form,
+       individual_count_min, individual_count_max,
+       part_ref, part, part_status,
+       building, "floor", room, "row", shelf,
+       container_type, container_storage, "container",
+       sub_container_type, sub_container_storage, "sub_container",
+       part_count_min, part_count_max
+      )
+      =
+      (DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT
+      )
+      WHERE individual_ref = OLD.id;
+    ELSE
+      DELETE FROM darwin_flat
+      WHERE individual_ref = OLD.id;
+    END IF;
+  ELSE
+    SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = OLD.specimen_individual_ref;
+    IF partCount < 2 THEN
+      UPDATE darwin_flat
+      SET
+      (part_ref, part, part_status,
+       building, "floor", room, "row", shelf,
+       container_type, container_storage, "container",
+       sub_container_type, sub_container_storage, "sub_container",
+       part_count_min, part_count_max
+      )
+      =
+      (DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT, DEFAULT,
+       DEFAULT, DEFAULT
+      )
+      WHERE part_ref = OLD.id;
+    ELSE
+      DELETE FROM darwin_flat
+      WHERE part_ref = OLD.id;
+    END IF;
+  END IF;
+  RETURN OLD;
+END;
+$$;
 
 CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
 DECLARE

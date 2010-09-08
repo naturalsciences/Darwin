@@ -233,6 +233,12 @@ DROP TRIGGER trg_update_mineralogy_darwin_flat
 DROP TRIGGER trg_update_specimens_darwin_flat
         ON specimens;
 
+DROP TRIGGER trg_delete_specimen_individuals_darwin_flat
+        ON specimen_individuals;
+
+DROP TRIGGER trg_delete_specimen_parts_darwin_flat
+        ON specimen_parts;
+
 DROP TRIGGER trg_update_specimen_individuals_darwin_flat
         ON specimen_individuals;
 
