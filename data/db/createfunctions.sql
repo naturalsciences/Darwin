@@ -7143,7 +7143,7 @@ BEGIN
         =
         (NEW.id,
          NEW.type, NEW.type_group, NEW.type_search, 
-         NEW.sex, NEW.state, NEW.stage
+         NEW.sex, NEW.state, NEW.stage,
          NEW.social_status, NEW.rock_form,
          NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
         )
@@ -7231,7 +7231,7 @@ BEGIN
       =
       (NEW.id,
        NEW.type, NEW.type_group, NEW.type_search, 
-       NEW.sex, NEW.state, NEW.stage
+       NEW.sex, NEW.state, NEW.stage,
        NEW.social_status, NEW.rock_form,
        NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
       )
@@ -7277,7 +7277,7 @@ BEGIN
       IF partCount = 0 THEN
         UPDATE darwin_flat
         SET
-        (part_ref, part, part_status
+        (part_ref, part, part_status,
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, sub_container,
@@ -7375,7 +7375,7 @@ BEGIN
     ELSIF TG_OP = 'UPDATE' THEN
       UPDATE darwin_flat
       SET
-      (part_ref, part, part_status
+      (part_ref, part, part_status,
        building, "floor", room, "row", shelf,
        container_type, container_storage, "container",
        sub_container_type, sub_container_storage, sub_container,
