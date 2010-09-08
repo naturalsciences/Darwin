@@ -5,13 +5,17 @@
  */
 class Collections extends BaseCollections
 {
-    public function getLevel()
-    {
-        return  substr_count($this->getPath(),'/');
-    }
-    
-    public function __toString()
-    {
-        return str_repeat('&nbsp;&nbsp;&nbsp;',$this->getLevel()-1).$this->getName();
-    }
+  public function getLevel()
+  {
+      return  substr_count($this->getPath(),'/');
+  }
+  
+  public function __toString()
+  {
+      return str_repeat('&nbsp;&nbsp;&nbsp;',$this->getLevel()-1).$this->getName();
+  }
+  public function getNameWithFormat()
+  {
+    return $this->getName();
+  }
 }
