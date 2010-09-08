@@ -744,8 +744,8 @@ SpecimenIndividuals:
         id: { type: integer, primary: true, autoincrement: true },
         specimen_ref: { type: integer, notnull: true }
         type: { type: string, notnull: true, default: specimen}
-        type_group: { type: string}
-        type_search: { type: string}
+        type_group: { type: string, notnull: true, default: specimen}
+        type_search: { type: string, notnull: true, default: specimen}
         sex: { type: string, notnull: true, default: undefined}
         stage: { type: string, notnull: true, default: undefined}
         state: { type: string, notnull: true, default: 'not applicable'}
