@@ -40,11 +40,13 @@ class MySavedSearches extends BaseMySavedSearches
       $this->_set('visible_fields_in_result',$val);
   }
 
+  // Returns an array from the serialized string stored in search_criterias field
   public function getRequest()
   {
     return unserialize($this->getSearchCriterias());
   }
-
+  
+  // Returns the searched ID from the serialized string stored in search_criterias field
   public function getSearchedIdString()
   {
     $prev_req = $this->getRequest();
