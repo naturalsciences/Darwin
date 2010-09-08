@@ -71,3 +71,6 @@ DROP FUNCTION IF EXISTS getGtusForTags(in_array anyarray) CASCADE;
 DROP FUNCTION IF EXISTS getTagsIndexedAsArray(IN tagList varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_update_darwin_flat() CASCADE;
 DROP FUNCTION IF EXISTS fct_searchCodes(VARIADIC varchar[])  CASCADE;
+DROP FUNCTION IF EXISTS fct_clr_savedspecimens() CASCADE;
+DROP FUNCTION IF EXISTS fct_search_methods(str_ids varchar) CASCADE;
+DROP FUNCTION IF EXISTS fct_search_tools(str_ids varchar) CASCADE;
