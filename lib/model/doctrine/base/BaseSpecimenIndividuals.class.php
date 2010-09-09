@@ -78,9 +78,13 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
              ));
         $this->hasColumn('type_group', 'string', null, array(
              'type' => 'string',
+             'notnull' => true,
+             'default' => '',
              ));
         $this->hasColumn('type_search', 'string', null, array(
              'type' => 'string',
+             'notnull' => true,
+             'default' => '',
              ));
         $this->hasColumn('sex', 'string', null, array(
              'type' => 'string',
@@ -131,7 +135,7 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
              'foreign' => 'specimen_individual_ref'));
 
         $this->hasMany('SpecimenSearch', array(
-             'local' => 'specimen_ref',
-             'foreign' => 'spec_ref'));
+             'local' => 'id',
+             'foreign' => 'individual_ref'));
     }
 }
