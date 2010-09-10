@@ -2366,99 +2366,66 @@ BEGIN
 	END IF;
 	
 	IF NEW.type = 'specimen' THEN
-		NEW.type_search := '';
-		NEW.type_group := '';
-	END IF;
-	
-	IF NEW.type = 'type' THEN
+		NEW.type_search := 'specimen';
+		NEW.type_group := 'specimen';
+	ELSIF NEW.type = 'type' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	END IF;	
-	
-	IF NEW.type = 'subtype' THEN
+	ELSIF NEW.type = 'subtype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	END IF;
-
-	IF NEW.type = 'allotype' THEN
+	ELSIF NEW.type = 'allotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'allotype';
-	END IF;
-
-	IF NEW.type = 'cotype' THEN
+	ELSIF NEW.type = 'cotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'syntype';
-	END IF;
-
-	IF NEW.type = 'genotype' THEN
+	ELSIF NEW.type = 'genotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	END IF;
-
-	IF NEW.type = 'holotype' THEN
+	ELSIF NEW.type = 'holotype' THEN
 		NEW.type_search := 'holotype';
 		NEW.type_group := 'holotype';
-	END IF;
-
-	IF NEW.type = 'hypotype' THEN
+	ELSIF NEW.type = 'hypotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'hypotype';
-	END IF;
-
-	IF NEW.type = 'lectotype' THEN
+	ELSIF NEW.type = 'lectotype' THEN
 		NEW.type_search := 'lectotype';
 		NEW.type_group := 'lectotype';
-	END IF;
-
-	IF NEW.type = 'locotype' THEN
+	ELSIF NEW.type = 'locotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'locotype';
-	END IF;
-
-	IF NEW.type = 'neallotype' THEN
+	ELSIF NEW.type = 'neallotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	END IF;
-
-	IF NEW.type = 'neotype' THEN
+	ELSIF NEW.type = 'neotype' THEN
 		NEW.type_search := 'neotype';
 		NEW.type_group := 'neotype';
-	END IF;
-	
-	IF NEW.type = 'paralectotype' THEN
+	ELSIF NEW.type = 'paralectotype' THEN
 		NEW.type_search := 'paralectotype';
 		NEW.type_group := 'paralectotype';
-	END IF;
-
-	IF NEW.type = 'paratype' THEN
+	ELSIF NEW.type = 'paratype' THEN
 		NEW.type_search := 'paratype';
 		NEW.type_group := 'paratype';
-	END IF;
-
-	IF NEW.type = 'plastotype' THEN
+	ELSIF NEW.type = 'plastotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'plastotype';
-	END IF;
-	
-	IF NEW.type = 'plesiotype' THEN
+	ELSIF NEW.type = 'plesiotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'plesiotype';
-	END IF;
-
-	IF NEW.type = 'syntype' THEN
+	ELSIF NEW.type = 'syntype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'syntype';
-	END IF;
-		
-	IF NEW.type = 'topotype' THEN
+	ELSIF NEW.type = 'topotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'topotype';
-	END IF;
-	
-	IF NEW.type = 'type in litteris' THEN
+	ELSIF NEW.type = 'type in litteris' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type in litteris';
-	END IF;
+	ELSE
+    NEW.type_search := 'type';
+    NEW.type_group := 'type';
+  END IF;
 	
 	RETURN NEW;
 EXCEPTION

@@ -1,11 +1,11 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(38);
+SELECT plan(40);
 INSERT INTO specimens (id, collection_ref) VALUES (1,1);
 
 INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (1,1,'specimen');
-SELECT ok( '' = (SELECT type_group FROM specimen_individuals WHERE id=1)) ;
-SELECT ok( '' = (SELECT type_search FROM specimen_individuals WHERE id=1));
+SELECT ok( 'specimen' = (SELECT type_group FROM specimen_individuals WHERE id=1)) ;
+SELECT ok( 'specimen' = (SELECT type_search FROM specimen_individuals WHERE id=1));
 
 INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (2,1,'type');
 SELECT ok( 'type' = (SELECT type_group FROM specimen_individuals WHERE id=2)) ;
@@ -78,6 +78,10 @@ SELECT ok( 'type' = (SELECT type_search FROM specimen_individuals WHERE id=18));
 INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (19,1,'topotype');
 SELECT ok( 'topotype' = (SELECT type_group FROM specimen_individuals WHERE id=19)) ;
 SELECT ok( 'type' = (SELECT type_search FROM specimen_individuals WHERE id=19));
+
+INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (20,1,'caratype');
+SELECT ok( 'type' = (SELECT type_group FROM specimen_individuals WHERE id=20)) ;
+SELECT ok( 'type' = (SELECT type_search FROM specimen_individuals WHERE id=20));
 
 -- Finish the tests and clean up.
 SELECT * FROM finish();
