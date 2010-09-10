@@ -40,7 +40,8 @@ class specimensearchwidgetComponents extends sfComponents
   public function executeSpecIds()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
-  }        
+  }
+
   public function executeRefGtu()
   {
     if(!$this->form) 
@@ -87,4 +88,10 @@ class specimensearchwidgetComponents extends sfComponents
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+
+  public function executeWhatSearched()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+  }
+
 }

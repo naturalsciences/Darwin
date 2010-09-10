@@ -57,11 +57,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => 'All'
       ));      
-    $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
-                                         'taxon_name' => 'Taxon',
-                                         'taxon_level_ref' => 'Level'
-                                        )
-                                  );
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
     $this->setDefault('col_fields','category|taxon|collection|type|gtu');
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
@@ -162,6 +157,25 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     ));
     $this->validatorSchema['methods'] = new sfValidatorPass();
     $this->validatorSchema['tools'] = new sfValidatorPass();
+
+
+    /* Define list of options available for different type of searches to provide */
+    $what_searched = array('specimen'=>$this->getI18N()->__('Specimens'), 
+                           'specimen_individuals'=>$this->getI18N()->__('Individuals'), 
+                           'specimen_parts'=>$this->getI18N()->__('Parts'));
+    $this->widgetSchema['what_searched'] = new sfWidgetFormChoice(array(
+        'choices' => $what_searched,
+    ));
+    $this->validatorSchema['what_searched'] = new sfValidatorPass();
+//     $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>$what_searched, 'required'=>true));
+
+    /* Labels */
+    $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
+                                         'taxon_name' => 'Taxon',
+                                         'taxon_level_ref' => 'Level',
+                                         'what_searched' => 'What would you like to search ?'
+                                        )
+                                  );
 
   /**
   * Individuals Fields
