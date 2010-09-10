@@ -41,15 +41,28 @@ class SpecimenSearch extends BaseSpecimenSearch
       return $str;
     }
 
-    /* Function returning a flag telling if for the current specimen there are types or not */
-    public function getWithTypes()
-    {
-      $q = Doctrine_Query::create()->
-           select('count(*) as typeCount')->
-           from('SpecimenSearch')->
-           where('spec_ref = ?', $this->_get('spec_ref'))->
-           andWhere('individual_type <> ?', 'specimen');
-      $types_count = $q->fetchOne();
-      return $types_count['typeCount'];
-    }
+  /* Function returning a flag telling if for the current specimen there are types or not */
+  public function getWithTypes()
+  {
+    $q = Doctrine_Query::create()->
+      select('count(*) as typeCount')->
+      from('SpecimenSearch')->
+      where('spec_ref = ?', $this->_get('spec_ref'))->
+      andWhere('individual_type <> ?', 'specimen');
+    $types_count = $q->fetchOne();
+    return $types_count['typeCount'];
+  }
+
+  public function getAggregatedName($sep = ' / ')
+  {
+    $items = array(
+      $this->getTaxonName(),
+      $this->getChronoName(),
+      $this->getLithoName(),
+      $this->getLithologyName(),
+      $this->getMineralName()
+    );
+    $items = array_filter($items);
+    return implode($sep, $items);
+  }
 }

@@ -1,6 +1,7 @@
 <?php slot('title','Mass Actions');?>
 <div class="page" id="mass_action">
   <h1><?php echo __('Mass Actions :');?></h1>
+  <?php echo form_tag('massactions/index');?>
   <table>
     <tbody>
       <tr>
@@ -27,10 +28,11 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="2"><input type="submit" value="<?php echo __('Go');?>" /></td>
+        <td colspan="2"><input type="submit" id="mass_submit" value="<?php echo __('Go');?>" /></td>
       </tr>
     </tfoot>
   </table>
+  </form>
 </div>
 <script type="text/javascript">
 function chooseSource()
@@ -53,9 +55,9 @@ function chooseSource()
 
 function checkItem()
 {
-  $('#mass_action_action').val('');
   if( $('#item_list .item_row').length == 0)
   {
+    $('#mass_action_action').val('');
     $('#mass_action_action').attr('disabled','disabled');
     $('#mass_action_action').closest('tr').addClass('disabled');
   }
@@ -80,6 +82,15 @@ function chooseAction()
     $('#action_sub_form').removeClass('disabled');
     $('#action_sub_form > td > div').load('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/action/' + $('#mass_action_action').val() , function() {});
   }
+  changeSubmit(false);
+}
+
+function changeSubmit(status)
+{
+  if(status)
+    $('#mass_submit').removeAttr('disabled');
+  else
+    $('#mass_submit').attr('disabled','disabled');
 }
 
 $(document).ready(function () {
@@ -87,6 +98,14 @@ $(document).ready(function () {
   chooseSource();
   $('#mass_action_source').change(chooseSource);
   $('#mass_action_action').change(chooseAction);
+  $('#mass_submit').closest('form').submit(function (event)
+  {
+    event.preventDefault();
+    if(confirm('<?php echo __('Are you sure ?') ?>'))
+    {
+      
+    }
+  });
 
 });
 

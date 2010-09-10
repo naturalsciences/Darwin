@@ -1827,6 +1827,14 @@ td.and_col
   min-height: 200px;
   border: 1px solid #3390A1;
 }
+dt
+{
+  font-weight:bold;
+}
+dd
+{
+  margin-left: 1em;
+}
 #mass_action .disabled th
 {
   color:gray;

@@ -1,15 +1,27 @@
 <?php if(count($items) !=0 ):?>
+  <?php use_helper('Text');?>
   <table>
     <?php foreach($items as $item):?>
       <tr>
         <td>
           <?php echo image_tag('info.png',"title=info class=extd_info");?>
           <div class="extended_info" style="display:none;">
-            <?php //include_partial('extendedInfo', array('part' => $part, 'codes' => $codes) );?>
+            <dl>
+              <dt><?php echo __('Taxonomy :');?></dt>
+              <dd><?php echo $item->getTaxonName();?></dd>
+              <dt><?php echo __('Chronostratigraphy :');?></dt>
+              <dd><?php echo $item->getChronoName();?></dd>
+              <dt><?php echo __('Lithostratigraphy :');?></dt>
+              <dd><?php echo $item->getLithoName();?></dd>
+              <dt><?php echo __('Lithology :');?></dt>
+              <dd><?php echo $item->getLithologyName();?></dd>
+              <dt><?php echo __('Mineralogy :');?></dt>
+              <dd><?php echo $item->getMineralName();?></dd>
+            </dl>
           </div>
         </td>
         <td>
-          <?php echo $item->getTaxonName();?>
+          <?php echo truncate_text($item->getAggregatedName(),40);?>
         </td>
         <td>
           <input name="mass_action[item_list][]" type="hidden" value="<?php echo $item->getSpecRef();?>" class="item_row">
@@ -25,6 +37,18 @@
         event.preventDefault();
         $(this).closest('tr').remove();
         checkItem();
+      });
+
+      $('img.extd_info').each(function(){
+        tip_content = $(this).next().html();
+        $(this).qtip(
+        {
+          content: tip_content,
+          style: {
+            tip: true, // Give it a speech bubble tip with automatic corner detection
+            name: 'cream'
+         }
+        });
       });
    });
   </script>
