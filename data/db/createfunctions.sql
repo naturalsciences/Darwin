@@ -2356,70 +2356,72 @@ $$ LANGUAGE plpgsql;
 */
 CREATE OR REPLACE FUNCTION fct_clr_specialstatus() RETURNS TRIGGER
 AS $$
+DECLARE
+  newType varchar := fullToIndex(NEW.type);
 BEGIN
 
 	-- IF Type not changed
 	IF TG_OP = 'UPDATE' THEN
-		IF OLD.type = NEW.type THEN
+		IF fullToIndex(OLD.type) = newType THEN
 			RETURN NEW;
 		END IF;
 	END IF;
 	
-	IF NEW.type = 'specimen' THEN
+	IF newType= 'specimen' THEN
 		NEW.type_search := 'specimen';
 		NEW.type_group := 'specimen';
-	ELSIF NEW.type = 'type' THEN
+	ELSIF newType= 'type' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	ELSIF NEW.type = 'subtype' THEN
+	ELSIF newType= 'subtype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	ELSIF NEW.type = 'allotype' THEN
+	ELSIF newType= 'allotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'allotype';
-	ELSIF NEW.type = 'cotype' THEN
+	ELSIF newType= 'cotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'syntype';
-	ELSIF NEW.type = 'genotype' THEN
+	ELSIF newType= 'genotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	ELSIF NEW.type = 'holotype' THEN
+	ELSIF newType= 'holotype' THEN
 		NEW.type_search := 'holotype';
 		NEW.type_group := 'holotype';
-	ELSIF NEW.type = 'hypotype' THEN
+	ELSIF newType= 'hypotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'hypotype';
-	ELSIF NEW.type = 'lectotype' THEN
+	ELSIF newType= 'lectotype' THEN
 		NEW.type_search := 'lectotype';
 		NEW.type_group := 'lectotype';
-	ELSIF NEW.type = 'locotype' THEN
+	ELSIF newType= 'locotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'locotype';
-	ELSIF NEW.type = 'neallotype' THEN
+	ELSIF newType= 'neallotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type';
-	ELSIF NEW.type = 'neotype' THEN
+	ELSIF newType= 'neotype' THEN
 		NEW.type_search := 'neotype';
 		NEW.type_group := 'neotype';
-	ELSIF NEW.type = 'paralectotype' THEN
+	ELSIF newType= 'paralectotype' THEN
 		NEW.type_search := 'paralectotype';
 		NEW.type_group := 'paralectotype';
-	ELSIF NEW.type = 'paratype' THEN
+	ELSIF newType= 'paratype' THEN
 		NEW.type_search := 'paratype';
 		NEW.type_group := 'paratype';
-	ELSIF NEW.type = 'plastotype' THEN
+	ELSIF newType= 'plastotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'plastotype';
-	ELSIF NEW.type = 'plesiotype' THEN
+	ELSIF newType= 'plesiotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'plesiotype';
-	ELSIF NEW.type = 'syntype' THEN
+	ELSIF newType= 'syntype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'syntype';
-	ELSIF NEW.type = 'topotype' THEN
+	ELSIF newType= 'topotype' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'topotype';
-	ELSIF NEW.type = 'type in litteris' THEN
+	ELSIF newType= 'typeinlitteris' THEN
 		NEW.type_search := 'type';
 		NEW.type_group := 'type in litteris';
 	ELSE
