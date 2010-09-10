@@ -79,12 +79,12 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
         $this->hasColumn('type_group', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => '',
+             'default' => 'specimen',
              ));
         $this->hasColumn('type_search', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => '',
+             'default' => 'specimen',
              ));
         $this->hasColumn('sex', 'string', null, array(
              'type' => 'string',
