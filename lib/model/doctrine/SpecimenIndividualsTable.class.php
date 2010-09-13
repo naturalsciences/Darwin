@@ -22,7 +22,29 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctTypes()
     {
-      $types = $this->createDistinct('SpecimenIndividuals', 'type', 'type', 't', 'specimen')->execute();
+      $types = $this->createDistinct('SpecimenIndividuals', 'type', 'type', 't')->execute();
+      $types->add(new SpecimenIndividuals);
+      return $types;
+    }
+
+    /**
+    * Get distinct Type groups
+    * @return Doctrine_collection with distinct "type groups" as column
+    */
+    public function getDistinctTypeGroups()
+    {
+      $types = $this->createDistinct('SpecimenIndividuals', 'type_group', 'type_group', 't')->execute();
+      $types->add(new SpecimenIndividuals);
+      return $types;
+    }
+
+    /**
+    * Get distinct Type searches
+    * @return Doctrine_collection with distinct "type searches" as column
+    */
+    public function getDistinctTypeSearches()
+    {
+      $types = $this->createDistinct('SpecimenIndividuals', 'type_search', 'type_search', 't')->execute();
       $types->add(new SpecimenIndividuals);
       return $types;
     }

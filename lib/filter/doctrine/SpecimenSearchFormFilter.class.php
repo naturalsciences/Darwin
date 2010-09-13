@@ -57,11 +57,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => 'All'
       ));      
-    $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
-                                         'taxon_name' => 'Taxon',
-                                         'taxon_level_ref' => 'Level'
-                                        )
-                                  );
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
     $this->setDefault('col_fields','category|taxon|collection|type|gtu');
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
@@ -163,14 +158,44 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->validatorSchema['methods'] = new sfValidatorPass();
     $this->validatorSchema['tools'] = new sfValidatorPass();
 
+
+    /* Define list of options available for different type of searches to provide */
+    $what_searched = array('specimen'=>$this->getI18N()->__('Specimens'), 
+                           'specimen_individuals'=>$this->getI18N()->__('Individuals'), 
+                           'specimen_parts'=>$this->getI18N()->__('Parts'));
+    $this->widgetSchema['what_searched'] = new sfWidgetFormChoice(array(
+        'choices' => $what_searched,
+    ));
+    $this->validatorSchema['what_searched'] = new sfValidatorPass();
+//     $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>$what_searched, 'required'=>true));
+
+    /* Labels */
+    $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
+                                         'taxon_name' => 'Taxon',
+                                         'taxon_level_ref' => 'Level',
+                                         'what_searched' => 'What would you like to search ?'
+                                        )
+                                  );
+
   /**
   * Individuals Fields
   */
     $this->is_individual_joined = false;
+    $this->widgetSchema['type'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'SpecimenIndividuals',
+        'table_method' => 'getDistinctTypeGroups',
+        'method' => 'getTypeGroupFormated',
+        'key_method' => 'getTypeGroup',
+        'multiple' => true,
+        'expanded' => true,
+        'add_empty' => false,
+    ));
+    $this->validatorSchema['type'] = new sfValidatorPass();
+
     $this->widgetSchema['sex'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctSexes',
-        'method' => 'getSex',
+        'method' => 'getSexSearchFormated',
         'key_method' => 'getSex',
         'multiple' => true,
         'expanded' => true,
@@ -181,7 +206,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['stage'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctStages',
-        'method' => 'getStage',
+        'method' => 'getStageSearchFormated',
         'key_method' => 'getStage',
         'multiple' => true,
         'expanded' => true,
@@ -192,7 +217,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['status'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctStates',
-        'method' => 'getState',
+        'method' => 'getStateSearchFormated',
         'key_method' => 'getState',
         'multiple' => true,
         'expanded' => true,
@@ -203,7 +228,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['social'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctSocialStatuses',
-        'method' => 'getSocialStatus',
+        'method' => 'getSocialStatusSearchFormated',
         'key_method' => 'getSocialStatus',
         'multiple' => true,
         'expanded' => true,
@@ -214,7 +239,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['rockform'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctRockForms',
-        'method' => 'getRockForm',
+        'method' => 'getRockFormSearchFormated',
         'key_method' => 'getRockForm',
         'multiple' => true,
         'expanded' => true,
@@ -272,6 +297,19 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         $query->andWhereIn('individual_sex',$val);
       else
         $query->andWhere('individual_sex = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addTypeColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+//       $this->joinIndividual($query);
+      if(is_array($val))
+        $query->andWhereIn('individual_type_search',$val);
+      else
+        $query->andWhere('individual_type_search = ?',$val);
     }
     return $query ;
   }

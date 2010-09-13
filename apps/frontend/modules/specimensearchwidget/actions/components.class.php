@@ -40,7 +40,8 @@ class specimensearchwidgetComponents extends sfComponents
   public function executeSpecIds()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
-  }        
+  }
+
   public function executeRefGtu()
   {
     if(!$this->form) 
@@ -50,22 +51,31 @@ class specimensearchwidgetComponents extends sfComponents
     }
   }
 
+  public function executeType()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
+
   public function executeSex()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+
   public function executeStage()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   } 
+
   public function executeStatus()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+
   public function executeSocial()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+
   public function executeRockform()
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
@@ -87,4 +97,10 @@ class specimensearchwidgetComponents extends sfComponents
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+
+  public function executeWhatSearched()
+  {
+    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+  }
+
 }

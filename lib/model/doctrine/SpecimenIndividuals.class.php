@@ -10,10 +10,25 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
     return ucfirst($this->_get('type'));
   }
 
+  public function getTypeSearchFormated()
+  {
+    return ucfirst($this->_get('type_search'));
+  }
+
+  public function getTypeGroupFormated()
+  {
+    return ucfirst($this->_get('type_group'));
+  }
+
   public function getSexFormated()
   {
     if ($this->_get('sex') == 'undefined')
       return '-';
+    return ucfirst($this->_get('sex'));
+  }
+
+  public function getSexSearchFormated()
+  {
     return ucfirst($this->_get('sex'));
   }
 
@@ -24,11 +39,21 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
     return ucfirst($this->_get('state'));
   }
 
+  public function getStateSearchFormated()
+  {
+    return ucfirst($this->_get('sex'));
+  }
+
   public function getStageFormated()
   {
     if ($this->_get('stage') == 'undefined')
       return '-';
     return ucfirst($this->_get('stage'));
+  }
+
+  public function getStageSearchFormated()
+  {
+    return ucfirst($this->_get('sex'));
   }
 
   public function getSocialStatusFormated()
@@ -38,10 +63,21 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
     return ucfirst($this->_get('social_status'));
   }
 
+  public function getSocialStatusSearchFormated()
+  {
+    return ucfirst($this->_get('sex'));
+  }
+
   public function getRockFormFormated()
   {
     if ($this->_get('rock_form') == 'not applicable')
       return '-';
     return ucfirst($this->_get('rock_form'));
   }
+
+  public function getRockFormSearchFormated()
+  {
+    return ucfirst($this->_get('sex'));
+  }
+
 }
