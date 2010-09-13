@@ -12,6 +12,7 @@
  * @property string $collection_type
  * @property string $collection_code
  * @property string $collection_name
+ * @property boolean $collection_is_public
  * @property integer $collection_institution_ref
  * @property string $collection_institution_formated_name
  * @property string $collection_institution_formated_name_ts
@@ -169,6 +170,7 @@
  * @method string              getCollectionType()                                Returns the current record's "collection_type" value
  * @method string              getCollectionCode()                                Returns the current record's "collection_code" value
  * @method string              getCollectionName()                                Returns the current record's "collection_name" value
+ * @method boolean             getCollectionIsPublic()                            Returns the current record's "collection_is_public" value
  * @method integer             getCollectionInstitutionRef()                      Returns the current record's "collection_institution_ref" value
  * @method string              getCollectionInstitutionFormatedName()             Returns the current record's "collection_institution_formated_name" value
  * @method string              getCollectionInstitutionFormatedNameTs()           Returns the current record's "collection_institution_formated_name_ts" value
@@ -325,6 +327,7 @@
  * @method SpecimenSearch      setCollectionType()                                Sets the current record's "collection_type" value
  * @method SpecimenSearch      setCollectionCode()                                Sets the current record's "collection_code" value
  * @method SpecimenSearch      setCollectionName()                                Sets the current record's "collection_name" value
+ * @method SpecimenSearch      setCollectionIsPublic()                            Sets the current record's "collection_is_public" value
  * @method SpecimenSearch      setCollectionInstitutionRef()                      Sets the current record's "collection_institution_ref" value
  * @method SpecimenSearch      setCollectionInstitutionFormatedName()             Sets the current record's "collection_institution_formated_name" value
  * @method SpecimenSearch      setCollectionInstitutionFormatedNameTs()           Sets the current record's "collection_institution_formated_name_ts" value
@@ -510,6 +513,11 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('collection_name', 'string', null, array(
              'type' => 'string',
+             ));
+        $this->hasColumn('collection_is_public', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => true,
              ));
         $this->hasColumn('collection_institution_ref', 'integer', null, array(
              'type' => 'integer',

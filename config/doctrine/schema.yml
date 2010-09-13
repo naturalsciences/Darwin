@@ -892,10 +892,11 @@ SpecimenSearch:
         id: { type: integer, primary: true, autoincrement: true}
         spec_ref: { type: integer, notnull: true }
         category: { type: string}
-        collection_ref: { type: integer, notnull: true, default:0} 
-        collection_type: { type: string}    
+        collection_ref: { type: integer, notnull: true, default:0}
+        collection_type: { type: string}
         collection_code: { type: string}
         collection_name: { type: string}
+        collection_is_public: {type: boolean, notnull: true, default: true}
         collection_institution_ref: { type: integer, notnull: true, default:0}
         collection_institution_formated_name: { type: string}
         collection_institution_formated_name_ts: { type: string}
@@ -912,14 +913,14 @@ SpecimenSearch:
         expedition_name_ts: { type: string}
         expedition_name_indexed: { type: string}
         station_visible: { type: boolean}
-        gtu_ref: { type: integer, notnull: true, default:0}      
+        gtu_ref: { type: integer, notnull: true, default:0}
         gtu_code: { type: string}
         gtu_parent_ref: { type: integer, default:0}
         gtu_path: { type: string}
         gtu_from_date_mask: { type: integer }
-        gtu_from_date: { type: string}        
-        gtu_to_date_mask: { type: integer }             
-        gtu_to_date: { type: string}                  
+        gtu_from_date: { type: string}
+        gtu_to_date_mask: { type: integer }
+        gtu_to_date: { type: string}
         gtu_tag_values_indexed: { type: string}
         gtu_country_tag_value: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
