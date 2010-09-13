@@ -12,68 +12,104 @@ class searchActions extends DarwinActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->specimen_searchs = Doctrine::getTable('SpecimenSearch')
-      ->createQuery('a')
-      ->execute();
+    $this->form = new PublicSearchFormFilter();
+    $this->form->addGtuTagValue(0);    
   }
 
-  public function executeShow(sfWebRequest $request)
+  public function executeAndSearch(sfWebRequest $request)
   {
-    $this->specimen_search = Doctrine::getTable('SpecimenSearch')->find(array($request->getParameter('id')));
-    $this->forward404Unless($this->specimen_search);
+    $number = intval($request->getParameter('num'));
+
+    $form = new PublicSearchFormFilter();
+    $form->addGtuTagValue($number);
+    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number], 'row_line'=>$number));
+  } 
+  
+  public function executePurposeTag(sfWebRequest $request)
+  {
+    $this->tags = Doctrine::getTable('TagGroups')->getPropositions($request->getParameter('value'), $request->getParameter('group_name'), $request->getParameter('sub_group_name'));
   }
-
-  public function executeNew(sfWebRequest $request)
+  public function executeTree(sfWebRequest $request)
   {
-    $this->form = new SpecimenSearchForm();
+    $this->items = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )
+      ->findWithParents($request->getParameter('id'));
   }
-
-  public function executeCreate(sfWebRequest $request)
+   
+  public function executeSearch(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
-
-    $this->form = new SpecimenSearchForm();
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
-  }
-
-  public function executeEdit(sfWebRequest $request)
-  {
-    $this->forward404Unless($specimen_search = Doctrine::getTable('SpecimenSearch')->find(array($request->getParameter('id'))), sprintf('Object specimen_search does not exist (%s).', $request->getParameter('id')));
-    $this->form = new SpecimenSearchForm($specimen_search);
-  }
-
-  public function executeUpdate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $this->forward404Unless($specimen_search = Doctrine::getTable('SpecimenSearch')->find(array($request->getParameter('id'))), sprintf('Object specimen_search does not exist (%s).', $request->getParameter('id')));
-    $this->form = new SpecimenSearchForm($specimen_search);
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('edit');
-  }
-
-  public function executeDelete(sfWebRequest $request)
-  {
-    $request->checkCSRFProtection();
-
-    $this->forward404Unless($specimen_search = Doctrine::getTable('SpecimenSearch')->find(array($request->getParameter('id'))), sprintf('Object specimen_search does not exist (%s).', $request->getParameter('id')));
-    $specimen_search->delete();
-
-    $this->redirect('search/index');
-  }
-
-  protected function processForm(sfWebRequest $request, sfForm $form)
-  {
-    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-    if ($form->isValid())
+    // Initialize the order by and paging values: order by collection_name here
+    $this->setCommonValues('search', 'collection_name', $request);
+    // Modify the s_url to call the searchResult action when on result page and playing with pager
+    $this->s_url = 'search/searchResult' ;  
+    $this->form = new PublicSearchFormFilter();
+    // If the search has been triggered by clicking on the search button or with pinned specimens
+    if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ))
     {
-      $specimen_search = $form->save();
-
-      $this->redirect('search/edit?id='.$specimen_search->getId());
+      // Store all post parameters
+      $criterias = $request->getPostParameters(); 
+      $this->form->bind($criterias['specimen_search_filters']) ;    
     }
-  }
+    if($this->form->isBound())
+    {
+      if ($this->form->isValid())
+      {        
+        if($request->hasParameter('criteria'))
+        {
+          $this->setTemplate('index');
+          return;
+        }
+        else
+        {
+          // Define all properties that will be either used by the data query or by the pager
+          // They take their values from the request. If not present, a default value is defined
+          $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
+          // Define in one line a pager Layout based on a pagerLayoutWithArrows object
+          // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
+          $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+                                                                            $this->currentPage,
+                                                                            $this->form->getValue('rec_per_page')
+                                                                          ),
+                                                        new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
+                                                        $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+                                                        );
+          // Sets the Pager Layout templates
+          $this->setDefaultPaggingLayout($this->pagerLayout);
+          // If pager not yet executed, this means the query has to be executed for data loading
+          if (! $this->pagerLayout->getPager()->getExecuted())
+            $this->search = $this->pagerLayout->execute();
+          $this->field_to_show = $this->getVisibleColumns($this->form);            
+          return;
+        } 
+      }
+    }
+    $this->setTemplate('index');        
+  }   
+  /**
+  * Compute different sources to get the columns that must be showed
+  * 1) from form request 2) from session 3) from default value
+  * @param sfForm $form The SpecimenSearch form with the 'fields' field defined
+  * @return array of fields with check or uncheck or a list of visible fields separated by |
+  */
+  private function getVisibleColumns(sfForm $form)
+  {
+    $flds = array('collection','taxon','type','gtu','codes','chrono',
+              'litho','lithologic','mineral','sex','stage');
+    $flds = array_fill_keys($flds, 'uncheck');
+
+    if($form->isBound())
+    {
+      $req_fields = $form->getValue('col_fields');
+      $req_fields_array = explode('|',$req_fields);
+
+    }
+
+    if(empty($req_fields_array))
+      $req_fields_array = explode('|', $form->getDefault('col_fields'));
+
+    foreach($req_fields_array as $k => $val)
+    {
+      $flds[$val] = 'check';
+    }
+    return $flds;
+  }  
 }
