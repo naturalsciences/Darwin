@@ -6733,13 +6733,13 @@ BEGIN
     WHERE expedition_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'collections' THEN
     UPDATE darwin_flat 
-    SET (collection_type, collection_code, collection_name, 
+    SET (collection_type, collection_code, collection_name, collection_is_public,
          collection_institution_ref, collection_institution_formated_name, collection_institution_formated_name_ts,
          collection_institution_formated_name_indexed, collection_institution_sub_type, collection_main_manager_ref,
          collection_main_manager_formated_name, collection_main_manager_formated_name_ts, collection_main_manager_formated_name_indexed,
          collection_parent_ref, collection_path
         ) =
-        (NEW.collection_type, NEW.code, NEW.name, 
+        (NEW.collection_type, NEW.code, NEW.name, NEW.is_public,
          NEW.institution_ref, subq.ins_formated_name, subq.ins_formated_name_ts,
          subq.ins_formated_name_indexed, subq.ins_sub_type, NEW.main_manager_ref,
          subq.peo_formated_name, subq.peo_formated_name_ts, subq.peo_formated_name_indexed,
@@ -6887,7 +6887,7 @@ BEGIN
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'specimens' THEN
     UPDATE darwin_flat
     SET (category,
-         collection_ref,collection_type,collection_code,collection_name,
+         collection_ref,collection_type,collection_code,collection_name, collection_is_public,
          collection_institution_ref,collection_institution_formated_name,
          collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
          collection_main_manager_ref,collection_main_manager_formated_name,
@@ -6913,7 +6913,7 @@ BEGIN
          specimen_count_min,specimen_count_max
         )=
         (NEW.category,
-         NEW.collection_ref, subq.coll_collection_type, subq.coll_code, subq.coll_name, 
+         NEW.collection_ref, subq.coll_collection_type, subq.coll_code, subq.coll_name, subq.coll_is_public,
          subq.coll_institution_ref, subq.ins_formated_name, 
          subq.ins_formated_name_ts, subq.ins_formated_name_indexed, subq.ins_sub_type,
          subq.coll_main_manager_ref, subq.peo_formated_name, 
@@ -6945,7 +6945,7 @@ BEGIN
          NEW.specimen_count_min, NEW.specimen_count_max
         )
         FROM
-        (SELECT coll.collection_type coll_collection_type, coll.code coll_code, coll.name coll_name,
+        (SELECT coll.collection_type coll_collection_type, coll.code coll_code, coll.name coll_name, coll.is_public coll_is_public,
                 coll.institution_ref coll_institution_ref, ins.formated_name ins_formated_name,
                 ins.formated_name_ts ins_formated_name_ts, ins.formated_name_indexed ins_formated_name_indexed, ins.sub_type ins_sub_type,
                 coll.main_manager_ref coll_main_manager_ref, peo.formated_name peo_formated_name,
@@ -6999,7 +6999,7 @@ BEGIN
   ELSIF TG_OP = 'INSERT' AND TG_TABLE_NAME = 'specimens' THEN
     INSERT INTO darwin_flat
     (spec_ref,category,
-     collection_ref,collection_type,collection_code,collection_name,
+     collection_ref,collection_type,collection_code,collection_name, collection_is_public,
      collection_institution_ref,collection_institution_formated_name,
      collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
      collection_main_manager_ref,collection_main_manager_formated_name,
@@ -7025,7 +7025,7 @@ BEGIN
      specimen_count_min,specimen_count_max
     )
     (SELECT NEW.id, NEW.category,
-            NEW.collection_ref, coll.collection_type, coll.code, coll.name, 
+            NEW.collection_ref, coll.collection_type, coll.code, coll.name, coll.is_public,
             coll.institution_ref, ins.formated_name, 
             ins.formated_name_ts, ins.formated_name_indexed, ins.sub_type,
             coll.main_manager_ref, peo.formated_name, 
@@ -7120,7 +7120,7 @@ BEGIN
       ELSE
         INSERT INTO darwin_flat
         (spec_ref,category,
-         collection_ref,collection_type,collection_code,collection_name,
+         collection_ref,collection_type,collection_code,collection_name,collection_is_public,
          collection_institution_ref,collection_institution_formated_name,
          collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
          collection_main_manager_ref,collection_main_manager_formated_name,
@@ -7153,7 +7153,7 @@ BEGIN
         )
         (SELECT
          spec_ref,category,
-         collection_ref,collection_type,collection_code,collection_name,
+         collection_ref,collection_type,collection_code,collection_name,collection_is_public,
          collection_institution_ref,collection_institution_formated_name,
          collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
          collection_main_manager_ref,collection_main_manager_formated_name,
@@ -7230,7 +7230,7 @@ BEGIN
       ELSE
         INSERT INTO darwin_flat
         (spec_ref,category,
-         collection_ref,collection_type,collection_code,collection_name,
+         collection_ref,collection_type,collection_code,collection_name,collection_is_public,
          collection_institution_ref,collection_institution_formated_name,
          collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
          collection_main_manager_ref,collection_main_manager_formated_name,
@@ -7268,7 +7268,7 @@ BEGIN
         )
         (SELECT
          spec_ref,category,
-         collection_ref,collection_type,collection_code,collection_name,
+         collection_ref,collection_type,collection_code,collection_name,collection_is_public,
          collection_institution_ref,collection_institution_formated_name,
          collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
          collection_main_manager_ref,collection_main_manager_formated_name,

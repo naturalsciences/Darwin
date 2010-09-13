@@ -380,5 +380,4 @@
   DROP INDEX IF EXISTS idx_darwin_flat_sub_container_type;
   DROP INDEX IF EXISTS idx_darwin_flat_container_storage;
   DROP INDEX IF EXISTS idx_darwin_flat_sub_container_storage;
-
-
+  DROP INDEX IF EXISTS idx_darwin_flat_collection_is_public;

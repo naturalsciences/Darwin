@@ -2017,6 +2017,7 @@ create table darwin_flat
     collection_type varchar,
     collection_code varchar,
     collection_name varchar,
+    collection_is_public boolean not null default true,
     collection_institution_ref integer not null default 0,
     collection_institution_formated_name varchar,
     collection_institution_formated_name_ts tsvector,
@@ -2177,6 +2178,7 @@ comment on column darwin_flat.category is 'Specimen concerned category: physical
 comment on column darwin_flat.collection_ref is 'Reference of collection the specimen concerned belongs to';
 comment on column darwin_flat.collection_code is 'Collection code';
 comment on column darwin_flat.collection_name is 'Collection name - i.e.: Vertebrates,...';
+comment on column darwin_flat.collection_is_public is 'Flag telling if collection is public or not';
 comment on column darwin_flat.collection_institution_ref is 'Institution the collection referenced belongs to';
 comment on column darwin_flat.collection_institution_formated_name is 'Institution the collection referenced belongs to - Formated name';
 comment on column darwin_flat.collection_institution_formated_name_ts is 'Institution the collection referenced belongs to - Formated name ts_vector form - used for search purposes';

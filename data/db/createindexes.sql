@@ -356,6 +356,7 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_container_type on darwin_flat(containe
 CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container_type on darwin_flat(sub_container_type);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_container_storage on darwin_flat(container_storage);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container_storage on darwin_flat(sub_container_storage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_is_public on darwin_flat(collection_is_public);
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
 
