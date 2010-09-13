@@ -25,6 +25,12 @@ class BaseMassActionForm extends sfFormSymfony
     );
   }
 
+  public function doMassAction()
+  {
+    if($this->isBound() && $this->isValid())
+      $this->getEmbeddedForm('MassActionForm')->doMassAction($this->getValue('item_list'));
+  }
+
   public function setSubForm($form_name)
   {
     $subForm = new $form_name();
@@ -41,10 +47,12 @@ class BaseMassActionForm extends sfFormSymfony
     $this->widgetSchema['source'] = new sfWidgetFormChoice(array( 
      'choices' => $action_sources
     ));
+    $this->validatorSchema['source'] = new sfValidatorPass();
 
-    $this->widgetSchema['action'] = new sfWidgetFormChoice(array( 
+    $this->widgetSchema['field_action'] = new sfWidgetFormChoice(array( 
      'choices' =>  array()
     ));
+    $this->validatorSchema['field_action'] = new sfValidatorPass();
 
     $this->widgetSchema['item_list'] = new sfWidgetFormChoice(array( 'choices' => array() ));
     $this->validatorSchema['item_list'] = new sfValidatorDoctrineChoice(array(

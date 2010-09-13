@@ -1859,3 +1859,8 @@ dd
   padding: 1em;
   border: 1px solid #3390A1;
 }
+
+#mass_action_status p
+{
+  margin-top:1em;
+}

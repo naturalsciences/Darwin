@@ -12,36 +12,53 @@ class massactionsActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-//     $actions = $request->getParameter('mass_action',array());
-//     if(!empty($actions) && isset($actions['action']))
-//     {
-//       if($actions['action'] == 'collection_ref')
-//       {
-//         $this->form = new MaCollectionRefForm();
-//       }
-//       else
-//         $this->forward404();
-//     }
-//     else
-//     {
-     $this->form = new BaseMassActionForm();
-//     }
+    $this->form = new BaseMassActionForm();
+    if($request->isMethod('post') && $request->getParameter('mass_action','') != '')
+    {
+      $actions = $request->getParameter('mass_action',array());
+      $this->setSubForm($this->form, $actions['field_action']);
+      $this->form->bind($actions);
+      if($this->form->isValid())
+      {
+        $this->form->doMassAction();
+        $nb_item = count($this->form->getValue('item_list'));
+        $this->redirect('massactions/status?nb_item='.$nb_item.'&'.http_build_query($this->form->getValues()));
+      }
+
+      $possibles_actions = BaseMassActionForm::getPossibleActions();
+      $this->form->getWidget('field_action')->setOption('choices',array_merge(array(''=>''),$possibles_actions[$actions['source']]));
+
+      $items_ids = $actions['item_list'];
+      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids);
+
+    }
+
   }
 
+  public function executeStatus(sfWebRequest $request)
+  {
+    $this->nb_items = $request->getParameter('nb_item',0);
+  }
+
+  protected function setSubForm($form, $type)
+  {
+    if($type == 'collection_ref')
+      $form->setSubForm('MaCollectionRefForm');
+    else
+      $this->forward404();
+    return  $form;
+  }
   public function executeGetSubForm(sfWebRequest $request)
   {
     $this->source = $request->getParameter('source','');
-    $this->action = $request->getParameter('action','');
-    
+    $this->mAction = $request->getParameter('maction','');
     $this->form = new BaseMassActionForm();
-    $this->form->setSubForm('MaCollectionRefForm');
+    $this->setSubForm($this->form, $this->mAction);
   }
 
   public function executeItems(sfWebRequest $request)
   {
     $items_ids = $this->getUser()->getAllPinned();
-    if($request->getParameter('source','') =='specimens')
-      $items_ids = array(1,2,3,4);
     $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids);
   }
   

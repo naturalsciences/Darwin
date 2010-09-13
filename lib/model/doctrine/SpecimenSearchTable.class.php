@@ -180,8 +180,10 @@ specimen_count_min,
 specimen_count_max,
 with_types
 
+
 FROM public.darwin_flat 
 GROUP BY 
+
 spec_ref,
 category,
 collection_ref,

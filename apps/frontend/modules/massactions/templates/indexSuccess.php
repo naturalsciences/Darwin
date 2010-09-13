@@ -1,7 +1,7 @@
 <?php slot('title','Mass Actions');?>
 <div class="page" id="mass_action">
   <h1><?php echo __('Mass Actions :');?></h1>
-  <?php echo form_tag('massactions/index');?>
+  <?php echo form_tag('massactions/index', array('autocomplete'=>"off"));?>
   <table>
     <tbody>
       <tr>
@@ -10,19 +10,26 @@
       </tr>
       <tr>
         <td colspan="2">
-          <div  id="item_list"><?php echo $form['item_list'];?>
+          <div  id="item_list">
+            <?php if(isset($items)):?>
+              <?php include_partial('itemlist',array('items'=>$items));?>
+            <?php else:?>
+              <?php echo $form['item_list'];?>
+            <?php endif;?>
           </div>
         </td>
       </tr>
 
       <tr>
-        <th><?php echo $form['action']->renderLabel();?></th>
-        <td><?php echo $form['action'];?></td>
+        <th><?php echo $form['field_action']->renderLabel();?></th>
+        <td><?php echo $form['field_action'];?></td>
       </tr>
 
       <tr id="action_sub_form">
         <td colspan="2" >
-          <div><?php echo $form['MassActionForm'];?></div>
+          <div>
+            <?php include_partial('subform',array('form'=>$form));?>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -35,8 +42,10 @@
   </form>
 </div>
 <script type="text/javascript">
-function chooseSource()
+function chooseSource(event)
 {
+  if(! event  && $('#mass_action_source').val() != '')
+    return;
   if($('#mass_action_source').val() == '')
   {
     $('#item_list').html('');
@@ -45,11 +54,11 @@ function chooseSource()
   }
   else
   {
+    $("#item_list").html('<img src="<?php echo image_path('loader.gif');?>" />');
     $('#item_list').load('<?php echo url_for('massactions/items');?>/source/' + $('#mass_action_source').val() , function() {
       checkItem();
     });
-
-    $('#mass_action_action').load('<?php echo url_for('massactions/getActions');?>/source/' + $('#mass_action_source').val() ,function(){});
+    $('#mass_action_field_action').load('<?php echo url_for('massactions/getActions');?>/source/' + $('#mass_action_source').val() ,function(){});
   }
 }
 
@@ -57,22 +66,22 @@ function checkItem()
 {
   if( $('#item_list .item_row').length == 0)
   {
-    $('#mass_action_action').val('');
-    $('#mass_action_action').attr('disabled','disabled');
-    $('#mass_action_action').closest('tr').addClass('disabled');
+    $('#mass_action_field_action').val('');
+    $('#mass_action_field_action').attr('disabled','disabled');
+    $('#mass_action_field_action').closest('tr').addClass('disabled');
+    chooseAction();
   }
   else
   {
     $('#item_list').removeClass('disabled');
-    $('#mass_action_action').removeAttr('disabled');
-    $('#mass_action_action').closest('tr').removeClass('disabled');
+    $('#mass_action_field_action').removeAttr('disabled');
+    $('#mass_action_field_action').closest('tr').removeClass('disabled');
   }
-  chooseAction();
 }
 
 function chooseAction()
 {
-  if($('#mass_action_action').val() == '' || $('#mass_action_action').val() == null)
+  if($('#mass_action_field_action').val() == '' || $('#mass_action_field_action').val() == null)
   {
     $('#action_sub_form').addClass('disabled');
     $('#action_sub_form div').html('');
@@ -80,7 +89,8 @@ function chooseAction()
   else
   {
     $('#action_sub_form').removeClass('disabled');
-    $('#action_sub_form > td > div').load('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/action/' + $('#mass_action_action').val() , function() {});
+    $("#action_sub_form > td > div").html('<img src="<?php echo image_path('loader.gif');?>" />');
+    $('#action_sub_form > td > div').load('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/maction/' + $('#mass_action_field_action').val() , function() {});
   }
   changeSubmit(false);
 }
@@ -97,13 +107,13 @@ $(document).ready(function () {
 
   chooseSource();
   $('#mass_action_source').change(chooseSource);
-  $('#mass_action_action').change(chooseAction);
+  $('#mass_action_field_action').change(chooseAction);
   $('#mass_submit').closest('form').submit(function (event)
   {
-    event.preventDefault();
-    if(confirm('<?php echo __('Are you sure ?') ?>'))
+
+    if(! confirm('<?php echo __('Are you sure ?') ?>'))
     {
-      
+      event.preventDefault();
     }
   });
 

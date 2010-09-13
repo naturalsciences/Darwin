@@ -16,4 +16,9 @@ class MaCollectionRefForm extends BaseForm
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger(array('required'=>true));
 
   }
+
+  public function doMassAction($items)
+  {
+    
+  }
 }
