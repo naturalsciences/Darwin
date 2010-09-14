@@ -37,6 +37,7 @@
           </ul>
         </li>
       </ul>
+      <?php echo $form->getValue('what_searched');?>
       <table class="spec_results">
         <thead>
           <tr>

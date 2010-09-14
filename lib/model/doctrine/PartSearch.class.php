@@ -12,6 +12,41 @@
  */
 class PartSearch extends BasePartSearch
 {
+    public function getCountryTags()
+    {
+      $tags = explode(';',$this->getGtuCountryTagValue(''));
+      $nbr = count($tags);
+      if(! $nbr) return "-";
+      $str = '<ul class="name_tags">';
+      foreach($tags as $value)
+        if (strlen($value))
+          $str .=  '<li>' . trim($value).'</li>';
+      $str .= '</ul>';
+      
+      return $str;
+    }
+
+    public function getOtherGtuTags()
+    {
+      $tags = explode(';',$this->getGtuCountryTagValue(''));
+      $nbr = count($tags);
+      if(! $nbr) return "-";
+      $str = '<ul class="name_tags">';
+      foreach($tags as $value)
+        if (strlen($value))
+          $str .=  '<li>' . trim($value).'</li>';
+      $str .= '</ul>';
+      
+      return $str;
+    }
+
+  /* Function returning a flag telling if for the current specimen there are types or not */
+  public function getWithTypes()
+  {
+    if($this->_get('with_types') == '{specimen}' || $this->_get('with_types') == '{}') return false;
+    return true;
+  }
+
   public function getAggregatedName($sep = ' / ')
   {
     $items = array(

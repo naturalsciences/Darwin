@@ -154,8 +154,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     /* Define list of options available for different type of searches to provide */
     $what_searched = array('specimen'=>$this->getI18N()->__('Specimens'), 
-                           'individuals'=>$this->getI18N()->__('Individuals'), 
-                           'parts'=>$this->getI18N()->__('Parts'));
+                           'individual'=>$this->getI18N()->__('Individuals'), 
+                           'part'=>$this->getI18N()->__('Parts'));
     $this->widgetSchema['what_searched'] = new sfWidgetFormChoice(array(
         'choices' => $what_searched,
     ));
@@ -466,20 +466,39 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function doBuildQuery(array $values)
   {
-    if($values['what_searched'] == 'specimen')
-      $query = Doctrine_Query::create()->from('SpecimenSearch s');
-    elseif($values['what_searched'] == 'individual')
-      $query = Doctrine_Query::create()->from('IndividualSearch s');
-    else
-      $query = Doctrine_Query::create()->from('PartSearch s');
 
     $fields = SpecimenSearchTable::getFieldsByType();
-    $str = implode(', ',$fields['specimens']);
-    $query->groupBy($str)
-      ->select('
-        array_accum(distinct individual_type) as with_types,
-        MIN(id) as id,
-        '.$str);
+
+    if($values['what_searched'] == 'specimen')
+    {
+      $str = implode(', ',$fields['specimens']);
+      $query = Doctrine_Query::create()
+        ->from('SpecimenSearch s')
+        ->groupBy($str)
+        ->select('array_accum(distinct individual_type) as with_types,
+          MIN(id) as id, '.$str);
+
+    }
+    elseif($values['what_searched'] == 'individual')
+    {
+      $array_fld = array_merge($fields['specimens'],$fields['individuals']);
+      $str = implode(', ',$array_fld);
+      $query = Doctrine_Query::create()
+        ->from('IndividualSearch s')
+        ->select(' MIN(id) as id,  false as with_types , '.$str)
+        ->andWhere('individual_ref != 0 ')
+        ->groupBy($str);
+    }
+    else
+    {
+      $array_fld = array_merge($fields['specimens'],$fields['individuals']);
+      $array_fld = array_merge($array_fld,$fields['parts']);
+      $str = implode(', ',$array_fld);
+      $query = Doctrine_Query::create()
+        ->select($str.' ,false as with_types')
+        ->andWhere('part_ref != 0 ')
+        ->from('PartSearch s');
+    }
 
     $this->options['query'] = $query;
     $query = parent::doBuildQuery($values);
