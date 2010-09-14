@@ -25,6 +25,9 @@ $(document).ready(function () {
       });
 
     scroll(0,0) ;
+
+    $('form.search_form select.double_list_select-selected option').attr('selected', 'selected');
+
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your specimens')?>', button: 'X' },        
