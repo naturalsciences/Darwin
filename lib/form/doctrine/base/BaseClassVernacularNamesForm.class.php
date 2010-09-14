@@ -17,14 +17,14 @@ abstract class BaseClassVernacularNamesForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'                  => new sfWidgetFormInputHidden(),
       'referenced_relation' => new sfWidgetFormTextarea(),
-      'record_id'           => new sfWidgetFormInputText(),
+      'record_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenSearch'), 'add_empty' => false)),
       'community'           => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
       'id'                  => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'referenced_relation' => new sfValidatorString(),
-      'record_id'           => new sfValidatorInteger(),
+      'record_id'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenSearch'))),
       'community'           => new sfValidatorString(),
     ));
 

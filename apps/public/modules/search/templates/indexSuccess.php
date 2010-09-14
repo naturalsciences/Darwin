@@ -55,7 +55,7 @@
         <td>
           <h2 class="title"><?php echo __("Collections") ?></h2>
           <div class="borded framed">
-          <table class='double_table'>
+          <table class="double_table collections">
             <tr>
               <td>
                 <div class="treelist">
@@ -97,7 +97,7 @@
         <td>
           <h2 class="title"><?php echo __("Types") ?></h2>
           <div class="borded framed" class='triple_table'>
-            &nbsp;
+            <?php echo $form['type'] ; ?>
           </div>
         </td>
         
@@ -146,7 +146,7 @@ $(document).ready(function () {
     });    
     $('#clear_collections').click(function()
     {
-  	  $('table.widget_sub_table').find(':checkbox').attr('checked','');    
+  	  $('table.collections').find(':checkbox').attr('checked','');    
     });   
   var num_fld = 1;
   $('.and_tag').click(function()
@@ -179,7 +179,7 @@ $(document).ready(function () {
       type: "GET",
       url: "<?php echo url_for('search/purposeTag');?>" + '/value/'+ $(this).val(),
       success: function(html)
-      {
+      {      
         parent_el.find('.purposed_tags').html(html);
         parent_el.find('.purposed_tags').show();
       }

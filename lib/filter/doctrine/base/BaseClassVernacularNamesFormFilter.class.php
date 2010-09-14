@@ -14,13 +14,13 @@ abstract class BaseClassVernacularNamesFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'referenced_relation' => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'record_id'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'record_id'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenSearch'), 'add_empty' => true)),
       'community'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
       'referenced_relation' => new sfValidatorPass(array('required' => false)),
-      'record_id'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'record_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SpecimenSearch'), 'column' => 'id')),
       'community'           => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -43,7 +43,7 @@ abstract class BaseClassVernacularNamesFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'                  => 'Number',
       'referenced_relation' => 'Text',
-      'record_id'           => 'Number',
+      'record_id'           => 'ForeignKey',
       'community'           => 'Text',
     );
   }

@@ -27,8 +27,9 @@ class searchActions extends DarwinActions
   
   public function executePurposeTag(sfWebRequest $request)
   {
-    $this->tags = Doctrine::getTable('TagGroups')->getPropositions($request->getParameter('value'), $request->getParameter('group_name'), $request->getParameter('sub_group_name'));
+    $this->tags = Doctrine::getTable('TagGroups')->getPropositions($request->getParameter('value'), '', 'country');
   }
+  
   public function executeTree(sfWebRequest $request)
   {
     $this->items = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )
@@ -40,7 +41,7 @@ class searchActions extends DarwinActions
     // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('search', 'collection_name', $request);
     // Modify the s_url to call the searchResult action when on result page and playing with pager
-    $this->s_url = 'search/searchResult' ;  
+    $this->s_url = 'search/searchResult?toto=1' ;  
     $this->form = new PublicSearchFormFilter();
     // If the search has been triggered by clicking on the search button or with pinned specimens
     if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ))
@@ -84,6 +85,23 @@ class searchActions extends DarwinActions
     }
     $this->setTemplate('index');        
   }   
+  
+  public function executeSearchResult(sfWebRequest $request)
+  {
+    // Do the same as a executeSearch...
+    $this->executeSearch($request) ;
+    // ... and render partial searchSuccess
+    return $this->renderPartial('searchSuccess');
+  } 
+
+  public function executeView(sfWebRequest $request)
+  {
+    $this->specimen = Doctrine::getTable('specimenSearch')->findOneById($request->getParameter('id'));  
+    $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
+    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());  
+    $this->tags = explode(';',$this->specimen->getGtuCountryTagValue()) ; 
+  }
+    
   /**
   * Compute different sources to get the columns that must be showed
   * 1) from form request 2) from session 3) from default value
@@ -111,5 +129,29 @@ class searchActions extends DarwinActions
       $flds[$val] = 'check';
     }
     return $flds;
-  }  
+  } 
+  
+  /**
+  * Return tags for a GTU without the country part
+  */
+  public function executeCompleteTag(sfWebRequest $request)
+  {
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id') );
+    $this->forward404Unless($gtu);
+    $str = "" ;
+    foreach($gtu->TagGroups as $group)
+    {
+      if ($group->getSubGroupName() == 'country')
+      {
+        $str .= '<ul class="country_tags">';
+        $tags = explode(";",$group->getTagValue());
+        foreach($tags as $value)
+          if (strlen($value))
+            $str .=  '<li>' . trim($value).'</li>';
+        $str .= '</ul><div class="clear" />';
+      }
+    }
+    return $this->renderText($str); 
+  }   
 }

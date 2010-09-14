@@ -22,4 +22,16 @@ class UsersComm extends BaseUsersComm
     }
     return $result;
   }
+  
+  public function getDisplayImage($domain = 'all')
+  {    
+    if (strstr($this->getTag(),'work') || $domain = 'all')
+    {
+      if($this->getCommType() == "EMAIL") return "email.png";      
+      elseif (strstr($this->getTag(),'fax'))
+        return "fax.png" ;
+      else
+        return "tel.png" ;
+    }  
+  }
 }

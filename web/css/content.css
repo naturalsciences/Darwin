@@ -1,0 +1,176 @@
+body
+{
+  min-width: 968px;
+  font-size: 10pt;
+  font-family:sans-serif;
+}
+
+table
+{
+  width: 100% ;
+}
+table tr
+{
+  text-align:left;
+}
+
+table td
+{
+  vertical-align: middle;
+}
+
+table td.centered, table th.centered
+{
+  text-align:center;
+}
+
+.page
+{
+  margin-top: 30px;
+  margin-left:51px;
+  margin-right: 51px;
+  width: 1024px;
+}
+
+.line
+{
+  display:block;
+  padding:0.2em; 
+  vertical-align: top;
+}
+
+.framed
+{
+  max-height: 200px;
+  height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+}
+
+.borded
+{
+  border: 3px ridge #3390a1; 
+  margin-top: 0.2em;
+  margin-bottom: 0.5em ;
+  padding-top: 0.2em;
+  padding-left: 0.2em;
+  -moz-border-radius: 0 0 5px 5px ;
+  -webkit-border-radius: 0 0 5px 5px;
+}
+
+.double_table
+{
+ width: 500px;
+}
+
+.triple_table
+{
+ width: 341px ;
+} 
+h1
+{
+  color:#3390a1;
+  font-size:large;
+  margin-bottom: 1em;
+}
+
+h2.title
+{
+	background-color:#5baabd;
+	height:20px;
+	padding-left: 2em;
+	padding-top: 0.4em;
+	margin: 0.1em;
+	color:white;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;	
+}
+
+.medium_small_size
+{
+  width:180px;
+}
+
+.medium_size
+{
+  width:320px;
+}
+
+/* Tree views (Collections list) */
+
+.treelist ul, .treelist ul li
+{
+  margin-left: 0.4em;
+  margin-right: 1em;
+}
+
+.treelist li
+{
+  margin-left: 0.5em;
+  margin-top: 0.5em;  
+  margin-bottom: 0.5em;
+}
+
+.treelist
+{}
+
+.treelist li > ul, .expanded
+{
+  display:none;
+}
+
+.col_name
+{
+  margin-left: 0.5em;
+  padding:0.1em;
+}
+
+.col_name:hover
+{
+  background-color: #ececec;
+}
+.col_name span
+{
+  margin-left: 0.3em;
+  padding-left: 0.2em;
+  border-bottom: 1px dashed #878988;
+}
+
+.check_right
+{
+ float:right
+}
+
+/* Gtu View (Sampling location) */
+
+input.tag_line
+{
+  width:100%;
+}
+
+/* Country tags */
+.country_tags li
+{
+  background-color: #FAFAFA;
+  min-height:1em;
+  min-width:1em;
+  margin-bottom:2em;
+  cursor: pointer;
+  float:left;
+  padding:0.2em;
+  margin:0.3em;
+  border: 1px solid #878988;
+}
+
+.country_tags li
+{
+  font-size: x-small;
+  border-color: #878988;
+  border-left: 6px solid #5baabd;
+
+}
+.country_tags li:hover
+{
+  border-color:#5baabd;
+}
