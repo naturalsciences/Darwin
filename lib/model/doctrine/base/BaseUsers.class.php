@@ -33,6 +33,8 @@
  * @property Doctrine_Collection $MyWidgets
  * @property Doctrine_Collection $Preferences
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method boolean             getIsPhysical()            Returns the current record's "is_physical" value
@@ -62,6 +64,8 @@
  * @method Doctrine_Collection getMyWidgets()             Returns the current record's "MyWidgets" collection
  * @method Doctrine_Collection getPreferences()           Returns the current record's "Preferences" collection
  * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()      Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()            Returns the current record's "PartSearch" collection
  * @method Users               setId()                    Sets the current record's "id" value
  * @method Users               setIsPhysical()            Sets the current record's "is_physical" value
  * @method Users               setSubType()               Sets the current record's "sub_type" value
@@ -90,6 +94,8 @@
  * @method Users               setMyWidgets()             Sets the current record's "MyWidgets" collection
  * @method Users               setPreferences()           Sets the current record's "Preferences" collection
  * @method Users               setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
+ * @method Users               setIndividualSearch()      Sets the current record's "IndividualSearch" collection
+ * @method Users               setPartSearch()            Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -215,6 +221,14 @@ abstract class BaseUsers extends sfDoctrineRecord
              'foreign' => 'user_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_main_manager_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_main_manager_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'collection_main_manager_ref'));
     }

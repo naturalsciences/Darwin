@@ -161,8 +161,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     /* Define list of options available for different type of searches to provide */
     $what_searched = array('specimen'=>$this->getI18N()->__('Specimens'), 
-                           'specimen_individuals'=>$this->getI18N()->__('Individuals'), 
-                           'specimen_parts'=>$this->getI18N()->__('Parts'));
+                           'individuals'=>$this->getI18N()->__('Individuals'), 
+                           'parts'=>$this->getI18N()->__('Parts'));
     $this->widgetSchema['what_searched'] = new sfWidgetFormChoice(array(
         'choices' => $what_searched,
     ));
@@ -473,6 +473,22 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function doBuildQuery(array $values)
   {
+    if($values['what_searched'] == 'specimen')
+      $query = Doctrine_Query::create()->from('SpecimenSearch s');
+    elseif($values['what_searched'] == 'individual')
+      $query = Doctrine_Query::create()->from('IndividualSearch s');
+    else
+      $query = Doctrine_Query::create()->from('PartSearch s');
+
+    $fields = SpecimenSearchTable::getFieldsByType();
+    $str = implode(', ',$fields['specimens']);
+    $query->groupBy($str)
+      ->select('
+        array_accum(distinct individual_type) as with_types,
+        MIN(id) as id,
+        '.$str);
+
+    $this->options['query'] = $query;
     $query = parent::doBuildQuery($values);
 
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));

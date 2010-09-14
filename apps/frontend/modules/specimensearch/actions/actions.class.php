@@ -141,7 +141,7 @@ class specimensearchActions extends DarwinActions
             $this->specimensearch = $this->pagerLayout->execute();
           $spec_list = array();
           foreach($this->specimensearch as $key=>$specimen)
-            $spec_list[] = $specimen->getId() ;
+            $spec_list[] = $specimen->getSpecRef() ;
           $this->codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
 

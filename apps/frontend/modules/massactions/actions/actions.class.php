@@ -59,7 +59,9 @@ class massactionsActions extends sfActions
   public function executeItems(sfWebRequest $request)
   {
     $items_ids = $this->getUser()->getAllPinned();
-    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids);
+    $source = $request->getParameter('source','specimens');
+  
+    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$source);
   }
   
   public function executeGetActions(sfWebRequest $request)

@@ -44,13 +44,8 @@ class SpecimenSearch extends BaseSpecimenSearch
   /* Function returning a flag telling if for the current specimen there are types or not */
   public function getWithTypes()
   {
-    $q = Doctrine_Query::create()->
-      select('count(*) as typeCount')->
-      from('SpecimenSearch')->
-      where('spec_ref = ?', $this->_get('spec_ref'))->
-      andWhere('individual_type <> ?', 'specimen');
-    $types_count = $q->fetchOne();
-    return $types_count['typeCount'];
+    if($this->_get('with_types') == '{specimen}' || $this->_get('with_types') == '{}') return false;
+    return true;
   }
 
   public function getAggregatedName($sep = ' / ')

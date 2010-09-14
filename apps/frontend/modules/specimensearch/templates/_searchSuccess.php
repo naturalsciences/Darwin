@@ -242,7 +242,7 @@
               </td> 
               <td class="col_codes">     
                 <?php foreach($codes as $key=>$code):?>
-                  <?php if ($code->getRecordId() === $specimen->getId()) : ?>
+                  <?php if ($code->getRecordId() === $specimen->getSpecRef()) : ?>
                     <?php if ($code->getCodeCategory() == 'main' ) : ?>
                       <?php echo ('<b>'.$code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().
                       $code->getCodeSuffix()."</b><br />") ; ?>

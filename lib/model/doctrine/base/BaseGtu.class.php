@@ -18,6 +18,8 @@
  * @property Doctrine_Collection $Gtu
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                 Returns the current record's "id" value
  * @method string              getCode()               Returns the current record's "code" value
@@ -32,6 +34,8 @@
  * @method Doctrine_Collection getGtu()                Returns the current record's "Gtu" collection
  * @method Doctrine_Collection getSpecimens()          Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenSearch()     Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()   Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()         Returns the current record's "PartSearch" collection
  * @method Gtu                 setId()                 Sets the current record's "id" value
  * @method Gtu                 setCode()               Sets the current record's "code" value
  * @method Gtu                 setParentRef()          Sets the current record's "parent_ref" value
@@ -45,6 +49,8 @@
  * @method Gtu                 setGtu()                Sets the current record's "Gtu" collection
  * @method Gtu                 setSpecimens()          Sets the current record's "Specimens" collection
  * @method Gtu                 setSpecimenSearch()     Sets the current record's "SpecimenSearch" collection
+ * @method Gtu                 setIndividualSearch()   Sets the current record's "IndividualSearch" collection
+ * @method Gtu                 setPartSearch()         Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -116,6 +122,14 @@ abstract class BaseGtu extends sfDoctrineRecord
              'foreign' => 'gtu_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'gtu_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'gtu_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'gtu_ref'));
     }

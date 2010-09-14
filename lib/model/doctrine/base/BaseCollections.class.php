@@ -29,6 +29,8 @@
  * @property Doctrine_Collection $CollectionsRights
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                       Returns the current record's "id" value
  * @method enum                getCollectionType()           Returns the current record's "collection_type" value
@@ -54,6 +56,8 @@
  * @method Doctrine_Collection getCollectionsRights()        Returns the current record's "CollectionsRights" collection
  * @method Doctrine_Collection getSpecimens()                Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenSearch()           Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()         Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()               Returns the current record's "PartSearch" collection
  * @method Collections         setId()                       Sets the current record's "id" value
  * @method Collections         setCollectionType()           Sets the current record's "collection_type" value
  * @method Collections         setCode()                     Sets the current record's "code" value
@@ -78,6 +82,8 @@
  * @method Collections         setCollectionsRights()        Sets the current record's "CollectionsRights" collection
  * @method Collections         setSpecimens()                Sets the current record's "Specimens" collection
  * @method Collections         setSpecimenSearch()           Sets the current record's "SpecimenSearch" collection
+ * @method Collections         setIndividualSearch()         Sets the current record's "IndividualSearch" collection
+ * @method Collections         setPartSearch()               Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -195,6 +201,14 @@ abstract class BaseCollections extends sfDoctrineRecord
              'foreign' => 'collection_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'collection_ref'));
     }
