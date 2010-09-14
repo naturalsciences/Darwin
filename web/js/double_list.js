@@ -3,7 +3,6 @@ var sfDoubleList =
   init: function(id, className)
   {
     form = sfDoubleList.get_current_form(id);
-
     callback = function() { sfDoubleList.submit(form, className) };
 
     if (form.addEventListener)
@@ -34,7 +33,6 @@ var sfDoubleList =
   submit: function(form, className)
   {
     var element;
-
     for (var i = 0; i < form.elements.length; i++)
     {
       element = form.elements[i];

@@ -9,8 +9,8 @@
     <?php echo form_tag('specimensearch/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'specimensearch_form','id'=>'specimen_filter'));?>
       <ul id="intro" class="hidden">
         <?php 
-          // Render all the form fields as hidden input if possible. if the value is an array or and object render them as usual
-          foreach($form as $row)
+        // Render all the form fields as hidden input if possible. if the value is an array or and object render them as usual
+        foreach($form as $row)
         { 
           $w = new sfWidgetFormInputHidden();
           $attributes = $form->getWidget($row->getName())->getAttributes();
@@ -40,42 +40,41 @@
       <?php if(isset($is_pinned_only_search)):?>
         <input type="hidden" name="pinned" value="true" />
       <?php endif;?>
-        <script  type="text/javascript">
-$(document).ready(function () {
-
-  $("#criteria_butt").click(function(){
-    $('#specimen_filter').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
-  });
-
-  <?php if($is_specimen_search):?>
-    $('#del_from_spec').click(function(){
-      pins = '';
-      pins_array = new Array();
-      $('.spec_results tbody tr input.spec_selected:checked').each(function(){
-        rid = getIdInClasses($(this).closest('tr'));
-        pins_array.push(rid);
-      });
-      if(pins_array.length == 0)
-      {
-        alert("<?php echo __('You must select at least one specimen.');?>");
-      }
-      else
-      {
-        if(confirm('<?php echo __('Are you sure?');?>'))
-        {
-          $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/ids/' + pins_array.join(',') ,function (html){
-            //$('.rid_'+rid).closest('tbody').remove();
-            for(var i = 0; i < pins_array.length; ++i)
+      <script  type="text/javascript">
+        $(document).ready(function () {
+          $("#criteria_butt").click(function(){
+            // Reselect all double list options that should be selected to be taken in account in the form submit
+            $('form#specimen_filter select.double_list_select-selected option').attr('selected', 'selected');
+            // Submit the form with criteria = 1 -> telling we request the index template
+            $('#specimen_filter').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
+          });
+        <?php if($is_specimen_search):?>
+          $('#del_from_spec').click(function(){
+            pins = '';
+            pins_array = new Array();
+            $('.spec_results tbody tr input.spec_selected:checked').each(function(){
+              rid = getIdInClasses($(this).closest('tr'));
+              pins_array.push(rid);
+            });
+            if(pins_array.length == 0)
             {
-              $('.rid_' + pins_array[i]).closest('tbody').remove();
+              alert("<?php echo __('You must select at least one specimen.');?>");
+            }
+            else
+            {
+              if(confirm('<?php echo __('Are you sure?');?>'))
+              {
+                $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/ids/' + pins_array.join(',') ,function (html){
+                  for(var i = 0; i < pins_array.length; ++i)
+                  {
+                    $('.rid_' + pins_array[i]).closest('tbody').remove();
+                  }
+                });
+              }
             }
           });
-        }
-      }
-    });
-  <?php endif;?>
-
-});
+        <?php endif;?>
+        });
       </script>
     </form>
       <div class="check_right" id="save_button"> 

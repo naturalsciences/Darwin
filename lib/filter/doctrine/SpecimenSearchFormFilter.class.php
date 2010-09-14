@@ -136,25 +136,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);
 
-
-/*    $this->widgetSchema['tools'] = new sfWidgetFormDarwinDoctrineChoice(array(
-        'model' => 'CollectingTools',
-        'table_method' => 'getAll',
-        'method' => 'getTool',
-        'key_method' => 'getId',
-        'multiple' => true,
-        'expanded' => true,
-        'add_empty' => false,
-    ));
-    $this->widgetSchema['methods'] = new sfWidgetFormDarwinDoctrineChoice(array(
-        'model' => 'CollectingMethods',
-        'table_method' => 'getAll',
-        'method' => 'getMethod',
-        'key_method' => 'getId',
-        'multiple' => true,
-        'expanded' => true,
-        'add_empty' => false,
-    ));*/
     $this->widgetSchema['tools'] = new widgetFormSelectDoubleListFilterable(
       array(
             'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),

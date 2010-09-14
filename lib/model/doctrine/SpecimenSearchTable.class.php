@@ -31,6 +31,8 @@ class SpecimenSearchTable extends Doctrine_Table
       'status' => 'status',
       'social' => 'social',
       'rockform' => 'rockform',
+      'tools' => 'tools',
+      'methods' => 'methods',
     );
 
     public static function getInstance()

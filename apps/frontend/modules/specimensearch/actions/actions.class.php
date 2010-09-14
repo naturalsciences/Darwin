@@ -36,6 +36,8 @@ class specimensearchActions extends DarwinActions
 
   /**
     * Action executed when searching a specimen - trigger by the click on the search button
+    * It's also the same action that is used to open a saved search reopened, a list of pinned specimens
+    * or when clicking on the back to criterias button
     * @param sfWebRequest $request Request coming from browser
     */ 
   public function executeSearch(sfWebRequest $request)
@@ -82,18 +84,24 @@ class specimensearchActions extends DarwinActions
       }
       $this->form->bind($criterias['specimen_search_filters']) ;
     }
+    // If search_id parameter is given it means we try to open an already saved search with its criterias
     elseif($request->getParameter('search_id','') != '')
     {
+      // Get the saved search asked
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
-
+      // If not available, not found -> forward on 404 page
       $this->forward404Unless($saved_search);
 
       if($saved_search->getisOnlyId())
         $this->is_specimen_search = $saved_search->getId();
+      // Get all search criterias from DB
       $criterias = unserialize($saved_search->getSearchCriterias());
+      // Transform all visible fields stored as a string with | as separator and store it into col_fields field
       $criterias['specimen_search_filters']['col_fields'] = implode('|',$saved_search->getVisibleFieldsInResult()) ;
+      // If data were set, in other terms specimen_search_filters array is available...
       if(isset($criterias['specimen_search_filters']))
       {
+        // Bring all the required/necessary widgets on page
         Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
         if($saved_search->getisOnlyId() && $criterias['specimen_search_filters']['spec_ids']=='')
           $criterias['specimen_search_filters']['spec_ids'] = '0';
@@ -106,9 +114,11 @@ class specimensearchActions extends DarwinActions
       if ($this->form->isValid())
       {
         $this->getUser()->storeRecPerPage( $this->form->getValue('rec_per_page'));
+        // When criteria parameter is given, it means we go back to criterias
         if($request->hasParameter('criteria'))
         {
           $this->setTemplate('index');
+          // Bring all the required/necessary widgets on page
           Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
           $this->loadWidgets();
           return;
@@ -196,6 +206,11 @@ class specimensearchActions extends DarwinActions
     return $flds;
   }
 
+  /**
+  * This search is ajaxly called to render only the results -> i.e. triggered from a pager action
+  * @param sfWebRequest $request the request passed
+  * @return A partial with the results
+  */
   public function executeSearchResult(sfWebRequest $request)
   {
     // Do the same as a executeSearch...
