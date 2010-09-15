@@ -6,7 +6,7 @@
   
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
-    <?php echo form_tag('specimensearch/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'specimensearch_form','id'=>'specimen_filter'));?>
+    <?php echo form_tag('specimensearch/searchResult'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'specimensearch_form','id'=>'specimen_filter'));?>
       <ul id="intro" class="hidden">
         <?php 
           // Render all the form fields as hidden input if possible. if the value is an array or and object render them as usual

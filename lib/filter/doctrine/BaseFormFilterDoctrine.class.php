@@ -82,7 +82,6 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 		$pg_array_string .= $conn_MGR->quote($term, 'string').',';
 
 	  $pg_array_string = substr($pg_array_string, 0, -1); //remove last ','
-
 	  $statement = $conn->prepare("SELECT vt.anyelement as search, word from fct_explode_array(array[$pg_array_string]) as vt  
 		LEFT JOIN words on word % vt.anyelement
 		WHERE referenced_relation = :table
@@ -111,17 +110,16 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	  unset($search['with']);
 	  foreach($search as $search_group)
 	  {
-		$tsquery_arr = array();
-		foreach($search_group as $search_term)
-		{
-		  $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
-		}
-		$tsquery = implode(' & ',$tsquery_arr);
-		$tsquery = $conn_MGR->quote($tsquery,'string');
-		$query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
+		  $tsquery_arr = array();
+		  foreach($search_group as $search_term)
+		  {
+		    $tsquery_arr[] =  self::getWordsForTerms($search_term, $results);
+		  }
+		  $tsquery = implode(' & ',$tsquery_arr);
+		  $tsquery = $conn_MGR->quote($tsquery,'string');
+		  $query->andWhere('not '.$alias.'.'.$field." @@ to_tsquery('simple',".$tsquery.") ");
 	  }
-	  
-	}
+	}	
 	return $query;
   }
 

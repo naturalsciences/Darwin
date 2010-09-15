@@ -248,76 +248,16 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     return $query;
   }
-  
-  public function addTaxonomyCommonNamesColumnQuery($query, $val)
-  {
-    if($val != '')
-    {
-      $query->innerJoin('r.ClassVernacularNames as cvn')
-            ->innerJoin('VernacularNames as tvn ON cvn.id = tvn.class_vernacular_name_ref')
-            ->andWhere('cvn.referenced_relation = ?', 'taxonomy');
-      $this->addNamingColumnQuery($query, 'vernacular_names', 'name_ts', $val, 'tvn');
-    }
-  }
-  
-  public function addChronoCommonNamesColumnQuery($query, $val)
-  {
-    if($val != '')
-    {
-      $query->innerJoin('r.ChronoCommonNames as cvn')
-            ->innerJoin('VernacularNames as tvn ON cvn.id = tvn.class_vernacular_name_ref')
-            ->andWhere('cvn.referenced_relation = ?', 'chronostratigraphy');
-      $this->addNamingColumnQuery($query, 'vernacular_names', 'name_ts', $val, 'tvn');
-    }
-  }  
-    
-  public function addLithoCommonNamesColumnQuery($query, $val)
-  {
-    if($val != '')
-    {
-      $query->innerJoin('r.LithoCommonNames as cvn')
-            ->innerJoin('VernacularNames as tvn ON cvn.id = tvn.class_vernacular_name_ref')
-            ->andWhere('cvn.referenced_relation = ?', 'lithostratigraphy');
-      $this->addNamingColumnQuery($query, 'vernacular_names', 'name_ts', $val, 'tvn');
-    }
-  }
-  
-  public function addMineralCommonNamesColumnQuery($query, $val)
-  {
-    if($val != '')
-    {
-      $query->innerJoin('r.MineralCommonNames as cvn')
-            ->innerJoin('VernacularNames as tvn ON cvn.id = tvn.class_vernacular_name_ref')
-            ->andWhere('cvn.referenced_relation = ?', 'mineralogy');
-      $this->addNamingColumnQuery($query, 'vernacular_names', 'name_ts', $val, 'tvn');
-    }
-  }  
-    
-  public function addLithologyCommonNamesColumnQuery($query, $val)
-  {
-    if($val != '')
-    {
-      $query->innerJoin('r.LithologyCommonNames as cvn')
-            ->innerJoin('VernacularNames as tvn ON cvn.id = tvn.class_vernacular_name_ref')
-            ->andWhere('cvn.referenced_relation = ?', 'lithology');
-      $this->addNamingColumnQuery($query, 'vernacular_names', 'name_ts', $val, 'tvn');
-    }
-  } 
      
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
-    
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));    
     if ($values['lithology_level_ref'] != '') $query->andWhere('lithology_level_ref = ?', intval($values['lithology_level_ref']));
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
-    if ($values['taxon_common_name'] != '') $this->addTaxonomyCommonNamesColumnQuery($query, $values['taxon_common_name']);
-    if ($values['chrono_common_name'] != '') $this->addChronoCommonNamesColumnQuery($query, $values['chrono_common_name']);
-    if ($values['litho_common_name'] != '') $this->addLithoCommonNamesColumnQuery($query, $values['litho_common_name']); 
-    if ($values['lithology_common_name'] != '') $this->addLithologyCommonNamesColumnQuery($query, $values['lithology_common_name']);
-    if ($values['mineral_common_name'] != '') $this->addMineralCommonNamesColumnQuery($query, $values['mineral_common_name']);
+ 
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['taxon_name'],null,'taxon_name_indexed');
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');    
     $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');        
