@@ -213,7 +213,7 @@ class SpecimensForm extends BaseSpecimensForm
             'add_url'=>'methods_and_tools/addMethod'
            )
     );
-    $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
+    $this->widgetSchema['coll_methods'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Collecting tools */
 
@@ -226,7 +226,7 @@ class SpecimensForm extends BaseSpecimensForm
             'add_url'=>'methods_and_tools/addTool'
            )
     );
-    $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
+    $this->widgetSchema['coll_tools'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Acquisition categories */
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
@@ -387,13 +387,27 @@ class SpecimensForm extends BaseSpecimensForm
         'required' => false,
         ));
 
+    $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
+
+    $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
+
     $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
+
     $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+
     $this->validatorSchema['collector'] = new sfValidatorPass();
+
     $this->validatorSchema['comment'] = new sfValidatorPass();    
+
     $this->validatorSchema['code'] = new sfValidatorPass();
+
     $this->validatorSchema['ident'] = new sfValidatorPass();
+
     $this->validatorSchema['accompanying'] = new sfValidatorPass();
+
+    $this->validatorSchema['coll_tools'] = new sfValidatorPass();
+
+    $this->validatorSchema['coll_methods'] = new sfValidatorPass();
 
     $this->validatorSchema->setPostValidator(
         new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
@@ -528,6 +542,8 @@ class SpecimensForm extends BaseSpecimensForm
       'specimen_count_min',
       'specimen_count_max',
       ),
+      'Tool' => array('collecting_tools_list'),
+      'Method' => array('collecting_methods_list'),
     );
   }
   public function bind(array $taintedValues = null, array $taintedFiles = null)
@@ -641,7 +657,11 @@ class SpecimensForm extends BaseSpecimensForm
         }
       }
     }
-
+    
+    /* For each embedded informations or many-to-many data such as collecting tools and methods
+     * test if the widget is on screen by testing a flag field present on the concerned widget
+     * If widget is not on screen, remove the field from list of fields to be bound, and than potentially saved
+    */
     if(!isset($taintedValues['code']))
     {
       $this->offsetUnset('Codes');
@@ -676,6 +696,16 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['Identifications']);
       $this->offsetUnset('newIdentification');
       unset($taintedValues['newIdentification']);
+    }
+    if(!isset($taintedValues['coll_tools']))
+    {
+      $this->offsetUnset('collecting_tools_list');
+      unset($taintedValues['collecting_tools_list']);
+    }
+    if(!isset($taintedValues['coll_methods']))
+    {
+      $this->offsetUnset('collecting_methods_list');
+      unset($taintedValues['collecting_methods_list']);
     }
 
     parent::bind($taintedValues, $taintedFiles);
