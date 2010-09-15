@@ -59,12 +59,12 @@ class specimensearchActions extends DarwinActions
       // If pinned specimens called
       if($request->hasParameter('pinned'))
       {
-        // Store all ids pinned
-        $ids=implode(',',$this->getUser()->getAllPinned() );
-        if($ids=='')
+        // Get all ids pinned
+        $ids = implode(',',$this->getUser()->getAllPinned() );
+        if($ids == '')
           $ids = '0';
         $this->is_pinned_only_search=true;
-        // Set the list of specimen ids
+        // Set the list of ids as criteria
         $criterias['specimen_search_filters']['spec_ids'] = $ids;
         // and the list of visible fields from the list of default visible fields defined in form configuration
         $criterias['specimen_search_filters']['col_fields'] = $this->form->getDefault('col_fields');
@@ -76,9 +76,9 @@ class specimensearchActions extends DarwinActions
         $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
         // Forward 404 if we don't get the search requested
         $this->forward404Unless($saved_search);
-        
+
         $criterias['specimen_search_filters']['spec_ids'] = $saved_search->getSearchedIdString();
-        if($criterias['specimen_search_filters']['spec_ids']=='')
+        if($criterias['specimen_search_filters']['spec_ids'] == '')
           $criterias['specimen_search_filters']['spec_ids'] = '0';
         $this->is_specimen_search = $saved_search->getId();
       }

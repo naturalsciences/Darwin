@@ -159,8 +159,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['what_searched'] = new sfWidgetFormChoice(array(
         'choices' => $what_searched,
     ));
-    $this->validatorSchema['what_searched'] = new sfValidatorPass();
-//     $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>$what_searched, 'required'=>true));
+
+    $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>$what_searched, 'required'=>false,'empty_value'=>'specimen'));
 
     /* Labels */
     $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',

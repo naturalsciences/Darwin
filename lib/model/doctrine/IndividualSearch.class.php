@@ -40,11 +40,10 @@ class IndividualSearch extends BaseIndividualSearch
       return $str;
     }
 
-  /* Function returning a flag telling if for the current specimen there are types or not */
   public function getWithTypes()
   {
-    if($this->_get('with_types') == '{specimen}' || $this->_get('with_types') == '{}') return false;
-    return true;
+    if($this->getIndividualType() != 'specimen') return true;
+    else return false;
   }
 
   public function getAggregatedName($sep = ' / ')
