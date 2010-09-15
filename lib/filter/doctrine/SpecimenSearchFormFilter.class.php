@@ -98,7 +98,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                 );
     $this->validatorSchema['mineral_level_ref'] = new sfValidatorString(array('required' => false));              
 //    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
-  	$this->hasJoinTaxa = false;
+    $this->hasJoinTaxa = false;
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));
     $maxDate->setStart(false);
@@ -136,38 +136,31 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);
 
-
-    $this->widgetSchema['tools'] = new sfWidgetFormDarwinDoctrineChoice(array(
-        'model' => 'CollectingTools',
-        'table_method' => 'getAll',
-        'method' => 'getTool',
-        'key_method' => 'getId',
-        'multiple' => true,
-        'expanded' => true,
-        'add_empty' => false,
-    ));
-    $this->widgetSchema['methods'] = new sfWidgetFormDarwinDoctrineChoice(array(
-        'model' => 'CollectingMethods',
-        'table_method' => 'getAll',
-        'method' => 'getMethod',
-        'key_method' => 'getId',
-        'multiple' => true,
-        'expanded' => true,
-        'add_empty' => false,
-    ));
+    $this->widgetSchema['tools'] = new widgetFormSelectDoubleListFilterable(
+      array(
+            'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available')
+           ));
+    $this->widgetSchema['methods'] = new widgetFormSelectDoubleListFilterable(
+      array(
+            'choices' => Doctrine::getTable('CollectingMethods')->fetchMethods(),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available')
+           ));
     $this->validatorSchema['methods'] = new sfValidatorPass();
     $this->validatorSchema['tools'] = new sfValidatorPass();
 
 
     /* Define list of options available for different type of searches to provide */
     $what_searched = array('specimen'=>$this->getI18N()->__('Specimens'), 
-                           'specimen_individuals'=>$this->getI18N()->__('Individuals'), 
-                           'specimen_parts'=>$this->getI18N()->__('Parts'));
+                           'individual'=>$this->getI18N()->__('Individuals'), 
+                           'part'=>$this->getI18N()->__('Parts'));
     $this->widgetSchema['what_searched'] = new sfWidgetFormChoice(array(
         'choices' => $what_searched,
     ));
-    $this->validatorSchema['what_searched'] = new sfValidatorPass();
-//     $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>$what_searched, 'required'=>true));
+
+    $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>array_keys($what_searched), 'required'=>false,'empty_value'=>'specimen'));
 
     /* Labels */
     $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
@@ -473,6 +466,41 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function doBuildQuery(array $values)
   {
+
+    $fields = SpecimenSearchTable::getFieldsByType();
+
+    if($values['what_searched'] == 'specimen')
+    {
+      $str = implode(', ',$fields['specimens']);
+      $query = Doctrine_Query::create()
+        ->from('SpecimenSearch s')
+        ->groupBy($str)
+        ->select('array_accum(distinct individual_type) as with_types,
+          MIN(id) as id, '.$str);
+
+    }
+    elseif($values['what_searched'] == 'individual')
+    {
+      $array_fld = array_merge($fields['specimens'],$fields['individuals']);
+      $str = implode(', ',$array_fld);
+      $query = Doctrine_Query::create()
+        ->from('IndividualSearch s')
+        ->select(' MIN(id) as id,  false as with_types , '.$str)
+        ->andWhere('individual_ref != 0 ')
+        ->groupBy($str);
+    }
+    else
+    {
+      $array_fld = array_merge($fields['specimens'],$fields['individuals']);
+      $array_fld = array_merge($array_fld,$fields['parts']);
+      $str = implode(', ',$array_fld);
+      $query = Doctrine_Query::create()
+        ->select($str.' ,false as with_types')
+        ->andWhere('part_ref != 0 ')
+        ->from('PartSearch s');
+    }
+
+    $this->options['query'] = $query;
     $query = parent::doBuildQuery($values);
 
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));

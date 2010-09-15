@@ -30,6 +30,8 @@
  * @property SpecimenParts $Parent
  * @property Doctrine_Collection $SpecimenParts
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                      Returns the current record's "id" value
  * @method string              getPath()                    Returns the current record's "path" value
@@ -56,6 +58,8 @@
  * @method SpecimenParts       getParent()                  Returns the current record's "Parent" value
  * @method Doctrine_Collection getSpecimenParts()           Returns the current record's "SpecimenParts" collection
  * @method Doctrine_Collection getSpecimenSearch()          Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()        Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()              Returns the current record's "PartSearch" collection
  * @method SpecimenParts       setId()                      Sets the current record's "id" value
  * @method SpecimenParts       setPath()                    Sets the current record's "path" value
  * @method SpecimenParts       setParentRef()               Sets the current record's "parent_ref" value
@@ -81,6 +85,8 @@
  * @method SpecimenParts       setParent()                  Sets the current record's "Parent" value
  * @method SpecimenParts       setSpecimenParts()           Sets the current record's "SpecimenParts" collection
  * @method SpecimenParts       setSpecimenSearch()          Sets the current record's "SpecimenSearch" collection
+ * @method SpecimenParts       setIndividualSearch()        Sets the current record's "IndividualSearch" collection
+ * @method SpecimenParts       setPartSearch()              Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -198,6 +204,14 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
              'foreign' => 'parent_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'part_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'part_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'part_ref'));
     }

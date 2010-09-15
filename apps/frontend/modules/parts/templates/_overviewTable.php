@@ -70,18 +70,18 @@
     <?php endif;?>
 </table>
 <script  type="text/javascript">
-  
+$(document).ready(function () {
   $('img.extd_info').each(function(){
-     
-  tip_content = $(this).next().html();
-  $(this).qtip(
-  {
+    tip_content = $(this).next().html();
+    $(this).qtip(
+    {
          content: tip_content,
          style: {
             tip: true, // Give it a speech bubble tip with automatic corner detection
             name: 'cream'
          }
-      });
     });
+  });
+});
 </script>
 <?php endif;?>

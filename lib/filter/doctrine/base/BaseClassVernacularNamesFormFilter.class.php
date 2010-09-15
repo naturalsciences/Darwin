@@ -20,7 +20,7 @@ abstract class BaseClassVernacularNamesFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'referenced_relation' => new sfValidatorPass(array('required' => false)),
-      'record_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SpecimenSearch'), 'column' => 'id')),
+      'record_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SpecimenSearch'), 'column' => 'spec_ref')),
       'community'           => new sfValidatorPass(array('required' => false)),
     ));
 

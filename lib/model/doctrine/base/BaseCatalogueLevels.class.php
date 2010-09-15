@@ -17,6 +17,8 @@
  * @property Doctrine_Collection $Mineralogy
  * @property Doctrine_Collection $Lithology
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                  Returns the current record's "id" value
  * @method string              getLevelType()           Returns the current record's "level_type" value
@@ -30,6 +32,8 @@
  * @method Doctrine_Collection getMineralogy()          Returns the current record's "Mineralogy" collection
  * @method Doctrine_Collection getLithology()           Returns the current record's "Lithology" collection
  * @method Doctrine_Collection getSpecimenSearch()      Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()    Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()          Returns the current record's "PartSearch" collection
  * @method CatalogueLevels     setId()                  Sets the current record's "id" value
  * @method CatalogueLevels     setLevelType()           Sets the current record's "level_type" value
  * @method CatalogueLevels     setLevelName()           Sets the current record's "level_name" value
@@ -42,6 +46,8 @@
  * @method CatalogueLevels     setMineralogy()          Sets the current record's "Mineralogy" collection
  * @method CatalogueLevels     setLithology()           Sets the current record's "Lithology" collection
  * @method CatalogueLevels     setSpecimenSearch()      Sets the current record's "SpecimenSearch" collection
+ * @method CatalogueLevels     setIndividualSearch()    Sets the current record's "IndividualSearch" collection
+ * @method CatalogueLevels     setPartSearch()          Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -105,6 +111,14 @@ abstract class BaseCatalogueLevels extends sfDoctrineRecord
              'foreign' => 'level_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'taxon_level_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'taxon_level_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'taxon_level_ref'));
     }

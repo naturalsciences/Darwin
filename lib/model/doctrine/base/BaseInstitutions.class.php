@@ -16,6 +16,8 @@
  * @property integer $db_people_type
  * @property Doctrine_Collection $PeopleRelationships
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method boolean             getIsPhysical()            Returns the current record's "is_physical" value
@@ -28,6 +30,8 @@
  * @method integer             getDbPeopleType()          Returns the current record's "db_people_type" value
  * @method Doctrine_Collection getPeopleRelationships()   Returns the current record's "PeopleRelationships" collection
  * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()      Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()            Returns the current record's "PartSearch" collection
  * @method Institutions        setId()                    Sets the current record's "id" value
  * @method Institutions        setIsPhysical()            Sets the current record's "is_physical" value
  * @method Institutions        setSubType()               Sets the current record's "sub_type" value
@@ -39,6 +43,8 @@
  * @method Institutions        setDbPeopleType()          Sets the current record's "db_people_type" value
  * @method Institutions        setPeopleRelationships()   Sets the current record's "PeopleRelationships" collection
  * @method Institutions        setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
+ * @method Institutions        setIndividualSearch()      Sets the current record's "IndividualSearch" collection
+ * @method Institutions        setPartSearch()            Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -93,6 +99,14 @@ abstract class BaseInstitutions extends sfDoctrineRecord
              'foreign' => 'person_1_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_institution_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'collection_institution_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'collection_institution_ref'));
     }

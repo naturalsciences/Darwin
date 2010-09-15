@@ -20,6 +20,8 @@
  * @property Specimens $Specimens
  * @property Doctrine_Collection $SpecimenParts
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                             Returns the current record's "id" value
  * @method integer             getSpecimenRef()                    Returns the current record's "specimen_ref" value
@@ -36,6 +38,8 @@
  * @method Specimens           getSpecimens()                      Returns the current record's "Specimens" value
  * @method Doctrine_Collection getSpecimenParts()                  Returns the current record's "SpecimenParts" collection
  * @method Doctrine_Collection getSpecimenSearch()                 Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()               Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()                     Returns the current record's "PartSearch" collection
  * @method SpecimenIndividuals setId()                             Sets the current record's "id" value
  * @method SpecimenIndividuals setSpecimenRef()                    Sets the current record's "specimen_ref" value
  * @method SpecimenIndividuals setType()                           Sets the current record's "type" value
@@ -51,6 +55,8 @@
  * @method SpecimenIndividuals setSpecimens()                      Sets the current record's "Specimens" value
  * @method SpecimenIndividuals setSpecimenParts()                  Sets the current record's "SpecimenParts" collection
  * @method SpecimenIndividuals setSpecimenSearch()                 Sets the current record's "SpecimenSearch" collection
+ * @method SpecimenIndividuals setIndividualSearch()               Sets the current record's "IndividualSearch" collection
+ * @method SpecimenIndividuals setPartSearch()                     Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -135,6 +141,14 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
              'foreign' => 'specimen_individual_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'individual_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'individual_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'individual_ref'));
     }

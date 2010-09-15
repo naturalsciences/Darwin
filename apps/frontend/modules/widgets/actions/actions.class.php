@@ -39,23 +39,32 @@ class widgetsActions extends DarwinActions
       ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), 'visible');
 
     $title = Doctrine::getTable('MyWidgets')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
-                                                                 $request->getParameter('widget'),
-                                                                 $request->getParameter('category')."_widget");
+                                                             $request->getParameter('widget'),
+                                                             $request->getParameter('category')."_widget");
     if($title)
     {
       $title = $title[0]['title'];
     }
     
+    $mandatory = Doctrine::getTable('MyWidgets')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
+                                                                 $request->getParameter('widget'),
+                                                                 $request->getParameter('category')."_widget");
+    if($mandatory)
+    {
+      $mandatory = $mandatory[0]['mandatory'];
+    }
+    
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
+            'is_mandatory' => $mandatory,
             'category' => $this->getComponentFromCategory($request->getParameter('category')),
             'title' => $title,
-      'options' => array(
-    'eid' =>  $request->getParameter('eid',null),
-    'table' => $this->getTableFromCategory($request->getParameter('category')),
-        ),
-        ));
+            'options' => array(
+              'eid' =>  $request->getParameter('eid',null),
+              'table' => $this->getTableFromCategory($request->getParameter('category')),
+            ),
+           ));
   }
 
   public function executeChangeStatus(sfWebRequest $request)

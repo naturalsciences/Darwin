@@ -13,12 +13,12 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'), 'add_empty' => true)),
       'category'                                      => new sfWidgetFormFilterInput(),
       'collection_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'add_empty' => true)),
       'collection_type'                               => new sfWidgetFormFilterInput(),
       'collection_code'                               => new sfWidgetFormFilterInput(),
       'collection_name'                               => new sfWidgetFormFilterInput(),
+      'collection_is_public'                          => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'collection_institution_ref'                    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('CollectionInstitution'), 'add_empty' => true)),
       'collection_institution_formated_name'          => new sfWidgetFormFilterInput(),
       'collection_institution_formated_name_ts'       => new sfWidgetFormFilterInput(),
@@ -142,12 +142,12 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Specimen'), 'column' => 'id')),
       'category'                                      => new sfValidatorPass(array('required' => false)),
       'collection_ref'                                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Collection'), 'column' => 'id')),
       'collection_type'                               => new sfValidatorPass(array('required' => false)),
       'collection_code'                               => new sfValidatorPass(array('required' => false)),
       'collection_name'                               => new sfValidatorPass(array('required' => false)),
+      'collection_is_public'                          => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'collection_institution_ref'                    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('CollectionInstitution'), 'column' => 'id')),
       'collection_institution_formated_name'          => new sfValidatorPass(array('required' => false)),
       'collection_institution_formated_name_ts'       => new sfValidatorPass(array('required' => false)),
@@ -287,13 +287,13 @@ abstract class BaseSpecimenSearchFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'                                            => 'Number',
-      'spec_ref'                                      => 'ForeignKey',
+      'spec_ref'                                      => 'Number',
       'category'                                      => 'Text',
       'collection_ref'                                => 'ForeignKey',
       'collection_type'                               => 'Text',
       'collection_code'                               => 'Text',
       'collection_name'                               => 'Text',
+      'collection_is_public'                          => 'Boolean',
       'collection_institution_ref'                    => 'ForeignKey',
       'collection_institution_formated_name'          => 'Text',
       'collection_institution_formated_name_ts'       => 'Text',

@@ -223,6 +223,9 @@ EOF
     $associated = array();
     $unassociated = array();
 
+    if (!is_array($value))
+      $value = array($value);
+
     foreach ($choices as $key => $option)
     {
       if (in_array(strval($key), $value))

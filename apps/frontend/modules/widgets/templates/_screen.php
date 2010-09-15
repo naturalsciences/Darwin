@@ -14,14 +14,14 @@ if(!isset($columns)) $columns = 1;
 	<div class="board_spacer">&nbsp;</div>
 	<ul class="board_col<?php if($encod) echo ' encod_screen';?>">
     <?php endif;?>
-
     <?php include_partial('widgets/wlayout', array(
-	'widget' => $widget->getGroupName(),
-     'title' => $widget->getTitlePerso(),
-	'is_opened' => $widget->getOpened(),
-	'category' => $category,
-	'options' => $options,
-	)); ?>
+      'widget' => $widget->getGroupName(),
+      'title' => $widget->getTitlePerso(),
+      'is_opened' => $widget->getOpened(),
+      'is_mandatory' => $widget->getMandatory(),
+      'category' => $category,
+      'options' => $options,
+      )); ?>
     <?php $has_one_visible=true;?>
   <?php endforeach;?>
 

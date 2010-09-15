@@ -29,6 +29,18 @@ class MyWidgetsTable extends DarwinTable
     return $q->execute();
   }
 
+  public function getWidgetMandatory($userId, $widget, $category)
+  {
+    $q = Doctrine_Query::create()
+         ->select('p.mandatory')
+         ->from('MyWidgets p')
+         ->andWhere('p.user_ref = ?', $userId)
+         ->andWhere('p.category = ?', $category)
+         ->andWhere('p.group_name = ?', $widget)
+         ->andWhere('p.is_available = true') ;
+    return $q->execute();
+  }
+
   public function getWidgets($category)
   {
       $q = Doctrine_Query::create()

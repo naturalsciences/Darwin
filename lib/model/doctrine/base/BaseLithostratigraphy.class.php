@@ -18,6 +18,8 @@
  * @property Doctrine_Collection $Lithostratigraphy
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenSearch
+ * @property Doctrine_Collection $IndividualSearch
+ * @property Doctrine_Collection $PartSearch
  * 
  * @method integer             getId()                Returns the current record's "id" value
  * @method string              getName()              Returns the current record's "name" value
@@ -32,6 +34,8 @@
  * @method Doctrine_Collection getLithostratigraphy() Returns the current record's "Lithostratigraphy" collection
  * @method Doctrine_Collection getSpecimens()         Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenSearch()    Returns the current record's "SpecimenSearch" collection
+ * @method Doctrine_Collection getIndividualSearch()  Returns the current record's "IndividualSearch" collection
+ * @method Doctrine_Collection getPartSearch()        Returns the current record's "PartSearch" collection
  * @method Lithostratigraphy   setId()                Sets the current record's "id" value
  * @method Lithostratigraphy   setName()              Sets the current record's "name" value
  * @method Lithostratigraphy   setNameIndexed()       Sets the current record's "name_indexed" value
@@ -45,6 +49,8 @@
  * @method Lithostratigraphy   setLithostratigraphy() Sets the current record's "Lithostratigraphy" collection
  * @method Lithostratigraphy   setSpecimens()         Sets the current record's "Specimens" collection
  * @method Lithostratigraphy   setSpecimenSearch()    Sets the current record's "SpecimenSearch" collection
+ * @method Lithostratigraphy   setIndividualSearch()  Sets the current record's "IndividualSearch" collection
+ * @method Lithostratigraphy   setPartSearch()        Sets the current record's "PartSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -111,6 +117,14 @@ abstract class BaseLithostratigraphy extends sfDoctrineRecord
              'foreign' => 'litho_ref'));
 
         $this->hasMany('SpecimenSearch', array(
+             'local' => 'id',
+             'foreign' => 'litho_ref'));
+
+        $this->hasMany('IndividualSearch', array(
+             'local' => 'id',
+             'foreign' => 'litho_ref'));
+
+        $this->hasMany('PartSearch', array(
              'local' => 'id',
              'foreign' => 'litho_ref'));
     }
