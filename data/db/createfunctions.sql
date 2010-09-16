@@ -1,3 +1,12 @@
+
+CREATE AGGREGATE array_accum (anyelement)
+(
+  sfunc = array_append,
+  stype = anyarray,
+  initcond = '{}'
+);
+
+
 /***
 * Trigger Function fct_cpy_specimensMainCode
 * Automaticaly copy the "main" code from the specimen to the specimen parts

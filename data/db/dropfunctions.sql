@@ -1,5 +1,6 @@
 \set log_error_verbosity terse
 
+DROP AGGREGATE  IF EXISTS array_accum (anyelement);
 /*** All length conversion functions ***/
 
 DROP FUNCTION IF EXISTS fct_cpy_unified_values() CASCADE;
