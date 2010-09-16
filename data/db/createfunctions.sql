@@ -7473,6 +7473,14 @@ $$
     select specimen_ref from specimen_collecting_methods where collecting_method_ref in (select X::int from regexp_split_to_table($1,',') as X);
 $$;
 
+CREATE OR REPLACE FUNCTION fct_units_for_vernacular_names(IN unit_type varchar, IN tab_values varchar) RETURNS SETOF integer
+language SQL STABLE
+AS
+$$
+  SELECT cvn.id FROM vernacular_names as vn, class_vernacular_names as cvn 
+  WHERE cvn.id = vn.vernacular_class_ref AND cvn.referenced_relation = $1
+  AND vn.name_ts @@ (select search_words_to_query('vernacular_names', 'name_ts', $2, 'contains')) ;
+$$;
 -- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
 -- $$
 -- DECLARE
