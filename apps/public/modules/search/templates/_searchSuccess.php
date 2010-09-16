@@ -1,6 +1,7 @@
 <div>
   <?php if(isset($search) && $search->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
     <?php
+      $i = 0 ;
       if($orderDir=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
       else
@@ -104,126 +105,126 @@
         </thead>
         <?php foreach($search as $specimen):?>
           <tbody>
-            <tr class="rid_<?php echo $specimen->getId(); ?>">
+            <tr class="rid_<?php echo $i++ ; ?>">
               <td>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$specimen->getId());?>
+                  <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$i);?>
               </td>
               <td  class="col_collection">
                 <?php if($specimen->getCollectionRef() > 0) : ?>
-                  <?php echo image_tag('info.png',"title=info class=info id=collection_".$specimen->getId()."_info");?>
+                  <?php echo image_tag('info.png',"title=info class=info id=collection_".$i."_info");?>
                   <?php echo $specimen->getCollectionName();?>
-                  <div id="collection_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="collection_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#collection_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#collection_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#collection_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#collection_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=collections&id=".$specimen->getCollectionRef()) ;?>',function (html){
-                           item_row.find('#collection_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#collection_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#collection_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#collection_<?php echo $i;?>_tree').slideUp();
                      });
                   </script>                  
                 <?php endif ; ?>&nbsp;
               </td>
               <td class="col_taxon">
                 <?php if($specimen->getTaxonRef() > 0) : ?>
-                  <?php echo image_tag('info.png',"title=info class=info id=taxon_".$specimen->getId()."_info");?>
+                  <?php echo image_tag('info.png',"title=info class=info id=taxon_".$i."_info");?>
                   <?php echo $specimen->getTaxonName();?>
-                  <div id="taxon_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="taxon_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#taxon_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#taxon_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#taxon_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#taxon_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=taxonomy&id=".$specimen->getTaxonRef()) ;?>',function (html){
-                           item_row.find('#taxon_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#taxon_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#taxon_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#taxon_<?php echo $i;?>_tree').slideUp();
                      });
                   </script>                  
                 <?php endif ; ?>&nbsp;
               </td>              
               <td  class="col_chrono">
                 <?php if($specimen->getChronoRef() > 0) : ?>              
-                  <?php echo image_tag('info.png',"title=info class=info id=chrono_".$specimen->getId()."_info");?>
+                  <?php echo image_tag('info.png',"title=info class=info id=chrono_".$i."_info");?>
                   <?php echo $specimen->getChronoName();?>
-                  <div id="chrono_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="chrono_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#chrono_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#chrono_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#chrono_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#chrono_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=chronostratigraphy&id=".$specimen->getChronoRef()) ;?>',function (html){
-                           item_row.find('#chrono_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#chrono_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#chrono_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#chrono_<?php echo $i;?>_tree').slideUp();
                      });
                   </script>  
                 <?php endif ; ?>&nbsp;                              
               </td>
               <td  class="col_litho">
                 <?php if($specimen->getLithoRef() > 0) : ?>              
-                  <?php echo image_tag('info.png',"title=info class=info id=litho_".$specimen->getId()."_info");?>                
+                  <?php echo image_tag('info.png',"title=info class=info id=litho_".$i."_info");?>                
                   <?php echo $specimen->getLithoName();?>
-                  <div id="litho_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="litho_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#litho_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#litho_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#litho_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#litho_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=lithostratigraphy&id=".$specimen->getLithoRef()) ;?>',function (html){
-                           item_row.find('#litho_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#litho_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#litho_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#litho_<?php echo $i;?>_tree').slideUp();
                      });
                   </script> 
                 <?php endif ; ?>&nbsp;                
               </td> 
               <td class="col_lithologic">
                 <?php if($specimen->getLithologyRef() > 0) : ?>              
-                  <?php echo image_tag('info.png',"title=info class=info id=lithologic_".$specimen->getId()."_info");?>                                
+                  <?php echo image_tag('info.png',"title=info class=info id=lithologic_".$i."_info");?>                                
                   <?php echo $specimen->getLithologyName();?>
-                  <div id="lithologic_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="lithologic_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#lithologic_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#lithologic_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#lithologic_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#lithologic_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=lithology&id=".$specimen->getLithologyRef()) ;?>',function (html){
-                           item_row.find('#lithologic_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#lithologic_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#lithologic_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#lithologic_<?php echo $i;?>_tree').slideUp();
                      });
                   </script> 
                 <?php endif ; ?>&nbsp;
               </td>
               <td class="col_mineral">
                 <?php if($specimen->getMineralRef() > 0) : ?>
-                  <?php echo image_tag('info.png',"title=info class=info id=mineral_".$specimen->getId()."_info");?>                
+                  <?php echo image_tag('info.png',"title=info class=info id=mineral_".$i."_info");?>                
                   <?php echo $specimen->getMineralName();?>
-                  <div id="mineral_<?php echo $specimen->getId();?>_tree" class="tree"></div>
+                  <div id="mineral_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#mineral_<?php echo $specimen->getId();?>_info').click(function() 
+                     $('#mineral_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#mineral_<?php echo $specimen->getId();?>_tree').is(":hidden"))
+                       if(item_row.find('#mineral_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=mineralogy&id=".$specimen->getMineralRef()) ;?>',function (html){
-                           item_row.find('#mineral_<?php echo $specimen->getId();?>_tree').html(html).slideDown();
+                           item_row.find('#mineral_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#mineral_<?php echo $specimen->getId();?>_tree').slideUp();
+                       $('#mineral_<?php echo $i;?>_tree').slideUp();
                      });
                   </script> 
                 <?php endif ; ?>&nbsp;
@@ -231,13 +232,13 @@
               <td class="col_gtu">
                 <?php if($specimen->getGtuRef() > 0) : ?>
                   <?php if($specimen->getGtuCountryTagValue() != "") : ?>                  
-                    <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getId()."_info");?><?php echo $specimen->getGtuCode();?>
-                    <div id="gtu_<?php echo $specimen->getId();?>_details" style="display:none;"></div> 
+                    <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$i."_info");?><?php echo $specimen->getGtuCode();?>
+                    <div id="gtu_<?php echo $i;?>_details" style="display:none;"></div> 
                     <script type="text/javascript">
-                    $('#gtu_ctr_<?php echo $specimen->getId();?>_info').click(function() 
+                    $('#gtu_ctr_<?php echo $i;?>_info').click(function() 
                     {
                       item_row = $(this).closest('tr');
-                      elem = item_row.find('#gtu_<?php echo $specimen->getId();?>_details');
+                      elem = item_row.find('#gtu_<?php echo $i;?>_details');
                       if(elem.is(":hidden"))
                       { 
                         $.get('<?php echo url_for("search/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){

@@ -248,7 +248,14 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     return $query;
   }
-     
+  public function addCommonNamesColumnQuery($query,$relation, $field, $val)
+  {
+    if($val != '')
+    {
+      $query->andWhere($field.' IN (select fct_units_for_vernacular_names(?, ?))', array($relation,$val));
+    }
+    return $query;
+  }     
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
@@ -257,7 +264,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));    
     if ($values['lithology_level_ref'] != '') $query->andWhere('lithology_level_ref = ?', intval($values['lithology_level_ref']));
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
- 
+    if ($values['taxon_common_name'] != '') $this->addCommonNamesColumnQuery($query,'taxonomy', 'taxon_ref', $values['taxon_common_name']);
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['taxon_name'],null,'taxon_name_indexed');
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');    
     $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');        
