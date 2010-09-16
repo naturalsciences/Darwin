@@ -127,7 +127,7 @@
       <?php endforeach; ?>
     </td>                
     <td  class="col_chrono">
-      <?php if($specimen->getChronoRef() > 0) : ?>              
+      <?php if($specimen->getChronoRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=chrono_".$specimen->getSpecRef()."_info");?>
         <a href="<?php echo url_for('chronostratigraphy/edit?id='.$specimen->getChronoRef());?>"><?php echo $specimen->getChronoName();?></a>
         <div id="chrono_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
@@ -147,8 +147,8 @@
       <?php endif ; ?>
     </td>
     <td  class="col_litho">
-      <?php if($specimen->getLithoRef() > 0) : ?>              
-        <?php echo image_tag('info.png',"title=info class=info id=litho_".$specimen->getSpecRef()."_info");?>                
+      <?php if($specimen->getLithoRef() > 0) : ?>
+        <?php echo image_tag('info.png',"title=info class=info id=litho_".$specimen->getSpecRef()."_info");?>
         <a href="<?php echo url_for('lithostratigraphy/edit?id='.$specimen->getLithoRef());?>"><?php echo $specimen->getLithoName();?></a>
         <div id="litho_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
         <script type="text/javascript">
@@ -167,8 +167,8 @@
       <?php endif ; ?>
     </td> 
     <td class="col_lithologic">
-      <?php if($specimen->getLithologyRef() > 0) : ?>              
-        <?php echo image_tag('info.png',"title=info class=info id=lithologic_".$specimen->getSpecRef()."_info");?>                                
+      <?php if($specimen->getLithologyRef() > 0) : ?>
+        <?php echo image_tag('info.png',"title=info class=info id=lithologic_".$specimen->getSpecRef()."_info");?>
         <a href="<?php echo url_for('lithology/edit?id='.$specimen->getLithologyRef());?>"><?php echo $specimen->getLithologyName();?></a>
         <div id="lithologic_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
         <script type="text/javascript">
@@ -212,7 +212,11 @@
       <?php endif ; ?>
     </td> 
     <td class="col_count">
-        <?php echo $specimen->getSpecimenCountMax();?>
+        <?php if($specimen->getSpecimenCountMax()==$specimen->getSpecimenCountMin()):?>
+          <?php echo $specimen->getSpecimenCountMax();?>
+        <?php else:?>
+           <?php echo $specimen->getSpecimenCountMin();?> -  <?php echo $specimen->getSpecimenCountMax();?>
+        <?php endif;?>
     </td>
     <td rowspan="2">
         <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
