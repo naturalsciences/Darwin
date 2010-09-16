@@ -24,11 +24,11 @@ class specimensearchActions extends DarwinActions
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
-      
+
       $this->fields = $saved_search->getVisibleFieldsInResultStr();
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;
-    }    
+    }
     else $this->form->addGtuTagValue(0);    
     //loadwidget at the end because we possibliy need to update some widget visibility before showing it
     $this->loadWidgets();
@@ -241,15 +241,15 @@ class specimensearchActions extends DarwinActions
       if(! isset($this->codes[$code->getRecordId()]))
         $this->codes[$code->getRecordId()] = array();
       $this->codes[$code->getRecordId()][] = $code;
-    }      
+    }
   }
-  
+
   public function executeGtuTree(sfWebRequest $request)
   {
     $this->items = Doctrine::getTable('gtu')
       ->findWithParents($request->getParameter('id'));
   }  
-    
+
   public function executeAndSearch(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));
