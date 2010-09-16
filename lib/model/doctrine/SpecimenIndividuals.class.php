@@ -41,7 +41,7 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
 
   public function getStateSearchFormated()
   {
-    return ucfirst($this->_get('sex'));
+    return ucfirst($this->_get('state'));
   }
 
   public function getStageFormated()
@@ -53,7 +53,7 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
 
   public function getStageSearchFormated()
   {
-    return ucfirst($this->_get('sex'));
+    return ucfirst($this->_get('stage'));
   }
 
   public function getSocialStatusFormated()
@@ -65,7 +65,7 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
 
   public function getSocialStatusSearchFormated()
   {
-    return ucfirst($this->_get('sex'));
+    return ucfirst($this->_get('social_status'));
   }
 
   public function getRockFormFormated()
@@ -77,7 +77,7 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
 
   public function getRockFormSearchFormated()
   {
-    return ucfirst($this->_get('sex'));
+    return ucfirst($this->_get('rock_form'));
   }
 
 }
