@@ -66,6 +66,7 @@ table td.centered, table th.centered
 
 .page
 {
+  padding-top: 60px;
   margin-top: 30px;
   margin-left:51px;
   margin-right: 51px;

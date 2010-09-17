@@ -1,6 +1,7 @@
 <?php slot('title', __('Dashboard'));  ?>
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'board')) ?>
+<div class="page">
 <div class="board">
 
  <?php include_partial('widgets/screen', array(
@@ -10,4 +11,5 @@
 	'columns' => 2,
 	'options' => array()
 	)); ?>
+</div>
 </div>

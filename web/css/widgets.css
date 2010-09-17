@@ -100,8 +100,11 @@
 
 .widget_collection_global
 {
-	margin-left:51px;
-	margin-right:51px;
+	left:51px;
+	right:51px;
+        position: fixed;
+        top: 32px;
+        z-index: 100;
 }
 .widget_collection_top
 {
