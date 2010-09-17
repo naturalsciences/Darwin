@@ -27,6 +27,7 @@
                                     'field_to_show' => $field_to_show,
                                     'currentPage' => $currentPage,
                                     'pagerLayout' => $pagerLayout,
+                                    'common_names' => $common_names
                                    )
                              ); ?>
       </div>

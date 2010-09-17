@@ -10,20 +10,17 @@
  * @property integer $record_id
  * @property string $community
  * @property Doctrine_Collection $VernacularNames
- * @property Doctrine_Collection $SpecimenSearch
  * 
  * @method integer              getId()                  Returns the current record's "id" value
  * @method string               getReferencedRelation()  Returns the current record's "referenced_relation" value
  * @method integer              getRecordId()            Returns the current record's "record_id" value
  * @method string               getCommunity()           Returns the current record's "community" value
  * @method Doctrine_Collection  getVernacularNames()     Returns the current record's "VernacularNames" collection
- * @method Doctrine_Collection  getSpecimenSearch()      Returns the current record's "SpecimenSearch" collection
  * @method ClassVernacularNames setId()                  Sets the current record's "id" value
  * @method ClassVernacularNames setReferencedRelation()  Sets the current record's "referenced_relation" value
  * @method ClassVernacularNames setRecordId()            Sets the current record's "record_id" value
  * @method ClassVernacularNames setCommunity()           Sets the current record's "community" value
  * @method ClassVernacularNames setVernacularNames()     Sets the current record's "VernacularNames" collection
- * @method ClassVernacularNames setSpecimenSearch()      Sets the current record's "SpecimenSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -60,9 +57,5 @@ abstract class BaseClassVernacularNames extends sfDoctrineRecord
         $this->hasMany('VernacularNames', array(
              'local' => 'id',
              'foreign' => 'vernacular_class_ref'));
-
-        $this->hasMany('SpecimenSearch', array(
-             'local' => 'record_id',
-             'foreign' => 'taxon_ref'));
     }
 }

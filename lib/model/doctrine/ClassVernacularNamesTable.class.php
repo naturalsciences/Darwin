@@ -30,4 +30,30 @@ class ClassVernacularNamesTable extends DarwinTable
     return $this->createDistinct('ClassVernacularNames', 'community', 'community')->execute();
   }
 
+  public function findAllCommonNames($listId = null)
+  {
+     $q = Doctrine_Query::create()
+	    ->from('ClassVernacularNames cv')
+	    ->leftJoin('cv.VernacularNames v') 
+      ->orderBy('cv.record_id');	     
+     $result = $q->execute();
+    $tab = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 'lithology' => array(),'mineralogy' => array()) ;
+    foreach($result as $key=>$vernacular)
+    {
+      if (!isset($tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]))
+        $tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()] = array('community' => array(), 'name' => '') ;
+      foreach($vernacular->VernacularNames as $name)
+      {
+        if ($tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]['name'] != '')
+          $tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]['name'] .= ','.$name->getName() ;
+        else
+          $tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]['name'] = $name->getName() ;
+        if(!isset($tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]['community'][$vernacular->getCommunity()]))
+          $tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]['community'][$vernacular->getCommunity()] = $name->getName() ;
+        else
+          $tab[$vernacular->getReferencedRelation()][$vernacular->getRecordId()]['community'][$vernacular->getCommunity()] .= ','.$name->getName() ;         
+      }
+    }    
+    return $tab ;
+	}
 }

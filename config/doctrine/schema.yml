@@ -1127,27 +1127,7 @@ SpecimenSearch:
         Ig:
             local: ig_ref
             foreign: id
-            class: Igs
-        TaxonomyCommonNames:        
-            class: ClassVernacularNames
-            local: taxon_ref
-            foreign: record_id
-        ChronoCommonNames:
-            class: ClassVernacularNames
-            local: chrono_ref
-            foreign: record_id
-        LithoCommonNames:
-            class: ClassVernacularNames
-            local: litho_ref
-            foreign: record_id
-        LithologyCommonNames:
-            class: ClassVernacularNames
-            local: lithology_ref
-            foreign: record_id
-        MineralCommonNames:
-            class: ClassVernacularNames
-            local: mineral_ref
-            foreign: record_id            
+            class: Igs          
 
 IndividualSearch:
     tableName: darwin_flat

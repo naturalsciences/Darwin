@@ -41,7 +41,7 @@ class searchActions extends DarwinActions
     // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('search', 'collection_name', $request);
     // Modify the s_url to call the searchResult action when on result page and playing with pager
-    $this->s_url = 'search/searchResult?toto=1' ;  
+    $this->s_url = 'search/searchResult?back=1' ;  
     $this->form = new PublicSearchFormFilter();
     // If the search has been triggered by clicking on the search button or with pinned specimens
     if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ))
@@ -60,7 +60,7 @@ class searchActions extends DarwinActions
           return;
         }
         else
-        {
+        {                
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
@@ -78,12 +78,15 @@ class searchActions extends DarwinActions
           // If pager not yet executed, this means the query has to be executed for data loading
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->search = $this->pagerLayout->execute();
-          $this->field_to_show = $this->getVisibleColumns($this->form);            
+          $this->field_to_show = $this->getVisibleColumns($this->form);
+
+          $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames() ;
           return;
         } 
       }
     }
-    $this->setTemplate('index');        
+    $this->setTemplate('index'); 
+    $this->form->addGtuTagValue(0);        
   }   
   
   public function executeSearchResult(sfWebRequest $request)
@@ -96,10 +99,13 @@ class searchActions extends DarwinActions
 
   public function executeView(sfWebRequest $request)
   {
-    $this->specimen = Doctrine::getTable('specimenSearch')->findOneById($request->getParameter('id'));  
+    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));  
+    
     $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
-    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());  
-    $this->tags = explode(';',$this->specimen->getGtuCountryTagValue()) ; 
+    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      
+    $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames() ;    
+    if ($tag = $this->specimen->getGtuCountryTagValue()) $this->tags = explode(';',$tag) ; 
+    else $this->tags = false ;
   }
     
   /**
@@ -110,8 +116,9 @@ class searchActions extends DarwinActions
   */
   private function getVisibleColumns(sfForm $form)
   {
-    $flds = array('collection','taxon','type','gtu','codes','chrono',
-              'litho','lithologic','mineral','sex','stage');
+    $flds = array('collection','taxon','type','gtu','codes','chrono','taxon_common_name', 'chrono_common_name',
+              'litho_common_name','lithology_common_name','mineral_common_name',
+              'litho','lithology','mineral','sex','stage');
     $flds = array_fill_keys($flds, 'uncheck');
 
     if($form->isBound())
@@ -123,7 +130,6 @@ class searchActions extends DarwinActions
 
     if(empty($req_fields_array))
       $req_fields_array = explode('|', $form->getDefault('col_fields'));
-
     foreach($req_fields_array as $k => $val)
     {
       $flds[$val] = 'check';

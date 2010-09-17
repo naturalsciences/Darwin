@@ -95,6 +95,10 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     //if $flat_field is not null then we want to use the fla table, change the $field value by $flat_field 
     if ($flat_field != null) $field = $flat_field ;
 	  //print_r($results);
+	  if($table == 'vernacular_names')
+	  {
+	    
+	  }
 	  if(count($results) == 0)
 	  {
 		$query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
@@ -313,5 +317,25 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     $javascripts[]='/js/searchForm.js';
     return $javascripts;
   }
-
+  
+  /**
+  * return an array of vernacular_name id 
+  * @param relation the relation concerned (taxonomy, chrono, litho...)
+  * @param $val a list of words to include or exclude
+  * @return string an list of id separated by ','
+  */
+  protected function ListIdByWord($relation,$val)
+  {
+    $q = Doctrine_Query::create()
+	    ->select('cvn.record_id')
+	    ->from('ClassVernacularNames cvn')
+	    ->leftJoin('cvn.VernacularNames tvn')  
+      ->andWhere('cvn.referenced_relation = ?', $relation);
+	  $this->addNamingColumnQuery($q, 'VernacularNames', 'name_ts', $val, 'tvn');
+	  $list = "" ;
+    foreach($q->execute() as $key=>$result) 
+      $list .= $result->getRecordId()."," ;
+    if($list == "") return (0) ;      
+    return (substr($list,0,strlen($list)-1)) ; //return list of id without the last ','
+  }
 }

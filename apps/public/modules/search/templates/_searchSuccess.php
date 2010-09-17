@@ -15,12 +15,17 @@
             <?php
             $cols = array(
               'collection' => __("Collection"),
-              'taxon' => __("Taxon"),
+              'taxon' => __("Taxonomy"),
               'gtu' => __("Countries"),
               'chrono' => __("Chronostratigraphic unit"),
               'litho' => __("Lithostratigraphic unit"),
-              'lithologic' => __("Lithologic unit"),
+              'lithology' => __("lithology unit"),
               'mineral' => __("Mineralogic"),
+              'taxon_common_name' => __("Taxon Common Names"),
+              'chrono_common_name' => __("Chrono Common Names"),
+              'litho_common_name' => __("Litho Common Names"),
+              'lithology_common_name' => __("lithology Common Names"),
+              'mineral_common_name' => __("Mineral Common Names"),              
               'type' => __("Type"),
               'sex' => __("Sex"),
               'stage' => __("Stage"),              
@@ -66,10 +71,10 @@
                 <?php if($orderBy=='litho_name') echo $orderSign ?>
               </a>            
             </th>
-            <th class="col_lithologic">
+            <th class="col_lithology">
               <a class="sort" href="<?php echo url_for($s_url.'&orderby=lithology_name'.( ($orderBy=='lithology_name' && $orderDir=='asc') ? '&orderdir=desc' :
                '').'&page='.$currentPage);?>">
-                <?php echo __('lithologic unit');?>
+                <?php echo __('lithology unit');?>
                 <?php if($orderBy=='lithology_name') echo $orderSign ?>
               </a>            
             </th>
@@ -80,6 +85,21 @@
                 <?php if($orderBy=='mineral_name') echo $orderSign ?>
               </a>            
             </th>
+            <th class="col_taxon_common_name">
+                <?php echo __('Taxonomy Common Name');?>    
+            </th>                                  
+            <th class="col_chrono_common_name">
+                <?php echo __('Chronostratigraphic Common Name');?>      
+            </th>            
+            <th class="col_litho_common_name">
+                <?php echo __('Lithostratigraphic Common Name');?>      
+            </th>
+            <th class="col_lithology_common_name">
+                <?php echo __('lithology Common Name');?>       
+            </th>
+            <th class="col_mineral_common_name">
+                <?php echo __('Mineralogic Common Name');?>         
+            </th>            
             <th class="col_gtu">                          
               <?php echo __('Countries');?>
             </th>            
@@ -107,7 +127,7 @@
           <tbody>
             <tr class="rid_<?php echo $i++ ; ?>">
               <td>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$i);?>
+                  <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef());?>
               </td>
               <td  class="col_collection">
                 <?php if($specimen->getCollectionRef() > 0) : ?>
@@ -189,22 +209,22 @@
                   </script> 
                 <?php endif ; ?>&nbsp;                
               </td> 
-              <td class="col_lithologic">
+              <td class="col_lithology">
                 <?php if($specimen->getLithologyRef() > 0) : ?>              
-                  <?php echo image_tag('info.png',"title=info class=info id=lithologic_".$i."_info");?>                                
+                  <?php echo image_tag('info.png',"title=info class=info id=lithology_".$i."_info");?>                                
                   <?php echo $specimen->getLithologyName();?>
-                  <div id="lithologic_<?php echo $i;?>_tree" class="tree"></div>
+                  <div id="lithology_<?php echo $i;?>_tree" class="tree"></div>
                   <script type="text/javascript">
-                     $('#lithologic_<?php echo $i;?>_info').click(function() 
+                     $('#lithology_<?php echo $i;?>_info').click(function() 
                      {
                        item_row=$(this).closest('tr');
-                       if(item_row.find('#lithologic_<?php echo $i;?>_tree').is(":hidden"))
+                       if(item_row.find('#lithology_<?php echo $i;?>_tree').is(":hidden"))
                        {
                          $.get('<?php echo url_for("search/tree?table=lithology&id=".$specimen->getLithologyRef()) ;?>',function (html){
-                           item_row.find('#lithologic_<?php echo $i;?>_tree').html(html).slideDown();
+                           item_row.find('#lithology_<?php echo $i;?>_tree').html(html).slideDown();
                            });
                        }
-                       $('#lithologic_<?php echo $i;?>_tree').slideUp();
+                       $('#lithology_<?php echo $i;?>_tree').slideUp();
                      });
                   </script> 
                 <?php endif ; ?>&nbsp;
@@ -228,7 +248,8 @@
                      });
                   </script> 
                 <?php endif ; ?>&nbsp;
-              </td>    
+              </td> 
+              <?php include_partial('tagCommonName',array('common_names'=> $common_names, 'spec'=> $specimen)) ; ?>
               <td class="col_gtu">
                 <?php if($specimen->getGtuRef() > 0) : ?>
                   <?php if($specimen->getGtuCountryTagValue() != "") : ?>                  

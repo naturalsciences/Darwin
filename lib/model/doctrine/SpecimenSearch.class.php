@@ -60,4 +60,25 @@ class SpecimenSearch extends BaseSpecimenSearch
     $items = array_filter($items);
     return implode($sep, $items);
   }
+  
+  /* function witch check if there at least 1 common name for a specific catalogue */  
+  public function checkIfCommonName($id,$tab)
+  {
+    if(!$id) return false;
+    if(!isset($tab[$id])) return false;
+    if($tab[$id]['name'] == '') return false ;
+    return true ;
+  }
+
+  /* function witch check if there at least 1 common name for a specific specimen */
+  public function checkCommonNameForSpecimen($common_name,$spec) 
+  {
+    $bool = false ;
+    if($this->checkIfCommonName($spec->getTaxonRef(), $common_name['taxonomy'])) $bool = true ;
+    if($this->checkIfCommonName($spec->getChronoRef(), $common_name['chronostratigraphy'])) $bool = true ;
+    if($this->checkIfCommonName($spec->getLithoRef(), $common_name['lithostratigraphy'])) $bool = true ;
+    if($this->checkIfCommonName($spec->getLithologyRef(), $common_name['lithology'])) $bool = true ;
+    if($this->checkIfCommonName($spec->getMineralRef(), $common_name['mineralogy'])) $bool = true ;   
+    return $bool ;             
+  }   
 }

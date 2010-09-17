@@ -69,7 +69,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
                                         )
                                   );  
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
-    $this->setDefault('col_fields','taxon|common_name|collection|type|gtu|sex|stage|type');                                    
+    $this->setDefault('col_fields','taxon|collection|gtu|sex|stage|type|taxon_common_name');                                    
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
     $this->validatorSchema['collection_ref'] = new sfValidatorPass(); //Avoid duplicate the query                                  
 
@@ -252,7 +252,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-      $query->andWhere($field.' IN (select fct_units_for_vernacular_names(?, ?))', array($relation,$val));
+      $query->andWhere($field.' IN ('.$this->ListIdByWord($relation,$val).')');
     }
     return $query;
   }     
@@ -265,6 +265,10 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     if ($values['lithology_level_ref'] != '') $query->andWhere('lithology_level_ref = ?', intval($values['lithology_level_ref']));
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
     if ($values['taxon_common_name'] != '') $this->addCommonNamesColumnQuery($query,'taxonomy', 'taxon_ref', $values['taxon_common_name']);
+    if ($values['chrono_common_name'] != '') $this->addCommonNamesColumnQuery($query,'chronostratigraphy', 'chrono_ref', $values['chrono_common_name']);
+    if ($values['litho_common_name'] != '') $this->addCommonNamesColumnQuery($query,'lithostratigraphy', 'litho_ref', $values['litho_common_name']);    
+    if ($values['lithology_common_name'] != '') $this->addCommonNamesColumnQuery($query,'lithology', 'lithology_ref', $values['lithology_common_name']);        
+    if ($values['mineral_common_name'] != '') $this->addCommonNamesColumnQuery($query,'mineralogy', 'mineral_ref', $values['mineral_common_name']);        
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['taxon_name'],null,'taxon_name_indexed');
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');    
     $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');        

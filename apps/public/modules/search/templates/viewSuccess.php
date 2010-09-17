@@ -49,23 +49,19 @@
         </tbody>
       </table>
     </div>      
-    <?php if(0) : ?>
+    <?php if($specimen->checkCommonNameForSpecimen($common_names,$specimen)) : ?>
     <h2 class="title"><?php echo __("Common Names") ?></h2>  
     <div class="borded">    
       <table>
         <thead>
           <tr>
+            <th><?php echo __("Classification") ; ?></th>
             <th><?php echo __("Community/language") ; ?></th>
             <th><?php echo __("Names") ; ?></th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach($specimen->getCollectionRef() as $toto) : ?>
-            <tr>
-              <td><?php echo "1" ; ?></td>
-              <td><?php echo "2" ; ?></td>
-            </tr>
-          <?php endforeach ; ?>
+          <?php include_partial('classification',array('common_name' => $common_names, 'spec' => $specimen)) ; ?>
         </tbody>
       </table>
     </div>
@@ -262,12 +258,16 @@
         <tr>
           <td><?php echo __("Country(ies)") ; ?> :</td>
           <td>
+            <?php if($tags) : ?> 
             <ul class="country_tags">
               <?php foreach($tags as $key=>$tag):?>
                 <?php if($tag == "") echo "-" ; ?>
                 <li class="tag_size_2"><?php echo $tag ;?></li>
               <?php endforeach;?>
             </ul>
+            <?php else : ?>
+              <span class="pager_nav">-</span>
+            <?php endif ; ?>
           </td>
         </tr>        
       </table>
