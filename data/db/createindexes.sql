@@ -360,7 +360,7 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_is_public on darwin_flat(co
 CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_name on darwin_flat(collection_name);
 
 /*** Indexes created for the f***ing necessary group by when searching in darwin_flat ***/
-
+/**** For specimen search ****/
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_category on darwin_flat(spec_ref, category);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_coll_name on darwin_flat(spec_ref, collection_name);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_taxon_name on darwin_flat(spec_ref, taxon_name_order_by);
@@ -370,6 +370,59 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_lithology_name on darwin_flat
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_mineral_name on darwin_flat(spec_ref, mineral_name_order_by);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_expedition_name on darwin_flat(spec_ref, expedition_name_indexed);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_spec_count_max on darwin_flat(spec_ref, specimen_count_max);
+
+/**** For individual search ****/
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_category on darwin_flat(individual_ref, category);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_coll_name on darwin_flat(individual_ref, collection_name);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_taxon_name on darwin_flat(individual_ref, taxon_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_chrono_name on darwin_flat(individual_ref, chrono_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_litho_name on darwin_flat(individual_ref, litho_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_lithology_name on darwin_flat(individual_ref, lithology_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_mineral_name on darwin_flat(individual_ref, mineral_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_expedition_name on darwin_flat(individual_ref, expedition_name_indexed);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_spec_count_max on darwin_flat(individual_ref, specimen_count_max);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_type on darwin_flat(individual_ref, individual_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_type_group on darwin_flat(individual_ref, individual_type_group);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_type_search on darwin_flat(individual_ref, individual_type_search);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_sex on darwin_flat(individual_ref, individual_sex);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_state on darwin_flat(individual_ref, individual_state);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_stage on darwin_flat(individual_ref, individual_stage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_social_status on darwin_flat(individual_ref, individual_social_status);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_rock_form on darwin_flat(individual_ref, individual_rock_form);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_individual_count_max on darwin_flat(individual_ref, individual_count_max);
+
+/**** For part search ****/
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_category on darwin_flat(part_ref, category);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_coll_name on darwin_flat(part_ref, collection_name);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_taxon_name on darwin_flat(part_ref, taxon_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_chrono_name on darwin_flat(part_ref, chrono_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_litho_name on darwin_flat(part_ref, litho_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_lithology_name on darwin_flat(part_ref, lithology_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_mineral_name on darwin_flat(part_ref, mineral_name_order_by);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_expedition_name on darwin_flat(part_ref, expedition_name_indexed);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_spec_count_max on darwin_flat(part_ref, specimen_count_max);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_type on darwin_flat(part_ref, part_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_type_group on darwin_flat(part_ref, part_type_group);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_type_search on darwin_flat(part_ref, part_type_search);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_sex on darwin_flat(part_ref, part_sex);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_state on darwin_flat(part_ref, part_state);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_stage on darwin_flat(part_ref, part_stage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_social_status on darwin_flat(part_ref, part_social_status);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_rock_form on darwin_flat(part_ref, part_rock_form);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_individual_count_max on darwin_flat(part_ref, individual_count_max);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_part on darwin_flat(part_ref, part);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_part_status on darwin_flat(part_ref, part_status);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_building on darwin_flat(part_ref, building);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_floor on darwin_flat(part_ref, "floor");
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_room on darwin_flat(part_ref, room);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_row on darwin_flat(part_ref, "row");
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_container_type on darwin_flat(part_ref, container_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_container_storage on darwin_flat(part_ref, container_storage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_sub_container_type on darwin_flat(part_ref, sub_container_type);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_container on darwin_flat(part_ref, container);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_sub_container_storage on darwin_flat(part_ref, sub_container_storage);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_sub_container on darwin_flat(part_ref, sub_container);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_part_ref_part_count_max on darwin_flat(part_ref, part_count_max);
 
 
 /*** GiST and eventual GIN Indexes for ts_vector fields ***/
@@ -392,8 +445,8 @@ CREATE INDEX CONCURRENTLY idx_gin_lithostratigraphy_naming on lithostratigraphy 
 CREATE INDEX CONCURRENTLY idx_gin_mineralogy_naming on mineralogy using gin(name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_lithology_naming on lithology using gin(name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_gtu_tags_values on gtu using gin(tag_values_indexed);
-CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_collection_institution_formated_name_ts on darwin_flat using gin(collection_institution_formated_name_ts);
-CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_collection_main_manager_formated_name_ts on darwin_flat using gin(collection_main_manager_formated_name_ts);
+/*CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_collection_institution_formated_name_ts on darwin_flat using gin(collection_institution_formated_name_ts);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_collection_main_manager_formated_name_ts on darwin_flat using gin(collection_main_manager_formated_name_ts);*/
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_expedition_name_ts on darwin_flat using gin(expedition_name_ts);
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_taxon_name_indexed on darwin_flat using gin(taxon_name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_chrono_name_indexed on darwin_flat using gin(chrono_name_indexed);
