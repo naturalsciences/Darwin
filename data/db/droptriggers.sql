@@ -1,23 +1,23 @@
-DROP TRIGGER IF EXISTS trg_cpy_specimensMainCode_specimenPartCode ON specimen_parts CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_idToCode_gtu ON gtu CASCADE;
+DROP TRIGGER trg_cpy_specimensMainCode_specimenPartCode ON specimen_parts;
+DROP TRIGGER trg_cpy_idToCode_gtu ON gtu ;
 
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_lithology ON lithology CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_catalogueproperties ON catalogue_properties CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_chronostratigraphy ON chronostratigraphy  CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_expeditions ON expeditions CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_identifications ON identifications CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_lithostratigraphy ON lithostratigraphy CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_mineralogy ON mineralogy CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimedia ON multimedia CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_codes ON codes CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_multimediakeywords ON multimedia_keywords CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taggroups ON tag_groups CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_taxa ON taxonomy CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_classvernacularnames ON class_vernacular_names CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_vernacularnames ON vernacular_names CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_collecting_tools ON collecting_tools CASCADE;
-DROP TRIGGER IF EXISTS trg_cpy_fullToIndex_collecting_methods ON collecting_methods CASCADE;
-DROP TRIGGER IF EXISTS trg_clr_specialstatus_specimenindividuals ON specimen_individuals CASCADE;
+DROP TRIGGER trg_cpy_fullToIndex_lithology ON lithology ;
+DROP TRIGGER trg_cpy_fullToIndex_catalogueproperties ON catalogue_properties ;
+DROP TRIGGER trg_cpy_fullToIndex_chronostratigraphy ON chronostratigraphy ;
+DROP TRIGGER trg_cpy_fullToIndex_expeditions ON expeditions ;
+DROP TRIGGER trg_cpy_fullToIndex_identifications ON identifications;
+DROP TRIGGER trg_cpy_fullToIndex_lithostratigraphy ON lithostratigraphy;
+DROP TRIGGER trg_cpy_fullToIndex_mineralogy ON mineralogy;
+DROP TRIGGER trg_cpy_fullToIndex_multimedia ON multimedia;
+DROP TRIGGER trg_cpy_fullToIndex_codes ON codes ;
+DROP TRIGGER trg_cpy_fullToIndex_multimediakeywords ON multimedia_keywords;
+DROP TRIGGER trg_cpy_fullToIndex_taggroups ON tag_groups;
+DROP TRIGGER trg_cpy_fullToIndex_taxa ON taxonomy;
+DROP TRIGGER trg_cpy_fullToIndex_classvernacularnames ON class_vernacular_names;
+DROP TRIGGER trg_cpy_fullToIndex_vernacularnames ON vernacular_names;
+DROP TRIGGER trg_cpy_fullToIndex_collecting_tools ON collecting_tools;
+DROP TRIGGER trg_cpy_fullToIndex_collecting_methods ON collecting_methods;
+DROP TRIGGER trg_clr_specialstatus_specimenindividuals ON specimen_individuals;
 
 /*** REPERCUTION record_id ****/
 DROP TRIGGER trg_clr_referenceRecord_cataloguerelationships ON catalogue_relationships;
@@ -244,3 +244,49 @@ DROP TRIGGER trg_update_specimen_individuals_darwin_flat
 
 DROP TRIGGER trg_update_specimen_parts_darwin_flat
         ON specimen_parts;
+
+DROP TRIGGER trg_cpy_fulltoindex_expeditions
+        ON habitats;
+
+DROP TRIGGER trg_cpy_fulltoindex_classification_keywords
+        ON classification_keywords;
+
+DROP TRIGGER trg_cpy_fulltoindex_igs
+        ON igs;
+
+DROP TRIGGER trg_clr_referencerecord_insurances
+        ON insurances;
+
+DROP TRIGGER trg_cpy_updatecollectionadmin_collections
+        ON collections;
+
+DROP TRIGGER trg_cpy_path_multimedia
+        ON multimedia;
+
+DROP TRIGGER trg_cpy_path_collections
+        ON collections;
+
+DROP TRIGGER trg_cpy_path_peoplerelationships
+        ON people_relationships;
+
+DROP TRIGGER trg_cpy_path_gtu
+        ON gtu;
+
+DROP TRIGGER trg_cpy_path_specimen_parts
+        ON specimen_parts;
+
+DROP TRIGGER trg_cpy_path_habitats
+        ON habitats;
+
+DROP TRIGGER trg_cpy_unified_values
+        ON properties_values;
+
+DROP TRIGGER trg_cpy_unified_values
+        ON catalogue_properties;
+
+DROP TRIGGER trg_nbr_in_relation
+        ON catalogue_relationships;
+
+DROP TRIGGER trg_nbr_in_synonym
+        ON classification_synonymies;
+

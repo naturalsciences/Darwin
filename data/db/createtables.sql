@@ -2111,7 +2111,6 @@ create table darwin_flat
     acquisition_date date,
     specimen_count_min integer,
     specimen_count_max integer,
-    with_types boolean default false,
     individual_ref integer,
     individual_type varchar not null default 'specimen',
     individual_type_group varchar not null default 'specimen',
