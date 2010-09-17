@@ -76,5 +76,6 @@ DROP FUNCTION IF EXISTS fct_search_methods(str_ids varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_search_tools(str_ids varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_delete_darwin_flat_ind_part() CASCADE;
 
+DROP FUNCTION IF EXISTS dummy( in anyelement, inout anyelement ) CASCADE;
+DROP AGGREGATE array_accum (anyelement);
 DROP AGGREGATE dummy_first(anyelement);
-DROP FUNCTION IF EXISTS DROP dummy( in anyelement, inout anyelement ) CASCADE;
