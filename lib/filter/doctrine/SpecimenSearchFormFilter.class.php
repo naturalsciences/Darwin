@@ -494,7 +494,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         ->from('IndividualSearch s')
         ->select($str .' MIN(id) as id,  false as with_types')
         ->andWhere('individual_ref != 0 ')
-        ->groupBy('spec_ref, individual_ref');
+        ->groupBy('individual_ref');
     }
     else
     {

@@ -137,7 +137,7 @@ class specimensearchActions extends DarwinActions
           $ordered_searched = 'spec_ref, ';
           
           if($this->form->getValue('what_searched') == 'individual')
-            $ordered_searched .= ' individual_ref , ';
+            $ordered_searched = ' individual_ref , ';
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
 
           if($this->form->getValue('what_searched') != 'part')
@@ -147,10 +147,18 @@ class specimensearchActions extends DarwinActions
           }
           // Define in one line a pager Layout based on a pagerLayoutWithArrows object
           // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-          $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
-                                                                            $this->currentPage,
-                                                                            $this->form->getValue('rec_per_page')
-                                                                          ),
+          $pager = new Doctrine_Pager($query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          );
+          $count_q = clone $query;//$pager->getCountQuery();
+          $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
+          if($this->form->getValue('what_searched') == 'individual')
+            $count_q->select('count( distinct individual_ref)');
+          $counted = new DoctrineCounted();
+          $counted->count_query = $count_q;
+          $pager->setCountQuery($counted);
+          $this->pagerLayout = new PagerLayoutWithArrows($pager,
                                                         new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
                                                         $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
                                                         );
