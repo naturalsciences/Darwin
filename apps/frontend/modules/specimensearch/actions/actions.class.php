@@ -24,11 +24,11 @@ class specimensearchActions extends DarwinActions
     {
       $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('search_id'), $this->getUser()->getId()) ;
       $criterias = unserialize($saved_search->getSearchCriterias());
-      
+
       $this->fields = $saved_search->getVisibleFieldsInResultStr();
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
       $this->form->bind($criterias['specimen_search_filters']) ;
-    }    
+    }
     else $this->form->addGtuTagValue(0);    
     //loadwidget at the end because we possibliy need to update some widget visibility before showing it
     $this->loadWidgets();
@@ -134,13 +134,31 @@ class specimensearchActions extends DarwinActions
 
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
+          $ordered_searched = 'spec_ref, ';
+          
+          if($this->form->getValue('what_searched') == 'individual')
+            $ordered_searched = ' individual_ref , ';
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
+
+          if($this->form->getValue('what_searched') != 'part')
+          {
+            $query->orderby($ordered_searched. $this->orderBy . ' ' . $this->orderDir);
+            $query->addGroupBy($this->orderBy);
+          }
           // Define in one line a pager Layout based on a pagerLayoutWithArrows object
           // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-          $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
-                                                                            $this->currentPage,
-                                                                            $this->form->getValue('rec_per_page')
-                                                                          ),
+          $pager = new Doctrine_Pager($query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          );
+          $count_q = clone $query;//$pager->getCountQuery();
+          $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
+          if($this->form->getValue('what_searched') == 'individual')
+            $count_q->select('count( distinct individual_ref)');
+          $counted = new DoctrineCounted();
+          $counted->count_query = $count_q;
+          $pager->setCountQuery($counted);
+          $this->pagerLayout = new PagerLayoutWithArrows($pager,
                                                         new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
                                                         $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
                                                         );
@@ -241,15 +259,15 @@ class specimensearchActions extends DarwinActions
       if(! isset($this->codes[$code->getRecordId()]))
         $this->codes[$code->getRecordId()] = array();
       $this->codes[$code->getRecordId()][] = $code;
-    }      
+    }
   }
-  
+
   public function executeGtuTree(sfWebRequest $request)
   {
     $this->items = Doctrine::getTable('gtu')
       ->findWithParents($request->getParameter('id'));
   }  
-    
+
   public function executeAndSearch(sfWebRequest $request)
   {
     $number = intval($request->getParameter('num'));

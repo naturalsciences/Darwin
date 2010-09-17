@@ -27,7 +27,7 @@ $(document).ready(function ()
     </ul>
   </div>
 
-  <?php echo form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
+  <?php echo form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition no_border'));?>
     <div>
       <?php echo $form['id']->render() ?>
       <?php if($form->hasGlobalErrors()):?>

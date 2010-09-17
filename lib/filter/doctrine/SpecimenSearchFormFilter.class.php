@@ -466,28 +466,35 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function doBuildQuery(array $values)
   {
-
     $fields = SpecimenSearchTable::getFieldsByType();
 
     if($values['what_searched'] == 'specimen')
     {
-      $str = implode(', ',$fields['specimens']);
+      $str = '';
+      foreach($fields['specimens'] as $fld)
+      {
+        $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
+      }
       $query = Doctrine_Query::create()
         ->from('SpecimenSearch s')
-        ->groupBy($str)
-        ->select('array_accum(distinct individual_type) as with_types,
-          MIN(id) as id, '.$str);
+        ->groupBy('spec_ref')
+        ->select($str . ' array_accum(distinct individual_type) as with_types, MIN(id) as id');
 
     }
     elseif($values['what_searched'] == 'individual')
     {
+      $str = '';
       $array_fld = array_merge($fields['specimens'],$fields['individuals']);
-      $str = implode(', ',$array_fld);
+      foreach($array_fld as $fld)
+      {
+        $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
+      }
+
       $query = Doctrine_Query::create()
         ->from('IndividualSearch s')
-        ->select(' MIN(id) as id,  false as with_types , '.$str)
+        ->select($str .' MIN(id) as id,  false as with_types')
         ->andWhere('individual_ref != 0 ')
-        ->groupBy($str);
+        ->groupBy('individual_ref');
     }
     else
     {
@@ -509,10 +516,10 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     if ($values['lithology_level_ref'] != '') $query->andWhere('lithology_level_ref = ?', intval($values['lithology_level_ref']));
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['taxon_name'],null,'taxon_name_indexed');
-    $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');    
-    $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');        
-    $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['lithology_name'],null,'lithology_name_indexed');    
-    $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['mineral_name'],null,'mineral_name_indexed');        
+    $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');
+    $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');
+    $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['lithology_name'],null,'lithology_name_indexed');
+    $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['mineral_name'],null,'mineral_name_indexed');
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
     $query->limit($this->getCatalogueRecLimits());
