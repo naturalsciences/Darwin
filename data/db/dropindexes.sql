@@ -409,8 +409,6 @@
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_social_status;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_rock_form;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_individual_count_max;
-
-  /**** For part search ****/
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_category;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_coll_name;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_taxon_name;
