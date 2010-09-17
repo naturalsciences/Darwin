@@ -2111,6 +2111,7 @@ create table darwin_flat
     acquisition_date date,
     specimen_count_min integer,
     specimen_count_max integer,
+    with_types boolean not null default false,
     individual_ref integer,
     individual_type varchar not null default 'specimen',
     individual_type_group varchar not null default 'specimen',
@@ -2270,6 +2271,7 @@ comment on column darwin_flat.acquisition_date_mask is 'Specimen acquisition dat
 comment on column darwin_flat.acquisition_date is 'Specimen acquisition date';
 comment on column darwin_flat.specimen_count_min is 'Specimen count (minimum value if in a range)';
 comment on column darwin_flat.specimen_count_max is 'Specimen count (maximum value if in a range - equal to min value if not)';
+comment on column darwin_flat.with_types is 'Flag telling if there are types for current specimen';
 comment on column darwin_flat.individual_ref is 'Reference of specimen individual - references to id of individual in specimen_individuals table - Null if nothing referenced';
 comment on column darwin_flat.individual_type is 'Type';
 comment on column darwin_flat.individual_type_group is 'Type group - Grouping of types appelations used for internal search';

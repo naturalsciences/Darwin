@@ -6734,6 +6734,7 @@ $$
 DECLARE
   indCount INTEGER := 0;
   partCount INTEGER := 0;
+  indType BOOLEAN := false;
 BEGIN
   IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
     UPDATE darwin_flat 
@@ -7107,6 +7108,10 @@ BEGIN
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimen_individuals' THEN
+    SELECT true INTO indType FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref AND type_group <> 'specimen' LIMIT 1;
+    IF NOT FOUND THEN
+      indType := false;
+    END IF;
     IF TG_OP = 'INSERT' THEN
       SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref;
       IF indCount = 1 THEN
@@ -7215,6 +7220,12 @@ BEGIN
       )
       WHERE individual_ref = NEW.id;
     END IF;
+
+    /*And then update with_types value for specimen concerned*/
+    UPDATE darwin_flat
+    SET with_types = indType
+    WHERE spec_ref = NEW.specimen_ref;
+
   END IF;
   IF TG_TABLE_NAME = 'specimen_parts' THEN
     IF TG_OP = 'INSERT' THEN
@@ -7424,6 +7435,24 @@ BEGIN
     END IF;
   END IF;
   RETURN OLD;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION fct_darwin_flat_indviduals_after_del() RETURNS TRIGGER 
+language plpgsql
+AS
+$$
+DECLARE
+  indType BOOLEAN := false;
+BEGIN
+  SELECT true INTO indType FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref AND type_group <> 'specimen' LIMIT 1;
+  IF NOT FOUND THEN
+    indType := false;
+  END IF;
+  UPDATE darwin_flat
+  SET with_types = indType
+  WHERE spec_ref = OLD.specimen_ref;
+  RETURN NEW;
 END;
 $$;
 
