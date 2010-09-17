@@ -466,28 +466,35 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function doBuildQuery(array $values)
   {
-
     $fields = SpecimenSearchTable::getFieldsByType();
 
     if($values['what_searched'] == 'specimen')
     {
-      $str = implode(', ',$fields['specimens']);
+      $str = '';
+      foreach($fields['specimens'] as $fld)
+      {
+        $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
+      }
       $query = Doctrine_Query::create()
         ->from('SpecimenSearch s')
-        ->groupBy($str)
-        ->select('array_accum(distinct individual_type) as with_types,
-          MIN(id) as id, '.$str);
+        ->groupBy('spec_ref')
+        ->select($str . ' array_accum(distinct individual_type) as with_types, MIN(id) as id');
 
     }
     elseif($values['what_searched'] == 'individual')
     {
+      $str = '';
       $array_fld = array_merge($fields['specimens'],$fields['individuals']);
-      $str = implode(', ',$array_fld);
+      foreach($array_fld as $fld)
+      {
+        $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
+      }
+
       $query = Doctrine_Query::create()
         ->from('IndividualSearch s')
-        ->select(' MIN(id) as id,  false as with_types , '.$str)
+        ->select($str .' MIN(id) as id,  false as with_types')
         ->andWhere('individual_ref != 0 ')
-        ->groupBy($str);
+        ->groupBy('spec_ref, individual_ref');
     }
     else
     {

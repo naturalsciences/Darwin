@@ -23,7 +23,7 @@
                 'collection_name',
                 __('Collection'),),
               'taxon' => array(
-                'taxon_name',
+                'taxon_name_order_by',
                 __('Taxon'),),
               'type' => array(
                 'with_types',
@@ -35,19 +35,19 @@
                 false,
                 __('Codes'),),
               'chrono' => array(
-                'chrono_name',
+                'chrono_name_order_by',
                 __('Chronostratigraphic unit'),),
               'litho' => array(
-                'litho_name',
+                'litho_name_order_by',
                 __('Lithostratigraphic unit'),),
               'lithologic' => array(
-                'lithologic_name',
+                'lithologic_name_order_by',
                 __('Lithologic unit'),),
               'mineral' => array(
-                'mineral_name',
+                'mineral_name_order_by',
                 __('Mineralogic unit'),),
               'expedition' => array(
-                'expedition_name',
+                'expedition_name_indexed',
                 __('Expedition'),),
               'count' => array(
                 'specimen_count_max',
