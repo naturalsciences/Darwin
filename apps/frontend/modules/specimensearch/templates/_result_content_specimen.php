@@ -1,5 +1,3 @@
-<tbody>
-  <tr class="rid_<?php echo $specimen->getSpecRef(); ?>">
     <td rowspan="2">
       <?php if($is_specimen_search):?>
         <input type="checkbox" value="<?php echo $specimen->getSpecRef();?>" class="spec_selected"/>
@@ -218,30 +216,3 @@
            <?php echo $specimen->getSpecimenCountMin();?> -  <?php echo $specimen->getSpecimenCountMax();?>
         <?php endif;?>
     </td>
-    <td rowspan="2">
-        <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
-        <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'specimen/new?duplicate_id='.$specimen->getSpecRef(), array('class' => 'duplicate_link'));?>
-    </td>
-  </tr>
-  <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">
-    <td colspan="6"> 
-      <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
-      <script type="text/javascript">
-        $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
-        {
-          $(this).hide();
-          $(this).siblings('.expanded').show();
-          $.get('<?php echo url_for("specimensearch/individualTree?id=".$specimen->getSpecRef()) ;?>',function (html){
-                  $('#container_individual_<?php echo $specimen->getSpecRef();?>').html(html).slideDown();
-                  });
-        });  
-        $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.expanded').click(function() 
-        {
-          $(this).hide();
-          $(this).siblings('.collapsed').show();
-          $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
-        });
-      </script>
-    </td>
-  </tr>
-</tbody>
