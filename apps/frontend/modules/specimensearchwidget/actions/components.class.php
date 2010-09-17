@@ -12,7 +12,6 @@ class specimensearchwidgetComponents extends sfComponents
 {
   public function executeRefCollection()
   {
-    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
 

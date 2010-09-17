@@ -100,6 +100,8 @@ class searchActions extends DarwinActions
   public function executeView(sfWebRequest $request)
   {
     $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));  
+    $this->forward404Unless($this->specimen);
+    if(!$this->specimen->getCollectionIsPublic()) $this->forwardToSecureAction();
     
     $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
     $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      

@@ -37,7 +37,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     {
       $objects = Doctrine_Core::getTable('Collections')->fetchByCollectionParent($parent);
     }
-    else      
+    else
       $objects = Doctrine_Core::getTable('Collections')->getAllCollections() ;
     if(!$objects->count()) return(array());
 
@@ -66,6 +66,19 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     return $choices;
   }
   
+  private function getCollectionByIntitution()
+  {
+    $tab = array() ;
+    $objects = Doctrine_Core::getTable('Collections')->fetchByInstitutionList() ;  
+    foreach($objects as $institution)
+    {
+      $tab[$institution->getFormatedName()] = array() ;
+      foreach($institution->Collections as $collection)
+       $tab[$institution->getFormatedName()][] = $collection->getId() ;
+    } 
+    return $tab ;
+  }
+  
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     if ($this->getOption('multiple'))
@@ -80,40 +93,24 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     $options = array();
     $this->addOption('listCheck',$value) ; 
     $choices = $this->getChoices();
+    $institutions = $this->getCollectionByIntitution() ;
     $html = "" ;
     $prev_level = 0 ;
-    if(count($choices) == 0) return ('No existing Sub collections');
+    if(count($choices) == 0) return ('No existing Sub collections'); 
     if($this->hasOption('collection_parent'))
     {
-      $img_expand = 'individual_expand.png';
-      $img_expand_up = 'individual_expand_up.png' ;
+      $html .= $this->getChoiceRenderer($choices,$name) ;
     }
     else
     {
-      $img_expand = 'blue_expand.png';
-      $img_expand_up = 'blue_expand_up.png' ;
-    }    
-    foreach ($choices as $key => $option)
-    {    
-        if($prev_level < $option['level'])
-          $html .= "<ul>\n" ;
-        else
-        {
-          $html .= "</li>\n" ;
-          if($prev_level > $option['level'])
-              $html .= str_repeat('</ul></li>',$prev_level-$option['level']);
-        }
-        $html .= "<li class=\"rid_".$key."\"><div class=\"col_name\">" ;
-        $html .= image_tag ($img_expand, array('alt' => '+', 'class'=> 'tree_cmd collapsed'));
-        $html .= image_tag ($img_expand_up, array('alt' => '-', 'class'=> 'tree_cmd expanded'));
-        $html .=  "<span>".$option['label'];
-			  $html .= "<div class=\"check_right\">\n\t\t" ;
-        $html .= "<input type=\"checkbox\" value=\"".$key."\" name=\"".$name."\"" ;
-        if(isset($option['checked'])) $html .= "checked=\"".$option['checked']."\"" ;
-		    $html .= "></div></span></div>" ;
-        $prev_level = $option['level'] ;
+      foreach($institutions as $institution=> $collection)
+      {
+        $html .= "<h2>$institution</h2>" ;
+        $html .= "<div class=\"treelist\">" ;
+        $html .= $this->getChoiceRenderer($choices, $name, $collection ) ;
+        $html .= "</div>" ;
+      }
     }
-    $html .= str_repeat('</li></ul>',$option['level']);    
 
 	  if ($this->hasOption('collection_parent'))
 	  {
@@ -123,5 +120,64 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
       $html .= "</div>" ;
     }
     return($html) ;
+  }
+  
+  private function getChoiceRenderer($choice, $name,$collection = null)   
+  {
+    $html = "" ;
+    $prev_level = 0 ;
+    if($collection == null) 
+    {
+      $img_expand = 'individual_expand.png';
+      $img_expand_up = 'individual_expand_up.png' ;
+      foreach ($choice as $key => $option)
+      {    
+          if($prev_level < $option['level'])
+            $html .= "<ul>\n" ;
+          else
+          {
+            $html .= "</li>\n" ;
+            if($prev_level > $option['level'])
+                $html .= str_repeat('</ul></li>',$prev_level-$option['level']);
+          }
+          $html .= "<li class=\"rid_".$key."\"><div class=\"col_name\">" ;
+          $html .= image_tag ($img_expand, array('alt' => '+', 'class'=> 'tree_cmd collapsed'));
+          $html .= image_tag ($img_expand_up, array('alt' => '-', 'class'=> 'tree_cmd expanded'));
+          $html .=  "<span>".$option['label'];
+			    $html .= "<div class=\"check_right\">\n\t\t" ;
+          $html .= "<input type=\"checkbox\" value=\"".$key."\" name=\"".$name."\"" ;
+          if(isset($option['checked'])) $html .= "checked=\"".$option['checked']."\"" ;
+		      $html .= "></div></span></div>" ;
+          $prev_level = $option['level'] ;
+      }
+      $html .= str_repeat('</li></ul>',$option['level']);
+    }
+    else
+    {
+      $img_expand = 'blue_expand.png';
+      $img_expand_up = 'blue_expand_up.png' ;   
+      foreach ($collection as $val)
+      {    
+          if($prev_level < $choice[$val]['level'])
+            $html .= "<ul>\n" ;
+          else
+          {
+            $html .= "</li>\n" ;
+            if($prev_level > $choice[$val]['level'])
+                $html .= str_repeat('</ul></li>',$prev_level-$choice[$val]['level']);
+          }
+          $html .= "<li class=\"rid_".$choice[$val]."\"><div class=\"col_name\">" ;
+          $html .= image_tag ($img_expand, array('alt' => '+', 'class'=> 'tree_cmd collapsed'));
+          $html .= image_tag ($img_expand_up, array('alt' => '-', 'class'=> 'tree_cmd expanded'));
+          $html .=  "<span>".$choice[$val]['label'];
+			    $html .= "<div class=\"check_right\">\n\t\t" ;
+          $html .= "<input type=\"checkbox\" value=\"".$val."\" name=\"".$name."\"" ;
+          if(isset($choice[$val]['checked'])) $html .= "checked=\"".$choice[$val]['checked']."\"" ;
+		      $html .= "></div></span></div>" ;
+          $prev_level = $choice[$val]['level'] ;
+      }
+      $html .= str_repeat('</li></ul>',$choice[$val]['level']);    
+    }   
+    return $html ;
   }
 }

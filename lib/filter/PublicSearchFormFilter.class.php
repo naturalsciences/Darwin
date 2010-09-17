@@ -240,7 +240,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     parent::bind($taintedValues, $taintedFiles);
   }
 
-  public function addCollectionRefColumnQuery($query, $val)
+  public function addCollectionRefColumnQuery($query, $field, $val)
   {
     if (count($val) > 0) 
     {
