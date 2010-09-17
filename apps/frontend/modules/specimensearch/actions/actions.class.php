@@ -196,7 +196,7 @@ class specimensearchActions extends DarwinActions
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
     $flds = array('category','collection','taxon','type','gtu','codes','chrono',
-              'litho','lithologic','mineral','expedition','count');
+              'litho','lithologic','mineral','expedition','count','individual_type','sex','state','stage','social_status','rock_form','individual_count');
     $flds = array_fill_keys($flds, 'uncheck');
 
     if($form->isBound())

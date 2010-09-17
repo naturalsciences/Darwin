@@ -11,6 +11,7 @@
     ?>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
     <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
+    <?php $source = $form->getValue('what_searched');?>
       <ul class="sf-menu column_menu">
         <li class="head"><?php echo __('Choose columns to display') ; ?><br/><?php echo image_tag('column_display_expand.png', array('id'=>'column_display_expand','alt' => __('expand'))) ; ?>
           <ul>
@@ -52,8 +53,35 @@
               'count' => array(
                 'specimen_count_max',
                 __('Count'),),
-            );
-            foreach($cols as $col_name => $col):?>
+              );
+            if($source =='individual')
+            {
+              $cols += array(
+              'individual_type' => array(
+                'individual_type_group',
+                __('Type'),),
+              'sex' => array(
+                'individual_sex',
+                __('Sex'),),
+              'state' => array(
+                'individual_state',
+                __('State'),),
+              'stage' => array(
+                'individual_stage',
+                __('Stage'),),
+              'social_status' => array(
+                'individual_social_status',
+                __('Social Status'),),
+              'rock_form' => array(
+                'individual_rock_form',
+                __('Rock Form'),),
+              'individual_count' => array(
+                'individual_count_max',
+                __('Individual Count'),),
+              );
+            }?>
+
+            <?php foreach($cols as $col_name => $col):?>
               <li class="<?php echo $field_to_show[$col_name]; ?>" id="li_<?php echo $col_name;?>">
                 <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'hidden':''); ?>">&#10003;</span>
                 <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?php echo $col[1];?>
@@ -63,7 +91,7 @@
         </li>
       </ul>
 
-      <?php echo $form->getValue('what_searched');?>
+      <?php echo $source;?>
       <table class="spec_results">
         <thead>
           <tr>
@@ -90,7 +118,42 @@
           </tr>
         </thead>
         <?php foreach($specimensearch as $specimen):?>
-          <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+          <tbody>
+            <tr class="rid_<?php echo $specimen->getSpecRef(); ?>">
+              <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+              <?php if($source != 'specimen'):?>
+                <?php include_partial('result_content_individual', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+              <?php endif;?>
+              <td rowspan="2">
+                <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
+                <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'specimen/new?duplicate_id='.$specimen->getSpecRef(), array('class' => 'duplicate_link'));?>
+              </td>
+            </tr>
+
+            <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">
+              <td colspan="14"> 
+                <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
+                <script type="text/javascript">
+                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
+                  {
+                    $(this).hide();
+                    $(this).siblings('.expanded').show();
+                    $.get('<?php echo url_for("specimensearch/individualTree?id=".$specimen->getSpecRef()) ;?>',function (html){
+                            $('#container_individual_<?php echo $specimen->getSpecRef();?>').html(html).slideDown();
+                            });
+                  });  
+                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.expanded').click(function() 
+                  {
+                    $(this).hide();
+                    $(this).siblings('.collapsed').show();
+                    $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
+                  });
+                </script>
+              </td>
+            </tr>
+
+
+          </tbody>
         <?php endforeach;?>
       </table>
 
