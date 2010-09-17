@@ -381,3 +381,13 @@
   DROP INDEX IF EXISTS idx_darwin_flat_container_storage;
   DROP INDEX IF EXISTS idx_darwin_flat_sub_container_storage;
   DROP INDEX IF EXISTS idx_darwin_flat_collection_is_public;
+  DROP INDEX IF EXISTS idx_darwin_flat_collection_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_category;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_coll_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_taxon_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_chrono_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_litho_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_lithology_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_mineral_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_expedition_name;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_spec_count_max;
