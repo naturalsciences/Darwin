@@ -88,7 +88,7 @@
           <div id="gtu_<?php echo $specimen->getSpecRef();?>_details" style="display:none;"></div>
         <?php else : ?>
           <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef());?>"><?php echo $specimen->getGtuCode();?></a>
-        <?php endif ; ?>                 
+        <?php endif ; ?>
           <script type="text/javascript">
           $('#gtu_ctr_<?php echo $specimen->getSpecRef();?>_info').click(function() 
           {

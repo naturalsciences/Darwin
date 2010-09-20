@@ -1,5 +1,7 @@
-<?php slot('title', __('Specimens search result'));  ?>  
-     
+<?php slot('title', __('Specimens search result'));  ?>
+
+<?php include_partial('result_cols', array('source' => $source, 'columns' => $columns, 'field_to_show' => $field_to_show));?>
+
 <div class="encoding">
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
@@ -29,10 +31,11 @@
                                       'orderBy' => $orderBy,
                                       's_url' => $s_url,
                                       'orderDir' => $orderDir,
-                                      'field_to_show' => $field_to_show,
                                       'currentPage' => $currentPage,
                                       'pagerLayout' => $pagerLayout,
-                                      'is_specimen_search' => $is_specimen_search
+                                      'is_specimen_search' => $is_specimen_search,
+                                      'columns' => $columns,
+                                      'source' => $source
                                      )
                                ); ?>
         </div>

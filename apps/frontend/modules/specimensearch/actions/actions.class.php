@@ -155,6 +155,8 @@ class specimensearchActions extends DarwinActions
           $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
           if($this->form->getValue('what_searched') == 'individual')
             $count_q->select('count( distinct individual_ref)');
+          if($this->form->getValue('what_searched') == 'part')
+            $count_q->select('count( distinct part_ref)');
           $counted = new DoctrineCounted();
           $counted->count_query = $count_q;
           $pager->setCountQuery($counted);
@@ -172,7 +174,8 @@ class specimensearchActions extends DarwinActions
             $spec_list[] = $specimen->getSpecRef() ;
           $this->codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
-
+          $this->source = $this->form->getValue('what_searched');
+          $this->defineFields($this->source);
           return;
         }
       }
@@ -196,7 +199,11 @@ class specimensearchActions extends DarwinActions
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
     $flds = array('category','collection','taxon','type','gtu','codes','chrono',
-              'litho','lithologic','mineral','expedition','count','individual_type','sex','state','stage','social_status','rock_form','individual_count');
+              'litho','lithologic','mineral','expedition','count','individual_type','sex','state','stage','social_status','rock_form','individual_count',
+              'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
+              'sub_container_type' , 'sub_container_storage', 'part_count',);
+
+
     $flds = array_fill_keys($flds, 'uncheck');
 
     if($form->isBound())
@@ -242,7 +249,7 @@ class specimensearchActions extends DarwinActions
     $this->items = Doctrine::getTable('SpecimenIndividuals')
       ->getIndividualBySpecimen($request->getParameter('id'));
   }
-  
+
   public function executePartTree(sfWebRequest $request)
   {
     $this->parts = Doctrine::getTable('SpecimenParts')
@@ -284,5 +291,124 @@ class specimensearchActions extends DarwinActions
     $form = new SpecimenSearchFormFilter();
     $form->addCodeValue($number);
     return $this->renderPartial('specimensearchwidget/codeline',array('code' => $form['Codes'][$number], 'row_line'=>$number));
+  }
+
+  protected function defineFields($source)
+  {
+    $this->columns= array('individual'=>array(),'part'=>array());
+    $this->columns['specimen'] = array(
+      'category' => array(
+        'category',
+        $this->getI18N()->__('Category'),),
+      'collection' => array(
+        'collection_name',
+        $this->getI18N()->__('Collection'),),
+      'taxon' => array(
+        'taxon_name_order_by',
+        $this->getI18N()->__('Taxon'),),
+      'type' => array(
+        'with_types',
+        $this->getI18N()->__('Type'),),
+      'gtu' => array( ///
+        false,
+        $this->getI18N()->__('Sampling locations'),),
+      'codes' => array( ///
+        false,
+        $this->getI18N()->__('Codes'),),
+      'chrono' => array(
+        'chrono_name_order_by',
+        $this->getI18N()->__('Chronostratigraphic unit'),),
+      'litho' => array(
+        'litho_name_order_by',
+        $this->getI18N()->__('Lithostratigraphic unit'),),
+      'lithologic' => array(
+        'lithologic_name_order_by',
+        $this->getI18N()->__('Lithologic unit'),),
+      'mineral' => array(
+        'mineral_name_order_by',
+        $this->getI18N()->__('Mineralogic unit'),),
+      'expedition' => array(
+        'expedition_name_indexed',
+        $this->getI18N()->__('Expedition'),),
+      'count' => array(
+        'specimen_count_max',
+        $this->getI18N()->__('Count'),),
+    );
+
+    if($source != 'specimen')
+    {
+      $this->columns['individual'] = array(
+        'individual_type' => array(
+          'individual_type_group',
+          $this->getI18N()->__('Type'),),
+        'sex' => array(
+          'individual_sex',
+          $this->getI18N()->__('Sex'),),
+        'state' => array(
+          'individual_state',
+          $this->getI18N()->__('State'),),
+        'stage' => array(
+          'individual_stage',
+          $this->getI18N()->__('Stage'),),
+        'social_status' => array(
+          'individual_social_status',
+          $this->getI18N()->__('Social Status'),),
+        'rock_form' => array(
+          'individual_rock_form',
+          $this->getI18N()->__('Rock Form'),),
+        'individual_count' => array(
+          'individual_count_max',
+          $this->getI18N()->__('Individual Count'),),
+        );
+    }
+
+    if($source == 'part')
+    {
+      $this->columns['part'] = array(
+        'part' => array(
+          'part',
+          $this->getI18N()->__('Part'),),
+        'part_status' => array(
+          'part_status',
+          $this->getI18N()->__('Part Status'),),
+        'building' => array(
+          'building',
+          $this->getI18N()->__('Building'),),
+        'floor' => array(
+          'floor',
+          $this->getI18N()->__('Floor'),),
+        'room' => array(
+          'room',
+          $this->getI18N()->__('Room'),),
+        'row' => array(
+          'row',
+          $this->getI18N()->__('Row'),),
+        'shelf' => array(
+          'shelf',
+          $this->getI18N()->__('Shelf'),),
+
+        'container' => array(
+          'container',
+          $this->getI18N()->__('Container'),),
+        'container_type' => array(
+          'container_type',
+          $this->getI18N()->__('Container Type'),),
+        'container_storage' => array(
+          'container_storage',
+          $this->getI18N()->__('Container Storage'),),
+        'sub_container' => array(
+          'sub_container',
+          $this->getI18N()->__('Sub Container'),),
+        'sub_container_type' => array(
+          'sub_container_type',
+          $this->getI18N()->__('Sub Container Type'),),
+        'sub_container_storage' => array(
+          'sub_container_storage',
+          $this->getI18N()->__('Sub Container Storage'),),
+        'part_count' => array(
+          'part_count_max',
+          $this->getI18N()->__('Part Count'),),
+        );
+    }
   }
 }

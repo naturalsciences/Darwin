@@ -1,8 +1,12 @@
 
 .menu_top
 {
-	background-color: #3390A1;
-	height: 32px;
+  background-color: #3390A1;
+  height: 32px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 400;
 }
 
 .menu_top .highlight

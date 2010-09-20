@@ -111,6 +111,44 @@ img#column_display_expand
   padding-top:0.6em;
 }
 
+.search_columns .widget_collection_container
+{
+  padding:1em;
+  color:white;
+  font-weight:bold;
+}
+
+ul.column_menu > li
+{
+  width:300px;
+/*   border:2px solid red; */
+  float:left;
+  padding: 0.5em;
+}
+
+ul.column_menu > li .cols_title
+{
+  color:white;
+  font-size:large;
+  font-weight:bold;
+  margin-bottom:0.5em;
+}
+
+ul.column_menu > li > ul >li
+{
+  padding:0.2em;
+}
+
+li.check span
+{
+  color: green;  
+}
+
+li.uncheck span
+{
+  color: red;
+}
+/*
 ul.column_menu > li
 {
   margin-bottom:1.3em;
@@ -159,7 +197,8 @@ ul.column_menu li > ul > li:hover
 {
   min-width:14em;
 }
-*/
+
+
 li.head
 {
 	background-color:#ebf5f5;
@@ -175,7 +214,7 @@ li.uncheck
 {
   color: red;
 }
-
+*/
 div.aligned_fields
 {
   width:400px;

@@ -11,85 +11,6 @@
     ?>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
     <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
-    <?php $source = $form->getValue('what_searched');?>
-      <ul class="sf-menu column_menu">
-        <li class="head"><?php echo __('Choose columns to display') ; ?><br/><?php echo image_tag('column_display_expand.png', array('id'=>'column_display_expand','alt' => __('expand'))) ; ?>
-          <ul>
-            <?php
-            $cols = array(
-              'category' => array(
-                'category',
-                __('Category'),),
-              'collection' => array(
-                'collection_name',
-                __('Collection'),),
-              'taxon' => array(
-                'taxon_name_order_by',
-                __('Taxon'),),
-              'type' => array(
-                'with_types',
-                __('Type'),),
-              'gtu' => array( ///
-                false,
-                __('Sampling locations'),),
-              'codes' => array( ///
-                false,
-                __('Codes'),),
-              'chrono' => array(
-                'chrono_name_order_by',
-                __('Chronostratigraphic unit'),),
-              'litho' => array(
-                'litho_name_order_by',
-                __('Lithostratigraphic unit'),),
-              'lithologic' => array(
-                'lithologic_name_order_by',
-                __('Lithologic unit'),),
-              'mineral' => array(
-                'mineral_name_order_by',
-                __('Mineralogic unit'),),
-              'expedition' => array(
-                'expedition_name_indexed',
-                __('Expedition'),),
-              'count' => array(
-                'specimen_count_max',
-                __('Count'),),
-              );
-            if($source =='individual')
-            {
-              $cols += array(
-              'individual_type' => array(
-                'individual_type_group',
-                __('Type'),),
-              'sex' => array(
-                'individual_sex',
-                __('Sex'),),
-              'state' => array(
-                'individual_state',
-                __('State'),),
-              'stage' => array(
-                'individual_stage',
-                __('Stage'),),
-              'social_status' => array(
-                'individual_social_status',
-                __('Social Status'),),
-              'rock_form' => array(
-                'individual_rock_form',
-                __('Rock Form'),),
-              'individual_count' => array(
-                'individual_count_max',
-                __('Individual Count'),),
-              );
-            }?>
-
-            <?php foreach($cols as $col_name => $col):?>
-              <li class="<?php echo $field_to_show[$col_name]; ?>" id="li_<?php echo $col_name;?>">
-                <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'hidden':''); ?>">&#10003;</span>
-                <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'':'hidden'); ?>">&#10007;</span>&nbsp;<?php echo $col[1];?>
-              </li>
-            <?php endforeach;?>
-          </ul>
-        </li>
-      </ul>
 
       <?php echo $source;?>
       <table class="spec_results">
@@ -101,7 +22,8 @@
                <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
                <?php echo image_tag('white_pin_on.png', array('class'=>'top_pin_but pin_on', 'alt' =>  __('Save this result'))) ; ?>
             </th>
-            <?php foreach($cols as $col_name => $col):?>
+            <?php $all_columns = $columns['specimen'] + $columns['individual'] + $columns['part'] ;?>
+            <?php foreach($all_columns as $col_name => $col):?>
               <th class="col_<?php echo $col_name;?>">
                 <?php if($col[0] != false):?>
                   <a class="sort" href="<?php echo url_for($s_url.'&orderby='.$col[0].( ($orderBy==$col[0] && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
@@ -123,6 +45,9 @@
               <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
                 <?php include_partial('result_content_individual', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+              <?php endif;?>
+              <?php if($source == 'part'):?>
+                <?php include_partial('result_content_part', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <td rowspan="2">
                 <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
@@ -164,19 +89,7 @@
 </div>  
 <script type="text/javascript">
 $(document).ready(function () {
-  $('body').catalogue({},link=$('div.check_right').find('a.hidden').attr('href')); 
-  o = {"dropShadows":false, "autoArrows":false,  "delay":400};
-  $('ul.column_menu').superfish(o);
 
-  $('ul.column_menu > li > ul > li').each(function(){
-    hide_or_show($(this));
-  });
-  initIndividualColspan() ;
-  $("ul.column_menu > li > ul > li").click(function(){
-    update_list($(this));
-    hide_or_show($(this));
-  });
-  
   /**PIN management **/
   $('.spec_results .pin_but').click(function(){
     if($(this).hasClass('pin_on'))
