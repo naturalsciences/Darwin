@@ -105,6 +105,7 @@
  * @property string $acquisition_date
  * @property integer $specimen_count_min
  * @property integer $specimen_count_max
+ * @property boolean $with_types
  * @property integer $individual_ref
  * @property string $individual_type
  * @property string $individual_type_group
@@ -262,6 +263,7 @@
  * @method string              getAcquisitionDate()                               Returns the current record's "acquisition_date" value
  * @method integer             getSpecimenCountMin()                              Returns the current record's "specimen_count_min" value
  * @method integer             getSpecimenCountMax()                              Returns the current record's "specimen_count_max" value
+ * @method boolean             getWithTypes()                                     Returns the current record's "with_types" value
  * @method integer             getIndividualRef()                                 Returns the current record's "individual_ref" value
  * @method string              getIndividualType()                                Returns the current record's "individual_type" value
  * @method string              getIndividualTypeGroup()                           Returns the current record's "individual_type_group" value
@@ -418,6 +420,7 @@
  * @method IndividualSearch    setAcquisitionDate()                               Sets the current record's "acquisition_date" value
  * @method IndividualSearch    setSpecimenCountMin()                              Sets the current record's "specimen_count_min" value
  * @method IndividualSearch    setSpecimenCountMax()                              Sets the current record's "specimen_count_max" value
+ * @method IndividualSearch    setWithTypes()                                     Sets the current record's "with_types" value
  * @method IndividualSearch    setIndividualRef()                                 Sets the current record's "individual_ref" value
  * @method IndividualSearch    setIndividualType()                                Sets the current record's "individual_type" value
  * @method IndividualSearch    setIndividualTypeGroup()                           Sets the current record's "individual_type_group" value
@@ -828,6 +831,9 @@ abstract class BaseIndividualSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('specimen_count_max', 'integer', null, array(
              'type' => 'integer',
+             ));
+        $this->hasColumn('with_types', 'boolean', null, array(
+             'type' => 'boolean',
              ));
         $this->hasColumn('individual_ref', 'integer', null, array(
              'type' => 'integer',

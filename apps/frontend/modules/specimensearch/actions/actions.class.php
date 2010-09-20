@@ -134,16 +134,15 @@ class specimensearchActions extends DarwinActions
 
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
-          $ordered_searched = 'spec_ref, ';
+          $ordered_searched = ' spec_ref ';
           
           if($this->form->getValue('what_searched') == 'individual')
-            $ordered_searched = ' individual_ref , ';
+            $ordered_searched = ' individual_ref ';
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-
           if($this->form->getValue('what_searched') != 'part')
           {
-            $query->orderby($ordered_searched. $this->orderBy . ' ' . $this->orderDir);
-            $query->addGroupBy($this->orderBy);
+            $query->orderby($this->orderBy . ' ' . $this->orderDir . ', ' . $ordered_searched);
+            $query->groupBy($this->orderBy . ', ' . $ordered_searched);
           }
           // Define in one line a pager Layout based on a pagerLayoutWithArrows object
           // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
@@ -151,14 +150,21 @@ class specimensearchActions extends DarwinActions
             $this->currentPage,
             $this->form->getValue('rec_per_page')
           );
+          // Replace the count query triggered by the Pager to get the number of records retrieved
           $count_q = clone $query;//$pager->getCountQuery();
+          // Remove from query the group by and order by clauses
           $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
           if($this->form->getValue('what_searched') == 'individual')
             $count_q->select('count( distinct individual_ref)');
+
           if($this->form->getValue('what_searched') == 'part')
             $count_q->select('count( distinct part_ref)');
+
+          // Initialize an empty count query
           $counted = new DoctrineCounted();
+          // Define the correct select count() of the count query
           $counted->count_query = $count_q;
+          // And replace the one of the pager with this new one
           $pager->setCountQuery($counted);
           $this->pagerLayout = new PagerLayoutWithArrows($pager,
                                                         new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
@@ -185,7 +191,7 @@ class specimensearchActions extends DarwinActions
     if(isset($criterias['specimen_search_filters']))
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
     $this->loadWidgets();
-//    $this->form->addGtuTagValue(0); 
+//    $this->form->addGtuTagValue(0);
   }
   
   /**
@@ -199,7 +205,7 @@ class specimensearchActions extends DarwinActions
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
     $flds = array('category','collection','taxon','type','gtu','codes','chrono',
-              'litho','lithologic','mineral','expedition','count','individual_type','sex','state','stage','social_status','rock_form','individual_count',
+              'litho','lithologic','mineral','expedition','count','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
               'sub_container_type' , 'sub_container_storage', 'part_count',);
 

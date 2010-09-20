@@ -478,7 +478,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query = Doctrine_Query::create()
         ->from('SpecimenSearch s')
         ->groupBy('spec_ref')
-        ->select($str . ' array_accum(distinct individual_type) as with_types, MIN(id) as id');
+        ->select($str . ' MIN(id) as id');
 
     }
     elseif($values['what_searched'] == 'individual')
@@ -502,7 +502,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $array_fld = array_merge($array_fld,$fields['parts']);
       $str = implode(', ',$array_fld);
       $query = Doctrine_Query::create()
-        ->select($str.' ,false as with_types')
+        ->select($str.' , false as with_types')
         ->andWhere('part_ref != 0 ')
         ->from('PartSearch s');
     }

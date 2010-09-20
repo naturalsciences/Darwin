@@ -990,6 +990,7 @@ SpecimenSearch:
         acquisition_date: { type: string}             
         specimen_count_min: { type: integer }       
         specimen_count_max: { type: integer }
+        with_types: {type: boolean }
         individual_ref: {type: integer}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}
@@ -1233,6 +1234,7 @@ IndividualSearch:
         acquisition_date: { type: string}             
         specimen_count_min: { type: integer }       
         specimen_count_max: { type: integer }
+        with_types: {type: boolean }
         individual_ref: {type: integer, primary: true}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}
@@ -1477,6 +1479,7 @@ PartSearch:
         acquisition_date: { type: string}
         specimen_count_min: { type: integer }
         specimen_count_max: { type: integer }
+        with_types: {type: boolean }
         individual_ref: {type: integer, primary: true}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}

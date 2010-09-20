@@ -41,13 +41,6 @@ class SpecimenSearch extends BaseSpecimenSearch
       return $str;
     }
 
-  /* Function returning a flag telling if for the current specimen there are types or not */
-  public function getWithTypes()
-  {
-    if($this->_get('with_types') == '{specimen}' || $this->_get('with_types') == '{}') return false;
-    return true;
-  }
-
   public function getAggregatedName($sep = ' / ')
   {
     $items = array(

@@ -203,6 +203,7 @@ class SpecimenSearchTable extends Doctrine_Table
 //           'acquisition_date',
           'specimen_count_min',
           'specimen_count_max',
+          'with_types',
         ),
         'individuals' => array(
           'individual_ref',
