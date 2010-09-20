@@ -155,6 +155,8 @@ class specimensearchActions extends DarwinActions
           $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
           if($this->form->getValue('what_searched') == 'individual')
             $count_q->select('count( distinct individual_ref)');
+          if($this->form->getValue('what_searched') == 'part')
+            $count_q->select('count( distinct part_ref)');
           $counted = new DoctrineCounted();
           $counted->count_query = $count_q;
           $pager->setCountQuery($counted);
