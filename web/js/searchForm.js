@@ -43,6 +43,19 @@ function update_list(li)
   }
 }
 
+function getColVisible()
+{
+  column_str = '';
+  if($('.column_menu ul > li.check').length)
+  {
+    $('.column_menu ul > li.check').each(function (index)
+    {
+      if(column_str != '') column_str += '|';
+      column_str += $(this).attr('id').substr(3);
+    });
+  }
+  return column_str;
+}
 /**
 * set the individual colspan depending on how many fields are visible
 */
@@ -55,7 +68,8 @@ function initIndividualColspan()
       cpt++ ;
     }
    });  
-  $('table.spec_results tbody tr:nth-child(2) td').attr('colspan', cpt) ;    
+  $('table.spec_results tbody tr.sub_row td').attr('colspan', cpt);
+  $('#specimen_search_filters_col_fields').val(getColVisible());
 }
 
 /***
@@ -83,5 +97,5 @@ function hide_or_show(li)
     //this line below is neccessary to avoid table border to be cut    
   }
   initIndividualColspan();
-
+$('#specimen_search_filters_col_fields').val();
 }

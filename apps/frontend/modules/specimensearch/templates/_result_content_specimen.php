@@ -4,8 +4,10 @@
       <?php endif;?>
     </td>
     <td rowspan="2">
-      <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
-      <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+      <?php if($source != 'part'):?>
+        <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
+        <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+      <?php endif;?>
     </td>
     <td >
       <?php if($sf_user->isPinned($specimen->getSpecRef())):?>

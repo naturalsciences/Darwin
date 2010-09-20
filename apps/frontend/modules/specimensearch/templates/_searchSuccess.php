@@ -40,9 +40,12 @@
           </tr>
         </thead>
         <?php foreach($specimensearch as $specimen):?>
+          <?php if($source=="specimen") $itemRef = $specimen->getSpecRef();
+                elseif($source=="individual") $itemRef = $specimen->getIndividualRef();
+                else $itemRef = $specimen->getPartRef(); ?>
           <tbody>
-            <tr class="rid_<?php echo $specimen->getSpecRef(); ?>">
-              <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+            <tr class="rid_<?php echo $itemRef?>">
+              <?php include_partial('result_content_specimen', array('source'=>$source,'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
                 <?php include_partial('result_content_individual', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
@@ -55,29 +58,55 @@
               </td>
             </tr>
 
-            <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row">
-              <td colspan="14"> 
-                <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
-                <script type="text/javascript">
-                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
-                  {
-                    $(this).hide();
-                    $(this).siblings('.expanded').show();
-                    $.get('<?php echo url_for("specimensearch/individualTree?id=".$specimen->getSpecRef()) ;?>',function (html){
-                            $('#container_individual_<?php echo $specimen->getSpecRef();?>').html(html).slideDown();
-                            });
-                  });  
-                  $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.expanded').click(function() 
-                  {
-                    $(this).hide();
-                    $(this).siblings('.collapsed').show();
-                    $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
-                  });
-                </script>
-              </td>
-            </tr>
-
-
+            <?php if($source == 'specimen'):?>
+              <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row sub_row">
+                <td colspan="14"> 
+                  <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
+                  <script type="text/javascript">
+                    $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
+                    {
+                      $(this).hide();
+                      $(this).siblings('.expanded').show();
+                      $.get('<?php echo url_for("specimensearch/individualTree?id=".$specimen->getSpecRef()) ;?>',function (html){
+                              $('#container_individual_<?php echo $specimen->getSpecRef();?>').html(html).slideDown();
+                              });
+                    });  
+                    $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.expanded').click(function() 
+                    {
+                      $(this).hide();
+                      $(this).siblings('.collapsed').show();
+                      $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
+                    });
+                  </script>
+                </td>
+              </tr>
+            <?php elseif($source == 'individual'):?>
+              <tr id="tr_part_<?php echo $specimen->getIndividualRef();?>" class="part_row sub_row">
+                <td colspan="14"> 
+                  <div id="container_part_<?php echo $specimen->getIndividualRef();?>" class="tree"></div>
+                  <script type="text/javascript">
+                    $('tr.rid_<?php echo $specimen->getIndividualRef(); ?> img.collapsed').click(function() 
+                    {
+                      $(this).hide();
+                      $(this).siblings('.expanded').show();
+                      $.get('<?php echo url_for("specimensearch/partTree?id=".$specimen->getIndividualRef()) ;?>',function (html){
+                              $('#container_part_<?php echo $specimen->getIndividualRef();?>').html(html).slideDown();
+                              });
+                    });  
+                    $('tr.rid_<?php echo $specimen->getIndividualRef(); ?> img.expanded').click(function() 
+                    {
+                      $(this).hide();
+                      $(this).siblings('.collapsed').show();
+                      $('#container_part_<?php echo $specimen->getIndividualRef();?>').slideUp();
+                    });
+                  </script>
+                </td>
+              </tr>
+            <?php else:?>
+              <tr id="tr_part_<?php echo $specimen->getPartRef();?>" class="sub_row">
+                <td colspan="14"></td>
+              </tr>
+            <?php endif;?>
           </tbody>
         <?php endforeach;?>
       </table>

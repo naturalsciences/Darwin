@@ -108,13 +108,15 @@
 }
 .widget_collection_top
 {
-	background-color:#55afc5;
+    border-bottom: 1px solid white;
+    background-color:#55afc5;
 /* 	height:12px;	 */
-	padding:7px;
+    padding:7px;
 }
 .widget_collection_button
 {
 	text-align:center;
+        margin-top: -1px;
 }
 .widget_collection_container
 {
