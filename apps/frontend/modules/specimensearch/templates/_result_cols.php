@@ -6,16 +6,6 @@ $(document).ready(function () {
     collection_img_up: '<?php echo  image_path('widgets_expand_up_button.png');?>',
     collection_img_down: '<?php echo  image_path('widget_expand_button.png');?>'
   });
-
-
-  $('ul.column_menu > li > ul > li').each(function(){
-    hide_or_show($(this));
-  });
-  initIndividualColspan() ;
-  $("ul.column_menu > li > ul > li").click(function(){
-    update_list($(this));
-    hide_or_show($(this));
-  });
   
 });
 </script>
