@@ -34,8 +34,8 @@ class widgetFormJQueryDLookup extends sfWidgetFormInputText
           $input .= $this->renderTag('img',$options);
         }
 
-        $script_header = '<script type="text/javascript">';
-        $script_footer = '</script>';
+        $script_header = '<script type="text/javascript"> $(document).ready(function () {';
+        $script_footer = '});</script>';
 
         $script_formated = sprintf('jQuery("#%1$s").focus(function() 
                                     {

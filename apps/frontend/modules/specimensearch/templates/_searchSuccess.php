@@ -72,6 +72,7 @@
                 <td colspan="14"> 
                   <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
                   <script type="text/javascript">
+                    $(document).ready(function () {
                     $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
                     {
                       $(this).hide();
@@ -86,6 +87,7 @@
                       $(this).siblings('.collapsed').show();
                       $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
                     });
+                  });
                   </script>
                 </td>
               </tr>
@@ -94,6 +96,7 @@
                 <td colspan="14"> 
                   <div id="container_part_<?php echo $specimen->getIndividualRef();?>" class="tree"></div>
                   <script type="text/javascript">
+                  $(document).ready(function () {
                     $('tr.rid_<?php echo $specimen->getIndividualRef(); ?> img.collapsed').click(function() 
                     {
                       $(this).hide();
@@ -108,6 +111,7 @@
                       $(this).siblings('.collapsed').show();
                       $('#container_part_<?php echo $specimen->getIndividualRef();?>').slideUp();
                     });
+                  });
                   </script>
                 </td>
               </tr>
