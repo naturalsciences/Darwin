@@ -110,13 +110,13 @@
               <?php if($orderBy=='individual_type') echo $orderSign ?>              
             </th>
             <th class="col_sex">
-                <a class="sort" href="<?php echo url_for($s_url.'&orderby=with_sex'.( ($orderBy=='individual_sex' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
+                <a class="sort" href="<?php echo url_for($s_url.'&orderby=individual_sex'.( ($orderBy=='individual_sex' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                  $currentPage);?>">
               <?php echo __('Sex');?>
               <?php if($orderBy=='individual_sex') echo $orderSign ?>              
             </th>        
             <th class="col_stage">
-                <a class="sort" href="<?php echo url_for($s_url.'&orderby=with_stage'.( ($orderBy=='individual_stage' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
+                <a class="sort" href="<?php echo url_for($s_url.'&orderby=individual_stage'.( ($orderBy=='individual_stage' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                  $currentPage);?>">
               <?php echo __('Stage');?>
               <?php if($orderBy=='individual_stage') echo $orderSign ?>              

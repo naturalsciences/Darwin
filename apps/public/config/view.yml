@@ -9,7 +9,7 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [reset.css, content.css, menu.css,main.css,specimensearch.css]
+  stylesheets:    [reset.css, content.css, menu.css,specimensearch.css]
 
   javascripts:    [jquery-1.4.2.min.js, jquery.ui.all.min.js, core.js, jquery.hoverIntent.minified.js, superfish.js, supersubs.js, jquery.qtip-1.0.0-rc3.min.js,searchForm.js]
 

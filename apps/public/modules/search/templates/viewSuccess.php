@@ -2,7 +2,7 @@
 
 <div class="page">
   <h2 class="title"><?php echo __("Darwin Specimen") ?></h2>
-  <div class="borded">
+  <div class="borded  padded">
     <h2 class="title"><?php echo __("Collection") ?></h2>  
     <div class="borded">
       <table>
@@ -33,15 +33,17 @@
               </div>            
             </td>
             <td>
-              <div>
+              <div class="tree_view">
                 <span class="line">
                 <?php echo __("Corrector") ; ?>: <span class="pager_nav"><?php echo $specimen->getCollectionMainManagerFormatedName() ; ?></span>
                 </span>
                 <?php foreach($manager as $info) : ?>
-                  <span class="line">
-                    <?php echo image_tag($info->getDisplayImage(),"title=info class=info");?> :
-                    <span class="pager_nav"><?php echo $info->getEntry() ; ?></span>
-                  </span>
+                  <?php if($img = $info->getDisplayImage(1)) : ?>
+                    <span class="line">
+                      <?php echo image_tag($img,"title=info class=info");?> :
+                      <span class="pager_nav"><?php echo $info->getEntry() ; ?></span>
+                    </span>
+                 <?php endif ; ?>
                 <?php endforeach ; ?>
               </div>
             </td>
@@ -82,12 +84,12 @@
               <?php echo __("Taxonomy") ; ?>: <span class="pager_nav"><?php echo $specimen->getTaxonName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=taxon_info");?>
             </td>
-            <td>
+            <td class="view_level">
               <span class="pager_nav"><?php echo $specimen->getTaxonLevelRef() ; ?></span>
             </td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td>
               <div id="taxon_tree" class="tree"></div>
               <script type="text/javascript">
                  $('#taxon_info').click(function() 
@@ -103,6 +105,7 @@
               </script>
               </div>          
             </td>
+            <td></td>
           </tr>
         <?php endif ; ?>
         <?php if($specimen->getChronoRef()) : ?>
@@ -226,7 +229,7 @@
     </div>
     <h2 class="title"><?php echo __("Specimen Characteristics") ?></h2>  
     <div class="borded">        
-      <table>
+      <table class="caract_table">
         <tr>
           <td><?php echo __("Number of individual") ; ?> :</td>
           <td><span class="pager_nav">
@@ -269,9 +272,8 @@
               <span class="pager_nav">-</span>
             <?php endif ; ?>
           </td>
-        </tr>        
+        </tr>
       </table>
-    </div>        
+    </div>
   </div>
 </div>
-    

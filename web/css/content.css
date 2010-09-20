@@ -1,6 +1,6 @@
 body
 {
-  min-width: 968px;
+  min-width: 1024px;
   font-size: 10pt;
   font-family:sans-serif;
 }
@@ -12,11 +12,7 @@ table
 table tr
 {
   text-align:left;
-}
-
-table td
-{
-  vertical-align: middle;
+  vertical-align: top ;  
 }
 
 table td.centered, table th.centered
@@ -59,6 +55,11 @@ table td.centered, table th.centered
   -webkit-border-radius: 0 0 5px 5px;
 }
 
+.space_right
+{
+  margin-right: 0.5em ;
+}
+
 .double_table
 {
  width: 500px;
@@ -68,6 +69,7 @@ table td.centered, table th.centered
 {
  width: 341px ;
 } 
+
 h1
 {
   color:#3390a1;
@@ -97,12 +99,32 @@ h2.title
   width:320px;
 }
 
+form.publicsearch_form input:focus
+{
+  border:1px inset #5baabd;
+    
+}
+
+input[type="submit"][class="search_submit"],input[type="button"][class="result"]
+{
+  background: white url(/images/widget_button.png) no-repeat;
+  border:0;
+  width:60px;
+  height:21px;
+  color:white;
+  margin-top:1px;
+  padding-bottom:10px;
+}
+input[type="submit"][class="search_submit"]:hover,input[type="button"][class="result"]:hover
+{
+  cursor: pointer ;
+}
+
 /* Tree views (Collections list) */
 
 .treelist ul, .treelist ul li
 {
-  margin-left: 0.4em;
-  margin-right: 1em;
+  margin-left: 8px;
 }
 
 .treelist li
@@ -113,11 +135,29 @@ h2.title
 }
 
 .treelist
-{}
+{
+  width: 100% ;
+}
 
 .treelist li > ul, .expanded
 {
   display:none;
+}
+
+.collections td
+{
+  text-align: left ;
+  padding-right: 1em;  
+}
+
+.collections tr
+{
+  vertical-align: middle ;
+}
+
+.treelist > h2
+{
+  margin-top : 0.3em ;
 }
 
 .col_name
@@ -130,6 +170,7 @@ h2.title
 {
   background-color: #ececec;
 }
+
 .col_name span
 {
   margin-left: 0.3em;
@@ -173,4 +214,136 @@ input.tag_line
 .country_tags li:hover
 {
   border-color:#5baabd;
+}
+
+/** Pager **/
+
+.pager
+{
+  margin-top:0.1em;
+  margin-bottom:0.1em;
+}
+
+.pager li
+{
+  display:inline;
+  padding:0.2em;
+}
+
+.pager_nav
+{
+  font-weight:bold;
+}
+
+.paging_info
+{
+  background-color:#5BAABD;
+  margin-right:0.5em;
+  margin-bottom:1em;
+  margin-top:0.5em;
+  color:white;
+  min-width:600px;
+}
+.paging_info > span
+{
+ font-weight:bold;
+}
+.paging_info table
+{
+  width:100%;
+}
+
+.paging_info td
+{
+  padding:0.1em;
+}
+
+.paging_info td li
+{
+  float:right;
+  padding:0;
+}
+
+.nav_arrow
+{
+  color:#C1C1C1;
+  font-size:medium;
+}
+
+.pager a, a .nav_arrow
+{
+  color:#2C7B88;
+  text-decoration:none;
+}
+
+.pager a:hover
+{
+  text-decoration:underline;
+}
+
+/** Search result style **/
+.page
+{
+  margin-top: 30px;
+  margin-left:51px;
+  margin-right: 51px;
+}
+
+.padded
+{
+  padding: 0.5em;
+}
+
+img.info:hover
+{
+  cursor:pointer;
+}
+
+.tree h3, .tree
+{
+  display:none;
+}
+
+.tree_view
+{
+  padding: 0.5em;
+  margin: 1em;
+  background-color: #ebf5f5;
+  border: 1px solid #5BAABD;
+}
+/*** Hierarchical structure for catalogue units - integrated into results ***/
+
+.tree
+{
+  padding: 0.5em;
+  margin: 1em;
+  background-color: #ebf5f5;
+  border: 1px solid #5BAABD;
+}
+
+.tree h3
+{
+  margin-bottom: 0.5em;
+}
+
+.tree ul
+{
+  padding-left:1.1em;
+}
+
+.tree li:hover
+{
+  background-color:#ebf5f5;
+}
+
+/** view page **/
+.view_level
+{
+  border-top: 1px solid #5BAABD;
+  width: 350px;
+}
+
+table.caract_table tr:hover
+{
+  background-color: #ececec;
 }

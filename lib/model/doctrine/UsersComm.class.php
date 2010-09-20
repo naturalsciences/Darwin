@@ -25,7 +25,7 @@ class UsersComm extends BaseUsersComm
   
   public function getDisplayImage($domain = 'all')
   {    
-    if (strstr($this->getTag(),'work') || $domain = 'all')
+    if (strstr($this->getTag(),'work') || $domain == 'all')
     {
       if($this->getCommType() == "EMAIL") return "email.png";      
       elseif (strstr($this->getTag(),'fax'))

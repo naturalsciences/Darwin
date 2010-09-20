@@ -166,14 +166,13 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
             if($prev_level > $choice[$val]['level'])
                 $html .= str_repeat('</ul></li>',$prev_level-$choice[$val]['level']);
           }
-          $html .= "<li class=\"rid_".$choice[$val]."\"><div class=\"col_name\">" ;
+          $html .= "<li class=\"rid_".$val."\"><div class=\"col_name\">" ;
           $html .= image_tag ($img_expand, array('alt' => '+', 'class'=> 'tree_cmd collapsed'));
           $html .= image_tag ($img_expand_up, array('alt' => '-', 'class'=> 'tree_cmd expanded'));
-          $html .=  "<span>".$choice[$val]['label'];
-			    $html .= "<div class=\"check_right\">\n\t\t" ;
-          $html .= "<input type=\"checkbox\" value=\"".$val."\" name=\"".$name."\"" ;
+          $html .=  "<span>".$choice[$val]['label']."</span>";
+          $html .= "<input type=\"checkbox\" class=\"check_right\" value=\"".$val."\" name=\"".$name."\"" ;
           if(isset($choice[$val]['checked'])) $html .= "checked=\"".$choice[$val]['checked']."\"" ;
-		      $html .= "></div></span></div>" ;
+		      $html .= "></div>" ;
           $prev_level = $choice[$val]['level'] ;
       }
       $html .= str_repeat('</li></ul>',$choice[$val]['level']);    

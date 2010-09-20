@@ -1,8 +1,7 @@
 <?php slot('title', __('Search Specimens/Rocks/Minerals'));  ?>  
-
+<div class="page">
 <h1>Specimen searchs List</h1>
 <?php echo form_tag('search/search', array('class'=>'publicsearch_form'));?>
-<div class="page">
   <h2 class="title"><?php echo __("Classifications") ?></h2>
   <div class="borded">
     <?php echo $form->renderHiddenFields(); ?>
@@ -53,20 +52,24 @@
     <tbody>
       <tr>
         <td>
-          <h2 class="title"><?php echo __("Collections") ?></h2>
-          <div class="borded framed">
-          <table class="double_table collections">
-            <tr>
-              <td>
-                <div class="treelist">
-		              <?php echo $form['collection_ref'] ; ?>        
-                </div>
-                <div class="check_right">
-                  <input type="button" class="result" value="clear" id="clear_collections">
-                </div>
-	            </td>
-	          </tr>
-          </table>
+          <div class="space_right">
+            <h2 class="title"><?php echo __("Collections") ?></h2>
+            <div class="borded framed">
+            <table class="double_table collections">
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="treelist">
+		                  <?php echo $form['collection_ref'] ; ?>        
+                    </div>
+                    <div class="check_right">
+                      <input type="button" class="result" value="clear" id="clear_collections">
+                    </div>
+	                </td>
+	              </tr>
+	            </tbody>
+            </table>
+          </div>
         </td>
         
         <td>
@@ -95,16 +98,20 @@
     <tbody>
       <tr>
         <td>
-          <h2 class="title"><?php echo __("Types") ?></h2>
-          <div class="borded framed" class='triple_table'>
-            <?php echo $form['type'] ; ?>
+          <div class="space_right">
+            <h2 class="title"><?php echo __("Types") ?></h2>
+            <div class="borded framed" class='triple_table'>
+              <?php echo $form['type'] ; ?>
+            </div>
           </div>
         </td>
         
         <td>
+          <div class="space_right">
           <h2 class="title"><?php echo __("Sexes") ?></h2>
-          <div class="borded framed" class='triple_table'>
-            <?php echo $form['sex'] ; ?>
+            <div class="borded framed" class='triple_table'>
+              <?php echo $form['sex'] ; ?>
+            </div>
           </div>
         </td>
 
