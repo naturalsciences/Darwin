@@ -1,6 +1,12 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
+<script type="text/javascript">
+$(document).ready(function () {
+  $('body').catalogue({});
+});
+</script>
+
 <?php echo form_tag('people/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
 
 <?php if (!$form->getObject()->isNew()): ?>
@@ -99,9 +105,4 @@
       </tr>
     </tfoot>
   </table>
-<script type="text/javascript">
-$(document).ready(function () {
-  $('body').catalogue({});
-});
-</script>
 </form>
