@@ -37,8 +37,8 @@
           <?php foreach($expeditions as $expedition):?>
             <tr class="rid_<?php echo $expedition->getId(); ?>">
               <td><?php echo $expedition->getName();?></td>
-              <td class="datesNum"><?php echo $expedition->getExpeditionFromDateMasked();?></td>
-              <td class="datesNum"><?php echo $expedition->getExpeditionToDateMasked();?></td>
+              <td class="datesNum"><?php echo $expedition->getExpeditionFromDateMasked(ESC_RAW);?></td>
+              <td class="datesNum"><?php echo $expedition->getExpeditionToDateMasked(ESC_RAW);?></td>
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit expedition')),'expedition/edit?id='.$expedition->getId());?>

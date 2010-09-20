@@ -1,4 +1,92 @@
 (function($){
+    $.duplicatable = function(el, options){
+
+        var base = this;
+        base.$el = $(el);
+        base.el = el;
+
+        base.$el.data("duplicatable", base);
+
+        base.init = function(){
+            base.options = $.extend({},$.duplicatable.defaultOptions, options);
+            if(base.options['duplicate_binding_type'] == "live")
+            {
+              $(base.options['duplicate_link']).live('click',base.duplicateItem);
+            }
+            else
+              $(base.options['duplicate_link']).click(base.duplicateItem);
+        };
+
+        base.init();
+
+        base.duplicateItem = function(event)
+        {
+          self = this ;
+          event.preventDefault();
+          scroll(0,0);
+
+          $(this).qtip({
+            content: {
+              title: { text : 'duplicate', button: 'X' },
+              url: link 
+            },
+            show: { when: 'click', ready: true },
+            position: {
+              target: $(document.body), // Position it via the document body...
+              adjust: { y: 210 },
+              corner: 'topMiddle' // ...at the topMiddle of the viewport
+            },
+            hide: false,
+            style: {
+              width: { min: 200, max: 500},
+              border: {radius:3},
+              title: { background: '#C1CF56', color:'white'}
+            },
+            api: {
+              beforeShow: function()
+              {
+                  // Fade in the modal "blanket" using the defined show speed
+                element_name = null;
+                addBlackScreen()
+                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+              },
+              beforeHide: function()
+              {
+                  // Fade out the modal "blanket" using the defined hide speed
+                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+              },
+              onHide: function()
+              {
+                $(this.elements.target).qtip("destroy");
+                if (element_name==null)
+                {
+                  return false ;
+                }
+                else
+                {
+                  new_link = $(self).attr('href') + element_name ;
+                  $(location).attr('href',new_link);
+                }
+              }
+            }
+          });
+        }
+    };
+
+    $.duplicatable.defaultOptions = {
+       duplicate_link: "a.duplicate_link",
+       duplicate_binding_type: "normal"
+    };
+
+    $.fn.duplicatable = function(options){
+        return this.each(function(){
+            (new $.duplicatable(this, options));
+        });
+    };
+
+})(jQuery);
+
+(function($){
     $.catalogue = function(el, options){
         // To avoid scope issues, use 'base' instead of 'this'
         // to reference this class from internal events and functions.
@@ -16,6 +104,7 @@
             $(base.options['link_catalogue']).live('click', base.catalogueLinkEdit);
             $(base.options['delete_link']).live('click', base.deleteItem);
             $(base.options['duplicate_link']).live('click',base.duplicateItem);
+            base.$el.duplicatable({});
             // Put your initialization code here
         };
         
@@ -59,59 +148,7 @@
             }
           });
         };
-        
-        base.duplicateItem = function(event)
-        {
-          self = this ;
-          event.preventDefault();
-          scroll(0,0);
 
-          $(this).qtip({
-            content: {
-              title: { text : 'duplicate', button: 'X' },
-              url: link 
-            },
-            show: { when: 'click', ready: true },
-            position: {
-              target: $(document.body), // Position it via the document body...
-              adjust: { y: 210 },
-              corner: 'topMiddle' // ...at the topMiddle of the viewport
-            },
-            hide: false,
-            style: {
-              width: { min: 200, max: 500},
-              border: {radius:3},
-              title: { background: '#C1CF56', color:'white'}
-            },
-            api: {
-              beforeShow: function()
-              {
-                  // Fade in the modal "blanket" using the defined show speed
-                element_name = null;
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-              },
-              beforeHide: function()
-              {
-                  // Fade out the modal "blanket" using the defined hide speed
-                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-              },
-              onHide: function()
-              {
-                $(this.elements.target).qtip("destroy");        
-                if (element_name==null)
-                {
-                  return false ;
-                }
-                else
-                {
-                  new_link = $(self).attr('href') + element_name ;        
-                  $(location).attr('href',new_link);
-		            }
-              }
-            }
-          });       
-        }
         
         base.deleteItem = function(event)
         {

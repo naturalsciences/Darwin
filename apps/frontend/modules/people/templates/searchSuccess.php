@@ -63,12 +63,12 @@
             <td><?php echo $item->getGivenName();?></td>
             <td><?php echo $item->getAdditionalNames() ?></td>
             <td class="datesNum">
-	      <?php echo $item->getBirthDateObject()->getDateMasked('em','Y');?> - 
-	      <?php echo $item->getEndDateObject()->getDateMasked('em','Y') ?>
+	      <?php echo $item->getBirthDateObject()->getDateMasked('em','Y',ESC_RAW);?> - 
+	      <?php echo $item->getEndDateObject()->getDateMasked('em','Y',ESC_RAW) ?>
             </td>
             <td class="datesNum">
-	      <?php echo $item->getActivityDateFromObject()->getDateMasked('em','Y');?> - 
-	      <?php echo $item->getActivityDateToObject()->getDateMasked('em','Y') ?>
+	      <?php echo $item->getActivityDateFromObject()->getDateMasked('em','Y',ESC_RAW);?> - 
+	      <?php echo $item->getActivityDateToObject()->getDateMasked('em','Y',ESC_RAW) ?>
             </td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>

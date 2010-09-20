@@ -36,9 +36,9 @@
         <?php foreach($items as $item):?>
           <tr class="rid_<?php echo $item->getId();?>">
             <td class="top_aligned"><?php echo $item->getCode();?></td>
-            <td class="item_name"><?php echo $item->getName();?></td>
-            <td class="datesNum"><?php echo $item->getGtuFromDateMasked();?></td>
-            <td class="datesNum"><?php echo $item->getGtuToDateMasked();?></td>
+            <td class="item_name"><?php echo $item->getName(ESC_RAW);?></td>
+            <td class="datesNum"><?php echo $item->getGtuFromDateMasked(ESC_RAW);?></td>
+            <td class="datesNum"><?php echo $item->getGtuToDateMasked(ESC_RAW);?></td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?> top_aligned">
               <?php if(! $is_choose):?>
                 <?php echo link_to(image_tag('edit.png',array('title' => 'Edit')),'gtu/edit?id='.$item->getId());?>

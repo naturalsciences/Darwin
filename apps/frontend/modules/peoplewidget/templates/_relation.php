@@ -23,8 +23,8 @@
     <td><?php echo $relation->Parent;?></td>
     <td><?php echo $relation->getPersonUserRole();?></td>
     <td class="datesNum">
-	<?php echo $relation->getActivityDateFromObject()->getDateMasked('em','Y');?> - 
-	<?php echo $relation->getActivityDateToObject()->getDateMasked('em','Y') ?>
+	<?php echo $relation->getActivityDateFromObject()->getDateMasked('em','Y',ESC_RAW);?> - 
+	<?php echo $relation->getActivityDateToObject()->getDateMasked('em','Y', ESC_RAW) ?>
     </td>
     <td class="widget_row_delete">
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_relationships&id='.$relation->getId());?>" title="<?php echo __('Are you sure ?') ?>">

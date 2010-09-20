@@ -84,7 +84,7 @@
           <div class="general_gtu">
           <?php if($specimen->getGtuCountryTagValue() != ""): ?>
             <strong><?php echo __('Country');?> :</strong>
-            <?php echo $specimen->getCountryTags();?>
+            <?php echo $specimen->getCountryTags(ESC_RAW);?>
           <?php endif ; ?>
           </div>
           <div id="gtu_<?php echo $specimen->getSpecRef();?>_details" style="display:none;"></div>

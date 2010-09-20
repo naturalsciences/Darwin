@@ -31,7 +31,7 @@
           <?php foreach($igss as $igs):?>
             <tr class="rid_<?php echo $igs->getId(); ?>">
               <td><?php echo $igs->getIgNum();?></td>
-              <td class="datesNum"><?php echo $igs->getIgDateMasked();?></td>
+              <td class="datesNum"><?php echo $igs->getIgDateMasked(ESC_RAW);?></td>
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit IGS')),'igs/edit?id='.$igs->getId());?>
