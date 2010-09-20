@@ -134,7 +134,7 @@
  * @property integer $part_count_max
  * @property Specimens $Specimen
  * @property SpecimenIndividuals $SpecimenIndividual
- * @property SpecimenParts $Part
+ * @property SpecimenParts $PartRelation
  * @property Collections $Collection
  * @property Institutions $CollectionInstitution
  * @property Users $CollectionMainManager
@@ -291,7 +291,7 @@
  * @method integer             getPartCountMax()                                  Returns the current record's "part_count_max" value
  * @method Specimens           getSpecimen()                                      Returns the current record's "Specimen" value
  * @method SpecimenIndividuals getSpecimenIndividual()                            Returns the current record's "SpecimenIndividual" value
- * @method SpecimenParts       getPart()                                          Returns the current record's "Part" value
+ * @method SpecimenParts       getPartRelation()                                  Returns the current record's "PartRelation" value
  * @method Collections         getCollection()                                    Returns the current record's "Collection" value
  * @method Institutions        getCollectionInstitution()                         Returns the current record's "CollectionInstitution" value
  * @method Users               getCollectionMainManager()                         Returns the current record's "CollectionMainManager" value
@@ -447,7 +447,7 @@
  * @method SpecimenSearch      setPartCountMax()                                  Sets the current record's "part_count_max" value
  * @method SpecimenSearch      setSpecimen()                                      Sets the current record's "Specimen" value
  * @method SpecimenSearch      setSpecimenIndividual()                            Sets the current record's "SpecimenIndividual" value
- * @method SpecimenSearch      setPart()                                          Sets the current record's "Part" value
+ * @method SpecimenSearch      setPartRelation()                                  Sets the current record's "PartRelation" value
  * @method SpecimenSearch      setCollection()                                    Sets the current record's "Collection" value
  * @method SpecimenSearch      setCollectionInstitution()                         Sets the current record's "CollectionInstitution" value
  * @method SpecimenSearch      setCollectionMainManager()                         Sets the current record's "CollectionMainManager" value
@@ -939,7 +939,7 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
              'local' => 'individual_ref',
              'foreign' => 'id'));
 
-        $this->hasOne('SpecimenParts as Part', array(
+        $this->hasOne('SpecimenParts as PartRelation', array(
              'local' => 'part_ref',
              'foreign' => 'id'));
 

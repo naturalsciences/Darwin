@@ -1,4 +1,4 @@
-<td class="col_part"><?php echo $specimen->getPart();?></td> 
+<td class="col_part"><?php echo $specimen->getPart();?></td>
 <td class="col_part_status"><?php echo $specimen->getPartStatus();?></td> 
 <td class="col_building"><?php echo $specimen->getBuilding();?></td> 
 <td class="col_floor"><?php echo $specimen->getFloor();?></td> 

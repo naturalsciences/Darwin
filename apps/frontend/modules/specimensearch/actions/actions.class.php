@@ -361,24 +361,7 @@ class specimensearchActions extends DarwinActions
     }
 
     if($source == 'part')
-    {/*
-
-        part_ref
-        part
-        part_status
-        building
-        floor
-        room
-        row
-        shelf
-        container_type
-        container_storage
-        container
-        sub_container_type
-        sub_container_storage
-        sub_container
-        part_count_min
-        part_count_max*/
+    {
       $this->columns['part'] = array(
         'part' => array(
           'part',

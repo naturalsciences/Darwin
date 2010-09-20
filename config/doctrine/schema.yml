@@ -857,7 +857,7 @@ SpecimensCodes:
         Specimens:
             local: record_id
             foreign: id
-      
+
 SpecimensMethods:
     tableName: specimen_collecting_methods
     columns:
@@ -1026,7 +1026,7 @@ SpecimenSearch:
             class: SpecimenIndividuals
             local: individual_ref
             foreign: id
-        Part:
+        PartRelation:
             class: SpecimenParts
             local: part_ref
             foreign: id
@@ -1269,7 +1269,7 @@ IndividualSearch:
             class: SpecimenIndividuals
             local: individual_ref
             foreign: id
-        Part:
+        PartRelation:
             class: SpecimenParts
             local: part_ref
             foreign: id
@@ -1466,16 +1466,16 @@ PartSearch:
         host_taxon_status: { type: string}
         host_taxon_path: { type: string}
         host_taxon_parent_ref: { type: integer, default:0}
-        host_taxon_extinct: { type: boolean}      
-        ig_ref: { type: integer }                  
-        ig_num: { type: string}           
+        host_taxon_extinct: { type: boolean}
+        ig_ref: { type: integer }
+        ig_num: { type: string}
         ig_num_indexed: { type: string}
-        ig_date_mask: { type: integer }                 
-        ig_date: { type: string}                      
-        acquisition_category: { type: string}     
-        acquisition_date_mask: { type: integer }        
-        acquisition_date: { type: string}             
-        specimen_count_min: { type: integer }       
+        ig_date_mask: { type: integer }
+        ig_date: { type: string}
+        acquisition_category: { type: string}
+        acquisition_date_mask: { type: integer }
+        acquisition_date: { type: string}
+        specimen_count_min: { type: integer }
         specimen_count_max: { type: integer }
         individual_ref: {type: integer, primary: true}
         individual_type: {type: string, notnull: true, default:'specimen'}
@@ -1513,7 +1513,7 @@ PartSearch:
             class: SpecimenIndividuals
             local: individual_ref
             foreign: id
-        Part:
+        PartRelation:
             class: SpecimenParts
             local: part_ref
             foreign: id
