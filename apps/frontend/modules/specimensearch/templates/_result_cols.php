@@ -38,9 +38,23 @@ $(document).ready(function () {
             </li>
           <?php if($source != 'specimen'):?>
              <li>
-              <div class="cols_title"><?php echo __('Individuals');?></div>
+              <div class="cols_title"><?php echo __('Individual');?></div>
               <ul id="specimen_cols">
                 <?php foreach($columns['individual'] as $col_name => $col):?>
+                  <li class="<?php echo $field_to_show[$col_name]; ?>" id="li_<?php echo $col_name;?>">
+                    <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'hidden':''); ?>">&#10003;</span><span class="<?php echo($field_to_show[$col_name]=='uncheck'?'':'hidden'); ?>">&#10007;</span>
+                    &nbsp;<?php echo $col[1];?>
+                  </li>
+                <?php endforeach;?>
+              </ul>
+            </li>
+          <?php endif;?>
+
+          <?php if($source == 'part'):?>
+             <li>
+              <div class="cols_title"><?php echo __('Part');?></div>
+              <ul id="specimen_cols">
+                <?php foreach($columns['part'] as $col_name => $col):?>
                   <li class="<?php echo $field_to_show[$col_name]; ?>" id="li_<?php echo $col_name;?>">
                     <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'hidden':''); ?>">&#10003;</span><span class="<?php echo($field_to_show[$col_name]=='uncheck'?'':'hidden'); ?>">&#10007;</span>
                     &nbsp;<?php echo $col[1];?>

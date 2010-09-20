@@ -22,7 +22,7 @@
                <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
                <?php echo image_tag('white_pin_on.png', array('class'=>'top_pin_but pin_on', 'alt' =>  __('Save this result'))) ; ?>
             </th>
-            <?php $all_columns = $columns['specimen'] + $columns['individual'];// + $columns['part'] ;?>
+            <?php $all_columns = $columns['specimen'] + $columns['individual'] + $columns['part'] ;?>
             <?php foreach($all_columns as $col_name => $col):?>
               <th class="col_<?php echo $col_name;?>">
                 <?php if($col[0] != false):?>
@@ -45,6 +45,9 @@
               <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
                 <?php include_partial('result_content_individual', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+              <?php endif;?>
+              <?php if($source == 'part'):?>
+                <?php include_partial('result_content_part', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <td rowspan="2">
                 <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>

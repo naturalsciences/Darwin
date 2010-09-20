@@ -197,7 +197,11 @@ class specimensearchActions extends DarwinActions
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
     $flds = array('category','collection','taxon','type','gtu','codes','chrono',
-              'litho','lithologic','mineral','expedition','count','individual_type','sex','state','stage','social_status','rock_form','individual_count');
+              'litho','lithologic','mineral','expedition','count','individual_type','sex','state','stage','social_status','rock_form','individual_count',
+              'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
+              'sub_container_type' , 'sub_container_storage', 'part_count',);
+
+
     $flds = array_fill_keys($flds, 'uncheck');
 
     if($form->isBound())
@@ -353,6 +357,72 @@ class specimensearchActions extends DarwinActions
         'individual_count' => array(
           'individual_count_max',
           $this->getI18N()->__('Individual Count'),),
+        );
+    }
+
+    if($source == 'part')
+    {/*
+
+        part_ref
+        part
+        part_status
+        building
+        floor
+        room
+        row
+        shelf
+        container_type
+        container_storage
+        container
+        sub_container_type
+        sub_container_storage
+        sub_container
+        part_count_min
+        part_count_max*/
+      $this->columns['part'] = array(
+        'part' => array(
+          'part',
+          $this->getI18N()->__('Part'),),
+        'part_status' => array(
+          'part_status',
+          $this->getI18N()->__('Part Status'),),
+        'building' => array(
+          'building',
+          $this->getI18N()->__('Building'),),
+        'floor' => array(
+          'floor',
+          $this->getI18N()->__('Floor'),),
+        'room' => array(
+          'room',
+          $this->getI18N()->__('Room'),),
+        'row' => array(
+          'row',
+          $this->getI18N()->__('Row'),),
+        'shelf' => array(
+          'shelf',
+          $this->getI18N()->__('Shelf'),),
+
+        'container' => array(
+          'container',
+          $this->getI18N()->__('Container'),),
+        'container_type' => array(
+          'container_type',
+          $this->getI18N()->__('Container Type'),),
+        'container_storage' => array(
+          'container_storage',
+          $this->getI18N()->__('Container Storage'),),
+        'sub_container' => array(
+          'sub_container',
+          $this->getI18N()->__('Sub Container'),),
+        'sub_container_type' => array(
+          'sub_container_type',
+          $this->getI18N()->__('Sub Container Type'),),
+        'sub_container_storage' => array(
+          'sub_container_storage',
+          $this->getI18N()->__('Sub Container Storage'),),
+        'part_count' => array(
+          'part_count_max',
+          $this->getI18N()->__('Part Count'),),
         );
     }
   }
