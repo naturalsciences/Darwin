@@ -966,6 +966,7 @@ create table my_saved_searches
         modification_date_time update_date_time,
         visible_fields_in_result varchar not null,
 	is_only_id boolean not null default false,
+	subject varchar not null default 'specimen',
         constraint pk_my_saved_searches primary key (id),
         constraint unq_my_saved_searches unique (user_ref, name),
         constraint fk_my_saved_searches_users foreign key (user_ref) references users(id) on delete cascade
