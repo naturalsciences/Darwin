@@ -1,4 +1,4 @@
-<?php $widget_content = get_component($category, $widget, $options); ?>
+<?php $widget_content = get_component($category, $widget, $sf_data->getRaw('options')); ?>
 <li class="widget" id="<?php echo $widget;?>">
   <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
         <?php if($category=='boardwidget'||$category=='specimensearchwidget'):?>

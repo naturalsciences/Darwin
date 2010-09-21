@@ -148,73 +148,7 @@ li.uncheck span
 {
   color: red;
 }
-/*
-ul.column_menu > li
-{
-  margin-bottom:1.3em;
-	height: 20px;
-  display: list-item;
-}
 
-ul.column_menu li
-{
-  min-width: 14em;
-	height: 20px;
-  background: #5BAABD	;
-	font-size:10pt; 
-  display: list-item;
-  font-stretch: ultra-expanded;	
-}
-
-ul.column_menu li ul
-{
-  margin-top:0.3em;
-}
-
-ul.column_menu > li > ul > li
-{
-  vertical-align:middle;
-	z-index: 500;
-  display: inline-block;
-  background-color:#a9d4db; 
-  padding:0;
-  padding-left:0.2em;
-  margin:0;
-  min-width:15em;
-}
-
-ul.column_menu li > ul > li:last
-{
-  padding-bottom:0.2em;
-}
-
-ul.column_menu li > ul > li:hover
-{
-  background-color:#ebf5f5;
-}
-
-/*ul.column_menu li
-{
-  min-width:14em;
-}
-
-
-li.head
-{
-	background-color:#ebf5f5;
-	color:white;  
-}
-
-li.check
-{
-  color: green;  
-}
-
-li.uncheck
-{
-  color: red;
-}
-*/
 div.aligned_fields
 {
   width:400px;

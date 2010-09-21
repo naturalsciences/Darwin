@@ -59,6 +59,8 @@
     $('.clear_prop').live('click', clearPropertyValue);
 
     $('#add_prop_value').click(addPropertyValue);
+
+    $('form.qtiped_form').modal_screen();
   });
 </script>
 </div>

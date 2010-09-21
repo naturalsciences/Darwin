@@ -17,7 +17,7 @@
 		<?php echo link_to($maintenance->getCategory(),'maintenance/edit?id='.$maintenance->getId(),array('popup'=>true)); ?>
       </td>
       <td><?php echo $maintenance->getActionObservation();?></td>
-      <td class="datesNum"><?php echo $maintenance->getModificationDateTimeMasked();?></td>
+      <td class="datesNum"><?php echo $maintenance->getModificationDateTimeMasked(ESC_RAW);?></td>
       <td><?php echo $maintenance->People->getFormatedName();?></td>
       <td><?php echo $maintenance->getDescription();?></td>
       <td class="widget_row_delete">

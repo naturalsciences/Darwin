@@ -1,6 +1,12 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('body').catalogue({});
+  });
+</script>
+
 <?php $notion_param = 'notion='.$notion;?>
 <?php echo form_tag('methods_and_tools/'.($form->getObject()->isNew() ? 'create?'.$notion_param : 'update?id='.$form->getObject()->getId().'&'.$notion_param), array('class'=>'edition'));?>
 

@@ -5,7 +5,7 @@
 <div class="encoding">
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
-  
+  <?php echo $brol;?>
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
     <?php echo form_tag('specimensearch/searchResult'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'specimensearch_form','id'=>'specimen_filter'));?>
@@ -45,6 +45,8 @@
       <?php endif;?>
       <script  type="text/javascript">
         $(document).ready(function () {
+          $("body").duplicatable({duplicate_binding_type: "live"});
+
           $("#criteria_butt").click(function(){
             // Reselect all double list options that should be selected to be taken in account in the form submit
             $('form#specimen_filter select.double_list_select-selected option').attr('selected', 'selected');

@@ -20,7 +20,7 @@ if(!isset($columns)) $columns = 1;
       'is_opened' => $widget->getOpened(),
       'is_mandatory' => $widget->getMandatory(),
       'category' => $category,
-      'options' => $options,
+      'options' => $options->getRawValue(),
       )); ?>
     <?php $has_one_visible=true;?>
   <?php endforeach;?>

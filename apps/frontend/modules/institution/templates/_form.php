@@ -1,6 +1,12 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('body').catalogue({});
+  });
+</script>
+
 <?php echo form_tag('institution/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
 
   <table>

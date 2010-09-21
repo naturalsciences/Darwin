@@ -22,14 +22,14 @@
                <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
                <?php echo image_tag('white_pin_on.png', array('class'=>'top_pin_but pin_on', 'alt' =>  __('Save this result'))) ; ?>
             </th>
-            <?php $all_columns = $columns['specimen'] + $columns['individual'] + $columns['part'] ;?>
+            <?php $all_columns = $columns['specimen']->getRawValue() + $columns['individual']->getRawValue() + $columns['part']->getRawValue() ;?>
             <?php foreach($all_columns as $col_name => $col):?>
               <th class="col_<?php echo $col_name;?>">
                 <?php if($col[0] != false):?>
                   <a class="sort" href="<?php echo url_for($s_url.'&orderby='.$col[0].( ($orderBy==$col[0] && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                     $currentPage);?>">
                     <?php echo $col[1];?>
-                    <?php if($orderBy == $col[0]) echo $orderSign ?>
+                    <?php if($orderBy == $col[0]) echo $orderSign; ?>
                   </a>
                 <?php else:?>
                   <?php echo $col[1];?>
@@ -53,8 +53,17 @@
                 <?php include_partial('result_content_part', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <td rowspan="2">
+              <?php if($source == 'specimen'):?>
                 <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
                 <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'specimen/new?duplicate_id='.$specimen->getSpecRef(), array('class' => 'duplicate_link'));?>
+              <?php elseif($source=="individual"):?>
+                <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'individuals/edit?id='.$specimen->getIndividualRef());?>
+                <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'individuals/edit?spec_id='.$specimen->getSpecRef().
+      '&duplicate_id='.$specimen->getIndividualRef(),array('class' => 'duplicate_link'));?>
+              <?php else:?>
+                <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'parts/edit?id='.$specimen->getPartRef());?>
+                <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef(),array('class' => 'duplicate_link'));?>
+              <?php endif;?>
               </td>
             </tr>
 
@@ -63,6 +72,7 @@
                 <td colspan="14"> 
                   <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
                   <script type="text/javascript">
+                    $(document).ready(function () {
                     $('tr.rid_<?php echo $specimen->getSpecRef(); ?> img.collapsed').click(function() 
                     {
                       $(this).hide();
@@ -77,6 +87,7 @@
                       $(this).siblings('.collapsed').show();
                       $('#container_individual_<?php echo $specimen->getSpecRef();?>').slideUp();
                     });
+                  });
                   </script>
                 </td>
               </tr>
@@ -85,6 +96,7 @@
                 <td colspan="14"> 
                   <div id="container_part_<?php echo $specimen->getIndividualRef();?>" class="tree"></div>
                   <script type="text/javascript">
+                  $(document).ready(function () {
                     $('tr.rid_<?php echo $specimen->getIndividualRef(); ?> img.collapsed').click(function() 
                     {
                       $(this).hide();
@@ -99,6 +111,7 @@
                       $(this).siblings('.collapsed').show();
                       $('#container_part_<?php echo $specimen->getIndividualRef();?>').slideUp();
                     });
+                  });
                   </script>
                 </td>
               </tr>
@@ -118,6 +131,16 @@
 </div>  
 <script type="text/javascript">
 $(document).ready(function () {
+/****COL MANAGEMENT ***/
+  $('ul.column_menu > li > ul > li').each(function(){
+    hide_or_show($(this));
+  });
+  initIndividualColspan() ;
+  $("ul.column_menu > li > ul > li").click(function(){
+    update_list($(this));
+    hide_or_show($(this));
+  });
+/****END COL MANAGEMENT ***/
 
   /**PIN management **/
   $('.spec_results .pin_but').click(function(){

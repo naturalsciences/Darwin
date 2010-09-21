@@ -18,10 +18,14 @@ class ClassificationKeywords extends BaseClassificationKeywords
       'scientific_name_authorship' => 'Scientific Name Authorship',
       'verbatim_taxon_rank' => 'Verbatim Taxon Rank',
       'nomenclatural_status' => 'Nomenclatural Status',
+      'name' => 'Non generic or specific name part',
+      'generic_name' => 'Generic Epithet',
       'specific_epithet' => 'Specific Epithet',
       'infra_specific_epithet' => 'Infra Specific Epithet',
       'uncertainty' => 'Uncertainty',
       'pub_year' => 'Publication Year',
+      'hybrid' => 'Hybridated ?',
+      'original_combination' => 'Recombined ?'
     );
   }
   public static function getTagNameFor($tag)

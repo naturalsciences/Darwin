@@ -20,8 +20,8 @@
       </td>
       <td><?php echo $property->getPropertySubType();?></td>
       <td><?php echo $property->getPropertyQualifier();?></td>
-      <td class="datesNum"><?php echo $property->getFromDateMasked();?></td>
-      <td class="datesNum"><?php echo $property->getToDateMasked();?></td>
+      <td class="datesNum"><?php echo $property->getFromDateMasked(ESC_RAW);?></td>
+      <td class="datesNum"><?php echo $property->getToDateMasked(ESC_RAW);?></td>
       <td>
 	<?php if( count($property->PropertiesValues) > 1):?>
 	  <a href="#" class="display_value"><?php echo format_number_choice('[1]Show 1 Value|(1,+Inf]Show %1% Values', array('%1%' => count($property->PropertiesValues) ), count($property->PropertiesValues));?></a>
