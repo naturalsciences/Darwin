@@ -9,10 +9,8 @@
         <tbody>
           <tr>
             <td class="line">
-              <span class="line">
                 <?php echo __("Name") ; ?>: <span class="pager_nav"><?php echo $specimen->getCollectionName() ; ?></span>
                 <?php echo image_tag('info.png',"title=info class=info id=collection_info");?>
-              </span>
               <div id="collection_tree" class="tree"></div>
                 <script type="text/javascript">
                    $('#collection_info').click(function() 

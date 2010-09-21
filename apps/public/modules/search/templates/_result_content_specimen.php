@@ -11,8 +11,10 @@
     </td>
     <td  class="col_collection">
       <?php if($specimen->getCollectionRef() > 0) : ?>
+        <span class="line">
         <?php echo image_tag('info.png',"title=info class=info id=collection_".$specimen->getSpecRef()."_info");?>
         <?php echo $specimen->getCollectionName();?>
+        <span>
         <div id="collection_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#collection_<?php echo $specimen->getSpecRef();?>_info').click(function() 

@@ -96,7 +96,8 @@ class searchActions extends DarwinActions
             $this->search = $this->pagerLayout->execute();
           $this->field_to_show = $this->getVisibleColumns($this->form);
           $this->defineFields();
-          $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames() ;
+          $ids = $this->FecthIdForCommonNames() ;
+          $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;
           return;
         } 
       }
@@ -260,4 +261,18 @@ class searchActions extends DarwinActions
         $this->getI18N()->__('Individual Count'),),
       );
   }  
+  
+  private function FecthIdForCommonNames() 
+  {
+    $tab = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 'lithology' => array(),'mineralogy' => array()) ;
+    foreach($this->search as $specimen)
+    {
+      if($specimen->getTaxonRef()) $tab['taxonomy'][] = $specimen->getTaxonRef() ;
+      if($specimen->getChronoRef()) $tab['chronostratigraphy'][] = $specimen->getChronoRef() ;
+      if($specimen->getLithoRef()) $tab['lithostratigraphy'][] = $specimen->getLithoRef() ;
+      if($specimen->getLithologyRef()) $tab['lithology'][] = $specimen->getLithologyRef() ;
+      if($specimen->getMineralRef()) $tab['mineralogy'][] = $specimen->getMineralRef() ;
+    }
+    return $tab ;
+  }
 }

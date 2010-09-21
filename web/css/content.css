@@ -15,11 +15,6 @@ table tr
   vertical-align: top ;  
 }
 
-table td
-{
-  vertical-align: top ;  
-}
-
 table td.centered, table th.centered
 {
   text-align:center;
@@ -125,6 +120,10 @@ input[type="submit"][class="search_submit"]:hover,input[type="button"][class="re
   cursor: pointer ;
 }
 
+.line
+{
+  vertical-align : top ;
+}
 /* Tree views (Collections list) */
 
 .treelist ul, .treelist ul li

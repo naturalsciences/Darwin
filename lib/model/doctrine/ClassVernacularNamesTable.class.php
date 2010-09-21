@@ -32,11 +32,17 @@ class ClassVernacularNamesTable extends DarwinTable
 
   public function findAllCommonNames($listId = null)
   {
+    if($listId == null) return array() ;
      $q = Doctrine_Query::create()
 	    ->from('ClassVernacularNames cv')
-	    ->leftJoin('cv.VernacularNames v') 
-      ->orderBy('cv.record_id');	     
-     $result = $q->execute();
+	    ->innerJoin('cv.VernacularNames v') 
+      ->orderBy('cv.record_id');	 
+    if(count($listId['taxonomy'])) $q->andWhere('referenced_relation=?','taxonomy')->andWhereIn('record_id',$listId['taxonomy']);
+    if(count($listId['chronostratigraphy'])) $q->andWhere('referenced_relation=?','chronostratigraphy')->andWhereIn('record_id',$listId['chronostratigraphy']);
+    if(count($listId['lithostratigraphy'])) $q->andWhere('referenced_relation=?',"lithostratigraphy")->andWhereIn('record_id',$listId['lithostratigraphy']) ;
+    if(count($listId['lithology'])) $q->andWhere('referenced_relation=?',"lithology")->andWhereIn('record_id',$listId['lithology']);
+    if(count($listId['mineralogy'])) $q->andWhere('referenced_relation=?',"mineralogy")->andWhereIn('record_id',$listId['mineralogy']) ;    
+    $result = $q->execute();
     $tab = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 'lithology' => array(),'mineralogy' => array()) ;
     foreach($result as $key=>$vernacular)
     {
