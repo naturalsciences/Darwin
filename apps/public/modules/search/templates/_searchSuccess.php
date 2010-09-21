@@ -47,4 +47,17 @@
   <?php else:?>
     <?php echo __('No Specimen Matching');?>
   <?php endif;?>
-</div>  
+</div> 
+<script type="text/javascript">
+$(document).ready(function () {
+/****COL MANAGEMENT ***/
+  $('ul.column_menu > li > ul > li').each(function(){
+    hide_or_show($(this));
+  });
+  initIndividualColspan() ;
+  $("ul.column_menu > li > ul > li").click(function(){
+    update_list($(this));
+    hide_or_show($(this));
+  });
+/****END COL MANAGEMENT ***/
+</script>
