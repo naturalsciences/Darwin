@@ -106,7 +106,6 @@
             base.options = $.extend({},$.catalogue.defaultOptions, options);
             $(base.options['link_catalogue']).live('click', base.catalogueLinkEdit);
             $(base.options['delete_link']).live('click', base.deleteItem);
-            $(base.options['duplicate_link']).live('click',base.duplicateItem);
             // Put your initialization code here
         };
 
@@ -188,9 +187,8 @@
     $.catalogue.defaultOptions = {
       link_catalogue: "a.link_catalogue",
       delete_link: "a.widget_row_delete",
-      duplicate_link: "a.duplicate_link"
     };
-    
+
     $.fn.catalogue = function(options){
         return this.each(function(){
             (new $.catalogue(this, options));
