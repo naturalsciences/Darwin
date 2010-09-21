@@ -45,7 +45,10 @@
       <?php endif;?>
       <script  type="text/javascript">
         $(document).ready(function () {
-          $("body").duplicatable({duplicate_binding_type: "live"});
+          $('body').duplicatable({
+            duplicate_href: '<?php echo url_for('specimen/confirm');?>',
+            duplicate_binding_type: 'live'
+          });
 
           $("#criteria_butt").click(function(){
             // Reselect all double list options that should be selected to be taken in account in the form submit

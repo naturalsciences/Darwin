@@ -60,12 +60,12 @@
       return this;
    };
   
-  $.fn.catalogue_people = function(options) {            
+  $.fn.catalogue_people = function(options) {
     return this.each(function() {
-       (new $.catalogue_people($(this), options));           
-    });        
+       (new $.catalogue_people($(this), options));
+    });
   };
-  
+
   $.fn.catalogue_people.forceCollectorsHelper = function (e,ui){
     $(".ui-state-highlight").html("<td colspan='3' style='line-height:"+ui.item[0].offsetHeight+"px'>&nbsp;</td>");
   };

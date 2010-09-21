@@ -60,8 +60,7 @@
     <tfoot>
     <tr>
       <td colspan='10'>
-        <div class="add_spec_individual">
-          <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>	        
+        <div class="add_spec_individual">	        
           <a href="<?php echo url_for('parts/edit?indid='.$individual->getId());?>"><?php echo __('Add part');?></a>
         </div>
       </td>
