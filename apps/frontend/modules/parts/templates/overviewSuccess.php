@@ -26,33 +26,36 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $('body').catalogue({},link=$('div.add_spec_individual').find('a.hidden').attr('href')); 
-  $("a.row_delete").click(function(){
+  $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
 
-	if(confirm($(this).attr('title')))
-	{
-	  currentElement = $(this);
-	  $.ajax({
-		url: $(this).attr('href'),
-        success: function(html) {
-		  if(html == "ok" )
-		  {
-			currentElement.closest('tr').remove();
-			if($('table.catalogue_table').find('tbody').find('tr.parts:visible').size() == 0)
-			{
-			  $('table.catalogue_table').find('thead').hide();
-			}
-		  }
-		  else
-		  {
-			addError(html, currentElement); //@TODO:change this!
-		  }
-		},
-		error: function(xhr){
-		 addError('Error!  Status = ' + xhr.status);
-		}
-	  });
-	}
+  $('body').catalogue({}); 
+  $("a.row_delete").click(function()
+  {
+    if(confirm($(this).attr('title')))
+    {
+      currentElement = $(this);
+      $.ajax({
+        url: $(this).attr('href'),
+        success: function(html)
+        {
+          if(html == "ok" )
+          {
+            currentElement.closest('tr').remove();
+            if($('table.catalogue_table').find('tbody').find('tr.parts:visible').size() == 0)
+            {
+              $('table.catalogue_table').find('thead').hide();
+            }
+          }
+          else
+          {
+            addError(html, currentElement); //@TODO:change this!
+          }
+        },
+        error: function(xhr){
+          addError('Error!  Status = ' + xhr.status);
+        }
+      });
+    }
     return false;
   });
 

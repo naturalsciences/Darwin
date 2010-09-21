@@ -131,6 +131,7 @@
 </div>  
 <script type="text/javascript">
 $(document).ready(function () {
+
 /****COL MANAGEMENT ***/
   $('ul.column_menu > li > ul > li').each(function(){
     hide_or_show($(this));

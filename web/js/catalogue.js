@@ -9,26 +9,26 @@
 
         base.init = function(){
             base.options = $.extend({},$.duplicatable.defaultOptions, options);
+
             if(base.options['duplicate_binding_type'] == "live")
             {
               $(base.options['duplicate_link']).live('click',base.duplicateItem);
             }
             else
+            {
               $(base.options['duplicate_link']).click(base.duplicateItem);
+            }
         };
-
-        base.init();
 
         base.duplicateItem = function(event)
         {
-          self = this ;
+          self = this;
           event.preventDefault();
           scroll(0,0);
-
           $(this).qtip({
             content: {
               title: { text : 'duplicate', button: 'X' },
-              url: link 
+              url: base.options['duplicate_href']
             },
             show: { when: 'click', ready: true },
             position: {
@@ -58,7 +58,7 @@
               onHide: function()
               {
                 $(this.elements.target).qtip("destroy");
-                if (element_name==null)
+                if (element_name == null)
                 {
                   return false ;
                 }
@@ -71,10 +71,13 @@
             }
           });
         }
+        
+        base.init();
     };
 
     $.duplicatable.defaultOptions = {
        duplicate_link: "a.duplicate_link",
+       duplicate_href: "",
        duplicate_binding_type: "normal"
     };
 
@@ -104,7 +107,6 @@
             $(base.options['link_catalogue']).live('click', base.catalogueLinkEdit);
             $(base.options['delete_link']).live('click', base.deleteItem);
             $(base.options['duplicate_link']).live('click',base.duplicateItem);
-            base.$el.duplicatable({});
             // Put your initialization code here
         };
 

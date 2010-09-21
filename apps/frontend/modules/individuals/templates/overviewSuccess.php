@@ -75,7 +75,6 @@
     <tr>
       <td colspan='10'>
 	<div class="add_spec_individual">
-    <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>	
 	  <a href="<?php echo url_for('individuals/edit?spec_id='.$specimen->getId());?>" id="add_spec_individual"><?php echo __('Add New');?></a>
 	</div>
       </td>
@@ -98,7 +97,9 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $('body').catalogue({},link=$('div.add_spec_individual').find('a.hidden').attr('href')); 
+  $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
+
+  $('body').catalogue({}); 
   $("a.row_delete").click(function(){
      if(confirm($(this).attr('title')))
      {

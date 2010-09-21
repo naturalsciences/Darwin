@@ -42,7 +42,6 @@
       <p class="clear"></p>
       <p class="form_buttons">
           <?php if (!$form->getObject()->isNew()): ?>
-            <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>	
             <?php echo link_to(__('New part'), 'parts/edit?indid='.$individual->getId()) ?>
             &nbsp;<?php echo link_to(__('Duplicate part'), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId(),array('class' => 'duplicate_link')) ?>
             &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_part_delete"><?php echo __('Delete');?></a>
@@ -66,7 +65,9 @@ function removeError()
 }
 
 $(document).ready(function () {
-  $('body').catalogue({},link=$('p.form_buttons').find('a.hidden').attr('href'));
+  $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
+
+  $('body').catalogue({});
   $("a#spec_part_delete").click(function(){
      if(confirm($(this).attr('title')))
      {

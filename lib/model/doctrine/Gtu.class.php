@@ -72,7 +72,7 @@ class Gtu extends BaseGtu
       foreach($tags as $value)
         if (strlen($value))
           $str .=  '<li>' . trim($value).'</li>';
-      $str .= '</ul><div class="clear" />';
+      $str .= '</ul><div class="clear"></div>';
     }
     $str .= '</ul>';
     return $str;
