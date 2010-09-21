@@ -258,6 +258,20 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
   }     
   public function doBuildQuery(array $values)
   {
+    $fields = SpecimenSearchTable::getFieldsByType();  
+    $str = '';
+    $array_fld = array_merge($fields['specimens'],$fields['individuals']);
+    foreach($array_fld as $fld)
+    {
+      $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
+    }
+
+    $query = Doctrine_Query::create()
+      ->from('IndividualSearch s')
+      ->select($str .' MIN(id) as id,  false as with_types')
+      ->andWhere('individual_ref != 0 ')
+      ->groupBy('individual_ref'); 
+    $this->options['query'] = $query;       
     $query = parent::doBuildQuery($values);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));

@@ -64,12 +64,27 @@ class searchActions extends DarwinActions
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
+          $query->groupBy($this->orderBy . ', individual_ref ');
           // Define in one line a pager Layout based on a pagerLayoutWithArrows object
           // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-          $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
-                                                                            $this->currentPage,
-                                                                            $this->form->getValue('rec_per_page')
-                                                                          ),
+          $pager = new Doctrine_Pager($query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          );
+          // Replace the count query triggered by the Pager to get the number of records retrieved
+          $count_q = clone $query;//$pager->getCountQuery();
+          // Remove from query the group by and order by clauses
+          $count_q = $count_q->select('count( distinct spec_ref), count( distinct individual_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
+          // Initialize an empty count query
+          $counted = new DoctrineCounted();
+          // Define the correct select count() of the count query
+          $counted->count_query = $count_q;
+          // And replace the one of the pager with this new one
+          $pager->setCountQuery($counted);         
+          
+          // Define in one line a pager Layout based on a pagerLayoutWithArrows object
+          // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
+          $this->pagerLayout = new PagerLayoutWithArrows($pager,
                                                         new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
                                                         $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
                                                         );
@@ -79,7 +94,7 @@ class searchActions extends DarwinActions
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->search = $this->pagerLayout->execute();
           $this->field_to_show = $this->getVisibleColumns($this->form);
-
+          $this->defineFields();
           $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames() ;
           return;
         } 
@@ -118,9 +133,9 @@ class searchActions extends DarwinActions
   */
   private function getVisibleColumns(sfForm $form)
   {
-    $flds = array('collection','taxon','type','gtu','codes','chrono','taxon_common_name', 'chrono_common_name',
-              'litho_common_name','lithology_common_name','mineral_common_name',
-              'litho','lithology','mineral','sex','stage');
+    $flds = array('category','collection','taxon','type','gtu','codes','chrono','taxon_common_name', 'chrono_common_name',
+              'litho_common_name','lithologic_common_name','mineral_common_name', 'expedition', 'count', 'individual_type',
+              'litho','lithologic','mineral','sex','state','stage','social_status','rock_form','individual_count');
     $flds = array_fill_keys($flds, 'uncheck');
 
     if($form->isBound())
@@ -161,5 +176,87 @@ class searchActions extends DarwinActions
       }
     }
     return $this->renderText($str); 
-  }   
+  }  
+   
+  protected function defineFields()
+  {
+    $this->columns= array('individual'=>array());
+    $this->columns['specimen'] = array(
+      'category' => array(
+        'category',
+        $this->getI18N()->__('Category'),),
+      'collection' => array(
+        'collection_name',
+        $this->getI18N()->__('Collection'),),
+      'taxon' => array(
+        'taxon_name_order_by',
+        $this->getI18N()->__('Taxon'),),
+      'type' => array(
+        'with_types',
+        $this->getI18N()->__('Type'),),
+      'gtu' => array( ///
+        false,
+        $this->getI18N()->__('Country'),),
+      'codes' => array( ///
+        false,
+        $this->getI18N()->__('Codes'),),
+      'chrono' => array(
+        'chrono_name_order_by',
+        $this->getI18N()->__('Chronostratigraphic unit'),),
+      'litho' => array(
+        'litho_name_order_by',
+        $this->getI18N()->__('Lithostratigraphic unit'),),
+      'lithologic' => array(
+        'lithologic_name_order_by',
+        $this->getI18N()->__('Lithologic unit'),),
+      'mineral' => array(
+        'mineral_name_order_by',
+        $this->getI18N()->__('Mineralogic unit'),),
+      'expedition' => array(
+        'expedition_name_indexed',
+        $this->getI18N()->__('Expedition'),),
+      'count' => array(
+        'specimen_count_max',
+        $this->getI18N()->__('Count'),),
+    );
+
+    $this->columns['individual'] = array(
+      'taxon_common_name' => array(
+        false,
+        $this->getI18N()->__('Taxon common name'),),      
+      'chrono_common_name' => array(
+        false,
+        $this->getI18N()->__('Chrono common name'),),
+      'litho_common_name' => array(
+        false,
+        $this->getI18N()->__('Litho common name'),),
+      'lithologic_common_name' => array(
+        false,
+        $this->getI18N()->__('Lithologic common name'),),
+      'mineral_common_name' => array(
+        false,
+        $this->getI18N()->__('Mineral common name'),),      
+      'individual_type' => array(
+        'individual_type_group',
+        $this->getI18N()->__('Type'),),        
+      'sex' => array(
+        'individual_sex',
+        $this->getI18N()->__('Sex'),),
+      'state' => array(
+        'individual_state',
+        $this->getI18N()->__('State'),),
+      'stage' => array(
+        'individual_stage',
+        $this->getI18N()->__('Stage'),),
+      'social_status' => array(
+        'individual_social_status',
+        $this->getI18N()->__('Social Status'),),
+      'rock_form' => array(
+        'individual_rock_form',
+        $this->getI18N()->__('Rock Form'),),
+      'individual_count' => array(
+        'individual_count_max',
+        $this->getI18N()->__('Individual Count'),),
+      );
+  }  
 }

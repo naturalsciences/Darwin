@@ -58,4 +58,13 @@ class IndividualSearch extends BaseIndividualSearch
     $items = array_filter($items);
     return implode($sep, $items);
   }
+  
+  /* function witch check if there at least 1 common name for a specific catalogue */  
+  public static function checkIfCommonName($id,$tab)
+  {
+    if(!$id) return false;
+    if(!isset($tab[$id])) return false;
+    if($tab[$id]['name'] == '') return false ;
+    return true ;
+  }  
 }

@@ -5,8 +5,8 @@
 </td>
 <td class="col_sex"><?php echo $specimen->getIndividualSex();?></td> 
 <td class="col_state"><?php echo $specimen->getIndividualState();?></td> 
-<td class="col_stage"><?php echo $specimen->getIndividualSocialStatus();?></td> 
-<td class="col_social_status"><?php echo $specimen->getIndividualRockForm();?></td> 
+<td class="col_stage"><?php echo $specimen->getIndividualStage();?></td> 
+<td class="col_social_status"><?php echo $specimen->getIndividualSocialStatus();?></td> 
 <td class="col_rock_form"><?php echo $specimen->getIndividualRockForm();?></td> 
 <td class="col_individual_count">
   <?php if($specimen->getIndividualCountMin() != $specimen->getIndividualCountMax()):?>

@@ -15,6 +15,11 @@ table tr
   vertical-align: top ;  
 }
 
+table td
+{
+  vertical-align: top ;  
+}
+
 table td.centered, table th.centered
 {
   text-align:center;

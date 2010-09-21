@@ -31,7 +31,7 @@
                   <?php echo ('-') ; ?>
                 <?php endif ; ?>
               </td> 
-              <td class="col_lithology_common_name">
+              <td class="col_lithologic_common_name">
                 <?php if($spec->checkIfCommonName($spec->getLithologyRef(),$common_names['lithology'])) : ?>
                   <ul class="country_tags">
                     <?php foreach(explode(',',$common_names['lithology'][$spec->getLithologyRef()]['name']) as $tag):?>
