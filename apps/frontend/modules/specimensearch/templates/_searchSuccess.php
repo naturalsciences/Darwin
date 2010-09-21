@@ -29,7 +29,7 @@
                   <a class="sort" href="<?php echo url_for($s_url.'&orderby='.$col[0].( ($orderBy==$col[0] && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
                     $currentPage);?>">
                     <?php echo $col[1];?>
-                    <?php if($orderBy == $col[0]) echo $orderSign ?>
+                    <?php if($orderBy == $col[0]) echo $orderSign; ?>
                   </a>
                 <?php else:?>
                   <?php echo $col[1];?>

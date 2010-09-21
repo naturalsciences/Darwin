@@ -107,12 +107,12 @@
             base.$el.duplicatable({});
             // Put your initialization code here
         };
-        
+
         base.catalogueLinkEdit = function(event)
         {
           event.preventDefault();
           scroll(0,0);
-          
+
           $(this).qtip({
             content: {
               title: { text : $(this).attr('title'), button: 'X' },
@@ -143,6 +143,7 @@
               },
               onHide: function(event)
               {
+                 $(this.elements.target).qtip("destroy");
                 $('body').data('widgets_screen').refreshWidget(event, $(this.elements.target));
               }
             }
