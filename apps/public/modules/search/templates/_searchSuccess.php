@@ -1,7 +1,6 @@
 <div>
   <?php if(isset($search) && $search->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
     <?php
-      $i = 0 ;
       if($orderDir=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
       else
@@ -32,7 +31,7 @@
         </thead>
         <?php foreach($search as $specimen):?>
           <tbody>
-            <tr class="rid_<?php echo $i++ ; ?>">
+            <tr>
               <td>
                   <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef());?>
               </td>
@@ -41,15 +40,15 @@
               <?php include_partial('result_content_individual', array('specimen' => $specimen)); ?>                                                       
             </tr>            
           </tbody>
-          <?php endforeach;?>
+        <?php endforeach;?>
       </table>
-    <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php else:?>
     <?php echo __('No Specimen Matching');?>
   <?php endif;?>
-</div> 
+</div>
 <script type="text/javascript">
 $(document).ready(function () {
+
 /****COL MANAGEMENT ***/
   $('ul.column_menu > li > ul > li').each(function(){
     hide_or_show($(this));
@@ -59,5 +58,5 @@ $(document).ready(function () {
     update_list($(this));
     hide_or_show($(this));
   });
-/****END COL MANAGEMENT ***/
+});
 </script>

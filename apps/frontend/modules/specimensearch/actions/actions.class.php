@@ -182,7 +182,6 @@ class specimensearchActions extends DarwinActions
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
           $this->source = $this->form->getValue('what_searched');
           $this->defineFields($this->source);
-$this->brol ="&eacute;";
           return;
         }
       }

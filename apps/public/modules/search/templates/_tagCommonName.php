@@ -5,8 +5,7 @@
                       <li><?php echo $tag;?></li>
                     <?php endforeach;?>
                   </ul>
-                <?php else : ?>                
-                  <?php echo ('-') ; ?>
+                <?php else : ?>-
                 <?php endif ; ?>
               </td>
               <td class="col_chrono_common_name">
@@ -16,8 +15,7 @@
                       <li><?php echo $tag;?></li>
                     <?php endforeach;?>
                   </ul>                
-                <?php else : ?>   
-                  <?php echo ('-') ; ?>
+                <?php else : ?>-
                 <?php endif ; ?>
               </td>
               <td class="col_litho_common_name"> 
@@ -27,8 +25,7 @@
                       <li><?php echo $tag;?></li>
                     <?php endforeach;?>
                   </ul>  
-                <?php else : ?>  
-                  <?php echo ('-') ; ?>
+                <?php else : ?>-
                 <?php endif ; ?>
               </td> 
               <td class="col_lithologic_common_name">
@@ -38,8 +35,7 @@
                       <li><?php echo $tag;?></li>
                     <?php endforeach;?>
                   </ul>                  
-                <?php else : ?>   
-                  <?php echo ('-') ; ?>                
+                <?php else : ?>-          
                 <?php endif ; ?>
               </td>  
               <td class="col_mineral_common_name"> 
@@ -49,7 +45,6 @@
                       <li><?php echo $tag;?></li>
                     <?php endforeach;?>
                   </ul>                  
-                <?php else : ?>  
-                  <?php echo ('-') ; ?>
+                <?php else : ?>-
                 <?php endif ; ?>
               </td>

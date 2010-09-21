@@ -352,3 +352,8 @@ table.caract_table tr:hover
 {
   background-color: #ececec;
 }
+
+ul.column_menu:hover
+{
+  cursor: pointer; 
+}
