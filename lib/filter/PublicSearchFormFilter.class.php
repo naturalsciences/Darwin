@@ -250,11 +250,8 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     return $query;
   }
   public function addCommonNamesColumnQuery($query,$relation, $field, $val)
-  {
-    if($val != '')
-    {
-      $query->andWhere($field.' IN ('.$this->ListIdByWord($relation,$val).')');
-    }
+  {  
+    $query->andWhere($field.' IN ('.$this->ListIdByWord($relation,$val).')');
     return $query;
   }     
   public function doBuildQuery(array $values)
