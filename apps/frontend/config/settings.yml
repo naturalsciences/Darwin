@@ -27,7 +27,7 @@ all:
     # Output escaping settings
     escaping_strategy:      on            # Determines how variables are made available to templates. Accepted values: on, off.
     escaping_method:        ESC_SPECIALCHARS # Function or helper used for escaping. Accepted values: ESC_RAW, ESC_ENTITIES, ESC_JS, ESC_JS_NO_ENTITIES, and ESC_SPECIALCHARS.
-    i18n: on
+    i18n:                   on
     # Cache settings
     lazy_cache_key:         on        # Delays creation of a cache key until after checking whether an action or partial is cacheable
     standard_helpers:       [Partial, Cache, I18N]
