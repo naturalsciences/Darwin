@@ -64,8 +64,8 @@ class searchActions extends DarwinActions
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-            $query->orderby($this->orderBy . ' ' . $this->orderDir . ', individual_ref ');
-          $query->groupBy($this->orderBy . ', individual_ref ');
+            $query->orderby($this->orderBy . ' ' . $this->orderDir . ', spec_ref ');
+          $query->groupBy($this->orderBy . ', spec_ref ');
           // Define in one line a pager Layout based on a pagerLayoutWithArrows object
           // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
           $pager = new Doctrine_Pager($query,
