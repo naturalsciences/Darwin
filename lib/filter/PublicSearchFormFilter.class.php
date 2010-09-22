@@ -267,7 +267,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $query = Doctrine_Query::create()
       ->from('IndividualSearch s')
       ->select($str .' MIN(id) as id,  false as with_types')
-      ->andWhere('individual_ref != 0 ')
+      //->andWhere('individual_ref != 0 ')
       ->groupBy('individual_ref'); 
     $this->options['query'] = $query;       
     $query = parent::doBuildQuery($values);

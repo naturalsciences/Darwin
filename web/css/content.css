@@ -10,6 +10,11 @@ table
   width: 100% ;
 }
 
+table td, table th
+{
+   vertical-align: middle ; 
+}
+
 table.spec_result tr
 {
   text-align:left;
