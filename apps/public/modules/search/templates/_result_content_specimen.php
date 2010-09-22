@@ -33,8 +33,10 @@
     </td>
     <td class="col_taxon">
       <?php if($specimen->getTaxonRef() > 0) : ?>
+        <span class="line">      
         <?php echo image_tag('info.png',"title=info class=info id=taxon_".$specimen->getSpecRef()."_info");?>
         <?php echo $specimen->getTaxonName();?>
+        </span>        
         <div id="taxon_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#taxon_<?php echo $specimen->getSpecRef();?>_info').click(function() 

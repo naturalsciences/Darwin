@@ -97,7 +97,10 @@ class searchActions extends DarwinActions
           $this->field_to_show = $this->getVisibleColumns($this->form);
           $this->defineFields();
           $ids = $this->FecthIdForCommonNames() ;
-          $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;
+          $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;                    
+          if(!count($this->common_names))
+            $this->common_names = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 
+                                        'lithology' => array(),'mineralogy' => array()) ;
           return;
         } 
       }
@@ -116,7 +119,7 @@ class searchActions extends DarwinActions
 
   public function executeView(sfWebRequest $request)
   {
-    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));  
+    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));   
     $this->forward404Unless($this->specimen);
     if(!$this->specimen->getCollectionIsPublic()) $this->forwardToSecureAction();
     
@@ -124,6 +127,7 @@ class searchActions extends DarwinActions
     $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      
     $ids = $this->FecthIdForCommonNames() ;
     $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;    
+    
     if ($tag = $this->specimen->getGtuCountryTagValue()) $this->tags = explode(';',$tag) ; 
     else $this->tags = false ;
   }
@@ -266,13 +270,24 @@ class searchActions extends DarwinActions
   private function FecthIdForCommonNames() 
   {
     $tab = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 'lithology' => array(),'mineralogy' => array()) ;
-    foreach($this->search as $specimen)
+    if(isset($this->search))
     {
-      if($specimen->getTaxonRef()) $tab['taxonomy'][] = $specimen->getTaxonRef() ;
-      if($specimen->getChronoRef()) $tab['chronostratigraphy'][] = $specimen->getChronoRef() ;
-      if($specimen->getLithoRef()) $tab['lithostratigraphy'][] = $specimen->getLithoRef() ;
-      if($specimen->getLithologyRef()) $tab['lithology'][] = $specimen->getLithologyRef() ;
-      if($specimen->getMineralRef()) $tab['mineralogy'][] = $specimen->getMineralRef() ;
+      foreach($this->search as $specimen)
+      {
+        if($specimen->getTaxonRef()) $tab['taxonomy'][] = $specimen->getTaxonRef() ;
+        if($specimen->getChronoRef()) $tab['chronostratigraphy'][] = $specimen->getChronoRef() ;
+        if($specimen->getLithoRef()) $tab['lithostratigraphy'][] = $specimen->getLithoRef() ;
+        if($specimen->getLithologyRef()) $tab['lithology'][] = $specimen->getLithologyRef() ;
+        if($specimen->getMineralRef()) $tab['mineralogy'][] = $specimen->getMineralRef() ;
+      }
+    }
+    else
+    {
+      if($this->specimen->getTaxonRef()) $tab['taxonomy'][] = $this->specimen->getTaxonRef() ;
+      if($this->specimen->getChronoRef()) $tab['chronostratigraphy'][] = $this->specimen->getChronoRef() ;
+      if($this->specimen->getLithoRef()) $tab['lithostratigraphy'][] = $this->specimen->getLithoRef() ;
+      if($this->specimen->getLithologyRef()) $tab['lithology'][] = $this->specimen->getLithologyRef() ;
+      if($this->specimen->getMineralRef()) $tab['mineralogy'][] = $this->specimen->getMineralRef() ;   
     }
     return $tab ;
   }

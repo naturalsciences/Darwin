@@ -9,15 +9,11 @@ table
 {
   width: 100% ;
 }
-table tr
+
+table.spec_result tr
 {
   text-align:left;
   vertical-align: top ;  
-}
-
-table td.centered, table th.centered
-{
-  text-align:center;
 }
 
 .page
@@ -317,6 +313,9 @@ img.info:hover
 }
 /*** Hierarchical structure for catalogue units - integrated into results ***/
 
+.spec_results tbody:nth-child(even) tr .tree ul {background: white}
+.spec_results tbody:nth-child(odd) tr .tree ul {background: #E9F2F7}
+
 .tree
 {
   padding: 0.5em;
@@ -361,9 +360,110 @@ ul.column_menu:hover
 {
   clear:both;
 }
+/** Table of results **/
+
+.spec_results
+{
+  background-color:white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  vertical-align: top;
+  width:100%;
+  border: 1px solid #5BAABD;
+  clear:both;
+}
+
+.spec_results thead
+{
+  background-color: #5BAABD;
+  text-align: left;
+  color: white;
+}
+
+.spec_results thead a
+{
+  text-decoration:none;
+  color:white;
+}
+
+.spec_results thead a:hover
+{
+  text-decoration:underline;
+}
+
+.spec_results tbody:nth-child(even) tr {background: #E9F2F7}
+.spec_results tbody:nth-child(odd) tr {background: white}
+
+.spec_results th, .spec_results td
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left:0.2em;
+  vertical-align: top;
+}
+
+.spec_results span
+{
+  vertical-align : middle;
+  display : inline ;  
+}
+
+/* Style for choose column menu */
+
+img#column_display_expand
+{
+  padding-top:0.6em;
+}
+
+.search_columns .widget_collection_container
+{
+  padding:1em;
+  color:white;
+  font-weight:bold;
+}
+
+ul.column_menu > li
+{
+  width:300px;
+/*   border:2px solid red; */
+  float:left;
+  padding: 0.5em;
+}
+
+ul.column_menu > li .cols_title
+{
+  color:white;
+  font-size:large;
+  font-weight:bold;
+  margin-bottom:0.5em;
+}
+
+ul.column_menu > li > ul >li
+{
+  padding:0.2em;
+}
+
+li.check span
+{
+  color: green;  
+}
+
+li.uncheck span
+{
+  color: red;
+}
 
 .hidden
 {
   display:none;
 }
 
+.show
+{
+  display:show;
+}
+
+.info
+{
+  vertical-align: middle ;
+}

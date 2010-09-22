@@ -40,7 +40,7 @@
               <?php endforeach ; ?>
             <?php endif ; ?>
             
-            <?php if(count(['lithostratigraphy'])) : ?>
+            <?php if(count($common_name['lithostratigraphy'])) : ?>
             <?php $first=true ; ?>            
             <?php foreach($common_name['lithostratigraphy'][$spec->getLithoRef()]['community'] as $community => $name) : ?>
             <?php if($first) : ?> 

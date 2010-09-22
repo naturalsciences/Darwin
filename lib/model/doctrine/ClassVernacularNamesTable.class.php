@@ -46,6 +46,7 @@ class ClassVernacularNamesTable extends DarwinTable
     if(count($listId['mineralogy'])+count($listId['mineralogy'])+count($listId['lithology'])+count($listId['lithostratigraphy'])+count($listId['taxonomy']) == 0) 
       return array() ;
     $result = $q->execute();
+    if(!$result->count()) return array() ;
     $tab = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 'lithology' => array(),'mineralogy' => array()) ;
     foreach($result as $key=>$vernacular)
     {
