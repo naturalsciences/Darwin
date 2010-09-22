@@ -21,6 +21,27 @@ table.spec_result tr
   vertical-align: top ;  
 }
 
+table.classification
+{
+  border: thin solid #3390a1;
+}
+
+table.classification td, table.classification th
+{
+  border: thin solid #3390a1;
+  margin-top: 0.2em;
+  margin-bottom: 0.5em ;
+  padding-top: 0.2em;
+  padding-left: 0.2em;    
+  vertical-align : middle ;
+  text-align: left ;
+}
+
+table.classification tr:hover
+{
+  background-color: #ececec; 
+}
+
 .page
 {
   margin-top: 30px;

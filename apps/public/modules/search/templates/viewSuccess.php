@@ -52,7 +52,7 @@
     <?php if(count($common_names)) : ?>
     <h2 class="title"><?php echo __("Common Names") ?></h2>  
     <div class="borded">    
-      <table>
+      <table class="classification">
         <thead>
           <tr>
             <th><?php echo __("Classification") ; ?></th>
