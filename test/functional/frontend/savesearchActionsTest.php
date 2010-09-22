@@ -37,35 +37,35 @@ $browser->
 
   info('Pin / Unpin')->
 
-  get('/savesearch/pin?id=1&status=1')->
+  get('/savesearch/pin?id=1&status=1&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
     matches('/ok/')->
   end()->
 
-  get('/savesearch/pin?id=4&status=1')->
+  get('/savesearch/pin?id=4&status=1&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
     matches('/ok/')->
   end()->
 
-  get('specimensearch/search?pinned=true')->
+  get('specimensearch/search?pinned=true&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
     checkElement('table tbody tr',4)->
   end()->
 
-  get('/savesearch/pin?id=4&status=0')->
+  get('/savesearch/pin?id=4&status=0&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
     matches('/ok/')->
   end()->
 
-  get('specimensearch/search?pinned=true')->
+  get('specimensearch/search?pinned=true&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
@@ -74,7 +74,7 @@ $browser->
 
   info('Save pin to new spec search')->
   
-  get('savesearch/saveSearch?type=pin&cols=gtu|count&list_nr=create')->
+  get('savesearch/saveSearch?type=pin&cols=gtu|count&list_nr=create&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
@@ -88,7 +88,7 @@ $browser->
     matches('/ok/')->
   end()->
 
-  get('specimensearch/search?pinned=true')->
+  get('specimensearch/search?pinned=true&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
@@ -115,14 +115,14 @@ $new_search = $searches[1];
   $browser->
   info('Save pin to existing spec search')->
 
-  get('/savesearch/pin?id=1&status=1')->
+  get('/savesearch/pin?id=1&status=1&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
     matches('/ok/')->
   end()->
 
-  get('savesearch/saveSearch?type=pin&cols=gtu|count&list_nr='.$old_search->getId())->
+  get('savesearch/saveSearch?type=pin&source=specimen&cols=gtu|count&list_nr='.$old_search->getId())->
   with('response')->
   begin()->
     isStatusCode()->
@@ -136,14 +136,14 @@ $new_search = $searches[1];
     matches('/ok/')->
   end()->
 
-  get('specimensearch/search?pinned=true')->
+  get('specimensearch/search?pinned=true&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
     checkElement('.search_results_content','/No Specimen Matching/')->
   end()->
 
-  get('/savesearch/index?specimen=1')->
+  get('/savesearch/index?specimen=1&source=specimen')->
   with('response')->
   begin()->
     isStatusCode()->
