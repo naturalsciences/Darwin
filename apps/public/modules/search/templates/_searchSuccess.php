@@ -36,7 +36,7 @@
                   <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef());?>
               </td>
               <?php include_partial('result_content_specimen', array('specimen' => $specimen)); ?>
-              <?php include_partial('tagCommonName',array('common_names'=> $common_names, 'spec'=> $specimen)) ; ?>
+              <?php include_partial('tagCommonName',array('common_names'=>$common_names->getRawValue(), 'spec'=> $specimen)) ; ?>
               <?php include_partial('result_content_individual', array('specimen' => $specimen)); ?>                                                       
             </tr>            
           </tbody>
