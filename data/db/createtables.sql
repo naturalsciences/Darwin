@@ -30,7 +30,7 @@ comment on column template_people.birth_date is 'Birth/Creation date composed';
 comment on column template_people.gender is 'For physical user/persons give the gender: M or F';
 create table template_people_languages
        (
-        language_country varchar not null default 'en_gb',
+        language_country varchar not null default 'en',
         mother boolean not null default true,
         preferred_language boolean not null default false
        );
@@ -414,7 +414,7 @@ create table users
        (
         id integer not null default nextval('users_id_seq'),
         db_user_type smallint default 1 not null,
-	people_id integer,
+        people_id integer,
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
@@ -441,7 +441,7 @@ create sequence people_languages_id_seq;
 
 create table people_languages
        (
-	id integer not null default nextval('people_languages_id_seq'),
+        id integer not null default nextval('people_languages_id_seq'),
         people_ref integer not null,
         constraint pk_people_languages primary key (id),
         constraint unq_people_languages unique (people_ref, language_country),
@@ -457,7 +457,7 @@ comment on column people_languages.preferred_language is 'Flag telling which lan
 create sequence users_languages_id_seq;
 create table users_languages
        (
-	id integer not null default nextval('users_languages_id_seq'),
+        id integer not null default nextval('users_languages_id_seq'),
         users_ref integer not null,
         constraint pk_users_languages primary key (id),
         constraint unq_users_languages unique (users_ref, language_country),
