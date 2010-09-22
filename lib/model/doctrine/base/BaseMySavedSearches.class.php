@@ -13,6 +13,7 @@
  * @property boolean $is_only_id
  * @property string $modification_date_time
  * @property string $visible_fields_in_result
+ * @property string $subject
  * @property Users $User
  * 
  * @method integer         getId()                       Returns the current record's "id" value
@@ -23,6 +24,7 @@
  * @method boolean         getIsOnlyId()                 Returns the current record's "is_only_id" value
  * @method string          getModificationDateTime()     Returns the current record's "modification_date_time" value
  * @method string          getVisibleFieldsInResult()    Returns the current record's "visible_fields_in_result" value
+ * @method string          getSubject()                  Returns the current record's "subject" value
  * @method Users           getUser()                     Returns the current record's "User" value
  * @method MySavedSearches setId()                       Sets the current record's "id" value
  * @method MySavedSearches setUserRef()                  Sets the current record's "user_ref" value
@@ -32,6 +34,7 @@
  * @method MySavedSearches setIsOnlyId()                 Sets the current record's "is_only_id" value
  * @method MySavedSearches setModificationDateTime()     Sets the current record's "modification_date_time" value
  * @method MySavedSearches setVisibleFieldsInResult()    Sets the current record's "visible_fields_in_result" value
+ * @method MySavedSearches setSubject()                  Sets the current record's "subject" value
  * @method MySavedSearches setUser()                     Sets the current record's "User" value
  * 
  * @package    darwin
@@ -76,6 +79,10 @@ abstract class BaseMySavedSearches extends sfDoctrineRecord
              'notnull' => true,
              ));
         $this->hasColumn('visible_fields_in_result', 'string', null, array(
+             'type' => 'string',
+             'notnull' => true,
+             ));
+        $this->hasColumn('subject', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
              ));

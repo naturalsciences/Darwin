@@ -450,8 +450,16 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       if(ctype_digit($id))
         $clean_ids[] = $id;
     }
+    
     if(! empty($clean_ids))
-      $query->andWhereIn("spec_ref", $clean_ids);
+    {
+      if($this->getValue('what_searched') == 'specimen')
+        $query->andWhereIn("spec_ref", $clean_ids);
+      elseif($this->getValue('what_searched') == 'individual')
+        $query->andWhereIn("individual_ref", $clean_ids);
+      else
+        $query->andWhereIn("part_ref", $clean_ids);
+    }
     return $query ;
   }
 

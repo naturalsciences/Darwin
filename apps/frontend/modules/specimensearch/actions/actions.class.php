@@ -57,10 +57,10 @@ class specimensearchActions extends DarwinActions
       // Store all post parameters
       $criterias = $request->getPostParameters();
       // If pinned specimens called
-      if($request->hasParameter('pinned'))
+      if($request->hasParameter('pinned') && $request->hasParameter('source'))
       {
         // Get all ids pinned
-        $ids = implode(',',$this->getUser()->getAllPinned() );
+        $ids = implode(',',$this->getUser()->getAllPinned($request->getParameter('source')) );
         if($ids == '')
           $ids = '0';
         $this->is_pinned_only_search=true;
@@ -68,12 +68,13 @@ class specimensearchActions extends DarwinActions
         $criterias['specimen_search_filters']['spec_ids'] = $ids;
         // and the list of visible fields from the list of default visible fields defined in form configuration
         $criterias['specimen_search_filters']['col_fields'] = $this->form->getDefault('col_fields');
+        $criterias['specimen_search_filters']['what_searched'] = $request->getParameter('source');
       }
       // If instead it's a call to a stored specimen search
       elseif($request->hasParameter('spec_search'))
       {
         // Get the saved search concerned
-        $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
+        $criterias['specimen_search_filters']['what_searched'] = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
         // Forward 404 if we don't get the search requested
         $this->forward404Unless($saved_search);
 
@@ -81,6 +82,7 @@ class specimensearchActions extends DarwinActions
         if($criterias['specimen_search_filters']['spec_ids'] == '')
           $criterias['specimen_search_filters']['spec_ids'] = '0';
         $this->is_specimen_search = $saved_search->getId();
+        $criterias['specimen_search_filters']['what_searched'] = $saved_search->getSubject();
       }
       $this->form->bind($criterias['specimen_search_filters']) ;
     }
@@ -98,6 +100,7 @@ class specimensearchActions extends DarwinActions
       $criterias = unserialize($saved_search->getSearchCriterias());
       // Transform all visible fields stored as a string with | as separator and store it into col_fields field
       $criterias['specimen_search_filters']['col_fields'] = implode('|',$saved_search->getVisibleFieldsInResult()) ;
+      $criterias['specimen_search_filters']['what_searched'] = $saved_search->getSubject();
       // If data were set, in other terms specimen_search_filters array is available...
       if(isset($criterias['specimen_search_filters']))
       {
@@ -125,11 +128,8 @@ class specimensearchActions extends DarwinActions
         }
         else
         {
-          $q = Doctrine::getTable('MySavedSearches')
-            ->addUserOrder(null, $this->getUser()->getId());
           $this->spec_lists = Doctrine::getTable('MySavedSearches')
-            ->addIsSearch($q, false)
-            ->execute();
+            ->getListFor($this->getUser()->getId(), $this->form->getValue('what_searched'));
 
 
           // Define all properties that will be either used by the data query or by the pager

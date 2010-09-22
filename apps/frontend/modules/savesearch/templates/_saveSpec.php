@@ -30,9 +30,9 @@ $(document).ready(function () {
 
     $(this).qtip({
         content: {
-            title: { text : '<?php echo __('Save your specimens')?>', button: 'X' },        
-            url: '<?php echo url_for('savesearch/saveSearch?type=pin');?>'+ '/cols/' + column_str + '/list_nr/' + $('#save_specs_choice').val(),
-            data: $('.search_form').serialize(),
+            title: { text : '<?php echo __('Save your specimens')?>', button: 'X' },
+            url: '<?php echo url_for('savesearch/saveSearch?type=pin&source='.$source);?>'+ '/cols/' + column_str + '/list_nr/' + $('#save_specs_choice').val(),
+            //data: $('.search_form').serialize(),
             method: 'post'
         },
         show: { when: 'click', ready: true },
@@ -55,8 +55,8 @@ $(document).ready(function () {
                 // Fade in the modal "blanket" using the defined show speed
                ref_element_id = null;
                ref_element_name = null;
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+               addBlackScreen();
+               $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
             beforeHide: function()
             {

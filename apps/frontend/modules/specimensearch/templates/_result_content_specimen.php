@@ -1,23 +1,3 @@
-    <td rowspan="2">
-      <?php if($is_specimen_search):?>
-        <input type="checkbox" value="<?php echo $specimen->getSpecRef();?>" class="spec_selected"/>
-      <?php endif;?>
-    </td>
-    <td rowspan="2">
-      <?php if($source != 'part'):?>
-        <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
-        <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
-      <?php endif;?>
-    </td>
-    <td >
-      <?php if($sf_user->isPinned($specimen->getSpecRef())):?>
-        <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on','alt' =>  __('Un-Save this result'))) ; ?>
-        <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off hidden', 'alt' =>  __('Save this result'))) ; ?>
-      <?php else:?>
-        <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on hidden','alt' =>  __('Un-Save this result'))) ; ?>
-        <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
-      <?php endif;?>
-    </td>
     <td class="col_category">
       <?php if($specimen->getCategory() == 'physical' || $specimen->getCategory() == 'mixed' ):?>
         <?php echo image_tag('sp_in.png', array('alt' => __('Physical'), 'title'=> __('Physical')));?>

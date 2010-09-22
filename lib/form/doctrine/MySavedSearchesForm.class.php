@@ -11,6 +11,7 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
 {
   public function configure()
   {
+    $this->widgetSchema['subject'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['search_criterias'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['user_ref'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['name'] = new sfWidgetFormInputText() ;
@@ -28,19 +29,21 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
 
     $this->widgetSchema['modification_date_time']->setAttribute('class','medium_size');    
     $this->widgetSchema['modification_date_time']->setAttribute('disabled','disabled');
-    
+
     if($this->getObject()->getName() == "")
       $this->widgetSchema['name']->setDefault($default_name) ;
 
-    $choices = Doctrine::getTable('MySavedSearches')->getAllFields() ;
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields($this->object->getSubject()) ;
     $this->widgetSchema['visible_fields_in_result'] = new sfWidgetFormChoice(array(
 	  'choices' => $choices, 
 	  'expanded' => true,
 	  'multiple' => true,
-	  'renderer_options' => array('formatter' => array($this, 'formatter'))     
+	  'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
-    
+
     $this->validatorSchema['visible_fields_in_result'] = new sfValidatorChoice(array('choices' => $choices,'multiple' => true));
+
+    $this->validatorSchema['subject'] = new sfValidatorChoice(array('choices' => array('specimen','individual','part'), 'required'=>true,'empty_value'=>'specimen'));
 
     $this->validatorSchema['name'] = new sfValidatorString() ;
     $this->validatorSchema['modification_date_time'] = new sfValidatorString(array('required' => false)) ;

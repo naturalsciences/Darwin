@@ -1,5 +1,5 @@
 Institutions:
-  tableName: people                                                           
+  tableName: people
   columns:
         id: { type: integer, notnull: true,primary: true, autoincrement: true}
         is_physical: { type: boolean, notnull: false}
@@ -460,6 +460,7 @@ MySavedSearches:
         is_only_id: { type: boolean, notnull: true, default: false}
         modification_date_time: { type: string, notnull: true }
         visible_fields_in_result: { type: string, notnull: true}
+        subject: { type: string, notnull: true}
     relations:
         User:
             class: Users

@@ -1769,6 +1769,21 @@ table.saved_searches_board ,  table.saved_spec_board, table.full_size
   margin-bottom:1em;
 }
 
+.source_flag
+{
+/*   height: 1.2em; 
+  
+  overflow:hide;*/
+  width: 5em;
+  color:#3390A1;
+  padding-left:3px;
+  margin-right:5px;
+  border:1px solid #55AFC5;
+  font-size:x-small;
+  line-height: 1.5em;
+  background-color:white;
+}
+
 table.saved_searches td.fav_col,  table.saved_searches_board td.fav_col , table.saved_spec_board td.fav_col
 {
   width: 30px;
