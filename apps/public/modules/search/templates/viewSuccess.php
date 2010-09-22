@@ -49,7 +49,7 @@
         </tbody>
       </table>
     </div>      
-    <?php if($specimen->checkCommonNameForSpecimen($common_names,$specimen)) : ?>
+    <?php if(count($common_names)) : ?>
     <h2 class="title"><?php echo __("Common Names") ?></h2>  
     <div class="borded">    
       <table>
@@ -61,7 +61,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php include_partial('classification',array('common_name' => $common_names, 'spec' => $specimen)) ; ?>
+          <?php include_partial('classification',array('common_name' => $common_names->getRawValue(), 'spec' => $specimen)) ; ?>
         </tbody>
       </table>
     </div>

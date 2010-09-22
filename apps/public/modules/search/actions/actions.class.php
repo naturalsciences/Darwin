@@ -122,7 +122,8 @@ class searchActions extends DarwinActions
     
     $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
     $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      
-    $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames() ;    
+    $ids = $this->FecthIdForCommonNames() ;
+    $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;    
     if ($tag = $this->specimen->getGtuCountryTagValue()) $this->tags = explode(';',$tag) ; 
     else $this->tags = false ;
   }

@@ -1,6 +1,6 @@
-            <?php if($spec->checkIfCommonName($spec->getTaxonRef(),$common_name['taxonomy'])) : ?>
+            <?php if(count($common_name['taxonomy'])) : ?>
             <?php $first=true ; ?>
-            <?php foreach($common_name->['taxonomy'][$spec->getTaxonRef()]['community'] as $community => $name) : ?>
+            <?php foreach($common_name['taxonomy'][$spec->getTaxonRef()]['community'] as $community => $name) : ?>
               <?php if($first) : ?>
               <tr>
                 <td rowspan="<?php echo count($common_name['taxonomy'][$spec->getTaxonRef()]); ?>"><?php echo __('Taxonomy') ; ?></td>
@@ -12,7 +12,7 @@
               <?php endforeach ; ?>
             <?php endif ; ?>
             
-            <?php if($spec->checkIfCommonName($spec->getChronoRef(),$common_name['chronostratigraphy'])) : ?>
+            <?php if(count($common_name['chronostratigraphy'])) : ?>
             <?php $first=true ; ?>
             <?php foreach($common_name['chronostratigraphy'][$spec->getChronoRef()]['community'] as $community => $name) : ?>
             <?php if($first) : ?>
@@ -26,7 +26,7 @@
               <?php endforeach ; ?>
             <?php endif ; ?>    
             
-            <?php if($spec->checkIfCommonName($spec->getLithologyRef(),$common_name['lithology'])) : ?> 
+            <?php if(count($common_name['lithology'])) : ?> 
             <?php $first=true ; ?>                       
             <?php foreach($common_name['lithology'][$spec->getLithologyRef()]['community'] as $community => $name) : ?>            
             <?php if($first) : ?>              
@@ -40,7 +40,7 @@
               <?php endforeach ; ?>
             <?php endif ; ?>
             
-            <?php if($spec->checkIfCommonName($spec->getLithoRef(),$common_name['lithostratigraphy'])) : ?>
+            <?php if(count(['lithostratigraphy'])) : ?>
             <?php $first=true ; ?>            
             <?php foreach($common_name['lithostratigraphy'][$spec->getLithoRef()]['community'] as $community => $name) : ?>
             <?php if($first) : ?> 
@@ -54,7 +54,7 @@
               <?php endforeach ; ?>
             <?php endif ; ?>
             
-            <?php if($spec->checkIfCommonName($spec->getMineralRef(),$common_name['mineralogy'])) : ?>  
+            <?php if(count($common_name['mineralogy'])) : ?>  
             <?php $first=true ; ?>                      
             <?php foreach($common_name['mineralogy'][$spec->getMineralRef()]['community'] as $community => $name) : ?>
             <?php if($first) : ?>
