@@ -14,8 +14,8 @@ class PreferencesForm extends sfForm
   {
     $pref_keys = array('spec_search_cols','board_search_rec_pp', 'board_spec_rec_pp');
     $this->db_keys = Doctrine::getTable('Preferences')->getAllPreferences($this->options['user']->getId(), $pref_keys);
-    
-    $choices = Doctrine::getTable('MySavedSearches')->getAllFields() ;
+
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('specimen') ;
 
     $this->widgetSchema['spec_search_cols'] = new sfWidgetFormChoice(array(
       'choices' => $choices, 
