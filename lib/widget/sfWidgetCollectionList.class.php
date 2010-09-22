@@ -33,12 +33,13 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     $parent = $this->getOption('collection_parent');
     $choices = array() ;    
     $old_right = $this->getOption('old_right') ;
+    $pub = ($this->hasOption('public_only')?true:false) ;
     if($parent)
     {
-      $objects = Doctrine_Core::getTable('Collections')->fetchByCollectionParent($parent);
+      $objects = Doctrine_Core::getTable('Collections')->fetchByCollectionParent($parent,$pub);
     }
     else
-      $objects = Doctrine_Core::getTable('Collections')->getAllCollections() ;
+      $objects = Doctrine_Core::getTable('Collections')->getAllCollections($pub) ;
     if(!$objects->count()) return(array());
 
     foreach ($objects as $object)
@@ -69,7 +70,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
   private function getCollectionByIntitution()
   {
     $tab = array() ;
-    $objects = Doctrine_Core::getTable('Collections')->fetchByInstitutionList() ;  
+    $objects = Doctrine_Core::getTable('Collections')->fetchByInstitutionList(null,$this->hasOption('public_only')?true:false) ;  
     foreach($objects as $institution)
     {
       $tab[$institution->getFormatedName()] = array() ;

@@ -1,6 +1,6 @@
             <?php if($spec->checkIfCommonName($spec->getTaxonRef(),$common_name['taxonomy'])) : ?>
             <?php $first=true ; ?>
-            <?php foreach($common_name['taxonomy'][$spec->getTaxonRef()]['community'] as $community => $name) : ?>
+            <?php foreach($common_name->['taxonomy'][$spec->getTaxonRef()]['community'] as $community => $name) : ?>
               <?php if($first) : ?>
               <tr>
                 <td rowspan="<?php echo count($common_name['taxonomy'][$spec->getTaxonRef()]); ?>"><?php echo __('Taxonomy') ; ?></td>

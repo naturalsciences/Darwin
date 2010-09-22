@@ -5,7 +5,7 @@
 class CollectionsTable extends DarwinTable
 {
 
-    public function fetchByInstitutionList($institutionId = null)
+    public function fetchByInstitutionList($institutionId = null, $public_only = false)
     {
       $q = Doctrine_Query::create()
             ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
@@ -15,6 +15,8 @@ class CollectionsTable extends DarwinTable
             ->orderBy('p.id ASC, col_path_id ASC');
       if($institutionId != null)
         $q->andWhere('p.id = ?', $institutionId);
+      if($public_only)
+        $q->andWhere('col.is_public = TRUE');
       return $q->execute();
     }
 
@@ -46,7 +48,7 @@ class CollectionsTable extends DarwinTable
       return $q->fetchOne(); 
     }
 
-    public function fetchByCollectionParent($ParentId)
+    public function fetchByCollectionParent($ParentId, $public_only = false)
     {
       $expr = "%/$ParentId/%" ;
       $q = Doctrine_Query::create()
@@ -54,14 +56,18 @@ class CollectionsTable extends DarwinTable
             ->from('Collections c')
             ->andWhere('c.path like ?', $expr)
             ->orderBy('coll_path_id ASC');
+      if($public_only)
+        $q->andWhere('c.is_public = TRUE');             
       return $q->execute();
     }
     
-    public function getAllCollections()
+    public function getAllCollections($public_only = false)
     {
       $q = Doctrine_Query::create()
             ->from('Collections c')
             ->orderBy('path,name ASC');
+      if($public_only)
+        $q->andWhere('c.is_public = TRUE');            
       return $q->execute();
     }
     
