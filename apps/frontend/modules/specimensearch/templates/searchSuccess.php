@@ -5,7 +5,6 @@
 <div class="encoding">
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
-  <?php echo $brol;?>
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
     <?php echo form_tag('specimensearch/searchResult'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'specimensearch_form','id'=>'specimen_filter'));?>
