@@ -8,7 +8,7 @@ class PreferencesTable extends Doctrine_Table
     return Doctrine_Core::getTable('Preferences');
   }
 
-  public function getPreference($user_id, $key, $default="")
+  public function getPreference($user_id, $key, $take_from_default=true)
   {
     $result = Doctrine_Query::create()
       ->from('Preferences p')
@@ -17,8 +17,9 @@ class PreferencesTable extends Doctrine_Table
       ->fetchOne();
     if($result)
       return $result->getPrefValue();
-    else
-      return $default;
+    elseif($take_from_default)
+      return $this->getDefaultValue($key);
+    else return null;
   }
   
   public function setPreference($user_id, $key, $value)
@@ -70,6 +71,18 @@ class PreferencesTable extends Doctrine_Table
     {
       $this->setPreference($user_id, $key, $value);
     }
+  }
+
+  public function getDefaultValue($key)
+  {
+    switch($key)
+    {
+      case 'search_cols_specimen': return 'category|taxon|collection|type|gtu'; break;
+      case 'search_cols_individual': return 'collection|individual_type'; break;
+      case 'search_cols_part': return 'collection|type|row|shelf'; break;
+      case 'board_search_rec_pp': return '10'; break;
+      case 'board_spec_rec_pp': return '10'; break;
+    }  
   }
 }
 

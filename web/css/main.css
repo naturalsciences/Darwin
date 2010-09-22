@@ -1815,10 +1815,12 @@ td.and_col
 }
 
 
-.spec_search_cols_pref
+.search_cols_part, .search_cols_individual, .search_cols_specimen
 {
   max-height: 200px;
   overflow-y: scroll;
+  border:1px solid #ccc;
+  padding:1em;
 }
 
 

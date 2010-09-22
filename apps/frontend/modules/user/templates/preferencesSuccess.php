@@ -1,6 +1,6 @@
-<?php slot('title', __('Edit Preferences widgets'));  ?>        
+<?php slot('title', __('Edit Preferences widgets'));  ?>
 <?php use_stylesheets_for_form($form) ?>
-<?php use_javascripts_for_form($form) ?>                                                                                              
+<?php use_javascripts_for_form($form) ?>
 <div class="page edition">
  <h1><?php echo __('My Preferences');?></h1>
   <?php echo form_tag('user/preferences');?>
@@ -13,10 +13,24 @@
       <tbody>
         <tr>
           <th>
-          <?php echo $form['spec_search_cols']->renderLabel();?>
-          <div class="help_ico" alt="<?php echo $form['spec_search_cols']->renderHelp();?>"></div>
+          <?php echo $form['search_cols_specimen']->renderLabel();?>
+          <div class="help_ico" alt="<?php echo $form['search_cols_specimen']->renderHelp();?>"></div>
           </th>
-          <td><div > <!--class="spec_search_cols_pref"--><table><?php echo $form['spec_search_cols'];?></table></div></td>
+          <td><div class="search_cols_specimen" ><table><?php echo $form['search_cols_specimen'];?></table></div></td>
+        </tr>
+        <tr>
+          <th>
+          <?php echo $form['search_cols_individual']->renderLabel();?>
+          <div class="help_ico" alt="<?php echo $form['search_cols_individual']->renderHelp();?>"></div>
+          </th>
+          <td><div class="search_cols_individual" ><table><?php echo $form['search_cols_individual'];?></table></div></td>
+        </tr>
+        <tr>
+          <th>
+          <?php echo $form['search_cols_part']->renderLabel();?>
+          <div class="help_ico" alt="<?php echo $form['search_cols_part']->renderHelp();?>"></div>
+          </th>
+          <td><div class="search_cols_part" ><table><?php echo $form['search_cols_part'];?></table></div></td>
         </tr>
       </tbody>
       <thead>

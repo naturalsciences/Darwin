@@ -220,7 +220,7 @@ class specimensearchActions extends DarwinActions
     }
     else
     {
-      $req_fields_array = $user->fetchVisibleCols();
+      $req_fields_array = $user->fetchVisibleCols($form->getValue('what_searched'));
     }
 
     if(empty($req_fields_array))

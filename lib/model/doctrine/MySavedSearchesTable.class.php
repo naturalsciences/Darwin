@@ -57,18 +57,55 @@ class MySavedSearchesTable extends DarwinTable
 
   public function getAllFields($source)
   {
-    return array('category'=>'category',
-                 'collection'=>'collection',
-                 'taxon'=>'taxon',
-                 'type'=>'type',
-                 'gtu'=>'gtu',
-                 'codes'=>'codes',
-                 'chrono'=>'chrono',
-                 'litho'=>'litho',
-                 'lithologic'=>'lithologic',
-                 'expedition'=>'expedition',
-                 'mineral'=>'mineral',
-                 'count'=>'count');
-  
+    $part_col = array();
+    $individual_col = array();
+    $specimen_col = array(
+      'category'=>'category',
+      'collection'=>'collection',
+      'taxon'=>'taxon',
+      'type'=>'type',
+      'gtu'=>'gtu',
+      'codes'=>'codes',
+      'chrono'=>'chrono',
+      'litho'=>'litho',
+      'lithologic'=>'lithologic',
+      'expedition'=>'expedition',
+      'mineral'=>'mineral',
+      'count'=>'count'
+    );
+    if($source == 'individual')
+    {
+      $individual_col = array(
+        'individual_type',
+        'sex',
+        'state',
+        'stage',
+        'social_status',
+        'rock_form',
+        'individual_count',
+      );
+    }
+
+    if($source == 'part')
+    {
+      $part_col = array(
+        'part',
+        'part_status',
+        'building',
+        'floor',
+        'room',
+        'row',
+        'shelf',
+        'container',
+        'container_type',
+        'container_storage',
+        'sub_container',
+        'sub_container_type',
+        'sub_container_storage',
+        'part_count',
+      );
+    }
+    $columns = $specimen_col + $individual_col +  $part_col;
+    return array_combine($columns, $columns);
   }
 }

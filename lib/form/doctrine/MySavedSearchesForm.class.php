@@ -64,6 +64,16 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     return $widget->renderContentTag('tbody', implode($widget->getOption('separator'), $rows));
   }
   
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['subject']) && in_array($taintedValues['subject'], array('specimen','individual','part')))
+    {
+      $choices = Doctrine::getTable('MySavedSearches')->getAllFields($taintedValues['subject']) ;
+      $this->validatorSchema['visible_fields_in_result'] = new sfValidatorChoice(array('choices' => $choices,'multiple' => true));
+    }
+    parent::bind($taintedValues,$taintedFiles);
+  }
+
   public function save($con = null)
   {
     $values = $this->getValues();

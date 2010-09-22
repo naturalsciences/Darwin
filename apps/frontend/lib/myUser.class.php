@@ -25,9 +25,13 @@ class myUser extends sfBasicSecurityUser
    * Fetch the visible columns in the search
    * @return array an array of visible fields
    */
-  public function fetchVisibleCols()
+  public function fetchVisibleCols($source)
   {
-    return explode('|',Doctrine::getTable('Preferences')->getPreference($this->getId(),'spec_search_cols','category|taxon|collection|type|gtu'));
+    if($source=='specimen')
+      return explode('|',Doctrine::getTable('Preferences')->getPreference($this->getId(),'search_cols_specimen',true));
+    if($source=='individual')
+      return explode('|',Doctrine::getTable('Preferences')->getPreference($this->getId(),'search_cols_individual',true));
+    return explode('|',Doctrine::getTable('Preferences')->getPreference($this->getId(),'search_cols_part',true));
   }
 
 

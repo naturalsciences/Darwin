@@ -16,8 +16,7 @@ class boardwidgetComponents extends sfComponents
       ->fetchSearch(
         $this->getUser()->getId(),
         Doctrine::getTable('Preferences')->getPreference(
-          $this->getUser()->getId(),'board_search_rec_pp','10'
-        )
+          $this->getUser()->getId(),'board_search_rec_pp')
       );
   }
 
@@ -27,8 +26,7 @@ class boardwidgetComponents extends sfComponents
       ->fetchSpecimens(
         $this->getUser()->getId(),
         Doctrine::getTable('Preferences')->getPreference(
-          $this->getUser()->getId(),'board_spec_rec_pp','10'
-        )
+          $this->getUser()->getId(),'board_spec_rec_pp')
       );
   }
   

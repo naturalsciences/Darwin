@@ -12,37 +12,72 @@ class PreferencesForm extends sfForm
 {
   public function configure()
   {
-    $pref_keys = array('spec_search_cols','board_search_rec_pp', 'board_spec_rec_pp');
+    $pref_keys = array('search_cols_specimen', 'search_cols_individual', 'search_cols_part', 'board_search_rec_pp', 'board_spec_rec_pp');
     $this->db_keys = Doctrine::getTable('Preferences')->getAllPreferences($this->options['user']->getId(), $pref_keys);
 
     $choices = Doctrine::getTable('MySavedSearches')->getAllFields('specimen') ;
 
-    $this->widgetSchema['spec_search_cols'] = new sfWidgetFormChoice(array(
+    $this->widgetSchema['search_cols_specimen'] = new sfWidgetFormChoice(array(
       'choices' => $choices, 
       'expanded' => true,
       'multiple' => true,
-      'renderer_options' => array('formatter' => array($this, 'formatter'))     
+      'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
-    $this->widgetSchema['spec_search_cols']->setLabel('Default visible columns');
-    $default = $this->db_keys['spec_search_cols'];
+    $this->widgetSchema['search_cols_specimen']->setLabel('Default visible columns');
+    $default = $this->db_keys['search_cols_specimen'];
     if($default == '')
-      $default = 'category|taxon|collection|type|gtu';
-    $this->widgetSchema['spec_search_cols']->setDefault(explode('|',$default));
-    $this->widgetSchema->setHelp('spec_search_cols', 'Define which field will be available by default into the specimen search');
-    $this->validatorSchema['spec_search_cols'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+      $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_specimen');
+    $this->widgetSchema['search_cols_specimen']->setDefault(explode('|',$default));
+    $this->widgetSchema->setHelp('search_cols_specimen', 'Define which field will be available by default into the specimen search');
+    $this->validatorSchema['search_cols_specimen'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+
+///------------- INDIVIDUALS
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('individual') ;
+
+    $this->widgetSchema['search_cols_individual'] = new sfWidgetFormChoice(array(
+      'choices' => $choices, 
+      'expanded' => true,
+      'multiple' => true,
+      'renderer_options' => array('formatter' => array($this, 'formatter'))
+    ));
+    $this->widgetSchema['search_cols_individual']->setLabel('Default visible columns');
+    $default = $this->db_keys['search_cols_individual'];
+    if($default == '')
+      $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_individual');
+    $this->widgetSchema['search_cols_individual']->setDefault(explode('|',$default));
+    $this->widgetSchema->setHelp('search_cols_individual', 'Define which field will be available by default into the specimen search');
+    $this->validatorSchema['search_cols_individual'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+
+///------------ PARTS
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('part') ;
+
+    $this->widgetSchema['search_cols_part'] = new sfWidgetFormChoice(array(
+      'choices' => $choices, 
+      'expanded' => true,
+      'multiple' => true,
+      'renderer_options' => array('formatter' => array($this, 'formatter'))
+    ));
+    $this->widgetSchema['search_cols_specimen']->setLabel('Default visible columns');
+    $default = $this->db_keys['search_cols_part'];
+    if($default == '')
+      $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_part');
+    $this->widgetSchema['search_cols_part']->setDefault(explode('|',$default));
+    $this->widgetSchema->setHelp('search_cols_part', 'Define which field will be available by default into the specimen search');
+    $this->validatorSchema['search_cols_part'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+///-----OTHER
 
     $choices = array('5' => '5', '10' => '10', '15' => '15', '20' => '20');
     $this->widgetSchema['board_search_rec_pp'] = new sfWidgetFormChoice(array('choices' => $choices));
     $this->validatorSchema['board_search_rec_pp'] = new sfValidatorChoice(array('choices' => array_keys($choices) ));
     $this->widgetSchema['board_search_rec_pp']->setLabel('Number of saved searches');
     $this->widgetSchema->setHelp('board_search_rec_pp',"Number of Saved searches showed on the board widget. (You browse every searches on the dedicated page)");
-    $this->widgetSchema['board_search_rec_pp']->setDefault($this->db_keys['board_search_rec_pp']? $this->db_keys['board_search_rec_pp'] : '10');
+    $this->widgetSchema['board_search_rec_pp']->setDefault($this->db_keys['board_search_rec_pp']? $this->db_keys['board_search_rec_pp'] : Doctrine::getTable('Preferences')->getDefaultValue('board_search_rec_pp'));
 
     $this->widgetSchema['board_spec_rec_pp'] = new sfWidgetFormChoice(array('choices' => $choices));
     $this->validatorSchema['board_spec_rec_pp'] = new sfValidatorChoice(array('choices' => array_keys($choices) ));
     $this->widgetSchema['board_spec_rec_pp']->setLabel('Number of saved specimens');
     $this->widgetSchema->setHelp('board_spec_rec_pp',"Number of saved specimens list showed on the board widget. (You browse every specimen lists on the dedicated page)");
-    $this->widgetSchema['board_spec_rec_pp']->setDefault($this->db_keys['board_spec_rec_pp']? $this->db_keys['board_spec_rec_pp'] : '10');
+    $this->widgetSchema['board_spec_rec_pp']->setDefault($this->db_keys['board_spec_rec_pp']? $this->db_keys['board_spec_rec_pp'] : Doctrine::getTable('Preferences')->getDefaultValue('board_spec_rec_pp'));
 
     $this->widgetSchema->setNameFormat('preferences[%s]');
   }
@@ -63,7 +98,9 @@ class PreferencesForm extends sfForm
   public function save($con = null)
   {
     $results = array(
-      'spec_search_cols'=> implode('|',$this->getValue('spec_search_cols')),
+      'search_cols_specimen'=> implode('|',$this->getValue('search_cols_specimen')),
+      'search_cols_individual'=> implode('|',$this->getValue('search_cols_individual')),
+      'search_cols_part'=> implode('|',$this->getValue('search_cols_part')),
       'board_search_rec_pp'=> $this->getValue('board_search_rec_pp'),
       'board_spec_rec_pp'=> $this->getValue('board_spec_rec_pp'),
     );
