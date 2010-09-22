@@ -58,13 +58,13 @@
     <td class="col_gtu">
       <?php if($specimen->getGtuRef() > 0) : ?>
         <?php if($specimen->getGtuCountryTagValue() != "") : ?>                  
-          <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$i."_info");?><?php echo $specimen->getGtuCode();?>
-          <div id="gtu_<?php echo $i;?>_details" style="display:none;"></div> 
+          <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getIndividualRef()."_info");?><?php echo $specimen->getGtuCode();?>
+          <div id="gtu_<?php echo $specimen->getIndividualRef();?>_details" style="display:none;"></div> 
           <script type="text/javascript">
-          $('#gtu_ctr_<?php echo $i;?>_info').click(function() 
+          $('#gtu_ctr_<?php echo $specimen->getIndividualRef();?>_info').click(function() 
           {
             item_row = $(this).closest('tr');
-            elem = item_row.find('#gtu_<?php echo $i;?>_details');
+            elem = item_row.find('#gtu_<?php echo $specimen->getIndividualRef();?>_details');
             if(elem.is(":hidden"))
             { 
               $.get('<?php echo url_for("search/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
