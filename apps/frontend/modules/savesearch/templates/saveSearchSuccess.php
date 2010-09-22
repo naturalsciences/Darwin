@@ -12,9 +12,9 @@
         <?php echo $form['name'] ; ?>
       </td>
       <td>
-        <?php echo $form['favorite'] ; ?>      
+        <?php echo $form['favorite'] ; ?>
         <?php echo image_tag('favorite_on.png', array('id'=> 'favorite_on', 'alt' => 'Set a bookmark')) ; ?>
-        <?php echo image_tag('favorite_off.png', array('id'=> 'favorite_off', 'alt' => 'Set a bookmark')) ; ?>          
+        <?php echo image_tag('favorite_off.png', array('id'=> 'favorite_off', 'alt' => 'Set a bookmark')) ; ?>
       </td>
     </tr>
     <tr>
@@ -53,6 +53,7 @@
   </table>
   <div class="aligned_fields"> 
     <?php echo $form['is_only_id']->render(array('class'=>'hidden')) ; ?>
+    <?php echo $form['subject']->render() ; ?>
     <input type="submit" name="save" id="save" value="<?php echo __('Save'); ?>" class="search_submit">
   </div>      
   </form>

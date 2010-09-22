@@ -42,39 +42,39 @@ class myUser extends sfBasicSecurityUser
   }
 
 
-  public function removePinTo($id)
+  public function removePinTo($id,$source)
   {
-    $pins = $this->getAttribute('spec_pinned',array());
+    $pins = $this->getAttribute('spec_pinned_'.$source, array());
     if( ($key = array_search($id, $pins)) !== false)
       unset($pins[$key]);
 
-    $this->setAttribute('spec_pinned',$pins);
+    $this->setAttribute('spec_pinned_'.$source, $pins);
     
   }
   
-  public function clearPinned()
+  public function clearPinned($source)
   {
-     $this->setAttribute('spec_pinned',array());
+     $this->setAttribute('spec_pinned_'.$source,array());
   }
   
-  public function addPinTo($id)
+  public function addPinTo($id, $source)
   {
-    $pins = $this->getAttribute('spec_pinned',array());
+    $pins = $this->getAttribute('spec_pinned_'.$source, array());
     if(array_search($id, $pins) === false)
       $pins[] = $id;
     $pins = array_unique($pins);
-    $this->setAttribute('spec_pinned',$pins);
+    $this->setAttribute('spec_pinned_'.$source,$pins);
     
   }
 
-  public function getAllPinned()
+  public function getAllPinned($source)
   {
-    return $this->getAttribute('spec_pinned',array());
+    return $this->getAttribute('spec_pinned_'.$source,array());
   }
   
-  public function isPinned($id)
+  public function isPinned($id,$source)
   {
-    $pins = $this->getAttribute('spec_pinned',array());
+    $pins = $this->getAttribute('spec_pinned_'.$source, array());
     return (array_search($id, $pins) === false) ? false : true;
   }
 }

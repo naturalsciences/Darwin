@@ -24,7 +24,7 @@ class MySavedSearchesTable extends DarwinTable
   }
   
   public function getSavedSearchByKey($id, $user )
-  {       
+  {
     return $this->addUserOrder(null, $user)
       ->andWhere('id = ?', $id )
       ->fetchOne();
@@ -48,12 +48,19 @@ class MySavedSearchesTable extends DarwinTable
     return $q->execute();
   }
 
-  public function getAllFields()
+  public function getListFor($user, $source)
+  {
+    $q = $this->addUserOrder(null,$user);
+    $this->addIsSearch($q, false);
+    return $q->andWhere('subject = ?',$source)->execute();
+  }
+
+  public function getAllFields($source)
   {
     return array('category'=>'category',
                  'collection'=>'collection',
                  'taxon'=>'taxon',
-                 'type'=>'type',                 
+                 'type'=>'type',
                  'gtu'=>'gtu',
                  'codes'=>'codes',
                  'chrono'=>'chrono',

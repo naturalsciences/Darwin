@@ -23,6 +23,7 @@ abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
       'is_only_id'               => new sfWidgetFormInputCheckbox(),
       'modification_date_time'   => new sfWidgetFormTextarea(),
       'visible_fields_in_result' => new sfWidgetFormTextarea(),
+      'subject'                  => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseMySavedSearchesForm extends BaseFormDoctrine
       'is_only_id'               => new sfValidatorBoolean(array('required' => false)),
       'modification_date_time'   => new sfValidatorString(),
       'visible_fields_in_result' => new sfValidatorString(),
+      'subject'                  => new sfValidatorString(),
     ));
 
     $this->widgetSchema->setNameFormat('my_saved_searches[%s]');

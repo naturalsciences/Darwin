@@ -20,6 +20,7 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
       'is_only_id'               => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'modification_date_time'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'visible_fields_in_result' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'subject'                  => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
       'is_only_id'               => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'modification_date_time'   => new sfValidatorPass(array('required' => false)),
       'visible_fields_in_result' => new sfValidatorPass(array('required' => false)),
+      'subject'                  => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('my_saved_searches_filters[%s]');
@@ -57,6 +59,7 @@ abstract class BaseMySavedSearchesFormFilter extends BaseFormFilterDoctrine
       'is_only_id'               => 'Boolean',
       'modification_date_time'   => 'Text',
       'visible_fields_in_result' => 'Text',
+      'subject'                  => 'Text',
     );
   }
 }

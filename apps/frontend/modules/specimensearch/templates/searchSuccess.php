@@ -85,11 +85,11 @@
       </script>
     </form>
       <div class="check_right" id="save_button"> 
-        <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>	           
-        <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists));?>
+        <a href="<?php echo url_for('specimen/confirm') ; ?>" class="hidden"></a>
+        <?php include_partial('savesearch/saveSpec', array('spec_lists'=>$spec_lists,'source' => $source));?>
 
         <?php if(! $is_specimen_search):?>
-          <?php include_partial('savesearch/saveSearch');?>
+          <?php include_partial('savesearch/saveSearch', array('source' => $source));?>
         <?php endif;?>
       </div>
       <?php if(!isset($is_pinned_only_search) && ! $is_specimen_search):?>

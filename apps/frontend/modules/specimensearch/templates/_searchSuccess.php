@@ -45,6 +45,28 @@
                 else $itemRef = $specimen->getPartRef(); ?>
           <tbody>
             <tr class="rid_<?php echo $itemRef?>">
+
+              <td rowspan="2">
+                <?php if($is_specimen_search):?>
+                  <input type="checkbox" value="<?php echo $itemRef;?>" class="spec_selected"/>
+                <?php endif;?>
+              </td>
+              <td rowspan="2">
+                <?php if($source != 'part'):?>
+                  <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
+                  <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+                <?php endif;?>
+              </td>
+              <td >
+                <?php if($sf_user->isPinned($itemRef, $source)):?>
+                  <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on','alt' =>  __('Un-Save this result'))) ; ?>
+                  <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off hidden', 'alt' =>  __('Save this result'))) ; ?>
+                <?php else:?>
+                  <?php echo image_tag('blue_pin_on.png', array('class'=>'pin_but pin_on hidden','alt' =>  __('Un-Save this result'))) ; ?>
+                  <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
+                <?php endif;?>
+              </td>
+
               <?php include_partial('result_content_specimen', array('source'=>$source,'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
                 <?php include_partial('result_content_individual', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
@@ -158,7 +180,7 @@ $(document).ready(function () {
       pin_status = 1;
     }
     rid = getIdInClasses($(this).closest('tr'));
-    $.get('<?php echo url_for('savesearch/pin');?>/id/' + rid + '/status/' + pin_status,function (html){});
+    $.get('<?php echo url_for('savesearch/pin?source='.$source);?>/id/' + rid + '/status/' + pin_status,function (html){});
   });
 
   if($('.spec_results tbody .pin_on').not('.hidden').length == $('.spec_results tbody .pin_on').length)
@@ -187,7 +209,7 @@ $(document).ready(function () {
       pin_status = 1;
     }
     pins = '';
-    $('.spec_results tbody tr').not('.ind_row').each(function(){
+    $('.spec_results tbody tr').not('.sub_row').each(function(){
       rid = getIdInClasses($(this));
       if(pins == '')
         pins = rid;
@@ -205,7 +227,7 @@ $(document).ready(function () {
         $('.spec_results tbody tr .pin_off').addClass('hidden');
         $('.spec_results tbody tr .pin_on').removeClass('hidden') ;
     }
-    $.get('<?php echo url_for('savesearch/pin');?>/mid/' + pins + '/status/' + pin_status,function (html){});
+    $.get('<?php echo url_for('savesearch/pin?source='.$source);?>/mid/' + pins + '/status/' + pin_status,function (html){});
   }); 
 
 });
