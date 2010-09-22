@@ -37,11 +37,6 @@ table.classification td, table.classification th
   text-align: left ;
 }
 
-table.classification tr:hover
-{
-  background-color: #ececec; 
-}
-
 .page
 {
   margin-top: 30px;

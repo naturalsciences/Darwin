@@ -149,6 +149,11 @@ class searchActions extends DarwinActions
     if($form->isBound())
     {
       $req_fields = $form->getValue('col_fields');
+      if($form->getValue('taxon_common_name') != '' || $form->getValue('taxon_name') != '') $req_fields .= '|taxon|taxon_common_name';
+      if($form->getValue('chrono_common_name') != '' || $form->getValue('chrono_name') != '') $req_fields .= '|chrono|chrono_common_name';      
+      if($form->getValue('litho_common_name') != '' || $form->getValue('litho_name') != '') $req_fields .= '|litho|litho_common_name';
+      if($form->getValue('lithologic_common_name') != '' || $form->getValue('lithologic_name') != '') $req_fields .= '|lithologic|lithologic_common_name'; 
+      if($form->getValue('mineral_common_name') != '' || $form->getValue('mineral_name') != '') $req_fields .= '|mineral|mineral_common_name';    
       $req_fields_array = explode('|',$req_fields);
 
     }

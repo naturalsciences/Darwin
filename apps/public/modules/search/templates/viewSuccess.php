@@ -1,6 +1,6 @@
 <?php slot('title', __('View Specimens'));  ?>  
 
-<div class="page">
+<div class="page viewer">
   <h2 class="title"><?php echo __("Darwin Specimen") ?></h2>
   <div class="borded  padded">
     <h2 class="title"><?php echo __("Collection") ?></h2>  

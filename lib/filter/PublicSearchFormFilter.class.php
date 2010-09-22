@@ -69,7 +69,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
                                         )
                                   );  
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
-    $this->setDefault('col_fields','taxon|collection|gtu|sex|stage|type|taxon_common_name');                                    
+    $this->setDefault('col_fields','collection|gtu|sex|stage|type');                                    
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
     $this->widgetSchema['collection_ref']->addOption('public_only',true);    
     $this->validatorSchema['collection_ref'] = new sfValidatorPass(); //Avoid duplicate the query                                  
