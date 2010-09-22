@@ -326,12 +326,13 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	    ->select('cvn.record_id')
 	    ->from('ClassVernacularNames cvn')
 	    ->leftJoin('cvn.VernacularNames tvn')  
-      ->andWhere('cvn.referenced_relation = ?', $relation);
+      ->andWhere('cvn.referenced_relation = ?', $relation);      
 	  $this->addNamingColumnQuery($q, 'VernacularNames', 'name_ts', $val, 'tvn');
+    $results = $q->execute(); 
 	  $list = "" ;
-    foreach($q->execute() as $key=>$result) 
+    foreach($results as $key=>$result) 
       $list .= $result->getRecordId()."," ;
-    if($list == "") return (0) ;      
+    if($list == "") return (-1) ;      
     return (substr($list,0,strlen($list)-1)) ; //return list of id without the last ','
   }
 }
