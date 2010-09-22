@@ -84,7 +84,11 @@ class UsersForm extends BaseUsersForm
       $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));                                                                 
       $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;
     }
-    if ($this->options['mode'] != 'profile')
+    if ($this->options['mode'] = 'profile')
+    {
+      unset($this['db_user_type']);
+    }
+    else
     {
       $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array(
         'choices'        => Users::getTypes($this->options)
@@ -95,24 +99,23 @@ class UsersForm extends BaseUsersForm
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));    
     $this->widgetSchema['family_name'] = new sfWidgetFormInput();
-    $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
     $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
 
+    $this->widgetSchema['additional_names'] = new sfWidgetFormInput();
     $this->widgetSchema['additional_names']->setAttributes(array('class'=>'medium_size'));
      
-    $this->widgetSchema['password']  = new sfWidgetFormInputPassword();
+    /*$this->widgetSchema['password']  = new sfWidgetFormInputPassword();
     $this->widgetSchema['password_again']  = new sfWidgetFormInputPassword();
     $this->validatorSchema['password']  = new sfValidatorString(array('required' => false, 'trim' => true, 'min_length' => 5));
     $this->validatorSchema['password']->setMessage('min_length','this password is too short (%min_length% characters min).');
-    $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['password_again']  = new sfValidatorString(array('required' => false));*/
     
-    $this->validatorSchema->setPostValidator(
+/*    $this->validatorSchema->setPostValidator(
                                   new sfValidatorSchemaCompare('password', '==', 'password_again',
 	                                array(),
                                 	array('invalid' => 'Passwords must be equals and can not contains spaces')
                                                               )
-                                            );
-                                            
+                                            );*/
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $dateText = array('year'=>'yyyy', 'month'=>'mm', 'day'=>'dd');

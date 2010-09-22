@@ -23,6 +23,6 @@ class UsersLoginInfosTable extends DarwinTable
             ->from('UsersLoginInfos u')
             ->andWhere('u.user_ref = ?', $user_id)
             ->andWhere('u.login_type = ?', $type); 
-	return $q->fetchOne() ;  
+	return $q->fetchOne() ;
   }
 }

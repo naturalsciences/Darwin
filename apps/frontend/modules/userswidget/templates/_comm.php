@@ -12,7 +12,7 @@
   <tr>
     <td>
       <a class="link_catalogue" title="<?php echo __('Edit Communication Means');?>"  href="<?php echo url_for('user/comm?ref_id='.$eid.'&id='.$comm->getId());?>">
-      <?php if($comm->getCommType()=="TEL"):?>
+      <?php if($comm->getCommType()=="phone/fax"):?>
 	<?php echo __('Phone');?>
       <?php else:?>
 	<?php echo __('e-Mail');?>

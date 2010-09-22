@@ -239,7 +239,7 @@ PeopleLanguages:
     columns:
         id: { type: integer, primary: true, autoincrement: true}
         people_ref: { type: integer, notnull: true}
-        language_country: { type: string, notnull: true, default: en_gb}
+        language_country: { type: string, notnull: true, default: en}
         mother: { type: boolean, notnull: true, default: true}
         preferred_language: { type: boolean, notnull: true, default: false}
     relations:
@@ -251,7 +251,7 @@ UsersLanguages:
     columns:
         id: { type: integer, primary: true, autoincrement: true}
         users_ref: { type: integer, notnull: true}
-        language_country: { type: string, notnull: true, default: en_gb}
+        language_country: { type: string, notnull: true, default: en}
         mother: { type: boolean, notnull: true, default: true}
         preferred_language: { type: boolean, notnull: true, default: false}
     relations:
@@ -286,7 +286,7 @@ PeopleComm:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
-        comm_type: { type: string, notnull: true, default: 'TEL' }
+        comm_type: { type: string, notnull: true, default: 'phone_fax' }
         tag: { type: string, notnull: true, default: ''}
         entry: { type: string, notnull: true }
     relations:
@@ -316,7 +316,7 @@ UsersComm:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
         person_user_ref: { type: integer, notnull: true}
-        comm_type: { type: string, notnull: true, default: 'TEL' }
+        comm_type: { type: string, notnull: true, default: 'phone/fax' }
         entry: { type: string, notnull: true}
         tag: { type: string, notnull: true, default: ''}
     relations:

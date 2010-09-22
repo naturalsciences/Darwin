@@ -6,6 +6,15 @@
 class PeopleComm extends BasePeopleComm
 {
   /**
+  * Get list of communication types available
+  * @return array Array of list of communication types
+  */
+  public static function getCommTypes()
+  {
+    return array('phone/fax'=> 'phone/fax', 'e-mail' => 'e-mail');
+  }
+
+  /**
   * Get tags of the comm as an array (only label not keys)
   * @return array Array of tags for this comm
   */
@@ -18,7 +27,7 @@ class PeopleComm extends BasePeopleComm
     {
       $tag=trim($tag);
       if(isset($possible_tags[$tag]))
-	$result[] = $possible_tags[$tag];
+        $result[] = $possible_tags[$tag];
     }
     return $result;
   }

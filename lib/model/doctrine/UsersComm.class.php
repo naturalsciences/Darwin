@@ -6,6 +6,24 @@
 class UsersComm extends BaseUsersComm
 {
   /**
+  * Get list of communication types available
+  * @return array Array of list of communication types
+  */
+  public static function getCommTypes()
+  {
+    return array('phone/fax'=> 'phone/fax', 'e-mail' => 'e-mail');
+  }
+
+  /**
+  * Get the communication types available for registering
+  * @return string Give the comm type available for registering
+  */
+  public static function getRegisterCommType()
+  {
+    return 'e-mail';
+  }
+
+  /**
   * Get tags of the comm as an array (only label not keys)
   * @return array Array of tags for this comm
   */
@@ -18,16 +36,16 @@ class UsersComm extends BaseUsersComm
     {
       $tag=trim($tag);
       if(isset($possible_tags[$tag]))
-	$result[] = $possible_tags[$tag];
+        $result[] = $possible_tags[$tag];
     }
     return $result;
   }
   
   public function getDisplayImage($domain = 'all')
-  {    
+  {
     if (strstr($this->getTag(),'work') || $domain == 'all')
     {
-      if($this->getCommType() == "EMAIL") return "email.png";      
+      if($this->getCommType() == "e-mail") return "email.png";      
       elseif (strstr($this->getTag(),'fax'))
         return "fax.png" ;
       else

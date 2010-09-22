@@ -47,7 +47,7 @@ abstract class BasePeopleLanguages extends sfDoctrineRecord
         $this->hasColumn('language_country', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => 'en_gb',
+             'default' => 'en',
              ));
         $this->hasColumn('mother', 'boolean', null, array(
              'type' => 'boolean',

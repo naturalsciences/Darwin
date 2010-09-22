@@ -234,7 +234,8 @@ class userActions extends DarwinActions
       $this->form->bind($request->getParameter('users_comm'));
       if($this->form->isValid())
       {
-        try{
+        try
+        {
           $this->form->save();
         }
         catch(Exception $e)
