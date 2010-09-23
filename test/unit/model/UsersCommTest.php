@@ -14,7 +14,7 @@ $a->setTag('pref');
 $t->is($a->getTagsAsArray(),array('Preferred'),"We have only 1 tag");
 
 $a->setTag('pref,home,pager');
-$a->setCommType('MAIL');
+$a->setCommType('e-mail');
 
 $t->is($a->getTagsAsArray(),array ('Preferred','Home'),"We have 2 tags (do not get pager)");
 
