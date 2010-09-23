@@ -135,7 +135,7 @@ $browser->
 
   click('Save', array('users_comm' => array(
     'entry'  => '+32478.254415',
-    'comm_type' => 'TEL',
+    'comm_type' => 'phone/fax',
     'tag' => 'home'
   )))->
 

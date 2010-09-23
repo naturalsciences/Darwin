@@ -23,14 +23,22 @@ class userActions extends DarwinActions
   {
     $this->user = Doctrine::getTable('Users')->findExcept( $request->getparameter('id') );
     $this->forward404Unless($this->user, sprintf('User does not exist (%s).', $request->getParameter('id')));
-    if($this->getUser()->getId() == $this->user->getId() && !$request->isMethod('post')) $this->redirect('user/profile'); 
-    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-    elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) $this->forwardToSecureAction();
+    if($this->getUser()->getId() == $this->user->getId() && !$request->isMethod('post')) 
+      $this->redirect('user/profile'); 
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      $this->forwardToSecureAction();
+    elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
+      $this->forwardToSecureAction();
     $this->mode = 'edit' ;
     $this->form = new UsersForm($this->user, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
+    $users = $request->getParameter('users');
+    if(! isset($users['db_user_type']))
+    {
+      $users['db_user_type'] = $this->user->getDbUserType();
+    }
     if($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('users'));
+      $this->form->bind($users);
       if($this->form->isValid())
       {
         $old_db_user_type = $this->user->getDbUserType() ;
