@@ -93,7 +93,7 @@
         </script>
       <?php endif ; ?>
     </td> 
-    <td class="col_codes">     
+    <td class="col_codes">
       <?php foreach($codes as $key=>$code):?>
         <?php if ($code->getRecordId() === $specimen->getSpecRef()) : ?>
           <?php if ($code->getCodeCategory() == 'main' ) : ?>
@@ -105,7 +105,7 @@
           <?php endif ; ?>
         <?php endif ; ?>
       <?php endforeach; ?>
-    </td>                
+    </td>
     <td  class="col_chrono">
       <?php if($specimen->getChronoRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=chrono_".$specimen->getSpecRef()."_info");?>
