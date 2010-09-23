@@ -425,7 +425,7 @@ input[type="text"].xlarge_size
 .paging_info
 {
   background-color:#5BAABD;
-/*   margin-right:0.5em; */
+  margin-right:0.5em;
   margin-bottom:1em;
   margin-top:0.5em;
   color:white;
