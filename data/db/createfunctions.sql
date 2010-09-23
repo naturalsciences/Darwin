@@ -3239,7 +3239,7 @@ BEGIN
 				NEW.description_ts := to_tsvector(NEW.description_language_full_text::regconfig, NEW.description);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'vernacular_names' THEN
-			IF OLD.name != NEW.name OR OLD.country_language_full_text != NEW.country_language_full_text THEN
+			IF OLD.name != NEW.name THEN
 				NEW.name_ts := to_tsvector('simple', NEW.name);
 			END IF;
 		END IF;
