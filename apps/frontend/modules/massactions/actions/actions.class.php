@@ -50,7 +50,7 @@ class massactionsActions extends sfActions
   }
   public function executeGetSubForm(sfWebRequest $request)
   {
-    $this->source = $request->getParameter('source','');
+    $this->source = $request->getParameter('source','specimen');
     $this->mAction = $request->getParameter('maction','');
     $this->form = new BaseMassActionForm();
     $this->setSubForm($this->form, $this->mAction);
@@ -58,10 +58,8 @@ class massactionsActions extends sfActions
 
   public function executeItems(sfWebRequest $request)
   {
-    $items_ids = $this->getUser()->getAllPinned();
-    $source = $request->getParameter('source','specimens');
-    if($source == 'specimens') $items_ids = array(1,2,3,4);
-    if($source == 'individuals') $items_ids = array(1,2,3);
+    $source = $request->getParameter('source','specimen');
+    $items_ids = $this->getUser()->getAllPinned($source);
     $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$source);
   }
   

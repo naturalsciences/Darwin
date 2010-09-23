@@ -13,12 +13,23 @@ class MaCollectionRefForm extends BaseForm
            )
      );
     $this->widgetSchema['collection_ref']->setLabel('Choose New Collection');
-    $this->validatorSchema['collection_ref'] = new sfValidatorInteger(array('required'=>true));
+    $this->validatorSchema['collection_ref'] = new sfValidatorDoctrineChoice(array(
+      'model' => 'Collections',
+      'min' => 0,
+      'required' => true
+    ));
 
   }
 
-  public function doMassAction($items)
+  public function doMassAction($items, $values)
   {
-    
+    $new_collection = $values['collection_ref'];
+
+    $q = Doctrine_Query::create()
+    ->update('Specimens s')
+    ->set('s.collection_ref', '?', $new_collection)
+    ->whereIn('s.id ', $items);
+    $updated = $q->execute();
+    return $updated;
   }
 }
