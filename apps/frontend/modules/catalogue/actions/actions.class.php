@@ -93,7 +93,7 @@ class catalogueActions extends DarwinActions
                  ->getQuery()
                  ->orderBy($this->orderBy .' '.$this->orderDir);
         if($this->is_choose == 0)
-          $query->andWhere('id != 0');
+          $query->andWhere('id > 0');
         $this->pagerLayout = new PagerLayoutWithArrows(
                               new Doctrine_Pager(
                                 $query,
@@ -111,7 +111,7 @@ class catalogueActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
-	
+        $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
       }
     }
   }

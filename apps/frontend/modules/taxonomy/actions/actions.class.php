@@ -93,6 +93,7 @@ class taxonomyActions extends DarwinActions
   {
     $this->setLevelAndCaller($request);
     $this->searchForm = new TaxonomyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
+    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;    
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
