@@ -33,10 +33,10 @@
     </td>
     <td class="col_taxon">
       <?php if($specimen->getTaxonRef() > 0) : ?>
-        <span class="line">      
+        <span class="line">
         <?php echo image_tag('info.png',"title=info class=info id=taxon_".$specimen->getSpecRef()."_info");?>
         <?php echo $specimen->getTaxonName();?>
-        </span>        
+        </span>
         <div id="taxon_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#taxon_<?php echo $specimen->getSpecRef();?>_info').click(function() 
@@ -51,44 +51,41 @@
               $('#taxon_<?php echo $specimen->getSpecRef();?>_tree').slideUp();
             });
         </script> 
-      <?php else : ?>-
       <?php endif ; ?>
-    </td>
-    <td class="col_type">
-      <?php echo ($specimen->getIndividualTypeSearch()=="undefined"?"-":$specimen->getIndividualTypeSearch()) ; ?>                
     </td>
     <td class="col_gtu">
       <?php if($specimen->getGtuRef() > 0) : ?>
-        <?php if($specimen->getGtuCountryTagValue() != "") : ?>                  
+        <?php if($specimen->getGtuCountryTagValue() != "") : ?>
           <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$specimen->getIndividualRef()."_info");?><?php echo $specimen->getGtuCode();?>
           <div id="gtu_<?php echo $specimen->getIndividualRef();?>_details" style="display:none;"></div> 
           <script type="text/javascript">
-          $('#gtu_ctr_<?php echo $specimen->getIndividualRef();?>_info').click(function() 
-          {
-            item_row = $(this).closest('tr');
-            elem = item_row.find('#gtu_<?php echo $specimen->getIndividualRef();?>_details');
-            if(elem.is(":hidden"))
-            { 
-              $.get('<?php echo url_for("search/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
-                item_row.find('.general_gtu').slideUp();
-                elem.html(html).slideDown();
-              });
-              //elem.slideDown();
-            }
-            else
+            $('#gtu_ctr_<?php echo $specimen->getIndividualRef();?>_info').click(function() 
             {
-              elem.slideUp();
-              item_row.find('.general_gtu').slideDown();
-            }
-          });
-        </script>
-        <?php endif ; ?>  
-      <?php else : ?>-              
-      <?php endif ; ?> 
+              item_row = $(this).closest('tr');
+              elem = item_row.find('#gtu_<?php echo $specimen->getIndividualRef();?>_details');
+              if(elem.is(":hidden"))
+              { 
+                $.get('<?php echo url_for("search/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
+                  item_row.find('.general_gtu').slideUp();
+                  elem.html(html).slideDown();
+                });
+                //elem.slideDown();
+              }
+              else
+              {
+                elem.slideUp();
+                item_row.find('.general_gtu').slideDown();
+              }
+            });
+          </script>
+        <?php else: ?>
+          <?php echo $specimen->getGtuCode();?>
+        <?php endif ; ?>
+      <?php endif ; ?>
     </td> 
-    <td class="col_codes">     
+    <td class="col_codes">
         -
-    </td>                
+    </td>
     <td  class="col_chrono">
       <?php if($specimen->getChronoRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=chrono_".$specimen->getSpecRef()."_info");?>
@@ -107,7 +104,6 @@
               $('#chrono_<?php echo $specimen->getSpecRef();?>_tree').slideUp();
             });
         </script> 
-      <?php else : ?>-
       <?php endif ; ?>
     </td>
     <td  class="col_litho">
@@ -128,7 +124,6 @@
               $('#litho_<?php echo $specimen->getSpecRef();?>_tree').slideUp();
             });
         </script> 
-      <?php else : ?>-
       <?php endif ; ?>
     </td> 
     <td class="col_lithologic">
@@ -148,8 +143,7 @@
               }
               $('#lithologic_<?php echo $specimen->getSpecRef();?>_tree').slideUp();
             });
-        </script>  
-      <?php else : ?>-
+        </script>
       <?php endif ; ?>
     </td>
     <td class="col_mineral">
@@ -170,14 +164,11 @@
               $('#mineral_<?php echo $specimen->getSpecRef();?>_tree').slideUp();
             });
         </script>  
-      <?php else : ?>-
       <?php endif ; ?>
     </td>
     <td class="col_expedition">
       <?php if($specimen->getExpeditionRef() > 0) : ?>
         <?php echo $specimen->getExpeditionName();?>
-      <?php else : ?>
-        -
       <?php endif ; ?>
     </td> 
     <td class="col_count">

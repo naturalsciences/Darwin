@@ -37,6 +37,11 @@ table.classification td, table.classification th
   text-align: left ;
 }
 
+table#classifications td
+{
+  padding-bottom:0.2em;
+}
+
 .page
 {
   margin-top: 30px;
@@ -58,23 +63,34 @@ table.classification td, table.classification th
   height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
-  
 }
 
 .borded
 {
-  border: 3px ridge #3390a1; 
+  border: 1px solid #3390a1; 
   margin-top: 0.2em;
   margin-bottom: 0.5em ;
-  padding-top: 0.2em;
-  padding-left: 0.2em;
+  padding-bottom: 0.4em;
+  padding-top: 0.4em;
+  padding-left: 0.6em;
   -moz-border-radius: 0 0 5px 5px ;
   -webkit-border-radius: 0 0 5px 5px;
+}
+
+.borded th
+{
+  text-align:left;
+  padding-bottom:0.4em;
 }
 
 .space_right
 {
   margin-right: 0.5em ;
+}
+
+.small_space_right
+{
+  margin-right:0.3em;
 }
 
 .double_table
@@ -98,9 +114,8 @@ h2.title
 {
 	background-color:#5baabd;
 	height:20px;
-	padding-left: 2em;
+	padding-left: 0.6em;
 	padding-top: 0.4em;
-	margin: 0.1em;
 	color:white;
   -moz-border-radius: 5px 5px 0 0;
   -webkit-border-radius: 5px 5px 0 0;	
@@ -211,6 +226,32 @@ input.tag_line
   width:100%;
 }
 
+table#gtu_search th
+{
+  padding-top:0.2em;
+  padding-bottom:0.7em;
+}
+
+table#gtu_search tr.tag_line td, table#gtu_search tr.and_row td
+{
+  padding-bottom:0.2em;
+}
+
+table#gtu_search tr.tag_line td:nth-child(1)
+{
+  width:80%;
+}
+
+table#gtu_search tr.tag_line td:nth-child(2)
+{
+  padding-left:0.4em;
+}
+
+table#gtu_search tr.and_row td:nth-child(2)
+{
+  padding-left:0.5em;
+}
+
 /* Country tags */
 .country_tags li
 {
@@ -259,7 +300,7 @@ input.tag_line
 .paging_info
 {
   background-color:#5BAABD;
-  margin-right:0.5em;
+/*   margin-right:0.5em; */
   margin-bottom:1em;
   margin-top:0.5em;
   color:white;
