@@ -58,7 +58,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'add_empty' => 'All'
       ));      
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
-    $this->setDefault('col_fields','category|taxon|collection|type|gtu');
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
     $this->validatorSchema['collection_ref'] = new sfValidatorPass(); //Avoid duplicate the query
     $this->widgetSchema['spec_ids'] = new sfWidgetFormTextarea(array('label'=>'#ID list'));
