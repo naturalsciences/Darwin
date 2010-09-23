@@ -164,6 +164,7 @@ class searchActions extends DarwinActions
     {
       $flds[$val] = 'check';
     }
+    $form->setDefault('col_fields',$req_fields) ;
     return $flds;
   } 
   

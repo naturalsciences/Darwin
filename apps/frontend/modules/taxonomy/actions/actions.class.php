@@ -22,6 +22,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();  
     $this->forward404Unless(
       $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
       sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
@@ -45,6 +46,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $taxa = new Taxonomy() ;
     $taxa = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $taxa);
     // if there is no duplicate $taxa is an empty array
@@ -53,6 +55,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $this->form = new TaxonomyForm();
     $this->processForm($request,$this->form);
     $this->setTemplate('new');
@@ -60,6 +63,7 @@ class taxonomyActions extends DarwinActions
     
   public function executeEdit(sfWebRequest $request)
   {
+    if($request->getParameter('id') < 1 || $this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
 
     $this->forward404Unless($taxa,'Taxa not Found');
