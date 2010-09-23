@@ -27,9 +27,18 @@
         <?php echo $form['modification_date_time'] ; ?>
       </td>
     </tr>
+    <tr>
+      <td><label><?php echo __('Type of Search');?></label></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input class="medium_size" disabled="disabled" type="text" value="<?php echo __($form->getObject()->getSubject());?>">
+      </td>
+    </tr>
     <?php if($is_spec_search):?>
     <tr>
-      <td colspan="2"><label><?php echo __("Number of specimens ") ; ?></label></td>
+      <td colspan="2"><label><?php echo __("Number of items ") ; ?></label></td>
     </tr>
     <tr>
       <td colspan="2">

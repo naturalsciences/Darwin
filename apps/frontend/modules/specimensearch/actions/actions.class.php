@@ -16,7 +16,6 @@ class specimensearchActions extends DarwinActions
   {
     $this->form = new SpecimenSearchFormFilter();
 
-    $this->form->setDefault('col_fields', $this->getVisibleColumns($this->getUser(), $this->form, true));
     $this->form->setDefault('rec_per_page',$this->getUser()->fetchRecPerPage());
 
     // if Parameter name exist, so the referer is mysavedsearch
@@ -63,11 +62,10 @@ class specimensearchActions extends DarwinActions
         $ids = implode(',',$this->getUser()->getAllPinned($request->getParameter('source')) );
         if($ids == '')
           $ids = '0';
-        $this->is_pinned_only_search=true;
+        $this->is_pinned_only_search = true;
         // Set the list of ids as criteria
         $criterias['specimen_search_filters']['spec_ids'] = $ids;
-        // and the list of visible fields from the list of default visible fields defined in form configuration
-        $criterias['specimen_search_filters']['col_fields'] = $this->form->getDefault('col_fields');
+
         $criterias['specimen_search_filters']['what_searched'] = $request->getParameter('source');
       }
       // If instead it's a call to a stored specimen search
@@ -212,7 +210,7 @@ class specimensearchActions extends DarwinActions
 
     $flds = array_fill_keys($flds, 'uncheck');
 
-    if($form->isBound())
+    if($form->isBound() && $form->getValue('col_fields') != "")
     {
       $req_fields = $form->getValue('col_fields');
       $req_fields_array = explode('|',$req_fields);
