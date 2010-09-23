@@ -239,7 +239,7 @@ $browser->
 
   click('Save', array('people_comm' => array(
     'entry'  => '+32478.254415',
-    'comm_type' => 'TEL',
+    'comm_type' => 'phone/fax',
     'tag' => 'home'
   )))->
 
