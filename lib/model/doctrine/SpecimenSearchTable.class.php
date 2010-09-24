@@ -62,12 +62,12 @@ class SpecimenSearchTable extends Doctrine_Table
     * @param array $ids Ids of specimen to search
     * @return Doctrine_collection
     */
-    public function getByMultipleIds(array $ids, $type = "specimens")
+    public function getByMultipleIds(array $ids, $type = "specimen")
     {
       if( empty($ids))
         return $ids;
 
-      if($type == 'specimens')
+      if($type == 'specimen')
       {
         $q = Doctrine_Query::create()
         ->select('s.spec_ref, s.taxon_name')
@@ -76,7 +76,7 @@ class SpecimenSearchTable extends Doctrine_Table
         ->groupBy('s.spec_ref, s.taxon_name')
         ->orderBy('spec_ref');
       }
-      elseif($type == 'individuals')
+      elseif($type == 'individual')
       {
         $q = Doctrine_Query::create()
         ->select('s.spec_ref, s.individual_ref, s.taxon_name')
@@ -87,7 +87,7 @@ class SpecimenSearchTable extends Doctrine_Table
         //$a = $q->execute();
         //print_r($a->toArray());die();
       }
-      elseif($type == 'parts')
+      elseif($type == 'part')
       {
         $q = Doctrine_Query::create()
         ->select('s.spec_ref,s.individual_ref,s.part_ref, s.taxon_name')

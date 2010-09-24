@@ -4,8 +4,8 @@
               <?php if($first) : ?>
               <tr>
                 <td rowspan="<?php echo count($common_name['taxonomy'][$spec->getTaxonRef()]['community']); ?>"><?php echo __('Taxonomy') ; ?></td>
-                <?php $first=false ; ?>              
-              <?php endif ; ?>              
+                <?php $first=false ; ?>
+              <?php endif ; ?>
               <td><?php echo $community ?></td>
               <td><?php echo $name ; ?></td>
               </tr>
@@ -24,12 +24,12 @@
               <td><?php echo $name ; ?></td>
               </tr>
               <?php endforeach ; ?>
-            <?php endif ; ?>    
+            <?php endif ; ?>
             
             <?php if(isset($common_name['lithology'][$spec->getTaxonRef()])) : ?> 
             <?php $first=true ; ?>                       
             <?php foreach($common_name['lithology'][$spec->getLithologyRef()]['community'] as $community => $name) : ?>            
-            <?php if($first) : ?>              
+            <?php if($first) : ?>
               <tr>
                 <td rowspan="<?php echo count($common_name['lithology'][$spec->getLithologyRef()]['community']); ?>"><?php echo __('Lithology') ; ?></td>
                 <?php $first=false ; ?>
@@ -65,6 +65,5 @@
               <td><?php echo $community ?></td>
               <td><?php echo $name ; ?></td>
               </tr>
-              <?php endforeach ; ?>  
-            <?php endif ; ?>          
-                                     
+              <?php endforeach ; ?>
+            <?php endif ; ?>

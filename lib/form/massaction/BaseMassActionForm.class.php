@@ -9,18 +9,18 @@ class BaseMassActionForm extends sfFormSymfony
 
   public static function getActionsSources()
   {
-    return array('' => '', 'specimens'=>'specimens','individuals'=>'individuals','parts'=>'parts');
+    return array('' => '', 'specimen'=>'specimen','individual'=>'individual','part'=>'part');
   }
   
   public static function getPossibleActions()
   {
     return array(
-      'specimens' => array(
+      'specimen' => array(
         'collection_ref' => self::getI18N()->__('Collection'),
       ),
-      'individuals' => array(
+      'individual' => array(
       ),
-      'parts' => array(
+      'part' => array(
       ),
     );
   }
@@ -28,7 +28,9 @@ class BaseMassActionForm extends sfFormSymfony
   public function doMassAction()
   {
     if($this->isBound() && $this->isValid())
-      $this->getEmbeddedForm('MassActionForm')->doMassAction($this->getValue('item_list'));
+    {
+      $this->getEmbeddedForm('MassActionForm')->doMassAction($this->getValue('item_list'), $this->getValue('MassActionForm'));
+    }
   }
 
   public function setSubForm($form_name)
@@ -36,6 +38,27 @@ class BaseMassActionForm extends sfFormSymfony
     $subForm = new $form_name();
     $this->embedForm('MassActionForm',$subForm);
   }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['source']) && in_array($taintedValues['source'], array('specimen','individual','part')))
+    {
+      if($taintedValues['source'] == 'specimen')
+        $model = 'Specimens';
+      elseif($taintedValues['source'] == 'individual')
+        $model = 'SpecimenIndividuals';
+      else
+        $model = 'SpecimenParts';
+
+      $this->validatorSchema['item_list'] = new sfValidatorDoctrineChoice(array(
+        'multiple' => true,
+        'model' => $model,
+        'min' => 1,
+      ));
+    }
+    parent::bind($taintedValues,$taintedFiles);
+  }
+
   public function configure()
   {
     $action_sources = self::getActionsSources();

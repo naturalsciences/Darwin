@@ -134,9 +134,9 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
    
     $this->widgetSchema['type'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
-        'table_method' => 'getDistinctTypeGroups',
-        'method' => 'getTypeGroupFormated',
-        'key_method' => 'getTypeGroup',
+        'table_method' => 'getDistinctTypeSearches',
+        'method' => 'getTypeSearchFormated',
+        'key_method' => 'getTypeSearch',
         'multiple' => true,
         'expanded' => true,
         'add_empty' => false,
@@ -145,7 +145,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['sex'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctSexes',
-        'method' => 'getSex',
+        'method' => 'getSexSearchFormated',
         'key_method' => 'getSex',
         'multiple' => true,
         'expanded' => true,
@@ -156,7 +156,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['stage'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctStages',
-        'method' => 'getStage',
+        'method' => 'getStageSearchFormated',
         'key_method' => 'getStage',
         'multiple' => true,
         'expanded' => true,

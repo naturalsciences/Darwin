@@ -42,6 +42,7 @@
           </tbody>
         <?php endforeach;?>
       </table>
+    <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php else:?>
     <?php echo __('No Specimen Matching');?>
   <?php endif;?>

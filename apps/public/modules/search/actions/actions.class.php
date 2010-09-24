@@ -205,9 +205,9 @@ class searchActions extends DarwinActions
       'taxon' => array(
         'taxon_name_order_by',
         $this->getI18N()->__('Taxon'),),
-      'type' => array(
+/*      'type' => array(
         'with_types',
-        $this->getI18N()->__('Type'),),
+        $this->getI18N()->__('Type'),),*/
       'gtu' => array( ///
         false,
         $this->getI18N()->__('Country'),),
@@ -251,7 +251,7 @@ class searchActions extends DarwinActions
         false,
         $this->getI18N()->__('Mineral common name'),),      
       'individual_type' => array(
-        'individual_type_group',
+        'individual_type_search',
         $this->getI18N()->__('Type'),),        
       'sex' => array(
         'individual_sex',

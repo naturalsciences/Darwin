@@ -5,7 +5,7 @@
   <h2 class="title"><?php echo __("Classifications") ?></h2>
   <div class="borded">
     <?php echo $form->renderHiddenFields(); ?>
-    <table>
+    <table id="classifications">
       <thead>
         <tr>
           <th></th>
@@ -52,7 +52,7 @@
     <tbody>
       <tr>
         <td>
-          <div class="space_right">
+          <div class="small_space_right">
             <h2 class="title"><?php echo __("Collections") ?></h2>
             <div class="borded framed">
             <table class="double_table collections">
@@ -84,7 +84,8 @@
                 <?php include_partial('search/andSearch',array('form' => $form['Tags'][$i], 'row_line'=>$i));?>
               <?php endforeach;?>
               <tr class="and_row">
-                <td colspan=2"><?php echo image_tag('add_blue.png');?><a href="<?php echo url_for('search/andSearch');?>" class="and_tag"><?php echo __('Add tag'); ?></a></td>
+                <td></td>
+                <td><?php echo image_tag('add_blue.png');?><a href="<?php echo url_for('search/andSearch');?>" class="and_tag"><?php echo __('Add tag'); ?></a></td>
               </tr>
             </tbody>
           </table>
