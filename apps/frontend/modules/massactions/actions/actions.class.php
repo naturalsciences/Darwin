@@ -16,7 +16,6 @@ class massactionsActions extends sfActions
     if($request->isMethod('post') && $request->getParameter('mass_action','') != '')
     {
       $actions = $request->getParameter('mass_action',array());
-      $this->setSubForm($this->form, $actions['field_action']);
       $this->form->bind($actions);
       if($this->form->isValid())
       {
@@ -40,20 +39,14 @@ class massactionsActions extends sfActions
     $this->nb_items = $request->getParameter('nb_item',0);
   }
 
-  protected function setSubForm($form, $type)
-  {
-    if($type == 'collection_ref')
-      $form->setSubForm('MaCollectionRefForm');
-    else
-      $this->forward404();
-    return  $form;
-  }
+
+
   public function executeGetSubForm(sfWebRequest $request)
   {
     $this->source = $request->getParameter('source','specimen');
     $this->mAction = $request->getParameter('maction','');
     $this->form = new BaseMassActionForm();
-    $this->setSubForm($this->form, $this->mAction);
+    $this->form->addSubForm($this->mAction);
   }
 
   public function executeItems(sfWebRequest $request)
@@ -63,10 +56,4 @@ class massactionsActions extends sfActions
     $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$source);
   }
   
-  public function executeGetActions(sfWebRequest $request)
-  {
-    $this->source = $request->getParameter('source','');
-    $this->actions = BaseMassActionForm::getPossibleActions();
-    $this->forward404unless( isset($this->actions[$this->source]));
-  }
 }

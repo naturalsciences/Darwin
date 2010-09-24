@@ -58,7 +58,9 @@ function chooseSource(event)
     $('#item_list').load('<?php echo url_for('massactions/items');?>/source/' + $('#mass_action_source').val() , function() {
       checkItem();
     });
-    $('#mass_action_field_action').load('<?php echo url_for('massactions/getActions');?>/source/' + $('#mass_action_source').val() ,function(){});
+    $('#mass_action .fld_group ul').hide();
+    $(".group_"+$('#mass_action_source').val()+" ul").show();
+    ///SHOW OR HIDE possible action  UNCHECK not possible actions
   }
 }
 
@@ -66,31 +68,28 @@ function checkItem()
 {
   if( $('#item_list .item_row').length == 0)
   {
-    $('#mass_action_field_action').val('');
-    $('#mass_action_field_action').attr('disabled','disabled');
-    $('#mass_action_field_action').closest('tr').addClass('disabled');
+    $('#mass_action .fld_group ul :checkbox').removeAttr('checked');
+    $('#mass_action .fld_group ul :checkbox').attr('disabled','disabled');
     chooseAction();
   }
   else
   {
-    $('#item_list').removeClass('disabled');
-    $('#mass_action_field_action').removeAttr('disabled');
-    $('#mass_action_field_action').closest('tr').removeClass('disabled');
+    $(".group_"+$('#mass_action_source').val()+" ul :checkbox").removeAttr('disabled');
   }
 }
 
 function chooseAction()
 {
-  if($('#mass_action_field_action').val() == '' || $('#mass_action_field_action').val() == null)
+  if(! $(this).is(':checked'))
   {
     $('#action_sub_form').addClass('disabled');
-    $('#action_sub_form div').html('');
+    $('#sub_form_'+$(this).val()).remove();
   }
   else
   {
     $('#action_sub_form').removeClass('disabled');
     $("#action_sub_form > td > div").html('<img src="<?php echo image_path('loader.gif');?>" />');
-    $('#action_sub_form > td > div').load('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/maction/' + $('#mass_action_field_action').val() , function() {});
+    $('#action_sub_form > td > div').load('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/maction/' + $(this).val() , function() {});
   }
   changeSubmit(false);
 }
@@ -107,10 +106,9 @@ $(document).ready(function () {
 
   chooseSource();
   $('#mass_action_source').change(chooseSource);
-  $('#mass_action_field_action').change(chooseAction);
+  $('#mass_action .fld_group ul :checkbox').change(chooseAction);
   $('#mass_submit').closest('form').submit(function (event)
   {
-
     if(! confirm('<?php echo __('Are you sure ?') ?>'))
     {
       event.preventDefault();

@@ -1,1 +1,1 @@
-<?php include_partial('subform',array('form'=>$form));?>
+<?php include_partial('subform',array('form'=>$form, 'mAction' => $mAction));?>
