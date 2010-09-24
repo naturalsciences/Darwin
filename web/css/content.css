@@ -37,9 +37,24 @@ table.classification td, table.classification th
   text-align: left ;
 }
 
-table#classifications td
+table#classifications td, table#registration td
 {
-  padding-bottom:0.2em;
+  padding-bottom:0.3em;
+}
+
+table#registration th
+{
+  width:20%;
+}
+
+table#registration td
+{
+  width:40%;
+}
+
+table#registration div.check_right
+{
+  margin-right: 0.4em;
 }
 
 .page
@@ -528,4 +543,70 @@ li.uncheck span
 .info
 {
   vertical-align: middle ;
+}
+
+
+/* Input text sizes */
+/** !!! Duplicated from main **/
+/** !!! Need to be putted in a common css !!! **/
+input[type="text"].small_size
+{
+  width:120px;
+}
+
+input[type="text"].medium_small_size
+{
+  width:180px;
+}
+
+input[type="text"].medium_size
+{
+  width:320px;
+}
+
+input[type="text"].large_size
+{
+  width:420px;
+}
+
+input[type="text"].xlarge_size
+{
+  width:520px;
+}
+
+/* Errors style */
+/** !!! Duplicated from main **/
+/** !!! Need to be putted in a common css !!! **/
+
+ul.error_list
+{
+  background-color:#ec9593;
+  border: 3px solid #c36b70;
+  margin-top: 0.4em;
+  margin-right:0.4em;
+  padding: 1em;
+}
+
+/* Register */
+
+input
+{
+  border-width:thin;
+}
+
+input:focus
+{
+  border-color:#5BAABD;
+  border-style:solid;
+}
+
+input.required_field
+{
+  border-right-color:red;
+  border-right-width:2px;
+}
+
+input.required_field:focus
+{
+  border-right-color:red;
 }
