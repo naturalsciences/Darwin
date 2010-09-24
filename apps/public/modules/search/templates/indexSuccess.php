@@ -75,7 +75,7 @@
         <td>
           <h2 class="title"><?php echo __("Countries") ?></h2>
           <div class="borded framed">
-          <table id="gtu_search" class='double_table'>
+          <table id="gtu_search" class="double_table tag">
             <thead>
               <tr><th colspan="2"><?php echo __('Tags') ; ?></th></tr>
             </thead>

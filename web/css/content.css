@@ -15,6 +15,11 @@ table td, table th
    vertical-align: middle ; 
 }
 
+table.tag td
+{
+  vertical-align: top ;
+}
+
 table.spec_result tr
 {
   text-align:left;
@@ -487,4 +492,33 @@ li.uncheck span
 .info
 {
   vertical-align: middle ;
+}
+
+/* Tags */
+.purposed_tags
+{
+  max-width:600px;
+  font-size: 9pt ;
+}
+
+.tag_selected, .tag_available, .name_tags li, .purposed_tags li
+{
+  background-color: #FAFAFA;
+  min-height:1em;
+  min-width:1em;
+  margin-bottom:2em;
+  cursor: pointer;
+}
+
+.tag_selected li, .tag_available li, .name_tags li, .purposed_tags li
+{
+  float:left;
+  padding:0.2em;
+  margin:0.3em;
+  border: 1px solid #5BAABD;
+}
+
+.clear_prop
+{
+  margin-top : 0.3em ;
 }

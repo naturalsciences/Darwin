@@ -64,8 +64,8 @@ class searchActions extends DarwinActions
           // Define all properties that will be either used by the data query or by the pager
           // They take their values from the request. If not present, a default value is defined
           $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-            $query->orderby($this->orderBy . ' ' . $this->orderDir . ', spec_ref ');
-          $query->groupBy($this->orderBy . ', spec_ref ');
+            $query->orderby($this->orderBy . ' ' . $this->orderDir . ', individual_ref ');
+          $query->groupBy($this->orderBy . ', individual_ref ');
           // Define in one line a pager Layout based on a pagerLayoutWithArrows object
           // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
           $pager = new Doctrine_Pager($query,
@@ -76,7 +76,7 @@ class searchActions extends DarwinActions
           $count_q = clone $query;//$pager->getCountQuery();
           // Remove from query the group by and order by clauses
           $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
-          //$count_q->select('count( distinct individual_ref)');
+          $count_q->select('count( distinct individual_ref)');
           // Initialize an empty count query
           $counted = new DoctrineCounted();
           // Define the correct select count() of the count query
