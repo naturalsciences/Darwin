@@ -75,8 +75,8 @@ class BaseMassActionForm extends sfFormSymfony
       ));
     }
 
-    if(isset($taintedValues['field_action']) && is_array(($taintedValues['field_action'])) && count($taintedValues['field_action']) !=0 
-      && isset($taintedValues['MassActionForm']) && is_array(($taintedValues['MassActionForm'])) && count($taintedValues['MassActionForm']) !=0 )
+    if(isset($taintedValues['field_action']) && is_array(($taintedValues['field_action'])) && count($taintedValues['field_action']) != 0 
+      && isset($taintedValues['MassActionForm']) && is_array(($taintedValues['MassActionForm'])) && count($taintedValues['MassActionForm']) != 0 )
     {
       foreach($taintedValues['field_action'] as $form_name)
       {
@@ -89,7 +89,6 @@ class BaseMassActionForm extends sfFormSymfony
   public function configure()
   {
     $action_sources = self::getActionsSources();
-    $action_possibles = self::getPossibleActions();
 
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
     $this->widgetSchema->setNameFormat('mass_action[%s]');

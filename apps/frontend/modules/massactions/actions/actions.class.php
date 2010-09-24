@@ -24,9 +24,6 @@ class massactionsActions extends sfActions
         $this->redirect('massactions/status?nb_item='.$nb_item.'&'.http_build_query($this->form->getValues()));
       }
 
-      $possibles_actions = BaseMassActionForm::getPossibleActions();
-      $this->form->getWidget('field_action')->setOption('choices',array_merge(array(''=>''),$possibles_actions[$actions['source']]));
-
       $items_ids = $actions['item_list'];
       $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids);
 

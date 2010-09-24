@@ -28,7 +28,9 @@
       <tr id="action_sub_form">
         <td colspan="2" >
           <div>
-            <?php include_partial('subform',array('form'=>$form));?>
+            <?php foreach($form['MassActionForm'] as  $key => $sform):?>
+              <?php include_partial('subform',array('form'=>$form,'mAction' => $key));?>
+            <?php endforeach;?>
           </div>
         </td>
       </tr>
@@ -45,22 +47,28 @@
 function chooseSource(event)
 {
   if(! event  && $('#mass_action_source').val() != '')
-    return;
-  if($('#mass_action_source').val() == '')
   {
-    $('#item_list').html('');
-    $('#item_list').addClass('disabled');
-    checkItem();
+    $('#mass_action .fld_group ul').hide();
+    $(".group_"+$('#mass_action_source').val()+" ul").show();
   }
   else
   {
-    $("#item_list").html('<img src="<?php echo image_path('loader.gif');?>" />');
-    $('#item_list').load('<?php echo url_for('massactions/items');?>/source/' + $('#mass_action_source').val() , function() {
+    if($('#mass_action_source').val() == '')
+    {
+      $('#item_list').html('');
+      $('#item_list').addClass('disabled');
       checkItem();
-    });
-    $('#mass_action .fld_group ul').hide();
-    $(".group_"+$('#mass_action_source').val()+" ul").show();
-    ///SHOW OR HIDE possible action  UNCHECK not possible actions
+    }
+    else
+    {
+      $("#item_list").html('<img src="<?php echo image_path('loader.gif');?>" />');
+      $('#item_list').load('<?php echo url_for('massactions/items');?>/source/' + $('#mass_action_source').val() , function() {
+        checkItem();
+      });
+      $('#mass_action .fld_group ul').hide();
+      $(".group_"+$('#mass_action_source').val()+" ul").show();
+      ///SHOW OR HIDE possible action  UNCHECK not possible actions
+    }
   }
 }
 

@@ -5,10 +5,15 @@
 <?php if(isset($mAction) && $mAction == 'collection_ref'):?>
   <table id="sub_form_<?php echo $mAction;?>">
     <tr>
-      <th><?php echo $form['MassActionForm']['collection_ref']['collection_ref']->renderLabel();?></th>
+      <th>
+        <?php echo $form['MassActionForm']['collection_ref']['collection_ref']->renderLabel();?>
+      </th>
     </tr>
     <tr>
-      <td><?php echo $form['MassActionForm']['collection_ref']['collection_ref']->render(array('class' => 'inline'));?></td>
+      <td>
+        <?php echo $form['MassActionForm']['collection_ref']['collection_ref']->renderError();?>
+        <?php echo $form['MassActionForm']['collection_ref']['collection_ref']->render(array('class' => 'inline'));?>
+      </td>
     <tr>
   </table>
 
