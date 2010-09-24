@@ -19,12 +19,24 @@ class registerActions extends DarwinActions
     {
       // Store all post parameters
       $criterias = $request->getPostParameters(); 
-      $this->form->bind($criterias['specimen_search_filters']) ;    
+      $this->form->bind($criterias['users']) ;
     }
     if($this->form->isBound())
     {
       if ($this->form->isValid())
-      {        
+      {
+        try
+        {
+          $this->user = $this->form->save();
+          print_r($this->user->toArray());
+//           $this->user->addUserWidgets();
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
       }
     }
     $this->setTemplate('index'); 

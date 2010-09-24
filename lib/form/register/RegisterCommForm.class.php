@@ -14,9 +14,17 @@ class RegisterCommForm extends BaseUsersCommForm
     $comm_mean = UsersComm::getRegisterCommType();
     unset($this['id'], $this['tag']);
     $this->widgetSchema['person_user_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['comm_type'] = new sfWidgetFormInputHidden(array('default' => $comm_mean));
+    $this->widgetSchema['comm_type'] = new sfWidgetFormInputHidden();
+    $this->setDefault('comm_type', $comm_mean);
     $this->widgetSchema['entry'] = new sfWidgetFormInput();
-    $this->validatorSchema['entry'] = new sfValidatorString(array('required'=> true));
+    $this->widgetSchema['entry']->setLabel('e-mail');
+    $this->widgetSchema['entry']->setAttributes(array('class'=>'medium_size required_field'));
+    $this->validatorSchema['person_user_ref'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['entry'] = new sfValidatorEmail(array('required'=> true),
+                                                           array('required'=>'E-mail is required',
+                                                                 'invalid' => 'E-mail is not of a valid form'
+                                                                )
+                                                          );
     $this->validatorSchema['comm_type'] = new sfValidatorString(array('required'=> true, 'empty_value'=> $comm_mean));
   }
 }
