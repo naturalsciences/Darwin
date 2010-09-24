@@ -11,11 +11,11 @@ class SpecimensForm extends BaseSpecimensForm
 {
   public function configure()
   {
-    
+
     unset($this['acquisition_date_mask'], $this['multimedia_visible']
          );
 
-    /* Set default values 
+    /* Set default values
     * commented for now because it prevent specimen to be duplicated
     $this->setDefaults(array(
         'expedition_ref' => 0,
@@ -39,9 +39,9 @@ class SpecimensForm extends BaseSpecimensForm
     $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
 
     /* Define name format */
-    $this->widgetSchema->setNameFormat('specimen[%s]');    
+    $this->widgetSchema->setNameFormat('specimen[%s]');
     /* Fields */
-    
+
     $this->widgetSchema['category'] = new widgetFormSelectComplete(array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctCategory',
@@ -63,7 +63,7 @@ class SpecimensForm extends BaseSpecimensForm
       array('class'=>'inline',
            )
      );
-    
+
     /* Expedition Reference */
     $this->widgetSchema['expedition_ref'] = new widgetFormButtonRef(array(
        'model' => 'Expeditions',
@@ -233,9 +233,9 @@ class SpecimensForm extends BaseSpecimensForm
       'choices' =>  SpecimensTable::getDistinctCategories(),
     ));
 
-    $this->widgetSchema['acquisition_date'] = new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
-                                                                                  'image'=>'/images/calendar.gif', 
-                                                                                  'format' => '%day%/%month%/%year%', 
+    $this->widgetSchema['acquisition_date'] = new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(),
+                                                                                  'image'=>'/images/calendar.gif',
+                                                                                  'format' => '%day%/%month%/%year%',
                                                                                   'years' => $years,
                                                                                   'empty_values' => $dateText,
                                                                                  ),
@@ -250,15 +250,15 @@ class SpecimensForm extends BaseSpecimensForm
     /* Accompanying elements sub form */
 
     $this->embedRelation('SpecimensAccompanying');
-    
+
     $subForm = new sfForm();
     $this->embedForm('newSpecimensAccompanying',$subForm);
     $this->widgetSchema['accompanying'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Codes sub form */
-    
+
     $subForm = new sfForm();
-    $this->embedForm('Codes',$subForm);   
+    $this->embedForm('Codes',$subForm);
     foreach(Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
     {
       $form = new CodesForm($vals);
@@ -283,9 +283,9 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Collectors sub form */
-    
+
     $subForm = new sfForm();
-    $this->embedForm('Collectors',$subForm);   
+    $this->embedForm('Collectors',$subForm);
     foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
     {
       $form = new PeopleAssociationsForm($vals);
@@ -296,13 +296,13 @@ class SpecimensForm extends BaseSpecimensForm
 
     $subForm = new sfForm();
     $this->embedForm('newCollectors',$subForm);
-    
+
     $this->widgetSchema['collector'] = new sfWidgetFormInputHidden(array('default'=>1));
-    
+
     /* Identifications sub form */
-    
+
     $subForm = new sfForm();
-    $this->embedForm('Identifications',$subForm);   
+    $this->embedForm('Identifications',$subForm);
     foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
     {
       $form = new IdentificationsForm($vals);
@@ -318,9 +318,9 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Comments sub form */
-    
+
     $subForm = new sfForm();
-    $this->embedForm('Comments',$subForm);   
+    $this->embedForm('Comments',$subForm);
     foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
     {
       $form = new CommentsSubForm($vals,array('table' => 'specimens'));
@@ -331,9 +331,9 @@ class SpecimensForm extends BaseSpecimensForm
 
     $subForm = new sfForm();
     $this->embedForm('newComments',$subForm);
-    
+
     $this->widgetSchema['comment'] = new sfWidgetFormInputHidden(array('default'=>1));
-    
+
     /* Labels */
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
                                          'host_relationship' => 'Relationship',
@@ -342,7 +342,7 @@ class SpecimensForm extends BaseSpecimensForm
                                          'station_visible' => 'Public sampling location ?'
                                         )
                                   );
-    
+
     /* Validators */
 
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
@@ -375,7 +375,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['acquisition_date'] = new fuzzyDateValidator(array('required' => false,
                                                                               'from_date' => true,
                                                                               'min' => $minDate,
-                                                                              'max' => $maxDate, 
+                                                                              'max' => $maxDate,
                                                                               'empty_value' => $dateLowerBound,
                                                                              ),
                                                                         array('invalid' => 'Date provided is not valid',
@@ -397,7 +397,7 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->validatorSchema['collector'] = new sfValidatorPass();
 
-    $this->validatorSchema['comment'] = new sfValidatorPass();    
+    $this->validatorSchema['comment'] = new sfValidatorPass();
 
     $this->validatorSchema['code'] = new sfValidatorPass();
 
@@ -416,7 +416,7 @@ class SpecimensForm extends BaseSpecimensForm
             )
         );
     $this->setDefault('accuracy', 1);
-    
+
   }
 
   public function addCodes($num, $collectionId=null, $code=null)
@@ -483,7 +483,7 @@ class SpecimensForm extends BaseSpecimensForm
       //Re-embedding the container
       $this->embedForm('newComments', $this->embeddedForms['newComments']);
   }
-  
+
   public function addIdentifications($num, $order_by=0, $obj=null)
   {
       $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
@@ -657,7 +657,7 @@ class SpecimensForm extends BaseSpecimensForm
         }
       }
     }
-    
+
     /* For each embedded informations or many-to-many data such as collecting tools and methods
      * test if the widget is on screen by testing a flag field present on the concerned widget
      * If widget is not on screen, remove the field from list of fields to be bound, and than potentially saved
@@ -689,7 +689,7 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['Comments']);
       $this->offsetUnset('newComments');
       unset($taintedValues['newComments']);
-    }    
+    }
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');

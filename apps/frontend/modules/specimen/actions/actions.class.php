@@ -22,14 +22,14 @@ class specimenActions extends DarwinActions
       $this->forward404Unless($spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter,0)), $this->getI18N('Specimen not found'));
     elseif($request->hasParameter($parameter) && $request->getParameter($parameter))
       $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter) );
-    
+
     $form = new SpecimensForm($spec);
     return $form;
   }
 
   public function executeConfirm(sfWebRequest $request)
   {
-  
+
   }
 
   public function executeAddCode(sfWebRequest $request)
@@ -77,10 +77,10 @@ class specimenActions extends DarwinActions
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
- //  die("ref : ".$request->getParameter('people_ref')) ; 
+ //  die("ref : ".$request->getParameter('people_ref')) ;
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $number = intval($request->getParameter('num'));
-    $people_ref = intval($request->getParameter('people_ref')) ; 
+    $people_ref = intval($request->getParameter('people_ref')) ;
     $identifier_number = intval($request->getParameter('identifier_num'));
     $identifier_order_by = intval($request->getParameter('iorder_by',0));
     $ident = null;
@@ -101,35 +101,35 @@ class specimenActions extends DarwinActions
       return $this->renderPartial('spec_identification_identifiers',array('form' => $spec_form['newIdentification'][$number]['newIdentifier'][$identifier_number], 'rownum'=>$identifier_number, 'identnum' => $number));
     }
   }
-  
+
   protected function getRecordIfDuplicate($id = 0, $obj, $is_spec = false)
   {
     if ($id)
     {
-      $check = $obj->getTable()->findExcept($id);      
+      $check = $obj->getTable()->findExcept($id);
       if(!$check) return $obj ;
       if($is_spec)
       {
         $check->SpecimensMethods->count() ;
-        $check->SpecimensTools->count() ;  
-      }    
-      $record = $check->toArray(true);     
-      unset($record['id']) ;       
-      $obj->fromArray($record,true) ;      
+        $check->SpecimensTools->count() ;
+      }
+      $record = $check->toArray(true);
+      unset($record['id']) ;
+      $obj->fromArray($record,true) ;
     }
     return $obj ;
   }
-  
+
   public function executeNew(sfWebRequest $request)
   {
     if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
     {
       $specimen = new Specimens() ;
-      $duplic = $request->getParameter('duplicate_id','0') ;     
-      $specimen = $this->getRecordIfDuplicate($duplic,$specimen,true);    
-      // set all necessary widgets to visible 
-      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',($request->hasParameter('all_duplicate')?1:0));      
-      $this->form = new SpecimensForm($specimen); 
+      $duplic = $request->getParameter('duplicate_id','0') ;
+      $specimen = $this->getRecordIfDuplicate($duplic,$specimen,true);
+      // set all necessary widgets to visible
+      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',($request->hasParameter('all_duplicate')?1:0));
+      $this->form = new SpecimensForm($specimen);
       if($duplic)
       {
         // reembed duplicated codes
@@ -137,76 +137,78 @@ class specimenActions extends DarwinActions
         foreach ($Codes as $key=>$val)
         {
            $code = new Codes() ;
-           $code = $this->getRecordIfDuplicate($val->getId(),$code);             
+           $code = $this->getRecordIfDuplicate($val->getId(),$code);
            $this->form->addCodes($key,null,$code);
-        }     
+        }
         // reembed duplicated specimen Accompanying
         $spec_a = Doctrine::getTable('SpecimensAccompanying')->findBySpecimen($duplic) ;
         foreach ($spec_a as $key=>$val)
         {
           $spec = new SpecimensAccompanying() ;
-          $spec = $this->getRecordIfDuplicate($val->getId(),$spec); 
-          $this->form->addSpecimensAccompanying($key, $spec) ;          
+          $spec = $this->getRecordIfDuplicate($val->getId(),$spec);
+          $this->form->addSpecimensAccompanying($key, $spec) ;
         }
         // reembed duplicated comment
         $Comments = Doctrine::getTable('Comments')->findForTable('specimens',$duplic) ;
         foreach ($Comments as $key=>$val)
         {
           $comment = new Comments() ;
-          $comment = $this->getRecordIfDuplicate($val->getId(),$comment); 
-          $this->form->addComments($key, $comment) ;          
+          $comment = $this->getRecordIfDuplicate($val->getId(),$comment);
+          $this->form->addComments($key, $comment) ;
         }
-        
-        $Catalogue = Doctrine::getTable('CataloguePeople')->findForTableByType('specimens',$duplic) ;        
+
+        $Catalogue = Doctrine::getTable('CataloguePeople')->findForTableByType('specimens',$duplic) ;
         // reembed duplicated collector
         if(count($Catalogue))
         {
           foreach ($Catalogue['collector'] as $key=>$val)
           {
              $this->form->addCollectors($key, $val->getPeopleRef(),$val->getOrderBy());
-          }   
-        }    
+          }
+        }
         //reembed identification
          $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens',$duplic) ;
         foreach ($Identifications as $key=>$val)
         {
           $identification = new Identifications() ;
-          $identification = $this->getRecordIfDuplicate($val->getId(),$identification); 
-          $this->form->addIdentifications($key, $val->getOrderBy(), $identification);  
-          $Identifier = Doctrine::getTable('CataloguePeople')->getPeopleRelated('identifications', 'identifier', $val->getId()) ;        
+          $identification = $this->getRecordIfDuplicate($val->getId(),$identification);
+          $this->form->addIdentifications($key, $val->getOrderBy(), $identification);
+          $Identifier = Doctrine::getTable('CataloguePeople')->getPeopleRelated('identifications', 'identifier', $val->getId()) ;
           foreach ($Identifier as $key2=>$val2)
           {
             $ident = $this->form->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
-            $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);   
-            $this->form->reembedNewIdentification($ident, $key);                       
+            $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);
+            $this->form->reembedNewIdentification($ident, $key);
           }
-        }                          
+        }
         $tools = $specimen->SpecimensTools->toArray() ;
         if(count($tools))
         {
           $tab = array() ;
           foreach ($tools as $key=>$tool)
             $tab[] = $tool['collecting_tool_ref'] ;
-          $this->form->setDefault('collecting_tools_list',$tab); 
+          $this->form->setDefault('collecting_tools_list',$tab);
         }
-          
+
         $methods = $specimen->SpecimensMethods->toArray() ;
         if(count($methods))
         {
           $tab = array() ;
           foreach ($methods as $key=>$method)
             $tab[] = $method['collecting_method_ref'] ;
-          $this->form->setDefault('collecting_methods_list',$tab);   
+          $this->form->setDefault('collecting_methods_list',$tab);
         }
       }
-    }        
+    }
     else
-    {  
-      $this->form = new SpecimensForm(); 
-      $this->form->addIdentifications(0,0); 
-      $this->form->addComments(0); 
-    }  
-    $this->loadWidgets();     
+    {
+      $this->form = new SpecimensForm();
+      $this->form->addIdentifications(0,0);
+      $this->form->addComments(0);
+      $this->form->addCodes(0);
+      $this->form->addSpecimensAccompanying(0);
+    }
+    $this->loadWidgets();
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -252,7 +254,7 @@ class specimenActions extends DarwinActions
       {
         $e = new DarwinPgErrorParser($ne);
         $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-        $form->getErrorSchema()->addError($error, 'Darwin2 :'); 
+        $form->getErrorSchema()->addError($error, 'Darwin2 :');
       }
     }
   }
@@ -260,7 +262,7 @@ class specimenActions extends DarwinActions
   /**
     * Action executed when calling the expeditions from an other screen
     * @param sfWebRequest $request Request coming from browser
-    */ 
+    */
   public function executeChoose(sfWebRequest $request)
   {
     $this->setLevelAndCaller($request);
@@ -280,7 +282,7 @@ class specimenActions extends DarwinActions
   /**
     * Action executed when searching an expedition - trigger by the click on the search button
     * @param sfWebRequest $request Request coming from browser
-    */ 
+    */
   public function executeSearch(sfWebRequest $request)
   {
     // Forward to a 404 page if the method used is not a post
@@ -290,7 +292,7 @@ class specimenActions extends DarwinActions
     // Instantiate a new expedition form
     $this->form = new SpecimensFormFilter(array('caller_id'=>$item['caller_id']));
     // Triggers the search result function
-    $this->searchResults($this->form, $request);    
+    $this->searchResults($this->form, $request);
   }
 
   /**
@@ -335,7 +337,7 @@ class specimenActions extends DarwinActions
         $this->codes = array();
         foreach($specCodes as $code)
         {
-          if(! isset($this->codes[$code->getRecordId()]) ) 
+          if(! isset($this->codes[$code->getRecordId()]) )
             $this->codes[$code->getRecordId()] = array();
           $this->codes[$code->getRecordId()][] = $code;
         }

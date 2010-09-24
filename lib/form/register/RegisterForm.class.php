@@ -40,7 +40,7 @@ class RegisterForm extends BaseUsersForm
     $this->setDefault('terms_of_use',false);
 
     /* Validators */
-    
+
     // Write a post validator for is_physical here
     $this->validatorSchema['terms_of_use'] = new sfValidatorBoolean(array('required'=>true),
                                                                     array('required'=> 'You cannot register without accepting DaRWIN 2  term of use',
@@ -52,7 +52,7 @@ class RegisterForm extends BaseUsersForm
                                                                          'invalid' => 'The value provided for status is invalid'
                                                                         )
                                                                   );
-    $this->validatorSchema['family_name'] = new sfValidatorString(array('trim'=>true, 
+    $this->validatorSchema['family_name'] = new sfValidatorString(array('trim'=>true,
                                                                         'required'=>true
                                                                        ),
                                                                    array('required'=> 'Name is required',
@@ -62,25 +62,17 @@ class RegisterForm extends BaseUsersForm
 
     /* Labels */
     $this->widgetSchema->setLabels(array('family_name'=>'Name',
-                                         'given_name'=>'First name', 
-                                         'is_physical'=>'Status', 
+                                         'given_name'=>'First name',
+                                         'is_physical'=>'Status',
                                          'sub_type'=>'Type'
                                         )
                                   );
 
     /* Login infos as embedded form */
 
-      $login = new UsersLoginInfos();
-      $login->User = $this->getObject();
-      $form = new RegisterLoginInfosForm($login);
-      $this->embedForm('RegisterLoginInfosForm',$form);
-//       $this->embeddedForms['RegisterLoginInfos']->embedForm($form);
-//       //Re-embedding the container
-//       $this->embedForm('RegisterLoginInfos', $this->embeddedForms['RegisterLoginInfos']);
+    $subForm = new RegisterLoginInfosForm();
+    $this->embedForm('RegisterLoginInfosForm',$subForm);
 
-//     $regLoginSubForm = new RegisterLoginInfosForm();
-//      $this->embeddedForms['RegisterLoginInfosForm']->embedForm(1, $form);
-//      $this->embedForm('RegisterLoginInfosForm', $this->embeddedForms['RegisterLoginInfosForm']);
 
     /* Comm means as embedded form */
     $regCommSubForm = new RegisterCommForm();
@@ -90,5 +82,31 @@ class RegisterForm extends BaseUsersForm
     $regLangSubForm = new RegisterLanguagesForm();
     $this->embedForm('RegisterLanguagesForm',$regLangSubForm);
 
+  }
+
+  public function addLoginInfos($num, $obj=null)
+  {
+    if (!$obj) $val = new UsersLoginInfos();
+    else $val = $obj ;
+    $val->User = $this->getObject();
+    $form = new RegisterLoginInfosForm($val);
+    $this->embeddedForms['RegisterLoginInfosForm']->embedForm($num, $form);
+    //Re-embedding the container
+    $this->embedForm('RegisterLoginInfosForm', $this->embeddedForms['RegisterLoginInfosForm']);
+  }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    if(isset($taintedValues['RegisterLoginInfosForm']))
+    {
+      foreach($taintedValues['RegisterLoginInfosForm'] as $key=>$newVal)
+      {
+        if (!isset($this['RegisterLoginInfosForm'][$key]))
+        {
+          $this->addLoginInfos($key);
+        }
+      }
+    }
+    parent::bind($taintedValues, $taintedFiles);
   }
 }

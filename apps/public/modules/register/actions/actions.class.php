@@ -13,12 +13,13 @@ class registerActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new RegisterForm();
+    $this->form->addLoginInfos(0);
 
     // If the search has been triggered by clicking on the search button or with pinned specimens
     if(($request->isMethod('post') && $request->getParameter('users','') !== '' ))
     {
       // Store all post parameters
-      $criterias = $request->getPostParameters(); 
+      $criterias = $request->getPostParameters();
       $this->form->bind($criterias['users']) ;
     }
     if($this->form->isBound())
@@ -39,6 +40,6 @@ class registerActions extends DarwinActions
         }
       }
     }
-    $this->setTemplate('index'); 
+    $this->setTemplate('index');
   }
 }
