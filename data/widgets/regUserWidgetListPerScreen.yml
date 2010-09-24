@@ -185,3 +185,12 @@ sps16:
    opened: false
    visible: false
    title_perso: Methods
+sps17:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: whatSearched
+   mandatory: true
+   order_by: 8
+   opened: true
+   visible: true
+   title_perso: Type of search  
