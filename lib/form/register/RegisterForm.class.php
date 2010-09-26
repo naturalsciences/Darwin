@@ -70,29 +70,48 @@ class RegisterForm extends BaseUsersForm
 
     /* Login infos as embedded form */
 
-    $subForm = new RegisterLoginInfosForm();
-    $this->embedForm('RegisterLoginInfosForm',$subForm);
+    $regLoginInfoSubForm = new sfForm();
+    $this->embedForm('RegisterLoginInfosForm',$regLoginInfoSubForm);
 
 
     /* Comm means as embedded form */
-    $regCommSubForm = new RegisterCommForm();
+    $regCommSubForm = new sfForm();
     $this->embedForm('RegisterCommForm',$regCommSubForm);
 
     /* Languages as embedded form */
-    $regLangSubForm = new RegisterLanguagesForm();
+    $regLangSubForm = new sfForm();
     $this->embedForm('RegisterLanguagesForm',$regLangSubForm);
 
   }
 
-  public function addLoginInfos($num, $obj=null)
+  public function addLoginInfos($num)
   {
-    if (!$obj) $val = new UsersLoginInfos();
-    else $val = $obj ;
+    $val = new UsersLoginInfos();
     $val->User = $this->getObject();
     $form = new RegisterLoginInfosForm($val);
     $this->embeddedForms['RegisterLoginInfosForm']->embedForm($num, $form);
     //Re-embedding the container
     $this->embedForm('RegisterLoginInfosForm', $this->embeddedForms['RegisterLoginInfosForm']);
+  }
+
+  public function addComm($num)
+  {
+    $val = new UsersComm();
+    $val->Users = $this->getObject();
+    $form = new RegisterCommForm($val);
+    $this->embeddedForms['RegisterCommForm']->embedForm($num, $form);
+    //Re-embedding the container
+    $this->embedForm('RegisterCommForm', $this->embeddedForms['RegisterCommForm']);
+  }
+
+  public function addLanguages($num)
+  {
+    $val = new UsersLanguages();
+    $val->User = $this->getObject();
+    $form = new RegisterLanguagesForm($val);
+    $this->embeddedForms['RegisterLanguagesForm']->embedForm($num, $form);
+    //Re-embedding the container
+    $this->embedForm('RegisterLanguagesForm', $this->embeddedForms['RegisterLanguagesForm']);
   }
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
@@ -107,6 +126,52 @@ class RegisterForm extends BaseUsersForm
         }
       }
     }
+    if(isset($taintedValues['RegisterCommForm']))
+    {
+      foreach($taintedValues['RegisterCommForm'] as $key=>$newVal)
+      {
+        if (!isset($this['RegisterCommForm'][$key]))
+        {
+          $this->addComm($key);
+        }
+      }
+    }
+    if(isset($taintedValues['RegisterLanguagesForm']))
+    {
+      foreach($taintedValues['RegisterLanguagesForm'] as $key=>$newVal)
+      {
+        if (!isset($this['RegisterLanguagesForm'][$key]))
+        {
+          $this->addLanguages($key);
+        }
+      }
+    }
     parent::bind($taintedValues, $taintedFiles);
+  }
+
+  public function saveEmbeddedForms($con = null, $forms = null)
+  {
+    if (null === $forms)
+    {
+      $value = $this->getValue('RegisterLoginInfosForm');
+      foreach($this->embeddedForms['RegisterLoginInfosForm']->getEmbeddedForms() as $name => $form)
+      {
+        $form->getObject()->setUserRef($this->getObject()->getId());
+        $form->getObject()->save();
+      }
+      $value = $this->getValue('RegisterCommForm');
+      foreach($this->embeddedForms['RegisterCommForm']->getEmbeddedForms() as $name => $form)
+      {
+        $form->getObject()->setPersonUserRef($this->getObject()->getId());
+        $form->getObject()->save();
+      }
+      $value = $this->getValue('RegisterLanguagesForm');
+      foreach($this->embeddedForms['RegisterLanguagesForm']->getEmbeddedForms() as $name => $form)
+      {
+        $form->getObject()->setUsersRef($this->getObject()->getId());
+        $form->getObject()->save();
+      }
+    }
+    return parent::saveEmbeddedForms($con, $forms);
   }
 }

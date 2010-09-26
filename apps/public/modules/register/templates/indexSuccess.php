@@ -34,29 +34,29 @@
             <td><?php echo $form['given_name']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLoginInfosForm']['user_name']->renderLabel();?>:</th>
-            <td><?php echo $form['RegisterLoginInfosForm']['user_name']->render();?></td>
-            <td><?php echo $form['RegisterLoginInfosForm']['user_name']->renderError();?></td>
+            <th><?php echo $form['RegisterLoginInfosForm'][0]['user_name']->renderLabel();?>:</th>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['user_name']->render();?></td>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['user_name']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLoginInfosForm']['new_password']->renderLabel();?>:</th>
-            <td><?php echo $form['RegisterLoginInfosForm']['new_password']->render();?></td>
-            <td><?php echo $form['RegisterLoginInfosForm']['new_password']->renderError();?></td>
+            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>:</th>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->render();?></td>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLoginInfosForm']['confirm_password']->renderLabel();?>:</th>
-            <td><?php echo $form['RegisterLoginInfosForm']['confirm_password']->render();?></td>
-            <td><?php echo $form['RegisterLoginInfosForm']['confirm_password']->renderError();?></td>
+            <th><?php echo $form['RegisterLoginInfosForm'][0]['confirm_password']->renderLabel();?>:</th>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['confirm_password']->render();?></td>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['confirm_password']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterCommForm']['entry']->renderLabel();?>:</th>
-            <td><?php echo $form['RegisterCommForm']['entry']->render();?></td>
-            <td><?php echo $form['RegisterCommForm']['entry']->renderError();?></td>
+            <th><?php echo $form['RegisterCommForm'][0]['entry']->renderLabel();?>:</th>
+            <td><?php echo $form['RegisterCommForm'][0]['entry']->render();?></td>
+            <td><?php echo $form['RegisterCommForm'][0]['entry']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLanguagesForm']['language_country']->renderLabel();?>:</th>
-            <td><?php echo $form['RegisterLanguagesForm']['language_country']->render();?></td>
-            <td><?php echo $form['RegisterLanguagesForm']['language_country']->renderError();?></td>
+            <th><?php echo $form['RegisterLanguagesForm'][0]['language_country']->renderLabel();?>:</th>
+            <td><?php echo $form['RegisterLanguagesForm'][0]['language_country']->render();?></td>
+            <td><?php echo $form['RegisterLanguagesForm'][0]['language_country']->renderError();?></td>
           </tr>
           <tr>
             <th><?php echo $form['title']->renderLabel();?>:</th>
