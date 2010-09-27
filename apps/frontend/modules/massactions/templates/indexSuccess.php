@@ -78,6 +78,7 @@ function checkItem()
   {
     $('#mass_action .fld_group ul :checkbox').removeAttr('checked');
     $('#mass_action .fld_group ul :checkbox').attr('disabled','disabled');
+    $("#action_sub_form > td > div").html('');
     chooseAction();
   }
   else

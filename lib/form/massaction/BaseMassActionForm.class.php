@@ -18,6 +18,10 @@ class BaseMassActionForm extends sfFormSymfony
       'specimen' => array(
         'collection_ref' => self::getI18N()->__('Collection'),
         'taxon_ref' => self::getI18N()->__('Taxonomy'),
+        'lithology_ref' => self::getI18N()->__('Lithology'),
+        'chronostratigraphy_ref' => self::getI18N()->__('Chronostratigraphy'),
+        'lithostratigraphy_ref' => self::getI18N()->__('Lithostratigraphy'),
+        'mineralogy_ref' => self::getI18N()->__('Mineralogy'),
       ),
      /* 'individual' => array(
       ),*/
@@ -25,6 +29,30 @@ class BaseMassActionForm extends sfFormSymfony
         'maintenance' => self::getI18N()->__('Maintenance'),
       ),
     );
+  }
+
+  protected function getFormNameForAction($action)
+  {
+    if($action == 'collection_ref')
+      return 'MaCollectionRefForm';
+
+    elseif($action == 'taxon_ref')
+      return 'MaTaxonomyRefForm';
+
+    elseif($action == 'lithology_ref')
+      return 'MaLithologyRefForm';
+
+    elseif($action == 'chronostratigraphy_ref')
+      return 'MaChronostratigraphyRefForm';
+
+    elseif($action == 'lithostratigraphy_ref')
+      return 'MaLithostratigraphyRefForm';
+
+    elseif($action == 'mineralogy_ref')
+      return 'MaMineralogyRefForm';
+
+    else
+      return 'sfForm';
   }
 
   public function doMassAction()
@@ -67,16 +95,6 @@ class BaseMassActionForm extends sfFormSymfony
     $this->embeddedForms['MassActionForm']->embedForm($field_name, $subForm);
       //Re-embedding the container
     $this->embedForm('MassActionForm', $this->embeddedForms['MassActionForm']);
-  }
-
-  protected function getFormNameForAction($action)
-  {
-    if($action == 'collection_ref')
-      return 'MaCollectionRefForm';
-    elseif($action == 'taxon_ref')
-      return 'MaTaxonomyRefForm';
-    else
-      return 'sfForm';
   }
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
