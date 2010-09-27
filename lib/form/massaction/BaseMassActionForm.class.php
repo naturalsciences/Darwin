@@ -17,6 +17,7 @@ class BaseMassActionForm extends sfFormSymfony
     return array(
       'specimen' => array(
         'collection_ref' => self::getI18N()->__('Collection'),
+        'taxon_ref' => self::getI18N()->__('Taxonomy'),
       ),
      /* 'individual' => array(
       ),*/
@@ -31,11 +32,30 @@ class BaseMassActionForm extends sfFormSymfony
     if($this->isBound() && $this->isValid())
     {
       $actions_values = $this->getValue('MassActionForm');
+      if($this->getValue('source') == 'specimen')
+        $query = Doctrine_Query::create()->update('Specimens s');
+      elseif($this->getValue('source') == 'individual')
+        $query = Doctrine_Query::create()->update('SpecimenIndividuals s');
+      else
+        $query = Doctrine_Query::create()->update('SpecimenParts s');
+
+      $query->whereIn('s.id ', $this->getValue('item_list'));
+      $group_action = 0;
       foreach($this->embeddedForms['MassActionForm'] as $key=> $form)
       {
-        $this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key)->doMassAction($this->getValue('item_list'), $actions_values[$key]);
+        if (method_exists($this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key), 'doGroupedAction'))
+        {
+          $this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key)->doGroupedAction($query, $actions_values[$key], $this->getValue('item_list'));
+          $group_action++;
+        }
+
+        if (method_exists($this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key), 'doMassAction'))
+        {
+          $this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key)->doMassAction($this->getValue('item_list'), $actions_values[$key]);
+        }
       }
-        //$this->getEmbeddedForm('MassActionForm')->doMassAction($this->getValue('item_list'), );
+      if($group_action)
+        $query->execute();
     }
   }
 
@@ -53,6 +73,8 @@ class BaseMassActionForm extends sfFormSymfony
   {
     if($action == 'collection_ref')
       return 'MaCollectionRefForm';
+    elseif($action == 'taxon_ref')
+      return 'MaTaxonomyRefForm';
     else
       return 'sfForm';
   }

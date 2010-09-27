@@ -22,15 +22,10 @@ class MaCollectionRefForm extends BaseForm
 
   }
 
-  public function doMassAction($items, $values)
+  public function doGroupedAction($query, $values, $items)
   {
     $new_collection = $values['collection_ref'];
-
-    $q = Doctrine_Query::create()
-    ->update('Specimens s')
-    ->set('s.collection_ref', '?', $new_collection)
-    ->whereIn('s.id ', $items);
-    $updated = $q->execute();
-    return $updated;
+    $query->set('s.collection_ref', '?', $new_collection);
+    return $query;
   }
 }

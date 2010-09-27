@@ -25,6 +25,31 @@
     });
   });
   </script>
+
+<?php elseif(isset($mAction) && $mAction == 'taxon_ref'):?>
+  <table id="sub_form_<?php echo $mAction;?>">
+    <tr>
+      <th>
+        <?php echo $form['MassActionForm']['taxon_ref']['taxon_ref']->renderLabel();?>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <?php echo $form['MassActionForm']['taxon_ref']['taxon_ref']->renderError();?>
+        <?php echo $form['MassActionForm']['taxon_ref']['taxon_ref']->render(array('class' => 'inline'));?>
+      </td>
+    <tr>
+  </table>
+
+  <script  type="text/javascript">
+  $(document).ready(function () {
+   $('#mass_action_MassActionForm_taxon_ref_taxon_ref').change(function ()
+    {
+      changeSubmit(true);
+    });
+  });
+  </script>
+
 <?php elseif($sFormClass == 'sfForm'):?>
   <?php echo $form['MassActionForm'];?>
 <?php else:?>

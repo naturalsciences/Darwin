@@ -61,7 +61,7 @@ function chooseSource(event)
     }
     else
     {
-      $("#item_list").html('<img src="<?php echo image_path('loader.gif');?>" />');
+      $("#item_list").html('<?php echo image_tag('loader.gif',array('class'=>'loading_img'));?>');
       $('#item_list').load('<?php echo url_for('massactions/items');?>/source/' + $('#mass_action_source').val() , function() {
         checkItem();
       });
@@ -90,14 +90,19 @@ function chooseAction()
 {
   if(! $(this).is(':checked'))
   {
-    $('#action_sub_form').addClass('disabled');
     $('#sub_form_'+$(this).val()).remove();
+    if( $('#mass_action .fld_group ul :checked').length ==0)
+      $('#action_sub_form').addClass('disabled');
   }
   else
   {
     $('#action_sub_form').removeClass('disabled');
-    $("#action_sub_form > td > div").html('<img src="<?php echo image_path('loader.gif');?>" />');
-    $('#action_sub_form > td > div').load('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/maction/' + $(this).val() , function() {});
+    $("#action_sub_form > td > div").append('<?php echo image_tag('loader.gif',array('class'=>'loading_img'));?>');
+    $.get('<?php echo url_for('massactions/getSubForm');?>/source/' + $('#mass_action_source').val() + '/maction/' + $(this).val() ,
+      function(data){
+        $('.loading_img').remove();
+        $('#action_sub_form > td > div').append(data);
+      });
   }
   changeSubmit(false);
 }
