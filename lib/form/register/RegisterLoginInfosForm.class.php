@@ -23,12 +23,34 @@ class RegisterLoginInfosForm extends UsersLoginInfosForm
                                                                       'required' => 'Login is required'
                                                                      )
                                                                ) ;
-    $this->validatorSchema['new_password'] = new sfValidatorString(array('trim'=>true, 'required'=>true),
-                                                                   array('required'=>'You need to provide a password')
-                                                                  );
-    $this->validatorSchema['confirm_password'] = new sfValidatorString(array('trim'=>true, 'required'=>true),
-                                                                       array('required'=>'You need to confirm your password')
-                                                                      );
+    $this->validatorSchema['new_password'] = new sfValidatorAnd(
+                                              array(
+                                                new sfValidatorRegex(
+                                                  array('pattern' => "/\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*/"),
+                                                  array('invalid' => 'Password must contain at least a case mix and at least one digit')
+                                                  ),
+                                                new sfValidatorString(
+                                                  array('min_length' => 6, 'trim'=>true, 'required'=>true),
+                                                  array('required'=>'You need to provide a password',
+                                                        'min_length' => 'Password must be at least %min_length% characters length'
+                                                       )
+                                                  )
+                                              )
+                                             );
+    $this->validatorSchema['confirm_password'] = new sfValidatorAnd(
+                                                  array(
+                                                    new sfValidatorRegex(
+                                                      array('pattern' => "/\w*(?=\w*\d)(?=\w*[a-z])(?=\w*[A-Z])\w*/"),
+                                                      array('invalid' => 'Password must contain at least a case mix and at least one digit')
+                                                      ),
+                                                    new sfValidatorString(
+                                                      array('min_length' => 6, 'trim'=>true, 'required'=>true),
+                                                      array('required'=>'You need to confirm your password',
+                                                            'min_length' => 'Password must be at least %min_length% characters length'
+                                                          )
+                                                      )
+                                                  )
+                                                );
     $this->validatorSchema['user_ref'] = new sfValidatorInteger(array('required'=>false));
   }
 
@@ -36,7 +58,7 @@ class RegisterLoginInfosForm extends UsersLoginInfosForm
   {
     if($values['new_password'] != $values['confirm_password'])
     {
-      $error = new sfValidatorError($validator, 'Password does not match' ) ;
+      $error = new sfValidatorError($validator, 'Password does not match' );
       throw new sfvalidatorErrorSchema($validator, array('confirm_password' => $error));
     }
     if(! empty($values['user_name']) )

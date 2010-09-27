@@ -64,6 +64,11 @@
             <td><?php echo $form['title']->renderError();?></td>
           </tr>
           <tr>
+            <th><?php echo $form['captcha']->renderLabel();?>:</th>
+            <td><?php echo $form['captcha']->render();?></td>
+            <td><?php echo $form['captcha']->renderError();?></td>
+          </tr>
+          <tr>
             <th></th>
             <td><?php echo $form['terms_of_use']->render();?>&nbsp;I accept the <?php echo link_to('terms of use', 'tof/index', array('id'=>'tof'));?></td>
             <td><?php echo $form['terms_of_use']->renderError();?></td>

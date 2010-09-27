@@ -20,12 +20,12 @@ class registerActions extends DarwinActions
     // If the search has been triggered by clicking on the search button or with pinned specimens
     if(($request->isMethod('post') && $request->getParameter('users','') !== '' ))
     {
-      // Store all post parameters
-      $criterias = $request->getPostParameters();
-      $this->form->bind($criterias['users']) ;
-    }
-    if($this->form->isBound())
-    {
+      $captcha = array(
+        'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
+        'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
+      );
+      $this->form->bind(array_merge($request->getParameter('users'), array('captcha' => $captcha)));
+/*      $this->form->bind($request->getParameter('users')) ;*/
       if ($this->form->isValid())
       {
         try
