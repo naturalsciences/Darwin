@@ -5,7 +5,7 @@
 class UsersTable extends DarwinTable
 {
     /**
-    * Get an user with his username and password in internal system
+    * Get a user with his username and password in internal system
     * @param string $username The username
     * @param string $password The password of the user
     * @return a record with the user or null if it's not found
@@ -17,9 +17,11 @@ class UsersTable extends DarwinTable
             ->leftJoin('u.UsersLoginInfos ul')
             ->andWhere('ul.user_name = ?',$username)
             ->andWhere('ul.password = ?',sha1(sfConfig::get('app_salt').$password))
-            ->andWhere('ul.login_system is null');
+            ->andWhere('ul.login_system is null')
+            ->andWhere('ul.login_type = ?', 'local');
         return $q->fetchOne();
     }
+
     public function findUser($id)
     {
 	   $q = Doctrine_Query::create()

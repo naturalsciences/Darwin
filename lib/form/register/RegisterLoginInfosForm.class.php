@@ -37,8 +37,18 @@ class RegisterLoginInfosForm extends UsersLoginInfosForm
     if($values['new_password'] != $values['confirm_password'])
     {
       $error = new sfValidatorError($validator, 'Password does not match' ) ;
-      throw new sfvalidatorErrorSchema($validator, array('new_password' => $error));
+      throw new sfvalidatorErrorSchema($validator, array('confirm_password' => $error));
+    }
+    if(! empty($values['user_name']) )
+    {
+        $this->user = Doctrine::getTable('UsersLoginInfos')->getUserByUserName($values['user_name']);
+        if ($this->user)
+        {
+            $error = new sfValidatorError($validator, 'Login is already used, please provide an other');
+            // throw an error bound to the password field
+            throw new sfValidatorErrorSchema($validator, array('user_name' => $error));
+        }
     }
     return $values;
-  } 
+  }
 }

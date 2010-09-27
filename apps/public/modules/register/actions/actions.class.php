@@ -31,8 +31,7 @@ class registerActions extends DarwinActions
         try
         {
           $this->user = $this->form->save();
-          print_r($this->user->toArray());
-//           $this->user->addUserWidgets();
+          $this->user->addUserWidgets();
         }
         catch(Doctrine_Exception $ne)
         {

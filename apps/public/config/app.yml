@@ -1,5 +1,6 @@
 all:
    .general:
+       salt: mySecret$alt
        recPerPage: 10
        pagerSlidingSize: 5
        catalogueRecLimit: 200
