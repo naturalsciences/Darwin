@@ -22,6 +22,7 @@ class BaseMassActionForm extends sfFormSymfony
         'chronostratigraphy_ref' => self::getI18N()->__('Chronostratigraphy'),
         'lithostratigraphy_ref' => self::getI18N()->__('Lithostratigraphy'),
         'mineralogy_ref' => self::getI18N()->__('Mineralogy'),
+        'station_visible' => self::getI18N()->__('Station visibility'),
       ),
      /* 'individual' => array(
       ),*/
@@ -50,6 +51,9 @@ class BaseMassActionForm extends sfFormSymfony
 
     elseif($action == 'mineralogy_ref')
       return 'MaMineralogyRefForm';
+
+    elseif($action == 'station_visible')
+      return 'MaStationVisibleForm';
 
     else
       return 'sfForm';

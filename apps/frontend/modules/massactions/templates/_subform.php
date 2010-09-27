@@ -21,6 +21,9 @@
 <?php elseif(isset($mAction) && $mAction == 'chronostratigraphy_ref'):?>
   <?php include_partial('sub_chronostratigraphy_ref',array('form'=>$form, 'mAction' => $mAction));?>
 
+<?php elseif(isset($mAction) && $mAction == 'station_visible'):?>
+  <?php include_partial('sub_station_visible',array('form'=>$form, 'mAction' => $mAction));?>
+
 <?php elseif($sFormClass == 'sfForm'):?>
   <?php echo $form['MassActionForm'];?>
 
