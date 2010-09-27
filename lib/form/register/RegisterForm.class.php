@@ -39,9 +39,12 @@ class RegisterForm extends BaseUsersForm
     $this->widgetSchema['terms_of_use']->setAttributes(array('class'=>'required_field'));
     $this->setDefault('terms_of_use',false);
 
+    /* Captcha */
+    
+    $this->widgetSchema['captcha'] = new sfWidgetFormReCaptcha(array('public_key' => sfConfig::get('app_recaptcha_public_key')));
+ 
     /* Validators */
 
-    // Write a post validator for is_physical here
     $this->validatorSchema['terms_of_use'] = new sfValidatorBoolean(array('required'=>true),
                                                                     array('required'=> 'You cannot register without accepting DaRWIN 2  term of use',
                                                                           'invalid' => 'The value provided for term of use is invalid'
@@ -59,6 +62,7 @@ class RegisterForm extends BaseUsersForm
                                                                          'invalid' => 'The value provided for name is invalid'
                                                                         )
                                                                  );
+    $this->validatorSchema['captcha'] = new sfValidatorReCaptcha(array('private_key' => sfConfig::get('app_recaptcha_private_key')));
 
     /* Labels */
     $this->widgetSchema->setLabels(array('family_name'=>'Name',
