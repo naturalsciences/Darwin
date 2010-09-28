@@ -62,7 +62,10 @@ class RegisterForm extends BaseUsersForm
                                                                          'invalid' => 'The value provided for name is invalid'
                                                                         )
                                                                  );
-    $this->validatorSchema['captcha'] = new sfValidatorReCaptcha(array('private_key' => sfConfig::get('app_recaptcha_private_key')));
+    $this->validatorSchema['captcha'] = new sfValidatorReCaptcha(array('private_key' => sfConfig::get('app_recaptcha_private_key'),
+                                                                       'proxy_host' => '193.190.234.10',
+                                                                       'proxy_port' => 3128
+                                                                      ));
 
     /* Labels */
     $this->widgetSchema->setLabels(array('family_name'=>'Name',

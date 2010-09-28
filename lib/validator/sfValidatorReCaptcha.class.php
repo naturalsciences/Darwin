@@ -58,7 +58,8 @@ class sfValidatorReCaptcha extends sfValidatorBase
     $this->addOption('server_port', 80);
     $this->addOption('server_path', '/verify');
     $this->addOption('server_timeout', 10);
-
+    $this->addOption('proxy_host', '');
+    $this->addOption('proxy_port', 80);
     $this->addMessage('captcha', 'The captcha is not valid (%error%).');
     $this->addMessage('server_problem', 'Unable to check the captcha from the server (%error%).');
   }
@@ -83,8 +84,7 @@ class sfValidatorReCaptcha extends sfValidatorBase
 
     if (true !== ($answer = $this->check(array(
       'privatekey' => $this->getOption('private_key'),
-//       'remoteip'   => '192.168.20.117',
-       'remoteip'   => $this->getOption('remote_addr') ? $this->getOption('remote_addr') : $_SERVER['REMOTE_ADDR'],
+      'remoteip'   => $this->getOption('remote_addr') ? $this->getOption('remote_addr') : $_SERVER['REMOTE_ADDR'],
       'challenge'  => $challenge,
       'response'   => $response,
     ))))
@@ -104,40 +104,50 @@ class sfValidatorReCaptcha extends sfValidatorBase
    */
   protected function check($parameters)
   {
-/*    if (false === ($fs = @fsockopen($this->getOption('server_host'), $this->getOption('server_port'), $errno, $errstr, $this->getOption('server_timeout'))))
+    $server_host = $this->getOption('server_host');
+    $server_port = $this->getOption('server_port');
+    if ($this->getOption('proxy_host') != '')
     {
-      throw new sfValidatorError($this, 'server_problem', array('error' => $errstr));
-    }*/
-    if (false === ($fs = @fsockopen("193.190.234.10", 3128, $errno, $errstr, $this->getOption('server_timeout'))))
+      $server_host = $this->getOption('proxy_host');
+      $server_port = $this->getOption('proxy_port');
+    }
+    if (false === ($fs = @fsockopen($server_host, $server_port, $errno, $errstr, $this->getOption('server_timeout'))))
     {
       throw new sfValidatorError($this, 'server_problem', array('error' => $errstr));
     }
 
     $query = http_build_query($parameters, null, '&');
-    fwrite($fs, sprintf(
-                  "POST http://%s%s HTTP/1.0\r\n".
-                  "Host: %s\r\n".
-                  "Content-Type: application/x-www-form-urlencoded\r\n".
-                  "Content-Length: %d\r\n".
-                  "User-Agent: reCAPTCHA/PHP/symfony\r\n".
-                  "\r\n%s",
-                $this->getOption('server_host'), $this->getOption('server_path'), $this->getOption('server_host'), strlen($query), $query)
-    );
-/*    print_r(sprintf(
-                  "POST %s HTTP/1.0\r\n".
-                  "Host: %s\r\n".
-                  "Content-Type: application/x-www-form-urlencoded\r\n".
-                  "Content-Length: %d\r\n".
-                  "User-Agent: reCAPTCHA/PHP/symfony\r\n".
-                  "\r\n%s",
-                $this->getOption('server_path'), $this->getOption('server_host'), strlen($query), $query));*/
+    if ($this->getOption('proxy_host') == '')
+    {
+      fwrite($fs, sprintf(
+                    "POST %s HTTP/1.0\r\n".
+                    "Host: %s\r\n".
+                    "Content-Type: application/x-www-form-urlencoded\r\n".
+                    "Content-Length: %d\r\n".
+                    "User-Agent: reCAPTCHA/PHP/symfony\r\n".
+                    "\r\n%s",
+                    $this->getOption('server_path'), $this->getOption('server_host'), strlen($query), $query
+                  )
+            );
+    }
+    else
+    {
+      fwrite($fs, sprintf(
+                    "POST http://%s%s HTTP/1.0\r\n".
+                    "Host: %s\r\n".
+                    "Content-Type: application/x-www-form-urlencoded\r\n".
+                    "Content-Length: %d\r\n".
+                    "User-Agent: reCAPTCHA/PHP/symfony\r\n".
+                    "\r\n%s",
+                  $this->getOption('server_host'), $this->getOption('server_path'), $this->getOption('server_host'), strlen($query), $query)
+      );
+    }
     $response = '';
     while (!feof($fs))
     {
       $response .= fgets($fs, 1160);
     }
     fclose($fs);
-    print_r($response);
     $response = explode("\r\n\r\n", $response, 2);
     $answers = explode("\n", $response[1]);
 
