@@ -12,7 +12,7 @@
         <td colspan="2">
           <div  id="item_list">
             <?php if(isset($items)):?>
-              <?php include_partial('itemlist',array('items'=>$items));?>
+              <?php include_partial('itemlist',array('items'=>$items, 'source'=>$form['source']->getValue()));?>
             <?php else:?>
               <?php echo $form['item_list'];?>
             <?php endif;?>

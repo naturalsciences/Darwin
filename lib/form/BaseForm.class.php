@@ -19,4 +19,9 @@ class BaseForm extends sfFormSymfony
   {
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
+
+  public function getCurrentCulture()
+  {
+    return sfContext::getInstance()->getUser()->getCulture();
+  }
 }

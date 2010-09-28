@@ -25,7 +25,7 @@ class massactionsActions extends sfActions
       }
 
       $items_ids = $actions['item_list'];
-      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids);
+      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$actions['source']);
 
     }
 
@@ -35,8 +35,6 @@ class massactionsActions extends sfActions
   {
     $this->nb_items = $request->getParameter('nb_item',0);
   }
-
-
 
   public function executeGetSubForm(sfWebRequest $request)
   {
@@ -48,9 +46,9 @@ class massactionsActions extends sfActions
 
   public function executeItems(sfWebRequest $request)
   {
-    $source = $request->getParameter('source','specimen');
-    $items_ids = $this->getUser()->getAllPinned($source);
-    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$source);
+    $this->source = $request->getParameter('source','specimen');
+    $items_ids = $this->getUser()->getAllPinned($this->source);
+    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$this->source);
   }
   
 }

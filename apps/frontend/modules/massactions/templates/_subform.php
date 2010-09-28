@@ -24,6 +24,9 @@
 <?php elseif(isset($mAction) && $mAction == 'station_visible'):?>
   <?php include_partial('sub_station_visible',array('form'=>$form, 'mAction' => $mAction));?>
 
+<?php elseif(isset($mAction) && $mAction == 'maintenance'):?>
+  <?php include_partial('sub_maintenance',array('form'=>$form, 'mAction' => $mAction));?>
+
 <?php elseif($sFormClass == 'sfForm'):?>
   <?php echo $form['MassActionForm'];?>
 

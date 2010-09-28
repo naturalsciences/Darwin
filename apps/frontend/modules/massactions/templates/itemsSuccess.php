@@ -1,1 +1,1 @@
-<?php include_partial('itemlist',array('items' =>$items));?>
+<?php include_partial('itemlist',array('items' =>$items,'source'=>$source));?>

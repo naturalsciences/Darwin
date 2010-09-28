@@ -27,7 +27,7 @@ class BaseMassActionForm extends sfFormSymfony
      /* 'individual' => array(
       ),*/
       'part' => array(
-        'maintenance' => self::getI18N()->__('Maintenance'),
+        'maintenance' => self::getI18N()->__('Add Maintenance'),
       ),
     );
   }
@@ -55,6 +55,8 @@ class BaseMassActionForm extends sfFormSymfony
     elseif($action == 'station_visible')
       return 'MaStationVisibleForm';
 
+    elseif($action == 'maintenance')
+      return 'MaMaintenanceForm';
     else
       return 'sfForm';
   }
