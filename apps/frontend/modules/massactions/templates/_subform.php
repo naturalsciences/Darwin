@@ -24,8 +24,30 @@
 <?php elseif(isset($mAction) && $mAction == 'station_visible'):?>
   <?php include_partial('sub_station_visible',array('form'=>$form, 'mAction' => $mAction));?>
 
+
 <?php elseif(isset($mAction) && $mAction == 'maintenance'):?>
   <?php include_partial('sub_maintenance',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'floor'):?>
+  <?php include_partial('sub_floor',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'room'):?>
+  <?php include_partial('sub_room',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'row'):?>
+  <?php include_partial('sub_row',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'shelf'):?>
+  <?php include_partial('sub_shelf',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'container'):?>
+  <?php include_partial('sub_container',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'sub_container'):?>
+  <?php include_partial('sub_sub_container',array('form'=>$form, 'mAction' => $mAction));?>
+
+<?php elseif(isset($mAction) && $mAction == 'building'):?>
+  <?php include_partial('sub_building',array('form'=>$form, 'mAction' => $mAction));?>
 
 <?php elseif($sFormClass == 'sfForm'):?>
   <?php echo $form['MassActionForm'];?>
@@ -33,3 +55,7 @@
 <?php else:?>
   <div class="warning"><?php echo __("Houston, We've Got a Problem");?></div>
 <?php endif;?>
+
+
+
+

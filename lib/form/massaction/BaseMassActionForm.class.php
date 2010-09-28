@@ -28,6 +28,13 @@ class BaseMassActionForm extends sfFormSymfony
       ),*/
       'part' => array(
         'maintenance' => self::getI18N()->__('Add Maintenance'),
+        'building' => self::getI18N()->__('Building'),
+        'floor' => self::getI18N()->__('Floor'),
+        'room' => self::getI18N()->__('Room'),
+        'row' => self::getI18N()->__('Row'),
+        'shelf' => self::getI18N()->__('Shelf'),
+        'container' => self::getI18N()->__('Container'),
+        'sub_container' => self::getI18N()->__('Sub Container'),
       ),
     );
   }
@@ -57,6 +64,22 @@ class BaseMassActionForm extends sfFormSymfony
 
     elseif($action == 'maintenance')
       return 'MaMaintenanceForm';
+
+    elseif($action == 'building')
+      return 'MaBuildingForm';
+    elseif($action == 'floor')
+      return 'MaFloorForm';
+    elseif($action == 'room')
+      return 'MaRoomForm';
+    elseif($action == 'row')
+      return 'MaRowForm';
+    elseif($action == 'shelf')
+      return 'MaShelfForm';
+    elseif($action == 'container')
+      return 'MaContainerForm';
+    elseif($action == 'sub_container')
+      return 'MaSubContainerForm';
+
     else
       return 'sfForm';
   }
