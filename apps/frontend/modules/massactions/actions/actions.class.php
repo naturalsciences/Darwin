@@ -16,7 +16,6 @@ class massactionsActions extends sfActions
     if($request->isMethod('post') && $request->getParameter('mass_action','') != '')
     {
       $actions = $request->getParameter('mass_action',array());
-      $this->setSubForm($this->form, $actions['field_action']);
       $this->form->bind($actions);
       if($this->form->isValid())
       {
@@ -25,11 +24,8 @@ class massactionsActions extends sfActions
         $this->redirect('massactions/status?nb_item='.$nb_item.'&'.http_build_query($this->form->getValues()));
       }
 
-      $possibles_actions = BaseMassActionForm::getPossibleActions();
-      $this->form->getWidget('field_action')->setOption('choices',array_merge(array(''=>''),$possibles_actions[$actions['source']]));
-
       $items_ids = $actions['item_list'];
-      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids);
+      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$actions['source']);
 
     }
 
@@ -40,33 +36,19 @@ class massactionsActions extends sfActions
     $this->nb_items = $request->getParameter('nb_item',0);
   }
 
-  protected function setSubForm($form, $type)
-  {
-    if($type == 'collection_ref')
-      $form->setSubForm('MaCollectionRefForm');
-    else
-      $this->forward404();
-    return  $form;
-  }
   public function executeGetSubForm(sfWebRequest $request)
   {
     $this->source = $request->getParameter('source','specimen');
     $this->mAction = $request->getParameter('maction','');
     $this->form = new BaseMassActionForm();
-    $this->setSubForm($this->form, $this->mAction);
+    $this->form->addSubForm($this->mAction);
   }
 
   public function executeItems(sfWebRequest $request)
   {
-    $source = $request->getParameter('source','specimen');
-    $items_ids = $this->getUser()->getAllPinned($source);
-    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$source);
+    $this->source = $request->getParameter('source','specimen');
+    $items_ids = $this->getUser()->getAllPinned($this->source);
+    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$this->source);
   }
   
-  public function executeGetActions(sfWebRequest $request)
-  {
-    $this->source = $request->getParameter('source','');
-    $this->actions = BaseMassActionForm::getPossibleActions();
-    $this->forward404unless( isset($this->actions[$this->source]));
-  }
 }

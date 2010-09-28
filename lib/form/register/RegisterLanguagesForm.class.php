@@ -13,5 +13,7 @@ class RegisterLanguagesForm extends UsersLanguagesForm
   {
     parent::configure();
     unset($this['mother'],$this['preferred_language']);
+    $this->widgetSchema['language_country']->setLabel('Preferred language');
+    $this->validatorSchema['users_ref'] = new sfValidatorInteger(array('required'=>false));
   }
 }

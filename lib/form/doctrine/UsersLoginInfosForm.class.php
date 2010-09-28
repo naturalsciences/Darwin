@@ -26,7 +26,7 @@ class UsersLoginInfosForm extends BaseUsersLoginInfosForm
      $this->validatorSchema['confirm_password'] = new sfValidatorString();    
      $this->widgetSchema['user_name'] = new sfWidgetFormInputText() ;
      $this->validatorSchema['user_name'] = new sfValidatorString(array('required' => true, 'min_length' => 4),
-                                                                 array('min_length' => '"%value%" must be at least %min_length% characters.')) ;    
+                                                                 array('min_length' => '"%value%" must be at least %min_length% characters.')) ;
     }
     else
     {
