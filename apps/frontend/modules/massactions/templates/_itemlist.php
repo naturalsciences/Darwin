@@ -2,34 +2,13 @@
   <?php use_helper('Text');?>
   <table>
     <?php foreach($items as $item):?>
-      <tr>
-        <td>
-          <?php echo image_tag('info.png',"title=info class=extd_info");?>
-          <div class="extended_info" style="display:none;">
-            <dl>
-              <dt><?php echo __('Taxonomy :');?></dt>
-              <dd><?php echo $item->getTaxonName();?></dd>
-              <dt><?php echo __('Chronostratigraphy :');?></dt>
-              <dd><?php echo $item->getChronoName();?></dd>
-              <dt><?php echo __('Lithostratigraphy :');?></dt>
-              <dd><?php echo $item->getLithoName();?></dd>
-              <dt><?php echo __('Lithology :');?></dt>
-              <dd><?php echo $item->getLithologyName();?></dd>
-              <dt><?php echo __('Mineralogy :');?></dt>
-              <dd><?php echo $item->getMineralName();?></dd>
-            </dl>
-          </div>
-        </td>
-        <td>
-          <?php echo truncate_text($item->getAggregatedName(),40);?>
-        </td>
-        <td>
-          <input name="mass_action[item_list][]" type="hidden" value="<?php if($source=='specimen') echo $item->getSpecRef();
-if($source=='individuam') echo $item->getIndividualRef();
-else echo $item->getPartRef(); ?>" class="item_row">
-          <a class="row_delete" href="#" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?></a>
-        </td>
-      </tr>
+      <?php if($source == 'specimen'):?>
+         <?php include_partial('item_specimen',array('item'=>$item) );?>
+      <?php elseif($source == 'individual'):?>
+         <?php include_partial('item_individual',array('item'=>$item) );?>
+      <?php else:?>
+          <?php include_partial('item_part',array('item'=>$item) );?>
+      <?php endif;?>
     <?php endforeach;?>
   </table>
   <script  type="text/javascript">
