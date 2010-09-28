@@ -1,4 +1,4 @@
-  <table id="sub_form_<?php echo $mAction;?>">
+  <table>
     <tr>
       <th>
         <?php echo $form['MassActionForm']['chronostratigraphy_ref']['chronostratigraphy_ref']->renderLabel();?>

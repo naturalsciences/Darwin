@@ -62,6 +62,7 @@ function chooseSource(event)
     else
     {
       $("#item_list").html('<?php echo image_tag('loader.gif',array('class'=>'loading_img'));?>');
+        checkItem();
       $('#item_list').load('<?php echo url_for('massactions/items');?>/source/' + $('#mass_action_source').val() , function() {
         checkItem();
       });
@@ -92,8 +93,11 @@ function chooseAction()
   if(! $(this).is(':checked'))
   {
     $('#sub_form_'+$(this).val()).remove();
-    if( $('#mass_action .fld_group ul :checked').length ==0)
+    if( $('#mass_action .fld_group ul :checked').length == 0)
+    {
       $('#action_sub_form').addClass('disabled');
+      changeSubmit(false);
+    }
   }
   else
   {
@@ -104,8 +108,8 @@ function chooseAction()
         $('.loading_img').remove();
         $('#action_sub_form > td > div').append(data);
       });
+    changeSubmit(false);
   }
-  changeSubmit(false);
 }
 
 function changeSubmit(status)

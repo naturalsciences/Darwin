@@ -11,32 +11,41 @@ class BaseMassActionForm extends sfFormSymfony
   {
     return array('' => '', 'specimen'=>'specimen','individual'=>'individual','part'=>'part');
   }
-  
-  public static function getPossibleActions()
+
+  public function getActionTitle($action)
   {
-    return array(
+    $poss_actions = self::getPossibleActions(true);
+    $poss_actions[$action];
+  }
+
+  public static function getPossibleActions($merged = false)
+  {
+    $result = array(
       'specimen' => array(
-        'collection_ref' => self::getI18N()->__('Collection'),
-        'taxon_ref' => self::getI18N()->__('Taxonomy'),
-        'lithology_ref' => self::getI18N()->__('Lithology'),
-        'chronostratigraphy_ref' => self::getI18N()->__('Chronostratigraphy'),
-        'lithostratigraphy_ref' => self::getI18N()->__('Lithostratigraphy'),
-        'mineralogy_ref' => self::getI18N()->__('Mineralogy'),
-        'station_visible' => self::getI18N()->__('Station visibility'),
+        'collection_ref' => self::getI18N()->__('Change Collection'),
+        'taxon_ref' => self::getI18N()->__('Change Taxonomy'),
+        'lithology_ref' => self::getI18N()->__('Change Lithology'),
+        'chronostratigraphy_ref' => self::getI18N()->__('Change Chronostratigraphy'),
+        'lithostratigraphy_ref' => self::getI18N()->__('Change Lithostratigraphy'),
+        'mineralogy_ref' => self::getI18N()->__('Change Mineralogy'),
+        'station_visible' => self::getI18N()->__('Change Station visibility'),
       ),
      /* 'individual' => array(
       ),*/
       'part' => array(
         'maintenance' => self::getI18N()->__('Add Maintenance'),
-        'building' => self::getI18N()->__('Building'),
-        'floor' => self::getI18N()->__('Floor'),
-        'room' => self::getI18N()->__('Room'),
-        'row' => self::getI18N()->__('Row'),
-        'shelf' => self::getI18N()->__('Shelf'),
-        'container' => self::getI18N()->__('Container'),
-        'sub_container' => self::getI18N()->__('Sub Container'),
+        'building' => self::getI18N()->__('Change Building'),
+        'floor' => self::getI18N()->__('Change Floor'),
+        'room' => self::getI18N()->__('Change Room'),
+        'row' => self::getI18N()->__('Change Row'),
+        'shelf' => self::getI18N()->__('Change Shelf'),
+        'container' => self::getI18N()->__('Change Container'),
+        'sub_container' => self::getI18N()->__('Change Sub Container'),
       ),
     );
+    if(!$merged) return $result;
+
+    return $result['specimen'] + $result['part'];
   }
 
   protected function getFormNameForAction($action)

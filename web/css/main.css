@@ -1884,8 +1884,23 @@ dd
   margin-bottom: 1em;
   min-width: 300px;
   min-height: 200px;
-  padding: 1em;
-  border: 1px solid #3390A1;
+/*   padding: 1em; */
+  border: 1px solid #c0d147;
+}
+#action_sub_form h2
+{
+  background-color: #c0d147;
+  color:white;
+  padding: 0.3em;
+}
+.sub_form_block
+{
+  margin-bottom:1em;
+}
+
+.sub_form_block >table
+{
+  margin:1em;
 }
 
 #mass_action_status p
