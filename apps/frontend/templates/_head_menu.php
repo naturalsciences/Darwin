@@ -32,7 +32,15 @@
                     </ul>
                 </li>
                 <li><?php echo link_to(__('Specimens'),'specimensearch/index');?></li>
-                <li><?php echo link_to(__('Pinned Specimens'),'specimensearch/search?pinned=true');?></li>
+                <li>
+                  <a href="#"><?php echo __('Pinned Items');?></a>
+                  <ul>
+                    <li><?php echo link_to(sprintf(__('Specimens (%d)'), count($sf_user->getAllPinned('specimen'))),'specimensearch/search?pinned=true&source=specimen');?></li>
+                    <li><?php echo link_to(sprintf(__('Individuals (%d)'), count($sf_user->getAllPinned('individual'))),'specimensearch/search?pinned=true&source=individual');?></li>
+                    <li><?php echo link_to(sprintf(__('Parts (%d)'), count($sf_user->getAllPinned('part'))),'specimensearch/search?pinned=true&source=part');?></li>
+                  </ul>
+                </li>
+
                 <li><?php echo link_to(__('Collections'),'collection/index');?></li>
             </ul>
         </li>
@@ -71,6 +79,7 @@
                 <?php if($sf_user->getDbUserType() >= Users::ADMIN) : ?>
                 <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>                
                 <li><?php echo link_to('Big Brother','bigbro/index');?></li>
+                <li><?php echo link_to('Mass Actions','massactions/index');?></li>
                 <?php endif ?>
                 <li>
                 	<a href="#"><?php echo __('User');?></a>

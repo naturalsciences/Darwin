@@ -1,5 +1,9 @@
-<form class="edition" method="post" id="collection_maintenance" action="">
-	<h2><?php echo __('2. Add Maintenance item : ');?></h2>
+<?php slot('title', __('Edit Maintenance'));  ?>
+<div class="page edition" id="maintenance">
+  <h1><?php echo __('Edit Maintenance :');?></h1>
+
+    <div class="action_maintenance">
+    <form class="edition" method="post" id="collection_maintenance" action="">
 	<?php include_stylesheets_for_form($form) ?>
 	<?php include_javascripts_for_form($form) ?>
 	
@@ -56,4 +60,5 @@
       </tr>
     </tfoot>
 	</table>
-</form>
+  </form>
+</div>
