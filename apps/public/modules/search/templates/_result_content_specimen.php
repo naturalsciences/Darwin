@@ -47,6 +47,7 @@
                 $.get('<?php echo url_for("search/tree?table=taxonomy&id=".$specimen->getTaxonRef()) ;?>',function (html){
                   item_row.find('#taxon_<?php echo $specimen->getIndividualRef();?>_tree').html(html).slideDown();
                   });
+                $(this).closest('td').css('width','auto') ;
               }
               $('#taxon_<?php echo $specimen->getIndividualRef();?>_tree').slideUp();
             });

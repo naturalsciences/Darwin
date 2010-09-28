@@ -1,0 +1,153 @@
+.menu_top
+{
+  background: #474747 url(/images/photo_bckg.jpg) fixed no-repeat; 
+  background-position:center top;
+  height: 120px;
+}
+
+.header_menu
+{
+  margin-bottom: -140px;
+}
+
+#wrapper
+{
+  min-height: 100%;
+}
+
+#main
+{
+  overflow:auto;
+	padding-bottom: 50px ;
+	padding-top : 140px ;
+}
+
+.menu_bottom
+{
+  background: #404040 ; 
+  position: relative;
+	margin-top: -50px; /* negative value of footer height */
+	height: 50px;
+	clear:both;  
+}
+
+.table_menu
+{
+  width:800px;
+  font-size: 16pt ;
+  margin-left:auto;
+  margin-right: auto;   
+}
+
+.table_menu li 
+{
+  min-height:1em;
+  min-width:1em;
+  margin-bottom:2em;
+  cursor: pointer;
+  float:left;
+  padding:0.2em;
+  margin:0.3em;
+  color: white ;
+}
+.table_menu li a
+{
+  color: white ;
+  text-decoration : none ;  
+} 
+
+.table_menu li a:hover
+{
+  color: red ;
+  text-decoration: underline ;
+}
+
+h1.title
+{
+  font-size: 16pt ;
+  margin-top : 1em ;  
+}
+
+.blue_line
+{
+  z-index: 400; 
+  background: #3390a1;
+  height: 20px ;
+  text-align : center ;  
+}
+
+.blue_line div
+{
+  margin-left:auto;
+  margin-right:auto;
+  width: 1024px ;
+}
+
+/* style for the login section */
+.register_form table
+{
+  position: relative ;
+  float:right;
+  vertical-align: middle ;
+  width : 100px ;  
+}
+
+.register_form table tr td
+{
+  clear:both ;
+  text-align: right;
+  padding-top : 1px ;
+}
+
+.register_form input[type=password]
+{
+  background: white url(/images/key.png) no-repeat 3px 3px;
+  padding-left:2em;
+}
+
+.register_form input#login_username
+{
+  background: white url(/images/user.png) no-repeat 3px 3px;
+  padding-left:2em;
+}
+
+.register_form input, .register_form a
+{
+  border: 1px ridge white ;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;	  
+  background : #5baabd ;
+  color : white ;
+  height: 16px;
+  font-size: 9pt;  
+  margin : 1px;
+}
+
+#register
+{
+  width: 70px ;
+  padding: 0px 6px;  
+  margin-top: 1em ;
+}
+
+.register_form input#login
+{
+  width: 35px ;
+}
+
+.register_form input#login:hover, .register_form #register:hover
+{
+  color : #474747;
+  border: 1px ridge #474747 ;  
+}
+
+input.small 
+{
+  margin : 1px;
+  width:110px;  
+  height: 10px;
+  font-size: 9pt;   
+  color : black ;  
+  margin-top : 2px;  
+}
+

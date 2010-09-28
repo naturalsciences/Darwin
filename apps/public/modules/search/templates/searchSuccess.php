@@ -1,12 +1,12 @@
-<?php slot('title', __('Search results'));  ?>  
-<?php include_partial('result_cols', array('columns' => $columns, 'field_to_show' => $field_to_show));?>        
+<?php slot('title', __('Search results'));  ?>         
 
 <div class="encoding">
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
     
   <div class="page" id="search_div">
-    <h1 id="title"><?php echo __('Search Results');?></h1>
+    <h1 id="title"><?php echo __('Search Results');?></h1>    
+    <?php include_partial('result_cols', array('columns' => $columns, 'field_to_show' => $field_to_show));?>       
     <?php echo form_tag('search/searchResult', array('class'=>'publicsearch_form','id'=>'specimen_filter'));?>
       <ul id="intro" class="hidden">
         <?php 

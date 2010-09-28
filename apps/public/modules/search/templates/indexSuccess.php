@@ -125,7 +125,7 @@
       </tr>
     </tbody>
   </table>  
-  <div class="check_right">
+  <div style="text-align:right">
     <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">
   </div>
 </div>  

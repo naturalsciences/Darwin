@@ -154,6 +154,7 @@ class searchActions extends DarwinActions
       if($form->getValue('litho_common_name') != '' || $form->getValue('litho_name') != '') $req_fields .= '|litho|litho_common_name';
       if($form->getValue('lithologic_common_name') != '' || $form->getValue('lithologic_name') != '') $req_fields .= '|lithologic|lithologic_common_name'; 
       if($form->getValue('mineral_common_name') != '' || $form->getValue('mineral_name') != '') $req_fields .= '|mineral|mineral_common_name';    
+      if(!strpos($req_fields,'common_name')) $req_fields .= '|taxon|taxon_common_name'; // add taxon by default if there is not other catalogue 
       $req_fields_array = explode('|',$req_fields);
 
     }

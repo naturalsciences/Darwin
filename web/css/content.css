@@ -1,8 +1,9 @@
-body
+html, body
 {
   min-width: 1024px;
   font-size: 10pt;
-  font-family:sans-serif;
+  font-family:sans-serif; 
+  height: 100%;  
 }
 
 table
@@ -25,6 +26,7 @@ table.spec_result tr
   text-align:left;
   vertical-align: top ;  
 }
+
 
 table.classification
 {
@@ -49,10 +51,10 @@ table#classifications td
 
 .page
 {
-  margin-top: 30px;
-  margin-left:51px;
-  margin-right: 51px;
-  width: 1024px;
+  margin-top: 3px;
+  margin-left:auto;
+  margin-right: auto; 
+  width: 1024px ;  
 }
 
 .line
@@ -112,7 +114,7 @@ h1
 {
   color:#3390a1;
   font-size:large;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 h2.title
@@ -349,12 +351,6 @@ table#gtu_search tr.and_row td:nth-child(2)
 }
 
 /** Search result style **/
-.page
-{
-  margin-top: 30px;
-  margin-left:51px;
-  margin-right: 51px;
-}
 
 .padded
 {
@@ -386,7 +382,7 @@ img.info:hover
 .tree
 {
   padding: 0.5em;
-  margin: 1em;
+  margin: 0.5em;
   background-color: #ebf5f5;
   border: 1px solid #5BAABD;
 }
@@ -431,13 +427,17 @@ ul.column_menu:hover
 
 .spec_results
 {
+  margin: auto; 
+  padding : auto ;
   background-color:white;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: top;
-  width:100%;
+  width:auto;
+  min-width: 1024px ;
   border: 1px solid #5BAABD;
   clear:both;
+ 
 }
 
 .spec_results thead
@@ -465,8 +465,10 @@ ul.column_menu:hover
 {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
-  padding-left:0.2em;
+  padding-left:0.5em;
   vertical-align: top;
+  width:auto ;
+  min-width : 121px ; 
 }
 
 .spec_results span
@@ -482,32 +484,45 @@ img#column_display_expand
   padding-top:0.6em;
 }
 
-.search_columns .widget_collection_container
+table.display_column th, table.display_column td
 {
-  padding:1em;
-  color:white;
+  text-align : left ;
+}
+
+fieldset.opened
+{
+  border: 1px solid #5BAABD ;
+  cursor : pointer ;
+}
+
+fieldset.closed
+{
+  cursor : pointer ;
+}
+
+#fld_spec table
+{
+  margin: 0.2em ;
+}
+
+#fld_spec table td
+{
+  vertical-align:top ;
+}
+
+.cols_title
+{
   font-weight:bold;
 }
 
-ul.column_menu > li
+.column_menu ul > li 
 {
-  width:300px;
-/*   border:2px solid red; */
-  float:left;
-  padding: 0.5em;
+  display: list-item ;
 }
 
-ul.column_menu > li .cols_title
+.column_menu ul > li:hover
 {
-  color:white;
-  font-size:large;
-  font-weight:bold;
-  margin-bottom:0.5em;
-}
-
-ul.column_menu > li > ul >li
-{
-  padding:0.2em;
+  background: #ececec ;
 }
 
 li.check span
