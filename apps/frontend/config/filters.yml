@@ -4,6 +4,8 @@ security:  ~
 # insert your own filters here
 tracking:
   class: trackingFilter
+timeout:
+  class: timeoutFilter
 
 cache:     ~
 common:
