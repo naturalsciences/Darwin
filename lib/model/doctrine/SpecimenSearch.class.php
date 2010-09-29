@@ -44,12 +44,14 @@ class SpecimenSearch extends BaseSpecimenSearch
   public function getAggregatedName($sep = ' / ')
   {
     $items = array(
-      $this->getTaxonName(),
-      $this->getChronoName(),
-      $this->getLithoName(),
-      $this->getLithologyName(),
-      $this->getMineralName()
-    );
+        $this->getCollectionName(),
+        $this->getTaxonName(),
+        $this->getChronoName(),
+        $this->getLithoName(),
+        $this->getLithologyName(),
+        $this->getMineralName()
+   );
+
     $items = array_filter($items);
     return implode($sep, $items);
   }  
