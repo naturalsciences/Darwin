@@ -44,6 +44,7 @@
       <?php endif;?>
       <script  type="text/javascript">
         $(document).ready(function () {
+          $('form#specimen_filter select.double_list_select-selected option').attr('selected', 'selected');
           $('body').duplicatable({
             duplicate_href: '<?php echo url_for('specimen/confirm');?>',
             duplicate_binding_type: 'live'
@@ -51,7 +52,6 @@
 
           $("#criteria_butt").click(function(){
             // Reselect all double list options that should be selected to be taken in account in the form submit
-            $('form#specimen_filter select.double_list_select-selected option').attr('selected', 'selected');
             // Submit the form with criteria = 1 -> telling we request the index template
             $('#specimen_filter').attr('action','<?php echo url_for('specimensearch/search?criteria=1');?>').submit();
           });
