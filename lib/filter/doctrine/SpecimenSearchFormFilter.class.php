@@ -398,7 +398,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   public function addGtuCodeColumnQuery($query, $field, $val)
   {
     if($val != '')
-      $query->andWhere("gtu_code = ?", $val);
+      $query->andWhere("LOWER(gtu_code) like ?", strtolower('%'.$val.'%'));
     return $query ;  
   }
 
