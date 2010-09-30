@@ -194,3 +194,23 @@ sps17:
    opened: true
    visible: true
    title_perso: Type of search  
+
+sps18:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: localisation
+   mandatory: false
+   order_by: 9
+   opened: false
+   visible: false
+   title_perso: Localisation
+
+sps19:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: container
+   mandatory: false
+   order_by: 10
+   opened: false
+   visible: false
+   title_perso: Container
