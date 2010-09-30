@@ -44,7 +44,7 @@ class UsersForm extends BaseUsersForm
       $this->useFields(array('title','family_name','given_name','additional_names','gender','people_id')) ;      
       $this->widgetSchema['people_id'] = new widgetFormButtonRef(array('model' => 'People',
                                                                 'method' => 'getFormatedName',
-                                                                'link_url' => 'people/choose',
+                                                                'link_url' => 'people/choose?with_js=1',
                                                                 'nullable' => true,
                                                                 'box_title' => $this->getI18N()->__('Choose Yourself'),
                                                                       )
