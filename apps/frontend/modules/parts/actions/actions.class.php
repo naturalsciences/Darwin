@@ -185,4 +185,31 @@ class partsActions extends DarwinActions
     $form->addComments($number);
     return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
+
+
+  public function executeEditMaintenance(sfWebRequest $request)
+  {
+    $main = Doctrine::getTable('CollectionMaintenance')->find($request->getParameter('id'));
+    $this->forward404unless($main);
+    $this->form = new CollectionMaintenanceForm($main);
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('collection_maintenance'));
+
+      if($this->form->isValid())
+      {
+        try
+        {
+          $this->form->save();
+          return $this->redirect('parts/edit?id='.$this->form->getObject()->getRecordId()); //Only true if no other maintenance than parts
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error); 
+        }
+      }
+    }
+  }
 }

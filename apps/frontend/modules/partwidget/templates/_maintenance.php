@@ -14,7 +14,7 @@
     <?php foreach($maintenances as $maintenance):?>
     <tr>
       <td>
-		<?php echo link_to($maintenance->getCategory(),'maintenance/edit?id='.$maintenance->getId(),array('popup'=>true)); ?>
+		<?php echo link_to($maintenance->getCategory(),'parts/editMaintenance?id='.$maintenance->getId(),array('popup'=>true)); ?>
       </td>
       <td><?php echo $maintenance->getActionObservation();?></td>
       <td class="datesNum"><?php echo $maintenance->getModificationDateTimeMasked(ESC_RAW);?></td>
@@ -29,7 +29,6 @@
 </table>
 
 <br />
-<?php echo image_tag('add_green.png');?> <?php echo link_to('Add','maintenance/index',array('popup'=>true)); ?>
 <?php else:?>
-  <?php echo __('Please save your part in order to add maintenances');?>
+  <?php echo __('Please save your part and use the "mass action" in order to add maintenances');?>
 <?php endif;?>

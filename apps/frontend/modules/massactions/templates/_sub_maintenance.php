@@ -1,4 +1,4 @@
-<table id="sub_form_<?php echo $mAction;?>">
+<table>
   <tbody>
     <tr>
       <th><?php echo $form['MassActionForm']['maintenance']['category']->renderLabel();?></th>

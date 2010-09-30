@@ -49,11 +49,12 @@ class IndividualSearch extends BaseIndividualSearch
   public function getAggregatedName($sep = ' / ')
   {
     $items = array(
-      $this->getTaxonName(),
-      $this->getChronoName(),
-      $this->getLithoName(),
-      $this->getLithologyName(),
-      $this->getMineralName()
+        $this->getCollectionName(),
+        $this->getTaxonName(),
+        $this->getIndividualTypeGroup(),
+        $this->getIndividualSex(),
+        $this->getIndividualState(),
+        $this->getIndividualStage(),
     );
     $items = array_filter($items);
     return implode($sep, $items);

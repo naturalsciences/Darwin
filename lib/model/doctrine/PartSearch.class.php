@@ -50,12 +50,16 @@ class PartSearch extends BasePartSearch
   public function getAggregatedName($sep = ' / ')
   {
     $items = array(
-      $this->getTaxonName(),
-      $this->getChronoName(),
-      $this->getLithoName(),
-      $this->getLithologyName(),
-      $this->getMineralName()
-    );
+        $this->getCollectionName(),
+        $this->getTaxonName(),
+        $this->getIndividualTypeGroup(),
+        $this->getIndividualSex(),
+        $this->getBuilding(),
+        $this->getFloor(),
+        $this->getRoom(),
+        $this->getRow(),
+        $this->getShelf(),
+      );
     $items = array_filter($items);
     return implode($sep, $items);
   }
