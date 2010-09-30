@@ -448,11 +448,10 @@ ul.column_menu:hover
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   vertical-align: top;
-  width:auto;
+  width:100%;
   min-width: 1024px ;
   border: 1px solid #5BAABD;
   clear:both;
- 
 }
 
 .spec_results thead
@@ -483,7 +482,7 @@ ul.column_menu:hover
   padding-left:0.5em;
   vertical-align: top;
   width:auto ;
-  min-width : 121px ; 
+/*  min-width : 121px ; */
 }
 
 .spec_results span
@@ -650,11 +649,11 @@ input:focus
 
 input.required_field
 {
-  border-right-color:red;
+  border-right-color:#CF4040;
   border-right-width:2px;
 }
 
 input.required_field:focus
 {
-  border-right-color:red;
+  border-right-color:#CF4040;
 }

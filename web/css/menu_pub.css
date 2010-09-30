@@ -96,18 +96,18 @@ h1.title
 {
   clear:both ;
   text-align: right;
-  padding-top : 1px ;
+/*  padding-top : 1px ;*/
 }
 
 .register_form input[type=password]
 {
-  background: white url(/images/key.png) no-repeat 3px 3px;
+  background: white url(/images/key.png) no-repeat 3px 0px;
   padding-left:2em;
 }
 
 .register_form input#login_username
 {
-  background: white url(/images/user.png) no-repeat 3px 3px;
+  background: white url(/images/user.png) no-repeat 3px 0px;
   padding-left:2em;
 }
 
@@ -119,20 +119,22 @@ h1.title
   background : #5baabd ;
   color : white ;
   height: 16px;
-  font-size: 9pt;  
+  font-size: 8.5pt;  
   margin : 1px;
 }
 
 #register
 {
-  width: 70px ;
-  padding: 0px 6px;  
-  margin-top: 1em ;
+  padding: 0px 6px;
+  font-size:8.5pt;
+  text-decoration:none;
 }
 
 .register_form input#login_bt
 {
   width: 35px ;
+  font-size:7pt;
+  padding-bottom:0.1em;
 }
 
 .register_form input#login_bt:hover, .register_form #register:hover
