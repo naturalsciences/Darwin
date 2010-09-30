@@ -66,6 +66,7 @@
       </table>
     </div>
     <?php endif ; ?>
+    <?php if($specimen->getTaxonRef() || $specimen->getChronoRef() || $specimen->getLithoRef() || $specimen->getMineralRef() || $specimen->getLithologyRef()):?>
     <h2 class="title"><?php echo __("Classifications") ?></h2>  
     <div class="borded">        
       <table>
@@ -221,10 +222,11 @@
               </div>          
             </td>
           </tr>
-        <?php endif ; ?>                          
+        <?php endif ; ?>
         </tbody>
       </table>      
     </div>
+    <?php endif;?>
     <h2 class="title"><?php echo __("Specimen Characteristics") ?></h2>  
     <div class="borded">        
       <table class="caract_table">
