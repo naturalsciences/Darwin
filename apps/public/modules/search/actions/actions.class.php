@@ -102,6 +102,10 @@ class searchActions extends DarwinActions
           if(!count($this->common_names))
             $this->common_names = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 
                                         'lithology' => array(),'mineralogy' => array()) ;
+          $listId = array() ;
+          foreach($this->search as $spec)
+             if ($spec->getGtuRef()!=0) $listId[] = $spec->getGtuRef() ;
+          $this->gtu = Doctrine::getTable('Gtu')->getCountries($listId);                                       
           return;
         } 
       }
@@ -168,30 +172,6 @@ class searchActions extends DarwinActions
     $form->setDefault('col_fields',$req_fields) ;
     return $flds;
   } 
-  
-  /**
-  * Return tags for a GTU without the country part
-  */
-  public function executeCompleteTag(sfWebRequest $request)
-  {
-    if($request->hasParameter('id') && $request->getParameter('id'))
-      $gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id') );
-    $this->forward404Unless($gtu);
-    $str = "" ;
-    foreach($gtu->TagGroups as $group)
-    {
-      if ($group->getSubGroupName() == 'country')
-      {
-        $str .= '<ul class="country_tags">';
-        $tags = explode(";",$group->getTagValue());
-        foreach($tags as $value)
-          if (strlen($value))
-            $str .=  '<li>' . trim($value).'</li>';
-        $str .= '</ul><div class="clear" />';
-      }
-    }
-    return $this->renderText($str); 
-  }  
    
   protected function defineFields()
   {

@@ -33,6 +33,7 @@
                                       'currentPage' => $currentPage,
                                       'pagerLayout' => $pagerLayout,
                                       'common_names' => $common_names,
+                                      'gtu' => $gtu,
                                       'columns' => $columns
                                      )
                                ); ?>
