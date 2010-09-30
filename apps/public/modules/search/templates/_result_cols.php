@@ -3,6 +3,7 @@
 $(document).ready(function () {
   $('#fld_spec legend').click(function()
   {
+    
     if( $(this).parent().attr('class') == 'closed')
     {
       $(this).parent().attr('class','opened') ;
