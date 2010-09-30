@@ -81,8 +81,8 @@ table#registration div.check_right
 
 .framed
 {
-  max-height: 200px;
-  height: 200px;
+  max-height: 185px;
+  height: 185px;
   overflow-y: auto;
   overflow-x: hidden;
 }
