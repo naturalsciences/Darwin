@@ -1102,6 +1102,11 @@ a.widget_row_delete
   margin-right:4px;
 }
 
+.spec_individuals a.row_delete
+{
+  padding-right:30px;
+}
+
 table.encoding tbody .widget_row_delete
 {
   vertical-align:middle;
