@@ -21,7 +21,7 @@
   </div>
   <div class="blue_line">
       <div class="login_zone">
-        <?php echo form_tag('register/index', array('class'=>'register_form'));?>
+        <?php echo form_tag('register/login', array('class'=>'register_form'));?>
         <?php include_component('login','MenuLogin') ; ?> 
         </form>
       </div>    

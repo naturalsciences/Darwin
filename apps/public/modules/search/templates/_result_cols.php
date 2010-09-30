@@ -24,7 +24,6 @@ $(document).ready(function () {
   $('#fld_spec').find('.expanded').show();    
 });
 </script>
-<?php $i=0; ?>
 <div id="fields">
 <fieldset id="fld_spec" class="opened">
   <legend>

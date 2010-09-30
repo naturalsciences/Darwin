@@ -43,4 +43,30 @@ class registerActions extends DarwinActions
     }
     $this->setTemplate('index');
   }
+  
+  public function executeLogin(sfWebRequest $request)
+  {
+    $this->form = new LoginForm();
+    if ($request->isMethod('post'))
+    {      
+      die($request->getParameter('login')) ;
+      $this->form->bind($request->getParameter('login'));
+      if ($this->form->isValid())
+      {
+        $this->getUser()->setAuthenticated(true);
+        sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('username').' '.$this->form->user->getId() );
+        $this->getUser()->setAttribute('db_user_id',$this->form->user->getId());
+        $this->getUser()->setAttribute('db_user_type',$this->form->user->getDbUserType());
+        $lang = Doctrine::getTable("UsersLanguages")->getPreferredLanguage($this->form->user->getId());
+        if($lang) //prevent from crashing if lang is set
+        {
+            $this->getUser()->setCulture($lang->getLanguageCountry());
+        }
+        $this->redirect('http://frontend_dev.php');
+      }
+      else
+        $this->redirect('@homepage') ;
+    }  
+  
+  }
 }
