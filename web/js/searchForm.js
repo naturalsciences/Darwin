@@ -97,5 +97,4 @@ function hide_or_show(li)
     //this line below is neccessary to avoid table border to be cut    
   }
   initIndividualColspan();
-$('#specimen_search_filters_col_fields').val();
 }
