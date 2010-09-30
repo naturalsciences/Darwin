@@ -266,7 +266,7 @@ class specimensearchActions extends DarwinActions
     foreach($this->parts as $part)
       $parts_ids[] = $part->getId();
 
-    $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray($this->table, $parts_ids);
+    $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts', $parts_ids);
     $this->codes = array();
     foreach($codes_collection as $code)
     {

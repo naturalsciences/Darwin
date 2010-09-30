@@ -163,7 +163,7 @@ input[type="submit"][class="search_submit"],input[type="button"][class="result"]
 {
   background: white url(/images/widget_button.png) no-repeat;
   border:0;
-  width:60px;
+  width:auto;
   height:21px;
   color:white;
   margin-top:1px;

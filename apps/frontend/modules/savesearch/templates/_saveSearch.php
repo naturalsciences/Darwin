@@ -26,7 +26,7 @@ $(document).ready(function () {
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
-            url: '<?php echo url_for('savesearch/saveSearch?source='.$source);?>'+ '/cols/' + column_str,
+            url: '<?php echo url_for("savesearch/saveSearch?source=".$source);?>'+ '/cols/' + column_str,
             data: $('.specimensearch_form').serialize(),
             method: 'post'
         },
