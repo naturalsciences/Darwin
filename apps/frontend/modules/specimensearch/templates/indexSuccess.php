@@ -23,7 +23,7 @@
           </div>
       </div>
       <div class="check_right" id="save_button"> 
-        <?php include_partial('savesearch/saveSearch', array('source' => ''));?>
+        <?php include_partial('savesearch/saveSearch');?>
       </div>
     </form>
   </div>

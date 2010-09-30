@@ -2,7 +2,6 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <div class="page">
-  <h1><?php echo __('Register to DaRWIN 2');?></h1>
   <?php echo form_tag('register/index', array('id'=>'register_form'));?>
     <h2 class="title"><?php echo __("Register") ?></h2>
     <div class="borded">

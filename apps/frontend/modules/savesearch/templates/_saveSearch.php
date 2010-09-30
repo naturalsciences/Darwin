@@ -4,7 +4,7 @@
 $(document).ready(function () {
 
   $("#save_search").click(function(){
-
+    source = '<?php if(isset($source)) echo $source;?>';
     column_str = ' ';
     if($('.column_menu ul > li.check').length)
     {
@@ -22,11 +22,12 @@ $(document).ready(function () {
     scroll(0,0) ;
 
     $('form.specimensearch_form select.double_list_select-selected option').attr('selected', 'selected');
-
+    if(source == '')
+      source = $('#specimen_search_filters_what_searched').val();
     $(this).qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
-            url: '<?php echo url_for("savesearch/saveSearch?source=".$source);?>'+ '/cols/' + column_str,
+            url: '<?php echo url_for("savesearch/saveSearch");?>/source/' + source + '/cols/' + column_str,
             data: $('.specimensearch_form').serialize(),
             method: 'post'
         },
