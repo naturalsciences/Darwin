@@ -134,7 +134,7 @@ h1
 
 h2.title
 {
-	background-color:#5baabd;
+	background-color:#3390a1;
 	height:20px;
 	padding-left: 0.6em;
 	padding-top: 0.4em;
@@ -155,7 +155,7 @@ h2.title
 
 form.publicsearch_form input:focus
 {
-  border:1px inset #5baabd;
+  border:1px inset #3390a1;
     
 }
 
@@ -585,7 +585,7 @@ li.uncheck span
   float:left;
   padding:0.2em;
   margin:0.3em;
-  border: 1px solid #5BAABD;
+  border: 1px solid #3390a1;
 }
 
 .clear_prop
@@ -643,7 +643,7 @@ input
 
 input:focus
 {
-  border-color:#5BAABD;
+  border-color:#3390a1;
   border-style:solid;
 }
 
