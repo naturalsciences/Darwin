@@ -274,4 +274,12 @@
       </table>
     </div>
   </div>
+  <div class="check_right"> 
+    <input type="button" id="close_butt" value="<?php echo __('Close this file'); ?>">
+  </div>  
+  <script>
+    $('#close_butt').click(function(){
+      window.close() ;
+    });
+  </script> 
 </div>

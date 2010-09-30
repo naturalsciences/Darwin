@@ -41,6 +41,7 @@ class specimensearchActions extends DarwinActions
     */ 
   public function executeSearch(sfWebRequest $request)
   {
+    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
     $this->is_specimen_search = false;
     // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('specimensearch', 'collection_name', $request);
@@ -250,12 +251,14 @@ class specimensearchActions extends DarwinActions
 
   public function executeIndividualTree(sfWebRequest $request)
   {
+    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;  
     $this->items = Doctrine::getTable('SpecimenIndividuals')
       ->getIndividualBySpecimen($request->getParameter('id'));
   }
 
   public function executePartTree(sfWebRequest $request)
   {
+    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
     $this->parts = Doctrine::getTable('SpecimenParts')
       ->findForIndividual($request->getParameter('id'));
     $this->individual = $request->getParameter('id') ;
