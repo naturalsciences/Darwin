@@ -33,7 +33,7 @@
             <td>
               <div class="tree_view">
                 <span class="line">
-                <?php echo __("Corrector") ; ?>: <span class="pager_nav"><?php echo $specimen->getCollectionMainManagerFormatedName() ; ?></span>
+                <?php echo __("Collection manager") ; ?>: <span class="pager_nav"><?php echo $specimen->getCollectionMainManagerFormatedName() ; ?></span>
                 </span>
                 <?php foreach($manager as $info) : ?>
                   <?php if($img = $info->getDisplayImage(1)) : ?>
@@ -48,7 +48,7 @@
           </tr>
         </tbody>
       </table>
-    </div>      
+    </div>    
     <?php if(count($common_names)) : ?>
     <h2 class="title"><?php echo __("Common Names") ?></h2>  
     <div class="borded">    
@@ -83,7 +83,7 @@
               <?php echo image_tag('info.png',"title=info class=info id=taxon_info");?>
             </td>
             <td class="view_level">
-              <span class="pager_nav"><?php echo $specimen->getTaxonLevelRef() ; ?></span>
+              <span class="pager_nav"><?php echo $specimen->getTaxonLevelName() ; ?></span>
             </td>
           </tr>
           <tr>
