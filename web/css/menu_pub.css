@@ -130,12 +130,12 @@ h1.title
   margin-top: 1em ;
 }
 
-.register_form input#login
+.register_form input#login_bt
 {
   width: 35px ;
 }
 
-.register_form input#login:hover, .register_form #register:hover
+.register_form input#login_bt:hover, .register_form #register:hover
 {
   color : #474747;
   border: 1px ridge #474747 ;  
