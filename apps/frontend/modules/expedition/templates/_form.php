@@ -61,7 +61,7 @@ $(document).ready(function ()
           </table>
           <div class='add_value'>
             <a href="<?php echo url_for('expedition/addMember'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-            <a class='add_member' href="<?php echo url_for('people/choose');?>"><?php echo __('Add Member');?></a>
+            <a class='add_member' href="<?php echo url_for('people/choose?with_js=1');?>"><?php echo __('Add Member');?></a>
           </div>
         </td>
       </tr>

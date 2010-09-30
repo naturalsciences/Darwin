@@ -63,10 +63,12 @@
                   <?php echo $item->getRockForm() ; ?>
                  <?php endif ; ?>                 
               </td>                                                                
-              <td rowspan="2">                
+              <td rowspan="2"> 
+                <?php if($user_allowed) : ?>               
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit this individual"))),'individuals/edit?id='.$item->getId());?>
                   <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this individual"))),'individuals/edit?spec_id='.$item->getSpecimenRef().
                   '&duplicate_id='.$item->getId(), array('class' => 'duplicate_link'));?>               
+                <?php endif ; ?>
               </td>
             </tr>
             <tr>

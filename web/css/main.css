@@ -79,9 +79,10 @@ table td.centered, table th.centered
 
 .qtip-content .page
 {
+  padding-top: 10px;
   margin-top: 15px;
   margin-left:0;
-  margin-right:0;
+  margin-right:0;  
 }
 
 h1
@@ -290,7 +291,7 @@ input[type="submit"][class="search_submit"]
 {
   background: white url(/images/widget_button.png) no-repeat;
   border:0;
-  width:73px;
+  width:auto;
   height:21px;
   color:white;
   margin-top:1px;

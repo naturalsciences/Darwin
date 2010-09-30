@@ -75,6 +75,7 @@ class collectionActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
+    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
   }
 
   public function executeNew(sfWebRequest $request)

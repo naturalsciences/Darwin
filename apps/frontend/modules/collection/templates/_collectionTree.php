@@ -34,7 +34,7 @@ $(document).ready(function () {
         <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
         <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
         <span><?php echo $col_item->getName();?>
-        <?php if(! $is_choose):?>
+        <?php if(! $is_choose && $user_allowed):?>
 	        <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
 	        <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
         <?php endif;?></span></div>
@@ -43,5 +43,7 @@ $(document).ready(function () {
       <?php echo str_repeat('</li></ul>',$col_item->getLevel());?>
     </div>
   <?php endforeach;?>
-  <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('collection/new') ?>"><?php echo __('New');?></a></div>
+  <?php if ($user_allowed): ?>
+    <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('collection/new') ?>"><?php echo __('New');?></a></div>
+  <?php endif ; ?>
 </div>

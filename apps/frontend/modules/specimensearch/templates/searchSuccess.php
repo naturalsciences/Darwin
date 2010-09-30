@@ -34,7 +34,8 @@
                                       'pagerLayout' => $pagerLayout,
                                       'is_specimen_search' => $is_specimen_search,
                                       'columns' => $columns,
-                                      'source' => $source
+                                      'source' => $source,
+                                      'user_allowed' => $user_allowed
                                      )
                                ); ?>
         </div>
