@@ -105,14 +105,14 @@ class searchActions extends DarwinActions
           $listId = array() ;
           foreach($this->search as $spec)
              if ($spec->getGtuRef()!=0) $listId[] = $spec->getGtuRef() ;
-          $this->gtu = Doctrine::getTable('Gtu')->getCountries($listId);                                       
+          $this->gtu = Doctrine::getTable('Gtu')->getCountries($listId);
           return;
         } 
       }
     }
     $this->setTemplate('index'); 
     if(! $this->form->isBound())
-      $this->form->addGtuTagValue(0);        
+      $this->form->addGtuTagValue(0);
   }   
   
   public function executeSearchResult(sfWebRequest $request)
