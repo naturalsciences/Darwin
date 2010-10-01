@@ -4,8 +4,7 @@
 <?php use_javascript('catalogue.js') ?>
 <?php use_javascript('button_ref.js') ?>
 
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'part','eid'=> $part->getId(), 'table' => 'specimen_parts')); ?>
-
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'part','eid'=> $part->getId(), 'table' => 'specimen_parts','query_options'=> array('col_ref'=> $specimen->getCollectionRef()))); ?>
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'part'=> $part ,'mode' => 'parts_edit') );?>
 
   <?php include_stylesheets_for_form($form) ?>
@@ -37,7 +36,7 @@
         'widgets' => $widgets,
         'category' => 'partwidget',
         'columns' => 2,
-        'options' => array('form' => $form)
+        'options' => array('form' => $form, 'col_ref' => $specimen->getCollectionRef() )
       )); ?>
       <p class="clear"></p>
       <p class="form_buttons">

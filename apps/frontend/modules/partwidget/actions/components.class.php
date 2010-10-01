@@ -59,6 +59,18 @@ class partwidgetComponents extends sfComponents
 
   public function executeRefCodes()
   {
+    $this->code_copy = false;
+    if($this->form->getObject()->isNew())
+    {
+      if(! isset($this->col_ref))
+      {
+        $this->col_ref =  $this->getRequest()->getParameter('col_ref');
+      }
+      $col = Doctrine::getTable('Collections')->find($this->col_ref);
+      if($col)
+        $this->code_copy = $col->getCodePartCodeAutoCopy();
+    }
+
     $this->defineForm();
   }
 
