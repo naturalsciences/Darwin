@@ -20,7 +20,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'mineral_level_name'));
 
     $this->addPagerItems();
-    
+
     $this->widgetSchema['gtu_code'] = new sfWidgetFormInputText();
     $this->widgetSchema['taxon_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['taxon_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
@@ -28,7 +28,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
         'add_empty' => 'All'
       ));
-      
+
     $this->widgetSchema['lithology_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['lithology_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
