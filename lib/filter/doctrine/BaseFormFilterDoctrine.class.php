@@ -327,7 +327,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	    ->from('ClassVernacularNames cvn')
 	    ->leftJoin('cvn.VernacularNames tvn')  
       ->andWhere('cvn.referenced_relation = ?', $relation);      
-	  $this->addNamingColumnQuery($q, 'VernacularNames', 'name_ts', $val, 'tvn');
+	  $this->addNamingColumnQuery($q, 'vernacular_names', 'name_ts', $val, 'tvn');
     $results = $q->execute(); 
 	  $list = "" ;
     foreach($results as $key=>$result) 
