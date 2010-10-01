@@ -11,7 +11,17 @@ class myUser extends sfBasicSecurityUser
   {
     return $this->getAttribute('db_user_type');
   }
-  
+
+  public function setCulture($culture)
+  {
+    if(in_array($culture, array('en','fr','nl')))
+    {
+      parent::setCulture($culture);
+    }
+    else
+      parent::setCulture('en');
+  }
+
   /**
    * Save the visible columns in the search
    * @param array $columns Array of columns names
