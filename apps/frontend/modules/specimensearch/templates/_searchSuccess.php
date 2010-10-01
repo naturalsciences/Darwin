@@ -67,12 +67,12 @@
                 <?php endif;?>
               </td>
 
-              <?php include_partial('result_content_specimen', array('source'=>$source,'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+              <?php include_partial('result_content_specimen', array('item_ref'=>$itemRef, 'source'=>$source,'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
-                <?php include_partial('result_content_individual', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+                <?php include_partial('result_content_individual', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <?php if($source == 'part'):?>
-                <?php include_partial('result_content_part', array('specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+                <?php include_partial('result_content_part', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <td rowspan="2">
               <?php if($user_allowed) : ?>
