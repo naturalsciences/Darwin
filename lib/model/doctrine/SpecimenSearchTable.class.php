@@ -33,6 +33,13 @@ class SpecimenSearchTable extends Doctrine_Table
       'rockform' => 'rockform',
       'tools' => 'tools',
       'methods' => 'methods',
+      'building' => 'localisation',
+      'floor' => 'localisation',
+      'room' => 'localisation',
+      'row' => 'localisation',
+      'shelf' => 'localisation',
+      'container' => 'container',
+      'sub_container' => 'container',
     );
 
     public static function getInstance()

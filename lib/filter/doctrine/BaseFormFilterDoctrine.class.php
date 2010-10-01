@@ -80,7 +80,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       $pg_array_string  = '';
       foreach($terms as $term)
             $pg_array_string .= $conn_MGR->quote($term, 'string').',';
-
+      $conn->exec('SELECT set_limit(0.1)');
       $pg_array_string = substr($pg_array_string, 0, -1); //remove last ','
       $statement = $conn->prepare("SELECT vt.anyelement as search, word from fct_explode_array(array[$pg_array_string]) as vt  
             LEFT JOIN words on word % vt.anyelement
@@ -327,7 +327,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
 	    ->from('ClassVernacularNames cvn')
 	    ->leftJoin('cvn.VernacularNames tvn')  
       ->andWhere('cvn.referenced_relation = ?', $relation);      
-	  $this->addNamingColumnQuery($q, 'VernacularNames', 'name_ts', $val, 'tvn');
+	  $this->addNamingColumnQuery($q, 'vernacular_names', 'name_ts', $val, 'tvn');
     $results = $q->execute(); 
 	  $list = "" ;
     foreach($results as $key=>$result) 

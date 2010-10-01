@@ -7,7 +7,7 @@ class Codes extends BaseCodes
 {
   public static function getCategories()
   {
-    return array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.');
+    return array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.', 'inventory'=> 'Invent.');
   }
   public function getCodeFormated()
   {

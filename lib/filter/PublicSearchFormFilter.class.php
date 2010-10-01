@@ -89,7 +89,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                        'trim' => true
                                                                       )
                                                                 );                                                                
-    $this->validatorSchema['taxon_level_ref'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['taxon_level_ref'] = new sfValidatorInteger(array('required' => false));
     $this->validatorSchema['chrono_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
@@ -98,16 +98,16 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                        'trim' => true
                                                                       )
                                                                 );                                                                
-    $this->validatorSchema['chrono_level_ref'] = new sfValidatorString(array('required' => false));    
+    $this->validatorSchema['chrono_level_ref'] = new sfValidatorInteger(array('required' => false));    
     $this->validatorSchema['litho_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['litho_common_name'] = new sfValidatorString(array('required' => false,
+    $this->validatorSchema['litho_common_name'] = new sfValidatorInteger(array('required' => false,
                                                                        'trim' => true
                                                                       )
                                                                 );                                                                
-    $this->validatorSchema['litho_level_ref'] = new sfValidatorString(array('required' => false));  
+    $this->validatorSchema['litho_level_ref'] = new sfValidatorInteger(array('required' => false));  
     $this->validatorSchema['lithology_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
@@ -115,8 +115,8 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->validatorSchema['lithology_common_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
-                                                                );                                                                
-    $this->validatorSchema['lithology_level_ref'] = new sfValidatorString(array('required' => false));  
+                                                                );
+    $this->validatorSchema['lithology_level_ref'] = new sfValidatorInteger(array('required' => false));  
     $this->validatorSchema['mineral_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
@@ -124,8 +124,8 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->validatorSchema['mineral_common_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
-                                                                );                                                                
-    $this->validatorSchema['mineral_level_ref'] = new sfValidatorString(array('required' => false));                                                                 
+                                                                );
+    $this->validatorSchema['mineral_level_ref'] = new sfValidatorInteger(array('required' => false));
 
     $subForm = new sfForm();
     $this->embedForm('Tags',$subForm);   
@@ -289,5 +289,5 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $query->andWhere('collection_is_public = true') ;
     $query->limit($this->getCatalogueRecLimits());
     return $query;
-  }  
+  }
 }

@@ -8,6 +8,7 @@ class GtuTable extends DarwinTable
     @ListId an array of Id */    
   public function getCountries($listId)
   {
+    if(empty($listId)) return array();
     $q = Doctrine_Query::create()->
        from('TagGroups t')->  
        innerJoin('t.Gtu g')->
@@ -16,7 +17,7 @@ class GtuTable extends DarwinTable
        WhereIn('g.id',$listId);
        
    $result = $q->execute() ;
-   $coutries = array() ;
+   $countries = array() ;
    foreach($result as $tag)
    {
       $str = '<ul class="country_tags">';

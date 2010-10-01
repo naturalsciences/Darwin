@@ -14,13 +14,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
 
 
-      $this->useFields(array('gtu_code','gtu_from_date','gtu_to_date',
+      $this->useFields(array('building','floor','room','row','shelf','gtu_code','gtu_from_date','gtu_to_date',
         'taxon_name', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
         'chrono_level_name', 'lithology_name', 'lithology_level_ref', 'lithology_level_name', 'mineral_name', 'mineral_level_ref',
         'mineral_level_name'));
 
     $this->addPagerItems();
-    
+
     $this->widgetSchema['gtu_code'] = new sfWidgetFormInputText();
     $this->widgetSchema['taxon_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['taxon_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
@@ -28,7 +28,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
         'add_empty' => 'All'
       ));
-      
+
     $this->widgetSchema['lithology_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['lithology_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
@@ -75,29 +75,29 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['taxon_level_ref'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['taxon_level_ref'] = new sfValidatorInteger(array('required' => false));
     $this->validatorSchema['chrono_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['chrono_level_ref'] = new sfValidatorString(array('required' => false));    
+    $this->validatorSchema['chrono_level_ref'] = new sfValidatorInteger(array('required' => false));    
     $this->validatorSchema['litho_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['litho_level_ref'] = new sfValidatorString(array('required' => false));  
+    $this->validatorSchema['litho_level_ref'] = new sfValidatorInteger(array('required' => false));  
     $this->validatorSchema['lithology_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['lithology_level_ref'] = new sfValidatorString(array('required' => false));  
+    $this->validatorSchema['lithology_level_ref'] = new sfValidatorInteger(array('required' => false));  
     $this->validatorSchema['mineral_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['mineral_level_ref'] = new sfValidatorString(array('required' => false));              
-//    $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
-    $this->hasJoinTaxa = false;
+    $this->validatorSchema['mineral_level_ref'] = new sfValidatorInteger(array('required' => false));              
+
+
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));
     $maxDate->setStart(false);
@@ -172,7 +172,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   /**
   * Individuals Fields
   */
-    $this->is_individual_joined = false;
     $this->widgetSchema['type'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
         'table_method' => 'getDistinctTypeGroups',
@@ -239,6 +238,60 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     ));
     $this->validatorSchema['rockform'] = new sfValidatorPass();
 
+    $this->widgetSchema['container'] = new sfWidgetFormInput();
+    $this->validatorSchema['container'] = new sfValidatorString(array('required' => false));
+
+    $this->widgetSchema['sub_container'] = new sfWidgetFormInput();
+    $this->validatorSchema['sub_container'] = new sfValidatorString(array('required' => false));
+
+
+
+
+    $this->widgetSchema['building'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'SpecimenParts',
+      'table_method' => 'getDistinctBuildings',
+      'method' => 'getBuildings',
+      'key_method' => 'getBuildings',
+      'add_empty' => true,
+    ));
+    $this->validatorSchema['building'] = new sfValidatorString(array('required' => false));
+
+    $this->widgetSchema['floor'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'SpecimenParts',
+      'table_method' => 'getDistinctFloors',
+      'method' => 'getFloors',
+      'key_method' => 'getFloors',
+      'add_empty' => true,
+    ));
+    $this->validatorSchema['floor'] = new sfValidatorString(array('required' => false));
+
+    $this->widgetSchema['row'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'SpecimenParts',
+      'table_method' => 'getDistinctRows',
+      'method' => 'getRows',
+      'key_method' => 'getRows',
+      'add_empty' => true,
+    ));
+    $this->validatorSchema['row'] = new sfValidatorString(array('required' => false));
+
+    $this->widgetSchema['room'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'SpecimenParts',
+      'table_method' => 'getDistinctRooms',
+      'method' => 'getRooms',
+      'key_method' => 'getRooms',
+      'add_empty' => true,
+    ));
+    $this->validatorSchema['room'] = new sfValidatorString(array('required' => false));
+
+    $this->widgetSchema['shelf'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'SpecimenParts',
+      'table_method' => 'getDistinctShelfs',
+      'method' => 'getShelfs',
+      'key_method' => 'getShelfs',
+      'add_empty' => true,
+    ));
+    $this->validatorSchema['shelf'] = new sfValidatorString(array('required' => false));
+
     $subForm = new sfForm();
     $this->embedForm('Codes',$subForm);
 
@@ -247,6 +300,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
 
+
   public function addCodeValue($num)
   {
       $form = new CodeLineForm();
@@ -254,12 +308,39 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $this->embedForm('Codes', $this->embeddedForms['Codes']);
   }
 
-  public function joinIndividual($query)
+
+  public function addContainerColumnQuery($query, $field, $val)
   {
-    $alias = $query->getRootAlias();
-     if(! $this->is_individual_joined)
-        $query->leftJoin($alias.'.SpecimenIndividual i');
-    $this->is_individual_joined = true;
+    if(trim($val) != '')
+    {
+      $values = explode(' ',$val);
+      $query_value = array();
+      foreach($values as $value)
+      {
+        if(trim($value) != '')
+          $query_value[] = '%'.strtolower($value).'%';
+      }
+      $query_array = array_fill(0,count($query_value),'lower(container) like ?');
+      $query->andWhere( implode(' or ',$query_array) ,$query_value);
+    }
+    return $query ;
+  }
+
+  public function addSubContainerColumnQuery($query, $field, $val)
+  {
+    if(trim($val) != '')
+    {
+      $values = explode(' ',$val);
+      $query_value = array();
+      foreach($values as $value)
+      {
+        if(trim($value) != '')
+          $query_value[] = '%'.strtolower($value).'%';
+      }
+      $query_array = array_fill(0,count($query_value),'lower(sub_container) like ?');
+      $query->andWhere( implode(' or ',$query_array) ,$query_value);
+    }
+    return $query ;
   }
 
   public function addToolsColumnQuery($query, $field, $val)
@@ -284,7 +365,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-//       $this->joinIndividual($query);
       if(is_array($val))
         $query->andWhereIn('individual_sex',$val);
       else
@@ -297,7 +377,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-//       $this->joinIndividual($query);
       if(is_array($val))
         $query->andWhereIn('individual_type_search',$val);
       else
@@ -310,7 +389,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-//       $this->joinIndividual($query);
       if(is_array($val))
         $query->andWhereIn('individual_stage',$val);
       else
@@ -323,7 +401,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-//       $this->joinIndividual($query);
       if(is_array($val))
         $query->andWhereIn('individual_state',$val);
       else
@@ -336,7 +413,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-//       $this->joinIndividual($query);
       if(is_array($val))
         $query->andWhereIn('individual_social_status',$val);
       else
@@ -349,11 +425,70 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if($val != '')
     {
-//       $this->joinIndividual($query);
       if(is_array($val))
         $query->andWhereIn('individual_rock_form',$val);
       else
         $query->andWhere('individual_rock_form = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addBuildingColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      if(is_array($val))
+        $query->andWhereIn('building',$val);
+      else
+        $query->andWhere('building = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addFloorColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      if(is_array($val))
+        $query->andWhereIn('floor',$val);
+      else
+        $query->andWhere('floor = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addRoomColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      if(is_array($val))
+        $query->andWhereIn('room',$val);
+      else
+        $query->andWhere('room = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addRowColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      if(is_array($val))
+        $query->andWhereIn('row',$val);
+      else
+        $query->andWhere('row = ?',$val);
+    }
+    return $query ;
+  }
+
+  public function addShelfColumnQuery($query, $field, $val)
+  {
+    if($val != '')
+    {
+      if(is_array($val))
+        $query->andWhereIn('shelf',$val);
+      else
+        $query->andWhere('shelf = ?',$val);
     }
     return $query ;
   }

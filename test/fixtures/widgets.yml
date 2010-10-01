@@ -1251,3 +1251,25 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Methods
+    u1sps18:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: localisation
+        mandatory: false
+        order_by: 9
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Localisation
+    u1sps19:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: container
+        mandatory: false
+        order_by: 10
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Container
