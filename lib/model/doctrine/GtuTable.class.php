@@ -16,7 +16,7 @@ class GtuTable extends DarwinTable
        WhereIn('g.id',$listId);
        
    $result = $q->execute() ;
-   $coutries = array() ;
+   $countries = array() ;
    foreach($result as $tag)
    {
       $str = '<ul class="country_tags">';
