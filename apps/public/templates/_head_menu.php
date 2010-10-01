@@ -1,4 +1,4 @@
-<div class="header_menu">
+<td class="header_menu">
   <div class="menu_top">
     <table>
       <tr>
@@ -30,4 +30,4 @@
       </tr>
     </table>    
   </div>
-</div>
+</td>

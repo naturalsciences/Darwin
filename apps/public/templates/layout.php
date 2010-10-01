@@ -10,11 +10,19 @@
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body>
-    <?php include_partial('global/head_menu') ?>
-    <div class="main">
-      <?php echo $sf_content ?>
-    </div>
-    <?php include_partial('global/foot_menu') ?>
+    <table class="all_content">
+      <tr>
+        <?php include_partial('global/head_menu') ?>
+      </tr>
+      <tr>
+        <td class="main">
+          <?php echo $sf_content ?>
+        </td>
+      </tr>
+      <tr>
+        <?php include_partial('global/foot_menu') ?>
+      </tr>
+    </table>
     <script type="text/javascript">
     $(document).ready(function () {
       attachHelpQtip('body');
