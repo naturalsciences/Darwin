@@ -4,6 +4,13 @@ else $record_ref = "";
 
 if(!isset($table)) $table = '';
 else $table = '&table='.$table;
+
+$other_query = '';
+if(isset($query_options))
+{
+  $other_query = http_build_query($query_options->getRawValue());
+  if($other_query != '') $other_query = '&'.$other_query;
+}
 ?>
 <script type="text/javascript">
 
@@ -12,7 +19,7 @@ $(document).ready(function () {
   {
     change_order_url: '<?php echo url_for('widgets/changeOrder?category='.$category.$record_ref);?>',
     change_status_url: '<?php echo url_for('widgets/changeStatus?category='.$category.$record_ref);?>',
-    reload_url: '<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref);?>',
+    reload_url: '<?php echo url_for('widgets/reloadContent?category='.$category.$record_ref.$other_query);?>',
     position_url: '<?php echo url_for('widgets/getWidgetPosition?category='.$category.$record_ref);?>',
     collection_img_up: '<?php echo  image_path('widgets_expand_up_button.png');?>',
     collection_img_down: '<?php echo  image_path('widget_expand_button.png');?>'
@@ -37,7 +44,7 @@ else{e.value="no";location.reload();}
 	    <?php if(! $widget->getVisible()) $has_one_visible = true;?>
             <div class="widget_preview" <?php if($widget->getVisible()) echo 'style="display:none"';?>
                 id="boardprev_<?php echo $widget->getGroupName();?>">
-              <a href="<?php echo url_for('widgets/addWidget?widget='.$widget->getGroupName()."&category=".$category.$record_ref.$table);?>">
+              <a href="<?php echo url_for('widgets/addWidget?widget='.$widget->getGroupName()."&category=".$category.$record_ref.$table.$other_query);?>">
                 <?php echo image_tag('widged_preview_1.png','alt='.$widget->getGroupName());?>
                 <span class="widget_prev_title"><?php echo $widget->getTitlePerso();?></span>
               </a>

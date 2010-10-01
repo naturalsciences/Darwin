@@ -1,3 +1,6 @@
+<?php if($code_copy):?>
+<div class="warn_message"><?php echo __("The specimen code will be copied automaticaly.");?></div>
+<?php endif;?>
 <table  class="property_values">
   <thead style="<?php echo ($form['Codes']->count() || $form['newCode']->count())?'':'display: none;';?>">
     <tr>
