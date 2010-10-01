@@ -352,6 +352,7 @@ class specimensearchActions extends DarwinActions
 
     if($source != 'specimen')
     {
+      unset($this->columns['specimen']['type']);
       $this->columns['individual'] = array(
         'individual_type' => array(
           'individual_type_group',

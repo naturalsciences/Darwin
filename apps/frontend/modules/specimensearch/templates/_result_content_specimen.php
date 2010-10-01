@@ -49,13 +49,15 @@
         </script>
       <?php endif ; ?>&nbsp;
     </td>
-    <td class="col_type">
-      <?php if($specimen->getWithTypes()) : ?>
-        <?php echo image_tag('blue_favorite_on.png', array('class'=> 'tree_cmd with_type')) ; ?>
-      <?php else : ?>
-        <?php echo image_tag('blue_favorite_off.png', array('class'=> 'tree_cmd with_type')) ; ?>
-      <?php endif ; ?>&nbsp;
-    </td>        
+   <?php if($source=="specimen"):?>
+      <td class="col_type">
+        <?php if($specimen->getWithTypes()) : ?>
+          <?php echo image_tag('blue_favorite_on.png', array('class'=> 'tree_cmd with_type')) ; ?>
+        <?php else : ?>
+          <?php echo image_tag('blue_favorite_off.png', array('class'=> 'tree_cmd with_type')) ; ?>
+        <?php endif ; ?>&nbsp;
+      </td>        
+    <?php endif;?>
     <td class="col_gtu">
       <?php if($specimen->getGtuRef() > 0) : ?>
         <?php if($specimen->getGtuTagValuesIndexed() != "") : ?>
