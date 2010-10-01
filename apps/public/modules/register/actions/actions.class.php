@@ -31,6 +31,16 @@ class registerActions extends DarwinActions
         {
           $this->user = $this->form->save();
           $this->user->addUserWidgets();
+          $this->getUser()->setAuthenticated(true);
+          sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('user_name').' '.$this->user->getId() );
+          $this->getUser()->setAttribute('db_user_id',$this->user->getId());
+          $this->getUser()->setAttribute('db_user_type',$this->user->getDbUserType());
+          $lang = Doctrine::getTable("UsersLanguages")->getPreferredLanguage($this->user->getId());
+          if($lang) //prevent from crashing if lang is set
+          {
+              $this->getUser()->setCulture($lang->getLanguageCountry());
+          }
+          $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
         }
         catch(Doctrine_Exception $ne)
         {
