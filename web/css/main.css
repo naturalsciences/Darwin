@@ -64,6 +64,10 @@ table td.centered, table th.centered
   display:none;
 }
 
+.qtip .page
+{
+  margin-top:0;
+}
 .page
 {
   padding-top: 60px;
