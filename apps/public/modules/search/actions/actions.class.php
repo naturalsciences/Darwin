@@ -111,7 +111,7 @@ class searchActions extends DarwinActions
       }
     }
     $this->setTemplate('index'); 
-    $this->form->addGtuTagValue(0);        
+    $this->form->addGtuTagValue(0);
   }   
   
   public function executeSearchResult(sfWebRequest $request)

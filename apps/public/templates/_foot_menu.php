@@ -1,5 +1,5 @@
 <div class="menu_bottom">
   <div class="check_right">
-    fin
+    <?php echo ('En | Fr | Ne') ; ?>
   </div>  
 </div>

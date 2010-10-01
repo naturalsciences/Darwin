@@ -1,45 +1,39 @@
 .menu_top
 {
-  background: #474747 url(/images/photo_bckg.jpg) fixed no-repeat; 
+  background: #474747 url(/images/photo_bckg.jpg) no-repeat; 
   background-position:center top;
-  height: 120px;
+  height: 151px;
 }
 
-.header_menu
+.main
 {
-  margin-bottom: -140px;
-}
-
-#wrapper
-{
-  min-height: 100%;
-}
-
-#main
-{
-  overflow:auto;
-	padding-bottom: 50px ;
-	padding-top : 140px ;
+  margin-top : 15px ;
+  min-height: 600px ;
 }
 
 .menu_bottom
 {
-  background: #404040 ; 
+  background: #404040 repeat-y; 
   position: relative;
-	margin-top: -50px; /* negative value of footer height */
-	height: 50px;
+	min-height: 50px ;
 	clear:both;  
 }
 
-.table_menu
+.menu_top table
 {
-  width:800px;
-  font-size: 16pt ;
+  width:700px;
+  font-size: 12pt ;
   margin-left:auto;
-  margin-right: auto;   
+  margin-right: auto;  
 }
 
-.table_menu li 
+.menu_top table td
+{
+  vertical-align: bottom ; 
+  float: right ;
+}
+
+.menu_link > li 
 {
   min-height:1em;
   min-width:1em;
@@ -47,109 +41,143 @@
   cursor: pointer;
   float:left;
   padding:0.2em;
-  margin:0.3em;
-  color: white ;
+  margin:0.7em;
 }
-.table_menu li a
+
+.menu_link > li > a
 {
-  color: white ;
-  text-decoration : none ;  
+  text-decoration: none ;  
+  color: #d8d5d5 ;  
 } 
 
-.table_menu li a:hover
+.menu_link > li > a:hover
 {
-  color: red ;
-  text-decoration: underline ;
-}
-
-h1.title
-{
-  font-size: 16pt ;
-  margin-top : 1em ;  
-}
+  text-decoration: underline ;  
+  color: #FFFFFF ;
+} 
 
 .blue_line
 {
   z-index: 400; 
-  background: #3390a1;
-  height: 20px ;
+  background:  #3390A1 repeat-x;
+  height: 23px ;
   text-align : center ;  
 }
 
-.blue_line div
+.blue_line_right
 {
-  margin-left:auto;
-  margin-right:auto;
-  width: 1024px ;
+  z-index: 400; 
+  background: #3390A1 url(/images/corner.png) no-repeat ;
+  height: 32px ;
+}
+
+.blue_line table td
+{
+  width:50% ;
+  height: 32px ;    
 }
 
 /* style for the login section */
-.register_form table
-{
-  position: relative ;
-  float:right;
-  vertical-align: middle ;
-  width : 100px ;  
-}
 
-.register_form table tr td
+.register_form li
 {
-  clear:both ;
-  text-align: right;
-/*  padding-top : 1px ;*/
+  float:left; 
+  height:32px ;
+  text-decoration:none;   
+  vertical-align:middle ;
 }
 
 .register_form input[type=password]
 {
   background: white url(/images/key.png) no-repeat 3px 0px;
   padding-left:2em;
+  background-color: white ;
 }
 
 .register_form input#login_username
 {
   background: white url(/images/user.png) no-repeat 3px 0px;
   padding-left:2em;
+  background-color: white ;  
+}
+.test
+{
+  border: 1px ridge white ;
 }
 
-.register_form input, .register_form a
+.register_form input
 {
   border: 1px ridge white ;
   -moz-border-radius: 5px 5px 5px 5px;
   -webkit-border-radius: 5px 5px 5px 5px;	  
-  background : #5baabd ;
-  color : white ;
-  height: 16px;
-  font-size: 8.5pt;  
-  margin : 1px;
+  background-color : #5baabd ;
 }
 
-#register
+.register_form #register a
 {
-  padding: 0px 6px;
-  font-size:8.5pt;
-  text-decoration:none;
+  color: black ;
+  text-decoration: none ;
+  position: absolute;
+  margin-top : 9px;
+  width:130px;
+  font-size: 9pt;     
+  height: 14px;  
 }
 
-.register_form input#login_bt
+.register_form #login_bt a
 {
-  width: 35px ;
-  font-size:7pt;
-  padding-bottom:0.1em;
+  color: black ;
+  text-decoration: none ;
+  position: absolute;
+  margin-top : 9px;
+  width:36px;
+  font-size: 9pt;     
+  height: 14px;  
 }
 
-.register_form input#login_bt:hover, .register_form #register:hover
+.register_form #register
 {
-  color : #474747;
-  border: 1px ridge #474747 ;  
+  background-image: url(/images/button_blue.png)   ;
+  background-position: center center ;
+  background-repeat : no-repeat ;
+  width:132px ;  
+}
+
+.register_form #login_bt
+{
+  background-image: url(/images/next_button_blue.png)   ;
+  background-position: center center ;
+  background-repeat : no-repeat ; 
+  width:36px ;
+  font-size:7pt;  
+}
+
+#login_bt a:hover, #register a:hover
+{
+  color : #474747; 
+  text-decoration: underline ;  
 }
 
 input.small 
 {
   margin : 1px;
   width:110px;  
-  height: 10px;
+  margin-top : 7px;   
+  height: 14px;
   font-size: 9pt;   
-  color : black ;  
-  margin-top : 2px;  
+  color : black ;   
 }
 
+.menu_bottom div
+{
+  color : #d8d5d5 ;
+  text-decoration: none ;   
+  margin-right : 1em ;
+}
+
+.menu_bottom div:hover
+{
+  cursor : pointer ;
+  color : white ;
+  text-decoration: underline ;    
+}

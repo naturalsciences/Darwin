@@ -2,7 +2,7 @@ html, body
 {
   min-width: 1024px;
   font-size: 10pt;
-  font-family:sans-serif; 
+  font-family: Arial,Regular,sans-serif;
   height: 100%;  
 }
 

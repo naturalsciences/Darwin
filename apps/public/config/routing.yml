@@ -14,3 +14,7 @@ default_index:
 
 default:
   url:   /:module/:action/*
+
+frontend:
+  url: http://127.0.0.1/frontend_dev.php
+  param: { module:board, action: index }

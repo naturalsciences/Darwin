@@ -24,7 +24,7 @@ class GtuTable extends DarwinTable
       foreach($tags as $value)
         if (strlen($value))
           $str .=  '<li>' . trim($value).'</li>';
-      $str .= '</ul><div class="clear" />';
+      $str .= '</ul>';
       $countries[$tag->getGtuRef()] = $str ;
    }
    return $countries ;     

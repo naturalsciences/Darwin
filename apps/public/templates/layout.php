@@ -11,10 +11,8 @@
   </head>
   <body>
     <?php include_partial('global/head_menu') ?>
-    <div id="wrapper">
-      <div id="main">
-        <?php echo $sf_content ?>
-      </div>
+    <div class="main">
+      <?php echo $sf_content ?>
     </div>
     <?php include_partial('global/foot_menu') ?>
     <script type="text/javascript">
