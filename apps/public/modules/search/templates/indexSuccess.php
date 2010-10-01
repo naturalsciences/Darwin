@@ -3,6 +3,7 @@
 <h1><?php echo __("Specimen searchs List");?></h1>
 <?php echo form_tag('search/search', array('class'=>'publicsearch_form'));?>
   <h2 class="title"><?php echo __("Classifications") ?></h2>
+  <?php echo $form->renderGlobalErrors(); ?>
   <div class="borded">
     <?php echo $form->renderHiddenFields(); ?>
     <table id="classifications">
