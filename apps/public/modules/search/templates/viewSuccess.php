@@ -27,7 +27,9 @@
               </div>
               <div class="line">
                 <?php echo __("Institution") ; ?>: <span class="pager_nav"><?php echo $institute->getFamilyName() ; ?></span>
-                (<span class="pager_nav"><?php echo $institute->getAdditionalNames() ; ?></span>)
+                <?php if ($institute->getAdditionalNames()) : ?>
+                  (<span class="pager_nav"><?php echo $institute->getAdditionalNames() ; ?></span>)
+                <?php endif ; ?>
               </div>            
             </td>
             <td>
