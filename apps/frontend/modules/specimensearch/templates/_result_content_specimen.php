@@ -94,17 +94,39 @@
       <?php endif ; ?>
     </td> 
     <td class="col_codes">
-      <?php foreach($codes as $key=>$code):?>
-        <?php if ($code->getRecordId() === $specimen->getSpecRef()) : ?>
-          <?php if ($code->getCodeCategory() == 'main' ) : ?>
-            <?php echo ('<b>'.$code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().
-            $code->getCodeSuffix()."</b><br />") ; ?>
-          <?php else : ?>
-            <?php echo ($code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().
-            $code->getCodeSuffix()."<br />") ; ?>  
-          <?php endif ; ?>
-        <?php endif ; ?>
-      <?php endforeach; ?>
+      <?php if(isset($codes[$specimen->getSpecRef()])):?>
+        <?php if(count($codes[$specimen->getSpecRef()]) <= 3):?>
+          <?php echo image_tag('info-bw.png',"title=info class=info");?>
+        <?php else:?>
+          <?php echo image_tag('info.png',"title=info class=info id=spec_code_".$specimen->getSpecRef()."_info");?>
+          <script type="text/javascript">
+            $(document).ready(function () {
+              $('#spec_code_<?php echo $specimen->getSpecRef();?>_info').click(function() 
+              {
+                item_row=$(this).closest('td');
+                console.log(item_row.find('li .code_supp:hidden'));
+                if(item_row.find('li.code_supp:hidden').length)
+                {
+                  item_row.find('li.code_supp').removeClass('hidden');
+                }
+                else
+                {
+                  item_row.find('li.code_supp').addClass('hidden');
+                }
+              });
+            });
+          </script>
+        <?php endif;?>
+        <ul>
+        <?php $i=0; foreach($codes[$specimen->getSpecRef()] as $key=>$code):?>
+          <li class="<?php if($i++ >= 3) echo "hidden code_supp";?>" >
+            <?php if($code->getCodeCategory() == 'main' ): ?><strong><?php endif;?>
+              <?php echo $code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().$code->getCodeSuffix(); ?>
+            <?php if($code->getCodeCategory() == 'main' ): ?></strong><?php endif;?>
+           </li>
+        <?php endforeach; ?>
+        </ul>
+      <?php endif;?>
     </td>
     <td  class="col_chrono">
       <?php if($specimen->getChronoRef() > 0) : ?>
@@ -112,6 +134,7 @@
         <a href="<?php echo url_for('chronostratigraphy/edit?id='.$specimen->getChronoRef());?>"><?php echo $specimen->getChronoName();?></a>
         <div id="chrono_<?php echo $specimen->getSpecRef();?>_tree" class="tree"></div>
         <script type="text/javascript">
+    
             $('#chrono_<?php echo $specimen->getSpecRef();?>_info').click(function() 
             {
               item_row=$(this).closest('tr');
