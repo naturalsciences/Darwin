@@ -7472,7 +7472,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
 DECLARE
-  sqlString varchar := E'select record_id from codes where referenced_relation=\'specimens\'';
+  sqlString varchar := E'select distinct(record_id) from codes where referenced_relation=\'specimens\'';
   sqlWhere varchar := '';
   code_part varchar;
   code_from varchar;
@@ -7515,14 +7515,14 @@ CREATE OR REPLACE FUNCTION fct_search_tools (IN str_ids varchar) RETURNS SETOF i
 language SQL STABLE
 AS
 $$
-    select specimen_ref from specimen_collecting_tools where collecting_tool_ref in (select X::int from regexp_split_to_table($1,',') as X);
+    select distinct(specimen_ref) from specimen_collecting_tools where collecting_tool_ref in (select X::int from regexp_split_to_table($1,',') as X);
 $$;
 
 CREATE OR REPLACE FUNCTION fct_search_methods (IN str_ids varchar) RETURNS SETOF integer
 language SQL STABLE
 AS
 $$
-    select specimen_ref from specimen_collecting_methods where collecting_method_ref in (select X::int from regexp_split_to_table($1,',') as X);
+    select distinct(specimen_ref) from specimen_collecting_methods where collecting_method_ref in (select X::int from regexp_split_to_table($1,',') as X);
 $$;
 
 CREATE OR REPLACE FUNCTION dummy( in anyelement, inout anyelement )
