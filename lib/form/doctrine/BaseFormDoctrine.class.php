@@ -34,7 +34,7 @@ abstract class BaseFormDoctrine extends sfFormDoctrine
     {
       foreach($group as $field)
       {
-        if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox")
+        if(!isset($taintedValues[$field]) && get_class($this->widgetSchema[$field]) != "sfWidgetFormInputCheckbox" &&  get_class($this->widgetSchema[$field]) != "widgetFormSelectDoubleListFilterable")
         {
           foreach($group as $ufield)
           {

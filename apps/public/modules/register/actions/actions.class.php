@@ -16,7 +16,7 @@ class registerActions extends DarwinActions
     $this->form->addLoginInfos(0);
     $this->form->addComm(0);
     $this->form->addLanguages(0);
-
+    
     // If the search has been triggered by clicking on the search button or with pinned specimens
     if(($request->isMethod('post') && $request->getParameter('users','') !== '' ))
     {
@@ -25,7 +25,6 @@ class registerActions extends DarwinActions
         'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
       );
       $this->form->bind(array_merge($request->getParameter('users'), array('captcha' => $captcha)));
-/*      $this->form->bind($request->getParameter('users')) ;*/
       if ($this->form->isValid())
       {
         try
@@ -46,13 +45,14 @@ class registerActions extends DarwinActions
   
   public function executeLogin(sfWebRequest $request)
   {
-    $url = "http://192.168.20.116/frontend_dev.php";
-    $this->form = new LoginForm();
+    $this->redirectIf($this->getUser()->isAuthenticated(),$this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
+    $referer = $this->getRequest()->getReferer();
+    $this->form = new LoginForm(null, array('thin'=>true));
     if ($request->isMethod('post'))
-    {      
-      $this->form->bind($request->getParameter('login'));      
+    {
+      $this->form->bind($request->getParameter('login'));
       if ($this->form->isValid())
-      {      
+      {
         $this->getUser()->setAuthenticated(true);
         sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('username').' '.$this->form->user->getId() );
         $this->getUser()->setAttribute('db_user_id',$this->form->user->getId());
@@ -62,11 +62,9 @@ class registerActions extends DarwinActions
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }
-        $this->redirect("$url");
+        $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
       }
-      else
-       $this->redirect("$url/account/login") ;
-    }  
-  
+    }
+    $this->redirect($referer);
   }
 }

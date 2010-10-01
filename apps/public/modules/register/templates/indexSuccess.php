@@ -18,11 +18,6 @@
             <td><?php echo $form['is_physical']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['sub_type']->renderLabel();?>:</th>
-            <td><?php echo $form['sub_type']->render();?></td>
-            <td><?php echo $form['sub_type']->renderError();?></td>
-          </tr>
-          <tr>
             <th><?php echo $form['family_name']->renderLabel();?>:</th>
             <td><?php echo $form['family_name']->render();?></td>
             <td><?php echo $form['family_name']->renderError();?></td>

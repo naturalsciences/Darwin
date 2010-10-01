@@ -513,11 +513,11 @@ class SpecimensForm extends BaseSpecimensForm
   {
     return array(
       'Acquisition' => array(
-      'acquisition_category',
-      'acquisition_date',
+        'acquisition_category',
+        'acquisition_date',
       ),
       'Expedition' => array(
-      'expedition_ref',
+        'expedition_ref',
       ),
       'Taxonomy' => array('taxon_ref'),
       'Chrono' => array('chrono_ref'),
@@ -526,21 +526,21 @@ class SpecimensForm extends BaseSpecimensForm
       'Mineralogy' => array('mineral_ref'),
 
       'Host' => array(
-      'host_relationship',
-      'host_specimen_ref',
-      'host_taxon_ref',
+        'host_relationship',
+        'host_specimen_ref',
+        'host_taxon_ref',
       ),
       'Ig' => array(
-      'ig_ref',
+        'ig_ref',
       ),
       'Gtu' => array(
-      'gtu_ref',
-      'station_visible',
+        'gtu_ref',
+        'station_visible',
       ),
       'Count' => array(
-      'accuracy',
-      'specimen_count_min',
-      'specimen_count_max',
+        'accuracy',
+        'specimen_count_min',
+        'specimen_count_max',
       ),
       'Tool' => array('collecting_tools_list'),
       'Method' => array('collecting_methods_list'),
