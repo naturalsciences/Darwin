@@ -79,3 +79,4 @@ DROP FUNCTION IF EXISTS fct_delete_darwin_flat_ind_part() CASCADE;
 DROP AGGREGATE array_accum (anyelement);
 DROP AGGREGATE dummy_first(anyelement);
 DROP FUNCTION IF EXISTS dummy( in anyelement, inout anyelement ) CASCADE;
+DROP FUNCTION IF EXISTS convert_to_integer(v_input varchar) CASCADE;

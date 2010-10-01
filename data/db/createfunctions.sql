@@ -7456,6 +7456,20 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION convert_to_integer(v_input varchar) RETURNS INTEGER 
+AS $$
+DECLARE v_int_value INTEGER DEFAULT 0;
+BEGIN
+    BEGIN
+        v_int_value := v_input::INTEGER;
+    EXCEPTION WHEN OTHERS THEN
+        RAISE NOTICE 'Invalid integer value: "%".  Returning NULL.', v_input;
+        RETURN 0;
+    END;
+RETURN v_int_value;
+END;
+$$ LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
 DECLARE
   sqlString varchar := E'select record_id from codes where referenced_relation=\'specimens\'';
