@@ -28,7 +28,8 @@ class DarwinPgErrorParser
     '/violates check constraint ".*_min"/i' => 'Min count value must be a positive number',
     '/violates check constraint "chk_collecting_methods_method"/i' => 'Method inserted cannot be empty',
     '/violates check constraint "chk_collecting_tools_tool"/i' => 'Tool inserted cannot be empty',
-    '/unq_users/i' => 'This user already exist'
+    '/unq_users/i' => 'This user already exist',
+    '/\bunq_class_vernacular_names\b/' => 'This community already exists, you should edit it instead of adding new one'
   );
 
 
@@ -37,16 +38,15 @@ class DarwinPgErrorParser
     $this->nat_exception = $e;
   }
 
-  
   public function getMessage()
-  {
+  {    
     $original_message = $this->nat_exception->getMessage();
     foreach (self::$errorRegexps as $regexp => $message)
     {
-	  if(preg_match($regexp, $original_message))
-	  {
-	      return $message;
-	  }
+	    if(preg_match($regexp, $original_message))
+	    {
+	        return $message;
+	    }
     }
     return 'Unknown Error : '.$original_message;
   }

@@ -36,10 +36,11 @@ class vernacularnamesActions extends DarwinActions
 	    $this->form = new ClassVernacularNamesForm($this->form->getObject()); //Ugly refresh
 	    return $this->renderText('ok');
 	  }
-	  catch(Exception $e)
-	  {
-            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-            $this->form->getErrorSchema()->addError($error); 
+    catch(Doctrine_Exception $ne)
+    {
+      $e = new DarwinPgErrorParser($ne);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form->getErrorSchema()->addError($error);
 	  }
 	}
     }
