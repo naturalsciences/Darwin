@@ -4,11 +4,11 @@ alter table collections add constraint chk_chk_InstitutionIsMoral check (fct_chk
 alter table chronostratigraphy add constraint chk_chk_possible_upper_level_chronostratigraphy check (fct_chk_possible_upper_level('chronostratigraphy', parent_ref, level_ref, id));
 alter table lithostratigraphy add constraint chk_chk_possible_upper_level_lithostratigraphy check (fct_chk_possible_upper_level('lithostratigraphy', parent_ref, level_ref, id));
 alter table mineralogy add constraint chk_chk_possible_upper_level_mineralogy check (fct_chk_possible_upper_level('mineralogy', parent_ref, level_ref, id));
-/*
+
 alter table lithology add constraint chk_chk_possible_upper_level_lithology check (fct_chk_possible_upper_level('lithology', parent_ref, level_ref, id));
 
 alter table taxonomy add constraint chk_chk_possible_upper_level_taxa check (fct_chk_possible_upper_level('taxonomy', parent_ref, level_ref, id));
-*/
+
 
 ALTER TABLE template_table_record_ref add constraint fct_chk_ReferencedRecord_template_table_record_ref check (fct_chk_ReferencedRecord(referenced_relation,record_id));
 ALTER TABLE catalogue_relationships add constraint fct_chk_ReferencedRecord_catalogue_relationships_rec1 check (fct_chk_ReferencedRecord(referenced_relation,record_id_1));
