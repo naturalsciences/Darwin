@@ -7458,7 +7458,7 @@ $$;
 
 CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
 DECLARE
-  sqlString varchar := E'select record_id from codes where referenced_relation=\'specimens\'';
+  sqlString varchar := E'select record_id from codes';
   sqlWhere varchar := '';
   code_part varchar;
   code_from varchar;
@@ -7471,7 +7471,14 @@ BEGIN
     code_part := $1[i+1];
     code_from := $1[i+2];
     code_to := $1[i+3];
+    relation := $1[i+4] ;
     
+    IF relation != '' THEN
+      sqlWhere := sqlWhere || ' where referenced_relation=' || quote_literal(relation) ;
+    ELSE
+      sqlWhere := sqlWhere || ' where referenced_relation=\'specimens\''  ;
+    END IF ;
+      
     sqlWhere := sqlWhere || ' (code_category = ' || quote_literal(code_category) ;
 
     IF code_from ~ '^[0-9]+$' and code_to ~ '^[0-9]+$' THEN
