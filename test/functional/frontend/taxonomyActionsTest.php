@@ -6,10 +6,10 @@ $browser = new DarwinTestFunctional(new sfBrowser());
 $browser->loadData($configuration)->login('root','evil');
 
 $browser->
-  info('Index')->
+  info('Can\'t edit -1')->
   get('/taxonomy/edit?id=-1')->
     with('response')->begin()->
-    isStatusCode(200)->
+    isStatusCode(403)->
   end()->
   get('/taxonomy/index')->
   

@@ -3,10 +3,6 @@ homepage:
   url:   /
   param: { module: board, action: index }
 
-logmein:
-  url: /:module/:action/*
-  param: { module: account, action: login}
-
 default_index:
   url:   /:module
   param: { action: index }

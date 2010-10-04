@@ -144,6 +144,16 @@ ul.column_menu > li > ul >li
   padding:0.2em;
 }
 
+td.col_codes img
+{
+  float:left;
+  margin-right: 1em;
+}
+td.col_codes > ul
+{
+  float:left;
+}
+
 li.check span
 {
   color: green;  

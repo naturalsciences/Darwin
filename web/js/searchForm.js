@@ -68,7 +68,7 @@ function initIndividualColspan()
       cpt++ ;
     }
    });  
-  $('table.spec_results tbody tr.sub_row td').attr('colspan', cpt);
+  $('table.spec_results tbody tr.sub_row td:first').attr('colspan', cpt);
   $('#specimen_search_filters_col_fields').val(getColVisible());
 }
 

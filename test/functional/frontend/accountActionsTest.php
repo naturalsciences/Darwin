@@ -78,11 +78,8 @@ $browser->
     isRedirected()->
   end()->
   followRedirect()->
-  with('request')->begin()->
-    isParameter('module', 'account')->
-    isParameter('action', 'login')->
-  end()->
-    with('user')->begin()->
+
+  with('user')->begin()->
     isAuthenticated(false)->
   end()
 ;
