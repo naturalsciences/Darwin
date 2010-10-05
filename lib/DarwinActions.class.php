@@ -63,33 +63,41 @@ class DarwinActions extends sfActions
     throw new sfStopException();
   }
   
-  protected function getRecordIfDuplicate($id = 0, $obj)
+  protected function getRecordIfDuplicate($id = 0, $obj, $is_spec = false)
   {
     if ($id)
     {
       $check = $obj->getTable()->findExcept($id);
       if(!$check) return $obj ;
-      else $record = $check->toArray();
-      unset($record['id']) ;                
-      $obj->fromArray($record) ;      
+      if($is_spec)
+      {
+        $check->SpecimensMethods->count() ;
+        $check->SpecimensTools->count() ;
+      }
+      $record = $check->toArray(true);
+      unset($record['id']) ;
+      $obj->fromArray($record,true) ;
       switch(get_class($obj))
       {
        case 'Expeditions' : 
         $obj->setExpeditionFromDate(new FuzzyDateTime($check->getExpeditionFromDate(),$check->getExpeditionFromDateMask()) );
-        $obj->setExpeditionToDate(new FuzzyDateTime($check->getExpeditionToDate(),$check->getExpeditionToDateMask()) );          
+        $obj->setExpeditionToDate(new FuzzyDateTime($check->getExpeditionToDate(),$check->getExpeditionToDateMask()) );
         break ; 
        case 'People' :            
         $obj->setBirthDate(new FuzzyDateTime($check->getBirthDate(),$check->getBirthDateMask()) );
         $obj->setEndDate(new FuzzyDateTime($check->getEndDate(),$check->getEndDateMask()) );
         $obj->setActivityDateFrom(new FuzzyDateTime($check->getActivityDateFrom(),$check->getActivityDateFromMask()) );
-        $obj->setActivityDateTo(new FuzzyDateTime($check->getActivityDateTo(),$check->getActivityDateToMask()) );         
+        $obj->setActivityDateTo(new FuzzyDateTime($check->getActivityDateTo(),$check->getActivityDateToMask()) );
         break ;
        case 'Gtu' :
         $obj->setGtuFromDate(new FuzzyDateTime($check->getGtuFromDate(),$check->getGtuFromDateMask()) );
-        $obj->setGtuToDate(new FuzzyDateTime($check->getGtuToDate(),$check->getGtuToDateMask()) );       
+        $obj->setGtuToDate(new FuzzyDateTime($check->getGtuToDate(),$check->getGtuToDateMask()) );
         break ;
        case 'Igs' :
-        $obj->setIgDate(new FuzzyDateTime($check->getIgDate(),$check->getIgDateMask()) );     
+        $obj->setIgDate(new FuzzyDateTime($check->getIgDate(),$check->getIgDateMask()) );
+        break ;
+       case 'Specimens' :
+        $obj->setAcquisitionDate(new FuzzyDateTime($check->getAcquisitionDate(),$check->getAcquisitionDateMask()) );
         break ;
        default: break ;
       }

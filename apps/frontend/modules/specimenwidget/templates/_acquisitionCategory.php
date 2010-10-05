@@ -1,11 +1,11 @@
 <table>
   <tbody>
-    <?php if($form['acquisition_category']->hasError()):?>
+    <?php if($form['acquisition_category']->hasError() || $form['acquisition_date']->hasError()):?>
       <tr>
         <td colspan="2">
-		  <?php echo $form['acquisition_category']->renderError(); ?>
-		  <?php echo $form['acquisition_date']->renderError(); ?>
-		<td>
+          <?php echo $form['acquisition_category']->renderError(); ?>
+          <?php echo $form['acquisition_date']->renderError(); ?>
+        <td>
       </tr>
     <?php endif; ?>
     <tr>

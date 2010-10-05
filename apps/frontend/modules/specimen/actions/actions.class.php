@@ -102,24 +102,6 @@ class specimenActions extends DarwinActions
     }
   }
 
-  protected function getRecordIfDuplicate($id = 0, $obj, $is_spec = false)
-  {
-    if ($id)
-    {
-      $check = $obj->getTable()->findExcept($id);
-      if(!$check) return $obj ;
-      if($is_spec)
-      {
-        $check->SpecimensMethods->count() ;
-        $check->SpecimensTools->count() ;
-      }
-      $record = $check->toArray(true);
-      unset($record['id']) ;
-      $obj->fromArray($record,true) ;
-    }
-    return $obj ;
-  }
-
   public function executeNew(sfWebRequest $request)
   {
     if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
