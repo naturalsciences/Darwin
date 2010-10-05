@@ -1,5 +1,6 @@
 <tr>
   <td><?php echo $code['category']->renderError();?></td>
+  <td><?php echo $code['category']->renderError();?></td>
   <td><?php echo $code['code_part']->renderError();?></td>
   <td></td>
   <td><?php echo $code['code_from']->renderError();?></td>
@@ -7,6 +8,7 @@
   <td></td>
 </tr>
 <tr>
+  <td><?php echo $code['referenced_relation'];?></td>
   <td><?php echo $code['category'];?></td>
   <td><?php echo $code['code_part'];?></td>
   <td class="and_col">
