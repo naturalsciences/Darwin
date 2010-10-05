@@ -160,12 +160,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     ));
 
     $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>array_keys($what_searched), 'required'=>false,'empty_value'=>'specimen'));
-
+   
     /* Labels */
     $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
                                          'taxon_name' => 'Taxon',
                                          'taxon_level_ref' => 'Level',
-                                         'what_searched' => 'What would you like to search ?'
+                                         'what_searched' => 'What would you like to search ?',
+                                         'code_ref_relation' => 'Code of'
                                         )
                                   );
 
@@ -512,21 +513,47 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   }
 
   public function addCodesColumnQuery($query, $field, $val)
-  {
+  {   
+
     $str_params = '';
+    $str_params_part = '' ;
     $params = array();
+    $params_part = array() ;
     foreach($val as $i => $code)
     {
       if(empty($code)) continue;
-      if($str_params != '')
-        $str_params .= ',';
-      $str_params .= '?,?,?,?';
-      $params[] = $code['category'];
-      $params[] = $code['code_part'];
-      $params[] = $code['code_from'];
-      $params[] = $code['code_to'];
+      if($code['referenced_relation'] == 'specimens')
+      {
+        if($str_params != '')
+          $str_params .= ',';
+        $str_params .= '?,?,?,?,?';      
+        $params[] = $code['category'];
+        $params[] = $code['code_part'];
+        $params[] = $code['code_from'];
+        $params[] = $code['code_to'];
+        $params[] = $code['referenced_relation'];
+      }
+      else
+      {
+        if($str_params_part != '')
+          $str_params_part .= ',';
+        $str_params_part .= '?,?,?,?,?';      
+        $params_part[] = $code['category'];
+        $params_part[] = $code['code_part'];
+        $params_part[] = $code['code_from'];
+        $params_part[] = $code['code_to'];
+        $params_part[] = $code['referenced_relation'];      
+      }
+      
     }
-    if(! empty($params)) $query->andWhere("spec_ref in  (select fct_searchCodes($str_params) )", $params);
+    if(! empty($params)) 
+    {
+      $query->addWhere("spec_ref in (select fct_searchCodes($str_params) )", $params);      
+    }
+    if(! empty($params_part)) 
+    {
+      $query->addWhere("part_ref in (select fct_searchCodes($str_params_part) )", $params_part);      
+    }    
     return $query ;
   }
 

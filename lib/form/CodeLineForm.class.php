@@ -11,7 +11,13 @@ class CodeLineForm extends BaseForm
       'required' => false,
       'choices' => array_keys(Codes::getCategories())
     ));
-
+    $this->widgetSchema['referenced_relation'] = new sfWidgetFormChoice(array(
+        'choices' => array('specimens'=>'specimens','specimen_parts'=>'specimen_parts'),
+    ));   
+    $this->validatorSchema['referenced_relation'] = new sfValidatorChoice(array(
+      'required' => false,
+      'choices' => array('specimens'=>'specimens','specimen_parts'=>'specimen_parts'),
+    ));
     $this->widgetSchema['code_part'] = new sfWidgetFormInput(array(),array('class'=> 'medium_small_size'));
     $this->widgetSchema['code_from'] = new sfWidgetFormInput(array(),array('class'=> 'lsmall_size'));
     $this->widgetSchema['code_to'] = new sfWidgetFormInput(array(),array('class'=> 'lsmall_size'));

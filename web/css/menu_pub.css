@@ -21,6 +21,11 @@
   min-height: 600px ;
 }
 
+.main td
+{
+  vertical-align:top ;
+}
+
 .menu_bottom
 {
   background: #404040 repeat-y; 
