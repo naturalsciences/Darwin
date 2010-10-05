@@ -77,7 +77,7 @@
             <a href=""><?php echo __('Administration');?></a>
             <ul>
                 <?php if($sf_user->getDbUserType() >= Users::ADMIN) : ?>
-                <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>                
+                <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>
                 <li><?php echo link_to('Big Brother','bigbro/index');?></li>
                 <li><?php echo link_to('Mass Actions','massactions/index');?></li>
                 <?php endif ?>
