@@ -48,7 +48,7 @@ $browser->
     'level_ref' => '48',
     'status' => 'valid', //Of course!
     'extinct'   => '',
-    'parent_ref'=> '',
+    'parent_ref'=> '11',
   )))->
 
   with('response')->begin()->
@@ -77,7 +77,7 @@ $nitems = Doctrine::getTable('Taxonomy')->findByName('tchet savadje (tchantchès
     'level_ref' => '48',
     'status' => 'valid', //Of course!
     'extinct'   => '',
-    'parent_ref'=> '0',
+    'parent_ref'=> '11',
     'newVal' => array(
       '1' => array(
 	'id' => '',

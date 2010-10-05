@@ -43,12 +43,36 @@ Taxonomy:
         level_ref: 2
         status: valid
         parent_ref: '-1'
+    ta8:
+        id: 8
+        name: Falco Class
+        level_ref: 12
+        status: valid
+        Parent: ta1
+    ta9:
+        id: 9
+        name: Falco Order
+        level_ref: 28
+        status: valid
+        Parent: ta8
+    ta10:
+        id: 10
+        name: Falco Fam
+        level_ref: 34
+        status: valid
+        Parent: ta9
+    ta11:
+        id: 11
+        name: Falco genre
+        level_ref: 41
+        status: valid
+        Parent: ta10
     ta2:
         id: 2
         name: Falco Peregrinus
         level_ref: 48
         status: valid
-        Parent: ta1
+        Parent: ta11
     ta3:
         id: 3
         name: Falco Peregrinus Tunstall, 1771
