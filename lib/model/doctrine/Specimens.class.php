@@ -38,22 +38,6 @@ class Specimens extends BaseSpecimens
     }
   }
 
-  public function setSpecimenCountMin($value)
-  {
-    if(is_numeric($value) && ($value != $this->_get('specimen_count_min')))
-    {
-      $this->_set('specimen_count_min', $value);
-    }
-  }
-
-  public function setSpecimenCountMax($value)
-  {
-    if(is_numeric($value) && ($value != $this->_get('specimen_count_max')))
-    {
-      $this->_set('specimen_count_max', $value);
-    }
-  }
-
   public function setHostRelationship($value)
   {
     if($value != $this->_get('host_relationship'))

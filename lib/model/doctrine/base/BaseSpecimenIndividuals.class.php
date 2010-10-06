@@ -17,6 +17,7 @@
  * @property string $rock_form
  * @property integer $specimen_individuals_count_min
  * @property integer $specimen_individuals_count_max
+ * @property boolean $with_parts
  * @property Specimens $Specimens
  * @property Doctrine_Collection $SpecimenParts
  * @property Doctrine_Collection $SpecimenSearch
@@ -35,6 +36,7 @@
  * @method string              getRockForm()                       Returns the current record's "rock_form" value
  * @method integer             getSpecimenIndividualsCountMin()    Returns the current record's "specimen_individuals_count_min" value
  * @method integer             getSpecimenIndividualsCountMax()    Returns the current record's "specimen_individuals_count_max" value
+ * @method boolean             getWithParts()                      Returns the current record's "with_parts" value
  * @method Specimens           getSpecimens()                      Returns the current record's "Specimens" value
  * @method Doctrine_Collection getSpecimenParts()                  Returns the current record's "SpecimenParts" collection
  * @method Doctrine_Collection getSpecimenSearch()                 Returns the current record's "SpecimenSearch" collection
@@ -52,6 +54,7 @@
  * @method SpecimenIndividuals setRockForm()                       Sets the current record's "rock_form" value
  * @method SpecimenIndividuals setSpecimenIndividualsCountMin()    Sets the current record's "specimen_individuals_count_min" value
  * @method SpecimenIndividuals setSpecimenIndividualsCountMax()    Sets the current record's "specimen_individuals_count_max" value
+ * @method SpecimenIndividuals setWithParts()                      Sets the current record's "with_parts" value
  * @method SpecimenIndividuals setSpecimens()                      Sets the current record's "Specimens" value
  * @method SpecimenIndividuals setSpecimenParts()                  Sets the current record's "SpecimenParts" collection
  * @method SpecimenIndividuals setSpecimenSearch()                 Sets the current record's "SpecimenSearch" collection
@@ -126,6 +129,9 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'default' => 1,
+             ));
+        $this->hasColumn('with_parts', 'boolean', null, array(
+             'type' => 'boolean',
              ));
     }
 

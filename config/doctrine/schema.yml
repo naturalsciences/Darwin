@@ -645,8 +645,6 @@ Specimens:
         acquisition_category: { type: string, default: expedition}
         acquisition_date_mask: { type: integer, notnull: true, default:0}
         acquisition_date: { type: string, default: '0001-01-01'}
-        specimen_count_min: { type: integer, default: 1}
-        specimen_count_max: { type: integer, default: 1}
         station_visible: { type: boolean, default: true}
         multimedia_visible: { type: boolean, default: true}
         ig_ref: { type: integer}
@@ -754,6 +752,7 @@ SpecimenIndividuals:
         rock_form: { type: string, notnull: true, default: 'not applicable'}
         specimen_individuals_count_min: { type: integer, notnull: true, default:1}
         specimen_individuals_count_max: { type: integer, notnull: true, default:1}
+        with_parts: {type: boolean}
     relations:
         Specimens:
             local: specimen_ref
@@ -989,9 +988,8 @@ SpecimenSearch:
         acquisition_category: { type: string}     
         acquisition_date_mask: { type: integer }        
         acquisition_date: { type: string}             
-        specimen_count_min: { type: integer }       
-        specimen_count_max: { type: integer }
         with_types: {type: boolean }
+        with_individuals: {type: boolean}
         individual_ref: {type: integer}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}
@@ -1003,6 +1001,7 @@ SpecimenSearch:
         individual_rock_form: {type: string, notnull: true, default: 'not applicable'}
         individual_count_min: {type: integer }
         individual_count_max: {type: integer }
+        with_parts: {type: boolean}
         part_ref: {type: integer }
         part: {type: string }
         part_status: {type: string }
@@ -1233,9 +1232,8 @@ IndividualSearch:
         acquisition_category: { type: string}     
         acquisition_date_mask: { type: integer }        
         acquisition_date: { type: string}             
-        specimen_count_min: { type: integer }       
-        specimen_count_max: { type: integer }
         with_types: {type: boolean }
+        with_individuals: {type:boolean}
         individual_ref: {type: integer, primary: true}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}
@@ -1247,6 +1245,7 @@ IndividualSearch:
         individual_rock_form: {type: string, notnull: true, default: 'not applicable'}
         individual_count_min: {type: integer }
         individual_count_max: {type: integer }
+        with_parts: {type: boolean}
         part_ref: {type: integer }
         part: {type: string }
         part_status: {type: string }
@@ -1478,9 +1477,8 @@ PartSearch:
         acquisition_category: { type: string}
         acquisition_date_mask: { type: integer }
         acquisition_date: { type: string}
-        specimen_count_min: { type: integer }
-        specimen_count_max: { type: integer }
         with_types: {type: boolean }
+        with_individuals: {type:boolean}
         individual_ref: {type: integer, primary: true}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}
@@ -1492,6 +1490,7 @@ PartSearch:
         individual_rock_form: {type: string, notnull: true, default: 'not applicable'}
         individual_count_min: {type: integer }
         individual_count_max: {type: integer }
+        with_parts: {type:boolean}
         part_ref: {type: integer , primary: true}
         part: {type: string }
         part_status: {type: string }

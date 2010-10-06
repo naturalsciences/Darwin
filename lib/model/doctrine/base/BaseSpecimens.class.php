@@ -21,8 +21,6 @@
  * @property string $acquisition_category
  * @property integer $acquisition_date_mask
  * @property string $acquisition_date
- * @property integer $specimen_count_min
- * @property integer $specimen_count_max
  * @property boolean $station_visible
  * @property boolean $multimedia_visible
  * @property integer $ig_ref
@@ -65,8 +63,6 @@
  * @method string              getAcquisitionCategory()   Returns the current record's "acquisition_category" value
  * @method integer             getAcquisitionDateMask()   Returns the current record's "acquisition_date_mask" value
  * @method string              getAcquisitionDate()       Returns the current record's "acquisition_date" value
- * @method integer             getSpecimenCountMin()      Returns the current record's "specimen_count_min" value
- * @method integer             getSpecimenCountMax()      Returns the current record's "specimen_count_max" value
  * @method boolean             getStationVisible()        Returns the current record's "station_visible" value
  * @method boolean             getMultimediaVisible()     Returns the current record's "multimedia_visible" value
  * @method integer             getIgRef()                 Returns the current record's "ig_ref" value
@@ -108,8 +104,6 @@
  * @method Specimens           setAcquisitionCategory()   Sets the current record's "acquisition_category" value
  * @method Specimens           setAcquisitionDateMask()   Sets the current record's "acquisition_date_mask" value
  * @method Specimens           setAcquisitionDate()       Sets the current record's "acquisition_date" value
- * @method Specimens           setSpecimenCountMin()      Sets the current record's "specimen_count_min" value
- * @method Specimens           setSpecimenCountMax()      Sets the current record's "specimen_count_max" value
  * @method Specimens           setStationVisible()        Sets the current record's "station_visible" value
  * @method Specimens           setMultimediaVisible()     Sets the current record's "multimedia_visible" value
  * @method Specimens           setIgRef()                 Sets the current record's "ig_ref" value
@@ -210,14 +204,6 @@ abstract class BaseSpecimens extends sfDoctrineRecord
         $this->hasColumn('acquisition_date', 'string', null, array(
              'type' => 'string',
              'default' => '0001-01-01',
-             ));
-        $this->hasColumn('specimen_count_min', 'integer', null, array(
-             'type' => 'integer',
-             'default' => 1,
-             ));
-        $this->hasColumn('specimen_count_max', 'integer', null, array(
-             'type' => 'integer',
-             'default' => 1,
              ));
         $this->hasColumn('station_visible', 'boolean', null, array(
              'type' => 'boolean',

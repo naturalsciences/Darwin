@@ -333,7 +333,6 @@ Specimens:
     sp1:
         id: 1
         Collections: c1
-        specimen_count_min: 1
         acquisition_date: '2001-01-01'
         acquisition_category: expedition
         Taxonomy: ta1
@@ -341,7 +340,6 @@ Specimens:
         id: 2
         Collections: c2
         category: observation
-        specimen_count_min: 1
         acquisition_date: '2001-03-01'
         acquisition_category: theft
         Taxonomy: ta2
@@ -349,7 +347,6 @@ Specimens:
     sp3:
         id: 3
         Collections: c3
-        specimen_count_min: 1
         acquisition_date: '2001-02-01'
         acquisition_category: expedition
         Taxonomy: ta3
@@ -359,8 +356,6 @@ Specimens:
     sp4:
         id: 4
         Collections: c3
-        specimen_count_min: 3
-        specimen_count_max: 3
         acquisition_date: '2009-02-24'
         acquisition_category: expedition
         HostSpecimen: sp2
@@ -471,14 +466,14 @@ CatalogueProperties:
         property_type: protection status
         property_sub_type: top
         property_unit: ''
-        property_accuracy_unit: ''  
+        property_accuracy_unit: ''
     cprop4:
         referenced_relation: specimens
         record_id: 1
         property_type: physical measurement
         property_sub_type: length
         property_unit: mm
-        property_accuracy_unit: mm                 
+        property_accuracy_unit: mm
 
 PropertiesValues:
     prop1val1:
@@ -869,4 +864,4 @@ TagGroups:
 SpecimenIndividuals:
     spi1:
         Specimens: sp4
-                
+

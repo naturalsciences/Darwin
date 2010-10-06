@@ -39,8 +39,6 @@ class SpecimensTable extends DarwinTable
       'acquisition_date' => 'acquisitionCategory' ,   
       'collecting_method' => 'tool' ,
       'collecting_tool' => 'tool' ,
-      'specimen_count_min' => 'specimenCount' ,
-      'specimen_count_max' => 'specimenCount'
     );
     /**
     * Get differents acquisition categories

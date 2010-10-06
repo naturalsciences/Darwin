@@ -242,11 +242,6 @@ class SpecimensForm extends BaseSpecimensForm
                                                                             array('class' => 'to_date')
                                                                            );
 
-    $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(
-        'choices'  => array($this->getI18N()->__('exact'), $this->getI18N()->__('imprecise')),
-        'expanded' => true,
-    ));
-
     /* Accompanying elements sub form */
 
     $this->embedRelation('SpecimensAccompanying');
@@ -382,11 +377,6 @@ class SpecimensForm extends BaseSpecimensForm
                                                                              )
                                                                        );
 
-    $this->validatorSchema['accuracy'] = new sfValidatorChoice(array(
-        'choices' => array(0,1),
-        'required' => false,
-        ));
-
     $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
 
     $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
@@ -408,14 +398,6 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['coll_tools'] = new sfValidatorPass();
 
     $this->validatorSchema['coll_methods'] = new sfValidatorPass();
-
-    $this->validatorSchema->setPostValidator(
-        new sfValidatorSchemaCompare('specimen_count_min', '<=', 'specimen_count_max',
-            array(),
-            array('invalid' => 'The min number ("%left_field%") must be lower or equal the max number ("%right_field%")' )
-            )
-        );
-    $this->setDefault('accuracy', 1);
 
   }
 
@@ -537,25 +519,12 @@ class SpecimensForm extends BaseSpecimensForm
         'gtu_ref',
         'station_visible',
       ),
-      'Count' => array(
-        'accuracy',
-        'specimen_count_min',
-        'specimen_count_max',
-      ),
       'Tool' => array('collecting_tools_list'),
       'Method' => array('collecting_methods_list'),
     );
   }
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-    if(isset($taintedValues['accuracy']))
-    {
-      if($taintedValues['accuracy'] == 0 ) //exact
-      {
-        $taintedValues['specimen_count_max'] = $taintedValues['specimen_count_min'];
-      }
-    }
-
     if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
     {
       foreach($taintedValues['newCode'] as $key=>$newVal)

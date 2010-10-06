@@ -11,7 +11,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 {
   public function configure()
   {
-	unset( $this['specimen_individual_ref'] , $this['id'],$this['path']);
+	unset( $this['specimen_individual_ref'] , $this['id'],$this['path'], $this['with_parts']);
 
   $individual = $this->getOption('individual', '');
   $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(

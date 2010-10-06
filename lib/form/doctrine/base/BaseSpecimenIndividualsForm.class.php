@@ -27,6 +27,7 @@ abstract class BaseSpecimenIndividualsForm extends BaseFormDoctrine
       'rock_form'                      => new sfWidgetFormTextarea(),
       'specimen_individuals_count_min' => new sfWidgetFormInputText(),
       'specimen_individuals_count_max' => new sfWidgetFormInputText(),
+      'with_parts'                     => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -42,6 +43,7 @@ abstract class BaseSpecimenIndividualsForm extends BaseFormDoctrine
       'rock_form'                      => new sfValidatorString(array('required' => false)),
       'specimen_individuals_count_min' => new sfValidatorInteger(array('required' => false)),
       'specimen_individuals_count_max' => new sfValidatorInteger(array('required' => false)),
+      'with_parts'                     => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimen_individuals[%s]');

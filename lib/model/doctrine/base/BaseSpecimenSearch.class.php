@@ -103,9 +103,8 @@
  * @property string $acquisition_category
  * @property integer $acquisition_date_mask
  * @property string $acquisition_date
- * @property integer $specimen_count_min
- * @property integer $specimen_count_max
  * @property boolean $with_types
+ * @property boolean $with_individuals
  * @property integer $individual_ref
  * @property string $individual_type
  * @property string $individual_type_group
@@ -117,6 +116,7 @@
  * @property string $individual_rock_form
  * @property integer $individual_count_min
  * @property integer $individual_count_max
+ * @property boolean $with_parts
  * @property integer $part_ref
  * @property string $part
  * @property string $part_status
@@ -261,9 +261,8 @@
  * @method string              getAcquisitionCategory()                           Returns the current record's "acquisition_category" value
  * @method integer             getAcquisitionDateMask()                           Returns the current record's "acquisition_date_mask" value
  * @method string              getAcquisitionDate()                               Returns the current record's "acquisition_date" value
- * @method integer             getSpecimenCountMin()                              Returns the current record's "specimen_count_min" value
- * @method integer             getSpecimenCountMax()                              Returns the current record's "specimen_count_max" value
  * @method boolean             getWithTypes()                                     Returns the current record's "with_types" value
+ * @method boolean             getWithIndividuals()                               Returns the current record's "with_individuals" value
  * @method integer             getIndividualRef()                                 Returns the current record's "individual_ref" value
  * @method string              getIndividualType()                                Returns the current record's "individual_type" value
  * @method string              getIndividualTypeGroup()                           Returns the current record's "individual_type_group" value
@@ -275,6 +274,7 @@
  * @method string              getIndividualRockForm()                            Returns the current record's "individual_rock_form" value
  * @method integer             getIndividualCountMin()                            Returns the current record's "individual_count_min" value
  * @method integer             getIndividualCountMax()                            Returns the current record's "individual_count_max" value
+ * @method boolean             getWithParts()                                     Returns the current record's "with_parts" value
  * @method integer             getPartRef()                                       Returns the current record's "part_ref" value
  * @method string              getPart()                                          Returns the current record's "part" value
  * @method string              getPartStatus()                                    Returns the current record's "part_status" value
@@ -418,9 +418,8 @@
  * @method SpecimenSearch      setAcquisitionCategory()                           Sets the current record's "acquisition_category" value
  * @method SpecimenSearch      setAcquisitionDateMask()                           Sets the current record's "acquisition_date_mask" value
  * @method SpecimenSearch      setAcquisitionDate()                               Sets the current record's "acquisition_date" value
- * @method SpecimenSearch      setSpecimenCountMin()                              Sets the current record's "specimen_count_min" value
- * @method SpecimenSearch      setSpecimenCountMax()                              Sets the current record's "specimen_count_max" value
  * @method SpecimenSearch      setWithTypes()                                     Sets the current record's "with_types" value
+ * @method SpecimenSearch      setWithIndividuals()                               Sets the current record's "with_individuals" value
  * @method SpecimenSearch      setIndividualRef()                                 Sets the current record's "individual_ref" value
  * @method SpecimenSearch      setIndividualType()                                Sets the current record's "individual_type" value
  * @method SpecimenSearch      setIndividualTypeGroup()                           Sets the current record's "individual_type_group" value
@@ -432,6 +431,7 @@
  * @method SpecimenSearch      setIndividualRockForm()                            Sets the current record's "individual_rock_form" value
  * @method SpecimenSearch      setIndividualCountMin()                            Sets the current record's "individual_count_min" value
  * @method SpecimenSearch      setIndividualCountMax()                            Sets the current record's "individual_count_max" value
+ * @method SpecimenSearch      setWithParts()                                     Sets the current record's "with_parts" value
  * @method SpecimenSearch      setPartRef()                                       Sets the current record's "part_ref" value
  * @method SpecimenSearch      setPart()                                          Sets the current record's "part" value
  * @method SpecimenSearch      setPartStatus()                                    Sets the current record's "part_status" value
@@ -826,13 +826,10 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
         $this->hasColumn('acquisition_date', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('specimen_count_min', 'integer', null, array(
-             'type' => 'integer',
-             ));
-        $this->hasColumn('specimen_count_max', 'integer', null, array(
-             'type' => 'integer',
-             ));
         $this->hasColumn('with_types', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('with_individuals', 'boolean', null, array(
              'type' => 'boolean',
              ));
         $this->hasColumn('individual_ref', 'integer', null, array(
@@ -883,6 +880,9 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('individual_count_max', 'integer', null, array(
              'type' => 'integer',
+             ));
+        $this->hasColumn('with_parts', 'boolean', null, array(
+             'type' => 'boolean',
              ));
         $this->hasColumn('part_ref', 'integer', null, array(
              'type' => 'integer',

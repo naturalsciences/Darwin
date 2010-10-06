@@ -208,9 +208,8 @@ class SpecimenSearchTable extends Doctrine_Table
 //           'acquisition_category',
 //           'acquisition_date_mask',
 //           'acquisition_date',
-          'specimen_count_min',
-          'specimen_count_max',
           'with_types',
+          'with_individuals',
         ),
         'individuals' => array(
           'individual_ref',
@@ -224,6 +223,7 @@ class SpecimenSearchTable extends Doctrine_Table
           'individual_rock_form',
           'individual_count_min',
           'individual_count_max',
+          'with_parts',
         ),
         'parts' => array(
           'part_ref',

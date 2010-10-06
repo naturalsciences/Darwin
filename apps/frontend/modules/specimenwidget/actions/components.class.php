@@ -59,11 +59,6 @@ class specimenwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
-  public function executeSpecimenCount()
-  {
-    $this->defineForm();
-  }
-
   public function executeTool()
   {
     $this->defineForm();

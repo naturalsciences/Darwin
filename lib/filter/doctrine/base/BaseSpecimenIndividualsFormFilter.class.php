@@ -24,6 +24,7 @@ abstract class BaseSpecimenIndividualsFormFilter extends BaseFormFilterDoctrine
       'rock_form'                      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'specimen_individuals_count_min' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'specimen_individuals_count_max' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'with_parts'                     => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -38,6 +39,7 @@ abstract class BaseSpecimenIndividualsFormFilter extends BaseFormFilterDoctrine
       'rock_form'                      => new sfValidatorPass(array('required' => false)),
       'specimen_individuals_count_min' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'specimen_individuals_count_max' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'with_parts'                     => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('specimen_individuals_filters[%s]');
@@ -69,6 +71,7 @@ abstract class BaseSpecimenIndividualsFormFilter extends BaseFormFilterDoctrine
       'rock_form'                      => 'Text',
       'specimen_individuals_count_min' => 'Number',
       'specimen_individuals_count_max' => 'Number',
+      'with_parts'                     => 'Boolean',
     );
   }
 }
