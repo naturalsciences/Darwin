@@ -151,10 +151,3 @@
         <?php echo $specimen->getExpeditionName();?>
       <?php endif ; ?>
     </td> 
-    <td class="col_count">
-        <?php if($specimen->getSpecimenCountMax()==$specimen->getSpecimenCountMin()):?>
-          <?php echo $specimen->getSpecimenCountMax();?>
-        <?php else:?>
-           <?php echo $specimen->getSpecimenCountMin();?> -  <?php echo $specimen->getSpecimenCountMax();?>
-        <?php endif;?>
-    </td>

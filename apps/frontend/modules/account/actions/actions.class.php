@@ -59,7 +59,7 @@ class accountActions extends DarwinActions
     ********************************/
 
     $this->getUser()->setAuthenticated(false);
-    $this->redirect('account/login');
+    $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
   }
 
   public function executeLogout()
