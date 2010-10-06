@@ -526,7 +526,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       {
         if($str_params != '')
           $str_params .= ',';
-        $str_params .= '?,?,?,?,?';      
+        $str_params .= '?,?,?,?,?';
         $params[] = $code['category'];
         $params[] = $code['code_part'];
         $params[] = $code['code_from'];
@@ -537,12 +537,12 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       {
         if($str_params_part != '')
           $str_params_part .= ',';
-        $str_params_part .= '?,?,?,?,?';      
+        $str_params_part .= '?,?,?,?,?';
         $params_part[] = $code['category'];
         $params_part[] = $code['code_part'];
         $params_part[] = $code['code_from'];
         $params_part[] = $code['code_to'];
-        $params_part[] = $code['referenced_relation'];      
+        $params_part[] = $code['referenced_relation'];
       }
       
     }
@@ -566,7 +566,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function addGtuTagValue($num)
   {
-      $form = new TagLineForm();
+      $form = new TagLineForm(null,array('num'=>$num));
       $this->embeddedForms['Tags']->embedForm($num, $form);
       $this->embedForm('Tags', $this->embeddedForms['Tags']);
   }

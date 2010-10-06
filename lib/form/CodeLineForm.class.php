@@ -12,7 +12,7 @@ class CodeLineForm extends BaseForm
       'choices' => array_keys(Codes::getCategories())
     ));
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormChoice(array(
-        'choices' => array('specimens'=>'specimens','specimen_parts'=>'specimen_parts'),
+        'choices' => array('specimens'=>'Specimen Code','specimen_parts'=>'Parts Code'),
     ));   
     $this->validatorSchema['referenced_relation'] = new sfValidatorChoice(array(
       'required' => false,
