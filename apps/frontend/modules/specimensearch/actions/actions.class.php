@@ -212,7 +212,7 @@ class specimensearchActions extends DarwinActions
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
     $flds = array('category','collection','taxon','type','gtu','codes','chrono',
-              'litho','lithologic','mineral','expedition','count','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
+              'litho','lithologic','mineral','expedition','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
               'sub_container_type' , 'sub_container_storage', 'part_count',);
 
@@ -345,9 +345,6 @@ class specimensearchActions extends DarwinActions
       'expedition' => array(
         'expedition_name_indexed',
         $this->getI18N()->__('Expedition'),),
-      'count' => array(
-        'specimen_count_max',
-        $this->getI18N()->__('Count'),),
     );
 
     if($source != 'specimen')

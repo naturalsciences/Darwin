@@ -147,7 +147,7 @@ class searchActions extends DarwinActions
   private function getVisibleColumns(sfForm $form)
   {
     $flds = array('category','collection','taxon','type','gtu','codes','chrono','taxon_common_name', 'chrono_common_name',
-              'litho_common_name','lithologic_common_name','mineral_common_name', 'expedition', 'count', 'individual_type',
+              'litho_common_name','lithologic_common_name','mineral_common_name', 'expedition', 'individual_type',
               'litho','lithologic','mineral','sex','state','stage','social_status','rock_form','individual_count');
     $flds = array_fill_keys($flds, 'uncheck');
 
@@ -187,9 +187,6 @@ class searchActions extends DarwinActions
       'taxon' => array(
         'taxon_name_order_by',
         $this->getI18N()->__('Taxon'),),
-/*      'type' => array(
-        'with_types',
-        $this->getI18N()->__('Type'),),*/
       'gtu' => array( ///
         false,
         $this->getI18N()->__('Country'),),
@@ -211,9 +208,6 @@ class searchActions extends DarwinActions
       'expedition' => array(
         'expedition_name_indexed',
         $this->getI18N()->__('Expedition'),),
-      'count' => array(
-        'specimen_count_max',
-        $this->getI18N()->__('Count'),),
     );
 
     $this->columns['individual'] = array(

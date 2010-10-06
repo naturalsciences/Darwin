@@ -215,11 +215,4 @@
       <?php if($specimen->getExpeditionRef() > 0) : ?>
         <a href="<?php echo url_for('expedition/edit?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
       <?php endif ; ?>
-    </td> 
-    <td class="col_count">
-        <?php if($specimen->getSpecimenCountMax()==$specimen->getSpecimenCountMin()):?>
-          <?php echo $specimen->getSpecimenCountMax();?>
-        <?php else:?>
-           <?php echo $specimen->getSpecimenCountMin();?> -  <?php echo $specimen->getSpecimenCountMax();?>
-        <?php endif;?>
     </td>
