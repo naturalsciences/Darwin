@@ -15,5 +15,6 @@
     });
     </script>
     <div class="clear"></div>
+    <div id="load_indicator"><?php echo image_tag('loader.gif');?> <?php echo __('Loading');?></div>
   </body>
 </html>

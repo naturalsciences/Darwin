@@ -39,6 +39,21 @@ fieldset
   z-index: 10000;
 }
 
+#load_indicator
+{
+    display: none;
+    border: 1px solid #F4BB0F;
+    background-color:#FFEFBF;
+    padding:0.2em;
+    padding-bottom:0.8em;
+    opacity: 0.9;
+    height: 1em;
+    position: fixed;
+    bottom: 10px;
+    width: 150px;
+    z-index: 400;
+}
+
 table tr
 {
   text-align:left;
