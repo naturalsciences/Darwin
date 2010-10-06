@@ -6919,8 +6919,7 @@ BEGIN
          mineral_path,mineral_parent_ref,
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
-         acquisition_category,acquisition_date_mask,acquisition_date,
-         specimen_count_min,specimen_count_max
+         acquisition_category,acquisition_date_mask,acquisition_date
         )=
         (NEW.category,
          NEW.collection_ref, subq.coll_collection_type, subq.coll_code, subq.coll_name, subq.coll_is_public,
@@ -6951,8 +6950,7 @@ BEGIN
          NEW.host_taxon_ref, NEW.host_relationship, subq.host_taxon_name, subq.host_taxon_name_indexed, subq.host_taxon_name_order_by, 
          subq.host_taxon_level_ref, subq.host_taxon_level_level_name, subq.host_taxon_status,
          subq.host_taxon_path, subq.host_taxon_parent_ref, subq.host_taxon_extinct,
-         NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date,
-         NEW.specimen_count_min, NEW.specimen_count_max
+         NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date
         )
         FROM
         (SELECT coll.collection_type coll_collection_type, coll.code coll_code, coll.name coll_name, coll.is_public coll_is_public,
@@ -7031,8 +7029,7 @@ BEGIN
      mineral_path,mineral_parent_ref,
      host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
      host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
-     acquisition_category,acquisition_date_mask,acquisition_date,
-     specimen_count_min,specimen_count_max
+     acquisition_category,acquisition_date_mask,acquisition_date
     )
     (SELECT NEW.id, NEW.category,
             NEW.collection_ref, coll.collection_type, coll.code, coll.name, coll.is_public,
@@ -7057,8 +7054,7 @@ BEGIN
             mineral.path, mineral.parent_ref,
             NEW.host_taxon_ref, NEW.host_relationship, host_taxon.name, host_taxon.name_indexed, host_taxon.name_order_by, host_taxon.level_ref, host_taxon_level.level_name, host_taxon.status,
             host_taxon.path, host_taxon.parent_ref, host_taxon.extinct,
-            NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date,
-            NEW.specimen_count_min, NEW.specimen_count_max
+            NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date
      FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
                             INNER JOIN users peo ON coll.main_manager_ref = peo.id
           ),
@@ -7157,7 +7153,6 @@ BEGIN
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
-         specimen_count_min,specimen_count_max,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          individual_ref,
          individual_type, individual_type_group, individual_type_search,
@@ -7190,7 +7185,6 @@ BEGIN
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
-         specimen_count_min,specimen_count_max,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          NEW.id,
          NEW.type, NEW.type_group, NEW.type_search,
@@ -7273,7 +7267,6 @@ BEGIN
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
-         specimen_count_min,specimen_count_max,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          individual_ref,
          individual_type, individual_type_group, individual_type_search,
@@ -7311,7 +7304,6 @@ BEGIN
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
-         specimen_count_min,specimen_count_max,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          individual_ref,
          individual_type, individual_type_group, individual_type_search,
