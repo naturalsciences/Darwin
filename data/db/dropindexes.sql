@@ -325,8 +325,6 @@
   DROP INDEX IF EXISTS idx_darwin_flat_host_taxon_extinct;
   DROP INDEX IF EXISTS idx_darwin_flat_ig_num;
   DROP INDEX IF EXISTS idx_darwin_flat_acquisition_category;
-  DROP INDEX IF EXISTS idx_darwin_flat_specimen_count_min;
-  DROP INDEX IF EXISTS idx_darwin_flat_specimen_count_max;
   DROP INDEX IF EXISTS idx_darwin_flat_spec_ref;
   DROP INDEX IF EXISTS idx_darwin_flat_collection_ref;
   DROP INDEX IF EXISTS idx_darwin_flat_collection_institution_ref;
@@ -390,7 +388,9 @@
   DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_lithology_name;
   DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_mineral_name;
   DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_expedition_name;
-  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_spec_count_max;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_with_types;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_with_individuals;
+  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_with_parts;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_category;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_coll_name;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_taxon_name;
@@ -409,6 +409,7 @@
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_social_status;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_rock_form;
   DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_individual_count_max;
+  DROP INDEX IF EXISTS idx_darwin_flat_individual_ref_with_parts;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_category;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_coll_name;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_taxon_name;
@@ -440,4 +441,3 @@
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_sub_container_storage;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_sub_container;
   DROP INDEX IF EXISTS idx_darwin_flat_part_ref_part_count_max;
-  DROP INDEX IF EXISTS idx_darwin_flat_spec_ref_with_types;
