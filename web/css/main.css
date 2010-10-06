@@ -76,6 +76,10 @@ table td.centered, table th.centered
   margin-right: 51px;
 }
 
+.load_ajax
+{
+  cursor: wait;
+}
 .container
 {
   display:inline-block;

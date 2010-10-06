@@ -14,5 +14,6 @@
       attachHelpQtip('body');
     });
     </script>
+    <div class="clear"></div>
   </body>
 </html>

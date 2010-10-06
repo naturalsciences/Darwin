@@ -14,8 +14,8 @@ $browser->
 
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('table tbody tr',5)->
-    checkElement('tbody tr:first span','/Falco Peregrinus/')->
+    checkElement('table tbody tr',9)->
+    checkElement('tbody tr:first span','/Falco Class/')->
   end()->
   info('executeTree');
 
@@ -26,7 +26,7 @@ $browser->
   
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('body > ul > li',4)->
+    checkElement('body > ul > li',8)->
     checkElement('body > ul li:first','/Eucaryota/')->
     checkElement('body > ul li:last','/Duchesnus/')->
   end()->
@@ -85,7 +85,7 @@ $browser->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
     checkElement('input[id="catalogue_relationships_record_id_2_name"]')->
-    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus recombinus"]')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus"]')->
   end()->
 
   info('DeleteRelated')->
