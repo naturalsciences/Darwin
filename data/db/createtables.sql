@@ -1693,9 +1693,7 @@ create table specimens
         constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id) on delete set default,
         constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
-        constraint fk_specimens_igs foreign key (ig_ref) references igs(id) on delete set null,
-	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max),
-	constraint chk_chk_specimens_min check (specimen_count_min >= 0)
+        constraint fk_specimens_igs foreign key (ig_ref) references igs(id) on delete set null
        );
 comment on table specimens is 'Specimens or batch of specimens stored in collection';
 comment on column specimens.id is 'Unique identifier of a specimen or batch of specimens';
@@ -1710,8 +1708,6 @@ comment on column specimens.host_specimen_ref is 'When current specimen encoded 
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
 comment on column specimens.acquisition_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
 comment on column specimens.acquisition_date is 'Date Composed (if possible) of the acquisition';
-comment on column specimens.specimen_count_min is 'Minimum number of individuals in batch';
-comment on column specimens.specimen_count_max is 'Maximum number of individuals in batch';
 comment on column specimens.multimedia_visible is 'Flag telling if the multimedia attached to this specimen can be visible or not';
 comment on column specimens.station_visible is 'Flag telling if the sampling location can be visible or must be hidden for the specimen encoded';
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
