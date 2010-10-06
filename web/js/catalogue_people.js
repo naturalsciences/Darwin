@@ -13,7 +13,7 @@
               $.fn.catalogue_people.reorder(element);
         }
       });
-      
+
       $(options['add_button']).click(function(){
         scroll(0,0) ;
         $(this).qtip({

@@ -107,12 +107,12 @@ function addPropertyValue()
   return false;
 }
 
-$(this).ajaxStart(function(){ 
-   $('body').css('background-color','#F1F1F1');
-});
-$(this).ajaxComplete(function(){
-   $('body').css('background-color','white');
-});
+// $(this).ajaxStart(function(){ 
+//    $('body').css('background-color','#F1F1F1');
+// });
+// $(this).ajaxComplete(function(){
+//    $('body').css('background-color','white');
+// });
 
 function returnText(object)
 {

@@ -77,7 +77,7 @@ $browser->
   $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
 
   $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'recombined from');
- 
+  $tax =  Doctrine::getTable('Taxonomy')->find($items[1]['record_id_2']);
   $browser->
   get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[1]['id'])->
   with('response')->begin()->
@@ -85,7 +85,7 @@ $browser->
     checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
     checkElement('form')->
     checkElement('input[id="catalogue_relationships_record_id_2_name"]')->
-    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus"]')->
+    checkElement('input[id="catalogue_relationships_record_id_2_name"][value="'.$tax->getName().'"]')->
   end()->
 
   info('DeleteRelated')->
