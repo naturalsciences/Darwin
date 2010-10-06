@@ -319,6 +319,7 @@ insert into possible_upper_levels (level_ref, level_upper_ref) values (34, 32);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (34, 33);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (35, 34);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (36, 34);
+insert into possible_upper_levels (level_ref, level_upper_ref) values (36, 35);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (37, 2);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (37, 4);
 insert into possible_upper_levels (level_ref, level_upper_ref) values (37, 5);
