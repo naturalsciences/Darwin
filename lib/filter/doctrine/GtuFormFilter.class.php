@@ -99,7 +99,7 @@ class GtuFormFilter extends BaseGtuFormFilter
 
   public function addValue($num)
   {
-      $form = new TagLineForm();
+      $form = new TagLineForm(null,array('num'=>$num));
       $this->embeddedForms['Tags']->embedForm($num, $form);
       $this->embedForm('Tags', $this->embeddedForms['Tags']);
   }
