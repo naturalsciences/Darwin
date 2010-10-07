@@ -22,6 +22,12 @@ abstract class BaseGtuForm extends BaseFormDoctrine
       'gtu_from_date'      => new sfWidgetFormTextarea(),
       'gtu_to_date_mask'   => new sfWidgetFormInputText(),
       'gtu_to_date'        => new sfWidgetFormTextarea(),
+      'latitude'           => new sfWidgetFormInputText(),
+      'longitude'          => new sfWidgetFormInputText(),
+      'location'           => new sfWidgetFormTextarea(),
+      'lat_long_accuracy'  => new sfWidgetFormInputText(),
+      'elevation'          => new sfWidgetFormInputText(),
+      'elevation_accuracy' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -32,6 +38,12 @@ abstract class BaseGtuForm extends BaseFormDoctrine
       'gtu_from_date'      => new sfValidatorString(array('required' => false)),
       'gtu_to_date_mask'   => new sfValidatorInteger(array('required' => false)),
       'gtu_to_date'        => new sfValidatorString(array('required' => false)),
+      'latitude'           => new sfValidatorNumber(array('required' => false)),
+      'longitude'          => new sfValidatorNumber(array('required' => false)),
+      'location'           => new sfValidatorString(array('required' => false)),
+      'lat_long_accuracy'  => new sfValidatorNumber(array('required' => false)),
+      'elevation'          => new sfValidatorNumber(array('required' => false)),
+      'elevation_accuracy' => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('gtu[%s]');

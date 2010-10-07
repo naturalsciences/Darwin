@@ -44,6 +44,41 @@ $(document).ready(function ()
           <?php echo $form['parent_ref'] ?>
         </td>
       </tr>
+      <tr>
+        <th class="top_aligned"><?php echo $form['latitude']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['latitude']->renderError() ?>
+          <?php echo $form['latitude'] ?>
+        </td>
+      </tr>
+      <tr>
+        <th class="top_aligned"><?php echo $form['longitude']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['longitude']->renderError() ?>
+          <?php echo $form['longitude'] ?>
+        </td>
+      </tr>
+      <tr>
+        <th class="top_aligned"><?php echo $form['lat_long_accuracy']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['lat_long_accuracy']->renderError() ?>
+          <?php echo $form['lat_long_accuracy'] ?> <span class="unit"><?php echo __('metres');?></span>
+        </td>
+      </tr>
+      <tr>
+        <th class="top_aligned"><?php echo $form['elevation']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['elevation']->renderError() ?>
+          <?php echo $form['elevation'] ?>  <span class="unit"><?php echo __('metres');?></span>
+        </td>
+      </tr>
+      <tr>
+        <th class="top_aligned"><?php echo $form['elevation_accuracy']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['elevation_accuracy']->renderError() ?>
+          <?php echo $form['elevation_accuracy'] ?> <span class="unit"><?php echo __('metres');?></span>
+        </td>
+      </tr>
     </tbody>
 </table>
 

@@ -73,7 +73,7 @@ class UsersForm extends BaseUsersForm
                                                                    'change_label' => 'Pick a sub type in the list',
                                                                    'add_label' => 'Add another sub type',
                                                                           )
-                                                                    );                                                                          
+                                                                    );
       $this->widgetSchema['people_id'] = new widgetFormButtonRef(array('model' => 'People',
                                                                 'method' => 'getFormatedName',
                                                                 'link_url' => 'institution/choose',
@@ -81,7 +81,7 @@ class UsersForm extends BaseUsersForm
                                                                 'box_title' => $this->getI18N()->__('Choose Yourself'),
                                                                       )
                                                                 );   
-      $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));                                                                 
+      $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));
       $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;
     }
     if ($this->options['mode'] != 'profile')

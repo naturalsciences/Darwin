@@ -12,6 +12,12 @@
  * @property string $gtu_from_date
  * @property integer $gtu_to_date_mask
  * @property string $gtu_to_date
+ * @property float $latitude
+ * @property float $longitude
+ * @property string $location
+ * @property float $lat_long_accuracy
+ * @property float $elevation
+ * @property float $elevation_accuracy
  * @property Gtu $Parent
  * @property Doctrine_Collection $TagGroups
  * @property Doctrine_Collection $Tags
@@ -28,6 +34,12 @@
  * @method string              getGtuFromDate()        Returns the current record's "gtu_from_date" value
  * @method integer             getGtuToDateMask()      Returns the current record's "gtu_to_date_mask" value
  * @method string              getGtuToDate()          Returns the current record's "gtu_to_date" value
+ * @method float               getLatitude()           Returns the current record's "latitude" value
+ * @method float               getLongitude()          Returns the current record's "longitude" value
+ * @method string              getLocation()           Returns the current record's "location" value
+ * @method float               getLatLongAccuracy()    Returns the current record's "lat_long_accuracy" value
+ * @method float               getElevation()          Returns the current record's "elevation" value
+ * @method float               getElevationAccuracy()  Returns the current record's "elevation_accuracy" value
  * @method Gtu                 getParent()             Returns the current record's "Parent" value
  * @method Doctrine_Collection getTagGroups()          Returns the current record's "TagGroups" collection
  * @method Doctrine_Collection getTags()               Returns the current record's "Tags" collection
@@ -43,6 +55,12 @@
  * @method Gtu                 setGtuFromDate()        Sets the current record's "gtu_from_date" value
  * @method Gtu                 setGtuToDateMask()      Sets the current record's "gtu_to_date_mask" value
  * @method Gtu                 setGtuToDate()          Sets the current record's "gtu_to_date" value
+ * @method Gtu                 setLatitude()           Sets the current record's "latitude" value
+ * @method Gtu                 setLongitude()          Sets the current record's "longitude" value
+ * @method Gtu                 setLocation()           Sets the current record's "location" value
+ * @method Gtu                 setLatLongAccuracy()    Sets the current record's "lat_long_accuracy" value
+ * @method Gtu                 setElevation()          Sets the current record's "elevation" value
+ * @method Gtu                 setElevationAccuracy()  Sets the current record's "elevation_accuracy" value
  * @method Gtu                 setParent()             Sets the current record's "Parent" value
  * @method Gtu                 setTagGroups()          Sets the current record's "TagGroups" collection
  * @method Gtu                 setTags()               Sets the current record's "Tags" collection
@@ -95,6 +113,24 @@ abstract class BaseGtu extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'default' => '0001-01-01',
+             ));
+        $this->hasColumn('latitude', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('longitude', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('location', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('lat_long_accuracy', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('elevation', 'float', null, array(
+             'type' => 'float',
+             ));
+        $this->hasColumn('elevation_accuracy', 'float', null, array(
+             'type' => 'float',
              ));
     }
 
