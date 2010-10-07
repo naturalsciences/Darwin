@@ -1678,8 +1678,6 @@ create table specimens
         acquisition_category varchar not null default '',
         acquisition_date_mask integer not null default 0,
         acquisition_date date not null default '01/01/0001',
-        specimen_count_min integer not null default 1,
-        specimen_count_max integer not null default 1,
         station_visible boolean not null default true,
         multimedia_visible boolean not null default true,
         ig_ref integer,
@@ -1695,9 +1693,7 @@ create table specimens
         constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id) on delete set default,
         constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id) on delete set default,
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
-        constraint fk_specimens_igs foreign key (ig_ref) references igs(id) on delete set null,
-	constraint chk_chk_specimens_minmax check (specimen_count_min <= specimen_count_max),
-	constraint chk_chk_specimens_min check (specimen_count_min >= 0)
+        constraint fk_specimens_igs foreign key (ig_ref) references igs(id) on delete set null
        );
 comment on table specimens is 'Specimens or batch of specimens stored in collection';
 comment on column specimens.id is 'Unique identifier of a specimen or batch of specimens';
@@ -1712,8 +1708,6 @@ comment on column specimens.host_specimen_ref is 'When current specimen encoded 
 comment on column specimens.acquisition_category is 'Describe how the specimen was collected: expedition, donation,...';
 comment on column specimens.acquisition_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
 comment on column specimens.acquisition_date is 'Date Composed (if possible) of the acquisition';
-comment on column specimens.specimen_count_min is 'Minimum number of individuals in batch';
-comment on column specimens.specimen_count_max is 'Maximum number of individuals in batch';
 comment on column specimens.multimedia_visible is 'Flag telling if the multimedia attached to this specimen can be visible or not';
 comment on column specimens.station_visible is 'Flag telling if the sampling location can be visible or must be hidden for the specimen encoded';
 comment on column specimens.lithology_ref is 'Reference of a rock classification unit associated to the specimen encoded - id field of lithology table';
@@ -1774,6 +1768,7 @@ create table specimen_individuals
         rock_form varchar not null default 'not applicable',
         specimen_individuals_count_min integer not null default 1,
         specimen_individuals_count_max integer not null default 1,
+        with_parts boolean not null default false,
         constraint pk_specimen_individuals primary key (id),
         constraint fk_specimen_individuals_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint chk_chk_specimen_individuals_minmax check (specimen_individuals_count_min <= specimen_individuals_count_max),
@@ -1792,6 +1787,7 @@ comment on column specimen_individuals.social_status is 'For social specimens, g
 comment on column specimen_individuals.rock_form is 'For rock specimens/individuals, a descriptive form can be given: polygonous,...';
 comment on column specimen_individuals.specimen_individuals_count_min is 'Minimum number of individuals';
 comment on column specimen_individuals.specimen_individuals_count_max is 'Maximum number of individuals';
+comment on column specimen_individuals.with_parts is 'Flag telling if they are parts for current individual - Triggerly composed';
 
 create sequence specimen_parts_id_seq;
 
@@ -2111,9 +2107,8 @@ create table darwin_flat
     acquisition_category varchar,
     acquisition_date_mask integer,
     acquisition_date date,
-    specimen_count_min integer,
-    specimen_count_max integer,
     with_types boolean not null default false,
+    with_individuals boolean not null default false,
     individual_ref integer,
     individual_type varchar not null default 'specimen',
     individual_type_group varchar not null default 'specimen',
@@ -2125,6 +2120,7 @@ create table darwin_flat
     individual_rock_form varchar not null default 'not applicable',
     individual_count_min integer,
     individual_count_max integer,
+    with_parts boolean not null default false,
     part_ref integer,
     part varchar,
     part_status varchar,
@@ -2271,9 +2267,8 @@ comment on column darwin_flat.ig_date is 'General Inventory number (I.G. Num) re
 comment on column darwin_flat.acquisition_category is 'Specimen acquisition category';
 comment on column darwin_flat.acquisition_date_mask is 'Specimen acquisition date mask';
 comment on column darwin_flat.acquisition_date is 'Specimen acquisition date';
-comment on column darwin_flat.specimen_count_min is 'Specimen count (minimum value if in a range)';
-comment on column darwin_flat.specimen_count_max is 'Specimen count (maximum value if in a range - equal to min value if not)';
 comment on column darwin_flat.with_types is 'Flag telling if there are types for current specimen';
+comment on column darwin_flat.with_individuals is 'Flag telling if there are individuals for current specimen';
 comment on column darwin_flat.individual_ref is 'Reference of specimen individual - references to id of individual in specimen_individuals table - Null if nothing referenced';
 comment on column darwin_flat.individual_type is 'Type';
 comment on column darwin_flat.individual_type_group is 'Type group - Grouping of types appelations used for internal search';
@@ -2285,6 +2280,7 @@ comment on column darwin_flat.individual_social_status is 'Social status if appl
 comment on column darwin_flat.individual_rock_form is 'Rock form if applicable: Cubic, Orthorhombic,...';
 comment on column darwin_flat.individual_count_min is 'Minimum number of individuals';
 comment on column darwin_flat.individual_count_max is 'Maximum number of individuals';
+comment on column darwin_flat.with_parts is 'Flag telling if they are parts for the current individual';
 comment on column darwin_flat.part_ref is 'Reference of part - coming from specimen_parts table (id field) - set to null if no references';
 comment on column darwin_flat.part is 'Part name: wing, tail, toes,...';
 comment on column darwin_flat.part_status is 'Part status: intact, lost, stolen,...';

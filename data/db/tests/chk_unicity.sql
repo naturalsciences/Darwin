@@ -4,7 +4,7 @@
 SELECT plan(6);
 
 INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
-INSERT INTO taxonomy (id, name, level_ref) VALUES (2, 'Brol', 2);
+INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (2, 'Brol', 2,1);
 
 SELECT lives_ok('INSERT INTO classification_synonymies(referenced_relation, record_id, group_id, group_name) 
     VALUES (''taxonomy'',1, 12, ''synonym'') ;','Insert synonym is ok');
