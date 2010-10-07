@@ -2,7 +2,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <div class="page">
-  <?php echo form_tag('register/index', array('id'=>'register_form'));?>
+  <?php echo form_tag('register/index', array('id'=>'registration_form'));?>
     <h2 class="title"><?php echo __("Register") ?></h2>
     <div class="borded">
       <table id="registration">
@@ -83,9 +83,9 @@
 </div>
 <script language="javascript">
   $(document).ready(function () {
-    $('input#submit').bind('click', function(){
-      $(this).attr('disabled', 'true');
-      $(this).closest('form').submit();
+    $('form#registration_form').submit(function(){
+      $('input#submit').attr('disabled', 'true');
+      return true;
     });
   });
 </script>
