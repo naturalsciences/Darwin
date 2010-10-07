@@ -82,6 +82,73 @@ $(document).ready(function ()
     </tbody>
 </table>
 
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+
+<div style="width:600px; height:400px;border:1px solid red;" id="map"></div>
+<script defer="defer" type="text/javascript">
+  var markers;
+  var marker;
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
+  var map = new OpenLayers.Map('map');
+  var wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
+      "http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
+  map.addLayer(wms);
+  map.zoomToMaxExtent();
+
+
+   markers = new OpenLayers.Layer.Markers("Markers", {
+      displayInLayerSwitcher: false,
+      units: "m",
+      projection: "EPSG:900913"
+   });
+   map.addLayer(markers);
+
+ map.events.register("click", map, setPoint);
+ marker = addMarkerToMap(new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>));
+
+function setPoint( e ) { 
+      var lonlat = getEventPosition(e);
+ 
+      $('#gtu_latitude').val(lonlat.lat);
+      $('#gtu_longitude').val(lonlat.lon);
+ 
+      if (marker) {
+        removeMarkerFromMap(marker);
+      }
+ 
+      marker = addMarkerToMap(lonlat, null);
+  }
+function removeMarkerFromMap(marker){
+   markers.removeMarker(marker);
+}
+function addMarkerToMap(position, icon, description) {
+   var marker = new OpenLayers.Marker(position.clone().transform(epsg4326, map.getProjectionObject()), icon);
+
+   markers.addMarker(marker);
+
+   if (description) {
+      marker.events.register("mouseover", marker, function() { openMapPopup(marker, description) });
+      marker.events.register("mouseout", marker, function() { closeMapPopup() });
+   }
+
+   return marker;
+}
+
+function getEventPosition(event) {
+   return map.getLonLatFromViewPortPx(event.xy).clone().transform(map.getProjectionObject(), epsg4326);
+}
+
+/*
+var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
+var feature = new OpenLayers.Feature.Vector(
+ new OpenLayers.Geometry.Point(-71, 42),
+ {some:'data'},
+ {externalGraphic: '/images/blue_pin_on.png', graphicHeight: 21, graphicWidth: 16});
+vectorLayer.addFeatures(feature);
+map.addLayer(vectorLayer);*/
+</script>
+
 <?php
 $tag_grouped = array();
 $avail_groups = TagGroups::getGroups(); 
