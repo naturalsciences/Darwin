@@ -1573,7 +1573,7 @@ a.sub_group
    vertical-align: top;
 }
 
-input.tag_line
+tr.tag_line input
 {
   width:100%;
 }

@@ -1,4 +1,4 @@
-<tr>
+<tr class="tag_line">
   <td colspan="3">
   <?php echo $form['tag'];?>
     <div class="purposed_tags">
