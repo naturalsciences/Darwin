@@ -7,7 +7,7 @@ alter table mineralogy add constraint chk_chk_possible_upper_level_mineralogy ch
 
 alter table lithology add constraint chk_chk_possible_upper_level_lithology check (fct_chk_possible_upper_level('lithology', parent_ref, level_ref, id));
 
-/*alter table taxonomy add constraint chk_chk_possible_upper_level_taxa check (fct_chk_possible_upper_level('taxonomy', parent_ref, level_ref, id));*/
+alter table taxonomy add constraint chk_chk_possible_upper_level_taxa check (fct_chk_possible_upper_level('taxonomy', parent_ref, level_ref, id));
 
 
 ALTER TABLE template_table_record_ref add constraint fct_chk_ReferencedRecord_template_table_record_ref check (fct_chk_ReferencedRecord(referenced_relation,record_id));
