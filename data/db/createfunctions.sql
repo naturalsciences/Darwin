@@ -7478,9 +7478,10 @@ DECLARE
   code_from varchar;
   code_to varchar;
   code_category varchar;
+  relation varchar;
   word varchar;
 BEGIN
-  FOR i in 1..array_upper( $1, 1 ) BY 4 LOOP
+  FOR i in 1..array_upper( $1, 1 ) BY 5 LOOP
     code_category := $1[i];
     code_part := $1[i+1];
     code_from := $1[i+2];
@@ -7488,9 +7489,9 @@ BEGIN
     relation := $1[i+4] ;
     
     IF relation != '' THEN
-      sqlWhere := sqlWhere || ' where referenced_relation=' || quote_literal(relation) ;
+      sqlString := sqlString || ' where referenced_relation=' || quote_literal(relation) ;
     ELSE
-      sqlWhere := sqlWhere || ' where referenced_relation=\'specimens\''  ;
+      sqlString := sqlString || E' where referenced_relation=\'specimens\''  ;
     END IF ;
       
     sqlWhere := sqlWhere || ' (code_category = ' || quote_literal(code_category) ;
@@ -7512,7 +7513,7 @@ BEGIN
   END LOOP;
   
   sqlString := sqlString || ' AND (' || substr(sqlWhere,0, length(sqlWhere)-2) || ')';
-  
+  RAISE INFO 'Sql : %',sqlString ;
   RETURN QUERY EXECUTE sqlString;
 END;
 $$ LANGUAGE plpgSQL;
