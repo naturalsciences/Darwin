@@ -15,7 +15,7 @@
     <?php endforeach;?>
       <tr class="and_row">
         <td colspan="3"></td>
-        <td colspan="3" class="and_col"><?php echo link_to(image_tag('add_blue.png'),'specimensearch/addCode', array('class'=>'add_code'));?></td>
+        <td colspan="4"><?php echo image_tag('add_blue.png'). link_to(__('Add code'),'specimensearch/addCode', array('class'=>'add_search_code'));?></td>
       </tr>
   </tbody>
 </table>

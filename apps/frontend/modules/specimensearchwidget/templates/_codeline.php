@@ -1,5 +1,5 @@
 <tr>
-  <td><?php echo $code['category']->renderError();?></td>
+  <td></td>
   <td><?php echo $code['category']->renderError();?></td>
   <td><?php echo $code['code_part']->renderError();?></td>
   <td></td>

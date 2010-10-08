@@ -18,7 +18,7 @@ class CodeLineForm extends BaseForm
       'required' => false,
       'choices' => array('specimens'=>'specimens','specimen_parts'=>'specimen_parts'),
     ));
-    $this->widgetSchema['code_part'] = new sfWidgetFormInput(array(),array('class'=> 'medium_small_size'));
+    $this->widgetSchema['code_part'] = new sfWidgetFormInput(array(),array('style'=> 'width:97%;'));
     $this->widgetSchema['code_from'] = new sfWidgetFormInput(array(),array('class'=> 'lsmall_size'));
     $this->widgetSchema['code_to'] = new sfWidgetFormInput(array(),array('class'=> 'lsmall_size'));
 
