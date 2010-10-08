@@ -62,7 +62,7 @@ class collectionActions extends DarwinActions
 
   public function executeCompleteOptions(sfWebRequest $request)
   {
-    $this->collections = Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($request->getParameter('institution'));
+    $this->collections = Doctrine::getTable('Collections')->getDistinctCollectionByInstitution($request->getParameter('institution'));    
     $this->setLayout(false);
   }
   
@@ -91,8 +91,13 @@ class collectionActions extends DarwinActions
       $User = Doctrine::getTable('CollectionsRights')->getAllUserRef($duplic) ;      
       foreach ($User as $key=>$val)
       {
-         $this->form->addValue($key, $val->getUserRef());
+         $this->form->addValue($key, $val->getUserRef(),'encoder');
       }
+      $Admin = Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($duplic) ;      
+      foreach ($Admin as $key=>$val)
+      {
+         $this->form->addValue($key, $val->getUserRef(),'admin');
+      }      
     }  
   }
 

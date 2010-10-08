@@ -16,7 +16,7 @@ $(document).ready(function ()
 	  $('.collections_rights tbody tr').each(function() {
 	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
 	  });
-	  if($info == 'good') addCollRightValue(ref_element_id);
+	  if($info == 'good') addCollRightValue(ref_element_id,'encoder_right');
   });
 });
 </script>

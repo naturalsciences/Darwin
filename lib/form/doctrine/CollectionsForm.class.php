@@ -28,7 +28,7 @@ class CollectionsForm extends BaseCollectionsForm
     $this->widgetSchema['name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['institution_ref'] = new widgetFormButtonRef(array(
        'model' => 'Institutions',
-       'link_url' => 'institution/choose',
+       'link_url' => 'institution/choose?with_js=1',
        'method' => 'getFamilyName',
        'box_title' => $this->getI18N()->__('Choose Institution'),
      ));
@@ -80,7 +80,7 @@ class CollectionsForm extends BaseCollectionsForm
       $form = new CollectionsAdminForm($vals);
       $this->embeddedForms['CollectionsAdmin']->embedForm($key, $form);
     }
-    //Re-embedding the container
+    //Re-embedding the container    
     $this->embedForm('CollectionsAdmin', $this->embeddedForms['CollectionsAdmin']); 
     
 //    $this->embedRelation('CollectionsRights');
@@ -130,7 +130,7 @@ class CollectionsForm extends BaseCollectionsForm
 		  {
 		    if (!isset($this['newVal'][$key]))
 		    {
-		      $this->addValue($key,$newVal['user_ref']);
+		      $this->addValue($key,$newVal['user_ref'],'encoder');
 		    }
 		  }
     }
@@ -140,7 +140,7 @@ class CollectionsForm extends BaseCollectionsForm
 		  {
 		    if (!isset($this['newAdmin'][$key]))
 		    {
-		      $this->addValue($key,$newVal['user_ref']);
+		      $this->addValue($key,$newVal['user_ref'],'admin');
 		    }
 		  }
     }    
@@ -168,7 +168,13 @@ class CollectionsForm extends BaseCollectionsForm
 	        $form->getObject()->delete();
 	        unset($this->embeddedForms['CollectionsAdmin'][$name]);
 	      } 
-	    }		    
+	    }
+	    $value = $this->getValue('newAdmin') ;
+      foreach($this->embeddedForms['newAdmin']->getEmbeddedForms() as $name => $form)
+      {
+        if($value[$name]['user_ref'] == $this->getValue('main_manager_ref'))
+	        unset($this->embeddedForms['newAdmin'][$name]);
+      }	    
    }
    return parent::saveEmbeddedForms($con, $forms);
   }
