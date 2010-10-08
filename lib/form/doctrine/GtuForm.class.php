@@ -69,7 +69,8 @@ class GtuForm extends BaseGtuForm
                                                                           array('invalid' => 'Date provided is not valid',
                                                                                )
                                                                          );
-
+    $this->widgetSchema['lat_long_accuracy']->setLabel('Accuracy');
+    $this->widgetSchema['elevation_accuracy']->setLabel('Accuracy');
     $this->validatorSchema['latitude'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
     $this->validatorSchema['longitude'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
     $this->validatorSchema->setPostValidator(
@@ -109,7 +110,9 @@ class GtuForm extends BaseGtuForm
       if($values['latitude'] == '' || $values['longitude'] == '')
       {
         $error = new sfValidatorError($validator, 'You must enter valid latitude And longitude' );
-        throw new sfvalidatorErrorSchema($validator, array('latitude' => $error));
+        $field = 'longitude';
+        if($values['latitude'] == '') $field = 'latitude'; 
+        throw new sfvalidatorErrorSchema($validator, array($field => $error));
       }
       if($values['lat_long_accuracy'] == '')
       {

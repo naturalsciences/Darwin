@@ -44,49 +44,90 @@ $(document).ready(function ()
           <?php echo $form['parent_ref'] ?>
         </td>
       </tr>
-      <tr>
-        <th class="top_aligned"><?php echo $form['latitude']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['latitude']->renderError() ?>
-          <?php echo $form['latitude'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th class="top_aligned"><?php echo $form['longitude']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['longitude']->renderError() ?>
-          <?php echo $form['longitude'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th class="top_aligned"><?php echo $form['lat_long_accuracy']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['lat_long_accuracy']->renderError() ?>
-          <?php echo $form['lat_long_accuracy'] ?> <span class="unit"><?php echo __('metres');?></span>
-        </td>
-      </tr>
-      <tr>
-        <th class="top_aligned"><?php echo $form['elevation']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['elevation']->renderError() ?>
-          <?php echo $form['elevation'] ?>  <span class="unit"><?php echo __('metres');?></span>
-        </td>
-      </tr>
-      <tr>
-        <th class="top_aligned"><?php echo $form['elevation_accuracy']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['elevation_accuracy']->renderError() ?>
-          <?php echo $form['elevation_accuracy'] ?> <span class="unit"><?php echo __('metres');?></span>
-        </td>
-      </tr>
     </tbody>
 </table>
 
+<?php
+$tag_grouped = array();
+$avail_groups = TagGroups::getGroups(); 
+foreach($form['TagGroups'] as $group)
+{
+  $type = $group['group_name']->getValue();
+  if(!isset($tag_grouped[$type]))
+    $tag_grouped[$type] = array();
+  $tag_grouped[$type][] = $group;
+}
+foreach($form['newVal'] as $group)
+{
+  $type = $group['group_name']->getValue();
+  if(!isset($tag_grouped[$type]))
+    $tag_grouped[$type] = array();
+  $tag_grouped[$type][] = $group;
+}
+?>
+
+<div class="tag_parts_screen" alt="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>">
+<?php foreach($tag_grouped as  $group_key => $sub_forms):?>
+  <fieldset alt="<?php echo $group_key;?>">
+    <legend><?php echo __($avail_groups[$group_key]);?></legend>
+    <ul>
+      <?php foreach($sub_forms as $form_value):?>
+	<?php include_partial('taggroups', array('form' => $form_value));?>
+      <?php endforeach;?>
+    </ul>
+    <a class="sub_group"><?php echo __('Add Sub Group');?></a>
+  </fieldset>
+<?php endforeach;?>
+</div>
+
+
+  <div class="gtu_groups_add">
+    <select id="groups_select">
+      <option value=""></option>
+      <?php foreach(TagGroups::getGroups() as $k => $v):?>
+	<option value="<?php echo $k;?>"><?php echo $v;?></option>
+      <?php endforeach;?>
+    </select>
+    <a href="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>" id="add_group"><?php echo __('Add Group');?></a>
+  </div>
+
+  <fieldset id="location">
+    <legend><?php echo __('Localisation');?></legend>
+    <table>
+      <tr>
+        <th><?php echo $form['latitude']->renderLabel() ;?><?php echo $form['latitude']->renderError() ?></th>
+        <th><?php echo $form['longitude']->renderLabel(); ?><?php echo $form['longitude']->renderError() ?></th>
+        <th><?php echo $form['lat_long_accuracy']->renderLabel() ;?><?php echo $form['lat_long_accuracy']->renderError() ?></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td><?php echo $form['latitude'];?></td>
+        <td><?php echo $form['longitude'];?></td>
+        <td><?php echo $form['lat_long_accuracy'];?></td>
+        <td><strong><?php echo _('m');?></strong> <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th><?php echo $form['elevation']->renderLabel(); ?><?php echo $form['elevation']->renderError() ?></th>
+        <th><?php echo $form['elevation_accuracy']->renderLabel() ;?><?php echo $form['elevation_accuracy']->renderError() ?></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td></td>
+        <td><?php echo $form['elevation'];?></td>
+        <td><?php echo $form['elevation_accuracy'];?></td>
+        <td><strong><?php echo _('m');?></strong> <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
+      </tr>
+      <tr>
+        <td colspan="3"><div style="width:100%; height:300px;" id="map"></div></td>
+        <td>
 
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<div style="width:600px; height:400px;border:1px solid red;" id="map"></div>
+
 <script type="text/javascript">
+
   var epsg4326 = new OpenLayers.Projection("EPSG:4326");
   var markers;
   var marker;
@@ -137,7 +178,7 @@ $(document).ready(function ()
         "Google Hybrid",
         {sphericalMercator: true,type: google.maps.MapTypeId.HYBRID, numZoomLevels: 22, visibility: false}
     );
-    var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", {projection: new OpenLayers.Projection("EPSG:4326")});
+    var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", { displayInLayerSwitcher: false, projection: new OpenLayers.Projection("EPSG:4326")});
     map.addLayers([gsat, gphy, gmap, ghyb,vectorLayer]);
 
 
@@ -167,6 +208,7 @@ $(document).ready(function ()
 $('#gtu_lat_long_accuracy').change(drawAccuracy);
 $('#gtu_longitude').change(drawLatLong);
 $('#gtu_latitude').change(drawLatLong);
+
 
 function setZoom(e)
 {
@@ -207,6 +249,20 @@ function setPoint( e )
   var lonlat = getEventPosition(e).wrapDateLine();
   $('#gtu_latitude').val(lonlat.lat);
   $('#gtu_longitude').val(lonlat.lon);
+
+////GOOGLE ELE
+var latlng = new google.maps.LatLng(lonlat.lat,lonlat.lon);
+elevator = new google.maps.ElevationService();
+var positionalRequest = {'locations': [latlng] };
+elevator.getElevationForLocations(positionalRequest, function(results, status) 
+{
+  if (status == google.maps.ElevationStatus.OK && results[0]) 
+  {
+    $('#gtu_elevation').val(results[0].elevation.toFixed(3));
+  }
+});
+//// GOOGLE ELE
+
   drawLatLong();
 }
 
@@ -239,52 +295,18 @@ function setMapCenter(center, zoom)
   if (zoom >= numzoom) zoom = numzoom - 1;
   map.setCenter(center.clone().transform(epsg4326, map.getProjectionObject()), zoom);
 }
+ $('#location .clear_prop').click(function()
+  {
+    $(this).closest('tr').find('input').val('');
+    drawLatLong();
 
+  });
 </script>
+</td>
+      </tr>
+    </table>
 
-<?php
-$tag_grouped = array();
-$avail_groups = TagGroups::getGroups(); 
-foreach($form['TagGroups'] as $group)
-{
-  $type = $group['group_name']->getValue();
-  if(!isset($tag_grouped[$type]))
-    $tag_grouped[$type] = array();
-  $tag_grouped[$type][] = $group;
-}
-foreach($form['newVal'] as $group)
-{
-  $type = $group['group_name']->getValue();
-  if(!isset($tag_grouped[$type]))
-    $tag_grouped[$type] = array();
-  $tag_grouped[$type][] = $group;
-}
-?>
-
-<div class="tag_parts_screen" alt="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>">
-<?php foreach($tag_grouped as  $group_key => $sub_forms):?>
-  <fieldset alt="<?php echo $group_key;?>">
-    <legend><?php echo __($avail_groups[$group_key]);?></legend>
-    <ul>
-      <?php foreach($sub_forms as $form_value):?>
-	<?php include_partial('taggroups', array('form' => $form_value));?>
-      <?php endforeach;?>
-    </ul>
-    <a class="sub_group"><?php echo __('Add Sub Group');?></a>
   </fieldset>
-<?php endforeach;?>
-</div>
-
-
-  <div class="gtu_groups_add">
-    <select id="groups_select">
-      <option value=""></option>
-      <?php foreach(TagGroups::getGroups() as $k => $v):?>
-	<option value="<?php echo $k;?>"><?php echo $v;?></option>
-      <?php endforeach;?>
-    </select>
-    <a href="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>" id="add_group"><?php echo __('Add Group');?></a>
-  </div>
 
   <table>
     <tfoot>
@@ -317,7 +339,7 @@ $(document).ready(function () {
     });
 
 
-    $('.clear_prop').live('click', function()
+    $('.tag_parts_screen .clear_prop').live('click', function()
     {
       parent = $(this).closest('li');
       nvalue='';
