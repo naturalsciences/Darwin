@@ -1843,6 +1843,10 @@ td.and_col
   text-align:right;
 }
 
+a.and_search_code
+{
+  text-align:left;
+}
 
 .search_cols_part, .search_cols_individual, .search_cols_specimen
 {
