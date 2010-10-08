@@ -84,69 +84,121 @@ $(document).ready(function ()
 
 
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <div style="width:600px; height:400px;border:1px solid red;" id="map"></div>
-<script defer="defer" type="text/javascript">
+<script type="text/javascript">
+  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
   var markers;
   var marker;
-  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
-  var map = new OpenLayers.Map('map');
-  var wms = new OpenLayers.Layer.WMS( "OpenLayers WMS",
-      "http://labs.metacarta.com/wms/vmap0", {layers: 'basic'} );
-  map.addLayer(wms);
-  map.zoomToMaxExtent();
+  var center;
+  var zoom = 2;
+
+  options = {
+//     restrictedExtent: extent,
+    controls: [
+      new OpenLayers.Control.Navigation(), 
+      new OpenLayers.Control.PanZoomBar(),
+      new OpenLayers.Control.LayerSwitcher()
+    ],
+    numZoomLevels: 20,
+    displayProjection: new OpenLayers.Projection("EPSG:4326"),
+    maxExtent: new OpenLayers.Bounds(-180,-90, 180, 90),
+    maxResolution: 0.3515625
+  };
+
+// OpenLayers.Layer.XYZ.
+
+  var map = new OpenLayers.Map("map", options);
+
+  var mapnik = new OpenLayers.Layer.OSM();
+  mapnik.addOptions({wrapDateLine:true});
+  map.addLayer(mapnik);
+
+  // the SATELLITE layer has all 22 zoom level, so we add it first to
+    // become the internal base layer that determines the zoom levels of the
+    // map.
+    var gsat = new OpenLayers.Layer.Google(
+        "Google Satellite",
+        {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+    );
+    var gphy = new OpenLayers.Layer.Google(
+        "Google Physical",
+        {type: google.maps.MapTypeId.TERRAIN, visibility: false}
+    );
+    var gmap = new OpenLayers.Layer.Google(
+        "Google Streets", // the default
+        {numZoomLevels: 20, visibility: false}
+    );
+    var ghyb = new OpenLayers.Layer.Google(
+        "Google Hybrid",
+        {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 22, visibility: false}
+    );
+
+    map.addLayers([gsat, gphy, gmap, ghyb]);
 
 
-   markers = new OpenLayers.Layer.Markers("Markers", {
-      displayInLayerSwitcher: false,
-      units: "m",
-      projection: "EPSG:900913"
+  markers = new OpenLayers.Layer.Markers("Markers", {
+    displayInLayerSwitcher: false,
+    units: "m",
+    projection: "EPSG:900913"
    });
-   map.addLayer(markers);
+  map.addLayer(markers);
 
- map.events.register("click", map, setPoint);
- marker = addMarkerToMap(new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>));
+  map.zoomToMaxExtent();
+  map.events.register("click", map, setPoint);
 
-function setPoint( e ) { 
-      var lonlat = getEventPosition(e);
+
+  <?php if($form->getObject()->getLongitude() != ''):?>
+    centre = new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>);
+    zoom = 14;
+    setMapCenter(centre, zoom);
+    marker = addMarkerToMap(centre);
+
+  <?php else:?>
+        //var bbox = new OpenLayers.Bounds(2.54694366455078, 49.4936027526855, 6.40386152267456, 51.5054512023926);
+    setMapCenter(new OpenLayers.LonLat(0,0), 2);
+// map.zoomToMaxExtent();
+
+  <?php endif;?>
+
+function setPoint( e )
+{
+  var lonlat = getEventPosition(e).wrapDateLine();
+  $('#gtu_latitude').val(lonlat.lat);
+  $('#gtu_longitude').val(lonlat.lon);
  
-      $('#gtu_latitude').val(lonlat.lat);
-      $('#gtu_longitude').val(lonlat.lon);
- 
-      if (marker) {
-        removeMarkerFromMap(marker);
-      }
- 
-      marker = addMarkerToMap(lonlat, null);
+  if (marker) {
+    removeMarkerFromMap(marker);
   }
-function removeMarkerFromMap(marker){
+  marker = addMarkerToMap(lonlat, null);
+
+}
+
+function addMarkerToMap(position, icon, description)
+{
+  var marker = new OpenLayers.Marker(position.clone().transform(epsg4326, map.getProjectionObject()), icon);
+  markers.addMarker(marker);
+  return marker;
+}
+
+function removeMarkerFromMap(marker)
+{
    markers.removeMarker(marker);
 }
-function addMarkerToMap(position, icon, description) {
-   var marker = new OpenLayers.Marker(position.clone().transform(epsg4326, map.getProjectionObject()), icon);
 
-   markers.addMarker(marker);
-
-   if (description) {
-      marker.events.register("mouseover", marker, function() { openMapPopup(marker, description) });
-      marker.events.register("mouseout", marker, function() { closeMapPopup() });
-   }
-
-   return marker;
+function getEventPosition(event)
+{
+  return map.getLonLatFromViewPortPx(event.xy).clone().transform(map.getProjectionObject(), epsg4326);
 }
 
-function getEventPosition(event) {
-   return map.getLonLatFromViewPortPx(event.xy).clone().transform(map.getProjectionObject(), epsg4326);
+function setMapCenter(center, zoom)
+{
+  zoom = parseInt(zoom);
+  var numzoom = map.getNumZoomLevels();
+  if (zoom >= numzoom) zoom = numzoom - 1;
+  map.setCenter(center.clone().transform(epsg4326, map.getProjectionObject()), zoom);
 }
 
-/*
-var vectorLayer = new OpenLayers.Layer.Vector("Overlay");
-var feature = new OpenLayers.Feature.Vector(
- new OpenLayers.Geometry.Point(-71, 42),
- {some:'data'},
- {externalGraphic: '/images/blue_pin_on.png', graphicHeight: 21, graphicWidth: 16});
-vectorLayer.addFeatures(feature);
-map.addLayer(vectorLayer);*/
 </script>
 
 <?php
