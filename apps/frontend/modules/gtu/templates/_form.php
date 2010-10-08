@@ -92,7 +92,8 @@ $(document).ready(function ()
   var marker;
   var center;
   var zoom = 2;
-
+  var pointFeature;
+  var point;
   options = {
 //     restrictedExtent: extent,
     controls: [
@@ -103,9 +104,12 @@ $(document).ready(function ()
     numZoomLevels: 20,
     displayProjection: new OpenLayers.Projection("EPSG:4326"),
     maxExtent: new OpenLayers.Bounds(-180,-90, 180, 90),
-    maxResolution: 0.3515625
+    maxResolution: 0.3515625,
+    units: "m"
   };
-
+  var style_blue = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+  style_blue.strokeColor = "blue"; 
+  style_blue.fillColor = "blue"; 
 // OpenLayers.Layer.XYZ.
 
   var map = new OpenLayers.Map("map", options);
@@ -119,22 +123,22 @@ $(document).ready(function ()
     // map.
     var gsat = new OpenLayers.Layer.Google(
         "Google Satellite",
-        {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+        {sphericalMercator: true,type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
     );
     var gphy = new OpenLayers.Layer.Google(
         "Google Physical",
-        {type: google.maps.MapTypeId.TERRAIN, visibility: false}
+        {sphericalMercator: true,type: google.maps.MapTypeId.TERRAIN, visibility: false}
     );
     var gmap = new OpenLayers.Layer.Google(
         "Google Streets", // the default
-        {numZoomLevels: 20, visibility: false}
+        {sphericalMercator: true,numZoomLevels: 20, visibility: false}
     );
     var ghyb = new OpenLayers.Layer.Google(
         "Google Hybrid",
-        {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 22, visibility: false}
+        {sphericalMercator: true,type: google.maps.MapTypeId.HYBRID, numZoomLevels: 22, visibility: false}
     );
-
-    map.addLayers([gsat, gphy, gmap, ghyb]);
+    var vectorLayer = new OpenLayers.Layer.Vector("Simple Geometry", {projection: new OpenLayers.Projection("EPSG:4326")});
+    map.addLayers([gsat, gphy, gmap, ghyb,vectorLayer]);
 
 
   markers = new OpenLayers.Layer.Markers("Markers", {
@@ -145,9 +149,10 @@ $(document).ready(function ()
   map.addLayer(markers);
 
   map.zoomToMaxExtent();
+  
+
   map.events.register("click", map, setPoint);
-
-
+  map.events.register("zoomend", map, setZoom);
   <?php if($form->getObject()->getLongitude() != ''):?>
     centre = new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>);
     zoom = 14;
@@ -160,6 +165,35 @@ $(document).ready(function ()
 // map.zoomToMaxExtent();
 
   <?php endif;?>
+$('#gtu_lat_long_accuracy').change(drawAccuracy);
+
+function setZoom(e)
+{
+   
+  if(pointFeature)
+{     
+ drawAccuracy()
+
+}
+
+}
+
+function getAccuracySize()
+{
+  zoom = map.getZoom();
+  resolution = map.getResolutionForZoom(zoom);
+  return $('#gtu_lat_long_accuracy').val() / resolution;
+}
+
+function drawAccuracy()
+{
+  vectorLayer.removeAllFeatures();
+  point = new OpenLayers.Geometry.Point(new_pos.lon, new_pos.lat);
+  style_blue.pointRadius = getAccuracySize();
+  pointFeature = new OpenLayers.Feature.Vector(point, null, style_blue);
+  vectorLayer.addFeatures([pointFeature]);
+  vectorLayer.redraw();
+}
 
 function setPoint( e )
 {
@@ -174,10 +208,15 @@ function setPoint( e )
 
 }
 
-function addMarkerToMap(position, icon, description)
+function addMarkerToMap(position, icon)
 {
+  new_pos = position.clone().transform(epsg4326, map.getProjectionObject());
   var marker = new OpenLayers.Marker(position.clone().transform(epsg4326, map.getProjectionObject()), icon);
   markers.addMarker(marker);
+
+            // create a point feature
+
+  drawAccuracy();
   return marker;
 }
 
