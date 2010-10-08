@@ -104,7 +104,7 @@ else ifeq ($(TEST_CMD),psql)
 endif
 
 install-db:
-	$(PARAM_PSQL) -f postgisgrant.sql -v dbuser=$(DB_USER)
+	$(PRIV_PSQL_DB) -f postgisgrant.sql -v dbuser=$(DB_USER)
 	$(PARAM_PSQL) -f createdomains.sql
 	$(PARAM_PSQL) -f createtypes.sql
 	$(PARAM_PSQL) -f createtables.sql
