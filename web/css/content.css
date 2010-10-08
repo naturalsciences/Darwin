@@ -243,7 +243,7 @@ input[type="submit"][class="search_submit"]:hover,input[type="button"][class="re
 
 /* Gtu View (Sampling location) */
 
-input.tag_line
+tr.tag_line input
 {
   width:100%;
 }
@@ -588,9 +588,9 @@ li.uncheck span
   border: 1px solid #3390a1;
 }
 
-.clear_prop
+img.clear_prop, img.tree_cmd
 {
-  margin-top : 0.3em ;
+  cursor:pointer;
 }
 
 /* Input text sizes */
