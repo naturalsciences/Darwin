@@ -177,7 +177,7 @@ class gtuActions extends DarwinActions
 
     $form = new GtuFormFilter();
     $form->addValue($number);
-    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number]));
+    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number], 'row_line' => $number));
   }
 
   /**

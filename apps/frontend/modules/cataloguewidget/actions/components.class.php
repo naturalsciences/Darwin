@@ -56,5 +56,4 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->collCodes = Doctrine::getTable('Collections')->findExcept($this->eid);
   }
-
 }

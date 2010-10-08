@@ -24,7 +24,7 @@
           <th colspan="4"><?php echo $form['tags']->renderLabel() ?></th>
         </tr>
 
-        <?php echo include_partial('andSearch',array('form' => $form['Tags'][0]));?>
+        <?php echo include_partial('andSearch',array('form' => $form['Tags'][0], 'row_line' => 0));?>
 
         <tr class="and_row">
           <td colspan="3"></td>
@@ -54,48 +54,6 @@
           });
         return false;
       });
-
-      $('.widget_row_delete').live('click',function(){
-        if($('.tag_line').length == 1)
-          $(this).closest('tr').find('.tag_line').val('');
-        else
-        $(this).closest('tr').remove();
-      });
-
-      $('input.tag_line').live('keydown click',purposeTags);
-
-      function purposeTags(event)
-      {
-        if (event.type == 'keydown')
-        {
-          var code = (event.keyCode ? event.keyCode : event.which);
-          if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
-        }        
-        parent_el = $(this).closest('tr');
-
-        if($(this).val() == '') return;
-        $('.purposed_tags').html('<img src="/images/loader.gif" />');
-        $.ajax({
-          type: "GET",
-          url: "<?php echo url_for('gtu/purposeTag');?>" + '/value/'+ $(this).val(),
-          success: function(html)
-          {
-            parent_el.find('.purposed_tags').html(html);
-            parent_el.find('.purposed_tags').show();
-          }
-        });
-      }
-
-      $('.purposed_tags li').live('click', function()
-      {
-        input_el = $(this).closest('tr').find('input.tag_line');
-        if(input_el.val().match("\;\s*$"))
-          input_el.val( input_el.val() + $(this).text() );
-        else
-          input_el.val( input_el.val() + " ; " +$(this).text() );
-        input_el.trigger('click');
-      });
-
     </script>
     <div class="search_results">
       <div class="search_results_content"> 

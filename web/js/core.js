@@ -106,13 +106,15 @@ function addPropertyValue()
   });
   return false;
 }
+$(document).ready(function()
+{
+  $(this).ajaxStart(function(){ 
+    $('#load_indicator').fadeIn();
+  });
 
-$(this).ajaxStart(function(){ 
-   $('#load_indicator').fadeIn();
-});
-
-$(this).ajaxComplete(function(){
+  $(this).ajaxComplete(function(){
     $('#load_indicator').fadeOut();
+  });
 });
 
 function returnText(object)

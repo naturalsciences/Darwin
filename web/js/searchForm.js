@@ -61,14 +61,14 @@ function getColVisible()
 */
 function initIndividualColspan()
 {
-  cpt = 2 ;
+  cpt = 1 ;
   $('ul.column_menu > li > ul').find('>li').each(function() {
     if( $(this).hasClass('check'))
     {
       cpt++ ;
     }
    });  
-  $('table.spec_results tbody tr.sub_row td:first').attr('colspan', cpt);
+  $('table.spec_results tbody tr.sub_row').find('td:first').attr('colspan', cpt);
   $('#specimen_search_filters_col_fields').val(getColVisible());
 }
 

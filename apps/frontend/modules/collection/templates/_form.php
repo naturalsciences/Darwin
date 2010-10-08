@@ -75,31 +75,58 @@ $(document).ready(function ()
       </tr>
       <tr>
       	<td colspan="2">
-      	<table class="encoding collections_rights">
-		  <thead>
-		    <tr>
-			 <th><label><?php echo __("User") ; ?></label></th>
-			 <?php if(!$form->getObject()->isNew()) : ?>
-			 <th><?php echo __('Set rights for sub-collections');?></th>
-			 <?php endif ; ?>
-			 <th>&nbsp;</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <?php foreach($form['CollectionsRights'] as $form_value):?>
-			 <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
-		    <?php endforeach;?>
-		    <?php foreach($form['newVal'] as $form_value):?>
-			 <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
-		    <?php endforeach;?>
-		  </tbody>
-		</table>
-		<div class='add_value'>
-		  <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		  <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/"><?php echo __('Add User');?></a>
-		</div>
+        	<table class="encoding collections_rights" id="encoder_right">
+		        <thead>
+		          <tr>
+			          <th><label><?php echo __("Encoder") ; ?></label></th>
+			          <?php if(!$form->getObject()->isNew()) : ?>
+			          <th><?php echo __('Set rights for sub-collections');?></th>
+			          <?php endif ; ?>
+			          <th>&nbsp;</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <?php foreach($form['CollectionsRights'] as $form_value):?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
+		          <?php endforeach;?>
+		          <?php foreach($form['newVal'] as $form_value):?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
+		          <?php endforeach;?>
+		        </tbody>
+		      </table>
+	        <div class='add_value' id="encoder_right">
+		        <a href="<?php echo url_for('collection/addValue?right=encoder'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+		        <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/"><?php echo __('Add User');?></a>
+		      </div>
       	</td>
+      </tr>
       <tr>
+        <td colspan="2"><hr /></td>
+      </tr>
+      <tr>
+      	<td colspan="2">
+        	<table class="encoding collections_rights" id="admin_right">
+		        <thead>
+		          <tr>
+			          <th><label><?php echo __("Secondary Manager") ; ?></label></th>
+			          <th>&nbsp;</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <?php foreach($form['CollectionsAdmin'] as $form_value):?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+		          <?php endforeach;?>
+		          <?php foreach($form['newAdmin'] as $form_value):?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+		          <?php endforeach;?>
+		        </tbody>
+		      </table>
+	        <div class='add_value' id="admin_right">
+		        <a href="<?php echo url_for('collection/addValue?right=admin'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+		        <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/"><?php echo __('Add Admin');?></a>
+		      </div>
+      	</td>
+      </tr>     
     </tbody>
     <tfoot>
       <tr>

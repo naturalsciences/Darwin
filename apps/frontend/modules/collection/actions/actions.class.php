@@ -75,7 +75,7 @@ class collectionActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
+    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::MANAGER?false:true) ;
   }
 
   public function executeNew(sfWebRequest $request)
@@ -120,16 +120,19 @@ class collectionActions extends DarwinActions
   {
     $number = intval($request->getParameter('num'));
     $user_ref = intval($request->getParameter('user_ref'));
+    $right = $request->getParameter('right') ; // used to determine if we add an encoder right or a secondary admin right
     if($request->hasParameter('id'))
     {
-         $this->ref_id = $request->getParameter('id') ;
+      $this->ref_id = $request->getParameter('id') ;
 	    $collection = Doctrine::getTable('Collections')->findExcept($this->ref_id) ;
-         $form = new CollectionsForm($collection);
-
+      $form = new CollectionsForm($collection);
     }
     else $form = new CollectionsForm();
-    $form->addValue($number,$user_ref);
-    return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id));
+    $form->addValue($number,$user_ref,$right);
+    if($right == 'encoder')
+      return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id));
+    else
+      return $this->renderPartial('coll_rights',array('form' => $form['newAdmin'][$number],'ref_id' => ''));
   }
 
   public function executeUpdate(sfWebRequest $request)

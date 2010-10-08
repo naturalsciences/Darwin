@@ -72,19 +72,41 @@ class CollectionsForm extends BaseCollectionsForm
 //    $this->embedRelation('CollectionsRights');
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
-  
+    
+    $subForm = new sfForm();
+    $this->embedForm('CollectionsAdmin',$subForm);   
+    foreach(Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CollectionsAdminForm($vals);
+      $this->embeddedForms['CollectionsAdmin']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('CollectionsAdmin', $this->embeddedForms['CollectionsAdmin']); 
+    
+//    $this->embedRelation('CollectionsRights');
+    $subForm = new sfForm();
+    $this->embedForm('newAdmin',$subForm);  
   }
   
-  public function addValue($num,$user_id)
+  public function addValue($num,$user_id,$rights)
   {
-      $val = new CollectionsRights();
-      $val->Collections = $this->getObject();      
-      $val->setUserRef($user_id) ;
-      $form = new CollectionsRightsForm($val,array('user_id'=>$user_id));
-  
+    $val = ($rights == "encoder"?new CollectionsRights():new CollectionsAdmin()) ;
+    $val->Collections = $this->getObject();      
+    $val->setUserRef($user_id) ;
+    if($rights == "encoder") 
+    {
+      $form = new CollectionsRightsForm($val,array('user_id'=>$user_id));  
       $this->embeddedForms['newVal']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newVal', $this->embeddedForms['newVal']);
+    }
+    else
+    {
+      $form = new CollectionsAdminForm($val,array('user_id'=>$user_id));  
+      $this->embeddedForms['newAdmin']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newAdmin', $this->embeddedForms['newAdmin']);    
+    }
   }
 
   public function checkSelfAttached($validator, $values)
@@ -112,6 +134,16 @@ class CollectionsForm extends BaseCollectionsForm
 		    }
 		  }
     }
+    if(isset($taintedValues['newAdmin']))
+    {
+		  foreach($taintedValues['newAdmin'] as $key=>$newVal)
+		  {
+		    if (!isset($this['newAdmin'][$key]))
+		    {
+		      $this->addValue($key,$newVal['user_ref']);
+		    }
+		  }
+    }    
     parent::bind($taintedValues, $taintedFiles);
   }
 
@@ -128,6 +160,15 @@ class CollectionsForm extends BaseCollectionsForm
 	        unset($this->embeddedForms['CollectionsRights'][$name]);
 	      } 
 	    }	
+	    $value = $this->getValue('CollectionsAdmin');
+	    foreach($this->embeddedForms['CollectionsAdmin']->getEmbeddedForms() as $name => $form)
+    	{
+    	  if (!isset($value[$name]['user_ref']))
+	      {
+	        $form->getObject()->delete();
+	        unset($this->embeddedForms['CollectionsAdmin'][$name]);
+	      } 
+	    }		    
    }
    return parent::saveEmbeddedForms($con, $forms);
   }

@@ -16,10 +16,10 @@ $(document).ready(function () {
 	  el = $(this).closest('tr');
 	  ref_element_id = getIdInClasses(el);
 	  $info = 'good' ;
-	  $('.collections_rights tbody tr').each(function() {
+	  $('table#'+referer+' tbody tr').each(function() {
 	    if($(this).attr('id') == ref_element_id) $info = 'bad' ;
 	  });
-	  if($info == 'good') addCollRightValue(ref_element_id);
+	  if($info == 'good') addCollRightValue(ref_element_id,referer);
   });
 });
 </script>

@@ -5,4 +5,12 @@
 class CollectionsAdminTable extends DarwinTable
 {
 
+  public function getCollectionAdmin($collection_ref) 
+  {
+     $q = Doctrine_Query::create()
+	    ->from('CollectionsAdmin ca')
+	    ->innerJoin('ca.Users u')
+	    ->andWhere('ca.collection_ref = ?',$collection_ref) ; 
+    return $q->execute() ;  
+  }
 }
