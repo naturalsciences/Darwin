@@ -191,6 +191,12 @@ create table gtu
         gtu_to_date timestamp not null default '01/01/0001 00:00:00',
         path varchar not null default '/',
         tag_values_indexed varchar[],
+        latitude float,
+        longitude float,
+        lat_long_accuracy float,
+        --location GEOGRAPHY(POINT,4326),
+        elevation float,
+        elevation_accuracy float,
         constraint pk_gtu primary key (id),
         constraint fk_gtu_gtu foreign key (parent_ref) references gtu(id) on delete cascade
        );
@@ -204,6 +210,12 @@ comment on column gtu.gtu_to_date_mask is 'Mask Flag to know wich part of the da
 comment on column gtu.gtu_to_date is 'composed to date of the GTU';
 comment on column gtu.path is 'When gtus are hierarchicaly ordered, give the parenty path';
 comment on column gtu.tag_values_indexed is 'Array of all tags associated to gtu (indexed form)';
+comment on column gtu.latitude is 'Latitude of the gtu';
+comment on column gtu.longitude is 'longitude of the gtu';
+comment on column gtu.lat_long_accuracy is 'Accuracy in meter of both lat & long';
+comment on column gtu.elevation is 'Elevation from the level of the sea in meter';
+comment on column gtu.elevation_accuracy is 'Accuracy in meter of the elevation';
+SELECT AddGeometryColumn('gtu', 'location', 4326, 'POINT', 2);
 
 create sequence tag_groups_id_seq;
 

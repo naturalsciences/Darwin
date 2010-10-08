@@ -75,6 +75,7 @@ DROP FUNCTION IF EXISTS fct_clr_savedspecimens() CASCADE;
 DROP FUNCTION IF EXISTS fct_search_methods(str_ids varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_search_tools(str_ids varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_delete_darwin_flat_ind_part() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_location() CASCADE;
 
 DROP AGGREGATE array_accum (anyelement);
 DROP AGGREGATE dummy_first(anyelement);

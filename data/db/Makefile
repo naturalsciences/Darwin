@@ -104,7 +104,7 @@ else ifeq ($(TEST_CMD),psql)
 endif
 
 install-db:
-	
+	$(PARAM_PSQL) -f postgisgrant.sql -v dbuser=$(DB_USER)
 	$(PARAM_PSQL) -f createdomains.sql
 	$(PARAM_PSQL) -f createtypes.sql
 	$(PARAM_PSQL) -f createtables.sql
@@ -157,6 +157,8 @@ install-lib:
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pg_trgm.sql
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pgcrypto.sql
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/hstore-new.sql
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis-1.5/postgis.sql
+	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis-1.5/spatial_ref_sys.sql
 
 create-user-web:
 	-createuser -l -i -S -R -D -P -E $(DB_WEB_USER)

@@ -7536,6 +7536,21 @@ CREATE AGGREGATE dummy_first (anyelement)
   stype = anyelement
 );
 
+
+CREATE OR REPLACE FUNCTION fct_cpy_location() RETURNS trigger
+as $$
+BEGIN
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.longitude IS DISTINCT FROM OLD.longitude OR NEW.latitude IS DISTINCT FROM OLD.latitude THEN
+      NEW.location = GeomFromText( 'POINT(' || NEW.longitude || ' ' || NEW.latitude || ')', 4326);
+    END IF;
+  ELSE
+    NEW.location = GeomFromText( 'POINT(' || NEW.longitude || ' ' || NEW.latitude || ')', 4326);
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 -- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
 -- $$
 -- DECLARE

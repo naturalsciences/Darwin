@@ -451,6 +451,10 @@ CREATE TRIGGER trg_cpy_unified_values BEFORE INSERT OR UPDATE
 	ON catalogue_properties FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_unified_values();
 
+/** GTU GIS ***/
+CREATE TRIGGER trg_cpy_location BEFORE INSERT OR UPDATE
+        ON gtu FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_location() ;
 
 /**** ADDing TS words Trigger ***/
 

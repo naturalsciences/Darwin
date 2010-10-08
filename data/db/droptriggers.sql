@@ -191,7 +191,8 @@ DROP TRIGGER trg_trk_log_table_comments
 DROP TRIGGER trg_trk_log_table_expeditions
 	ON expeditions;
 
-
+DROP TRIGGER trg_cpy_location
+        ON gtu ;
 /*** darwin flat synchro triggers ***/
 
 DROP TRIGGER trg_update_expeditions_darwin_flat
