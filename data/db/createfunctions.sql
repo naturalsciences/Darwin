@@ -6718,6 +6718,10 @@ ELSIF NEW.main_manager_ref <> OLD.main_manager_ref THEN
 	END IF;
 END IF;
 RETURN NEW;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE WARNING 'An error occured: %', SQLERRM;
+    RETURN NEW;
 END;
 $$;
 
