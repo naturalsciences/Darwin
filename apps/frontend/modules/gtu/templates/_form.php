@@ -155,10 +155,9 @@ $(document).ready(function ()
   map.events.register("zoomend", map, setZoom);
   <?php if($form->getObject()->getLongitude() != ''):?>
     centre = new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>);
-    zoom = 14;
+    zoom = 13;
     setMapCenter(centre, zoom);
-    marker = addMarkerToMap(centre);
-
+    drawLatLong();
   <?php else:?>
         //var bbox = new OpenLayers.Bounds(2.54694366455078, 49.4936027526855, 6.40386152267456, 51.5054512023926);
     setMapCenter(new OpenLayers.LonLat(0,0), 2);
