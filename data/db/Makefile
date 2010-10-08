@@ -156,8 +156,15 @@ install-lib:
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pg_trgm.sql
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/pgcrypto.sql
 	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/hstore-new.sql
-	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis-1.5/postgis.sql
-	$(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis-1.5/spatial_ref_sys.sql
+	if test -f /usr/share/postgresql/$(PG_VER)/contrib/postgis.sql; \
+		then $(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis.sql; \
+	else $(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis-1.5/postgis.sql; \
+	fi
+
+	if test -f /usr/share/postgresql/$(PG_VER)/contrib/spatial_ref_sys.sql; \
+		then $(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/spatial_ref_sys.sql; \
+	else $(PRIV_PSQL_DB) -f /usr/share/postgresql/$(PG_VER)/contrib/postgis-1.5/spatial_ref_sys.sql; \
+	fi
 	$(PRIV_PSQL_DB) -f postgisgrant.sql -v dbuser=$(DB_USER)
 
 create-user-web:
