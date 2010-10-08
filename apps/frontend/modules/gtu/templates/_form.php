@@ -166,16 +166,15 @@ $(document).ready(function ()
 
   <?php endif;?>
 $('#gtu_lat_long_accuracy').change(drawAccuracy);
+$('#gtu_longitude').change(drawLatLong);
+$('#gtu_latitude').change(drawLatLong);
 
 function setZoom(e)
 {
-   
   if(pointFeature)
-{     
- drawAccuracy()
-
-}
-
+  {
+    drawAccuracy()
+  }
 }
 
 function getAccuracySize()
@@ -195,17 +194,21 @@ function drawAccuracy()
   vectorLayer.redraw();
 }
 
+function drawLatLong()
+{
+  if (marker) {
+    removeMarkerFromMap(marker);
+  }
+  lonlat = new OpenLayers.LonLat($('#gtu_longitude').val(), $('#gtu_latitude').val())
+  marker = addMarkerToMap(lonlat, null);
+}
+
 function setPoint( e )
 {
   var lonlat = getEventPosition(e).wrapDateLine();
   $('#gtu_latitude').val(lonlat.lat);
   $('#gtu_longitude').val(lonlat.lon);
- 
-  if (marker) {
-    removeMarkerFromMap(marker);
-  }
-  marker = addMarkerToMap(lonlat, null);
-
+  drawLatLong();
 }
 
 function addMarkerToMap(position, icon)
