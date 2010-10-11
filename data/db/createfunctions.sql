@@ -6709,15 +6709,12 @@ DECLARE
 BEGIN
 IF TG_OP = 'INSERT' THEN
 	INSERT INTO collections_admin(collection_ref, user_ref) VALUES (NEW.id, NEW.main_manager_ref);
-ELSIF NEW.main_manager_ref <> OLD.main_manager_ref THEN
-	SELECT id INTO ref_id FROM collections_admin WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id  ;
-	IF FOUND THEN
-		DELETE FROM collections_admin WHERE user_ref = OLD.main_manager_ref and collection_ref = OLD.id  ;
-	ELSE
-	     UPDATE collections_admin SET user_ref = NEW.main_manager_ref WHERE user_ref = OLD.main_manager_ref and collection_ref = OLD.id  ;  
-	END IF;
 END IF;
 RETURN NEW;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE NOTICE 'An error occured: %', SQLERRM;
+    RETURN NEW;
 END;
 $$;
 

@@ -215,7 +215,7 @@ comment on column gtu.longitude is 'longitude of the gtu';
 comment on column gtu.lat_long_accuracy is 'Accuracy in meter of both lat & long';
 comment on column gtu.elevation is 'Elevation from the level of the sea in meter';
 comment on column gtu.elevation_accuracy is 'Accuracy in meter of the elevation';
-SELECT AddGeometryColumn('gtu', 'location', 4326, 'POINT', 2);
+SELECT substring(AddGeometryColumn('gtu', 'location', 4326, 'POINT', 2) for 0);
 
 create sequence tag_groups_id_seq;
 
