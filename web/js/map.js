@@ -134,6 +134,7 @@ function setPoint( e )
   fetchElevation(lonlat);
   //// GOOGLE ELE
   drawLatLong();
+  drawAccuracy();
 }
 
 function addMarkerToMap(position, icon)
