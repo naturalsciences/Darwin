@@ -26,6 +26,7 @@ DROP TABLE  IF EXISTS users_coll_rights_asked CASCADE;
 DROP TABLE  IF EXISTS collections_fields_visibilities CASCADE;
 DROP TABLE  IF EXISTS collections_rights CASCADE;
 DROP TABLE  IF EXISTS collections_admin CASCADE;
+DROP TABLE  IF EXISTS collections_reg_user CASCADE; 
 DROP TABLE  IF EXISTS template_collections_users CASCADE;
 DROP TABLE  IF EXISTS collections CASCADE;
 DROP TABLE  IF EXISTS users_multimedia CASCADE;

@@ -22,6 +22,7 @@ CREATE INDEX CONCURRENTLY idx_people_multimedia_object_ref on people_multimedia(
 CREATE INDEX CONCURRENTLY idx_users_multimedia_person_user_ref on users_multimedia(person_user_ref);
 CREATE INDEX CONCURRENTLY idx_users_multimedia_object_ref on users_multimedia(object_ref);
 CREATE INDEX CONCURRENTLY idx_collections_admin_referenced_record on collections_admin(collection_ref, user_ref);
+CREATE INDEX CONCURRENTLY idx_collections_reg_user_referenced_record on collections_reg_user(collection_ref, user_ref);
 CREATE INDEX CONCURRENTLY idx_collections_institution_ref on collections(institution_ref);
 CREATE INDEX CONCURRENTLY idx_collections_main_manager_ref on collections(main_manager_ref);
 CREATE INDEX CONCURRENTLY idx_collections_parent_ref on collections(parent_ref);
@@ -37,6 +38,7 @@ CREATE INDEX CONCURRENTLY idx_collection_maintenance_user_ref on collection_main
 CREATE INDEX CONCURRENTLY idx_my_saved_searches_user_ref on my_saved_searches(user_ref);
 CREATE INDEX CONCURRENTLY idx_my_widgets_user_ref on my_widgets(user_ref);
 CREATE INDEX CONCURRENTLY idx_my_widgets_icon_ref on my_widgets(icon_ref);
+CREATE INDEX CONCURRENTLY idx_my_widgets_collections on my_widgets(collections) ;
 CREATE INDEX CONCURRENTLY idx_taxonomy_level_ref on taxonomy(level_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_parent_ref on taxonomy(parent_ref);
 CREATE INDEX CONCURRENTLY idx_taxonomy_domain_ref on taxonomy(domain_ref);

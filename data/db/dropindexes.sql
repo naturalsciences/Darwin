@@ -45,6 +45,7 @@
  DROP INDEX IF EXISTS idx_record_visibilities;
  DROP INDEX IF EXISTS idx_tag_groups_gtu_ref;
  DROP INDEX IF EXISTS idx_collections_admin_referenced_record;
+ DROP INDEX IF EXISTS idx_collections_reg_user_referenced_record; 
  DROP INDEX IF EXISTS idx_gtu_parent_ref;
  DROP INDEX IF EXISTS idx_people_languages_people_ref;
  DROP INDEX IF EXISTS idx_users_languages_users_ref;
@@ -76,6 +77,7 @@
  DROP INDEX IF EXISTS idx_taxonomy_domain_ref;
  DROP INDEX IF EXISTS idx_my_widgets_user_ref;
  DROP INDEX IF EXISTS idx_my_widgets_icon_ref;
+ DROP INDEX IF EXISTS idx_my_widgets_collections;
  DROP INDEX IF EXISTS idx_taxonomy_kingdom_ref;
  DROP INDEX IF EXISTS idx_taxonomy_level_ref;
  DROP INDEX IF EXISTS idx_taxonomy_cohort_botany_ref;

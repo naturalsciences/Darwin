@@ -808,6 +808,21 @@ comment on column collections_admin.id is 'Unique identifier for collection admi
 comment on column collections_admin.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_admin.user_ref is 'Reference of user - id field of users table';
 
+create sequence collections_reg_user_id_seq;
+create table collections_reg_user
+       (
+        id integer not null default nextval('collections_reg_user_id_seq'),
+        constraint pk_collections_reg_user primary key (id),
+        constraint unq_collections_reg_user unique (collection_ref, user_ref),
+        constraint fk_collections_reg_user_collections foreign key (collection_ref) references collections(id) on delete cascade,
+        constraint fk_collections_reg_user_users foreign key (user_ref) references users(id) on delete cascade
+       )
+inherits (template_collections_users);
+comment on table collections_reg_user is 'Stores the list of collections administrators';
+comment on column collections_reg_user.id is 'Unique identifier for collection admin';
+comment on column collections_reg_user.collection_ref is 'Reference of collection concerned - id field of collections table';
+comment on column collections_reg_user.user_ref is 'Reference of user - id field of users table';
+
 create sequence collections_rights_id_seq;
 
 create table collections_rights
@@ -1010,6 +1025,8 @@ create table my_widgets
         is_available boolean not null default false,
         icon_ref integer,
         title_perso varchar(32),
+        collections integer[],
+        all_public boolean not null default false,
         constraint pk_my_widgets primary key (id),
         constraint unq_my_widgets unique (user_ref, category, group_name),
         constraint fk_my_widgets_users foreign key (user_ref) references users(id) on delete cascade,
@@ -1028,6 +1045,8 @@ comment on column my_widgets.color is 'Color given to page element by user';
 comment on column my_widgets.is_available is 'Flag telling if the widget can be used or not';
 comment on column my_widgets.icon_ref is 'Reference of multimedia icon to be used before page element title';
 comment on column my_widgets.title_perso is 'Page element title given by user';
+comment on column my_widgets.collections is 'Array of collections whitch user_ref has rights to see';
+comment on column my_widgets.all_public is 'Set to determine if the widget is public by default or not';
 
 create table template_classifications
        (
