@@ -6,17 +6,27 @@ $(document).ready(function ()
   $('body').catalogue({});
 
   $("#collections_institution_ref").change(function() {
-      $.get("<?php echo url_for('collection/completeOptions');?>/institution/"+$(this).val(), function (data) {
-	      $("#collections_parent_ref").html(data);
-      });
+    $.get("<?php echo url_for('collection/completeOptions');?>/institution/"+$(this).val(), function (data) {
+	    $("#collections_parent_ref").html(data);
     });
+  });
+  $("#collections_parent_ref").change(function() {   
+    $.get("<?php echo url_for('collection/setInstitution');?>/parent_ref/"+$(this).val(), function (data) {
+      $("#institution_to_change").html(data);
+    });
+  });
   $("#collections_main_manager_ref").change(function() {
 	  ref_element_id = $(this).val();
 	  $info = 'good' ;
-	  $('.collections_rights tbody tr').each(function() {
+	  $('table#encoder_right tbody tr').each(function() {
 	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
 	  });
 	  if($info == 'good') addCollRightValue(ref_element_id,'encoder_right');
+	  $info = 'good' ;
+	  $('table#admin_right tbody tr').each(function() {
+	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
+	  });
+	  if($info == 'good') addCollRightValue(ref_element_id,'admin_right');	  
   });
 });
 </script>
@@ -47,7 +57,7 @@ $(document).ready(function ()
       </tr>
       <tr>
         <th><?php echo $form['institution_ref']->renderLabel() ?></th>
-        <td>
+        <td id="institution_to_change">
           <?php echo $form['institution_ref']->renderError() ?>
           <?php echo $form['institution_ref'] ?>
         </td>

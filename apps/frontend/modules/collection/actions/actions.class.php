@@ -66,6 +66,15 @@ class collectionActions extends DarwinActions
     $this->setLayout(false);
   }
   
+  /* function that modify the institution when we change the paretn_ref */ 
+  public function executeSetInstitution(sfWebRequest $request)
+  {        
+    $collection = new Collections() ;
+    $collection->setInstitutionRef(Doctrine::getTable('Collections')->getInstitutionNameByCollection($request->getParameter('parent_ref'))->getId()) ;
+    $this->form = new CollectionsForm($collection);
+    $this->setLayout(false);
+  }
+    
   public function executeChoose(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();

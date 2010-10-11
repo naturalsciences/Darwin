@@ -81,4 +81,14 @@ class CollectionsTable extends DarwinTable
       $returnedVal = $conn->fetchOne($sql);
       return $returnedVal;
     }
+    
+    public function getInstitutionNameByCollection($collection_ref)
+    {
+      $q = Doctrine_Query::create()
+            ->select('p.*')
+            ->from('People p')
+            ->innerJoin('p.Collections col')
+            ->where('col.id = ?', $collection_ref);
+      return $q->fetchOne();
+    }    
 }
