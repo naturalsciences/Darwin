@@ -128,6 +128,12 @@ Gtu:
         gtu_from_date: { type: string, notnull: true, default: '0001-01-01'}
         gtu_to_date_mask: { type: integer, notnull: true, default:0}
         gtu_to_date: { type: string, notnull: true, default: '0001-01-01'}
+        latitude: {type: float}
+        longitude: {type: float}
+        location: {type: string}
+        lat_long_accuracy: {type: float}
+        elevation: {type: float}
+        elevation_accuracy: {type: float}
     relations:
         Parent:
             class: Gtu

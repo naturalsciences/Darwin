@@ -91,6 +91,80 @@ foreach($form['newVal'] as $group)
     <a href="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>" id="add_group"><?php echo __('Add Group');?></a>
   </div>
 
+  <fieldset id="location">
+    <legend><?php echo __('Localisation');?></legend>
+    <table>
+      <tr>
+        <th><?php echo $form['latitude']->renderLabel() ;?><?php echo $form['latitude']->renderError() ?></th>
+        <th><?php echo $form['longitude']->renderLabel(); ?><?php echo $form['longitude']->renderError() ?></th>
+        <th><?php echo $form['lat_long_accuracy']->renderLabel() ;?><?php echo $form['lat_long_accuracy']->renderError() ?></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td><?php echo $form['latitude'];?></td>
+        <td><?php echo $form['longitude'];?></td>
+        <td><?php echo $form['lat_long_accuracy'];?></td>
+        <td><strong><?php echo _('m');?></strong> <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
+      </tr>
+
+      <tr>
+        <th></th>
+        <th><?php echo $form['elevation']->renderLabel(); ?><?php echo $form['elevation']->renderError() ?></th>
+        <th><?php echo $form['elevation_accuracy']->renderLabel() ;?><?php echo $form['elevation_accuracy']->renderError() ?></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td></td>
+        <td><?php echo $form['elevation'];?></td>
+        <td><?php echo $form['elevation_accuracy'];?></td>
+        <td><strong><?php echo _('m');?></strong> <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
+      </tr>
+      <tr>
+        <td colspan="3"><div style="width:100%; height:400px;" id="map"></div></td>
+        <td>
+
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<?php echo javascript_include_tag('map.js'); ?>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+  initMap();
+
+  <?php if($form->getObject()->getLongitude() != ''):?>
+    centre = new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>);
+    zoom = 13;
+    setMapCenter(centre, zoom);
+  <?php else:?>
+    setMapCenter(new OpenLayers.LonLat(0,0), 2);
+  <?php endif;?>
+
+  drawLatLong();
+  drawAccuracy();
+
+  map.events.register("click", map, setPoint);
+  map.events.register("zoomend", map, setZoom);
+
+  $('#gtu_lat_long_accuracy').change(drawAccuracy);
+  $('#gtu_longitude').change(drawLatLong);
+  $('#gtu_latitude').change(drawLatLong);
+
+
+  $('#location .clear_prop').click(function()
+  {
+    $(this).closest('tr').find('input').val('');
+    drawLatLong();
+  });
+
+});
+</script>
+</td>
+      </tr>
+    </table>
+
+  </fieldset>
+
   <table>
     <tfoot>
       <tr>
@@ -122,7 +196,7 @@ $(document).ready(function () {
     });
 
 
-    $('.clear_prop').live('click', function()
+    $('.tag_parts_screen .clear_prop').live('click', function()
     {
       parent = $(this).closest('li');
       nvalue='';

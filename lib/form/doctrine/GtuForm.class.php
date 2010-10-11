@@ -12,7 +12,8 @@ class GtuForm extends BaseGtuForm
   public function configure()
   {
     unset($this['gtu_from_date_mask'], 
-          $this['gtu_to_date_mask']
+          $this['gtu_to_date_mask'],
+          $this['location']
          );
 
     $this->widgetSchema['parent_ref'] = new widgetFormButtonRef(array(
@@ -68,18 +69,60 @@ class GtuForm extends BaseGtuForm
                                                                           array('invalid' => 'Date provided is not valid',
                                                                                )
                                                                          );
-    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('gtu_from_date', 
-                                                                          '<=', 
-                                                                          'gtu_to_date', 
-                                                                          array('throw_global_error' => true), 
-                                                                          array('invalid'=>'The "begin" date cannot be above the "end" date.')
-                                                                         )
-                                            ); 
+    $this->widgetSchema['lat_long_accuracy']->setLabel('Accuracy');
+    $this->widgetSchema['elevation_accuracy']->setLabel('Accuracy');
+    $this->validatorSchema['latitude'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
+    $this->validatorSchema['longitude'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorAnd(array(
+        new sfValidatorSchemaCompare(
+          'gtu_from_date',
+          '<=', 
+          'gtu_to_date', 
+          array('throw_global_error' => true), 
+          array('invalid'=>'The "begin" date cannot be above the "end" date.')
+        ),
+        new sfValidatorCallback(array('callback'=> array($this, 'checkLatLong'))),
+        new sfValidatorCallback(array('callback'=> array($this, 'checkElevation'))),
+      )
+    )); 
+
+
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
     $this->embedRelation('TagGroups');
   }
-  
+
+  public function checkElevation($validator, $values)
+  {
+    if($values['elevation'] != '' && $values['elevation_accuracy'] == '')
+    {
+      $error = new sfValidatorError($validator, 'You must enter an accuracy for the elevation.' );
+      throw new sfvalidatorErrorSchema($validator, array('elevation_accuracy' => $error));
+    }
+    return $values;
+  }
+
+  public function checkLatLong($validator, $values)
+  {
+    if($values['latitude'] != '' || $values['longitude'] != '')
+    {
+      if($values['latitude'] == '' || $values['longitude'] == '')
+      {
+        $error = new sfValidatorError($validator, 'You must enter valid latitude And longitude' );
+        $field = 'longitude';
+        if($values['latitude'] == '') $field = 'latitude'; 
+        throw new sfvalidatorErrorSchema($validator, array($field => $error));
+      }
+      if($values['lat_long_accuracy'] == '')
+      {
+        $error = new sfValidatorError($validator, 'You must enter an accuracy for your position');
+        throw new sfvalidatorErrorSchema($validator, array('lat_long_accuracy' => $error));
+      }
+    }
+    return $values;
+  }
+
   public function addValue($num, $group="", $TagGroup = null)
   {
       if(!$TagGroup)
