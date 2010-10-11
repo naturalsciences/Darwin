@@ -139,7 +139,6 @@ function setPoint( e )
 
 function addMarkerToMap(position, icon)
 {
-  new_pos = position.clone().transform(epsg4326, map.getProjectionObject());
   var marker = new OpenLayers.Marker(position.clone().transform(epsg4326, map.getProjectionObject()), icon);
   markers.addMarker(marker);
 
