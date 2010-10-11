@@ -130,7 +130,7 @@ foreach($form['newVal'] as $group)
 <script type="text/javascript">
 $(document).ready(function () {
 
-  initMap();
+  initMap("map");
 
   <?php if($form->getObject()->getLongitude() != ''):?>
     centre = new OpenLayers.LonLat(<?php echo $form->getObject()->getLongitude();?>, <?php echo $form->getObject()->getLatitude();?>);

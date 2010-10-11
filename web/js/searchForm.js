@@ -1,23 +1,24 @@
 jQuery(function () 
 {
-  $(".search_form").submit(function ()
-  {
-    $(".tree").slideUp().html("");
-    $.ajax({
-            type: "POST",
-            url: $(this).attr('action'),
-            data: $('.search_form').serialize(),
-            success: function(html){
-                                    $(".search_results_content").html(html);
-                                    $('.search_results').slideDown();
-                                   }
-           }
-          );
-    $(".search_results_content").html('<img src="/images/loader.gif" />');
-    return false;
-  });
-
+  $(".search_form").bind('submit.sform',search_form_submit);
 });
+
+function search_form_submit()
+{
+  $(".tree").slideUp().html("");
+  $.ajax({
+          type: "POST",
+          url: $(this).attr('action'),
+          data: $('.search_form').serialize(),
+          success: function(html){
+                                  $(".search_results_content").html(html);
+                                  $('.search_results').slideDown();
+                                  }
+          }
+        );
+  $(".search_results_content").html('<img src="/images/loader.gif" />');
+  return false;
+}
 
 
 /**********************************

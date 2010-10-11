@@ -48,6 +48,16 @@ class GtuFormFilter extends BaseGtuFormFilter
                                                                                ),
                                                                           array('invalid' => 'Date provided is not valid',)
                                                                          );
+    $this->widgetSchema['lat_from'] = new sfWidgetForminputHidden();
+    $this->widgetSchema['lat_to'] = new sfWidgetForminputHidden();
+    $this->widgetSchema['lon_from'] = new sfWidgetForminputHidden();
+    $this->widgetSchema['lon_to'] = new sfWidgetForminputHidden();
+
+    $this->validatorSchema['lat_from'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
+    $this->validatorSchema['lon_from'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
+    $this->validatorSchema['lat_to'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
+    $this->validatorSchema['lon_to'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
+
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('gtu_from_date', 
                                                                           '<=', 
                                                                           'gtu_to_date', 
@@ -82,6 +92,16 @@ class GtuFormFilter extends BaseGtuFormFilter
     return $query;
   }
 
+  public function addLatLonColumnQuery($query, $values)
+  {
+    if( $values['lat_from'] != '')
+    {
+      $query->andWhere('location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
+        ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326)');
+    }
+    return $query;
+  }
+
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     if(isset($taintedValues['Tags']))
@@ -107,6 +127,9 @@ class GtuFormFilter extends BaseGtuFormFilter
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
+
+    $this->addLatLonColumnQuery($query,$values);
+
     $alias = $query->getRootAlias();
     $query
       ->leftJoin($alias.'.TagGroups g');

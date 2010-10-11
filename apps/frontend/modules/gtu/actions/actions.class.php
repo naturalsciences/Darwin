@@ -26,7 +26,7 @@ class gtuActions extends DarwinActions
 
  public function executeSearch(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod('post'));
+//     $this->forward404Unless($request->isMethod('post'));
 
     $this->setCommonValues('gtu', 'code', $request);
 
@@ -40,6 +40,7 @@ class gtuActions extends DarwinActions
       if ($this->form->isValid())
       {
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
+        if($request->getParameter('format') == 'xml') $query->andWhere('latitude is not null');
         $this->pagerLayout = new PagerLayoutWithArrows(
                               new Doctrine_Pager(
                                 $query,
@@ -57,6 +58,14 @@ class gtuActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
+        
+        if($request->getParameter('format') == 'xml')
+        {
+          $this->setLayout(false);
+          $this->getResponse()->setContentType('application/xml');
+          $this->setTemplate('georss');
+          return;
+        }
       }
     }
   }
