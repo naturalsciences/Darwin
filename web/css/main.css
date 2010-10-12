@@ -256,6 +256,10 @@ form th, form tr > td
   vertical-align:middle;
 }
 
+.right_aligned
+{
+  text-align:right;
+}
 .top_aligned
 {
   vertical-align:top;
@@ -656,9 +660,10 @@ input[type="text"].xlarge_size
   background-color:#ebf5f5;
 }
 
+
 /** Add New button after results **/
 
-.new_link
+.new_link, .right_button
 {
   float:right;
   background: white url(/images/widget_button.png) no-repeat;
@@ -668,6 +673,8 @@ input[type="text"].xlarge_size
   font-size:small;
   padding-right:0.4em;
   padding-top:0.2em;
+  border:0;
+  color:white;
 }
 
 .new_link a

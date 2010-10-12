@@ -32,28 +32,49 @@
             <?php echo image_tag('add_blue.png');?> <a href="<?php echo url_for('gtu/andSearch');?>" class="and_tag"><?php echo __('And'); ?></a>
           </td>
         </tr>
-        <tr>
-          <th><?php echo __('Show Result as map');?></th><td colspan="2"><input type="checkbox" id="show_as_map"></td>
-        </tr>
-        <tr>
-          <td colspan="3"></td>
-          <td>
-            <?php echo $form->renderHiddenFields();?>
-            <input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="3"><div style="width:100%; height:400px;display:none;" id="smap"></div></td>
-          <td>
+      </tbody>
+
+      </table>
+
+      <fieldset id="lat_long_set">
+        <legend><?php echo __('Show Result as map');?> <input type="checkbox" id="show_as_map"></legend>
+          <table>
+            <tr>
+              <td>
+              </td>
+              <th>
+                <?php echo $form['lat_from']->renderLabel();?>
+              </th>
+              <th>
+                <?php echo $form['lon_from']->renderLabel();?>
+              </th>
+            </tr>
+            <tr>
+              <th class="right_aligned"><?php echo __('Between');?></th>
+              <td><?php echo $form['lat_from'];?></td>
+              <td><?php echo $form['lon_from'];?></td>
+            </tr>
+            <tr>
+              <th class="right_aligned"><?php echo __('And');?></th>
+              <td><?php echo $form['lat_to'];?></td>
+              <td><?php echo $form['lon_to'];?></td>
+            </tr>
+          </table>
+
+          <div style="width:100%; height:400px;display:none;" id="smap"></div>
           <?php if(! (isset($is_choose) && $is_choose) ):?>
               <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
               <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
               <?php echo javascript_include_tag('map.js'); ?>
             <?php endif;?>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+    </fieldset>
+
+
+                <?php echo $form->renderHiddenFields();?>
+                <input class="search_submit right_button" type="submit" name="search" value="<?php echo __('Search'); ?>" />
+<div class="clear"></div>
+
     <script  type="text/javascript">
     var results;
     $(document).ready(function()
@@ -67,11 +88,12 @@
             $('#gtu_filter').unbind('submit.sform');
             $('#gtu_filter').bind('submit.map_form',map_submit);
             $('.search_results_content').html('');
+            $('#lat_long_set table').hide();
 
           }
           else
           {
-            //$(this).closest('form').addClass('search_form');
+             //$(this).closest('form').addClass('search_form');
             $('#gtu_filter').unbind('submit.map_form');
             $('#gtu_filter').bind('submit.sform',search_form_submit);
             $('#gtu_filters_lat_from').val('');
@@ -79,6 +101,7 @@
 
             $('#gtu_filters_lat_to').val('');
             $('#gtu_filters_lon_to').val('');
+            $('#lat_long_set table').show();
             $('#smap').hide();
           }
        });
