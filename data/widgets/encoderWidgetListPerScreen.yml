@@ -17,6 +17,7 @@ bw2:
    opened: true
    visible: true
    title_perso: Add new taxon
+
 bw3:
    col_num: 2
    category: board_widget
@@ -25,6 +26,7 @@ bw3:
    opened: true
    visible: true
    title_perso: My Last Actions
+
 bw5:
    col_num: 1
    category: board_widget
@@ -33,6 +35,7 @@ bw5:
    opened: true
    visible: true
    title_perso: My activity
+
 sw1:
    col_num: 1
    category: specimen_widget
@@ -672,36 +675,6 @@ ins5:
    opened: false
    visible: false
    title_perso: Comments
-
-usr1:
-   col_num: 1
-   category: users_widget
-   group_name: lang
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: Languages
-
-usr2:
-   col_num: 1
-   category: users_widget
-   group_name: comm
-   mandatory: false
-   order_by: 2
-   opened: true
-   visible: true
-   title_perso: Communications
-
-usr3:
-   col_num: 1
-   category: users_widget
-   group_name: address
-   mandatory: false
-   order_by: 3
-   opened: true
-   visible: true
-   title_perso: Addresses
 
 gtu1:
    col_num: 1
