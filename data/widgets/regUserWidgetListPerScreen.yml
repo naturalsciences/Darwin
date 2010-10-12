@@ -250,3 +250,12 @@ sps17:
    visible: true
    title_perso: Type of search  
    all_public: true  
+sps17:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: latlong
+   mandatory: false
+   order_by: 8
+   opened: false
+   visible: false
+   title_perso: Latitude Longitude 
