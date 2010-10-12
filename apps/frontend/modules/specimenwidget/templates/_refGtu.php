@@ -31,9 +31,6 @@
     </tr>
   </tbody>
 </table>
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<?php echo javascript_include_tag('map.js'); ?>
 
 <script language="javascript" type="text/javascript"> 
 $(document).ready(function () {

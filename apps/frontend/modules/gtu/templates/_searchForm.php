@@ -62,12 +62,6 @@
           </table>
 
           <div style="width:100%; height:400px;display:none;" id="smap"></div>
-          <?php if(! (isset($is_choose) && $is_choose) ):?>
-              <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-              <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-              <?php echo javascript_include_tag('map.js'); ?>
-            <?php endif;?>
-
     </fieldset>
 
 
