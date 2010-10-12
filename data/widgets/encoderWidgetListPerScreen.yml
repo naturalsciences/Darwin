@@ -913,4 +913,14 @@ sps19:
    order_by: 10
    opened: false
    visible: false
-   title_perso: Container 
+   title_perso: Container
+
+sps20:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: latlong
+   mandatory: false
+   order_by: 11
+   opened: false
+   visible: false
+   title_perso: Latitude Longitude 

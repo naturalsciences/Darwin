@@ -1291,3 +1291,15 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Container
+
+    u1sps20:
+        User: u1
+        col_num: 2
+        category: specimensearch_widget
+        group_name: latlong
+        mandatory: false
+        order_by: 11
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Latitude Longitude 
