@@ -314,6 +314,11 @@ form.search_form input:focus
   border:1px solid #5BAABD;
 }
 
+.search_form fieldset, #latlong fieldset
+{
+ border-color: #5BAABD;
+}
+
 input[type="submit"][class="search_submit"]
 {
   background: white url(/images/widget_button.png) no-repeat;
@@ -663,7 +668,7 @@ input[type="text"].xlarge_size
 
 /** Add New button after results **/
 
-.new_link, .right_button
+.new_link, #gtu_filter .right_button
 {
   float:right;
   background: white url(/images/widget_button.png) no-repeat;

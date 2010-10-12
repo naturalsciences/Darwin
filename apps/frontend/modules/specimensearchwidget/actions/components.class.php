@@ -111,4 +111,9 @@ class specimensearchwidgetComponents extends sfComponents
   {
     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
   }
+  
+  public function executeLatlong()
+  {
+     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
 }

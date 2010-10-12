@@ -52,12 +52,12 @@
             <tr>
               <th class="right_aligned"><?php echo __('Between');?></th>
               <td><?php echo $form['lat_from'];?></td>
-              <td><?php echo $form['lon_from'];?></td>
+              <td><?php echo $form['lon_from'];?><?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
             </tr>
             <tr>
               <th class="right_aligned"><?php echo __('And');?></th>
               <td><?php echo $form['lat_to'];?></td>
-              <td><?php echo $form['lon_to'];?></td>
+              <td><?php echo $form['lon_to'];?><?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
             </tr>
           </table>
 
@@ -89,7 +89,6 @@
             $('#gtu_filter').bind('submit.map_form',map_submit);
             $('.search_results_content').html('');
             $('#lat_long_set table').hide();
-
           }
           else
           {
@@ -107,6 +106,10 @@
        });
        initMap("smap");
        map.events.register("moveend", map, updateLatLong);
+       $('#lat_long_set .clear_prop').click(function()
+        {
+          $(this).closest('tr').find('input').val('');
+        });
     });
 
     function updateLatLong()
