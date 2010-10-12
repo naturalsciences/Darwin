@@ -14,7 +14,7 @@ function chooseGtu()
   el = $(this).closest('tr');
   ref_element_id = getIdInClasses(el);
   ref_element_name = el.find('td.item_name').html();
-  ref_element_code = el.find('td.item_name').prev().html();
+//   ref_element_code = el.find('td.item_name').prev().html();
   $('.result_choose').die('click');
   $('.qtip-button').click();
 }
@@ -23,9 +23,9 @@ function chooseGtuInMap(id)
 {
   ref_element_id = id;
   ref_element_name = $('.map_result_id_'+id+' .item_name').html();
-  ref_element_name = $('.map_result_id_'+id+' .item_name').html();
+/*  ref_element_name = $('.map_result_id_'+id+' .item_name').html();
   ref_element_code =  $('.map_result_id_'+id+' .item_code').html();
-  console.log(ref_element_name);
+  console.log(ref_element_name);*/
   $('.qtip-button').click();
 }
 

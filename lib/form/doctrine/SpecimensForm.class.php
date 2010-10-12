@@ -333,7 +333,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema->setLabels(array('host_specimen_ref' => 'Host specimen',
                                          'host_relationship' => 'Relationship',
                                          'host_taxon_ref' => 'Host taxon',
-                                         'gtu_ref' => 'Sampling location',
+                                         'gtu_ref' => 'Sampling location Tags',
                                          'station_visible' => 'Public sampling location ?'
                                         )
                                   );

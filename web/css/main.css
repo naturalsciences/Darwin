@@ -1242,6 +1242,20 @@ tr.details .details_info tr:hover
   line-height: 100%;
 }
 
+.gtu_img_loc
+{
+  display:none;
+}
+
+#specimen_gtu_ref_map
+{
+  text-align:center;
+  padding: 1em;
+}
+#refGtu .gtu_img_loc
+{
+  display:block;
+}
 .purposed_tags
 {
   max-width:600px;

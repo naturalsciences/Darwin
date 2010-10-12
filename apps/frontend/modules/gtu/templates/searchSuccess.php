@@ -18,6 +18,7 @@
             </a>
           </th>
           <th><?php echo __('Location');?></th>
+          <th class="hidden"></th>
           <th><?php echo __('Latitude');?></th>
           <th><?php echo __('Longitude');?></th>
           <th class="datesNum">
@@ -38,7 +39,8 @@
         <?php foreach($items as $item):?>
           <tr class="rid_<?php echo $item->getId();?>">
             <td class="top_aligned"><?php echo $item->getCode();?></td>
-            <td class="item_name"><?php echo $item->getName(ESC_RAW);?></td>
+            <td class=""><?php echo $item->getName(ESC_RAW);?></td>
+            <td class="item_name hidden"><?php echo $item->getTagsWithCode(ESC_RAW);?></td>
             <td class=""><?php echo $item->getLatitude();?></td>
             <td class=""><?php echo $item->getLongitude();?></td>
             <td class="datesNum"><?php echo $item->getGtuFromDateMasked(ESC_RAW);?></td>
