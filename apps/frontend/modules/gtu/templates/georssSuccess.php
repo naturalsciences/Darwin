@@ -15,14 +15,19 @@
 <!--     <link>http://platial.com/place/90306</link>  i we want the title to be a link-->
     <title><?php echo $item->getCode();?></title>
     <description><![CDATA[
-      <?php echo $item->getName(ESC_RAW);?> 
+      <div class="map_result_id_<?php echo $item->getId();?>">
+      <div class="item_name"><?php echo $item->getName(ESC_RAW);?></div>
+      <div class="item_code hidden"><?php echo $item->getCode();?></div>
       <?php if(! $is_choose):?>
         <?php echo link_to(image_tag('edit.png',array('title' => 'Edit')),'gtu/edit?id='.$item->getId());?>
         <?php echo link_to(image_tag('duplicate.png',array('title' => 'Duplicate')),'gtu/new?duplicate_id='.$item->getId());?>
       <?php else:?>
-        <div class="result_choose"><?php echo __('Choose');?></div>
+        <di
+        <div class="result_choose" onclick="chooseGtuInMap(<?php echo $item->getId();?>);"><?php echo __('Choose');?></div>
       <?php endif;?>
+    </div>
     ]]></description>
+
     <georss:point><?php echo $item->getLatitude();?> <?php echo $item->getLongitude();?></georss:point>
   </item>
 <?php endforeach;?>
