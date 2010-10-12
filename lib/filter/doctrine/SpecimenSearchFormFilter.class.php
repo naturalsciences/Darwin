@@ -59,6 +59,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       ));      
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
+    $this->widgetSchema['collection_ref']->addOption('public_only',true);    
     $this->validatorSchema['collection_ref'] = new sfValidatorPass(); //Avoid duplicate the query
     $this->widgetSchema['spec_ids'] = new sfWidgetFormTextarea(array('label'=>'#ID list'));
     

@@ -8,7 +8,7 @@ MyWidgets:
         visible: true
         is_available: true
         opened: false
-        title_perso: My saved specimens
+        title_perso: My saved specimens        
     u1wb2:
         User: u1
         col_num: 1
@@ -1045,7 +1045,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Type of search
-           
+        all_public : true   
+        
     u1sps1:
         User: u1
         col_num: 1
@@ -1057,6 +1058,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Collection  
+        all_public : true
            
     u1sps2:
         User: u1
@@ -1069,6 +1071,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Taxonomy  
+        all_public : true
            
     u1sps3:
         User: u1
@@ -1081,6 +1084,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Sampling Location  
+        all_public : true
            
     u1sps4:
         User: u1
@@ -1093,6 +1097,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Chrono  
+        all_public : true
            
     u1sps5:
         User: u1
@@ -1105,6 +1110,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Litho  
+        all_public : true
            
     u1sps6:
         User: u1
@@ -1117,6 +1123,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Lithology    
+        all_public : true
            
     u1sps7:
         User: u1
@@ -1129,6 +1136,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Mineral         
+        all_public : true
+        
     u1sps8:
         User: u1
         col_num: 2
@@ -1140,6 +1149,7 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Advanced: Search By ID
+        all_public : true
 
     u1sps9:
         User: u1
@@ -1152,6 +1162,7 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Types
+        all_public : true
 
     u1sps10:
         User: u1
@@ -1164,6 +1175,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Sex
+        all_public : true
+        
     u1sps11:
         User: u1
         col_num: 2
@@ -1175,6 +1188,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Stage
+        all_public : true
+        
     u1sps12:
         User: u1
         col_num: 2
@@ -1186,6 +1201,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: States
+        all_public : true
+        
     u1sps13:
         User: u1
         col_num: 1
@@ -1197,6 +1214,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Social Status
+        all_public : true
+        
     u1sps14:
         User: u1
         col_num: 2
@@ -1208,6 +1227,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Rock Form
+        all_public : true
+        
     u1sps15:
         User: u1
         col_num: 1
@@ -1219,6 +1240,8 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Codes
+        all_public : true
+        
     u1sps16:
         User: u1
         col_num: 2
@@ -1230,6 +1253,8 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Tools
+        all_public : true
+        
     u1sps17:
         User: u1
         col_num: 1
@@ -1241,6 +1266,8 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Methods
+        all_public : true
+        
     u1sps18:
         User: u1
         col_num: 2
@@ -1252,6 +1279,7 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Localisation
+        
     u1sps19:
         User: u1
         col_num: 2

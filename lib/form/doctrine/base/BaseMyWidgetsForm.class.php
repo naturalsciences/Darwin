@@ -28,6 +28,8 @@ abstract class BaseMyWidgetsForm extends BaseFormDoctrine
       'color'        => new sfWidgetFormTextarea(),
       'icon_ref'     => new sfWidgetFormInputText(),
       'title_perso'  => new sfWidgetFormTextarea(),
+      'collections'  => new sfWidgetFormTextarea(),
+      'all_public'   => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -44,6 +46,8 @@ abstract class BaseMyWidgetsForm extends BaseFormDoctrine
       'color'        => new sfValidatorString(array('required' => false)),
       'icon_ref'     => new sfValidatorInteger(array('required' => false)),
       'title_perso'  => new sfValidatorString(array('required' => false)),
+      'collections'  => new sfValidatorString(array('required' => false)),
+      'all_public'   => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('my_widgets[%s]');

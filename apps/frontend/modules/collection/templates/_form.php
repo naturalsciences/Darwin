@@ -15,7 +15,7 @@ $(document).ready(function ()
       $("#institution_to_change").html(data);
     });
   });
-  $("#collections_main_manager_ref").change(function() {
+  $("#collections_main_manager_ref").change(function() {     
 	  ref_element_id = $(this).val();
 	  $info = 'good' ;
 	  $('table#encoder_right tbody tr').each(function() {
@@ -106,7 +106,7 @@ $(document).ready(function ()
 		      </table>
 	        <div class='add_value' id="encoder_right">
 		        <a href="<?php echo url_for('collection/addValue?right=encoder'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		        <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/"><?php echo __('Add User');?></a>
+		        <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add User');?></a>
 		      </div>
       	</td>
       </tr>
@@ -133,10 +133,37 @@ $(document).ready(function ()
 		      </table>
 	        <div class='add_value' id="admin_right">
 		        <a href="<?php echo url_for('collection/addValue?right=admin'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		        <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/"><?php echo __('Add Admin');?></a>
+		        <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add Admin');?></a>
 		      </div>
       	</td>
       </tr>     
+      <tr>
+        <td colspan="2"><hr /></td>
+      </tr>
+      <tr>
+      	<td colspan="2">
+        	<table class="encoding collections_rights" id="reg_user_right">
+		        <thead>
+		          <tr>
+			          <th><label><?php echo __("Registered User view") ; ?></label></th>
+			          <th>&nbsp;</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		          <?php foreach($form['CollectionsRegUser'] as $form_value):?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+		          <?php endforeach;?>
+		          <?php foreach($form['newRegUser'] as $form_value):?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+		          <?php endforeach;?>
+		        </tbody>
+		      </table>
+	        <div class='add_value' id="reg_user_right">
+		        <a href="<?php echo url_for('collection/addValue?right=reg_user'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+		        <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/1"><?php echo __('Add User');?></a>
+		      </div>
+      	</td>
+      </tr>          
     </tbody>
     <tfoot>
       <tr>

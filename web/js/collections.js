@@ -39,7 +39,7 @@ $(document).ready(function () {
         },
         onHide: function()
         {
-          $('.result_choose_coll_rights').die('click') ;
+          $('.result_choose').die('click') ;
           $(this.elements.target).qtip("destroy");
         }
       }

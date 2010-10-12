@@ -30,8 +30,5 @@
       </div>
     </div> 
     <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('people/new') ?>"><?php echo __('New');?></a></div>
-    <?php if( false): //isset($is_choose) && $is_choose):?>
-       <div class="new_link"><a class="cancel_qtip"><?php echo __('Close'); ?></a></div>
-    <?php endif; ?>
   </div>
 </form> 

@@ -18,11 +18,10 @@ class UsersFormFilter extends BaseUsersFormFilter
     $this->widgetSchema['screen'] = new sfwidgetFormInputHidden();
     $this->widgetSchema['screen']->setDefault($this->options['screen']);
     $this->validatorSchema['screen'] = new sfValidatorPass(array('required' => false));
-    $db_user_type = array(''=>'All') ;
+    $db_user_type = $this->options['screen']==1?array():array(''=>'All') ;
     foreach(Users::getTypes($this->options) as $flag => $name)
 	    $db_user_type[strval($flag)] = $name; 
     $status = array(''=>"All",'true'=>'Physical','false'=>'moral');
-    
     $this->widgetSchema['family_name'] = new sfWidgetFormFilterInput(array('template' => '%input%'));
     $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array(
       'choices'        => $db_user_type));
@@ -41,7 +40,7 @@ class UsersFormFilter extends BaseUsersFormFilter
 
   public function addScreenColumnQuery($query, $field, $val)
   {
-  	if ($val == 1) $query->addWhere('db_user_type >= 4') ;
+  	if ($val == 1) $query->addWhere('db_user_type = 1') ;
   	if ($val == 2 && $this->options['db_user_type']!=8) $query->addWhere('db_user_type < 4') ;
   	if ($val == 3) $query->addWhere('db_user_type > 1') ;
   }

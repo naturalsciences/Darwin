@@ -33,7 +33,7 @@ class Users extends BaseUsers
   public static function getTypes($options)
   {
     if (isset($options['screen']) && $options['screen'] == 1)
-      return array( self::MANAGER => Users::getTypeName(self::MANAGER) );
+      return array( self::REGISTERED_USER => Users::getTypeName(self::REGISTERED_USER) );
 
     $db_user_type = array(
     self::REGISTERED_USER => Users::getTypeName(self::REGISTERED_USER),

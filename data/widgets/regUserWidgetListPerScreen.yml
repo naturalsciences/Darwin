@@ -7,6 +7,7 @@ bw1:
    opened: false
    visible: true
    title_perso: My saved searches
+   all_public: true
 
 bw2:
    col_num: 1
@@ -17,6 +18,8 @@ bw2:
    opened: false
    visible: true
    title_perso: My saved specimens
+   all_public: true
+   all_public: true
 
 bw3:
    col_num: 1
@@ -27,7 +30,8 @@ bw3:
    opened: true
    visible: true
    title_perso: User information
-
+   all_public: true
+   all_public: true
 
 sps1:
    col_num: 1
@@ -38,6 +42,8 @@ sps1:
    opened: true
    visible: true
    title_perso: Collection
+   all_public: true
+   all_public: true
 
 sps2:
    col_num: 1
@@ -48,6 +54,7 @@ sps2:
    opened: true
    visible: true
    title_perso: Taxonomy
+   all_public: true
 
 sps3:
    col_num: 2
@@ -58,6 +65,7 @@ sps3:
    opened: true
    visible: true
    title_perso: Sampling Location
+   all_public: true
 
 sps4:
    col_num: 2
@@ -68,6 +76,7 @@ sps4:
    opened: true
    visible: true
    title_perso: Chonostratigraphy
+   all_public: true
 
 sps5:
    col_num: 1
@@ -78,7 +87,8 @@ sps5:
    opened: true
    visible: true
    title_perso: Lithology
-
+   all_public: true
+   
 sps6:
    col_num: 1
    category: specimensearch_widget
@@ -88,7 +98,8 @@ sps6:
    opened: true
    visible: true
    title_perso: Lithostratigraphy
-
+   all_public: true
+   
 sps7:
    col_num: 2
    category: specimensearch_widget
@@ -98,7 +109,8 @@ sps7:
    opened: true
    visible: true
    title_perso: Mineralogy
-
+   all_public: true
+   
 sps8:
    col_num: 2
    category: specimensearch_widget
@@ -108,7 +120,8 @@ sps8:
    opened: false
    visible: false
    title_perso: Advanced: Search By ID
-
+   all_public: true
+   
 sps9:
    col_num: 2
    category: specimensearch_widget
@@ -118,7 +131,8 @@ sps9:
    opened: false
    visible: false
    title_perso: Social Status
-
+   all_public: true
+   
 sps10:
    col_num: 1
    category: specimensearch_widget
@@ -128,7 +142,8 @@ sps10:
    opened: false
    visible: false
    title_perso: Sex
-
+   all_public: true
+   
 sps11:
    col_num: 1
    category: specimensearch_widget
@@ -138,7 +153,8 @@ sps11:
    opened: false
    visible: false
    title_perso: Stage
-
+   all_public: true
+   
 sps12:
    col_num: 2
    category: specimensearch_widget
@@ -148,7 +164,8 @@ sps12:
    opened: false
    visible: false
    title_perso: State
-
+   all_public: true
+   
 sps13:
    col_num: 2
    category: specimensearch_widget
@@ -158,6 +175,8 @@ sps13:
    opened: false
    visible: false
    title_perso: Rock Form
+   all_public: true
+
 sps14:
    col_num: 1
    category: specimensearch_widget
@@ -167,6 +186,8 @@ sps14:
    opened: false
    visible: false
    title_perso: Codes
+   all_public: true
+      
 sps15:
    col_num: 1
    category: specimensearch_widget
@@ -176,6 +197,8 @@ sps15:
    opened: false
    visible: false
    title_perso: Tools
+   all_public: true
+
 sps16:
    col_num: 2
    category: specimensearch_widget
@@ -185,6 +208,8 @@ sps16:
    opened: false
    visible: false
    title_perso: Methods
+   all_public: true
+
 sps17:
    col_num: 1
    category: specimensearch_widget
@@ -194,23 +219,4 @@ sps17:
    opened: true
    visible: true
    title_perso: Type of search  
-
-sps18:
-   col_num: 2
-   category: specimensearch_widget
-   group_name: localisation
-   mandatory: false
-   order_by: 9
-   opened: false
-   visible: false
-   title_perso: Localisation
-
-sps19:
-   col_num: 2
-   category: specimensearch_widget
-   group_name: container
-   mandatory: false
-   order_by: 10
-   opened: false
-   visible: false
-   title_perso: Container
+   all_public: true  

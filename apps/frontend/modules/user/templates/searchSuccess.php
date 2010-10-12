@@ -72,6 +72,3 @@
     <?php echo $form['family_name']->renderError(); ?>
 </div>
 <?php endif;?>
-<?php if ($screen == 3) : ?>
-   <div class="edit"><a class="cancel_qtip bt_close" href="#"><?php echo __('Close'); ?></a></div>
- <?php endif; ?>

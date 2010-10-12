@@ -145,8 +145,10 @@ class collectionActions extends DarwinActions
     $form->addValue($number,$user_ref,$right);
     if($right == 'encoder')
       return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id));
-    else
+    elseif($right == 'admin')
       return $this->renderPartial('coll_rights',array('form' => $form['newAdmin'][$number],'ref_id' => ''));
+    else
+      return $this->renderPartial('coll_rights',array('form' => $form['newRegUser'][$number],'ref_id' => ''));      
   }
 
   public function executeUpdate(sfWebRequest $request)

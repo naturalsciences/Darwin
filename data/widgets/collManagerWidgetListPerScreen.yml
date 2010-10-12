@@ -7,7 +7,6 @@ col0:
    opened: true
    visible: true
    title_perso: Default specimens codes
-
 col1:
    col_num: 1
    category: catalogue_collections_widget
@@ -16,5 +15,5 @@ col1:
    order_by: 1
    opened: true
    visible: true
-   title_perso: Comments
+   title_perso: Comments   
 

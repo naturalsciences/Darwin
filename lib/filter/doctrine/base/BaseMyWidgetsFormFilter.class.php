@@ -25,6 +25,8 @@ abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
       'color'        => new sfWidgetFormFilterInput(),
       'icon_ref'     => new sfWidgetFormFilterInput(),
       'title_perso'  => new sfWidgetFormFilterInput(),
+      'collections'  => new sfWidgetFormFilterInput(),
+      'all_public'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -40,6 +42,8 @@ abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
       'color'        => new sfValidatorPass(array('required' => false)),
       'icon_ref'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'title_perso'  => new sfValidatorPass(array('required' => false)),
+      'collections'  => new sfValidatorPass(array('required' => false)),
+      'all_public'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('my_widgets_filters[%s]');
@@ -72,6 +76,8 @@ abstract class BaseMyWidgetsFormFilter extends BaseFormFilterDoctrine
       'color'        => 'Text',
       'icon_ref'     => 'Number',
       'title_perso'  => 'Text',
+      'collections'  => 'Text',
+      'all_public'   => 'Boolean',
     );
   }
 }

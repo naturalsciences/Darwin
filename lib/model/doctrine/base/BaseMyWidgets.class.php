@@ -18,6 +18,8 @@
  * @property string $color
  * @property integer $icon_ref
  * @property string $title_perso
+ * @property string $collections
+ * @property boolean $all_public
  * @property Users $User
  * 
  * @method integer   getId()           Returns the current record's "id" value
@@ -33,6 +35,8 @@
  * @method string    getColor()        Returns the current record's "color" value
  * @method integer   getIconRef()      Returns the current record's "icon_ref" value
  * @method string    getTitlePerso()   Returns the current record's "title_perso" value
+ * @method string    getCollections()  Returns the current record's "collections" value
+ * @method boolean   getAllPublic()    Returns the current record's "all_public" value
  * @method Users     getUser()         Returns the current record's "User" value
  * @method MyWidgets setId()           Sets the current record's "id" value
  * @method MyWidgets setUserRef()      Sets the current record's "user_ref" value
@@ -47,6 +51,8 @@
  * @method MyWidgets setColor()        Sets the current record's "color" value
  * @method MyWidgets setIconRef()      Sets the current record's "icon_ref" value
  * @method MyWidgets setTitlePerso()   Sets the current record's "title_perso" value
+ * @method MyWidgets setCollections()  Sets the current record's "collections" value
+ * @method MyWidgets setAllPublic()    Sets the current record's "all_public" value
  * @method MyWidgets setUser()         Sets the current record's "User" value
  * 
  * @package    darwin
@@ -115,6 +121,14 @@ abstract class BaseMyWidgets extends sfDoctrineRecord
              ));
         $this->hasColumn('title_perso', 'string', null, array(
              'type' => 'string',
+             ));
+        $this->hasColumn('collections', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('all_public', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => false,
              ));
     }
 
