@@ -104,7 +104,7 @@
 	right:51px;
         position: fixed;
         top: 32px;
-        z-index: 100;
+        z-index: 2000;
 }
 .widget_collection_top
 {
