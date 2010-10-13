@@ -1025,7 +1025,7 @@ create table my_widgets
         is_available boolean not null default false,
         icon_ref integer,
         title_perso varchar(32),
-        collections integer[],
+        collections varchar not null default ',',
         all_public boolean not null default false,
         constraint pk_my_widgets primary key (id),
         constraint unq_my_widgets unique (user_ref, category, group_name),
@@ -1045,7 +1045,7 @@ comment on column my_widgets.color is 'Color given to page element by user';
 comment on column my_widgets.is_available is 'Flag telling if the widget can be used or not';
 comment on column my_widgets.icon_ref is 'Reference of multimedia icon to be used before page element title';
 comment on column my_widgets.title_perso is 'Page element title given by user';
-comment on column my_widgets.collections is 'Array of collections whitch user_ref has rights to see';
+comment on column my_widgets.collections is 'list of collections whitch user_ref has rights to see';
 comment on column my_widgets.all_public is 'Set to determine if the widget is public by default or not';
 
 create table template_classifications
