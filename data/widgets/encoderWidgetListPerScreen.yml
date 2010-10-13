@@ -36,85 +36,35 @@ bw5:
    visible: true
    title_perso: My activity
 
-sw1:
-   col_num: 1
-   category: specimen_widget
-   group_name: refCollection
-   mandatory: true
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: Collection
-
-sw2:
-   col_num: 1
-   category: specimen_widget
-   group_name: refCodes
+sps18:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: localisation
    mandatory: false
-   order_by: 2
-   opened: true
-   visible: true
-   title_perso: Codes
+   order_by: 9
+   opened: false
+   visible: false
+   title_perso: Localisation
+   
+sps19:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: container
+   mandatory: false
+   order_by: 10
+   opened: false
+   visible: false
+   title_perso: Container 
 
-sw3:
-   col_num: 1
+sw13:
+   col_num: 2
    category: specimen_widget
-   group_name: refTaxon
+   group_name: refIgs
    mandatory: false
    order_by: 3
    opened: true
    visible: true
-   title_perso: Taxonomy
-
-sw4:
-   col_num: 1
-   category: specimen_widget
-   group_name: refHosts
-   mandatory: false
-   order_by: 4
-   opened: true
-   visible: true
-   title_perso: Host
-
-sw5:
-   col_num: 1
-   category: specimen_widget
-   group_name: refChrono
-   mandatory: false
-   order_by: 5
-   opened: true
-   visible: false
-   title_perso: Chronostratigraphy
-
-sw6:
-   col_num: 1
-   category: specimen_widget
-   group_name: refLitho
-   mandatory: false
-   order_by: 6
-   opened: true
-   visible: false
-   title_perso: Lithostratigraphy
-
-sw7:
-   col_num: 1
-   category: specimen_widget
-   group_name: refLithology
-   mandatory: false    
-   order_by: 7
-   opened: true
-   visible: false
-   title_perso: Lithology
-
-sw8:
-   col_num: 1
-   category: specimen_widget
-   group_name: refMineral
-   mandatory: false    
-   order_by: 8
-   opened: true
-   visible: false
-   title_perso: Mineralogy
+   title_perso: I.G. number
 
 sw10:
    col_num: 1
@@ -135,56 +85,6 @@ sw11:
    opened: true
    visible: true
    title_perso: Acquisition
-
-sw12:
-   col_num: 2
-   category: specimen_widget
-   group_name: refExpedition
-   mandatory: false
-   order_by: 2
-   opened: true
-   visible: true
-   title_perso: Expedition
-
-sw13:
-   col_num: 2
-   category: specimen_widget
-   group_name: refIgs
-   mandatory: false
-   order_by: 3
-   opened: true
-   visible: true
-   title_perso: I.G. number
-
-sw14:
-   col_num: 2
-   category: specimen_widget
-   group_name: refGtu
-   mandatory: false
-   order_by: 4
-   opened: true
-   visible: true
-   title_perso: Sampling location
-
-sw15:
-   col_num: 2
-   category: specimen_widget
-   group_name: method
-   order_by: 5
-   mandatory: false    
-   opened: false
-   visible: false
-   title_perso: Collecting method
-
-sw16:
-   col_num: 2
-   category: specimen_widget
-   mandatory: false    
-   group_name: tool
-   order_by: 6
-   opened: false
-   visible: false
-   title_perso: Collecting tools
 
 sw17:
    col_num: 2
@@ -226,495 +126,35 @@ sw20:
    visible: true
    title_perso: Accompanying elements
 
-tw1:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: cataloguePeople
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: People
+spi7:
+  col_num: 2
+  category: individuals_widget
+  group_name: refProperties
+  mandatory: false
+  order_by: 2
+  opened: false
+  visible: false
+  title_perso: Properties
 
-tw2:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: relationRename
-   mandatory: false
-   order_by: 2
-   opened: true
-   visible: true
-   title_perso: Current name
+spi8:
+  col_num: 2
+  category: individuals_widget
+  group_name: refIdentifications
+  mandatory: false
+  order_by: 3
+  opened: true
+  visible: true
+  title_perso: Identifications
 
-tw3:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: relationRecombination
-   mandatory: false
-   order_by: 3
-   opened: true
-   visible: true
-   title_perso: Recombined from
-
-tw4:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: synonym
-   order_by: 4
-   mandatory: false
-   opened: true
-   visible: true
-   title_perso: Synonymies
-
-tw5:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: vernacularNames
-   mandatory: false
-   order_by: 5
-   opened: true
-   visible: true
-   title_perso: Vernacular names
-
-tw6:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: comment
-   mandatory: false
-   order_by: 6
-   opened: false
-   visible: false
-   title_perso: Comments
-
-tw7:
-   col_num: 1
-   category: catalogue_taxonomy_widget
-   group_name: properties
-   order_by: 7
-   mandatory: false
-   opened: false
-   visible: false
-   title_perso: Properties
-
-chw1:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: cataloguePeople
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: People
-
-chw2:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: relationRename
-   mandatory: false
-   order_by: 2
-   opened: false
-   visible: false
-   title_perso: Current name
-
-chw3:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: synonym
-   order_by: 3
-   mandatory: false
-   opened: true
-   visible: true
-   title_perso: Synonymies
-
-chw4:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: vernacularNames
-   mandatory: false
-   order_by: 4
-   opened: true
-   visible: true
-   title_perso: Vernacular names
-
-chw5:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: comment
-   mandatory: false
-   order_by: 5
-   opened: false
-   visible: false
-   title_perso: Comments
-
-chw6:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: properties
-   mandatory: false
-   order_by: 6
-   opened: false
-   visible: false
-   title_perso: Properties
-
-lhw1:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: cataloguePeople
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: People
-
-lhw2:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: relationRename
-   mandatory: false
-   order_by: 2
-   opened: false
-   visible: false
-   title_perso: Current name
-
-lhw3:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: synonym
-   order_by: 3
-   mandatory: false
-   opened: true
-   visible: true
-   title_perso: Synonymies
-
-lhw4:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: vernacularNames
-   mandatory: false
-   order_by: 4
-   opened: true
-   visible: true
-   title_perso: Vernacular names
-
-lhw5:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: comment
-   mandatory: false
-   order_by: 5
-   opened: false
-   visible: false
-   title_perso: Comments
-
-lhw6:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: properties
-   mandatory: false
-   order_by: 6
-   opened: false
-   visible: false
-   title_perso: Properties
-
-liw1:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: cataloguePeople
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: People
-
-liw2:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: relationRename
-   mandatory: false
-   order_by: 2
-   opened: false
-   visible: false
-   title_perso: Current name
-
-liw3:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: synonym
-   order_by: 3
-   mandatory: false
-   opened: true
-   visible: true
-   title_perso: Synonymies
-
-liw4:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: vernacularNames
-   mandatory: false
-   order_by: 5
-   opened: true
-   visible: true
-   title_perso: Vernacular names
-
-liw5:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: comment
-   mandatory: false
-   order_by: 5
-   opened: false
-   visible: false
-   title_perso: Comments
-
-liw6:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: properties
-   mandatory: false
-   order_by: 6
-   opened: false
-   visible: false
-   title_perso: Properties
-
-miw1:
-   col_num: 1
-   category: catalogue_mineralogy_widget
-   group_name: cataloguePeople
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: People
-
-miw2:
-   col_num: 1
-   category: catalogue_mineralogy_widget
-   group_name: relationRename
-   mandatory: false
-   order_by: 2
-   opened: false
-   visible: false
-   title_perso: Current name
-
-miw3:
-   col_num: 1
-   category: catalogue_mineralogy_widget
-   group_name: synonym
-   order_by: 3
-   mandatory: false
-   opened: true
-   visible: true
-   title_perso: Synonymies
-
-miw4:
-   col_num: 1
-   category: catalogue_mineralogy_widget
-   group_name: vernacularNames
-   mandatory: false
-   order_by: 4
-   opened: true
-   visible: true
-   title_perso: Vernacular names
-
-miw5:
-   col_num: 1
-   category: catalogue_mineralogy_widget
-   group_name: comment
-   mandatory: false
-   order_by: 5
-   opened: false
-   visible: false
-   title_perso: Comments
-
-miw6:
-   col_num: 1
-   category: catalogue_mineralogy_widget
-   group_name: properties
-   mandatory: false
-   order_by: 6
-   opened: false
-   visible: false
-   title_perso: Properties
-
-ig1:
-   col_num: 1
-   category: catalogue_igs_widget
-   group_name: comment
-   mandatory: false
-   order_by: 0
-   opened: true
-   visible: true
-   title_perso: Comments
-
-ig2:
-   col_num: 1
-   category: catalogue_igs_widget
-   group_name: insurances
-   mandatory: false
-   order_by: 1
-   opened: false
-   visible: false
-   title_perso: Insurances
-
-ex1:
-   col_num: 1
-   category: catalogue_expeditions_widget
-   group_name: comment
-   mandatory: false
-   order_by: 0
-   opened: true
-   visible: true
-   title_perso: Comments
-
-pe1:
-   col_num: 1
-   category: people_widget
-   group_name: lang
-   mandatory: false
-   order_by: 0
-   opened: true
-   visible: true
-   title_perso: Languages
-
-pe2:
-   col_num: 1
-   category: people_widget
-   group_name: relation
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: Relationships
-
-pe3:
-   col_num: 1
-   category: people_widget
-   group_name: address
-   mandatory: false
-   order_by: 2
-   opened: false
-   visible: false
-   title_perso: Addresses
-
-pe4:
-   col_num: 1
-   category: people_widget
-   group_name: comm
-   mandatory: false
-   order_by: 3
-   opened: false
-   visible: false
-   title_perso: Communications
-
-pe5:
-   col_num: 1
-   category: people_widget
-   group_name: properties
-   mandatory: false
-   order_by: 4
-   opened: false
-   visible: false
-   title_perso: Properties
-
-pe6:
-   col_num: 1
-   category: people_widget
-   group_name: comment
-   mandatory: false
-   order_by: 5
-   opened: false
-   visible: false
-   title_perso: Comments
-
-ins1:
-   col_num: 1
-   category: people_institution_widget
-   group_name: relation
-   mandatory: false
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: Relationships
-
-ins2:
-   col_num: 1
-   category: people_institution_widget
-   group_name: address
-   mandatory: false
-   order_by: 2
-   opened: false
-   visible: false
-   title_perso: Addresses
-
-ins3:
-   col_num: 1
-   category: people_institution_widget
-   group_name: comm
-   mandatory: false
-   order_by: 3
-   opened: false
-   visible: false
-   title_perso: Communications
-
-ins4:
-   col_num: 1
-   category: people_institution_widget
-   group_name: properties
-   mandatory: false
-   order_by: 4
-   opened: false
-   visible: false
-   title_perso: Properties
-
-ins5:
-   col_num: 1
-   category: people_institution_widget
-   group_name: comment
-   mandatory: false
-   order_by: 5
-   opened: false
-   visible: false
-   title_perso: Comments
-
-gtu1:
-   col_num: 1
-   category: catalogue_gtu_widget
-   group_name: comment
-   mandatory: false
-   order_by: 1
-   opened: false
-   visible: true
-   title_perso: Comments
-
-gtu2:
-   col_num: 1
-   category: catalogue_gtu_widget
-   group_name: properties
-   mandatory: false
-   order_by: 2
-   opened: true
-   visible: true
-   title_perso: Properties
-
-sp1:
-   col_num: 1
-   category: part_widget
-   group_name: specPart
-   mandatory: true
-   order_by: 1
-   opened: true
-   visible: true
-   title_perso: Part
-
-sp2:
-   col_num: 1
-   category: part_widget
-   group_name: partCount
-   mandatory: false
-   order_by: 2
-   opened: true
-   visible: true
-   title_perso: Count
+spi9:
+  col_num: 2
+  category: individuals_widget
+  group_name: specimenIndividualComments
+  mandatory: false
+  order_by: 4
+  opened: true
+  visible: true
+  title_perso: Comments
 
 sp3:
    col_num: 2
@@ -796,121 +236,232 @@ sp10:
    visible: true
    title_perso: Parent
 
-sp11:
+pe3:
    col_num: 1
-   category: part_widget
-   group_name: refCodes
+   category: people_widget
+   group_name: address
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: false
+   title_perso: Addresses
+
+pe4:
+   col_num: 1
+   category: people_widget
+   group_name: comm
+   mandatory: false
+   order_by: 3
+   opened: false
+   visible: false
+   title_perso: Communications
+
+pe5:
+   col_num: 1
+   category: people_widget
+   group_name: properties
    mandatory: false
    order_by: 4
-   opened: true
-   visible: true
-   title_perso: Codes
-spi1:
+   opened: false
+   visible: false
+   title_perso: Properties
+
+pe6:
    col_num: 1
-   category: individuals_widget
-   group_name: type
-   mandatory: true
-   order_by: 1
+   category: people_widget
+   group_name: comment
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Comments
+
+ins2:
+   col_num: 1
+   category: people_institution_widget
+   group_name: address
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: false
+   title_perso: Addresses
+
+ins3:
+   col_num: 1
+   category: people_institution_widget
+   group_name: comm
+   mandatory: false
+   order_by: 3
+   opened: false
+   visible: false
+   title_perso: Communications
+
+ins4:
+   col_num: 1
+   category: people_institution_widget
+   group_name: properties
+   mandatory: false
+   order_by: 4
+   opened: false
+   visible: false
+   title_perso: Properties
+
+ins5:
+   col_num: 1
+   category: people_institution_widget
+   group_name: comment
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Comments
+
+tw6:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: comment
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Comments
+
+tw7:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: properties
+   order_by: 7
+   mandatory: false
+   opened: false
+   visible: false
+   title_perso: Properties
+
+chw5:
+   col_num: 1
+   category: catalogue_chronostratigraphy_widget
+   group_name: comment
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Comments
+
+chw6:
+   col_num: 1
+   category: catalogue_chronostratigraphy_widget
+   group_name: properties
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Properties
+
+lhw5:
+   col_num: 1
+   category: catalogue_lithostratigraphy_widget
+   group_name: comment
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Comments
+
+lhw6:
+   col_num: 1
+   category: catalogue_lithostratigraphy_widget
+   group_name: properties
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Properties
+
+liw5:
+   col_num: 1
+   category: catalogue_lithology_widget
+   group_name: comment
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Comments
+
+liw6:
+   col_num: 1
+   category: catalogue_lithology_widget
+   group_name: properties
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Properties
+
+miw5:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: comment
+   mandatory: false
+   order_by: 5
+   opened: false
+   visible: false
+   title_perso: Comments
+
+miw6:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: properties
+   mandatory: false
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Properties
+
+ig1:
+   col_num: 1
+   category: catalogue_igs_widget
+   group_name: comment
+   mandatory: false
+   order_by: 0
    opened: true
    visible: true
-   title_perso: Type
+   title_perso: Comments
 
-spi2:
-  col_num: 1
-  category: individuals_widget
-  group_name: sex
-  mandatory: false
-  order_by: 2
-  opened: true
-  visible: true
-  title_perso: Sex
-
-spi3:
-  col_num: 1
-  category: individuals_widget
-  group_name: stage
-  mandatory: false
-  order_by: 3
-  opened: true
-  visible: true
-  title_perso: Stage
-
-spi4:
-  col_num: 1
-  category: individuals_widget
-  group_name: socialStatus
-  mandatory: false
-  order_by: 4
-  opened: false
-  visible: false
-  title_perso: Social Status
-
-spi5:
-  col_num: 1
-  category: individuals_widget
-  group_name: rockForm
-  mandatory: false
-  order_by: 5
-  opened: false
-  visible: false
-  title_perso: Rock form
-
-spi6:
-  col_num: 2
-  category: individuals_widget
-  group_name: specimenIndividualCount
-  mandatory: false
-  order_by: 1
-  opened: true
-  visible: true
-  title_perso: Count
-
-spi7:
-  col_num: 2
-  category: individuals_widget
-  group_name: refProperties
-  mandatory: false
-  order_by: 2
-  opened: false
-  visible: false
-  title_perso: Properties
-
-spi8:
-  col_num: 2
-  category: individuals_widget
-  group_name: refIdentifications
-  mandatory: false
-  order_by: 3
-  opened: true
-  visible: true
-  title_perso: Identifications
-
-spi9:
-  col_num: 2
-  category: individuals_widget
-  group_name: specimenIndividualComments
-  mandatory: false
-  order_by: 4
-  opened: true
-  visible: true
-  title_perso: Comments
-
-sps18:
-   col_num: 2
-   category: specimensearch_widget
-   group_name: localisation
+ig2:
+   col_num: 1
+   category: catalogue_igs_widget
+   group_name: insurances
    mandatory: false
-   order_by: 9
+   order_by: 1
    opened: false
    visible: false
-   title_perso: Localisation
-   
-sps19:
-   col_num: 2
-   category: specimensearch_widget
-   group_name: container
+   title_perso: Insurances
+
+ex1:
+   col_num: 1
+   category: catalogue_expeditions_widget
+   group_name: comment
    mandatory: false
-   order_by: 10
+   order_by: 0
+   opened: true
+   visible: true
+   title_perso: Comments
+
+gtu1:
+   col_num: 1
+   category: catalogue_gtu_widget
+   group_name: comment
+   mandatory: false
+   order_by: 1
    opened: false
-   visible: false
-   title_perso: Container
+   visible: true
+   title_perso: Comments
+
+gtu2:
+   col_num: 1
+   category: catalogue_gtu_widget
+   group_name: properties
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Properties

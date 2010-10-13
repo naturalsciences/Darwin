@@ -100,15 +100,26 @@ sps3:
 sps4:
    col_num: 2
    category: specimensearch_widget
-   group_name: refChrono
+   group_name: latlong
    mandatory: false
    order_by: 2
+   opened: false
+   visible: false
+   title_perso: Latitude Longitude 
+   all_public: true  
+
+sps5:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: refChrono
+   mandatory: false
+   order_by: 3
    opened: true
    visible: true
    title_perso: Chonostratigraphy
    all_public: true
 
-sps5:
+sps6:
    col_num: 1
    category: specimensearch_widget
    group_name: refLithology
@@ -119,7 +130,7 @@ sps5:
    title_perso: Lithology
    all_public: true
    
-sps6:
+sps7:
    col_num: 1
    category: specimensearch_widget
    group_name: refLitho
@@ -130,40 +141,40 @@ sps6:
    title_perso: Lithostratigraphy
    all_public: true
    
-sps7:
+sps8:
    col_num: 2
    category: specimensearch_widget
    group_name: refMineral
    mandatory: false
-   order_by: 3
+   order_by: 4
    opened: true
    visible: true
    title_perso: Mineralogy
    all_public: true
    
-sps8:
+sps9:
    col_num: 2
    category: specimensearch_widget
    group_name: specIds
    mandatory: false
-   order_by: 4
+   order_by: 5
    opened: false
    visible: false
    title_perso: Advanced: Search By ID
    all_public: true
    
-sps9:
+sps10:
    col_num: 2
    category: specimensearch_widget
    group_name: social
    mandatory: false
-   order_by: 5
+   order_by: 6
    opened: false
    visible: false
    title_perso: Social Status
    all_public: true
    
-sps10:
+sps11:
    col_num: 1
    category: specimensearch_widget
    group_name: sex
@@ -174,7 +185,7 @@ sps10:
    title_perso: Sex
    all_public: true
    
-sps11:
+sps12:
    col_num: 1
    category: specimensearch_widget
    group_name: stage
@@ -185,40 +196,40 @@ sps11:
    title_perso: Stage
    all_public: true
    
-sps12:
+sps13:
    col_num: 2
    category: specimensearch_widget
    group_name: status
    mandatory: false
-   order_by: 6
+   order_by: 7
    opened: false
    visible: false
    title_perso: State
    all_public: true
    
-sps13:
+sps14:
    col_num: 2
    category: specimensearch_widget
    group_name: rockform
    mandatory: false
-   order_by: 7
+   order_by: 8
    opened: false
    visible: false
    title_perso: Rock Form
    all_public: true
 
-sps14:
+sps15:
    col_num: 1
    category: specimensearch_widget
    group_name: codes
    mandatory: false
-   order_by: 7
+   order_by: 9
    opened: false
    visible: false
    title_perso: Codes
    all_public: true
       
-sps15:
+sps16:
    col_num: 1
    category: specimensearch_widget
    group_name: tools
@@ -229,33 +240,519 @@ sps15:
    title_perso: Tools
    all_public: true
 
-sps16:
+sps17:
    col_num: 2
    category: specimensearch_widget
    group_name: methods
    mandatory: false
-   order_by: 7
+   order_by: 8
    opened: false
    visible: false
    title_perso: Methods
    all_public: true
 
-sps17:
+sps18:
    col_num: 1
    category: specimensearch_widget
    group_name: whatSearched
    mandatory: true
-   order_by: 8
+   order_by: 9
    opened: true
    visible: true
    title_perso: Type of search  
    all_public: true  
-sps17:
-   col_num: 2
-   category: specimensearch_widget
-   group_name: latlong
+
+sw1:
+   col_num: 1
+   category: specimen_widget
+   group_name: refCollection
+   mandatory: true
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Collection
+   all_public: true
+
+sw2:
+   col_num: 1
+   category: specimen_widget
+   group_name: refCodes
    mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Codes
+   all_public: true
+
+sw3:
+   col_num: 1
+   category: specimen_widget
+   group_name: refTaxon
+   mandatory: false
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: Taxonomy
+   all_public: true
+
+sw4:
+   col_num: 1
+   category: specimen_widget
+   group_name: refHosts
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Host
+   all_public: true
+
+sw5:
+   col_num: 1
+   category: specimen_widget
+   group_name: refChrono
+   mandatory: false
+   order_by: 5
+   opened: true
+   visible: false
+   title_perso: Chronostratigraphy
+   all_public: true
+
+sw6:
+   col_num: 1
+   category: specimen_widget
+   group_name: refLitho
+   mandatory: false
+   order_by: 6
+   opened: true
+   visible: false
+   title_perso: Lithostratigraphy
+   all_public: true
+
+sw7:
+   col_num: 1
+   category: specimen_widget
+   group_name: refLithology
+   mandatory: false    
+   order_by: 7
+   opened: true
+   visible: false
+   title_perso: Lithology
+   all_public: true
+
+sw8:
+   col_num: 1
+   category: specimen_widget
+   group_name: refMineral
+   mandatory: false    
    order_by: 8
+   opened: true
+   visible: false
+   title_perso: Mineralogy
+   all_public: true
+
+sw12:
+   col_num: 2
+   category: specimen_widget
+   group_name: refExpedition
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Expedition
+   all_public: true
+
+sw14:
+   col_num: 2
+   category: specimen_widget
+   group_name: refGtu
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Sampling location
+   all_public: true
+
+sw15:
+   col_num: 2
+   category: specimen_widget
+   group_name: method
+   order_by: 5
+   mandatory: false    
    opened: false
    visible: false
-   title_perso: Latitude Longitude 
+   title_perso: Collecting method
+   all_public: true
+
+sw16:
+   col_num: 2
+   category: specimen_widget
+   mandatory: false    
+   group_name: tool
+   order_by: 6
+   opened: false
+   visible: false
+   title_perso: Collecting tools
+   all_public: true
+
+spi1:
+   col_num: 1
+   category: individuals_widget
+   group_name: type
+   mandatory: true
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Type
+   all_public: true
+
+spi2:
+  col_num: 1
+  category: individuals_widget
+  group_name: sex
+  mandatory: false
+  order_by: 2
+  opened: true
+  visible: true
+  title_perso: Sex
+   all_public: true
+
+spi3:
+  col_num: 1
+  category: individuals_widget
+  group_name: stage
+  mandatory: false
+  order_by: 3
+  opened: true
+  visible: true
+  title_perso: Stage
+  all_public: true
+
+spi4:
+  col_num: 1
+  category: individuals_widget
+  group_name: socialStatus
+  mandatory: false
+  order_by: 4
+  opened: false
+  visible: false
+  title_perso: Social Status
+   all_public: true
+
+spi5:
+  col_num: 1
+  category: individuals_widget
+  group_name: rockForm
+  mandatory: false
+  order_by: 5
+  opened: false
+  visible: false
+  title_perso: Rock form
+  all_public: true
+
+spi6:
+  col_num: 2
+  category: individuals_widget
+  group_name: specimenIndividualCount
+  mandatory: false
+  order_by: 1
+  opened: true
+  visible: true
+  title_perso: Count
+  all_public: true
+
+sp1:
+   col_num: 1
+   category: part_widget
+   group_name: specPart
+   mandatory: true
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Part
+   all_public: true
+
+sp2:
+   col_num: 1
+   category: part_widget
+   group_name: partCount
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Count
+   all_public: true
+
+sp11:
+   col_num: 1
+   category: part_widget
+   group_name: refCodes
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Codes
+   all_public: true
+
+tw1:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: cataloguePeople
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: People
+   all_public: true
+
+tw2:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: relationRename
+   mandatory: false
+   order_by: 2
+   opened: true
+   visible: true
+   title_perso: Current name
+   all_public: true
+
+tw3:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: relationRecombination
+   mandatory: false
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: Recombined from
+   all_public: true
+
+tw4:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: synonym
+   order_by: 4
+   mandatory: false
+   opened: true
+   visible: true
+   title_perso: Synonymies
+   all_public: true
+
+tw5:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: vernacularNames
+   mandatory: false
+   order_by: 5
+   opened: true
+   visible: true
+   title_perso: Vernacular names
+   all_public: true
+
+chw1:
+   col_num: 1
+   category: catalogue_chronostratigraphy_widget
+   group_name: cataloguePeople
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: People
+   all_public: true
+
+chw2:
+   col_num: 1
+   category: catalogue_chronostratigraphy_widget
+   group_name: relationRename
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: false
+   title_perso: Current name
+   all_public: true
+
+chw3:
+   col_num: 1
+   category: catalogue_chronostratigraphy_widget
+   group_name: synonym
+   order_by: 3
+   mandatory: false
+   opened: true
+   visible: true
+   title_perso: Synonymies
+   all_public: true
+
+chw4:
+   col_num: 1
+   category: catalogue_chronostratigraphy_widget
+   group_name: vernacularNames
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Vernacular names
+   all_public: true
+
+lhw1:
+   col_num: 1
+   category: catalogue_lithostratigraphy_widget
+   group_name: cataloguePeople
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: People
+   all_public: true
+
+lhw2:
+   col_num: 1
+   category: catalogue_lithostratigraphy_widget
+   group_name: relationRename
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: false
+   title_perso: Current name
+   all_public: true
+
+lhw3:
+   col_num: 1
+   category: catalogue_lithostratigraphy_widget
+   group_name: synonym
+   order_by: 3
+   mandatory: false
+   opened: true
+   visible: true
+   title_perso: Synonymies
+   all_public: true
+
+lhw4:
+   col_num: 1
+   category: catalogue_lithostratigraphy_widget
+   group_name: vernacularNames
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Vernacular names
+   all_public: true
+
+liw1:
+   col_num: 1
+   category: catalogue_lithology_widget
+   group_name: cataloguePeople
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: People
+   all_public: true
+
+liw2:
+   col_num: 1
+   category: catalogue_lithology_widget
+   group_name: relationRename
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: false
+   title_perso: Current name
+   all_public: true
+
+liw3:
+   col_num: 1
+   category: catalogue_lithology_widget
+   group_name: synonym
+   order_by: 3
+   mandatory: false
+   opened: true
+   visible: true
+   title_perso: Synonymies
+   all_public: true
+
+liw4:
+   col_num: 1
+   category: catalogue_lithology_widget
+   group_name: vernacularNames
+   mandatory: false
+   order_by: 5
+   opened: true
+   visible: true
+   title_perso: Vernacular names
+   all_public: true
+
+miw1:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: cataloguePeople
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: People
+   all_public: true
+
+miw2:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: relationRename
+   mandatory: false
+   order_by: 2
+   opened: false
+   visible: false
+   title_perso: Current name
+   all_public: true
+
+miw3:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: synonym
+   order_by: 3
+   mandatory: false
+   opened: true
+   visible: true
+   title_perso: Synonymies
+   all_public: true
+
+miw4:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: vernacularNames
+   mandatory: false
+   order_by: 4
+   opened: true
+   visible: true
+   title_perso: Vernacular names
+   all_public: true
+
+pe1:
+   col_num: 1
+   category: people_widget
+   group_name: lang
+   mandatory: false
+   order_by: 0
+   opened: true
+   visible: true
+   title_perso: Languages
+   all_public: true
+
+pe2:
+   col_num: 1
+   category: people_widget
+   group_name: relation
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Relationships
+   all_public: true
+
+ins1:
+   col_num: 1
+   category: people_institution_widget
+   group_name: relation
+   mandatory: false
+   order_by: 1
+   opened: true
+   visible: true
+   title_perso: Relationships
+   all_public: true
