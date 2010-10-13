@@ -414,7 +414,7 @@ spi2:
   opened: true
   visible: true
   title_perso: Sex
-   all_public: true
+  all_public: true
 
 spi3:
   col_num: 1
@@ -436,7 +436,7 @@ spi4:
   opened: false
   visible: false
   title_perso: Social Status
-   all_public: true
+  all_public: true
 
 spi5:
   col_num: 1
