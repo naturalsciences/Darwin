@@ -97,10 +97,10 @@ $(document).ready(function ()
 		        </thead>
 		        <tbody>
 		          <?php foreach($form['CollectionsRights'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId()), 'reg_widget' => ''));?>
 		          <?php endforeach;?>
 		          <?php foreach($form['newVal'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId()), 'reg_widget' => ''));?>
 		          <?php endforeach;?>
 		        </tbody>
 		      </table>
@@ -124,10 +124,10 @@ $(document).ready(function ()
 		        </thead>
 		        <tbody>
 		          <?php foreach($form['CollectionsAdmin'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ''));?>
 		          <?php endforeach;?>
 		          <?php foreach($form['newAdmin'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ''));?>
 		          <?php endforeach;?>
 		        </tbody>
 		      </table>
@@ -146,15 +146,18 @@ $(document).ready(function ()
 		        <thead>
 		          <tr>
 			          <th><label><?php echo __("Registered User view") ; ?></label></th>
+                <?php if(!$form->getObject()->isNew()) : ?>
+  			          <th><?php echo __('Allow view on Widgets');?></th>
+			          <?php endif ; ?>			          
 			          <th>&nbsp;</th>
 		          </tr>
 		        </thead>
 		        <tbody>
 		          <?php foreach($form['CollectionsRegUser'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
 		          <?php endforeach;?>
 		          <?php foreach($form['newRegUser'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
 		          <?php endforeach;?>
 		        </tbody>
 		      </table>

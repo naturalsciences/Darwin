@@ -160,7 +160,7 @@ class userActions extends DarwinActions
     else
     { 
       if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-      $this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+        $this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
     }
     $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
     $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));

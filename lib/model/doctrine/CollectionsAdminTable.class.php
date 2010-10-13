@@ -13,4 +13,13 @@ class CollectionsAdminTable extends DarwinTable
 	    ->andWhere('ca.collection_ref = ?',$collection_ref) ; 
     return $q->execute() ;  
   }
+  
+	public function getCollectionsByRight($user)
+	{
+	  $result = $this->findRights($user,'CollectionsAdmin') ;
+	  $collections = array() ;
+	  foreach($result as $rights)
+	    $collections[] = $rights->getCollectionRef() ;
+	  return $collections ;
+	}  
 }

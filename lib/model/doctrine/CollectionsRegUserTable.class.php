@@ -1,7 +1,7 @@
 <?php
 
 
-class CollectionsRegUserTable extends Doctrine_Table
+class CollectionsRegUserTable extends DarwinTable
 {
     
   public static function getInstance()
@@ -16,6 +16,15 @@ class CollectionsRegUserTable extends Doctrine_Table
 	    ->innerJoin('cr.Users u')
 	    ->andWhere('cr.collection_ref = ?',$collection_ref) ; 
     return $q->execute() ;  
-  }    
+  } 
+  
+	public function getCollectionsByRight($user)
+	{
+	  $result = $this->findRights($user,'CollectionsRegUser') ;
+	  $collections = array() ;
+	  foreach($result as $rights)
+	    $collections[] = $rights->getCollectionRef() ;
+	  return $collections ;
+	}       
 }
 

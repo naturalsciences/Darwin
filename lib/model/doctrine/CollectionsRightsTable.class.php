@@ -20,4 +20,13 @@ class CollectionsRightsTable extends DarwinTable
 	    ->andWhere('collection_ref = ?', $collection_id);
 	  return $q->execute() ;
 	}
+	
+	public function getCollectionsByRight($user)
+	{
+	  $result = $this->findRights($user,'CollectionsRights') ;
+	  $collections = array() ;
+	  foreach($result as $rights)
+	    $collections[] = $rights->getCollectionRef() ;
+	  return $collections ;
+	}
 }

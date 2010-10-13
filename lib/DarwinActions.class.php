@@ -38,9 +38,10 @@ class DarwinActions extends sfActions
     $this->__set('widgetCategory',$this->widgetCategory);
     if($id == null) $id = $this->getUser()->getId();
     $this->widgets = Doctrine::getTable('MyWidgets')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
+      ->setUserRef($this->getUser()->getId())
+      ->setDbUserType($this->getUser()->getDbUserType())
       ->getWidgets($this->widgetCategory);
-    if(! $this->widgets) $this->widgets=array();
+    if(! $this->widgets) $this->widgets=array();   
   }
 
   protected function getI18N()

@@ -213,6 +213,8 @@ $browser->
 
 $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
 $browser->addCustomUserAndLogin('ychambert',Users::REGISTERED_USER,'toto');	
+$browser->addCustomUserAndLogin('encoder',Users::ENCODER,'evil');
+$browser->addCustomUserAndLogin('manager', Users::MANAGER,'evil');	
 $browser->get('account/logout')->
   with('response')->begin()->
     isRedirected()->
@@ -304,5 +306,4 @@ $browser->
     checkElement('#preferences_board_spec_rec_pp option[selected]','5')->
     checkElement('#preferences_board_search_rec_pp option[selected]','5')->
   end();
-
   

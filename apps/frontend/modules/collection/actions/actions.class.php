@@ -84,7 +84,7 @@ class collectionActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::MANAGER?false:true) ;
+    $this->rights = Doctrine::getTable(Collections::getTableByRight($this->getUser()->getDbUserType()))->getCollectionsByRight($this->getUser()->getId()) ;    
   }
 
   public function executeNew(sfWebRequest $request)
@@ -144,11 +144,11 @@ class collectionActions extends DarwinActions
     else $form = new CollectionsForm();
     $form->addValue($number,$user_ref,$right);
     if($right == 'encoder')
-      return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id));
+      return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id, 'reg_widget'=> ''));
     elseif($right == 'admin')
-      return $this->renderPartial('coll_rights',array('form' => $form['newAdmin'][$number],'ref_id' => ''));
+      return $this->renderPartial('coll_rights',array('form' => $form['newAdmin'][$number],'ref_id' => '', 'reg_widget'=> ''));
     else
-      return $this->renderPartial('coll_rights',array('form' => $form['newRegUser'][$number],'ref_id' => ''));      
+      return $this->renderPartial('coll_rights',array('form' => $form['newRegUser'][$number],'ref_id' => '', 'reg_widget'=> $this->ref_id));      
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -226,4 +226,37 @@ class collectionActions extends DarwinActions
         }
     }
   }    
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));   
+    $this->forward404Unless($this->specimen);
+    if(!$this->specimen->getCollectionIsPublic()) $this->forwardToSecureAction();
+    
+    $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
+    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      
+    $ids = $this->FecthIdForCommonNames() ;
+    $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;    
+    
+    if ($tag = $this->specimen->getGtuCountryTagValue()) $this->tags = explode(';',$tag) ; 
+    else $this->tags = false ;
+  }  
+  
+  public function executeWidgetsRight(sfWebRequest $request)
+  {
+    if (!Doctrine::getTable('CollectionsAdmin')->findOneByCollectionRefAndUserRef($request->getParameter('collection_ref'),$this->getUser()->getId()))
+      $this->forwardToSecureAction();
+    $id = $request->getParameter('user_ref');
+    $this->form = new WidgetRightsForm(null,array('user_ref' => $id,'collection_ref' => $request->getParameter('collection_ref'))) ;
+    $this->user = Doctrine::getTable("Users")->findUser($id) ;    
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('widget_rights')) ;
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->renderText('ok') ;
+      }
+    }    
+  }
 }

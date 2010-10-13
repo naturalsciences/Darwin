@@ -10,105 +10,110 @@
  */
 class specimensearchwidgetComponents extends sfComponents
 {
+  protected function defineForm()
+  {
+    if(!$this->form)
+    {
+     $this->form = new SpecimenSearchFormFilter() ;
+    }
+  }
+  
   public function executeRefCollection()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeRefTaxon()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
   public function executeRefLitho()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
   public function executeRefLithology()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm(); 
   }
   public function executeRefChrono()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
   public function executeRefMineral()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
 
   public function executeSpecIds()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
 
   public function executeRefGtu()
   {
-    if(!$this->form) 
-    {
-      $this->form = new SpecimenSearchFormFilter() ;  
-      $this->form->addGtuTagValue(0);
-    }
+    $this->defineForm();  
+    if(!$this->form) $this->form->addGtuTagValue(0);
   }
 
   public function executeType()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeSex()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeStage()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   } 
 
   public function executeStatus()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeSocial()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeRockform()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeCodes()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
     if(! $this->form->isBound() && count($this->form['Codes']) == 0)
       $this->form->addCodeValue(0);
   }
 
   public function executeMethods()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeTools()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+    $this->defineForm();
   }
 
   public function executeWhatSearched()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm(); 
   }
 
   public function executeLocalisation()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
 
   public function executeContainer()
   {
-    if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;  
+    $this->defineForm();
   }
 }

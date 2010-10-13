@@ -54,7 +54,12 @@ class MyWidgetsTable extends DarwinTable
     $this->user_ref = $ref;
     return $this;
   }
-
+  
+  public function setDbUserType($ref)
+  {
+    $this->db_user_type = $ref;
+    return $this;
+  }
     
   public function changeWidgetStatus($category, $widget, $status)
   {
@@ -138,6 +143,7 @@ class MyWidgetsTable extends DarwinTable
     $q->andWhere($alias . '.user_ref = ?', $this->user_ref)
         ->andWhere($alias . '.category = ?', $category)
         ->andWhere('p.is_available = true') ;
+    if ($this->db_user_type == Users::REGISTERED_USER) $q->andWhere('p.all_public = true') ; 
     return $q;
   }
  
@@ -153,11 +159,13 @@ class MyWidgetsTable extends DarwinTable
  
   public function getAvailableWidgets()
   {
-	$q = Doctrine_Query::create()
-	  ->from('MyWidgets p')
-	  ->where('p.is_available = true') 
-	  ->andwhere('p.user_ref = ?', $this->user_ref) ;
-	return $q->execute() ;	
+	  $q = Doctrine_Query::create()
+	    ->from('MyWidgets p')
+	    ->where('p.is_available = true') 
+	    ->andWhere('p.all_public = true') 
+	    ->andwhere('p.user_ref = ?', $this->user_ref) 
+	    ->orderBy('category,group_name');
+	  return $q->execute() ;
   }
 
   /**

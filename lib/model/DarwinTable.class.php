@@ -107,5 +107,13 @@ class DarwinTable extends Doctrine_Table
 	 ->orderBy('path ASC');
     return $q->execute();
   }
-
+  
+  public function findRights($user, $table)
+  {
+ 		$q = Doctrine_Query::create()
+		   ->select('collection_ref')
+		   ->from($table)
+		   ->andWhere('user_ref = ?', $user) ;
+		return $q->execute() ; 
+  }
 }

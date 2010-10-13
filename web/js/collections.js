@@ -48,10 +48,11 @@ $(document).ready(function () {
  });
  
  $("a.set_rights").live('click', function(){
+    if ($(this).attr('id') == 'widget') { min_width = 476 } else { min_width = 876 }
     scroll(0,0) ;
     $(this).qtip({
         content: {
-            title: { text : 'List of sub collections', button: 'X' },
+            title: { text : 'List of '+$(this).attr('name'), button: 'X' },
             url: $(this).attr('href')
         },
         show: { when: 'click', ready: true },
@@ -65,7 +66,7 @@ $(document).ready(function () {
         },
         hide: false,
         style: {
-            width: { min: 876, max: 1000},
+            width: { min: min_width, max: 1000},
             border: {radius:3},
             title: { background: '#C1CF56', color:'white'}
         },

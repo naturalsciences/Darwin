@@ -773,6 +773,49 @@ input[type="text"].xlarge_size
 {
   margin-right: 0.5em;
 }
+/* widget_right class is user in collection q-tip in registerd user widget management */
+
+table.widget_right
+{
+  border:1px solid #C1CC33;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding-left:0.5em;
+  padding-right:0.5em;
+}
+
+table.widget_right thead
+{
+  background-color: #C3CF56;
+  color: white;
+  border: 1px solid #C1CF56;
+}
+
+table.widget_right thead th
+{
+  font-weight: normal;
+}
+
+table.widget_right tbody
+{
+  margin-top:6px;
+  border: 1px solid #C1CF56;
+  background-color: #F6F6F6;
+}
+
+table.widget_right tbody th, table.widget_right tbody td
+{
+  padding-left : 6px ;
+  border: 1px solid #C1CF56;
+  background-color: #F6F6F6;
+}
+
+table.widget_right tbody td
+{
+  text-align : center ;
+}
+
+/* end widget_right class */
 
 table.encoding thead
 {
@@ -792,6 +835,7 @@ table.encoding tbody
   border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }
+
 .collections_rights
 {
   margin: 0.5em;

@@ -219,4 +219,15 @@ sps17:
    opened: true
    visible: true
    title_perso: Type of search  
-   all_public: true  
+   all_public: true
+
+sps18:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: type
+   mandatory: false
+   order_by: 8
+   opened: true
+   visible: true
+   title_perso: Type  
+   all_public: true
