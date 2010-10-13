@@ -23,8 +23,7 @@ class UsersFormFilter extends BaseUsersFormFilter
 	    $db_user_type[strval($flag)] = $name; 
     $status = array(''=>"All",'true'=>'Physical','false'=>'moral');
     $this->widgetSchema['family_name'] = new sfWidgetFormFilterInput(array('template' => '%input%'));
-    $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array(
-      'choices'        => $db_user_type));
+    $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array('choices' => $db_user_type));
     $this->widgetSchema['is_physical'] = new sfWidgetFormChoice(array('choices' => array('' => 'All', 1 => 'Physical', 0 => 'Moral')));
     $this->validatorSchema['db_user_type'] = new sfValidatorInteger(array('required' => false)) ;
   }
@@ -33,6 +32,7 @@ class UsersFormFilter extends BaseUsersFormFilter
   {
     return $this->addNamingColumnQuery($query, 'users', 'formated_name_ts', $val['text']);
   }
+
   public function addDbUserTypeColumnQuery($query, $field, $val)
   {
     return $query->andWhere($field.' = ?',$val);
@@ -48,7 +48,7 @@ class UsersFormFilter extends BaseUsersFormFilter
   public function doBuildQuery(array $values)
   {
     $query = parent::doBuildQuery($values);
-
+    $query->andWhere('id >0');
     if ($this->options['db_user_type']!=8) $query->addWhere('db_user_type <= 4') ;     
     return $query ;
   }
