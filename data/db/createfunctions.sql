@@ -5737,7 +5737,7 @@ BEGIN
 					 (OLD.genus_ref <> NEW.genus_ref) OR (OLD.sub_genus_ref <> NEW.sub_genus_ref) OR
 					 (OLD.section_botany_ref <> NEW.section_botany_ref) OR (OLD.sub_section_botany_ref <> NEW.sub_section_botany_ref) OR
 					 (OLD.serie_ref <> NEW.serie_ref) OR (OLD.sub_serie_ref <> NEW.sub_serie_ref) OR
-					 (OLD.super_species_ref <> NEW.super_speciesaddLatLonColumnQuery_ref) OR (OLD.species_ref <> NEW.species_ref) OR (OLD.sub_species_ref <> NEW.sub_species_ref) OR
+					 (OLD.super_species_ref <> NEW.super_species_ref) OR (OLD.species_ref <> NEW.species_ref) OR (OLD.sub_species_ref <> NEW.sub_species_ref) OR
 					 (OLD.variety_ref <> NEW.variety_ref) OR (OLD.sub_variety_ref <> NEW.sub_variety_ref) OR
 					 (OLD.form_ref <> NEW.form_ref) OR (OLD.sub_form_ref <> NEW.sub_form_ref) OR
 					 (OLD.abberans_ref <> NEW.abberans_ref)
