@@ -82,7 +82,7 @@ class Gtu extends BaseGtu
   {
     $str = $this->getName();
     if($this->getLongitude() != '')
-      $str .= '<b class="img"><img class="gtu_img_loc" src="http://ojw.dev.openstreetmap.org/StaticMap/?show=1&w=480&h=240&lat='.$this->getLatitude().'&lon='.$this->getLongitude().'&z=5&mlat0='.$this->getLatitude().'&mlon0='.$this->getLongitude().'&mico0=18479" alt="Sampling location" /></b>';
+      $str .= '<b class="img"><img class="gtu_img_loc" src="http://dev.openstreetmap.de/staticmap/staticmap.php?&size=480x240&center='.$this->getLatitude().','.$this->getLongitude().'&zoom=5&markers='.$this->getLatitude().','.$this->getLongitude().',red-pushpin" alt="Sampling location" /></b>';
     $str .=  '<b class="code">'.$this->getCode().'</b>';
     $str .=  '<b class="lat">'.$this->getLatitude().'</b>';
     $str .=  '<b class="lon">'.$this->getLongitude().'</b>';

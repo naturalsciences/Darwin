@@ -153,6 +153,15 @@
 
       selectControl = new OpenLayers.Control.SelectFeature(results, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
       map.addControl(selectControl);
+
+      /**** HACK FOR DRAGGING ON FEATURES ****/
+      if (typeof(selectControl.handlers) != "undefined") { // OL 2.7 
+                      selectControl.handlers.feature.stopDown = false; 
+                  } else if (typeof(selectControl.handler) != "undefined") { // OL < 2.7 
+                      selectControl.handler.stopDown = false;  
+                      selectControl.handler.stopUp = false;  
+      }
+      /*** END OF HACK ***/
       selectControl.activate();  
       return false;
     }
@@ -192,16 +201,6 @@ if (feature.popup) {
 }
 function addMarkersFromFeatures()
 {
-  console.log('Mark');
- /* if(markers ==0)
-  {
-    markers = new OpenLayers.Layer.Markers("Markers", {
-      displayInLayerSwitcher: false,
-      units: "m",
-      projection: "EPSG:900913"
-    });
-    map.addLayer(markers);
-  }*/
   for( var i = 0; i < results.features.length; i++ )
   {
     m = new OpenLayers.Marker(results.features[i].geometry.getBounds().getCenterLonLat());
