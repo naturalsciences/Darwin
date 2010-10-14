@@ -146,7 +146,19 @@ $(document).ready(function () {
   $('#gtu_longitude').change(drawLatLong);
   $('#gtu_latitude').change(drawLatLong);
 
-
+  if(pointFeature)
+  {
+    if(getAccuracySize() *2  > $('#map').width()) //Recenter if accuracy is too large
+    {
+      for( var i = map.getZoom(); i > 0; i-- )
+      {
+        if(getAccuracySize(i) *2  < $('#map').width())
+        {
+          setMapCenter(centre, i); break;
+        }
+      }
+    }
+  }
   $('#location .clear_prop').click(function()
   {
     $(this).closest('tr').find('input').val('');

@@ -84,9 +84,12 @@ function setZoom(e)
   }
 }
 
-function getAccuracySize()
+function getAccuracySize(z)
 {
-  zoom = map.getZoom();
+  if(! z)
+    zoom = map.getZoom();
+  else
+    zoom = z;
   resolution = map.getResolutionForZoom(zoom);
   return $('#gtu_lat_long_accuracy').val() / resolution;
 }
