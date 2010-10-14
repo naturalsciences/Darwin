@@ -142,7 +142,7 @@
         units: "m", 
         strategies: [new OpenLayers.Strategy.Fixed()],
         protocol: new OpenLayers.Protocol.HTTP({
-          url: $('#gtu_filter').attr('action')+'/format/xml?gtu_filters%5Brec_per_page%5D=45&'+ $('#gtu_filter').serialize(),
+          url: $('#gtu_filter').attr('action')+'/format/xml?gtu_filters%5Brec_per_page%5D=50&'+ $('#gtu_filter').serialize(),
           format: new OpenLayers.Format.KML()
         })
       });
