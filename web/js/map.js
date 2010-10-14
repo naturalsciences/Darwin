@@ -111,6 +111,7 @@ function drawLatLong()
   }
   lonlat = new OpenLayers.LonLat($('#gtu_longitude').val(), $('#gtu_latitude').val())
   marker = addMarkerToMap(lonlat, null);
+  drawAccuracy();
 }
 
 function fetchElevation(lonlat)
