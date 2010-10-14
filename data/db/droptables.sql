@@ -129,4 +129,4 @@ DROP SEQUENCE IF EXISTS collecting_tools_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS specimen_collecting_methods_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS specimen_collecting_tools_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS preferences_id_seq CASCADE;
-
+DROP SEQUENCE IF EXISTS collections_reg_user_id_seq CASCADE;

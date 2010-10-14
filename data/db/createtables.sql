@@ -215,7 +215,7 @@ comment on column gtu.longitude is 'longitude of the gtu';
 comment on column gtu.lat_long_accuracy is 'Accuracy in meter of both lat & long';
 comment on column gtu.elevation is 'Elevation from the level of the sea in meter';
 comment on column gtu.elevation_accuracy is 'Accuracy in meter of the elevation';
-SELECT substring(AddGeometryColumn('gtu', 'location', 4326, 'POINT', 2) for 0);
+SELECT substring(AddGeometryColumn('gtu', 'location', 4326, 'POLYGON', 2) for 0);
 
 create sequence tag_groups_id_seq;
 
@@ -2199,6 +2199,7 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL,
     CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL
   );
+SELECT substring(AddGeometryColumn('darwin_flat', 'gtu_location', 4326, 'POLYGON', 2) for 0);
 
 comment on table darwin_flat is 'Flat table compiling all specimens data (catalogues data included - used for search purposes';
 comment on column darwin_flat.id is 'Unique identifier of a darwin flat entry';

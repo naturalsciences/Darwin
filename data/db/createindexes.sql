@@ -456,6 +456,7 @@ CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_litho_name_indexed on darwin_flat 
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_lithology_name_indexed on darwin_flat using gin(lithology_name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_mineral_name_indexed on darwin_flat using gin(mineral_name_indexed);
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_gtu_tag_values_indexed on darwin_flat using gin(gtu_tag_values_indexed);
+CREATE INDEX CONCURRENTLY idx_gist_darwin_flat_gtu_location ON darwin_flat USING GIST ( gtu_location );
 
 /*
 
