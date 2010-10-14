@@ -7543,11 +7543,12 @@ CREATE OR REPLACE FUNCTION fct_cpy_location() RETURNS trigger
 as $$
 BEGIN
   IF TG_OP = 'UPDATE' THEN
-    IF NEW.longitude IS DISTINCT FROM OLD.longitude OR NEW.latitude IS DISTINCT FROM OLD.latitude THEN
-      NEW.location = GeomFromText( 'POINT(' || NEW.longitude || ' ' || NEW.latitude || ')', 4326);
+    IF NEW.longitude IS DISTINCT FROM OLD.longitude OR NEW.latitude IS DISTINCT FROM OLD.latitude OR NEW.lat_long_accuracy IS DISTINCT FROM OLD.lat_long_accuracy THEN
+      NEW.location = --GeomFromText( 'POINT(' || NEW.longitude || ' ' || NEW.latitude || ')', 4326);
+        ST_Transform(ST_Buffer(ST_Transform(GeomFromEWKT('SRID=4326;POINT(' || NEW.longitude || ' ' || NEW.latitude || ')'),3021),NEW.lat_long_accuracy, 16),4326);
     END IF;
   ELSE
-    NEW.location = GeomFromText( 'POINT(' || NEW.longitude || ' ' || NEW.latitude || ')', 4326);
+    NEW.location =  ST_Transform(ST_Buffer(ST_Transform(GeomFromEWKT('SRID=4326;POINT(' || NEW.longitude || ' ' || NEW.latitude || ')'),3021),NEW.lat_long_accuracy, 16),4326);
   END IF;
 
   RETURN NEW;
