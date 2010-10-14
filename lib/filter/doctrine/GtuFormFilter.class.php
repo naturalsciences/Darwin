@@ -100,6 +100,7 @@ class GtuFormFilter extends BaseGtuFormFilter
     {
       $query->andWhere('location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
         ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326)');
+      $query->andWhere('location is not null');
     }
     return $query;
   }
@@ -133,9 +134,11 @@ class GtuFormFilter extends BaseGtuFormFilter
     $this->addLatLonColumnQuery($query,$values);
 
     $alias = $query->getRootAlias();
+
     $query
       ->leftJoin($alias.'.TagGroups g');
 //       ->leftJoin('g.Tags');
+    $query->addSelect('*,ST_AsKML(location) as kml');
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
     $query->andWhere("id > 0 ");
