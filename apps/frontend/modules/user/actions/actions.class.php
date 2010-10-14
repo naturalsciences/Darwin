@@ -257,9 +257,9 @@ class userActions extends DarwinActions
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
-
+    $this->mode = 'new';
     if($this->getUser()->getDbUserType()  < Users::MANAGER) $this->forwardToSecureAction();
-    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => 'new'));
+    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' =>$this->mode));
 
     $this->form->bind($request->getParameter($this->form->getName()));
 
