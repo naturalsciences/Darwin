@@ -1,4 +1,4 @@
-  var epsg4326 = new OpenLayers.Projection("EPSG:4326");
+  var epsg4326;
   var markers;
   var marker;
   var center;
@@ -14,8 +14,9 @@
   var style_blue;
   var map;
 
-function initMap()
+function initMap(mapId)
 {
+  epsg4326 = new OpenLayers.Projection("EPSG:4326");
   options = {
 //     restrictedExtent: extent,
     controls: [
@@ -35,7 +36,7 @@ function initMap()
   style_blue.fillColor = "blue"; 
 // OpenLayers.Layer.XYZ.
 
-   map = new OpenLayers.Map("map", options);
+   map = new OpenLayers.Map(mapId, options);
 
   mapnik = new OpenLayers.Layer.OSM();
   mapnik.addOptions({wrapDateLine:true});
@@ -139,7 +140,6 @@ function setPoint( e )
 
 function addMarkerToMap(position, icon)
 {
-  new_pos = position.clone().transform(epsg4326, map.getProjectionObject());
   var marker = new OpenLayers.Marker(position.clone().transform(epsg4326, map.getProjectionObject()), icon);
   markers.addMarker(marker);
 

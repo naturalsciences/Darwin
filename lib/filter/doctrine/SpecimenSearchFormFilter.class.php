@@ -297,7 +297,18 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $subForm = new sfForm();
     $this->embedForm('Codes',$subForm);
 
+     // LAT LON 
+    $this->widgetSchema['lat_from'] = new sfWidgetForminput();
+    $this->widgetSchema['lat_from']->setLabel('Latitude');
+    $this->widgetSchema['lat_to'] = new sfWidgetForminput();
+    $this->widgetSchema['lon_from'] = new sfWidgetForminput();
+    $this->widgetSchema['lon_from']->setLabel('Longitude');
+    $this->widgetSchema['lon_to'] = new sfWidgetForminput();
 
+    $this->validatorSchema['lat_from'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
+    $this->validatorSchema['lon_from'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
+    $this->validatorSchema['lat_to'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
+    $this->validatorSchema['lon_to'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
 
     sfWidgetFormSchema::setDefaultFormFormatterName('list');
   }
@@ -310,6 +321,15 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $this->embedForm('Codes', $this->embeddedForms['Codes']);
   }
 
+  public function addLatLonColumnQuery($query, $values)
+  {
+    if( $values['lat_from'] != '' && $values['lon_from'] != '' && $values['lon_to'] != ''  && $values['lat_to'] != '' )
+    {
+      $query->andWhere('gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
+        ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326)');
+    }
+    return $query;
+  }
 
   public function addContainerColumnQuery($query, $field, $val)
   {
@@ -685,6 +705,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));    
     if ($values['lithology_level_ref'] != '') $query->andWhere('lithology_level_ref = ?', intval($values['lithology_level_ref']));
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
+    $this->addLatLonColumnQuery($query, $values);
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['taxon_name'],null,'taxon_name_indexed');
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');
     $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');

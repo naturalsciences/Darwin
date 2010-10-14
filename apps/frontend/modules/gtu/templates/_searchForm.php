@@ -1,7 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
-<?php echo form_tag('gtu/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'search_form','id'=>'gtu_filter'));?>
+<?php echo form_tag('gtu/search'.( isset($is_choose) && $is_choose  ? '?is_choose='.$is_choose : '') , array('class'=>'search_form','id'=>'gtu_filter'));?>
   <div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">
       <thead>
@@ -32,15 +32,113 @@
             <?php echo image_tag('add_blue.png');?> <a href="<?php echo url_for('gtu/andSearch');?>" class="and_tag"><?php echo __('And'); ?></a>
           </td>
         </tr>
-        <tr>
-          <td colspan="3"></td>
-          <td>
-            <input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
-          </td>
-        </tr>
       </tbody>
-    </table>
+
+      </table>
+
+      <fieldset id="lat_long_set">
+        <legend><?php echo __('Show Result as map');?> <input type="checkbox" id="show_as_map"></legend>
+          <table>
+            <tr>
+              <td>
+              </td>
+              <th>
+                <?php echo $form['lat_from']->renderLabel();?>
+              </th>
+              <th>
+                <?php echo $form['lon_from']->renderLabel();?>
+              </th>
+            </tr>
+            <tr>
+              <th class="right_aligned"><?php echo __('Between');?></th>
+              <td><?php echo $form['lat_from'];?></td>
+              <td><?php echo $form['lon_from'];?><?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
+            </tr>
+            <tr>
+              <th class="right_aligned"><?php echo __('And');?></th>
+              <td><?php echo $form['lat_to'];?></td>
+              <td><?php echo $form['lon_to'];?><?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
+            </tr>
+          </table>
+
+          <div style="width:100%; height:400px;display:none;" id="smap"></div>
+    </fieldset>
+
+
+                <?php echo $form->renderHiddenFields();?>
+                <input class="search_submit right_button" type="submit" name="search" value="<?php echo __('Search'); ?>" />
+<div class="clear"></div>
+
     <script  type="text/javascript">
+    var results;
+    $(document).ready(function()
+    {
+       $('#show_as_map').click(function(){
+          if($(this).is(':checked'))
+          {
+            $('#smap').show();
+            setMapCenter(new OpenLayers.LonLat(0,0), 2);
+            //$(this).closest('form').removeClass('search_form');
+            $('#gtu_filter').unbind('submit.sform');
+            $('#gtu_filter').bind('submit.map_form',map_submit);
+            $('.search_results_content').html('');
+            $('#lat_long_set table').hide();
+          }
+          else
+          {
+             //$(this).closest('form').addClass('search_form');
+            $('#gtu_filter').unbind('submit.map_form');
+            $('#gtu_filter').bind('submit.sform',search_form_submit);
+            $('#gtu_filters_lat_from').val('');
+            $('#gtu_filters_lon_from').val('');
+
+            $('#gtu_filters_lat_to').val('');
+            $('#gtu_filters_lon_to').val('');
+            $('#lat_long_set table').show();
+            $('#smap').hide();
+          }
+       });
+       initMap("smap");
+       map.events.register("moveend", map, updateLatLong);
+       $('#lat_long_set .clear_prop').click(function()
+        {
+          $(this).closest('tr').find('input').val('');
+        });
+    });
+
+    function updateLatLong()
+    {
+      bounds = map.getExtent();
+      p1 = new OpenLayers.LonLat( bounds.right,bounds.bottom);
+      p2 = new OpenLayers.LonLat( bounds.left, bounds.top);
+    
+      p1.transform(map.getProjectionObject(), epsg4326).wrapDateLine();
+      p2.transform(map.getProjectionObject(), epsg4326).wrapDateLine();
+//       console.log(p1.lat +" , " +p1.lon + '   '+ p2.lat +" , " +p2.lon);
+      $('#gtu_filters_lat_from').val(p1.lat);
+      $('#gtu_filters_lon_from').val(p1.lon);
+      
+      $('#gtu_filters_lat_to').val(p2.lat);
+      $('#gtu_filters_lon_to').val(p2.lon);
+    }
+
+    function map_submit()
+    {
+      event.preventDefault();
+      if(results)
+      {
+        results.destroy();
+//         map.removeLayer(results);
+      }
+      updateLatLong()
+
+      results = new OpenLayers.Layer.GeoRSS('test',$('#gtu_filter').attr('action')+'/format/xml?'+ $('#gtu_filter').serialize(),{ displayInLayerSwitcher: false});
+      map.addLayer(results);
+      return false;
+    }
+
+
+
       var num_fld = 1;
       $('.and_tag').click(function()
       {

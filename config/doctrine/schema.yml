@@ -944,6 +944,7 @@ SpecimenSearch:
         gtu_to_date: { type: string}
         gtu_tag_values_indexed: { type: string}
         gtu_country_tag_value: { type: string}
+        gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
         taxon_name_indexed: { type: string}    
@@ -1188,6 +1189,7 @@ IndividualSearch:
         gtu_to_date: { type: string}
         gtu_tag_values_indexed: { type: string}
         gtu_country_tag_value: { type: string}
+        gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
         taxon_name_indexed: { type: string}    
@@ -1433,6 +1435,7 @@ PartSearch:
         gtu_to_date: { type: string}
         gtu_tag_values_indexed: { type: string}
         gtu_country_tag_value: { type: string}
+        gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
         taxon_name_indexed: { type: string}    

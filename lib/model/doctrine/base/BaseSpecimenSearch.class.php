@@ -38,6 +38,7 @@
  * @property string $gtu_to_date
  * @property string $gtu_tag_values_indexed
  * @property string $gtu_country_tag_value
+ * @property string $gtu_location
  * @property integer $taxon_ref
  * @property string $taxon_name
  * @property string $taxon_name_indexed
@@ -196,6 +197,7 @@
  * @method string              getGtuToDate()                                     Returns the current record's "gtu_to_date" value
  * @method string              getGtuTagValuesIndexed()                           Returns the current record's "gtu_tag_values_indexed" value
  * @method string              getGtuCountryTagValue()                            Returns the current record's "gtu_country_tag_value" value
+ * @method string              getGtuLocation()                                   Returns the current record's "gtu_location" value
  * @method integer             getTaxonRef()                                      Returns the current record's "taxon_ref" value
  * @method string              getTaxonName()                                     Returns the current record's "taxon_name" value
  * @method string              getTaxonNameIndexed()                              Returns the current record's "taxon_name_indexed" value
@@ -353,6 +355,7 @@
  * @method SpecimenSearch      setGtuToDate()                                     Sets the current record's "gtu_to_date" value
  * @method SpecimenSearch      setGtuTagValuesIndexed()                           Sets the current record's "gtu_tag_values_indexed" value
  * @method SpecimenSearch      setGtuCountryTagValue()                            Sets the current record's "gtu_country_tag_value" value
+ * @method SpecimenSearch      setGtuLocation()                                   Sets the current record's "gtu_location" value
  * @method SpecimenSearch      setTaxonRef()                                      Sets the current record's "taxon_ref" value
  * @method SpecimenSearch      setTaxonName()                                     Sets the current record's "taxon_name" value
  * @method SpecimenSearch      setTaxonNameIndexed()                              Sets the current record's "taxon_name_indexed" value
@@ -600,6 +603,9 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
              'type' => 'string',
              ));
         $this->hasColumn('gtu_country_tag_value', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('gtu_location', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('taxon_ref', 'integer', null, array(

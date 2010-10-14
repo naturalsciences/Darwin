@@ -5,17 +5,6 @@
         <td colspan="2"><?php echo $form['gtu_ref']->renderError(); ?><td>
       </tr>
     <?php endif; ?>
-    <tr>
-      <th><label><?php echo __('Sampling location code');?></label></th>
-      <td id="specimen_gtu_ref_code"></td>
-    <tr>
-      <th class="top_aligned">
-        <?php echo $form['gtu_ref']->renderLabel() ?>
-      </th>
-      <td>
-        <?php echo $form['gtu_ref']->render() ?>
-      </td>
-    </tr>
     <?php if($form['station_visible']->hasError()):?>
       <tr>
         <td colspan="2"><?php echo $form['station_visible']->renderError(); ?><td>
@@ -29,24 +18,65 @@
         <?php echo $form['station_visible']->render() ?>
       </td>
     </tr>
+    <tr>
+      <th><label><?php echo __('Sampling location code');?></label></th>
+      <td id="specimen_gtu_ref_code"></td>
+    </tr>
+    <tr>
+      <th><label><?php echo __('Latitude');?></label></th>
+      <td id="specimen_gtu_ref_lat"></td>
+    </tr>
+    <tr>
+      <th><label><?php echo __('Longitude');?></label></th>
+      <td id="specimen_gtu_ref_lon"></td>
+    </tr>
+    <tr>
+      <th class="top_aligned">
+        <?php echo $form['gtu_ref']->renderLabel() ?>
+      </th>
+      <td>
+        <?php echo $form['gtu_ref']->render() ?>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" id="specimen_gtu_ref_map"></td>
+    </tr>
   </tbody>
+</table>
+
 <script language="javascript" type="text/javascript"> 
 $(document).ready(function () {
     
-    el_name = $("#specimen_gtu_ref_name b");
-    if(el_name.length)
+    function splitGtu()
     {
-      $("#specimen_gtu_ref_code").html(el_name.html());
-      el_name.remove();
+      el_name = $("#specimen_gtu_ref_name .code");
+      if(el_name.length)
+      {
+        $("#specimen_gtu_ref_code").html($("#specimen_gtu_ref_name .code").html());
+        $("#specimen_gtu_ref_map").html($("#specimen_gtu_ref_name .img").html());
+        $("#specimen_gtu_ref_lat").html($("#specimen_gtu_ref_name .lat").html());
+        $("#specimen_gtu_ref_lon").html($("#specimen_gtu_ref_name .lon").html());
+        $("#specimen_gtu_ref_name .code").remove();
+        $("#specimen_gtu_ref_name .lat").remove();
+        $("#specimen_gtu_ref_name .lon").remove();
+        $("#specimen_gtu_ref_name .img").remove();
+      }
     }
-  
+
     $('#specimen_gtu_ref').change(function()
     {
       $("#specimen_gtu_ref_name").html(trim(ref_element_name));
-      $("#specimen_gtu_ref_code").html(ref_element_code);
+      splitGtu();
     });
-   
+
+    $('#refGtu .ref_clear').click(function()
+    {
+      $("#specimen_gtu_ref_code").html('');
+        $("#specimen_gtu_ref_map").html('');
+        $("#specimen_gtu_ref_lat").html('');
+        $("#specimen_gtu_ref_lon").html('');
+    });
+    splitGtu();
 
 });
 </script>
-</table>
