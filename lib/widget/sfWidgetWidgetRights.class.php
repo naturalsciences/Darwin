@@ -38,22 +38,9 @@ class sfWidgetWidgetRights extends sfWidgetFormChoice
     {
       if(!isset($choices[$object->getCategory()])) $choices[$object->getCategory()] = array() ;
       $choices[$object->getCategory()][$object->getGroupName()] = $object ;
-      if(strstr(','.$this->getOption('collection_ref').',',$object->getCollections())) $choices['old_right'][] = $object->getId() ;
+      if(strstr($object->getCollections(),','.$this->getOption('collection_ref').',')) $choices['old_right'][] = $object->getId() ;
     }
     return $choices;
-  }
-  
-  public function getOldRight($tab)
-  {
-    $rights = array() ;
-    foreach($tab as $category)
-    {
-      foreach($category as $widget)
-      {
-        if(strstr(','.$this->getOption('collection_ref').',',$widget->getCollections())) $rights[] = $widget->getId() ;
-      }
-    }
-    return($rights) ; 
   }
   
   public function render($name, $value = null, $attributes = array(), $errors = array())
@@ -69,7 +56,6 @@ class sfWidgetWidgetRights extends sfWidgetFormChoice
     }   
     $options = array();
     $choices = $this->getChoices();
-    $rights = $this->getOldRight($choices);
     $html = "<tbody>" ;  
 	  foreach($choices as $category=>$group) 
 	  {
@@ -87,7 +73,7 @@ class sfWidgetWidgetRights extends sfWidgetFormChoice
     		}
 	      $html .= "<th>".$group_name."</th>" ;		      
 	      $html .= "<td><input type=\"checkbox\" value=\"".$widget->getId()."\" name=\"".$name."\" " ;
-        if((count($value) && in_array($widget->getId(),$value))||strstr(','.$this->getOption('collection_ref').',',$widget->getCollections()))
+        if((count($value) && in_array($widget->getId(),$value))||strstr($widget->getCollections(),','.$this->getOption('collection_ref').','))
           $html .= "checked=\"true\" " ;        
         $html .= "></td></tr>" ;
 			}			

@@ -1,5 +1,12 @@
+<?php include_stylesheets_for_form($form) ?>
+<?php include_javascripts_for_form($form) ?>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('form.qtiped_form').modal_screen();
+ });
+</script>    
 <h1 class="edit_mode"><?php echo __(sprintf("Set rights on widgets for %s", $user->getFormatedName())); ?></h1>
-<form action="" method="post">
+<?php echo form_tag('collection/WidgetsRight?user_ref='.$sf_params->get('user_ref').'&collection_ref='.$sf_params->get('collection_ref'), array('class'=>'qtiped_form') );?>
   <table class="widget_right edition">
     <thead>
       <tr>

@@ -23,6 +23,7 @@ class WidgetRightsForm extends sfForm
   public function save()
   {
     $value = $this->getValue('widget_ref'); // checked by user values
+    
     $widget_ref = $this->getWidget('widget_ref')->getChoices() ;
 	  if(!$value) $value = array() ;
 	  $insert_right = array() ;
@@ -37,8 +38,11 @@ class WidgetRightsForm extends sfForm
 	    if(!in_array($old,$value)) //then we have to remove collection_ref to this widget
 	      $delete_right[] = $old ;
     }
-    die(print_r($insert_right)) ;
-    if (count($insert_right)) Doctrine::getTable('MyWidgets')->doUpdateWidgetRight($this->options['collection_ref'],$insert_right);
-    if (count($delete_right)) Doctrine::getTable('MyWidgets')->doRemoveWidgetRight($this->options['collection_ref'],$delete_right);
+    if (count($insert_right) > 0) Doctrine::getTable('MyWidgets')->
+                                  setUserRef($this->options['user_ref'])->
+                                  doUpdateWidgetRight($this->options['collection_ref'],$insert_right,'insert');
+    if (count($delete_right) > 0) Doctrine::getTable('MyWidgets')->
+                                  setUserRef($this->options['user_ref'])->
+                                  doUpdateWidgetRight($this->options['collection_ref'],$delete_right,'delete');
   }  
 }

@@ -778,10 +778,6 @@ input[type="text"].xlarge_size
 table.widget_right
 {
   border:1px solid #C1CC33;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  padding-left:0.5em;
-  padding-right:0.5em;
 }
 
 table.widget_right thead
@@ -798,7 +794,6 @@ table.widget_right thead th
 
 table.widget_right tbody
 {
-  margin-top:6px;
   border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }
@@ -806,6 +801,10 @@ table.widget_right tbody
 table.widget_right tbody th, table.widget_right tbody td
 {
   padding-left : 6px ;
+  margin-top: 0;
+  padding-top: 0; 
+  margin-bottom: 0;
+  padding-bottom: 0;     
   border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }

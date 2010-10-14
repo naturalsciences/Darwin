@@ -204,7 +204,9 @@ class CollectionsForm extends BaseCollectionsForm
     	{
     	  if (!isset($value[$name]['user_ref']))
 	      {
-	        $form->getObject()->delete();
+	        // remove all widget rights on this collection before deleting this user
+	        Doctrine::getTable('MyWidgets')->setUserRef($form->getObject()->getUserRef())->doUpdateWidgetRight($form->getObject()->getCollectionRef());
+	        $form->getObject()->delete();                                  
 	        unset($this->embeddedForms['CollectionsRegUser'][$name]);
 	      } 
 	    } 	

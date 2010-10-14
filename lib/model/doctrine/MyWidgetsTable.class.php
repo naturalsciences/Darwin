@@ -249,4 +249,26 @@ class MyWidgetsTable extends DarwinTable
       $q->andWhereIn('p.group_name',$widget_array);
     return $q->execute() ;
   }
+  
+  /**
+  * function called by WidgetRightform to add a specific collection_ref to a list of widget
+  * @param string $collection_ref collection to be added in collections field
+  * @param array $list_id list of widgets id witch where $collection_ref has to be inserted
+  * @param string $mode used to dtermine if the query is for adding a collection_ref or removing it
+  */  
+  public function doUpdateWidgetRight($collection_ref,$list_id=null, $mode=null)
+  {
+    $conn = Doctrine_Manager::connection();
+    $q = "UPDATE my_widgets " ;
+    if($mode == 'insert') 
+      $q .= "SET collections= collections || '$collection_ref,' " ;      
+    else
+      $q .= "SET collections = regexp_replace(collections, '$collection_ref,', '', 'g') " ;
+    if($list_id ==null)
+      $q .= "WHERE user_ref = ".$this->user_ref ;    
+    else
+      $q .= "WHERE (id in (".implode(',',$list_id).") AND user_ref = ".$this->user_ref.")" ;  
+    $result = $conn->fetchAssoc($q);  
+    $conn->close() ; 
+  }
 }
