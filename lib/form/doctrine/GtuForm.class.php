@@ -73,6 +73,8 @@ class GtuForm extends BaseGtuForm
     $this->widgetSchema['elevation_accuracy']->setLabel('Accuracy');
     $this->validatorSchema['latitude'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
     $this->validatorSchema['longitude'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
+    $this->validatorSchema['lat_long_accuracy'] = new sfValidatorNumber(array('required'=>false,'min' => '0.0000001'));
+    $this->validatorSchema['elevation_accuracy'] = new sfValidatorNumber(array('required'=>false,'min' => '0.0000001'));
     $this->validatorSchema->setPostValidator(
       new sfValidatorAnd(array(
         new sfValidatorSchemaCompare(

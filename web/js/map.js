@@ -84,9 +84,12 @@ function setZoom(e)
   }
 }
 
-function getAccuracySize()
+function getAccuracySize(z)
 {
-  zoom = map.getZoom();
+  if(! z)
+    zoom = map.getZoom();
+  else
+    zoom = z;
   resolution = map.getResolutionForZoom(zoom);
   return $('#gtu_lat_long_accuracy').val() / resolution;
 }
@@ -111,6 +114,7 @@ function drawLatLong()
   }
   lonlat = new OpenLayers.LonLat($('#gtu_longitude').val(), $('#gtu_latitude').val())
   marker = addMarkerToMap(lonlat, null);
+  drawAccuracy();
 }
 
 function fetchElevation(lonlat)

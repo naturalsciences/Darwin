@@ -71,6 +71,7 @@
 
     <script  type="text/javascript">
     var results;
+    var selectControl=0;
     $(document).ready(function()
     {
        $('#show_as_map').click(function(){
@@ -104,6 +105,7 @@
         {
           $(this).closest('tr').find('input').val('');
         });
+
     });
 
     function updateLatLong()
@@ -122,21 +124,98 @@
       $('#gtu_filters_lon_to').val(p2.lon);
     }
 
-    function map_submit()
+    function map_submit(event)
     {
       event.preventDefault();
       if(results)
       {
-        results.destroy();
+        map.removeLayer(results);
+        //results.destroy();
+        markers.clearMarkers();
+       /* markers.destroy();
+        markers=0;*/
 //         map.removeLayer(results);
       }
       updateLatLong()
-
-      results = new OpenLayers.Layer.GeoRSS('test',$('#gtu_filter').attr('action')+'/format/xml?'+ $('#gtu_filter').serialize(),{ displayInLayerSwitcher: false});
+      removeAllPopups();
+      results = new OpenLayers.Layer.Vector("Earthquakes", {
+        units: "m", 
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        protocol: new OpenLayers.Protocol.HTTP({
+          url: $('#gtu_filter').attr('action')+'/format/xml?'+ $('#gtu_filter').serialize(),
+          format: new OpenLayers.Format.KML()
+        })
+      });
+      //new OpenLayers.Layer.GeoRSS('test',$('#gtu_filter').attr('action')+'/format/xml?'+ $('#gtu_filter').serialize(),{ displayInLayerSwitcher: false});
       map.addLayer(results);
+       results.events.register("loadend", results, addMarkersFromFeatures);
+
+
+      selectControl = new OpenLayers.Control.SelectFeature(results, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
+      map.addControl(selectControl);
+
+      /**** HACK FOR DRAGGING ON FEATURES ****/
+      if (typeof(selectControl.handlers) != "undefined") { // OL 2.7 
+                      selectControl.handlers.feature.stopDown = false; 
+                  } else if (typeof(selectControl.handler) != "undefined") { // OL < 2.7 
+                      selectControl.handler.stopDown = false;  
+                      selectControl.handler.stopUp = false;  
+      }
+      /*** END OF HACK ***/
+      selectControl.activate();  
       return false;
     }
+function removeAllPopups()
+{
+  if(selectControl != 0)
+    selectControl.unselectAll();
+  for( var i = 0; i < map.popups.length; i++ )
+  {
+    map.removePopup(map.popups[i]);
+  }
+}
 
+function onFeatureSelect(feature) {
+  removeAllPopups()
+  selectedFeature = feature;
+  popup = new OpenLayers.Popup.FramedCloud("chicken", 
+    feature.geometry.getBounds().getCenterLonLat(),
+    new OpenLayers.Size(100,100),
+      "<div><strong>"+feature.attributes.name+"</strong><br/>"+feature.attributes.description+"</div>",
+      null, true, onPopupClose);
+  feature.popup = popup;
+  map.addPopup(popup);
+}
+
+function onPopupClose(evt) {
+//  selectControl.unselect(selectedFeature);
+  onFeatureUnselect(selectedFeature);
+}
+
+function onFeatureUnselect(feature) {
+if (feature.popup) {
+    map.removePopup(feature.popup);
+    feature.popup.destroy();
+    feature.popup = null;
+  }
+}
+function addMarkersFromFeatures()
+{
+  for( var i = 0; i < results.features.length; i++ )
+  {
+    m = new OpenLayers.Marker(results.features[i].geometry.getBounds().getCenterLonLat());
+    markers.addMarker(m,results.features[i].attributes.description);
+
+    m.events.register("mousedown", m, function()
+    {
+      for( var i = 0; i < results.features.length; i++ )
+      {
+        if(results.features[i].geometry.getBounds().getCenterLonLat() == this.lonlat)
+          onFeatureSelect(results.features[i]);
+      }
+    });
+  }
+}
 
 
       var num_fld = 1;
@@ -149,7 +228,7 @@
             {
               $('table.search > tbody .and_row').before(html);
             }
-          });
+        });
         return false;
       });
     </script>
