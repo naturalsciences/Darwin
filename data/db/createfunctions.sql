@@ -3303,7 +3303,7 @@ BEGIN
 			IF still_mgr THEN
 				RAISE EXCEPTION 'Still Manager in some Collections.';
 			END IF;
-			DELETE FROM collections_admin WHERE user_ref = NEW.id;
+			DELETE FROM collections_rights WHERE user_ref = NEW.id AND db_user_type  >= 4; 
 		END IF;
 		
 		IF OLD.db_user_type >= 2 AND NEW.db_user_type = 1 THEN
@@ -6700,6 +6700,10 @@ BEGIN
 END;
 $$;
 
+/**
+* When adding or changing a collection, 
+* Impact changes on rights for the collection manager
+*/
 CREATE OR REPLACE FUNCTION fct_cpy_updateCollectionAdmin() RETURNS TRIGGER
 language plpgsql
 AS
@@ -6707,14 +6711,14 @@ $$
 DECLARE
 	ref_id integer ;
 BEGIN
-IF TG_OP = 'INSERT' THEN
-	INSERT INTO collections_admin(collection_ref, user_ref) VALUES (NEW.id, NEW.main_manager_ref);
-ELSIF TG_OP = 'UPDATE' THEN
-	SELECT id INTO ref_id FROM collections_admin WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id  ;
-	IF NOT FOUND THEN
-		INSERT INTO collections_admin(collection_ref, user_ref) VALUES (NEW.id, NEW.main_manager_ref);
-	END IF;
-END IF;
+
+    SELECT id INTO ref_id FROM collections_rights WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
+    IF FOUND THEN
+      UPDATE collections_rights SET db_user_type=4 /**MANAGER */ WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
+    ELSE
+      INSERT INTO collections_rights (collection_ref, user_ref, db_user_type) VALUES (NEW.id, NEW.main_manager_ref,  4); -- MANAGER
+    END IF;
+
 RETURN NEW;
 EXCEPTION
   WHEN OTHERS THEN
@@ -7554,58 +7558,4 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
--- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
--- $$
--- DECLARE
---   sqlString varchar := '';
--- BEGIN
---   IF array_lower(in_array,1) THEN
---     FOR i IN array_lower(in_array,1)..array_upper(in_array,1) LOOP
---       sqlString := sqlString || ' SELECT gtu_ref FROM tags WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(in_array[i]) || ')) INTERSECT';
---     END LOOP;
---     IF LENGTH(sqlString)>0 THEN
---       sqlString := TRIM(SUBSTR(sqlString,1,LENGTH(sqlString)-9));
---       RETURN QUERY EXECUTE sqlString;
---     END IF;
---   END IF;
---   RETURN;
--- EXCEPTION
---   WHEN OTHERS THEN
---     RAISE EXCEPTION 'Error in getGtusForTags: %', SQLERRM;
---     RETURN;
--- END;
--- $$
--- LANGUAGE plpgsql;
 
--- CREATE OR REPLACE FUNCTION getGtusForTags(in_array anyarray) returns setof tags.gtu_ref%TYPE as
--- $$
--- DECLARE
---   sqlString varchar ;
---   tempArray varchar[] := in_array;
---   tempTagList varchar := array_to_string(tempArray, ';');
--- BEGIN
---   IF array_lower(in_array,1) THEN
---     FOR i IN array_lower(in_array,1)..array_upper(in_array,1) LOOP
---       IF i = 1 THEN
---         sqlString := 'SELECT gtu_ref, tag_indexed FROM tags WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(tempTagList) || '))';
---       ELSE
---         sqlString := 'SELECT gtu_ref, tag_indexed FROM (' || sqlString || ') as subQuery' || i || ' WHERE tag_indexed IN (SELECT lineToTagRows(' || quote_literal(tempTagList) || '))';
---       END IF;
---       IF i < array_upper(in_array,1) THEN
---         tempArray := in_array[i+1:array_upper(in_array,1)];
---         tempTagList := array_to_string(tempArray, ';');
---       END IF;
---     END LOOP;
---     IF LENGTH(sqlString)>0 THEN
---       sqlString := regexp_replace(sqlString, ', tag_indexed', '');
---       RETURN QUERY EXECUTE sqlString;
---     END IF;
---   END IF;
---   RETURN;
--- EXCEPTION
---   WHEN OTHERS THEN
---     RAISE EXCEPTION 'Error in getGtusForTags: %', SQLERRM;
---     RETURN;
--- END;
--- $$
--- LANGUAGE plpgsql;

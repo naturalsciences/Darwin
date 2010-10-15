@@ -12,10 +12,10 @@ SELECT lives_ok('UPDATE users SET db_user_type=2 WHERE id=2','With not reference
 
 UPDATE users SET db_user_type=4 WHERE id=2;
 
-INSERT INTO collections_admin (collection_ref,user_ref) VALUES (1,2);
+INSERT INTO collections_rights (collection_ref,user_ref,db_user_type) VALUES (1,2,4);
 
-SELECT lives_ok('UPDATE users SET db_user_type=2 WHERE id=2','With  reference int collection_admin');
-SELECT ok(0 = (SELECT count(*) FROM collections_admin WHERE user_ref=2),'Removed from collections_admin');
+SELECT lives_ok('UPDATE users SET db_user_type=2 WHERE id=2','With  reference int collection admins');
+SELECT ok(0 = (SELECT count(*) FROM collections_rights WHERE user_ref=2 AND db_user_type >=4 ),'Removed from collections admins');
 
 
 INSERT INTO record_visibilities (referenced_relation, record_id, db_user_type, user_ref, visible)

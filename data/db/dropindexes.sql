@@ -44,8 +44,6 @@
  DROP INDEX IF EXISTS idx_possible_upper_levels_level_upper_ref;
  DROP INDEX IF EXISTS idx_record_visibilities;
  DROP INDEX IF EXISTS idx_tag_groups_gtu_ref;
- DROP INDEX IF EXISTS idx_collections_admin_referenced_record;
- DROP INDEX IF EXISTS idx_collections_reg_user_referenced_record; 
  DROP INDEX IF EXISTS idx_gtu_parent_ref;
  DROP INDEX IF EXISTS idx_people_languages_people_ref;
  DROP INDEX IF EXISTS idx_users_languages_users_ref;

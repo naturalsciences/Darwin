@@ -38,7 +38,6 @@ SELECT has_table('people_multimedia','people_multimedia exists');
 SELECT has_table('users_multimedia','users_multimedia exists');
 SELECT has_table('collections','collections exists');
 SELECT has_table('template_collections_users','template_collections_users exists');
-SELECT has_table('collections_admin','collections_admin exists');
 SELECT has_table('collections_rights','collections_rights exists');
 SELECT has_table('collections_fields_visibilities','collections_fields_visibilities exists');
 SELECT has_table('users_coll_rights_asked','users_coll_rights_asked exists');

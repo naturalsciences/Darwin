@@ -44,7 +44,6 @@
  GRANT select, insert, update, delete on darwin2.multimedia to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_comm to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_login_infos to cebmpad;
- GRANT select, insert, update, delete on darwin2.collections_admin to cebmpad;
  GRANT select, insert, update, delete on darwin2.collections_rights to cebmpad;
  GRANT select, insert, update, delete on darwin2.template_people_users_multimedia to cebmpad;
  GRANT select, insert, update, delete on darwin2.people_multimedia to cebmpad;

@@ -21,8 +21,6 @@ CREATE INDEX CONCURRENTLY idx_people_multimedia_person_user_ref on people_multim
 CREATE INDEX CONCURRENTLY idx_people_multimedia_object_ref on people_multimedia(object_ref);
 CREATE INDEX CONCURRENTLY idx_users_multimedia_person_user_ref on users_multimedia(person_user_ref);
 CREATE INDEX CONCURRENTLY idx_users_multimedia_object_ref on users_multimedia(object_ref);
-CREATE INDEX CONCURRENTLY idx_collections_admin_referenced_record on collections_admin(collection_ref, user_ref);
-CREATE INDEX CONCURRENTLY idx_collections_reg_user_referenced_record on collections_reg_user(collection_ref, user_ref);
 CREATE INDEX CONCURRENTLY idx_collections_institution_ref on collections(institution_ref);
 CREATE INDEX CONCURRENTLY idx_collections_main_manager_ref on collections(main_manager_ref);
 CREATE INDEX CONCURRENTLY idx_collections_parent_ref on collections(parent_ref);
