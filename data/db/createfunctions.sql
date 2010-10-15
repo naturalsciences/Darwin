@@ -7543,6 +7543,26 @@ CREATE AGGREGATE dummy_first (anyelement)
 );
 
 
+
+CREATE OR REPLACE FUNCTION fct_search_authorized_encoding_collections (IN user_id varchar) RETURNS SETOF integer
+language SQL STABLE
+AS
+$$
+    select collection_ref from collections_rights where user_ref = user_id and db_user_type >= 2;
+$$;
+
+CREATE OR REPLACE FUNCTION fct_search_authorized_view_collections (IN user_id varchar) RETURNS SETOF integer
+language SQL STABLE
+AS
+$$
+    select collection_ref from collections_rights where user_ref = user_id;
+
+    UNION
+
+    select id as collection_ref from collections where is_public = true;
+$$;
+
+
 CREATE OR REPLACE FUNCTION fct_cpy_location() RETURNS trigger
 as $$
 BEGIN
