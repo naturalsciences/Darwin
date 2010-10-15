@@ -8,17 +8,20 @@
  * @property integer $id
  * @property integer $collection_ref
  * @property integer $user_ref
+ * @property integer $db_user_type
  * @property Collections $Collections
  * @property Users $Users
  * 
  * @method integer           getId()             Returns the current record's "id" value
  * @method integer           getCollectionRef()  Returns the current record's "collection_ref" value
  * @method integer           getUserRef()        Returns the current record's "user_ref" value
+ * @method integer           getDbUserType()     Returns the current record's "db_user_type" value
  * @method Collections       getCollections()    Returns the current record's "Collections" value
  * @method Users             getUsers()          Returns the current record's "Users" value
  * @method CollectionsRights setId()             Sets the current record's "id" value
  * @method CollectionsRights setCollectionRef()  Sets the current record's "collection_ref" value
  * @method CollectionsRights setUserRef()        Sets the current record's "user_ref" value
+ * @method CollectionsRights setDbUserType()     Sets the current record's "db_user_type" value
  * @method CollectionsRights setCollections()    Sets the current record's "Collections" value
  * @method CollectionsRights setUsers()          Sets the current record's "Users" value
  * 
@@ -45,6 +48,11 @@ abstract class BaseCollectionsRights extends sfDoctrineRecord
              'type' => 'integer',
              'notnull' => true,
              'default' => 0,
+             ));
+        $this->hasColumn('db_user_type', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             'default' => 1,
              ));
     }
 

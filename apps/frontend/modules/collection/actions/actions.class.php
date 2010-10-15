@@ -84,13 +84,12 @@ class collectionActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList();
-    $this->rights = Doctrine::getTable(Collections::getTableByRight($this->getUser()->getDbUserType()))->getCollectionsByRight($this->getUser()->getId()) ;    
+    $this->rights = Doctrine::getTable('CollectionsRights')->getCollectionsByRight($this->getUser()->getId()) ;
   }
 
   public function executeNew(sfWebRequest $request)
   {
-    $db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
-    if($db_user_type < Users::MANAGER) $this->forwardToSecureAction();
+    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $collection = new Collections();
     $duplic = $request->getParameter('duplicate_id','0') ;
     $collection = $this->getRecordIfDuplicate($duplic, $collection);
@@ -102,11 +101,11 @@ class collectionActions extends DarwinActions
       {
          $this->form->addValue($key, $val->getUserRef(),'encoder');
       }
-      $Admin = Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($duplic) ;      
+      /*$Admin = Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($duplic) ;      
       foreach ($Admin as $key=>$val)
       {
          $this->form->addValue($key, $val->getUserRef(),'admin');
-      }      
+      } */     
     }  
   }
 
@@ -124,8 +123,7 @@ class collectionActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($collections = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), sprintf('Object collections does not exist (%s).', array($request->getParameter('id'))));
-//	$db_user_type = Doctrine::getTable('Users')->find( $this->getUser()->getId() )->getDbUserType();
-//    if($db_user_type < Users::MANAGER) $this->forwardToSecureAction();
+//    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $this->form = new CollectionsForm($collections);
     $this->loadWidgets();
   }

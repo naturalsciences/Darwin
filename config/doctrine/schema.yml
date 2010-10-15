@@ -397,37 +397,12 @@ Collections:
             local: parent_ref
             foreign: id
 
-CollectionsAdmin:
-    columns:
-        id: { type: integer, primary: true, autoincrement: true} 
-        collection_ref: { type: integer, notnull: true, default:0 }
-        user_ref: { type: integer, notnull: true, default:0 }
-    relations:
-        Collections:
-            local: collection_ref
-            foreign: id
-        Users:
-            local: user_ref
-            foreign: id
-
-CollectionsRegUser:
-    columns:
-        id: { type: integer, primary: true, autoincrement: true} 
-        collection_ref: { type: integer, notnull: true, default:0 }
-        user_ref: { type: integer, notnull: true, default:0 }
-    relations:
-        Collections:
-            local: collection_ref
-            foreign: id
-        Users:
-            local: user_ref
-            foreign: id            
-
 CollectionsRights:
     columns:
         id: { type: integer, primary: true, autoincrement: true}    
         collection_ref: { type: integer, notnull: true }
-        user_ref: { type: integer, notnull: true, default:0 }      
+        user_ref: { type: integer, notnull: true, default:0 }
+        db_user_type: { type: integer, notnull: true, default:1 }
     relations:
         Collections:
             local: collection_ref

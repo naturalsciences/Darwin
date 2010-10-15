@@ -96,23 +96,29 @@ class DarwinTestFunctional extends sfTestFunctional
     else
         $encoder_id = $this->addCustomUserAndLogin('Super Encoder',Users::ENCODER,'nothing');        
     $this->
-  	  info('** add a custom collection **')->
-  	  get('collection/new')->
-  	  with('response')->begin()->
-  	  click('#submit', array('collections' => array('code' => $code,
-  				  					        'name' => $name,
-  					     				   'institution_ref' => $institution_id,
-  					     				   'main_manager_ref' => $manager_id,
-  					     				   'newVal' => array(0 => array('user_ref' => $manager_id),
-  					     				                     1 => array('user_ref' => $encoder_id)
-  					     				                    ))))->
-  	  end()->
-      with('doctrine')->begin()->		    
-       	check('Collections', array('code' => $code,
-	  					       'name' => $name,
-		     				  'institution_ref' => $institution_id,
-		     				  'main_manager_ref' => $manager_id))->
-  	  end();
+      info('** add a custom collection **')->
+      get('collection/new')->
+      with('response')->begin()->
+      click('#submit', array(
+        'collections' => array('code' => $code,
+        'name' => $name,
+        'institution_ref' => $institution_id,
+        'main_manager_ref' => $manager_id,
+        'newVal' => array(
+          1 => array('user_ref' => $encoder_id)
+          )
+        )
+      ))->
+      end()->
+
+      with('doctrine')->begin()->
+        check('Collections', array(
+          'code' => $code,
+          'name' => $name,
+          'institution_ref' => $institution_id,
+          'main_manager_ref' => $manager_id)
+        )->
+      end();
   	$collection_id = Doctrine::getTable('Collections')->getCollectionByName($name)->getId() ;
     $this->
        with('doctrine')->begin()->		    

@@ -18,15 +18,4 @@ class Collections extends BaseCollections
   {
     return $this->getName();
   }
-  
-  public static function getTableByRight($db_user_type)
-  {
-	  switch ($db_user_type)
-	  {
-		  case Users::REGISTERED_USER : return 'CollectionsRegUser';
-		  case Users::ENCODER : return 'CollectionsRights';
-		  case Users::MANAGER : return 'CollectionsAdmin';
-		  case Users::ADMIN : return 'CollectionsAdmin';   	  
-	  }
-  }
 }

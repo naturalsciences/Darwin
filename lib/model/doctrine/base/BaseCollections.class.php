@@ -25,8 +25,6 @@
  * @property Users $Manager
  * @property Collections $Parent
  * @property Doctrine_Collection $Collections
- * @property Doctrine_Collection $CollectionsAdmin
- * @property Doctrine_Collection $CollectionsRegUser
  * @property Doctrine_Collection $CollectionsRights
  * @property Doctrine_Collection $Specimens
  * @property Doctrine_Collection $SpecimenSearch
@@ -53,8 +51,6 @@
  * @method Users               getManager()                  Returns the current record's "Manager" value
  * @method Collections         getParent()                   Returns the current record's "Parent" value
  * @method Doctrine_Collection getCollections()              Returns the current record's "Collections" collection
- * @method Doctrine_Collection getCollectionsAdmin()         Returns the current record's "CollectionsAdmin" collection
- * @method Doctrine_Collection getCollectionsRegUser()       Returns the current record's "CollectionsRegUser" collection
  * @method Doctrine_Collection getCollectionsRights()        Returns the current record's "CollectionsRights" collection
  * @method Doctrine_Collection getSpecimens()                Returns the current record's "Specimens" collection
  * @method Doctrine_Collection getSpecimenSearch()           Returns the current record's "SpecimenSearch" collection
@@ -80,8 +76,6 @@
  * @method Collections         setManager()                  Sets the current record's "Manager" value
  * @method Collections         setParent()                   Sets the current record's "Parent" value
  * @method Collections         setCollections()              Sets the current record's "Collections" collection
- * @method Collections         setCollectionsAdmin()         Sets the current record's "CollectionsAdmin" collection
- * @method Collections         setCollectionsRegUser()       Sets the current record's "CollectionsRegUser" collection
  * @method Collections         setCollectionsRights()        Sets the current record's "CollectionsRights" collection
  * @method Collections         setSpecimens()                Sets the current record's "Specimens" collection
  * @method Collections         setSpecimenSearch()           Sets the current record's "SpecimenSearch" collection
@@ -190,14 +184,6 @@ abstract class BaseCollections extends sfDoctrineRecord
         $this->hasMany('Collections', array(
              'local' => 'id',
              'foreign' => 'parent_ref'));
-
-        $this->hasMany('CollectionsAdmin', array(
-             'local' => 'id',
-             'foreign' => 'collection_ref'));
-
-        $this->hasMany('CollectionsRegUser', array(
-             'local' => 'id',
-             'foreign' => 'collection_ref'));
 
         $this->hasMany('CollectionsRights', array(
              'local' => 'id',

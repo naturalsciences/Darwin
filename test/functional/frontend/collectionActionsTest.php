@@ -232,14 +232,5 @@ $browser->
   with('response')->
   begin()->
     isStatusCode(200)->
-    checkElement('table#encoder_right tbody tr', 2)->
-    checkElement('table#admin_right tbody tr', 1)->    
-    click('#submit', array(
-      'collections' => array(
-        'CollectionsRights' => array(
-          0 => array ('user_ref' => '')
-        )
-      )
-    ))->
   end();
   

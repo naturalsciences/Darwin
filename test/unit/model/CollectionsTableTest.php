@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(12, new lime_output_color());
+$t = new lime_test(11, new lime_output_color());
 
 $t->info('fetchByInstitutionList');
 $list = Doctrine::getTable('Collections')->fetchByInstitutionList();
@@ -34,8 +34,6 @@ $t->is(count($list2), 2, 'We have 2 collections in this institution ("" + 1)');
 
 $t->info('findCollectionsByUser');
 
-$rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user_id);
-$t->is(count($rights), 1, 'Root have encoder right on 1 collections');
 
 $collections = $list[0]->Collections;
 $list3 = Doctrine::getTable('Collections')->fetchByCollectionParent($collections[0]->getId());

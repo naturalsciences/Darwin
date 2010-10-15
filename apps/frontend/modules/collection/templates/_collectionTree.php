@@ -35,7 +35,7 @@ $(document).ready(function () {
           <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
           <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
           <span><?php echo $col_item->getName();?>
-          <?php if((! $is_choose )&&($sf_user->getDbUserType() > Users::ENCODER && in_array($col_item->getId(),sfOutputEscaper::unescape($rights)))):?>
+          <?php if($sf_user->getDbUserType() == Users::ADMIN || ((! $is_choose )&&($sf_user->getDbUserType() > Users::ENCODER && in_array($col_item->getId(),sfOutputEscaper::unescape($rights))))):?>
 	          <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
 	          <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
           <?php elseif($sf_user->getDbUserType() < Users::MANAGER && in_array($col_item->getId(),sfOutputEscaper::unescape($rights))) :?>
