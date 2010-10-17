@@ -105,7 +105,7 @@ comment on column template_table_record_ref.record_id is 'Id of record concerned
 
 create sequence catalogue_people_id_seq;
 
-create table catalogue_people 
+create table catalogue_people
        (
         id integer not null default nextval('catalogue_people_id_seq'),
         people_type varchar not null default 'author',
@@ -810,80 +810,80 @@ comment on table collections_rights is 'List of rights of given users on given c
 comment on column collections_rights.id is 'Unique identifier for collection rights';
 comment on column collections_rights.collection_ref is 'Reference of collection concerned - id field of collections table';
 comment on column collections_rights.user_ref is 'Reference of user - id field of users table';
-comment on column collections_rights.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
+comment on column collections_rights.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
 
 
-create sequence collections_fields_visibilities_id_seq;
-
-create table collections_fields_visibilities
-       (
-        id integer not null default nextval('collections_fields_visibilities_id_seq'),
-        field_group_name varchar not null,
-        db_user_type smallint not null default 1,
-        searchable boolean not null default true,
-        visible boolean not null default true,
-        constraint pk_collections_fields_visibilities primary key (id),
-        constraint unq_collections_fields_visibilities unique (collection_ref, user_ref, field_group_name, db_user_type),
-        constraint fk_collections_fields_visibilities_collections foreign key (collection_ref) references collections(id) on delete cascade,
-        constraint fk_collections_fields_visibilities_users foreign key (user_ref) references users(id) on delete cascade
-       )
-inherits (template_collections_users);
-comment on table collections_fields_visibilities is 'This table tells which group of fields can be searchable and/or visible by a user role or a given precise user - for specimens tables, give the possibility to manage these field visibilities per collections';
-comment on column collections_fields_visibilities.collection_ref is 'Reference of collection concerned - id field of collections table';
-comment on column collections_fields_visibilities.user_ref is 'Reference of user - id field of users table';
-comment on column collections_fields_visibilities.field_group_name is 'Group of fields name';
-comment on column collections_fields_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
-comment on column collections_fields_visibilities.searchable is 'Flag telling if the field group is searchable - meaning these fields will appear as search criterias in the search form';
-comment on column collections_fields_visibilities.visible is 'Flag telling if the field group is visible - meaning these fields will be displayable in the result table';
-
-create sequence users_coll_rights_asked_id_seq;
-
-create table users_coll_rights_asked
-       (
-        id integer not null default nextval('users_coll_rights_asked_id_seq'),
-        field_group_name varchar not null,
-        db_user_type smallint not null,
-        searchable boolean not null default true,
-        visible boolean not null default true,
-        motivation varchar not null,
-        asking_date_time update_date_time,
-        with_sub_collections boolean not null default true,
-        constraint pk_users_coll_rights_asked primary key (id),
-        constraint unq_users_coll_rights_asked unique (collection_ref, user_ref, field_group_name, db_user_type),
-        constraint fk_users_coll_rights_asked_collections foreign key (collection_ref) references collections(id) on delete cascade,
-        constraint fk_users_coll_rights_asked_users foreign key (user_ref) references users(id) on delete cascade
-       )
-inherits (template_collections_users);
-comment on table users_coll_rights_asked is 'List all rights asked by a registered user or encoder to collection managers';
-comment on column users_coll_rights_asked.collection_ref is 'Reference of collection concerned - id field of collections table';
-comment on column users_coll_rights_asked.user_ref is 'Reference of user - id field of users table';
-comment on column users_coll_rights_asked.field_group_name is 'Group of fields name';
-comment on column users_coll_rights_asked.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
-comment on column users_coll_rights_asked.searchable is 'Flag telling if the field group is searchable - meaning these fields will appear as search criterias in the search form';
-comment on column users_coll_rights_asked.visible is 'Flag telling if the field group is visible - meaning these fields will be displayable in the result table';
-comment on column users_coll_rights_asked.motivation is 'Motivation given by asker';
-comment on column users_coll_rights_asked.asking_date_time is 'Telling when right ask was done';
-comment on column users_coll_rights_asked.with_sub_collections is 'Rights are asked on a single collection or on this collection with all the sub-collections included ?';
-
-create sequence record_visibilities_id_seq;
-
-create table record_visibilities
-       (
-        id integer not null default nextval('record_visibilities_id_seq'),
-        db_user_type smallint not null default 0,
-        user_ref integer not null default 0,
-        visible boolean not null default true,
-        constraint pk_record_visibilities primary key (id),
-        constraint unq_record_visibilities unique (referenced_relation, record_id, user_ref, db_user_type),
-        constraint fk_record_visibilities_users foreign key (user_ref) references users(id) on delete cascade
-       )
-inherits (template_table_record_ref);
-comment on table record_visibilities is 'Manage visibility of records for all DaRWIN 2 tables - visibility per user type and/or specific user';
-comment on column record_visibilities.user_ref is 'Reference of user - id field of users table';
-comment on column record_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
-comment on column record_visibilities.referenced_relation is 'Reference-Name of table concerned';
-comment on column record_visibilities.record_id is 'ID of record a visibility is defined for';
-comment on column record_visibilities.visible is 'Flag telling if record is visible or not';
+-- create sequence collections_fields_visibilities_id_seq;
+--
+-- create table collections_fields_visibilities
+--        (
+--         id integer not null default nextval('collections_fields_visibilities_id_seq'),
+--         field_group_name varchar not null,
+--         db_user_type smallint not null default 1,
+--         searchable boolean not null default true,
+--         visible boolean not null default true,
+--         constraint pk_collections_fields_visibilities primary key (id),
+--         constraint unq_collections_fields_visibilities unique (collection_ref, user_ref, field_group_name, db_user_type),
+--         constraint fk_collections_fields_visibilities_collections foreign key (collection_ref) references collections(id) on delete cascade,
+--         constraint fk_collections_fields_visibilities_users foreign key (user_ref) references users(id) on delete cascade
+--        )
+-- inherits (template_collections_users);
+-- comment on table collections_fields_visibilities is 'This table tells which group of fields can be searchable and/or visible by a user role or a given precise user - for specimens tables, give the possibility to manage these field visibilities per collections';
+-- comment on column collections_fields_visibilities.collection_ref is 'Reference of collection concerned - id field of collections table';
+-- comment on column collections_fields_visibilities.user_ref is 'Reference of user - id field of users table';
+-- comment on column collections_fields_visibilities.field_group_name is 'Group of fields name';
+-- comment on column collections_fields_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
+-- comment on column collections_fields_visibilities.searchable is 'Flag telling if the field group is searchable - meaning these fields will appear as search criterias in the search form';
+-- comment on column collections_fields_visibilities.visible is 'Flag telling if the field group is visible - meaning these fields will be displayable in the result table';
+--
+-- create sequence users_coll_rights_asked_id_seq;
+--
+-- create table users_coll_rights_asked
+--        (
+--         id integer not null default nextval('users_coll_rights_asked_id_seq'),
+--         field_group_name varchar not null,
+--         db_user_type smallint not null,
+--         searchable boolean not null default true,
+--         visible boolean not null default true,
+--         motivation varchar not null,
+--         asking_date_time update_date_time,
+--         with_sub_collections boolean not null default true,
+--         constraint pk_users_coll_rights_asked primary key (id),
+--         constraint unq_users_coll_rights_asked unique (collection_ref, user_ref, field_group_name, db_user_type),
+--         constraint fk_users_coll_rights_asked_collections foreign key (collection_ref) references collections(id) on delete cascade,
+--         constraint fk_users_coll_rights_asked_users foreign key (user_ref) references users(id) on delete cascade
+--        )
+-- inherits (template_collections_users);
+-- comment on table users_coll_rights_asked is 'List all rights asked by a registered user or encoder to collection managers';
+-- comment on column users_coll_rights_asked.collection_ref is 'Reference of collection concerned - id field of collections table';
+-- comment on column users_coll_rights_asked.user_ref is 'Reference of user - id field of users table';
+-- comment on column users_coll_rights_asked.field_group_name is 'Group of fields name';
+-- comment on column users_coll_rights_asked.db_user_type is 'Integer is representing a role: 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,...';
+-- comment on column users_coll_rights_asked.searchable is 'Flag telling if the field group is searchable - meaning these fields will appear as search criterias in the search form';
+-- comment on column users_coll_rights_asked.visible is 'Flag telling if the field group is visible - meaning these fields will be displayable in the result table';
+-- comment on column users_coll_rights_asked.motivation is 'Motivation given by asker';
+-- comment on column users_coll_rights_asked.asking_date_time is 'Telling when right ask was done';
+-- comment on column users_coll_rights_asked.with_sub_collections is 'Rights are asked on a single collection or on this collection with all the sub-collections included ?';
+--
+-- create sequence record_visibilities_id_seq;
+--
+-- create table record_visibilities
+--        (
+--         id integer not null default nextval('record_visibilities_id_seq'),
+--         db_user_type smallint not null default 0,
+--         user_ref integer not null default 0,
+--         visible boolean not null default true,
+--         constraint pk_record_visibilities primary key (id),
+--         constraint unq_record_visibilities unique (referenced_relation, record_id, user_ref, db_user_type),
+--         constraint fk_record_visibilities_users foreign key (user_ref) references users(id) on delete cascade
+--        )
+-- inherits (template_table_record_ref);
+-- comment on table record_visibilities is 'Manage visibility of records for all DaRWIN 2 tables - visibility per user type and/or specific user';
+-- comment on column record_visibilities.user_ref is 'Reference of user - id field of users table';
+-- comment on column record_visibilities.db_user_type is 'Integer is representing a role: 0 for all public, 1 for registered user, 2 for encoder, 3 for collection manager, 4 for system admin,...';
+-- comment on column record_visibilities.referenced_relation is 'Reference-Name of table concerned';
+-- comment on column record_visibilities.record_id is 'ID of record a visibility is defined for';
+-- comment on column record_visibilities.visible is 'Flag telling if record is visible or not';
 
 create sequence users_workflow_id_seq;
 
@@ -1595,7 +1595,7 @@ create table habitats
         code_indexed varchar not null default '/',
         description varchar not null,
         description_ts tsvector not null,
-        description_language_full_text full_text_language, 
+        description_language_full_text full_text_language,
         habitat_system varchar not null default 'eunis',
 	parent_ref integer,
         path varchar not null default '/',
@@ -1806,7 +1806,7 @@ create table specimen_parts
         building varchar,
         floor varchar,
         room varchar,
-        row varchar, 
+        row varchar,
         shelf varchar,
         container varchar,
         sub_container varchar,

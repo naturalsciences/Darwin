@@ -63,6 +63,7 @@
  DROP INDEX IF EXISTS idx_people_multimedia_object_ref;
  DROP INDEX IF EXISTS idx_collections_rights_collection_ref;
  DROP INDEX IF EXISTS idx_users_multimedia_person_user_ref;
+ DROP INDEX IF EXISTS idx_collections_rights_db_user_type;
  DROP INDEX IF EXISTS idx_taxonomy_parent_ref;
  DROP INDEX IF EXISTS idx_collection_maintenance_user_ref;
  DROP INDEX IF EXISTS idx_collections_rights_user_ref;
@@ -285,9 +286,9 @@
  DROP INDEX IF EXISTS idx_tags_tag_indexed;
  DROP INDEX IF EXISTS idx_tags_group_type;
  DROP INDEX IF EXISTS idx_tags_sub_group_type;
- 
+
   /*** Gin indexes ***/
-  
+
   DROP INDEX IF EXISTS idx_words_trgm;
   DROP INDEX IF EXISTS idx_tags_trgm;
   DROP INDEX IF EXISTS idx_tools_trgm;

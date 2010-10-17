@@ -18,16 +18,16 @@ DECLARE
 	spec_code codes%ROWTYPE;
 	must_be_copied collections.code_part_code_auto_copy%TYPE;
 BEGIN
-	SELECT collections.code_part_code_auto_copy INTO must_be_copied FROM collections 
+	SELECT collections.code_part_code_auto_copy INTO must_be_copied FROM collections
 			INNER JOIN specimens ON collections.id = specimens.collection_ref
 			INNER JOIN specimen_individuals ON specimen_individuals.specimen_ref=specimens.id
 				WHERE specimen_individuals.id = NEW.specimen_individual_ref;
-	
+
 	IF must_be_copied = true THEN
 		SELECT codes.* into spec_code FROM codes
 			INNER JOIN specimens ON record_id = specimens.id
 			INNER JOIN specimen_individuals ON specimen_individuals.specimen_ref=specimens.id
-			WHERE 
+			WHERE
                 referenced_relation = 'specimens'
                 AND  specimen_individuals.id = NEW.specimen_individual_ref
 				AND code_category = 'main'
@@ -73,7 +73,7 @@ BEGIN
 	IF tableExist THEN
 		IF preferred THEN
 			EXECUTE 'select not count(*)::integer::boolean from ' || quote_ident(tabl) || ' where ' || quote_ident(prefix || '_ref') || ' = ' || $2 || ' and preferred_language = ' || $3 || ' and id <> ' || $1 INTO response;
-			
+
 		ELSE
 			response := true;
 		END IF;
@@ -142,7 +142,7 @@ BEGIN
 	EXECUTE 'SELECT level_ref, name_indexed, parent_ref FROM ' || quote_ident(referenced_relation) || ' WHERE id = ' || id INTO level_ref, name_indexed, parent_ref;
 	SELECT cl.level_sys_name INTO level_sys_name FROM catalogue_levels as cl WHERE cl.id = level_ref;
 	IF referenced_relation = 'chronostratigraphy' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'eon' THEN
 					id
@@ -251,12 +251,12 @@ BEGIN
 				ELSE
 					pc.sub_level_2_indexed
 			END AS sub_level_2_indexed
-		INTO 
+		INTO
 			result
 		FROM chronostratigraphy AS pc
 		WHERE pc.id = parent_ref;
 	ELSIF referenced_relation = 'lithostratigraphy' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'group' THEN
 					id
@@ -329,12 +329,12 @@ BEGIN
 				ELSE
 					pl.sub_level_2_indexed
 			END AS sub_level_2_indexed
-		INTO 
+		INTO
 			result
 		FROM lithostratigraphy AS pl
 		WHERE pl.id = parent_ref;
 	ELSIF referenced_relation = 'lithology' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'unit_main_group' THEN
 					id
@@ -383,12 +383,12 @@ BEGIN
 				ELSE
 					pl.unit_rock_indexed
 			END AS unit_rock_indexed
-		INTO 
+		INTO
 			result
 		FROM lithology AS pl
 		WHERE pl.id = parent_ref;
 	ELSIF referenced_relation = 'mineralogy' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'unit_class' THEN
 					id
@@ -449,7 +449,7 @@ BEGIN
 				ELSE
 					pm.unit_variety_indexed
 			END AS unit_variety_indexed
-		INTO 
+		INTO
 			result
 		FROM mineralogy AS pm
 		WHERE pm.id = parent_ref;
@@ -1103,7 +1103,7 @@ BEGIN
 				ELSE
 					pt.abberans_indexed
 			END AS abberans_indexed
-		INTO 
+		INTO
 			result
 		FROM taxonomy AS pt
 		WHERE pt.id = parent_ref;
@@ -1126,7 +1126,7 @@ BEGIN
 		RETURN NEW;
 	END IF;
 	IF TG_TABLE_NAME = 'chronostratigraphy' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'eon' THEN
 					NEW.id
@@ -1235,7 +1235,7 @@ BEGIN
 				ELSE
 					pc.sub_level_2_indexed
 			END AS sub_level_2_indexed
-		INTO 
+		INTO
 			NEW.eon_ref,
 			NEW.eon_indexed,
 			NEW.era_ref,
@@ -1257,7 +1257,7 @@ BEGIN
 		FROM chronostratigraphy AS pc
 		WHERE pc.id = NEW.parent_ref;
 	ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'group' THEN
 					NEW.id
@@ -1330,7 +1330,7 @@ BEGIN
 				ELSE
 					pl.sub_level_2_indexed
 			END AS sub_level_2_indexed
-		INTO 
+		INTO
 			NEW.group_ref,
 			NEW.group_indexed,
 			NEW.formation_ref,
@@ -1346,7 +1346,7 @@ BEGIN
 		FROM lithostratigraphy AS pl
 		WHERE pl.id = NEW.parent_ref;
 	ELSIF TG_TABLE_NAME = 'lithology' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'unit_main_group' THEN
 					NEW.id
@@ -1395,7 +1395,7 @@ BEGIN
 				ELSE
 					pl.unit_rock_indexed
 			END AS unit_rock_indexed
-		INTO 
+		INTO
 			NEW.unit_main_group_ref,
 			NEW.unit_main_group_indexed,
 			NEW.unit_group_ref,
@@ -1407,7 +1407,7 @@ BEGIN
 		FROM lithology AS pl
 		WHERE pl.id = NEW.parent_ref;
 	ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-		SELECT 
+		SELECT
 			CASE
 				WHEN level_sys_name = 'unit_class' THEN
 					NEW.id
@@ -1468,7 +1468,7 @@ BEGIN
 				ELSE
 					pm.unit_variety_indexed
 			END AS unit_variety_indexed
-		INTO 
+		INTO
 			NEW.unit_class_ref,
 			NEW.unit_class_indexed,
 			NEW.unit_division_ref,
@@ -2131,7 +2131,7 @@ BEGIN
 				ELSE
 					pt.abberans_indexed
 			END AS abberans_indexed
-		INTO 
+		INTO
 			NEW.domain_ref,
 			NEW.domain_indexed,
 			NEW.kingdom_ref,
@@ -2259,10 +2259,10 @@ DECLARE
 BEGIN
 	SELECT level_sys_name INTO level_prefix FROM catalogue_levels WHERE id = new_level_ref;
 	IF level_prefix IS NOT NULL THEN
-		EXECUTE 'UPDATE ' || 
-			quote_ident(referenced_relation) || 
-			' SET ' || quote_ident(level_prefix || '_indexed') || ' = ' || quote_literal(new_name_indexed) || 
-			' WHERE ' || quote_ident(level_prefix || '_ref') || ' = ' || new_id || 
+		EXECUTE 'UPDATE ' ||
+			quote_ident(referenced_relation) ||
+			' SET ' || quote_ident(level_prefix || '_indexed') || ' = ' || quote_literal(new_name_indexed) ||
+			' WHERE ' || quote_ident(level_prefix || '_ref') || ' = ' || new_id ||
 			'   AND ' || quote_ident('id') || ' <> ' || new_id ;
 		response := true;
 	END IF;
@@ -2375,7 +2375,7 @@ BEGIN
 			RETURN NEW;
 		END IF;
 	END IF;
-	
+
 	IF newType= 'specimen' THEN
 		NEW.type_search := 'specimen';
 		NEW.type_group := 'specimen';
@@ -2437,7 +2437,7 @@ BEGIN
     NEW.type_search := 'type';
     NEW.type_group := 'type';
   END IF;
-	
+
 	RETURN NEW;
 EXCEPTION
 	WHEN RAISE_EXCEPTION THEN
@@ -2474,13 +2474,13 @@ BEGIN
 	ELSE
 		nmonth := month;
 	END IF;
-	
+
 	IF year = 0 OR year IS NULL THEN
 		nyear := 1;
 	ELSE
 		nyear := year;
 	END IF;
-			
+
 	IF hour = -1 OR hour IS NULL THEN
 		nhour := 0;
 	ELSE
@@ -2498,10 +2498,10 @@ BEGIN
 	ELSE
 		nsecond := second;
 	END IF;
-	
+
 	stamp_string := ''|| to_char(nyear,'0000') ||'-'|| nmonth ||'-'|| nday || ' ' ||
 			to_char(nhour,'FM00') ||':'|| to_char(nminute,'FM00') ||':'|| to_char(nsecond,'FM00');
-	
+
 	RETURN stamp_string::TIMESTAMP;
 END;
 $$ LANGUAGE plpgsql;
@@ -2583,7 +2583,7 @@ BEGIN
 				NEW.sub_stage_indexed,
 				NEW.sub_level_1_indexed,
 				NEW.sub_level_2_indexed
-			FROM catalogue_levels as cl 
+			FROM catalogue_levels as cl
 			WHERE cl.id = NEW.level_ref;
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
 			SELECT
@@ -3101,7 +3101,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-/* 
+/*
 fct_compose_date
 Compose a date with default value call compose_timestamp
 */
@@ -3126,7 +3126,7 @@ BEGIN
 	DELETE FROM class_vernacular_names WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM classification_synonymies WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM classification_keywords WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
-	DELETE FROM record_visibilities WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
+/*	DELETE FROM record_visibilities WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;*/
 	DELETE FROM users_workflow WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM collection_maintenance WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM associated_multimedia WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
@@ -3207,7 +3207,7 @@ BEGIN
 				NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
-			IF OLD.value_defined != NEW.value_defined THEN 
+			IF OLD.value_defined != NEW.value_defined THEN
 				NEW.value_defined_ts := to_tsvector('simple', NEW.value_defined);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
@@ -3217,7 +3217,7 @@ BEGIN
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
 					);
 		ELSEIF TG_TABLE_NAME = 'users_addresses' THEN
-				NEW.address_parts_ts := to_tsvector('simple', 
+				NEW.address_parts_ts := to_tsvector('simple',
 							COALESCE(NEW.entry,'') || ' ' || COALESCE(NEW.po_box,'') || ' ' || COALESCE(NEW.extended_address,'')
 							|| ' ' || COALESCE(NEW.locality,'')  || ' ' || COALESCE(NEW.region,'')
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
@@ -3262,7 +3262,7 @@ BEGIN
 	ELSE
 		EXECUTE 'select count(*)::integer::boolean ' ||
 			'from possible_upper_levels ' ||
-			'where level_ref = ' || new_level_ref || 
+			'where level_ref = ' || new_level_ref ||
 			'  and level_upper_ref = (select level_ref from ' || quote_ident(referenced_relation) || ' where id = ' || new_parent_ref || ')'
 		INTO response;
 	END IF;
@@ -3273,48 +3273,6 @@ EXCEPTION
 END;
 $$ LANGUAGE plpgsql;
 
-/**
-fct_cas_userType
-Copy the new dbuser type if it's changed
-users db_user_type
-*/
-CREATE OR REPLACE FUNCTION fct_cas_userType() RETURNS TRIGGER
-AS $$
-DECLARE
-	still_mgr boolean;
-BEGIN
-
-	IF NEW.db_user_type = OLD.db_user_type THEN
-		RETURN NEW;
-	END IF;
-	
-	/** Copy to other fields **/
-	UPDATE record_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.id;
-	UPDATE collections_fields_visibilities SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.id;
-	UPDATE users_coll_rights_asked SET db_user_type=NEW.db_user_type WHERE user_ref=NEW.id;
-	
-	
-	/** IF REVOKE ***/
-	IF NEW.db_user_type < OLD.db_user_type THEN
-		/*db user type 1 for registered user, 2 for encoder, 4 for collection manager, 8 for system admin,*/
-		IF OLD.db_user_type >= 4  AND NEW.db_user_type < 4 THEN
-			/** If retrograde from collection_man, remove all collection administrated **/
-			SELECT count(*) != 0 INTO still_mgr FROM collections WHERE main_manager_ref = NEW.id;
-			IF still_mgr THEN
-				RAISE EXCEPTION 'Still Manager in some Collections.';
-			END IF;
-			DELETE FROM collections_rights WHERE user_ref = NEW.id AND db_user_type  >= 4; 
-		END IF;
-		
-		IF OLD.db_user_type >= 2 AND NEW.db_user_type = 1 THEN
-			/** If retrograde to register , remove write/insert/update rights**/
-			DELETE FROM collections_rights WHERE user_ref=NEW.id;
-		END IF;
-	END IF;
-	RETURN NEW;
-END;
-$$
-LANGUAGE plpgsql;
 
 /**
 * fct_cpy_update_children_when_parent_updated
@@ -3336,112 +3294,112 @@ BEGIN
 			'SET eon_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    eon_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
 			'    era_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
-			'                   WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.era_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(era_ref,0) ' ||
 			'              END, ' ||
 			'    era_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
-			'                       WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                       WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                       CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
 			'                            ELSE (SELECT pt.era_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                       END ' ||
 			'                       ELSE coalesce(era_indexed, '''') ' ||
 			'                  END, ' ||
 			'    sub_era_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
-			'                       WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                       WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.sub_era_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                       ELSE coalesce(sub_era_ref,0) ' ||
 			'                  END, ' ||
 			'    sub_era_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
-			'                           WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                           WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                           CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN '''' ' ||
 			'                                ELSE (SELECT pt.sub_era_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                           END ' ||
 			'                           ELSE coalesce(sub_era_indexed, '''') ' ||
 			'                      END, ' ||
 			'    system_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
-			'                   WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.system_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(system_ref,0) ' ||
 			'              END, ' ||
 			'    system_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
-			'                   WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN '''' ' ||
 			'                        ELSE (SELECT pt.system_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(system_indexed, '''') ' ||
 			'              END, ' ||
 			'    serie_ref = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[5] || ') THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
-			'                   WHEN level_ref > ' || levels[5] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[5] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[5] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.serie_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(serie_ref,0) ' ||
 			'              END, ' ||
 			'    serie_indexed = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[5] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
-			'                   WHEN level_ref > ' || levels[5] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[5] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[5] || ' THEN '''' ' ||
 			'                        ELSE (SELECT pt.serie_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(serie_indexed, '''') ' ||
 			'              END, ' ||
 			'    stage_ref = CASE WHEN ' || levels[6] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[6] || ') THEN ' || coalesce(parent_hierarchy_ref[6], 0) ||
-			'                   WHEN level_ref > ' || levels[6] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[6] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[6] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.stage_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(stage_ref,0) ' ||
 			'              END, ' ||
 			'    stage_indexed = CASE WHEN ' || levels[6] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[6] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[6], '')) ||
-			'                   WHEN level_ref > ' || levels[6] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[6] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[6] || ' THEN '''' ' ||
 			'                        ELSE (SELECT pt.stage_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(stage_indexed, '''') ' ||
 			'              END, ' ||
 			'    sub_stage_ref = CASE WHEN ' || levels[7] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[7] || ') THEN ' || coalesce(parent_hierarchy_ref[7], 0) ||
-			'                   WHEN level_ref > ' || levels[7] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[7] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[7] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.sub_stage_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(sub_stage_ref,0) ' ||
 			'              END, ' ||
 			'    sub_stage_indexed = CASE WHEN ' || levels[7] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[7] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[7], '')) ||
-			'                   WHEN level_ref > ' || levels[7] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[7] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[7] || ' THEN '''' ' ||
 			'                        ELSE (SELECT pt.sub_stage_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(sub_stage_indexed, '''') ' ||
 			'              END, ' ||
 			'    sub_level_1_ref = CASE WHEN ' || levels[8] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[8] || ') THEN ' || coalesce(parent_hierarchy_ref[8], 0) ||
-			'                   WHEN level_ref > ' || levels[8] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[8] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[8] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.sub_level_1_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(sub_level_1_ref,0) ' ||
 			'              END, ' ||
 			'    sub_level_1_indexed = CASE WHEN ' || levels[8] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[8] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[8], '')) ||
-			'                   WHEN level_ref > ' || levels[8] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[8] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[8] || ' THEN '''' ' ||
 			'                        ELSE (SELECT pt.sub_level_1_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(sub_level_1_indexed, '''') ' ||
 			'              END, ' ||
 			'    sub_level_2_ref = CASE WHEN ' || levels[9] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[9] || ') THEN ' || coalesce(parent_hierarchy_ref[9], 0) ||
-			'                   WHEN level_ref > ' || levels[9] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[9] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[9] || ' THEN 0 ' ||
 			'                        ELSE (SELECT pt.sub_level_2_ref FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
 			'                   ELSE coalesce(sub_level_2_ref,0) ' ||
 			'              END, ' ||
 			'    sub_level_2_indexed = CASE WHEN ' || levels[9] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[9] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[9], '')) ||
-			'                   WHEN level_ref > ' || levels[9] || ' THEN ' || 
+			'                   WHEN level_ref > ' || levels[9] || ' THEN ' ||
 			'                   CASE WHEN ' || parent_old_level || ' >= ' || levels[9] || ' THEN '''' ' ||
 			'                        ELSE (SELECT pt.sub_level_2_indexed FROM chronostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                   END ' ||
@@ -3455,70 +3413,70 @@ BEGIN
 			'SET group_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    group_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
 			'    formation_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
-			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                         WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
 			'                              ELSE (SELECT pt.formation_ref FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(formation_ref,0) ' ||
 			'                    END, ' ||
 			'    formation_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
-			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                             WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
 			'                                  ELSE (SELECT pt.formation_indexed FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
 			'                             ELSE coalesce(formation_indexed, '''') ' ||
 			'                        END, ' ||
 			'    member_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
-			'                      WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                      WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                      CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN 0 ' ||
 			'                           ELSE (SELECT pt.member_ref FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                      END ' ||
 			'                      ELSE coalesce(member_ref,0) ' ||
 			'                 END, ' ||
 			'    member_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
-			'                          WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                          WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                          CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN '''' ' ||
 			'                               ELSE (SELECT pt.member_indexed FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                          END ' ||
 			'                          ELSE coalesce(member_indexed, '''') ' ||
 			'                     END, ' ||
 			'    layer_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
-			'                     WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                     WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                     CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN 0 ' ||
 			'                          ELSE (SELECT pt.layer_ref FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                     END ' ||
 			'                     ELSE coalesce(layer_ref,0) ' ||
 			'                END, ' ||
 			'    layer_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
-			'                         WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                         WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN '''' ' ||
 			'                              ELSE (SELECT pt.layer_indexed FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(layer_indexed, '''') ' ||
 			'                    END, ' ||
 			'    sub_level_1_ref = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[5] || ') THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
-			'                           WHEN level_ref > ' || levels[5] || ' THEN ' || 
+			'                           WHEN level_ref > ' || levels[5] || ' THEN ' ||
 			'                           CASE WHEN ' || parent_old_level || ' >= ' || levels[5] || ' THEN 0 ' ||
 			'                                ELSE (SELECT pt.sub_level_1_ref FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                           END ' ||
 			'                           ELSE coalesce(sub_level_1_ref,0) ' ||
 			'                      END, ' ||
 			'    sub_level_1_indexed = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[5] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
-			'                               WHEN level_ref > ' || levels[5] || ' THEN ' || 
+			'                               WHEN level_ref > ' || levels[5] || ' THEN ' ||
 			'                               CASE WHEN ' || parent_old_level || ' >= ' || levels[5] || ' THEN '''' ' ||
 			'                                    ELSE (SELECT pt.sub_level_1_indexed FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                               END ' ||
 			'                               ELSE coalesce(sub_level_1_indexed, '''') ' ||
 			'                          END, ' ||
 			'    sub_level_2_ref = CASE WHEN ' || levels[6] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[6] || ') THEN ' || coalesce(parent_hierarchy_ref[6], 0) ||
-			'                           WHEN level_ref > ' || levels[6] || ' THEN ' || 
+			'                           WHEN level_ref > ' || levels[6] || ' THEN ' ||
 			'                           CASE WHEN ' || parent_old_level || ' >= ' || levels[6] || ' THEN 0 ' ||
 			'                                ELSE (SELECT pt.sub_level_2_ref FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                           END ' ||
 			'                           ELSE coalesce(sub_level_2_ref,0) ' ||
 			'                      END, ' ||
 			'    sub_level_2_indexed = CASE WHEN ' || levels[6] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[6] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[6], '')) ||
-			'                               WHEN level_ref > ' || levels[6] || ' THEN ' || 
+			'                               WHEN level_ref > ' || levels[6] || ' THEN ' ||
 			'                               CASE WHEN ' || parent_old_level || ' >= ' || levels[6] || ' THEN '''' ' ||
 			'                                    ELSE (SELECT pt.sub_level_2_indexed FROM lithostratigraphy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                               END ' ||
@@ -3532,56 +3490,56 @@ BEGIN
 			'SET unit_class_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    unit_class_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
 			'    unit_division_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
-			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                             WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
 			'                                  ELSE (SELECT pt.unit_division_ref FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
 			'                             ELSE coalesce(unit_division_ref,0) ' ||
 			'                        END, ' ||
 			'    unit_division_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
-			'                                 WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                                 WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                                 CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
 			'                                      ELSE (SELECT pt.unit_division_indexed FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                                 END ' ||
 			'                                 ELSE coalesce(unit_division_indexed, '''') ' ||
 			'                            END, ' ||
 			'    unit_family_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
-			'                           WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                           WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                           CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN 0 ' ||
 			'                                ELSE (SELECT pt.unit_family_ref FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                           END ' ||
 			'                           ELSE coalesce(unit_family_ref,0) ' ||
 			'                      END, ' ||
 			'    unit_family_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
-			'                               WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                               WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                               CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN '''' ' ||
 			'                                    ELSE (SELECT pt.unit_family_indexed FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                               END ' ||
 			'                               ELSE coalesce(unit_family_indexed, '''') ' ||
 			'                          END, ' ||
 			'    unit_group_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
-			'                          WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                          WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                          CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN 0 ' ||
 			'                               ELSE (SELECT pt.unit_group_ref FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                          END ' ||
 			'                          ELSE coalesce(unit_group_ref,0) ' ||
 			'                     END, ' ||
 			'    unit_group_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
-			'                              WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                              WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                              CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN '''' ' ||
 			'                                   ELSE (SELECT pt.unit_group_indexed FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                              END ' ||
 			'                              ELSE coalesce(unit_group_indexed, '''') ' ||
 			'                         END, ' ||
 			'    unit_variety_ref = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[5] || ') THEN ' || coalesce(parent_hierarchy_ref[5], 0) ||
-			'                            WHEN level_ref > ' || levels[5] || ' THEN ' || 
+			'                            WHEN level_ref > ' || levels[5] || ' THEN ' ||
 			'                            CASE WHEN ' || parent_old_level || ' >= ' || levels[5] || ' THEN 0 ' ||
 			'                                 ELSE (SELECT pt.unit_variety_ref FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                            END ' ||
 			'                            ELSE coalesce(unit_variety_ref,0) ' ||
 			'                       END, ' ||
 			'    unit_variety_indexed = CASE WHEN ' || levels[5] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[5] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[5], '')) ||
-			'                                WHEN level_ref > ' || levels[5] || ' THEN ' || 
+			'                                WHEN level_ref > ' || levels[5] || ' THEN ' ||
 			'                                CASE WHEN ' || parent_old_level || ' >= ' || levels[5] || ' THEN '''' ' ||
 			'                                     ELSE (SELECT pt.unit_variety_indexed FROM mineralogy AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                                END ' ||
@@ -4344,42 +4302,42 @@ BEGIN
 			'SET unit_main_group_ref = ' || coalesce(parent_hierarchy_ref[1], 0) || ', ' ||
 			'    unit_main_group_indexed = ' || quote_literal(coalesce(parent_hierarchy_indexed[1], '')) || ', ' ||
 			'    unit_group_ref = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || coalesce(parent_hierarchy_ref[2], 0) ||
-			'                         WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                         WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN 0 ' ||
 			'                              ELSE (SELECT pt.unit_group_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(unit_group_ref,0) ' ||
 			'                    END, ' ||
 			'    unit_group_indexed = CASE WHEN ' || levels[2] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[2] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[2], '')) ||
-			'                             WHEN level_ref > ' || levels[2] || ' THEN ' || 
+			'                             WHEN level_ref > ' || levels[2] || ' THEN ' ||
 			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[2] || ' THEN '''' ' ||
 			'                                  ELSE (SELECT pt.unit_group_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
 			'                             ELSE coalesce(unit_group_indexed, '''') ' ||
 			'                        END, ' ||
 			'    unit_sub_group_ref = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || coalesce(parent_hierarchy_ref[3], 0) ||
-			'                         WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                         WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN 0 ' ||
 			'                              ELSE (SELECT pt.unit_sub_group_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(unit_sub_group_ref,0) ' ||
 			'                    END, ' ||
 			'    unit_sub_group_indexed = CASE WHEN ' || levels[3] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[3] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[3], '')) ||
-			'                             WHEN level_ref > ' || levels[3] || ' THEN ' || 
+			'                             WHEN level_ref > ' || levels[3] || ' THEN ' ||
 			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[3] || ' THEN '''' ' ||
 			'                                  ELSE (SELECT pt.unit_sub_group_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
 			'                             ELSE coalesce(unit_sub_group_indexed, '''') ' ||
 			'                        END, ' ||
 			'    unit_rock_ref = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || coalesce(parent_hierarchy_ref[4], 0) ||
-			'                         WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                         WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                         CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN 0 ' ||
 			'                              ELSE (SELECT pt.unit_rock_ref FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                         END ' ||
 			'                         ELSE coalesce(unit_rock_ref,0) ' ||
 			'                    END, ' ||
 			'    unit_rock_indexed = CASE WHEN ' || levels[4] || ' <= ' || parent_new_level || ' OR (parent_ref = ' || parent_id || ' AND level_ref <> ' || levels[4] || ') THEN ' || quote_literal(coalesce(parent_hierarchy_indexed[4], '')) ||
-			'                             WHEN level_ref > ' || levels[4] || ' THEN ' || 
+			'                             WHEN level_ref > ' || levels[4] || ' THEN ' ||
 			'                             CASE WHEN ' || parent_old_level || ' >= ' || levels[4] || ' THEN '''' ' ||
 			'                                  ELSE (SELECT pt.unit_rock_indexed FROM lithology AS pt WHERE pt.id = c.parent_ref) ' ||
 			'                             END ' ||
@@ -4415,7 +4373,7 @@ BEGIN
 		IF NEW.level_ref <> OLD.level_ref THEN
 			EXECUTE 'SELECT (SELECT COUNT(*) FROM (SELECT DISTINCT tab1.level_ref ' ||
 				'			       FROM ' || quote_ident(TG_TABLE_NAME::varchar) || ' AS tab1 ' ||
-				'			       WHERE tab1.level_ref IN (' || 
+				'			       WHERE tab1.level_ref IN (' ||
 				'							SELECT pul1.level_ref ' ||
 				'							FROM possible_upper_levels AS pul1 ' ||
 				'							WHERE pul1.level_upper_ref = ' || OLD.level_ref ||
@@ -4427,7 +4385,7 @@ BEGIN
 				'	(SELECT COUNT(*) FROM (SELECT DISTINCT pul2.level_ref ' ||
 				'			       FROM possible_upper_levels AS pul2 ' ||
 				'			       WHERE pul2.level_upper_ref = ' || NEW.level_ref || ' ' ||
-				'				 AND pul2.level_ref IN (SELECT DISTINCT tab2.level_ref ' || 
+				'				 AND pul2.level_ref IN (SELECT DISTINCT tab2.level_ref ' ||
 				'							FROM ' || quote_ident(TG_TABLE_NAME::varchar) || ' AS tab2 ' ||
 				'							WHERE tab2.level_ref IN (' ||
 				'										 SELECT pul3.level_ref ' ||
@@ -4445,7 +4403,7 @@ BEGIN
 		END IF;
 			IF TG_TABLE_NAME = 'chronostratigraphy' THEN
 				SELECT
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'eon' THEN
 							NEW.id
 						ELSE
@@ -4457,7 +4415,7 @@ BEGIN
                                                 ELSE
                                                         pc.eon_indexed
                                         END AS eon_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'era' THEN
 							NEW.id
 						ELSE
@@ -4469,7 +4427,7 @@ BEGIN
                                                 ELSE
                                                         pc.era_indexed
                                         END AS era_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'sub_era' THEN
 							NEW.id
 						ELSE
@@ -4481,7 +4439,7 @@ BEGIN
                                                 ELSE
                                                         pc.sub_era_indexed
                                         END AS sub_era_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'system' THEN
 							NEW.id
 						ELSE
@@ -4493,7 +4451,7 @@ BEGIN
                                                 ELSE
                                                         pc.system_indexed
                                         END AS system_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'serie' THEN
 							NEW.id
 						ELSE
@@ -4505,7 +4463,7 @@ BEGIN
                                                 ELSE
                                                         pc.serie_indexed
                                         END AS serie_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'stage' THEN
 							NEW.id
 						ELSE
@@ -4517,7 +4475,7 @@ BEGIN
                                                 ELSE
                                                         pc.stage_indexed
                                         END AS stage_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'sub_stage' THEN
 							NEW.id
 						ELSE
@@ -4529,7 +4487,7 @@ BEGIN
                                                 ELSE
                                                         pc.sub_stage_indexed
                                         END AS sub_stage_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'sub_level_1' THEN
 							NEW.id
 						ELSE
@@ -4541,7 +4499,7 @@ BEGIN
                                                 ELSE
                                                         pc.sub_level_1_indexed
                                         END AS sub_level_1_indexed,
-					CASE 
+					CASE
 						WHEN level_sys_name_new = 'sub_level_2' THEN
 							NEW.id
 						ELSE
@@ -5603,7 +5561,7 @@ BEGIN
 			RAISE EXCEPTION 'Identifier still used as identifier.';
 		END IF;
 	END IF;
-	
+
         /** Expert Flag is 8 **/
         IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
                 SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='expert';
@@ -5611,7 +5569,7 @@ BEGIN
                         RAISE EXCEPTION 'Expert still used as expert.';
                 END IF;
         END IF;
-        
+
         /** COLLECTOR Flag is 16 **/
         IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 16)>0 )  THEN
                 SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='collector';
@@ -5631,32 +5589,32 @@ DECLARE
 	are_not_author boolean;
 BEGIN
 	IF NEW.people_type = 'author' THEN
-	
+
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id=NEW.people_ref;
-		
+
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Author must be defined as author.';
 		END IF;
 
 	ELSIF NEW.people_type = 'identifier' THEN
-		
+
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 4)=0 AND id=NEW.people_ref;
 
                 IF are_not_author THEN
                         RAISE EXCEPTION 'Experts must be defined as identifier.';
                 END IF;
-		
+
 	ELSIF NEW.people_type = 'expert' THEN
-	
+
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 8)=0 AND id=NEW.people_ref;
-		
+
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Experts must be defined as expert.';
 		END IF;
 	ELSIF NEW.people_type = 'collector' THEN
-	
+
 		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 16)=0 AND id=NEW.people_ref;
-		
+
 		IF are_not_author THEN
 			RAISE EXCEPTION 'Collectors must be defined as collector.';
 		END IF;
@@ -5686,7 +5644,7 @@ BEGIN
 			RETURN NEW;
 		END IF;
 	END IF;
-	
+
 	IF NEW.is_physical THEN
                 IF NEW.title = '' THEN
 		        NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'');
@@ -5723,7 +5681,7 @@ BEGIN
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
 			booContinue := 	((OLD.unit_class_ref <> NEW.unit_class_ref) OR (OLD.unit_division_ref <> NEW.unit_division_ref) OR (OLD.unit_family_ref <> NEW.unit_family_ref) OR (OLD.unit_group_ref <> NEW.unit_group_ref) OR (OLD.unit_variety_ref <> NEW.unit_variety_ref));
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
-			booContinue := 	((OLD.domain_ref <> NEW.domain_ref) OR (OLD.kingdom_ref <> NEW.kingdom_ref) OR 
+			booContinue := 	((OLD.domain_ref <> NEW.domain_ref) OR (OLD.kingdom_ref <> NEW.kingdom_ref) OR
 					 (OLD.super_phylum_ref <> NEW.super_phylum_ref) OR (OLD.phylum_ref <> NEW.phylum_ref) OR (OLD.sub_phylum_ref <> NEW.sub_phylum_ref) OR (OLD.infra_phylum_ref <> NEW.infra_phylum_ref) OR
 					 (OLD.super_cohort_botany_ref <> NEW.super_cohort_botany_ref) OR (OLD.cohort_botany_ref <> NEW.cohort_botany_ref) OR (OLD.sub_cohort_botany_ref <> NEW.sub_cohort_botany_ref) OR (OLD.infra_cohort_botany_ref <> NEW.infra_cohort_botany_ref) OR
 					 (OLD.super_class_ref <> NEW.super_class_ref) OR (OLD.class_ref <> NEW.class_ref) OR (OLD.sub_class_ref <> NEW.sub_class_ref) OR (OLD.infra_class_ref <> NEW.infra_class_ref) OR
@@ -5746,9 +5704,9 @@ BEGIN
 	END IF;
 	IF booContinue THEN
 		IF TG_TABLE_NAME = 'chronostratigraphy' THEN
-			SELECT replace(replace('/' || NEW.eon_ref::varchar || '/' || NEW.era_ref::varchar || '/' || NEW.sub_era_ref::varchar || '/' || 
-						     NEW.system_ref::varchar || '/' || NEW.serie_ref::varchar || '/' || NEW.stage_ref::varchar || '/' || 
-						     NEW.sub_stage_ref::varchar || '/' || NEW.sub_level_1_ref::varchar || '/' || 
+			SELECT replace(replace('/' || NEW.eon_ref::varchar || '/' || NEW.era_ref::varchar || '/' || NEW.sub_era_ref::varchar || '/' ||
+						     NEW.system_ref::varchar || '/' || NEW.serie_ref::varchar || '/' || NEW.stage_ref::varchar || '/' ||
+						     NEW.sub_stage_ref::varchar || '/' || NEW.sub_level_1_ref::varchar || '/' ||
 						     NEW.sub_level_2_ref::varchar || '/',
 						     '/0',
 						     ''
@@ -5758,8 +5716,8 @@ BEGIN
 					     )
 			INTO NEW.path;
 		ELSIF TG_TABLE_NAME = 'lithostratigraphy' THEN
-			SELECT replace(replace('/' || NEW.group_ref::varchar || '/' || NEW.formation_ref::varchar || '/' || NEW.member_ref::varchar || 
-						     '/' || NEW.layer_ref::varchar || '/' || 
+			SELECT replace(replace('/' || NEW.group_ref::varchar || '/' || NEW.formation_ref::varchar || '/' || NEW.member_ref::varchar ||
+						     '/' || NEW.layer_ref::varchar || '/' ||
 						     NEW.sub_level_1_ref::varchar || '/' || NEW.sub_level_2_ref::varchar || '/',
 						     '/0',
 						     ''
@@ -5769,8 +5727,8 @@ BEGIN
 					     )
 			INTO NEW.path;
 		ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-			SELECT replace(replace('/' || NEW.unit_class_ref::varchar || '/' || NEW.unit_division_ref::varchar || '/' || 
-						     NEW.unit_family_ref::varchar || '/' || NEW.unit_group_ref::varchar || '/' || 
+			SELECT replace(replace('/' || NEW.unit_class_ref::varchar || '/' || NEW.unit_division_ref::varchar || '/' ||
+						     NEW.unit_family_ref::varchar || '/' || NEW.unit_group_ref::varchar || '/' ||
 						     NEW.unit_variety_ref::varchar || '/',
 						     '/0',
 						     ''
@@ -5780,7 +5738,7 @@ BEGIN
 					     )
 			INTO NEW.path;
 		ELSIF TG_TABLE_NAME = 'lithology' THEN
-			SELECT replace(replace('/' || NEW.unit_main_group_ref::varchar || '/' || NEW.unit_group_ref::varchar || '/' || NEW.unit_sub_group_ref::varchar || 
+			SELECT replace(replace('/' || NEW.unit_main_group_ref::varchar || '/' || NEW.unit_group_ref::varchar || '/' || NEW.unit_sub_group_ref::varchar ||
 						     '/' || NEW.unit_rock_ref::varchar || '/',
 						     '/0',
 						     ''
@@ -5790,7 +5748,7 @@ BEGIN
 					     )
 			INTO NEW.path;
 		ELSIF TG_TABLE_NAME = 'taxonomy' THEN
-			SELECT replace(replace('/' || NEW.domain_ref::varchar || '/' || NEW.kingdom_ref::varchar || '/' || 
+			SELECT replace(replace('/' || NEW.domain_ref::varchar || '/' || NEW.kingdom_ref::varchar || '/' ||
 						     NEW.super_phylum_ref::varchar || '/' || NEW.phylum_ref::varchar || '/' || NEW.sub_phylum_ref::varchar || '/' || NEW.infra_phylum_ref::varchar || '/' ||
 						     NEW.super_cohort_botany_ref::varchar || '/' || NEW.cohort_botany_ref::varchar || '/' || NEW.sub_cohort_botany_ref::varchar || '/' || NEW.infra_cohort_botany_ref::varchar || '/' ||
 						     NEW.super_class_ref::varchar || '/' || NEW.class_ref::varchar || '/' || NEW.sub_class_ref::varchar || '/' || NEW.infra_class_ref::varchar || '/' ||
@@ -5931,7 +5889,7 @@ END;$$;
 
 CREATE OR REPLACE FUNCTION fct_trk_log_table() RETURNS TRIGGER
 AS $$
-DECLARE 
+DECLARE
 	user_id integer;
 	track_fields integer;
 	trk_id bigint;
@@ -5972,12 +5930,12 @@ LANGUAGE plpgsql;
 */
 CREATE OR REPLACE FUNCTION fct_cpy_length_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
 language SQL STABLE
-AS 
+AS
 $$
 	SELECT  CASE
 			WHEN $2 = 'dm' THEN
 				($1)*10^(-1)
-			WHEN $2 = 'ft' THEN	
+			WHEN $2 = 'ft' THEN
 				($1)*3.048*10^(-1)
 			WHEN $2 = 'P' THEN
 				($1)*3.24839385*10^(-1)
@@ -6194,11 +6152,11 @@ CREATE OR REPLACE FUNCTION convert_to_unified (IN property varchar, IN property_
 language plpgsql
 AS
 $$
-BEGIN 
+BEGIN
     IF property is NULL THEN
         RETURN NULL;
     END IF;
-    
+
     IF property_type = 'speed' THEN
         RETURN fct_cpy_speed_conversion(property::real, property_unit)::text;
     END IF;
@@ -6206,7 +6164,7 @@ BEGIN
     IF property_type = 'temperature' AND property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
         RETURN fct_cpy_temperature_conversion(property::real, property_unit)::text;
     END IF;
-    
+
     IF property_type = 'length' AND property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
         RETURN fct_cpy_length_conversion(property::real, property_unit)::text;
     END IF;
@@ -6294,7 +6252,7 @@ BEGIN
 
    IF TG_TABLE_NAME ='collection_maintenance' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.description_ts != NEW.description_ts THEN
 	  PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
 	END IF;
@@ -6304,7 +6262,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='comments' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.comment_ts != NEW.comment_ts THEN
 	  PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
 	END IF;
@@ -6314,7 +6272,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='vernacular_names' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_ts != NEW.name_ts THEN
 	  PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
 	END IF;
@@ -6324,7 +6282,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='identifications' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.value_defined_ts != NEW.value_defined_ts THEN
 	  PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
 	END IF;
@@ -6334,7 +6292,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='multimedia' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.descriptive_ts != NEW.descriptive_ts THEN
 	  PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
 	END IF;
@@ -6344,7 +6302,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='people' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
 	  PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
 	END IF;
@@ -6354,7 +6312,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='people_addresses' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.address_parts_ts != NEW.address_parts_ts THEN
 	  PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
 	END IF;
@@ -6364,7 +6322,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='users_addresses' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.address_parts_ts != NEW.address_parts_ts THEN
 	   PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
 	END IF;
@@ -6374,7 +6332,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='users' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
 	  PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
 	END IF;
@@ -6384,7 +6342,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='expeditions' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_ts != NEW.name_ts THEN
 	  PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
 	END IF;
@@ -6394,7 +6352,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='habitats' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.description_ts != NEW.description_ts THEN
 	  PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
 	END IF;
@@ -6404,7 +6362,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='mineralogy' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_indexed != NEW.name_indexed THEN
 	  PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
 	END IF;
@@ -6414,7 +6372,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='chronostratigraphy' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_indexed != NEW.name_indexed THEN
 	  PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
 	END IF;
@@ -6424,7 +6382,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='lithostratigraphy' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_indexed != NEW.name_indexed THEN
 	  PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
 	END IF;
@@ -6434,7 +6392,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='lithology' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_indexed != NEW.name_indexed THEN
 	  PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
 	END IF;
@@ -6444,7 +6402,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='taxonomy' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.name_indexed != NEW.name_indexed THEN
 	  PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
 	END IF;
@@ -6454,7 +6412,7 @@ BEGIN
 
    ELSIF TG_TABLE_NAME ='codes' THEN
 
-      IF TG_OP = 'UPDATE' THEN 
+      IF TG_OP = 'UPDATE' THEN
 	IF OLD.full_code_indexed != NEW.full_code_indexed THEN
 	  PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
 	END IF;
@@ -6490,13 +6448,13 @@ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION search_words_to_query(tbl_name words.referenced_relation%TYPE, fld_name words.field_name%TYPE, value varchar, op varchar) RETURNS tsquery AS
 $$
- 
+
   SELECT to_tsquery('simple',array_to_string( array(SELECT word FROM words
       WHERE referenced_relation = $1
 	AND field_name = $2
 	AND word % $3
         AND to_tsvector($3) <> to_tsvector('')
-	AND word ilike 
+	AND word ilike
 	  CASE WHEN $4 = 'begin' THEN $3 || '%'
 	      WHEN $4 = 'end' THEN '%' || $3
 	      WHEN $4 = 'contains' THEN '%' || $3 || '%'
@@ -6510,14 +6468,14 @@ CREATE OR REPLACE FUNCTION fct_nbr_in_relation() RETURNS TRIGGER
 AS
 --fct_chk_nbr_in_relation(relation_type catalogue_relationships.relationship_type%TYPE, table_name catalogue_relationships.referenced_relation%TYPE, rid  catalogue_relationships.record_id_1%TYPE ) RETURNS BOOLEAN AS
 $$
-DECLARE 
+DECLARE
   nbr integer = 0 ;
 BEGIN
   SELECT count(record_id_2) INTO nbr FROM catalogue_relationships WHERE
       relationship_type = NEW.relationship_type
       AND record_id_1 = NEW.record_id_1
       AND referenced_relation = NEW.referenced_relation;
-  
+
   IF NEW.relationship_type = 'current_name' THEN
     IF TG_OP = 'INSERT' THEN
       IF nbr > 0 THEN
@@ -6547,7 +6505,7 @@ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_nbr_in_synonym() RETURNS TRIGGER
 AS
 $$
-DECLARE 
+DECLARE
   nbr integer = 0 ;
 BEGIN
 
@@ -6604,8 +6562,8 @@ DECLARE
   seen_el varchar[];
 BEGIN
   IF TG_OP != 'DELETE' THEN
-    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag, trim(tags) as tags 
-                        FROM regexp_split_to_table(NEW.tag_value, ';') as tags 
+    OPEN curs_entry FOR SELECT distinct(fulltoIndex(tags)) as u_tag, trim(tags) as tags
+                        FROM regexp_split_to_table(NEW.tag_value, ';') as tags
                         WHERE fulltoIndex(tags) != '';
     LOOP
       FETCH curs_entry INTO entry_row;
@@ -6613,15 +6571,15 @@ BEGIN
 
       seen_el := array_append(seen_el, entry_row.u_tag);
 
-      PERFORM * FROM tags 
-                WHERE gtu_ref = NEW.gtu_ref 
-                  AND group_ref = NEW.id 
-                  AND tag_indexed = entry_row.u_tag 
+      PERFORM * FROM tags
+                WHERE gtu_ref = NEW.gtu_ref
+                  AND group_ref = NEW.id
+                  AND tag_indexed = entry_row.u_tag
                 LIMIT 1;
       IF FOUND THEN
         IF OLD.sub_group_name = NEW.sub_group_name THEN
-          UPDATE tags 
-          SET sub_group_type = NEW.sub_group_name 
+          UPDATE tags
+          SET sub_group_type = NEW.sub_group_name
           WHERE group_ref = NEW.id;
         END IF;
         CONTINUE;
@@ -6647,9 +6605,9 @@ BEGIN
                              )
     WHERE id = NEW.gtu_ref;
 
-    DELETE FROM tags 
-           WHERE group_ref = NEW.id 
-              AND gtu_ref = NEW.gtu_ref 
+    DELETE FROM tags
+           WHERE group_ref = NEW.id
+              AND gtu_ref = NEW.gtu_ref
               AND fct_array_find(seen_el, tag_indexed ) IS NULL;
     RETURN NEW;
   ELSE
@@ -6701,7 +6659,7 @@ END;
 $$;
 
 /**
-* When adding or changing a collection, 
+* When adding or changing a collection,
 * Impact changes on rights for the collection manager
 */
 CREATE OR REPLACE FUNCTION fct_cpy_updateCollectionAdmin() RETURNS TRIGGER
@@ -6714,7 +6672,7 @@ BEGIN
 
     SELECT id INTO ref_id FROM collections_rights WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
     IF FOUND THEN
-      UPDATE collections_rights SET db_user_type=4 /**MANAGER */ WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
+      UPDATE collections_rights SET db_user_type= 4 /**MANAGER */ WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
     ELSE
       INSERT INTO collections_rights (collection_ref, user_ref, db_user_type) VALUES (NEW.id, NEW.main_manager_ref,  4); -- MANAGER
     END IF;
@@ -6743,12 +6701,12 @@ DECLARE
   indType BOOLEAN := false;
 BEGIN
   IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
-    UPDATE darwin_flat 
-    SET (expedition_name, expedition_name_ts, expedition_name_indexed) = 
+    UPDATE darwin_flat
+    SET (expedition_name, expedition_name_ts, expedition_name_indexed) =
         (NEW.name, NEW.name_ts, NEW.name_indexed)
     WHERE expedition_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'collections' THEN
-    UPDATE darwin_flat 
+    UPDATE darwin_flat
     SET (collection_type, collection_code, collection_name, collection_is_public,
          collection_institution_ref, collection_institution_formated_name, collection_institution_formated_name_ts,
          collection_institution_formated_name_indexed, collection_institution_sub_type, collection_main_manager_ref,
@@ -6762,9 +6720,9 @@ BEGIN
          NEW.parent_ref, NEW.path
         )
         FROM
-        (SELECT ins.formated_name as ins_formated_name, ins.formated_name_ts as ins_formated_name_ts, 
-                ins.formated_name_indexed as ins_formated_name_indexed, ins.sub_type as ins_sub_type, 
-                peo.formated_name as peo_formated_name, peo.formated_name_ts as peo_formated_name_ts, 
+        (SELECT ins.formated_name as ins_formated_name, ins.formated_name_ts as ins_formated_name_ts,
+                ins.formated_name_indexed as ins_formated_name_indexed, ins.sub_type as ins_sub_type,
+                peo.formated_name as peo_formated_name, peo.formated_name_ts as peo_formated_name_ts,
                 peo.formated_name_indexed as peo_formated_name_indexed
          FROM people ins, users peo
          WHERE ins.id = NEW.institution_ref
@@ -6775,34 +6733,34 @@ BEGIN
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'people' THEN
     IF NOT NEW.is_physical THEN
       UPDATE darwin_flat
-      SET (collection_institution_formated_name, 
-           collection_institution_formated_name_ts, 
+      SET (collection_institution_formated_name,
+           collection_institution_formated_name_ts,
            collection_institution_formated_name_indexed,
            collection_institution_sub_type
-          ) = 
+          ) =
           (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed, NEW.sub_type)
       WHERE collection_institution_ref = NEW.id;
     END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'users' THEN
     UPDATE darwin_flat
-    SET (collection_main_manager_formated_name, 
-         collection_main_manager_formated_name_ts, 
+    SET (collection_main_manager_formated_name,
+         collection_main_manager_formated_name_ts,
          collection_main_manager_formated_name_indexed
-        ) = 
+        ) =
         (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
     WHERE collection_main_manager_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'gtu' THEN
     UPDATE darwin_flat
-    SET (gtu_code, gtu_parent_ref, gtu_path, gtu_from_date, gtu_from_date_mask, 
+    SET (gtu_code, gtu_parent_ref, gtu_path, gtu_from_date, gtu_from_date_mask,
          gtu_to_date, gtu_to_date_mask, gtu_tag_values_indexed, gtu_location
         ) =
-        (NEW.code, NEW.parent_ref, NEW.path, NEW.gtu_from_date, NEW.gtu_from_date_mask, 
+        (NEW.code, NEW.parent_ref, NEW.path, NEW.gtu_from_date, NEW.gtu_from_date_mask,
          NEW.gtu_to_date, NEW.gtu_to_date_mask, NEW.tag_values_indexed, new.location
         )
     WHERE gtu_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'igs' THEN
     UPDATE darwin_flat
-    SET (ig_num, ig_num_indexed, ig_date, ig_date_mask) = 
+    SET (ig_num, ig_num_indexed, ig_date, ig_date_mask) =
         (NEW.ig_num, NEW.ig_num_indexed, NEW.ig_date, NEW.ig_date_mask)
     WHERE ig_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'taxonomy' THEN
@@ -6929,31 +6887,31 @@ BEGIN
         )=
         (NEW.category,
          NEW.collection_ref, subq.coll_collection_type, subq.coll_code, subq.coll_name, subq.coll_is_public,
-         subq.coll_institution_ref, subq.ins_formated_name, 
+         subq.coll_institution_ref, subq.ins_formated_name,
          subq.ins_formated_name_ts, subq.ins_formated_name_indexed, subq.ins_sub_type,
-         subq.coll_main_manager_ref, subq.peo_formated_name, 
+         subq.coll_main_manager_ref, subq.peo_formated_name,
          subq.peo_formated_name_ts, subq.peo_formated_name_indexed,
          subq.coll_parent_ref, subq.coll_path,
          NEW.expedition_ref, subq.expe_name, subq.expe_name_ts, subq.expe_name_indexed,
          NEW.station_visible, NEW.gtu_ref, subq.gtu_code, subq.gtu_parent_ref, subq.gtu_path, subq.gtu_location,
          subq.gtu_from_date_mask, subq.gtu_from_date, subq.gtu_to_date_mask, subq.gtu_to_date,
          subq.gtu_tag_values_indexed, subq.taggr_tag_value,
-         NEW.taxon_ref, subq.taxon_name, subq.taxon_name_indexed, subq.taxon_name_order_by, 
+         NEW.taxon_ref, subq.taxon_name, subq.taxon_name_indexed, subq.taxon_name_order_by,
          subq.taxon_level_ref, subq.taxon_level_level_name, subq.taxon_status,
          subq.taxon_path, subq.taxon_parent_ref, subq.taxon_extinct,
-         NEW.chrono_ref, subq.chrono_name, subq.chrono_name_indexed, subq.chrono_name_order_by, 
+         NEW.chrono_ref, subq.chrono_name, subq.chrono_name_indexed, subq.chrono_name_order_by,
          subq.chrono_level_ref, subq.chrono_level_level_name, subq.chrono_status,
          subq.chrono_path, subq.chrono_parent_ref,
-         NEW.litho_ref, subq.litho_name, subq.litho_name_indexed, subq.litho_name_order_by, 
+         NEW.litho_ref, subq.litho_name, subq.litho_name_indexed, subq.litho_name_order_by,
          subq.litho_level_ref, subq.litho_level_level_name, subq.litho_status,
          subq.litho_path, subq.litho_parent_ref,
-         NEW.lithology_ref, subq.lithology_name, subq.lithology_name_indexed, subq.lithology_name_order_by, 
+         NEW.lithology_ref, subq.lithology_name, subq.lithology_name_indexed, subq.lithology_name_order_by,
          subq.lithology_level_ref, subq.lithology_level_level_name, subq.lithology_status,
          subq.lithology_path, subq.lithology_parent_ref,
-         NEW.mineral_ref, subq.mineral_name, subq.mineral_name_indexed, subq.mineral_name_order_by, 
+         NEW.mineral_ref, subq.mineral_name, subq.mineral_name_indexed, subq.mineral_name_order_by,
          subq.mineral_level_ref, subq.mineral_level_level_name, subq.mineral_status,
          subq.mineral_path, subq.mineral_parent_ref,
-         NEW.host_taxon_ref, NEW.host_relationship, subq.host_taxon_name, subq.host_taxon_name_indexed, subq.host_taxon_name_order_by, 
+         NEW.host_taxon_ref, NEW.host_relationship, subq.host_taxon_name, subq.host_taxon_name_indexed, subq.host_taxon_name_order_by,
          subq.host_taxon_level_ref, subq.host_taxon_level_level_name, subq.host_taxon_status,
          subq.host_taxon_path, subq.host_taxon_parent_ref, subq.host_taxon_extinct,
          NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date
@@ -6969,22 +6927,22 @@ BEGIN
                 gtu.code gtu_code, gtu.parent_ref gtu_parent_ref, gtu.path gtu_path,gtu.location gtu_location,
                 gtu.gtu_from_date_mask, gtu.gtu_from_date, gtu.gtu_to_date_mask, gtu.gtu_to_date,
                 gtu.tag_values_indexed gtu_tag_values_indexed, taggr.tag_value taggr_tag_value,
-                taxon.name taxon_name, taxon.name_indexed taxon_name_indexed, taxon.name_order_by taxon_name_order_by, 
+                taxon.name taxon_name, taxon.name_indexed taxon_name_indexed, taxon.name_order_by taxon_name_order_by,
                 taxon.level_ref taxon_level_ref, taxon_level.level_name taxon_level_level_name, taxon.status taxon_status,
                 taxon.path taxon_path, taxon.parent_ref taxon_parent_ref, taxon.extinct taxon_extinct,
-                chrono.name chrono_name, chrono.name_indexed chrono_name_indexed, chrono.name_order_by chrono_name_order_by, 
+                chrono.name chrono_name, chrono.name_indexed chrono_name_indexed, chrono.name_order_by chrono_name_order_by,
                 chrono.level_ref chrono_level_ref, chrono_level.level_name chrono_level_level_name, chrono.status chrono_status,
                 chrono.path chrono_path, chrono.parent_ref chrono_parent_ref,
-                litho.name litho_name, litho.name_indexed litho_name_indexed, litho.name_order_by litho_name_order_by, 
+                litho.name litho_name, litho.name_indexed litho_name_indexed, litho.name_order_by litho_name_order_by,
                 litho.level_ref litho_level_ref, litho_level.level_name litho_level_level_name, litho.status litho_status,
                 litho.path litho_path, litho.parent_ref litho_parent_ref,
-                lithology.name lithology_name, lithology.name_indexed lithology_name_indexed, lithology.name_order_by lithology_name_order_by, 
+                lithology.name lithology_name, lithology.name_indexed lithology_name_indexed, lithology.name_order_by lithology_name_order_by,
                 lithology.level_ref lithology_level_ref, lithology_level.level_name lithology_level_level_name, lithology.status lithology_status,
                 lithology.path lithology_path, lithology.parent_ref lithology_parent_ref,
-                mineral.name mineral_name, mineral.name_indexed mineral_name_indexed, mineral.name_order_by mineral_name_order_by, 
+                mineral.name mineral_name, mineral.name_indexed mineral_name_indexed, mineral.name_order_by mineral_name_order_by,
                 mineral.level_ref mineral_level_ref, mineral_level.level_name mineral_level_level_name, mineral.status mineral_status,
                 mineral.path mineral_path, mineral.parent_ref mineral_parent_ref,
-                host_taxon.name host_taxon_name, host_taxon.name_indexed host_taxon_name_indexed, host_taxon.name_order_by host_taxon_name_order_by, 
+                host_taxon.name host_taxon_name, host_taxon.name_indexed host_taxon_name_indexed, host_taxon.name_order_by host_taxon_name_order_by,
                 host_taxon.level_ref host_taxon_level_ref, host_taxon_level.level_name host_taxon_level_level_name, host_taxon.status host_taxon_status,
                 host_taxon.path host_taxon_path, host_taxon.parent_ref host_taxon_parent_ref, host_taxon.extinct host_taxon_extinct
          FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
@@ -7039,9 +6997,9 @@ BEGIN
     )
     (SELECT NEW.id, NEW.category,
             NEW.collection_ref, coll.collection_type, coll.code, coll.name, coll.is_public,
-            coll.institution_ref, ins.formated_name, 
+            coll.institution_ref, ins.formated_name,
             ins.formated_name_ts, ins.formated_name_indexed, ins.sub_type,
-            coll.main_manager_ref, peo.formated_name, 
+            coll.main_manager_ref, peo.formated_name,
             peo.formated_name_ts, peo.formated_name_indexed,
             coll.parent_ref, coll.path,
             NEW.expedition_ref, expe.name, expe.name_ts, expe.name_indexed,
@@ -7127,7 +7085,7 @@ BEGIN
         )
         =
         (NEW.id,
-         NEW.type, NEW.type_group, NEW.type_search, 
+         NEW.type, NEW.type_group, NEW.type_search,
          NEW.sex, NEW.state, NEW.stage,
          NEW.social_status, NEW.rock_form,
          NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
@@ -7213,7 +7171,7 @@ BEGIN
       )
       =
       (NEW.id,
-       NEW.type, NEW.type_group, NEW.type_search, 
+       NEW.type, NEW.type_group, NEW.type_search,
        NEW.sex, NEW.state, NEW.stage,
        NEW.social_status, NEW.rock_form,
        NEW.specimen_individuals_count_min, NEW.specimen_individuals_count_max
@@ -7348,12 +7306,12 @@ BEGIN
   IF TG_TABLE_NAME = 'specimens' THEN
     IF COALESCE(NEW.ig_ref,0) = 0 THEN
       UPDATE darwin_flat
-      SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) = 
+      SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) =
           (NULL, NULL, NULL, NULL, NULL)
       WHERE spec_ref = NEW.id;
     ELSE
       UPDATE darwin_flat
-      SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) = 
+      SET (ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date) =
           (NEW.ig_ref, subq.ig_num, subq.ig_num_indexed, subq.ig_date_mask, subq.ig_date)
           FROM
           (SELECT ig_num, ig_num_indexed, ig_date_mask, ig_date
@@ -7436,7 +7394,7 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION fct_darwin_flat_indviduals_after_del() RETURNS TRIGGER 
+CREATE OR REPLACE FUNCTION fct_darwin_flat_indviduals_after_del() RETURNS TRIGGER
 language plpgsql
 AS
 $$
@@ -7454,7 +7412,7 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION convert_to_integer(v_input varchar) RETURNS INTEGER 
+CREATE OR REPLACE FUNCTION convert_to_integer(v_input varchar) RETURNS INTEGER
 AS $$
 DECLARE v_int_value INTEGER DEFAULT 0;
 BEGIN
@@ -7485,13 +7443,13 @@ BEGIN
     code_from := $1[i+2];
     code_to := $1[i+3];
     relation := $1[i+4] ;
-    
+
     IF relation != '' THEN
       sqlString := sqlString || ' where referenced_relation=' || quote_literal(relation) ;
     ELSE
       sqlString := sqlString || E' where referenced_relation=\'specimens\''  ;
     END IF ;
-      
+
     sqlWhere := sqlWhere || ' (code_category = ' || quote_literal(code_category) ;
 
     IF code_from ~ '^[0-9]+$' and code_to ~ '^[0-9]+$' THEN
@@ -7505,11 +7463,11 @@ BEGIN
       END LOOP;
       sqlWhere := substr(sqlWhere,0,length(sqlWhere)-2) || ')';
     END IF;
-    
+
     sqlWhere := sqlWhere || ') OR ';
 
   END LOOP;
-  
+
   sqlString := sqlString || ' AND (' || substr(sqlWhere,0, length(sqlWhere)-2) || ')';
   RAISE INFO 'Sql : %',sqlString ;
   RETURN QUERY EXECUTE sqlString;
@@ -7532,7 +7490,7 @@ $$
 $$;
 
 CREATE OR REPLACE FUNCTION dummy( in anyelement, inout anyelement )
-AS $$ 
+AS $$
   select $2;
 $$LANGUAGE 'sql' STABLE RETURNS NULL ON NULL INPUT;
 

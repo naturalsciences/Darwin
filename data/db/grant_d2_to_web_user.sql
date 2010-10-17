@@ -47,16 +47,16 @@
  GRANT select, insert, update, delete on darwin2.collections_rights to cebmpad;
  GRANT select, insert, update, delete on darwin2.template_people_users_multimedia to cebmpad;
  GRANT select, insert, update, delete on darwin2.people_multimedia to cebmpad;
- GRANT select, insert, update, delete on darwin2.users_coll_rights_asked to cebmpad;
+ --GRANT select, insert, update, delete on darwin2.users_coll_rights_asked to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_addresses to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_multimedia to cebmpad;
  GRANT select, insert, update, delete on darwin2.template_collections_users to cebmpad;
- GRANT select, insert, update, delete on darwin2.collections_fields_visibilities to cebmpad;
+ --GRANT select, insert, update, delete on darwin2.collections_fields_visibilities to cebmpad;
  GRANT select, insert, update, delete on darwin2.collections to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_tracking to cebmpad;
  GRANT select, insert, update, delete on darwin2.my_widgets to cebmpad;
  GRANT select, insert, update, delete on darwin2.my_saved_searches to cebmpad;
- GRANT select, insert, update, delete on darwin2.record_visibilities to cebmpad;
+ --GRANT select, insert, update, delete on darwin2.record_visibilities to cebmpad;
  GRANT select, insert, update, delete on darwin2.users to cebmpad;
  GRANT select, insert, update, delete on darwin2.template_classifications to cebmpad;
  GRANT select, insert, update, delete on darwin2.users_workflow to cebmpad;
@@ -94,7 +94,7 @@
  GRANT USAGE ON darwin2.users_comm_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.users_addresses_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.collections_id_seq TO cebmpad;
- GRANT USAGE ON darwin2.record_visibilities_id_seq TO cebmpad;
+ --GRANT USAGE ON darwin2.record_visibilities_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.users_workflow_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.users_tracking_id_seq TO cebmpad;
  GRANT USAGE ON darwin2.collection_maintenance_id_seq TO cebmpad;
