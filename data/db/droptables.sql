@@ -94,6 +94,7 @@ DROP SEQUENCE IF EXISTS users_comm_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS users_addresses_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS users_login_info_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS collections_id_seq  CASCADE;
+DROP SEQUENCE IF EXISTS collections_admin_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS collections_rights_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS collections_fields_visibilities_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS users_coll_rights_asked_id_seq  CASCADE;

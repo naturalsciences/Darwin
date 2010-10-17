@@ -6673,8 +6673,8 @@ BEGIN
     INSERT INTO collections_rights (collection_ref, user_ref, db_user_type)
     (SELECT NEW.id as coll_ref, NEW.main_manager_ref as mgr_ref, 4 as user_type
      UNION
-     SELECT collection_ref as coll_ref, user_ref as mgr_ref, db_user_type as user_type
-     FROM collection_rights
+     SELECT NEW.id as coll_ref, user_ref as mgr_ref, db_user_type as user_type
+     FROM collections_rights
      WHERE collection_ref = NEW.parent_ref
        AND db_user_type = 4
     );
@@ -6682,7 +6682,7 @@ BEGIN
     IF NEW.main_manager_ref != OLD.main_manager_ref THEN
       SELECT db_user_type INTO db_user_type_val FROM collections_rights WHERE collection_ref = NEW.id AND user_ref = NEW.main_manager_ref;
       IF FOUND THEN
-        UPDATE collection_rights
+        UPDATE collections_rights
         SET db_user_type = 4
         WHERE collection_ref = NEW.id
           AND user_ref = NEW.main_manager_ref;
@@ -6694,7 +6694,7 @@ BEGIN
     IF NEW.parent_ref != OLD.parent_ref THEN
       INSERT INTO collections_rights (collection_ref, user_ref, db_user_type)
       (
-        SELECT collection_ref, user_ref, db_user_type
+        SELECT NEW.id, user_ref, db_user_type
         FROM collections_rights
         WHERE collection_ref = NEW.parent_ref
           AND db_user_type = 4
@@ -6708,7 +6708,67 @@ BEGIN
     END IF;
   END IF;
 
-RETURN NEW;
+  RETURN NEW;
+
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE NOTICE 'An error occured: %', SQLERRM;
+    RETURN NEW;
+END;
+$$;
+
+/*
+  After inserting, updating or deleting a user in collections_rights -> impact user rights
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_updateUserRights() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+DECLARE
+  db_user_type_val integer ;
+BEGIN
+  IF TG_OP = 'UPDATE' AND NEW.db_user_type != OLD.db_user_type THEN
+      /* Promotion */
+      IF NEW.db_user_type > OLD.db_user_type THEN
+        UPDATE users
+        SET db_user_type = NEW.db_user_type
+        WHERE id = NEW.user_ref
+          AND db_user_type < NEW.db_user_type;
+      /* Unpromotion */
+      ELSE
+        UPDATE users
+        SET db_user_type = subq.db_user_type_max
+        FROM (
+              SELECT MAX(cr1.db_user_type) as db_user_type_max
+              FROM cr1.collections_rights
+              WHERE cr1.user_ref = NEW.user_ref
+             ) subq
+        WHERE id = NEW.user_ref;
+      END IF;
+  END IF;
+  IF TG_OP = 'INSERT' OR (TG_OP = 'UPDATE' AND NEW.user_ref != OLD.user_ref) THEN
+    UPDATE users
+    SET db_user_type = NEW.db_user_type
+    WHERE id = NEW.user_ref
+      AND db_user_type < NEW.db_user_type;
+  END IF;
+  IF TG_OP = 'DELETE' OR (TG_OP = 'UPDATE' AND NEW.user_ref != OLD.user_ref) THEN
+    SELECT MAX(db_user_type)
+    INTO db_user_type_val
+    FROM collections_rights
+    WHERE user_ref = OLD.user_ref;
+    IF FOUND THEN
+      UPDATE users
+      SET db_user_type = db_user_type_val
+      WHERE id = OLD.user_ref;
+    ELSE
+      UPDATE users
+      SET db_user_type = 1
+      WHERE id = OLD.user_ref;
+    END IF;
+  END IF;
+
+  RETURN NEW;
 
 EXCEPTION
   WHEN OTHERS THEN

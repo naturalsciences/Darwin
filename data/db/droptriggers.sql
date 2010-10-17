@@ -32,7 +32,7 @@ DROP TRIGGER trg_clr_referenceRecord_people ON people;
 DROP TRIGGER trg_clr_referenceRecord_users ON users;
 DROP TRIGGER trg_clr_referenceRecord_multimedia ON multimedia;
 DROP TRIGGER trg_clr_referenceRecord_collections ON collections;
-DROP TRIGGER trg_clr_referenceRecord_userscollrightsasked ON users_coll_rights_asked;
+/*DROP TRIGGER trg_clr_referenceRecord_userscollrightsasked ON users_coll_rights_asked;*/
 DROP TRIGGER trg_clr_referenceRecord_mysavedsearches ON collection_maintenance;
 DROP TRIGGER trg_clr_referenceRecord_taxa ON taxonomy;
 DROP TRIGGER trg_clr_referenceRecord_chronostratigraphy ON chronostratigraphy;
@@ -58,7 +58,7 @@ DROP TRIGGER trg_cpy_toFullText_expeditions ON expeditions;
 DROP TRIGGER trg_cpy_toFullText_habitats ON habitats;
 DROP TRIGGER trg_cpy_toFullText_vernacularnames ON vernacular_names;
 
-DROP TRIGGER trg_cas_userType_users ON users;
+/*DROP TRIGGER trg_cas_userType_users ON users;*/
 DROP TRIGGER trg_chk_peopleType ON people;
 DROP TRIGGER trg_chk_AreRole ON catalogue_people;
 
@@ -258,8 +258,8 @@ DROP TRIGGER trg_cpy_fulltoindex_igs
 DROP TRIGGER trg_clr_referencerecord_insurances
         ON insurances;
 
-DROP TRIGGER trg_cpy_updatecollectionadmin_collections
-        ON collections;
+-- DROP TRIGGER trg_cpy_updatecollectionadmin_collections
+--         ON collections;
 
 DROP TRIGGER trg_cpy_updateCollectionRights
         ON collections;
