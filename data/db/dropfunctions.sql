@@ -66,7 +66,7 @@ DROP FUNCTION IF EXISTS ts_stat(tsvector, OUT word text, OUT ndoc integer, OUT n
 DROP FUNCTION IF EXISTS sha1(bytea) CASCADE;
 DROP FUNCTION IF EXISTS get_setting(IN param text, OUT value text) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updateCollectionAdmin() CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_updatecollectionadmin() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_updateCollectionRights() CASCADE;
 DROP FUNCTION IF EXISTS getGtusForTags(in_array anyarray) CASCADE;
 DROP FUNCTION IF EXISTS getTagsIndexedAsArray(IN tagList varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_update_darwin_flat() CASCADE;

@@ -6660,24 +6660,56 @@ $$;
 
 /**
 * When adding or changing a collection,
-* Impact changes on rights for the collection manager
+* Impact changes on rights
 */
-CREATE OR REPLACE FUNCTION fct_cpy_updateCollectionAdmin() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION fct_cpy_updateCollectionRights() RETURNS TRIGGER
 language plpgsql
 AS
 $$
 DECLARE
-	ref_id integer ;
+	db_user_type_val integer ;
 BEGIN
-
-    SELECT id INTO ref_id FROM collections_rights WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
-    IF FOUND THEN
-      UPDATE collections_rights SET db_user_type= 4 /**MANAGER */ WHERE user_ref = NEW.main_manager_ref and collection_ref = NEW.id ;
-    ELSE
-      INSERT INTO collections_rights (collection_ref, user_ref, db_user_type) VALUES (NEW.id, NEW.main_manager_ref,  4); -- MANAGER
+  IF TG_OP = 'INSERT' THEN
+    INSERT INTO collections_rights (collection_ref, user_ref, db_user_type)
+    (SELECT NEW.id as coll_ref, NEW.main_manager_ref as mgr_ref, 4 as user_type
+     UNION
+     SELECT collection_ref as coll_ref, user_ref as mgr_ref, db_user_type as user_type
+     FROM collection_rights
+     WHERE collection_ref = NEW.parent_ref
+       AND db_user_type = 4
+    );
+  ELSIF TG_OP = 'UPDATE' THEN
+    IF NEW.main_manager_ref != OLD.main_manager_ref THEN
+      SELECT db_user_type INTO db_user_type_val FROM collections_rights WHERE collection_ref = NEW.id AND user_ref = NEW.main_manager_ref;
+      IF FOUND THEN
+        UPDATE collection_rights
+        SET db_user_type = 4
+        WHERE collection_ref = NEW.id
+          AND user_ref = NEW.main_manager_ref;
+      ELSE
+        INSERT INTO collections_rights (collection_ref, user_ref, db_user_type)
+        VALUES(NEW.id,NEW.main_manager_ref,4);
+      END IF;
     END IF;
+    IF NEW.parent_ref != OLD.parent_ref THEN
+      INSERT INTO collections_rights (collection_ref, user_ref, db_user_type)
+      (
+        SELECT collection_ref, user_ref, db_user_type
+        FROM collections_rights
+        WHERE collection_ref = NEW.parent_ref
+          AND db_user_type = 4
+          AND user_ref NOT IN
+            (
+              SELECT user_ref
+              FROM collections_rights
+              WHERE collection_ref = NEW.id
+            )
+      );
+    END IF;
+  END IF;
 
 RETURN NEW;
+
 EXCEPTION
   WHEN OTHERS THEN
     RAISE NOTICE 'An error occured: %', SQLERRM;

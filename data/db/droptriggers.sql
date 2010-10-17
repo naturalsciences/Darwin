@@ -57,7 +57,7 @@ DROP TRIGGER trg_cpy_toFullText_collectionmaintenance ON collection_maintenance;
 DROP TRIGGER trg_cpy_toFullText_expeditions ON expeditions;
 DROP TRIGGER trg_cpy_toFullText_habitats ON habitats;
 DROP TRIGGER trg_cpy_toFullText_vernacularnames ON vernacular_names;
-	
+
 DROP TRIGGER trg_cas_userType_users ON users;
 DROP TRIGGER trg_chk_peopleType ON people;
 DROP TRIGGER trg_chk_AreRole ON catalogue_people;
@@ -151,7 +151,7 @@ DROP TRIGGER trg_words_ts_cpy_codes
 /*** Tracking ***/
 
 DROP TRIGGER trg_trk_log_table_taxonomy
-	ON taxonomy; 
+	ON taxonomy;
 
 DROP TRIGGER trg_trk_log_table_lithology
 	ON lithology;
@@ -259,6 +259,9 @@ DROP TRIGGER trg_clr_referencerecord_insurances
         ON insurances;
 
 DROP TRIGGER trg_cpy_updatecollectionadmin_collections
+        ON collections;
+
+DROP TRIGGER trg_cpy_updateCollectionRights
         ON collections;
 
 DROP TRIGGER trg_cpy_path_multimedia
