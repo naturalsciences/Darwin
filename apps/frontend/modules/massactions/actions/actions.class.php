@@ -12,7 +12,7 @@ class massactionsActions extends sfActions
 {
   public function preExecute()
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER)
+    if($this->getUser()->isAtLeast(Users::ENCODER))
     {
       $this->forwardToSecureAction();
     }
