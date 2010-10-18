@@ -7647,6 +7647,40 @@ $$
     select id as collection_ref from collections where is_public = true;
 $$;
 
+/*
+  Check when doing an action on specimen that the user is allowed to do it
+*/
+CREATE OR REPLACE FUNCTION fct_chk_specimenCollectionAllowed() RETURNS TRIGGER
+language plpgSQL
+AS
+$$
+DECLARE
+  user_id integer;
+  db_user_type_cpy smallint;
+BEGIN
+
+  SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
+
+  SELECT db_user_type INTO db_user_type_cpy FROM users WHERE id = user_id;
+
+  IF db_user_type_cpy = 8 THEN
+    RETURN NEW;
+  END IF;
+  
+  IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+    PERFORM true WHERE NEW.collection_ref::integer IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'You don''t have the rights to insert into or update a specimen with this collection';
+    END IF;
+  ELSE /*Delete*/
+    PERFORM true WHERE OLD.collection_ref::integer IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'You don''t have the rights to delete a specimen from this collection';
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
 
 CREATE OR REPLACE FUNCTION fct_cpy_location() RETURNS trigger
 as $$

@@ -342,6 +342,10 @@ CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
 	ON vernacular_names FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();
 
+CREATE TRIGGER trg_chk_specimenCollectionAllowed BEFORE INSERT OR UPDATE OR DELETE
+  ON specimens FOR EACH ROW
+  EXECUTE PROCEDURE fct_chk_specimenCollectionAllowed();
+
 /* trigger set BEFORE update, in order to avoid bad db_user_type to be set when this user is a collection manager */
 
 CREATE TRIGGER trg_chk_peopleType AFTER UPDATE
