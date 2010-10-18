@@ -93,19 +93,30 @@ class BaseMassActionForm extends sfFormSymfony
       return 'sfForm';
   }
 
-  public function doMassAction()
+  public function doMassAction($user_id)
   {
     if($this->isBound() && $this->isValid())
     {
       $actions_values = $this->getValue('MassActionForm');
       if($this->getValue('source') == 'specimen')
+      {
         $query = Doctrine_Query::create()->update('Specimens s');
-      elseif($this->getValue('source') == 'individual')
-        $query = Doctrine_Query::create()->update('SpecimenIndividuals s');
-      else
-        $query = Doctrine_Query::create()->update('SpecimenParts s');
+        $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$this->getValue('item_list')),'spec_ref', $user_id));
 
-      $query->whereIn('s.id ', $this->getValue('item_list'));
+      }
+      elseif($this->getValue('source') == 'individual')
+      {
+        $query = Doctrine_Query::create()->update('SpecimenIndividuals s');
+        $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$this->getValue('item_list')),'individual_ref', $user_id));
+
+      }
+      else
+      {
+        $query = Doctrine_Query::create()->update('SpecimenParts s');
+        $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array( implode(',',$this->getValue('item_list')),'part_ref', $user_id));
+      }
+
+
       $group_action = 0;
       foreach($this->embeddedForms['MassActionForm'] as $key=> $form)
       {
@@ -117,7 +128,7 @@ class BaseMassActionForm extends sfFormSymfony
 
         if (method_exists($this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key), 'doMassAction'))
         {
-          $this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key)->doMassAction($this->getValue('item_list'), $actions_values[$key]);
+          $this->getEmbeddedForm('MassActionForm')->getEmbeddedForm($key)->doMassAction($user_id, $this->getValue('item_list'), $actions_values[$key]);
         }
       }
       if($group_action)

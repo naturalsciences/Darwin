@@ -105,7 +105,7 @@ class SpecimenSearchTable extends Doctrine_Table
       }
       else return array(); //Error
       
-      $q->andWhere('collection_ref in fct_search_authorized_encoding_collections(?)',$user_id);
+      $q->andWhere('s.collection_ref in (select fct_search_authorized_encoding_collections(?))',$user_id);
       return $q->execute();
     }
 
