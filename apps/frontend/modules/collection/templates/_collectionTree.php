@@ -30,12 +30,12 @@ $(document).ready(function () {
               <?php echo str_repeat('</ul></li>',$prev_level-$col_item->getLevel());?>
             <?php endif;?>
         <?php endif;?>
-        <?php if($col_item->getIsPublic() || count($col_item->CollectionsRights)) : ?>
+        <?php if($col_item->getIsPublic() || $col_item->getTypeInCol() > 0 ): ?>
           <li class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
           <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
           <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
           <span><?php echo $col_item->getName();?>
-          <?php if($sf_user->isA(Users::ADMIN) || ((! $is_choose ) &&( $sf_user->isAtLeast(Users::ENCODER) && count($col_item->CollectionsRights) && $col_item->CollectionsRights[0]->getDbUserType() >= Users::MANAGER  ))):?>
+          <?php if($sf_user->isA(Users::ADMIN) || ((! $is_choose ) && ( $sf_user->isAtLeast(Users::ENCODER) && $col_item->getTypeInCol() >= Users::MANAGER  ))):?>
 	          <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
 	          <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
           <?php endif ; ?>

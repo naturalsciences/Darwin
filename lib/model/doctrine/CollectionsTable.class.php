@@ -35,7 +35,7 @@ class CollectionsTable extends DarwinTable
       $results = array('' =>'');
       foreach($res as $row)
       {
-        $results[$row->getId()] = sfOutputEscaper::unescape($row->__toString());
+        $results[$row->getId()] = $row->__toString();
       }
       return $results;
     }
