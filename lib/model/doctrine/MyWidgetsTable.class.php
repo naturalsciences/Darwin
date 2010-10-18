@@ -60,6 +60,10 @@ class MyWidgetsTable extends DarwinTable
     $this->db_user_type = $ref;
     return $this;
   }
+  public function getDbUserType()
+  {
+    return $this->db_user_type;
+  }
     
   public function changeWidgetStatus($category, $widget, $status)
   {
@@ -159,12 +163,13 @@ class MyWidgetsTable extends DarwinTable
  
   public function getAvailableWidgets()
   {
+    $categories = array('specimen_widget','individuals_widget','part_widget','specimensearch_widget');
 	  $q = Doctrine_Query::create()
 	    ->from('MyWidgets p')
-	    ->where('p.is_available = true') 
-	    ->andWhere('p.all_public = true') 
+	    ->andWhere('p.all_public = false') 
 	    ->andwhere('p.user_ref = ?', $this->user_ref) 
-	    ->orderBy('category,group_name');
+	    ->andWhereIn("p.category",$categories) 
+	    ->orderBy('category DESC,group_name ASC');	  
 	  return $q->execute() ;
   }
 

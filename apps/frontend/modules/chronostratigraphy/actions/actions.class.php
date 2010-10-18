@@ -65,7 +65,7 @@ class chronostratigraphyActions extends DarwinActions
     $unit = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new ChronostratigraphyForm($unit);
-    
+    $this->level = $this->getUser()->getDbUserType() ;    
     $this->loadWidgets();
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
@@ -108,5 +108,15 @@ class chronostratigraphyActions extends DarwinActions
       }
     }
   }
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->chrono = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id'));
+    $this->level = $this->getUser()->getDbUserType() ;
+    $this->forward404Unless($this->chrono,'Chrono not Found');
+    $this->form = new ChronostratigraphyForm($this->chrono);    
+    $this->loadWidgets();
 
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->chrono->getId());
+  }  
 }

@@ -57,6 +57,7 @@ class institutionActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
+        $this->level = $this->getUser()->getDbUserType() ;           
       }
     }    
   }

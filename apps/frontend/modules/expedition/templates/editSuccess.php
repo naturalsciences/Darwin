@@ -9,6 +9,6 @@
 	'widgets' => $widgets,
 	'category' => 'cataloguewidget',
 	'columns' => 1,
-	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'expeditions')
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'expeditions', 'level' => $level)
 	)); ?>
 </div>

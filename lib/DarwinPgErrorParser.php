@@ -29,7 +29,8 @@ class DarwinPgErrorParser
     '/violates check constraint "chk_collecting_methods_method"/i' => 'Method inserted cannot be empty',
     '/violates check constraint "chk_collecting_tools_tool"/i' => 'Tool inserted cannot be empty',
     '/unq_users/i' => 'This user already exist',
-    '/\bunq_class_vernacular_names\b/' => 'This community already exists, you should edit it instead of adding new one'
+    '/\bunq_class_vernacular_names\b/' => 'This community already exists, you should edit it instead of adding new one',
+    '/\bchk_not_related_to_self\b/' => 'You cannot recombinate to itself',
   );
 
 

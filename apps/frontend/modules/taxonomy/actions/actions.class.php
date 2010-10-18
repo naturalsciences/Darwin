@@ -68,7 +68,7 @@ class taxonomyActions extends DarwinActions
 
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);
-    
+    $this->level = $this->getUser()->getDbUserType() ;    
     $this->loadWidgets();
 
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$taxa->getId());
@@ -114,4 +114,15 @@ class taxonomyActions extends DarwinActions
       }
     }
   }
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->taxon = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
+    $this->level = $this->getUser()->getDbUserType() ;
+    $this->forward404Unless($this->taxon,'Taxa not Found');
+    $this->form = new TaxonomyForm($this->taxon);    
+    $this->loadWidgets();
+
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->taxon->getId());
+  }  
 }

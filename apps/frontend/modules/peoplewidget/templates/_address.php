@@ -1,4 +1,4 @@
-<table class="catalogue_table">
+<table class="catalogue_table<?php echo($level == Users::REGISTERED_USER?'_view':'') ;?>">
   <thead>
     <tr>
       <th><?php echo __('Country');?></th>
@@ -13,9 +13,13 @@
   <?php foreach($addresses as $address):?>
   <tr>
     <td>
+      <?php if($level>Users::REGISTERED_USER) : ?>    
       <a class="link_catalogue" title="<?php echo __('Edit Address');?>"  href="<?php echo url_for('people/address?ref_id='.$eid.'&id='.$address->getId());?>">
 	<?php echo $address->getCountry();?>
       </a>
+      <?php else : ?>
+       	<?php echo $address->getCountry();?>     
+      <?php endif ; ?>
     </td>
     <td>
       <?php echo $address->getRegion();?>
@@ -35,8 +39,10 @@
       <?php endforeach;?>
     </td>
     <td class="widget_row_delete">
+      <?php if($level>Users::REGISTERED_USER) : ?>       
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_addresses&id='.$address->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
+      <?php endif ; ?>
     </td>
   </tr>
   <?php endforeach;?>
@@ -44,5 +50,7 @@
 </table>
 
 <br />
+<?php if($level>Users::REGISTERED_USER) : ?>   
 <?php echo image_tag('add_green.png');?>
 <a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('people/address?ref_id='.$eid);?>"><?php echo __('Add');?></a>
+<?php endif ?>

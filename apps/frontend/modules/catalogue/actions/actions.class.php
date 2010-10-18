@@ -111,7 +111,7 @@ class catalogueActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
-        $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
+        $this->level = $this->getUser()->getDbUserType() ;
       }
     }
   }

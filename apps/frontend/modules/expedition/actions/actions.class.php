@@ -89,6 +89,7 @@ class expeditionActions extends DarwinActions
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Otherwise initialize the expedition encoding form
     $this->form = new ExpeditionsForm($expeditions);
+    $this->level = $this->getUser()->getDbUserType() ;    
     $this->loadWidgets();
   }
 
@@ -195,6 +196,7 @@ class expeditionActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->expeditions = $this->pagerLayout->execute();
+        $this->level = $this->getUser()->getDbUserType() ;           
       }
     }
   }
@@ -223,4 +225,13 @@ class expeditionActions extends DarwinActions
       }
     }
   }
+  public function executeView(sfWebRequest $request)
+  {
+    $this->expedition = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id'));
+    $this->level = $this->getUser()->getDbUserType() ;
+    $this->forward404Unless($this->expedition,'Expeditions not Found');
+    $this->form = new ExpeditionsForm($this->expedition);    
+    $this->loadWidgets();
+  }
+    
 }

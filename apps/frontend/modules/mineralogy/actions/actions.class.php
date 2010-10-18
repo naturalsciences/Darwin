@@ -63,7 +63,7 @@ class mineralogyActions extends DarwinActions
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new MineralogyForm($unit);
     $this->loadWidgets();
-
+    $this->level = $this->getUser()->getDbUserType() ;
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
@@ -144,5 +144,14 @@ class mineralogyActions extends DarwinActions
     }  
     return $this->renderText(array(''));
   }
+  public function executeView(sfWebRequest $request)
+  {
+    $this->mineral = Doctrine::getTable('Mineralogy')->findExcept($request->getParameter('id'));
+    $this->level = $this->getUser()->getDbUserType() ;
+    $this->forward404Unless($this->mineral,'Mineralogic unit not Found');
+    $this->form = new MineralogyForm($this->mineral);    
+    $this->loadWidgets();
 
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->mineral->getId());
+  }
 }

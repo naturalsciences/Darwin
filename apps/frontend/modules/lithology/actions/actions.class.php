@@ -63,7 +63,7 @@ class lithologyActions extends DarwinActions
     $unit = Doctrine::getTable('Lithology')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new LithologyForm($unit);
- 
+    $this->level = $this->getUser()->getDbUserType() ; 
     $this->loadWidgets();
 
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
@@ -106,5 +106,14 @@ class lithologyActions extends DarwinActions
       }
     }
   }
+  public function executeView(sfWebRequest $request)
+  {
+    $this->litho = Doctrine::getTable('Lithology')->findExcept($request->getParameter('id'));
+    $this->level = $this->getUser()->getDbUserType() ;
+    $this->forward404Unless($this->litho,'Lithologic unit not Found');
+    $this->form = new LithologyForm($this->litho);    
+    $this->loadWidgets();
 
+    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->litho->getId());
+  }
 }

@@ -14,7 +14,7 @@ foreach($form['newVal'] as $keyword)
     $form_kws[$type] = array();
   $form_kws[$type][] = $keyword;
 }?>
-<div id="catalogue_keywords">
+<div id="catalogue_keywords<?php if(isset($view)) echo ('_view') ;?>">
       <table>
       <thead>
 	<tr>
