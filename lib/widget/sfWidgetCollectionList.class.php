@@ -70,7 +70,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
   private function getCollectionByIntitution()
   {
     $tab = array() ;
-    $objects = Doctrine_Core::getTable('Collections')->fetchByInstitutionList(null,$this->hasOption('public_only')?true:false) ;  
+    $objects = Doctrine_Core::getTable('Collections')->fetchByInstitutionList(sfContext::getInstance()->getUser(), null, $this->hasOption('public_only')?true:false) ;  
     foreach($objects as $institution)
     {
       $tab[$institution->getFormatedName()] = array() ;

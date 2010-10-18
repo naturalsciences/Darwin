@@ -15,11 +15,13 @@ abstract class BaseCollectionsRightsFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'collection_ref' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collections'), 'add_empty' => true)),
       'user_ref'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Users'), 'add_empty' => true)),
+      'db_user_type'   => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
       'collection_ref' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Collections'), 'column' => 'id')),
       'user_ref'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Users'), 'column' => 'id')),
+      'db_user_type'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('collections_rights_filters[%s]');
@@ -42,6 +44,7 @@ abstract class BaseCollectionsRightsFormFilter extends BaseFormFilterDoctrine
       'id'             => 'Number',
       'collection_ref' => 'ForeignKey',
       'user_ref'       => 'ForeignKey',
+      'db_user_type'   => 'Number',
     );
   }
 }

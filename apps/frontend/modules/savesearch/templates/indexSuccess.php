@@ -50,12 +50,13 @@ $(document).ready(function () {
 
   $('.saved_searches .del_butt').click(function(event)
   {
-    event.preventDefault();  
+    event.preventDefault();
+    search_row = $(this).closest('tr');
     var answer = confirm('<?php echo __('Are you sure ?');?>');
     if( answer )
     {
       $.get($(this).attr('href'),function (html){
-        $(this).closest('tr').remove();
+        search_row.remove();
       });
     }
   });

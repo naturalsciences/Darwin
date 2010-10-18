@@ -5,10 +5,10 @@
  */
 class Users extends BaseUsers
 {
-	const REGISTERED_USER = 1;
+  const REGISTERED_USER = 1;
   const ENCODER = 2;
-	const MANAGER = 4;
-	const ADMIN = 8;
+  const MANAGER = 4;
+  const ADMIN = 8;
 
   public function __toString()
   {

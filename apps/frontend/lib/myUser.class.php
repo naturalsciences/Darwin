@@ -91,4 +91,15 @@ class myUser extends sfBasicSecurityUser
     $pins = $this->getAttribute('spec_pinned_'.$source, array());
     return (array_search($id, $pins) === false) ? false : true;
   }
+
+  public function isAtLeast($role)
+  {
+    return $this->getDbUserType() >= $role;
+  }
+
+  public function isA($role)
+  {
+    return $this->getDbUserType() == $role;
+  }
+
 }

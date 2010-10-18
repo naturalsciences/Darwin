@@ -312,11 +312,6 @@ Collections:
         Manager: u1
         Parent: c4
 
-CollectionsRights:
-    cr1:
-        Users: u1
-        Collections : c2
-
 CollectingMethods:
     cm1:
         method: Trappist catch

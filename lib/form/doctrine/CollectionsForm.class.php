@@ -74,27 +74,27 @@ class CollectionsForm extends BaseCollectionsForm
     
     $subForm = new sfForm();
     $this->embedForm('CollectionsAdmin',$subForm);   
-    foreach(Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($this->getObject()->getId()) as $key=>$vals)
+    /*foreach(Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($this->getObject()->getId()) as $key=>$vals)
     {
       $form = new CollectionsAdminForm($vals);
       $this->embeddedForms['CollectionsAdmin']->embedForm($key, $form);
     }
     //Re-embedding the container    
     $this->embedForm('CollectionsAdmin', $this->embeddedForms['CollectionsAdmin']); 
-    
+    */
     $subForm = new sfForm();
     $this->embedForm('newAdmin',$subForm);  
     
     $subForm = new sfForm();
     $this->embedForm('CollectionsRegUser',$subForm);   
-    foreach(Doctrine::getTable('CollectionsRegUser')->getCollectionRegUser($this->getObject()->getId()) as $key=>$vals)
+   /* foreach(Doctrine::getTable('CollectionsRegUser')->getCollectionRegUser($this->getObject()->getId()) as $key=>$vals)
     {
       $form = new CollectionsRegUserForm($vals);
       $this->embeddedForms['CollectionsRegUser']->embedForm($key, $form);
     }
     //Re-embedding the container    
     $this->embedForm('CollectionsRegUser', $this->embeddedForms['CollectionsRegUser']); 
-    
+   */ 
     $subForm = new sfForm();
     $this->embedForm('newRegUser',$subForm); 
   }
@@ -190,7 +190,7 @@ class CollectionsForm extends BaseCollectionsForm
 	        unset($this->embeddedForms['CollectionsRights'][$name]);
 	      } 
 	    }	
-	    $value = $this->getValue('CollectionsAdmin');
+	  /*  $value = $this->getValue('CollectionsAdmin');
 	    foreach($this->embeddedForms['CollectionsAdmin']->getEmbeddedForms() as $name => $form)
     	{
     	  if (!isset($value[$name]['user_ref']))
@@ -217,7 +217,7 @@ class CollectionsForm extends BaseCollectionsForm
 	      {
 	        unset($this->embeddedForms['newAdmin'][$name]);
 	      } 
-	    }	           
+	    }	      */     
    }
    return parent::saveEmbeddedForms($con, $forms);
   }

@@ -26,8 +26,6 @@
  * @property Doctrine_Collection $UsersAddresses
  * @property Doctrine_Collection $UsersLoginInfos
  * @property Doctrine_Collection $Collections
- * @property Doctrine_Collection $CollectionsAdmin
- * @property Doctrine_Collection $CollectionsRegUser
  * @property Doctrine_Collection $CollectionsRights
  * @property Doctrine_Collection $UsersTracking
  * @property Doctrine_Collection $MySavedSearches
@@ -58,8 +56,6 @@
  * @method Doctrine_Collection getUsersAddresses()        Returns the current record's "UsersAddresses" collection
  * @method Doctrine_Collection getUsersLoginInfos()       Returns the current record's "UsersLoginInfos" collection
  * @method Doctrine_Collection getCollections()           Returns the current record's "Collections" collection
- * @method Doctrine_Collection getCollectionsAdmin()      Returns the current record's "CollectionsAdmin" collection
- * @method Doctrine_Collection getCollectionsRegUser()    Returns the current record's "CollectionsRegUser" collection
  * @method Doctrine_Collection getCollectionsRights()     Returns the current record's "CollectionsRights" collection
  * @method Doctrine_Collection getUsersTracking()         Returns the current record's "UsersTracking" collection
  * @method Doctrine_Collection getMySavedSearches()       Returns the current record's "MySavedSearches" collection
@@ -89,8 +85,6 @@
  * @method Users               setUsersAddresses()        Sets the current record's "UsersAddresses" collection
  * @method Users               setUsersLoginInfos()       Sets the current record's "UsersLoginInfos" collection
  * @method Users               setCollections()           Sets the current record's "Collections" collection
- * @method Users               setCollectionsAdmin()      Sets the current record's "CollectionsAdmin" collection
- * @method Users               setCollectionsRegUser()    Sets the current record's "CollectionsRegUser" collection
  * @method Users               setCollectionsRights()     Sets the current record's "CollectionsRights" collection
  * @method Users               setUsersTracking()         Sets the current record's "UsersTracking" collection
  * @method Users               setMySavedSearches()       Sets the current record's "MySavedSearches" collection
@@ -198,14 +192,6 @@ abstract class BaseUsers extends sfDoctrineRecord
         $this->hasMany('Collections', array(
              'local' => 'id',
              'foreign' => 'main_manager_ref'));
-
-        $this->hasMany('CollectionsAdmin', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
-
-        $this->hasMany('CollectionsRegUser', array(
-             'local' => 'id',
-             'foreign' => 'user_ref'));
 
         $this->hasMany('CollectionsRights', array(
              'local' => 'id',

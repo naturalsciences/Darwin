@@ -60,11 +60,11 @@ class DarwinActions extends sfActions
   public function forwardToSecureAction()
   {
     sfContext::getInstance()->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
-	$this->getResponse()->setStatusCode(403);
+    $this->getResponse()->setStatusCode(403);
     throw new sfStopException();
   }
   
-  protected function getRecordIfDuplicate($id = 0, $obj, $is_spec = false)
+  protected function getRecordIfDuplicate($id , $obj, $is_spec = false)
   {
     if ($id)
     {

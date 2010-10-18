@@ -17,16 +17,16 @@ $(document).ready(function ()
   });
   $("#collections_main_manager_ref").change(function() {     
 	  ref_element_id = $(this).val();
-	  $info = 'good' ;
+	  info = 'good' ;
 	  $('table#encoder_right tbody tr').each(function() {
-	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
+	      if($(this).attr('id') == ref_element_id) info = 'bad' ;
 	  });
-	  if($info == 'good') addCollRightValue(ref_element_id,'encoder_right');
-	  $info = 'good' ;
+	  if(info == 'good') addCollRightValue(ref_element_id,'encoder_right');
+	  info = 'good' ;
 	  $('table#admin_right tbody tr').each(function() {
-	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
+	      if($(this).attr('id') == ref_element_id) info = 'bad' ;
 	  });
-	  if($info == 'good') addCollRightValue(ref_element_id,'admin_right');	  
+	  if(info == 'good') addCollRightValue(ref_element_id,'admin_right');
   });
 });
 </script>

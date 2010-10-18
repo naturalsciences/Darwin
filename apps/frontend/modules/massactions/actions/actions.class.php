@@ -10,6 +10,14 @@
  */
 class massactionsActions extends sfActions
 {
+  public function preExecute()
+  {
+    if($this->getUser()->getDbUserType() < Users::ENCODER)
+    {
+      $this->forwardToSecureAction();
+    }
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new BaseMassActionForm();
@@ -25,7 +33,7 @@ class massactionsActions extends sfActions
       }
 
       $items_ids = $actions['item_list'];
-      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$actions['source']);
+      $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$actions['source'], $this->getUser()->getId());
 
     }
 
@@ -48,7 +56,7 @@ class massactionsActions extends sfActions
   {
     $this->source = $request->getParameter('source','specimen');
     $items_ids = $this->getUser()->getAllPinned($this->source);
-    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$this->source);
+    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids,$this->source, $this->getUser()->getId());
   }
   
 }
