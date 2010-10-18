@@ -5,13 +5,15 @@
 class CollectionsTable extends DarwinTable
 {
 
-    public function fetchByInstitutionList($institutionId = null, $public_only = false)
+    public function fetchByInstitutionList($user, $institutionId = null, $public_only = false)
     {
       $q = Doctrine_Query::create()
-            ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
+            ->select('p.*, col.*,r.id,r.db_user_type, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->from('People p')
             ->innerJoin('p.Collections col')
+            ->leftJoin('col.CollectionsRights r')
             ->andWhere('p.is_physical = false')
+            ->andWhere('r.user_ref = ?',$user->getId())
             ->orderBy('p.id ASC, col_path_id ASC');
       if($institutionId != null)
         $q->andWhere('p.id = ?', $institutionId);
@@ -57,7 +59,7 @@ class CollectionsTable extends DarwinTable
             ->andWhere('c.path like ?', $expr)
             ->orderBy('coll_path_id ASC');
       if($public_only)
-        $q->andWhere('c.is_public = TRUE');             
+        $q->andWhere('c.is_public = TRUE');
       return $q->execute();
     }
     
@@ -67,7 +69,7 @@ class CollectionsTable extends DarwinTable
             ->from('Collections c')
             ->orderBy('path,name ASC');
       if($public_only)
-        $q->andWhere('c.is_public = TRUE');            
+        $q->andWhere('c.is_public = TRUE');
       return $q->execute();
     }
     

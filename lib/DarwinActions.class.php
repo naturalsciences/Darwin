@@ -64,7 +64,7 @@ class DarwinActions extends sfActions
     throw new sfStopException();
   }
   
-  protected function getRecordIfDuplicate($id = 0, $obj, $is_spec = false)
+  protected function getRecordIfDuplicate($id , $obj, $is_spec = false)
   {
     if ($id)
     {
