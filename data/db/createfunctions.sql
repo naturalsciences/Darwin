@@ -6718,6 +6718,31 @@ END;
 $$;
 
 /*
+  Before updating a collections rights entry, 
+  check we don't do a modification which wouldn't be in accordance with main manager of the concerned collection
+*/
+CREATE OR REPLACE FUNCTION fct_chk_canUpdateCollectionsRights() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+DECLARE
+  mgrName varchar;
+  booContinue boolean := false;
+BEGIN
+  IF (NEW.db_user_type < 4 AND OLD.db_user_type >=4) OR NEW.collection_ref != OLD.collection_ref OR NEW.user_ref != OLD.user_ref THEN
+    SELECT formated_name INTO mgrName 
+    FROM collections INNER JOIN users ON users.id = collections.main_manager_ref
+    WHERE collections.id = OLD.collection_ref
+      AND main_manager_ref = OLD.user_ref;
+    IF FOUND THEN
+      RAISE EXCEPTION 'This manager (%) cannot be updated because he/she is still defined as a main manager for this collection', mgrName;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+/*
   After inserting, updating or deleting a user in collections_rights -> impact user rights
 */
 CREATE OR REPLACE FUNCTION fct_cpy_updateUserRights() RETURNS TRIGGER
@@ -6726,8 +6751,16 @@ AS
 $$
 DECLARE
   db_user_type_val integer ;
+  booCollFound boolean;
 BEGIN
-  IF TG_OP = 'UPDATE' AND NEW.db_user_type != OLD.db_user_type THEN
+  IF TG_OP = 'INSERT' THEN
+    UPDATE users
+    SET db_user_type = NEW.db_user_type
+    WHERE id = NEW.user_ref
+      AND db_user_type < NEW.db_user_type;
+  END IF;
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.db_user_type != OLD.db_user_type THEN
       /* Promotion */
       IF NEW.db_user_type > OLD.db_user_type THEN
         UPDATE users
@@ -6745,14 +6778,19 @@ BEGIN
              ) subq
         WHERE id = NEW.user_ref;
       END IF;
+    END IF;
   END IF;
-  IF TG_OP = 'INSERT' OR (TG_OP = 'UPDATE' AND NEW.user_ref != OLD.user_ref) THEN
-    UPDATE users
-    SET db_user_type = NEW.db_user_type
-    WHERE id = NEW.user_ref
-      AND db_user_type < NEW.db_user_type;
-  END IF;
-  IF TG_OP = 'DELETE' OR (TG_OP = 'UPDATE' AND NEW.user_ref != OLD.user_ref) THEN
+  IF TG_OP = 'DELETE' THEN
+    IF OLD.db_user_type >=4 THEN
+      SELECT true
+      INTO booCollFound
+      FROM collections
+      WHERE id = OLD.collection_ref
+        AND main_manager_ref = OLD.user_ref;
+      IF FOUND THEN
+        RAISE EXCEPTION 'You try to delete a manager who is still defined as a main manager of the current collection';
+      END IF;
+    END IF;
     SELECT MAX(db_user_type)
     INTO db_user_type_val
     FROM collections_rights
@@ -6767,13 +6805,7 @@ BEGIN
       WHERE id = OLD.user_ref;
     END IF;
   END IF;
-
   RETURN NEW;
-
-EXCEPTION
-  WHEN OTHERS THEN
-    RAISE NOTICE 'An error occured: %', SQLERRM;
-    RETURN NEW;
 END;
 $$;
 

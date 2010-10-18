@@ -322,6 +322,10 @@ CREATE TRIGGER trg_cpy_updateCollectionRights AFTER INSERT OR UPDATE
 	ON collections FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_updateCollectionRights();
 
+CREATE TRIGGER trg_chk_canUpdateCollectionsRights BEFORE UPDATE
+  ON collections_rights FOR EACH ROW
+  EXECUTE PROCEDURE fct_chk_canUpdateCollectionsRights();
+
 CREATE TRIGGER trg_cpy_updateUserRights AFTER INSERT OR UPDATE OR DELETE
   ON collections_rights FOR EACH ROW
   EXECUTE PROCEDURE fct_cpy_updateUserRights();

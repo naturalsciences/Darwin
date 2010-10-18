@@ -261,6 +261,9 @@ DROP TRIGGER trg_clr_referencerecord_insurances
 -- DROP TRIGGER trg_cpy_updatecollectionadmin_collections
 --         ON collections;
 
+DROP TRIGGER trg_chk_canUpdateCollectionsRights
+        ON collections_rights;
+
 DROP TRIGGER trg_cpy_updateCollectionRights
         ON collections;
 
