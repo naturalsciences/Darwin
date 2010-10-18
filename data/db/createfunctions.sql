@@ -7664,3 +7664,30 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION fct_filter_encodable_row(ids varchar, col_name varchar, user_id integer) RETURNS SETOF integer
+AS $$
+DECLARE
+  ref refcursor;
+  rec RECORD;
+BEGIN
+        OPEN ref FOR EXECUTE 'SELECT distinct(' || quote_ident(col_name) || ') as result ' ||
+          ' FROM darwin_flat ' ||
+          'WHERE '|| quote_ident(col_name) || ' in (select X::int from regexp_split_to_table(' || quote_literal($1) || ', '','' ) as X) ' ||
+          'AND collection_ref in (select X FROM fct_search_authorized_encoding_collections(' || user_id || ') as X)';
+
+        LOOP
+        FETCH ref INTO rec;
+            IF  NOT FOUND THEN
+                EXIT;  -- exit loop
+            END IF;
+
+        return next rec.result;
+
+        END LOOP;
+
+        CLOSE ref;
+
+END;
+$$ LANGUAGE plpgsql;
+
