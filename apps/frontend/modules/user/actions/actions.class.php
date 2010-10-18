@@ -41,12 +41,7 @@ class userActions extends DarwinActions
       $this->form->bind($users);
       if($this->form->isValid())
       {
-        $old_db_user_type = $this->user->getDbUserType() ;
         $this->form->save();
-        Doctrine::getTable('MyWidgets')->
-          setUserRef($this->user->getId())->
-          setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
-
         return $this->redirect('user/edit?id='.$this->user->getId());
       }
     }

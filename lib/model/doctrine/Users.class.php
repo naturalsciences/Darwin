@@ -68,7 +68,7 @@ class Users extends BaseUsers
   }
 
     /**
-	* function to add all user's widgets in my_preference table
+	* function to add all user's widgets in my_widgets table
 	* use user id and db_user_type
 	* @return the number of widget added
 	*/
@@ -88,13 +88,7 @@ class Users extends BaseUsers
 				$pref = new MyWidgets() ;
 				$array_values['user_ref'] = $this->getId();
 				$pref->fromArray($array_values);
-				if($pref->getMandatory())
-				  $pref->setIsAvailable(true);
-
-				if($this->getDbUserType() < $key)
-				  $pref->setIsAvailable(false);
-				else
-				  $pref->setIsAvailable(true);
+			  $pref->setIsAvailable(true);
 
 				$pref->save();
 				$count_widget++;

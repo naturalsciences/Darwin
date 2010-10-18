@@ -192,48 +192,6 @@ class MyWidgetsTable extends DarwinTable
 
     $this->addCategoryUser($q,$category)->execute();
   }
-
-  /**
-  * Update widgets for a user when there is a change in DbUserType
-  * @param int $old_type OLD Db user type of the user
-  * @param int $new_type New Db user type of the user
-  */
-  public function setWidgetsForNewUserType($old_type, $new_type)
-  {
-	  if ($old_type != $new_type)
-	  {
-	    if ($old_type > $new_type)
-	    {
-		  // widget to delete
-		    switch ($old_type)
-		    {
-		      case 8: if ($new_type > 2) break ; /** @TODO: for now an admin and a CM have the same widgets**/
-				      if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
-				      if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				      break ;
-		      case 4: if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
-				      if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				      break ;
-		      case 2: $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				      break ;
-		      default: break ;
-		    }
-	    }
-	    else
-	    {
-		  // widget to add
-		    switch ($old_type)
-		    {
-		      case 1:$this->updateWigetsAvailabilityForRole(Users::ENCODER, true) ; 
-				      if ($new_type > 2) $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
-				      break ;
-		      case 2: $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
-				      break ;
-		      default: break ;
-		    }
-	    }
-	  }
-  }
   
   /**
   * Set all widget saved in a MySavedSearch visible in order see all parameter
