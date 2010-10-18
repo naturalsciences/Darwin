@@ -227,14 +227,14 @@ class collectionActions extends DarwinActions
   
   public function executeView(sfWebRequest $request)
   {
-    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));   
+    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));
     $this->forward404Unless($this->specimen);
     if(!$this->specimen->getCollectionIsPublic()) $this->forwardToSecureAction();
     
     $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
-    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      
+    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());
     $ids = $this->FecthIdForCommonNames() ;
-    $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;    
+    $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;
     
     if ($tag = $this->specimen->getGtuCountryTagValue()) $this->tags = explode(';',$tag) ; 
     else $this->tags = false ;

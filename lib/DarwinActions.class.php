@@ -60,7 +60,7 @@ class DarwinActions extends sfActions
   public function forwardToSecureAction()
   {
     sfContext::getInstance()->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
-	$this->getResponse()->setStatusCode(403);
+    $this->getResponse()->setStatusCode(403);
     throw new sfStopException();
   }
   
