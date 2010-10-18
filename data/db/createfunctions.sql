@@ -6776,7 +6776,8 @@ BEGIN
               FROM cr1.collections_rights
               WHERE cr1.user_ref = NEW.user_ref
              ) subq
-        WHERE id = NEW.user_ref;
+        WHERE id = NEW.user_ref
+          AND db_user_type != 8;
       END IF;
     END IF;
   END IF;
@@ -6798,11 +6799,13 @@ BEGIN
     IF FOUND THEN
       UPDATE users
       SET db_user_type = db_user_type_val
-      WHERE id = OLD.user_ref;
+      WHERE id = OLD.user_ref
+        AND db_user_type != 8;
     ELSE
       UPDATE users
       SET db_user_type = 1
-      WHERE id = OLD.user_ref;
+      WHERE id = OLD.user_ref
+        AND db_user_type != 8;
     END IF;
   END IF;
   RETURN NEW;
