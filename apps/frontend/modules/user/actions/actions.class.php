@@ -16,7 +16,7 @@ class userActions extends DarwinActions
   {
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $this->mode = 'new' ;
-    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode));
+    $this->form = new UsersForm(null, array('mode' => $this->mode));
   }
   
   public function executeEdit(sfWebRequest $request)
@@ -30,12 +30,9 @@ class userActions extends DarwinActions
     elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
       $this->forwardToSecureAction();
     $this->mode = 'edit' ;
-    $this->form = new UsersForm($this->user, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
+    $this->form = new UsersForm($this->user, array('mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
     $users = $request->getParameter('users');
-    if(! isset($users['db_user_type']))
-    {
-      $users['db_user_type'] = $this->user->getDbUserType();
-    }
+
     if($request->isMethod('post'))
     {
       $this->form->bind($users);

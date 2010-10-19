@@ -110,15 +110,6 @@ class collectionActions extends DarwinActions
       {
          $this->form->addValue($key, $val->getUserRef(),'encoder');
       }
-
-      /** TODO: OBSOLEEEEET***
-
-      $Admin = Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($duplic) ;      
-      foreach ($Admin as $key=>$val)
-      {
-         $this->form->addValue($key, $val->getUserRef(),'admin');
-      }
-      ************************/
     }  
   }
 
@@ -140,6 +131,7 @@ class collectionActions extends DarwinActions
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
     $this->forward404Unless($collection, 'collections does not exist');
+    $this->level = $this->getUser()->getDbUserType() ;      
     $this->form = new CollectionsForm($collection);
     $this->loadWidgets();
   }
@@ -150,7 +142,7 @@ class collectionActions extends DarwinActions
 
     $number = intval($request->getParameter('num'));
     $user_ref = intval($request->getParameter('user_ref'));
-    $right = $request->getParameter('right') ; // used to determine if we add an encoder right or a secondary admin right
+
     if($request->hasParameter('id'))
     {
       $this->ref_id = $request->getParameter('id') ;
@@ -160,21 +152,14 @@ class collectionActions extends DarwinActions
     else $form = new CollectionsForm();
     $form->addValue($number,$user_ref,$right);
 
-    if($right == 'encoder')
-      return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => $this->ref_id, 'reg_widget'=> ''));
-/** TODO: OBSOLEEEEET***
-    elseif($right == 'admin')
-      return $this->renderPartial('coll_rights',array('form' => $form['newAdmin'][$number],'ref_id' => '', 'reg_widget'=> ''));
-    else
-      return $this->renderPartial('coll_rights',array('form' => $form['newRegUser'][$number],'ref_id' => '', 'reg_widget'=> $this->ref_id));
-*************************/
+    return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => ''));
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
-
+    $this->level = $this->getUser()->getDbUserType() ;    
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
 
     $this->forward404Unless($collection, 'collections does not exist');
@@ -242,6 +227,7 @@ class collectionActions extends DarwinActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()));
+
     if ($form->isValid())
     {
         try{
@@ -254,18 +240,22 @@ class collectionActions extends DarwinActions
             $form->getErrorSchema()->addError($error); 
         }
     }
+    else
+      return $this->renderText('pas bon') ;
   }
 
   public function executeView(sfWebRequest $request)
   {
-  /** TODO Add things here ***/ $this->forwardToSecureAction();
+    $this->forward404Unless($this->collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), "Collection does not Exist");
+    if (!Doctrine::getTable('collectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId()))
+      $this->forwardToSecureAction();
+    $this->form = new CollectionsForm($this->collection) ;    
   }
 
   public function executeWidgetsRight(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-
-    if (!Doctrine::getTable('CollectionsAdmin')->findOneByCollectionRefAndUserRef($request->getParameter('collection_ref'),$this->getUser()->getId()))
+    if (!Doctrine::getTable('collectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('collection_ref'),$this->getUser()->getId()))
       $this->forwardToSecureAction();
     $id = $request->getParameter('user_ref');
     $this->form = new WidgetRightsForm(null,array('user_ref' => $id,'collection_ref' => $request->getParameter('collection_ref'))) ;

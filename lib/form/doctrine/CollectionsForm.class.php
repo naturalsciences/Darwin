@@ -101,32 +101,14 @@ class CollectionsForm extends BaseCollectionsForm
   
   public function addValue($num,$user_id,$rights)
   {
-    if($rights == "encoder") $val = new CollectionsRights() ;
-    elseif($rights == "admin") $val = new CollectionsAdmin() ;
-    else $val = new CollectionsRegUser() ;
+    $val = new CollectionsRights() ;
     $val->Collections = $this->getObject();      
     $val->setUserRef($user_id) ;
-    if($rights == "encoder") 
-    {
-      $form = new CollectionsRightsForm($val,array('user_id'=>$user_id));  
-      $this->embeddedForms['newVal']->embedForm($num, $form);
-      //Re-embedding the container
-      $this->embedForm('newVal', $this->embeddedForms['newVal']);
-    }
-    elseif($rights == "admin")
-    {
-      $form = new CollectionsAdminForm($val,array('user_id'=>$user_id));  
-      $this->embeddedForms['newAdmin']->embedForm($num, $form);
-      //Re-embedding the container
-      $this->embedForm('newAdmin', $this->embeddedForms['newAdmin']);    
-    }
-    else
-    {
-      $form = new CollectionsRegUserForm($val,array('user_id'=>$user_id));  
-      $this->embeddedForms['newRegUser']->embedForm($num, $form);
-      //Re-embedding the container
-      $this->embedForm('newRegUser', $this->embeddedForms['newRegUser']);    
-    }    
+    $val->setDbUserType($rights) ;
+    $form = new CollectionsRightsForm($val,array('user_id'=>$user_id));  
+    $this->embeddedForms['newVal']->embedForm($num, $form);
+    //Re-embedding the container
+    $this->embedForm('newVal', $this->embeddedForms['newVal']);
   }
 
   public function checkSelfAttached($validator, $values)
@@ -150,30 +132,10 @@ class CollectionsForm extends BaseCollectionsForm
 		  {
 		    if (!isset($this['newVal'][$key]))
 		    {
-		      $this->addValue($key,$newVal['user_ref'],'encoder');
+		      $this->addValue($key,$newVal['user_ref'],$newVal['db_user_type']);
 		    }
 		  }
-    }
-    if(isset($taintedValues['newAdmin']))
-    {
-		  foreach($taintedValues['newAdmin'] as $key=>$newVal)
-		  {
-		    if (!isset($this['newAdmin'][$key]))
-		    {
-		      $this->addValue($key,$newVal['user_ref'],'admin');
-		    }
-		  }
-    } 
-    if(isset($taintedValues['newRegUser']))
-    {
-		  foreach($taintedValues['newRegUser'] as $key=>$newVal)
-		  {
-		    if (!isset($this['newRegUser'][$key]))
-		    {
-		      $this->addValue($key,$newVal['user_ref'],'reg_user');
-		    }
-		  }
-    }        
+    }       
     parent::bind($taintedValues, $taintedFiles);
   }
 
@@ -185,39 +147,21 @@ class CollectionsForm extends BaseCollectionsForm
 	    foreach($this->embeddedForms['CollectionsRights']->getEmbeddedForms() as $name => $form)
     	{
     	  if (!isset($value[$name]['user_ref']))
-	      {
+	      {         
+	        if ($form->getObject()->getDbUserType() == Users::REGISTERED_USER ) // so we have to delete widget right for this guy
+	          Doctrine::getTable('MyWidgets')->setUserRef($form->getObject()->getUserRef())->doUpdateWidgetRight($form->getObject()->getCollectionRef());
 	        $form->getObject()->delete();
 	        unset($this->embeddedForms['CollectionsRights'][$name]);
 	      } 
-	    }	
-	  /*  $value = $this->getValue('CollectionsAdmin');
-	    foreach($this->embeddedForms['CollectionsAdmin']->getEmbeddedForms() as $name => $form)
+	    }	  
+	    $value = $this->getValue('newVal');
+	    foreach($this->embeddedForms['newVal']->getEmbeddedForms() as $name => $form)
     	{
     	  if (!isset($value[$name]['user_ref']))
-	      {
-	        $form->getObject()->delete();
-	        unset($this->embeddedForms['CollectionsAdmin'][$name]);
-	      } 
-	    } 
-	    $value = $this->getValue('CollectionsRegUser');
-	    foreach($this->embeddedForms['CollectionsRegUser']->getEmbeddedForms() as $name => $form)
-    	{
-    	  if (!isset($value[$name]['user_ref']))
-	      {
-	        // remove all widget rights on this collection before deleting this user
-	        Doctrine::getTable('MyWidgets')->setUserRef($form->getObject()->getUserRef())->doUpdateWidgetRight($form->getObject()->getCollectionRef());
-	        $form->getObject()->delete();                                  
-	        unset($this->embeddedForms['CollectionsRegUser'][$name]);
-	      } 
-	    } 	
-	    $value = $this->getValue('newAdmin');	    
-	    foreach($this->embeddedForms['newAdmin']->getEmbeddedForms() as $name => $form)
-    	{
-    	  if ($value[$name]['user_ref'] == $this->getValue('main_manager_ref'))
-	      {
-	        unset($this->embeddedForms['newAdmin'][$name]);
-	      } 
-	    }	      */     
+    	  {
+	        unset($this->embeddedForms['newVal'][$name]);
+	      }
+	    }	      
    }
    return parent::saveEmbeddedForms($con, $forms);
   }

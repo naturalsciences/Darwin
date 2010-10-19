@@ -6,15 +6,6 @@
   <table>
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
-      <?php if ($mode != 'profile') : ?>
-        <tr>
-          <th><?php echo $form['db_user_type']->renderLabel() ?></th>
-	        <td>
-	          <?php echo $form['db_user_type']->renderError() ?>
-	          <?php echo $form['db_user_type'] ?>
-	        </td>
-        </tr>
-      <?php endif ?>
       <?php if ($mode == 'new') : ?>
         <tr>
           <th><?php echo $form['is_physical']->renderLabel() ?></th>

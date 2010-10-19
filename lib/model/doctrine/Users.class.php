@@ -47,7 +47,8 @@ class Users extends BaseUsers
       array_shift($db_user_type) ;
       return $db_user_type ;
     }	
-	  
+    if (isset($options['screen']) && $options['screen'] == 2)    
+	    array_pop($db_user_type);
     if ($options['db_user_type'] != self::ADMIN)
     { 
 	    array_pop($db_user_type);

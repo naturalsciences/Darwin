@@ -857,6 +857,7 @@ table.encoding tbody
   margin: 0.5em;
   margin-left:0;
   width:98%;
+  font-size : 9pt ;  
 }
 
 .collections_rights td, .collections_rights th
@@ -880,6 +881,12 @@ table.encoding tbody
 {
   text-align:right;
   padding-right:2.8em;
+}
+
+.collections_rights select
+{
+  font-size : 9pt ;  
+  border: 1px solid #C1CF56; 
 }
 
 .property_values
@@ -1025,7 +1032,7 @@ td.left_tabed
   padding-left:0.1em;
 }
 
-.add_value, .set_rights
+.add_value
 {
   height:24px;
   width:74px;
@@ -1040,7 +1047,13 @@ td.left_tabed
 .set_rights
 {
   margin-top:0.3em;
-  background: url(/images/widget_button_green.png) no-repeat;
+  margin-bottom:0.3em;  
+  border:1px solid #C1CC33;
+  background-color:#C1CF56;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  color:white;
+  text-decoration: none;
 }
 
 table.green_border
