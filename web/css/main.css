@@ -851,6 +851,10 @@ table.encoding tbody
   border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }
+table.collections
+{
+  width: 600px;
+}
 
 .collections_rights
 {

@@ -240,8 +240,6 @@ class collectionActions extends DarwinActions
             $form->getErrorSchema()->addError($error); 
         }
     }
-    else
-      return $this->renderText('pas bon') ;
   }
 
   public function executeView(sfWebRequest $request)

@@ -27,7 +27,7 @@ $(document).ready(function ()
 </script>
 <?php echo form_tag('collection/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
 <?php echo $form->renderGlobalErrors() ?>
-  <table>
+  <table class="collections">
     <tbody>
       <tr>
         <th><?php echo $form['is_public']->renderLabel(__("Public collection")) ?></th>

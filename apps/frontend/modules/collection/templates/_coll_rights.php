@@ -16,7 +16,7 @@
     </td>
     <td>
       <div <?php if($form['db_user_type']->getValue() != Users::REGISTERED_USER) echo "class='tree'" ; ?>>
-	    <a id="widget" class='set_rights' href="<?php echo url_for('collection/widgetsRight?user_ref='.$form['user_ref']->getValue().'&collection_ref='.$ref_id);?>" name="<?php echo __('Widgets') ; ?>"><?php echo __('Manage widgets');?></a>
+	    <a id="widget_<?php echo $form['user_ref']->getValue() ;?>" class='set_rights' href="<?php echo url_for('collection/widgetsRight?user_ref='.$form['user_ref']->getValue().'&collection_ref='.$ref_id);?>" name="<?php echo __('Widgets') ; ?>"><?php echo __('Manage widgets');?></a>
 	   </div>
     </td>
     <?php else : ?>
