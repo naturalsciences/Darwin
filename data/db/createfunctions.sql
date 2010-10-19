@@ -6796,7 +6796,7 @@ BEGIN
     INTO db_user_type_val
     FROM collections_rights
     WHERE user_ref = OLD.user_ref;
-    IF FOUND THEN
+    IF db_user_type_val is not null THEN
       UPDATE users
       SET db_user_type = db_user_type_val
       WHERE id = OLD.user_ref
