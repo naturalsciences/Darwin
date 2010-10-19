@@ -6,7 +6,14 @@ class publicConfiguration extends sfApplicationConfiguration
 
   public function generateFrontendUrl($name, $parameters = array())
   {
-    return 'http://'.$_SERVER['SERVER_NAME'].$this->getFrontendRouting()->generate($name, $parameters);
+    $env_str = '';
+    switch($this->getEnvironment())
+    {
+      case 'prod': $env_str = '';break;
+      case 'dev': $env_str = '/frontend_dev.php';break;
+      case 'preprod': $env_str = '/frontend_pre.php';break;
+    }
+    return 'http://'.$_SERVER['SERVER_NAME'].$env_str.$this->getFrontendRouting()->generate($name, $parameters);
   }
 
   public function getFrontendRouting()
