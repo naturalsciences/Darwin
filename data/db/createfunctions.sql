@@ -6772,9 +6772,9 @@ BEGIN
         UPDATE users
         SET db_user_type = subq.db_user_type_max
         FROM (
-              SELECT MAX(cr1.db_user_type) as db_user_type_max
-              FROM cr1.collections_rights
-              WHERE cr1.user_ref = NEW.user_ref
+              SELECT MAX(db_user_type) as db_user_type_max
+              FROM collections_rights
+              WHERE user_ref = NEW.user_ref
              ) subq
         WHERE id = NEW.user_ref
           AND db_user_type != 8;
