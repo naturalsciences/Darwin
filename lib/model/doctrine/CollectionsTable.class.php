@@ -14,7 +14,7 @@ class CollectionsTable extends DarwinTable
             ->leftJoin('col.CollectionsRights r')
             ->andWhere('p.is_physical = false')
             ->orderBy('p.id ASC, col_path_id ASC');
-      if($user)
+      if($user && ! $user->isA(Users::ADMIN) )
             $q->andWhere('r.user_ref = ? OR col.is_public = TRUE',$user->getId());
       if($public_only)
         $q->andWhere('col.is_public = TRUE');
