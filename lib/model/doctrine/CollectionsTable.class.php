@@ -13,12 +13,14 @@ class CollectionsTable extends DarwinTable
             ->innerJoin('p.Collections col')
             ->leftJoin('col.CollectionsRights r')
             ->andWhere('p.is_physical = false')
-            ->andWhere('r.user_ref = ?',$user->getId())
             ->orderBy('p.id ASC, col_path_id ASC');
-      if($institutionId != null)
-        $q->andWhere('p.id = ?', $institutionId);
+      if($user)
+            $q->andWhere('r.user_ref = ? OR col.is_public = TRUE',$user->getId());
       if($public_only)
         $q->andWhere('col.is_public = TRUE');
+      if($institutionId != null)
+        $q->andWhere('p.id = ?', $institutionId);
+
       return $q->execute();
     }
 
