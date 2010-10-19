@@ -35,7 +35,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'lithology'))),
         'add_empty' => 'All'
       ));
-      
+
     $this->widgetSchema['litho_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['litho_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
@@ -49,20 +49,20 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'chronostratigraphy'))),
         'add_empty' => 'All'
-      )); 
-           
+      ));
+
     $this->widgetSchema['mineral_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['mineral_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => 'All'
-      ));      
+      ));
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
-    $this->widgetSchema['collection_ref']->addOption('public_only',true);    
+    $this->widgetSchema['collection_ref']->addOption('public_only',false);
     $this->validatorSchema['collection_ref'] = new sfValidatorPass(); //Avoid duplicate the query
     $this->widgetSchema['spec_ids'] = new sfWidgetFormTextarea(array('label'=>'#ID list'));
-    
+
     $this->validatorSchema['spec_ids'] = new sfValidatorString( array('required' => false,'trim' => true));
     $this->validatorSchema['col_fields'] = new sfValidatorString(array('required' => false,
                                                                  'trim' => true
@@ -607,8 +607,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     else $this->offsetUnset('Codes') ;
 
-    if(isset($taintedValues['collection_ref']))
-      $this->widgetSchema['collection_ref']->addOption('listCheck',$taintedValues['collection_ref']) ;
     if(isset($taintedValues['Tags'])&& is_array($taintedValues['Tags']))
     {
       foreach($taintedValues['Tags'] as $key=>$newVal)
@@ -651,6 +649,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     {
       $query->andWhereIn('collection_ref',$val) ;
     }
+    $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', sfContext::getInstance()->getUser()->getId());
     return $query;
   }
 
