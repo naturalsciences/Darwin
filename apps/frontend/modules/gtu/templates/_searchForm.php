@@ -130,15 +130,11 @@
       if(results)
       {
         map.removeLayer(results);
-        //results.destroy();
         markers.clearMarkers();
-       /* markers.destroy();
-        markers=0;*/
-//         map.removeLayer(results);
       }
       updateLatLong()
       removeAllPopups();
-      results = new OpenLayers.Layer.Vector("Earthquakes", {
+      results = new OpenLayers.Layer.Vector("Results", {
         units: "m", 
         strategies: [new OpenLayers.Strategy.Fixed()],
         protocol: new OpenLayers.Protocol.HTTP({
@@ -146,9 +142,8 @@
           format: new OpenLayers.Format.KML()
         })
       });
-      //new OpenLayers.Layer.GeoRSS('test',$('#gtu_filter').attr('action')+'/format/xml?'+ $('#gtu_filter').serialize(),{ displayInLayerSwitcher: false});
       map.addLayer(results);
-       results.events.register("loadend", results, addMarkersFromFeatures);
+      results.events.register("loadend", results, addMarkersFromFeatures);
 
 
       selectControl = new OpenLayers.Control.SelectFeature(results, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});

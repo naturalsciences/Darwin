@@ -17,13 +17,13 @@ class SubCollectionsForm extends sfForm
       $this->widgetSchema['CollectionsRights']->addOption('collection_parent',$this->options['collection_ref']) ;    
       $this->widgetSchema['CollectionsRights']->addOption('old_right',$this->options['old_right']) ;
     }
-    $this->validatorSchema['CollectionsRights'] = new sfValidatorPass();    
+    $this->validatorSchema['CollectionsRights'] = new sfValidatorPass();
     $this->widgetSchema->setNameFormat('sub_collection[%s]');
   }
   
   public function save()
   {
-	  $value = $this->getValue('CollectionsRights'); // checked by user values
+/*	  $value = $this->getValue('CollectionsRights'); // checked by user values
 	  if(!$value) $value = array() ;
     $old_right = $this->getWidget('CollectionsRights')->getOption('old_right'); // old checked values
 	  if(!$old_right) $old_right = array() ;    
@@ -52,6 +52,6 @@ class SubCollectionsForm extends sfForm
 	       }
 	      	//else nothing to do  
 	    }
-    }
+    }*/
   }
 }
