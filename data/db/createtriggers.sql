@@ -330,6 +330,10 @@ CREATE TRIGGER trg_cpy_updateUserRights AFTER INSERT OR UPDATE OR DELETE
   ON collections_rights FOR EACH ROW
   EXECUTE PROCEDURE fct_cpy_updateUserRights();
 
+CREATE TRIGGER trg_cpy_updateUserRightsCollections AFTER INSERT OR UPDATE
+  ON collections FOR EACH ROW
+  EXECUTE PROCEDURE fct_cpy_updateUserRights();
+
 CREATE TRIGGER trg_cpy_toFullText_expeditions BEFORE INSERT OR UPDATE
 	ON expeditions FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();

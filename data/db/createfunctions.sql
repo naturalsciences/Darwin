@@ -6729,11 +6729,15 @@ DECLARE
   mgrName varchar;
   booContinue boolean := false;
 BEGIN
+  /*Check an unpromotion occurs by modifying db_user_type explicitely or implicitely by replacing a user by an other
+    or moving a user from one collection to an other
+  */
   IF (NEW.db_user_type < 4 AND OLD.db_user_type >=4) OR NEW.collection_ref != OLD.collection_ref OR NEW.user_ref != OLD.user_ref THEN
     SELECT formated_name INTO mgrName 
     FROM collections INNER JOIN users ON users.id = collections.main_manager_ref
     WHERE collections.id = OLD.collection_ref
       AND main_manager_ref = OLD.user_ref;
+    /*If user concerned still main manager of the collection, cannot be updated*/
     IF FOUND THEN
       RAISE EXCEPTION 'This manager (%) cannot be updated because he/she is still defined as a main manager for this collection', mgrName;
     END IF;
@@ -6752,58 +6756,91 @@ $$
 DECLARE
   db_user_type_val integer ;
   booCollFound boolean;
+  booContinue boolean;
 BEGIN
-  IF TG_OP = 'INSERT' THEN
-    UPDATE users
-    SET db_user_type = NEW.db_user_type
-    WHERE id = NEW.user_ref
-      AND db_user_type < NEW.db_user_type;
-  END IF;
-  IF TG_OP = 'UPDATE' THEN
-    IF NEW.db_user_type != OLD.db_user_type THEN
-      /* Promotion */
-      IF NEW.db_user_type > OLD.db_user_type THEN
+  /*When updating main manager ref -> impact potentially db_user_type 
+    of new user chosen as manager
+  */
+  IF TG_TABLE_NAME = 'collections' THEN
+    /*We take in count only an update
+      An insertion as it's creating an entry in collections_rights will trigger this current trigger again ;)
+    */
+    IF TG_OP = 'UPDATE' THEN
+      IF NEW.main_manager_ref != OLD.main_manager_ref THEN
+        UPDATE users
+        SET db_user_type = 4
+        WHERE id = NEW.main_manager_ref
+          AND db_user_type < 4;
+      END IF;
+    END IF;
+  ELSE -- trigger on collections_rights table
+    IF TG_OP = 'INSERT' THEN
+      /*If user is promoted by inserting her/him 
+        with a higher db_user_type than she/he is -> promote her/him
+      */
+      UPDATE users
+      SET db_user_type = NEW.db_user_type
+      WHERE id = NEW.user_ref
+        AND db_user_type < NEW.db_user_type;
+    END IF;
+    IF TG_OP = 'UPDATE' THEN
+      /*First case: replacing a user by an other*/
+      IF NEW.user_ref != OLD.user_ref THEN
+        /*Update the user db_user_type chosen as the new one as if it would be an insertion*/
         UPDATE users
         SET db_user_type = NEW.db_user_type
         WHERE id = NEW.user_ref
           AND db_user_type < NEW.db_user_type;
-      /* Unpromotion */
-      ELSE
+        /*Un promote the user replaced if necessary*/
         UPDATE users
-        SET db_user_type = subq.db_user_type_max
-        FROM (
-              SELECT MAX(db_user_type) as db_user_type_max
-              FROM collections_rights
-              WHERE user_ref = NEW.user_ref
-             ) subq
-        WHERE id = NEW.user_ref
-          AND db_user_type != 8;
+          SET db_user_type = subq.db_user_type_max
+          FROM (
+                SELECT COALESCE(MAX(db_user_type),1) as db_user_type_max
+                FROM collections_rights
+                WHERE user_ref = OLD.user_ref
+              ) subq
+          WHERE id = OLD.user_ref
+            AND db_user_type != 8;
+      END IF;
+      IF NEW.db_user_type != OLD.db_user_type THEN
+        /* Promotion */
+        IF NEW.db_user_type > OLD.db_user_type THEN
+          UPDATE users
+          SET db_user_type = NEW.db_user_type
+          WHERE id = NEW.user_ref
+            AND db_user_type < NEW.db_user_type;
+        /* Unpromotion */
+        ELSE
+          UPDATE users
+          SET db_user_type = subq.db_user_type_max
+          FROM (
+                SELECT COALESCE(MAX(db_user_type),1) as db_user_type_max
+                FROM collections_rights
+                WHERE user_ref = NEW.user_ref
+              ) subq
+          WHERE id = NEW.user_ref
+            AND db_user_type != 8;
+        END IF;
       END IF;
     END IF;
-  END IF;
-  IF TG_OP = 'DELETE' THEN
-    IF OLD.db_user_type >=4 THEN
-      SELECT true
-      INTO booCollFound
-      FROM collections
-      WHERE id = OLD.collection_ref
-        AND main_manager_ref = OLD.user_ref;
-      IF FOUND THEN
-        RAISE EXCEPTION 'You try to delete a manager who is still defined as a main manager of the current collection';
+    IF TG_OP = 'DELETE' THEN
+      IF OLD.db_user_type >=4 THEN
+        SELECT true
+        INTO booCollFound
+        FROM collections
+        WHERE id = OLD.collection_ref
+          AND main_manager_ref = OLD.user_ref;
+        IF FOUND THEN
+          RAISE EXCEPTION 'You try to delete a manager who is still defined as a main manager of the current collection';
+        END IF;
       END IF;
-    END IF;
-    SELECT MAX(db_user_type)
-    INTO db_user_type_val
-    FROM collections_rights
-    WHERE user_ref = OLD.user_ref;
-    IF db_user_type_val is not null THEN
       UPDATE users
-      SET db_user_type = db_user_type_val
-      WHERE id = OLD.user_ref
-        AND db_user_type != 8;
-    ELSE
-      UPDATE users
-      SET db_user_type = 1
+      SET db_user_type = subq.db_user_type_max
+      FROM (
+            SELECT COALESCE(MAX(db_user_type),1) as db_user_type_max
+            FROM collections_rights
+            WHERE user_ref = OLD.user_ref
+           ) subq
       WHERE id = OLD.user_ref
         AND db_user_type != 8;
     END IF;
