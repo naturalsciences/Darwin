@@ -1,3 +1,4 @@
+<div>
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <script type="text/javascript">
@@ -36,10 +37,12 @@ $(document).ready(function () {
     <table class="widget_sub_table">
       <tr>
         <td>
+          <?php $form->renderGlobalErrors();?>
           <div class="treelist">
             <?php $prev_level = 0;?>
             <?php foreach($form['collections'] as $id => $col):?>
               <?php $current_col = $form->getEmbeddedForm('collections')->getEmbeddedForm($id)->getCollection();?>
+              <?php $current_sub_form = $form->getEmbeddedForm('collections')->getEmbeddedForm($id);?>
               <?php if($prev_level < $current_col->getLevel()):?>
                 <ul>
               <?php else:?>
@@ -52,7 +55,12 @@ $(document).ready(function () {
               <?php echo image_tag ('individual_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
               <?php echo image_tag ('individual_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
               <span><?php echo $current_col->getName();?>
-              <?php echo $col['db_user_type'];?>
+                <?php if($current_col->getMainManagerRef() == $sf_params->get('user_ref')):?>
+                  <?php echo $col['db_user_type']->render(array('class'=>'hidden'));?>
+                  <?php echo $col['db_user_type']->render(array('disabled'=>'disabled'));?>
+                <?php else:?>
+                  <?php echo $col['db_user_type']->render();?>
+                <?php endif;?>
               </span></div>
             <?php $prev_level =$current_col->getLevel();?>
           <?php endforeach;?>
@@ -69,3 +77,4 @@ $(document).ready(function () {
     </table>
     </form>
   <?php endif;?>
+</div>

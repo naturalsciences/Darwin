@@ -102,13 +102,13 @@ class CollectionsForm extends BaseCollectionsForm
   {
     if(isset($taintedValues['newVal']))
     {
-		  foreach($taintedValues['newVal'] as $key=>$newVal)
-		  {
-		    if (!isset($this['newVal'][$key]))
-		    {
-		      $this->addValue($key,$newVal['user_ref'],$newVal['db_user_type']);
-		    }
-		  }
+      foreach($taintedValues['newVal'] as $key=>$newVal)
+      {
+        if (!isset($this['newVal'][$key]))
+        {
+          $this->addValue($key,$newVal['user_ref'],$newVal['db_user_type']);
+        }
+      }
     }
     parent::bind($taintedValues, $taintedFiles);
   }

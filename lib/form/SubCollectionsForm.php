@@ -24,7 +24,7 @@ class SubCollectionsForm extends sfForm
       {
         $right = new CollectionsRights();
         $right->setCollectionRef($record->getId());
-        $right->setDbUserType(Users::REGISTERED_USER);
+        $right->setDbUserType(0);
         $right->setUserRef($this->options['user_ref']);
       }
 
@@ -39,11 +39,18 @@ class SubCollectionsForm extends sfForm
   public function save()
   {
     $values = $this->getValues();
-    
+
     foreach($this->embeddedForms['collections']->getEmbeddedForms() as $key => $prefs)
     {
-      $prefs->updateObject($values['collections'][$key]);
-      $prefs->getObject()->save();
+      if($values['collections'][$key]['db_user_type'] == '')
+      {
+         $prefs->getObject()->delete();
+      }
+      else
+      {
+        $prefs->updateObject($values['collections'][$key]);
+        $prefs->getObject()->save();
+      }
     }
   }
 }
