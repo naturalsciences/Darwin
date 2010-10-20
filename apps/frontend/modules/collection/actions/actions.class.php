@@ -203,16 +203,10 @@ class collectionActions extends DarwinActions
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
 
-    $id = $request->getParameter('collection_ref') ;
-    $user = $request->getParameter('user_ref') ;
-    $this->forward404Unless(Doctrine::getTable('Collections')->fetchByCollectionParent($id), sprintf('Object collections does not exist (%s).', $id));
-    $this->user_formated_name = Doctrine::getTable('Users')->findUser($user)->getFormatedName() ;
-    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user)->toArray() ;
-    $old_right = array() ;
-    foreach($old_rights as $key=>$right)
-      $old_right[] = $right['collection_ref'] ;
-    $this->form = new SubCollectionsForm(null,array('collection_ref' => $id ,'user_ref' => $user,'old_right' => $old_right));
-    $this->form->user = $user ;
+    $user_ref = $request->getParameter('user_ref');
+    $parent_ref = $request->getParameter('collection_ref');
+
+    $this->form = new SubCollectionsForm(null, array('collection_ref' => $parent_ref ,'user_ref' => $user_ref));
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('sub_collection')) ;
@@ -222,6 +216,23 @@ class collectionActions extends DarwinActions
         return $this->renderText('ok') ;
       }
     }
+
+    /*$this->forward404Unless(Doctrine::getTable('Collections')->fetchByCollectionParent($parent_id), sprintf('Object collections does not exist (%s).', $id));
+    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user)->toArray() ;
+    $old_right = array() ;
+    foreach($old_rights as $key=>$right)
+      $old_right[] = $right['collection_ref'] ;
+    $this->form = new SubCollectionsForm(null,array('collection_ref' => $parent_id ,'user_ref' => $user,'old_right' => $old_right));
+    $this->form->user = $user ;
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('sub_collection')) ;
+      if($this->form->isValid())
+      {
+        $this->form->save();
+        return $this->renderText('ok') ;
+      }
+    }*/
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

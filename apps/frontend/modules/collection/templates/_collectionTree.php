@@ -35,9 +35,11 @@ $(document).ready(function () {
           <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
           <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
           <span><?php echo $col_item->getName();?>
-          <?php if($sf_user->isA(Users::ADMIN) || ((! $is_choose ) && ( $sf_user->isAtLeast(Users::ENCODER) && $col_item->getTypeInCol() >= Users::MANAGER  ))):?>
-	          <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
-	          <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
+          <?php (! $is_choose );?>
+            <?php if($sf_user->isA(Users::ADMIN) || ( $sf_user->isAtLeast(Users::ENCODER) && $col_item->getTypeInCol() >= Users::MANAGER  ) ):?>
+              <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
+              <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
+            <?php endif ; ?>
           <?php endif ; ?>
           </span></div>
         <?php endif ; ?>
