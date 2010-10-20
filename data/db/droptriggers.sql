@@ -276,6 +276,9 @@ DROP TRIGGER trg_cpy_updateUserRights
 DROP TRIGGER trg_cpy_updateUserRightsCollections
         ON collections;
 
+DROP TRIGGER trg_cpy_updateMyWidgetsCollRights
+        ON collections_rights;
+
 DROP TRIGGER trg_cpy_path_multimedia
         ON multimedia;
 
