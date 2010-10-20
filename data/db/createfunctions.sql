@@ -7661,6 +7661,10 @@ BEGIN
 
   SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
 
+  IF user_id = 0 THEN
+    RETURN NEW;
+  END IF;
+
   SELECT db_user_type INTO db_user_type_cpy FROM users WHERE id = user_id;
 
   IF db_user_type_cpy = 8 THEN
