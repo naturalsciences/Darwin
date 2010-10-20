@@ -113,9 +113,9 @@
         <tr class="trusted_user_links">
           <td colspan="2">
             <?php if($mode == 'edit') : ?>
-  	          <a class="link_catalogue" href="<?php echo url_for('user/rightSumary?id='.$user->getId()) ?>"><?php echo __('Rights on collections');?></a>
+  	          <a id="summary" href="<?php echo url_for('user/rightSummary?id='.$user->getId()) ?>"><?php echo __('Rights on collections');?></a>
   	        <?php else : ?>
-  	          <a class="link_catalogue" href="<?php echo url_for('user/rightSumary') ?>"><?php echo __('View your rights on collections');?></a>
+  	          <a id="summary" href="<?php echo url_for('user/rightSummary') ?>"><?php echo __('View your rights on collections');?></a>
   	        <?php endif ; ?>
           </td>
         </tr>            
@@ -172,6 +172,48 @@ $(document).ready(function () {
     $(this).hide();
     $('.display_value').show();
   });
+  
+  $("#summary").click(function(){
+    scroll(0,0) ;
 
+    $(this).qtip({
+        content: {
+            title: { text : '<?php echo __('List of rights in collections')?>', button: 'X' },        
+            url: $(this).attr('href'),
+        },
+        show: { when: 'click', ready: true },
+        position: {
+            target: $(document.body), // Position it via the document body...
+            corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
+            adjust:{
+              y: 150 // option set in case of the qtip become too big
+            },
+        },
+        hide: false,
+        style: {
+            width: { min: 620, max: 800},
+            border: {radius:3},
+            title: { background: '#5BABBD', color:'white'}
+        },
+        api: {
+            beforeShow: function()
+            {
+                // Fade in the modal "blanket" using the defined show speed
+                addBlackScreen()
+                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
+            },
+            beforeHide: function()
+            {
+                // Fade out the modal "blanket" using the defined hide speed
+                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
+            },
+        onHide: function()
+        {
+           $(this.elements.target).qtip("destroy");
+        }            
+      }
+    });
+    return false;
+ });
 });
 </script>
