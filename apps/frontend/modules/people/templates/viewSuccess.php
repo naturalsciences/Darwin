@@ -90,6 +90,6 @@
 	'widgets' => $widgets,
 	'category' => 'peoplewidget',
 	'columns' => 1,
-	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'people', 'level' => $level)
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'people', 'view' => true)
 	)); ?>
 </div>

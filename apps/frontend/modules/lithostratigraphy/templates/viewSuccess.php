@@ -62,6 +62,6 @@ $(document).ready(function ()
 	'widgets' => $widgets,
 	'category' => 'cataloguewidget',
 	'columns' => 1,
-	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'lithostratigraphy', 'level' => $level)
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'lithostratigraphy', 'view' => true)
 	)); ?>
 </div>

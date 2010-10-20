@@ -74,6 +74,6 @@ $(document).ready(function ()
 	'widgets' => $widgets,
 	'category' => 'cataloguewidget',
 	'columns' => 1,
-	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'chronostratigraphy', 'level' => $level)
+	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'chronostratigraphy', 'view' => true)
 	)); ?>
 </div>

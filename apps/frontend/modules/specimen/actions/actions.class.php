@@ -208,7 +208,6 @@ class specimenActions extends DarwinActions
     $this->forward404Unless(Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
     $this->loadWidgets();
     $this->form = $this->getSpecimenForm($request, true);
-    $rights 
     $this->setTemplate('new');
   }
 

@@ -1,1 +1,1 @@
-<?php echo get_component('cataloguewidget', 'properties', array('table' => 'people', 'eid' => $eid, 'level' => $level));?>
+<?php echo get_component('cataloguewidget', 'properties', array('table' => 'people', 'eid' => $eid));?>

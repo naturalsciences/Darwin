@@ -64,7 +64,6 @@ class lithostratigraphyActions extends DarwinActions
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new LithostratigraphyForm($unit);
     $this->loadWidgets();
-    $this->level = $this->getUser()->getDbUserType() ;
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
@@ -108,7 +107,6 @@ class lithostratigraphyActions extends DarwinActions
   public function executeView(sfWebRequest $request)
   {
     $this->litho = Doctrine::getTable('Lithostratigraphy')->findExcept($request->getParameter('id'));
-    $this->level = $this->getUser()->getDbUserType() ;
     $this->forward404Unless($this->litho,'Lithostratigraphic unit not Found');
     $this->form = new LithostratigraphyForm($this->litho);    
     $this->loadWidgets();

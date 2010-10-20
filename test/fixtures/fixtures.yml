@@ -310,7 +310,7 @@ Collections:
         name: Fossile Aves
         Institution: p1
         Manager: u1
-        Parent: c4
+        Parent: c4                            
 
 CollectingMethods:
     cm1:
@@ -327,13 +327,11 @@ CollectingTools:
 Specimens:
     sp1:
         id: 1
-        Collections: c1
         acquisition_date: '2001-01-01'
         acquisition_category: expedition
         Taxonomy: ta1
     sp2:
         id: 2
-        Collections: c2
         category: observation
         acquisition_date: '2001-03-01'
         acquisition_category: theft
@@ -341,7 +339,6 @@ Specimens:
         Gtu: gtu1
     sp3:
         id: 3
-        Collections: c3
         acquisition_date: '2001-02-01'
         acquisition_category: expedition
         Taxonomy: ta3
@@ -350,7 +347,6 @@ Specimens:
         Gtu: gtu2
     sp4:
         id: 4
-        Collections: c3
         acquisition_date: '2009-02-24'
         acquisition_category: expedition
         HostSpecimen: sp2

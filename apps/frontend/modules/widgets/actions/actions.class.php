@@ -63,7 +63,6 @@ class widgetsActions extends DarwinActions
             'options' => array(
               'eid' =>  $request->getParameter('eid',null),
               'table' => $this->getTableFromCategory($request->getParameter('category')),
-              'level' => $this->getUser()->getAttribute('db_user_type')
             ),
            ));
   }

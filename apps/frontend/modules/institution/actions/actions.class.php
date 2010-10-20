@@ -135,4 +135,12 @@ class institutionActions extends DarwinActions
       }
     }
   }
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->instit = Doctrine::getTable('Institutions')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($this->instit,'Institution not Found');
+    $this->form = new InstitutionsForm($this->instit);    
+    $this->loadWidgets();
+  }  
 }
