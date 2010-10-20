@@ -129,6 +129,8 @@ class collectionActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
+    if(!Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+      $this->forwardToSecureAction();
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
     $this->forward404Unless($collection, 'collections does not exist');
     $this->level = $this->getUser()->getDbUserType() ;      
@@ -150,7 +152,7 @@ class collectionActions extends DarwinActions
       $form = new CollectionsForm($collection);
     }
     else $form = new CollectionsForm();
-    $form->addValue($number,$user_ref,$right);
+    $form->addValue($number,$user_ref,1);
 
     return $this->renderPartial('coll_rights',array('form' => $form['newVal'][$number],'ref_id' => ''));
   }
@@ -177,7 +179,8 @@ class collectionActions extends DarwinActions
   public function executeDelete(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-
+    if(!Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+      $this->forwardToSecureAction();
     $request->checkCSRFProtection();
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
 
@@ -202,7 +205,8 @@ class collectionActions extends DarwinActions
   public function executeRights(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-
+    if(!Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+      $this->forwardToSecureAction();
     $user_ref = $request->getParameter('user_ref');
     $parent_ref = $request->getParameter('collection_ref');
 
@@ -251,14 +255,6 @@ class collectionActions extends DarwinActions
             $form->getErrorSchema()->addError($error); 
         }
     }
-  }
-
-  public function executeView(sfWebRequest $request)
-  {
-    $this->forward404Unless($this->collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id')), "Collection does not Exist");
-    if (!Doctrine::getTable('collectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId()))
-      $this->forwardToSecureAction();
-    $this->form = new CollectionsForm($this->collection) ;    
   }
 
   public function executeWidgetsRight(sfWebRequest $request)

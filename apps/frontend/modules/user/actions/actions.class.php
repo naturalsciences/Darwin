@@ -360,4 +360,17 @@ class userActions extends DarwinActions
       }
     }
   }
+  public function executeRightSumary(sfWebRequest $request)
+  {
+    if($request->hasParameter('id')) 
+    {
+      $user_id = $request->getParameter('id') ;
+      if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
+    }
+    else $user_id = $this->getUser()->getId() ;
+    $this->sumary = array(1=>'You can only <b>view</b> specimens linked to this collection',
+                          2=>'You can <b>edit</b> specimens linked to this collection',
+                          4=>'You are <b>Manager</b> of this collection') ;
+    $this->rights = Doctrine::getTable('collectionsRights')->findByUserRef($user_id) ;
+  }
 }

@@ -109,7 +109,16 @@
   	          <a href="<?php echo url_for('user/widget') ?>"><?php echo __('Edit your widgets');?></a>
   	        <?php endif ; ?>
           </td>
-        </tr>    
+        </tr> 
+        <tr class="trusted_user_links">
+          <td colspan="2">
+            <?php if($mode == 'edit') : ?>
+  	          <a class="link_catalogue" href="<?php echo url_for('user/rightSumary?id='.$user->getId()) ?>"><?php echo __('Rights on collections');?></a>
+  	        <?php else : ?>
+  	          <a class="link_catalogue" href="<?php echo url_for('user/rightSumary') ?>"><?php echo __('View your rights on collections');?></a>
+  	        <?php endif ; ?>
+          </td>
+        </tr>            
       <?php endif ; ?>  
     </tbody>
     <tfoot>
