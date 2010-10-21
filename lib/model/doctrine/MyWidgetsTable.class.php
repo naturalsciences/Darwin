@@ -226,7 +226,7 @@ class MyWidgetsTable extends DarwinTable
     if($mode == 'insert') 
       $q .= "SET collections= collections || '$collection_ref,' " ;      
     else
-      $q .= "SET collections = regexp_replace(collections, '$collection_ref,', '', 'g') " ;
+      $q .= "SET collections = regexp_replace(collections, E'\,$collection_ref\,', E'\,', 'g') " ;
     if($list_id ==null)
       $q .= "WHERE user_ref = ".$this->user_ref ;    
     else
