@@ -37,7 +37,7 @@ $(document).ready(function () {
     <table class="widget_sub_table">
       <tr>
         <td>
-          <?php $form->renderGlobalErrors();?>
+          <?php echo $form->renderGlobalErrors();?>
           <div class="treelist">
             <?php $prev_level = 0;?>
             <?php foreach($form['collections'] as $id => $col):?>

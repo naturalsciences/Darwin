@@ -225,7 +225,16 @@ class collectionActions extends DarwinActions
       $this->form->bind($request->getParameter('sub_collection')) ;
       if($this->form->isValid())
       {
-        $this->form->save();
+        try
+        {
+          $this->form->save();
+        }
+        catch(Doctrine_Connection_Pgsql_Exception $e)
+        {
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error); 
+          return ;
+        }
         return $this->renderText('ok') ;
       }
     }
