@@ -238,23 +238,6 @@ class collectionActions extends DarwinActions
         return $this->renderText('ok') ;
       }
     }
-
-    /*$this->forward404Unless(Doctrine::getTable('Collections')->fetchByCollectionParent($parent_id), sprintf('Object collections does not exist (%s).', $id));
-    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user)->toArray() ;
-    $old_right = array() ;
-    foreach($old_rights as $key=>$right)
-      $old_right[] = $right['collection_ref'] ;
-    $this->form = new SubCollectionsForm(null,array('collection_ref' => $parent_id ,'user_ref' => $user,'old_right' => $old_right));
-    $this->form->user = $user ;
-    if($request->isMethod('post'))
-    {
-      $this->form->bind($request->getParameter('sub_collection')) ;
-      if($this->form->isValid())
-      {
-        $this->form->save();
-        return $this->renderText('ok') ;
-      }
-    }*/
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
