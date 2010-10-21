@@ -88,6 +88,7 @@ class expeditionActions extends DarwinActions
     // Forward to a 404 page if the requested expedition id is not found
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Otherwise initialize the expedition encoding form
+    $this->no_right_col = Doctrine::getTable('Expeditions')->testNoRightsCollections('expedition_ref',$request->getParameter('id'), $this->getUser()->getId());
     $this->form = new ExpeditionsForm($expeditions);
     $this->loadWidgets();
   }
