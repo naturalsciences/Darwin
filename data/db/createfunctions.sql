@@ -7697,26 +7697,52 @@ DECLARE
 BEGIN
 
   SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
-
+  /*If no user id allows modification -> if we do a modif in SQL it should be possible*/
   IF user_id = 0 THEN
     RETURN NEW;
   END IF;
-
+  /*If user_id <> 0, get db_user_type of user concerned*/
   SELECT db_user_type INTO db_user_type_cpy FROM users WHERE id = user_id;
-
+  /*If admin allows whatever*/
   IF db_user_type_cpy = 8 THEN
     RETURN NEW;
   END IF;
-  
-  IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-    PERFORM true WHERE NEW.collection_ref::integer IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
-    IF NOT FOUND THEN
-      RAISE EXCEPTION 'You don''t have the rights to insert into or update a specimen with this collection';
+
+  IF TG_TABLE_NAME = 'specimens' THEN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+      PERFORM true WHERE NEW.collection_ref::integer IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'You don''t have the rights to insert into or update a specimen in this collection';
+      END IF;
+    ELSE /*Delete*/
+      PERFORM true WHERE OLD.collection_ref::integer IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'You don''t have the rights to delete a specimen from this collection';
+      END IF;
     END IF;
-  ELSE /*Delete*/
-    PERFORM true WHERE OLD.collection_ref::integer IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
-    IF NOT FOUND THEN
-      RAISE EXCEPTION 'You don''t have the rights to delete a specimen from this collection';
+  ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = NEW.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'You don''t have the rights to insert into or update an individual in this collection';
+      END IF;
+    ELSE /*Delete*/
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = OLD.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'You don''t have the rights to delete an individual from this collection';
+      END IF;
+    END IF;
+  ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
+    IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE part_ref = NEW.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'You don''t have the rights to insert into or update a part in this collection';
+      END IF;
+    ELSE /*Delete*/
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE part_ref = OLD.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      IF NOT FOUND THEN
+        RAISE EXCEPTION 'You don''t have the rights to delete a part from this collection';
+      END IF;
     END IF;
   END IF;
   RETURN NEW;

@@ -354,6 +354,14 @@ CREATE TRIGGER trg_chk_specimenCollectionAllowed BEFORE INSERT OR UPDATE OR DELE
   ON specimens FOR EACH ROW
   EXECUTE PROCEDURE fct_chk_specimenCollectionAllowed();
 
+CREATE TRIGGER trg_chk_specimenIndCollectionAllowed BEFORE INSERT OR UPDATE OR DELETE
+  ON specimen_individuals FOR EACH ROW
+  EXECUTE PROCEDURE fct_chk_specimenCollectionAllowed();
+
+CREATE TRIGGER trg_chk_specimenPartCollectionAllowed BEFORE INSERT OR UPDATE OR DELETE
+  ON specimen_parts FOR EACH ROW
+  EXECUTE PROCEDURE fct_chk_specimenCollectionAllowed();
+
 /* trigger set BEFORE update, in order to avoid bad db_user_type to be set when this user is a collection manager */
 
 CREATE TRIGGER trg_chk_peopleType AFTER UPDATE

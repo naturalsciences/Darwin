@@ -264,6 +264,12 @@ DROP TRIGGER trg_clr_referencerecord_insurances
 DROP TRIGGER trg_chk_specimenCollectionAllowed
         ON specimens;
 
+DROP TRIGGER trg_chk_specimenIndCollectionAllowed
+        ON specimen_individuals;
+
+DROP TRIGGER trg_chk_specimenPartCollectionAllowed
+        ON specimen_parts;
+
 DROP TRIGGER trg_chk_canUpdateCollectionsRights
         ON collections_rights;
 
