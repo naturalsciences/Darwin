@@ -7770,15 +7770,26 @@ CREATE OR REPLACE FUNCTION fct_cpy_updateMyWidgetsColl() RETURNS TRIGGER
 language plpgsql
 AS
 $$
+DECLARE
+  booContinue boolean := false;
 BEGIN
   IF TG_TABLE_NAME = 'collections_rights' THEN
-    /*!!! What's done is only removing the old collection reference from list of collections set in widgets !!!
-      !!! We considered the add of widgets available for someone in a collection still be a manual action !!!
-    */
-    UPDATE my_widgets 
-    SET collections = regexp_replace(collections, E'\,' || OLD.collection_ref || E'\,', E'\,', 'g') 
-    WHERE user_ref = OLD.user_ref
-      AND collections ~ (E'\,' || OLD.collection_ref || E'\,');
+    IF TG_OP = 'DELETE' THEN
+      booContinue := true;
+    ELSE
+      IF OLD.collection_ref != NEW.collection_ref OR OLD.user_ref != NEW.user_ref THEN
+        booContinue := true;
+      END IF;
+    END IF;
+    IF booContinue THEN
+      /*!!! What's done is only removing the old collection reference from list of collections set in widgets !!!
+        !!! We considered the add of widgets available for someone in a collection still be a manual action !!!
+      */
+      UPDATE my_widgets 
+      SET collections = regexp_replace(collections, E'\,' || OLD.collection_ref || E'\,', E'\,', 'g') 
+      WHERE user_ref = OLD.user_ref
+        AND collections ~ (E'\,' || OLD.collection_ref || E'\,');
+    END IF;
   END IF;
 
   RETURN NEW;
