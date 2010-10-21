@@ -80,6 +80,8 @@ DROP FUNCTION IF EXISTS fct_delete_darwin_flat_ind_part() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_location() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_specimenCollectionAllowed() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updateMyWidgetsColl() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_parentCollInsitution() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_updateCollInstitutionCascade() CASCADE;
 
 DROP AGGREGATE array_accum (anyelement);
 DROP AGGREGATE dummy_first(anyelement);

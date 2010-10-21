@@ -5790,89 +5790,110 @@ AS $$
 BEGIN
 	IF TG_OP = 'INSERT' THEN
 		IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats' OR TG_TABLE_NAME::text = 'specimen_parts') THEN
-		    IF NEW.id = 0 THEN
-			NEW.parent_ref = null;
-		    END IF;
-	            IF NEW.parent_ref IS NULL THEN
-        	        NEW.path ='/';
-	            ELSE
-        	        IF TG_TABLE_NAME::text = 'multimedia' THEN
-                	    SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
-                        	id=NEW.parent_ref;
-	                ELSIF TG_TABLE_NAME::text = 'collections' THEN
-        	            SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
-                	        id=NEW.parent_ref;
-			ELSIF TG_TABLE_NAME::text = 'gtu' THEN
-			    SELECT path || id || '/' INTO STRICT NEW.path FROM gtu WHERE
-                                id=NEW.parent_ref;
-	                ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
-                            SELECT path || id || '/' INTO STRICT NEW.path FROM specimen_parts WHERE
-                                id=NEW.parent_ref;
+		  IF NEW.id = 0 THEN
+        NEW.parent_ref = null;
+		  END IF;
+	    IF NEW.parent_ref IS NULL THEN
+         NEW.path ='/';
+	    ELSE
+        IF TG_TABLE_NAME::text = 'multimedia' THEN
+          SELECT path || id || '/' INTO STRICT NEW.path 
+          FROM multimedia 
+          WHERE id=NEW.parent_ref;
+	      ELSIF TG_TABLE_NAME::text = 'collections' THEN
+          SELECT path || id || '/' INTO STRICT NEW.path 
+          FROM collections 
+          WHERE id=NEW.parent_ref;
+        ELSIF TG_TABLE_NAME::text = 'gtu' THEN
+          SELECT path || id || '/' INTO STRICT NEW.path 
+          FROM gtu 
+          WHERE id=NEW.parent_ref;
+	      ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
+          SELECT path || id || '/' INTO STRICT NEW.path 
+          FROM specimen_parts 
+          WHERE id=NEW.parent_ref;
 
-			ELSE
-			    SELECT path || id || '/' INTO STRICT NEW.path FROM habitats WHERE
-                                id=NEW.parent_ref;
-	                END IF;
-        	    END IF;
+        ELSE
+          SELECT path || id || '/' INTO STRICT NEW.path 
+          FROM habitats 
+          WHERE id=NEW.parent_ref;
+        END IF;
+      END IF;
 		ELSIF TG_TABLE_NAME::text = 'people_relationships' THEN
-			SELECT path || NEW.person_1_ref || '/' INTO NEW.path FROM people_relationships WHERE
-				person_2_ref=NEW.person_1_ref;
+			SELECT path || NEW.person_1_ref || '/' INTO NEW.path 
+      FROM people_relationships 
+      WHERE person_2_ref=NEW.person_1_ref;
 			IF NEW.path is NULL THEN
-		                NEW.path = '/' || NEW.person_1_ref || '/';
-		        END IF;
+		    NEW.path = '/' || NEW.person_1_ref || '/';
+		  END IF;
 		END IF;
 	ELSIF TG_OP = 'UPDATE' THEN
-        IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats'  OR TG_TABLE_NAME::text = 'specimen_parts') THEN
-            IF NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
-                IF NEW.parent_ref IS NULL THEN
-                    NEW.path ='/';
-                ELSEIF COALESCE(OLD.parent_ref,0) = COALESCE(NEW.parent_ref,0) THEN
-                    RETURN NEW;
-                ELSE
-                    -- Change current path
-                    IF TG_TABLE_NAME::text = 'multimedia' THEN
-                        SELECT path || id || '/' INTO STRICT NEW.path FROM multimedia WHERE
-                            id=NEW.parent_ref;
-                    ELSIF TG_TABLE_NAME::text = 'collections' THEN
-                        SELECT path || id || '/' INTO STRICT NEW.path FROM collections WHERE
-                            id=NEW.parent_ref;
-		    ELSIF TG_TABLE_NAME::text = 'gtu' THEN
-			SELECT path || id || '/' INTO STRICT NEW.path FROM gtu WHERE
-                            id=NEW.parent_ref;
-                    ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
-                        SELECT path || id || '/' INTO STRICT NEW.path FROM specimen_parts WHERE
-                            id=NEW.parent_ref;
-		    ELSE
-			SELECT path || id || '/' INTO STRICT NEW.path FROM habitats WHERE
-                            id=NEW.parent_ref;
-                    END IF;
-                END IF;
-                -- Change children's path
-                IF TG_TABLE_NAME::text = 'multimedia' THEN
-                    UPDATE multimedia SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
-                ELSIF TG_TABLE_NAME::text = 'collections' THEN
-                    UPDATE collections SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/'), institution_ref=NEW.institution_ref WHERE path like OLD.path || OLD.id || '/%';
-		ELSIF TG_TABLE_NAME::text = 'gtu' THEN
-		    UPDATE gtu SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
-                ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
-                    UPDATE specimen_parts SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
-		ELSE
-		    UPDATE habitats SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') WHERE path like OLD.path || OLD.id || '/%';
-                END IF;
-            END IF;
+    IF (TG_TABLE_NAME::text = 'multimedia' OR TG_TABLE_NAME::text = 'collections' OR TG_TABLE_NAME::text = 'gtu' OR TG_TABLE_NAME::text = 'habitats'  OR TG_TABLE_NAME::text = 'specimen_parts') THEN
+      IF NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
+        IF NEW.parent_ref IS NULL THEN
+          NEW.path ='/';
+        ELSIF COALESCE(OLD.parent_ref,0) = COALESCE(NEW.parent_ref,0) THEN
+          RETURN NEW;
         ELSE
-            IF NEW.person_1_ref != OLD.person_1_ref OR NEW.person_2_ref != OLD.person_2_ref THEN
-                SELECT path ||  NEW.person_1_ref || '/' INTO NEW.path FROM people_relationships WHERE
-                    person_2_ref=NEW.person_1_ref;
-                IF NEW.path is NULL THEN
-                    NEW.path = '/' || NEW.person_1_ref || '/';
-                END IF;
-                -- AND UPDATE CHILDRENS
-               UPDATE people_relationships SET path=replace(path, OLD.path, NEW.path) WHERE person_1_ref=OLD.person_2_ref;
-            END IF;
+          -- Change current path
+          IF TG_TABLE_NAME::text = 'multimedia' THEN
+            SELECT path || id || '/' INTO STRICT NEW.path 
+            FROM multimedia 
+            WHERE id=NEW.parent_ref;
+          ELSIF TG_TABLE_NAME::text = 'collections' THEN
+            SELECT path || id || '/' INTO STRICT NEW.path 
+            FROM collections 
+            WHERE id=NEW.parent_ref;
+          ELSIF TG_TABLE_NAME::text = 'gtu' THEN
+            SELECT path || id || '/' INTO STRICT NEW.path 
+            FROM gtu 
+            WHERE id=NEW.parent_ref;
+          ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
+            SELECT path || id || '/' INTO STRICT NEW.path 
+            FROM specimen_parts 
+            WHERE id=NEW.parent_ref;
+          ELSE
+            SELECT path || id || '/' INTO STRICT NEW.path 
+            FROM habitats 
+            WHERE id=NEW.parent_ref;
+          END IF;
         END IF;
+        -- Change children's path
+        IF TG_TABLE_NAME::text = 'multimedia' THEN
+          UPDATE multimedia 
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          WHERE path like OLD.path || OLD.id || '/%';
+        ELSIF TG_TABLE_NAME::text = 'collections' THEN
+          UPDATE collections 
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          WHERE path like OLD.path || OLD.id || '/%';
+        ELSIF TG_TABLE_NAME::text = 'gtu' THEN
+          UPDATE gtu 
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          WHERE path like OLD.path || OLD.id || '/%';
+        ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
+          UPDATE specimen_parts 
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          WHERE path like OLD.path || OLD.id || '/%';
+        ELSE
+          UPDATE habitats 
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          WHERE path like OLD.path || OLD.id || '/%';
+        END IF;
+      END IF;
+    ELSE
+      IF NEW.person_1_ref != OLD.person_1_ref OR NEW.person_2_ref != OLD.person_2_ref THEN
+          SELECT path ||  NEW.person_1_ref || '/' INTO NEW.path FROM people_relationships WHERE
+              person_2_ref=NEW.person_1_ref;
+          IF NEW.path is NULL THEN
+              NEW.path = '/' || NEW.person_1_ref || '/';
+          END IF;
+          -- AND UPDATE CHILDRENS
+          UPDATE people_relationships SET path=replace(path, OLD.path, NEW.path) WHERE person_1_ref=OLD.person_2_ref;
+      END IF;
     END IF;
-    RETURN NEW;
+  END IF;
+  RETURN NEW;
 END;
 $$
 language plpgsql;
@@ -7818,6 +7839,52 @@ BEGIN
     END IF;
   END IF;
 
+  RETURN NEW;
+END;
+$$;
+
+/*Check that when specifying a parent collection the institution given is the same as the one used for parent*/
+CREATE OR REPLACE FUNCTION fct_chk_parentCollInstitution() RETURNS TRIGGER
+language plpgSQL
+AS 
+$$
+DECLARE
+  institutionRef integer;
+  booContinue boolean := false;
+BEGIN
+  IF TG_OP = 'INSERT' THEN
+    booContinue := true;
+  ELSIF TG_OP = 'UPDATE' THEN
+    IF NEW.institution_ref != OLD.institution_ref OR NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
+      booContinue := true;
+    END IF;
+  END IF;
+  IF booContinue THEN
+    IF NEW.parent_ref IS NOT NULL THEN
+      SELECT institution_ref INTO institutionRef FROM collections WHERE id = NEW.parent_ref;
+/*      RAISE WARNING 'Institution ref of parent is: %', institutionRef;
+      RAISE WARNING 'New institution ref is: %', NEW.institution_ref;*/
+      IF institutionRef != NEW.institution_ref THEN
+        RAISE EXCEPTION 'You tried to insert or update a collection with an other institution than the one given for the parent collection';
+      END IF;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+/*When updating institution reference of a collection -> impact this modification on all children collections*/
+CREATE OR REPLACE FUNCTION fct_cpy_updateCollInstitutionCascade() RETURNS TRIGGER
+language plpgsql
+AS
+$$
+BEGIN
+  IF NEW.institution_ref != OLD.institution_ref THEN
+    UPDATE collections
+    SET institution_ref = NEW.institution_ref
+    WHERE id != NEW.id
+      AND parent_ref = NEW.id;
+  END IF;
   RETURN NEW;
 END;
 $$;

@@ -362,6 +362,14 @@ CREATE TRIGGER trg_chk_specimenPartCollectionAllowed BEFORE INSERT OR UPDATE OR 
   ON specimen_parts FOR EACH ROW
   EXECUTE PROCEDURE fct_chk_specimenCollectionAllowed();
 
+CREATE TRIGGER trg_chk_parentCollInstitution BEFORE INSERT OR UPDATE
+  ON collections FOR EACH ROW
+  EXECUTE PROCEDURE fct_chk_parentCollInstitution();
+
+CREATE TRIGGER trg_cpy_updateCollInstitutionCascade AFTER UPDATE
+  ON collections FOR EACH ROW
+  EXECUTE PROCEDURE fct_cpy_updateCollInstitutionCascade();
+
 /* trigger set BEFORE update, in order to avoid bad db_user_type to be set when this user is a collection manager */
 
 CREATE TRIGGER trg_chk_peopleType AFTER UPDATE
