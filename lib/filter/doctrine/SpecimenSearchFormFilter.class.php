@@ -96,7 +96,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                        'trim' => true
                                                                       )
                                                                 );
-    $this->validatorSchema['mineral_level_ref'] = new sfValidatorInteger(array('required' => false));              
+    $this->validatorSchema['mineral_level_ref'] = new sfValidatorInteger(array('required' => false));
 
 
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
@@ -325,8 +325,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
     if( $values['lat_from'] != '' && $values['lon_from'] != '' && $values['lon_to'] != ''  && $values['lat_to'] != '' )
     {
-      $query->andWhere('gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
-        ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326)');
+      $query->andWhere('
+        ( station_visible = true AND gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
+        ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326) )
+       OR 
+        ( station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().')) 
+        AND gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
+        ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326) )
+      ');
     }
     return $query;
   }
@@ -527,7 +533,19 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       if( $line_val != '')
       {
         $tagList = $conn_MGR->quote($line_val, 'string');
-        $query->andWhere("gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)");
+        $query->andWhere("
+              (station_visible = true AND  gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)) 
+            OR
+              (station_visible = false
+               AND (
+                    (
+                      collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
+                      AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
+                    )
+                  OR
+                    (getTagsIndexedAsArray(gtu_country_tag_value) && getTagsIndexedAsArray($tagList))
+                  )
+              )");
       }
     }
     return $query ;
@@ -649,7 +667,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     {
       $query->andWhereIn('collection_ref',$val) ;
     }
-    $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', sfContext::getInstance()->getUser()->getId());
+    $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());
     return $query;
   }
 
