@@ -63,6 +63,7 @@ class widgetsActions extends DarwinActions
             'options' => array(
               'eid' =>  $request->getParameter('eid',null),
               'table' => $this->getTableFromCategory($request->getParameter('category')),
+              'view' => $request->hasParameter('view')?true:false,
             ),
            ));
   }

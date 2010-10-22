@@ -1353,6 +1353,24 @@ tr.details .details_info tr:hover
   border: 1px solid #E3E3E3;
 }
 
+.name_tags_view li, .purposed_tags_view li
+{
+  background-color: #FAFAFA;
+  min-height:1em;
+  min-width:1em;
+  margin-bottom:2em;
+  cursor: pointer;
+}
+
+.name_tags_view li, .purposed_tags_view li
+{
+  float:left;
+  padding:0.2em;
+  margin:0.3em;
+  border: 1px solid #5BAABD;
+}
+
+
 .tag_selected li img
 {
   margin-left: 5px;
@@ -1379,6 +1397,7 @@ th .error_list
 {
   font-weight:normal;
 }
+
 .name_tags li, .purposed_tags li
 {
   font-size: x-small;
@@ -1391,6 +1410,17 @@ th .error_list
   border-color:#C1CF56;
 }
 
+.name_tags_view li, .purposed_tags_view li
+{
+  font-size: x-small;
+  border-color: #E3E3E3;
+  border-left: 6px solid #5BAABD;
+
+}
+.name_tags_view li:hover, .purposed_tags_view li:hover
+{
+  border-color:#5BAABD;
+}
 .purposed_tags li.unprecise_tag
 {
   border-left: 6px solid #CCCCCC;
@@ -1477,6 +1507,12 @@ table.classifications_edit tbody td:nth-child(2)
   min-width:1em;
   padding:0.2em;
   display: block;
+}
+
+fieldset.opened
+{
+  border: 1px solid #5BAABD ;
+  cursor : pointer ;
 }
 
 /* catalogue_keyword_view */
@@ -1749,7 +1785,7 @@ tr.tag_line input
     font-weight: bold;
     text-transform:capitalize;
 }
-.search_tags .name_tags
+.search_tags .name_tags, .search_tags .name_tags_view
 {
   margin-left: 1em;
 }
@@ -2163,4 +2199,61 @@ dd
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   padding-left:0.2em;
+}
+
+
+/****************Class for specimens/indiv/part view ***********************/
+
+.tabs_view
+{
+	list-style-type:none;
+	margin:0;
+	padding-bottom:34px;
+	padding-left: 25px;
+}
+
+.tabs_view a{
+
+	width: 204px;
+	padding-top: 10px;
+	text-align:center;
+	float:left;
+ 	margin:2px 2px 0;
+	height: 20px;
+	cursor:pointer;
+}
+
+.tabs_view a.enabled
+{
+  background-color:white;
+  border-top-left-radius: 9px 9px;
+  border-top-right-radius: 9px 9px;
+  border: 1px solid #5BAABD;
+	background-repeat:no-repeat;
+	height:20px;
+}
+
+.tabs_view a.selected
+{
+	border-bottom:1px solid white;
+	height: 21px;
+}
+
+.panel_view
+{
+	margin-top:-1px;
+	border:1px solid #5BAABD;
+	padding-top: 30px;
+	padding-left:21px;
+	padding-right: 21px;
+	padding-bottom: 20px;
+	background-color:white;
+	min-height:  300px;
+}
+
+.panel_view ul.tool
+{
+  margin-top: 0.3em;
+  list-style-type:disc;
+  margin-left:2em;
 }

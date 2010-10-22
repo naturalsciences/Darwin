@@ -59,7 +59,7 @@ class Gtu extends BaseGtu
     }
   }
 
-  public function getName()
+  public function getName($view = null)
   {
     if($this->_get('id')==0) return '-';
     $nbr = count($this->TagGroups);
@@ -67,7 +67,7 @@ class Gtu extends BaseGtu
     $str = '<ul  class="search_tags">';
     foreach($this->TagGroups as $group)
     {
-      $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label><ul class="name_tags">';
+      $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label><ul class="name_tags'.($view!=null?"_view":"").'">';
       $tags = explode(";",$group->getTagValue());
       foreach($tags as $value)
         if (strlen($value))
@@ -78,9 +78,9 @@ class Gtu extends BaseGtu
     return $str;
   }
 
-  public function getTagsWithCode()
+  public function getTagsWithCode($view = null)
   {
-    $str = $this->getName();
+    $str = $this->getName($view);
     if($this->getLongitude() != '')
       $str .= '<b class="img"><img class="gtu_img_loc" src="http://dev.openstreetmap.de/staticmap/staticmap.php?&size=480x240&center='.$this->getLatitude().','.$this->getLongitude().'&zoom=5&markers='.$this->getLatitude().','.$this->getLongitude().',red-pushpin" alt="Sampling location" /></b>';
     $str .=  '<b class="code">'.$this->getCode().'</b>';

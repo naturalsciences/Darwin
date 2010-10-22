@@ -368,9 +368,9 @@ class userActions extends DarwinActions
       if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
     }
     else $user_id = $this->getUser()->getId() ;
-    $this->summary = array(Users::REGISTERED_USER=>'You can only view specimens linked to this collection',
-                           Users::ENCODER=>'You can edit specimens linked to this collection',
-                           Users::MANAGER=>'You are Manager of this collection') ;
+    $this->summary = array(Users::REGISTERED_USER=>$this->getI18N()->__('You can only view specimens linked to this collection'),
+                           Users::ENCODER=>$this->getI18N()->__('You can edit specimens linked to this collection'),
+                           Users::MANAGER=>$this->getI18N()->__('You are Manager of this collection')) ;
     $this->rights = Doctrine::getTable('collectionsRights')->findByUserRef($user_id) ;
   }
 }

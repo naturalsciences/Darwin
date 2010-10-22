@@ -1,3 +1,4 @@
+<?php $read_only = (isset($view)&&$view)?true:false ; ?>
 <table>
   <tbody>
     <?php if($form['host_relationship']->hasError()):?>
@@ -10,7 +11,11 @@
         <?php echo $form['host_relationship']->renderLabel() ?>
       </th>
       <td>
-        <?php echo $form['host_relationship']->render() ?>
+        <?php if($read_only) : ?>
+          <?php echo $form['host_relationship']->getValue() ?>
+        <?php else : ?>
+          <?php echo $form['host_relationship']->render() ?>
+        <?php endif ; ?>
       </td>
     </tr>
     <?php if($form['host_taxon_ref']->hasError()):?>
@@ -23,7 +28,11 @@
         <?php echo $form['host_taxon_ref']->renderLabel() ?>
       </th>
       <td>
-        <?php echo $form['host_taxon_ref']->render() ?>
+        <?php if($read_only) : ?>
+          <?php echo $form['host_taxon_ref']->getValue() ?>
+        <?php else : ?>      
+          <?php echo $form['host_taxon_ref']->render() ?>
+        <?php endif ; ?>
       </td>
     </tr>
     <?php if($form['host_specimen_ref']->hasError()):?>
@@ -36,10 +45,15 @@
         <?php echo $form['host_specimen_ref']->renderLabel(); ?>
       </th>
       <td>
-        <?php echo $form['host_specimen_ref']->render(); ?>
+        <?php if($read_only) : ?>
+          <?php echo $form['host_specimen_ref']->getValue() ?>
+        <?php else : ?>        
+          <?php echo $form['host_specimen_ref']->render(); ?>
+        <?php endif ; ?>
       </td>
     </tr>
   </tbody>
+  <?php if(!$read_only) : ?>
   <tfoot>
     <tr>
       <td><?php echo $form['id']->render(); ?></td>
@@ -140,3 +154,6 @@ $(document).ready(function ()
 
 });
 </script>
+<?php else : ?>
+</table>
+<?php endif ; ?>

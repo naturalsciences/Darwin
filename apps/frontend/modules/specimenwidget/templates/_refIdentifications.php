@@ -1,3 +1,5 @@
+<?php $read_only = (isset($view)&&$view)?true:false ; ?>
+<?php if(!$read_only) : ?>
 <script  type="text/javascript">
 function forceIdentificationHelper(e,ui)
 {
@@ -39,9 +41,9 @@ function addIdentifierValue(people_ref,ref_table)
   });
   return false;
 }
-
 </script>
-<table class="property_values" id="identifications">
+<?php endif ; ?>
+<table class="<?php echo($read_only?'catalogue_table_view':'property_values');?>" id="identifications">
   <thead style="<?php echo ($form['Identifications']->count() || $form['newIdentification']->count())?'':'display: none;';?>" class="spec_ident_head">
     <tr>
       <th><?php echo $form['ident'];?></th>
@@ -49,9 +51,10 @@ function addIdentifierValue(people_ref,ref_table)
       <th><?php echo __('Subject');?></th>
       <th><?php echo __('Value'); ?></th>
       <th><?php echo __('Det. St.'); ?></th>
-      <th></th>
+      <th><?php if($read_only) echo __("Identifiers") ; ?></th>
     </tr>
-  </thead>
+  </thead>   
+  <?php if(!$read_only) : ?>   
     <?php $retainedKey = 0;?>
     <?php foreach($form['Identifications'] as $form_value):?>
       <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$retainedKey, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id, 'identification_id'=>$retainedKey));?>
@@ -105,3 +108,7 @@ $(document).ready(function () {
        });
 });
 </script>
+  <?php else : ?>
+  <?php include_partial('specimen/spec_identifications_view', array('form' => $form, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id));?>  
+  </table>
+  <?php endif ; ?>
