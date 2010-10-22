@@ -17,6 +17,9 @@ class collectionActions extends DarwinActions
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
 
     $this->forward404Unless($request->hasParameter('id'));
+    if(!$this->getUser()->isAtLeast(Users::ADMIN) &&  !Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+      $this->forwardToSecureAction();
+
     $this->collCodes = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
     $this->form = new CollectionsCodesForm($this->collCodes);
 
@@ -44,6 +47,9 @@ class collectionActions extends DarwinActions
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
 
     $this->forward404Unless($request->hasParameter('id'),'No id given');
+    if(!$this->getUser()->isAtLeast(Users::ADMIN) &&  !Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+      $this->forwardToSecureAction();
+
     $item = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
     $this->forward404Unless($item,'No such item');
     try
@@ -129,7 +135,7 @@ class collectionActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-    if(!Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+    if(!$this->getUser()->isAtLeast(Users::ADMIN) &&  !Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
       $this->forwardToSecureAction();
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
     $this->forward404Unless($collection, 'collections does not exist');
@@ -179,7 +185,7 @@ class collectionActions extends DarwinActions
   public function executeDelete(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-    if(!Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
+    if(!$this->getUser()->isAtLeast(Users::ADMIN) && !Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
       $this->forwardToSecureAction();
     $request->checkCSRFProtection();
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
@@ -205,38 +211,33 @@ class collectionActions extends DarwinActions
   public function executeRights(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-    if(!Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('id'),$this->getUser()->getId())) 
-      $this->forwardToSecureAction();
+
     $user_ref = $request->getParameter('user_ref');
     $parent_ref = $request->getParameter('collection_ref');
 
-    $this->form = new SubCollectionsForm(null, array('collection_ref' => $parent_ref ,'user_ref' => $user_ref));
+    /*** Check if the user has rights on this collection ***/
+    if(!$this->getUser()->isAtLeast(Users::ADMIN) && !Doctrine::getTable('CollectionsRights')->findOneByCollectionRefAndUserRef($parent_ref,$this->getUser()->getId())) 
+      $this->forwardToSecureAction();
+
+    $this->form = new SubCollectionsForm(null, array('current_user' => $this->getUser(),'collection_ref' => $parent_ref ,'user_ref' => $user_ref));
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('sub_collection')) ;
       if($this->form->isValid())
       {
-        $this->form->save();
+        try
+        {
+          $this->form->save();
+        }
+        catch(Doctrine_Connection_Pgsql_Exception $e)
+        {
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error); 
+          return ;
+        }
         return $this->renderText('ok') ;
       }
     }
-
-    /*$this->forward404Unless(Doctrine::getTable('Collections')->fetchByCollectionParent($parent_id), sprintf('Object collections does not exist (%s).', $id));
-    $old_rights = Doctrine::getTable('CollectionsRights')->findCollectionsByUser($user)->toArray() ;
-    $old_right = array() ;
-    foreach($old_rights as $key=>$right)
-      $old_right[] = $right['collection_ref'] ;
-    $this->form = new SubCollectionsForm(null,array('collection_ref' => $parent_id ,'user_ref' => $user,'old_right' => $old_right));
-    $this->form->user = $user ;
-    if($request->isMethod('post'))
-    {
-      $this->form->bind($request->getParameter('sub_collection')) ;
-      if($this->form->isValid())
-      {
-        $this->form->save();
-        return $this->renderText('ok') ;
-      }
-    }*/
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

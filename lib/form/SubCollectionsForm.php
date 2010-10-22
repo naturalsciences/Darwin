@@ -11,47 +11,46 @@ class SubCollectionsForm extends sfForm
 {
   public function configure()
   {
-    $this->widgetSchema['CollectionsRights'] = new sfWidgetCollectionList(array('choices' => array()));
-    if(isset($this->options['collection_ref'])) 
+    $subForm = new sfForm();
+    $collections = Doctrine::getTable('Collections')->fetchByCollectionParent($this->options['current_user'],$this->options['user_ref'], $this->options['collection_ref']);
+
+    foreach ($collections as $record)
     {
-      $this->widgetSchema['CollectionsRights']->addOption('collection_parent',$this->options['collection_ref']) ;    
-      $this->widgetSchema['CollectionsRights']->addOption('old_right',$this->options['old_right']) ;
+      if(count($record->CollectionsRights) )
+      {
+        $right = $record->CollectionsRights[0];
+      }
+      else
+      {
+        $right = new CollectionsRights();
+        $right->setCollectionRef($record->getId());
+        $right->setDbUserType(0);
+        $right->setUserRef($this->options['user_ref']);
+      }
+
+      $form = new SubCollectionsRightsForm($right, array('collection' => $record));
+      $subForm->embedForm($record->getId(), $form);
     }
-    $this->validatorSchema['CollectionsRights'] = new sfValidatorPass();
+
+    $this->embedForm('collections',$subForm);
     $this->widgetSchema->setNameFormat('sub_collection[%s]');
   }
   
   public function save()
   {
-/*	  $value = $this->getValue('CollectionsRights'); // checked by user values
-	  if(!$value) $value = array() ;
-    $old_right = $this->getWidget('CollectionsRights')->getOption('old_right'); // old checked values
-	  if(!$old_right) $old_right = array() ;    
-    $obj_to_save = array('collection_ref'=>'','user_ref' => $this->user) ;
-	  foreach($this->getWidget('CollectionsRights')->getChoices() as $key => $form)
-	  {
-	    if(in_array($key,$value)) // then this collection is checked 
-	    {
-	    	if(!in_array($key,$old_right)) //false ? so it's a new right
-	    	{
-		        $collectionRights = new CollectionsRights() ;
-		        $obj_to_save['collection_ref'] = $key ;
-		        $collectionRights->fromArray($obj_to_save);
-       	    $collectionRights->save();	
-	      }
-	      //else nothing to do  	 
-	    } 
-	    else
-	    {
-	    	if(in_array($key,$old_right)) //true ? so user has right but not for long
-	    	{
-	    	  $this->collectionRights = new CollectionsRights() ;	
-	    	  $obj_to_save['collection_ref'] = $key ;  	  
-	    	  $this->collectionRights->fromArray($obj_to_save);
-		      $this->collectionRights->deleteCollectionRight();
-	       }
-	      	//else nothing to do  
-	    }
-    }*/
+    $values = $this->getValues();
+
+    foreach($this->embeddedForms['collections']->getEmbeddedForms() as $key => $prefs)
+    {
+      if($values['collections'][$key]['db_user_type'] == '')
+      {
+         $prefs->getObject()->delete();
+      }
+      else
+      {
+        $prefs->updateObject($values['collections'][$key]);
+        $prefs->getObject()->save();
+      }
+    }
   }
 }

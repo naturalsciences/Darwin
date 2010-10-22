@@ -66,6 +66,8 @@ class taxonomyActions extends DarwinActions
     if($request->getParameter('id') < 1 || $this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();
     $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
 
+    $this->no_right_col = Doctrine::getTable('Taxonomy')->testNoRightsCollections('taxon_ref',$request->getParameter('id'), $this->getUser()->getId());
+
     $this->forward404Unless($taxa,'Taxa not Found');
     $this->form = new TaxonomyForm($taxa);   
     $this->loadWidgets();

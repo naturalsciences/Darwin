@@ -116,4 +116,33 @@ class DarwinTable extends Doctrine_Table
 		   ->andWhere('user_ref = ?', $user) ;
 		return $q->execute() ; 
   }
+
+  public function testNoRightsCollections($field_name, $unit_id, $user_id)
+  {
+    $q = Doctrine_Query::create()
+      ->select('distinct(collection_ref) as collection_ref')
+      ->from('SpecimenSearch s')
+      ->where("s.$field_name = ?",$unit_id);
+    $collections = $q->execute();
+    $ids = array();
+    foreach($collections as $col)
+    {
+      $ids[] = $col->getCollectionRef();
+    }
+    if(empty($ids)) return array(); // If not referenced... you have rights !
+
+    $q = Doctrine_Query::create()
+      ->from('CollectionsRights r')
+      ->whereIn('r.collection_ref', $ids)
+      ->andWhere('r.user_ref = ?',$user_id)
+      ->andWhere('r.db_user_type >= 2');
+    $has_right_col = $q->execute();
+    $rights_cols = array();
+    foreach($has_right_col as $col)
+    {
+      $rights_cols[] = $col->getCollectionRef();
+    }
+    $noRights = array_diff($ids,$rights_cols);
+    return $noRights;
+  }
 }

@@ -71,32 +71,6 @@ class CollectionsForm extends BaseCollectionsForm
     
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);
-    
-    $subForm = new sfForm();
-    $this->embedForm('CollectionsAdmin',$subForm);   
-    /*foreach(Doctrine::getTable('CollectionsAdmin')->getCollectionAdmin($this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new CollectionsAdminForm($vals);
-      $this->embeddedForms['CollectionsAdmin']->embedForm($key, $form);
-    }
-    //Re-embedding the container    
-    $this->embedForm('CollectionsAdmin', $this->embeddedForms['CollectionsAdmin']); 
-    */
-    $subForm = new sfForm();
-    $this->embedForm('newAdmin',$subForm);  
-    
-    $subForm = new sfForm();
-    $this->embedForm('CollectionsRegUser',$subForm);   
-   /* foreach(Doctrine::getTable('CollectionsRegUser')->getCollectionRegUser($this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new CollectionsRegUserForm($vals);
-      $this->embeddedForms['CollectionsRegUser']->embedForm($key, $form);
-    }
-    //Re-embedding the container    
-    $this->embedForm('CollectionsRegUser', $this->embeddedForms['CollectionsRegUser']); 
-   */ 
-    $subForm = new sfForm();
-    $this->embedForm('newRegUser',$subForm); 
   }
   
   public function addValue($num,$user_id,$rights)
@@ -128,14 +102,14 @@ class CollectionsForm extends BaseCollectionsForm
   {
     if(isset($taintedValues['newVal']))
     {
-		  foreach($taintedValues['newVal'] as $key=>$newVal)
-		  {
-		    if (!isset($this['newVal'][$key]))
-		    {
-		      $this->addValue($key,$newVal['user_ref'],$newVal['db_user_type']);
-		    }
-		  }
-    }       
+      foreach($taintedValues['newVal'] as $key=>$newVal)
+      {
+        if (!isset($this['newVal'][$key]))
+        {
+          $this->addValue($key,$newVal['user_ref'],$newVal['db_user_type']);
+        }
+      }
+    }
     parent::bind($taintedValues, $taintedFiles);
   }
 
