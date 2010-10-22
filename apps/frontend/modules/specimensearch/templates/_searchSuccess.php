@@ -53,8 +53,13 @@
               </td>
               <td rowspan="2">
                 <?php if($source != 'part'):?>
-                  <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
-                  <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+                  <?php $expandable=($source=='specimen')?$specimen->getWithIndividuals():$specimen->getWithParts();?>
+                  <?php if($expandable):?>
+                    <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
+                    <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+                  <?php else:?>
+                    <?php echo image_tag('grey_expand.png', array('alt' => '+', 'class'=> 'collapsed')); ?>
+                  <?php endif;?>
                 <?php endif;?>
               </td>
               <td >
@@ -99,7 +104,7 @@
               </td>
             </tr>
 
-            <?php if($source == 'specimen'):?>
+            <?php if($source == 'specimen' && $specimen->getWithIndividuals()):?>
               <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row sub_row">
                 <td colspan="14"> 
                   <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
@@ -123,7 +128,7 @@
                   </script>
                 </td>
               </tr>
-            <?php elseif($source == 'individual'):?>
+            <?php elseif($source == 'individual' && $specimen->getWithParts()):?>
               <tr id="tr_part_<?php echo $specimen->getIndividualRef();?>" class="part_row sub_row">
                 <td colspan="14"> 
                   <div id="container_part_<?php echo $specimen->getIndividualRef();?>" class="tree"></div>

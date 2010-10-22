@@ -184,3 +184,8 @@ img#favorite_on, img#favorite_off
 {
   display:show;
 }
+
+img.tree_cmd_td
+{
+  cursor:pointer;
+}
