@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(64);
+SELECT plan(81);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -95,7 +95,7 @@ SELECT ok('ECOLO' = (SELECT collection_institution_formated_name FROM darwin_fla
 
 -- UPDATE of 3 collections institution and main manager reference data -> for collections trigger check
 
-UPDATE collections SET institution_ref = 100003, main_manager_ref = 100001 WHERE id Between 100000 and 100002;
+UPDATE collections SET institution_ref = 100003, main_manager_ref = 100001 WHERE id = 100000;
 
 SELECT ok('ASBL' = (SELECT collection_institution_sub_type FROM darwin_flat WHERE id = 1), 'Collection referenced institution sub type is well "ASBL" for specimen 1.');
 SELECT ok('ECOLO' = (SELECT collection_institution_formated_name FROM darwin_flat WHERE id = 1), 'Collection referenced institution is well now "ECOLO" for specimen 1.');
@@ -166,6 +166,38 @@ SELECT ok('240275' = (SELECT ig_num FROM darwin_flat WHERE id = 2), 'ig num "240
 DELETE FROM igs where ig_num = '240275';
 
 SELECT ok('0' = (SELECT coalesce(ig_num,'0') FROM darwin_flat WHERE id = 2), 'ig num reset to null for specimen 2.');
+
+-- Tests individuals interactions
+
+SELECT ok(false = (SELECT with_individuals FROM darwin_flat WHERE spec_ref = 100001), 'With individuals value well false for specimen 100001');
+
+INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (240275, 100001, 'holotype');
+
+SELECT ok(240275 = (SELECT individual_ref FROM darwin_flat WHERE spec_ref = 100001), 'Individual well inserted in flat');
+SELECT ok(true = (SELECT with_individuals FROM darwin_flat WHERE spec_ref = 100001), 'and with individuals well set to true');
+SELECT lives_ok('INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (240276, 100001, ''paratype'')', 'Insertion of a new individual for specimen 100001');
+SELECT ok(2 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND with_individuals = true), 'Creates well a new line');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240276), '... and with good values');
+
+-- Test parts interactions
+
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240275, 240276, 'specimen');
+
+SELECT ok(240275 = (SELECT part_ref FROM darwin_flat WHERE individual_ref = 240276), 'New part data well updated in darwin flat');
+SELECT ok(true = (SELECT with_parts FROM darwin_flat WHERE individual_ref = 240276), 'and with with_parts field well updated');
+SELECT lives_ok('INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240276, 240276, ''leg'')', 'Insertion of a new part for the same individual');
+SELECT ok(2 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240276 AND with_parts = true), 'Creates well a new line');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND part_ref = 240276), '... and with good values');
+
+-- Test removing parts interactions
+
+SELECT lives_ok('DELETE FROM specimen_parts WHERE specimen_individual_ref = 240276', 'Parts well deleted for individual 240276');
+SELECT ok(0 = (SELECT COUNT(*) FROM specimen_parts WHERE specimen_individual_ref = 240276), 'No more parts for individual 240276');
+SELECT ok(false = (SELECT with_parts FROM specimen_individuals WHERE id = 240276), 'With parts field well updated in specimen_individuals');
+SELECT ok(1 = (SELECT COUNT(*) from darwin_flat WHERE individual_ref = 240276), 'Nbr of corresponding records well updated in darwin_flat');
+SELECT ok(false = (SELECT with_parts FROM darwin_flat WHERE individual_ref = 240276), 'With parts field well updated in darwin_flat');
+SELECT ok(0 = (SELECT COALESCE(part_ref,0) FROM darwin_flat WHERE individual_ref = 240276), 'Part ref well removed');
+
 
 SELECT * FROM finish();
 ROLLBACK;

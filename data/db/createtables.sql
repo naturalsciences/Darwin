@@ -2168,9 +2168,9 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_host_taxon_ref FOREIGN KEY (host_taxon_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL,
-    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL,
-    CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL
+    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL
+/*    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED,
+    CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED*/
   );
 SELECT substring(AddGeometryColumn('darwin_flat', 'gtu_location', 4326, 'POLYGON', 2) for 0);
 

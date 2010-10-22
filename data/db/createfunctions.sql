@@ -7253,6 +7253,7 @@ BEGIN
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimen_individuals' THEN
+    /*Check there's at least one type - if insertion, this new one is taken in count due to after insert trigger*/
     SELECT true INTO indType FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref AND type_group <> 'specimen' LIMIT 1;
     IF NOT FOUND THEN
       indType := false;
@@ -7262,14 +7263,16 @@ BEGIN
       IF indCount = 1 THEN
         UPDATE darwin_flat
         SET
-        (individual_ref,
+        (with_individuals,
+         individual_ref,
          individual_type, individual_type_group, individual_type_search,
          individual_sex, individual_state, individual_stage,
          individual_social_status, individual_rock_form,
          individual_count_min, individual_count_max
         )
         =
-        (NEW.id,
+        (true,
+         NEW.id,
          NEW.type, NEW.type_group, NEW.type_search,
          NEW.sex, NEW.state, NEW.stage,
          NEW.social_status, NEW.rock_form,
@@ -7303,6 +7306,7 @@ BEGIN
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         with_individuals,
          individual_ref,
          individual_type, individual_type_group, individual_type_search,
          individual_sex, individual_state, individual_stage,
@@ -7335,6 +7339,7 @@ BEGIN
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         true,
          NEW.id,
          NEW.type, NEW.type_group, NEW.type_search,
          NEW.sex, NEW.state, NEW.stage,
@@ -7372,18 +7377,27 @@ BEGIN
   END IF;
   IF TG_TABLE_NAME = 'specimen_parts' THEN
     IF TG_OP = 'INSERT' THEN
+      
+      /*Tell now there are parts for individuals*/
+      UPDATE specimen_individuals
+      SET with_parts = true
+      WHERE id = NEW.specimen_individual_ref
+        AND with_parts = false;
+
       SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = NEW.specimen_individual_ref;
       IF partCount = 1 THEN
         UPDATE darwin_flat
         SET
-        (part_ref, part, part_status,
+        (with_parts,
+         part_ref, part, part_status,
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, sub_container,
          part_count_min, part_count_max
         )
         =
-        (NEW.id, NEW.specimen_part, NEW.specimen_status,
+        (true,
+         NEW.id, NEW.specimen_part, NEW.specimen_status,
          NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
          NEW.container_type, NEW.container_storage, NEW.container,
          NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
@@ -7417,11 +7431,13 @@ BEGIN
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         with_types, with_individuals,
          individual_ref,
          individual_type, individual_type_group, individual_type_search,
          individual_sex, individual_state, individual_stage,
          individual_social_status, individual_rock_form,
          individual_count_min, individual_count_max,
+         with_parts,
          part_ref, part, part_status,
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
@@ -7454,11 +7470,13 @@ BEGIN
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
+         with_types, with_individuals,
          individual_ref,
          individual_type, individual_type_group, individual_type_search,
          individual_sex, individual_state, individual_stage,
          individual_social_status, individual_rock_form,
          individual_count_min, individual_count_max,
+         true,
          NEW.id, NEW.specimen_part, NEW.specimen_status,
          NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
          NEW.container_type, NEW.container_storage, NEW.container,
@@ -7517,82 +7535,113 @@ $$
 DECLARE
   indCount INTEGER := 0;
   partCount INTEGER := 0;
+  indType BOOLEAN := false;
 BEGIN
   IF TG_TABLE_NAME = 'specimen_individuals' THEN
     SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref;
-    IF indCount < 2 THEN
-      UPDATE darwin_flat
-      SET
-      (individual_ref,
-       individual_type, individual_type_group, individual_type_search,
-       individual_sex, individual_state, individual_stage,
-       individual_social_status, individual_rock_form,
-       individual_count_min, individual_count_max,
-       part_ref, part, part_status,
-       building, "floor", room, "row", shelf,
-       container_type, container_storage, "container",
-       sub_container_type, sub_container_storage, "sub_container",
-       part_count_min, part_count_max
-      )
-      =
-      (DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT
-      )
-      WHERE individual_ref = OLD.id;
-    ELSE
-      DELETE FROM darwin_flat
-      WHERE individual_ref = OLD.id;
-    END IF;
-  ELSE
-    SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = OLD.specimen_individual_ref;
-    IF partCount < 2 THEN
-      UPDATE darwin_flat
-      SET
-      (part_ref, part, part_status,
-       building, "floor", room, "row", shelf,
-       container_type, container_storage, "container",
-       sub_container_type, sub_container_storage, "sub_container",
-       part_count_min, part_count_max
-      )
-      =
-      (DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT, DEFAULT,
-       DEFAULT, DEFAULT
-      )
-      WHERE part_ref = OLD.id;
-    ELSE
-      DELETE FROM darwin_flat
-      WHERE part_ref = OLD.id;
-    END IF;
-  END IF;
-  RETURN OLD;
-END;
-$$;
+    /*If it was the last individual deleted, then update individuals and parts fiedls with default values*/
+    IF indCount = 0 THEN
 
-CREATE OR REPLACE FUNCTION fct_darwin_flat_indviduals_after_del() RETURNS TRIGGER
-language plpgsql
-AS
-$$
-DECLARE
-  indType BOOLEAN := false;
-BEGIN
-  SELECT true INTO indType FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref AND type_group <> 'specimen' LIMIT 1;
-  IF NOT FOUND THEN
-    indType := false;
+      SELECT COUNT(*) INTO indCount FROM darwin_flat WHERE spec_ref = OLD.specimen_ref;
+      IF indCount > 1 THEN
+        DELETE FROM darwin_flat WHERE individual_ref = OLD.id;
+      ELSE
+        UPDATE darwin_flat
+        SET
+        (individual_ref,
+         individual_type, individual_type_group, individual_type_search,
+         individual_sex, individual_state, individual_stage,
+         individual_social_status, individual_rock_form,
+         individual_count_min, individual_count_max,
+         with_types, with_individuals, with_parts,
+         part_ref, part, part_status,
+         building, "floor", room, "row", shelf,
+         container_type, container_storage, "container",
+         sub_container_type, sub_container_storage, "sub_container",
+         part_count_min, part_count_max
+        )
+        =
+        (DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT,DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT
+        )
+        WHERE individual_ref = OLD.id;
+      END IF;
+    ELSE
+
+      DELETE FROM darwin_flat
+      WHERE individual_ref = OLD.id;
+
+      /*Check for the with_types and with_individuals update*/
+      SELECT true INTO indType
+      FROM specimen_individuals 
+      WHERE specimen_ref = OLD.specimen_ref 
+        AND type_group <> 'specimen' LIMIT 1;
+      
+      IF NOT FOUND THEN
+        indType := false;
+      END IF;
+
+      UPDATE darwin_flat
+      SET with_types = indType
+      WHERE spec_ref = OLD.specimen_ref;
+
+    END IF;
+  ELSE /*Parts*/
+    SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = OLD.specimen_individual_ref;
+    IF partCount = 0 THEN
+
+      SELECT COUNT(*) INTO partCount FROM darwin_flat WHERE individual_ref = OLD.specimen_individual_ref;
+/*      RAISE WARNING 'Part count in Flat: %', partCount;
+      RAISE WARNING 'Part id is: %', OLD.id;*/
+      IF partCount > 1 THEN
+        DELETE FROM darwin_flat WHERE part_ref = OLD.id;
+      ELSE
+        /*Update darwin flat*/
+        UPDATE darwin_flat
+        SET
+        (with_parts,
+         part_ref, part, part_status,
+         building, "floor", room, "row", shelf,
+         container_type, container_storage, "container",
+         sub_container_type, sub_container_storage, "sub_container",
+         part_count_min, part_count_max
+        )
+        =
+        (DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT
+        )
+        WHERE part_ref = OLD.id;
+
+      END IF;
+      /*and also specimen_individuals table*/
+      UPDATE specimen_individuals
+      SET with_parts = DEFAULT
+      WHERE id = OLD.specimen_individual_ref
+        AND with_parts = true;
+
+    ELSE
+
+      DELETE FROM darwin_flat
+      WHERE part_ref = OLD.id;
+      
+    END IF;
   END IF;
-  UPDATE darwin_flat
-  SET with_types = indType
-  WHERE spec_ref = OLD.specimen_ref;
+  IF TG_OP = 'DELETE' THEN
+    RETURN OLD;
+  END IF;
   RETURN NEW;
 END;
 $$;
@@ -7716,16 +7765,21 @@ DECLARE
   user_id integer;
   db_user_type_cpy smallint;
 BEGIN
-
   SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
   /*If no user id allows modification -> if we do a modif in SQL it should be possible*/
   IF user_id = 0 THEN
+    IF TG_OP = 'DELETE' THEN
+      RETURN OLD;
+    END IF;
     RETURN NEW;
   END IF;
   /*If user_id <> 0, get db_user_type of user concerned*/
   SELECT db_user_type INTO db_user_type_cpy FROM users WHERE id = user_id;
   /*If admin allows whatever*/
   IF db_user_type_cpy = 8 THEN
+    IF TG_OP = 'DELETE' THEN
+      RETURN OLD;
+    END IF;
     RETURN NEW;
   END IF;
 
@@ -7765,6 +7819,9 @@ BEGIN
         RAISE EXCEPTION 'You don''t have the rights to delete a part from this collection';
       END IF;
     END IF;
+  END IF;
+  IF TG_OP = 'DELETE' THEN
+    RETURN OLD;
   END IF;
   RETURN NEW;
 END;
@@ -7838,7 +7895,9 @@ BEGIN
         AND collections ~ (E'\,' || OLD.collection_ref || E'\,');
     END IF;
   END IF;
-
+  IF TG_OP = 'DELETE' THEN
+    RETURN OLD;
+  END IF;
   RETURN NEW;
 END;
 $$;
