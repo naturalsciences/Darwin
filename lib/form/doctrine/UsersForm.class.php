@@ -84,13 +84,6 @@ class UsersForm extends BaseUsersForm
       $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));
       $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;
     }
-    if ($this->options['mode'] != 'profile')
-    {
-      $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array(
-        'choices' => Users::getTypes($this->options)
-       ));    
-      $this->validatorSchema['db_user_type'] = new sfValidatorChoice(array('choices' => array_keys(Users::getTypes($this->options)), 'required' => false));       
-    }
                                          
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));    

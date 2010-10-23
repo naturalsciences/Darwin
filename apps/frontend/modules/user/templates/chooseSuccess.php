@@ -18,10 +18,10 @@ $(document).ready(function () {
 	    el = $(this).closest('tr');
 	    ref_element_id = getIdInClasses(el);
 	    $info = 'good' ;
-	    $('table#'+referer+' tbody tr').each(function() {
+	    $('table#user_right tbody tr').each(function() {
 	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
 	    });
-	    if($info == 'good') addCollRightValue(ref_element_id,referer);
+	    if($info == 'good') addCollRightValue(ref_element_id);
 	  }
 	  else
 	  {

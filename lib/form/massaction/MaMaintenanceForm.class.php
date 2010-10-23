@@ -66,13 +66,17 @@ class MaMaintenanceForm extends BaseCollectionMaintenanceForm
     $this->widgetSchema['action_observation']->setLabel('Maintenance Achieved');
   }
 
-  public function doMassAction($items, $values)
+  public function doMassAction($user_id, $items, $values)
   {
-    foreach($items as $id)
+    $query = Doctrine_Query::create()->select('id')->from('SpecimenParts s');
+    $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$items),'part_ref', $user_id));
+    $results = $query->execute();
+
+    foreach($results as $result)
     {
       $maintenance = new CollectionMaintenance();
       $maintenance->fromArray($values);
-      $maintenance->setRecordId($id);
+      $maintenance->setRecordId($result->getId());
       $maintenance->setReferencedRelation("specimen_parts");
       $maintenance->save();
     }

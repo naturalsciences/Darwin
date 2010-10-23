@@ -61,12 +61,14 @@ class specimenwidgetComponents extends sfComponents
 
   public function executeTool()
   {
-    $this->defineForm();
+    if(isset($this->view) && $this->view) $this->form = Doctrine::getTable('CollectingTools')->findAll() ;  
+    else $this->defineForm();
   }
 
   public function executeMethod()
   {
-    $this->defineForm();
+    if(isset($this->view) && $this->view) $this->form = Doctrine::getTable('CollectingMethods')->findAll() ;
+    else $this->defineForm();
   }
 
   public function executeRefTaxon()

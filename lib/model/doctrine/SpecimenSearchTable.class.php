@@ -69,7 +69,7 @@ class SpecimenSearchTable extends Doctrine_Table
     * @param array $ids Ids of specimen to search
     * @return Doctrine_collection
     */
-    public function getByMultipleIds(array $ids, $type = "specimen")
+    public function getByMultipleIds(array $ids, $type = "specimen", $user_id)
     {
       if( empty($ids))
         return $ids;
@@ -104,6 +104,8 @@ class SpecimenSearchTable extends Doctrine_Table
         ->orderBy('spec_ref, individual_ref, part_ref');  
       }
       else return array(); //Error
+      
+      $q->andWhere('s.collection_ref in (select fct_search_authorized_encoding_collections(?))',$user_id);
       return $q->execute();
     }
 

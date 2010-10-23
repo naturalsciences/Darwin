@@ -55,7 +55,8 @@ class igsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($igs = Doctrine::getTable('Igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
+    $this->no_right_col = Doctrine::getTable('Igs')->testNoRightsCollections('ig_ref',$request->getParameter('id'), $this->getUser()->getId());
     $this->form = new igsForm($igs);
     $this->loadWidgets();
   }
@@ -170,6 +171,7 @@ class igsActions extends DarwinActions
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted()) $this->igss = $this->pagerLayout->execute();
+        $this->level = $this->getUser()->getDbUserType() ;          
       }
     }
   }
@@ -197,5 +199,12 @@ class igsActions extends DarwinActions
 	$form->getErrorSchema()->addError($error); 
       }
     }
+  }
+  public function executeView(sfWebRequest $request)
+  {
+    $this->igs = Doctrine::getTable('igs')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($this->igs,'Ig not Found');
+    $this->form = new igsForm($this->igs);    
+    $this->loadWidgets();
   }
 }

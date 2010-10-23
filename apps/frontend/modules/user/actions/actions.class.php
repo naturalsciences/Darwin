@@ -16,7 +16,7 @@ class userActions extends DarwinActions
   {
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
     $this->mode = 'new' ;
-    $this->form = new UsersForm(null, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode));
+    $this->form = new UsersForm(null, array('mode' => $this->mode));
   }
   
   public function executeEdit(sfWebRequest $request)
@@ -30,23 +30,15 @@ class userActions extends DarwinActions
     elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
       $this->forwardToSecureAction();
     $this->mode = 'edit' ;
-    $this->form = new UsersForm($this->user, array("db_user_type" => $this->getUser()->getDbUserType(),'mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
+    $this->form = new UsersForm($this->user, array('mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
     $users = $request->getParameter('users');
-    if(! isset($users['db_user_type']))
-    {
-      $users['db_user_type'] = $this->user->getDbUserType();
-    }
+
     if($request->isMethod('post'))
     {
       $this->form->bind($users);
       if($this->form->isValid())
       {
-        $old_db_user_type = $this->user->getDbUserType() ;
         $this->form->save();
-        Doctrine::getTable('MyWidgets')->
-          setUserRef($this->user->getId())->
-          setWidgetsForNewUserType($old_db_user_type, $this->form->getValue('db_user_type'));
-
         return $this->redirect('user/edit?id='.$this->user->getId());
       }
     }
@@ -367,5 +359,18 @@ class userActions extends DarwinActions
         return $this->redirect('user/preferences');
       }
     }
+  }
+  public function executeRightSummary(sfWebRequest $request)
+  {
+    if($request->hasParameter('id')) 
+    {
+      $user_id = $request->getParameter('id') ;
+      if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
+    }
+    else $user_id = $this->getUser()->getId() ;
+    $this->summary = array(Users::REGISTERED_USER=>$this->getI18N()->__('You can only view specimens linked to this collection'),
+                           Users::ENCODER=>$this->getI18N()->__('You can edit specimens linked to this collection'),
+                           Users::MANAGER=>$this->getI18N()->__('You are Manager of this collection')) ;
+    $this->rights = Doctrine::getTable('collectionsRights')->findByUserRef($user_id) ;
   }
 }

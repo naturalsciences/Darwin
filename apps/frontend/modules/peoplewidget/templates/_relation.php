@@ -1,4 +1,4 @@
-<table class="catalogue_table">
+<table class="catalogue_table<?php echo($sf_user->isA(Users::REGISTERED_USER)?'_view':'') ;?>">
   <thead>
     <tr>
       <th></th>
@@ -15,9 +15,13 @@
     <tr class="rid_<?php echo $relation->Parent->getId();?>">
     <td><?php echo image_tag('info.png',"title=info class='info lid_1'");?></td>
     <td>
+		  <?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>      
       <a class="link_catalogue" title="<?php echo __('Edit Relation');?>"  href="<?php echo url_for('people/relation?ref_id='.$eid.'&id='.$relation->getId());?>">
 	<?php echo $relation->Child;?>
       </a>
+      <?php else : ?>
+      	<?php echo $relation->Child;?>     
+      <?php endif ; ?>
     </td>
     <td><?php echo $relation->getRelationshipType();?></td>
     <td><?php echo $relation->Parent;?></td>
@@ -25,11 +29,13 @@
     <td class="datesNum">
 	<?php echo $relation->getActivityDateFromObject()->getDateMasked('em','Y',ESC_RAW);?> - 
 	<?php echo $relation->getActivityDateToObject()->getDateMasked('em','Y', ESC_RAW) ?>
-    </td>
+    </td>    
     <td class="widget_row_delete">
+		  <?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>      
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_relationships&id='.$relation->getId());?>" title="<?php echo __('Are you sure ?') ?>">
 	<?php echo image_tag('remove.png'); ?>
       </a>
+      <?php endif ; ?>
     </td>
   </tr>
   <?php endforeach;?>
@@ -37,9 +43,10 @@
 </table>
 
 <br />
+<?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>  
 <?php echo image_tag('add_green.png');?>
 <a title="<?php echo __('Add Relationship');?>" class="link_catalogue" href="<?php echo url_for('people/relation?ref_id='.$eid);?>"><?php echo __('Add');?></a>
-
+<?php endif ?>
 <script language="javascript">
   function fetchRelDetails()
   { 

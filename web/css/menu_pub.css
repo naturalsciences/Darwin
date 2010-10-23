@@ -139,13 +139,15 @@
   font-size: 9pt;      
 }
 
-.register_form #login_bt a
+.register_form #login_bt input
 {
   color: black ;
-  text-decoration: none ;   
-  margin-top: 7px;   
+  text-decoration: none ;
   width:36px;
-  font-size: 9pt;     
+  font-size: 7pt;
+  vertical-align:top;
+  border:0;
+  background-color:transparent;
 }
 
 .register_form #register

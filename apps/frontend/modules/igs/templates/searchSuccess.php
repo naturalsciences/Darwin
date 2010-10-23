@@ -32,6 +32,7 @@
             <tr class="rid_<?php echo $igs->getId(); ?>">
               <td><?php echo $igs->getIgNum();?></td>
               <td class="datesNum"><?php echo $igs->getIgDateMasked(ESC_RAW);?></td>
+              <?php if ($level > Users::REGISTERED_USER) : ?>              
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit IGS')),'igs/edit?id='.$igs->getId());?>
@@ -40,6 +41,9 @@
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
               </td>
+              <?php else : ?>
+                <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),'igs/view?id='.$igs->getId());?></td>
+              <?php endif ; ?>   
             </tr>
           <?php endforeach;?>
         </tbody>

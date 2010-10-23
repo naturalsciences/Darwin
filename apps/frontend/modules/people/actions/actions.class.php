@@ -55,7 +55,7 @@ class peopleActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
-
+        $this->level = $this->getUser()->getDbUserType() ;     
       }
     }
   }
@@ -288,4 +288,12 @@ class peopleActions extends DarwinActions
     if(!$this->relations)
       return $this->renderText('nothing');
   }
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->people = Doctrine::getTable('People')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($this->people,'People not Found');
+    $this->form = new PeopleForm($this->people);    
+    $this->loadWidgets();
+  }  
 }

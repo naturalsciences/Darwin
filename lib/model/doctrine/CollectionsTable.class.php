@@ -5,18 +5,22 @@
 class CollectionsTable extends DarwinTable
 {
 
-    public function fetchByInstitutionList($institutionId = null, $public_only = false)
+    public function fetchByInstitutionList($user, $institutionId = null, $public_only = false)
     {
       $q = Doctrine_Query::create()
-            ->select('p.*, col.*, CONCAT(col.path,col.id,E\'/\') as col_path_id')
+            ->select('p.*, col.*,r.id,r.db_user_type, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->from('People p')
             ->innerJoin('p.Collections col')
+            ->leftJoin('col.CollectionsRights r')
             ->andWhere('p.is_physical = false')
             ->orderBy('p.id ASC, col_path_id ASC');
-      if($institutionId != null)
-        $q->andWhere('p.id = ?', $institutionId);
+      if($user && ! $user->isA(Users::ADMIN) )
+            $q->andWhere('r.user_ref = ? OR col.is_public = TRUE',$user->getId());
       if($public_only)
         $q->andWhere('col.is_public = TRUE');
+      if($institutionId != null)
+        $q->andWhere('p.id = ?', $institutionId);
+
       return $q->execute();
     }
 
@@ -33,11 +37,11 @@ class CollectionsTable extends DarwinTable
       $results = array('' =>'');
       foreach($res as $row)
       {
-        $results[$row->getId()] = sfOutputEscaper::unescape($row->__toString());
+        $results[$row->getId()] = $row->__toString();
       }
       return $results;
     }
-    
+
     public function getCollectionByName($name)
     {
       $q = Doctrine_Query::create()
@@ -48,29 +52,31 @@ class CollectionsTable extends DarwinTable
       return $q->fetchOne(); 
     }
 
-    public function fetchByCollectionParent($ParentId, $public_only = false)
+    public function fetchByCollectionParent($curent_user, $user_id, $collection_id)
     {
-      $expr = "%/$ParentId/%" ;
+      $expr = "%/$collection_id/%" ;
       $q = Doctrine_Query::create()
-            ->select('c.id, c.name, c.path, CONCAT(c.path,c.id,E\'/\') as coll_path_id')
-            ->from('Collections c')
-            ->andWhere('c.path like ?', $expr)
-            ->orderBy('coll_path_id ASC');
-      if($public_only)
-        $q->andWhere('c.is_public = TRUE');             
+        ->select('c.*, r.*, CONCAT(c.path,c.id,E\'/\') as coll_path_id')
+        ->from('Collections c')
+        ->leftJoin('c.CollectionsRights r ON c.id=r.collection_ref AND r.user_ref = '.$user_id);
+      if(! $curent_user->isAtLeast(Users::ADMIN))
+        $q->innerJoin('c.CollectionsRights r2 ON c.id=r2.collection_ref AND r2.db_user_type >=4 AND r2.user_ref = '.$curent_user->getId());
+
+      $q->andWhere('c.path like ?', $expr)
+        ->orderBy('coll_path_id ASC');
       return $q->execute();
     }
-    
+
     public function getAllCollections($public_only = false)
     {
       $q = Doctrine_Query::create()
             ->from('Collections c')
             ->orderBy('path,name ASC');
       if($public_only)
-        $q->andWhere('c.is_public = TRUE');            
+        $q->andWhere('c.is_public = TRUE');
       return $q->execute();
     }
-    
+
     public function getAndUpdateLastCode($collectionId)
     {
       if (!isset($collectionId))
@@ -81,7 +87,7 @@ class CollectionsTable extends DarwinTable
       $returnedVal = $conn->fetchOne($sql);
       return $returnedVal;
     }
-    
+
     public function getInstitutionNameByCollection($collection_ref)
     {
       $q = Doctrine_Query::create()

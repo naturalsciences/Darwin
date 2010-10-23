@@ -1,4 +1,5 @@
-<table class="catalogue_table">
+<?php $read_only = (isset($view)&&$view)?true:false ; ?>
+<table class="catalogue_table<?php echo $read_only?'_view':'' ; ?>">
   <thead>
     <tr>
       <th><?php echo __('Type');?></th>
@@ -13,10 +14,14 @@
   <tbody>
     <?php foreach($properties as $property):?>
     <tr>
-      <td>
-	  <a class="link_catalogue" title="<?php echo __('Edit Properties');?>" href="<?php echo url_for('property/add?table='.$table.'&rid='.$property->getId().'&id='.$eid); ?>">
-	    <?php echo $property->getPropertyType();?>
-	  </a>
+      <td>  
+      <?php if($read_only) : ?>
+        <?php echo $property->getPropertyType();?>
+      <?php else : ?>
+    	  <a class="link_catalogue" title="<?php echo __('Edit Properties');?>" href="<?php echo url_for('property/add?table='.$table.'&rid='.$property->getId().'&id='.$eid); ?>">
+	        <?php echo $property->getPropertyType();?>
+    	  </a>
+    	<?php endif ; ?>
       </td>
       <td><?php echo $property->getPropertySubType();?></td>
       <td><?php echo $property->getPropertyQualifier();?></td>
@@ -45,9 +50,12 @@
 	  <?php echo __('No Values');?>
 	<?php endif;?>
       </td>
-      <td class="widget_row_delete">
+      <td class="widget_row_delete">   
+       <?php if(!$read_only) : ?>
+       
         <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_properties&id='.$property->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
         </a>
+        <?php endif ; ?>
       </td>
     </tr>
     <?php endforeach;?>
@@ -59,4 +67,6 @@ $('.display_value').click(showValues);
 $('.hide_value').click(hideValues);
 </script>
 <br />
+<?php if(!$read_only) : ?>
 <?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Properties');?>" class="link_catalogue" href="<?php echo url_for('property/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
+<?php endif ; ?>

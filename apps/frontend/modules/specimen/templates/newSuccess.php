@@ -38,12 +38,11 @@ $(document).ready(function ()
         </ul>
       <?php endif;?>
 
-
       <?php include_partial('widgets/screen', array(
         'widgets' => $widgets,
         'category' => 'specimenwidget',
         'columns' => 2,
-        'options' => array('form' => $form),
+        'options' => array('form' => $form, 'level' => 2),
       )); ?>
     </div>
     <p class="clear"></p>

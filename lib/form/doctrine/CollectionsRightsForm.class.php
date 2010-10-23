@@ -15,8 +15,14 @@ class CollectionsRightsForm extends BaseCollectionsRightsForm
           $this['collection_ref']) ;
     $user_id=isset($option) ? $this->options['user_id'] : $this->getObject()->getUserRef() ;
     $this->widgetSchema['user_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['user_ref']->setLabel(Doctrine::getTable('Users')->findUser($user_id)->getFormatedName()) ;
-    $this->validatorSchema['user_ref'] = new sfValidatorinteger(array('required' => false)) ;
+    if($user_id == 0 ) $this->widgetSchema['user_ref']->setLabel('nobody') ;
+    else $this->widgetSchema['user_ref']->setLabel(Doctrine::getTable('Users')->findUser($user_id)->getFormatedName()) ;
+    $this->widgetSchema['db_user_type'] = new sfWidgetFormChoice(array(
+      'choices' =>  Users::getTypes(array('screen' => 2,'db_user_type' => Users::ADMIN)),
+    ));    
+    $this->widgetSchema->setDefault('db_user_type',Users::REGISTERED_USER) ;
+    $this->validatorSchema['db_user_type'] = new sfValidatorPass();
+    $this->validatorSchema['user_ref'] = new sfValidatorPass();
     $this->mergePostValidator(new CollectionsRightsValidatorSchema());     
   }
 }

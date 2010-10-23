@@ -18,4 +18,11 @@ class Collections extends BaseCollections
   {
     return $this->getName();
   }
+
+  public function getTypeInCol()
+  {
+    if(count($this->CollectionsRights) )
+      return  $this->CollectionsRights[0]->getDbUserType();
+    return 0;
+  }
 }

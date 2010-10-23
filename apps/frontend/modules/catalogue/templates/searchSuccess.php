@@ -87,17 +87,17 @@
                 <span><?php echo $item->getUpperBound();?></span>
               </td>
             <?php endif;?>
-            <?php if ($user_allowed) : ?>
+            <?php if ($level > Users::REGISTERED_USER) : ?>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),$searchForm->getValue('table').'/edit?id='.$item->getId());?>
-                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),$searchForm->getValue('table').'/new?duplicate_id='.$item->getId());?>
+                    <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),$searchForm->getValue('table').'/edit?id='.$item->getId());?>
+                    <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),$searchForm->getValue('table').'/new?duplicate_id='.$item->getId());?>
                 <?php else:?>
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
             </td>
             <?php else : ?>
-              <td>&nbsp;</td>
+              <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),$searchForm->getValue('table').'/view?id='.$item->getId());?></td>
             <?php endif ; ?>
           </tr>
         <?php endforeach;?>

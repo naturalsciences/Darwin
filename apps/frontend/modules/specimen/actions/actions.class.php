@@ -205,6 +205,7 @@ class specimenActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    $this->forward404Unless(Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
     $this->loadWidgets();
     $this->form = $this->getSpecimenForm($request, true);
     $this->setTemplate('new');
@@ -352,5 +353,11 @@ class specimenActions extends DarwinActions
                              '}'
                             );
   }
-
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
+    $this->loadWidgets(); // a changer an loadRegWidget()
+    $this->form = new SpecimensForm($this->specimen);
+  }  
 }

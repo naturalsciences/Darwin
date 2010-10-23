@@ -34,7 +34,7 @@ class cataloguewidgetComponents extends sfComponents
 
   public function executeProperties()
   {
-    $this->properties =  Doctrine::getTable('CatalogueProperties')->findForTable($this->table, $this->eid);
+    $this->properties = Doctrine::getTable('CatalogueProperties')->findForTable($this->table, $this->eid);
   }
 
   public function executeVernacularNames()

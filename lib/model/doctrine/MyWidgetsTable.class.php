@@ -60,6 +60,10 @@ class MyWidgetsTable extends DarwinTable
     $this->db_user_type = $ref;
     return $this;
   }
+  public function getDbUserType()
+  {
+    return $this->db_user_type;
+  }
     
   public function changeWidgetStatus($category, $widget, $status)
   {
@@ -159,12 +163,13 @@ class MyWidgetsTable extends DarwinTable
  
   public function getAvailableWidgets()
   {
+    $categories = array('specimen_widget','individuals_widget','part_widget','specimensearch_widget');
 	  $q = Doctrine_Query::create()
 	    ->from('MyWidgets p')
-	    ->where('p.is_available = true') 
-	    ->andWhere('p.all_public = true') 
+	    ->andWhere('p.all_public = false') 
 	    ->andwhere('p.user_ref = ?', $this->user_ref) 
-	    ->orderBy('category,group_name');
+	    ->andWhereIn("p.category",$categories) 
+	    ->orderBy('category DESC,group_name ASC');	  
 	  return $q->execute() ;
   }
 
@@ -186,48 +191,6 @@ class MyWidgetsTable extends DarwinTable
           ->andWhereIn('p.group_name',$widget_array);
 
     $this->addCategoryUser($q,$category)->execute();
-  }
-
-  /**
-  * Update widgets for a user when there is a change in DbUserType
-  * @param int $old_type OLD Db user type of the user
-  * @param int $new_type New Db user type of the user
-  */
-  public function setWidgetsForNewUserType($old_type, $new_type)
-  {
-	  if ($old_type != $new_type)
-	  {
-	    if ($old_type > $new_type)
-	    {
-		  // widget to delete
-		    switch ($old_type)
-		    {
-		      case 8: if ($new_type > 2) break ; /** @TODO: for now an admin and a CM have the same widgets**/
-				      if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
-				      if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				      break ;
-		      case 4: if ($new_type > 1)  $this->updateWigetsAvailabilityForRole(Users::MANAGER, false) ; 
-				      if ($new_type == 1)  $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				      break ;
-		      case 2: $this->updateWigetsAvailabilityForRole(Users::ENCODER, false) ; 
-				      break ;
-		      default: break ;
-		    }
-	    }
-	    else
-	    {
-		  // widget to add
-		    switch ($old_type)
-		    {
-		      case 1:$this->updateWigetsAvailabilityForRole(Users::ENCODER, true) ; 
-				      if ($new_type > 2) $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
-				      break ;
-		      case 2: $this->updateWigetsAvailabilityForRole(Users::MANAGER, true) ; 
-				      break ;
-		      default: break ;
-		    }
-	    }
-	  }
   }
   
   /**
@@ -263,7 +226,7 @@ class MyWidgetsTable extends DarwinTable
     if($mode == 'insert') 
       $q .= "SET collections= collections || '$collection_ref,' " ;      
     else
-      $q .= "SET collections = regexp_replace(collections, '$collection_ref,', '', 'g') " ;
+      $q .= "SET collections = regexp_replace(collections, E'\,$collection_ref\,', E'\,', 'g') " ;
     if($list_id ==null)
       $q .= "WHERE user_ref = ".$this->user_ref ;    
     else

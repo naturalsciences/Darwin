@@ -15,24 +15,11 @@ $(document).ready(function ()
       $("#institution_to_change").html(data);
     });
   });
-  $("#collections_main_manager_ref").change(function() {     
-	  ref_element_id = $(this).val();
-	  $info = 'good' ;
-	  $('table#encoder_right tbody tr').each(function() {
-	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
-	  });
-	  if($info == 'good') addCollRightValue(ref_element_id,'encoder_right');
-	  $info = 'good' ;
-	  $('table#admin_right tbody tr').each(function() {
-	      if($(this).attr('id') == ref_element_id) $info = 'bad' ;
-	  });
-	  if($info == 'good') addCollRightValue(ref_element_id,'admin_right');	  
-  });
 });
 </script>
 <?php echo form_tag('collection/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition'));?>
 <?php echo $form->renderGlobalErrors() ?>
-  <table>
+  <table class="collections">
     <tbody>
       <tr>
         <th><?php echo $form['is_public']->renderLabel(__("Public collection")) ?></th>
@@ -85,85 +72,26 @@ $(document).ready(function ()
       </tr>
       <tr>
       	<td colspan="2">
-        	<table class="encoding collections_rights" id="encoder_right">
+        	<table class="encoding collections_rights" id="user_right">
 		        <thead>
 		          <tr>
-			          <th><label><?php echo __("Encoder") ; ?></label></th>
-			          <?php if(!$form->getObject()->isNew()) : ?>
-			          <th><?php echo __('Set rights for sub-collections');?></th>
-			          <?php endif ; ?>
-			          <th>&nbsp;</th>
+			          <th><label><?php echo __("Users") ; ?></label></th>
+			          <th colspan="4"><label><?php echo __("Rights") ; ?></label></th>
 		          </tr>
 		        </thead>
 		        <tbody>
 		          <?php foreach($form['CollectionsRights'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId()), 'reg_widget' => ''));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
 		          <?php endforeach;?>
 		          <?php foreach($form['newVal'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId()), 'reg_widget' => ''));?>
+			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
 		          <?php endforeach;?>
 		        </tbody>
 		      </table>
-	        <div class='add_value' id="encoder_right">
-		        <a href="<?php echo url_for('collection/addValue?right=encoder'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+
+	        <div class='add_value' id="user_right">
+		        <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
 		        <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add User');?></a>
-		      </div>
-      	</td>
-      </tr>
-      <tr>
-        <td colspan="2"><hr /></td>
-      </tr>
-      <tr>
-      	<td colspan="2">
-        	<table class="encoding collections_rights" id="admin_right">
-		        <thead>
-		          <tr>
-			          <th><label><?php echo __("Secondary Manager") ; ?></label></th>
-			          <th>&nbsp;</th>
-		          </tr>
-		        </thead>
-		        <tbody>
-		          <?php foreach($form['CollectionsAdmin'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ''));?>
-		          <?php endforeach;?>
-		          <?php foreach($form['newAdmin'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ''));?>
-		          <?php endforeach;?>
-		        </tbody>
-		      </table>
-	        <div class='add_value' id="admin_right">
-		        <a href="<?php echo url_for('collection/addValue?right=admin'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		        <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add Admin');?></a>
-		      </div>
-      	</td>
-      </tr>     
-      <tr>
-        <td colspan="2"><hr /></td>
-      </tr>
-      <tr>
-      	<td colspan="2">
-        	<table class="encoding collections_rights" id="reg_user_right">
-		        <thead>
-		          <tr>
-			          <th><label><?php echo __("Registered User view") ; ?></label></th>
-                <?php if(!$form->getObject()->isNew()) : ?>
-  			          <th><?php echo __('Allow view on Widgets');?></th>
-			          <?php endif ; ?>			          
-			          <th>&nbsp;</th>
-		          </tr>
-		        </thead>
-		        <tbody>
-		          <?php foreach($form['CollectionsRegUser'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
-		          <?php endforeach;?>
-		          <?php foreach($form['newRegUser'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => '', 'reg_widget' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
-		          <?php endforeach;?>
-		        </tbody>
-		      </table>
-	        <div class='add_value' id="reg_user_right">
-		        <a href="<?php echo url_for('collection/addValue?right=reg_user'. ($form->getObject()->isNew() ? '': '&id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		        <a class='coll_right' href="<?php echo url_for('user/choose');?>/num/1"><?php echo __('Add User');?></a>
 		      </div>
       	</td>
       </tr>          

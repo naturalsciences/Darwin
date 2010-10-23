@@ -13,9 +13,9 @@ class TaxonomyTable extends DarwinTable
 	 ->andWhere('t.level_ref = ?', $level)
 	 ->andWhere('t.path = ?', $path);
 
-    return $q->fetchOne();  	
+    return $q->fetchOne();
   }
-  
+
   public function getRealTaxon()
   {
     $q = Doctrine_Query::create()
@@ -23,6 +23,5 @@ class TaxonomyTable extends DarwinTable
 	 ->where('t.id > 0') ;  
 	 return $q->execute() ;  
   }
-  
 
 }

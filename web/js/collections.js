@@ -4,7 +4,7 @@ var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
  $("a.coll_right").click(function(){
-    referer = $(this).closest('div').attr('id') ;
+    referer = 'collection' ;
     scroll(0,0) ;
     $(this).qtip({
       content: {
@@ -91,16 +91,16 @@ $(document).ready(function () {
     return false;
  });
 });
-function addCollRightValue(user_ref,referer)
+function addCollRightValue(user_ref)
 {
   $.ajax(
   {
     type: "GET",
-    url: $('div#'+referer+' a.hidden').attr('href')+ (0+$('table#'+referer+' tbody tr').length)+'/user_ref/'+user_ref,
+    url: $('div#user_right a.hidden').attr('href')+ (0+$('table#user_right tbody tr').length)+'/user_ref/'+user_ref,
     success: function(html)
     {
-      $('table#'+referer+' tbody').append(html);
-      $('table#'+referer+' tbody tr:last').attr("id" , user_ref) ;
+      $('table#user_right tbody').append(html);
+      $('table#user_right tbody tr:last').attr("id" , user_ref) ;
     }
   });
   return false;
@@ -109,5 +109,7 @@ function addCollRightValue(user_ref,referer)
 function detachCollRightValue()
 {
   parent = $(this).closest('tr');
-  $(parent).detach();
+  $(parent).hide();
+  $(parent).attr('id','') ;
+  $(parent).find('input[type=hidden]:first').val('') ;
 }

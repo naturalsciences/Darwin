@@ -57,6 +57,7 @@ class institutionActions extends DarwinActions
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->items = $this->pagerLayout->execute();
+        $this->level = $this->getUser()->getDbUserType() ;           
       }
     }    
   }
@@ -134,4 +135,12 @@ class institutionActions extends DarwinActions
       }
     }
   }
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->instit = Doctrine::getTable('Institutions')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($this->instit,'Institution not Found');
+    $this->form = new InstitutionsForm($this->instit);    
+    $this->loadWidgets();
+  }  
 }

@@ -53,8 +53,13 @@
               </td>
               <td rowspan="2">
                 <?php if($source != 'part'):?>
-                  <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
-                  <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+                  <?php $expandable=($source=='specimen')?$specimen->getWithIndividuals():$specimen->getWithParts();?>
+                  <?php if($expandable):?>
+                    <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
+                    <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+                  <?php else:?>
+                    <?php echo image_tag('grey_expand.png', array('alt' => '+', 'class'=> 'collapsed')); ?>
+                  <?php endif;?>
                 <?php endif;?>
               </td>
               <td >
@@ -87,11 +92,19 @@
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'parts/edit?id='.$specimen->getPartRef());?>
                   <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef(),array('class' => 'duplicate_link'));?>
                 <?php endif;?>
+              <?php else : ?>
+                 <?php if($source == 'specimen'):?>
+                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),'specimen/view?id='.$specimen->getSpecRef());?>
+                <?php elseif($source=="individual"):?>
+                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),'individuals/view?id='.$specimen->getIndividualRef());?>
+                <?php else:?>
+                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),'parts/view?id='.$specimen->getPartRef());?>
+                <?php endif;?>             
               <?php endif ; ?>
               </td>
             </tr>
 
-            <?php if($source == 'specimen'):?>
+            <?php if($source == 'specimen' && $specimen->getWithIndividuals()):?>
               <tr id="tr_individual_<?php echo $specimen->getSpecRef();?>" class="ind_row sub_row">
                 <td colspan="14"> 
                   <div id="container_individual_<?php echo $specimen->getSpecRef();?>" class="tree"></div>
@@ -115,7 +128,7 @@
                   </script>
                 </td>
               </tr>
-            <?php elseif($source == 'individual'):?>
+            <?php elseif($source == 'individual' && $specimen->getWithParts()):?>
               <tr id="tr_part_<?php echo $specimen->getIndividualRef();?>" class="part_row sub_row">
                 <td colspan="14"> 
                   <div id="container_part_<?php echo $specimen->getIndividualRef();?>" class="tree"></div>

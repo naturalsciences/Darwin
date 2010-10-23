@@ -181,6 +181,7 @@ class methods_and_toolsActions extends DarwinActions
         if (! $this->pagerLayout->getPager()->getExecuted())
            $this->methods_and_tools = $this->pagerLayout->execute();
       }
+      $this->level = $this->getUser()->getDbUserType() ;       
     }
   }
 

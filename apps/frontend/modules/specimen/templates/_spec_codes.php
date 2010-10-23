@@ -1,7 +1,7 @@
 <tbody id="code_<?php echo $rownum;?>">
   <?php if($form->hasError()): ?>
   <tr>
-    <td colspan="8">
+    <td colspan="7">
       <?php echo $form->renderError();?>
     </td>
   </tr>

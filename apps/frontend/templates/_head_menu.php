@@ -26,7 +26,9 @@
                         <li><?php echo link_to(__('I.G. Numbers'),'igs/index');?></li>
                         <li><?php echo link_to(__('Institutions'),'institution/index');?></li>
                         <li><?php echo link_to(__('People'),'people/index');?></li>
-                        <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
+                        <?php if($sf_user->getDbUserType() >= Users::ENCODER) : ?>
+                          <li><?php echo link_to(__('Sampling location'),'gtu/index');?></li>
+                        <?php endif ; ?>
                         <li><?php echo link_to(__('Collecting Methods'),'methods_and_tools/methodsIndex');?></li>
                         <li><?php echo link_to(__('Collecting Tools'),'methods_and_tools/toolsIndex');?></li>
                     </ul>
@@ -106,7 +108,6 @@
 <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <?php echo javascript_include_tag('map.js'); ?>
-
 <script  type="text/javascript">
 
 $(document).ready(function () {

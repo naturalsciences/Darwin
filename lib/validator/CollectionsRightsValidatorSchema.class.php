@@ -10,10 +10,8 @@ class CollectionsRightsValidatorSchema extends sfValidatorSchema
   {
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
-
-
-    if (!$value['user_ref'])
-    {
+    if ($value['user_ref'] == 0)
+    {    
       return array();
     }
 
