@@ -216,6 +216,7 @@ SELECT ok(false = (SELECT with_individuals FROM darwin_flat WHERE spec_ref = 100
 SELECT ok(false = (SELECT with_parts FROM darwin_flat WHERE spec_ref = 100001), '...with_parts well set to false');
 SELECT ok(0 = (SELECT COALESCE(part_ref,0) FROM darwin_flat WHERE spec_ref = 100001), '... and no more part_ref');
 
+SELECT diag('Good tests done for individuals and parts :)');
 
 SELECT * FROM finish();
 ROLLBACK;
