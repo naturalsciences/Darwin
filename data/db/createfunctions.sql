@@ -7567,7 +7567,6 @@ BEGIN
         DELETE FROM darwin_flat WHERE individual_ref = OLD.id;
       END IF;
     ELSE
-/*  IF indCount > 0 THEN*/
       DELETE FROM darwin_flat
       WHERE individual_ref = OLD.id;
 
@@ -7591,8 +7590,7 @@ BEGIN
     IF partCount = 0 THEN
 
       SELECT COUNT(*) INTO partCount FROM darwin_flat WHERE individual_ref = OLD.specimen_individual_ref;
-/*      RAISE WARNING 'Part count in Flat: %', partCount;
-      RAISE WARNING 'Part id is: %', OLD.id;*/
+
       IF partCount > 1 THEN
         DELETE FROM darwin_flat WHERE part_ref = OLD.id;
       ELSE
