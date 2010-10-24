@@ -7351,6 +7351,9 @@ BEGIN
         );
       END IF;
     ELSIF TG_OP = 'UPDATE' THEN
+
+      /*@TODO: Foresee update of spec_ref*/
+
       UPDATE darwin_flat
       SET
       (individual_ref,
@@ -7488,6 +7491,9 @@ BEGIN
         );
       END IF;
     ELSIF TG_OP = 'UPDATE' THEN
+
+      /*@TODO: Foresee update of specimen_individual_ref*/
+
       UPDATE darwin_flat
       SET
       (part_ref, part, part_status,
@@ -7631,21 +7637,6 @@ BEGIN
   RETURN OLD;
 END;
 $$;
-
--- CREATE OR REPLACE FUNCTION fct_delete_darwin_flat_ind_row() RETURNS TRIGGER
--- language plpgsql
--- AS
--- $$
--- DECLARE
---   indCount INTEGER := 0;
---   partCount INTEGER := 0;
---   indType BOOLEAN := false;
--- BEGIN
---   IF TG_TABLE_NAME = 'specimen_individuals' THEN
---   END IF;
---   RETURN OLD;
--- END;
--- $$;
 
 CREATE OR REPLACE FUNCTION convert_to_integer(v_input varchar) RETURNS INTEGER
 AS $$
