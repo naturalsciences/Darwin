@@ -60,7 +60,7 @@
     <?php endif;?>
     <td class="col_gtu">
       <?php if($specimen->getGtuRef() > 0) : ?>
-        <?php if($specimen->getHasEncodingRights() || $specimen->getStationVisible() /*|| $sfuser->isAtLeast(Users::Admin) */):?>
+        <?php if($specimen->getHasEncodingRights() || $specimen->getStationVisible() || $sf_user->isAtLeast(Users::ADMIN) ):?>
           <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$item_ref."_info");?>
           <script type="text/javascript">
             $(document).ready(function()
