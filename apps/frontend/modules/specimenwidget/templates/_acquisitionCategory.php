@@ -13,11 +13,7 @@
         <?php echo $form['acquisition_category']->renderLabel(); ?>
       </th>
       <td>
-        <?php if(isset($view) && $view) : ?>
-          <?php echo $form->getObject()->getAcquisitionCategory() ; ?>
-        <?php else  : ?>
-          <?php echo $form['acquisition_category']->render(); ?>
-        <?php endif ; ?>
+        <?php echo $form['acquisition_category']->render(); ?>
       </td>
     </tr>
     <tr>
@@ -25,15 +21,7 @@
         <?php echo $form['acquisition_date']->renderLabel() ?>
       </th>
       <td>
-        <?php if(isset($view) && $view) : ?>
-          <?php if (FuzzyDateTime::getDateTimeStringFromArray($form->getObject()->getAcquisitionDate()) != '0001/01/01') : ?>        
-            <?php echo FuzzyDateTime::getDateTimeStringFromArray($form->getObject()->getAcquisitionDate()) ?>
-          <?php else : ?>
-          -
-          <?php endif ; ?>
-        <?php else  : ?>
-          <?php echo $form['acquisition_date']->render() ?>
-        <?php endif ; ?>
+        <?php echo $form['acquisition_date']->render() ?>
       </td>
     </tr>
   </tbody>

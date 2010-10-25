@@ -33,14 +33,14 @@ class DarwinActions extends sfActions
     $this->only_role = (!$request->hasParameter('only_role'))?'0':$request->getParameter('only_role');
   }
 
-  protected function loadWidgets($id = null)
+  protected function loadWidgets($id = null,$collection = null)
   {
     $this->__set('widgetCategory',$this->widgetCategory);
     if($id == null) $id = $this->getUser()->getId();
     $this->widgets = Doctrine::getTable('MyWidgets')
       ->setUserRef($this->getUser()->getId())
       ->setDbUserType($this->getUser()->getDbUserType())
-      ->getWidgets($this->widgetCategory);
+      ->getWidgets($this->widgetCategory, $collection);
     if(! $this->widgets) $this->widgets=array();   
   }
 

@@ -1,6 +1,6 @@
 <?php slot('title', __('Specimen individuals overview'));  ?>
 
-<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview'));?>
+<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview', 'view' => $view));?>
 
 <div>
 <ul id="error_list" class="error_list" style="display:none">
@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-<table class="catalogue_table">
+<table class="catalogue_table<?php if($view) echo '_view' ; ?>">
   <thead style="<?php echo (count($individuals))?'':'display: none;';?>">
     <tr>
       <th>
@@ -52,25 +52,40 @@
 	<td>
 	  <?php echo $individual->getRockFormFormated();?>
 	</td>
+  <?php if($view): ?>	
+    <td colspan="2">
+	    <?php echo link_to(image_tag('info.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
+	  </td>
+	  <td>
+	  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
+      <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
+        '&duplicate_id='.$individual->getId(),array('class' => 'duplicate_link')) ?>	
+    <?php endif ;?>
+	  </td>
+  <?php else : ?>	    
+	  <td>
+	    <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
+	  </td>
+	  <td>
+      <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
+        '&duplicate_id='.$individual->getId(),array('class' => 'duplicate_link')) ?>	
+	  </td>
+	  <td class="row_delete">
+	    <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
+	  </td>
+  <?php endif ; ?>	
 	<td>
-	  <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
+	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId().($view?'&view=true':''), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
 	</td>
+  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>	
 	<td>
-    <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
-      '&duplicate_id='.$individual->getId(),array('class' => 'duplicate_link')) ?>	
+	  <?php echo link_to(image_tag('slide_right_enable_new.png'),'parts/edit?indid='.$individual->getId().($view?'&view=true':''), array('class'=>'part_detail_slide', 'title'=>__('Edit a new part')));?>
 	</td>
-	<td class="row_delete">
-	  <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
-	</td>
-	<td>
-	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId(), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
-	</td>
-	<td>
-	  <?php echo link_to(image_tag('slide_right_enable_new.png'),'parts/edit?indid='.$individual->getId(), array('class'=>'part_detail_slide', 'title'=>__('Edit a new part')));?>
-	</td>
+	<?php endif ; ?>
       </tr>
     <?php endforeach;?>
   </tbody>
+  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>  
   <tfoot>
     <tr>
       <td colspan='10'>
@@ -80,6 +95,7 @@
       </td>
     </tr>
   </tfoot>
+  <?php endif ; ?>  
 </table>
 
 <script  type="text/javascript">

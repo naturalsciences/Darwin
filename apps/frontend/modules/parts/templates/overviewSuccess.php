@@ -1,6 +1,6 @@
 <?php slot('title', __('Parts overview'));  ?>
 
-<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'mode' => 'parts_overview') );?>
+<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'mode' => 'parts_overview', 'view' => $view) );?>
 
 <div>
 <ul id="error_list" class="error_list" style="display:none">
@@ -8,7 +8,7 @@
 </ul>
 </div>
 
-  <?php include_partial('overviewTable', array('parts' => $parts, 'codes' => $codes, 'individual'=> $individual,'is_choose'=>false)); ?>
+  <?php include_partial('overviewTable', array('parts' => $parts, 'codes' => $codes, 'individual'=> $individual,'is_choose'=>false, 'view' => $view)); ?>
 
 <br />
 <script  type="text/javascript">

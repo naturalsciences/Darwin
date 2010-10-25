@@ -1,4 +1,3 @@
-<?php $read_only = (isset($view)&&$view)?true:false ; ?>
 <?php echo javascript_include_tag('catalogue_people.js') ?>
  <table class="property_values collectors" id="spec_ident_collectors">
    <thead style="<?php echo ($form['Collectors']->count() || $form['newCollectors']->count())?'':'display: none;';?>" class="spec_ident_collectors_head">
@@ -10,22 +9,15 @@
    </thead>
    <tbody id="spec_ident_collectors_body">
      <?php $retainedKey = 0;?>
-     <?php foreach($form['Collectors'] as $form_value):?>
-       <?php if (!$read_only) : ?>     
-         <?php include_partial('specimen/spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
-         <?php $retainedKey = $retainedKey+1;?>
-       <?php else : ?>
-        <tr><td>
-          <a href="<?php echo url_for('people/view?id='.$form_value['people_ref']->getvalue()) ; ?>"><?php echo $form_value['people_ref']->renderLabel() ; ?></a>
-        </td></tr>
-       <?php endif ; ?>
+     <?php foreach($form['Collectors'] as $form_value):?>   
+       <?php include_partial('specimen/spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
+       <?php $retainedKey = $retainedKey+1;?>
      <?php endforeach;?>
      <?php foreach($form['newCollectors'] as $form_value):?>
        <?php include_partial('specimen/spec_people_associations', array('form' => $form_value, 'row_num'=>$retainedKey));?>
        <?php $retainedKey = $retainedKey+1;?>
      <?php endforeach;?>
-   </tbody>
-   <?php if (!$read_only) : ?>       
+   </tbody>     
    <tfoot>
      <tr>
        <td colspan="3">
@@ -71,6 +63,3 @@ $("#spec_ident_collectors").catalogue_people({ add_button: '#spec_ident_collecto
 });
 
 </script>
-<?php else : ?> 
-</table>
-<?php endif ; ?>

@@ -1,4 +1,3 @@
-<?php $read_only = (isset($view)&&$view)?true:false ; ?>
 <table>
   <tbody>
     <?php if($form['gtu_ref']->hasError()):?>
@@ -36,11 +35,7 @@
         <?php echo $form['gtu_ref']->renderLabel() ?>
       </th>
       <td>
-        <?php if ($read_only) : ?>
-          <?php echo ($form->getObject()->Gtu->getTagsWithCode(true)) ?>          
-        <?php else : ?>
-          <?php echo $form['gtu_ref']->render() ?>
-        <?php endif ; ?>
+        <?php echo $form['gtu_ref']->render() ?>
       </td>
     </tr>
     <tr>

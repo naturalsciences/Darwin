@@ -132,7 +132,8 @@ class partsActions extends DarwinActions
         $this->codes[$code->getRecordId()] = array();
       $this->codes[$code->getRecordId()][] = $code;
     }
-
+    if($request->hasParameter('view') || $this->getUser()->isA(Users::REGISTERED_USER)) $this->view=true ;
+    else $this->view = false ;
   }
 
   public function executeGetStorage(sfWebRequest $request)
@@ -212,4 +213,9 @@ class partsActions extends DarwinActions
       }
     }
   }
+  public function executeView(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->specimen = Doctrine::getTable('SpecimenSearch')->findOneByPartRef($request->getParameter('id')),'Part does not exist');  
+    $this->loadWidgets(null,$this->specimen->getCollectionRef()); 
+  }   
 }

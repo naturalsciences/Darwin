@@ -118,6 +118,8 @@ class individualsActions extends DarwinActions
     $this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0));
     $this->forward404Unless($this->specimen, sprintf('Specimen does not exist (%s).', $request->getParameter('spec_id',0)));
     $this->individuals = Doctrine::getTable('SpecimenIndividuals')->findBySpecimenRef($this->specimen->getId());
+    if($request->hasParameter('view') || $this->getUser()->isA(Users::REGISTERED_USER)) $this->view=true ;
+    else $this->view = false ;
   }
 
   public function executeAddIdentification(sfWebRequest $request)
@@ -174,5 +176,10 @@ class individualsActions extends DarwinActions
     $form->addComments($number);
     return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
-
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->specimen = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($request->getParameter('id')),'Individual does not exist');  
+    $this->loadWidgets(null,$this->specimen->getCollectionRef()); 
+  } 
 }

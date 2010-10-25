@@ -304,7 +304,7 @@ input:focus, textarea:focus
 
 
 
- .login input:focus, .login textarea:focus
+.login input:focus, .login textarea:focus
 {
   border:1px solid #3390A1;
 }
@@ -334,6 +334,7 @@ input[type="submit"][class="search_submit"]
 {
   padding-bottom:0px;
 }
+
 form#save_search label.spec_nbr
 {
   width: 7em;
@@ -2225,10 +2226,7 @@ dd
 
 .tabs_view a.enabled
 {
-  background-color:white;
-  border-top-left-radius: 9px 9px;
-  border-top-right-radius: 9px 9px;
-  border: 1px solid #5BAABD;
+	background-image:url(/images/encod_tab_enable_view.png);
 	background-repeat:no-repeat;
 	height:20px;
 }
@@ -2239,9 +2237,16 @@ dd
 	height: 21px;
 }
 
+.tabs_view a.disabled
+{
+	background-image:url(/images/encod_tab_disable.png);
+	background-repeat:no-repeat;
+	color:#d3d3d1;
+}
+
 .panel_view
 {
-	margin-top:-1px;
+	margin-top:-2px;
 	border:1px solid #5BAABD;
 	padding-top: 30px;
 	padding-left:21px;

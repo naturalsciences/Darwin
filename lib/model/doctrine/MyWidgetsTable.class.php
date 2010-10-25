@@ -41,12 +41,12 @@ class MyWidgetsTable extends DarwinTable
     return $q->execute();
   }
 
-  public function getWidgets($category)
+  public function getWidgets($category, $collection = null)
   {
       $q = Doctrine_Query::create()
             ->from('MyWidgets p INDEXBY p.group_name')
-            ->orderBy('p.col_num ASC, p.order_by ASC, p.group_name ASC');
-    return $this->addCategoryUser($q,$category)->execute();
+            ->orderBy('p.col_num ASC, p.order_by ASC, p.group_name ASC');                
+    return $this->addCategoryUser($q,$category,$collection)->execute();
   }
   
   public function setUserRef($ref)
@@ -129,7 +129,7 @@ class MyWidgetsTable extends DarwinTable
 	  }  	
   }
 
-  public function addCategoryUser(Doctrine_Query $q = null, $category)
+  public function addCategoryUser(Doctrine_Query $q = null, $category, $collection = null)
   {
     if (sfConfig::get('sf_logging_enabled') && !$this->user_ref)
     {
@@ -147,7 +147,11 @@ class MyWidgetsTable extends DarwinTable
     $q->andWhere($alias . '.user_ref = ?', $this->user_ref)
         ->andWhere($alias . '.category = ?', $category)
         ->andWhere('p.is_available = true') ;
-    if ($this->db_user_type == Users::REGISTERED_USER) $q->andWhere('p.all_public = true') ; 
+    if ($this->db_user_type == Users::REGISTERED_USER) 
+    {
+      if($collection != null) $q->andWhere('p.all_public = true OR p.collections like \'%,'.$collection.',%\'') ;
+      else $q->andWhere('p.all_public = true') ; 
+    }
     return $q;
   }
  

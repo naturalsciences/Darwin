@@ -1,8 +1,6 @@
-<?php $read_only = (isset($view)&&$view)?true:false ; ?>
-<table  class="<?php echo($read_only?'catalogue_table_view':'property_values');?>">
+<table  class="property_values">
   <thead style="<?php echo ($form['Codes']->count() || $form['newCode']->count())?'':'display: none;';?>">
     <tr>
-     <?php if (!$read_only) : ?>  
       <th>
         <?php echo __('Category'); ?>
       </th>
@@ -38,17 +36,8 @@
       </th>
       <th colspan='3'>      
       </th>
-    <?php else : ?>
-      <th>
-        <?php echo __('Category'); ?>
-      </th>
-      <th>
-        <?php echo __('Code') ; ?>
-      </th>
-    <?php endif ; ?>
     </tr>
   </thead>
-  <?php if (!$read_only) : ?>  
     <?php $retainedKey = 0;?>
     <?php foreach($form['Codes'] as $form_value):?>
       <?php include_partial('specimen/spec_codes', array('form' => $form_value, 'rownum'=>$retainedKey));?>
@@ -102,18 +91,3 @@ $(document).ready(function () {
 
 });
 </script>
-<?php else : ?>
-  <?php foreach($form['Codes'] as $code):?>
-  <tr>
-    <td><?php echo $code['code_category']->getValue();?></td>
-    <td>
-      <?php echo $code['code_prefix']->getValue();?>
-      <?php echo $code['code_prefix_separator']->getValue();?>
-      <?php echo $code['code']->getValue();?>
-      <?php echo $code['code_suffix_separator']->getValue();?>
-      <?php echo $code['code_suffix']->getValue();?>
-    </td>
-  </tr>
-  <?php endforeach ; ?>
-  </table>
- <?php endif ; ?>
