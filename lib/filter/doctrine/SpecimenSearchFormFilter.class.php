@@ -599,7 +599,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   public function addGtuCodeColumnQuery($query, $field, $val)
   {
     if($val != '')
-      $query->andWhere("LOWER(gtu_code) like ?", strtolower('%'.$val.'%'));
+      $query->andWhere("
+        (station_visible = true AND  LOWER(gtu_code) like ? )
+        OR
+        (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))
+          AND LOWER(gtu_code) like ?)", array(strtolower('%'.$val.'%'),strtolower('%'.$val.'%')));
     return $query ;  
   }
 
@@ -713,7 +717,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         ->andWhere('part_ref != 0 ')
         ->from('PartSearch s');
     }
-
+    $query->addSelect('dummy_first(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
     $this->options['query'] = $query;
     $query = parent::doBuildQuery($values);
 
