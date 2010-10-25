@@ -24,11 +24,6 @@
     
     <p class="clear"></p>
     <p align="right">
-      <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
-        <?php echo link_to(__('New individual'), 'individuals/edit?spec_id='.$specimen->getSpecRef(), array('class' => 'bt_close')) ?>
-       &nbsp;<?php echo link_to(__('Duplicate individual'), 'individuals/edit?spec_id='.$specimen->getSpecRef().
-      '&duplicate_id='.$specimen->getIndividualRef(),array('class' => 'duplicate_link bt_close')) ?>
-      <?php endif?>
       &nbsp;<a class="bt_close" href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Back');?></a>
     </p>
   </div>

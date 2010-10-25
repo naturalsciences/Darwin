@@ -1,7 +1,9 @@
 <?php slot('title', __('Specimen individuals overview'));  ?>
 
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview', 'view' => $view));?>
-
+<?php if(count($individuals)==0):?>
+  <h2><?php echo __('There a currently no individual');?></h2>
+<?php else : ?>
 <div>
 <ul id="error_list" class="error_list" style="display:none">
   <li></li>
@@ -53,14 +55,8 @@
 	  <?php echo $individual->getRockFormFormated();?>
 	</td>
   <?php if($view): ?>	
-    <td colspan="2">
+    <td colspan="3">
 	    <?php echo link_to(image_tag('info.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
-	  </td>
-	  <td>
-	  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
-      <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
-        '&duplicate_id='.$individual->getId(),array('class' => 'duplicate_link')) ?>	
-    <?php endif ;?>
 	  </td>
   <?php else : ?>	    
 	  <td>
@@ -77,7 +73,7 @@
 	<td>
 	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId().($view?'&view=true':''), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
 	</td>
-  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>	
+  <?php if (!$view): ?>	
 	<td>
 	  <?php echo link_to(image_tag('slide_right_enable_new.png'),'parts/edit?indid='.$individual->getId().($view?'&view=true':''), array('class'=>'part_detail_slide', 'title'=>__('Edit a new part')));?>
 	</td>
@@ -85,7 +81,7 @@
       </tr>
     <?php endforeach;?>
   </tbody>
-  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>  
+  <?php if (!$view): ?>  
   <tfoot>
     <tr>
       <td colspan='10'>
@@ -147,4 +143,5 @@ $(document).ready(function () {
   });
 });
 </script>
+<?php endif ; ?>
 <?php include_partial('specimen/specAfterTab');?>

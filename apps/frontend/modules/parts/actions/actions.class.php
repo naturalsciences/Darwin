@@ -132,8 +132,10 @@ class partsActions extends DarwinActions
         $this->codes[$code->getRecordId()] = array();
       $this->codes[$code->getRecordId()][] = $code;
     }
+    $this->view = false ;    
     if($request->hasParameter('view') || $this->getUser()->isA(Users::REGISTERED_USER)) $this->view=true ;
-    else $this->view = false ;
+    if(in_array($request->getParameter('spec_id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('spec_id'), $this->getUser()->getId())))  // if this user is not in collection Right, so the overview is displayed in readOnly
+      $this->view = true;
   }
 
   public function executeGetStorage(sfWebRequest $request)

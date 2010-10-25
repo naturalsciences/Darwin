@@ -32,11 +32,11 @@
 			  <?php elseif($mode == 'individuals_overview' ):?>
         <?php if($view) : ?>
   				<?php echo link_to($specimen_name, 'specimen/view?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>        
+  				<a class="enabled selected" id="tab_1"> &lt; <?php echo __('Individuals overview');?> &gt; </a>
+  				<a class="disabled" id="tab_3"><?php echo __('Parts overview');?></a>
          <?php else : ?>
-  				<?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>
-  			<?php endif ; ?>	  		  
-				<a class="enabled selected" id="tab_1"> &lt; <?php echo __('Individuals overview');?> &gt; </a>
-				<?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
+  				<?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>  		  
+				  <a class="enabled selected" id="tab_1"> &lt; <?php echo __('Individuals overview');?> &gt; </a>			
 				  <?php echo link_to(__('New Individual'), 'individuals/edit?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
 				  <a class="disabled" id="tab_3"><?php echo __('Parts overview');?></a>
 				  <a class="disabled" id="tab_4"><?php echo __('New Part');?></a>
@@ -57,9 +57,6 @@
           <?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id.'&view=true', array('class'=>'enabled', 'id' => 'tab_1'));?>
 				  <?php echo link_to($individual_name, 'individuals/view?id='.$individual_id, array('class'=>'enabled', 'id' => 'tab_2'));?>
 				  <a class="enabled selected" id="tab_3"> &lt; <?php echo __('Parts overview');?> &gt; </a>
-    			<?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
-    				<?php echo link_to(__('New Part'), 'parts/edit?indid='.$individual_id, array('class'=>'enabled', 'id' => 'tab_4'));?>
-    		  <?php endif ; ?>
     		<?php else : ?>
 				  <?php echo link_to($specimen_name, 'specimen/edit?id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_0'));?>
 				  <?php echo link_to(__('Individuals overview'), 'individuals/overview?spec_id='.$specimen_id, array('class'=>'enabled', 'id' => 'tab_1'));?>
@@ -84,4 +81,4 @@
         <?php endif ; ?>
 			  <?php endif;?>
 		  </div>
- 		<div class="panel<?php if($view) echo '_view' ; ?> encod_screen edition" id="intro">
+ 		<div class="<?php if($view) echo 'panel_view' ; else echo 'panel edition ' ?> encod_screen" id="intro">

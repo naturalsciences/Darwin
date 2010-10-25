@@ -1,6 +1,6 @@
 <?php if(isset($view) && $view) $view= true ; else $view = false ; ?>
 <?php if(count($parts)==0):?>
-  <h2><?php echo __('There a currently no part. Please add one');?></h2>
+  <h2><?php echo __('There are currently no part');?></h2>
 <?php else:?>
 <table class="catalogue_table<?php if($view) echo '_view' ; ?>">
   <thead>
@@ -50,7 +50,7 @@
       </td>    
     <?php endif ; ?>
     <?php if(!isset($is_choose) || $is_choose==false):?>
-      <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?> 
+      <?php if (!$view): ?> 
       <td>
         <?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
       </td>
@@ -71,7 +71,7 @@
   </tr>
   <?php endforeach;?>
   </tbody>
-  <?php if((!isset($is_choose) || $is_choose==false) && $sf_user->isAtLeast(Users::ENCODER)):?>
+  <?php if((!isset($is_choose) || $is_choose==false) && (!$view)):?>
     <tfoot>
     <tr>
       <td colspan='10'>

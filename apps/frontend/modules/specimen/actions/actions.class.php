@@ -104,6 +104,7 @@ class specimenActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();
     if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
     {
       $specimen = new Specimens() ;
@@ -205,6 +206,9 @@ class specimenActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
+      $this->redirect("specimen/view?id=".$request->getParameter('id')) ;
     $this->forward404Unless(Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
     $this->loadWidgets();
     $this->form = $this->getSpecimenForm($request, true);

@@ -20,16 +20,8 @@
         'columns' => 2,	
         'options' => array('eid'=> $specimen->getPartRef(), 'level' => 2, 'view' => true),
       )); ?>
-    </div>
-    
+    </div>    
     <p class="clear"></p>
-    <p align="right">
-      <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
-        <?php echo link_to(__('New Part'), 'part/edit?indid='.$specimen->getIndividualRef(), array('class' => 'bt_close')) ?>
-       &nbsp;<?php echo link_to(__('Duplicate part'), 'part/edit?indid='.$specimen->getIndividualRef().
-      '&duplicate_id='.$specimen->getPartRef(),array('class' => 'duplicate_link bt_close')) ?>
-      <?php endif?>
-      &nbsp;<a class="bt_close" href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Back');?></a>
-    </p>
+      &nbsp;<a class="bt_close" href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Back');?></a>    
   </div>
 </div>

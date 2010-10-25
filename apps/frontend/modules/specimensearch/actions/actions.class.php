@@ -17,8 +17,6 @@ class specimensearchActions extends DarwinActions
     $this->form = new SpecimenSearchFormFilter(null,array('user' => $this->getUser()));
 
     $this->form->setDefault('rec_per_page',$this->getUser()->fetchRecPerPage());
-    $this->readOnly = false ;
-    if($this->getUser()->getDbUserType() == Users::REGISTERED_USER) $this->readOnly = true ;
 
     // if Parameter name exist, so the referer is mysavedsearch
     if ($request->getParameter('search_id','') != '')
