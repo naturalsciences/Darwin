@@ -60,9 +60,35 @@
     <?php endif;?>
     <td class="col_gtu">
       <?php if($specimen->getGtuRef() > 0) : ?>
-        <?php if($specimen->getGtuTagValuesIndexed() != "") : ?>
+        <?php if($specimen->getHasEncodingRights() || $specimen->getStationVisible() /*|| $sfuser->isAtLeast(Users::Admin) */):?>
           <?php echo image_tag('info.png',"title=info class=info id=gtu_ctr_".$item_ref."_info");?>
+          <script type="text/javascript">
+            $(document).ready(function()
+            {
+              $('#gtu_ctr_<?php echo $item_ref; ?>_info').click(function() 
+              {
+                item_row = $(this).closest('tr');
+                elem = item_row.find('#gtu_<?php echo $item_ref;?>_details');
+                if(elem.is(":hidden"))
+                { 
+                  $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getSpecRef()) ;?>',function (html){
+                    item_row.find('.general_gtu').slideUp();
+                    elem.html(html).slideDown();
+                  });
+                }
+                else
+                {
+                  elem.slideUp();
+                  item_row.find('.general_gtu').slideDown();
+                }
+              });
+            });
+          </script>
           <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
+        <?php else:?>
+          <?php echo image_tag('info-bw.png',"title=info class=info id=gtu_ctr_".$item_ref."_info");?>
+        <?php endif;?>
+
           <div class="general_gtu">
           <?php if($specimen->getGtuCountryTagValue() != ""): ?>
             <strong><?php echo __('Country');?> :</strong>
@@ -70,29 +96,7 @@
           <?php endif ; ?>
           </div>
           <div id="gtu_<?php echo $item_ref;?>_details" style="display:none;"></div>
-        <?php else : ?>
-          <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef());?>"><?php echo $specimen->getGtuCode();?></a>
-        <?php endif ; ?>
-          <script type="text/javascript">
-          $('#gtu_ctr_<?php echo $item_ref; ?>_info').click(function() 
-          {
-            item_row = $(this).closest('tr');
-            elem = item_row.find('#gtu_<?php echo $item_ref;?>_details');
-            if(elem.is(":hidden"))
-            { 
-              $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getGtuRef()) ;?>',function (html){
-                item_row.find('.general_gtu').slideUp();
-                elem.html(html).slideDown();
-              });
-              //elem.slideDown();
-            }
-            else
-            {
-              elem.slideUp();
-              item_row.find('.general_gtu').slideDown();
-            }
-          });
-        </script>
+
       <?php endif ; ?>
     </td> 
     <td class="col_codes">

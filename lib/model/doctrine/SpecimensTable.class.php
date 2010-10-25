@@ -4,123 +4,134 @@
  */
 class SpecimensTable extends DarwinTable
 {
-    static public $acquisition_category = array(
-        'Undefined' => 'Undefined',
-        'Donation' => 'Donation',
-        'Exchange' => 'Exchange',
-        'Internal work' => 'Internal work',
-        'Loan' => 'Loan',
-        'Mission' => 'Mission',
-        'Purchase' => 'Purchase',
-        'seizure' => 'Judicial seizure',
-        'Trip' => 'Trip',
-        'Excavation' => 'Excavation',
-        'Exploration' => 'Exploration',
-        'Collect' => 'Collect',
-        );
-    
-    protected static $widget_array = array(
-      'collection_ref' => 'refCollection' ,
-      'category' => 'refCollection' ,      
-      'gtu_ref' => 'refGtu' ,
-      'station_visible' => 'refGtu' ,
-      'taxon_ref' => 'refTaxon' ,
-      'host_taxon_ref' => 'refHosts' ,            
-      'host_specimen_ref' => 'refHosts' ,
-      'host_relationship' => 'refHost' ,
-      'litho_ref' => 'refLitho' ,
-      'chrono_ref' => 'refChrono' ,
-      'lithology_ref' => 'refLithology' ,
-      'mineral_ref' => 'refMineral' ,
-      'ig_ref' => 'refIgs' ,
-      'expedition_ref' => 'refExpedition' ,
-      'acquisition_category' => 'acquisitionCategory' ,
-      'acquisition_date_mask' => 'acquisitionCategory' ,
-      'acquisition_date' => 'acquisitionCategory' ,   
-      'collecting_method' => 'tool' ,
-      'collecting_tool' => 'tool' ,
-    );
-    /**
-    * Get differents acquisition categories
-    * @return array of key/value of acquisition categories
-    */
-    public static function getDistinctCategories()
-    {
-        try{
-            $i18n_object = sfContext::getInstance()->getI18n();
-        }
-        catch( Exception $e )
-        {
-            return self::$acquisition_category;
-        }
-        return array_map(array($i18n_object, '__'), self::$acquisition_category);
-    }
+  static public $acquisition_category = array(
+      'Undefined' => 'Undefined',
+      'Donation' => 'Donation',
+      'Exchange' => 'Exchange',
+      'Internal work' => 'Internal work',
+      'Loan' => 'Loan',
+      'Mission' => 'Mission',
+      'Purchase' => 'Purchase',
+      'seizure' => 'Judicial seizure',
+      'Trip' => 'Trip',
+      'Excavation' => 'Excavation',
+      'Exploration' => 'Exploration',
+      'Collect' => 'Collect',
+      );
 
-    /**
-    * Get distinct tools
-    * @return Doctrine_collection with distinct "tool" as column
-    */
-    public function getDistinctTools()
-    {
-      return $this->createDistinct('Specimens', 'collecting_tool', 'tool')->execute();
-    }
-
-    /**
-    * Get distinct Method
-    * @return Doctrine_collection with distinct "method" as column
-    */
-    public function getDistinctMethods()
-    {
-	return $this->createDistinct('Specimens', 'collecting_method', 'method')->execute();
-    }
-
-    /**
-    * Get distinct Host Relationships
-    * @return Doctrine_collection with distinct "host_relationship" as column
-    */
-    public function getDistinctHostRelationships()
-    {
-	return $this->createDistinct('Specimens', 'host_relationship', 'host_relationship')->execute();
-    }
-    
-    /**
-    * Get distinct category
-    * @return Doctrine_collection with distinct "categories" as column
-    */
-    public function getDistinctCategory()
-    {
-    	return $this->createDistinct('Specimens', 'category', 'category')->execute();
-    }   
-     
-    public function getSpecimenByRef($collection_id,$taxon_id)
-    {
-	   $q = Doctrine_Query::create()
-		->from('specimens s')
-		->where('s.collection_ref = ?', $collection_id)
-		->andWhere('s.taxon_ref = ?', $taxon_id);
-
-	   return $q->fetchOne(); 
-    }
-    
-    /**
-    * Set required widget visible and opened 
-    */   
-    public function getRequiredWidget($criterias, $user, $category, $all = 0)
-    {
-      if (!$all)
-      {
-        $req_widget = array() ;
-        foreach($criterias as $key => $fields)
-        {
-          if ($key == "rec_per_page") continue ;
-          if (!$fields) continue ;
-
-          if(isset(self::$widget_array[$key]) && $fields != 0)
-            $req_widget[self::$widget_array[$key]] = 1 ;
-        }
-        Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
+  protected static $widget_array = array(
+    'collection_ref' => 'refCollection' ,
+    'category' => 'refCollection' ,      
+    'gtu_ref' => 'refGtu' ,
+    'station_visible' => 'refGtu' ,
+    'taxon_ref' => 'refTaxon' ,
+    'host_taxon_ref' => 'refHosts' ,            
+    'host_specimen_ref' => 'refHosts' ,
+    'host_relationship' => 'refHost' ,
+    'litho_ref' => 'refLitho' ,
+    'chrono_ref' => 'refChrono' ,
+    'lithology_ref' => 'refLithology' ,
+    'mineral_ref' => 'refMineral' ,
+    'ig_ref' => 'refIgs' ,
+    'expedition_ref' => 'refExpedition' ,
+    'acquisition_category' => 'acquisitionCategory' ,
+    'acquisition_date_mask' => 'acquisitionCategory' ,
+    'acquisition_date' => 'acquisitionCategory' ,   
+    'collecting_method' => 'tool' ,
+    'collecting_tool' => 'tool' ,
+  );
+  /**
+  * Get differents acquisition categories
+  * @return array of key/value of acquisition categories
+  */
+  public static function getDistinctCategories()
+  {
+      try{
+          $i18n_object = sfContext::getInstance()->getI18n();
       }
-      else
-        Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,1);
+      catch( Exception $e )
+      {
+          return self::$acquisition_category;
+      }
+      return array_map(array($i18n_object, '__'), self::$acquisition_category);
+  }
+
+  /**
+  * Get distinct tools
+  * @return Doctrine_collection with distinct "tool" as column
+  */
+  public function getDistinctTools()
+  {
+    return $this->createDistinct('Specimens', 'collecting_tool', 'tool')->execute();
+  }
+
+  /**
+  * Get distinct Method
+  * @return Doctrine_collection with distinct "method" as column
+  */
+  public function getDistinctMethods()
+  {
+      return $this->createDistinct('Specimens', 'collecting_method', 'method')->execute();
+  }
+
+  /**
+  * Get distinct Host Relationships
+  * @return Doctrine_collection with distinct "host_relationship" as column
+  */
+  public function getDistinctHostRelationships()
+  {
+      return $this->createDistinct('Specimens', 'host_relationship', 'host_relationship')->execute();
+  }
+
+  /**
+  * Get distinct category
+  * @return Doctrine_collection with distinct "categories" as column
+  */
+  public function getDistinctCategory()
+  {
+      return $this->createDistinct('Specimens', 'category', 'category')->execute();
+  }   
+    
+  public function getSpecimenByRef($collection_id,$taxon_id)
+  {
+          $q = Doctrine_Query::create()
+              ->from('specimens s')
+              ->where('s.collection_ref = ?', $collection_id)
+              ->andWhere('s.taxon_ref = ?', $taxon_id);
+
+          return $q->fetchOne(); 
+  }
+
+  /**
+  * Set required widget visible and opened 
+  */   
+  public function getRequiredWidget($criterias, $user, $category, $all = 0)
+  {
+    if (!$all)
+    {
+      $req_widget = array() ;
+      foreach($criterias as $key => $fields)
+      {
+        if ($key == "rec_per_page") continue ;
+        if (!$fields) continue ;
+
+        if(isset(self::$widget_array[$key]) && $fields != 0)
+          $req_widget[self::$widget_array[$key]] = 1 ;
+      }
+      Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
     }
+    else
+      Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,1);
+  }
+
+  public function fetchOneWithRights($id, $user)
+  {
+    $q = Doctrine_Query::create()
+      ->select('s.*, collection_ref in (select fct_search_authorized_encoding_collections('.$user->getId().')) as has_encoding_rights')
+      ->from('specimens s')
+      ->where('id = ?',$id)
+      ->andWhere('collection_ref in (select fct_search_authorized_view_collections('.$user->getId().'))');
+
+    return $q->fetchOne();
+  }
 }

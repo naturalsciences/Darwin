@@ -43,7 +43,6 @@ class specimensearchActions extends DarwinActions
     */ 
   public function executeSearch(sfWebRequest $request)
   {
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
     $this->is_specimen_search = false;
     // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('specimensearch', 'collection_name', $request);
