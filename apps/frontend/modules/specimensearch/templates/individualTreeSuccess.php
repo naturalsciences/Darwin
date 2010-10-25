@@ -5,10 +5,10 @@
             <th></th>
             <th><?php echo __('Type');?></th>
             <th><?php echo __('Sex');?></th>
-            <th><?php echo __('State');?></th>            
-            <th><?php echo __('Stage');?></th>            
+            <th><?php echo __('State');?></th>
+            <th><?php echo __('Stage');?></th>
             <th><?php echo __('Social status');?></th> 
-            <th><?php echo __('Rock form');?></th>            
+            <th><?php echo __('Rock form');?></th>
             <th></th>
           </tr>
         </thead>
@@ -16,9 +16,11 @@
           <tbody>
             <tr class="indiv_<?php echo $item->getId(); ?>">
               <td rowspan="2">
-                <?php if (doctrine::getTable('SpecimenParts')->findForIndividual($item->getId())->count() > 0) : ?>
+                <?php if ($item->getWithParts()): ?>
                   <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
                   <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
+                <?php else:?>
+                  <?php echo image_tag('grey_expand.png', array('alt' => '+', 'class'=> 'collapsed')); ?>
                 <?php endif ?>
               </td>
               <td>
@@ -27,7 +29,7 @@
                 <?php else : ?>
                   <?php echo $item->getType() ; ?>
                  <?php endif ; ?>
-              </td>              
+              </td>
               <td>
                 <?php if ($item->getSex() == "not applicable") : ?>
                 -
@@ -48,49 +50,51 @@
                 <?php else : ?>
                   <?php echo $item->getStage() ; ?>
                  <?php endif ; ?>
-              </td>       
+              </td>
               <td>
                 <?php if ($item->getSocialStatus() == "not applicable") : ?>
                 -
                 <?php else : ?>
                   <?php echo $item->getSocialStatus() ; ?>
-                 <?php endif ; ?>              
-              </td>                      
+                 <?php endif ; ?>
+              </td>
               <td>
                 <?php if ($item->getRockForm() == "not applicable") : ?>
                 -
                 <?php else : ?>
                   <?php echo $item->getRockForm() ; ?>
-                 <?php endif ; ?>                 
-              </td>                                                                
+                 <?php endif ; ?>
+              </td>
               <td rowspan="2"> 
-                <?php if($user_allowed) : ?>               
+                <?php if($user_allowed) : ?>
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit this individual"))),'individuals/edit?id='.$item->getId());?>
                   <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this individual"))),'individuals/edit?spec_id='.$item->getSpecimenRef().
-                  '&duplicate_id='.$item->getId(), array('class' => 'duplicate_link'));?>               
+                  '&duplicate_id='.$item->getId(), array('class' => 'duplicate_link'));?>
                 <?php endif ; ?>
               </td>
             </tr>
             <tr>
               <td colspan='6'>
-                <div id="container_part_<?php echo $item->getId();?>" class='tree'>
-                </div>
-                <script type="text/javascript">
-                 $('tr.indiv_<?php echo $item->getId(); ?> img.collapsed').click(function() 
-                 {
-                    $(this).hide();
-                    $(this).siblings('.expanded').show();
-                    $.get('<?php echo url_for("specimensearch/partTree?id=".$item->getId()) ;?>',function (html){
-                           $('#container_part_<?php echo $item->getId();?>').html(html).slideDown();
-                           });
-                 });  
-                 $('tr.indiv_<?php echo $item->getId(); ?> img.expanded').click(function() 
-                 {
-                    $(this).hide();
-                    $(this).siblings('.collapsed').show();
-                    $('#container_part_<?php echo $item->getId();?>').slideUp();
-                 });             
-                </script>
+                <?php if($item->getWithParts()):?>
+                  <div id="container_part_<?php echo $item->getId();?>" class='tree'>
+                  </div>
+                  <script type="text/javascript">
+                  $('tr.indiv_<?php echo $item->getId(); ?> img.collapsed').click(function() 
+                  {
+                      $(this).hide();
+                      $(this).siblings('.expanded').show();
+                      $.get('<?php echo url_for("specimensearch/partTree?id=".$item->getId()) ;?>',function (html){
+                            $('#container_part_<?php echo $item->getId();?>').html(html).slideDown();
+                            });
+                  });
+                  $('tr.indiv_<?php echo $item->getId(); ?> img.expanded').click(function() 
+                  {
+                      $(this).hide();
+                      $(this).siblings('.collapsed').show();
+                      $('#container_part_<?php echo $item->getId();?>').slideUp();
+                  });
+                  </script>
+                <?php endif;?>
               </td>
             </tr>
           </tbody>

@@ -143,9 +143,9 @@
 {
   color: black ;
   text-decoration: none ;
-/*   margin-top: 7px;    */
   width:36px;
-  font-size: 9pt;
+  font-size: 7pt;
+  vertical-align:top;
   border:0;
   background-color:transparent;
 }
