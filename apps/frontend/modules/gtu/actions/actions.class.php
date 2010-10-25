@@ -200,7 +200,7 @@ class gtuActions extends DarwinActions
     if($request->hasParameter('id') && $request->getParameter('id'))
     {
       $spec = Doctrine::getTable('Specimens')->fetchOneWithRights($request->getParameter('id'), $this->getUser());
-      if($spec->getHasEncodingRights() || $this->getUser()->isAtLeast(Users::Admin))
+      if($spec->getHasEncodingRights() || $this->getUser()->isAtLeast(Users::ADMIN))
         $gtu = Doctrine::getTable('Gtu')->findExcept($spec->getGtuRef() );
       else
         $this->forwardToSecureAction();
