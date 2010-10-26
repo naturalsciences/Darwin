@@ -212,9 +212,9 @@ $browser->
   end();
 
 $browser->test()->like($browser->getResponse()->getContent(),'/ok/','Content is ok');
-$browser->addCustomUserAndLogin('ychambert',Users::REGISTERED_USER,'toto');	
-$browser->addCustomUserAndLogin('encoder',Users::ENCODER,'evil');
-$browser->addCustomUserAndLogin('manager', Users::MANAGER,'evil');	
+$browser->addCustomUserAndLogin('ychambert','toto');	
+$browser->addCustomUserAndLogin('encoder','evil');
+$browser->addCustomUserAndLogin('manager','evil');	
 $browser->get('account/logout')->
   with('response')->begin()->
     isRedirected()->

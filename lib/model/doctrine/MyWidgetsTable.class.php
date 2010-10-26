@@ -167,7 +167,7 @@ class MyWidgetsTable extends DarwinTable
  
   public function getAvailableWidgets()
   {
-    $categories = array('specimen_widget','individuals_widget','part_widget','specimensearch_widget');
+    $categories = array('specimen_widget','individuals_widget','part_widget');
 	  $q = Doctrine_Query::create()
 	    ->from('MyWidgets p')
 	    ->andWhere('p.all_public = false') 
