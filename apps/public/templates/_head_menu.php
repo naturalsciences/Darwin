@@ -8,26 +8,17 @@
       <tr>
         <td>
           <ul class="menu_link">
-            <li><a href="#">OUR COLLECTIONS</a></li>
-            <li><a href="<?php echo url_for('search/search');?>"><?php echo __("SEARCH"); ?></a></li>
-            <li><a href="#">TAKE A TOUR</a></li>
-            <li><a href="#">CONTACTS</a></li>
-            <li><a href="#">LINKS</a></li>
+            <li><a href="#">Our collections</a></li>
+            <li><a href="<?php echo url_for('search/search');?>"><?php echo __("Search"); ?></a></li>
+            <li><a href="#">Take a tour</a></li>
+            <li><a href="#">Contacts</a></li>
+            <li><a href="#">Links</a></li>
           </ul>
         </td>
       </tr>
     </table>    
   </div>
-  <div class="blue_line">
-    <table>
-      <tr>
-        <td>&nbsp;</td>
-        <td class="blue_line_right">
-          <?php echo form_tag('register/login', array('class'=>'register_form'));?>
-          <?php include_component('login','MenuLogin') ; ?> 
-          </form>
-        </td>
-      </tr>
-    </table>    
-  </div>
+
+  <?php include_component('login','MenuLogin') ; ?> 
+
 </td>

@@ -8,11 +8,7 @@ class LoginForm extends BaseForm
       'username'    => new sfWidgetFormInputText(),
       'password'   => new sfWidgetFormInputPassword(),
     ));
-    if (isset($this->options['thin'])) 
-    {
-      $this->widgetSchema['username']->setAttributes(array('class'=>'small')) ;
-      $this->widgetSchema['password']->setAttributes(array('class'=>'small'));
-    }    
+
     $this->setValidators(array(
       'username'    => new sfValidatorString(
             array('required' => true, 'min_length' => 4, 'trim' => true),

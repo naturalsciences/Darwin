@@ -55,9 +55,9 @@ class registerActions extends DarwinActions
   
   public function executeLogin(sfWebRequest $request)
   {
-    $this->redirectIf($this->getUser()->isAuthenticated(),$this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
+    $this->redirectIf($this->getUser()->isAuthenticated(), $this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
     $referer = $this->getRequest()->getReferer();
-    $this->form = new LoginForm(null, array('thin'=>true));
+    $this->form = new LoginForm();
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('login'));
@@ -74,7 +74,24 @@ class registerActions extends DarwinActions
         }
         $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
       }
+      else
+      {
+        $this->getContext()->getConfiguration()->loadHelpers('Url');
+        
+        $this->redirect('board/index?l_err=1');
+      }
     }
     $this->redirect($referer);
+  }
+  
+  public function executeLogout(sfWebRequest $request)
+  {
+    $referer = $this->getRequest()->getReferer();
+    $this->getUser()->clearCredentials();
+    $this->getUser()->setAuthenticated(false);
+    if(!$referer)
+      $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+    else
+      $this->redirect($referer);
   }
 }
