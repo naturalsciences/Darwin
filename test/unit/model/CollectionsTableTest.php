@@ -4,9 +4,9 @@ $t = new lime_test(11, new lime_output_color());
 
 $t->info('fetchByInstitutionList');
 
-$user_id = Doctrine::getTable('users')->getUserByPassword('root','evil')->getId() ;
+$user = Doctrine::getTable('Users')->getUserByPassword('root','evil') ;
 
-$list = Doctrine::getTable('Collections')->fetchByInstitutionList($user_id);
+$list = Doctrine::getTable('Collections')->fetchByInstitutionList($user);
 $t->is($list[0]->getFormatedName(),'Institut Royal des Sciences Naturelles de Belgique','Thre list give institutions');
 $collections = $list[0]->Collections;
 
@@ -37,7 +37,7 @@ $t->info('findCollectionsByUser');
 
 
 $collections = $list[0]->Collections;
-$list3 = Doctrine::getTable('Collections')->fetchByCollectionParent($collections[0]->getId());
+$list3 = Doctrine::getTable('Collections')->fetchByCollectionParent($user, $user->getId(), $collections[0]->getId()); 
 $t->is(count($list3), 3, 'Vertebrates have 3 children collections ');
 
 $collection = Doctrine::getTable('Collections')->findOneByName('Vertebrates');

@@ -57,6 +57,16 @@ class Users extends BaseUsers
     return $db_user_type ;
   }
 
+  public function isAtLeast($role)
+  {
+    return $this->getDbUserType() >= $role;
+  }
+
+  public function isA($role)
+  {
+    return $this->getDbUserType() == $role;
+  }
+
   public static function getTypeName($db_user_type)
   {
     switch ($db_user_type)

@@ -4,29 +4,29 @@
  */
 class CollectionsRightsTable extends DarwinTable
 {
-	public function findCollectionsByUser($user)
-	{
-		$q = Doctrine_Query::create()
-		   ->select('collection_ref')
-		   ->from('CollectionsRights')
-		   ->andWhere('user_ref = ?', $user) ;
-		return $q->execute() ;
-	}
-	
-	public function getAllUserRef($collection_id = null)
-	{  
-	  $q = Doctrine_Query::create()
-	    ->from('CollectionsRights')
-	    ->andWhere('collection_ref = ?', $collection_id);
-	  return $q->execute() ;
-	}
-	
-	public function getCollectionsByRight($user)
-	{
-	  $result = $this->findRights($user,'CollectionsRights') ;
-	  $collections = array() ;
-	  foreach($result as $rights)
-	    $collections[] = $rights->getCollectionRef() ;
-	  return $collections ;
-	}
+  public function findCollectionsByUser($user)
+  {
+    $q = Doctrine_Query::create()
+        ->select('collection_ref')
+        ->from('CollectionsRights')
+        ->andWhere('user_ref = ?', $user) ;
+    return $q->execute() ;
+  }
+
+  public function getAllUserRef($collection_id = null)
+  {  
+    $q = Doctrine_Query::create()
+      ->from('CollectionsRights')
+      ->andWhere('collection_ref = ?', $collection_id);
+    return $q->execute() ;
+  }
+
+  public function getCollectionsByRight($user)
+  {
+    $result = $this->findRights($user,'CollectionsRights') ;
+    $collections = array() ;
+    foreach($result as $rights)
+      $collections[] = $rights->getCollectionRef() ;
+    return $collections ;
+  }
 }
