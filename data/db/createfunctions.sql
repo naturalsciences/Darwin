@@ -5797,31 +5797,31 @@ BEGIN
          NEW.path ='/';
 	    ELSE
         IF TG_TABLE_NAME::text = 'multimedia' THEN
-          SELECT path || id || '/' INTO STRICT NEW.path 
-          FROM multimedia 
+          SELECT path || id || '/' INTO STRICT NEW.path
+          FROM multimedia
           WHERE id=NEW.parent_ref;
 	      ELSIF TG_TABLE_NAME::text = 'collections' THEN
-          SELECT path || id || '/' INTO STRICT NEW.path 
-          FROM collections 
+          SELECT path || id || '/' INTO STRICT NEW.path
+          FROM collections
           WHERE id=NEW.parent_ref;
         ELSIF TG_TABLE_NAME::text = 'gtu' THEN
-          SELECT path || id || '/' INTO STRICT NEW.path 
-          FROM gtu 
+          SELECT path || id || '/' INTO STRICT NEW.path
+          FROM gtu
           WHERE id=NEW.parent_ref;
 	      ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
-          SELECT path || id || '/' INTO STRICT NEW.path 
-          FROM specimen_parts 
+          SELECT path || id || '/' INTO STRICT NEW.path
+          FROM specimen_parts
           WHERE id=NEW.parent_ref;
 
         ELSE
-          SELECT path || id || '/' INTO STRICT NEW.path 
-          FROM habitats 
+          SELECT path || id || '/' INTO STRICT NEW.path
+          FROM habitats
           WHERE id=NEW.parent_ref;
         END IF;
       END IF;
 		ELSIF TG_TABLE_NAME::text = 'people_relationships' THEN
-			SELECT path || NEW.person_1_ref || '/' INTO NEW.path 
-      FROM people_relationships 
+			SELECT path || NEW.person_1_ref || '/' INTO NEW.path
+      FROM people_relationships
       WHERE person_2_ref=NEW.person_1_ref;
 			IF NEW.path is NULL THEN
 		    NEW.path = '/' || NEW.person_1_ref || '/';
@@ -5837,47 +5837,47 @@ BEGIN
         ELSE
           -- Change current path
           IF TG_TABLE_NAME::text = 'multimedia' THEN
-            SELECT path || id || '/' INTO STRICT NEW.path 
-            FROM multimedia 
+            SELECT path || id || '/' INTO STRICT NEW.path
+            FROM multimedia
             WHERE id=NEW.parent_ref;
           ELSIF TG_TABLE_NAME::text = 'collections' THEN
-            SELECT path || id || '/' INTO STRICT NEW.path 
-            FROM collections 
+            SELECT path || id || '/' INTO STRICT NEW.path
+            FROM collections
             WHERE id=NEW.parent_ref;
           ELSIF TG_TABLE_NAME::text = 'gtu' THEN
-            SELECT path || id || '/' INTO STRICT NEW.path 
-            FROM gtu 
+            SELECT path || id || '/' INTO STRICT NEW.path
+            FROM gtu
             WHERE id=NEW.parent_ref;
           ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
-            SELECT path || id || '/' INTO STRICT NEW.path 
-            FROM specimen_parts 
+            SELECT path || id || '/' INTO STRICT NEW.path
+            FROM specimen_parts
             WHERE id=NEW.parent_ref;
           ELSE
-            SELECT path || id || '/' INTO STRICT NEW.path 
-            FROM habitats 
+            SELECT path || id || '/' INTO STRICT NEW.path
+            FROM habitats
             WHERE id=NEW.parent_ref;
           END IF;
         END IF;
         -- Change children's path
         IF TG_TABLE_NAME::text = 'multimedia' THEN
-          UPDATE multimedia 
-          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          UPDATE multimedia
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/')
           WHERE path like OLD.path || OLD.id || '/%';
         ELSIF TG_TABLE_NAME::text = 'collections' THEN
-          UPDATE collections 
-          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          UPDATE collections
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/')
           WHERE path like OLD.path || OLD.id || '/%';
         ELSIF TG_TABLE_NAME::text = 'gtu' THEN
-          UPDATE gtu 
-          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          UPDATE gtu
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/')
           WHERE path like OLD.path || OLD.id || '/%';
         ELSIF TG_TABLE_NAME::text = 'specimen_parts' THEN
-          UPDATE specimen_parts 
-          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          UPDATE specimen_parts
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/')
           WHERE path like OLD.path || OLD.id || '/%';
         ELSE
-          UPDATE habitats 
-          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/') 
+          UPDATE habitats
+          SET path=replace(path, OLD.path || OLD.id || '/',  NEW.path || OLD.id || '/')
           WHERE path like OLD.path || OLD.id || '/%';
         END IF;
       END IF;
@@ -6739,7 +6739,7 @@ END;
 $$;
 
 /*
-  Before updating a collections rights entry, 
+  Before updating a collections rights entry,
   check we don't do a modification which wouldn't be in accordance with main manager of the concerned collection
 */
 CREATE OR REPLACE FUNCTION fct_chk_canUpdateCollectionsRights() RETURNS TRIGGER
@@ -6754,7 +6754,7 @@ BEGIN
     or moving a user from one collection to an other
   */
   IF (NEW.db_user_type < 4 AND OLD.db_user_type >=4) OR NEW.collection_ref != OLD.collection_ref OR NEW.user_ref != OLD.user_ref THEN
-    SELECT formated_name INTO mgrName 
+    SELECT formated_name INTO mgrName
     FROM collections INNER JOIN users ON users.id = collections.main_manager_ref
     WHERE collections.id = OLD.collection_ref
       AND main_manager_ref = OLD.user_ref;
@@ -6779,7 +6779,7 @@ DECLARE
   booCollFound boolean;
   booContinue boolean;
 BEGIN
-  /*When updating main manager ref -> impact potentially db_user_type 
+  /*When updating main manager ref -> impact potentially db_user_type
     of new user chosen as manager
   */
   IF TG_TABLE_NAME = 'collections' THEN
@@ -6796,7 +6796,7 @@ BEGIN
     END IF;
   ELSE -- trigger on collections_rights table
     IF TG_OP = 'INSERT' THEN
-      /*If user is promoted by inserting her/him 
+      /*If user is promoted by inserting her/him
         with a higher db_user_type than she/he is -> promote her/him
       */
       UPDATE users
@@ -7351,6 +7351,9 @@ BEGIN
         );
       END IF;
     ELSIF TG_OP = 'UPDATE' THEN
+
+      /*@TODO: Foresee update of spec_ref*/
+
       UPDATE darwin_flat
       SET
       (individual_ref,
@@ -7377,7 +7380,7 @@ BEGIN
   END IF;
   IF TG_TABLE_NAME = 'specimen_parts' THEN
     IF TG_OP = 'INSERT' THEN
-      
+
       /*Tell now there are parts for individuals*/
       UPDATE specimen_individuals
       SET with_parts = true
@@ -7488,6 +7491,9 @@ BEGIN
         );
       END IF;
     ELSIF TG_OP = 'UPDATE' THEN
+
+      /*@TODO: Foresee update of specimen_individual_ref*/
+
       UPDATE darwin_flat
       SET
       (part_ref, part, part_status,
@@ -7541,11 +7547,10 @@ BEGIN
     SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref;
     /*If it was the last individual deleted, then update individuals and parts fiedls with default values*/
     IF indCount = 0 THEN
-
-      SELECT COUNT(*) INTO indCount FROM darwin_flat WHERE spec_ref = OLD.specimen_ref;
-      IF indCount > 1 THEN
-        DELETE FROM darwin_flat WHERE individual_ref = OLD.id;
-      ELSE
+      SELECT COUNT(*) INTO indCount FROM darwin_flat WHERE individual_ref != OLD.id;
+      IF indCount = 0 THEN
+        SELECT COUNT(*) INTO indCount FROM darwin_flat WHERE individual_ref = OLD.id;
+        DELETE FROM darwin_flat WHERE ctid = ANY (ARRAY(SELECT ctid FROM darwin_flat WHERE individual_ref = OLD.id LIMIT (indCount - 1)));
         UPDATE darwin_flat
         SET
         (individual_ref,
@@ -7553,12 +7558,7 @@ BEGIN
          individual_sex, individual_state, individual_stage,
          individual_social_status, individual_rock_form,
          individual_count_min, individual_count_max,
-         with_types, with_individuals, with_parts,
-         part_ref, part, part_status,
-         building, "floor", room, "row", shelf,
-         container_type, container_storage, "container",
-         sub_container_type, sub_container_storage, "sub_container",
-         part_count_min, part_count_max
+         with_types, with_individuals
         )
         =
         (DEFAULT,
@@ -7566,26 +7566,22 @@ BEGIN
          DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT,
          DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT,DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT
         )
         WHERE individual_ref = OLD.id;
+      ELSE
+        DELETE FROM darwin_flat WHERE individual_ref = OLD.id;
       END IF;
     ELSE
-
       DELETE FROM darwin_flat
       WHERE individual_ref = OLD.id;
 
       /*Check for the with_types and with_individuals update*/
       SELECT true INTO indType
-      FROM specimen_individuals 
-      WHERE specimen_ref = OLD.specimen_ref 
+      FROM specimen_individuals
+      WHERE specimen_ref = OLD.specimen_ref
         AND type_group <> 'specimen' LIMIT 1;
-      
+
       IF NOT FOUND THEN
         indType := false;
       END IF;
@@ -7600,8 +7596,7 @@ BEGIN
     IF partCount = 0 THEN
 
       SELECT COUNT(*) INTO partCount FROM darwin_flat WHERE individual_ref = OLD.specimen_individual_ref;
-/*      RAISE WARNING 'Part count in Flat: %', partCount;
-      RAISE WARNING 'Part id is: %', OLD.id;*/
+
       IF partCount > 1 THEN
         DELETE FROM darwin_flat WHERE part_ref = OLD.id;
       ELSE
@@ -7636,13 +7631,10 @@ BEGIN
 
       DELETE FROM darwin_flat
       WHERE part_ref = OLD.id;
-      
+
     END IF;
   END IF;
-  IF TG_OP = 'DELETE' THEN
-    RETURN OLD;
-  END IF;
-  RETURN NEW;
+  RETURN OLD;
 END;
 $$;
 
@@ -7889,8 +7881,8 @@ BEGIN
       /*!!! What's done is only removing the old collection reference from list of collections set in widgets !!!
         !!! We considered the add of widgets available for someone in a collection still be a manual action !!!
       */
-      UPDATE my_widgets 
-      SET collections = regexp_replace(collections, E'\,' || OLD.collection_ref || E'\,', E'\,', 'g') 
+      UPDATE my_widgets
+      SET collections = regexp_replace(collections, E'\,' || OLD.collection_ref || E'\,', E'\,', 'g')
       WHERE user_ref = OLD.user_ref
         AND collections ~ (E'\,' || OLD.collection_ref || E'\,');
     END IF;
@@ -7905,7 +7897,7 @@ $$;
 /*Check that when specifying a parent collection the institution given is the same as the one used for parent*/
 CREATE OR REPLACE FUNCTION fct_chk_parentCollInstitution() RETURNS TRIGGER
 language plpgSQL
-AS 
+AS
 $$
 DECLARE
   institutionRef integer;

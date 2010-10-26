@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(81);
+SELECT plan(92);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -38,9 +38,9 @@ INSERT INTO mineralogy(id, code, name, level_ref, parent_ref) VALUES (100001, 'O
 INSERT INTO igs(id, ig_num) VALUES (100000, '240275');
 INSERT INTO igs(id, ig_num) VALUES (100001, '240276');
 -- Insertion of specimens using these data
-INSERT INTO specimens (id, collection_ref, expedition_ref, gtu_ref, taxon_ref, chrono_ref, litho_ref, lithology_ref, mineral_ref) 
+INSERT INTO specimens (id, collection_ref, expedition_ref, gtu_ref, taxon_ref, chrono_ref, litho_ref, lithology_ref, mineral_ref)
        VALUES (100000,100001,100000,100001,100000,100000,100000,100000,100000);
-INSERT INTO specimens (id, collection_ref, expedition_ref, gtu_ref, taxon_ref, chrono_ref, litho_ref, lithology_ref, mineral_ref, ig_ref, host_relationship, host_taxon_ref) 
+INSERT INTO specimens (id, collection_ref, expedition_ref, gtu_ref, taxon_ref, chrono_ref, litho_ref, lithology_ref, mineral_ref, ig_ref, host_relationship, host_taxon_ref)
        VALUES (100001,100005,100001,100002,100001,100001,100001,100001,100001,100001,'Parasit',100000);
 
 SELECT ok(100000 = (SELECT spec_ref FROM darwin_flat WHERE id = 1), 'First specimen inserted is well the specimen "100000".');
@@ -135,7 +135,7 @@ SELECT ok ('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwi
 -- Redelete the country tag group for gtu 100001 by updating the sub group value to an idot one
 
 -- UPDATE tag_groups SET group_name = 'Topographic', sub_group_name = 'Landscape' WHERE gtu_ref = 100001 AND group_name_indexed = 'administrativearea' AND sub_group_name_indexed = 'country';
--- 
+--
 -- SELECT ok (ARRAY['belgium','belgie','belgique','liege','lutig','luik']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list correctly updated');
 -- SELECT ok ('0' = (SELECT coalesce(gtu_country_tag_value,'0') FROM darwin_flat WHERE id = 1), 'Country Tag value correctly updated');
 
@@ -198,6 +198,25 @@ SELECT ok(1 = (SELECT COUNT(*) from darwin_flat WHERE individual_ref = 240276), 
 SELECT ok(false = (SELECT with_parts FROM darwin_flat WHERE individual_ref = 240276), 'With parts field well updated in darwin_flat');
 SELECT ok(0 = (SELECT COALESCE(part_ref,0) FROM darwin_flat WHERE individual_ref = 240276), 'Part ref well removed');
 
+-- Testing removing individuals with two parts linked deleted with cascade delete
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240275, 240276, 'specimen');
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240276, 240276, 'leg');
+SELECT ok(2 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240276 AND with_parts = true), 'Creates well a new line');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND part_ref = 240276), '... and with good values');
+SELECT lives_ok('DELETE FROM specimen_individuals WHERE id = 240276', 'Deleting individual 240276');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND with_individuals = true), 'One line remains');
+SELECT ok(0 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240276), 'No more individual 240276');
+SELECT ok(false = (SELECT DISTINCT with_parts FROM darwin_flat WHERE spec_ref = 100001), 'with parts set to false for specimen 100001');
+INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (240276, 100001, 'paratype');
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240275, 240276, 'specimen');
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240276, 240276, 'leg');
+SELECT lives_ok('DELETE FROM specimen_individuals', 'Deleting all individuals');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001), 'Spec 100001 remaining in flat');
+SELECT ok(false = (SELECT with_individuals FROM darwin_flat WHERE spec_ref = 100001), 'Deleting all individuals set well with_individuals to false');
+SELECT ok(false = (SELECT with_parts FROM darwin_flat WHERE spec_ref = 100001), '...with_parts well set to false');
+SELECT ok(0 = (SELECT COALESCE(part_ref,0) FROM darwin_flat WHERE spec_ref = 100001), '... and no more part_ref');
+
+SELECT diag('Good tests done for individuals and parts :)');
 
 SELECT * FROM finish();
 ROLLBACK;
