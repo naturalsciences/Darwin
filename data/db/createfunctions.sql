@@ -7521,6 +7521,15 @@ BEGIN
             LIMIT 1
           ) subq
         WHERE individual_ref = NEW.id;
+
+        /*Check if the specimen the individual is moved to has already individuals*/
+        SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = NEW.specimen_ref AND id != NEW.id;
+        IF indCount = 0 THEN
+          /*If not, remove the line with null individual*/
+          DELETE FROM darwin_flat
+          WHERE spec_ref = NEW.specimen_ref AND individual_ref IS NULL;
+        END IF;
+
       END IF;
     END IF;
 
@@ -7842,8 +7851,16 @@ BEGIN
             LIMIT 1
           ) subq
         WHERE part_ref = NEW.id;
-      END IF;
 
+        /*Check if the individual the part is moved to has already parts*/
+        SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = NEW.specimen_individual_ref AND id != NEW.id;
+        IF partCount = 0 THEN
+          /*If not, remove the line with null part*/
+          DELETE FROM darwin_flat
+          WHERE individual_ref = NEW.specimen_individual_ref AND part_ref IS NULL;
+        END IF;
+
+      END IF;
     END IF;
   END IF;
   IF TG_TABLE_NAME = 'specimens' THEN

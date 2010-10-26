@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(92);
+SELECT plan(113);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -216,7 +216,38 @@ SELECT ok(false = (SELECT with_individuals FROM darwin_flat WHERE spec_ref = 100
 SELECT ok(false = (SELECT with_parts FROM darwin_flat WHERE spec_ref = 100001), '...with_parts well set to false');
 SELECT ok(0 = (SELECT COALESCE(part_ref,0) FROM darwin_flat WHERE spec_ref = 100001), '... and no more part_ref');
 
-SELECT diag('Good tests done for individuals and parts :)');
+SELECT diag('Test now how db reacts by moving a part from one individual to an other');
+
+INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (240275, 100001, 'holotype');
+INSERT INTO specimen_individuals (id, specimen_ref, type) VALUES (240276, 100001, 'paratype');
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240275, 240276, 'specimen');
+INSERT INTO specimen_parts (id, specimen_individual_ref, specimen_part) VALUES (240276, 240276, 'leg');
+
+SELECT ok(3 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001), 'We''ve got well 3 lines for specimen 100001');
+SELECT lives_ok('UPDATE specimen_parts SET specimen_individual_ref = 240275, specimen_part = ''wing'' WHERE id = 240275', 'Move well part 240275 from individual 240276 to individual 240275');
+SELECT ok(2 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001), 'We''ve got now 2 lines for specimen 100001');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240275 AND part_ref = 240275), 'Only one with individual 240275');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240276 AND part_ref = 240276), 'and only one with individual 240276');
+
+SELECT lives_ok('UPDATE specimen_parts SET specimen_individual_ref = 240275, specimen_part = ''foot'' WHERE id = 240276', 'Move well part 240276 from individual 240276 to individual 240275');
+SELECT ok(3 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001), 'We''ve got now 3 lines for specimen 100001');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240275 AND part_ref = 240275), 'Part 240275 is with individual 240275');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240275 AND part_ref = 240276), 'Part 240276 is with individual 240275');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001 AND individual_ref = 240276 AND part_ref IS NULL), 'Individual 240276 has no parts');
+
+
+SELECT lives_ok('UPDATE specimen_individuals SET specimen_ref = 100000, type = ''lectotype'' WHERE id = 240275', 'Move well individual 240275 from specimen 100001 to specimen 100000');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001), 'We''ve got now 1 line for specimen 100001');
+SELECT ok(2 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000), 'and 2 lines for specimen 100000');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240275 AND part_ref = 240275), 'One per part');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240275 AND part_ref = 240276), 'One per part');
+
+SELECT lives_ok('UPDATE specimen_individuals SET specimen_ref = 100000, type = ''paralectotype'' WHERE id = 240276', 'Move well individual 240276 from specimen 100001 to specimen 100000');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100001), 'We''ve got now 1 line for specimen 100001');
+SELECT ok(3 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000), 'and 3 lines for specimen 100000');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240275 AND part_ref = 240275), 'One per part');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240275 AND part_ref = 240276), 'One per part');
+SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240276 AND part_ref IS NULL), 'One with part null');
 
 SELECT * FROM finish();
 ROLLBACK;
