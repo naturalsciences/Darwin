@@ -74,25 +74,25 @@
             </ul>
         </li>
         <?php endif ?>
-        <?php if($sf_user->getDbUserType() >= Users::MANAGER) : ?>
+        <?php if($sf_user->isAtLeast(Users::ENCODER) ): ?>
         <li>
             <a href=""><?php echo __('Administration');?></a>
             <ul>
-                <?php if($sf_user->getDbUserType() >= Users::ADMIN) : ?>
-                <li><?php echo link_to('Reload DB','account/reload','confirm=Are you sure?');?></li>
-                <li><?php echo link_to('Big Brother','bigbro/index');?></li>
                 <li><?php echo link_to('Mass Actions','massactions/index');?></li>
+                <?php if($sf_user->isAtLeast(Users::MANAGER) ): ?>
+                  <li><?php echo link_to('Big Brother','bigbro/index');?></li>
+                  <li>
+                    <a href="#"><?php echo __('User');?></a>
+                    <ul>
+                      <li><?php echo link_to(__('Add'),'user/new');?></li>
+                      <li><?php echo link_to(__('Search'),'user/index');?></li>
+                    </ul>
+                  </li>
                 <?php endif ?>
-                <li>
-                	<a href="#"><?php echo __('User');?></a>
-                	<ul>
-                		<li><?php echo link_to(__('Add'),'user/new');?></li>
-                		<li><?php echo link_to(__('Search'),'user/index');?></li>
-                	</ul>
-                </li>
             </ul>
         </li>
-		<li>
+        <?php endif ?>
+        <li>
             <a href=""><?php echo __('Help');?></a>
             <ul>
                 <li><?php echo link_to('Help','help/index');?></li>                
@@ -101,7 +101,6 @@
                 <li><?php echo link_to('About','help/about');?></li>
             </ul>
         </li>
-        <?php endif ?>
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>
     </ul>
 </div>
