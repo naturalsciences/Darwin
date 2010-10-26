@@ -1,4 +1,4 @@
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'people','eid'=> $form->getObject()->getId())); ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'people','eid'=> $form->getObject()->getId(), 'view' => true)); ?>
 <?php slot('title', __('View People'));  ?>
 <div class="page">
     <h1><?php echo __('View People');?></h1>
@@ -88,7 +88,7 @@
 </div>  
  <?php include_partial('widgets/screen', array(
 	'widgets' => $widgets,
-	'category' => 'peoplewidget',
+	'category' => 'peoplewidgetview',
 	'columns' => 1,
 	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'people', 'view' => true)
 	)); ?>

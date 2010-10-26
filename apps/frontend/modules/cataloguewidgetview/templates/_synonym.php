@@ -1,4 +1,4 @@
-<table class="catalogue_table">
+<table class="catalogue_table_view">
   <thead>
     <tr>
       <th><?php echo __('Type');?></th>
@@ -38,17 +38,9 @@
 		  <?php endif;?>
 		</td>
 		<td class="basio_cell">
-		  <?php if($group_name != "homonym"):?>
+		  <?php if($group_name != "homonym" && $read_only):?>
 		    <a href="#" <?php if($synonym['is_basionym']):?> class="checked"<?php endif;?>></a>
 		  <?php endif;?>
-		</td>
-		<td class="widget_row_delete">	
-		  <?php if($synonym['record_id'] == $eid):?>
-		    <a class="widget_row_delete" href="<?php echo url_for('synonym/delete?id='.$synonym['id']);?>" title="<?php echo __('Are you sure ?') ?>">
-		     <?php echo image_tag('remove.png'); ?>
-		    </a>
-		  <?php endif;?>
-		
 		</td>
 	      </tr>
 	    <?php endforeach;?>
@@ -60,8 +52,6 @@
     <?php endforeach;?>
   </tbody>
 </table>
-<br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Synonymies');?>" class="link_catalogue" href="<?php echo url_for('synonym/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
 
 <script type="text/javascript">
 

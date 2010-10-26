@@ -50,7 +50,7 @@
 	      <?php if($orderBy=='activity_date_from') echo $orderSign ?>
 	    </a>
           </th>
-          <th></th>
+          <th colspan="2"></th>
         <tr>
       </thead>
       <tbody>
@@ -70,7 +70,7 @@
 	      <?php echo $item->getActivityDateFromObject()->getDateMasked('em','Y',ESC_RAW);?> - 
 	      <?php echo $item->getActivityDateToObject()->getDateMasked('em','Y',ESC_RAW) ?>
             </td>
-            <?php if ($level > Users::REGISTERED_USER) : ?>             
+            <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>             
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
 	                <?php echo link_to(image_tag('edit.png',array('title'=>'Edit People')),'people/edit?id='.$item->getId());?>
@@ -79,9 +79,8 @@
                     <div class="result_choose"><?php echo __('Choose');?></div>           
                 <?php endif;?>
             </td>
-            <?php else : ?>
-              <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),'people/view?id='.$item->getId());?></td>
-            <?php endif ; ?>            
+            <?php endif ; ?>
+              <td><?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'people/view?id='.$item->getId());?></td>           
           </tr>
           <tr class="hidden details details_rid_<?php echo $item->getId();?>" >
             <td colspan="8"></td>

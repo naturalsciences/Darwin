@@ -1,4 +1,4 @@
-<table class="catalogue_table">
+<table class="catalogue_table_view">
   <thead>
     <tr>
       <th><?php echo __('Type');?></th>
@@ -39,14 +39,7 @@
 		<td class="catalogue_people_sub_type">
 		   <?php echo $person->getPeopleSubType();?>
 		</td>
-		<td class="widget_row_delete">
-    <?php if(!$read_only) : ?>		
-		  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_people&id='.$person->getId());?>" title="<?php echo __('Are you sure ?') ?>">
-		    <?php echo image_tag('remove.png'); ?>
-		  </a>
-		<?php endif ?>		  
-		</td>
-	      </tr>
+	</tr>
 	    <?php endforeach;?>
 	    </tbody>
 	  </table>
@@ -56,8 +49,6 @@
     <?php endforeach;?>
   </tbody>
 </table>
-<br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add People');?>" class="link_catalogue" href="<?php echo url_for('cataloguepeople/people?table='.$table.'&rid='.$eid); ?>"><?php echo __('Add');?></a>
 <script type="text/javascript">
 
 function forceHelper(e,ui)

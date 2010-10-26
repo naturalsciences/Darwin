@@ -24,7 +24,7 @@
                 <?php if($orderBy=='ig_date') echo $orderSign ?>
               </a>
             </th>
-            <th>&nbsp;</th>
+            <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -32,7 +32,7 @@
             <tr class="rid_<?php echo $igs->getId(); ?>">
               <td><?php echo $igs->getIgNum();?></td>
               <td class="datesNum"><?php echo $igs->getIgDateMasked(ESC_RAW);?></td>
-              <?php if ($level > Users::REGISTERED_USER) : ?>              
+              <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>              
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit IGS')),'igs/edit?id='.$igs->getId());?>
@@ -41,9 +41,8 @@
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
               </td>
-              <?php else : ?>
-                <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),'igs/view?id='.$igs->getId());?></td>
-              <?php endif ; ?>   
+              <?php endif ; ?>
+                <td><?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'igs/view?id='.$igs->getId());?></td>
             </tr>
           <?php endforeach;?>
         </tbody>

@@ -1,4 +1,4 @@
-<table class="catalogue_table">
+<table class="catalogue_table_view">
   <thead>
     <tr>
       <th><?php echo __('Community');?></th>
@@ -9,10 +9,8 @@
   <tbody id="property">
     <?php foreach($vernacular_names as $vernacular_name):?>
     <tr>
-      <td>     
-	  <a class="link_catalogue" title="<?php echo __('Edit Vernacular Names');?>" href="<?php echo url_for('vernacularnames/add?table='.$table.'&rid='.$vernacular_name->getId().'&id='.$eid); ?>">
-	    <?php echo $vernacular_name->getCommunity();?>
-	  </a>
+      <td>
+	      <?php echo $vernacular_name->getCommunity();?>
       </td>
       <td>
 	<?php if( count($vernacular_name->VernacularNames) > 1):?>
@@ -31,12 +29,6 @@
 	  <?php echo __('No Names');?>
 	<?php endif;?>
       </td>
-      <td class="widget_row_delete">
-      <?php if(!$read_only) : ?>       
-        <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=class_vernacular_names&id='.$vernacular_name->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
-        </a>
-      <?php endif ; ?>
-      </td>
     </tr>
     <?php endforeach;?>
   </tbody>
@@ -46,5 +38,3 @@
 $('.display_value').click(showValues);
 $('.hide_value').click(hideValues);
 </script>
-<br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Names');?>" class="link_catalogue" href="<?php echo url_for('vernacularnames/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>

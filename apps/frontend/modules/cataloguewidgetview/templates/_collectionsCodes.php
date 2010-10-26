@@ -1,4 +1,4 @@
-<table class="catalogue_table">
+<table class="catalogue_table_view">
   <thead>
     <tr>
       <th><?php echo __('Code prefix');?></th>
@@ -30,15 +30,6 @@
       </td>
       <td class="centered">
         <?php echo ($collCodes->getCodePartCodeAutoCopy())?image_tag('checkbox_checked_green.png'):image_tag('checkbox_unchecked_green.png'); ?>
-      </td>
-      <td class="widget_row_delete">    
-        <a class="link_catalogue" title="<?php echo __('Edit default specimen codes prefix and suffix');?>" href="<?php echo url_for('collection/addSpecCodes?id='.$eid); ?>">
-          <?php echo image_tag('edit.png'); ?>
-        </a>
-      </td>
-      <td class="widget_row_delete">
-        <a class="widget_row_delete" href="<?php echo url_for('collection/deleteSpecCodes?id='.$eid);?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
-        </a>
       </td>
     </tr>
   </tbody>

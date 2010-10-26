@@ -30,7 +30,7 @@
                 <?php if($orderBy=='expedition_to_date') echo $orderSign ?>
               </a>
             </th>
-            <th>&nbsp;</th>
+            <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
               <td><?php echo $expedition->getName();?></td>
               <td class="datesNum"><?php echo $expedition->getExpeditionFromDateMasked(ESC_RAW);?></td>
               <td class="datesNum"><?php echo $expedition->getExpeditionToDateMasked(ESC_RAW);?></td>
-              <?php if ($level > Users::REGISTERED_USER) : ?>
+              <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>
                 <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                   <?php if(! $is_choose):?>
                     <?php echo link_to(image_tag('edit.png',array('title'=>'Edit expedition')),'expedition/edit?id='.$expedition->getId());?>
@@ -48,9 +48,8 @@
                     <div class="result_choose"><?php echo __('Choose');?></div>
                   <?php endif;?>
                 </td>
-              <?php else : ?>
-                <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),'expedition/view?id='.$expedition->getId());?></td>
-              <?php endif ; ?>              
+              <?php endif ; ?>
+                <td><?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'expedition/view?id='.$expedition->getId());?></td>            
             </tr>
           <?php endforeach;?>
         </tbody>

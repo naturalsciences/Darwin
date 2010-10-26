@@ -1,4 +1,4 @@
-<table class="catalogue_table<?php echo($sf_user->isA(Users::REGISTERED_USER)?'_view':'') ;?>">
+<table class="catalogue_table">
   <thead>
     <tr>
       <th><?php echo __('Type');?></th>
@@ -10,22 +10,14 @@
   <tbody>
   <?php foreach($comms as $comm):?>
   <tr>
-    <td>
-      <?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>      
+    <td>     
       <a class="link_catalogue" title="<?php echo __('Edit Communication Means');?>"  href="<?php echo url_for('people/comm?ref_id='.$eid.'&id='.$comm->getId());?>">
       <?php if($comm->getCommType()=="phone/fax"):?>
 	<?php echo __('Phone');?>
       <?php else:?>
 	<?php echo __('e-Mail');?>
       <?php endif;?>
-      </a>
-      <?php else : ?>
-        <?php if($comm->getCommType()=="phone/fax"):?>
-	        <?php echo __('Phone');?>
-        <?php else:?>
-	        <?php echo __('e-Mail');?>      
-	      <?php endif ; ?>
-      <?php endif ; ?>      
+      </a>    
     </td>
     <td>
       <?php echo $comm->getEntry();?>
@@ -36,11 +28,9 @@
       <?php endforeach;?>
     </td>
 
-    <td class="widget_row_delete">
-      <?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>      
+    <td class="widget_row_delete">   
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_comm&id='.$comm->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
-      <?php endif ; ?>
     </td>
   </tr>
   <?php endforeach;?>
@@ -48,7 +38,5 @@
 </table>
 
 <br />
-<?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>  
 <?php echo image_tag('add_green.png');?>
 <a title="<?php echo __('Add Communication Means');?>" class="link_catalogue" href="<?php echo url_for('people/comm?ref_id='.$eid);?>"><?php echo __('Add');?></a>
-<?php endif ; ?>
