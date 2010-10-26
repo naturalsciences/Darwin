@@ -11,11 +11,15 @@ class CollectionsTable extends DarwinTable
             ->select('p.*, col.*,r.id,r.db_user_type, CONCAT(col.path,col.id,E\'/\') as col_path_id')
             ->from('People p')
             ->innerJoin('p.Collections col')
-            ->leftJoin('col.CollectionsRights r')
             ->andWhere('p.is_physical = false')
             ->orderBy('p.id ASC, col_path_id ASC');
+
       if($user && ! $user->isA(Users::ADMIN) )
-            $q->andWhere('r.user_ref = ? OR col.is_public = TRUE',$user->getId());
+      {
+        $q->leftJoin('col.CollectionsRights r ON col.id=r.collection_ref AND r.user_ref = '.$user->getId())
+          ->andWhere('r.id is not null OR col.is_public = TRUE');
+      }
+
       if($public_only)
         $q->andWhere('col.is_public = TRUE');
       if($institutionId != null)
