@@ -7797,24 +7797,24 @@ BEGIN
     END IF;
   ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
     IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = NEW.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE spec_ref = NEW.spec_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
       IF NOT FOUND THEN
         RAISE EXCEPTION 'You don''t have the rights to insert into or update an individual in this collection';
       END IF;
     ELSE /*Delete*/
-      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = OLD.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE spec_ref = OLD.spec_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
       IF NOT FOUND THEN
         RAISE EXCEPTION 'You don''t have the rights to delete an individual from this collection';
       END IF;
     END IF;
   ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
     IF TG_OP = 'INSERT' OR TG_OP = 'UPDATE' THEN
-      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE part_ref = NEW.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = NEW.specimen_individual_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
       IF NOT FOUND THEN
         RAISE EXCEPTION 'You don''t have the rights to insert into or update a part in this collection';
       END IF;
     ELSE /*Delete*/
-      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE part_ref = OLD.id LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = OLD.specimen_individual_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
       IF NOT FOUND THEN
         RAISE EXCEPTION 'You don''t have the rights to delete a part from this collection';
       END IF;
