@@ -717,7 +717,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         ->andWhere('part_ref != 0 ')
         ->from('PartSearch s');
     }
-    $query->addSelect('dummy_first(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
+    if($values['what_searched'] != 'part')
+      $query->addSelect('dummy_first(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
+    else
+      $query->addSelect('collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().')) as has_encoding_rights');
+
     $this->options['query'] = $query;
     $query = parent::doBuildQuery($values);
 
