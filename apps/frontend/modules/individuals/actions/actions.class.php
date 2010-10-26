@@ -53,6 +53,12 @@ class individualsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))
+      $this->redirect("specimen/view?id=".$request->getParameter('id')) ;  
+
     $this->individual = $this->getSpecimenIndividualsForm($request);  
 
     if($this->individual->getObject()->isNew())
@@ -114,7 +120,7 @@ class individualsActions extends DarwinActions
   }
 
   public function executeOverview(sfWebRequest $request)
-  {
+  {  
     $this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0));
     $this->forward404Unless($this->specimen, sprintf('Specimen does not exist (%s).', $request->getParameter('spec_id',0)));
     $this->individuals = Doctrine::getTable('SpecimenIndividuals')->findBySpecimenRef($this->specimen->getId());
