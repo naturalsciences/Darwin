@@ -57,6 +57,8 @@
  * @property integer $litho_level_ref
  * @property string $litho_level_name
  * @property string $litho_status
+ * @property boolean $litho_local
+ * @property string $litho_color
  * @property string $litho_path
  * @property integer $litho_parent_ref
  * @property integer $chrono_ref
@@ -66,6 +68,8 @@
  * @property integer $chrono_level_ref
  * @property string $chrono_level_name
  * @property string $chrono_status
+ * @property boolean $chrono_local
+ * @property string $chrono_color
  * @property string $chrono_path
  * @property integer $chrono_parent_ref
  * @property integer $lithology_ref
@@ -75,6 +79,8 @@
  * @property integer $lithology_level_ref
  * @property string $lithology_level_name
  * @property string $lithology_status
+ * @property boolean $lithology_local
+ * @property string $lithology_color
  * @property string $lithology_path
  * @property integer $lithology_parent_ref
  * @property integer $mineral_ref
@@ -84,6 +90,8 @@
  * @property integer $mineral_level_ref
  * @property string $mineral_level_name
  * @property string $mineral_status
+ * @property boolean $mineral_local
+ * @property string $mineral_color
  * @property string $mineral_path
  * @property integer $mineral_parent_ref
  * @property integer $host_taxon_ref
@@ -97,6 +105,7 @@
  * @property string $host_taxon_path
  * @property integer $host_taxon_parent_ref
  * @property boolean $host_taxon_extinct
+ * @property integer $host_specimen_ref
  * @property integer $ig_ref
  * @property string $ig_num
  * @property string $ig_num_indexed
@@ -135,6 +144,9 @@
  * @property string $sub_container
  * @property integer $part_count_min
  * @property integer $part_count_max
+ * @property string $specimen_status
+ * @property boolean $complete
+ * @property boolean $surnumerary
  * @property Specimens $Specimen
  * @property SpecimenIndividuals $SpecimenIndividual
  * @property SpecimenParts $PartRelation
@@ -163,6 +175,7 @@
  * @property Taxonomy $HostTaxon
  * @property CatalogueLevels $HostTaxonLevel
  * @property Taxonomy $HostTaxonParent
+ * @property Specimens $HostSpecimen
  * @property Igs $Ig
  * 
  * @method integer             getId()                                            Returns the current record's "id" value
@@ -217,6 +230,8 @@
  * @method integer             getLithoLevelRef()                                 Returns the current record's "litho_level_ref" value
  * @method string              getLithoLevelName()                                Returns the current record's "litho_level_name" value
  * @method string              getLithoStatus()                                   Returns the current record's "litho_status" value
+ * @method boolean             getLithoLocal()                                    Returns the current record's "litho_local" value
+ * @method string              getLithoColor()                                    Returns the current record's "litho_color" value
  * @method string              getLithoPath()                                     Returns the current record's "litho_path" value
  * @method integer             getLithoParentRef()                                Returns the current record's "litho_parent_ref" value
  * @method integer             getChronoRef()                                     Returns the current record's "chrono_ref" value
@@ -226,6 +241,8 @@
  * @method integer             getChronoLevelRef()                                Returns the current record's "chrono_level_ref" value
  * @method string              getChronoLevelName()                               Returns the current record's "chrono_level_name" value
  * @method string              getChronoStatus()                                  Returns the current record's "chrono_status" value
+ * @method boolean             getChronoLocal()                                   Returns the current record's "chrono_local" value
+ * @method string              getChronoColor()                                   Returns the current record's "chrono_color" value
  * @method string              getChronoPath()                                    Returns the current record's "chrono_path" value
  * @method integer             getChronoParentRef()                               Returns the current record's "chrono_parent_ref" value
  * @method integer             getLithologyRef()                                  Returns the current record's "lithology_ref" value
@@ -235,6 +252,8 @@
  * @method integer             getLithologyLevelRef()                             Returns the current record's "lithology_level_ref" value
  * @method string              getLithologyLevelName()                            Returns the current record's "lithology_level_name" value
  * @method string              getLithologyStatus()                               Returns the current record's "lithology_status" value
+ * @method boolean             getLithologyLocal()                                Returns the current record's "lithology_local" value
+ * @method string              getLithologyColor()                                Returns the current record's "lithology_color" value
  * @method string              getLithologyPath()                                 Returns the current record's "lithology_path" value
  * @method integer             getLithologyParentRef()                            Returns the current record's "lithology_parent_ref" value
  * @method integer             getMineralRef()                                    Returns the current record's "mineral_ref" value
@@ -244,6 +263,8 @@
  * @method integer             getMineralLevelRef()                               Returns the current record's "mineral_level_ref" value
  * @method string              getMineralLevelName()                              Returns the current record's "mineral_level_name" value
  * @method string              getMineralStatus()                                 Returns the current record's "mineral_status" value
+ * @method boolean             getMineralLocal()                                  Returns the current record's "mineral_local" value
+ * @method string              getMineralColor()                                  Returns the current record's "mineral_color" value
  * @method string              getMineralPath()                                   Returns the current record's "mineral_path" value
  * @method integer             getMineralParentRef()                              Returns the current record's "mineral_parent_ref" value
  * @method integer             getHostTaxonRef()                                  Returns the current record's "host_taxon_ref" value
@@ -257,6 +278,7 @@
  * @method string              getHostTaxonPath()                                 Returns the current record's "host_taxon_path" value
  * @method integer             getHostTaxonParentRef()                            Returns the current record's "host_taxon_parent_ref" value
  * @method boolean             getHostTaxonExtinct()                              Returns the current record's "host_taxon_extinct" value
+ * @method integer             getHostSpecimenRef()                               Returns the current record's "host_specimen_ref" value
  * @method integer             getIgRef()                                         Returns the current record's "ig_ref" value
  * @method string              getIgNum()                                         Returns the current record's "ig_num" value
  * @method string              getIgNumIndexed()                                  Returns the current record's "ig_num_indexed" value
@@ -295,6 +317,9 @@
  * @method string              getSubContainer()                                  Returns the current record's "sub_container" value
  * @method integer             getPartCountMin()                                  Returns the current record's "part_count_min" value
  * @method integer             getPartCountMax()                                  Returns the current record's "part_count_max" value
+ * @method string              getSpecimenStatus()                                Returns the current record's "specimen_status" value
+ * @method boolean             getComplete()                                      Returns the current record's "complete" value
+ * @method boolean             getSurnumerary()                                   Returns the current record's "surnumerary" value
  * @method Specimens           getSpecimen()                                      Returns the current record's "Specimen" value
  * @method SpecimenIndividuals getSpecimenIndividual()                            Returns the current record's "SpecimenIndividual" value
  * @method SpecimenParts       getPartRelation()                                  Returns the current record's "PartRelation" value
@@ -323,6 +348,7 @@
  * @method Taxonomy            getHostTaxon()                                     Returns the current record's "HostTaxon" value
  * @method CatalogueLevels     getHostTaxonLevel()                                Returns the current record's "HostTaxonLevel" value
  * @method Taxonomy            getHostTaxonParent()                               Returns the current record's "HostTaxonParent" value
+ * @method Specimens           getHostSpecimen()                                  Returns the current record's "HostSpecimen" value
  * @method Igs                 getIg()                                            Returns the current record's "Ig" value
  * @method PartSearch          setId()                                            Sets the current record's "id" value
  * @method PartSearch          setSpecRef()                                       Sets the current record's "spec_ref" value
@@ -376,6 +402,8 @@
  * @method PartSearch          setLithoLevelRef()                                 Sets the current record's "litho_level_ref" value
  * @method PartSearch          setLithoLevelName()                                Sets the current record's "litho_level_name" value
  * @method PartSearch          setLithoStatus()                                   Sets the current record's "litho_status" value
+ * @method PartSearch          setLithoLocal()                                    Sets the current record's "litho_local" value
+ * @method PartSearch          setLithoColor()                                    Sets the current record's "litho_color" value
  * @method PartSearch          setLithoPath()                                     Sets the current record's "litho_path" value
  * @method PartSearch          setLithoParentRef()                                Sets the current record's "litho_parent_ref" value
  * @method PartSearch          setChronoRef()                                     Sets the current record's "chrono_ref" value
@@ -385,6 +413,8 @@
  * @method PartSearch          setChronoLevelRef()                                Sets the current record's "chrono_level_ref" value
  * @method PartSearch          setChronoLevelName()                               Sets the current record's "chrono_level_name" value
  * @method PartSearch          setChronoStatus()                                  Sets the current record's "chrono_status" value
+ * @method PartSearch          setChronoLocal()                                   Sets the current record's "chrono_local" value
+ * @method PartSearch          setChronoColor()                                   Sets the current record's "chrono_color" value
  * @method PartSearch          setChronoPath()                                    Sets the current record's "chrono_path" value
  * @method PartSearch          setChronoParentRef()                               Sets the current record's "chrono_parent_ref" value
  * @method PartSearch          setLithologyRef()                                  Sets the current record's "lithology_ref" value
@@ -394,6 +424,8 @@
  * @method PartSearch          setLithologyLevelRef()                             Sets the current record's "lithology_level_ref" value
  * @method PartSearch          setLithologyLevelName()                            Sets the current record's "lithology_level_name" value
  * @method PartSearch          setLithologyStatus()                               Sets the current record's "lithology_status" value
+ * @method PartSearch          setLithologyLocal()                                Sets the current record's "lithology_local" value
+ * @method PartSearch          setLithologyColor()                                Sets the current record's "lithology_color" value
  * @method PartSearch          setLithologyPath()                                 Sets the current record's "lithology_path" value
  * @method PartSearch          setLithologyParentRef()                            Sets the current record's "lithology_parent_ref" value
  * @method PartSearch          setMineralRef()                                    Sets the current record's "mineral_ref" value
@@ -403,6 +435,8 @@
  * @method PartSearch          setMineralLevelRef()                               Sets the current record's "mineral_level_ref" value
  * @method PartSearch          setMineralLevelName()                              Sets the current record's "mineral_level_name" value
  * @method PartSearch          setMineralStatus()                                 Sets the current record's "mineral_status" value
+ * @method PartSearch          setMineralLocal()                                  Sets the current record's "mineral_local" value
+ * @method PartSearch          setMineralColor()                                  Sets the current record's "mineral_color" value
  * @method PartSearch          setMineralPath()                                   Sets the current record's "mineral_path" value
  * @method PartSearch          setMineralParentRef()                              Sets the current record's "mineral_parent_ref" value
  * @method PartSearch          setHostTaxonRef()                                  Sets the current record's "host_taxon_ref" value
@@ -416,6 +450,7 @@
  * @method PartSearch          setHostTaxonPath()                                 Sets the current record's "host_taxon_path" value
  * @method PartSearch          setHostTaxonParentRef()                            Sets the current record's "host_taxon_parent_ref" value
  * @method PartSearch          setHostTaxonExtinct()                              Sets the current record's "host_taxon_extinct" value
+ * @method PartSearch          setHostSpecimenRef()                               Sets the current record's "host_specimen_ref" value
  * @method PartSearch          setIgRef()                                         Sets the current record's "ig_ref" value
  * @method PartSearch          setIgNum()                                         Sets the current record's "ig_num" value
  * @method PartSearch          setIgNumIndexed()                                  Sets the current record's "ig_num_indexed" value
@@ -454,6 +489,9 @@
  * @method PartSearch          setSubContainer()                                  Sets the current record's "sub_container" value
  * @method PartSearch          setPartCountMin()                                  Sets the current record's "part_count_min" value
  * @method PartSearch          setPartCountMax()                                  Sets the current record's "part_count_max" value
+ * @method PartSearch          setSpecimenStatus()                                Sets the current record's "specimen_status" value
+ * @method PartSearch          setComplete()                                      Sets the current record's "complete" value
+ * @method PartSearch          setSurnumerary()                                   Sets the current record's "surnumerary" value
  * @method PartSearch          setSpecimen()                                      Sets the current record's "Specimen" value
  * @method PartSearch          setSpecimenIndividual()                            Sets the current record's "SpecimenIndividual" value
  * @method PartSearch          setPartRelation()                                  Sets the current record's "PartRelation" value
@@ -482,6 +520,7 @@
  * @method PartSearch          setHostTaxon()                                     Sets the current record's "HostTaxon" value
  * @method PartSearch          setHostTaxonLevel()                                Sets the current record's "HostTaxonLevel" value
  * @method PartSearch          setHostTaxonParent()                               Sets the current record's "HostTaxonParent" value
+ * @method PartSearch          setHostSpecimen()                                  Sets the current record's "HostSpecimen" value
  * @method PartSearch          setIg()                                            Sets the current record's "Ig" value
  * 
  * @package    darwin
@@ -674,6 +713,12 @@ abstract class BasePartSearch extends sfDoctrineRecord
         $this->hasColumn('litho_status', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('litho_local', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('litho_color', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('litho_path', 'string', null, array(
              'type' => 'string',
              ));
@@ -704,6 +749,12 @@ abstract class BasePartSearch extends sfDoctrineRecord
              'type' => 'string',
              ));
         $this->hasColumn('chrono_status', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('chrono_local', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('chrono_color', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('chrono_path', 'string', null, array(
@@ -738,6 +789,12 @@ abstract class BasePartSearch extends sfDoctrineRecord
         $this->hasColumn('lithology_status', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('lithology_local', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('lithology_color', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('lithology_path', 'string', null, array(
              'type' => 'string',
              ));
@@ -768,6 +825,12 @@ abstract class BasePartSearch extends sfDoctrineRecord
              'type' => 'string',
              ));
         $this->hasColumn('mineral_status', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('mineral_local', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('mineral_color', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('mineral_path', 'string', null, array(
@@ -814,6 +877,9 @@ abstract class BasePartSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('host_taxon_extinct', 'boolean', null, array(
              'type' => 'boolean',
+             ));
+        $this->hasColumn('host_specimen_ref', 'integer', null, array(
+             'type' => 'integer',
              ));
         $this->hasColumn('ig_ref', 'integer', null, array(
              'type' => 'integer',
@@ -947,6 +1013,15 @@ abstract class BasePartSearch extends sfDoctrineRecord
         $this->hasColumn('part_count_max', 'integer', null, array(
              'type' => 'integer',
              ));
+        $this->hasColumn('specimen_status', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('complete', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('surnumerary', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
     }
 
     public function setUp()
@@ -1062,6 +1137,10 @@ abstract class BasePartSearch extends sfDoctrineRecord
 
         $this->hasOne('Taxonomy as HostTaxonParent', array(
              'local' => 'host_taxon_parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasOne('Specimens as HostSpecimen', array(
+             'local' => 'host_specimen_ref',
              'foreign' => 'id'));
 
         $this->hasOne('Igs as Ig', array(

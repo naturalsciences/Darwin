@@ -13,14 +13,21 @@
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
         </td>
-	<td rowspan="7" class="keyword_row">
-	      <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'chronostratigraphy','field_name' => 'chronostratigraphy_name')); ?>
-	</td>
+        <td rowspan="7" class="keyword_row">
+              <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'chronostratigraphy','field_name' => 'chronostratigraphy_name')); ?>
+        </td>
       </tr>
       <tr>
-	<th></th>
-	<td>
-	   <?php include_partial('catalogue/keywordsList');?>
+        <th></th>
+        <td>
+          <?php include_partial('catalogue/keywordsList');?>
+        </td>
+      </tr>
+      <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['local_naming']->renderError() ?>
+          <?php echo $form['local_naming'] ?>
         </td>
       </tr>
       <tr>
@@ -56,7 +63,14 @@
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
           <?php echo $form['parent_ref'] ?>
-	  <div class="warn_message ref_name button hidden" id="taxonomy_parent_ref_warning"><?php echo __('The parenty does not follow the possible upper level rule');?></div>
+          <div class="warn_message ref_name button hidden" id="taxonomy_parent_ref_warning"><?php echo __('The parenty does not follow the possible upper level rule');?></div>
+        </td>
+      </tr>
+      <tr>
+        <th><?php echo $form['color']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['color']->renderError() ?>
+          <?php echo $form['color'] ?>
         </td>
       </tr>
     </tbody>

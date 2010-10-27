@@ -21,6 +21,8 @@ abstract class BaseLithologyForm extends BaseFormDoctrine
       'name_order_by' => new sfWidgetFormTextarea(),
       'level_ref'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Level'), 'add_empty' => false)),
       'status'        => new sfWidgetFormTextarea(),
+      'local_naming'  => new sfWidgetFormInputCheckbox(),
+      'color'         => new sfWidgetFormTextarea(),
       'path'          => new sfWidgetFormTextarea(),
       'parent_ref'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
     ));
@@ -32,6 +34,8 @@ abstract class BaseLithologyForm extends BaseFormDoctrine
       'name_order_by' => new sfValidatorString(array('required' => false)),
       'level_ref'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Level'))),
       'status'        => new sfValidatorString(array('required' => false)),
+      'local_naming'  => new sfValidatorBoolean(array('required' => false)),
+      'color'         => new sfValidatorString(array('required' => false)),
       'path'          => new sfValidatorString(array('required' => false)),
       'parent_ref'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
     ));
