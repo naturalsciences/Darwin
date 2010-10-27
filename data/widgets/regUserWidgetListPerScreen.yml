@@ -397,12 +397,23 @@ sw15:
 sw16:
    col_num: 2
    category: specimen_widget
-   mandatory: false    
+   mandatory: false
    group_name: tool
    order_by: 6
    opened: false
    visible: false
    title_perso: Collecting tools
+   all_public: true
+
+sw17:
+   col_num: 2
+   category: specimen_widget
+   mandatory: false
+   group_name: refDonators
+   order_by: 7
+   opened: false
+   visible: false
+   title_perso: Donators or Sellers
    all_public: true
 
 spi1:

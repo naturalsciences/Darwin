@@ -242,7 +242,7 @@ MyWidgets:
         opened: true
         visible: true
         is_available: true
-        title_perso: Comments                            
+        title_perso: Comments
     u1ws19:
         User: u1
         col_num: 2
@@ -253,6 +253,16 @@ MyWidgets:
         visible: true
         is_available: true
         title_perso: Accompanying elements
+    u1ws20:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: refDonators
+        order_by: 11
+        opened: true
+        visible: true
+        is_available: true
+        title_perso: Donators or Sellers
     u1wtax0:
         User: u1
         col_num: 1
