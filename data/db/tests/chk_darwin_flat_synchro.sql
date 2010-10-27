@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(113);
+SELECT plan(115);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -248,6 +248,11 @@ SELECT ok(3 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000), 'and 3
 SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240275 AND part_ref = 240275), 'One per part');
 SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240275 AND part_ref = 240276), 'One per part');
 SELECT ok(1 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000 AND individual_ref = 240276 AND part_ref IS NULL), 'One with part null');
+
+SELECT diag('Test cascade delete of a specimen');
+
+SELECT lives_ok('DELETE FROM specimens WHERE id = 100000', 'Delete seems to work');
+SELECT ok (0 = (SELECT COUNT(*) FROM darwin_flat WHERE spec_ref = 100000), 'Effectively deleted');
 
 SELECT * FROM finish();
 ROLLBACK;

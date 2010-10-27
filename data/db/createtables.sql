@@ -1028,6 +1028,8 @@ create table template_classifications
         name_order_by varchar,
         level_ref integer not null,
         status varchar not null default 'valid',
+        local_naming boolean not null default false,
+        color varchar,
         path varchar not null default '/',
         parent_ref integer not null default 0
        );
@@ -1037,6 +1039,8 @@ comment on column template_classifications.name_indexed is 'TS Vector Indexed fo
 comment on column template_classifications.name_order_by is 'Indexed form of name field for ordering';
 comment on column template_classifications.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column template_classifications.status is 'Validitiy status: valid, invalid, in discussion';
+comment on column template_classifications.local_naming is 'Flag telling the appelation is local or internationally recognized';
+comment on column template_classifications.color is 'Hexadecimal value of color associated to the unit';
 comment on column template_classifications.path is 'Hierarchy path (/ for root)';
 comment on column template_classifications.parent_ref is 'Id of parent - id field from table itself';
 
@@ -2063,6 +2067,8 @@ create table darwin_flat
     litho_level_ref integer not null default 0,
     litho_level_name varchar,
     litho_status varchar,
+    litho_local boolean not null default false,
+    litho_color varchar,
     litho_path varchar,
     litho_parent_ref integer default 0,
     chrono_ref integer not null default 0,
@@ -2072,6 +2078,8 @@ create table darwin_flat
     chrono_level_ref integer not null default 0,
     chrono_level_name varchar,
     chrono_status varchar,
+    chrono_local boolean not null default false,
+    chrono_color varchar,
     chrono_path varchar,
     chrono_parent_ref integer default 0,
     lithology_ref integer not null default 0,
@@ -2081,6 +2089,8 @@ create table darwin_flat
     lithology_level_ref integer not null default 0,
     lithology_level_name varchar,
     lithology_status varchar,
+    lithology_local boolean not null default false,
+    lithology_color varchar,
     lithology_path varchar,
     lithology_parent_ref integer default 0,
     mineral_ref integer not null default 0,
@@ -2090,6 +2100,8 @@ create table darwin_flat
     mineral_level_ref integer not null default 0,
     mineral_level_name varchar,
     mineral_status varchar,
+    mineral_local boolean not null default false,
+    mineral_color varchar,
     mineral_path varchar,
     mineral_parent_ref integer default 0,
     host_taxon_ref integer not null default 0,
@@ -2103,6 +2115,7 @@ create table darwin_flat
     host_taxon_path varchar,
     host_taxon_parent_ref integer default 0,
     host_taxon_extinct boolean,
+    host_specimen_ref integer,
     ig_ref integer,
     ig_num varchar,
     ig_num_indexed varchar,
@@ -2141,6 +2154,9 @@ create table darwin_flat
     sub_container varchar,
     part_count_min integer,
     part_count_max integer,
+    specimen_status varchar,
+    complete boolean,
+    surnumerary boolean,
     CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id) ON DELETE CASCADE,
@@ -2168,6 +2184,7 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_host_taxon_ref FOREIGN KEY (host_taxon_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE SET DEFAULT,
+    CONSTRAINT fk_darwin_flat_host_specimen_ref FOREIGN KEY (host_specimen_ref) REFERENCES specimens (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL
 /*    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED,
     CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED*/
@@ -2225,6 +2242,8 @@ comment on column darwin_flat.chrono_name_order_by is 'Chrono unit referenced na
 comment on column darwin_flat.chrono_level_ref is 'Chrono unit referenced level';
 comment on column darwin_flat.chrono_level_name is 'Chrono unit referenced level name';
 comment on column darwin_flat.chrono_status is 'Chrono unit referenced status: valid, invalid,...';
+comment on column darwin_flat.chrono_local is 'Flag telling if the chrono unit name is a local appelation or not';
+comment on column darwin_flat.chrono_color is 'Hexadecimal value of color associated to the chrono unit';
 comment on column darwin_flat.chrono_path is 'Chrono unit referenced hierarchical path';
 comment on column darwin_flat.chrono_parent_ref is 'Chrono unit referenced parenty';
 comment on column darwin_flat.litho_ref is 'Litho unit referenced';
@@ -2234,6 +2253,8 @@ comment on column darwin_flat.litho_name_order_by is 'Litho unit referenced name
 comment on column darwin_flat.litho_level_ref is 'Litho unit referenced level';
 comment on column darwin_flat.litho_level_name is 'Litho unit referenced level name';
 comment on column darwin_flat.litho_status is 'Litho unit referenced status: valid, invalid,...';
+comment on column darwin_flat.chrono_local is 'Flag telling if the litho unit name is a local appelation or not';
+comment on column darwin_flat.chrono_color is 'Hexadecimal value of color associated to the litho unit';
 comment on column darwin_flat.litho_path is 'Litho unit referenced hierarchical path';
 comment on column darwin_flat.litho_parent_ref is 'Litho unit referenced parenty';
 comment on column darwin_flat.lithology_ref is 'Lithology unit referenced';
@@ -2243,6 +2264,8 @@ comment on column darwin_flat.lithology_name_order_by is 'Lithology unit referen
 comment on column darwin_flat.lithology_level_ref is 'Lithology unit referenced level';
 comment on column darwin_flat.lithology_level_name is 'Lithology unit referenced level name';
 comment on column darwin_flat.lithology_status is 'Lithology unit referenced status: valid, invalid,...';
+comment on column darwin_flat.chrono_local is 'Flag telling if the lithology unit name is a local appelation or not';
+comment on column darwin_flat.chrono_color is 'Hexadecimal value of color associated to the lithology unit';
 comment on column darwin_flat.lithology_path is 'Lithology unit referenced hierarchical path';
 comment on column darwin_flat.lithology_parent_ref is 'Lithology unit referenced parenty';
 comment on column darwin_flat.mineral_ref is 'Mineral unit referenced';
@@ -2252,6 +2275,8 @@ comment on column darwin_flat.mineral_name_order_by is 'Mineral unit referenced 
 comment on column darwin_flat.mineral_level_ref is 'Mineral unit referenced level';
 comment on column darwin_flat.mineral_level_name is 'Mineral unit referenced level name';
 comment on column darwin_flat.mineral_status is 'Mineral unit referenced status: valid, invalid,...';
+comment on column darwin_flat.chrono_local is 'Flag telling if the mineral unit name is a local appelation or not';
+comment on column darwin_flat.chrono_color is 'Hexadecimal value of color associated to the mineral unit';
 comment on column darwin_flat.mineral_path is 'Mineral unit referenced hierarchical path';
 comment on column darwin_flat.mineral_parent_ref is 'Mineral unit referenced parenty';
 comment on column darwin_flat.host_taxon_ref is 'Host Taxon unit referenced';
@@ -2302,3 +2327,6 @@ comment on column darwin_flat.sub_container_storage is 'Sub-Container storage: d
 comment on column darwin_flat.sub_container is 'Sub container code';
 comment on column darwin_flat.part_count_min is 'Minimum number of parts stored';
 comment on column darwin_flat.part_count_max is 'Maximum number of parts stored';
+comment on column darwin_flat.specimen_status is 'Tells the status of part concerned: lost, damaged, good shape,...';
+comment on column darwin_flat.complete is 'Flag telling if the specimen is complete or not';
+comment on column darwin_flat.surnumerary is 'Tells if this part/individual has been added after first inventory';

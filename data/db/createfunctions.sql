@@ -6983,11 +6983,15 @@ BEGIN
     UPDATE darwin_flat
     SET (chrono_name, chrono_name_indexed, chrono_name_order_by,
          chrono_level_ref, chrono_level_name,
-         chrono_status, chrono_path, chrono_parent_ref
+         chrono_status, 
+         chrono_local, chrono_color,
+         chrono_path, chrono_parent_ref
         ) =
         (NEW.name, NEW.name_indexed, NEW.name_order_by,
          NEW.level_ref, subq.level_name,
-         NEW.status, NEW.path, NEW.parent_ref
+         NEW.status, 
+         NEW.local_naming, NEW.color,
+         NEW.path, NEW.parent_ref
         )
         FROM
         (SELECT level_name
@@ -6999,11 +7003,15 @@ BEGIN
     UPDATE darwin_flat
     SET (litho_name, litho_name_indexed, litho_name_order_by,
          litho_level_ref, litho_level_name,
-         litho_status, litho_path, litho_parent_ref
+         litho_status, 
+         litho_local, litho_color,
+         litho_path, litho_parent_ref
         ) =
         (NEW.name, NEW.name_indexed, NEW.name_order_by,
          NEW.level_ref, subq.level_name,
-         NEW.status, NEW.path, NEW.parent_ref
+         NEW.status, 
+         NEW.local_naming, NEW.color,
+         NEW.path, NEW.parent_ref
         )
         FROM
         (SELECT level_name
@@ -7015,11 +7023,15 @@ BEGIN
     UPDATE darwin_flat
     SET (lithology_name, lithology_name_indexed, lithology_name_order_by,
          lithology_level_ref, lithology_level_name,
-         lithology_status, lithology_path, lithology_parent_ref
+         lithology_status, 
+         lithology_local, lithology_color,
+         lithology_path, lithology_parent_ref
         ) =
         (NEW.name, NEW.name_indexed, NEW.name_order_by,
          NEW.level_ref, subq.level_name,
-         NEW.status, NEW.path, NEW.parent_ref
+         NEW.status, 
+         NEW.local_naming, NEW.color,
+         NEW.path, NEW.parent_ref
         )
         FROM
         (SELECT level_name
@@ -7031,11 +7043,15 @@ BEGIN
     UPDATE darwin_flat
     SET (mineral_name, mineral_name_indexed, mineral_name_order_by,
          mineral_level_ref, mineral_level_name,
-         mineral_status, mineral_path, mineral_parent_ref
+         mineral_status, 
+         mineral_local, mineral_color,
+         mineral_path, mineral_parent_ref
         ) =
         (NEW.name, NEW.name_indexed, NEW.name_order_by,
          NEW.level_ref, subq.level_name,
-         NEW.status, NEW.path, NEW.parent_ref
+         NEW.status, 
+         NEW.local_naming, NEW.color,
+         NEW.path, NEW.parent_ref
         )
         FROM
         (SELECT level_name
@@ -7059,15 +7075,20 @@ BEGIN
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_local, chrono_color,
          chrono_path,chrono_parent_ref,
          litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_local, litho_color,
          litho_path,litho_parent_ref,
          lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_local, lithology_color,
          lithology_path,lithology_parent_ref,
          mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_local, mineral_color,
          mineral_path,mineral_parent_ref,
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         host_specimen_ref,
          acquisition_category,acquisition_date_mask,acquisition_date
         )=
         (NEW.category,
@@ -7086,19 +7107,24 @@ BEGIN
          subq.taxon_path, subq.taxon_parent_ref, subq.taxon_extinct,
          NEW.chrono_ref, subq.chrono_name, subq.chrono_name_indexed, subq.chrono_name_order_by,
          subq.chrono_level_ref, subq.chrono_level_level_name, subq.chrono_status,
+         subq.chrono_local, subq.chrono_color,
          subq.chrono_path, subq.chrono_parent_ref,
          NEW.litho_ref, subq.litho_name, subq.litho_name_indexed, subq.litho_name_order_by,
          subq.litho_level_ref, subq.litho_level_level_name, subq.litho_status,
+         subq.litho_local, subq.litho_color,
          subq.litho_path, subq.litho_parent_ref,
          NEW.lithology_ref, subq.lithology_name, subq.lithology_name_indexed, subq.lithology_name_order_by,
          subq.lithology_level_ref, subq.lithology_level_level_name, subq.lithology_status,
+         subq.lithology_local, subq.lithology_color,
          subq.lithology_path, subq.lithology_parent_ref,
          NEW.mineral_ref, subq.mineral_name, subq.mineral_name_indexed, subq.mineral_name_order_by,
          subq.mineral_level_ref, subq.mineral_level_level_name, subq.mineral_status,
+         subq.mineral_local, subq.mineral_color,
          subq.mineral_path, subq.mineral_parent_ref,
          NEW.host_taxon_ref, NEW.host_relationship, subq.host_taxon_name, subq.host_taxon_name_indexed, subq.host_taxon_name_order_by,
          subq.host_taxon_level_ref, subq.host_taxon_level_level_name, subq.host_taxon_status,
          subq.host_taxon_path, subq.host_taxon_parent_ref, subq.host_taxon_extinct,
+         NEW.host_specimen_ref,
          NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date
         )
         FROM
@@ -7117,15 +7143,19 @@ BEGIN
                 taxon.path taxon_path, taxon.parent_ref taxon_parent_ref, taxon.extinct taxon_extinct,
                 chrono.name chrono_name, chrono.name_indexed chrono_name_indexed, chrono.name_order_by chrono_name_order_by,
                 chrono.level_ref chrono_level_ref, chrono_level.level_name chrono_level_level_name, chrono.status chrono_status,
+                chrono.local_naming chrono_local, chrono.color chrono_color,
                 chrono.path chrono_path, chrono.parent_ref chrono_parent_ref,
                 litho.name litho_name, litho.name_indexed litho_name_indexed, litho.name_order_by litho_name_order_by,
                 litho.level_ref litho_level_ref, litho_level.level_name litho_level_level_name, litho.status litho_status,
+                litho.local_naming litho_local, litho.color litho_color,
                 litho.path litho_path, litho.parent_ref litho_parent_ref,
                 lithology.name lithology_name, lithology.name_indexed lithology_name_indexed, lithology.name_order_by lithology_name_order_by,
                 lithology.level_ref lithology_level_ref, lithology_level.level_name lithology_level_level_name, lithology.status lithology_status,
+                lithology.local_naming lithology_local, lithology.color lithology_color,
                 lithology.path lithology_path, lithology.parent_ref lithology_parent_ref,
                 mineral.name mineral_name, mineral.name_indexed mineral_name_indexed, mineral.name_order_by mineral_name_order_by,
                 mineral.level_ref mineral_level_ref, mineral_level.level_name mineral_level_level_name, mineral.status mineral_status,
+                mineral.local_naming mineral_local, mineral.color mineral_color,
                 mineral.path mineral_path, mineral.parent_ref mineral_parent_ref,
                 host_taxon.name host_taxon_name, host_taxon.name_indexed host_taxon_name_indexed, host_taxon.name_order_by host_taxon_name_order_by,
                 host_taxon.level_ref host_taxon_level_ref, host_taxon_level.level_name host_taxon_level_level_name, host_taxon.status host_taxon_status,
@@ -7169,15 +7199,20 @@ BEGIN
      taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
      taxon_path,taxon_parent_ref,taxon_extinct,
      chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+     chrono_local,chrono_color,
      chrono_path,chrono_parent_ref,
      litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+     litho_local,litho_color,
      litho_path,litho_parent_ref,
      lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+     lithology_local,lithology_color,
      lithology_path,lithology_parent_ref,
      mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+     mineral_local,mineral_color,
      mineral_path,mineral_parent_ref,
      host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
      host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+     host_specimen_ref,
      acquisition_category,acquisition_date_mask,acquisition_date
     )
     (SELECT NEW.id, NEW.category,
@@ -7194,15 +7229,20 @@ BEGIN
             NEW.taxon_ref, taxon.name, taxon.name_indexed, taxon.name_order_by, taxon.level_ref, taxon_level.level_name, taxon.status,
             taxon.path, taxon.parent_ref, taxon.extinct,
             NEW.chrono_ref, chrono.name, chrono.name_indexed, chrono.name_order_by, chrono.level_ref, chrono_level.level_name, chrono.status,
+            chrono.local_naming, chrono.color,
             chrono.path, chrono.parent_ref,
             NEW.litho_ref, litho.name, litho.name_indexed, litho.name_order_by, litho.level_ref, litho_level.level_name, litho.status,
+            litho.local_naming,litho.color,
             litho.path, litho.parent_ref,
             NEW.lithology_ref, lithology.name, lithology.name_indexed, lithology.name_order_by, lithology.level_ref, lithology_level.level_name, lithology.status,
+            lithology.local_naming,lithology.color,
             lithology.path, lithology.parent_ref,
             NEW.mineral_ref, mineral.name, mineral.name_indexed, mineral.name_order_by, mineral.level_ref, mineral_level.level_name, mineral.status,
+            mineral.local_naming,mineral.color,
             mineral.path, mineral.parent_ref,
             NEW.host_taxon_ref, NEW.host_relationship, host_taxon.name, host_taxon.name_indexed, host_taxon.name_order_by, host_taxon.level_ref, host_taxon_level.level_name, host_taxon.status,
             host_taxon.path, host_taxon.parent_ref, host_taxon.extinct,
+            NEW.host_specimen_ref,
             NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date
      FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
                             INNER JOIN users peo ON coll.main_manager_ref = peo.id
@@ -7298,15 +7338,20 @@ BEGIN
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_local,chrono_color,
          chrono_path,chrono_parent_ref,
          litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_local,litho_color,
          litho_path,litho_parent_ref,
          lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_local,lithology_color,
          lithology_path,lithology_parent_ref,
          mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_local,mineral_color,
          mineral_path,mineral_parent_ref,
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         host_specimen_ref,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          with_individuals,
@@ -7331,15 +7376,20 @@ BEGIN
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_local,chrono_color,
          chrono_path,chrono_parent_ref,
          litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_local,litho_color,
          litho_path,litho_parent_ref,
          lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_local,lithology_color,
          lithology_path,lithology_parent_ref,
          mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_local,mineral_color,
          mineral_path,mineral_parent_ref,
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         host_specimen_ref,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          true,
@@ -7392,15 +7442,20 @@ BEGIN
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+            chrono_local,chrono_color,
             chrono_path,chrono_parent_ref,
             litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+            litho_local,litho_color,
             litho_path,litho_parent_ref,
             lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+            lithology_local,lithology_color,
             lithology_path,lithology_parent_ref,
             mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+            mineral_local,mineral_color,
             mineral_path,mineral_parent_ref,
             host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
             host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+            host_specimen_ref,
             acquisition_category,acquisition_date_mask,acquisition_date,
             ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date
           )
@@ -7419,15 +7474,20 @@ BEGIN
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+            chrono_local,chrono_color,
             chrono_path,chrono_parent_ref,
             litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+            litho_local,litho_color,
             litho_path,litho_parent_ref,
             lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+            lithology_local,lithology_color,
             lithology_path,lithology_parent_ref,
             mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+            mineral_local,mineral_color,
             mineral_path,mineral_parent_ref,
             host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
             host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+            host_specimen_ref,
             acquisition_category,acquisition_date_mask,acquisition_date,
             ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date
             FROM darwin_flat
@@ -7451,15 +7511,20 @@ BEGIN
               taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
               taxon_path,taxon_parent_ref,taxon_extinct,
               chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+              chrono_local,chrono_color,
               chrono_path,chrono_parent_ref,
               litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+              litho_local,litho_color,
               litho_path,litho_parent_ref,
               lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+              lithology_local,lithology_color,
               lithology_path,lithology_parent_ref,
               mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+              mineral_local,mineral_color,
               mineral_path,mineral_parent_ref,
               host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
               host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+              host_specimen_ref,
               acquisition_category,acquisition_date_mask,acquisition_date,
               ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date
             )=
@@ -7477,15 +7542,20 @@ BEGIN
               subq.taxon_ref,subq.taxon_name,subq.taxon_name_indexed,subq.taxon_name_order_by,subq.taxon_level_ref,subq.taxon_level_name,subq.taxon_status,
               subq.taxon_path,subq.taxon_parent_ref,subq.taxon_extinct,
               subq.chrono_ref,subq.chrono_name,subq.chrono_name_indexed,subq.chrono_name_order_by,subq.chrono_level_ref,subq.chrono_level_name,subq.chrono_status,
+              subq.chrono_local,subq.chrono_color,
               subq.chrono_path,subq.chrono_parent_ref,
               subq.litho_ref,subq.litho_name,subq.litho_name_indexed,subq.litho_name_order_by,subq.litho_level_ref,subq.litho_level_name,subq.litho_status,
+              subq.litho_local,subq.litho_color,
               subq.litho_path,subq.litho_parent_ref,
               subq.lithology_ref,subq.lithology_name,subq.lithology_name_indexed,subq.lithology_name_order_by,subq.lithology_level_ref,subq.lithology_level_name,subq.lithology_status,
+              subq.lithology_local,subq.lithology_color,
               subq.lithology_path,subq.lithology_parent_ref,
               subq.mineral_ref,subq.mineral_name,subq.mineral_name_indexed,subq.mineral_name_order_by,subq.mineral_level_ref,subq.mineral_level_name,subq.mineral_status,
+              subq.mineral_local,subq.mineral_color,
               subq.mineral_path,subq.mineral_parent_ref,
               subq.host_taxon_ref,subq.host_relationship,subq.host_taxon_name,subq.host_taxon_name_indexed,subq.host_taxon_name_order_by,subq.host_taxon_level_ref,subq.host_taxon_level_name,subq.host_taxon_status,
               subq.host_taxon_path,subq.host_taxon_parent_ref,subq.host_taxon_extinct,
+              subq.host_specimen_ref,
               subq.acquisition_category,subq.acquisition_date_mask,subq.acquisition_date,
               subq.ig_ref,subq.ig_num,subq.ig_num_indexed,subq.ig_date_mask,subq.ig_date
             )
@@ -7505,15 +7575,20 @@ BEGIN
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+            chrono_local,chrono_color,
             chrono_path,chrono_parent_ref,
             litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+            litho_local,litho_color,
             litho_path,litho_parent_ref,
             lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+            lithology_local,lithology_color,
             lithology_path,lithology_parent_ref,
             mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+            mineral_local,mineral_color,
             mineral_path,mineral_parent_ref,
             host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
             host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+            host_specimen_ref,
             acquisition_category,acquisition_date_mask,acquisition_date,
             ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date
             FROM darwin_flat
@@ -7559,7 +7634,8 @@ BEGIN
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, sub_container,
-         part_count_min, part_count_max
+         part_count_min, part_count_max,
+         specimen_status, "complete", surnumerary
         )
         =
         (true,
@@ -7567,7 +7643,8 @@ BEGIN
          NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
          NEW.container_type, NEW.container_storage, NEW.container,
          NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
-         NEW.specimen_part_count_min, NEW.specimen_part_count_max
+         NEW.specimen_part_count_min, NEW.specimen_part_count_max,
+         NEW.specimen_status, NEW.complete, NEW.surnumerary
         )
         WHERE individual_ref = NEW.specimen_individual_ref;
       ELSE
@@ -7587,15 +7664,20 @@ BEGIN
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_local,chrono_color,
          chrono_path,chrono_parent_ref,
          litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_local,litho_color,
          litho_path,litho_parent_ref,
          lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_local,lithology_color,
          lithology_path,lithology_parent_ref,
          mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_local,mineral_color,
          mineral_path,mineral_parent_ref,
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         host_specimen_ref,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          with_types, with_individuals,
@@ -7609,7 +7691,8 @@ BEGIN
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, sub_container,
-         part_count_min, part_count_max
+         part_count_min, part_count_max,
+         specimen_status, "complete", surnumerary
         )
         (SELECT
          spec_ref,category,
@@ -7626,15 +7709,20 @@ BEGIN
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+         chrono_local,chrono_color,
          chrono_path,chrono_parent_ref,
          litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+         litho_local,litho_color,
          litho_path,litho_parent_ref,
          lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+         lithology_local,lithology_color,
          lithology_path,lithology_parent_ref,
          mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+         mineral_local,mineral_color,
          mineral_path,mineral_parent_ref,
          host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
          host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+         host_specimen_ref,
          acquisition_category,acquisition_date_mask,acquisition_date,
          ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
          with_types, with_individuals,
@@ -7648,7 +7736,8 @@ BEGIN
          NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
          NEW.container_type, NEW.container_storage, NEW.container,
          NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
-         NEW.specimen_part_count_min, NEW.specimen_part_count_max
+         NEW.specimen_part_count_min, NEW.specimen_part_count_max,
+         NEW.specimen_status, NEW.complete, NEW.surnumerary
          FROM darwin_flat
          WHERE individual_ref = NEW.specimen_individual_ref
          LIMIT 1
@@ -7662,14 +7751,16 @@ BEGIN
        building, "floor", room, "row", shelf,
        container_type, container_storage, "container",
        sub_container_type, sub_container_storage, sub_container,
-       part_count_min, part_count_max
+       part_count_min, part_count_max,
+       specimen_status, "complete", surnumerary
       )
       =
       (NEW.id, NEW.specimen_part, NEW.specimen_status,
        NEW.building, NEW.floor, NEW.room, NEW.row, NEW.shelf,
        NEW.container_type, NEW.container_storage, NEW.container,
        NEW.sub_container_type, NEW.sub_container_storage, NEW.sub_container,
-       NEW.specimen_part_count_min, NEW.specimen_part_count_max
+       NEW.specimen_part_count_min, NEW.specimen_part_count_max,
+       NEW.specimen_status, NEW.complete, NEW.surnumerary
       )
       WHERE part_ref = NEW.id;
       /*Check if the part is moved from one individual to an other*/
@@ -7692,15 +7783,20 @@ BEGIN
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+            chrono_local,chrono_color,
             chrono_path,chrono_parent_ref,
             litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+            litho_local,litho_color,
             litho_path,litho_parent_ref,
             lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+            lithology_local,lithology_color,
             lithology_path,lithology_parent_ref,
             mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+            mineral_local,mineral_color,
             mineral_path,mineral_parent_ref,
             host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
             host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+            host_specimen_ref,
             acquisition_category,acquisition_date_mask,acquisition_date,
             ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
             with_types, with_individuals,
@@ -7725,15 +7821,20 @@ BEGIN
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+            chrono_local,chrono_color,
             chrono_path,chrono_parent_ref,
             litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+            litho_local,litho_color,
             litho_path,litho_parent_ref,
             lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+            lithology_local,lithology_color,
             lithology_path,lithology_parent_ref,
             mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+            mineral_local,mineral_color,
             mineral_path,mineral_parent_ref,
             host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
             host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+            host_specimen_ref,
             acquisition_category,acquisition_date_mask,acquisition_date,
             ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
             with_types, with_individuals,
@@ -7763,15 +7864,20 @@ BEGIN
               taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
               taxon_path,taxon_parent_ref,taxon_extinct,
               chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+              chrono_local,chrono_color,
               chrono_path,chrono_parent_ref,
               litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+              litho_local,litho_color,
               litho_path,litho_parent_ref,
               lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+              lithology_local,lithology_color,
               lithology_path,lithology_parent_ref,
               mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+              mineral_local,mineral_color,
               mineral_path,mineral_parent_ref,
               host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
               host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+              host_specimen_ref,
               acquisition_category,acquisition_date_mask,acquisition_date,
               ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
               with_types, with_individuals,
@@ -7795,15 +7901,20 @@ BEGIN
               subq.taxon_ref,subq.taxon_name,subq.taxon_name_indexed,subq.taxon_name_order_by,subq.taxon_level_ref,subq.taxon_level_name,subq.taxon_status,
               subq.taxon_path,subq.taxon_parent_ref,subq.taxon_extinct,
               subq.chrono_ref,subq.chrono_name,subq.chrono_name_indexed,subq.chrono_name_order_by,subq.chrono_level_ref,subq.chrono_level_name,subq.chrono_status,
+              subq.chrono_local,subq.chrono_color,
               subq.chrono_path,subq.chrono_parent_ref,
               subq.litho_ref,subq.litho_name,subq.litho_name_indexed,subq.litho_name_order_by,subq.litho_level_ref,subq.litho_level_name,subq.litho_status,
+              subq.litho_local,subq.litho_color,
               subq.litho_path,subq.litho_parent_ref,
               subq.lithology_ref,subq.lithology_name,subq.lithology_name_indexed,subq.lithology_name_order_by,subq.lithology_level_ref,subq.lithology_level_name,subq.lithology_status,
+              subq.lithology_local,subq.lithology_color,
               subq.lithology_path,subq.lithology_parent_ref,
               subq.mineral_ref,subq.mineral_name,subq.mineral_name_indexed,subq.mineral_name_order_by,subq.mineral_level_ref,subq.mineral_level_name,subq.mineral_status,
+              subq.mineral_local,subq.mineral_color,
               subq.mineral_path,subq.mineral_parent_ref,
               subq.host_taxon_ref,subq.host_relationship,subq.host_taxon_name,subq.host_taxon_name_indexed,subq.host_taxon_name_order_by,subq.host_taxon_level_ref,subq.host_taxon_level_name,subq.host_taxon_status,
               subq.host_taxon_path,subq.host_taxon_parent_ref,subq.host_taxon_extinct,
+              subq.host_specimen_ref,
               subq.acquisition_category,subq.acquisition_date_mask,subq.acquisition_date,
               subq.ig_ref,subq.ig_num,subq.ig_num_indexed,subq.ig_date_mask,subq.ig_date,
               subq.with_types, subq.with_individuals,
@@ -7829,15 +7940,20 @@ BEGIN
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
+            chrono_local,chrono_color,
             chrono_path,chrono_parent_ref,
             litho_ref,litho_name,litho_name_indexed,litho_name_order_by,litho_level_ref,litho_level_name,litho_status,
+            litho_local,litho_color,
             litho_path,litho_parent_ref,
             lithology_ref,lithology_name,lithology_name_indexed,lithology_name_order_by,lithology_level_ref,lithology_level_name,lithology_status,
+            lithology_local,lithology_color,
             lithology_path,lithology_parent_ref,
             mineral_ref,mineral_name,mineral_name_indexed,mineral_name_order_by,mineral_level_ref,mineral_level_name,mineral_status,
+            mineral_local,mineral_color,
             mineral_path,mineral_parent_ref,
             host_taxon_ref,host_relationship,host_taxon_name,host_taxon_name_indexed,host_taxon_name_order_by,host_taxon_level_ref,host_taxon_level_name,host_taxon_status,
             host_taxon_path,host_taxon_parent_ref,host_taxon_extinct,
+            host_specimen_ref,
             acquisition_category,acquisition_date_mask,acquisition_date,
             ig_ref, ig_num, ig_num_indexed, ig_date_mask, ig_date,
             with_types, with_individuals,
@@ -7901,7 +8017,9 @@ BEGIN
       SELECT COUNT(*) INTO indCount FROM darwin_flat WHERE spec_ref = OLD.specimen_ref AND individual_ref != OLD.id;
       IF indCount = 0 THEN
         SELECT COUNT(*) INTO indCount FROM darwin_flat WHERE spec_ref = OLD.specimen_ref AND individual_ref = OLD.id;
-        DELETE FROM darwin_flat WHERE ctid = ANY (ARRAY(SELECT ctid FROM darwin_flat WHERE individual_ref = OLD.id LIMIT (indCount - 1)));
+        IF indCount > 1 THEN
+          DELETE FROM darwin_flat WHERE ctid = ANY (ARRAY(SELECT ctid FROM darwin_flat WHERE individual_ref = OLD.id LIMIT (indCount - 1)));
+        END IF;
         UPDATE darwin_flat
         SET
         (individual_ref,
@@ -7959,7 +8077,8 @@ BEGIN
          building, "floor", room, "row", shelf,
          container_type, container_storage, "container",
          sub_container_type, sub_container_storage, "sub_container",
-         part_count_min, part_count_max
+         part_count_min, part_count_max,
+         specimen_status,"complete",surnumerary
         )
         =
         (DEFAULT,
@@ -7967,7 +8086,8 @@ BEGIN
          DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT, DEFAULT,
          DEFAULT, DEFAULT, DEFAULT,
-         DEFAULT, DEFAULT
+         DEFAULT, DEFAULT,
+         DEFAULT, DEFAULT, DEFAULT
         )
         WHERE part_ref = OLD.id;
 
@@ -8264,8 +8384,6 @@ BEGIN
   IF booContinue THEN
     IF NEW.parent_ref IS NOT NULL THEN
       SELECT institution_ref INTO institutionRef FROM collections WHERE id = NEW.parent_ref;
-/*      RAISE WARNING 'Institution ref of parent is: %', institutionRef;
-      RAISE WARNING 'New institution ref is: %', NEW.institution_ref;*/
       IF institutionRef != NEW.institution_ref THEN
         RAISE EXCEPTION 'You tried to insert or update a collection with an other institution than the one given for the parent collection';
       END IF;
