@@ -8408,3 +8408,30 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+/*When unpromoting a user we have to remove the non availble columns from preferences*/
+CREATE OR REPLACE FUNCTION fct_unpromotion_impact_prefs() RETURNS TRIGGER
+language plpgSQL
+AS
+$$
+BEGIN
+  IF NEW.db_user_type IS DISTINCT FROM OLD.db_user_type AND NEW.db_user_type = 1 THEN
+    UPDATE preferences
+    SET pref_value = subq.fields_available
+    FROM (select array_to_string(array(select fields_list 
+                                       from regexp_split_to_table((SELECT pref_value 
+                                                                   FROM preferences 
+                                                                   WHERE user_ref = NEW.id 
+                                                                     AND pref_key = 'search_cols_part' 
+                                                                   LIMIT 1
+                                                                  ), E'\\|') as fields_list 
+                                       where fields_list not in ('building', 'row')
+                                      ),'|'
+                                ) as fields_available
+         ) subq
+    WHERE user_ref = NEW.id
+      AND pref_key = 'search_cols_part';
+  END IF;
+  RETURN NEW;
+END;
+$$;

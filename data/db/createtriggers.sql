@@ -643,3 +643,7 @@ CREATE TRIGGER trg_update_specimen_parts_darwin_flat AFTER INSERT OR UPDATE
 CREATE TRIGGER trg_delete_specimen_parts_darwin_flat AFTER DELETE
         ON specimen_parts FOR EACH ROW
         EXECUTE PROCEDURE fct_delete_darwin_flat_ind_part();
+
+CREATE TRIGGER trg_unpromotion_remove_cols AFTER UPDATE
+        ON users FOR EACH ROW
+        EXECUTE PROCEDURE fct_unpromotion_impact_prefs();

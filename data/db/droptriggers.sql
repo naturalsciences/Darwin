@@ -320,3 +320,6 @@ DROP TRIGGER trg_nbr_in_relation
 
 DROP TRIGGER trg_nbr_in_synonym
         ON classification_synonymies;
+
+DROP TRIGGER trg_unpromotion_remove_cols
+        ON users;
