@@ -18,7 +18,8 @@ class partwidgetViewComponents extends sfComponents
 
   public function executeParent()
   {
-    $this->defineForm();
+    $this->part = Doctrine::getTable('SpecimenParts')->findExcept($this->eid);
+    $this->Codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts',$this->part->getParentRef()) ;     
   }
 
   public function executePartCount()

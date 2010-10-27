@@ -13,11 +13,13 @@
   <tr>
     <td><?php echo $code->getCodeCategory();?></td>
     <td>
+      <?php if($code->getCodeCategory() == "main") echo "<b>" ; ?>    
       <?php echo $code->getCodePrefix();?>
       <?php echo $code->getCodePrefixSeparator();?>
       <?php echo $code->getCode();?>
       <?php echo $code->getCodeSuffixSeparator();?>
       <?php echo $code->getCodeSuffix();?>
+      <?php if($code->getCodeCategory() == "main") echo "</b>" ; ?>      
     </td>
   </tr>
   <?php endforeach ; ?>
