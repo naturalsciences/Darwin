@@ -1622,7 +1622,7 @@ img.info:hover
   margin-left:2em;
 }
 
-#catalogue_people_screen .search_box
+#catalogue_people_screen .search_box, .search_catalogue_people_both
 {
   margin-top: 0.3em;
 }

@@ -1,1 +1,1 @@
-<?php include_partial('searchBoth');?>
+<?php include_partial('searchBoth',array('is_choose'=>true));?>

@@ -23,6 +23,9 @@ class peopleActions extends DarwinActions
     $this->form = new PeopleFormFilter();
   }
 
+  public function executeSearchBoth(sfWebRequest $request)
+  {}
+
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));

@@ -1,35 +1,53 @@
-<h2><?php echo __('Search');?> :</h2>
-<span class="both_search_people"><?php echo __('People');?> : <input name="type_search" type="radio" value="people" /></span>
-<span class="both_search_institutions"><?php echo __('Institution');?> <input name="type_search" type="radio" value="institution" /></span>
 <input type="hidden" name="only_role" id="only_role" value="0" />
+<ul class="tab_choice">
+  <li class="both_search_people"><?php echo __('People');?></li>
+  <li class="both_search_institutions"><?php echo __('Institution');?></li>
+</ul>
+<div class="search_box search_catalogue_people_both">
+  
+</div>
+<!--<span class="both_search_people"><?php echo __('People');?> : <input name="type_search" type="radio" value="people" /></span>
+<span class="both_search_institutions"><?php echo __('Institution');?> <input name="type_search" type="radio" value="institution" /></span>-->
 
 <script language="javascript">
 
-  $(document).ready(function () {
-    $('input[name="type_search"]').attr("checked", false); 
-    $('input[name="type_search"]').change(function()
-    {
-      $(".search_both_item").html('Searching');
+$(document).ready(function () {
+    $('.search_box').slideDown();
 
-      people_search_url = '<?php echo url_for('people/choose?with_js=0' . ($is_choose?'&is_choose=1' : '') );?>';
-      institution_search_url = '<?php echo url_for('institution/choose?with_js=0' . ($is_choose?'&is_choose=1' : '') );?>';
+  $('.both_search_people').not('.activated').click( function(event)
+  {
+    event.preventDefault();
+    $('.result_choose').die('click');
+    $(".search_box").html('<img src="/images/loader.gif" />');
+    $('.tab_choice .activated').removeClass('activated');
+    $('.both_search_people').addClass('activated');
 
-      if( $('input[name="type_search"]:checked').val() == 'people' )
-        search_url = people_search_url;
-      else
-        search_url = institution_search_url
-
-      $.ajax({
-        type: "POST",
-        url: search_url + 'only_role='+$("#only_role").val(),
-        success: function(html){
-          $('.search_both_item').html(html);
-        }});
-        return false;
+    $.ajax({
+      type: "POST",
+      url: '<?php echo url_for('people/choose?with_js=1' . ($is_choose?'&is_choose=1' : '') );?>',
+      success: function(html){
+        $('.search_box').html(html);
+      }
     });
   });
 
+  $('.both_search_institutions').not('.activated').click( function(event)
+  {
+    event.preventDefault();
+    $('.result_choose').die('click');
+    $(".search_box").html('<img src="/images/loader.gif" />');
+    $('.tab_choice .activated').removeClass('activated');
+
+    $('.both_search_institutions').addClass('activated');
+
+    $.ajax({
+      type: "POST",
+      url: '<?php echo url_for('institution/choose?with_js=1' . ($is_choose?'&is_choose=1' : '') );?>',
+      success: function(html){
+        $('.search_box').html(html);
+      }
+    });
+  });
+});
+
 </script> 
-<div class="search_both_item">
-  
-</div>
