@@ -38,16 +38,21 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
        'box_title' => $this->getI18N()->__('Choose Parent'),
        'button_is_hidden' => true,
      ));
+    $this->widgetSchema['local_naming'] = new sfWidgetFormInputCheckbox();
+    $this->widgetSchema['color'] = new sfWidgetFormInput();
+    $this->widgetSchema['color']->setAttributes(array('class'=>'lsmall_size'));
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
                                          'lower_bound' => 'Low. bound (My)',
                                          'upper_bound' => 'Up. bound (My)',
-                                         'parent_ref' => 'Parent'
+                                         'parent_ref' => 'Parent',
+                                         'local_naming' => 'Local ?'
                                         )
                                   );
     $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'min' => -4600));
     $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'max' => 1));
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
+    $this->validatorSchema['color'] = new sfValidatorString(array('required' => false));
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('lower_bound', 
                                                                           '<=', 
                                                                           'upper_bound', 
