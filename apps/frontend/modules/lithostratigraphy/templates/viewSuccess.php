@@ -31,6 +31,12 @@ $(document).ready(function ()
         </td>
       </tr>
       <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo ($litho->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$litho->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$litho->getLocalNaming()));?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['level_ref']->renderLabel() ?></th>
         <td>
           <?php echo $litho->Level->getLevelName() ?>

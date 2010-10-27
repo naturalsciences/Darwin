@@ -31,6 +31,12 @@ $(document).ready(function ()
         </td>
       </tr>
       <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo ($litho->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$litho->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$litho->getLocalNaming()));?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['level_ref']->renderLabel() ?></th>
         <td>
           <?php echo $litho->Level->getLevelName() ?>
@@ -45,7 +51,7 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['parent_ref']->renderLabel() ?></th>
         <td>
-          <?php if ($litho->Parent->getName() != "-") : ?>        
+          <?php if ($litho->Parent->getName() != "-") : ?>
             <?php echo link_to(__($litho->Parent->getName()), 'lithology/view?id='.$litho->Parent->getId(), array('id' => $litho->Parent->getId())) ?>
             <?php echo image_tag('info.png',"title=info class=info");?>
             <div class="tree">

@@ -31,6 +31,12 @@ $(document).ready(function ()
         </td>
       </tr>
       <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo ($chrono->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$chrono->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$chrono->getLocalNaming()));?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['level_ref']->renderLabel() ?></th>
         <td>
           <?php echo $chrono->Level->getLevelName() ?>

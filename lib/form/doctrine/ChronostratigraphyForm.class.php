@@ -11,7 +11,7 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
 {
   public function configure()
   {
-    unset($this['path']);
+    unset($this['path'], $this['color']);
 
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden(array('default'=>'chronostratigraphy'));
     $this->widgetSchema['name'] = new sfWidgetFormInput();
@@ -39,20 +39,20 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
        'button_is_hidden' => true,
      ));
     $this->widgetSchema['local_naming'] = new sfWidgetFormInputCheckbox();
-    $this->widgetSchema['color'] = new sfWidgetFormInput();
-    $this->widgetSchema['color']->setAttributes(array('class'=>'lsmall_size'));
+/*    $this->widgetSchema['color'] = new widgetFormColorPicker();
+    $this->widgetSchema['color']->setAttributes(array('class'=>'lsmall_size'));*/
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
                                          'lower_bound' => 'Low. bound (My)',
                                          'upper_bound' => 'Up. bound (My)',
                                          'parent_ref' => 'Parent',
-                                         'local_naming' => 'Local ?'
+                                         'local_naming' => 'Local unit ?'
                                         )
                                   );
     $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'min' => -4600));
     $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'max' => 1));
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
-    $this->validatorSchema['color'] = new sfValidatorString(array('required' => false));
+/*    $this->validatorSchema['color'] = new ColorPickerValidatorSchema(array('required' => false));*/
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('lower_bound', 
                                                                           '<=', 
                                                                           'upper_bound', 

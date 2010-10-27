@@ -43,6 +43,12 @@ $(document).ready(function ()
         </td>
       </tr>      
       <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo ($mineral->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$mineral->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$mineral->getLocalNaming()));?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['level_ref']->renderLabel() ?></th>
         <td>
           <?php echo $mineral->Level->getLevelName() ?>
