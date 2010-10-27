@@ -136,7 +136,7 @@ class savesearchActions extends sfActions
 
     $saved_search->setUserRef($this->getUser()->getId()) ;
 
-    $this->form = new MySavedSearchesForm($saved_search,array('type'=>$request->getParameter('type')));
+    $this->form = new MySavedSearchesForm($saved_search,array('type'=>$request->getParameter('type'), 'is_reg_user' => $this->getUser()->isA(Users::REGISTERED_USER)));
 
     if($request->getParameter('my_saved_searches') != '')
     {

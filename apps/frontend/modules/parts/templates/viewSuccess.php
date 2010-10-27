@@ -8,8 +8,9 @@
   <div class="tabs_view">
 		<?php echo link_to(__('View Specimen'), 'specimen/view?id='.$specimen->getSpecRef(), array('class'=>'enabled', 'id' => 'tab_0'));?>  
     <?php echo link_to(__('Individual overview'), 'individuals/overview?spec_id='.$specimen->getSpecRef().'&view=true', array('id'=>'tab_1', 'class'=> 'enabled')); ?>
-		<?php echo link_to(__('Part overview'), 'parts/overview?id='.$specimen->getIndividualRef()."&view=true", array('class'=>'enabled', 'id' => 'tab_2'));?>
-    <a class="enabled selected" id="tab_3"> &lt; <?php echo sprintf(__('Part %d'),$specimen->getPartRef());?> &gt; </a>		
+    <?php echo link_to(__('Individual'.$specimen->getIndividualRef()), 'individuals/view?id='.$specimen->getIndividualRef(), array('id'=>'tab_2', 'class'=> 'enabled')); ?>
+		<?php echo link_to(__('Part overview'), 'parts/overview?id='.$specimen->getIndividualRef()."&view=true", array('class'=>'enabled', 'id' => 'tab_3'));?>
+    <a class="enabled selected" id="tab_4"> &lt; <?php echo sprintf(__('Part %d'),$specimen->getPartRef());?> &gt; </a>		
   </div>
 
   <div class="panel_view encod_screen edition" id="intro">

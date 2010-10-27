@@ -24,25 +24,25 @@
                 <?php if($orderBy=='ig_date') echo $orderSign ?>
               </a>
             </th>
-            <th colspan="2">&nbsp;</th>
+            <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach($igss as $igs):?>
             <tr class="rid_<?php echo $igs->getId(); ?>">
               <td><?php echo $igs->getIgNum();?></td>
-              <td class="datesNum"><?php echo $igs->getIgDateMasked(ESC_RAW);?></td>
-              <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>              
+              <td class="datesNum"><?php echo $igs->getIgDateMasked(ESC_RAW);?></td>          
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
-                  <?php echo link_to(image_tag('edit.png',array('title'=>'Edit IGS')),'igs/edit?id='.$igs->getId());?>
-                  <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate IGS')),'igs/new?duplicate_id='.$igs->getId());?>
+                  <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>                    
+                    <?php echo link_to(image_tag('edit.png',array('title'=>'Edit IGS')),'igs/edit?id='.$igs->getId());?>
+                    <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate IGS')),'igs/new?duplicate_id='.$igs->getId());?>
+                  <?php endif ;?>
+                  <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'igs/view?id='.$igs->getId());?>
                 <?php else:?>
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
-              </td>
-              <?php endif ; ?>
-                <td><?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'igs/view?id='.$igs->getId());?></td>
+              </td>              
             </tr>
           <?php endforeach;?>
         </tbody>

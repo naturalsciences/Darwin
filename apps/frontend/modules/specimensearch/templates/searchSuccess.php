@@ -26,6 +26,7 @@
           <?php include_partial('searchSuccess',
                                 array('specimensearch' => $specimensearch,
                                       'codes' => $codes,
+                                      'part_codes' => $part_codes,
                                       'form' => $form, 
                                       'orderBy' => $orderBy,
                                       's_url' => $s_url,

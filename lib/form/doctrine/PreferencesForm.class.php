@@ -14,7 +14,7 @@ class PreferencesForm extends sfForm
   {
     $pref_keys = array('search_cols_specimen', 'search_cols_individual', 'search_cols_part', 'board_search_rec_pp', 'board_spec_rec_pp');
     $this->db_keys = Doctrine::getTable('Preferences')->getAllPreferences($this->options['user']->getId(), $pref_keys);
-
+    $is_reg_user = $this->options['user']->isA(Users::REGISTERED_USER) ;
     $choices = Doctrine::getTable('MySavedSearches')->getAllFields('specimen') ;
 
     $this->widgetSchema['search_cols_specimen'] = new sfWidgetFormChoice(array(
@@ -49,7 +49,7 @@ class PreferencesForm extends sfForm
     $this->validatorSchema['search_cols_individual'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
 
 ///------------ PARTS
-    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('part') ;
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('part',$is_reg_user) ;
 
     $this->widgetSchema['search_cols_part'] = new sfWidgetFormChoice(array(
       'choices' => $choices, 

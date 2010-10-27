@@ -56,7 +56,7 @@
 	</td>
   <?php if($view): ?>	
     <td colspan="3">
-	    <?php echo link_to(image_tag('info.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
+	    <?php echo link_to(image_tag('blue_eyel.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
 	  </td>
   <?php else : ?>	    
 	  <td>

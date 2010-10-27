@@ -47,7 +47,7 @@
             </a>
           </th>
         <?php endif;?>
-        <th colspan="2"></th>
+        <th></th>
 	   </tr>
       </thead>
       <tbody>
@@ -87,17 +87,17 @@
                 <span><?php echo $item->getUpperBound();?></span>
               </td>
             <?php endif;?>
-            <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
-                <?php if(! $is_choose):?>
-                    <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),$searchForm->getValue('table').'/edit?id='.$item->getId());?>
-                    <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),$searchForm->getValue('table').'/new?duplicate_id='.$item->getId());?>
-                <?php else:?>
-                  <div class="result_choose"><?php echo __('Choose');?></div>
-                <?php endif;?>
+              <?php if(! $is_choose):?>
+                <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>
+                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),$searchForm->getValue('table').'/edit?id='.$item->getId());?>
+                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),$searchForm->getValue('table').'/new?duplicate_id='.$item->getId());?>
+                <?php endif ; ?>
+                <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$searchForm->getValue('table').'/view?id='.$item->getId());?>                
+              <?php else:?>
+                <div class="result_choose"><?php echo __('Choose');?></div>
+              <?php endif;?>
             </td>
-            <?php endif ; ?>
-              <td><?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$searchForm->getValue('table').'/view?id='.$item->getId());?></td>
           </tr>
         <?php endforeach;?>
       </tbody>

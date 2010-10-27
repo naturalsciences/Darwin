@@ -55,7 +55,7 @@ class MySavedSearchesTable extends DarwinTable
     return $q->andWhere('subject = ?',$source)->execute();
   }
 
-  public function getAllFields($source)
+  public function getAllFields($source, $is_reg_user = false)
   {
     $part_col = array();
     $individual_col = array();
@@ -88,22 +88,35 @@ class MySavedSearchesTable extends DarwinTable
 
     if($source == 'part')
     {
-      $part_col = array(
-        'part',
-        'part_status',
-        'building',
-        'floor',
-        'room',
-        'row',
-        'shelf',
-        'container',
-        'container_type',
-        'container_storage',
-        'sub_container',
-        'sub_container_type',
-        'sub_container_storage',
-        'part_count',
-      );
+      if($is_reg_user)
+      {
+        $part_col = array(
+          'part',
+          'part_status',
+          'part_code',
+          'part_count',
+        );      
+      }
+      else
+      {
+        $part_col = array(
+          'part',
+          'part_status',
+          'building',
+          'floor',
+          'room',
+          'row',
+          'shelf',
+          'container',
+          'container_type',
+          'container_storage',
+          'sub_container',
+          'sub_container_type',
+          'sub_container_storage',
+          'part_code',
+          'part_count',
+        );
+      }
     }
     $columns = $specimen_col + $individual_col +  $part_col;
     return array_combine($columns, $columns);

@@ -74,10 +74,10 @@
 
               <?php include_partial('result_content_specimen', array('item_ref'=>$itemRef, 'source'=>$source,'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
-                <?php include_partial('result_content_individual', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+                <?php include_partial('result_content_individual', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <?php if($source == 'part'):?>
-                <?php include_partial('result_content_part', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+                <?php include_partial('result_content_part', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $part_codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <td rowspan="2">
               <?php if($sf_user->isAtLeast(Users::ADMIN) || $specimen->getHasEncodingRights()) : ?>
@@ -99,7 +99,7 @@
                   default:           $v_link = 'parts/view?id='.$specimen->getPartRef();break;
                   };?>
 
-                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),$v_link);?>
+                  <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>
               <?php endif ; ?>
               </td>
             </tr>

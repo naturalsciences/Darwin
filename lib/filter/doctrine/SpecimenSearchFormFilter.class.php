@@ -677,7 +677,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function doBuildQuery(array $values)
   {
-    $fields = SpecimenSearchTable::getFieldsByType();
+    $fields = SpecimenSearchTable::getFieldsByType($this->options['user']->getDbUserType());
 
     if($values['what_searched'] == 'specimen')
     {

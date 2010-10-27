@@ -262,7 +262,7 @@ sps18:
    title_perso: Type of search  
    all_public: true
 
-sps18:
+sps19:
    col_num: 2
    category: specimensearch_widget
    group_name: type

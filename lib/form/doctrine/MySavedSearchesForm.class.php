@@ -33,7 +33,7 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     if($this->getObject()->getName() == "")
       $this->widgetSchema['name']->setDefault($default_name) ;
 
-    $choices = Doctrine::getTable('MySavedSearches')->getAllFields($this->object->getSubject()) ;
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields($this->object->getSubject(),$this->options['is_reg_user']) ;
     $this->widgetSchema['visible_fields_in_result'] = new sfWidgetFormChoice(array(
 	  'choices' => $choices, 
 	  'expanded' => true,
