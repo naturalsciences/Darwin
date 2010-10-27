@@ -1,1 +1,1 @@
-<?php echo get_component('cataloguewidget', 'properties', array('table' => 'specimen_individuals', 'eid' => $eid, 'view' => true));?>
+<?php echo get_component('cataloguewidgetview', 'properties', array('table' => 'specimen_individuals', 'eid' => $eid));?>

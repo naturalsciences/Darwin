@@ -83,11 +83,14 @@
               <?php if($sf_user->isAtLeast(Users::ADMIN) || $specimen->getHasEncodingRights()) : ?>
                 <?php switch($source){
                   case 'specimen':   $e_link = 'specimen/edit?id='.$specimen->getSpecRef();
+                                     $v_link = 'specimen/edit?id='.$specimen->getSpecRef();                  
                                      $d_link = 'specimen/new?duplicate_id='.$specimen->getSpecRef();break;
                   case 'individual': $e_link = 'individuals/edit?id='.$specimen->getIndividualRef();
+                                     $v_link = 'individuals/view?id='.$specimen->getIndividualRef();
                                      $d_link = 'individuals/edit?spec_id='.$specimen->getSpecRef().'&duplicate_id='.$specimen->getIndividualRef();break;
                   default:           $e_link = 'parts/edit?id='.$specimen->getPartRef();
-                                     $d_link = 'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef();break;
+                                     $v_link = 'parts/view?id='.$specimen->getPartRef();break;
+                                     $d_link = 'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef();break;              
                   };?>
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), $e_link);?>
                   <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))), $d_link, array('class' => 'duplicate_link'));?>
@@ -98,9 +101,8 @@
                   case 'individual': $v_link = 'individuals/view?id='.$specimen->getIndividualRef();break;
                   default:           $v_link = 'parts/view?id='.$specimen->getPartRef();break;
                   };?>
-
-                  <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>
               <?php endif ; ?>
+              <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>              
               </td>
             </tr>
 
