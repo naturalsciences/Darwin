@@ -36,8 +36,7 @@ class individualsActions extends DarwinActions
     {
       $this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id'));
 
-      if(! $this->specimen) // PROTECT
-        $this->specimen = new Specimens();
+      $this->forward404Unless($this->specimen);
 
       $this->spec_individual->Specimens = $this->specimen;
     }
@@ -57,7 +56,7 @@ class individualsActions extends DarwinActions
     if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
                                                                                                       $request->getParameter('id'), 
                                                                                                       $this->getUser()->getId())))
-      $this->redirect("specimen/view?id=".$request->getParameter('id')) ;  
+      $this->redirect("individuals/view?id=".$request->getParameter('id')) ;  
 
     $this->individual = $this->getSpecimenIndividualsForm($request);  
 
@@ -89,8 +88,8 @@ class individualsActions extends DarwinActions
             $ident = $this->individual->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
             $ident->addIdentifiers($key2,$val2->getPeopleRef(),0);        
             $this->individual->reembedNewIdentification($ident, $key);    
-          }         
-        }                 
+          }
+        }
       }
       else
       {
