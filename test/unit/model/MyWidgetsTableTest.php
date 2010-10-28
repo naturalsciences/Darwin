@@ -22,7 +22,7 @@ $t->is(count(Doctrine::getTable('MyWidgets')
         ->getWidgets('board_widget')),4,'Get all board widget');
 $t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($userEvil)
-        ->getWidgets('specimen_widget')),19,'Get all specimen widget');
+        ->getWidgets('specimen_widget')),20,'Get all specimen widget');
 
 $t->comment('->changeWidgetStatus()');
 
