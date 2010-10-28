@@ -66,8 +66,9 @@
     $("#clear_identification_<?php echo $row_num;?>").click( function()
     {
       parent = $(this).closest('tbody');
-      nvalue='';
-      $(parent).find('input[id$=\"_value_defined\"]').val(nvalue);
+
+      $(parent).find('input[id$=\"_value_defined\"]').val('');
+      $(parent).find('select.to_date').val('');
       $(parent).hide();
       reOrderIdent();
       visibles = $('table#identifications tbody.spec_ident_data:visible').size();
