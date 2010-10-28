@@ -84,6 +84,12 @@ class specimensearchwidgetComponents extends sfComponents
   {
     $this->defineForm();
   }
+  
+  public function executeRefIgs()
+  {
+    $this->defineForm();
+  }
+  
 
   public function executeCodes()
   {

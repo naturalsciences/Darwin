@@ -267,12 +267,23 @@ sps19:
    category: specimensearch_widget
    group_name: type
    mandatory: false
-   order_by: 8
+   order_by: 9
    opened: true
    visible: true
    title_perso: Type  
    all_public: true  
 
+sps20:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: refIgs
+   mandatory: false
+   order_by: 10
+   opened: true
+   visible: true
+   title_perso: Igs  
+   all_public: true  
+   
 sw1:
    col_num: 1
    category: specimen_widget

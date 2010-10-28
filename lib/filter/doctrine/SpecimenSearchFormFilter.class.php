@@ -17,7 +17,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $this->useFields(array('building','floor','room','row','shelf','gtu_code','gtu_from_date','gtu_to_date',
         'taxon_name', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
         'chrono_level_name', 'lithology_name', 'lithology_level_ref', 'lithology_level_name', 'mineral_name', 'mineral_level_ref',
-        'mineral_level_name'));
+        'mineral_level_name','ig_num'));
 
     $this->addPagerItems();
 
@@ -57,6 +57,49 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => 'All'
       ));
+    $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
+    $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));
+    $maxDate->setStart(false);
+    $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
+    $dateUpperBound = new FuzzyDateTime(sfConfig::get('app_dateUpperBound'));
+    $this->widgetSchema['ig_num'] = new sfWidgetFormInputText();
+    $this->widgetSchema['ig_from_date'] = new widgetFormJQueryFuzzyDate($this->getDateItemOptions(),
+                                                                     array('class' => 'from_date')
+                                                                    );
+    $this->widgetSchema['ig_to_date'] = new widgetFormJQueryFuzzyDate($this->getDateItemOptions(),
+                                                                   array('class' => 'to_date')
+                                                                  );
+    $this->widgetSchema->setLabels(array('ig_from_date' => 'Between',
+                                         'ig_to_date' => 'and',
+                                        )
+                                  );
+    $this->widgetSchema['ig_num']->setAttributes(array('class'=>'small_size'));
+    $this->validatorSchema['ig_num'] = new sfValidatorString(array('required' => false, 'trim' => true));
+    $this->validatorSchema['ig_from_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                       'from_date' => true,
+                                                                       'min' => $minDate,
+                                                                       'max' => $maxDate, 
+                                                                       'empty_value' => $dateLowerBound,
+                                                                      ),
+                                                                 array('invalid' => 'Date provided is not valid',)
+                                                                );
+    $this->validatorSchema['ig_to_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                     'from_date' => false,
+                                                                     'min' => $minDate,
+                                                                     'max' => $maxDate,
+                                                                     'empty_value' => $dateUpperBound,
+                                                                    ),
+                                                               array('invalid' => 'Date provided is not valid',)
+                                                              );
+    $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('ig_from_date', 
+                                                                          '<=', 
+                                                                          'ig_to_date', 
+                                                                          array('throw_global_error' => true), 
+                                                                          array('invalid'=>'The "begin" date cannot be above the "end" date.')
+                                                                         )
+                                            );
+
+
     $this->widgetSchema['col_fields'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['collection_ref'] = new sfWidgetCollectionList(array('choices' => array()));
     $this->widgetSchema['collection_ref']->addOption('public_only',false);
@@ -412,6 +455,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     return $query ;
   }
+  
+  public function addIgNumColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+     if ($values != ""):
+       $query->andWhere("ig_num_indexed like concat(fullToIndex(?), '%') ", $values);
+     endif;
+     return $query;
+  }  
 
   public function addStageColumnQuery($query, $field, $val)
   {
@@ -738,6 +789,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['mineral_name'],null,'mineral_name_indexed');
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
+    $this->addDateFromToColumnQuery($query, array('ig_date'), $values['ig_from_date'], $values['ig_to_date']);    
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }

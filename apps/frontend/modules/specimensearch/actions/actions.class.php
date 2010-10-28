@@ -174,8 +174,12 @@ class specimensearchActions extends DarwinActions
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
           $spec_list = array();
+          $part_list = array() ;            
           foreach($this->specimensearch as $key=>$specimen)
+          {
             $spec_list[] = $specimen->getSpecRef() ;
+            $part_list[] = $specimen->getPartRef() ;          
+          }
           $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;
           $this->codes = array();
           foreach($codes_collection as $code)
@@ -184,11 +188,9 @@ class specimensearchActions extends DarwinActions
               $this->codes[$code->getRecordId()] = array();
             $this->codes[$code->getRecordId()][] = $code;
           }
-          $this->part_codes = array();   
-          $part_list = array() ;       
+          $this->part_codes = array();        
           if($this->form->getValue('what_searched') == 'part')
           {
-            $part_list[] = $specimen->getPartRef() ;          
             $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts',$part_list) ;
             foreach($codes_collection as $code)
             {
@@ -223,7 +225,7 @@ class specimensearchActions extends DarwinActions
   */
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
-    $flds = array('category','collection','taxon','type','gtu','codes','chrono',
+    $flds = array('category','collection','taxon','type','gtu','codes','chrono','ig',
               'litho','lithologic','mineral','expedition','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
               'sub_container_type' , 'sub_container_storage', 'part_count','part_codes');
@@ -345,6 +347,9 @@ class specimensearchActions extends DarwinActions
       'chrono' => array(
         'chrono_name_order_by',
         $this->getI18N()->__('Chronostratigraphic unit'),),
+      'ig' => array(
+        'ig_num_order_by',
+        $this->getI18N()->__('Ig unit'),),
       'litho' => array(
         'litho_name_order_by',
         $this->getI18N()->__('Lithostratigraphic unit'),),

@@ -220,3 +220,8 @@
         <a href="<?php echo url_for('expedition/edit?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
       <?php endif ; ?>
     </td>
+    <td  class="col_ig">
+      <?php if($specimen->getIgNum() > 0) : ?>
+        <a href="<?php echo url_for('collection/edit?id='.$specimen->getIgRef());?>"><?php echo $specimen->getIgNum();?></a>
+      <?php endif ; ?>
+    </td>    

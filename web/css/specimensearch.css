@@ -109,6 +109,11 @@
   margin-left:0.05em;
 }
 
+.specimensearch_form input:focus,.specimensearch_form textarea:focus
+{
+  border:1px solid #5BAABD;
+}
+
 /* Style for choose column menu */
 
 img#column_display_expand
