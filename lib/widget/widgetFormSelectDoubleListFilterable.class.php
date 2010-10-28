@@ -107,6 +107,9 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
                                                      );
         });
         sfDoubleList.move('unassociated_%id%', '%id%');
+        // Set titles of options
+        set_options_title($('#unassociated_%id%'));
+        set_options_title($('#%id%'));
         return false;
       });
       
@@ -128,6 +131,9 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
                                                                                jQuery('#filter_%id%').val())
                                                                               )
                                                                  );
+        // Set titles of options
+        set_options_title($('#unassociated_%id%'));
+        set_options_title($('#%id%'));
         return false;
       });
       
@@ -187,6 +193,10 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
         }
         return false;
       });
+      
+      // Set titles of options
+      set_options_title($('#unassociated_%id%'));
+      set_options_title($('#%id%'));
     });
 
   </script>
