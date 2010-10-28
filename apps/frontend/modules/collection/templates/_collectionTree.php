@@ -46,7 +46,7 @@ $(document).ready(function () {
             <?php endif;?>
         <?php endif;?>
         <?php if($col_item->getIsPublic() || $col_item->getTypeInCol() > 0 || $sf_user->isA(Users::ADMIN)): ?>
-          <li class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
+          <li data-edit="" class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
           <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
           <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
           <span><?php echo $col_item->getName();?>
