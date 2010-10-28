@@ -8414,6 +8414,8 @@ CREATE OR REPLACE FUNCTION fct_unpromotion_impact_prefs() RETURNS TRIGGER
 language plpgSQL
 AS
 $$
+DECLARE
+  saved_search_row RECORD;
 BEGIN
   IF NEW.db_user_type IS DISTINCT FROM OLD.db_user_type AND NEW.db_user_type = 1 THEN
     UPDATE preferences
@@ -8424,13 +8426,24 @@ BEGIN
                                                                    WHERE user_ref = NEW.id 
                                                                      AND pref_key = 'search_cols_part' 
                                                                    LIMIT 1
-                                                                  ), E'\\|') as fields_list 
-                                       where fields_list not in ('building', 'row')
+                                                                  ), E'\\|') as fields_list
+                                       where fields_list not in ('building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type', 'container_storage', 'sub_container', 'sub_container_type', 'sub_container_storage')
                                       ),'|'
                                 ) as fields_available
          ) subq
     WHERE user_ref = NEW.id
       AND pref_key = 'search_cols_part';
+    FOR saved_search_row IN SELECT id, visible_fields_in_result FROM my_saved_searches WHERE user_ref = NEW.id AND subject = 'part' LOOP
+      UPDATE my_saved_searches
+      SET visible_fields_in_result = subq.fields_available
+      FROM (select array_to_string(array(select fields_list
+                                         from regexp_split_to_table(saved_search_row.visible_fields_in_result, E'\\|') as fields_list 
+                                         where fields_list not in ('building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type', 'container_storage', 'sub_container', 'sub_container_type', 'sub_container_storage')
+                                        ),'|'
+                                  ) as fields_available
+          ) subq
+      WHERE id = saved_search_row.id;
+    END LOOP;
   END IF;
   RETURN NEW;
 END;
