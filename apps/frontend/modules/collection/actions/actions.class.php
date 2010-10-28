@@ -42,6 +42,14 @@ class collectionActions extends DarwinActions
     }
   }
 
+  public function executeExtdinfo(sfWebRequest $request)
+  {
+    $this->manager = Doctrine::getTable('Users')->getManagerWithId($request->getParameter('id'));
+    $this->forward404Unless($this->manager,'No such item');
+
+    $this->coms = Doctrine::getTable('UsersComm')->fetchByUser($this->manager->getId());
+  }
+
   public function executeDeleteSpecCodes(sfWebRequest $request)
   {
     if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();

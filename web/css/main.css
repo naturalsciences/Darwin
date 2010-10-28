@@ -116,6 +116,20 @@ h1
   margin-bottom: 1em;
 }
 
+.col_extd_info h2
+{
+  color:#3390a1;
+  margin-bottom: 0.5em;
+}
+
+.col_extd_info p
+{
+  margin:1em;
+}
+.col_extd_info
+{
+  min-width: 200px;
+}
 .edition h1, .edition h2 {
   color:#C1CF56;
 }
