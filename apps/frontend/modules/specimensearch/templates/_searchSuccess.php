@@ -88,7 +88,7 @@
                                      $v_link = 'individuals/view?id='.$specimen->getIndividualRef();
                                      $d_link = 'individuals/edit?spec_id='.$specimen->getSpecRef().'&duplicate_id='.$specimen->getIndividualRef();break;
                   default:           $e_link = 'parts/edit?id='.$specimen->getPartRef();
-                                     $v_link = 'parts/view?id='.$specimen->getPartRef();break;
+                                     $v_link = 'parts/view?id='.$specimen->getPartRef();
                                      $d_link = 'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef();break;              
                   };?>
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), $e_link);?>
