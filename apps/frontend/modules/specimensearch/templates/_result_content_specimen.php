@@ -1,3 +1,4 @@
+    <?php $action = $sf_user->isAtLeast(Users::ENCODER)?'edit':'view' ; ?>
     <td class="col_category">
       <?php if($specimen->getCategory() == 'physical' || $specimen->getCategory() == 'mixed' ):?>
         <?php echo image_tag('sp_in.png', array('alt' => __('Physical'), 'title'=> __('Physical')));?>
@@ -12,7 +13,11 @@
     <td  class="col_collection">
       <?php if($specimen->getCollectionRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=collection_".$item_ref."_info");?>
-        <a href="<?php echo url_for('collection/edit?id='.$specimen->getCollectionRef());?>"><?php echo $specimen->getCollectionName();?></a>
+        <?php if ($action == 'edit') : ?>        
+          <a href="<?php echo url_for('collection/edit?id='.$specimen->getCollectionRef());?>"><?php echo $specimen->getCollectionName();?></a>
+        <?php else : ?>
+          <?php echo $specimen->getCollectionName();?>
+        <?php endif ; ?>
         <div id="collection_<?php echo $item_ref;?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#collection_<?php echo $item_ref;?>_info').click(function() 
@@ -32,7 +37,7 @@
     <td class="col_taxon">
       <?php if($specimen->getTaxonRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=taxon_".$item_ref."_info");?>
-        <a href="<?php echo url_for('taxonomy/edit?id='.$specimen->getTaxonRef());?>"><?php echo $specimen->getTaxonName();?></a>
+        <a href="<?php echo url_for('taxonomy/'.$action.'?id='.$specimen->getTaxonRef());?>"><?php echo $specimen->getTaxonName();?></a>
         <div id="taxon_<?php echo $item_ref;?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#taxon_<?php echo $item_ref;?>_info').click(function() 
@@ -84,7 +89,11 @@
               });
             });
           </script>
-          <a href="<?php echo url_for('gtu/edit?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
+          <?php if ($action == 'edit') : ?>              
+            <a href="<?php echo url_for('gtu/'.$action.'?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
+          <?php else : ?>
+            <?php echo $specimen->getGtuCode();?>
+          <?php endif ; ?>
         <?php else:?>
           <?php echo image_tag('info-bw.png',"title=info class=info id=gtu_ctr_".$item_ref."_info");?>
         <?php endif;?>
@@ -137,7 +146,7 @@
     <td  class="col_chrono">
       <?php if($specimen->getChronoRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=chrono_".$item_ref."_info");?>
-        <a href="<?php echo url_for('chronostratigraphy/edit?id='.$specimen->getChronoRef());?>"><?php echo $specimen->getChronoName();?></a>
+        <a href="<?php echo url_for('chronostratigraphy/'.$action.'?id='.$specimen->getChronoRef());?>"><?php echo $specimen->getChronoName();?></a>
         <div id="chrono_<?php echo $item_ref;?>_tree" class="tree"></div>
         <script type="text/javascript">
     
@@ -158,7 +167,7 @@
     <td  class="col_litho">
       <?php if($specimen->getLithoRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=litho_".$item_ref."_info");?>
-        <a href="<?php echo url_for('lithostratigraphy/edit?id='.$specimen->getLithoRef());?>"><?php echo $specimen->getLithoName();?></a>
+        <a href="<?php echo url_for('lithostratigraphy/'.$action.'?id='.$specimen->getLithoRef());?>"><?php echo $specimen->getLithoName();?></a>
         <div id="litho_<?php echo $item_ref;?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#litho_<?php echo $item_ref;?>_info').click(function() 
@@ -178,7 +187,7 @@
     <td class="col_lithologic">
       <?php if($specimen->getLithologyRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=lithologic_".$item_ref."_info");?>
-        <a href="<?php echo url_for('lithology/edit?id='.$specimen->getLithologyRef());?>"><?php echo $specimen->getLithologyName();?></a>
+        <a href="<?php echo url_for('lithology/'.$action.'?id='.$specimen->getLithologyRef());?>"><?php echo $specimen->getLithologyName();?></a>
         <div id="lithologic_<?php echo $item_ref;?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#lithologic_<?php echo $item_ref;?>_info').click(function() 
@@ -198,7 +207,7 @@
     <td class="col_mineral">
       <?php if($specimen->getMineralRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=mineral_".$item_ref."_info");?>                
-        <a href="<?php echo url_for('mineralogy/edit?id='.$specimen->getMineralRef());?>"><?php echo $specimen->getMineralName();?></a>
+        <a href="<?php echo url_for('mineralogy/'.$action.'?id='.$specimen->getMineralRef());?>"><?php echo $specimen->getMineralName();?></a>
         <div id="mineral_<?php echo $item_ref;?>_tree" class="tree"></div>
         <script type="text/javascript">
             $('#mineral_<?php echo $item_ref;?>_info').click(function() 
@@ -217,11 +226,6 @@
     </td>
     <td class="col_expedition">
       <?php if($specimen->getExpeditionRef() > 0) : ?>
-        <a href="<?php echo url_for('expedition/edit?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
+        <a href="<?php echo url_for('expedition/'.$action.'?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
       <?php endif ; ?>
     </td>
-    <td  class="col_ig">
-      <?php if($specimen->getIgNum() > 0) : ?>
-        <a href="<?php echo url_for('collection/edit?id='.$specimen->getIgRef());?>"><?php echo $specimen->getIgNum();?></a>
-      <?php endif ; ?>
-    </td>    

@@ -31,11 +31,9 @@
 	  <?php echo __('No Names');?>
 	<?php endif;?>
       </td>
-      <td class="widget_row_delete">
-      <?php if(!$read_only) : ?>       
+      <td class="widget_row_delete">      
         <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=class_vernacular_names&id='.$vernacular_name->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
         </a>
-      <?php endif ; ?>
       </td>
     </tr>
     <?php endforeach;?>

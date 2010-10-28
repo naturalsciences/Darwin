@@ -26,25 +26,17 @@
 	      <tr class="peo_id_<?php echo $person->getId();?>" id="id_<?php echo $person->getId();?>">
 		<td class="handle"><?php echo image_tag('drag.png');?></td>
 		<td>
-		  <?php if(!$read_only) : ?>
 		    <a class="link_catalogue" title="<?php echo __('Edit People');?>" href="<?php echo url_for('cataloguepeople/people?table='.$table.'&rid='.$eid.'&id='.$person->getId()); ?>">
 		      <?php echo $person->People->getFormatedName();?>
-		    </a>
-		  <?php else : ?>
-<a class="link_catalogue" title="<?php echo __('View People');?>" href="<?php echo url_for('people/view?id='.$person->getId()); ?>">		  
-          <?php echo $person->People->getFormatedName();?>	  
-        </a>
-		  <?php endif ; ?>		  
+		    </a>	  
 		</td>
 		<td class="catalogue_people_sub_type">
 		   <?php echo $person->getPeopleSubType();?>
 		</td>
-		<td class="widget_row_delete">
-    <?php if(!$read_only) : ?>		
+		<td class="widget_row_delete">	
 		  <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_people&id='.$person->getId());?>" title="<?php echo __('Are you sure ?') ?>">
 		    <?php echo image_tag('remove.png'); ?>
-		  </a>
-		<?php endif ?>		  
+		  </a>  
 		</td>
 	      </tr>
 	    <?php endforeach;?>
