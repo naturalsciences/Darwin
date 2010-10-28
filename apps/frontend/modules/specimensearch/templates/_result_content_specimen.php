@@ -229,3 +229,8 @@
         <a href="<?php echo url_for('expedition/'.$action.'?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
       <?php endif ; ?>
     </td>
+    <td  class="col_ig">
+      <?php if($specimen->getIgRef() > 0) : ?>       
+          <a href="<?php echo url_for('igs/'.$action.'?id='.$specimen->getIgRef());?>"><?php echo $specimen->getIgNum();?></a>
+      <?php endif ;?>
+    </td>    
