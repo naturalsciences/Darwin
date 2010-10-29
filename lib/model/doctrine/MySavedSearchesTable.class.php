@@ -60,30 +60,30 @@ class MySavedSearchesTable extends DarwinTable
     $part_col = array();
     $individual_col = array();
     $specimen_col = array(
-      'category'=>'category',
-      'collection'=>'collection',
-      'taxon'=>'taxon',
-      'type'=>'type',
-      'gtu'=>'gtu',
-      'codes'=>'codes',
-      'chrono'=>'chrono',
-      'ig'=>'ig',
-      'litho'=>'litho',
-      'lithologic'=>'lithologic',
-      'expedition'=>'expedition',
-      'mineral'=>'mineral',
-      'count'=>'count'
+      'category'=>'Category',
+      'collection'=>'Collection',
+      'taxon'=>'Taxon',
+      'type'=>'Type',
+      'gtu'=>'Sampling Location',
+      'codes'=>'Codes',
+      'chrono'=>'Chronology',
+      'ig'=>'Inv. General',
+      'litho'=>'Lithostratigraphy',
+      'lithologic'=>'Lithology',
+      'expedition'=>'Expedition',
+      'mineral'=>'Mineralogy',
+      'count'=>'Count'
     );
     if($source == 'individual')
     {
       $individual_col = array(
-        'individual_type',
-        'sex',
-        'state',
-        'stage',
-        'social_status',
-        'rock_form',
-        'individual_count',
+        'individual_type' => 'Individual Type',
+        'sex' => 'Sex',
+        'state' => 'State',
+        'stage'=> 'Stage',
+        'social_status' =>'Social Status',
+        'rock_form'=>'Rock Form',
+        'individual_count'=>'Individual Count',
       );
     }
 
@@ -92,34 +92,34 @@ class MySavedSearchesTable extends DarwinTable
       if($is_reg_user)
       {
         $part_col = array(
-          'part',
-          'part_status',
-          'part_code',
-          'part_count',
+          'part' => 'Part',
+          'part_status'=>'Part Status',
+          'part_code'=>'Part Code',
+          'part_count'=>'Part Count',
         );      
       }
       else
       {
         $part_col = array(
-          'part',
-          'part_status',
-          'building',
-          'floor',
-          'room',
-          'row',
-          'shelf',
-          'container',
-          'container_type',
-          'container_storage',
-          'sub_container',
-          'sub_container_type',
-          'sub_container_storage',
-          'part_code',
-          'part_count',
+          'part'=>'Part',
+          'part_status'=>'Part Status',
+          'building'=>'Building',
+          'floor'=>'Floor',
+          'room'=>'Room',
+          'row'=>'Row',
+          'shelf'=>'Shelf',
+          'container'=>'Container',
+          'container_type'=>'Container Type',
+          'container_storage'=>'Container Storage',
+          'sub_container'=>'Sub Container',
+          'sub_container_type'=>'Sub Container Type',
+          'sub_container_storage'=>'Sub Container Storage',
+          'part_code'=>'Part Code',
+          'part_count'=>'Part Count',
         );
       }
     }
     $columns = $specimen_col + $individual_col +  $part_col;
-    return array_combine($columns, $columns);
+    return $columns;
   }
 }

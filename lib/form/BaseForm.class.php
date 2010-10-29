@@ -24,4 +24,13 @@ class BaseForm extends sfFormSymfony
   {
     return sfContext::getInstance()->getUser()->getCulture();
   }
+
+  public function translateValues($tbl)
+  {
+    foreach($tbl as $k => $v)
+    {
+      $tbl[$k] = $this->getI18N()->__($v);
+    }
+    return $tbl;
+  }
 }
