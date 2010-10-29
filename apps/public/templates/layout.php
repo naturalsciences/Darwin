@@ -15,7 +15,7 @@
         <?php include_partial('global/head_menu') ?>
       </tr>
       <tr>
-        <td class="main">
+        <td class="content">
           <?php echo $sf_content ?>
         </td>
       </tr>

@@ -49,7 +49,7 @@
       </tbody>
     </table>
   </div>
-  <table>
+  <table id="coll_and_countries">
     <tbody>
       <tr>
         <td>

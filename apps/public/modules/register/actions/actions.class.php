@@ -31,7 +31,12 @@ class registerActions extends DarwinActions
         {
           $this->user = $this->form->save();
           $this->user->addUserWidgets();
-          $this->getUser()->setAuthenticated(true);
+          $params = array(
+                          'physical' => $this->user->getIsPhysical(),
+                          'name' => $this->user->getFormatedName(),
+                          'title' => $this->user->getTitle()
+                         );
+/*          $this->getUser()->setAuthenticated(true);
           sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('user_name').' '.$this->user->getId() );
           $this->getUser()->setAttribute('db_user_id',$this->user->getId());
           $this->getUser()->setAttribute('db_user_type',$this->user->getDbUserType());
@@ -39,8 +44,9 @@ class registerActions extends DarwinActions
           if($lang) //prevent from crashing if lang is set
           {
               $this->getUser()->setCulture($lang->getLanguageCountry());
-          }
-          $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
+          }*/
+/*          $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));*/
+          $this->redirect('register/succeeded?'.http_build_query($params));
         }
         catch(Doctrine_Exception $ne)
         {
@@ -50,9 +56,17 @@ class registerActions extends DarwinActions
         }
       }
     }
-    $this->setTemplate('index');
   }
   
+  /**/
+  public function executeSucceeded(sfWebRequest $request)
+  {
+    $this->params = array('physical'=> $request->getParameter('physical'),
+                          'name' => $request->getParameter('name'),
+                          'title' => $request->getParameter('title')
+                         );
+  }
+
   public function executeLogin(sfWebRequest $request)
   {
     $this->redirectIf($this->getUser()->isAuthenticated(), $this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
