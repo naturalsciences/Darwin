@@ -20,6 +20,7 @@
       <?php endif;?>
     <?php endif;?>
     <p><?php echo __('Thank you for having registered on DaRWIN 2.');?></p>
+    <p><?php echo __('You should have received a recall of your username and password on the e-mail address provided.');?></p>
     <p><?php echo __('You can now log you in and enjoy enhanced services to our collections.');?></p>
     <p id="team_signature"><?php echo __('DaRWIN 2  team.');?></p>
   </div>

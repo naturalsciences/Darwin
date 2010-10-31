@@ -31,22 +31,27 @@ class registerActions extends DarwinActions
         {
           $this->user = $this->form->save();
           $this->user->addUserWidgets();
-          $params = array(
-                          'physical' => $this->user->getIsPhysical(),
-                          'name' => $this->user->getFormatedName(),
-                          'title' => $this->user->getTitle()
-                         );
-/*          $this->getUser()->setAuthenticated(true);
-          sfContext::getInstance()->getLogger()->debug('LOGIN: '.$this->form->getValue('user_name').' '.$this->user->getId() );
-          $this->getUser()->setAttribute('db_user_id',$this->user->getId());
-          $this->getUser()->setAttribute('db_user_type',$this->user->getDbUserType());
-          $lang = Doctrine::getTable("UsersLanguages")->getPreferredLanguage($this->user->getId());
-          if($lang) //prevent from crashing if lang is set
-          {
-              $this->getUser()->setCulture($lang->getLanguageCountry());
-          }*/
-/*          $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));*/
-          $this->redirect('register/succeeded?'.http_build_query($params));
+          $userInfos = $request->getParameter('users');
+          $mail = '';
+          if (isset($userInfos['RegisterCommForm'][0]['entry']))
+            $mail = $userInfos['RegisterCommForm'][0]['entry'];
+          $username = '';
+          if (isset($userInfos['RegisterLoginInfosForm'][0]['user_name']))
+            $username = $userInfos['RegisterLoginInfosForm'][0]['user_name'];
+          $password = '';
+          if (isset($userInfos['RegisterLoginInfosForm'][0]['new_password']))
+            $password = $userInfos['RegisterLoginInfosForm'][0]['new_password'];
+          $base_params =  array('physical' => $this->user->getIsPhysical(),
+                                'name' => $this->user->getFormatedName(),
+                                'title' => $this->user->getTitle()
+                               );
+          $suppl_params = array('mail' => $mail,
+                                'username' => $username,
+                                'password' => $password
+                               );
+          // send an email to the registered user
+          $this->sendConfirmationMail(array_merge($base_params,$suppl_params));
+          $this->redirect('register/succeeded?'.http_build_query($base_params));
         }
         catch(Doctrine_Exception $ne)
         {
@@ -58,12 +63,12 @@ class registerActions extends DarwinActions
     }
   }
   
-  /**/
+  /*When registration succeeded redirect on a succeeded page with users parameter to be used*/
   public function executeSucceeded(sfWebRequest $request)
   {
-    $this->params = array('physical'=> $request->getParameter('physical'),
-                          'name' => $request->getParameter('name'),
-                          'title' => $request->getParameter('title')
+    $this->params = array('physical'=> $request->getParameter('physical', 'physical'),
+                          'name' => $request->getParameter('name', ''),
+                          'title' => $request->getParameter('title', '')
                          );
   }
 

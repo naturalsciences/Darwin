@@ -7,3 +7,5 @@ all:
    recaptcha:
        public_key: "6Lf_ZL0SAAAAAN5AS3Wiiiu3VOs6CmpW3VMgZauH"
        private_key: "6Lf_ZL0SAAAAAEP1fcqjynm6NH3wbj1hc1It8iCH"
+   mailer:
+       sender: collections@naturalsciences.be
