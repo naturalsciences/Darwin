@@ -1,6 +1,6 @@
 html, body
 {
-  min-width: 1024px;
+  min-width: 996px;
   font-size: 10pt;
   font-family: Arial,Regular,sans-serif;
   height: 100%;  
@@ -14,6 +14,12 @@ table
 table td, table th
 {
    vertical-align: middle ; 
+}
+
+table td.content
+{
+  vertical-align:top;
+  padding-top:10px;
 }
 
 table.tag td
@@ -66,10 +72,68 @@ table#registration div.check_right
 
 .page
 {
-  margin-top: 3px;
   margin-left:auto;
-  margin-right: auto; 
-  width: 1024px ;  
+  margin-right: auto;
+  width: 996px ;
+}
+
+div.well_registered
+{
+  width:650px;
+  background-color:#3390a1;
+  margin-top:30px;
+  padding: 4px;
+  padding-top:6px;
+  color:white;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+div.white_content
+{
+  background-color:white;
+  padding: 10px;
+  color:#3390a1;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+div.white_content p
+{
+  margin-bottom:1em;
+}
+
+p#team_signature
+{
+  font-weight:bold;
+  text-align:right;
+  margin-top:3em;
+  margin-bottom:0;
+}
+
+div#login_arrow
+{
+  position:absolute;
+  margin-top:-24px;
+  margin-left:606px;
+}
+
+div#login_arrow_top_white
+{
+  margin-top:-12px;
+  margin-left: 5px;
+}
+
+div#login_arrow_middle_blue
+{
+  margin-top:-11px;
+  margin-left:5px;
+}
+
+div#login_arrow_middle_white
+{
+  margin-top:-8px;
+  margin-left:5px;
 }
 
 .line
@@ -81,8 +145,8 @@ table#registration div.check_right
 
 .framed
 {
-  max-height: 185px;
-  height: 185px;
+  max-height: 160px;
+  height: 160px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -117,7 +181,7 @@ table#registration div.check_right
 
 .double_table
 {
- width: 500px;
+ width: 486px;
 }
 
 .triple_table
@@ -161,7 +225,7 @@ form.publicsearch_form input:focus
 
 input[type="submit"][class="search_submit"],input[type="button"][class="result"]
 {
-  background: white url(/images/widget_button.png) no-repeat;
+  background: white url('/images/widget_button.png') no-repeat;
   border:0;
   width:auto;
   height:21px;
@@ -657,4 +721,9 @@ input.required_field
 input.required_field:focus
 {
   border-right-color:#CF4040;
+}
+
+input#login_username:focus, input#login_password:focus
+{
+  border-color:white;
 }

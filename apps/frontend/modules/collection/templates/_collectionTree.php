@@ -14,6 +14,21 @@ $(document).ready(function () {
         $(this).siblings('.collapsed').show();
         $(this).parent().siblings('ul').hide();
     });
+
+    $(".extd_info").each(function ()
+    {
+      $(this).qtip({
+        style: "light",
+        content: {
+          url: '<?php echo url_for('collection/extdinfo');?>',
+          data: { id: $(this).attr('data-manid') },
+          method: 'get'
+        }
+      });
+    });
+
+
+
 });
 </script>
 <div class="container">
@@ -31,12 +46,13 @@ $(document).ready(function () {
             <?php endif;?>
         <?php endif;?>
         <?php if($col_item->getIsPublic() || $col_item->getTypeInCol() > 0 || $sf_user->isA(Users::ADMIN)): ?>
-          <li class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
+          <li data-edit="" class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
           <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
           <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
           <span><?php echo $col_item->getName();?>
           <?php if(! $is_choose ):?>
-            <?php if($sf_user->isA(Users::ADMIN) || ( $sf_user->isAtLeast(Users::ENCODER) && $col_item->getTypeInCol() >= Users::MANAGER  ) ):?>
+             <?php echo image_tag('info.png',array('title'=>'info','class'=>'extd_info','data-manid'=>$col_item->getMainManagerRef()));?>
+            <?php if($sf_user->isA(Users::ADMIN) || ( $sf_user->isAtLeast(Users::MANAGER) && $col_item->getTypeInCol() >= Users::MANAGER  ) ):?>
               <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
               <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
             <?php endif ; ?>

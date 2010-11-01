@@ -69,19 +69,18 @@
             <td class="datesNum">
 	      <?php echo $item->getActivityDateFromObject()->getDateMasked('em','Y',ESC_RAW);?> - 
 	      <?php echo $item->getActivityDateToObject()->getDateMasked('em','Y',ESC_RAW) ?>
-            </td>
-            <?php if ($level > Users::REGISTERED_USER) : ?>             
+            </td>            
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
-	                <?php echo link_to(image_tag('edit.png',array('title'=>'Edit People')),'people/edit?id='.$item->getId());?>
-	                <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate People')),'people/new?duplicate_id='.$item->getId());?>
+                  <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?> 	              
+	                  <?php echo link_to(image_tag('edit.png',array('title'=>'Edit People')),'people/edit?id='.$item->getId());?>
+	                  <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate People')),'people/new?duplicate_id='.$item->getId());?>
+	                <?php endif ; ?>
+	                <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'people/view?id='.$item->getId());?>
                 <?php else:?>
                     <div class="result_choose"><?php echo __('Choose');?></div>           
                 <?php endif;?>
             </td>
-            <?php else : ?>
-              <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),'people/view?id='.$item->getId());?></td>
-            <?php endif ; ?>            
           </tr>
           <tr class="hidden details details_rid_<?php echo $item->getId();?>" >
             <td colspan="8"></td>

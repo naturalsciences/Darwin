@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     $('form.search_form select.double_list_select-selected option').attr('selected', 'selected');
 
-    $(this).qtip({
+    $("#save_specs").qtip({
         content: {
             title: { text : '<?php echo __('Save your specimens')?>', button: 'X' },
             url: '<?php echo url_for('savesearch/saveSearch?type=pin&source='.$source);?>'+ '/cols/' + column_str + '/list_nr/' + $('#save_specs_choice').val(),
@@ -66,7 +66,7 @@ $(document).ready(function () {
          onHide: function()
          {
             $(this).attr('value','Search Saved') ;
-            $(this.elements.target).qtip("destroy");
+            $("#save_specs").qtip("destroy");
             if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
               window.location.replace('<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved);
          }

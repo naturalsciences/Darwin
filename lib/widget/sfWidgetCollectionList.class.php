@@ -90,7 +90,10 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
           if($prev_level > $val->getLevel())
               $html .= str_repeat('</ul></li>',$prev_level-$val->getLevel());
         }
-        $html .= "<li class=\"rid_".$val."\"><div class=\"col_name\">" ;
+        $html .= "<li class=\"rid_".$val->getId()."\"";
+        if(count($val->CollectionsRights) && $val->CollectionsRights[0]->getDbUserType() >= Users::ENCODER)
+          $html .= ' data-enc="true" ';
+        $html .= "><div class=\"col_name\">" ;
         $html .= image_tag ($img_expand, array('alt' => '+', 'class'=> 'tree_cmd collapsed'));
         $html .= image_tag ($img_expand_up, array('alt' => '-', 'class'=> 'tree_cmd expanded'));
         $html .=  "<span>".$val->getName()."</span>";

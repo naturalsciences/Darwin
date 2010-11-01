@@ -24,7 +24,11 @@ $(document).ready(function () {
     {
   	  $('table.widget_sub_table').find(':checkbox').attr('checked','');
     });
-
+  
+    $('#check_editable').click(function(){
+      $('.treelist input:checkbox').removeAttr('checked');
+      $('li[data-enc] > div > input:checkbox').attr('checked','checked');
+    });
 });
 </script>
 <table class="widget_sub_table">
@@ -34,8 +38,12 @@ $(document).ready(function () {
 		    <?php echo $form['collection_ref'] ; ?>
       </div>
       <div class="check_right">
-        <input type="button" class="result_choose" value="clear" id="clear_collections">
+      <?php if($sf_user->isAtLeast(Users::ENCODER)):?>
+         <input type="button" class="result_choose" value="<?php echo __('check only editable');?>" id="check_editable">
+      <?php endif;?>
+        <input type="button" class="result_choose" value="<?php echo __('clear');?>" id="clear_collections">
       </div>
+
 	  </td>
 	</tr>
 </table>

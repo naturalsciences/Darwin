@@ -24,7 +24,7 @@ $(document).ready(function () {
     $('form.specimensearch_form select.double_list_select-selected option').attr('selected', 'selected');
     if(source == '')
       source = $('#specimen_search_filters_what_searched').val();
-    $(this).qtip({
+    $("#save_search").qtip({
         content: {
             title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
             url: '<?php echo url_for("savesearch/saveSearch");?>/source/' + source + '/cols/' + column_str,
@@ -62,7 +62,7 @@ $(document).ready(function () {
          onHide: function()
          {
             $(this).attr('value','Search Saved') ;
-            $(this.elements.target).qtip("destroy");
+            $("#save_search").qtip("destroy");
          }
          }
     });

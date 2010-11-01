@@ -66,8 +66,9 @@
     $("#clear_identification_<?php echo $row_num;?>").click( function()
     {
       parent = $(this).closest('tbody');
-      nvalue='';
-      $(parent).find('input[id$=\"_value_defined\"]').val(nvalue);
+
+      $(parent).find('input[id$=\"_value_defined\"]').val('');
+      $(parent).find('select.to_date').val('');
       $(parent).hide();
       reOrderIdent();
       visibles = $('table#identifications tbody.spec_ident_data:visible').size();
@@ -84,6 +85,7 @@
         if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
       });
       if(info != 'ok') return false;
+      hideForRefresh($('.qtip-content .page')) ; 
       $.ajax({
         type: "GET",
         url: $('a#add_identifier_<?php echo $row_num;?>').prev('a.hidden').attr('href')+ (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length),
@@ -93,6 +95,7 @@
           $.fn.catalogue_people.reorder($('#spec_ident_identifiers_<?php echo $row_num;?>'));
           $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> thead').show();
           $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?>').addClass('green_border');
+	  showAfterRefresh($('.qtip-content .page')) ; 
         }
       });
       return true;

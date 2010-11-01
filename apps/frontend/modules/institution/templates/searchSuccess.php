@@ -36,18 +36,17 @@
             <td class="item_name"><?php echo $item->getFamilyName();?></td>
             <td><?php echo $item->getAdditionalNames() ?></td>
             <td><?php echo $item->getSubType() ?></td>
-            <?php if ($level > Users::REGISTERED_USER) : ?>             
               <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(! $is_choose):?>
-                  <?php echo link_to(image_tag('edit.png'),'institution/edit?id='.$item->getId());?>
-                  <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Institution')),'institution/new?duplicate_id='.$item->getId());?>
+                  <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>             
+                    <?php echo link_to(image_tag('edit.png'),'institution/edit?id='.$item->getId());?>
+                    <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Institution')),'institution/new?duplicate_id='.$item->getId());?>
+                  <?php endif ; ?>
+                  <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'institution/view?id='.$item->getId());?>                  
                 <?php else:?>
                   <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
               </td>
-            <?php else : ?>
-              <td><?php echo link_to(image_tag('info.png', array("title" => __("View"))),'institution/view?id='.$item->getId());?></td>
-            <?php endif ; ?>             
           </tr>
         <?php endforeach;?>
       </tbody>

@@ -23,6 +23,13 @@
         </td>
       </tr>
       <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['local_naming']->renderError() ?>
+          <?php echo $form['local_naming'] ?>
+        </td>
+      </tr>
+      <tr>
         <th><?php echo $form['level_ref']->renderLabel('Level') ?></th>
         <td>
           <?php echo $form['level_ref']->renderError() ?>

@@ -196,10 +196,18 @@ class gtuActions extends DarwinActions
   */
   public function executeCompleteTag(sfWebRequest $request)
   {
+    $gtu = false;
     if($request->hasParameter('id') && $request->getParameter('id'))
-      $gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id') );
+    {
+      $spec = Doctrine::getTable('Specimens')->fetchOneWithRights($request->getParameter('id'), $this->getUser());
+      if($spec->getHasEncodingRights() || $this->getUser()->isAtLeast(Users::ADMIN))
+        $gtu = Doctrine::getTable('Gtu')->findExcept($spec->getGtuRef() );
+      else
+        $this->forwardToSecureAction();
+    }
+
     $this->forward404Unless($gtu);
-    
+
     $str = '<ul  class="search_tags">';
     foreach($gtu->TagGroups as $group)
     {

@@ -34,8 +34,10 @@ class LithostratigraphyForm extends BaseLithostratigraphyForm
        'box_title' => $this->getI18N()->__('Choose Parent'),
        'button_is_hidden' => true,
      ));
+    $this->widgetSchema['local_naming'] = new sfWidgetFormInputCheckbox();
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
-                                         'parent_ref' => 'Parent'
+                                         'parent_ref' => 'Parent',
+                                         'local_naming' => 'Local unit ?'
                                         )
                                   );
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));

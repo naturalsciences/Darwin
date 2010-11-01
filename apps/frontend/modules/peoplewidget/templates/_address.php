@@ -1,4 +1,4 @@
-<table class="catalogue_table<?php echo($sf_user->isA(Users::REGISTERED_USER)?'_view':'') ;?>">
+<table class="catalogue_table">
   <thead>
     <tr>
       <th><?php echo __('Country');?></th>
@@ -12,14 +12,10 @@
   <tbody>
   <?php foreach($addresses as $address):?>
   <tr>
-    <td>
-      <?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>    
+    <td> 
       <a class="link_catalogue" title="<?php echo __('Edit Address');?>"  href="<?php echo url_for('people/address?ref_id='.$eid.'&id='.$address->getId());?>">
 	<?php echo $address->getCountry();?>
       </a>
-      <?php else : ?>
-       	<?php echo $address->getCountry();?>     
-      <?php endif ; ?>
     </td>
     <td>
       <?php echo $address->getRegion();?>
@@ -38,11 +34,9 @@
 	<span class="tag"><?php echo $item;?><?php echo image_tag('tags.gif');?></span>
       <?php endforeach;?>
     </td>
-    <td class="widget_row_delete">
-      <?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>       
+    <td class="widget_row_delete">     
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=people_addresses&id='.$address->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
-      <?php endif ; ?>
     </td>
   </tr>
   <?php endforeach;?>
@@ -50,7 +44,5 @@
 </table>
 
 <br />
-<?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>   
 <?php echo image_tag('add_green.png');?>
 <a title="<?php echo __('Add Address');?>" class="link_catalogue" href="<?php echo url_for('people/address?ref_id='.$eid);?>"><?php echo __('Add');?></a>
-<?php endif ?>

@@ -33,12 +33,13 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     if($this->getObject()->getName() == "")
       $this->widgetSchema['name']->setDefault($default_name) ;
 
-    $choices = Doctrine::getTable('MySavedSearches')->getAllFields($this->object->getSubject()) ;
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields($this->object->getSubject(),$this->options['is_reg_user']) ;
+    $choices = $this->translateValues($choices);
     $this->widgetSchema['visible_fields_in_result'] = new sfWidgetFormChoice(array(
-	  'choices' => $choices, 
-	  'expanded' => true,
-	  'multiple' => true,
-	  'renderer_options' => array('formatter' => array($this, 'formatter'))
+      'choices' => $choices, 
+      'expanded' => true,
+      'multiple' => true,
+      'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
 
     $this->validatorSchema['visible_fields_in_result'] = new sfValidatorChoice(array('choices' => $choices,'multiple' => true));
@@ -69,6 +70,7 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     if(isset($taintedValues['subject']) && in_array($taintedValues['subject'], array('specimen','individual','part')))
     {
       $choices = Doctrine::getTable('MySavedSearches')->getAllFields($taintedValues['subject']) ;
+      $choices = array_keys($choices);
       $this->validatorSchema['visible_fields_in_result'] = new sfValidatorChoice(array('choices' => $choices,'multiple' => true));
     }
     parent::bind($taintedValues,$taintedFiles);

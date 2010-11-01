@@ -11,6 +11,8 @@
  * @property string $name_order_by
  * @property integer $level_ref
  * @property string $status
+ * @property boolean $local_naming
+ * @property string $color
  * @property string $path
  * @property integer $parent_ref
  * @property Lithology $Parent
@@ -27,6 +29,8 @@
  * @method string              getNameOrderBy()      Returns the current record's "name_order_by" value
  * @method integer             getLevelRef()         Returns the current record's "level_ref" value
  * @method string              getStatus()           Returns the current record's "status" value
+ * @method boolean             getLocalNaming()      Returns the current record's "local_naming" value
+ * @method string              getColor()            Returns the current record's "color" value
  * @method string              getPath()             Returns the current record's "path" value
  * @method integer             getParentRef()        Returns the current record's "parent_ref" value
  * @method Lithology           getParent()           Returns the current record's "Parent" value
@@ -42,6 +46,8 @@
  * @method Lithology           setNameOrderBy()      Sets the current record's "name_order_by" value
  * @method Lithology           setLevelRef()         Sets the current record's "level_ref" value
  * @method Lithology           setStatus()           Sets the current record's "status" value
+ * @method Lithology           setLocalNaming()      Sets the current record's "local_naming" value
+ * @method Lithology           setColor()            Sets the current record's "color" value
  * @method Lithology           setPath()             Sets the current record's "path" value
  * @method Lithology           setParentRef()        Sets the current record's "parent_ref" value
  * @method Lithology           setParent()           Sets the current record's "Parent" value
@@ -85,6 +91,14 @@ abstract class BaseLithology extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'default' => 'valid',
+             ));
+        $this->hasColumn('local_naming', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => false,
+             ));
+        $this->hasColumn('color', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',

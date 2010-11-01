@@ -1,7 +1,8 @@
+<?php if(isset($view) && $view) $view= true ; else $view = false ; ?>
 <?php if(count($parts)==0):?>
-  <h2><?php echo __('There a currently no part. Please add one');?></h2>
+  <h2><?php echo __('There are currently no part');?></h2>
 <?php else:?>
-<table class="catalogue_table">
+<table class="catalogue_table<?php if($view) echo '_view' ; ?>">
   <thead>
   <tr>
     <th></th>
@@ -14,18 +15,23 @@
     <th><?php echo __('Sub container');?></th>
     <th></th>
     <th></th>
-    <th></th>    
+    <th></th>   
+    <?php if ($view) : ?><th></th><?php endif ;?>
   </tr>
   </thead>
   <tbody>
   <?php foreach($parts as $part):?>
   <tr class="rid_<?php echo $part->getId();?>">
-    <td style="padding-left: <?php echo 20*($part->getLevel()-1);?>px; ">
-      <?php echo image_tag('info-green.png',"title=info class=extd_info");?>
-      <div class="extended_info" style="display:none;">
-        <?php include_partial('extendedInfo', array('part' => $part, 'codes' => $codes) );?>
-      </div>
-    </td>
+ 	  <?php if ($sf_user->isAtLeast(Users::ENCODER)): ?>
+      <td style="padding-left: <?php echo 20*($part->getLevel()-1);?>px; ">
+        <?php echo image_tag('info-green.png',"title=info class=extd_info");?>
+        <div class="extended_info" style="display:none;">
+          <?php include_partial('extendedInfo', array('part' => $part, 'codes' => $codes) );?>
+        </div>
+      </td>
+    <?php else : ?>
+      <td>&nbsp;</td>
+    <?php endif ; ?>  
     <td><?php if(isset($codes[$part->getId()])):?>
       <ul><?php foreach($codes[$part->getId()] as $code):?>
       <li><?php echo $code->getCodeFormated();?></li>
@@ -38,7 +44,13 @@
     <td><?php echo $part->getShelf();?></td>
     <td><?php echo $part->getContainer();?></td>
     <td><?php echo $part->getSubContainer();?></td>
+    <?php if ($view) : ?>
+      <td>
+        <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
+      </td>    
+    <?php endif ; ?>
     <?php if(!isset($is_choose) || $is_choose==false):?>
+      <?php if (!$view): ?> 
       <td>
         <?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>
       </td>
@@ -48,6 +60,9 @@
       <td>
         <a class="row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=specimen_parts&id='.$part->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </td>
+      <?php else : ?>
+        <td colspan="3">&nbsp;</td>
+      <?php endif ; ?>      
     <?php else:?>
       <td colspan="2">
         <div class="result_choose"><?php echo __('Choose');?></div>
@@ -56,7 +71,7 @@
   </tr>
   <?php endforeach;?>
   </tbody>
-  <?php if(!isset($is_choose) || $is_choose==false):?>
+  <?php if((!isset($is_choose) || $is_choose==false) && (!$view)):?>
     <tfoot>
     <tr>
       <td colspan='10'>

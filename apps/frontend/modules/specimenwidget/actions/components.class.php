@@ -116,6 +116,11 @@ class specimenwidgetComponents extends sfComponents
     $this->defineForm();
   }
 
+  public function executeRefDonators()
+  {
+    $this->defineForm();
+  }
+
   public function executeRefProperties()
   {    
     if(isset($this->form) )

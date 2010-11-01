@@ -1,11 +1,3 @@
-<?php $read_only = (isset($view)&&$view)?true:false ; ?>
-<?php if ($read_only) : ?> 
-  <?php foreach($form['Comments'] as $form_value):?>      
-    <fieldset class="opened"><legend><b><?php echo __('Notion');?></b> : <?php echo $form_value['notion_concerned']->getValue();?></legend>
-    <?php echo $form_value['comment']->getValue() ;?>
-    </fieldset>
-  <?php endforeach;?>
-<?php else : ?>
 <table class="property_values comments"  id="spec_ident_comments">
     <thead style="<?php echo ($form['Comments']->count() || $form['newComments']->count())?'':'display: none;';?>" class="spec_ident_comments_head">
     <tr>   
@@ -55,4 +47,3 @@ $(document).ready(function () {
     }); 
 });
 </script>
-<?php endif ; ?>

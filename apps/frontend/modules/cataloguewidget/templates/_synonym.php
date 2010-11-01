@@ -1,4 +1,4 @@
-<table class="catalogue_table<?php echo($sf_user->isA(Users::REGISTERED_USER)?'_view':'') ;?>">
+<table class="catalogue_table">
   <thead>
     <tr>
       <th><?php echo __('Type');?></th>
@@ -38,12 +38,12 @@
 		  <?php endif;?>
 		</td>
 		<td class="basio_cell">
-		  <?php if($group_name != "homonym" && $level>Users::REGISTERED_USER):?>
+		  <?php if($group_name != "homonym"):?>
 		    <a href="#" <?php if($synonym['is_basionym']):?> class="checked"<?php endif;?>></a>
 		  <?php endif;?>
 		</td>
 		<td class="widget_row_delete">	
-		  <?php if($synonym['record_id'] == $eid && $level>Users::REGISTERED_USER):?>
+		  <?php if($synonym['record_id'] == $eid):?>
 		    <a class="widget_row_delete" href="<?php echo url_for('synonym/delete?id='.$synonym['id']);?>" title="<?php echo __('Are you sure ?') ?>">
 		     <?php echo image_tag('remove.png'); ?>
 		    </a>
@@ -61,9 +61,8 @@
   </tbody>
 </table>
 <br />
-<?php if($sf_user->isAtLeast(Users::ENCODER)) : ?>
 <?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Synonymies');?>" class="link_catalogue" href="<?php echo url_for('synonym/add?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
-<?php endif ; ?>
+
 <script type="text/javascript">
 
 function forceHelper(e,ui)

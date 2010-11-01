@@ -2,8 +2,9 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <div class="page">
+  <h1><?php echo __("Register");?></h1>
   <?php echo form_tag('register/index', array('id'=>'registration_form'));?>
-    <h2 class="title"><?php echo __("Register") ?></h2>
+    <h2 class="title"><?php echo __("Please fill in the application form") ?></h2>
     <div class="borded">
       <table id="registration">
         <tbody>

@@ -101,7 +101,7 @@ function addMember(people_ref, people_name)
     if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
   });
   if(info != 'ok') return false;
-
+  hideForRefresh($('.qtip-content .page')) ; 
   $.ajax({
     type: "GET",
     url: $('.add_value a.hidden').attr('href')+ (0+$('#exp_member_table tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#exp_member_table tbody tr').length),
@@ -109,6 +109,7 @@ function addMember(people_ref, people_name)
     {
       $('#exp_member_table tbody').append(html);
       $.fn.catalogue_people.reorder($('#exp_member_table'));
+      showAfterRefresh($('.qtip-content .page')) ; 
     }
   });
   return true;

@@ -8,14 +8,15 @@
  * @author     DB team <collections@naturalsciences.be>
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class PreferencesForm extends sfForm 
+class PreferencesForm extends BaseForm 
 {
   public function configure()
   {
     $pref_keys = array('search_cols_specimen', 'search_cols_individual', 'search_cols_part', 'board_search_rec_pp', 'board_spec_rec_pp');
     $this->db_keys = Doctrine::getTable('Preferences')->getAllPreferences($this->options['user']->getId(), $pref_keys);
-
+    $is_reg_user = $this->options['user']->isA(Users::REGISTERED_USER) ;
     $choices = Doctrine::getTable('MySavedSearches')->getAllFields('specimen') ;
+    $choices = $this->translateValues($choices);
 
     $this->widgetSchema['search_cols_specimen'] = new sfWidgetFormChoice(array(
       'choices' => $choices, 
@@ -29,10 +30,11 @@ class PreferencesForm extends sfForm
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_specimen');
     $this->widgetSchema['search_cols_specimen']->setDefault(explode('|',$default));
     $this->widgetSchema->setHelp('search_cols_specimen', 'Define which field will be available by default into the specimen search');
-    $this->validatorSchema['search_cols_specimen'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+    $this->validatorSchema['search_cols_specimen'] = new sfValidatorChoice(array('choices' => array_keys($choices), 'multiple' => true));
 
 ///------------- INDIVIDUALS
     $choices = Doctrine::getTable('MySavedSearches')->getAllFields('individual') ;
+    $choices = $this->translateValues($choices);
 
     $this->widgetSchema['search_cols_individual'] = new sfWidgetFormChoice(array(
       'choices' => $choices, 
@@ -46,10 +48,11 @@ class PreferencesForm extends sfForm
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_individual');
     $this->widgetSchema['search_cols_individual']->setDefault(explode('|',$default));
     $this->widgetSchema->setHelp('search_cols_individual', 'Define which field will be available by default into the specimen search');
-    $this->validatorSchema['search_cols_individual'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+    $this->validatorSchema['search_cols_individual'] = new sfValidatorChoice(array('choices' => array_keys($choices), 'multiple' => true));
 
 ///------------ PARTS
-    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('part') ;
+    $choices = Doctrine::getTable('MySavedSearches')->getAllFields('part',$is_reg_user) ;
+    $choices = $this->translateValues($choices);
 
     $this->widgetSchema['search_cols_part'] = new sfWidgetFormChoice(array(
       'choices' => $choices, 
@@ -63,7 +66,7 @@ class PreferencesForm extends sfForm
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_part');
     $this->widgetSchema['search_cols_part']->setDefault(explode('|',$default));
     $this->widgetSchema->setHelp('search_cols_part', 'Define which field will be available by default into the specimen search');
-    $this->validatorSchema['search_cols_part'] = new sfValidatorChoice(array('choices' => $choices, 'multiple' => true));
+    $this->validatorSchema['search_cols_part'] = new sfValidatorChoice(array('choices' => array_keys($choices), 'multiple' => true));
 ///-----OTHER
 
     $choices = array('5' => '5', '10' => '10', '15' => '15', '20' => '20');

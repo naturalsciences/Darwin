@@ -22,7 +22,7 @@ $t->is(count(Doctrine::getTable('MyWidgets')
         ->getWidgets('board_widget')),4,'Get all board widget');
 $t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($userEvil)
-        ->getWidgets('specimen_widget')),19,'Get all specimen widget');
+        ->getWidgets('specimen_widget')),20,'Get all specimen widget');
 
 $t->comment('->changeWidgetStatus()');
 
@@ -147,6 +147,7 @@ $brol_user->addUserWidgets();
 $t->comment('->updateWigetsAvailabilityForRole()');  
 $t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($brol_user->getId())
+        ->setDbUserType(Users::REGISTERED_USER)
         ->getWidgets('board_widget')),2,'4 board widgets but only 2 visible for a registered user');
 
 Doctrine::getTable('MyWidgets')->setUserRef($brol_user->getId())->updateWigetsAvailabilityForRole(Users::REGISTERED_USER, false) ;

@@ -12,7 +12,7 @@
           'widgets' => $widgets,
           'category' => 'specimensearchwidget',
           'columns' => 2,
-          'options' => array('form' => $form, 'readOnly' => $readOnly),
+          'options' => array('form' => $form),
         )); ?>  
         <p class="clear"> </p>
         <p class="form_buttons">

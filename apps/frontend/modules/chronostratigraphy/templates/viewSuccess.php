@@ -14,7 +14,7 @@ $(document).ready(function ()
 });
 </script>
 
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_chronostratigraphy','eid'=> $form->getObject()->getId())); ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_chronostratigraphy','eid'=> $form->getObject()->getId(), 'view' => true)); ?>
 <?php slot('title', __('View Chronostratigraphic unit'));  ?>
 <div class="page">
     <h1><?php echo __('View Chronostratigraphic unit');?></h1>
@@ -28,6 +28,12 @@ $(document).ready(function ()
         </td>
         <td rowspan="6" class="keyword_row">
           <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'chronostratigraphy','field_name' => 'chronostratigraphy_name', 'view' => true)); ?>
+        </td>
+      </tr>
+      <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo ($chrono->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$chrono->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$chrono->getLocalNaming()));?>
         </td>
       </tr>
       <tr>
@@ -72,7 +78,7 @@ $(document).ready(function ()
 </div>  
  <?php include_partial('widgets/screen', array(
 	'widgets' => $widgets,
-	'category' => 'cataloguewidget',
+	'category' => 'cataloguewidgetview',
 	'columns' => 1,
 	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'chronostratigraphy', 'view' => true)
 	)); ?>

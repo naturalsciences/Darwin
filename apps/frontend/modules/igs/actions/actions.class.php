@@ -170,8 +170,7 @@ class igsActions extends DarwinActions
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->pagerLayout->getPager()->getExecuted()) $this->igss = $this->pagerLayout->execute();
-        $this->level = $this->getUser()->getDbUserType() ;          
+        if (! $this->pagerLayout->getPager()->getExecuted()) $this->igss = $this->pagerLayout->execute();         
       }
     }
   }

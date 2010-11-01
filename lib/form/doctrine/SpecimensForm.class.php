@@ -294,6 +294,23 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->widgetSchema['collector'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+    /* Donators sub form */
+
+    $subForm = new sfForm();
+    $this->embedForm('Donators',$subForm);
+    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new PeopleAssociationsForm($vals);
+      $this->embeddedForms['Donators']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Donators', $this->embeddedForms['Donators']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newDonators',$subForm);
+
+    $this->widgetSchema['donator'] = new sfWidgetFormInputHidden(array('default'=>1));
+
     /* Identifications sub form */
 
     $subForm = new sfForm();
@@ -387,6 +404,8 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->validatorSchema['collector'] = new sfValidatorPass();
 
+    $this->validatorSchema['donator'] = new sfValidatorPass();
+
     $this->validatorSchema['comment'] = new sfValidatorPass();
 
     $this->validatorSchema['code'] = new sfValidatorPass();
@@ -427,7 +446,7 @@ class SpecimensForm extends BaseSpecimensForm
   }
 
 
-  public function addCollectors($num, $people_ref,$order_by=0)
+  public function addCollectors($num, $people_ref, $order_by=0)
   {
       $options = array('referenced_relation' => 'specimens', 'people_type' => 'collector', 'people_ref' => $people_ref, 'order_by' => $order_by);
       $val = new CataloguePeople();
@@ -437,6 +456,18 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embeddedForms['newCollectors']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
+  }
+
+  public function addDonators($num, $people_ref, $order_by=0)
+  {
+      $options = array('referenced_relation' => 'specimens', 'people_type' => 'donator', 'people_ref' => $people_ref, 'order_by' => $order_by);
+      $val = new CataloguePeople();
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new PeopleAssociationsForm($val);
+      $this->embeddedForms['newDonators']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newDonators', $this->embeddedForms['newDonators']);
   }
 
   public function addSpecimensAccompanying($num, $obj=null)
@@ -536,6 +567,7 @@ class SpecimensForm extends BaseSpecimensForm
         $taintedValues['newCode'][$key]['record_id'] = 0;
       }
     }
+
     if(isset($taintedValues['newCollectors']) && isset($taintedValues['collector']))
     {
       foreach($taintedValues['newCollectors'] as $key=>$newVal)
@@ -547,6 +579,19 @@ class SpecimensForm extends BaseSpecimensForm
           $taintedValues['newCollectors'][$key]['record_id'] = 0;
       }
     }
+
+    if(isset($taintedValues['newDonators']) && isset($taintedValues['donator']))
+    {
+      foreach($taintedValues['newDonators'] as $key=>$newVal)
+      {
+        if (!isset($this['newDonators'][$key]))
+        {
+          $this->addDonators($key,$newVal['people_ref'],$newVal['order_by']);
+        }
+          $taintedValues['newDonators'][$key]['record_id'] = 0;
+      }
+    }
+
     if(isset($taintedValues['newComments']) && isset($taintedValues['comment']))
     {
       foreach($taintedValues['newComments'] as $key=>$newVal)
@@ -638,6 +683,7 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newCode');
       unset($taintedValues['newCode']);
     }
+
     if(!isset($taintedValues['collector']))
     {
       $this->offsetUnset('Collectors');
@@ -645,6 +691,15 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newCollectors');
       unset($taintedValues['newCollectors']);
     }
+
+    if(!isset($taintedValues['donator']))
+    {
+      $this->offsetUnset('Donators');
+      unset($taintedValues['Donators']);
+      $this->offsetUnset('newDonators');
+      unset($taintedValues['newDonators']);
+    }
+
     if(!isset($taintedValues['accompanying']))
     {
       $this->offsetUnset('SpecimensAccompanying');
@@ -788,6 +843,7 @@ class SpecimensForm extends BaseSpecimensForm
         }
       }
     }
+
     if (null === $forms && $this->getValue('collector'))
     {
       $value = $this->getValue('newCollectors');
@@ -808,6 +864,29 @@ class SpecimensForm extends BaseSpecimensForm
         }
       }
     }
+
+
+    if (null === $forms && $this->getValue('donator'))
+    {
+      $value = $this->getValue('newDonators');
+      foreach($this->embeddedForms['newDonators']->getEmbeddedForms() as $name => $form)
+      {
+        if(!isset($value[$name]['people_ref']))
+          unset($this->embeddedForms['newDonators'][$name]);
+        else
+          $form->getObject()->setRecordId($this->getObject()->getId());
+      }
+      $value = $this->getValue('Donators');
+      foreach($this->embeddedForms['Donators']->getEmbeddedForms() as $name => $form)
+      {
+        if (!isset($value[$name]['people_ref']))
+        {
+          $form->getObject()->delete();
+          unset($this->embeddedForms['Donators'][$name]);
+        }
+      }
+    }
+
     if (null === $forms && $this->getValue('accompanying'))
     {
       $value = $this->getValue('newSpecimensAccompanying');

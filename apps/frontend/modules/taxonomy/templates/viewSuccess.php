@@ -14,7 +14,7 @@ $(document).ready(function ()
 });
 </script>
 
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_taxonomy','eid'=> $form->getObject()->getId())); ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_taxonomy','eid'=> $form->getObject()->getId(), 'view' => true)); ?>
 <?php slot('title', __('View Taxonomic unit'));  ?>
 <div class="page">
     <h1><?php echo __('View Taxonomic unit');?></h1>
@@ -66,7 +66,7 @@ $(document).ready(function ()
 </div>  
  <?php include_partial('widgets/screen', array(
 	'widgets' => $widgets,
-	'category' => 'cataloguewidget',
+	'category' => 'cataloguewidgetview',
 	'columns' => 1,
 	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'taxonomy', 'view' => true)
 	)); ?>

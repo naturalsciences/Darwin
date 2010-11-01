@@ -47,7 +47,16 @@ class specimenActions extends DarwinActions
     $people_ref = intval($request->getParameter('people_ref')) ;
     $form = $this->getSpecimenForm($request);
     $form->addCollectors($number,$people_ref,$request->getParameter('iorder_by',0));
-    return $this->renderPartial('spec_people_associations',array('form' => $form['newCollectors'][$number], 'row_num'=>$number));
+    return $this->renderPartial('spec_people_associations',array('type'=>'collector','form' => $form['newCollectors'][$number], 'row_num'=>$number));
+  }
+
+  public function executeAddDonator(sfWebRequest $request)
+  {
+    $number = intval($request->getParameter('num'));
+    $people_ref = intval($request->getParameter('people_ref')) ;
+    $form = $this->getSpecimenForm($request);
+    $form->addDonators($number,$people_ref,$request->getParameter('iorder_by',0));
+    return $this->renderPartial('spec_people_associations',array('type'=>'donator','form' => $form['newDonators'][$number], 'row_num'=>$number));
   }
 
   public function executeAddComments(sfWebRequest $request)
@@ -104,6 +113,7 @@ class specimenActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();
     if ($request->hasParameter('duplicate_id')) // then it's a duplicate specimen
     {
       $specimen = new Specimens() ;
@@ -205,6 +215,9 @@ class specimenActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
+      $this->redirect("specimen/view?id=".$request->getParameter('id')) ;
     $this->forward404Unless(Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
     $this->loadWidgets();
     $this->form = $this->getSpecimenForm($request, true);
@@ -356,8 +369,7 @@ class specimenActions extends DarwinActions
   
   public function executeView(sfWebRequest $request)
   {
-    $this->forward404Unless($this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
-    $this->loadWidgets(); // a changer an loadRegWidget()
-    $this->form = new SpecimensForm($this->specimen);
+    $this->forward404Unless($this->specimen = Doctrine::getTable('SpecimenSearch')->findOneBySpecRef($request->getParameter('id')),'Specimen does not exist');  
+    $this->loadWidgets(null,$this->specimen->getCollectionRef()); 
   }  
 }

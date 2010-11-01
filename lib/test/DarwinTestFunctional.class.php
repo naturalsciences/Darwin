@@ -56,7 +56,7 @@ class DarwinTestFunctional extends sfTestFunctional
     return $this;
   }
   
-  public function addCustomUserAndLogin($name = '' ,$db_user_type = 2 ,$password = 'nothing')
+  public function addCustomUserAndLogin($name = '' ,$password = 'nothing')
   {
   	if ($name == '') $name = 'user_test_'.rand(1,1000) ;
   	$this->setTester('doctrine', 'sfTesterDoctrine');
@@ -65,8 +65,7 @@ class DarwinTestFunctional extends sfTestFunctional
     	  get('user/new')->
     	  with('response')->begin()->
     	  checkelement('#submit',1)->
-  	  click('#submit', array('users' => array('db_user_type' => $db_user_type,
-  					   'family_name' => $name)))->end()->	    					   
+  	  click('#submit', array('users' => array('family_name' => $name)))->end()->	    					   
        followRedirect()->
          info('** add login info for this user **')->
          click('#add_info')->
@@ -88,15 +87,19 @@ class DarwinTestFunctional extends sfTestFunctional
   {
     if ($name == "") $name = 'collection_test_'.rand(1,1000) ;  
     $institution_id = $this->addCustomInstitution('Institution for test', 'ITF') ;
-    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('Super Collection Manager')) 
+    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('manager')) 
         $manager_id = $record->getId() ;
     else
-    	   $manager_id = $this->addCustomUserAndLogin('Super Collection Manager',Users::MANAGER,'nothing');    
+    	   $manager_id = $this->addCustomUserAndLogin('manager','evil');    
     
-    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('Super Encoder')) 
+    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('encoder')) 
         $encoder_id = $record->getId() ;
     else
-        $encoder_id = $this->addCustomUserAndLogin('Super Encoder',Users::ENCODER,'nothing');        
+        $encoder_id = $this->addCustomUserAndLogin('encoder','evil');  
+    if ($record = Doctrine::getTable("Users")->findOneByFamilyName('reguser')) 
+        $reguser_id = $record->getId() ;
+    else
+        $reguser_id = $this->addCustomUserAndLogin('reguser','evil');               
     $this->
       info('** add a custom collection **')->
       get('collection/new')->
@@ -107,7 +110,8 @@ class DarwinTestFunctional extends sfTestFunctional
         'institution_ref' => $institution_id,
         'main_manager_ref' => $manager_id,
         'newVal' => array(
-          1 => array('user_ref' => $encoder_id)
+          1 => array('user_ref' => $encoder_id,'db_user_type' => Users::ENCODER),
+          2 => array('user_ref' => $reguser_id,'db_user_type' => Users::REGISTERED_USER)
           )
         )
       ))->

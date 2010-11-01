@@ -71,36 +71,37 @@
                   <?php echo image_tag('blue_pin_off.png', array('class'=>'pin_but pin_off', 'alt' =>  __('Save this result'))) ; ?>
                 <?php endif;?>
               </td>
-
               <?php include_partial('result_content_specimen', array('item_ref'=>$itemRef, 'source'=>$source,'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php if($source != 'specimen'):?>
-                <?php include_partial('result_content_individual', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+                <?php include_partial('result_content_individual', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <?php if($source == 'part'):?>
-                <?php include_partial('result_content_part', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $codes, 'is_specimen_search' => $is_specimen_search)); ?>
+                <?php include_partial('result_content_part', array('item_ref'=>$itemRef, 'specimen' => $specimen, 'codes' => $part_codes, 'is_specimen_search' => $is_specimen_search)); ?>
               <?php endif;?>
               <td rowspan="2">
-              <?php if($user_allowed) : ?>
-                <?php if($source == 'specimen'):?>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'specimen/edit?id='.$specimen->getSpecRef());?>
-                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'specimen/new?duplicate_id='.$specimen->getSpecRef(), array('class' => 'duplicate_link'));?>
-                <?php elseif($source=="individual"):?>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'individuals/edit?id='.$specimen->getIndividualRef());?>
-                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'individuals/edit?spec_id='.$specimen->getSpecRef().
-        '&duplicate_id='.$specimen->getIndividualRef(),array('class' => 'duplicate_link'));?>
-                <?php else:?>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),'parts/edit?id='.$specimen->getPartRef());?>
-                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))),'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef(),array('class' => 'duplicate_link'));?>
-                <?php endif;?>
+              <?php if($sf_user->isAtLeast(Users::ADMIN) || $specimen->getHasEncodingRights()) : ?>
+                <?php switch($source){
+                  case 'specimen':   $e_link = 'specimen/edit?id='.$specimen->getSpecRef();
+                                     $v_link = 'specimen/edit?id='.$specimen->getSpecRef();                  
+                                     $d_link = 'specimen/new?duplicate_id='.$specimen->getSpecRef();break;
+                  case 'individual': $e_link = 'individuals/edit?id='.$specimen->getIndividualRef();
+                                     $v_link = 'individuals/view?id='.$specimen->getIndividualRef();
+                                     $d_link = 'individuals/edit?spec_id='.$specimen->getSpecRef().'&duplicate_id='.$specimen->getIndividualRef();break;
+                  default:           $e_link = 'parts/edit?id='.$specimen->getPartRef();
+                                     $v_link = 'parts/view?id='.$specimen->getPartRef();
+                                     $d_link = 'parts/edit?indid='.$specimen->getIndividualRef().'&duplicate_id='.$specimen->getPartRef();break;              
+                  };?>
+                  <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), $e_link);?>
+                  <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate"))), $d_link, array('class' => 'duplicate_link'));?>
               <?php else : ?>
-                 <?php if($source == 'specimen'):?>
-                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),'specimen/view?id='.$specimen->getSpecRef());?>
-                <?php elseif($source=="individual"):?>
-                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),'individuals/view?id='.$specimen->getIndividualRef());?>
-                <?php else:?>
-                  <?php echo link_to(image_tag('info.png', array("title" => __("View"))),'parts/view?id='.$specimen->getPartRef());?>
-                <?php endif;?>             
+
+                <?php switch($source){
+                  case 'specimen':   $v_link = 'specimen/view?id='.$specimen->getSpecRef();break;
+                  case 'individual': $v_link = 'individuals/view?id='.$specimen->getIndividualRef();break;
+                  default:           $v_link = 'parts/view?id='.$specimen->getPartRef();break;
+                  };?>
               <?php endif ; ?>
+              <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>              
               </td>
             </tr>
 

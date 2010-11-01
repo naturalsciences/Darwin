@@ -1128,6 +1128,10 @@
         <source>New Taxa</source>
         <target/>
       </trans-unit>
+      <trans-unit id="209">
+        <source>Category</source>
+        <target>Catégorie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

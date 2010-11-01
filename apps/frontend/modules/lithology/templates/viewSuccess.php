@@ -14,7 +14,7 @@ $(document).ready(function ()
 });
 </script>
 
-<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_lithology','eid'=> $form->getObject()->getId())); ?>
+<?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'catalogue_lithology','eid'=> $form->getObject()->getId(), 'view' => true)); ?>
 <?php slot('title', __('View Lithologic unit'));  ?>
 <div class="page">
     <h1><?php echo __('View Lithologic unit');?></h1>
@@ -28,6 +28,12 @@ $(document).ready(function ()
         </td>
         <td rowspan="6" class="keyword_row">
           <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'lithology','field_name' => 'lithology_name', 'view' => true)); ?>
+        </td>
+      </tr>
+      <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo ($litho->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$litho->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$litho->getLocalNaming()));?>
         </td>
       </tr>
       <tr>
@@ -45,7 +51,7 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['parent_ref']->renderLabel() ?></th>
         <td>
-          <?php if ($litho->Parent->getName() != "-") : ?>        
+          <?php if ($litho->Parent->getName() != "-") : ?>
             <?php echo link_to(__($litho->Parent->getName()), 'lithology/view?id='.$litho->Parent->getId(), array('id' => $litho->Parent->getId())) ?>
             <?php echo image_tag('info.png',"title=info class=info");?>
             <div class="tree">
@@ -60,7 +66,7 @@ $(document).ready(function ()
 </div>  
  <?php include_partial('widgets/screen', array(
 	'widgets' => $widgets,
-	'category' => 'cataloguewidget',
+	'category' => 'cataloguewidgetview',
 	'columns' => 1,
 	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'lithology', 'view' => true)
 	)); ?>

@@ -139,3 +139,12 @@ function html_options_from_array(list_array)
   }
   return response;
 }
+
+// Function to set title of all options in a select = to their value
+function set_options_title(listConcerned)
+{
+  $(listConcerned).find('option').each(function(index)
+  {
+    $(this).attr('title', $(this).text());
+  });
+}

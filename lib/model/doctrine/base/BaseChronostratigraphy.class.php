@@ -11,6 +11,8 @@
  * @property string $name_order_by
  * @property integer $level_ref
  * @property string $status
+ * @property boolean $local_naming
+ * @property string $color
  * @property string $path
  * @property integer $parent_ref
  * @property decimal $lower_bound
@@ -29,6 +31,8 @@
  * @method string              getNameOrderBy()        Returns the current record's "name_order_by" value
  * @method integer             getLevelRef()           Returns the current record's "level_ref" value
  * @method string              getStatus()             Returns the current record's "status" value
+ * @method boolean             getLocalNaming()        Returns the current record's "local_naming" value
+ * @method string              getColor()              Returns the current record's "color" value
  * @method string              getPath()               Returns the current record's "path" value
  * @method integer             getParentRef()          Returns the current record's "parent_ref" value
  * @method decimal             getLowerBound()         Returns the current record's "lower_bound" value
@@ -46,6 +50,8 @@
  * @method Chronostratigraphy  setNameOrderBy()        Sets the current record's "name_order_by" value
  * @method Chronostratigraphy  setLevelRef()           Sets the current record's "level_ref" value
  * @method Chronostratigraphy  setStatus()             Sets the current record's "status" value
+ * @method Chronostratigraphy  setLocalNaming()        Sets the current record's "local_naming" value
+ * @method Chronostratigraphy  setColor()              Sets the current record's "color" value
  * @method Chronostratigraphy  setPath()               Sets the current record's "path" value
  * @method Chronostratigraphy  setParentRef()          Sets the current record's "parent_ref" value
  * @method Chronostratigraphy  setLowerBound()         Sets the current record's "lower_bound" value
@@ -91,6 +97,14 @@ abstract class BaseChronostratigraphy extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'default' => 'valid',
+             ));
+        $this->hasColumn('local_naming', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => false,
+             ));
+        $this->hasColumn('color', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('path', 'string', null, array(
              'type' => 'string',

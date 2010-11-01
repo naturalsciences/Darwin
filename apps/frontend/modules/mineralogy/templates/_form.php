@@ -22,7 +22,7 @@
         <td rowspan="8" class="keyword_row">
           <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'mineralogy','field_name' => 'mineralogy_name')); ?>
         </td>
-    </tr>
+      </tr>
       <tr>
         <th></th>
         <td>
@@ -34,6 +34,13 @@
         <td>
           <?php echo $form['classification']->renderError() ?>
           <?php echo $form['classification'] ?>
+        </td>
+      </tr>
+      <tr>
+        <th><?php echo $form['local_naming']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['local_naming']->renderError() ?>
+          <?php echo $form['local_naming'] ?>
         </td>
       </tr>
       <tr>

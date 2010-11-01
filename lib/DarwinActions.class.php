@@ -33,14 +33,14 @@ class DarwinActions extends sfActions
     $this->only_role = (!$request->hasParameter('only_role'))?'0':$request->getParameter('only_role');
   }
 
-  protected function loadWidgets($id = null)
+  protected function loadWidgets($id = null,$collection = null)
   {
     $this->__set('widgetCategory',$this->widgetCategory);
     if($id == null) $id = $this->getUser()->getId();
     $this->widgets = Doctrine::getTable('MyWidgets')
       ->setUserRef($this->getUser()->getId())
       ->setDbUserType($this->getUser()->getDbUserType())
-      ->getWidgets($this->widgetCategory);
+      ->getWidgets($this->widgetCategory, $collection);
     if(! $this->widgets) $this->widgets=array();   
   }
 
@@ -104,5 +104,70 @@ class DarwinActions extends sfActions
       }
     }
     return $obj ;
+  }
+
+  /*Function sending an email to the specified user to confirm he's been well registered*/
+  protected function sendConfirmationMail($userParams)
+  {
+    $message = $this->getMailer()->compose();
+    $message->setFrom(array(sfConfig::get('app_mailer_sender') => 'DaRWIN 2 team'));
+    if(is_array($userParams))
+    {
+      if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']))
+      {
+        if(!empty($userParams['mail']))
+        {
+          $message->setTo($userParams['mail']);
+          $message->setSubject($this->getI18N()->__('DaRWIN 2  registration'));
+          $invitation = $this->getI18N()->__('Dear').' ';
+          if($userParams['physical'])
+          {
+            if (empty($userParams['title']))
+            {
+              $invitation .= $userParams['name'];
+            }
+            else
+            {
+              $invitation .= $userParams['title'].' '.$userParams['name'];
+            }
+          }
+          else
+          {
+            $invitation .= $this->getI18N()->__('member of').' '.$userParams['name'];
+          }
+          $invitation .= ',';
+          $line_2 = $this->getI18N()->__('Thank you for having registered on DaRWIN 2.');
+          $line_3 = $this->getI18N()->__('You can now log you in and enjoy enhanced services to our collections.');
+          $line_4 = '';
+          $line_5 = '';
+          $line_6 = '';
+          if(!empty($userParams['username']) && !empty($userParams['password']))
+          {
+            $line_4 = $this->getI18N()->__('For your recall, here are your user name and password:');
+            $line_5 = $this->getI18N()->__('User name: ').$userParams['username'];
+            $line_6 = $this->getI18N()->__('Password: ').$userParams['password'];
+          }
+          $line_7 = $this->getI18N()->__('To log you in, you can visit us on http://').$_SERVER['SERVER_NAME'].' .';
+          $line_8 = $this->getI18N()->__('DaRWIN 2 team');
+          $body = sprintf(<<<EOF
+%1\$s
+
+%2\$s
+%3\$s
+
+%4\$s
+%5\$s
+%6\$s
+
+%7\$s
+
+%8\$s
+EOF
+          ,$invitation,$line_2,$line_3,$line_4,$line_5,$line_6,$line_7,$line_8);
+          $message->setBody($body,'text/plain');
+          $this->getMailer()->send($message);
+        }
+      }
+    }
   }
 }

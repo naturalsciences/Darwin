@@ -23,6 +23,9 @@ class peopleActions extends DarwinActions
     $this->form = new PeopleFormFilter();
   }
 
+  public function executeSearchBoth(sfWebRequest $request)
+  {}
+
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
@@ -54,8 +57,7 @@ class peopleActions extends DarwinActions
         $this->setDefaultPaggingLayout($this->pagerLayout);
         // If pager not yet executed, this means the query has to be executed for data loading
         if (! $this->pagerLayout->getPager()->getExecuted())
-           $this->items = $this->pagerLayout->execute();
-        $this->level = $this->getUser()->getDbUserType() ;     
+           $this->items = $this->pagerLayout->execute();  
       }
     }
   }

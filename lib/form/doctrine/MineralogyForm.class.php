@@ -56,9 +56,11 @@ class MineralogyForm extends BaseMineralogyForm
                                                                                'add_label' => 'Add another system',
                                                                               )
                                                                         );
+    $this->widgetSchema['local_naming'] = new sfWidgetFormInputCheckbox();
     $this->widgetSchema->setLabels(array('cristal_system' => 'Cristalographic system',
                                          'level_ref' => 'Level',
-                                         'parent_ref' => 'Parent'
+                                         'parent_ref' => 'Parent',
+                                         'local_naming' => 'Local unit ?'
                                         )
                                   );
 

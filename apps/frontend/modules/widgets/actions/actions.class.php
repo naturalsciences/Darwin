@@ -53,12 +53,13 @@ class widgetsActions extends DarwinActions
     {
       $mandatory = $mandatory[0]['mandatory'];
     }
-    
+    $category = $this->getComponentFromCategory($request->getParameter('category')) ;
+    if ($request->hasParameter('view')) $category .= "view" ;
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
             'is_mandatory' => $mandatory,
-            'category' => $this->getComponentFromCategory($request->getParameter('category')),
+            'category' => $category,
             'title' => $title,
             'options' => array(
               'eid' =>  $request->getParameter('eid',null),

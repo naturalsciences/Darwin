@@ -71,6 +71,7 @@
                   <?php echo link_to(image_tag('duplicate.png', array("title" => __("Duplicate this individual"))),'individuals/edit?spec_id='.$item->getSpecimenRef().
                   '&duplicate_id='.$item->getId(), array('class' => 'duplicate_link'));?>
                 <?php endif ; ?>
+                <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'individuals/view?id='.$item->getId(), array('title'=>__('View this individual')));?>
               </td>
             </tr>
             <tr>

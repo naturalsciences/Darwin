@@ -61,7 +61,8 @@
 
 .menu_link > li > a
 {
-  text-decoration: none ;  
+  text-decoration: none ; 
+  text-transform : uppercase;
   color: #d8d5d5 ;  
 } 
 
@@ -130,7 +131,7 @@
   background-color : #5baabd ;
 }
 
-.register_form #register a
+.register_form .menu_button a
 {
   color: black ;
   text-decoration: none ;
@@ -150,7 +151,7 @@
   background-color:transparent;
 }
 
-.register_form #register
+.register_form .menu_button
 {
   background-image: url(/images/button_blue.png)   ;
   background-position: center center ;
@@ -166,7 +167,18 @@
   width:36px ;
 }
 
-#login_bt a:hover, #register a:hover
+.login_error
+{
+  color:#FF3730;
+  font-weight:bold;
+  text-shadow: white 1px 1px 1px;
+  text-align:right;
+  margin-right:1em;
+  margin-bottom:8px;
+}
+
+
+#login_bt a:hover, .menu_button a:hover
 {
   color : #474747; 
   text-decoration: underline ;  

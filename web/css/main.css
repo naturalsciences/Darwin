@@ -116,6 +116,20 @@ h1
   margin-bottom: 1em;
 }
 
+.col_extd_info h2
+{
+  color:#3390a1;
+  margin-bottom: 0.5em;
+}
+
+.col_extd_info p
+{
+  margin:1em;
+}
+.col_extd_info
+{
+  min-width: 200px;
+}
 .edition h1, .edition h2 {
   color:#C1CF56;
 }
@@ -304,7 +318,7 @@ input:focus, textarea:focus
 
 
 
- .login input:focus, .login textarea:focus
+.login input:focus, .login textarea:focus
 {
   border:1px solid #3390A1;
 }
@@ -334,6 +348,7 @@ input[type="submit"][class="search_submit"]
 {
   padding-bottom:0px;
 }
+
 form#save_search label.spec_nbr
 {
   width: 7em;
@@ -1621,7 +1636,7 @@ img.info:hover
   margin-left:2em;
 }
 
-#catalogue_people_screen .search_box
+#catalogue_people_screen .search_box, .search_catalogue_people_both
 {
   margin-top: 0.3em;
 }
@@ -1913,7 +1928,7 @@ vertical-align: super;
 {
   float: left;
   margin-top:0.5em;
-  width:30em;
+  width:32em;
 }
 
 .double_list_filter_add div label
@@ -1923,13 +1938,14 @@ vertical-align: super;
 
 .double_list_select, .double_list_select-selected
 {
-  width:15em;
+  width:18em;
   height:15em;
 }
 
 .double_list_add_input
 {
   margin-right:0.3em;
+  width:26.1em !important;
 }
 
 
@@ -2225,10 +2241,7 @@ dd
 
 .tabs_view a.enabled
 {
-  background-color:white;
-  border-top-left-radius: 9px 9px;
-  border-top-right-radius: 9px 9px;
-  border: 1px solid #5BAABD;
+	background-image:url(/images/encod_tab_enable_view.png);
 	background-repeat:no-repeat;
 	height:20px;
 }
@@ -2239,9 +2252,16 @@ dd
 	height: 21px;
 }
 
+.tabs_view a.disabled
+{
+	background-image:url(/images/encod_tab_disable.png);
+	background-repeat:no-repeat;
+	color:#d3d3d1;
+}
+
 .panel_view
 {
-	margin-top:-1px;
+	margin-top:-2px;
 	border:1px solid #5BAABD;
 	padding-top: 30px;
 	padding-left:21px;

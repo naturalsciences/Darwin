@@ -17,8 +17,6 @@ class specimensearchActions extends DarwinActions
     $this->form = new SpecimenSearchFormFilter(null,array('user' => $this->getUser()));
 
     $this->form->setDefault('rec_per_page',$this->getUser()->fetchRecPerPage());
-    $this->readOnly = false ;
-    if($this->getUser()->getDbUserType() == Users::REGISTERED_USER) $this->readOnly = true ;
 
     // if Parameter name exist, so the referer is mysavedsearch
     if ($request->getParameter('search_id','') != '')
@@ -43,7 +41,6 @@ class specimensearchActions extends DarwinActions
     */ 
   public function executeSearch(sfWebRequest $request)
   {
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
     $this->is_specimen_search = false;
     // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('specimensearch', 'collection_name', $request);
@@ -177,8 +174,12 @@ class specimensearchActions extends DarwinActions
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
           $spec_list = array();
+          $part_list = array() ;            
           foreach($this->specimensearch as $key=>$specimen)
+          {
             $spec_list[] = $specimen->getSpecRef() ;
+            $part_list[] = $specimen->getPartRef() ;          
+          }
           $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;
           $this->codes = array();
           foreach($codes_collection as $code)
@@ -186,6 +187,17 @@ class specimensearchActions extends DarwinActions
             if(! isset($this->codes[$code->getRecordId()]))
               $this->codes[$code->getRecordId()] = array();
             $this->codes[$code->getRecordId()][] = $code;
+          }
+          $this->part_codes = array();        
+          if($this->form->getValue('what_searched') == 'part')
+          {
+            $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts',$part_list) ;
+            foreach($codes_collection as $code)
+            {
+              if(! isset($this->part_codes[$code->getRecordId()]))
+                $this->part_codes[$code->getRecordId()] = array();
+              $this->part_codes[$code->getRecordId()][] = $code;
+            }
           }
 
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
@@ -213,10 +225,10 @@ class specimensearchActions extends DarwinActions
   */
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
-    $flds = array('category','collection','taxon','type','gtu','codes','chrono',
+    $flds = array('category','collection','taxon','type','gtu','codes','chrono','ig',
               'litho','lithologic','mineral','expedition','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
-              'sub_container_type' , 'sub_container_storage', 'part_count',);
+              'sub_container_type' , 'sub_container_storage', 'part_count','part_codes');
 
 
     $flds = array_fill_keys($flds, 'uncheck');
@@ -335,6 +347,9 @@ class specimensearchActions extends DarwinActions
       'chrono' => array(
         'chrono_name_order_by',
         $this->getI18N()->__('Chronostratigraphic unit'),),
+      'ig' => array(
+        'ig_num_order_by',
+        $this->getI18N()->__('Ig unit'),),
       'litho' => array(
         'litho_name_order_by',
         $this->getI18N()->__('Lithostratigraphic unit'),),
@@ -379,51 +394,74 @@ class specimensearchActions extends DarwinActions
 
     if($source == 'part')
     {
-      $this->columns['part'] = array(
-        'part' => array(
-          'part',
-          $this->getI18N()->__('Part'),),
-        'part_status' => array(
-          'part_status',
-          $this->getI18N()->__('Part Status'),),
-        'building' => array(
-          'building',
-          $this->getI18N()->__('Building'),),
-        'floor' => array(
-          'floor',
-          $this->getI18N()->__('Floor'),),
-        'room' => array(
-          'room',
-          $this->getI18N()->__('Room'),),
-        'row' => array(
-          'row',
-          $this->getI18N()->__('Row'),),
-        'shelf' => array(
-          'shelf',
-          $this->getI18N()->__('Shelf'),),
+      if($this->getUser()->IsA(Users::REGISTERED_USER))    
+      {
+        $this->columns['part'] = array(
+          'part' => array(
+            'part',
+            $this->getI18N()->__('Part'),),
+          'part_status' => array(
+            'part_status',
+            $this->getI18N()->__('Part Status'),),
+          'part_codes' => array(
+            'part_codes',
+            $this->getI18N()->__('Part Codes'),),            
+          'part_count' => array(
+            'part_count_max',
+            $this->getI18N()->__('Part Count'),),
+          );      
+      }
+      else
+      {
+        $this->columns['part'] = array(
+          'part' => array(
+            'part',
+            $this->getI18N()->__('Part'),),
+          'part_status' => array(
+            'part_status',
+            $this->getI18N()->__('Part Status'),),
+          'building' => array(
+            'building',
+            $this->getI18N()->__('Building'),),
+          'floor' => array(
+            'floor',
+            $this->getI18N()->__('Floor'),),
+          'room' => array(
+            'room',
+            $this->getI18N()->__('Room'),),
+          'row' => array(
+            'row',
+            $this->getI18N()->__('Row'),),
+          'shelf' => array(
+            'shelf',
+            $this->getI18N()->__('Shelf'),),
 
-        'container' => array(
-          'container',
-          $this->getI18N()->__('Container'),),
-        'container_type' => array(
-          'container_type',
-          $this->getI18N()->__('Container Type'),),
-        'container_storage' => array(
-          'container_storage',
-          $this->getI18N()->__('Container Storage'),),
-        'sub_container' => array(
-          'sub_container',
-          $this->getI18N()->__('Sub Container'),),
-        'sub_container_type' => array(
-          'sub_container_type',
-          $this->getI18N()->__('Sub Container Type'),),
-        'sub_container_storage' => array(
-          'sub_container_storage',
-          $this->getI18N()->__('Sub Container Storage'),),
-        'part_count' => array(
-          'part_count_max',
-          $this->getI18N()->__('Part Count'),),
-        );
+          'container' => array(
+            'container',
+            $this->getI18N()->__('Container'),),
+          'container_type' => array(
+            'container_type',
+            $this->getI18N()->__('Container Type'),),
+          'container_storage' => array(
+            'container_storage',
+            $this->getI18N()->__('Container Storage'),),
+          'sub_container' => array(
+            'sub_container',
+            $this->getI18N()->__('Sub Container'),),
+          'sub_container_type' => array(
+            'sub_container_type',
+            $this->getI18N()->__('Sub Container Type'),),
+          'sub_container_storage' => array(
+            'sub_container_storage',
+            $this->getI18N()->__('Sub Container Storage'),),
+          'part_codes' => array(
+            'part_codes',
+            $this->getI18N()->__('Part Codes'),),             
+          'part_count' => array(
+            'part_count_max',
+            $this->getI18N()->__('Part Count'),),
+          );
+        }
     }
   }
 }

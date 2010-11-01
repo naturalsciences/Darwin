@@ -110,7 +110,7 @@ class SpecimenSearchTable extends Doctrine_Table
     }
 
 
-    public static function getFieldsByType()
+    public static function getFieldsByType($db_user_type = null)
     {
       $fields = array('specimens' =>
         array(
@@ -226,8 +226,18 @@ class SpecimenSearchTable extends Doctrine_Table
           'individual_count_min',
           'individual_count_max',
           'with_parts',
-        ),
-        'parts' => array(
+        )
+      );
+      if ($db_user_type == (null || Users::REGISTERED_USER))
+        $fields['parts'] = array(
+          'part_ref',
+          'part',
+          'part_status',
+//          'part_code',
+          'part_count_min',
+          'part_count_max') ;
+      else 
+       $fields['parts'] = array(
           'part_ref',
           'part',
           'part_status',
@@ -244,8 +254,7 @@ class SpecimenSearchTable extends Doctrine_Table
           'sub_container',
           'part_count_min',
           'part_count_max',
-        ),
-      );
+        ) ;
       return $fields;
     }
 }
