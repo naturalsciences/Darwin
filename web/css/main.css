@@ -2199,7 +2199,6 @@ dd
 
 .summary tbody tr:nth-child(even) {background: #E9F2F7}
 .summary tbody tr:nth-child(odd) {background: white}
-.summary tbody tr:hover {background: #5BAABD; color:white}
 
 .summary th, .summary td
 {

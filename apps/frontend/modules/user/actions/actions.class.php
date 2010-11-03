@@ -360,6 +360,7 @@ class userActions extends DarwinActions
       }
     }
   }
+  
   public function executeRightSummary(sfWebRequest $request)
   {
     if($request->hasParameter('id')) 
@@ -368,9 +369,29 @@ class userActions extends DarwinActions
       if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
     }
     else $user_id = $this->getUser()->getId() ;
-    $this->summary = array(Users::REGISTERED_USER=>$this->getI18N()->__('You can only view specimens linked to this collection'),
+    $this->summary = array(Users::REGISTERED_USER=>$this->getI18N()->__('You can view private specimens linked to this collection'),
                            Users::ENCODER=>$this->getI18N()->__('You can edit specimens linked to this collection'),
                            Users::MANAGER=>$this->getI18N()->__('You are Manager of this collection')) ;
     $this->rights = Doctrine::getTable('collectionsRights')->findByUserRef($user_id) ;
+    $this->widgets = array() ;
+    if ($this->getUser()->isA(Users::REGISTERED_USER))
+    {
+      $specific_rights = Doctrine::getTable('myWidgets')->findByUserRef($user_id) ;
+      foreach($specific_rights as $rights)
+      {
+        if($rights->getCollections() != ",")
+        {
+          $tab = explode(',',$rights->getCollections()) ;
+          foreach($tab as $collections)
+          {
+            if($collections != "")
+            {
+              if(!isset($this->widgets[$collections])) $this->widgets[$collections] = array() ;
+              $this->widgets[$collections][] = "<b>".$rights->getGroupName()."</b> (".$rights->getTitlePerso().")" ;
+            }
+          }
+        }
+      }    
+    }    
   }
 }

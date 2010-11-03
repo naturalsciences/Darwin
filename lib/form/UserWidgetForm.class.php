@@ -12,15 +12,18 @@ class UserWidgetForm extends sfForm
 {
   public function configure()
   {
-     $subForm = new sfForm();
-     foreach ($this->options['collection'] as $index=>$record)
-     {
-      $form = new MyWidgetsForm($record,array('level' => $this->options['level']));
-      $subForm->embedForm($index, $form);
-
-     }
-     $this->embedForm('MyWidgets',$subForm);
-     $this->widgetSchema->setNameFormat('user_widget[%s]');
+    $subForm = new sfForm();
+    foreach ($this->options['collection'] as $index=>$record)
+    {
+      if($this->options['level'] == Users::REGISTERED_USER && $record->getCollections() == ',' && $record->getAllPublic() == false ) ;
+      else
+      {
+        $form = new MyWidgetsForm($record,array('level' => $this->options['level']));
+        $subForm->embedForm($index, $form);
+      }
+    }
+    $this->embedForm('MyWidgets',$subForm);
+    $this->widgetSchema->setNameFormat('user_widget[%s]');
   }
 
   public function save()
