@@ -24,12 +24,6 @@ class MySavedSearchesForm extends BaseMySavedSearchesForm
     if(isset($this->options['type']) && $this->options['type']=='pin')
       $default_name = sprintf($this->getI18N()->__("My specimens on %s"),date('Y/m/d H:i:s'));
 
-    if($this->getObject()->isNew())
-      $this->widgetSchema['modification_date_time']->setDefault($this->getI18N()->__('Not Saved Yet'));
-
-    $this->widgetSchema['modification_date_time']->setAttribute('class','medium_size');    
-    $this->widgetSchema['modification_date_time']->setAttribute('disabled','disabled');
-
     if($this->getObject()->getName() == "")
       $this->widgetSchema['name']->setDefault($default_name) ;
 
