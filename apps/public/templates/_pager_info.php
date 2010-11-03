@@ -15,51 +15,39 @@
   $(document).ready(function () {
     $('.publicsearch_form').find(".rec_per_page").change(function (event)
     {
-      event.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: $(this).closest('form').attr('action'),
-        data: $(this).closest('form').serialize(),
-        success: function(html) {
-          $(".search_results_content").html(html);
-          $('.search_results').slideDown();
-        }
-      });
-      
-      $(".search_results_content").html('<img src="/images/loader.gif" />');
+      $(this).closest('form').submit();
     });
 
     $("a.sort").click(function (event)
     {
       event.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: $(this).attr("href"),
-        data: $(this).closest('form').serialize(),
-        success: function(html){
-          $(".search_results_content").html(html);
-          $('.search_results').slideDown();
-        }
-      });
-      $(".search_results_content").html('<img src="/images/loader.gif" />');
-      $(this).closest('form').attr('action', $(this).attr("href"))
+      $('#specimen_search_filters_order_by').val($(this).attr('alt'));
+
+      if( $(this).find('.order_sign_up').length)
+        $('#specimen_search_filters_order_dir').val('asc');
+      else
+        $('#specimen_search_filters_order_dir').val('desc');
+      $(this).closest('form').submit();
     });
   
-    $(".pager a").click(function (event)
+    $(".pager a").click(function (event,data)
     {
-      event.preventDefault();
-      $.ajax({
-        type: "POST",
-        url: $(this).attr("href"),
-        data: $(this).closest('form').serialize(),
-        success: function(html){
-          $(".search_results_content").html(html);
-          $('.search_results').slideDown();
-        }
-      });
-      $(".search_results_content").html('<img src="/images/loader.gif" />');
-    });
+      
+      if (event.which == null)
+       /* IE case */
+        button= (event.button < 2) ? "LEFT" : ((event.button == 4) ? "MIDDLE" : "RIGHT");
+      else
+        /* All others */
+       button= (event.which < 2) ? "LEFT" :
+                 ((event.which == 2) ? "MIDDLE" : "RIGHT");
+      
+      if(button == "MIDDLE"){ /*just do nothing */ return true;}
+      else event.preventDefault();
 
+
+      $('#specimen_search_filters_current_page').val($(this).closest('li').attr('data-page'));
+      $(this).closest('form').submit();
+    });
   });
   </script>
 <?php endif; ?>

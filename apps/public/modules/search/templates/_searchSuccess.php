@@ -1,7 +1,7 @@
 <div>
-  <?php if(isset($search) && $search->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
+  <?php if(isset($search) && $search->count() != 0):?>   
     <?php
-      if($orderDir=='asc')
+      if($form->getValue('order_dir')=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
       else
         $orderSign = '<span class="order_sign_up">&nbsp;&#9650;</span>';
@@ -17,10 +17,9 @@
             <?php foreach($all_columns as $col_name => $col):?>
               <th class="col_<?php echo $col_name;?>">
                 <?php if($col[0] != false):?>
-                  <a class="sort" href="<?php echo url_for($s_url.'&orderby='.$col[0].( ($orderBy==$col[0] && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
-                    $currentPage);?>">
+                  <a class="sort" href="#" alt="<?php echo $col[0];?>">
                     <?php echo $col[1];?>
-                    <?php if($orderBy == $col[0]) echo $orderSign ?>
+                    <?php if($form->getValue('order_by') == $col[0]) echo $orderSign ?>
                   </a>
                 <?php else:?>
                   <?php echo $col[1];?>

@@ -7,7 +7,7 @@
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Search Results');?></h1>    
     <?php include_partial('result_cols', array('columns' => $columns, 'field_to_show' => $field_to_show));?>       
-    <?php echo form_tag('search/searchResult', array('class'=>'publicsearch_form','id'=>'specimen_filter'));?>
+    <?php echo form_tag('search/search', array('class'=>'publicsearch_form','id'=>'specimen_filter'));?>
       <ul id="intro" class="hidden">
         <?php 
           // Render all the form fields as hidden input if possible. if the value is an array or and object render them as usual
@@ -26,11 +26,7 @@
           <?php include_partial('searchSuccess',
                                 array('search' => $search,
                                       'form' => $form, 
-                                      'orderBy' => $orderBy,
-                                      's_url' => $s_url,
-                                      'orderDir' => $orderDir,
                                       'field_to_show' => $field_to_show,
-                                      'currentPage' => $currentPage,
                                       'pagerLayout' => $pagerLayout,
                                       'common_names' => $common_names,
                                       'gtu' => $gtu,

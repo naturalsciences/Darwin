@@ -163,6 +163,18 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
         'add_empty' => false,
     ));
     $this->validatorSchema['stage'] = new sfValidatorPass();
+
+
+
+/** New Pagin System ***/
+    $this->widgetSchema['order_dir'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['order_by'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['order_dir'] = new sfValidatorChoice(array('required' => false, 'choices'=> array('asc','desc'),'empty_value'=>'desc'));
+    $this->validatorSchema['order_by'] = new sfValidatorString(array('required' => false,'empty_value'=>'collection_name'));
+    
+    $this->widgetSchema['current_page'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['current_page'] = new sfValidatorInteger(array('required'=>false,'empty_value'=>1));
+/** New Pagin System ***/
   }
   
   public function addSexColumnQuery($query, $field, $val)
@@ -287,5 +299,10 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $query->andWhere('collection_is_public = true') ;
     $query->limit($this->getCatalogueRecLimits());
     return $query;
+  }
+
+  public function getWithOrderCriteria()
+  {
+    return $this->getQuery()->orderby($this->getValue('order_by') . ' ' . $this->getValue('order_dir').', spec_ref');
   }
 }

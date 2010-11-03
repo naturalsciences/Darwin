@@ -40,75 +40,65 @@ class searchActions extends DarwinActions
   {
     // Initialize the order by and paging values: order by collection_name here
     $this->setCommonValues('search', 'collection_name', $request);
-    // Modify the s_url to call the searchResult action when on result page and playing with pager
-    $this->s_url = 'search/searchResult?back=1' ;  
+
     $this->form = new PublicSearchFormFilter();
     // If the search has been triggered by clicking on the search button or with pinned specimens
-    if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ))
+    if($request->getParameter('specimen_search_filters','') !== '')
     {
-      // Store all post parameters
-      $criterias = $request->getPostParameters(); 
-      $this->form->bind($criterias['specimen_search_filters']) ;    
+      $this->form->bind($request->getParameter('specimen_search_filters')) ;
     }
-    if($this->form->isBound())
+
+    if ($this->form->isBound() && $this->form->isValid() && ! $request->hasParameter('criteria'))
     {
-      if ($this->form->isValid())
-      {        
-        if($request->hasParameter('criteria'))
-        {
-          $this->setTemplate('index');
-          return;
-        }
-        else
-        {                
-          // Define all properties that will be either used by the data query or by the pager
-          // They take their values from the request. If not present, a default value is defined
-          $query = $this->form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
-            $query->orderby($this->orderBy . ' ' . $this->orderDir . ', spec_ref ');
-          $query->groupBy($this->orderBy . ', spec_ref ');
-          // Define in one line a pager Layout based on a pagerLayoutWithArrows object
-          // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-          $pager = new Doctrine_Pager($query,
-            $this->currentPage,
-            $this->form->getValue('rec_per_page')
-          );
-          // Replace the count query triggered by the Pager to get the number of records retrieved
-          $count_q = clone $query;//$pager->getCountQuery();
-          // Remove from query the group by and order by clauses
-          $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
-          //$count_q->select('count( distinct individual_ref)');
-          // Initialize an empty count query
-          $counted = new DoctrineCounted();
-          // Define the correct select count() of the count query
-          $counted->count_query = $count_q;
-          // And replace the one of the pager with this new one
-          $pager->setCountQuery($counted);         
-          
-          // Define in one line a pager Layout based on a pagerLayoutWithArrows object
-          // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-          $this->pagerLayout = new PagerLayoutWithArrows($pager,
-                                                        new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
-                                                        $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-                                                        );
-          // Sets the Pager Layout templates
-          $this->setDefaultPaggingLayout($this->pagerLayout);
-          // If pager not yet executed, this means the query has to be executed for data loading
-          if (! $this->pagerLayout->getPager()->getExecuted())
-            $this->search = $this->pagerLayout->execute();
-          $this->field_to_show = $this->getVisibleColumns($this->form);
-          $this->defineFields();
-          $ids = $this->FecthIdForCommonNames() ;
-          $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;                    
-          if(!count($this->common_names))
-            $this->common_names = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 
-                                        'lithology' => array(),'mineralogy' => array()) ;
-          $listId = array() ;
-          foreach($this->search as $spec)
-             if ($spec->getGtuRef()!=0) $listId[] = $spec->getGtuRef() ;
-          $this->gtu = Doctrine::getTable('Gtu')->getCountries($listId);
-          return;
-        } 
-      }
+
+      // Get the generated query from the filter and add order criterion to the query
+      $query = $this->form->getWithOrderCriteria();
+
+      $query->groupBy($this->form->getValue('order_by') . ', spec_ref ');
+
+      // Define the pager
+      $pager = new Doctrine_Pager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
+
+      // Replace the count query triggered by the Pager to get the number of records retrieved
+      $count_q = clone $query;
+      // Remove from query the group by and order by clauses
+      $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
+      // Initialize an empty count query
+      $counted = new DoctrineCounted();
+      // Define the correct select count() of the count query
+      $counted->count_query = $count_q;
+      // And replace the one of the pager with this new one
+      $pager->setCountQuery($counted);         
+      
+      // Define in one line a pager Layout based on a pagerLayoutWithArrows object
+      // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
+
+      $params = $request->isMethod('post') ? $request->getPostParameters() : $request->getGetParameters();
+
+      unset($params['specimen_search_filters']['current_page']);
+      $this->pagerLayout = new PagerLayoutWithArrows($pager,
+                                                    new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
+                                                    'search/search?specimen_search_filters[current_page]={%page_number}&'.http_build_query($params)
+                                                    );
+      // Sets the Pager Layout templates
+      $this->setDefaultPaggingLayout($this->pagerLayout);
+      $this->pagerLayout->setTemplate('<li data-page="{%page_number}"><a href="{%url}">{%page}</a></li>');
+
+      // If pager not yet executed, this means the query has to be executed for data loading
+      if (! $this->pagerLayout->getPager()->getExecuted())
+        $this->search = $this->pagerLayout->execute();
+      $this->field_to_show = $this->getVisibleColumns($this->form);
+      $this->defineFields();
+      $ids = $this->FecthIdForCommonNames() ;
+      $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;                    
+      if(!count($this->common_names))
+        $this->common_names = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 
+                                    'lithology' => array(),'mineralogy' => array()) ;
+      $listId = array() ;
+      foreach($this->search as $spec)
+          if ($spec->getGtuRef()!=0) $listId[] = $spec->getGtuRef() ;
+      $this->gtu = Doctrine::getTable('Gtu')->getCountries($listId);
+      return;
     }
     $this->setTemplate('index'); 
     if(! $this->form->isBound())
