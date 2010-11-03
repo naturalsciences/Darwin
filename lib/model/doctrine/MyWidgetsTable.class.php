@@ -161,6 +161,7 @@ class MyWidgetsTable extends DarwinTable
             ->from('MyWidgets p')
   		  ->where('p.user_ref = ?', $this->user_ref) ;
      if ($level < Users::MANAGER) $q->andWhere('p.is_available = true') ;
+     if ($level == Users::REGISTERED_USER) $q->andWhere('p.all_public = true');
      $q->orderBy('category,group_name');
    	return $q->execute() ;	
   }
