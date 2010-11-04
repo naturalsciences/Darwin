@@ -12,7 +12,7 @@ class massactionsActions extends DarwinActions
 {
   public function preExecute()
   {
-    if($this->getUser()->isAtLeast(Users::ENCODER))
+    if(! $this->getUser()->isAtLeast(Users::ENCODER))
     {
       $this->forwardToSecureAction();
     }
