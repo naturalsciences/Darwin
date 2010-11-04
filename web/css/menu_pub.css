@@ -169,7 +169,7 @@
 
 .login_error
 {
-  color:#FF3730;
+  color:red;
   font-weight:bold;
   text-shadow: white 1px 1px 1px;
   text-align:right;

@@ -37,7 +37,7 @@
 		</td>
 		<td class="basio_cell">
 		  <?php if($group_name != "homonym"):?>
-		    <a href="#" <?php if($synonym['is_basionym']):?> class="checked"<?php endif;?>></a>
+		    <?php if($synonym['is_basionym']) echo image_tag('checkbox_checked.png') ; else echo image_tag('checkbox_unchecked.png') ;?>
 		  <?php endif;?>
 		</td>
 	      </tr>

@@ -20,6 +20,7 @@ class CatalogueLevelsTable extends DarwinTable
     {
       $q->addWhere('cl.level_type = ?', $parameters['table']);
     }
+    $q->addOrderBy('cl.id') ;
     return $q->execute();
   }
 }
