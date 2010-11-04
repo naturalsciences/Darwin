@@ -53,7 +53,7 @@
               </td>
               <td rowspan="2">
                 <?php if($source != 'part'):?>
-                  <?php $expandable=($source=='specimen')?$specimen->getWithIndividuals():$specimen->getWithParts();?>
+                  <?php $expandable = ($source=='specimen') ? $specimen->getWithIndividuals() : $specimen->getWithParts();?>
                   <?php if($expandable):?>
                     <?php echo image_tag('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td collapsed')); ?>
                     <?php echo image_tag('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd_td expanded')); ?>
@@ -101,7 +101,7 @@
                   default:           $v_link = 'parts/view?id='.$specimen->getPartRef();break;
                   };?>
               <?php endif ; ?>
-              <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>              
+              <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>
               </td>
             </tr>
 
@@ -129,6 +129,8 @@
                   </script>
                 </td>
               </tr>
+            <?php elseif($source == 'specimen'):?>
+              <tr class="ind_row sub_row"><td colspan="14"></td></tr>
             <?php elseif($source == 'individual' && $specimen->getWithParts()):?>
               <tr id="tr_part_<?php echo $specimen->getIndividualRef();?>" class="part_row sub_row">
                 <td colspan="14"> 
@@ -153,8 +155,8 @@
                   </script>
                 </td>
               </tr>
-            <?php else:?>
-              <tr id="tr_part_<?php echo $specimen->getPartRef();?>" class="sub_row">
+            <?php else: // if source = individual but with no parts ?>
+              <tr class="part_row sub_row">
                 <td colspan="14"></td>
               </tr>
             <?php endif;?>

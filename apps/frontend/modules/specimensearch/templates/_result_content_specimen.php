@@ -89,7 +89,7 @@
               });
             });
           </script>
-          <?php if ($action == 'edit') : ?>              
+          <?php if ($action == 'edit') : ?>
             <a href="<?php echo url_for('gtu/'.$action.'?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
           <?php else : ?>
             <?php echo $specimen->getGtuCode();?>
@@ -108,6 +108,7 @@
 
       <?php endif ; ?>
     </td> 
+
     <td class="col_codes">
       <?php if(isset($codes[$specimen->getSpecRef()])):?>
         <?php if(count($codes[$specimen->getSpecRef()]) <= 3):?>
