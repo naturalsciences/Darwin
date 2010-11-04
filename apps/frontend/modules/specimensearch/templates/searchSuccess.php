@@ -8,7 +8,7 @@
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Specimens Search Result');?></h1>
     <?php echo form_tag('specimensearch/searchResult'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'specimensearch_form','id'=>'specimen_filter'));?>
-      d<ul id="intro" class="hidden">
+      <ul id="intro" class="hidden">
         <?php 
         // Render all the form fields as hidden input if possible. if the value is an array or and object render them as usual
         foreach($form as $row)
@@ -20,7 +20,7 @@
           else
             echo '<li>'.$row.'</li>';
         }?>
-      </ul>d
+      </ul>
       <div class="search_results">
         <div class="search_results_content">
           <?php include_partial('searchSuccess',
