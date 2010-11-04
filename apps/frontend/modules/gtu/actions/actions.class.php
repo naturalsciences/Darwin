@@ -20,6 +20,7 @@ class gtuActions extends DarwinActions
 
   public function executeIndex(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
     $this->form = new GtuFormFilter();
     $this->form->addValue(0);
   }
@@ -72,6 +73,7 @@ class gtuActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();    
     $gtu = new Gtu() ;
     $duplic = $request->getParameter('duplicate_id','0');
     $gtu = $this->getRecordIfDuplicate($duplic, $gtu);
@@ -106,6 +108,7 @@ class gtuActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();      
     $this->forward404Unless($gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id')), sprintf('Object gtu does not exist (%s).', $request->getParameter('id')));
     $this->no_right_col = Doctrine::getTable('Gtu')->testNoRightsCollections('gtu_ref',$request->getParameter('id'), $this->getUser()->getId());
 
@@ -126,6 +129,7 @@ class gtuActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();    
     $request->checkCSRFProtection();
 
     $this->forward404Unless($gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id')), sprintf('Object gtu does not exist (%s).', $request->getParameter('id')));

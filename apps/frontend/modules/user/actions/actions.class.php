@@ -25,10 +25,13 @@ class userActions extends DarwinActions
     $this->forward404Unless($this->user, sprintf('User does not exist (%s).', $request->getParameter('id')));
     if($this->getUser()->getId() == $this->user->getId() && !$request->isMethod('post')) 
       $this->redirect('user/profile'); 
-    if($this->getUser()->getDbUserType() < Users::MANAGER) 
-      $this->forwardToSecureAction();
-    elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
-      $this->forwardToSecureAction();
+    if($request->isMethod('get'))
+    {
+      if($this->getUser()->getDbUserType() < Users::MANAGER) 
+        $this->forwardToSecureAction();
+      elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
+        $this->forwardToSecureAction();
+    }
     $this->mode = 'edit' ;
     $this->form = new UsersForm($this->user, array('mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
     $users = $request->getParameter('users');
