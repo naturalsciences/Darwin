@@ -104,9 +104,9 @@
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>
     </ul>
 </div>
-<!--<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<?php echo javascript_include_tag('map.js'); ?>-->
+<?php echo javascript_include_tag('map.js'); ?>
 <script  type="text/javascript">
 
 $(document).ready(function () {

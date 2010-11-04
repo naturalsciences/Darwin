@@ -19,6 +19,11 @@ class CollectionsTable extends DarwinTable
         $q->leftJoin('col.CollectionsRights r ON col.id=r.collection_ref AND r.user_ref = '.$user->getId())
           ->andWhere('r.id is not null OR col.is_public = TRUE');
       }
+      elseif(!$user)
+      {
+         $q->leftJoin('col.CollectionsRights r ON col.id=r.collection_ref AND r.user_ref = -1');
+      }
+
 
       if($public_only)
         $q->andWhere('col.is_public = TRUE');
