@@ -117,6 +117,14 @@ class DarwinTable extends Doctrine_Table
 		return $q->execute() ; 
   }
 
+  /** Search in flat specimens with a given value ($unit_id) for a field (field_name)
+   * if a there is at least on collections matching criterias where you don't have rights to encod, 
+   * return collections ids
+   * @param string $field_name field of the darwin_flat
+   * @param int $unit_id An field value
+   * @param int $user_id the id of the user to test
+   * @return an array of collections where you do not have rights
+  **/
   public function testNoRightsCollections($field_name, $unit_id, $user_id)
   {
     $q = Doctrine_Query::create()
