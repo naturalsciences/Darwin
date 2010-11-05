@@ -32,8 +32,8 @@
         <?php foreach($search as $specimen):?>
           <tbody>
             <tr>
-              <td>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef(),array('popup' => true));?>
+              <td style="vertical-align:middle;">
+                  <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef(),array('popup' => true));?>
               </td>
               <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'id' => $i++, 'gtu' => $gtu)); ?>
               <?php include_partial('tagCommonName',array('common_names'=>$common_names->getRawValue(), 'spec'=> $specimen)) ; ?>
