@@ -49,6 +49,20 @@ $(document).ready(function () {
     </td><td>
       <ul class="column_menu">
         <li>
+          <div class="cols_title">&nbsp;</div>
+          <ul id="specimen_cols">
+            <?php foreach($columns['common_name'] as $col_name => $col):?>
+              <li class="<?php echo $field_to_show[$col_name]; ?>" id="li_<?php echo $col_name;?>">
+                <span class="<?php echo($field_to_show[$col_name]=='uncheck'?'hidden':''); ?>">&#10003;</span><span class="<?php echo($field_to_show[$col_name]=='uncheck'?'':'hidden'); ?>">&#10007;</span>
+                &nbsp;<?php echo $col[1];?>
+              </li>
+            <?php endforeach;?>
+          </ul>
+        </li>
+     </ul>  
+    </td><td>    
+      <ul class="column_menu">
+        <li>
           <div class="cols_title"><?php echo __('Individual');?></div>
           <ul id="specimen_cols">
             <?php foreach($columns['individual'] as $col_name => $col):?>

@@ -199,8 +199,8 @@ class searchActions extends DarwinActions
         'expedition_name_indexed',
         $this->getI18N()->__('Expedition'),),
     );
-
-    $this->columns['individual'] = array(
+    
+    $this->columns['common_name'] = array(
       'taxon_common_name' => array(
         false,
         $this->getI18N()->__('Taxon common name'),),      
@@ -215,7 +215,10 @@ class searchActions extends DarwinActions
         $this->getI18N()->__('Lithologic common name'),),
       'mineral_common_name' => array(
         false,
-        $this->getI18N()->__('Mineral common name'),),      
+        $this->getI18N()->__('Mineral common name'),), 
+    );      
+
+    $this->columns['individual'] = array(     
       'individual_type' => array(
         'individual_type_search',
         $this->getI18N()->__('Type'),),        

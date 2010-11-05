@@ -12,7 +12,7 @@
         <thead>
           <tr>
             <th></th>
-            <?php $all_columns = $columns->getRaw('specimen') + $columns->getRaw('individual') ;?>
+            <?php $all_columns = $columns->getRaw('specimen') + $columns->getRaw('common_name') + $columns->getRaw('individual') ;?>
 
             <?php foreach($all_columns as $col_name => $col):?>
               <th class="col_<?php echo $col_name;?>">
