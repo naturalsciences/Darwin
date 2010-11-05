@@ -139,8 +139,14 @@ div#login_arrow_middle_white
 .line
 {
   display:block;
-  padding:0.2em; 
   vertical-align: top;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+
+td.line, table.caract_table td, table.classification td
+{
+  padding:0.2em; 
 }
 
 .framed
@@ -220,7 +226,6 @@ h2.title
 form.publicsearch_form input:focus
 {
   border:1px inset #3390a1;
-    
 }
 
 input[type="submit"][class="search_submit"],input[type="button"][class="result"]
@@ -514,7 +519,7 @@ ul.column_menu:hover
   -webkit-border-radius: 5px;
   vertical-align: top;
   width:100%;
-  min-width: 1024px ;
+  min-width: 996px ;
   border: 1px solid #5BAABD;
   clear:both;
 }
@@ -726,4 +731,19 @@ input.required_field:focus
 input#login_username:focus, input#login_password:focus
 {
   border-color:white;
+}
+
+.right_aligned
+{
+  text-align:right;
+}
+
+.top_aligned
+{
+  vertical-align:top !important;
+}
+
+.right_padded
+{
+  padding-right:0.4em;
 }

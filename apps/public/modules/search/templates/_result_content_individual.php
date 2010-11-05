@@ -18,7 +18,7 @@
 <td class="col_rock_form">
   <?php echo ($specimen->getIndividualRockForm()=="not applicable")?"":ucfirst($specimen->getIndividualRockForm());?>
 </td> 
-<td class="col_individual_count">
+<td class="col_individual_count right_aligned">
   <?php if($specimen->getIndividualCountMin() != $specimen->getIndividualCountMax()):?>
     <?php echo $specimen->getIndividualCountMin() . ' - '.$specimen->getIndividualCountMax();?>
   <?php else:?>

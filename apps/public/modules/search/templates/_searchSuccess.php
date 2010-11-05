@@ -15,7 +15,7 @@
             <?php $all_columns = $columns->getRaw('specimen') + $columns->getRaw('common_name') + $columns->getRaw('individual') ;?>
 
             <?php foreach($all_columns as $col_name => $col):?>
-              <th class="col_<?php echo $col_name;?>">
+              <th class="col_<?php echo $col_name;?><?php echo ($col_name == 'individual_count')?' right_aligned':'';?>">
                 <?php if($col[0] != false):?>
                   <a class="sort" href="#" alt="<?php echo $col[0];?>">
                     <?php echo $col[1];?>

@@ -1,15 +1,16 @@
 <?php slot('title', __('View Specimens'));  ?>  
 
 <div class="page viewer">
-  <h2 class="title"><?php echo __("Darwin Specimen") ?></h2>
-  <div class="borded  padded">
+  <h1><?php echo __("Darwin Specimen ");?></h1>
+  <h2 class="title"><?php echo __("Fiche") ?></h2>
+  <div class="borded padded">
     <h2 class="title"><?php echo __("Collection") ?></h2>  
-    <div class="borded">
+    <div class="borded right_padded">
       <table>
         <tbody>
           <tr>
             <td class="line">
-                <?php echo __("Name") ; ?>: <span class="pager_nav"><?php echo $specimen->getCollectionName() ; ?></span>
+                <span class="pager_nav"><?php echo __("Name") ; ?>: </span><span><?php echo $specimen->getCollectionName() ; ?></span>
                 <?php echo image_tag('info.png',"title=info class=info id=collection_info");?>
               <div id="collection_tree" class="tree"></div>
                 <script type="text/javascript">
@@ -26,16 +27,16 @@
                 </script>
               </div>
               <div class="line">
-                <?php echo __("Institution") ; ?>: <span class="pager_nav"><?php echo $institute->getFamilyName() ; ?></span>
+                <span class="pager_nav"><?php echo __("Institution") ; ?>: </span><span><?php echo $institute->getFamilyName() ; ?></span>
                 <?php if ($institute->getAdditionalNames()) : ?>
-                  (<span class="pager_nav"><?php echo $institute->getAdditionalNames() ; ?></span>)
+                  (<span><?php echo $institute->getAdditionalNames() ; ?></span>)
                 <?php endif ; ?>
               </div>            
             </td>
             <td>
               <div class="tree_view">
                 <span class="line">
-                <?php echo __("Collection manager") ; ?>: <span class="pager_nav"><?php echo $specimen->getCollectionMainManagerFormatedName() ; ?></span>
+                <span class="pager_nav"><?php echo __("Collection manager") ; ?>: </span><span><?php echo $specimen->getCollectionMainManagerFormatedName() ; ?></span>
                 </span>
                 <?php foreach($manager as $info) : ?>
                   <?php if($img = $info->getDisplayImage(1)) : ?>
@@ -53,7 +54,7 @@
     </div>    
     <?php if(count($common_names)) : ?>
     <h2 class="title"><?php echo __("Common Names") ?></h2>  
-    <div class="borded">    
+    <div class="borded right_padded">    
       <table class="classification">
         <thead>
           <tr>
@@ -70,7 +71,7 @@
     <?php endif ; ?>
     <?php if($specimen->getTaxonRef() || $specimen->getChronoRef() || $specimen->getLithoRef() || $specimen->getMineralRef() || $specimen->getLithologyRef()):?>
     <h2 class="title"><?php echo __("Classifications") ?></h2>  
-    <div class="borded">        
+    <div class="borded right_padded">        
       <table>
         <thead>
           <tr>
@@ -82,11 +83,11 @@
         <?php if($specimen->getTaxonRef()) : ?>
           <tr>
             <td class="line">
-              <?php echo __("Taxonomy") ; ?>: <span class="pager_nav"><?php echo $specimen->getTaxonName() ; ?></span>
+              <span class="pager_nav"><?php echo __("Taxonomy") ; ?>: </span><span><?php echo $specimen->getTaxonName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=taxon_info");?>
             </td>
             <td class="view_level">
-              <span class="pager_nav"><?php echo $specimen->getTaxonLevelName() ; ?></span>
+              <span><?php echo $specimen->getTaxonLevelName() ; ?></span>
             </td>
           </tr>
           <tr>
@@ -112,11 +113,11 @@
         <?php if($specimen->getChronoRef()) : ?>
           <tr>
             <td class="line">
-              <?php echo __("Chronostatigraphy") ; ?>: <span class="pager_nav"><?php echo $specimen->getChronoName() ; ?></span>
+              <span class="pager_nav"><?php echo __("Chronostatigraphy") ; ?>: </span><span><?php echo $specimen->getChronoName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=chrono_info");?>
             </td>
             <td>
-              <span class="pager_nav"><?php echo $specimen->getChronoLevelRef() ; ?></span>
+              <span><?php echo $specimen->getChronoLevelRef() ; ?></span>
             </td>
           </tr>
           <tr>
@@ -141,11 +142,11 @@
         <?php if($specimen->getLithoRef()) : ?>
           <tr>
             <td class="line">
-              <?php echo __("Lithostatigraphy") ; ?>: <span class="pager_nav"><?php echo $specimen->getLithoName() ; ?></span>
+              <span class="pager_nav"><?php echo __("Lithostatigraphy") ; ?>: </span><span><?php echo $specimen->getLithoName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=litho_info");?>
             </td>
             <td>
-              <span class="pager_nav"><?php echo $specimen->getLithoLevelRef() ; ?></span>
+              <span><?php echo $specimen->getLithoLevelRef() ; ?></span>
             </td>
           </tr>
           <tr>
@@ -170,11 +171,11 @@
         <?php if($specimen->getLithologyRef()) : ?>
           <tr>
             <td class="line">
-              <?php echo __("Lithology") ; ?>: <span class="pager_nav"><?php echo $specimen->getLithologyName() ; ?></span>
+              <span class="pager_nav"><?php echo __("Lithology") ; ?>: </span><span><?php echo $specimen->getLithologyName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=lithology_info");?>
             </td>
             <td>
-              <span class="pager_nav"><?php echo $specimen->getLithologyLevelRef() ; ?></span>
+              <span><?php echo $specimen->getLithologyLevelRef() ; ?></span>
             </td>
           </tr>
           <tr>
@@ -199,11 +200,11 @@
         <?php if($specimen->getMineralRef()) : ?>
           <tr>
             <td class="line">
-              <?php echo __("Mineralogy") ; ?>: <span class="pager_nav"><?php echo $specimen->getMineralName() ; ?></span>
+              <span class="pager_nav"><?php echo __("Mineralogy") ; ?>: </span><span><?php echo $specimen->getMineralName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=mineral_info");?>
             </td>
             <td>
-              <span class="pager_nav"><?php echo $specimen->getMineralLevelRef() ; ?></span>
+              <span><?php echo $specimen->getMineralLevelRef() ; ?></span>
             </td>
           </tr>
           <tr>
@@ -230,11 +231,11 @@
     </div>
     <?php endif;?>
     <h2 class="title"><?php echo __("Specimen Characteristics") ?></h2>  
-    <div class="borded">        
+    <div class="borded right_padded">        
       <table class="caract_table">
         <tr>
-          <td><?php echo __("Number of individual") ; ?> :</td>
-          <td><span class="pager_nav">
+          <td><span class="pager_nav"><?php echo __("Number of individual") ; ?> :</span></td>
+          <td><span>
             <?php if($specimen->getIndividualCountMin() == $specimen->getIndividualCountMax()) 
                 echo ($specimen->getIndividualCountMin()==""?"-":$specimen->getIndividualCountMin()) ;
               else
@@ -243,25 +244,25 @@
           </td>
         </tr>
         <tr>
-          <td><?php echo __("Type") ; ?> :</td>
+          <td><span class="pager_nav"><?php echo __("Type") ; ?> :</span></td>
           <td>
-            <span class="pager_nav"><?php echo ($specimen->getIndividualTypeSearch()=="undefined"?"-":$specimen->getIndividualTypeSearch()) ; ?></span>
+            <span><?php echo ($specimen->getIndividualTypeSearch()=="undefined"?"-":$specimen->getIndividualTypeSearch()) ; ?></span>
           </td>
         </tr>
         <tr>
-          <td><?php echo __("Sex") ; ?> :</td>
+          <td><span class="pager_nav"><?php echo __("Sex") ; ?> :</span></td>
           <td>
-            <span class="pager_nav"><?php echo ($specimen->getIndividualSex()=="undefined"?"-":$specimen->getIndividualSex()) ; ?></span>
+            <span><?php echo ($specimen->getIndividualSex()=="undefined"?"-":$specimen->getIndividualSex()) ; ?></span>
           </td>
         </tr>
         <tr>
-          <td><?php echo __("Stage") ; ?> :</td>
+          <td><span class="pager_nav"><?php echo __("Stage") ; ?> :</span></td>
           <td>
-            <span class="pager_nav"><?php echo ($specimen->getIndividualStage()=="undefined"?"-":$specimen->getIndividualStage()) ; ?></span>
+            <span><?php echo ($specimen->getIndividualStage()=="undefined"?"-":$specimen->getIndividualStage()) ; ?></span>
           </td>
         </tr>
         <tr>
-          <td><?php echo __("Country(ies)") ; ?> :</td>
+          <td><span class="pager_nav"><?php echo __("Country") ; ?> :</span></td>
           <td>
             <?php if($tags) : ?> 
             <ul class="country_tags">
@@ -271,7 +272,7 @@
               <?php endforeach;?>
             </ul>
             <?php else : ?>
-              <span class="pager_nav">-</span>
+              <span>-</span>
             <?php endif ; ?>
           </td>
         </tr>
