@@ -577,11 +577,23 @@ fieldset.opened
 {
   border: 1px solid #5BAABD ;
   cursor : pointer ;
+  padding:0.5em;
 }
 
 fieldset.closed
 {
   cursor : pointer ;
+}
+
+fieldset
+{
+  margin-bottom:0.5em;
+}
+
+fieldset legend
+{
+  color: #3390A1;
+  font-weight:600;
 }
 
 #fld_spec table
@@ -597,6 +609,7 @@ fieldset.closed
 .cols_title
 {
   font-weight:bold;
+  margin-bottom: 0.4em;
 }
 
 .column_menu ul > li 
@@ -661,6 +674,8 @@ li.uncheck span
 img.clear_prop, img.tree_cmd
 {
   cursor:pointer;
+  vertical-align:middle;
+  margin-top:-0.1em;
 }
 
 /* Input text sizes */
