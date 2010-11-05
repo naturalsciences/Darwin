@@ -12,18 +12,8 @@ class searchActions extends DarwinActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->form = new PublicSearchFormFilter();
-    $this->form->addGtuTagValue(0);    
+    $this->form = new PublicSearchFormFilter();   
   }
-
-  public function executeAndSearch(sfWebRequest $request)
-  {
-    $number = intval($request->getParameter('num'));
-
-    $form = new PublicSearchFormFilter();
-    $form->addGtuTagValue($number);
-    return $this->renderPartial('andSearch',array('form' => $form['Tags'][$number], 'row_line'=>$number));
-  } 
   
   public function executePurposeTag(sfWebRequest $request)
   {
@@ -101,8 +91,6 @@ class searchActions extends DarwinActions
       return;
     }
     $this->setTemplate('index'); 
-    if(! $this->form->isBound())
-      $this->form->addGtuTagValue(0);
   }   
   
   public function executeSearchResult(sfWebRequest $request)

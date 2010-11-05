@@ -6,7 +6,9 @@
     
   <div class="page" id="search_div">
     <h1 id="title"><?php echo __('Search Results');?></h1>    
-    <?php include_partial('result_cols', array('columns' => $columns, 'field_to_show' => $field_to_show));?>       
+    <?php if(isset($search) && $search->count() != 0):?> 
+      <?php include_partial('result_cols', array('columns' => $columns, 'field_to_show' => $field_to_show));?>       
+    <?php endif ; ?>
     <?php echo form_tag('search/search', array('class'=>'publicsearch_form','id'=>'specimen_filter'));?>
       <ul id="intro" class="hidden">
         <?php 

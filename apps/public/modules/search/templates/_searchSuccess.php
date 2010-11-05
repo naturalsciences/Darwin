@@ -44,7 +44,13 @@
       </table>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php else:?>
-    <?php echo __('No Specimen Matching');?>
+  <table class="spec_results">
+    <tbody>
+      <tr>
+        <th><?php echo __('No Specimen Matching');?></th>
+      </tr>
+    </tbody>
+  </table>
   <?php endif;?>
 </div>
 <script type="text/javascript">

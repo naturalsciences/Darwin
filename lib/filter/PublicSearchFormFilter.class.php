@@ -127,10 +127,8 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                 );
     $this->validatorSchema['mineral_level_ref'] = new sfValidatorInteger(array('required' => false));
 
-    $subForm = new sfForm();
-    $this->embedForm('Tags',$subForm);   
-    $this->widgetSchema['tags'] = new sfWidgetFormInputText();    
-    $this->validatorSchema['tags'] = new sfValidatorString(array('required' => false, 'trim' => true));    
+    $this->setWidget('tags',new sfWidgetFormTextarea(array(),  array('class' => 'tag_line')));
+    $this->setValidator('tags', new sfValidatorString(array('required' => false, 'trim' => true)) );
    
     $this->widgetSchema['type'] = new sfWidgetFormDoctrineChoice(array(
         'model' => 'SpecimenIndividuals',
@@ -212,44 +210,6 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     }
     return $query ;
   }    
-  public function addTagsColumnQuery($query, $field, $val)
-  {
-    $alias = $query->getRootAlias();
-    $conn_MGR = Doctrine_Manager::connection();
-    $tagList = '';
-    foreach($val as $line)
-    {
-      $line_val = $line['tag'];
-      if( $line_val != '')
-      {
-        $tagList = $conn_MGR->quote($line_val, 'string');
-        $query->andWhere("gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)");
-      }
-    }
-    return $query ;
-  }   
-  public function addGtuTagValue($num)
-  {
-      $form = new TagLineForm(null, array('num' => $num));
-      $this->embeddedForms['Tags']->embedForm($num, $form);
-      $this->embedForm('Tags', $this->embeddedForms['Tags']);
-  }
-  
-  public function bind(array $taintedValues = null, array $taintedFiles = null)
-  {
-    if(isset($taintedValues['Tags'])&& is_array($taintedValues['Tags']))
-    {
-      foreach($taintedValues['Tags'] as $key=>$newVal)
-      {
-        if (!isset($this['Tags'][$key]))
-        {
-          $this->addGtuTagValue($key);
-        }
-      }
-    }
-    else $this->offsetUnset('Tags') ;
-    parent::bind($taintedValues, $taintedFiles);
-  }
 
   public function addCollectionRefColumnQuery($query, $field, $val)
   {
@@ -297,6 +257,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['lithology_name'],null,'lithology_name_indexed');    
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['mineral_name'],null,'mineral_name_indexed');           
     $query->andWhere('collection_is_public = true') ;
+    if($values['tags'] != '') $query->andWhere("gtu_tag_values_indexed && getTagsIndexedAsArray(?)",$values['tags']);   
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }

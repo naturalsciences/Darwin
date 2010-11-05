@@ -21,7 +21,7 @@
         };
 
         base.duplicateItem = function(event)
-        {
+        {        
           self = this;
           event.preventDefault();
           scroll(0,0);
@@ -65,7 +65,7 @@
                 else
                 {
                   new_link = $(self).attr('href') + element_name ;
-                  $(location).attr('href',new_link);
+                  document.location.href = new_link;
                 }
               }
             }
