@@ -50,6 +50,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeAddTool(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Test well action is Ajaxly called and that value parameter exist
     $this->forward404Unless($request->isMethod(sfRequest::POST) 
                             && $request->isXmlHttpRequest() 
@@ -191,6 +192,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Forward to a 404 page if notion is not defined as tool or method
     $this->forward404Unless($request->getParameter('notion','')=='method' || $request->getParameter('notion','')=='tool');
     // Get duplicate id parameter
@@ -249,6 +251,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Forward to a 404 page if notion is not defined as tool or method
     $this->forward404Unless($request->getParameter('notion','')=='method' || $request->getParameter('notion','')=='tool');
     // Set notion parameter
@@ -328,6 +331,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Trigger the protection against the XSS attack
     $request->checkCSRFProtection();
     // Forward to a 404 page if the expedition to be deleted has not been found

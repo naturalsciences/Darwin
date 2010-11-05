@@ -52,7 +52,7 @@
   <table id="coll_and_countries">
     <tbody>
       <tr>
-        <td colspan="2">
+        <td>
           <div class="small_space_right">
             <h2 class="title"><?php echo __("Collections") ?></h2>
             <div class="borded framed">

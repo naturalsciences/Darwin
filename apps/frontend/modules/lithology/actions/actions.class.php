@@ -22,6 +22,7 @@ class lithologyActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless(
       $unit = Doctrine::getTable('Lithology')->findExcept($request->getParameter('id')),
       sprintf('Object lithology does not exist (%s).', array($request->getParameter('id')))
@@ -45,6 +46,7 @@ class lithologyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $litho = new Lithology() ;
     $duplic = $request->getParameter('duplicate_id','0');
     $litho = $this->getRecordIfDuplicate($duplic, $litho);
@@ -60,6 +62,7 @@ class lithologyActions extends DarwinActions
     
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $unit = Doctrine::getTable('Lithology')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->no_right_col = Doctrine::getTable('Lithology')->testNoRightsCollections('lithology_ref',$request->getParameter('id'), $this->getUser()->getId());

@@ -63,6 +63,7 @@ class institutionActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $instit = new Institutions() ;
     $instit = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $instit);
     $this->form = new InstitutionsForm($instit);
@@ -70,6 +71,7 @@ class institutionActions extends DarwinActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
     $this->form = new InstitutionsForm();
@@ -81,6 +83,7 @@ class institutionActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     $this->form = new InstitutionsForm($institution);
     $this->loadWidgets();
@@ -88,6 +91,7 @@ class institutionActions extends DarwinActions
 
   public function executeUpdate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     $this->form = new InstitutionsForm($institution);
@@ -100,7 +104,7 @@ class institutionActions extends DarwinActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction(); 
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     try{
         $institution->delete();
@@ -119,6 +123,7 @@ class institutionActions extends DarwinActions
 
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
+  
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {

@@ -22,6 +22,7 @@ class mineralogyActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless(
       $unit = Doctrine::getTable('Mineralogy')->findExcept($request->getParameter('id')),
       sprintf('Object mineralogy does not exist (%s).', array($request->getParameter('id')))
@@ -45,6 +46,7 @@ class mineralogyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $mineral = new Mineralogy() ;
     $mineral = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $mineral);
     $this->form = new MineralogyForm($mineral);
@@ -59,6 +61,7 @@ class mineralogyActions extends DarwinActions
     
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $unit = Doctrine::getTable('Mineralogy')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->no_right_col = Doctrine::getTable('Mineralogy')->testNoRightsCollections('mineral_ref',$request->getParameter('id'), $this->getUser()->getId());

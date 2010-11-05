@@ -22,6 +22,7 @@ class chronostratigraphyActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless(
       $unit = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id')),
       sprintf('Object chronostratigraphy does not exist (%s).', array($request->getParameter('id')))
@@ -46,6 +47,7 @@ class chronostratigraphyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $chrono = new Chronostratigraphy();
     $duplic = $request->getParameter('duplicate_id','0');    
     $chrono = $this->getRecordIfDuplicate($duplic, $chrono);
@@ -62,6 +64,7 @@ class chronostratigraphyActions extends DarwinActions
     
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $unit = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->no_right_col = Doctrine::getTable('Chronostratigraphy')->testNoRightsCollections('chrono_ref',$request->getParameter('id'), $this->getUser()->getId());

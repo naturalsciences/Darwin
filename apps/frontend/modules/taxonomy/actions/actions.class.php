@@ -22,7 +22,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
     $this->forward404Unless(
       $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
       sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
@@ -46,7 +46,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     $taxa = new Taxonomy() ;
     $taxa = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $taxa);
     // if there is no duplicate $taxa is an empty array
@@ -55,7 +55,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeCreate(sfWebRequest $request)
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     $this->form = new TaxonomyForm();
     $this->processForm($request,$this->form);
     $this->setTemplate('new');
@@ -63,7 +63,7 @@ class taxonomyActions extends DarwinActions
     
   public function executeEdit(sfWebRequest $request)
   {
-    if($request->getParameter('id') < 1 || $this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();
+    if($request->getParameter('id') < 1 || $this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id'));
 
     $this->no_right_col = Doctrine::getTable('Taxonomy')->testNoRightsCollections('taxon_ref',$request->getParameter('id'), $this->getUser()->getId());
@@ -77,6 +77,7 @@ class taxonomyActions extends DarwinActions
 
   public function executeUpdate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
 
     $this->forward404Unless($taxa,'Taxa not Found');
@@ -94,11 +95,12 @@ class taxonomyActions extends DarwinActions
   {
     $this->setLevelAndCaller($request);
     $this->searchForm = new TaxonomyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;    
+    $this->user_allowed = ($this->getUser()->isA(Users::REGISTERED_USER)?false:true) ;    
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $form->bind( $request->getParameter($form->getName()) );
     if ($form->isValid())
     {

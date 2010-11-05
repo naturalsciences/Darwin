@@ -37,6 +37,7 @@ class igsActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $igs = new igs() ;
     $igs = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $igs);
     $this->form = new igsForm($igs);
@@ -55,6 +56,7 @@ class igsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless($igs = Doctrine::getTable('Igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
     $this->no_right_col = Doctrine::getTable('Igs')->testNoRightsCollections('ig_ref',$request->getParameter('id'), $this->getUser()->getId());
     $this->form = new igsForm($igs);
@@ -75,7 +77,7 @@ class igsActions extends DarwinActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction(); 
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
     try
     {

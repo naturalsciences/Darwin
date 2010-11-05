@@ -70,6 +70,7 @@ class peopleActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $people = new People() ;
     $people = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $people);
     $this->form = new PeopleForm($people);
@@ -88,6 +89,7 @@ class peopleActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
     $this->loadWidgets();
@@ -106,6 +108,7 @@ class peopleActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $request->checkCSRFProtection();
 
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
@@ -267,19 +270,19 @@ class peopleActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('people_relationships'));
-	if($this->form->isValid())
-	{
-	  try {
-	    $this->form->save();
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-	    $e = new DarwinPgErrorParser($ne);
-	    return $this->renderText($e->getMessage());
-	  }
-	}
+	    $this->form->bind($request->getParameter('people_relationships'));
+	    if($this->form->isValid())
+	    {
+	      try {
+	        $this->form->save();
+	        return $this->renderText('ok');
+	      }
+	      catch(Doctrine_Exception $ne)
+	      {
+	        $e = new DarwinPgErrorParser($ne);
+	        return $this->renderText($e->getMessage());
+	      }
+	    }
     }
   }
   
