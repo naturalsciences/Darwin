@@ -181,6 +181,7 @@ ul.spec_error_list, ul.error_list
 {
   margin-left: 0.3em;
   padding-left: 0.2em;
+  padding-bottom: 0.2em;
   border-bottom: 1px dashed #878988;
 }
 
@@ -1262,6 +1263,13 @@ table.encoding tbody .widget_row_delete
 .clear_prop, .clear_code, .clear_identification, .clear_identifier
 {
   cursor:pointer;
+}
+
+img.clear_prop, img.tree_cmd, img.extd_info
+{
+  cursor:pointer;
+  vertical-align:middle;
+  margin-top:-0.1em;
 }
 
 .merge_question div, .warn_message

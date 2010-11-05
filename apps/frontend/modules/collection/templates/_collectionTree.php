@@ -53,8 +53,8 @@ $(document).ready(function () {
           <?php if(! $is_choose ):?>
              <?php echo image_tag('info.png',array('title'=>'info','class'=>'extd_info','data-manid'=>$col_item->getMainManagerRef()));?>
             <?php if($sf_user->isA(Users::ADMIN) || ( $sf_user->isAtLeast(Users::MANAGER) && $col_item->getTypeInCol() >= Users::MANAGER  ) ):?>
-              <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$col_item->getId());?>
-              <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$col_item->getId());?>
+              <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection', 'style'=>'vertical-align:middle;')),'collection/edit?id='.$col_item->getId());?>
+              <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection', 'style'=>'vertical-align:middle;')),'collection/new?duplicate_id='.$col_item->getId());?>
             <?php endif ; ?>
           <?php endif ; ?>
           </span></div>
