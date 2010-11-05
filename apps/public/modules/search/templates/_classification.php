@@ -21,7 +21,7 @@
                 <?php $first=false ; ?>
               <?php endif ; ?>
               <td><?php echo $community ?></td>
-              <td><?php echo $name ; ?></td>
+              <td><?php echo $name; ?></td>
               </tr>
               <?php endforeach ; ?>
             <?php endif ; ?>

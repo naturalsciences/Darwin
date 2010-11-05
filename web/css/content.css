@@ -742,3 +742,8 @@ input#login_username:focus, input#login_password:focus
 {
   vertical-align:top !important;
 }
+
+.right_padded
+{
+  padding-right:0.4em;
+}

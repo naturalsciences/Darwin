@@ -3,9 +3,9 @@
 <div class="page viewer">
   <h1><?php echo __("Darwin Specimen ");?></h1>
   <h2 class="title"><?php echo __("Fiche") ?></h2>
-  <div class="borded  padded">
+  <div class="borded padded">
     <h2 class="title"><?php echo __("Collection") ?></h2>  
-    <div class="borded">
+    <div class="borded right_padded">
       <table>
         <tbody>
           <tr>
@@ -54,7 +54,7 @@
     </div>    
     <?php if(count($common_names)) : ?>
     <h2 class="title"><?php echo __("Common Names") ?></h2>  
-    <div class="borded">    
+    <div class="borded right_padded">    
       <table class="classification">
         <thead>
           <tr>
@@ -71,7 +71,7 @@
     <?php endif ; ?>
     <?php if($specimen->getTaxonRef() || $specimen->getChronoRef() || $specimen->getLithoRef() || $specimen->getMineralRef() || $specimen->getLithologyRef()):?>
     <h2 class="title"><?php echo __("Classifications") ?></h2>  
-    <div class="borded">        
+    <div class="borded right_padded">        
       <table>
         <thead>
           <tr>
@@ -231,7 +231,7 @@
     </div>
     <?php endif;?>
     <h2 class="title"><?php echo __("Specimen Characteristics") ?></h2>  
-    <div class="borded">        
+    <div class="borded right_padded">        
       <table class="caract_table">
         <tr>
           <td><span class="pager_nav"><?php echo __("Number of individual") ; ?> :</span></td>
