@@ -24,7 +24,7 @@ class CollectionsTable extends DarwinTable
 
       }
 
-      elseif(!$user)
+      elseif(!$user || $user->isA(Users::ADMIN)  )
       {
          $q->leftJoin('col.CollectionsRights r ON col.id=r.collection_ref AND r.user_ref = -1');
       }
