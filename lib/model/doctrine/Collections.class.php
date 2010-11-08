@@ -64,13 +64,17 @@ class Collections extends BaseCollections
     if($item->getParentRef() == $this->getId()) return $this;
 
     $i_path = explode('/',$item->getPath());
-    $i_id = 0;
+    $i_path[] = $item->getId();
+    
     $t = $this;
     do{
+      for($i=count($i_path)-1; $i >= 0 ; $i--)
+      {
+        if($t->getId() == $i_path[$i])
+          return $t;
+      }
       if($t->parent_node == null) return  $t;
 
-      if($t->getId() == $i_path[$i_id++])
-        return $t;
       $t = $t->getParent();
     } while(true);
   }
