@@ -25,4 +25,60 @@ class Collections extends BaseCollections
       return  $this->CollectionsRights[0]->getDbUserType();
     return 0;
   }
+
+
+
+
+  
+  protected $children = array();
+  protected $parent_node = null;
+
+  public function addChild($CollectionTree)
+  {
+    $CollectionTree->setParent($this);
+    $this->children[] = $CollectionTree;
+  }
+
+  public function hasChild()
+  {
+    return count($this->children) !=0;
+  }
+
+  public function getChilds()
+  {
+    return $this->children;
+  }
+
+  public function getParent()
+  {
+    return $this->parent_node;
+  }
+
+  protected function setParent($parent)
+  {
+    $this->parent_node = $parent;
+  }
+  
+  public function getFirstCommonAncestor($item)
+  {
+    if($item->getParentRef() == $this->getId()) return $this;
+
+    $i_path = explode('/',$item->getPath());
+    $i_id = 0;
+    $t = $this;
+    do{
+      if($t->parent_node == null) return  $t;
+
+      if($t->getId() == $i_path[$i_id++])
+        return $t;
+      $t = $t->getParent();
+    } while(true);
+  }
+
+  public function isEncodable()
+  {
+    if(count($this->CollectionsRights) && $this->CollectionsRights[0]->getDbUserType() >= Users::ENCODER)
+      return true;
+    return false;
+  }
 }

@@ -101,10 +101,9 @@ class collectionActions extends DarwinActions
   {
     if(! $this->getUser()->isAtLeast(Users::ENCODER) ) $this->forwardToSecureAction();
 
-    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList($this->getUser());
-    $this->setLayout(false);
+    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList($this->getUser(),null,false,true);
   }
-  
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList($this->getUser());

@@ -653,7 +653,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query->andWhere("
         (station_visible = true AND  LOWER(gtu_code) like ? )
         OR
-        (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))
+        (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
           AND LOWER(gtu_code) like ?)", array(strtolower('%'.$val.'%'),strtolower('%'.$val.'%')));
     return $query ;  
   }

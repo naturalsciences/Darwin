@@ -35,33 +35,19 @@ $(document).ready(function () {
   <?php foreach($institutions as $institution):?>
     <h2><?php echo $institution->getFormatedName();?></h2>
     <div class="treelist">
-      <?php $prev_level = 0;?>
-      <?php foreach($institution->Collections as $col_item):?>
-        <?php if($prev_level < $col_item->getLevel()):?>
-          <ul>
-        <?php else:?>
-          </li>
-            <?php if($prev_level > $col_item->getLevel()):?>
-              <?php echo str_repeat('</ul></li>',$prev_level-$col_item->getLevel());?>
-            <?php endif;?>
-        <?php endif;?>
-        <?php if($col_item->getIsPublic() || $col_item->getTypeInCol() > 0 || $sf_user->isA(Users::ADMIN)): ?>
-          <li data-edit="" class="rid_<?php echo $col_item->getId();?>"><div class="col_name">
-          <?php echo image_tag ('blue_expand.png', array('alt' => '+', 'class'=> 'tree_cmd collapsed'));?>
-          <?php echo image_tag ('blue_expand_up.png', array('alt' => '-', 'class'=> 'tree_cmd expanded'));?>
-          <span><?php echo $col_item->getName();?>
-          <?php if(! $is_choose ):?>
-             <?php echo image_tag('info.png',array('title'=>'info','class'=>'extd_info','data-manid'=>$col_item->getMainManagerRef()));?>
-            <?php if($sf_user->isA(Users::ADMIN) || ( $sf_user->isAtLeast(Users::MANAGER) && $col_item->getTypeInCol() >= Users::MANAGER  ) ):?>
-              <?php echo link_to(image_tag('edit.png',array('title'=>'Edit Collection', 'style'=>'vertical-align:middle;')),'collection/edit?id='.$col_item->getId());?>
-              <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection', 'style'=>'vertical-align:middle;')),'collection/new?duplicate_id='.$col_item->getId());?>
-            <?php endif ; ?>
-          <?php endif ; ?>
-          </span></div>
-        <?php endif ; ?>
-        <?php $prev_level =$col_item->getLevel();?>
-      <?php endforeach;?>
-      <?php echo str_repeat('</li></ul>',$col_item->getLevel());?>
+    <?php
+      $w = new sfWidgetCollectionList(array('choices'=>array(), 'is_choose' => $is_choose));
+      $root = $tree = new Collections();
+      foreach($institution->Collections as $item)
+      {
+        $it = sfOutputEscaper::unescape($item);
+        $anc = $tree->getFirstCommonAncestor($it);
+        $tree->addChild($it);
+        $tree = $it;
+      }
+      echo $w->displayTree($root,'', array(), '', $sf_user);
+  ?>
+
     </div>
   <?php endforeach;?>
   <?php if ($sf_user->isAtLeast(Users::MANAGER)): ?>

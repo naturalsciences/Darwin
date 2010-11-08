@@ -26,6 +26,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     parent::configure($options, $attributes);
     $this->addOption('multiple', true);
     $this->addOption('extended', true);
+    $this->addOption('is_choose',false);
   }
 
   private function getCollectionByIntitution()
@@ -66,52 +67,73 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
     $prev_level = 0 ;
     foreach($institutions as $institution=> $collections)
     {
-        $html .= "<h2>$institution</h2>" ;
-        $html .= "<div class=\"treelist\">" ;
-        $html .= $this->getChoiceRenderer($value, $name, $collections ) ;
-        $html .= "</div>" ;
+
+      $root = $tree = new Collections();
+      foreach($collections as $item)
+      {
+        $anc = $tree->getFirstCommonAncestor($item);
+        $tree->addChild($item);
+        $tree = $item;
+      }
+
+      $html .= "<h2>$institution</h2>" ;
+      $html .= "<div class=\"treelist\">" ;
+
+      $html .= $this->displayTree($root,'', $value, $name);
+
+      $html .= "</div>" ;
     }
-    return($html) ;
+    return $html;
   }
   
-  protected function getChoiceRenderer($value, $name, $collections = null)
+
+  function displayTree(Collections $elem, $html, $value, $name, $user=null)
   {
-    $html = "" ;
-    $prev_level = 0 ;
     $img_expand = 'blue_expand.png';
     $img_expand_up = 'blue_expand_up.png' ;
-    foreach ($collections as $val)
+
+    if($elem->hasChild())
     {
-        if($prev_level < $val->getLevel())
-          $html .= "<ul>\n" ;
-        else
-        {
-          $html .= "</li>\n" ;
-          if($prev_level > $val->getLevel())
-              $html .= str_repeat('</ul></li>',$prev_level-$val->getLevel());
-        }
-        $html .= "<li class=\"rid_".$val->getId()."\"";
-        if(count($val->CollectionsRights) && $val->CollectionsRights[0]->getDbUserType() >= Users::ENCODER)
+      $html .= '<ul>';
+      foreach( $elem->getChilds() as $child)
+      {
+        $html .= "<li class=\"rid_".$child->getId()."\"";
+        if($child->isEncodable())
           $html .= ' data-enc="true" ';
         $html .= "><div class=\"col_name\">" ;
         $html .= image_tag ($img_expand, array('alt' => '+', 'class'=> 'tree_cmd collapsed'));
         $html .= image_tag ($img_expand_up, array('alt' => '-', 'class'=> 'tree_cmd expanded'));
-        $html .=  "<span>".$val->getName()."</span>";
+        $html .=  "<span>".$child->getName()."</span>";
 
         $options = array(
           'type'=> 'checkbox',
           'class' => 'check_right',
-          'value' => $val->getId(),
+          'value' => $child->getId(),
           'name' => $name,
         );
-        if(is_array($value) && in_array($val->getId(), $value) )
+        if(is_array($value) && in_array($child->getId(), $value) )
           $options['checked'] = "checked";
-        $html .= $this->renderTag('input', $options);
+
+        if($name != '')
+          $html .= $this->renderTag('input', $options);
+        else
+        {
+          if(! $this->getOption('is_choose') )
+          {
+            $html .= ' '.image_tag('info.png',array('title'=>'info','class'=>'extd_info','data-manid'=> $child->getMainManagerRef()));
+            if($user->isA(Users::ADMIN) || ( $user->isAtLeast(Users::MANAGER) && $child->getTypeInCol() >= Users::MANAGER  ) )
+            {
+             $html .= link_to(image_tag('edit.png',array('title'=>'Edit Collection')),'collection/edit?id='.$child->getId());
+             $html .= link_to(image_tag('duplicate.png',array('title'=>'Duplicate Collection')),'collection/new?duplicate_id='.$child->getId());
+            }
+          }
+        }
 
         $html .= "</div>" ;
-        $prev_level = $val->getLevel();
+        $html .= $this->displayTree($child,'', $value, $name, $user).'</li>';
+      }
+      $html .= '</ul>';
     }
-    $html .= str_repeat('</li></ul>',$val->getLevel());       
-    return $html ;
+    return  $html;
   }
 }

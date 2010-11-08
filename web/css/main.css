@@ -167,6 +167,11 @@ ul.spec_error_list, ul.error_list
   display:none;
 }
 
+.treelist a img
+{
+  vertical-align:middle;
+}
+
 .col_name
 {
   margin-left: 0.5em;

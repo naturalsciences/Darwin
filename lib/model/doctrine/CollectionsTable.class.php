@@ -5,7 +5,7 @@
 class CollectionsTable extends DarwinTable
 {
 
-    public function fetchByInstitutionList($user, $institutionId = null, $public_only = false)
+    public function fetchByInstitutionList($user, $institutionId = null, $public_only = false, $only_encodable = false)
     {
       $q = Doctrine_Query::create()
             ->select('p.*, col.*,r.id,r.db_user_type, CONCAT(col.path,col.id,E\'/\') as col_path_id')
@@ -19,6 +19,10 @@ class CollectionsTable extends DarwinTable
         $q->leftJoin('col.CollectionsRights r ON col.id=r.collection_ref AND r.user_ref = '.$user->getId())
           ->andWhere('r.id is not null OR col.is_public = TRUE');
       }
+
+      if($only_encodable)
+            $q->andWhere('r.db_user_type >= ?',USERS::ENCODER);
+
       elseif(!$user)
       {
          $q->leftJoin('col.CollectionsRights r ON col.id=r.collection_ref AND r.user_ref = -1');
