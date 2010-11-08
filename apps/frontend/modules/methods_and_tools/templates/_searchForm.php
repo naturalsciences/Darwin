@@ -21,7 +21,9 @@
         <div class="search_results_content">
         </div>
       </div>
+      <?php if ($sf_user->isAtleast(Users::ENCODER)) : ?>        
       <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('methods_and_tools/new?notion='.$notion) ?>"><?php echo __('New');?></a></div>
+      <?php endif ; ?>
     </div>
   </form>
 <?php else:?>

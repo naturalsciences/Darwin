@@ -32,7 +32,7 @@
             <?php foreach($methods_and_tools as $method_and_tool):?>
               <tr class="rid_<?php echo $method_and_tool->getId(); ?>">
                 <td><?php echo $method_and_tool->getName();?></td>
-                <?php if ($level > Users::REGISTERED_USER) : ?>                
+                <?php if ($sf_user->isAtleast(Users::ENCODER)) : ?>                
                   <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                     <?php if(! $is_choose):?>
                       <?php echo link_to(image_tag('edit.png',array('title'=>'Edit '.$notion)),'methods_and_tools/edit?id='.$method_and_tool->getId().'&notion='.$notion);?>

@@ -8,4 +8,15 @@ class SpecimensMethodsTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('SpecimensMethods');
     }
+    
+    public function getMethodName($spec_ref)
+    {
+    $q = Doctrine_Query::create()
+   //   ->select('cm.method') 
+      ->from('SpecimensMethods sm')      
+      ->innerjoin('sm.CollectingMethods cm')
+      ->where('sm.specimen_ref = ?',$spec_ref)
+      ->orderby('cm.method_indexed') ;
+    return $q->execute() ;
+    }
 }

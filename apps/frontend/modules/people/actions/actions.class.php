@@ -299,6 +299,7 @@ class peopleActions extends DarwinActions
     $this->people = Doctrine::getTable('People')->findExcept($request->getParameter('id'));
     $this->forward404Unless($this->people,'People not Found');
     $this->form = new PeopleForm($this->people);    
+    $this->types = People::getTypes() ;
     $this->loadWidgets();
   }  
 }

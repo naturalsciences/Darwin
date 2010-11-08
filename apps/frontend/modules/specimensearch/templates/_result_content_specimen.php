@@ -13,7 +13,7 @@
     <td  class="col_collection">
       <?php if($specimen->getCollectionRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=collection_".$item_ref."_info");?>
-        <?php if ($action == 'edit') : ?>        
+        <?php if($sf_user->isAtLeast(Users::ADMIN) || ($sf_user->isAtLeast(Users::MANAGER) && $specimen->getHasEncodingRights())) : ?>           
           <a href="<?php echo url_for('collection/edit?id='.$specimen->getCollectionRef());?>"><?php echo $specimen->getCollectionName();?></a>
         <?php else : ?>
           <?php echo $specimen->getCollectionName();?>

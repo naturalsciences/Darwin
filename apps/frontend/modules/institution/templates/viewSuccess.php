@@ -27,7 +27,11 @@
       <tr>
         <th class="top_aligned"><?php echo $form['db_people_type']->renderLabel() ?></th>
         <td>
-          <?php echo $form['db_people_type'] ?>
+          <ul class="checkbox_list">
+          <?php foreach ($form['db_people_type']->getValue() as $role) : ?>
+            <?php if($role) echo "<li>".__($types[$role])."</li>" ; ?>
+          <?php endforeach ; ?>
+          </ul>
         </td>
       </tr>
     </tbody>

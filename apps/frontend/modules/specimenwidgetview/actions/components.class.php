@@ -38,12 +38,12 @@ class specimenwidgetviewComponents extends sfComponents
 
   public function executeTool()
   {
-    $this->form = Doctrine::getTable('CollectingTools')->findAll() ;  
+    $this->form = Doctrine::getTable('SpecimensTools')->getToolName($this->eid) ;  
   }
 
   public function executeMethod()
   {
-    $this->form = Doctrine::getTable('CollectingMethods')->findAll() ;
+    $this->form = Doctrine::getTable('SpecimensMethods')->getMethodName($this->eid) ;
   }
 
   public function executeRefTaxon()
