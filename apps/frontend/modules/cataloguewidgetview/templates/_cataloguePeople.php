@@ -8,32 +8,35 @@
   <tbody>
     <?php foreach($types as $type => $items):?>
     <tr>
-      <td>
-      	<?php echo __(ucfirst($type)); ?>
+      <td class="data_grouping">
+        <?php echo __(ucfirst($type)); ?>
       </td>
       <td>
-	      <table class="widget_sub_table" alt="<?php echo $type;?>">
-	        <thead>
-	          <tr>
-		          <th><?php echo __('People');?></th>
-		          <th><?php echo __('Sub-Type');?></th>
-	          </tr>
-	        </thead>
-	        <tbody>
-	        <?php foreach($items as $person):?>
-	          <tr class="peo_id_<?php echo $person->getId();?>" id="id_<?php echo $person->getId();?>">
-      		    <td>
+        <table class="widget_sub_table" alt="<?php echo $type;?>">
+          <thead>
+            <tr>
+              <th></th>
+              <th><?php echo __('People');?></th>
+              <th><?php echo __('Sub-Type');?></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php foreach($items as $person):?>
+            <tr class="peo_id_<?php echo $person->getId();?>" id="id_<?php echo $person->getId();?>">
+              <td class="handle"><?php echo image_tag('drag.png');?></td>
+              <td>
                 <a class="link_catalogue" title="<?php echo __('View People');?>" href="<?php echo url_for('people/view?id='.$person->getId()); ?>">		  
-                <?php echo $person->People->getFormatedName();?>	  
+                  <?php echo $person->People->getFormatedName();?>	  
                 </a>		  
-		          </td>
-	      	    <td class="catalogue_people_sub_type">
-		             <?php echo $person->getPeopleSubType();?>
-      		    </td>
-	          </tr>
-	        <?php endforeach;?>
-	        </tbody>
-	      </table>
+              </td>
+              <td class="catalogue_people_sub_type">
+                <?php echo $person->getPeopleSubType();?>
+              </td>
+            </tr>
+          <?php endforeach;?>
+          </tbody>
+        </table>
       </td>
     </tr>
     <?php endforeach;?>
