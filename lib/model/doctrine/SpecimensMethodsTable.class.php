@@ -12,7 +12,7 @@ class SpecimensMethodsTable extends Doctrine_Table
     public function getMethodName($spec_ref)
     {
     $q = Doctrine_Query::create()
-   //   ->select('cm.method') 
+//      ->select('cm.method, sm.specimen_ref') 
       ->from('SpecimensMethods sm')      
       ->innerjoin('sm.CollectingMethods cm')
       ->where('sm.specimen_ref = ?',$spec_ref)
