@@ -42,7 +42,7 @@ $(document).ready(function () {
       {
         $it = sfOutputEscaper::unescape($item);
         $anc = $tree->getFirstCommonAncestor($it);
-        $tree->addChild($it);
+        $anc->addChild($it);
         $tree = $it;
       }
       echo $w->displayTree($root,'', array(), '', $sf_user);

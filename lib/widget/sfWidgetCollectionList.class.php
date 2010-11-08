@@ -72,7 +72,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
       foreach($collections as $item)
       {
         $anc = $tree->getFirstCommonAncestor($item);
-        $tree->addChild($item);
+        $anc->addChild($item);
         $tree = $item;
       }
 
