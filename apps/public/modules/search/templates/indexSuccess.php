@@ -167,6 +167,7 @@
     </tbody>
   </table>  
   <div style="text-align:right">
+    <input type="button" name="clear" id="reset" value="<?php echo __('Clear'); ?>" class="result">
     <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">
   </div>
 </div>  
@@ -209,6 +210,10 @@ $(document).ready(function () {
       }
     });
     return false;
-  });           
+  });    
+  $('#reset').click(function()
+  {
+    document.location.href = "<?php echo url_for('search/index') ; ?>" ;
+  });
 });  
 </script>
