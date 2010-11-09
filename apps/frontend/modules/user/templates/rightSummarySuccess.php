@@ -6,7 +6,7 @@
       <th><?php echo ('Right') ; ?></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody>  
   <?php foreach($rights as $right) : ?>
     <tr>
       <td><?php echo $right->Collections->getName() ; ?></td>

@@ -383,14 +383,15 @@ class userActions extends DarwinActions
       foreach($specific_rights as $rights)
       {
         if($rights->getCollections() != ",")
-        {
+        {          
           $tab = explode(',',$rights->getCollections()) ;
           foreach($tab as $collections)
           {
             if($collections != "")
             {
               if(!isset($this->widgets[$collections])) $this->widgets[$collections] = array() ;
-              $this->widgets[$collections][] = "<b>".$rights->getGroupName()."</b> (".$rights->getTitlePerso().")" ;
+              if(!isset($this->widgets[$collections][$rights->getCategory()])) $this->widgets[$collections][$rights->getCategory()] = array() ;          
+              $this->widgets[$collections][$rights->getCategory()][] = "<b>".$rights->getGroupName()."</b> (".$rights->getTitlePerso().")" ;
             }
           }
         }
