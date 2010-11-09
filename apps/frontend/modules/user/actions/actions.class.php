@@ -147,6 +147,7 @@ class userActions extends DarwinActions
   {
     $id = $request->getparameter('id') ;
     $url = "user/widget?id=".$id ;
+    $is_reg_user = false ;
     if (!$id)
     {
       $id = $this->getUser()->getId();
@@ -155,9 +156,10 @@ class userActions extends DarwinActions
     else
     { 
       if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-        $this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+        $this->forward404Unless($user = Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+      if($user->getDbUserType() == Users::REGISTERED_USER) $is_reg_user = true ;
     }
-    $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
+    $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType(), $is_reg_user) ;
     $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
     $this->level = $this->getUser()->getAttribute('db_user_type') ; 
 
