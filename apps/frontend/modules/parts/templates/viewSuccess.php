@@ -23,6 +23,8 @@
       )); ?>
     </div>    
     <p class="clear"></p>
+    <p align="right">    
       &nbsp;<a class="bt_close" href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Back');?></a>    
+    </p>
   </div>
 </div>

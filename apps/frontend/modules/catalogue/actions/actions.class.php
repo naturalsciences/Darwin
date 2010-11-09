@@ -152,7 +152,7 @@ class catalogueActions extends DarwinActions
 
     $form->addKeyword($number, $request->getParameter('keyword'), $request->getParameter('value'));
 
-    return $this->renderPartial('nameValue',array('form' => $form['newVal'][$number]));
+    return $this->renderPartial('nameValue',array('form' => $form['newVal'][$number],'view' => false));
   }
 
 }

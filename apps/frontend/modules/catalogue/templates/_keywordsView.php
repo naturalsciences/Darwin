@@ -29,7 +29,7 @@ foreach($form['newVal'] as $keyword)
 	      <td><table alt="<?php echo $type;?>">
 	      <?php foreach($keywords as $i => $keyword):?>
 		  <tr>
-		    <?php include_partial('catalogue/nameValue', array('form' => $keyword, 'show_name' => ($i ==0? true:false)));?>
+		    <?php include_partial('catalogue/nameValue', array('form' => $keyword, 'show_name' => ($i ==0? true:false),'view' => isset($view)?true:false));?>
 		  </tr>
 	      <?php endforeach;?>
 	      </table></td>

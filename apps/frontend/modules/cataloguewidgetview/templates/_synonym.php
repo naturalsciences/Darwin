@@ -30,10 +30,32 @@
 	      <tr class="syn_id_<?php echo $synonym['id'];?>" id="id_<?php echo $synonym['id'];?>">
 		<td>
 		  <?php if($synonym['record_id'] == $eid):?>
-		      <strong><?php echo $synonym['ref_item']->getNameWithFormat();?></strong>
+		      <strong>
+		        <a class="link_catalogue" title="<?php echo __('Synonym');?>" href="<?php echo url_for('taxonomy/view?id='.$synonym['record_id']) ?>">
+		          <?php echo $synonym['ref_item']->getNameWithFormat();?>
+		        </a>
+		      </strong>
 		  <?php else:?>
-		    <?php echo $synonym['ref_item']->getNameWithFormat();?>
+        <a class="link_catalogue" title="<?php echo __('Synonym');?>" href="<?php echo url_for('taxonomy/view?id='.$synonym['record_id']) ?>">		  
+  		    <?php echo $synonym['ref_item']->getNameWithFormat();?>
+  		  </a>
 		  <?php endif;?>
+      <?php echo image_tag('info.png',"title=info class=info");?>
+      <div class="tree">
+      </div>
+      <script type="text/javascript">
+       $('table.catalogue_table_view').find('.info').click(function() 
+       {   
+         item_row = $(this).closest('td') ;
+         if(item_row.find('.tree').is(":hidden"))
+         {
+           $.get('<?php echo url_for('catalogue/tree?table=taxonomy&id='.$synonym['record_id']) ; ?>',function (html){
+             item_row.find('.tree').html(html).slideDown();
+             });
+         }
+         item_row.find('.tree').slideUp();
+       });
+      </script> 		  
 		</td>
 		<td class="basio_cell">
 		  <?php if($group_name != "homonym"):?>
