@@ -1,6 +1,6 @@
 <?php slot('title', __('Search Specimens/Rocks/Minerals'));  ?>  
 <div class="page">
-<h1><?php echo __("Specimen searchs List");?></h1>
+<h1><?php echo __("Specimen search criteria");?></h1>
 <?php echo form_tag('search/search', array('class'=>'publicsearch_form'));?>
   <h2 class="title"><?php echo __("Classifications") ?></h2>
   <?php echo $form->renderGlobalErrors(); ?>
