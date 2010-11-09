@@ -2289,3 +2289,8 @@ dd
   list-style-type:disc;
   margin-left:2em;
 }
+
+.col_extd_info
+{
+  word-wrap: break-word; 
+}

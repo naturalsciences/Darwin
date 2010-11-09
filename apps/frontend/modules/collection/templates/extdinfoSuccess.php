@@ -1,3 +1,5 @@
+<?php use_helper('Text');?>
+
 <div class="col_extd_info">
 <h2><?php echo __('Manager');?> :</h2>
 <p>
@@ -13,7 +15,7 @@
   <dl>
     <?php foreach($coms as $com):?>
     <dt><?php echo $com->getCommType()?><dt>
-    <dd><?php echo $com->getEntry();?></dd>
+    <dd><?php echo auto_link_text($com->getEntry());?></dd>
     <?php endforeach;?>
   </dl>
 </p>
