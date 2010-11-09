@@ -13,6 +13,7 @@ class UsersTable extends DarwinTable
   public function getUserByPassword($username, $password)
   {
       $q = Doctrine_Query::create()
+          ->useResultCache(null)
           ->from('Users u')
           ->leftJoin('u.UsersLoginInfos ul')
           ->andWhere('ul.user_name = ?',$username)
