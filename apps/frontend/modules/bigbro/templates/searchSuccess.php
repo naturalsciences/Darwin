@@ -96,7 +96,6 @@ $(document).ready(function()
       $('img.more_trk').each(function(){
 	   
        tip_content = $(this).next().html();
-      console.log(tip_content);
 	$(this).qtip(
 	{
          content: tip_content,

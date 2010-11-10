@@ -67,7 +67,6 @@ $(document).ready(function () {
     $(this).parent().remove();
     avail_el.removeClass('hidden');
     value = trim(avail_el.attr('alt').substr(2));
-    console.log(value);
     old_value = $('#%3\$s').val();
     old_value = old_value.replace(value,'');
     old_value = old_value.replace(/,,/g, ',');
