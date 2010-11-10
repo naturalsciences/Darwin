@@ -255,7 +255,6 @@ class collectionActions extends DarwinActions
     {
         try{
             $collections = $form->save();
-            return ;
             $this->redirect('collection/edit?id='.$collections->getId());
         }
         catch(Exception $e)

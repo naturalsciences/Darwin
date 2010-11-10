@@ -11,12 +11,12 @@ class SpecimensAccompanyingForm extends BaseSpecimensAccompanyingForm
 {
   public function configure()
   {
+    unset($this['id'],
+          $this['specimen_ref']) ;  
     $accompanying_types = array('biological'=>'Biological', 'mineral'=>'Mineral');
     $units = array(''=>'','%'=>'%');
     $this->widgetSchema['id'] = new sfWidgetFormInputHidden();
-    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
-    $this->widgetSchema['specimen_ref'] = new sfWidgetFormInputHidden();
-    $this->validatorSchema['specimen_ref'] = new sfValidatorInteger(array('required'=>false));    
+    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));   
     $this->widgetSchema['accompanying_type'] = new sfWidgetFormChoice(array('choices'=>$accompanying_types));
     $this->validatorSchema['accompanying_type'] = new sfValidatorChoice(array('choices'=>array_keys($accompanying_types), 'required'=>true));
     $this->widgetSchema['unit'] = new sfWidgetFormChoice(array('choices'=>$units, 'default'=>'%'));
