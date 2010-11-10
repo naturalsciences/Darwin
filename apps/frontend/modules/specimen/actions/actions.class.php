@@ -127,7 +127,8 @@ class specimenActions extends DarwinActions
       $duplic = $request->getParameter('duplicate_id','0') ;
       $specimen = $this->getRecordIfDuplicate($duplic,$specimen,true);
       // set all necessary widgets to visible
-      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',($request->hasParameter('all_duplicate')?1:0));
+      if($request->hasParameter('all_duplicate'))
+        Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',1);
       $this->form = new SpecimensForm($specimen);
       if($duplic)
       {
@@ -164,6 +165,10 @@ class specimenActions extends DarwinActions
           {
              $this->form->addCollectors($key, $val->getPeopleRef(),$val->getOrderBy());
           }
+          foreach ($Catalogue['donator'] as $key=>$val)
+          {
+             $this->form->addDonators($key, $val->getPeopleRef(),$val->getOrderBy());
+          }          
         }
         //reembed identification
          $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens',$duplic) ;
@@ -225,9 +230,11 @@ class specimenActions extends DarwinActions
   {
     if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
     $this->form = $this->getSpecimenForm($request, true);
-    if(in_array($this->form->getObject()->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
-      $this->redirect("specimen/view?id=".$request->getParameter('id')) ;
-
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {
+      if(in_array($this->form->getObject()->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
+        $this->redirect("specimen/view?id=".$request->getParameter('id')) ;
+    }
     $this->loadWidgets();
     $this->setTemplate('new');
   }

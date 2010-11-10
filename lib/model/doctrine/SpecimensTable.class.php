@@ -110,12 +110,13 @@ class SpecimensTable extends DarwinTable
     if (!$all)
     {
       $req_widget = array() ;
+      $default_values = array(0,"Undefined","undefined","not applicable","0001/01/01");
       foreach($criterias as $key => $fields)
       {
         if ($key == "rec_per_page") continue ;
         if (!$fields) continue ;
 
-        if(isset(self::$widget_array[$key]) && $fields != 0)
+        if(isset(self::$widget_array[$key]) && !in_array($fields,$default_values)) 
           $req_widget[self::$widget_array[$key]] = 1 ;
       }
       Doctrine::getTable('MyWidgets')->forceWidgetOpened($user, $category ,array_keys($req_widget));
