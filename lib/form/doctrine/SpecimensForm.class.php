@@ -472,12 +472,12 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addSpecimensAccompanying($num, $obj=null)
   {
-      $options = array('unit' => '%');
+      $options = array('unit' => '%', 'specimen_ref' => $this->getObject()->getId());
       if (!$obj) $val = new SpecimensAccompanying();
       else $val = $obj ;
       $val->fromArray($options);
       $val->Specimens = $this->getObject();
-//       $val->setRecordId($this->getObject()->getId());
+//      $val->setSpecimenRef($this->getObject()->getId());
       $form = new SpecimensAccompanyingForm($val);
       $this->embeddedForms['newSpecimensAccompanying']->embedForm($num, $form);
       //Re-embedding the container

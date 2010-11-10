@@ -121,6 +121,7 @@ class SpecimenIndividualsTable extends DarwinTable
       if(!$all)
       {
         $req_widget = array() ;
+        $default_values = array(0,"Undefined","undefined","not applicable","0001/01/01");        
         foreach($criterias as $key => $fields)
         {
           if ($key == "rec_per_page") continue ;

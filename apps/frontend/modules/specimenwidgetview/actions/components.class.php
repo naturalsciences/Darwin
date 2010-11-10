@@ -20,7 +20,12 @@ class specimenwidgetviewComponents extends sfComponents
   {
     $this->defineObject();
   }
-
+  
+  public function executeRefDonators()
+  {
+    $this->Donators = Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator',$this->eid) ;
+  }
+  
   public function executeRefExpedition()
   {
     $this->defineObject();

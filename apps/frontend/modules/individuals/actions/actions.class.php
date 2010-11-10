@@ -22,8 +22,8 @@ class individualsActions extends DarwinActions
       {
         $this->spec_individual = $this->getRecordIfDuplicate($duplic,$this->spec_individual);    
         // set all necessary widgets to visible 
-        Doctrine::getTable('SpecimenIndividuals')->getRequiredWidget($this->spec_individual, $this->getUser()->getId(), 'individuals_widget',
-                                                                      ($request->hasParameter('all_duplicate')?1:0));
+        if($request->hasParameter('all_duplicate'))        
+          Doctrine::getTable('SpecimenIndividuals')->getRequiredWidget($this->spec_individual, $this->getUser()->getId(), 'individuals_widget',1);
       }    
     }
     else

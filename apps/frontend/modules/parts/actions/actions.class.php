@@ -39,7 +39,8 @@ class partsActions extends DarwinActions
       {
         $this->part = $this->getRecordIfDuplicate($duplic, $this->part);    
         // set all necessary widgets to visible 
-        Doctrine::getTable('SpecimenParts')->getRequiredWidget($this->part, $this->getUser()->getId(), 'part_widget',($request->hasParameter('all_duplicate')?1:0));      
+        if($request->hasParameter('all_duplicate'))        
+          Doctrine::getTable('SpecimenParts')->getRequiredWidget($this->part, $this->getUser()->getId(), 'part_widget',1);      
         
       }      
     }
