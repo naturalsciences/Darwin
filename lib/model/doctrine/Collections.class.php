@@ -35,7 +35,7 @@ class Collections extends BaseCollections
 
   public function addChild($CollectionTree)
   {
-    $CollectionTree->setParent($this);
+    $CollectionTree->setParentNode($this);
     $this->children[] = $CollectionTree;
   }
 
@@ -49,12 +49,12 @@ class Collections extends BaseCollections
     return $this->children;
   }
 
-  public function getParent()
+  public function getParentNode()
   {
     return $this->parent_node;
   }
 
-  protected function setParent($parent)
+  protected function setParentNode($parent)
   {
     $this->parent_node = $parent;
   }
@@ -75,7 +75,7 @@ class Collections extends BaseCollections
       }
       if($t->parent_node == null) return  $t;
 
-      $t = $t->getParent();
+      $t = $t->getParentNode();
     } while(true);
   }
 
