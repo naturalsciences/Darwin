@@ -1,3 +1,21 @@
+.lang_picker 
+{
+  color:white;
+  font-size:small;
+}
+
+.lang_picker li
+{
+  display:inline;
+  text-transform : uppercase;
+  margin-left: 0.5em;
+}
+.lang_picker a[href]
+{
+  color:white;
+  text-decoration: none ;
+}
+
 .all_content
 {
   height: 100%

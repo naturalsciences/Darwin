@@ -19,9 +19,7 @@
           <?php echo $sf_content ?>
         </td>
       </tr>
-      <tr>
-        <?php include_partial('global/foot_menu') ?>
-      </tr>
+      <tr><td class="menu_bottom">&nbsp;</td></tr>
     </table>
     <script type="text/javascript">
     $(document).ready(function () {
