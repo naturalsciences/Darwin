@@ -129,6 +129,8 @@ class gtuActions extends DarwinActions
     $this->form = new GtuForm($gtu);
 
     $this->processForm($request, $this->form);
+    $this->no_right_col = Doctrine::getTable('Gtu')->testNoRightsCollections('gtu_ref',$request->getParameter('id'), $this->getUser()->getId());
+
     $this->loadWidgets();
     $this->setTemplate('edit');
   }

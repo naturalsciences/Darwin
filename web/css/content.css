@@ -446,6 +446,11 @@ img.info:hover
   cursor:pointer;
 }
 
+img.info
+{
+  vertical-align:middle;
+}
+
 .tree h3, .tree
 {
   display:none;

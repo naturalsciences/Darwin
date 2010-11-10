@@ -1008,6 +1008,12 @@ td.left_tabed
   padding: 0.2em;
 }
 
+.catalogue_table td.data_grouping, .catalogue_table_view td.data_grouping
+{
+  vertical-align: top;
+  padding-top: 2em;
+}
+
 .show_table
 {
   width:100%;
@@ -1253,6 +1259,11 @@ table.encoding tbody .widget_row_delete
 .widget_sub_table .handle
 {
   width:18px;
+}
+
+.widget_sub_table td:nth-child(2)
+{
+  width: 60%;
 }
 
 .widget_sub_table .catalogue_people_sub_type
@@ -1600,6 +1611,11 @@ fieldset.opened
 img.info:hover
 {
   cursor:pointer;
+}
+
+img.info
+{
+  vertical-align:middle;
 }
 
 .info_cell
@@ -2288,4 +2304,9 @@ dd
   margin-top: 0.3em;
   list-style-type:disc;
   margin-left:2em;
+}
+
+.col_extd_info
+{
+  word-wrap: break-word; 
 }

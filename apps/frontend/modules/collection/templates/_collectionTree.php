@@ -18,8 +18,14 @@ $(document).ready(function () {
     $(".extd_info").each(function ()
     {
       $(this).qtip({
-        style: "light",
+        show: { solo: true, when: { event: 'click' } },
+        hide: { when: { event: 'click' } },// May be replaced by smth else
+        style: {  name: "light", title: { padding: '3px'} },
         content: {
+          title: {
+            text: '&nbsp;',
+            button: 'X'
+          },
           url: '<?php echo url_for('collection/extdinfo');?>',
           data: { id: $(this).attr('data-manid') },
           method: 'get'
