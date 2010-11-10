@@ -76,7 +76,7 @@
                 elem = item_row.find('#gtu_<?php echo $item_ref;?>_details');
                 if(elem.is(":hidden"))
                 { 
-                  $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getSpecRef()) ;?>',function (html){
+                  $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getSpecRef()."&view=true") ;?>',function (html){
                     item_row.find('.general_gtu').slideUp();
                     elem.html(html).slideDown();
                   });

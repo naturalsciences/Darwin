@@ -12,6 +12,7 @@ class catalogueActions extends DarwinActions
 {
   public function executeRelation(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
     $this->relation = null;
     if($request->hasParameter('id'))
     {
@@ -69,6 +70,7 @@ class catalogueActions extends DarwinActions
 
   public function executeDeleteRelated(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
     $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
     $this->forward404Unless($r,'No such item');
     try{
@@ -145,6 +147,7 @@ class catalogueActions extends DarwinActions
 
   public function executeAddValue(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
     $number = intval($request->getParameter('num'));
     
     $formName = DarwinTable::getFormForTable($request->getParameter('table'));

@@ -20,6 +20,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeAddMethod(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Test well action is Ajaxly called and that value parameter exist
     $this->forward404Unless($request->isMethod(sfRequest::POST) 
                             && $request->isXmlHttpRequest() 
@@ -221,6 +222,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeCreate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Trigger the protection against the XSS attack
     $request->checkCSRFProtection();
     // Forward to a 404 page if the method used is not a post
@@ -279,6 +281,7 @@ class methods_and_toolsActions extends DarwinActions
     */ 
   public function executeUpdate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Trigger the protection against the XSS attack
     $request->checkCSRFProtection();
     // If method is <> from post or put and if the id edited and to be saved doesn't exist anymore... forward to a 404 page

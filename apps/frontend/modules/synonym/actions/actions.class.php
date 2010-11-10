@@ -16,7 +16,7 @@ class synonymActions extends DarwinActions
   */
   public function executeAdd(sfWebRequest $request)
   {
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->classification = new ClassificationSynonymies();
     $this->classification->setReferencedRelation($request->getParameter('table'));
 
@@ -24,39 +24,39 @@ class synonymActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('classification_synonymies'));
-	if($this->form->isValid())
-	{
-	    if($this->form->getValue('record_id') == $request->getParameter('id'))
+	    $this->form->bind($request->getParameter('classification_synonymies'));
+	    if($this->form->isValid())
 	    {
-	      $error = new sfValidatorError(new savedValidator(),'You can\'t synonym yourself!');
-	      $this->form->getErrorSchema()->addError($error); 
-	    }
-	    else
-	    {
-	      try
-	      {
-		$conn = Doctrine_Manager::connection();
-		$conn->beginTransaction();
+        if($this->form->getValue('record_id') == $request->getParameter('id'))
+        {
+          $error = new sfValidatorError(new savedValidator(),'You can\'t synonym yourself!');
+          $this->form->getErrorSchema()->addError($error); 
+        }
+        else
+        {
+          try
+          {
+	          $conn = Doctrine_Manager::connection();
+	          $conn->beginTransaction();
 
-		Doctrine::getTable('ClassificationSynonymies')
-		  ->mergeSynonyms(
-		    $request->getParameter('table'),
-		    $this->form->getValue('record_id'),
-		    $request->getParameter('id'),
-		    $this->form->getValue('group_name')
-		  );
-		$conn->commit();
-		return $this->renderText('ok');
-	      }
-	      catch(Doctrine_Exception $e)
-	      {
-		$conn->rollback();
-		$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-		$this->form->getErrorSchema()->addError($error); 
-	      }
+	          Doctrine::getTable('ClassificationSynonymies')
+	            ->mergeSynonyms(
+	              $request->getParameter('table'),
+	              $this->form->getValue('record_id'),
+	              $request->getParameter('id'),
+	              $this->form->getValue('group_name')
+	            );
+	          $conn->commit();
+	          return $this->renderText('ok');
+          }
+          catch(Doctrine_Exception $e)
+          {
+	          $conn->rollback();
+	          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	          $this->form->getErrorSchema()->addError($error); 
+          }
+        }
 	    }
-	 }
     }
     $formFilterName = DarwinTable::getFilterForTable($request->getParameter('table'));
     $this->searchForm = new $formFilterName(array('table'=> $request->getParameter('table') ));
@@ -64,6 +64,7 @@ class synonymActions extends DarwinActions
   
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $conn = Doctrine_Manager::connection();
     $conn->beginTransaction();
 
@@ -83,6 +84,7 @@ class synonymActions extends DarwinActions
 
   public function executeEditOrder(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $this->forward404Unless($request->isMethod('post'));
     Doctrine::getTable('ClassificationSynonymies')->saveOrder(substr($request->getParameter('order', ','),0,-1));
     return $this->renderText('ok');

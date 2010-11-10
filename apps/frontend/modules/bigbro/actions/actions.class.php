@@ -9,6 +9,14 @@
  */
 class bigbroActions extends DarwinActions
 {
+  public function preExecute()
+  {
+    if(! $this->getUser()->isAtLeast(Users::ADMIN))
+    {
+      $this->forwardToSecureAction();
+    }
+  }
+
  /**
   * Executes index action
   *

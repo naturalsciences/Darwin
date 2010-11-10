@@ -11,7 +11,7 @@
 class commentActions extends DarwinActions
 {
   public function executeComment(sfWebRequest $request)
-  {
+  { 
     if($request->hasParameter('cid'))
       $this->comment =  Doctrine::getTable('Comments')->findExcept($request->getParameter('cid'));
     else
@@ -25,18 +25,19 @@ class commentActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('comments'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	  }
-	  catch(Exception $e)
-	  {
-	    return $this->renderText($e->getMessage());
-	  }
-	  return $this->renderText('ok');
-	}
+      if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();    
+	    $this->form->bind($request->getParameter('comments'));
+	    if($this->form->isValid())
+	    {
+	      try{
+	        $this->form->save();
+	      }
+	      catch(Exception $e)
+	      {
+	        return $this->renderText($e->getMessage());
+	      }
+	      return $this->renderText('ok');
+	    }
     }
   }
 }

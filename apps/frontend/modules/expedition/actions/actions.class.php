@@ -12,6 +12,16 @@ class expeditionActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_expeditions_widget';
 
+  public function preExecute()
+  {
+    if (strstr('view,index,search',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
   /**
     * Action executed when calling the expeditions from an other screen
     * @param sfWebRequest $request Request coming from browser
@@ -40,7 +50,6 @@ class expeditionActions extends DarwinActions
     */ 
   public function executeNew(sfWebRequest $request)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $expedition = new Expeditions() ;
     $duplic = $request->getParameter('duplicate_id','0') ;
     $expedition = $this->getRecordIfDuplicate($duplic, $expedition);
@@ -86,7 +95,6 @@ class expeditionActions extends DarwinActions
     */ 
   public function executeEdit(sfWebRequest $request)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Forward to a 404 page if the requested expedition id is not found
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
     // Otherwise initialize the expedition encoding form
@@ -121,7 +129,6 @@ class expeditionActions extends DarwinActions
     */ 
   public function executeDelete(sfWebRequest $request)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     // Trigger the protection against the XSS attack
     $request->checkCSRFProtection();
     // Forward to a 404 page if the expedition to be deleted has not been found
@@ -160,7 +167,6 @@ class expeditionActions extends DarwinActions
 
   public function executeAddMember(sfWebRequest $request)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref'));
     $this->form = new ExpeditionsForm();

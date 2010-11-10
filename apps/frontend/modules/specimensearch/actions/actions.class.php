@@ -274,14 +274,28 @@ class specimensearchActions extends DarwinActions
 
   public function executeIndividualTree(sfWebRequest $request)
   {
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;  
+    $spec = Doctrine::getTable('SpecimenSearch')->findOneBySpecRef($request->getParameter('id'));
+    if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))
+       
+      $this->user_allowed = false ;  
+    else 
+      $this->user_allowed = true ;      
     $this->items = Doctrine::getTable('SpecimenIndividuals')
       ->getIndividualBySpecimen($request->getParameter('id'));
   }
 
   public function executePartTree(sfWebRequest $request)
   {
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
+    $spec = Doctrine::getTable('Specimensearch')->findOneByIndividualRef($request->getParameter('id'));
+    if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))
+       
+      $this->user_allowed = false ;  
+    else 
+      $this->user_allowed = true ;      
     $this->parts = Doctrine::getTable('SpecimenParts')
       ->findForIndividual($request->getParameter('id'));
     $this->individual = $request->getParameter('id') ;

@@ -125,6 +125,7 @@ class userActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();  
     $request->checkCSRFProtection();
 
     $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
@@ -185,9 +186,12 @@ class userActions extends DarwinActions
 
   public function executeAddress(sfWebRequest $request)
   {
-
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('ref_id')) $this->forwardToSecureAction();   
     if($request->hasParameter('id'))
+    { 
       $this->address =  Doctrine::getTable('UsersAddresses')->findExcept($request->getParameter('id'));
+    }
     else
     {
      $this->address = new UsersAddresses();
@@ -223,9 +227,12 @@ class userActions extends DarwinActions
 
   public function executeComm(sfWebRequest $request)
   {
-
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('ref_id')) $this->forwardToSecureAction(); 
     if($request->hasParameter('id'))
+    { 
       $this->comm =  Doctrine::getTable('UsersComm')->findExcept($request->getParameter('id'));
+    }
     else
     {
      $this->comm = new UsersComm();
@@ -279,12 +286,9 @@ class userActions extends DarwinActions
 
   public function executeLoginInfo(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('user_ref')) $this->forwardToSecureAction();   
     $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
-    if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
-    {
-      if($this->getUser()->getDbUserType() < Users::MANAGER)
-        $this->forwardToSecureAction();
-    }
     $this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
 
     if( ! $this->loginInfo )
@@ -312,9 +316,12 @@ class userActions extends DarwinActions
 
   public function executeLang(sfWebRequest $request)
   {
-
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('ref_id')) $this->forwardToSecureAction();  
     if($request->hasParameter('id'))
+    {  
       $this->lang =  Doctrine::getTable('UsersLanguages')->findExcept($request->getParameter('id'));
+    }
     else
     {
      $this->lang = new UsersLanguages();

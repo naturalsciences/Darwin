@@ -11,6 +11,7 @@ class insurancesActions extends DarwinActions
 {
   public function executeAdd(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();         
     $this->insurance = null;
     if($request->hasParameter('rid'))
     {
@@ -27,21 +28,21 @@ class insurancesActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('insurances'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	    $this->form->getObject()->refreshRelated();
-	    $this->form = new InsurancesForm($this->form->getObject()); //Ugly refresh
-	    return $this->renderText('ok');
-	  }
-	  catch(Exception $e)
-	  {
-            $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-            $this->form->getErrorSchema()->addError($error); 
-	  }
-	}
+	    $this->form->bind($request->getParameter('insurances'));
+	    if($this->form->isValid())
+	    {
+	      try{
+	        $this->form->save();
+	        $this->form->getObject()->refreshRelated();
+	        $this->form = new InsurancesForm($this->form->getObject()); //Ugly refresh
+	        return $this->renderText('ok');
+	      }
+	      catch(Exception $e)
+	      {
+                $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+                $this->form->getErrorSchema()->addError($error); 
+	      }
+	    }
     }
   }
 }

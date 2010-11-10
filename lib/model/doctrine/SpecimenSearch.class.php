@@ -13,12 +13,12 @@
 class SpecimenSearch extends BaseSpecimenSearch
 {
 
-    public function getCountryTags()
+    public function getCountryTags($is_view = false)
     {
       $tags = explode(';',$this->getGtuCountryTagValue(''));
       $nbr = count($tags);
       if(! $nbr) return "-";
-      $str = '<ul class="name_tags">';
+      $str = '<ul class="name_tags_view">';
       foreach($tags as $value)
         if (strlen($value))
           $str .=  '<li>' . trim($value).'</li>';
