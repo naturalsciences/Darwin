@@ -2,19 +2,28 @@
   <div class="menu_top">
     <table>
       <tr>
-        <td rowspan="2" style="height:100px">&nbsp;</td>
+        <td rowspan="2" style="height:90px">&nbsp;</td>
         <td></td>
       </tr>
       <tr>
         <td>
           <ul class="menu_link">
-            <li><a href="#">Our collections</a></li>
-            <li><a href="<?php echo url_for('search/search');?>"><?php echo __("Search"); ?></a></li>
-            <li><a href="#">Take a tour</a></li>
-            <li><a href="#">Contacts</a></li>
-            <li><a href="#">Links</a></li>
+            <li><?php echo link_to(__('Our Collections'),'@homepage');?></li>
+            <li><?php echo link_to(__('Search'),'search/search');?></li>
+            <li><?php echo link_to(__('Take a tour'),'@homepage');?></li>
+            <li><?php echo link_to(__('Contacts'),'@homepage');?></li>
+            <li><?php echo link_to(__('Links'),'@homepage');?></li>
           </ul>
         </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="lang_picker"><ul style="">
+          <li><?php echo link_to('En','board/lang?lang=en');?></li>
+          <li class="sep">|<li>
+          <li><?php echo link_to('Fr','board/lang?lang=fr');?></li>
+          <li class="sep">|<li>
+          <li><?php echo link_to('Nl','board/lang?lang=nl');?></li>
+        </ul></td>
       </tr>
     </table>    
   </div>

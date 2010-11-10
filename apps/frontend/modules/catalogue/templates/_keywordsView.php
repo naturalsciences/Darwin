@@ -80,7 +80,6 @@ $(document).ready(function () {
     parent = $(this).closest('tr');
     $(parent).find('input').val('');
     $(parent).hide();
-    console.log($(parent).closest('table[alt!=""]').find('tr:visible'));
     if(! $(parent).closest('table[alt!=""]').find('tr:visible').length)
       $(parent).closest('table[alt!=""]').closest('tr').hide();
   });

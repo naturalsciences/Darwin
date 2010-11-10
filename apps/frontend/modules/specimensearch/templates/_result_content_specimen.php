@@ -120,7 +120,6 @@
               $('#spec_code_<?php echo $item_ref;?>_info').click(function() 
               {
                 item_row=$(this).closest('td');
-                console.log(item_row.find('li .code_supp:hidden'));
                 if(item_row.find('li.code_supp:hidden').length)
                 {
                   item_row.find('li.code_supp').removeClass('hidden');
