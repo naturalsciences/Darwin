@@ -8,6 +8,7 @@
         <?php echo $spec->getStationVisible()?__("yes"):__("no") ; ?>
       </td>
     </tr>
+    <?php if($spec->getStationVisible() || (!$spec->getStationVisible() && $sf_user->isAtLeast(Users::ENCODER))) : ?>
     <tr>
       <th><label><?php echo __('Sampling location code');?></label></th>
       <td id="specimen_gtu_ref_code"><?php echo $spec->getGtuCode() ; ?></td>
@@ -33,5 +34,6 @@
     <tr>
       <td colspan="2" id="specimen_gtu_ref_map"></td>
     </tr>
+    <?php endif ; ?>
   </tbody>
 </table>

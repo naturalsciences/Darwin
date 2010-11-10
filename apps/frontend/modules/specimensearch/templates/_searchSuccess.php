@@ -82,7 +82,7 @@
               <?php if($sf_user->isAtLeast(Users::ADMIN) || $specimen->getHasEncodingRights()) : ?>
                 <?php switch($source){
                   case 'specimen':   $e_link = 'specimen/edit?id='.$specimen->getSpecRef();
-                                     $v_link = 'specimen/edit?id='.$specimen->getSpecRef();                  
+                                     $v_link = 'specimen/view?id='.$specimen->getSpecRef();                  
                                      $d_link = 'specimen/new?duplicate_id='.$specimen->getSpecRef();break;
                   case 'individual': $e_link = 'individuals/edit?id='.$specimen->getIndividualRef();
                                      $v_link = 'individuals/view?id='.$specimen->getIndividualRef();
