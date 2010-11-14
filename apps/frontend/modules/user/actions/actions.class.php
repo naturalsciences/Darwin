@@ -25,10 +25,13 @@ class userActions extends DarwinActions
     $this->forward404Unless($this->user, sprintf('User does not exist (%s).', $request->getParameter('id')));
     if($this->getUser()->getId() == $this->user->getId() && !$request->isMethod('post')) 
       $this->redirect('user/profile'); 
-    if($this->getUser()->getDbUserType() < Users::MANAGER) 
-      $this->forwardToSecureAction();
-    elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
-      $this->forwardToSecureAction();
+    if($request->isMethod('get'))
+    {
+      if($this->getUser()->getDbUserType() < Users::MANAGER) 
+        $this->forwardToSecureAction();
+      elseif($this->getUser()->getDbUserType() == Users::MANAGER && $this->getUser()->getDbUserType() == $this->user->getDbUserType()) 
+        $this->forwardToSecureAction();
+    }
     $this->mode = 'edit' ;
     $this->form = new UsersForm($this->user, array('mode' => $this->mode,'is_physical'=>$this->user->getIsPhysical()));
     $users = $request->getParameter('users');
@@ -122,6 +125,7 @@ class userActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();  
     $request->checkCSRFProtection();
 
     $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
@@ -144,6 +148,7 @@ class userActions extends DarwinActions
   {
     $id = $request->getparameter('id') ;
     $url = "user/widget?id=".$id ;
+    $is_reg_user = false ;
     if (!$id)
     {
       $id = $this->getUser()->getId();
@@ -152,9 +157,10 @@ class userActions extends DarwinActions
     else
     { 
       if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-        $this->forward404Unless(Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+        $this->forward404Unless($user = Doctrine::getTable('Users')->findExcept($id), sprintf('User does not exist (%s).', $id));
+      if($user->getDbUserType() == Users::REGISTERED_USER) $is_reg_user = true ;
     }
-    $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType()) ;
+    $widget = Doctrine::getTable('MyWidgets')->setUserRef($id)->getWidgetsList($this->getUser()->getDbUserType(), $is_reg_user) ;
     $this->form = new UserWidgetForm(null,array('collection' => $widget, 'level' =>$this->getUser()->getDbUserType()));
     $this->level = $this->getUser()->getAttribute('db_user_type') ; 
 
@@ -180,9 +186,12 @@ class userActions extends DarwinActions
 
   public function executeAddress(sfWebRequest $request)
   {
-
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('ref_id')) $this->forwardToSecureAction();   
     if($request->hasParameter('id'))
+    { 
       $this->address =  Doctrine::getTable('UsersAddresses')->findExcept($request->getParameter('id'));
+    }
     else
     {
      $this->address = new UsersAddresses();
@@ -218,9 +227,12 @@ class userActions extends DarwinActions
 
   public function executeComm(sfWebRequest $request)
   {
-
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('ref_id')) $this->forwardToSecureAction(); 
     if($request->hasParameter('id'))
+    { 
       $this->comm =  Doctrine::getTable('UsersComm')->findExcept($request->getParameter('id'));
+    }
     else
     {
      $this->comm = new UsersComm();
@@ -274,12 +286,9 @@ class userActions extends DarwinActions
 
   public function executeLoginInfo(sfWebRequest $request)
   {
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('user_ref')) $this->forwardToSecureAction();   
     $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
-    if($this->getUser()->getAttribute('db_user_id') != $request->getparameter('user_ref'))
-    {
-      if($this->getUser()->getDbUserType() < Users::MANAGER)
-        $this->forwardToSecureAction();
-    }
     $this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
 
     if( ! $this->loginInfo )
@@ -307,9 +316,12 @@ class userActions extends DarwinActions
 
   public function executeLang(sfWebRequest $request)
   {
-
+    if($this->getUser()->getDbUserType() < Users::MANAGER) 
+      if($this->getUser()->getId() != $request->getParameter('ref_id')) $this->forwardToSecureAction();  
     if($request->hasParameter('id'))
+    {  
       $this->lang =  Doctrine::getTable('UsersLanguages')->findExcept($request->getParameter('id'));
+    }
     else
     {
      $this->lang = new UsersLanguages();
@@ -360,6 +372,7 @@ class userActions extends DarwinActions
       }
     }
   }
+  
   public function executeRightSummary(sfWebRequest $request)
   {
     if($request->hasParameter('id')) 
@@ -368,9 +381,30 @@ class userActions extends DarwinActions
       if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
     }
     else $user_id = $this->getUser()->getId() ;
-    $this->summary = array(Users::REGISTERED_USER=>$this->getI18N()->__('You can only view specimens linked to this collection'),
+    $this->summary = array(Users::REGISTERED_USER=>$this->getI18N()->__('You can view private specimens linked to this collection'),
                            Users::ENCODER=>$this->getI18N()->__('You can edit specimens linked to this collection'),
                            Users::MANAGER=>$this->getI18N()->__('You are Manager of this collection')) ;
     $this->rights = Doctrine::getTable('collectionsRights')->findByUserRef($user_id) ;
+    $this->widgets = array() ;
+    if ($this->getUser()->isA(Users::REGISTERED_USER))
+    {
+      $specific_rights = Doctrine::getTable('myWidgets')->findByUserRef($user_id) ;
+      foreach($specific_rights as $rights)
+      {
+        if($rights->getCollections() != ",")
+        {          
+          $tab = explode(',',$rights->getCollections()) ;
+          foreach($tab as $collections)
+          {
+            if($collections != "")
+            {
+              if(!isset($this->widgets[$collections])) $this->widgets[$collections] = array() ;
+              if(!isset($this->widgets[$collections][$rights->getCategory()])) $this->widgets[$collections][$rights->getCategory()] = array() ;          
+              $this->widgets[$collections][$rights->getCategory()][] = "<b>".$rights->getGroupName()."</b> (".$rights->getTitlePerso().")" ;
+            }
+          }
+        }
+      }    
+    }    
   }
 }

@@ -13,7 +13,7 @@
     <td  class="col_collection">
       <?php if($specimen->getCollectionRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=collection_".$item_ref."_info");?>
-        <?php if ($action == 'edit') : ?>        
+        <?php if($sf_user->isAtLeast(Users::ADMIN) || ($sf_user->isAtLeast(Users::MANAGER) && $specimen->getHasEncodingRights())) : ?>           
           <a href="<?php echo url_for('collection/edit?id='.$specimen->getCollectionRef());?>"><?php echo $specimen->getCollectionName();?></a>
         <?php else : ?>
           <?php echo $specimen->getCollectionName();?>
@@ -76,7 +76,7 @@
                 elem = item_row.find('#gtu_<?php echo $item_ref;?>_details');
                 if(elem.is(":hidden"))
                 { 
-                  $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getSpecRef()) ;?>',function (html){
+                  $.get('<?php echo url_for("gtu/completeTag?id=".$specimen->getSpecRef()."&view=true") ;?>',function (html){
                     item_row.find('.general_gtu').slideUp();
                     elem.html(html).slideDown();
                   });
@@ -89,7 +89,7 @@
               });
             });
           </script>
-          <?php if ($action == 'edit') : ?>              
+          <?php if ($action == 'edit') : ?>
             <a href="<?php echo url_for('gtu/'.$action.'?id='.$specimen->getGtuRef()) ;?>"><?php echo $specimen->getGtuCode();?></a>
           <?php else : ?>
             <?php echo $specimen->getGtuCode();?>
@@ -108,6 +108,7 @@
 
       <?php endif ; ?>
     </td> 
+
     <td class="col_codes">
       <?php if(isset($codes[$specimen->getSpecRef()])):?>
         <?php if(count($codes[$specimen->getSpecRef()]) <= 3):?>
@@ -119,7 +120,6 @@
               $('#spec_code_<?php echo $item_ref;?>_info').click(function() 
               {
                 item_row=$(this).closest('td');
-                console.log(item_row.find('li .code_supp:hidden'));
                 if(item_row.find('li.code_supp:hidden').length)
                 {
                   item_row.find('li.code_supp').removeClass('hidden');

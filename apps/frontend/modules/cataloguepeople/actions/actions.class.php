@@ -12,6 +12,7 @@ class cataloguepeopleActions extends DarwinActions
 {
   public function executePeople(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
     if($request->hasParameter('id'))
       $this->cataloguepeople =  Doctrine::getTable('CataloguePeople')->find($request->getParameter('id'));
     else

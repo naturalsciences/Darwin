@@ -22,8 +22,8 @@ class individualsActions extends DarwinActions
       {
         $this->spec_individual = $this->getRecordIfDuplicate($duplic,$this->spec_individual);    
         // set all necessary widgets to visible 
-        Doctrine::getTable('SpecimenIndividuals')->getRequiredWidget($this->spec_individual, $this->getUser()->getId(), 'individuals_widget',
-                                                                      ($request->hasParameter('all_duplicate')?1:0));
+        if($request->hasParameter('all_duplicate'))        
+          Doctrine::getTable('SpecimenIndividuals')->getRequiredWidget($this->spec_individual, $this->getUser()->getId(), 'individuals_widget',1);
       }    
     }
     else
@@ -52,12 +52,15 @@ class individualsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
-    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
+    if($request->hasParameter('id'))
+    {    
+      $spec = Doctrine::getTable('Specimensearch')->findOneByIndividualRef($request->getParameter('id'));
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
                                                                                                       $request->getParameter('id'), 
-                                                                                                      $this->getUser()->getId())))
-      $this->redirect("individuals/view?id=".$request->getParameter('id')) ;  
-
+                                                                                                      $this->getUser()->getId())))    
+        $this->redirect("individuals/view?id=".$request->getParameter('id')) ;  
+    }
     $this->individual = $this->getSpecimenIndividualsForm($request);  
 
     if($this->individual->getObject()->isNew())
@@ -131,6 +134,11 @@ class individualsActions extends DarwinActions
 
   public function executeAddIdentification(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))  
+      $this->forwardToSecureAction();                                                                                                        
     $number = intval($request->getParameter('num'));
     $order_by = intval($request->getParameter('order_by',0));
     $individual_form = $this->getSpecimenIndividualsForm($request);
@@ -148,6 +156,11 @@ class individualsActions extends DarwinActions
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))  
+      $this->forwardToSecureAction();    
     $individual_form = $this->getSpecimenIndividualsForm($request);
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref')) ; 
@@ -174,6 +187,11 @@ class individualsActions extends DarwinActions
 
   public function executeAddComments(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))  
+      $this->forwardToSecureAction();    
     $number = intval($request->getParameter('num'));
     $spec = null;
 

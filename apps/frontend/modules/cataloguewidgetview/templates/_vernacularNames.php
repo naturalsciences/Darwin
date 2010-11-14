@@ -14,9 +14,7 @@
       </td>
       <td>
 	<?php if( count($vernacular_name->VernacularNames) > 1):?>
-	  <a href="#" class="display_value"><?php echo format_number_choice('[1]Show 1 Name|(1,+Inf]Show %1% Names', array('%1%' => count($vernacular_name->VernacularNames) ), count($vernacular_name->VernacularNames));?></a>
-	  <a href="#" class="hidden hide_value"><?php echo __('Hide Names');?></a>
-	  <ul class="hidden">
+	  <ul>
 	    <?php foreach($vernacular_name->VernacularNames as $name):?>
 	      <li>
 		<?php echo $name->getName();?>
@@ -34,7 +32,3 @@
   </tbody>
 </table>
 
-<script type="text/javascript">
-$('.display_value').click(showValues);
-$('.hide_value').click(hideValues);
-</script>

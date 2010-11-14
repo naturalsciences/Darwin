@@ -29,7 +29,7 @@ foreach($form['newVal'] as $keyword)
 	      <td><table alt="<?php echo $type;?>">
 	      <?php foreach($keywords as $i => $keyword):?>
 		  <tr>
-		    <?php include_partial('catalogue/nameValue', array('form' => $keyword, 'show_name' => ($i ==0? true:false)));?>
+		    <?php include_partial('catalogue/nameValue', array('form' => $keyword, 'show_name' => ($i ==0? true:false),'view' => isset($view)?true:false));?>
 		  </tr>
 	      <?php endforeach;?>
 	      </table></td>
@@ -80,7 +80,6 @@ $(document).ready(function () {
     parent = $(this).closest('tr');
     $(parent).find('input').val('');
     $(parent).hide();
-    console.log($(parent).closest('table[alt!=""]').find('tr:visible'));
     if(! $(parent).closest('table[alt!=""]').find('tr:visible').length)
       $(parent).closest('table[alt!=""]').closest('tr').hide();
   });

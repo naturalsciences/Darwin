@@ -70,6 +70,7 @@ class peopleActions extends DarwinActions
 
   public function executeNew(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $people = new People() ;
     $people = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $people);
     $this->form = new PeopleForm($people);
@@ -77,6 +78,7 @@ class peopleActions extends DarwinActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
     $this->form = new PeopleForm();
@@ -88,6 +90,7 @@ class peopleActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
     $this->loadWidgets();
@@ -95,6 +98,7 @@ class peopleActions extends DarwinActions
 
   public function executeUpdate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
     $this->form = new PeopleForm($people);
@@ -106,6 +110,7 @@ class peopleActions extends DarwinActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $request->checkCSRFProtection();
 
     $this->forward404Unless($people = Doctrine::getTable('People')->findPeople($request->getParameter('id')), sprintf('people does not exist (%s).', $request->getParameter('id')));
@@ -126,7 +131,7 @@ class peopleActions extends DarwinActions
 
 
   protected function processForm(sfWebRequest $request, sfForm $form)
-  {
+  {  
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
@@ -148,7 +153,7 @@ class peopleActions extends DarwinActions
   **/
   public function executeAddress(sfWebRequest $request)
   {
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     if($request->hasParameter('id'))
       $this->address =  Doctrine::getTable('PeopleAddresses')->findExcept($request->getParameter('id'));
     else
@@ -185,7 +190,7 @@ class peopleActions extends DarwinActions
 
   public function executeComm(sfWebRequest $request)
   {
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     if($request->hasParameter('id'))
       $this->comm =  Doctrine::getTable('PeopleComm')->find($request->getParameter('id'));
     else
@@ -216,7 +221,7 @@ class peopleActions extends DarwinActions
 
   public function executeLang(sfWebRequest $request)
   {
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     if($request->hasParameter('id'))
       $this->lang =  Doctrine::getTable('PeopleLanguages')->find($request->getParameter('id'));
     else
@@ -229,29 +234,29 @@ class peopleActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('people_languages'));
-	if($this->form->isValid())
-	{
-	  try {
-	    if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage())
+	    $this->form->bind($request->getParameter('people_languages'));
+	    if($this->form->isValid())
 	    {
-	      Doctrine::getTable('PeopleLanguages')->removeOldPreferredLang($request->getParameter('ref_id'));
+	      try {
+	        if($this->form->getValue('preferred_language') && ! $this->lang->getPreferredLanguage())
+	        {
+	          Doctrine::getTable('PeopleLanguages')->removeOldPreferredLang($request->getParameter('ref_id'));
+	        }
+	        $this->form->save();
+	        return $this->renderText('ok');
+	      }
+	      catch(Doctrine_Exception $ne)
+	      {
+	        $e = new DarwinPgErrorParser($ne);
+	        return $this->renderText($e->getMessage());
+	      }
 	    }
-	    $this->form->save();
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-	    $e = new DarwinPgErrorParser($ne);
-	    return $this->renderText($e->getMessage());
-	  }
-	}
     }
   }
 
   public function executeRelation(sfWebRequest $request)
   {
-
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     if($request->hasParameter('id')) {
       $this->relation =  Doctrine::getTable('PeopleRelationships')->find($request->getParameter('id'));
       $this->is_physical = Doctrine::getTable('People')->findExcept($request->getParameter('ref_id'))->getIsPhysical();
@@ -267,24 +272,25 @@ class peopleActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('people_relationships'));
-	if($this->form->isValid())
-	{
-	  try {
-	    $this->form->save();
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-	    $e = new DarwinPgErrorParser($ne);
-	    return $this->renderText($e->getMessage());
-	  }
-	}
+	    $this->form->bind($request->getParameter('people_relationships'));
+	    if($this->form->isValid())
+	    {
+	      try {
+	        $this->form->save();
+	        return $this->renderText('ok');
+	      }
+	      catch(Doctrine_Exception $ne)
+	      {
+	        $e = new DarwinPgErrorParser($ne);
+	        return $this->renderText($e->getMessage());
+	      }
+	    }
     }
   }
   
   public function executeRelationDetails(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $this->level = $request->getParameter('level',1);
     $this->relations  = Doctrine::getTable('PeopleRelationships')->findAllRelated($request->getParameter('id'));
     if(!$this->relations)
@@ -296,6 +302,7 @@ class peopleActions extends DarwinActions
     $this->people = Doctrine::getTable('People')->findExcept($request->getParameter('id'));
     $this->forward404Unless($this->people,'People not Found');
     $this->form = new PeopleForm($this->people);    
+    $this->types = People::getTypes() ;
     $this->loadWidgets();
   }  
 }

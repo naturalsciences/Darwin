@@ -11,7 +11,17 @@
 class institutionActions extends DarwinActions
 {
   protected $widgetCategory = 'people_institution_widget';
-
+  
+  public function preExecute()
+  {
+    if (strstr('view,index,search',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
   public function executeChoose(sfWebRequest $request)
   {
     $this->form = new InstitutionsFormFilter();
@@ -62,14 +72,14 @@ class institutionActions extends DarwinActions
   }
 
   public function executeNew(sfWebRequest $request)
-  {
+  {  
     $instit = new Institutions() ;
     $instit = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $instit);
     $this->form = new InstitutionsForm($instit);
   }
 
   public function executeCreate(sfWebRequest $request)
-  {
+  { 
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
     $this->form = new InstitutionsForm();
@@ -100,7 +110,6 @@ class institutionActions extends DarwinActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-
     $this->forward404Unless($institution = Doctrine::getTable('Institutions')->findInstitution($request->getParameter('id')), sprintf('Object institution does not exist (%s).', $request->getParameter('id')));
     try{
         $institution->delete();
@@ -140,6 +149,7 @@ class institutionActions extends DarwinActions
     $this->instit = Doctrine::getTable('Institutions')->findExcept($request->getParameter('id'));
     $this->forward404Unless($this->instit,'Institution not Found');
     $this->form = new InstitutionsForm($this->instit);    
+    $this->types = Institutions::getTypes();
     $this->loadWidgets();
   }  
 }

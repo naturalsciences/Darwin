@@ -174,11 +174,14 @@ class specimensearchActions extends DarwinActions
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->specimensearch = $this->pagerLayout->execute();
           $spec_list = array();
-          $part_list = array() ;            
+          $part_list = array() ;
+          $this->source = $this->form->getValue('what_searched');
+
           foreach($this->specimensearch as $key=>$specimen)
           {
             $spec_list[] = $specimen->getSpecRef() ;
-            $part_list[] = $specimen->getPartRef() ;          
+            if( $this->source == 'part')
+              $part_list[] = $specimen->getPartRef();
           }
           $codes_collection = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens',$spec_list) ;
           $this->codes = array();
@@ -201,7 +204,6 @@ class specimensearchActions extends DarwinActions
           }
 
           $this->field_to_show = $this->getVisibleColumns($this->getUser(), $this->form);
-          $this->source = $this->form->getValue('what_searched');
           $this->defineFields($this->source);
           return;
         }
@@ -212,7 +214,6 @@ class specimensearchActions extends DarwinActions
     if(isset($criterias['specimen_search_filters']))
       Doctrine::getTable('SpecimenSearch')->getRequiredWidget($criterias['specimen_search_filters'], $this->getUser()->getId(), 'specimensearch_widget');
     $this->loadWidgets();
-//    $this->form->addGtuTagValue(0);
   }
   
   /**
@@ -273,14 +274,28 @@ class specimensearchActions extends DarwinActions
 
   public function executeIndividualTree(sfWebRequest $request)
   {
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;  
+    $spec = Doctrine::getTable('SpecimenSearch')->findOneBySpecRef($request->getParameter('id'));
+    if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))
+       
+      $this->user_allowed = false ;  
+    else 
+      $this->user_allowed = true ;      
     $this->items = Doctrine::getTable('SpecimenIndividuals')
       ->getIndividualBySpecimen($request->getParameter('id'));
   }
 
   public function executePartTree(sfWebRequest $request)
   {
-    $this->user_allowed = ($this->getUser()->getDbUserType() < Users::ENCODER?false:true) ;
+    $spec = Doctrine::getTable('Specimensearch')->findOneByIndividualRef($request->getParameter('id'));
+    if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))
+       
+      $this->user_allowed = false ;  
+    else 
+      $this->user_allowed = true ;      
     $this->parts = Doctrine::getTable('SpecimenParts')
       ->findForIndividual($request->getParameter('id'));
     $this->individual = $request->getParameter('id') ;

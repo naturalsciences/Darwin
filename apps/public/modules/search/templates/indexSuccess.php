@@ -1,6 +1,6 @@
 <?php slot('title', __('Search Specimens/Rocks/Minerals'));  ?>  
 <div class="page">
-<h1><?php echo __("Specimen searchs List");?></h1>
+<h1><?php echo __("Specimen search criteria");?></h1>
 <?php echo form_tag('search/search', array('class'=>'publicsearch_form'));?>
   <h2 class="title"><?php echo __("Classifications") ?></h2>
   <?php echo $form->renderGlobalErrors(); ?>
@@ -81,13 +81,53 @@
               <tr><th colspan="2"><?php echo __('Tags') ; ?></th></tr>
             </thead>
             <tbody>              
-              <?php foreach($form['Tags'] as $i=>$form_value):?>
-                <?php include_partial('search/andSearch',array('form' => $form['Tags'][$i], 'row_line'=>$i));?>
-              <?php endforeach;?>
-              <tr class="and_row">
-                <td></td>
-                <td><?php echo image_tag('add_blue.png');?><a href="<?php echo url_for('search/andSearch');?>" class="and_tag"><?php echo __('Add tag'); ?></a></td>
+              <tr class="tag_line">
+                <td>
+                  <?php echo $form['tags'];?>
+                  <div class="purposed_tags" id="purposed_tags">
+                  </div>
+                </td>
+                <td>
+                  <?php echo image_tag('remove.png', 'alt=Delete class=clear_prop id=clear_tag'); ?>
+                </td>
               </tr>
+              <script  type="text/javascript">
+                $('textarea.tag_line').bind('keydown click',purposeTags);
+                $('#clear_tag').click(function(){
+                    $('textarea.tag_line').val('');
+                });
+                function purposeTags(event)
+                {
+                  if (event.type == 'keydown')
+                  {
+                    var code = (event.keyCode ? event.keyCode : event.which);
+                    if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
+                  }        
+                  parent_el = $(this).closest('tr');
+
+                  if($(this).val() == '') return;
+                  $(this).find('#purposed_tags').html('<img src="/images/loader.gif" />');
+                  $.ajax({
+                    type: "GET",
+                    url: "<?php echo url_for('search/purposeTag');?>" + '/value/'+ $(this).val(),
+                    success: function(html)
+                    {
+                      parent_el.find('#purposed_tags').html(html);
+                      parent_el.find('#purposed_tags').show();
+                    }
+                  });
+                }
+
+                $('#purposed_tags li').live('click',function()
+                { 
+                  input_el = $('textarea.tag_line');
+                  if(input_el.val().match("\;\s*$"))
+                    input_el.val( input_el.val() + $(this).text() );
+                  else
+                    input_el.val( input_el.val() + " ; " +$(this).text() );
+                  input_el.trigger('click');
+                });    
+              </script>
             </tbody>
           </table>
           </div>
@@ -127,6 +167,7 @@
     </tbody>
   </table>  
   <div style="text-align:right">
+    <input type="button" name="clear" id="reset" value="<?php echo __('Clear'); ?>" class="result">
     <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">
   </div>
 </div>  
@@ -169,6 +210,10 @@ $(document).ready(function () {
       }
     });
     return false;
-  });           
+  });    
+  $('#reset').click(function()
+  {
+    document.location.href = "<?php echo url_for('search/index') ; ?>" ;
+  });
 });  
 </script>

@@ -12,7 +12,16 @@
 class igsActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_igs_widget';
-
+  public function preExecute()
+  {
+    if (strstr('view,index,searchforlimited,search',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
   /**
     * Action executed when calling the expeditions from an other screen
     * @param sfWebRequest $request Request coming from browser
@@ -36,7 +45,7 @@ class igsActions extends DarwinActions
   }
 
   public function executeNew(sfWebRequest $request)
-  {
+  { 
     $igs = new igs() ;
     $igs = $this->getRecordIfDuplicate($request->getParameter('duplicate_id','0'), $igs);
     $this->form = new igsForm($igs);
@@ -75,7 +84,6 @@ class igsActions extends DarwinActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
     try
     {

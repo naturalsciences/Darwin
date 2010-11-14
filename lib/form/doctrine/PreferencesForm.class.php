@@ -24,7 +24,7 @@ class PreferencesForm extends BaseForm
       'multiple' => true,
       'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
-    $this->widgetSchema['search_cols_specimen']->setLabel('Default visible columns');
+    $this->widgetSchema['search_cols_specimen']->setLabel('Default specimens visible columns');
     $default = $this->db_keys['search_cols_specimen'];
     if($default == '')
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_specimen');
@@ -42,12 +42,12 @@ class PreferencesForm extends BaseForm
       'multiple' => true,
       'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
-    $this->widgetSchema['search_cols_individual']->setLabel('Default visible columns');
+    $this->widgetSchema['search_cols_individual']->setLabel('Default individuals visible columns');
     $default = $this->db_keys['search_cols_individual'];
     if($default == '')
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_individual');
     $this->widgetSchema['search_cols_individual']->setDefault(explode('|',$default));
-    $this->widgetSchema->setHelp('search_cols_individual', 'Define which field will be available by default into the specimen search');
+    $this->widgetSchema->setHelp('search_cols_individual', 'Define which field will be available by default into the specimen individual search');
     $this->validatorSchema['search_cols_individual'] = new sfValidatorChoice(array('choices' => array_keys($choices), 'multiple' => true));
 
 ///------------ PARTS
@@ -60,12 +60,12 @@ class PreferencesForm extends BaseForm
       'multiple' => true,
       'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
-    $this->widgetSchema['search_cols_specimen']->setLabel('Default visible columns');
+    $this->widgetSchema['search_cols_part']->setLabel('Default parts visible columns');
     $default = $this->db_keys['search_cols_part'];
     if($default == '')
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_part');
     $this->widgetSchema['search_cols_part']->setDefault(explode('|',$default));
-    $this->widgetSchema->setHelp('search_cols_part', 'Define which field will be available by default into the specimen search');
+    $this->widgetSchema->setHelp('search_cols_part', 'Define which field will be available by default into the specimen part search');
     $this->validatorSchema['search_cols_part'] = new sfValidatorChoice(array('choices' => array_keys($choices), 'multiple' => true));
 ///-----OTHER
 

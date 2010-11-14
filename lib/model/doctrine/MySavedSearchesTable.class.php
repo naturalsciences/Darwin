@@ -74,7 +74,7 @@ class MySavedSearchesTable extends DarwinTable
       'mineral'=>'Mineralogy',
       'count'=>'Count'
     );
-    if($source == 'individual')
+    if($source == 'individual' || $source == 'part')
     {
       $individual_col = array(
         'individual_type' => 'Individual Type',

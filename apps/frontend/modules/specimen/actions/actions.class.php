@@ -34,6 +34,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddCode(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $form = $this->getSpecimenForm($request);
     $collectionId = $request->getParameter('collection_id', null);
@@ -43,6 +44,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddCollector(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref')) ;
     $form = $this->getSpecimenForm($request);
@@ -52,6 +54,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddDonator(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref')) ;
     $form = $this->getSpecimenForm($request);
@@ -61,6 +64,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddComments(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $form = $this->getSpecimenForm($request);
     $form->addComments($number);
@@ -69,6 +73,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddSpecimensAccompanying(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $form = $this->getSpecimenForm($request);
     $form->addSpecimensAccompanying($number);
@@ -77,6 +82,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddIdentification(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $order_by = intval($request->getParameter('order_by',0));
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
@@ -86,6 +92,7 @@ class specimenActions extends DarwinActions
 
   public function executeAddIdentifier(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
  //  die("ref : ".$request->getParameter('people_ref')) ;
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
     $number = intval($request->getParameter('num'));
@@ -120,7 +127,8 @@ class specimenActions extends DarwinActions
       $duplic = $request->getParameter('duplicate_id','0') ;
       $specimen = $this->getRecordIfDuplicate($duplic,$specimen,true);
       // set all necessary widgets to visible
-      Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',($request->hasParameter('all_duplicate')?1:0));
+      if($request->hasParameter('all_duplicate'))
+        Doctrine::getTable('Specimens')->getRequiredWidget($specimen, $this->getUser()->getId(), 'specimen_widget',1);
       $this->form = new SpecimensForm($specimen);
       if($duplic)
       {
@@ -157,6 +165,10 @@ class specimenActions extends DarwinActions
           {
              $this->form->addCollectors($key, $val->getPeopleRef(),$val->getOrderBy());
           }
+          foreach ($Catalogue['donator'] as $key=>$val)
+          {
+             $this->form->addDonators($key, $val->getPeopleRef(),$val->getOrderBy());
+          }          
         }
         //reembed identification
          $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens',$duplic) ;
@@ -205,6 +217,7 @@ class specimenActions extends DarwinActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $this->forward404Unless($request->isMethod('post'),'You must submit your data with Post Method');
     $this->form = new SpecimensForm();
     $this->processForm($request, $this->form);
@@ -216,11 +229,13 @@ class specimenActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
-    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
-      $this->redirect("specimen/view?id=".$request->getParameter('id')) ;
-    $this->forward404Unless(Doctrine::getTable('Specimens')->findExcept($request->getParameter('id')),'Specimen does not exist');  
-    $this->loadWidgets();
     $this->form = $this->getSpecimenForm($request, true);
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {
+      if(in_array($this->form->getObject()->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
+        $this->redirect("specimen/view?id=".$request->getParameter('id')) ;
+    }
+    $this->loadWidgets();
     $this->setTemplate('new');
   }
 

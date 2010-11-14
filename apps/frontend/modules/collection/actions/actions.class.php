@@ -101,10 +101,9 @@ class collectionActions extends DarwinActions
   {
     if(! $this->getUser()->isAtLeast(Users::ENCODER) ) $this->forwardToSecureAction();
 
-    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList($this->getUser());
-    $this->setLayout(false);
+    $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList($this->getUser(),null,false,true);
   }
-  
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->institutions = Doctrine::getTable('Collections')->fetchByInstitutionList($this->getUser());
@@ -268,9 +267,10 @@ class collectionActions extends DarwinActions
 
   public function executeWidgetsRight(sfWebRequest $request)
   {
-    if(! $this->getUser()->isAtLeast(Users::MANAGER) ) $this->forwardToSecureAction();
-    if (!Doctrine::getTable('collectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('collection_ref'),$this->getUser()->getId()))
-      $this->forwardToSecureAction();
+    if($this->getUser()->getDbUserType() < Users::MANAGER ) $this->forwardToSecureAction();
+    if(!$this->getUser()->isA(Users::ADMIN))    
+      if (!Doctrine::getTable('collectionsRights')->findOneByCollectionRefAndUserRef($request->getParameter('collection_ref'),$this->getUser()->getId()))
+        $this->forwardToSecureAction();
     $id = $request->getParameter('user_ref');
     $this->form = new WidgetRightsForm(null,array('user_ref' => $id,'collection_ref' => $request->getParameter('collection_ref'))) ;
     $this->user = Doctrine::getTable("Users")->findUser($id) ;    

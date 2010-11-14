@@ -79,7 +79,7 @@
             <a href=""><?php echo __('Administration');?></a>
             <ul>
                 <li><?php echo link_to('Mass Actions','massactions/index');?></li>
-                <?php if($sf_user->isAtLeast(Users::MANAGER) ): ?>
+                <?php if($sf_user->isAtLeast(Users::ADMIN) ): ?>
                   <li><?php echo link_to('Big Brother','bigbro/index');?></li>
                   <li>
                     <a href="#"><?php echo __('User');?></a>
@@ -104,9 +104,9 @@
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>
     </ul>
 </div>
-<!--<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="/openlayers/lib/OpenLayers.js"></script>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<?php echo javascript_include_tag('map.js'); ?>-->
+<?php echo javascript_include_tag('map.js'); ?> 
 <script  type="text/javascript">
 
 $(document).ready(function () {

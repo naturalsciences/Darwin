@@ -12,7 +12,16 @@ class lithostratigraphyActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_lithostratigraphy_widget';
   protected $table = 'lithostratigraphy';
-
+  public function preExecute()
+  {
+    if (strstr('view,index',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
   public function executeChoose(sfWebRequest $request)
   {
     $this->setLevelAndCaller($request);
@@ -21,7 +30,7 @@ class lithostratigraphyActions extends DarwinActions
   }
 
   public function executeDelete(sfWebRequest $request)
-  {
+  { 
     $this->forward404Unless(
       $unit = Doctrine::getTable('Lithostratigraphy')->findExcept($request->getParameter('id')),
       sprintf('Object lithostratigraphy does not exist (%s).', array($request->getParameter('id')))
@@ -69,7 +78,7 @@ class lithostratigraphyActions extends DarwinActions
   }
 
   public function executeUpdate(sfWebRequest $request)
-  {
+  {    
     $unit = Doctrine::getTable('Lithostratigraphy')->find($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
     $this->form = new LithostratigraphyForm($unit);
@@ -93,14 +102,14 @@ class lithostratigraphyActions extends DarwinActions
     if ($form->isValid())
     {
       try{
-	$form->save();
-	$this->redirect('lithostratigraphy/edit?id='.$form->getObject()->getId());
-      }
-      catch(Doctrine_Exception $ne)
-      {
-	$e = new DarwinPgErrorParser($ne);
-	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$form->getErrorSchema()->addError($error); 
+	      $form->save();
+	      $this->redirect('lithostratigraphy/edit?id='.$form->getObject()->getId());
+            }
+            catch(Doctrine_Exception $ne)
+            {
+	      $e = new DarwinPgErrorParser($ne);
+	      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	      $form->getErrorSchema()->addError($error); 
       }
     }
   }

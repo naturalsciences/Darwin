@@ -1,7 +1,7 @@
 <div>
-  <?php if(isset($search) && $search->count() != 0 && isset($orderBy) && isset($orderDir) && isset($currentPage)):?>   
+  <?php if(isset($search) && $search->count() != 0):?>   
     <?php
-      if($orderDir=='asc')
+      if($form->getValue('order_dir')=='asc')
         $orderSign = '<span class="order_sign_down">&nbsp;&#9660;</span>';
       else
         $orderSign = '<span class="order_sign_up">&nbsp;&#9650;</span>';
@@ -12,15 +12,14 @@
         <thead>
           <tr>
             <th></th>
-            <?php $all_columns = $columns->getRaw('specimen') + $columns->getRaw('individual') ;?>
+            <?php $all_columns = $columns->getRaw('specimen') + $columns->getRaw('common_name') + $columns->getRaw('individual') ;?>
 
             <?php foreach($all_columns as $col_name => $col):?>
-              <th class="col_<?php echo $col_name;?>">
+              <th class="col_<?php echo $col_name;?><?php echo ($col_name == 'individual_count')?' right_aligned':'';?>">
                 <?php if($col[0] != false):?>
-                  <a class="sort" href="<?php echo url_for($s_url.'&orderby='.$col[0].( ($orderBy==$col[0] && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.
-                    $currentPage);?>">
+                  <a class="sort" href="#" alt="<?php echo $col[0];?>">
                     <?php echo $col[1];?>
-                    <?php if($orderBy == $col[0]) echo $orderSign ?>
+                    <?php if($form->getValue('order_by') == $col[0]) echo $orderSign ?>
                   </a>
                 <?php else:?>
                   <?php echo $col[1];?>
@@ -33,8 +32,8 @@
         <?php foreach($search as $specimen):?>
           <tbody>
             <tr>
-              <td>
-                  <?php echo link_to(image_tag('edit.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef(),array('popup' => true));?>
+              <td style="vertical-align:middle;">
+                  <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),'search/view?id='.$specimen->getSpecRef(),array('popup' => true));?>
               </td>
               <?php include_partial('result_content_specimen', array('specimen' => $specimen, 'id' => $i++, 'gtu' => $gtu)); ?>
               <?php include_partial('tagCommonName',array('common_names'=>$common_names->getRawValue(), 'spec'=> $specimen)) ; ?>
@@ -45,7 +44,13 @@
       </table>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php else:?>
-    <?php echo __('No Specimen Matching');?>
+  <table class="spec_results">
+    <tbody>
+      <tr>
+        <th><?php echo __('No Specimen Matching');?></th>
+      </tr>
+    </tbody>
+  </table>
   <?php endif;?>
 </div>
 <script type="text/javascript">

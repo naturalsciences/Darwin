@@ -196,6 +196,8 @@ if (feature.popup) {
 }
 function addMarkersFromFeatures()
 {
+  markers.setZIndex(2300);
+
   for( var i = 0; i < results.features.length; i++ )
   {
     m = new OpenLayers.Marker(results.features[i].geometry.getBounds().getCenterLonLat());

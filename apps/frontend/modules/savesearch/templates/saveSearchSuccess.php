@@ -1,6 +1,7 @@
 <div class="panel">
   <?php echo form_tag('savesearch/saveSearch'.($form->getObject()->isNew() ? '' : '?id='.$form->getObject()->getId()), array('class'=>'search_form','id'=>'save_search'));?>
   <?php echo $form->renderHiddenFields(); ?>
+  <?php echo $form->renderGlobalErrors(); ?>  
   <table class="form_table">
     <tbody>
     <tr>
@@ -18,13 +19,12 @@
       </td>
     </tr>
     <tr>
-      <td><?php echo $form['modification_date_time']->renderLabel() ; ?></td>
+      <td><label><?php echo __('Last modification'); ?></label></td>
       <td></td>
     </tr>
     <tr>
       <td colspan="2">
-        <?php echo $form['modification_date_time']->renderError(); ?>
-        <?php echo $form['modification_date_time'] ; ?>
+        <input class="medium_size" disabled="disabled" type="text" value="<?php echo __($form->getObject()->isNew()?'Not Saved Yet':$form->getObject()->getModificationDateTime());?>">
       </td>
     </tr>
     <tr>

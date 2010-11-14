@@ -45,7 +45,7 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['extinct']->renderLabel() ?></th>
         <td>
-          <?php echo $form['extinct'] ; ?>
+  		    <?php if($form['extinct']->getValue()) echo image_tag('checkbox_checked.png') ; else echo image_tag('checkbox_unchecked.png') ;?>             
         </td>
       </tr> 
       <tr>

@@ -94,15 +94,21 @@ class savesearchActions extends sfActions
     else
     {
       ///Create a new saved search
+      if($request->getParameter('my_saved_searches') != '')
+      {
+        $tab = $request->getParameter('my_saved_searches') ;
+        $source = $tab['subject'] ;
+      }
+      else
+        $source = $request->getParameter('source',"") ;
       $saved_search = new MySavedsearches() ;
       $cols_str = $request->getParameter('cols');
       $cols = explode('|',$cols_str);
       $saved_search->setVisibleFieldsInResult($cols);
-
       if($request->getParameter('type') == 'pin')
       {
-        $this->forward404unless(in_array($request->getParameter('source',""), array('specimen','individual','part')));
-        $saved_search->setSubject($request->getParameter('source',""));
+        $this->forward404unless(in_array($source, array('specimen','individual','part')));
+        $saved_search->setSubject($source);
 
         $this->is_spec_search=true;
         if($request->getParameter('list_nr') == 'create')
@@ -129,7 +135,7 @@ class savesearchActions extends sfActions
       {
         $criterias = serialize($request->getPostParameters());
         $saved_search->setIsOnlyId(false);
-        $saved_search->setSubject($request->getParameter('source',""));
+        $saved_search->setSubject($source);
       }
       $saved_search->setSearchCriterias($criterias) ;
     }
@@ -139,9 +145,8 @@ class savesearchActions extends sfActions
     $this->form = new MySavedSearchesForm($saved_search,array('type'=>$request->getParameter('type'), 'is_reg_user' => $this->getUser()->isA(Users::REGISTERED_USER)));
 
     if($request->getParameter('my_saved_searches') != '')
-    {
+    { 
       $this->form->bind($request->getParameter('my_saved_searches'));
-
       if ($this->form->isValid())
       {
         try{

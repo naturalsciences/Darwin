@@ -139,8 +139,14 @@ div#login_arrow_middle_white
 .line
 {
   display:block;
-  padding:0.2em; 
   vertical-align: top;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+
+td.line, table.caract_table td, table.classification td
+{
+  padding:0.2em; 
 }
 
 .framed
@@ -220,7 +226,6 @@ h2.title
 form.publicsearch_form input:focus
 {
   border:1px inset #3390a1;
-    
 }
 
 input[type="submit"][class="search_submit"],input[type="button"][class="result"]
@@ -441,6 +446,11 @@ img.info:hover
   cursor:pointer;
 }
 
+img.info
+{
+  vertical-align:middle;
+}
+
 .tree h3, .tree
 {
   display:none;
@@ -514,7 +524,7 @@ ul.column_menu:hover
   -webkit-border-radius: 5px;
   vertical-align: top;
   width:100%;
-  min-width: 1024px ;
+  min-width: 996px ;
   border: 1px solid #5BAABD;
   clear:both;
 }
@@ -572,11 +582,23 @@ fieldset.opened
 {
   border: 1px solid #5BAABD ;
   cursor : pointer ;
+  padding:0.5em;
 }
 
 fieldset.closed
 {
   cursor : pointer ;
+}
+
+fieldset
+{
+  margin-bottom:0.5em;
+}
+
+fieldset legend
+{
+  color: #3390A1;
+  font-weight:600;
 }
 
 #fld_spec table
@@ -592,6 +614,7 @@ fieldset.closed
 .cols_title
 {
   font-weight:bold;
+  margin-bottom: 0.4em;
 }
 
 .column_menu ul > li 
@@ -656,6 +679,8 @@ li.uncheck span
 img.clear_prop, img.tree_cmd
 {
   cursor:pointer;
+  vertical-align:middle;
+  margin-top:-0.1em;
 }
 
 /* Input text sizes */
@@ -726,4 +751,19 @@ input.required_field:focus
 input#login_username:focus, input#login_password:focus
 {
   border-color:white;
+}
+
+.right_aligned
+{
+  text-align:right;
+}
+
+.top_aligned
+{
+  vertical-align:top !important;
+}
+
+.right_padded
+{
+  padding-right:0.4em;
 }

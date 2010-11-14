@@ -14,6 +14,15 @@ class partsActions extends DarwinActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
+    if($request->hasParameter('id'))
+    {  
+      $spec = Doctrine::getTable('Specimensearch')->findOneByPartRef($request->getParameter('id'));
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',
+                                                                                                        $request->getParameter('id'), 
+                                                                                                        $this->getUser()->getId())))
+        $this->redirect("parts/view?id=".$request->getParameter('id')) ;    
+    }
     $this->part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));
     if($this->part)
     {
@@ -30,7 +39,8 @@ class partsActions extends DarwinActions
       {
         $this->part = $this->getRecordIfDuplicate($duplic, $this->part);    
         // set all necessary widgets to visible 
-        Doctrine::getTable('SpecimenParts')->getRequiredWidget($this->part, $this->getUser()->getId(), 'part_widget',($request->hasParameter('all_duplicate')?1:0));      
+        if($request->hasParameter('all_duplicate'))        
+          Doctrine::getTable('SpecimenParts')->getRequiredWidget($this->part, $this->getUser()->getId(), 'part_widget',1);      
         
       }      
     }
@@ -140,11 +150,11 @@ class partsActions extends DarwinActions
 
   public function executeGetStorage(sfWebRequest $request)
   {
-	if($request->getParameter('item')=="container")
-	  $items = Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($request->getParameter('type'));
-	else
-	  $items = Doctrine::getTable('SpecimenParts')->getDistinctSubContainerStorages($request->getParameter('type'));
-	return $this->renderPartial('options', array('items'=> $items ));
+	  if($request->getParameter('item')=="container")
+	    $items = Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($request->getParameter('type'));
+	  else
+	    $items = Doctrine::getTable('SpecimenParts')->getDistinctSubContainerStorages($request->getParameter('type'));
+	  return $this->renderPartial('options', array('items'=> $items ));
   }
 
   protected function getSpecimenPartForm(sfWebRequest $request, $fwd404=false, $parameter='id')
@@ -164,6 +174,7 @@ class partsActions extends DarwinActions
 
   public function executeAddCode(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $collectionId = $request->getParameter('collection_id', null);
     $form = $this->getSpecimenPartForm($request);
@@ -173,6 +184,7 @@ class partsActions extends DarwinActions
 
   public function executeAddInsurance(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $collectionId = $request->getParameter('collection_id', null);
     $form = $this->getSpecimenPartForm($request);
@@ -183,6 +195,7 @@ class partsActions extends DarwinActions
   
   public function executeAddComments(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $number = intval($request->getParameter('num'));
     $form = new SpecimenPartsForm();
     $form->addComments($number);
@@ -192,6 +205,7 @@ class partsActions extends DarwinActions
 
   public function executeEditMaintenance(sfWebRequest $request)
   {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $main = Doctrine::getTable('CollectionMaintenance')->find($request->getParameter('id'));
     $this->forward404unless($main);
     $this->form = new CollectionMaintenanceForm($main);

@@ -20,7 +20,12 @@ class specimenwidgetviewComponents extends sfComponents
   {
     $this->defineObject();
   }
-
+  
+  public function executeRefDonators()
+  {
+    $this->Donators = Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator',$this->eid) ;
+  }
+  
   public function executeRefExpedition()
   {
     $this->defineObject();
@@ -38,12 +43,12 @@ class specimenwidgetviewComponents extends sfComponents
 
   public function executeTool()
   {
-    $this->form = Doctrine::getTable('CollectingTools')->findAll() ;  
+    $this->form = Doctrine::getTable('SpecimensTools')->getToolName($this->eid) ;  
   }
 
   public function executeMethod()
   {
-    $this->form = Doctrine::getTable('CollectingMethods')->findAll() ;
+    $this->form = Doctrine::getTable('SpecimensMethods')->getMethodName($this->eid) ;
   }
 
   public function executeRefTaxon()

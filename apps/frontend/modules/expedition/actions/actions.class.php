@@ -12,6 +12,16 @@ class expeditionActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_expeditions_widget';
 
+  public function preExecute()
+  {
+    if (strstr('view,index,search',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
   /**
     * Action executed when calling the expeditions from an other screen
     * @param sfWebRequest $request Request coming from browser

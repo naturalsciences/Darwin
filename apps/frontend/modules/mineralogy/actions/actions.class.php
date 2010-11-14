@@ -12,7 +12,16 @@ class mineralogyActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_mineralogy_widget';
   protected $table = 'mineralogy';
-
+  public function preExecute()
+  {
+    if (strstr('view,index,searchforlimited',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
   public function executeChoose(sfWebRequest $request)
   {
     $this->setLevelAndCaller($request);
@@ -21,7 +30,7 @@ class mineralogyActions extends DarwinActions
   }
 
   public function executeDelete(sfWebRequest $request)
-  {
+  { 
     $this->forward404Unless(
       $unit = Doctrine::getTable('Mineralogy')->findExcept($request->getParameter('id')),
       sprintf('Object mineralogy does not exist (%s).', array($request->getParameter('id')))

@@ -167,6 +167,11 @@ ul.spec_error_list, ul.error_list
   display:none;
 }
 
+.treelist a img
+{
+  vertical-align:middle;
+}
+
 .col_name
 {
   margin-left: 0.5em;
@@ -181,6 +186,7 @@ ul.spec_error_list, ul.error_list
 {
   margin-left: 0.3em;
   padding-left: 0.2em;
+  padding-bottom: 0.2em;
   border-bottom: 1px dashed #878988;
 }
 
@@ -1002,6 +1008,12 @@ td.left_tabed
   padding: 0.2em;
 }
 
+.catalogue_table td.data_grouping, .catalogue_table_view td.data_grouping
+{
+  vertical-align: top;
+  padding-top: 2em;
+}
+
 .show_table
 {
   width:100%;
@@ -1249,6 +1261,11 @@ table.encoding tbody .widget_row_delete
   width:18px;
 }
 
+.widget_sub_table td:nth-child(2)
+{
+  width: 60%;
+}
+
 .widget_sub_table .catalogue_people_sub_type
 {
   width: 40%;
@@ -1262,6 +1279,13 @@ table.encoding tbody .widget_row_delete
 .clear_prop, .clear_code, .clear_identification, .clear_identifier
 {
   cursor:pointer;
+}
+
+img.clear_prop, img.tree_cmd, img.extd_info
+{
+  cursor:pointer;
+  vertical-align:middle;
+  margin-top:-0.1em;
 }
 
 .merge_question div, .warn_message
@@ -1516,7 +1540,7 @@ table.classifications_edit tbody td:nth-child(2)
 #catalogue_keywords  span
 {
   border: 1px solid #E3E3E3;
-  border-left: 6px solid #3390A1;
+  border-left: 6px solid #C1CF56;
   background-color: #FAFAFA;
   min-height:1em;
   min-width:1em;
@@ -1587,6 +1611,11 @@ fieldset.opened
 img.info:hover
 {
   cursor:pointer;
+}
+
+img.info
+{
+  vertical-align:middle;
 }
 
 .info_cell
@@ -2199,7 +2228,6 @@ dd
 
 .summary tbody tr:nth-child(even) {background: #E9F2F7}
 .summary tbody tr:nth-child(odd) {background: white}
-.summary tbody tr:hover {background: #5BAABD; color:white}
 
 .summary th, .summary td
 {
@@ -2276,4 +2304,9 @@ dd
   margin-top: 0.3em;
   list-style-type:disc;
   margin-left:2em;
+}
+
+.col_extd_info
+{
+  word-wrap: break-word; 
 }

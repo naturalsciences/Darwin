@@ -91,6 +91,8 @@ class registerActions extends DarwinActions
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }
+        else
+          $this->getUser()->setCulture('en') ;
         $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
       }
       else

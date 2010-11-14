@@ -12,7 +12,18 @@ class chronostratigraphyActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_chronostratigraphy_widget';
   protected $table = 'chronostratigraphy';
-
+  
+  public function preExecute()
+  {
+    if (strstr('view,index',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
+  
   public function executeChoose(sfWebRequest $request)
   {
     $this->setLevelAndCaller($request);
@@ -21,7 +32,7 @@ class chronostratigraphyActions extends DarwinActions
   }
 
   public function executeDelete(sfWebRequest $request)
-  {
+  {   
     $this->forward404Unless(
       $unit = Doctrine::getTable('Chronostratigraphy')->findExcept($request->getParameter('id')),
       sprintf('Object chronostratigraphy does not exist (%s).', array($request->getParameter('id')))
@@ -93,19 +104,19 @@ class chronostratigraphyActions extends DarwinActions
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
-  {
+  {  
     $form->bind( $request->getParameter($form->getName()) );
     if ($form->isValid())
     {
       try{
-	$form->save();
-	$this->redirect('chronostratigraphy/edit?id='.$form->getObject()->getId());
+	      $form->save();
+	      $this->redirect('chronostratigraphy/edit?id='.$form->getObject()->getId());
       }
       catch(Doctrine_Exception $ne)
       {
-	$e = new DarwinPgErrorParser($ne);
-	$error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	$form->getErrorSchema()->addError($error); 
+	      $e = new DarwinPgErrorParser($ne);
+	      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	      $form->getErrorSchema()->addError($error); 
       }
     }
   }

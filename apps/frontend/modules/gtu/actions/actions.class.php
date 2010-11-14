@@ -12,6 +12,17 @@ class gtuActions extends DarwinActions
 {
   protected $widgetCategory = 'catalogue_gtu_widget';
 
+  public function preExecute()
+  {
+    if (strstr('purposetag,andsearch,completetag',$this->getActionName()) )
+    {
+      if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      {
+        $this->forwardToSecureAction();
+      }
+    }
+  }
+  
   public function executeChoose(sfWebRequest $request)
   {
     $this->form = new GtuFormFilter();
@@ -26,8 +37,6 @@ class gtuActions extends DarwinActions
 
  public function executeSearch(sfWebRequest $request)
   {
-//     $this->forward404Unless($request->isMethod('post'));
-
     $this->setCommonValues('gtu', 'code', $request);
 
     $this->form = new GtuFormFilter();
@@ -71,7 +80,7 @@ class gtuActions extends DarwinActions
   }
 
   public function executeNew(sfWebRequest $request)
-  {
+  {  
     $gtu = new Gtu() ;
     $duplic = $request->getParameter('duplicate_id','0');
     $gtu = $this->getRecordIfDuplicate($duplic, $gtu);
@@ -105,7 +114,7 @@ class gtuActions extends DarwinActions
   }
 
   public function executeEdit(sfWebRequest $request)
-  {
+  {  
     $this->forward404Unless($gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id')), sprintf('Object gtu does not exist (%s).', $request->getParameter('id')));
     $this->no_right_col = Doctrine::getTable('Gtu')->testNoRightsCollections('gtu_ref',$request->getParameter('id'), $this->getUser()->getId());
 
@@ -120,6 +129,8 @@ class gtuActions extends DarwinActions
     $this->form = new GtuForm($gtu);
 
     $this->processForm($request, $this->form);
+    $this->no_right_col = Doctrine::getTable('Gtu')->testNoRightsCollections('gtu_ref',$request->getParameter('id'), $this->getUser()->getId());
+
     $this->loadWidgets();
     $this->setTemplate('edit');
   }
@@ -211,7 +222,9 @@ class gtuActions extends DarwinActions
     $str = '<ul  class="search_tags">';
     foreach($gtu->TagGroups as $group)
     {
-      $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label><ul class="name_tags">';
+      $str .= '<li><label>'.$group->getSubGroupName().'<span class="gtu_group"> - '.TagGroups::getGroup($group->getGroupName()).'</span></label>';
+      if($request->hasParameter('view')) $str .= '<ul class="name_tags_view">' ;
+      else $str .= '<ul class="name_tags">' ;
       $tags = explode(";",$group->getTagValue());
       foreach($tags as $value)
         if (strlen($value))

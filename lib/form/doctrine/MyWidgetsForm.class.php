@@ -13,7 +13,7 @@ class MyWidgetsForm extends BaseMyWidgetsForm
   {
     $this->useFields(array('title_perso','user_ref','group_name', 'category'));
     $w = $this->getObject() ;
-    if ($this->options['level'] > Users::MANAGER)
+    if ($this->options['level'] >= Users::MANAGER)
 	    $choices = array('unused'=> '', 'is_available' => '', 'visible' => '', 'opened' => '') ;
     else
 	    $choices = array('is_available' => '', 'visible' => '', 'opened' => '') ;

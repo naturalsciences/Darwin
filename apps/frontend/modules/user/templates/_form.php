@@ -186,12 +186,12 @@ $(document).ready(function () {
             target: $(document.body), // Position it via the document body...
             corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
             adjust:{
-              y: 150 // option set in case of the qtip become too big
+              y: 250 // option set in case of the qtip become too big
             },
         },
         hide: false,
         style: {
-            width: { min: 620, max: 800},
+            width: { min: 650, max: 800},
             border: {radius:3},
             title: { background: '#5BABBD', color:'white'}
         },

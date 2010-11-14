@@ -155,12 +155,13 @@ class MyWidgetsTable extends DarwinTable
     return $q;
   }
  
-  public function getWidgetsList($level)
+  public function getWidgetsList($level, $is_reg_user = false)
   {
   	$q = Doctrine_Query::create()
             ->from('MyWidgets p')
   		  ->where('p.user_ref = ?', $this->user_ref) ;
      if ($level < Users::MANAGER) $q->andWhere('p.is_available = true') ;
+     if ($is_reg_user) $q->andWhere('p.all_public = true') ;
      $q->orderBy('category,group_name');
    	return $q->execute() ;	
   }

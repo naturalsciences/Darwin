@@ -653,7 +653,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query->andWhere("
         (station_visible = true AND  LOWER(gtu_code) like ? )
         OR
-        (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))
+        (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
           AND LOWER(gtu_code) like ?)", array(strtolower('%'.$val.'%'),strtolower('%'.$val.'%')));
     return $query ;  
   }
@@ -722,7 +722,6 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     {
       $query->andWhereIn('collection_ref',$val) ;
     }
-    $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());
     return $query;
   }
 
@@ -775,6 +774,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     $this->options['query'] = $query;
     $query = parent::doBuildQuery($values);
+
+    $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());
 
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));

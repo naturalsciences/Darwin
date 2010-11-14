@@ -33,6 +33,8 @@ class accountActions extends DarwinActions
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }
+        else
+          $this->getUser()->setCulture('en') ;
         $referer = $this->getRequest()->getReferer();
         $this->redirect($referer ? $referer : '@homepage');
       }
