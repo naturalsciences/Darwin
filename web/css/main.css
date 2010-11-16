@@ -1439,6 +1439,7 @@ th .error_list
 
 .name_tags li, .purposed_tags li
 {
+  list-style:none;
   font-size: x-small;
   border-color: #E3E3E3;
   border-left: 6px solid #C1CF56;
@@ -1829,6 +1830,11 @@ tr.tag_line input
     font-weight: bold;
     text-transform:capitalize;
 }
+.search_tags li
+{
+  list-style:none;
+}
+
 .search_tags .name_tags, .search_tags .name_tags_view
 {
   margin-left: 1em;

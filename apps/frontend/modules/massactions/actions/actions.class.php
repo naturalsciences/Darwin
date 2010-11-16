@@ -29,7 +29,7 @@ class massactionsActions extends DarwinActions
       {
         $this->form->doMassAction($this->getUser()->getId());
         $nb_item = count($this->form->getValue('item_list'));
-        $this->redirect('massactions/status?nb_item='.$nb_item.'&'.http_build_query($this->form->getValues()));
+        $this->redirect('massactions/status?nb_item='.$nb_item);
       }
 
       $items_ids = $actions['item_list'];
