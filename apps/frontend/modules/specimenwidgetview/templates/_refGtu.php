@@ -22,17 +22,19 @@
       <td id="specimen_gtu_ref_lon"><?php echo $spec->Gtu->getLongitude(); ?></td>
     </tr>
     <tr>
-      <th class="top_aligned">      
+      <th class="top_aligned">
         <?php echo __("Sampling location Tags") ?>
       </th>
       <td>
         <div class="inline">
-          <?php echo html_entity_decode($spec->Gtu->getTagsWithCode(true)); ?>          
+          <?php echo $spec->Gtu->getName(ESC_RAW); ?>
         </div>
       </td>
     </tr>
     <tr>
-      <td colspan="2" id="specimen_gtu_ref_map"></td>
+      <td colspan="2" id="specimen_gtu_ref_map">
+        <?php echo $spec->Gtu->getMap(ESC_RAW);?>
+      </td>
     </tr>
     <?php endif ; ?>
   </tbody>
