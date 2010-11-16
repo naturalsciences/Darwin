@@ -6,12 +6,11 @@ $(document).ready(function () {
   $("a.but_text").live('click', function(event){
     event.preventDefault();
     scroll(0,0) ;
-
     $(this).parent().parent().find('input[type="hidden"]').trigger({ type:"loadref"});
     $(this).qtip({
         content: {
             title: { text : $(this).parent().attr('title'), button: 'X' },
-            url: $(this).attr('href')
+            url: $(this).attr('href')+'?with_js=1'
         },
         show: { when: 'click', ready: true },
         position: {

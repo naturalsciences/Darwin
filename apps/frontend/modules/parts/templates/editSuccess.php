@@ -1,8 +1,4 @@
 <?php slot('title', __( $form->isNew() ? 'Add Part' : 'Edit part'));  ?>
-<?php use_stylesheet('widgets.css') ?>
-<?php use_javascript('widgets.js') ?>
-<?php use_javascript('catalogue.js') ?>
-<?php use_javascript('button_ref.js') ?>
 
 <?php include_partial('widgets/list', array('widgets' => $widgets, 'category' => 'part','eid'=> $part->getId(), 'table' => 'specimen_parts','query_options'=> array('col_ref'=> $specimen->getCollectionRef()))); ?>
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'individual'=> $individual, 'part'=> $part ,'mode' => 'parts_edit') );?>

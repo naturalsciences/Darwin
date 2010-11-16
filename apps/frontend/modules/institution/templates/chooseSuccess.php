@@ -6,7 +6,7 @@
 
 <script language="javascript">
   $(document).ready(function () {
-    $('.result_choose').live('click',function () {
+    $('.result_choose').live('click',function () {  
       el = $(this).closest('tr');
       ref_element_id = getIdInClasses(el);
       ref_element_name = el.find('td.item_name').text();
