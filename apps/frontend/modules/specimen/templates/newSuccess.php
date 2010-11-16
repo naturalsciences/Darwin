@@ -50,7 +50,7 @@ $(document).ready(function ()
       <?php if (!$form->getObject()->isNew()): ?>
         <?php echo link_to(__('New specimen'), 'specimen/new') ?>
         &nbsp;<a href="<?php echo url_for('specimen/new?duplicate_id='.$form->getObject()->getId());?>" class="duplicate_link"><?php echo __('Duplicate specimen');?></a>
-        &nbsp;<a href="<?php echo url_for('catalogue/deleteRelated?table=specimens&id='.$form->getObject()->getId());?>" title="<?php echo __('Are you sure ?') ?>" id="spec_delete"><?php echo __('Delete');?></a>
+        &nbsp;<?php echo link_to('Delete', 'specimen/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
       <?php endif?>
       &nbsp;<a href="<?php echo url_for('specimensearch/index') ?>" id="spec_cancel"><?php echo __('Cancel');?></a>
       <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_f1"/>
@@ -73,32 +73,6 @@ function removeError()
 $(document).ready(function () {
   $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
   $('body').catalogue({});
-  $("a#spec_delete").click(function(){
-     if(confirm($(this).attr('title')))
-     {
-       currentElement = $(this);
-       removeError();
-       $.ajax({
-               url: $(this).attr('href'),
-               success: function(html) {
-		            if(html == "ok" )
-		            {
-			            // Reload page
-			            $(location).attr('href',$('a#spec_cancel').attr('href'));
-		                  }
-		                  else
-		                  {
-			            addError(html); //@TODO:change this!
-		                  }
-		            },
-                error: function(xhr){
-		              addError('Error!  Status = ' + xhr.status);
-                }
-              }
-            );
-    }
-    return false;
-  });
 });
 </script>
 <?php include_partial('specAfterTab', array('specimen'=> $form->getObject()) );?>

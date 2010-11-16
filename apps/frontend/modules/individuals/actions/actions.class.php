@@ -55,7 +55,7 @@ class individualsActions extends DarwinActions
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     if($request->hasParameter('id'))
     {    
-      $spec = Doctrine::getTable('Specimensearch')->findOneByIndividualRef($request->getParameter('id'));
+      $spec = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($request->getParameter('id'));
       if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
                                                                                                       $request->getParameter('id'), 
                                                                                                       $this->getUser()->getId())))    
@@ -201,6 +201,34 @@ class individualsActions extends DarwinActions
     $form->addComments($number);
     return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
+ 
+  public function executeDelete(sfWebRequest $request)
+  {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
+    $spec = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($request->getParameter('id'));
+    $this->forward404Unless($spec, 'Individual does not exist');
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {
+      if(in_array($part->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('id'), $this->getUser()->getId())))
+        $this->forwardToSecureAction();
+    }
+    $part = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));    
+    try
+    {
+      $part->delete();
+    }
+    catch(Doctrine_Connection_Pgsql_Exception $e)
+    {
+      $request->checkCSRFProtection();
+      $this->form = new specimenIndividualsForm($spec);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
+      return ;
+    }
+    $this->redirect('individuals/overview?spec_id='.$spec->getSpecRef());
+  }  
   
   public function executeView(sfWebRequest $request)
   {

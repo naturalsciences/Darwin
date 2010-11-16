@@ -43,6 +43,7 @@ class accountActions extends DarwinActions
 
   public function executeLogout()
   {
+    $this->getUser()->getAttributeHolder()->clear();  
     $this->getUser()->clearCredentials();
     $this->getUser()->setAuthenticated(false);
     $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));

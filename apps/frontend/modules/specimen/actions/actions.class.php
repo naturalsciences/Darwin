@@ -382,6 +382,33 @@ class specimenActions extends DarwinActions
                             );
   }
   
+  public function executeDelete(sfWebRequest $request)
+  {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
+    $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter('id'));
+    $this->forward404Unless($spec, 'Specimen does not exist');
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$request->getParameter('id'), $this->getUser()->getId())))
+        $this->forwardToSecureAction();
+    }
+    try
+    {
+      $spec->delete();
+    }
+    catch(Doctrine_Connection_Pgsql_Exception $e)
+    {
+      $request->checkCSRFProtection();
+      $this->form = new specimensForm($spec);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
+      return ;
+    }
+    $this->redirect('specimensearch/index');
+  }  
+  
   public function executeView(sfWebRequest $request)
   {
     $this->forward404Unless($this->specimen = Doctrine::getTable('SpecimenSearch')->findOneBySpecRef($request->getParameter('id')),'Specimen does not exist');  

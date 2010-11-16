@@ -17,7 +17,7 @@ class partsActions extends DarwinActions
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     if($request->hasParameter('id'))
     {  
-      $spec = Doctrine::getTable('Specimensearch')->findOneByPartRef($request->getParameter('id'));
+      $spec = Doctrine::getTable('SpecimenSearch')->findOneByPartRef($request->getParameter('id'));
       if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',
                                                                                                         $request->getParameter('id'), 
                                                                                                         $this->getUser()->getId())))
@@ -229,6 +229,35 @@ class partsActions extends DarwinActions
       }
     }
   }
+  
+  public function executeDelete(sfWebRequest $request)
+  {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
+    $spec = Doctrine::getTable('SpecimenSearch')->findOneByPartRef($request->getParameter('id'));
+    $this->forward404Unless($spec, 'Part does not exist');
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {
+      if(in_array($part->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',$request->getParameter('id'), $this->getUser()->getId())))
+        $this->forwardToSecureAction();
+    }
+    $part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));    
+    try
+    {
+      $part->delete();
+    }
+    catch(Doctrine_Connection_Pgsql_Exception $e)
+    {
+      $request->checkCSRFProtection();
+      $this->form = new specimenPartsForm($spec);
+      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+      $this->form->getErrorSchema()->addError($error); 
+      $this->loadWidgets();
+      $this->setTemplate('edit');
+      return ;
+    }
+    $this->redirect('parts/overview?id='.$spec->getIndividualRef());
+  }    
+  
   public function executeView(sfWebRequest $request)
   {
     $this->forward404Unless($this->specimen = Doctrine::getTable('SpecimenSearch')->findOneByPartRef($request->getParameter('id')),'Part does not exist');  
