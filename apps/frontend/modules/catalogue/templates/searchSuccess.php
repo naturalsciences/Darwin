@@ -72,7 +72,7 @@
               </td>
             <?php endif;?>
             <td>
-              <span class="item_name"><?php echo $item->getNameWithFormat();?><span class="invalid"><?php echo $addedFormat;?></span></span>
+              <span class="item_name"><?php echo $item->getNameWithFormat(ESC_RAW);?><span class="invalid"><?php echo $addedFormat;?></span></span>
               <div class="tree">
               </div>
             </td>

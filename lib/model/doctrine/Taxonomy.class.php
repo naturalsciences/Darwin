@@ -9,6 +9,7 @@ class Taxonomy extends BaseTaxonomy
   {
     $name = $this->getName();
     if($name == '-') return $name;
+    $name = '<i>'.$name.'</i>';
     if($this->_get('extinct'))
     {
       return $name . ' †';

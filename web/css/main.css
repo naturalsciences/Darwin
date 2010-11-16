@@ -2311,7 +2311,10 @@ dd
   list-style-type:disc;
   margin-left:2em;
 }
-
+tbody .col_taxon a
+{
+  font-style : italic;
+}
 .col_extd_info
 {
   word-wrap: break-word; 
