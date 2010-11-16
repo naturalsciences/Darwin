@@ -42,14 +42,12 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema->setNameFormat('specimen[%s]');
     /* Fields */
 
-    $this->widgetSchema['category'] = new widgetFormSelectComplete(array(
+    $this->widgetSchema['category'] = new sfWidgetFormDoctrineChoice(
+      array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctCategory',
         'method' => 'getCategory',
         'key_method' => 'getCategory',
-        'add_empty' => true,
-        'change_label' => 'Pick a category in the list',
-        'add_label' => 'Add another category',
     ));
 
     /* Collection Reference */
@@ -383,6 +381,11 @@ class SpecimensForm extends BaseSpecimensForm
         'choices' => SpecimensTable::getDistinctCategories(),
         'required' => false,
         ));
+    $this->validatorSchema['category'] = new sfValidatorDoctrineChoice(
+      array(
+        'model' => 'Specimens',
+        'column' => 'category',
+    ));
 
     $this->validatorSchema['acquisition_date'] = new fuzzyDateValidator(array('required' => false,
                                                                               'from_date' => true,
