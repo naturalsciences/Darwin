@@ -30,22 +30,22 @@ class catalogueActions extends DarwinActions
     
     if($request->isMethod('post'))
     {
-	$this->form->bind($request->getParameter('catalogue_relationships'));
-	if($this->form->isValid())
-	{
-	  try{
-	    $this->form->save();
-	    $this->form->getObject()->refreshRelated();
-	    $this->form = new CatalogueRelationshipsForm($this->form->getObject()); //Ugly refresh
-	    return $this->renderText('ok');
-	  }
-	  catch(Doctrine_Exception $ne)
-	  {
-	    $e = new DarwinPgErrorParser($ne);
-	    $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-	    $this->form->getErrorSchema()->addError($error);
-	  }
-	}
+      $this->form->bind($request->getParameter('catalogue_relationships'));
+      if($this->form->isValid())
+      {
+        try{
+          $this->form->save();
+          $this->form->getObject()->refreshRelated();
+          $this->form = new CatalogueRelationshipsForm($this->form->getObject()); //Ugly refresh
+          return $this->renderText('ok');
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
+      }
     }
     $filterFormName = DarwinTable::getFilterForTable($request->getParameter('table'));
     $this->searchForm = new $filterFormName(array('table'=>$request->getParameter('table')));
@@ -96,17 +96,28 @@ class catalogueActions extends DarwinActions
                  ->orderBy($this->orderBy .' '.$this->orderDir);
         if($this->is_choose == 0)
           $query->andWhere('id > 0');
+
+        $pager = new Doctrine_Pager($query,
+          $this->currentPage,
+          $form->getValue('rec_per_page')
+        );
+
+        // Replace the count query triggered by the Pager to get the number of records retrieved
+        $count_q = clone $query;
+        // Remove from query the group by and order by clauses
+        $count_q = $count_q->select('count(id)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby')->removeDqlQueryPart('join');
+
+        // Initialize an empty count query
+        $counted = new DoctrineCounted();
+        // Define the correct select count() of the count query
+        $counted->count_query = $count_q;
+        // And replace the one of the pager with this new one
+        $pager->setCountQuery($counted);
         $this->pagerLayout = new PagerLayoutWithArrows(
-                              new Doctrine_Pager(
-                                $query,
-                                $this->currentPage,
-                                $form->getValue('rec_per_page')
-                              ),
-                             new Doctrine_Pager_Range_Sliding(
-                              array('chunk' => $this->pagerSlidingSize)
-                             ),
-                             $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-                            );
+          $pager,
+          new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
+          $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+          );
 
         // Sets the Pager Layout templates
         $this->setDefaultPaggingLayout($this->pagerLayout);
