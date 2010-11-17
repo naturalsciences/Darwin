@@ -1,6 +1,6 @@
 <?php
 
-class frontendConfiguration extends sfApplicationConfiguration
+class backendConfiguration extends sfApplicationConfiguration
 {
   protected $publicRouting = null;
 
