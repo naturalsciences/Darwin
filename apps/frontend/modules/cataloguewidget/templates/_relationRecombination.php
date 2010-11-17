@@ -9,7 +9,7 @@
   <?php foreach($relations as $renamed):?>
   <tr>
     <td>
-      <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('catalogue/relation?type=recombined&table='.$table.'&rid='.$eid.'&id='.$renamed['id']) ?>"><?php echo $renamed['ref_item']->getNameWithFormat()?></a>
+      <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('catalogue/relation?type=recombined&table='.$table.'&rid='.$eid.'&id='.$renamed['id']) ?>"><?php echo $renamed['ref_item']->getNameWithFormat(ESC_RAW)?></a>
     </td>
     <td class="widget_row_delete">   
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$renamed['id']);?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>

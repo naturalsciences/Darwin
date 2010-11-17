@@ -32,9 +32,9 @@
 		<td class="handle"><?php echo image_tag('drag.png');?></td>
 		<td>
 		  <?php if($synonym['record_id'] == $eid):?>
-		      <strong><?php echo $synonym['ref_item']->getNameWithFormat();?></strong>
+		      <strong><?php echo $synonym['ref_item']->getNameWithFormat(ESC_RAW);?></strong>
 		  <?php else:?>
-		    <?php echo $synonym['ref_item']->getNameWithFormat();?>
+		    <?php echo $synonym['ref_item']->getNameWithFormat(ESC_RAW);?>
 		  <?php endif;?>
 		</td>
 		<td class="basio_cell">

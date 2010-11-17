@@ -382,7 +382,7 @@ class specimenActions extends DarwinActions
     $this->forward404Unless($specimen);
     return $this->renderText('{'.
                              '"'.$targetField.'":"'.$specimen->Taxonomy->getId().'",'.
-                             '"'.$targetField.'_name":"'.$specimen->Taxonomy->getNameWithFormat().'"'.
+                             '"'.$targetField.'_name":"'.$specimen->Taxonomy->getNameWithFormat(ESC_RAW).'"'.
                              '}'
                             );
   }
