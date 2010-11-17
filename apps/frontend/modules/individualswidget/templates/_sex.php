@@ -1,2 +1,2 @@
-<?php echo $form['sex']->renderRow() ?>
-<?php echo $form['state']->renderRow() ?>
+<?php echo $form['sex']->render() ?>
+<?php echo $form['state']->render() ?>

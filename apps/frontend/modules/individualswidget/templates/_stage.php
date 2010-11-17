@@ -1,1 +1,1 @@
-<?php echo $form['stage']->renderRow() ?>
+<?php echo $form['stage']->render() ?>
