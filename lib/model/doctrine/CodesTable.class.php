@@ -22,25 +22,6 @@ class CodesTable extends DarwinTable
     return $this->createDistinct('Codes', 'code_suffix_separator', 'code_suffix_separator')->execute();
   }
 
-  public function getDistinctSepVals($option=true)
-  {
-    $field = ($option)?'code_prefix_separator':'code_suffix_separator';
-    $vals = $this->createDistinct('Codes', $field, $field)->execute();
-    $response = array(''=>'');
-    foreach($vals as $keys=>$value)
-    {
-      if ($option)
-      {
-        $response[$value->getCodePrefixSeparator()] = $value->getCodePrefixSeparator();
-      }
-      else
-      {
-        $response[$value->getCodeSuffixSeparator()] = $value->getCodeSuffixSeparator();
-      }
-    }
-    return $response;
-  }
-
   public function getCodesRelated($table='specimens', $specId = null)
   {
 	return $this->getCodesRelatedArray($table, $specId);

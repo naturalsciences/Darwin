@@ -156,8 +156,6 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->validatorSchema['accuracy'] = new sfValidatorPass();
 
     /* Codes sub form */
-    $prefixes = Doctrine::getTable('Codes')->getDistinctSepVals();
-    $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
 
     $subForm = new sfForm();
     $this->embedForm('Codes',$subForm);   
@@ -172,14 +170,24 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $subForm = new sfForm();
     $this->embedForm('newCode',$subForm);
 
-    $this->widgetSchema['prefix_separator'] = new sfWidgetFormChoice(array(
-        'choices' => $prefixes
+    $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Codes',
+        'table_method' => 'getDistinctPrefixSep',
+        'method' => 'getCodePrefixSeparator',
+        'key_method' => 'getCodePrefixSeparator',
+        'add_empty' => true,
     ));
+
     $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
-    $this->widgetSchema['suffix_separator'] = new sfWidgetFormChoice(array(
-        'choices' => $suffixes
+    $this->widgetSchema['suffix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Codes',
+        'table_method' => 'getDistinctSuffixSep',
+        'method' => 'getCodeSuffixSeparator',
+        'key_method' => 'getCodeSuffixSeparator',
+        'add_empty' => true,
     ));
+
     $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
@@ -204,8 +212,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
     $this->validatorSchema['specimen_part'] = new sfValidatorString(array('required' => false, 'trim' => true));
 
-    $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
-    $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+    $this->validatorSchema['prefix_separator'] = new sfValidatorPass();
+    $this->validatorSchema['suffix_separator'] = new sfValidatorPass();
     $this->validatorSchema['code'] = new sfValidatorPass();
     $this->validatorSchema['comment'] = new sfValidatorPass();    
 
