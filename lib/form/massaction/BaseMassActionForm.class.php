@@ -30,8 +30,13 @@ class BaseMassActionForm extends sfFormSymfony
         'mineralogy_ref' => self::getI18N()->__('Change Mineralogy'),
         'station_visible' => self::getI18N()->__('Change Station visibility'),
       ),
-     /* 'individual' => array(
-      ),*/
+      'individual' => array(
+        'type' => self::getI18N()->__('Change Indivudal Type'),
+        'social_status' => self::getI18N()->__('Change Social Status'),
+        'sex' => self::getI18N()->__('Change Indivudal Sex'),
+        'type' => self::getI18N()->__('Change Indivudal Type'),
+
+      ),
       'part' => array(
         'maintenance' => self::getI18N()->__('Add Maintenance'),
         'building' => self::getI18N()->__('Change Building'),
