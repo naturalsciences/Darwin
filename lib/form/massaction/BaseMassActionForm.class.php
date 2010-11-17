@@ -31,11 +31,10 @@ class BaseMassActionForm extends sfFormSymfony
         'station_visible' => self::getI18N()->__('Change Station visibility'),
       ),
       'individual' => array(
-        'type' => self::getI18N()->__('Change Indivudal Type'),
-        'social_status' => self::getI18N()->__('Change Social Status'),
-        'sex' => self::getI18N()->__('Change Indivudal Sex'),
-        'type' => self::getI18N()->__('Change Indivudal Type'),
-
+        'type' => self::getI18N()->__('Change Individual Type'),
+        'social_status' => self::getI18N()->__('Change Individual Social Status'),
+        'sex' => self::getI18N()->__('Change Individual Sex'),
+        'stage' => self::getI18N()->__('Change Individual Stage'),
       ),
       'part' => array(
         'maintenance' => self::getI18N()->__('Add Maintenance'),
@@ -50,7 +49,7 @@ class BaseMassActionForm extends sfFormSymfony
     );
     if(!$merged) return $result;
 
-    return $result['specimen'] + $result['part'];
+    return $result['specimen'] + $result['individual'] + $result['part'];
   }
 
   protected function getFormNameForAction($action)
@@ -76,9 +75,17 @@ class BaseMassActionForm extends sfFormSymfony
     elseif($action == 'station_visible')
       return 'MaStationVisibleForm';
 
+    elseif($action == 'type')
+      return 'MaTypeForm';
+    elseif($action == 'social_status')
+      return 'MaSocialStatusForm';
+    elseif($action == 'sex')
+      return 'MaSexForm';
+    elseif($action == 'stage')
+      return 'MaStageForm';
+
     elseif($action == 'maintenance')
       return 'MaMaintenanceForm';
-
     elseif($action == 'building')
       return 'MaBuildingForm';
     elseif($action == 'floor')
@@ -143,6 +150,7 @@ class BaseMassActionForm extends sfFormSymfony
 
   public function addSubForm($field_name)
   {
+
     $form_name = $this->getFormNameForAction($field_name);
     $subForm = new $form_name();
 
