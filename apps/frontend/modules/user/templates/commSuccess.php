@@ -54,7 +54,8 @@
       $('form#lang_form input[type=submit]').attr('disabled','disabled');
       $.ajax({
 	      type: "get",
-	      url: "<?php echo url_for('user/getTags');?>/type/" + $('#users_comm_comm_type').val(),
+        url: "<?php echo url_for('user/getTags');?>",
+        data: { type: $('#users_comm_comm_type').val() } ,
 	      success: function(html){
 	        $('#users_comm_tag').val('');
 	        $('#users_comm_tag_selected').html('');
