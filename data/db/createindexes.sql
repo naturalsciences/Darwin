@@ -357,7 +357,7 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container_type on darwin_flat(sub_
 CREATE INDEX CONCURRENTLY idx_darwin_flat_container_storage on darwin_flat(container_storage);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_sub_container_storage on darwin_flat(sub_container_storage);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_is_public on darwin_flat(collection_is_public);
-CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_name on darwin_flat(collection_name);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_name on darwin_flat(collection_name, spec_ref);
 
 /*** Indexes created for the f***ing necessary group by when searching in darwin_flat ***/
 /**** For specimen search ****/
@@ -562,3 +562,7 @@ CREATE INDEX CONCURRENTLY idx_igs_ig_date on igs(ig_date, ig_date_mask);
 CREATE INDEX CONCURRENTLY idx_expeditions_expedition_from_date on expeditions(expedition_from_date, expedition_from_date_mask);
 CREATE INDEX CONCURRENTLY idx_expeditions_expedition_to_date on expeditions(expedition_to_date, expedition_to_date_mask);
 CREATE INDEX CONCURRENTLY idx_users_tracking_modification_date_time on users_tracking(modification_date_time);
+
+
+/*** For Public search ***/
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_gtu_country_tags on darwin_flat using gin (getTagsIndexedAsArray(gtu_country_tag_value));
