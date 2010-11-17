@@ -1,1 +1,1 @@
-<?php echo $form['type']->renderRow() ?>
+<?php echo $form['type']->render() ?>

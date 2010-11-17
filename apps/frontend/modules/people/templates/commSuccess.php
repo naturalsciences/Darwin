@@ -54,12 +54,13 @@
       $('form#lang_form input[type=submit]').attr('disabled','disabled');
       $.ajax({
 	      type: "get",
-	      url: "<?php echo url_for('user/getTags');?>/type/" + $('#people_comm_comm_type').val(),
+	      url: "<?php echo url_for('user/getTags');?>",
+        data: { type: $('#people_comm_comm_type').val() } ,
 	      success: function(html){
 	        $('#people_comm_tag').val('');
 	        $('#people_comm_tag_selected').html('');
 	        $('#people_comm_tag_available').html(html);
-	        $('#people_comm_tag_available li').bind('click',function() {	   
+	        $('#people_comm_tag_available li').bind('click',function() {
 	          new_elem = $('<li class="'+$(this).attr('class')+'" alt="'+$(this).attr('alt')+'">'+$(this).text()+'<img src="/images/widget_help_close.png"></li>');
             $('#people_comm_tag_selected').append(new_elem);
             value = trim($(this).attr('alt').substr(2));
@@ -68,11 +69,11 @@
               $('#people_comm_tag').val(value) ;
             else
               $('#people_comm_tag').val( $('#people_comm_tag').val() + ',' + value);
-	          new_elem.find('img').click(remove_tag);
-          });    	  
-	      }
+            new_elem.find('img').click(remove_tag);
+          });
+        }
       });
-      $('#people_comm_tag_selected li').each(function() {	   
+      $('#people_comm_tag_selected li').each(function() {
         $(this).remove_tag ;
        });
     });
