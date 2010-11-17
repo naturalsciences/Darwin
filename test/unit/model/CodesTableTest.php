@@ -1,6 +1,6 @@
 <?php 
 include(dirname(__FILE__).'/../../bootstrap/Doctrine.php');
-$t = new lime_test(24, new lime_output_color());
+$t = new lime_test(22, new lime_output_color());
 
 $taxon = Doctrine::getTable('Taxonomy')->findOneByName('Falco Peregrinus');
 $specimen = Doctrine::getTable('Specimens')->findOneByTaxonRef($taxon->getId());
@@ -56,11 +56,3 @@ $t->is($codesSuffix[0]->getCodeSuffixSeparator(), ' ', '"First" code suffix sepa
 $t->is($codesSuffix[1]->getCodeSuffixSeparator(), '-', '"Second" code suffix separator is "-"');
 $t->is($codesSuffix[2]->getCodeSuffixSeparator(), '/', '"Third" code suffix separator is "/"');
 $t->is($codesSuffix[3]->getCodeSuffixSeparator(), '*', '"Third" code suffix separator is "*"');
-
-$codesFixes = Doctrine::getTable('Codes')->getDistinctSepVals();
-
-$t->is(count($codesFixes), 4, '"4" different prefix separators exists');
-
-$codesFixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
-
-$t->is(count($codesFixes), 5, '"5" different suffix separators exists');
