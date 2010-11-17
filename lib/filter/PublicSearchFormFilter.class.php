@@ -127,7 +127,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                 );
     $this->validatorSchema['mineral_level_ref'] = new sfValidatorInteger(array('required' => false));
 
-    $this->setWidget('tags',new sfWidgetFormTextarea(array(),  array('class' => 'tag_line')));
+    $this->setWidget('tags',new sfWidgetFormTextarea(array(),  array('class' => 'tag_line', 'cols'=>'50', 'rows'=>'4')));
     $this->setValidator('tags', new sfValidatorString(array('required' => false, 'trim' => true)) );
    
     $this->widgetSchema['type'] = new sfWidgetFormDoctrineChoice(array(
@@ -237,7 +237,6 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $query = Doctrine_Query::create()
       ->from('IndividualSearch s')
       ->select($str .' MIN(id) as id,  false as with_types')
- //     ->andWhere('individual_ref != 0 ')
       ->groupBy('individual_ref'); 
     $this->options['query'] = $query;       
     $query = parent::doBuildQuery($values);
@@ -257,7 +256,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['lithology_name'],null,'lithology_name_indexed');    
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['mineral_name'],null,'mineral_name_indexed');           
     $query->andWhere('collection_is_public = true') ;
-    if($values['tags'] != '') $query->andWhere("gtu_tag_values_indexed && getTagsIndexedAsArray(?)",$values['tags']);   
+    if($values['tags'] != '') $query->andWhere("getTagsIndexedAsArray(gtu_country_tag_value) && getTagsIndexedAsArray(?)",$values['tags']);   
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }

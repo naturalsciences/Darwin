@@ -586,14 +586,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         $tagList = $conn_MGR->quote($line_val, 'string');
         $query->andWhere("
               (station_visible = true AND  gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)) 
-            OR
+               OR
               (station_visible = false
                AND (
                     (
                       collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
                       AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
                     )
-                  OR
+                    OR
                     (getTagsIndexedAsArray(gtu_country_tag_value) && getTagsIndexedAsArray($tagList))
                   )
               )");
