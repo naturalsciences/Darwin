@@ -29,7 +29,11 @@ class specimenActions extends DarwinActions
 
   public function executeConfirm(sfWebRequest $request)
   {
-
+  }
+  
+  public function callSecureAction()
+  {
+    $this->forwardToSecureAction();     
   }
 
   public function executeAddCode(sfWebRequest $request)
@@ -254,6 +258,7 @@ class specimenActions extends DarwinActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()));
+    if($request->getParameter('id') != $this->form->getValue('specimen_id')) $this->forwardToSecureAction();
     if ($form->isValid())
     {
       try

@@ -13,6 +13,7 @@ class specimenwidgetComponents extends sfComponents
 
   protected function defineForm()
   {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) die(print __("you can't do that !!")) ;   
     if(! isset($this->form) )
     {
       if(isset($this->eid) && $this->eid != null)
@@ -20,13 +21,18 @@ class specimenwidgetComponents extends sfComponents
         $spec = Doctrine::getTable('Specimens')->find($this->eid);
         $this->form = new SpecimensForm($spec);
         $this->spec_id = $this->eid;
+        if(!$this->getUser()->isA(Users::ADMIN))
+        {
+          if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$this->eid, $this->getUser()->getId())))
+            die(print __("you can't do that !!")) ;
+        }            
       }
       else
       {
         $this->form = new SpecimensForm();
         $this->spec_id = 0;
       }
-      if(!isset($this->individual_id)) $this->individual_id = 0;
+      if(!isset($this->individual_id)) $this->individual_id = 0;    
     }
     elseif(! isset($this->individual_id) )
     {
@@ -36,7 +42,7 @@ class specimenwidgetComponents extends sfComponents
     if(! isset($this->module) )
     {
       $this->module = 'specimen';
-    }
+    }  
   }
 
   public function executeRefCollection()
@@ -61,14 +67,12 @@ class specimenwidgetComponents extends sfComponents
 
   public function executeTool()
   {
-    if(isset($this->view) && $this->view) $this->form = Doctrine::getTable('CollectingTools')->findAll() ;  
-    else $this->defineForm();
+    $this->defineForm();
   }
 
   public function executeMethod()
   {
-    if(isset($this->view) && $this->view) $this->form = Doctrine::getTable('CollectingMethods')->findAll() ;
-    else $this->defineForm();
+    $this->defineForm();
   }
 
   public function executeRefTaxon()

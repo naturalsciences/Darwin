@@ -19,12 +19,19 @@ class partwidgetComponents extends sfComponents
       {
         $spec = Doctrine::getTable('SpecimenParts')->find($this->eid);
         $this->form = new SpecimenPartsForm($spec);
+        if(!$this->getUser()->isAtLeast(Users::ENCODER)) die(print __("you can't do that !!")) ;  
+        $spec = Doctrine::getTable('SpecimenSearch')->findOneByPartRef($this->eid);
+        if(!$this->getUser()->isA(Users::ADMIN))
+        {
+          if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',$this->eid, $this->getUser()->getId())))
+            die(print __("you can't do that !!")) ;
+        }         
       }
       else
       {
         $this->form = new SpecimenPartsForm();
       }
-    }
+    }   
   }
 
   public function executeParent()
@@ -59,6 +66,7 @@ class partwidgetComponents extends sfComponents
 
   public function executeRefCodes()
   {
+    $this->defineForm();  
     $this->code_copy = false;
     if($this->form->getObject()->isNew())
     {

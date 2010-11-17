@@ -21,6 +21,13 @@ class individualswidgetComponents extends sfComponents
         $this->form = new SpecimenIndividualsForm($spec_individual);
         $this->individual_id = $this->form->getObject()->getId();
         $this->spec_id = $this->form->getObject()->getSpecimenRef();
+        if(!$this->getUser()->isAtLeast(Users::ENCODER)) die(print __("you can't do that !!")) ;  
+        $spec = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($this->eid);
+        if(!$this->getUser()->isA(Users::ADMIN))
+        {
+          if(in_array($part->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$this->eid, $this->getUser()->getId())))
+            die(print __("you can't do that !!")) ;
+        }          
       }
       else
       {
@@ -37,7 +44,7 @@ class individualswidgetComponents extends sfComponents
     if(! isset($this->module) )
     {
       $this->module = 'individuals';
-    }
+    }  
   }
 
   public function executeType()

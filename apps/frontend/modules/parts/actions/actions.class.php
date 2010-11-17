@@ -83,6 +83,7 @@ class partsActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind( $request->getParameter('specimen_parts') );
+      if($request->getParameter('id') != $this->form->getValue('specimen_parts_id')) $this->forwardToSecureAction();      
       if( $this->form->isValid() )
       {
         try
@@ -237,7 +238,7 @@ class partsActions extends DarwinActions
     $this->forward404Unless($spec, 'Part does not exist');
     if(!$this->getUser()->isA(Users::ADMIN))
     {
-      if(in_array($part->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',$request->getParameter('id'), $this->getUser()->getId())))
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',$request->getParameter('id'), $this->getUser()->getId())))
         $this->forwardToSecureAction();
     }
     $part = Doctrine::getTable('SpecimenParts')->findExcept($request->getParameter('id'));    

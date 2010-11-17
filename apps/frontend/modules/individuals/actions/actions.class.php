@@ -103,6 +103,7 @@ class individualsActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->individual->bind( $request->getParameter('specimen_individuals') );
+     if($request->getParameter('id') != $this->individual->getValue('specimen_individuals_id')) $this->forwardToSecureAction();      
       if( $this->individual->isValid())
       {
         try
@@ -209,7 +210,7 @@ class individualsActions extends DarwinActions
     $this->forward404Unless($spec, 'Individual does not exist');
     if(!$this->getUser()->isA(Users::ADMIN))
     {
-      if(in_array($part->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('id'), $this->getUser()->getId())))
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('id'), $this->getUser()->getId())))
         $this->forwardToSecureAction();
     }
     $part = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id'));    

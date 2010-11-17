@@ -203,6 +203,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_addresses'));
+      if($request->getParameter('user_ref') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
@@ -244,6 +245,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_comm'));
+      if($request->getParameter('user_ref') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
@@ -290,7 +292,6 @@ class userActions extends DarwinActions
       if($this->getUser()->getId() != $request->getParameter('user_ref')) $this->forwardToSecureAction();   
     $this->forward404Unless($this->user = Doctrine::getTable('Users')->findExcept($request->getparameter('user_ref')), sprintf('User does not exist (%s).', $request->getParameter('user_ref')));
     $this->loginInfo = Doctrine::getTable('UsersLoginInfos')->findExcept($request->getParameter('id'));
-
     if( ! $this->loginInfo )
     {
       $this->loginInfo = new UsersLoginInfos() ;
@@ -300,6 +301,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_login_infos'));
+      if($request->getParameter('user_ref') != $this->form->getValue('user_ref')) $this->forwardToSecureAction();
       if($this->form->isValid())
       {
         try{
@@ -333,6 +335,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_languages'));
+      if($request->getParameter('ref_id') != $this->form->getValue('users_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
