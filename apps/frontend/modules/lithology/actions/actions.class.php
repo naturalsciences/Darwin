@@ -84,6 +84,7 @@ class lithologyActions extends DarwinActions
   {
     $unit = Doctrine::getTable('Lithology')->find($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
+    $this->no_right_col = Doctrine::getTable('Lithology')->testNoRightsCollections('lithology_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new LithologyForm($unit);
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());

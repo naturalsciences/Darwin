@@ -21,12 +21,12 @@ class individualswidgetComponents extends sfComponents
         $this->form = new SpecimenIndividualsForm($spec_individual);
         $this->individual_id = $this->form->getObject()->getId();
         $this->spec_id = $this->form->getObject()->getSpecimenRef();
-        if(!$this->getUser()->isAtLeast(Users::ENCODER)) die(print __("you can't do that !!")) ;  
+        if(!$this->getUser()->isAtLeast(Users::ENCODER)) die(__("<div class='warning'>you can't do that !!</div>")) ;  
         $spec = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($this->eid);
         if(!$this->getUser()->isA(Users::ADMIN))
         {
-          if(in_array($part->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$this->eid, $this->getUser()->getId())))
-            die(print __("you can't do that !!")) ;
+          if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$this->eid, $this->getUser()->getId())))
+            die(__("<div class='warning'>you can't do that !!</div>")) ;
         }          
       }
       else

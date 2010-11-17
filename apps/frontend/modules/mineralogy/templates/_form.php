@@ -79,6 +79,13 @@
           <?php echo $form['cristal_system'] ?>
         </td>
       </tr>
+      <tr>
+        <th><?php echo $form['color']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['color']->renderError() ?>
+          <?php echo $form['color'] ?>
+        </td>
+      </tr>       
     </tbody>
     <tfoot>
       <tr>

@@ -2315,7 +2315,18 @@ tbody .col_taxon a
 {
   font-style : italic;
 }
+
 .col_extd_info
 {
   word-wrap: break-word; 
+}
+
+/*** style for a color render for color picker */
+
+.round_color
+{
+	width: 20px;  
+	height: 20px; 
+	padding-left : 15px;
+	background-color:#ededee;	 
 }

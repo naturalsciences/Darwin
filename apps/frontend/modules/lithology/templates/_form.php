@@ -51,6 +51,13 @@
 	  <div class="warn_message ref_name button hidden" id="taxonomy_parent_ref_warning"><?php echo __('The parenty does not follow the possible upper level rule');?></div>
         </td>
       </tr>
+      <tr>
+        <th><?php echo $form['color']->renderLabel() ?></th>
+        <td>
+          <?php echo $form['color']->renderError() ?>
+          <?php echo $form['color'] ?>
+        </td>
+      </tr>       
     </tbody>
     <tfoot>
       <tr>

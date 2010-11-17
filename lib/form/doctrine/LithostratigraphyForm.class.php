@@ -16,6 +16,8 @@ class LithostratigraphyForm extends BaseLithostratigraphyForm
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden(array('default'=>'lithostratigraphy'));
     $this->widgetSchema['name'] = new sfWidgetFormInput();
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
+    $this->widgetSchema['color'] = new widgetFormColorPicker();    
+    $this->widgetSchema['color']->setAttributes(array('class'=>'vsmall_size'));    
     $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices'  => $statuses,
@@ -42,7 +44,7 @@ class LithostratigraphyForm extends BaseLithostratigraphyForm
                                   );
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
-
+    $this->validatorSchema['color'] = new ColorPickerValidatorSchema() ;
     $this->addKeywordsRelation('lithostratigraphy');
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);

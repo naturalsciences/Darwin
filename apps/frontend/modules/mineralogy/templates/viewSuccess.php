@@ -78,7 +78,13 @@ $(document).ready(function ()
         <td>
           <?php echo $mineral->getCristalSystem() ?>
         </td>
-      </tr>      
+      </tr> 
+      <tr>
+        <th><?php echo __("Color") ?></th>
+        <td>
+          <span class='round_color' style="background-color:<?php echo $mineral->getColor() ?>">&nbsp;</span>
+        </td>
+      </tr>            
     </tbody>
   </table>
 </div>  

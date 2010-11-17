@@ -74,6 +74,7 @@ class igsActions extends DarwinActions
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($igs = Doctrine::getTable('igs')->find(array($request->getParameter('id'))), sprintf('Object igs does not exist (%s).', $request->getParameter('id')));
+    $this->no_right_col = Doctrine::getTable('Igs')->testNoRightsCollections('ig_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new igsForm($igs);
 
     $this->processForm($request, $this->form);

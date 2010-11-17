@@ -20,7 +20,8 @@ class MineralogyForm extends BaseMineralogyForm
     $this->widgetSchema['code']->setAttributes(array('class'=>'small_size'));
     $this->widgetSchema['name']->setAttributes(array('class'=>'large_size'));
     $this->widgetSchema['formule']->setAttributes(array('class'=>'medium_size'));
-
+    $this->widgetSchema['color'] = new widgetFormColorPicker();    
+    $this->widgetSchema['color']->setAttributes(array('class'=>'vsmall_size'));
     $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices'  => $statuses,
@@ -67,7 +68,7 @@ class MineralogyForm extends BaseMineralogyForm
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema['classification'] = new sfValidatorChoice(array('choices'  => array_keys($classifications), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
-
+    $this->validatorSchema['color'] = new ColorPickerValidatorSchema() ;
     $this->addKeywordsRelation('mineralogy');
     $subForm = new sfForm();
     $this->embedForm('newVal',$subForm);

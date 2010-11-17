@@ -11,7 +11,7 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
 {
   public function configure()
   {
-    unset($this['path'], $this['color']);
+    unset($this['path']);
 
     $this->widgetSchema['table'] = new sfWidgetFormInputHidden(array('default'=>'chronostratigraphy'));
     $this->widgetSchema['name'] = new sfWidgetFormInput();
@@ -20,6 +20,8 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
     $this->widgetSchema['lower_bound']->setAttributes(array('class'=>'small_size datesNum'));
     $this->widgetSchema['upper_bound'] = new sfWidgetFormInput();
     $this->widgetSchema['upper_bound']->setAttributes(array('class'=>'small_size datesNum'));
+    $this->widgetSchema['color'] = new widgetFormColorPicker();    
+    $this->widgetSchema['color']->setAttributes(array('class'=>'vsmall_size'));
     $statuses = array('valid'=>$this->getI18N()->__('valid'), 'invalid'=>$this->getI18N()->__('invalid'), 'deprecated'=>$this->getI18N()->__('deprecated'));
     $this->widgetSchema['status'] = new sfWidgetFormChoice(array(
         'choices'  => $statuses,
@@ -48,6 +50,7 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
                                          'local_naming' => 'Local unit ?'
                                         )
                                   );
+    $this->validatorSchema['color'] = new ColorPickerValidatorSchema() ;
     $this->validatorSchema['lower_bound'] = new sfValidatorNumber(array('required' => false, 'min' => -4600));
     $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'max' => 1));
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));

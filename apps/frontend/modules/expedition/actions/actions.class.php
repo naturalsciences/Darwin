@@ -114,6 +114,7 @@ class expeditionActions extends DarwinActions
     // If method is <> from post or put and if the id edited and to be saved doesn't exist anymore... forward to a 404 page
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($expeditions = Doctrine::getTable('Expeditions')->findExcept($request->getParameter('id')), sprintf('Object expeditions does not exist (%s).', array($request->getParameter('id'))));
+    $this->no_right_col = Doctrine::getTable('Expeditions')->testNoRightsCollections('expedition_ref',$request->getParameter('id'), $this->getUser()->getId());    
     // Instantiate a new expedition form
     $this->form = new ExpeditionsForm($expeditions);
     // Process the form for saving informations

@@ -80,6 +80,7 @@ class mineralogyActions extends DarwinActions
   {
     $unit = Doctrine::getTable('Mineralogy')->find($request->getParameter('id'));
     $this->forward404Unless($unit,'Unit not Found');
+    $this->no_right_col = Doctrine::getTable('Mineralogy')->testNoRightsCollections('mineral_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new MineralogyForm($unit);
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());

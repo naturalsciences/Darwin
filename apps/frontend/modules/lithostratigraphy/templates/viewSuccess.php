@@ -61,6 +61,12 @@ $(document).ready(function ()
           <?php endif ; ?>
         </td>
       </tr>
+      <tr>
+        <th><?php echo __("Color") ?></th>
+        <td>
+          <span class='round_color' style="background-color:<?php echo $litho->getColor() ?>">&nbsp;</span>
+        </td>
+      </tr>       
     </tbody>
   </table>
 </div>  

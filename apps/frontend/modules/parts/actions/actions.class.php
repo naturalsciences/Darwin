@@ -15,7 +15,7 @@ class partsActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
-    if($request->hasParameter('id'))
+    if($request->hasParameter('id') && !$this->getUser()->isA(Users::ADMIN))
     {  
       $spec = Doctrine::getTable('SpecimenSearch')->findOneByPartRef($request->getParameter('id'));
       if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('part_ref',
@@ -83,7 +83,6 @@ class partsActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind( $request->getParameter('specimen_parts') );
-      if($request->getParameter('id') != $this->form->getValue('specimen_parts_id')) $this->forwardToSecureAction();      
       if( $this->form->isValid() )
       {
         try

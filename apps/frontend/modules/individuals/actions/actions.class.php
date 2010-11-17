@@ -53,7 +53,7 @@ class individualsActions extends DarwinActions
   public function executeEdit(sfWebRequest $request)
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
-    if($request->hasParameter('id'))
+    if($request->hasParameter('id') && !$this->getUser()->isA(Users::ADMIN))
     {    
       $spec = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($request->getParameter('id'));
       if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',

@@ -13,6 +13,13 @@
       <thead>
 		<tr>
         <th></th>
+        <?php if(isset($items[0]['color'])): ?>
+          <th>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=color'.( ($orderBy=='color' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">            
+            <?php echo __('Color');?>
+            <?php if($orderBy=='color') echo $orderSign ?>
+          </th>
+        <?php endif ; ?>       
         <?php if(isset($items[0]['code'])): ?>
           <th>
             <a class="sort" href="<?php echo url_for($s_url.'&orderby=code'.( ($orderBy=='code' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
@@ -66,6 +73,9 @@
               }
             ?>
             <td><?php echo image_tag('info.png',"title=info class=info");?></td>
+            <?php if(isset($item['color'])): ?>
+              <td><span class='round_color' style="background-color:<?php echo $item->getColor() ?>">&nbsp;</span></td>
+            <?php endif ; ?>
             <?php if(isset($item['code'])): ?>
               <td>
                 <span><?php echo $item->getCode();?></span>

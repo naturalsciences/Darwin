@@ -81,6 +81,7 @@ class taxonomyActions extends DarwinActions
     $taxa = Doctrine::getTable('Taxonomy')->find($request->getParameter('id'));
 
     $this->forward404Unless($taxa,'Taxa not Found');
+    $this->no_right_col = Doctrine::getTable('Taxonomy')->testNoRightsCollections('taxon_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new TaxonomyForm($taxa);
     
     $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$taxa->getId());
