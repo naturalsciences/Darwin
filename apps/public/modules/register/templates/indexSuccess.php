@@ -114,7 +114,7 @@
             text: '&nbsp;',
             button: 'X'
           },
-          text : '<p>Password must contain at least a case mix and at least one digit</p><hr495><p>Password must be at least 6 characters length</p>',
+          text : '<p>Password must contain at least one uppercase character and at least one digit</p><hr><p>Password must be at least 6 characters length</p>',
           method: 'get'
         }
       });
