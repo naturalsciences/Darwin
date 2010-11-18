@@ -84,6 +84,7 @@
               <tr class="tag_line">
                 <td>
                   <?php echo $form['tags'];?>
+                  <div class="tag_info"><span class="tag_info"><?php echo __('Please use ";" as tag separator.');?></span></div>
                   <div class="purposed_tags" id="purposed_tags">
                   </div>
                 </td>
