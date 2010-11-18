@@ -3,8 +3,19 @@
 <?php use_javascripts_for_form($form) ?>                                                                                              
 <div class="page">
   <h1 class="edit_mode"><?php echo __(sprintf("List of widgets available for <a href='%s'>%s</a>", url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()),$user->getFormatedName())); ?></h1>
-  <form class="edition" action="" method="post">
-  <table>
+  <form action="" method="post">
+  <table class="widget_right edition" width='100%'>
+    <tfoot>
+      <tr>
+        <td> 
+          <a href="<?php echo url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()) ?>"><?php echo __('Cancel');?></a>
+          <input id="reset" type="reset" value="<?php echo __('Reset');?>" />
+          <input id="submit" type="submit" value="<?php echo __('Save');?>" />
+        </td>
+      </tr>
+    </tfoot>
+  </table> 
+  <table class="widget_right edition" width='100%'>      
   <thead class="title_widget">
   <tr>
   	<th><?php echo __("Category/screen");?></th><th><?php echo __("Name");?></th><th colspan="6"><?php echo __("Widget");?></th>
@@ -22,7 +33,7 @@
   			<th class='head_widget'><?php echo __("Opened");?><br /><input type="radio" name="<?php echo('All_'.$category) ; ?>" value="opened"></th>
   			<th class='head_widget'><?php echo __("Custom title");?></th>
   		</tr>	
-	</thead>
+	</thead>	
 	<tbody alt="<?php echo $category ?>" class='widget_selection'>
 	<?php foreach($record as $i=>$widget) :?>
 		<tr>
@@ -48,7 +59,7 @@
   <?php endforeach ; ?>
 <tfoot>
   <tr>
-    <td colspan="5"> 
+    <td colspan="6"> 
       <a href="<?php echo url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()) ?>"><?php echo __('Cancel');?></a>
       <input id="reset" type="reset" value="<?php echo __('Reset');?>" />
       <input id="submit" type="submit" value="<?php echo __('Save');?>" />

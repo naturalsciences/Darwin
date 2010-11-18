@@ -822,7 +822,6 @@ table.widget_right thead
 {
   background-color: #C3CF56;
   color: white;
-  border: 1px solid #C1CF56;
 }
 
 table.widget_right thead th
@@ -832,7 +831,6 @@ table.widget_right thead th
 
 table.widget_right tbody
 {
-  border: 1px solid #C1CF56;
   background-color: #F6F6F6;
 }
 
@@ -1859,17 +1857,20 @@ tr.tag_line input
 .head_widget
 {
   background: #E9F2F7;
+  border-right:1px solid #C1CC33; 
+  border-left:1px solid #C1CC33;   
+  color: black;
   height:22px;
   width:174px;
   text-align:center;
   font-size:small;
-  padding-right:0.8em;
   padding-top:0.2em;
 }
 
 .title_widget th
 {
-  color:#C1CC33;
+  color: white;
+  font-weight: bold ;
   border-right:1px solid #C1CC33;
   border-top:1px solid #C1CC33;
   border-left:1px solid #C1CC33;
