@@ -64,11 +64,7 @@
         <?php endif ; ?>
       <?php endif ; ?>
     </td>
-
-    <td class="col_codes">
-        -
-    </td>
-    <td  class="col_chrono">
+    <td class="col_chrono">
       <?php if($specimen->getChronoRef() > 0) : ?>
         <?php echo image_tag('info.png',"title=info class=info id=chrono_".$id."_info");?>
         <?php echo $specimen->getChronoName();?>

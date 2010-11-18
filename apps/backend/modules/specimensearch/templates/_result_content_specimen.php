@@ -111,7 +111,7 @@
 
     <td class="col_codes">
       <?php if(isset($codes[$specimen->getSpecRef()])):?>
-        <?php if(count($codes[$specimen->getSpecRef()]) <= 3):?>
+        <?php if(count($codes[$specimen->getSpecRef()]) <= 1 || $sf_user->isA(Users::REGISTERED_USER)):?>
           <?php echo image_tag('info-bw.png',"title=info class=info");?>
         <?php else:?>
           <?php echo image_tag('info.png',"title=info class=info id=spec_code_".$item_ref."_info");?>
@@ -134,11 +134,21 @@
         <?php endif;?>
         <ul>
         <?php $i=0; foreach($codes[$specimen->getSpecRef()] as $key=>$code):?>
-          <li class="<?php if($i++ >= 3) echo "hidden code_supp";?>" >
-            <?php if($code->getCodeCategory() == 'main' ): ?><strong><?php endif;?>
-              <?php echo $code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().$code->getCodeSuffix(); ?>
-            <?php if($code->getCodeCategory() == 'main' ): ?></strong><?php endif;?>
-           </li>
+          <?php if($sf_user->isA(Users::REGISTERED_USER)) : ?>
+            <?php if($code->getCodeCategory() == 'main' ): ?>
+              <li>
+                <strong>
+                  <?php echo $code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().$code->getCodeSuffix(); ?>
+                </strong>
+              </li>
+            <?php endif;?>  
+          <?php else : ?>
+            <li class="<?php if($i++ >= 1) echo 'hidden code_supp';?>" >
+              <?php if($code->getCodeCategory() == 'main' ): ?><strong><?php endif;?>
+                <?php echo $code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().$code->getCodeSuffix(); ?>
+              <?php if($code->getCodeCategory() == 'main' ): ?></strong><?php endif;?>
+            </li>
+          <?php endif ; ?>
         <?php endforeach; ?>
         </ul>
       <?php endif;?>

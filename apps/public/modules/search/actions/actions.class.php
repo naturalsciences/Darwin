@@ -124,7 +124,7 @@ class searchActions extends DarwinActions
   */
   private function getVisibleColumns(sfForm $form)
   {
-    $flds = array('category','collection','taxon','type','gtu','codes','chrono','taxon_common_name', 'chrono_common_name',
+    $flds = array('category','collection','taxon','type','gtu','chrono','taxon_common_name', 'chrono_common_name',
               'litho_common_name','lithologic_common_name','mineral_common_name', 'expedition', 'individual_type',
               'litho','lithologic','mineral','sex','state','stage','social_status','rock_form','individual_count');
     $flds = array_fill_keys($flds, 'uncheck');
@@ -168,9 +168,6 @@ class searchActions extends DarwinActions
       'gtu' => array( ///
         false,
         $this->getI18N()->__('Country'),),
-      'codes' => array( ///
-        false,
-        $this->getI18N()->__('Codes'),),
       'chrono' => array(
         'chrono_name_order_by',
         $this->getI18N()->__('Chronostratigraphic unit'),),
