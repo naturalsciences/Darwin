@@ -34,7 +34,8 @@
             <td><?php echo $form['RegisterLoginInfosForm'][0]['user_name']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>:</th>
+            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>
+                <?php echo image_tag('info.png', array('class'=> 'passwd_info')) ; ?>:</th>
             <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->render();?></td>
             <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderError();?></td>
           </tr>
@@ -88,5 +89,21 @@
       $('input#submit').attr('disabled', 'true');
       return true;
     });
+    $(".passwd_info").each(function ()
+    {
+      $(this).qtip({
+        show: { solo: true, when: { event: 'click' } },
+        hide: { when: { event: 'click' } },// May be replaced by smth else
+        style: {  name: "light", title: { padding: '3px'} },
+        content: {
+          title: {
+            text: '&nbsp;',
+            button: 'X'
+          },
+          text : '<p>Password must contain at least a case mix and at least one digit</p><hr><p>Password must be at least 6 characters length</p>',
+          method: 'get'
+        }
+      });
+    });    
   });
 </script>
