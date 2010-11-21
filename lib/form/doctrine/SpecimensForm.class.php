@@ -11,22 +11,10 @@ class SpecimensForm extends BaseSpecimensForm
 {
   public function configure()
   {
-
-    unset($this['acquisition_date_mask'], $this['multimedia_visible']
-         );
-
-    /* Set default values
-    * commented for now because it prevent specimen to be duplicated
-    $this->setDefaults(array(
-        'expedition_ref' => 0,
-        'taxon_ref' => 0,
-        'mineral_ref' => 0,
-        'lithology_ref' => 0,
-        'litho_ref' => 0,
-        'chrono_ref' => 0,
-        'gtu_ref' => 0,
-        'host_taxon_ref' => 0,
-    )); */
+    unset(
+      $this['acquisition_date_mask'],
+      $this['multimedia_visible']
+    );
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
@@ -35,21 +23,17 @@ class SpecimensForm extends BaseSpecimensForm
     $maxDate = new FuzzyDateTime(strval(max($yearsKeyVal).'/12/31'));
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $maxDate->setStart(false);
-    $prefixes = Doctrine::getTable('Codes')->getDistinctSepVals();
-    $suffixes = Doctrine::getTable('Codes')->getDistinctSepVals(false);
 
     /* Define name format */
     $this->widgetSchema->setNameFormat('specimen[%s]');
     /* Fields */
 
-    $this->widgetSchema['category'] = new widgetFormSelectComplete(array(
+    $this->widgetSchema['category'] = new sfWidgetFormDoctrineChoice(
+      array(
         'model' => 'Specimens',
         'table_method' => 'getDistinctCategory',
         'method' => 'getCategory',
         'key_method' => 'getCategory',
-        'add_empty' => true,
-        'change_label' => 'Pick a category in the list',
-        'add_label' => 'Add another category',
     ));
 
     /* Collection Reference */
@@ -265,14 +249,24 @@ class SpecimensForm extends BaseSpecimensForm
     $subForm = new sfForm();
     $this->embedForm('newCode',$subForm);
 
-    $this->widgetSchema['prefix_separator'] = new sfWidgetFormChoice(array(
-        'choices' => $prefixes
+    $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Codes',
+        'table_method' => 'getDistinctPrefixSep',
+        'method' => 'getCodePrefixSeparator',
+        'key_method' => 'getCodePrefixSeparator',
+        'add_empty' => true,
     ));
+
     $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
-    $this->widgetSchema['suffix_separator'] = new sfWidgetFormChoice(array(
-        'choices' => $suffixes
+    $this->widgetSchema['suffix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Codes',
+        'table_method' => 'getDistinctSuffixSep',
+        'method' => 'getCodeSuffixSeparator',
+        'key_method' => 'getCodeSuffixSeparator',
+        'add_empty' => true,
     ));
+
     $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
 
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
@@ -383,6 +377,11 @@ class SpecimensForm extends BaseSpecimensForm
         'choices' => SpecimensTable::getDistinctCategories(),
         'required' => false,
         ));
+    $this->validatorSchema['category'] = new sfValidatorDoctrineChoice(
+      array(
+        'model' => 'Specimens',
+        'column' => 'category',
+    ));
 
     $this->validatorSchema['acquisition_date'] = new fuzzyDateValidator(array('required' => false,
                                                                               'from_date' => true,
@@ -398,9 +397,9 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
 
-    $this->validatorSchema['prefix_separator'] = new sfValidatorChoice(array('choices' => array_keys($prefixes), 'required' => false));
+    $this->validatorSchema['prefix_separator'] = new sfValidatorPass();
 
-    $this->validatorSchema['suffix_separator'] = new sfValidatorChoice(array('choices' => array_keys($suffixes), 'required' => false));
+    $this->validatorSchema['suffix_separator'] = new sfValidatorPass();
 
     $this->validatorSchema['collector'] = new sfValidatorPass();
 

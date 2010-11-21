@@ -78,11 +78,17 @@ class Gtu extends BaseGtu
     return $str;
   }
 
+  public function getMap()
+  {
+    if( $this->getLatitude() != '' && $this->getLongitude()!= '')
+      return '<img class="gtu_img_loc" src="http://dev.openstreetmap.de/staticmap/staticmap.php?&size=480x240&center='.$this->getLatitude().','.$this->getLongitude().'&zoom=5&markers='.$this->getLatitude().','.$this->getLongitude().',red-pushpin" alt="Sampling location" />';
+    return '';
+  }
   public function getTagsWithCode($view = null)
   {
     $str = $this->getName($view);
     if($this->getLongitude() != '')
-      $str .= '<b class="img"><img class="gtu_img_loc" src="http://dev.openstreetmap.de/staticmap/staticmap.php?&size=480x240&center='.$this->getLatitude().','.$this->getLongitude().'&zoom=5&markers='.$this->getLatitude().','.$this->getLongitude().',red-pushpin" alt="Sampling location" /></b>';
+      $str .= '<b class="img">'.$this->getMap().'</b>';
     $str .=  '<b class="code">'.$this->getCode().'</b>';
     $str .=  '<b class="lat">'.$this->getLatitude().'</b>';
     $str .=  '<b class="lon">'.$this->getLongitude().'</b>';

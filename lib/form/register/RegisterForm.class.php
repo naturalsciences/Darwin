@@ -11,7 +11,7 @@ class RegisterForm extends BaseUsersForm
 {
   public function configure()
   {
-    $this->useFields(array('id','is_physical','sub_type','title','family_name','given_name')) ;
+    $this->useFields(array('id','is_physical','sub_type','title','family_name','given_name','additional_names','gender')) ;
     $choices = array($this->getI18N()->__('Moral person'), $this->getI18N()->__('Physical person'));
     $this->widgetSchema['is_physical'] = new sfWidgetFormChoice(array ('choices' => $choices));
     $this->setDefault('is_physical', 1);
@@ -28,8 +28,9 @@ class RegisterForm extends BaseUsersForm
                                                                         'method' => 'getTitle',
                                                                         'key_method' => 'getTitle',
                                                                         'add_empty'=>true,
-                                                                       )
-                                                                 );
+                                                                       ));
+    $this->widgetSchema['gender'] = new sfWidgetFormChoice(array('choices' => array('M' => 'M', 'F' => 'F'))) ;
+    $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false));
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
     $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['family_name'] = new sfWidgetFormInput();

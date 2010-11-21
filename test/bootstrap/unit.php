@@ -13,7 +13,7 @@ $_test_dir = realpath(dirname(__FILE__).'/..');
 // configuration
 require_once dirname(__FILE__).'/../../config/ProjectConfiguration.class.php';
 
-$configuration = ProjectConfiguration::getApplicationConfiguration( 'frontend', 'test', true);
+$configuration = ProjectConfiguration::getApplicationConfiguration( 'backend', 'test', true);
 sfContext::createInstance($configuration, "darwin");
 
 // autoloader

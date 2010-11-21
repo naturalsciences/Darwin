@@ -10,11 +10,11 @@ $t->is($taxa->count(),9, 'we got all parent of the taxa');
 $t->is($taxa[7]->getId(),$taxs->getParentRef(), 'Parent is correct');
 
 $t->is($taxa[1]->Level->__toString(),'kingdom', 'get Level');
-$t->is($taxs->getNameWithFormat(),'Falco Peregrinus eliticus', 'get Name without extinct');
+$t->is($taxs->getNameWithFormat(),'<i>Falco Peregrinus eliticus</i>', 'get Name without extinct');
 
 $taxs->setExtinct('true');
 
-$t->is($taxs->getNameWithFormat(),'Falco Peregrinus eliticus †', 'get Name without extinct');
+$t->is($taxs->getNameWithFormat(),'<i>Falco Peregrinus eliticus</i> †', 'get Name without extinct');
 
 $t->is(DarwinTable::getFilterForTable('classification_syonymies'),"ClassificationSyonymiesFormFilter",'Filter Form name');
 $t->is(DarwinTable::getFormForTable('classification_syonymies'),"ClassificationSyonymiesForm",'Form Name');

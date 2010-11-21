@@ -2,7 +2,7 @@
 
 class publicConfiguration extends sfApplicationConfiguration
 {
-  protected $frontendRouting = null;
+  protected $backendRouting = null;
 
   public function generateFrontendUrl($name, $parameters = array())
   {
@@ -10,23 +10,23 @@ class publicConfiguration extends sfApplicationConfiguration
     switch($this->getEnvironment())
     {
       case 'prod': $env_str = '';break;
-      case 'dev': $env_str = '/frontend_dev.php';break;
-      case 'preprod': $env_str = '/frontend_pre.php';break;
+      case 'dev': $env_str = '/backend_dev.php';break;
+      case 'preprod': $env_str = '/backend_pre.php';break;
     }
-    return 'http://'.$_SERVER['SERVER_NAME'].$env_str.$this->getFrontendRouting()->generate($name, $parameters);
+    return 'http://'.$_SERVER['SERVER_NAME'].$env_str.$this->getBackendRouting()->generate($name, $parameters);
   }
 
-  public function getFrontendRouting()
+  public function getBackendRouting()
   {
-    if (!$this->frontendRouting)
+    if (!$this->backendRouting)
     {
-      $this->frontendRouting = new sfPatternRouting(new sfEventDispatcher());
+      $this->backendRouting = new sfPatternRouting(new sfEventDispatcher());
 
       $config = new sfRoutingConfigHandler();
-      $routes = $config->evaluate(array(sfConfig::get('sf_apps_dir').'/frontend/config/routing.yml'));
-      $this->frontendRouting->setRoutes($routes);
+      $routes = $config->evaluate(array(sfConfig::get('sf_apps_dir').'/backend/config/routing.yml'));
+      $this->backendRouting->setRoutes($routes);
     }
 
-    return $this->frontendRouting;
+    return $this->backendRouting;
   }
 }

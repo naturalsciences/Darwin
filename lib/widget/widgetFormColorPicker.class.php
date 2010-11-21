@@ -35,14 +35,42 @@ class widgetFormColorPicker extends sfWidgetFormInput
 
 /*    $attributes['style'] = "width: 4em;";*/
     $html = parent::render($name, $value, $attributes, $errors);
-
-    $html .= "<div id=\"colorpicker\"></div>
-   <script type=\"text/javascript\">
-     $(document).ready(function() {
-       
-       $('#" . $this->generateId($name) . "').css('backgroundColor', '#' + '" . (($value) ? $value : 'ededee') . "');
-
-       $('#colorpicker').farbtastic('#" . $this->generateId($name) . "');
+    $html .= "&nbsp;<span class='round_color'>&nbsp;</span>&nbsp;" ;
+    $html .= image_tag('ColorPickerUIBtnWheel.png',array('class' => 'color_pckr')) ;
+    $html .= "
+    <script type=\"text/javascript\">
+      $(document).ready(function () { 
+        $('.round_color').css('backgroundColor','".$value."');      
+        $(\".color_pckr\").qtip({
+          show: { solo: true, when: { event: 'click' } },
+          hide: { when: { event: 'click' } },// May be replaced by smth else
+          style: {  
+            name: 'light',
+            title: { padding: '3px'},
+            width: { min: '215px', max: '215px'}
+          },         
+          content: {
+            title: {
+              text: '&nbsp;',
+              button: 'X'              
+            },
+            text: '<div id=\"colorpicker\"></div>',
+            method: 'get'            
+          },
+          api : { 
+            onShow : function() {
+              $('#colorpicker').farbtastic(function(color){
+              $('#" . $this->generateId($name) . "').val(color);
+              $('.round_color').css('backgroundColor', color);        
+              });
+            },
+          } 
+       });       
+       $('#" . $this->generateId($name) . "').keyup(function(){
+         $.farbtastic('#colorpicker').setColor($(this).val());
+         $('.round_color').css('backgroundColor', color);        
+       });
+       $('#" . $this->generateId($name) . "').attr('value', '" . (($value) ? $value : '#ededee') . "');
      });
    </script>
     ";

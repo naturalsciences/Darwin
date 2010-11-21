@@ -18,6 +18,20 @@
             <td><?php echo $form['is_physical']->render();?></td>
             <td><?php echo $form['is_physical']->renderError();?></td>
           </tr>
+          <tr id="is_not_physical">
+            <th><?php echo $form['sub_type']->renderLabel() ?></th>
+            <td>
+              <?php echo $form['sub_type']->renderError() ?>
+              <?php echo $form['sub_type'] ?>
+            </td>
+          </tr>
+          <tr id="is_physical">
+            <th><?php echo $form['gender']->renderLabel() ?></th>
+            <td>
+              <?php echo $form['gender']->renderError() ?>
+              <?php echo $form['gender'] ?>
+            </td>
+          </tr>           
           <tr>
             <th><?php echo $form['family_name']->renderLabel();?>:</th>
             <td><?php echo $form['family_name']->render();?></td>
@@ -34,7 +48,8 @@
             <td><?php echo $form['RegisterLoginInfosForm'][0]['user_name']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>:</th>
+            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>:
+                <?php echo image_tag('info.png', array('class'=> 'passwd_info')) ; ?></th>
             <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->render();?></td>
             <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderError();?></td>
           </tr>
@@ -53,7 +68,7 @@
             <td><?php echo $form['RegisterLanguagesForm'][0]['language_country']->render();?></td>
             <td><?php echo $form['RegisterLanguagesForm'][0]['language_country']->renderError();?></td>
           </tr>
-          <tr>
+          <tr id="is_physical">
             <th><?php echo $form['title']->renderLabel();?>:</th>
             <td><?php echo $form['title']->render();?></td>
             <td><?php echo $form['title']->renderError();?></td>
@@ -88,5 +103,38 @@
       $('input#submit').attr('disabled', 'true');
       return true;
     });
+    $(".passwd_info").each(function ()
+    {
+      $(this).qtip({
+        show: { solo: true, when: { event: 'click' } },
+        hide: { when: { event: 'click' } },// May be replaced by smth else
+        style: {  name: "light", title: { padding: '3px'} },
+        content: {
+          title: {
+            text: '&nbsp;',
+            button: 'X'
+          },
+          text : '<p>Password must contain at least one uppercase character and at least one digit</p><hr><p>Password must be at least 6 characters length</p>',
+          method: 'get'
+        }
+      });
+    }); 
+  $('#users_is_physical').change(function(){
+    if ($(this).val() == 1)
+    {
+      $('tr#is_not_physical').hide();
+      $('tr#is_physical').fadeIn();
+      $('label[for="users_family_name"]').html("Family Name") ;
+      $('label[for="users_given_name"]').html("Given Name") ;
+    }
+    else
+    {
+      $('tr#is_physical').hide();
+      $('tr#is_not_physical').fadeIn();
+      $('label[for="users_family_name"]').html("Name") ;
+      $('label[for="users_given_name"]').html("Abbreviation") ;
+    }
+  });
+  $('#users_is_physical').change();         
   });
 </script>
