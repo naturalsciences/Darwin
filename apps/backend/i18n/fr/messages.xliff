@@ -1,85 +1,69 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file source-language="EN" target-language="en" datatype="plaintext" original="messages" date="2010-11-18T14:14:44Z" product-name="messages">
+  <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2010-11-18T14:14:52Z" product-name="messages">
     <header/>
     <body>
       <trans-unit id="1">
-        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source>
-        <target/>
-      </trans-unit>
+        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target state="needs-review-translation"/> </trans-unit>
       <trans-unit id="2">
-        <source>My Preferences</source>
-        <target/>
-      </trans-unit>
+        <source>My Preferences</source> <target>Mes Préférences</target> </trans-unit>
       <trans-unit id="3">
         <source>My Profile</source>
-        <target/>
+        <target>Mon profil</target>
       </trans-unit>
       <trans-unit id="4">
-        <source>My Widgets</source>
-        <target/>
-      </trans-unit>
+        <source>My Widgets</source> <target>Mes Widgets</target> </trans-unit>
       <trans-unit id="5">
         <source>Saved Specimens list</source>
-        <target/>
+        <target>Liste des spécimens sauvés</target>
       </trans-unit>
       <trans-unit id="6">
-        <source>Saved search</source>
-        <target/>
-      </trans-unit>
+        <source>Saved search</source> <target>Recherches sauvées</target> </trans-unit>
       <trans-unit id="7">
-        <source>Searches</source>
-        <target/>
-      </trans-unit>
+        <source>Searches</source> <target>Recherches</target> </trans-unit>
       <trans-unit id="8">
-        <source>Catalogues</source>
-        <target/>
-      </trans-unit>
+        <source>Catalogues</source> <target>Catalogues</target> </trans-unit>
       <trans-unit id="9">
         <source>Taxonomy</source>
-        <target/>
+        <target>Taxonomie</target>
       </trans-unit>
       <trans-unit id="10">
         <source>Chronostratigraphy</source>
-        <target/>
+        <target>Chronostratigraphie</target>
       </trans-unit>
       <trans-unit id="11">
         <source>Lithostratigraphy</source>
-        <target/>
+        <target>Lithostratigraphie</target>
       </trans-unit>
       <trans-unit id="12">
         <source>Lithology</source>
-        <target/>
+        <target>Lithologie</target>
       </trans-unit>
       <trans-unit id="13">
-        <source>Mineralogy</source>
-        <target/>
-      </trans-unit>
+        <source>Mineralogy</source> <target>Minéralogie</target> </trans-unit>
       <trans-unit id="14">
         <source>Expeditions</source>
-        <target/>
+        <target>Expéditions</target>
       </trans-unit>
       <trans-unit id="15">
         <source>I.G. Numbers</source>
-        <target/>
+        <target>Numéros I.G</target>
       </trans-unit>
       <trans-unit id="16">
         <source>Institutions</source>
-        <target/>
+        <target>Institutions</target>
       </trans-unit>
       <trans-unit id="17">
         <source>People</source>
-        <target/>
+        <target>Personnes</target>
       </trans-unit>
       <trans-unit id="18">
         <source>Sampling location</source>
-        <target/>
+        <target>Point d'échantillonage</target>
       </trans-unit>
-      <trans-unit id="19">
-        <source>Collecting Methods</source>
-        <target/>
-      </trans-unit>
+      <trans-unit id="19" approved="no">
+        <source>Collecting Methods</source> <target state="needs-review-translation"/> </trans-unit>
       <trans-unit id="20">
         <source>Collecting Tools</source>
         <target/>
@@ -97,17 +81,13 @@
         <target/>
       </trans-unit>
       <trans-unit id="24">
-        <source>Individuals (%d)</source>
-        <target/>
-      </trans-unit>
+        <source>Individuals (%d)</source> <target/> </trans-unit>
       <trans-unit id="25">
         <source>Parts (%d)</source>
         <target/>
       </trans-unit>
       <trans-unit id="26">
-        <source>Collections</source>
-        <target/>
-      </trans-unit>
+        <source>Collections</source> <target/> </trans-unit>
       <trans-unit id="27">
         <source>Add</source>
         <target/>
@@ -121,9 +101,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="30">
-        <source>User</source>
-        <target/>
-      </trans-unit>
+        <source>User</source> <target/> </trans-unit>
       <trans-unit id="31">
         <source>Search</source>
         <target/>

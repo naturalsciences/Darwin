@@ -47,6 +47,14 @@ class SpecimenSearchTable extends Doctrine_Table
         return Doctrine_Core::getTable('SpecimenSearch');
     }
 
+    public function getRecordByRef($ref = "spec_ref", $id)
+    {
+      $q = Doctrine_Query::create()
+        ->from('SpecimenSearch s')
+        ->where('s.'.$ref.' = ?',$id) ;
+      return $q->fetchOne() ;
+    }
+    
     public function getRequiredWidget($criterias, $user, $category)
     {
       $req_widget = array() ;
