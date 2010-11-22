@@ -56,4 +56,9 @@ class cataloguewidgetComponents extends sfComponents
   {
     $this->collCodes = Doctrine::getTable('Collections')->findExcept($this->eid);
   }
+
+  public function executeKeywords()
+  {
+    $this->keywords = Doctrine::getTable('ClassificationKeywords')->findForTable($this->table, $this->eid);
+  }
 }

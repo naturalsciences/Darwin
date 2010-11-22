@@ -1443,6 +1443,21 @@ th .error_list
   border-left: 6px solid #C1CF56;
 
 }
+
+.name_tags a[href]
+{
+  text-decoration:none;
+  color:black;
+}
+
+#unit_original_name
+{
+  margin-bottom: 1em;
+  margin-top: 1em;
+  font-weight:bold;
+  
+}
+
 .name_tags li:hover, .purposed_tags li:hover
 {
   border-color:#C1CF56;
@@ -1468,14 +1483,6 @@ th .error_list
 {
   margin-top:0.5em;
 }
-table.classifications_edit
-{
-  width: 100%;
-}
-table.classifications_edit tbody td:nth-child(2)
-{
-  width:41%;
-}
 
 .keyword_row
 {
@@ -1500,14 +1507,21 @@ table.classifications_edit tbody td:nth-child(2)
   font-size: x-small;
 }
 
-#catalogue_keywords thead
+#keyword_table thead
 {
   border-bottom: 1px solid #C1CF56;
 }
 
-#catalogue_keywords table
+#keyword_table
 {
-  width:100%;
+  min-width: 300px;
+  margin-bottom:2em;
+}
+#keyword_screen h3
+{
+    margin-bottom:1em;
+    border-bottom: 1px solid #C1CF56;
+
 }
 #catalogue_keywords table table td
 {

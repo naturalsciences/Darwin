@@ -63,20 +63,6 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
                                                                           array('invalid'=>$this->getI18N()->__('The lower bound (%left_field%) cannot be above the upper bound (%right_field%).'))
                                                                          )
                                             );
-    $this->addKeywordsRelation('chronostratigraphy');
-    $subForm = new sfForm();
-    $this->embedForm('newVal',$subForm);
-  }
-
-  public function bind(array $taintedValues = null, array $taintedFiles = null)
-  {
-    parent::bindKeywords($taintedValues,$taintedFiles);
-  }
-
-  public function saveEmbeddedForms($con = null, $forms = null)
-  {
-    parent::saveKeywordsEmbeddedForms($con, $forms);
-    return parent::saveEmbeddedForms($con, $forms);
   }
 
 }

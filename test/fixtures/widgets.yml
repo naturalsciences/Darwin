@@ -333,6 +333,16 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Properties
+    u1wtax7:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: keywords
+        order_by: 6
+        opened: true
+        visible: false
+        is_available: true
+        title_perso: Keywords
     u1wchs0:
         User: u1
         col_num: 1
@@ -573,6 +583,16 @@ MyWidgets:
         visible: false
         is_available: true
         title_perso: Properties
+    u1wmin6:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: keywords
+        order_by: 6
+        opened: true
+        visible: false
+        is_available: true
+        title_perso: Keywords
     u1wig1:
         User: u1
         col_num: 1
