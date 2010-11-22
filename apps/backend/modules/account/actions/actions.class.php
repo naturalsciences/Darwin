@@ -51,6 +51,6 @@ class accountActions extends DarwinActions
     $this->getUser()->getAttributeHolder()->clear();  
     $this->getUser()->clearCredentials();
     $this->getUser()->setAuthenticated(false);
-    $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+    $this->redirect('@homepage');
   }
 }
