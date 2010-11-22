@@ -767,3 +767,16 @@ input#login_username:focus, input#login_password:focus
 {
   padding-right:0.4em;
 }
+
+div.tag_info
+{
+  width:100%;
+  text-align:right;
+}
+
+span.tag_info
+{
+  padding-right:1.6em;
+  font-size:10px;
+  color:grey;
+}

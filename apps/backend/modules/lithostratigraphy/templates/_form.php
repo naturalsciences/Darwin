@@ -13,15 +13,6 @@
           <?php echo $form['name']->renderError() ?>
           <?php echo $form['name'] ?>
         </td>
-        <td rowspan="5" class="keyword_row">
-              <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'lithostratigraphy','field_name' => 'lithostratigraphy_name')); ?>
-        </td>
-            </tr>
-            <tr>
-        <th></th>
-        <td>
-          <?php include_partial('catalogue/keywordsList');?>
-        </td>
       </tr>
       <tr>
         <th><?php echo $form['local_naming']->renderLabel() ?></th>
