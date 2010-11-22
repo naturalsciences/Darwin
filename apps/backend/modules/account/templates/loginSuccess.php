@@ -1,6 +1,5 @@
 <div class="login">
-    <?php echo __('This application requires an authentication.
-    Please Log in with your username and password.');?>
+    <?php echo __('This application requires an authentication.');?>
     <?php echo form_tag('account/login');?>
       <table>
         <tbody>

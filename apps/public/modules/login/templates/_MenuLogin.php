@@ -19,7 +19,7 @@
               </td>
               <td class="menu_button"><?php echo link_to(__('Register'),'register/index') ;?></td>
         <?php else:?>
-              <td class="menu_button"><?php echo link_to(__('Go to Backend'),sfContext::getInstance()->getConfiguration()->generateFrontendUrl('homepage')) ;?></td>
+              <td class="menu_button"><?php echo link_to(__('Go to Backend'),sfContext::getInstance()->getConfiguration()->generateBackendUrl('homepage')) ;?></td>
               <td class="menu_button"><?php echo link_to(__('Logout'),'register/logout') ;?></td>
         <?php endif;?>
             </tr>

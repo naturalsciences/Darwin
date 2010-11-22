@@ -74,8 +74,9 @@ class registerActions extends DarwinActions
 
   public function executeLogin(sfWebRequest $request)
   {
-    $this->redirectIf($this->getUser()->isAuthenticated(), $this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
+    $this->redirectIf($this->getUser()->isAuthenticated(), $this->getContext()->getConfiguration()->generateBackendUrl('homepage'));
     $referer = $this->getRequest()->getReferer();
+    $login_params = array();
     $this->form = new LoginForm();
     if ($request->isMethod('post'))
     {
@@ -93,14 +94,12 @@ class registerActions extends DarwinActions
         }
         else
           $this->getUser()->setCulture('en') ;
-        $this->redirect($this->getContext()->getConfiguration()->generateFrontendUrl('homepage'));
       }
       else
       {
-        $this->getContext()->getConfiguration()->loadHelpers('Url');
-        
-        $this->redirect('board/index?l_err=1');
+        $login_params['l_err'] = '1';
       }
+      $this->redirect($this->getContext()->getConfiguration()->generateBackendUrl('homepage', $login_params));
     }
     $this->redirect($referer);
   }
@@ -111,7 +110,7 @@ class registerActions extends DarwinActions
     $this->getUser()->clearCredentials();
     $this->getUser()->setAuthenticated(false);
     if(!$referer)
-      $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+      $this->redirect('@homepage');
     else
       $this->redirect($referer);
   }

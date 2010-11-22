@@ -4,18 +4,27 @@
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <?php include_title() ?>
+    <title><?php include_slot('title') ?></title>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body id="login_page">
-    <h2>Not LOGGED</h2>
-    <?php echo $sf_content ?>
-
-<script language="javascript" type="text/javascript"> 
-$(document).ready(function () {
-
-  if($('.menu_top .house').length)
+    <table class="all_content">
+      <tr>
+        <?php include_partial('global/head_login') ?>
+      </tr>
+      <tr>
+        <td class="content">
+          <?php echo $sf_content ?>
+        </td>
+      </tr>
+      <tr><td class="menu_bottom">&nbsp;</td></tr>
+    </table>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      attachHelpQtip('body');
+      if($('.menu_top .house').length)
         location.reload();
-});
-  </script>
+    });
+    </script>
   </body>
 </html>
