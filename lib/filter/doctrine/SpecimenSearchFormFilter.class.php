@@ -376,6 +376,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         AND gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
         ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326) )
       ');
+      $query->whereParenWrap();
     }
     return $query;
   }
@@ -597,6 +598,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                     (getTagsIndexedAsArray(gtu_country_tag_value) && getTagsIndexedAsArray($tagList))
                   )
               )");
+        $query->whereParenWrap();
       }
     }
     return $query ;
@@ -650,11 +652,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   public function addGtuCodeColumnQuery($query, $field, $val)
   {
     if($val != '')
+    {
       $query->andWhere("
         (station_visible = true AND  LOWER(gtu_code) like ? )
         OR
         (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
           AND LOWER(gtu_code) like ?)", array(strtolower('%'.$val.'%'),strtolower('%'.$val.'%')));
+      $query->whereParenWrap();
+    }
     return $query ;  
   }
 
@@ -736,7 +741,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       {
         $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
       }
-      $query = Doctrine_Query::create()
+      $query = DQ::create()
         ->from('SpecimenSearch s')
         ->groupBy('spec_ref')
         ->select($str . ' MIN(id) as id');
@@ -751,7 +756,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         $str .= ' dummy_first( '. $fld .' ) as '.$fld.' ,' ;
       }
 
-      $query = Doctrine_Query::create()
+      $query = DQ::create()
         ->from('IndividualSearch s')
         ->select($str .' MIN(id) as id,  false as with_types')
         ->andWhere('individual_ref != 0 ')
@@ -762,7 +767,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $array_fld = array_merge($fields['specimens'],$fields['individuals']);
       $array_fld = array_merge($array_fld,$fields['parts']);
       $str = implode(', ',$array_fld);
-      $query = Doctrine_Query::create()
+      $query = DQ::create()
         ->select($str.' , false as with_types')
         ->andWhere('part_ref != 0 ')
         ->from('PartSearch s');
@@ -773,6 +778,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query->addSelect('collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().')) as has_encoding_rights');
 
     $this->options['query'] = $query;
+
+
     $query = parent::doBuildQuery($values);
 
     $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());

@@ -2266,6 +2266,13 @@ dd
   padding-left:0.2em;
 }
 
+#source
+{
+  color: #5BAABD;
+  font-size: 120%;
+  font-weight: bold;
+  margin-bottom: 0.7em;
+}
 
 /****************Class for specimens/indiv/part view ***********************/
 
