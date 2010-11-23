@@ -65,7 +65,6 @@ class accountActions extends DarwinActions
       $this->form->bind($request->getParameter('lost_pwd'));
       if ($this->form->isValid())
       {
-        print_r('Valide');
       }
     }
   }
