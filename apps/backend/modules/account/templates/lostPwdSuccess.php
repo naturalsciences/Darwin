@@ -14,7 +14,7 @@
       </tr>
       <tr>
         <td class="content">
-          <h1 id="login"><?php echo __("This application requires authentication.");?></h1>
+          <h1 id="login"><?php echo __("Reset your password.");?></h1>
           <?php echo $sf_content ?>
         </td>
       </tr>
@@ -23,8 +23,6 @@
     <script type="text/javascript">
     $(document).ready(function () {
       attachHelpQtip('body');
-      if($('.menu_top .house').length)
-        location.reload();
     });
     </script>
   </body>

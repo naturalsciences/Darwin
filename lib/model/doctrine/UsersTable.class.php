@@ -48,5 +48,21 @@ class UsersTable extends DarwinTable
   public function getDistinctSubType()
   {
       return $this->createDistinct('Users', 'sub_type', 'sub_type')->execute();
-  }	
+  }
+
+  public function getUserByLoginAndEMail($username, $email)
+  {
+    $q = Doctrine_Query::create()
+          ->useResultCache(null)
+          ->from('Users u')
+          ->innerJoin('u.UsersLoginInfos ul')
+          ->innerJoin('u.UsersComm uc')
+          ->andWhere('ul.user_name = ?',$username)
+          ->andWhere('ul.login_system is null')
+          ->andWhere('ul.login_type = ?', 'local')
+          ->andWhere('uc.comm_type = ?', 'e-mail')
+          ->andWhere('lower(uc.entry) = lower(?)', $email);
+    return $q->fetchOne();
+  }
+
 }

@@ -40,7 +40,6 @@ class accountActions extends DarwinActions
         }
         else
           $this->getUser()->setCulture('en') ;
-/*        $referer = $this->getRequest()->getReferer();*/
         $this->redirect('@homepage');
       }
     }
@@ -53,4 +52,18 @@ class accountActions extends DarwinActions
     $this->getUser()->setAuthenticated(false);
     $this->redirect('@homepage');
   }
+
+  public function executeLostPwd(sfWebRequest $request)
+  {
+    $this->form = new LostPwdForm();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('lost_pwd'));
+      if ($this->form->isValid())
+      {
+        print_r('Valide');
+      }
+    }
+  }
+
 }

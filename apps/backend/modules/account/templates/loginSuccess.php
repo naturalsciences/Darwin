@@ -1,5 +1,4 @@
 <div class="login">
-    <?php echo __('This application requires an authentication.');?>
     <?php echo form_tag('account/login');?>
       <table>
         <tbody>
@@ -30,4 +29,15 @@
         </tfoot>
       </table>
     </form>
+    <hr></hr>
+    <table id="login_register">
+      <tbody>
+        <tr>
+          <td><?php echo __("If you don't have an account yet, please");?>&nbsp;<?php echo link_to(__('register'), $sf_context->getConfiguration()->generatePublicUrl('homepage').'register', array('id'=>'login_register'));?></td>
+        </tr>
+        <tr>
+          <td><?php echo __("If you've lost your password, please");?>&nbsp;<?php echo link_to(__('reset your password'), 'account/lostPwd', array('id'=>'login_lostpwd'));?></td>
+        </tr>
+      </tbody>
+    </table>
 </div>

@@ -5,10 +5,15 @@
         <td rowspan="2" style="height:90px">&nbsp;</td>
       </tr>
       <tr>
-        <td></td>
+        <td>
+          <ul class="menu_link">
+            <li><?php echo link_to(__('Public search'),$sf_context->getConfiguration()->generatePublicUrl('homepage').'search/search');?></li>
+            <li><?php echo link_to(__('Contacts'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
+          </ul>
+        </td>
       </tr>
       <tr>
-        <td class="lang_picker" style="padding-top:30px;">
+        <td class="lang_picker">
           <ul style="">
             <li><?php echo link_to('En','board/lang?lang=en');?></li>
             <li class="sep">|<li>
@@ -19,5 +24,6 @@
         </td>
       </tr>
     </table>
+    <div class="blue_line"></div>
   </div>
 </td>

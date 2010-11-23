@@ -2,5 +2,7 @@ logout:
   is_secure:  false
 login:
   is_secure:  false
+lostPwd:
+  is_secure:  false
 submit:
   is_secure:  false
