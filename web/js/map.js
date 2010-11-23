@@ -13,7 +13,7 @@
   var mapnik;
   var style_blue;
   var map;
-OpenLayers.ImgPath = "/openlayers/img/";
+OpenLayers.ImgPath = "/images/ol_theme_dark/";
 function initMap(mapId)
 {
   epsg4326 = new OpenLayers.Projection("EPSG:4326");
