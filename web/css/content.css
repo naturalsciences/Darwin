@@ -230,7 +230,7 @@ form.publicsearch_form input:focus
 
 input[type="submit"][class="search_submit"],input[type="button"][class="result"]
 {
-  background: white url('/images/widget_button.png') no-repeat;
+  background: white url('/images/widget_button.png') repeat-x;
   border:0;
   width:auto;
   height:21px;

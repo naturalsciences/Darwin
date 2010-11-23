@@ -341,7 +341,7 @@ form.search_form input:focus
 
 input[type="submit"][class="search_submit"]
 {
-  background: white url(/images/widget_button.png) no-repeat;
+  background: white url(/images/widget_button.png) repeat-x;
   border:0;
   width:auto;
   height:21px;
@@ -697,7 +697,7 @@ a.bt_close
 .new_link, #gtu_filter .right_button
 {
   float:right;
-  background: white url(/images/widget_button.png) no-repeat;
+  background: white url(/images/widget_button.png) repeat-x;
   height:22px;
   width:74px;
   text-align:center;
