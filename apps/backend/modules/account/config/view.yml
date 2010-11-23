@@ -1,4 +1,8 @@
 loginSuccess:
   layout:  not_logged
+  stylesheets:  [reset.css, content.css, menu_pub.css]
+lostPwdSuccess:
+  layout:  not_logged
+  stylesheets:  [reset.css, content.css, menu_pub.css]
 submitSuccess:
   layout:  not_logged

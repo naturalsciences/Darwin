@@ -4,12 +4,12 @@ class publicConfiguration extends sfApplicationConfiguration
 {
   protected $backendRouting = null;
 
-  public function generateFrontendUrl($name, $parameters = array())
+  public function generateBackendUrl($name, $parameters = array())
   {
     $env_str = '';
     switch($this->getEnvironment())
     {
-      case 'prod': $env_str = '';break;
+      case 'prod': $env_str = '/backend.php';break;
       case 'dev': $env_str = '/backend_dev.php';break;
       case 'preprod': $env_str = '/backend_pre.php';break;
     }

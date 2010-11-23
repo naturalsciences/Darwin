@@ -195,11 +195,25 @@ td.line, table.caract_table td, table.classification td
  width: 341px ;
 } 
 
+hr
+{
+color: #B1D9E3;
+background-color: #B1D9E3;
+height: 1px;
+}
+
 h1
 {
   color:#3390a1;
   font-size:large;
   margin-bottom: 0.5em;
+}
+
+h1#login
+{
+  margin:auto;
+  margin-bottom:0.5em;
+  width:54%;
 }
 
 h2.title
@@ -228,17 +242,14 @@ form.publicsearch_form input:focus
   border:1px inset #3390a1;
 }
 
-input[type="submit"][class="search_submit"],input[type="button"][class="result"]
+input[type="submit"][class="search_submit"],input[type="button"]
 {
-  background: white url('/images/widget_button.png') no-repeat;
-  border:0;
-  width:auto;
-  height:21px;
+  background-color:#5BAABD;
   color:white;
-  margin-top:1px;
-  padding-bottom:10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
-input[type="submit"][class="search_submit"]:hover,input[type="button"][class="result"]:hover
+input[type="submit"][class="search_submit"]:hover,input[type="button"]:hover
 {
   cursor: pointer ;
 }
@@ -779,4 +790,17 @@ span.tag_info
   padding-right:1.6em;
   font-size:10px;
   color:grey;
+}
+
+table#login_register td
+{
+  text-align:right;
+  padding-right:0.5em;
+  padding-top:0.3em;
+  padding-bottom:0.3em;
+}
+
+a#login_register, a#login_lostpwd
+{
+  color:#3390A1;
 }

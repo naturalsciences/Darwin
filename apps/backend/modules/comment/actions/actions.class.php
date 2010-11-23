@@ -10,8 +10,20 @@
  */
 class commentActions extends DarwinActions
 {
+  protected $ref_id = array('specimens' => 'spec_ref','specimen_individuals' => 'individual_ref','specimen_parts' => 'part_ref') ;
   public function executeComment(sfWebRequest $request)
   { 
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
+    $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such item');     
+    if(in_array($request->getParameter('table'),array_keys($this->ref_id)) )
+    {
+      $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$request->getParameter('table')],$request->getParameter('id'));
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$request->getParameter('table')],
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))    
+        $this->forwardToSecureAction();    
+    } 
     if($request->hasParameter('cid'))
       $this->comment =  Doctrine::getTable('Comments')->findExcept($request->getParameter('cid'));
     else
@@ -24,8 +36,7 @@ class commentActions extends DarwinActions
     $this->form = new CommentsForm($this->comment,array('table' => $request->getParameter('table')));
     
     if($request->isMethod('post'))
-    {
-      if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();    
+    { 
 	    $this->form->bind($request->getParameter('comments'));
 	    if($this->form->isValid())
 	    {

@@ -581,6 +581,17 @@ tw5:
    title_perso: Vernacular names
    all_public: true
 
+tw6:
+   col_num: 1
+   category: catalogue_taxonomy_widget
+   group_name: keywords
+   mandatory: false
+   order_by: 6
+   opened: true
+   visible: true
+   title_perso: Keywords
+   all_public: true
+
 chw1:
    col_num: 1
    category: catalogue_chronostratigraphy_widget
@@ -755,6 +766,17 @@ miw4:
    opened: true
    visible: true
    title_perso: Vernacular names
+   all_public: true
+
+miw5:
+   col_num: 1
+   category: catalogue_mineralogy_widget
+   group_name: keywords
+   mandatory: false
+   order_by: 5
+   opened: true
+   visible: true
+   title_perso: Keywords
    all_public: true
 
 pe1:

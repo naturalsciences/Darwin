@@ -12,22 +12,56 @@
  */
 class ClassificationKeywords extends BaseClassificationKeywords
 {
-  public static function getTags()
+  public static function getTags($type)
   {
-    return array(
-      'scientific_name_authorship' => 'Scientific Name Authorship',
-      'verbatim_taxon_rank' => 'Verbatim Taxon Rank',
-      'nomenclatural_status' => 'Nomenclatural Status',
-      'name' => 'Non generic or specific name part',
-      'generic_name' => 'Generic Epithet',
-      'specific_epithet' => 'Specific Epithet',
-      'infra_specific_epithet' => 'Infra Specific Epithet',
-      'uncertainty' => 'Uncertainty',
-      'pub_year' => 'Publication Year',
-      'hybrid' => 'Hybridated ?',
-      'original_combination' => 'Recombined ?'
+    $ts = array(
+      'mixed' => array(
+        "AuthorTeam",
+        "AuthorTeamAndYear",
+        "AuthorTeamOriginalAndYear",
+        "AuthorTeamParenthesis",
+        "AuthorTeamParenthesisAndYear",
+        "CombinationAuthorTeamAndYear",
+        "GenusOrMonomial",  ///-->
+        "HybridFlag",
+        "NameApprobation",
+        "NamedIndividual",
+        "ParentheticalAuthorTeamAndYear",
+        "SpeciesEpithet",  ///-->
+        "Subgenus",  ///-->
+        "SubgenusAuthorAndYear",
+        "SubspeciesEpithet",  ///-->
+      ),
+      'zoobota' => array(
+        "CultivarGroupName",
+        "CultivarName",
+        "FirstEpithet",  ///-->
+        "InfraspecificEpithet",  ///-->
+        "TradeDesignationName", ///Bota
+        "Breed", ///Zoo
+      ),
+      'virus' => array(
+        "Acronym",
+        "ViralSpeciesDesignation",  ///-->
+      )
     );
+    if($type='taxonomy')
+      $k_tags = $ts['mixed'] + $ts['zoobota'];
+
+    $tags = array();
+    foreach($k_tags as $t)
+    {
+        $tags[$t] = sfInflector::humanize( sfInflector::tableize($t));
+    }
+    return $tags; 
   }
+
+  public function getReadableKeywordType()
+  {
+    return  sfInflector::humanize( sfInflector::tableize($this->getKeywordType()));
+  }
+  
+  
   public static function getTagNameFor($tag)
   {
     $tags = self::getTags();

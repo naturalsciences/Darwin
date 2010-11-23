@@ -18,8 +18,9 @@
         <target>S'authentifier</target>
       </trans-unit>
       <trans-unit>
-        <source>This application requires an authentication.
-    Please Log in with your username and password.</source> <target>Cette application nécessite une authentification. Veuillez introduire votre identifiant et mot de passe</target> </trans-unit>
+        <source>This application requires an authentication.</source>
+        <target>Cette application nécessite une authentification.</target> 
+      </trans-unit>
       <trans-unit>
         <source>"%value%" must be at least %min_length% characters.</source> <target state="needs-review-translation">"%value%" doit être d'au moins %min_length% caractères.</target> </trans-unit>
       <trans-unit>
@@ -27,7 +28,9 @@
         <target>Requis.</target>
       </trans-unit>
       <trans-unit>
-        <source>Invalid login or password</source> <target>Identifant ou mot de passe invalide.</target> </trans-unit>
+        <source>Bad login or password</source> 
+        <target>Identifant ou mot de passe invalide.</target> 
+      </trans-unit>
       <trans-unit>
         <source>Logout</source> <target>Déconnexion</target> </trans-unit>
       <trans-unit id="1">

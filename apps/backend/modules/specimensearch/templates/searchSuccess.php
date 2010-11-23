@@ -99,9 +99,9 @@
         <?php endif;?>
       </div>
       <?php if(!isset($is_pinned_only_search) && ! $is_specimen_search):?>
-        <input type="button" id="criteria_butt" value="<?php echo __('Back to criteria'); ?>">
+        <input type="button" id="criteria_butt" class="save_search" value="<?php echo __('Back to criteria'); ?>">
       <?php else:?>
-        <input type="button" id="del_from_spec" value="<?php echo __('Remove selected'); ?>">
+        <input type="button" id="del_from_spec" class="save_search" value="<?php echo __('Remove selected'); ?>">
       <?php endif;?>     
   </div>
 </div>

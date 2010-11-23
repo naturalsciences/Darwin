@@ -69,19 +69,5 @@ class MineralogyForm extends BaseMineralogyForm
     $this->validatorSchema['classification'] = new sfValidatorChoice(array('choices'  => array_keys($classifications), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
     $this->validatorSchema['color'] = new ColorPickerValidatorSchema() ;
-    $this->addKeywordsRelation('mineralogy');
-    $subForm = new sfForm();
-    $this->embedForm('newVal',$subForm);
-  }
-
-  public function bind(array $taintedValues = null, array $taintedFiles = null)
-  {
-    parent::bindKeywords($taintedValues,$taintedFiles);
-  }
-
-  public function saveEmbeddedForms($con = null, $forms = null)
-  {
-    parent::saveKeywordsEmbeddedForms($con, $forms);
-    return parent::saveEmbeddedForms($con, $forms);
   }
 }

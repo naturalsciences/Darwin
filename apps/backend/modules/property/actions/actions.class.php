@@ -9,9 +9,20 @@
  */
 class propertyActions extends DarwinActions
 {
+  protected $ref_id = array('specimens' => 'spec_ref','specimen_individuals' => 'individual_ref','specimen_parts' => 'part_ref') ;
   public function executeAdd(sfWebRequest $request)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();    
+    $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
+    $this->forward404Unless($r,'No such item');     
+    if(in_array($request->getParameter('table'),array_keys($this->ref_id)) )
+    {
+      $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$request->getParameter('table')],$request->getParameter('id'));
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$request->getParameter('table')],
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))    
+        $this->forwardToSecureAction();    
+    }
     $this->property = null;
     if($request->hasParameter('rid'))
     {

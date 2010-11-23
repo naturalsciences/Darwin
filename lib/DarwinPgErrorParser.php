@@ -32,6 +32,7 @@ class DarwinPgErrorParser
     '/\bunq_class_vernacular_names\b/' => 'This community already exists, you should edit it instead of adding new one',
     '/\bchk_not_related_to_self\b/' => 'You cannot recombinate to itself',
     '/\bYou don\'t have the rights to insert into or update a specimen in this collection\b/' => 'You don\'t have the rights to insert into or update a specimen in this collection',
+    '/\bchk_chk_possible_upper_level_taxa\b/' => 'The parenty does not follow the possible upper level rule',
   );
 
 

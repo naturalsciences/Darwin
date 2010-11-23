@@ -13,7 +13,7 @@
   var mapnik;
   var style_blue;
   var map;
-
+OpenLayers.ImgPath = "/images/ol_theme_dark/";
 function initMap(mapId)
 {
   epsg4326 = new OpenLayers.Projection("EPSG:4326");
@@ -29,7 +29,8 @@ function initMap(mapId)
     displayProjection: new OpenLayers.Projection("EPSG:4326"),
     maxExtent: new OpenLayers.Bounds(-180,-90, 180, 90),
     maxResolution: 0.3515625,
-    units: "m"
+    units: "m",
+    theme: '/openlayers/theme/default/style.css'
   };
   style_blue = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
   style_blue.strokeColor = "blue"; 

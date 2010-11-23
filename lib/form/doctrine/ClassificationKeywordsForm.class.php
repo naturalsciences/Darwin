@@ -16,11 +16,13 @@ class ClassificationKeywordsForm extends BaseClassificationKeywordsForm
 
 
     $this->widgetSchema['keyword_type'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['keyword'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['keyword'] = new sfWidgetFormInput();
 
-    $this->validatorSchema['record_id'] = new sfValidatorPass();
-    $this->validatorSchema['referenced_relation'] = new sfValidatorPass();
-    $this->validatorSchema['keyword'] = new sfValidatorPass();
+    $this->validatorSchema['record_id'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['referenced_relation'] = new sfValidatorString(array('required'=>false));
+    $this->validatorSchema['keyword'] = new sfValidatorString(array('required'=>false));// Go for the keys
+    $this->validatorSchema['keyword_type'] = new sfValidatorString(array('required'=>false));
 
+    $this->mergePostValidator(new KeywordsValidatorSchema());
   }
 }

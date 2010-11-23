@@ -11,7 +11,7 @@
       <?php endforeach;?>
     </optgroup>
 </select>
-<input type="button" name="save" id="save_specs" value="<?php echo __('Go'); ?>">
+<input type="button" name="save" id="save_specs" class="save_search" value="<?php echo __('Go'); ?>">
 <script  type="text/javascript">
 $(document).ready(function () {
 

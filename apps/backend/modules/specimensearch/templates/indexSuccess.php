@@ -16,7 +16,7 @@
         )); ?>  
         <p class="clear"> </p>
         <p class="form_buttons">
-          <div class="check_right">
+          <div class="edit">
             <?php echo $form['col_fields'];?>
             <?php echo $form['rec_per_page']->render(array('class'=>'hidden'));?>
             <input type="submit" name="submit" id="submit" value="<?php echo __('Search'); ?>" class="search_submit">

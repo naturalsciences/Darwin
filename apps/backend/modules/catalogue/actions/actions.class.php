@@ -10,6 +10,8 @@
  */
 class catalogueActions extends DarwinActions
 {
+  protected $catalogue = array('catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments','specimens','specimen_individuals','specimen_parts');
+  protected $ref_id = array('specimens' => 'spec_ref','specimen_individuals' => 'individual_ref','specimen_parts' => 'part_ref') ;
   public function executeRelation(sfWebRequest $request)
   {
     if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
@@ -70,9 +72,26 @@ class catalogueActions extends DarwinActions
 
   public function executeDeleteRelated(sfWebRequest $request)
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
+    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();
+    if(! in_array($request->getParameter('table'),$this->catalogue)) $this->forwardToSecureAction();   
     $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
     $this->forward404Unless($r,'No such item');
+    if(in_array($request->getParameter('table'),array('comments','catalogue_properties')))
+    {
+      $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$r->getReferencedRelation()],$r->getRecordId());
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$r->getReferencedRelation()],
+                                                                                                      $r->getRecordId(), 
+                                                                                                      $this->getUser()->getId())))    
+        $this->forwardToSecureAction();    
+    }
+    if(in_array($request->getParameter('table'),array('specimens','specimen_individuals','specimen_parts')))
+    {
+      $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$request->getParameter('table')],$request->getParameter('id'));
+      if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$request->getParameter('table')],
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))    
+        $this->forwardToSecureAction();    
+    }    
     try{
       $r->delete();
     }
@@ -156,16 +175,46 @@ class catalogueActions extends DarwinActions
     return $this->renderText($response);
   }
 
-  public function executeAddValue(sfWebRequest $request)
+  public function executeKeyword(sfWebRequest $request)
+  {
+    if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();
+
+    $this->forward404Unless( $request->hasParameter('id') && $request->hasParameter('table'));
+    $this->ref_object = Doctrine::getTable(DarwinTable::getModelForTable($request->getParameter('table')))->find($request->getParameter('id'));
+    $this->forward404Unless($this->ref_object);
+    $this->form = new  KeywordsForm(null,array('table' => $request->getParameter('table'), 'id' => $request->getParameter('id') ));
+
+    if($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('keywords'));
+      if($this->form->isValid())
+      {
+        try{
+          $this->form->save();
+          return $this->renderText('ok');
+
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
+      }
+    }
+
+  }
+
+  public function executeAddKeyword(sfWebRequest $request)
   {
     if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
     $number = intval($request->getParameter('num'));
-    
-    $formName = DarwinTable::getFormForTable($request->getParameter('table'));
-    $form = new $formName();
 
-    $form->addKeyword($number, $request->getParameter('keyword'), $request->getParameter('value'));
+    $form = new  KeywordsForm(null,array('no_load'=>true));
 
-    return $this->renderPartial('nameValue',array('form' => $form['newVal'][$number],'view' => false));
+    $form->addKeyword($number, $request->getParameter('key'));
+
+    return $this->renderPartial('nameValue',array('form' => $form['newKeywords'][$number]));
   }
+
 }

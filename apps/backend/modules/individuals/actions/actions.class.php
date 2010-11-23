@@ -103,7 +103,7 @@ class individualsActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->individual->bind( $request->getParameter('specimen_individuals') );
-     if($request->getParameter('id') != $this->individual->getValue('specimen_individuals_id')) $this->forwardToSecureAction();      
+     if($request->getParameter('id') != $this->individual->getValue('id')) $this->forwardToSecureAction();      
       if( $this->individual->isValid())
       {
         try

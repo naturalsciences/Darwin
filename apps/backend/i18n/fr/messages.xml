@@ -1,1137 +1,1121 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file original="messages" product-name="messages" target-language="fr" datatype="plaintext" source-language="EN" date="2010-05-10T13:11:35Z">
-    <header>
-      <phase-group>
-        <phase contact-name="Brice Maron" tool-id="lokalize-1.0" phase-name="approval-1" contact-email="bmaron@naturalsciences.be" process-name="approval" date="2009-10-13"/>
-      </phase-group>
-      <tool tool-id="lokalize-1.0" tool-name="Lokalize" tool-version="1.0"/>
-    </header>
+  <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2010-11-18T14:14:52Z" product-name="messages">
+    <header/>
     <body>
-      <trans-unit approved="yes">
-        <source>Username</source> <target>Identifiant</target> </trans-unit>
-      <trans-unit>
-        <source>Password</source> <target>Mot de passe</target> </trans-unit>
-      <trans-unit>
-        <source>Log in</source>
-        <target>S'authentifier</target>
-      </trans-unit>
-      <trans-unit>
-        <source>This application requires an authentication.
-    Please Log in with your username and password.</source> <target>Cette application nécessite une authentification. Veuillez introduire votre identifiant et mot de passe</target> </trans-unit>
-      <trans-unit>
-        <source>"%value%" must be at least %min_length% characters.</source> <target state="needs-review-translation">"%value%" doit être d'au moins %min_length% caractères.</target> </trans-unit>
-      <trans-unit>
-        <source>Required.</source>
-        <target>Requis.</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Invalid login or password</source> <target>Identifant ou mot de passe invalide.</target> </trans-unit>
-      <trans-unit>
-        <source>Logout</source> <target>Déconnexion</target> </trans-unit>
       <trans-unit id="1">
+        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target state="needs-review-translation">[0]Aucun résultat trouvé|[1]Votre requête à trouvé 1 enregistrement(1,+Inf]Votre requête à trouvé %1% enregistrements</target> </trans-unit>
+      <trans-unit id="2">
+        <source>My Preferences</source> <target>Mes Préférences</target> </trans-unit>
+      <trans-unit id="3">
         <source>My Profile</source>
-        <target>Mon Profil</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Searches</source>
-        <target>Recherche</target>
+        <target>Mon profil</target>
       </trans-unit>
       <trans-unit id="4">
-        <source>Add</source>
-        <target>Ajouter</target>
-      </trans-unit>
-      <trans-unit id="5">
-        <source>Administration</source>
-        <target>Administration</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>Dashboard</source>
-        <target>Tableau de Bord</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>My Saved Searches</source>
-        <target>Mes Recherches Sauvegardées</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>My Saved Specimens</source>
-        <target>Mes Spécimens Sauvegardé</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Customise your interface !</source>
-        <target>Personnalisez votre interface !</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>Specimens</source>
-        <target>Spécimens</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Add Specimens</source>
-        <target>Ajoutez un Spécimens</target>
-      </trans-unit>
-      <trans-unit id="3">
-        <source>Add New Specimen</source>
-        <target>Ajoutez un Nouveau Spécimens</target>
-      </trans-unit>
-      <trans-unit id="4">
-        <source>Add New Taxon</source>
-        <target>Ajoutez un Taxon</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>Collections</source>
-        <target phase-name="approval-1" state="signed-off">Collections</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Acquisition</source>
-        <target phase-name="approval-1" state="signed-off">Acquisition</target>
-      </trans-unit>
-      <trans-unit id="3">
-        <source>Specimen Count</source>
-        <target phase-name="approval-1" state="signed-off">Nombre de Spécimens</target>
-      </trans-unit>
-      <trans-unit id="4">
-        <source>Collection</source>
-        <target phase-name="approval-1" state="signed-off">Collection</target>
-      </trans-unit>
-      <trans-unit id="5">
-        <source>Loan</source>
-        <target>Prêt</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>&amp;lt; New Specimen &amp;gt;</source>
-        <target phase-name="approval-1" state="signed-off">&amp;lt; Nouveau Spécimen &amp;gt;</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Individuals</source>
-        <target phase-name="approval-1" state="signed-off">Individus</target>
-      </trans-unit>
-      <trans-unit id="3">
-        <source>Properties</source>
-        <target phase-name="approval-1" state="signed-off">Propriétés</target>
-      </trans-unit>
-      <trans-unit id="4">
-        <source>Submit</source>
-        <target phase-name="approval-1" state="signed-off">Envoyer</target>
-      </trans-unit>
-      <trans-unit id="5">
-        <source>Go next</source>
-        <target phase-name="approval-1" state="signed-off">Suivant</target>
-      </trans-unit>
-      <trans-unit id="6">
-        <source>Add Another method</source>
-        <target phase-name="approval-1" state="signed-off">Ajoutez une nouvelle méthode</target>
-      </trans-unit>
-      <trans-unit id="7">
-        <source>Pick a Method in the List</source>
-        <target phase-name="approval-1" state="signed-off">Choisissez une méthode dans la liste</target>
-      </trans-unit>
-      <trans-unit id="8">
-        <source>Collecting Tool</source>
-        <target phase-name="approval-1" state="signed-off">Outil de collecte</target>
-      </trans-unit>
-      <trans-unit id="9">
-        <source>Add Another Tool</source>
-        <target phase-name="approval-1" state="signed-off">Ajoutez un nouvel outil</target>
-      </trans-unit>
-      <trans-unit id="10">
-        <source>Pick a Tool in the List</source>
-        <target phase-name="approval-1" state="signed-off">Choisissez un outil dans la liste</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>(e)</source>
-        <target phase-name="approval-1" state="signed-off">(e)</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Collection List</source>
-        <target phase-name="approval-1" state="signed-off">Liste de Collection</target>
-      </trans-unit>
-      <trans-unit id="3">
-        <source>New</source>
-        <target phase-name="approval-1" state="signed-off">Nouveau</target>
-      </trans-unit>
-      <trans-unit id="4">
-        <source>Cancel</source>
-        <target phase-name="approval-1" state="signed-off">Annuler</target>
-      </trans-unit>
-      <trans-unit id="5">
-        <source>Are you sure?</source>
-        <target phase-name="approval-1" state="signed-off">Êtes vous sûr?</target>
-      </trans-unit>
-      <trans-unit id="6">
-        <source>Save</source>
-        <target phase-name="approval-1" state="signed-off">Enregistrer</target>
-      </trans-unit>
-      <trans-unit id="7">
-        <source>Choose a collection</source>
-        <target phase-name="approval-1" state="signed-off">Choisissez une collection</target>
-      </trans-unit>
-      <trans-unit id="8">
-        <source>New Collection</source>
-        <target phase-name="approval-1" state="signed-off">Nouvelle Collection</target>
-      </trans-unit>
-      <trans-unit id="9">
-        <source>Edit Collection</source>
-        <target phase-name="approval-1" state="signed-off">Éditer une Collection</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>Add new specimen</source>
-        <target phase-name="approval-1" state="signed-off">Ajouter un nouveau spécimen</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>More</source>
-        <target phase-name="approval-1" state="signed-off">Plus</target>
-      </trans-unit>
-      <trans-unit id="3">
-        <source>Add new Taxon</source>
-        <target phase-name="approval-1" state="signed-off">Ajouter un Taxon</target>
-      </trans-unit>
-      <trans-unit id="4">
-        <source>Close</source>
-        <target phase-name="approval-1" state="signed-off">Fermer</target>
-      </trans-unit>
-      <trans-unit id="5">
-        <source>Choose !</source>
-        <target phase-name="approval-1" state="signed-off">Choisir !</target>
-      </trans-unit>
-      <trans-unit id="6">
-        <source>Change !</source>
-        <target phase-name="approval-1" state="signed-off">Changer !</target>
-      </trans-unit>
-      <trans-unit id="7">
-        <source>Accuracy</source>
-        <target phase-name="approval-1" state="signed-off">Précision</target>
-      </trans-unit>
-      <trans-unit id="8">
-        <source>exact</source>
-        <target phase-name="approval-1" state="signed-off">exact</target>
-      </trans-unit>
-      <trans-unit id="9">
-        <source>imprecise</source>
-        <target phase-name="approval-1" state="signed-off">imprécis</target>
-      </trans-unit>
-      <trans-unit id="10">
-        <source>Specimen count min</source>
-        <target phase-name="approval-1" state="signed-off">Nombre minimum de spécimen</target>
-      </trans-unit>
-      <trans-unit id="11">
-        <source>Specimen count max</source>
-        <target phase-name="approval-1" state="signed-off">Nombre maximum de spécimen</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Expedition List</source>
-        <target phase-name="approval-1" state="signed-off">Liste des expéditions</target>
-      </trans-unit>
-      <trans-unit>
-        <source>begins with</source>
-        <target phase-name="approval-1" state="signed-off">commence par</target>
-      </trans-unit>
-      <trans-unit>
-        <source>contains</source>
-        <target phase-name="approval-1" state="signed-off">contient</target>
-      </trans-unit>
-      <trans-unit>
-        <source>ends by</source>
-        <target phase-name="approval-1" state="signed-off">se termine par</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Between</source>
-        <target phase-name="approval-1" state="signed-off">Entre</target>
-      </trans-unit>
-      <trans-unit>
-        <source>and</source>
-        <target phase-name="approval-1" state="signed-off">et</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Name</source>
-        <target phase-name="approval-1" state="signed-off">Nom</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Search</source>
-        <target phase-name="approval-1" state="signed-off">Rechercher</target>
-      </trans-unit>
-      <trans-unit id="1">
-        <source>Taxa</source>
-        <target phase-name="approval-1" state="signed-off">Taxa</target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>Add Collection</source>
-        <target phase-name="approval-1" state="signed-off">Ajouter une Collection</target>
-      </trans-unit>
-      <trans-unit id="3">
-        <source>No Taxa Matching</source>
-        <target phase-name="approval-1" state="signed-off">Aucun Taxon correspondant</target>
-      </trans-unit>
-      <trans-unit id="4">
-        <source>Search Taxonomic unit</source>
-        <target phase-name="approval-1" state="signed-off">Chercher une unité taxonomique</target>
-      </trans-unit>
-      <trans-unit id="5">
-        <source>Details :</source>
-        <target phase-name="approval-1" state="signed-off">Détails :</target>
-      </trans-unit>
-      <trans-unit id="6">
-        <source>Search Results :</source>
-        <target phase-name="approval-1" state="signed-off">Résultats de la recherche :</target>
-      </trans-unit>
-      <trans-unit id="7">
-        <source>Taxon Search</source>
-        <target phase-name="approval-1" state="signed-off">Recherche de Taxon</target>
-      </trans-unit>
-      <trans-unit id="8">
-        <source>Recombination</source>
-        <target phase-name="approval-1" state="signed-off">Re-combinaison</target>
-      </trans-unit>
-      <trans-unit id="9">
-        <source>Of</source>
-        <target phase-name="approval-1" state="signed-off">De</target>
-      </trans-unit>
-      <trans-unit id="10">
-        <source>With</source>
-        <target phase-name="approval-1" state="signed-off">Avec</target>
-      </trans-unit>
-      <trans-unit id="11">
-        <source>Renamed</source>
-        <target phase-name="approval-1" state="signed-off">Renommage</target>
-      </trans-unit>
-      <trans-unit id="12">
-        <source>Current Name</source>
-        <target phase-name="approval-1" state="signed-off">Nom Actuel</target>
-      </trans-unit>
-      <trans-unit id="13">
-        <source>Choose a Taxon</source>
-        <target phase-name="approval-1" state="signed-off">Choisissez un Taxon</target>
-      </trans-unit>
-      <trans-unit id="14">
-        <source>Add Taxonomic unit</source>
-        <target phase-name="approval-1" state="signed-off">Ajouter une unité Taxonomique</target>
-      </trans-unit>
-      <trans-unit id="15">
-        <source>New Taxonomic unit</source>
-        <target phase-name="approval-1" state="signed-off">Nouvelle unité Taxonomique</target>
-      </trans-unit>
-      <trans-unit id="16">
-        <source>Edit Taxonomic unit</source>
-        <target phase-name="approval-1" state="signed-off">Éditer une unité Taxonomique</target>
-      </trans-unit>
-      <trans-unit id="17">
-        <source>Taxonomy</source>
-        <target phase-name="approval-1" state="signed-off">Taxonomie</target>
-      </trans-unit>
-      <trans-unit id="18">
-        <source>From</source>
-        <target phase-name="approval-1" state="signed-off">De</target>
-      </trans-unit>
-      <trans-unit id="19">
-        <source>To</source>
-        <target phase-name="approval-1" state="signed-off">À</target>
-      </trans-unit>
-      <trans-unit id="20">
-        <source>No Expedition Matching</source>
-        <target phase-name="approval-1" state="signed-off">Aucune Expédition Correspondante</target>
-      </trans-unit>
-      <trans-unit id="21">
-        <source>Level</source>
-        <target phase-name="approval-1" state="signed-off">Niveau</target>
-      </trans-unit>
-      <trans-unit id="22">
-        <source>Extinct</source>
-        <target phase-name="approval-1" state="signed-off">Éteinte</target>
-      </trans-unit>
-      <trans-unit id="23">
-        <source>Status</source>
-        <target phase-name="approval-1" state="signed-off">Statut</target>
-      </trans-unit>
-      <trans-unit id="23">
-        <source>Delete</source>
-        <target phase-name="approval-1" state="signed-off">Supprimer</target>
-      </trans-unit>
-      <trans-unit id="23">
-        <source>Preferred</source>
-        <target phase-name="approval-1" state="signed-off">Préféré</target>
-      </trans-unit>
-      <trans-unit id="1">
         <source>My Widgets</source> <target>Mes Widgets</target> </trans-unit>
-      <trans-unit id="2">
-        <source>Chronostratigraphy</source> <target>Chronostratigraphie</target> </trans-unit>
-      <trans-unit id="3">
-        <source>Lithostratigraphy</source> <target>Lithostratigraphie</target> </trans-unit>
-      <trans-unit id="4">
-        <source>Lithology</source> <target>Lithologie</target> </trans-unit>
       <trans-unit id="5">
-        <source>Mineralogy</source> <target>Mineralogie</target> </trans-unit>
+        <source>Saved Specimens list</source>
+        <target>Liste des spécimens sauvés</target>
+      </trans-unit>
       <trans-unit id="6">
-        <source>Expeditions</source> <target>Expéditions</target> </trans-unit>
+        <source>Saved search</source> <target>Recherches sauvées</target> </trans-unit>
       <trans-unit id="7">
-        <source>I.G. Numbers</source> <target/> </trans-unit>
+        <source>Searches</source> <target>Recherches</target> </trans-unit>
       <trans-unit id="8">
-        <source>Institutions</source> <target>Établissements</target> </trans-unit>
+        <source>Catalogues</source> <target>Catalogues</target> </trans-unit>
       <trans-unit id="9">
-        <source>People</source> <target>Personnes</target> </trans-unit>
+        <source>Taxonomy</source>
+        <target>Taxonomie</target>
+      </trans-unit>
       <trans-unit id="10">
-        <source>Sampling location</source> <target>Points d'échantillonnages</target> </trans-unit>
+        <source>Chronostratigraphy</source>
+        <target>Chronostratigraphie</target>
+      </trans-unit>
       <trans-unit id="11">
-        <source>User</source> <target>Utilisateur</target> </trans-unit>
+        <source>Lithostratigraphy</source>
+        <target>Lithostratigraphie</target>
+      </trans-unit>
       <trans-unit id="12">
-        <source>[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target/> </trans-unit>
+        <source>Lithology</source>
+        <target>Lithologie</target>
+      </trans-unit>
       <trans-unit id="13">
-        <source>Are you sure ?</source> <target state="needs-review-translation">Êtes-vous sûr ?</target> </trans-unit>
+        <source>Mineralogy</source> <target>Minéralogie</target> </trans-unit>
       <trans-unit id="14">
-        <source>Date</source> <target>Date</target> </trans-unit>
+        <source>Expeditions</source>
+        <target>Expéditions</target>
+      </trans-unit>
       <trans-unit id="15">
-        <source>Subject</source> <target>Sujet</target> </trans-unit>
+        <source>I.G. Numbers</source>
+        <target>Numéros I.G</target>
+      </trans-unit>
       <trans-unit id="16">
-        <source>Value</source> <target>Valeur</target> </trans-unit>
+        <source>Institutions</source>
+        <target>Institutions</target>
+      </trans-unit>
       <trans-unit id="17">
-        <source>Det. St.</source> <target>Status de détermination</target> </trans-unit>
+        <source>People</source> <target>Personnes</target> </trans-unit>
       <trans-unit id="18">
-        <source>Add Ident.</source> <target></target> </trans-unit>
-      <trans-unit id="19">
-        <source>Clear also host taxon reference ?</source> <target/> </trans-unit>
+        <source>Sampling location</source> <target>Point d'échantillonage</target> </trans-unit>
+      <trans-unit id="19" approved="no">
+        <source>Collecting Methods</source> <target state="needs-review-translation">Methodes de collecte</target> </trans-unit>
       <trans-unit id="20">
-        <source>Category</source> <target>Catégorie</target> </trans-unit>
+        <source>Collecting Tools</source> <target>Outils de collecte</target> </trans-unit>
       <trans-unit id="21">
-        <source>Prefix</source> <target>Préfixe</target> </trans-unit>
+        <source>Specimens</source> <target>Échantillons</target> </trans-unit>
       <trans-unit id="22">
-        <source>sep.</source> <target>sep.</target> </trans-unit>
+        <source>Pinned Items</source> <target>Objets épinglés</target> </trans-unit>
       <trans-unit id="23">
-        <source>Code</source>
-        <target/>
-      </trans-unit>
+        <source>Specimens (%d)</source> <target>Échantillons (%d)</target> </trans-unit>
       <trans-unit id="24">
-        <source>Suffix</source> <target>Suffixe</target> </trans-unit>
+        <source>Individuals (%d)</source> <target>Individus (%d)</target> </trans-unit>
       <trans-unit id="25">
-        <source>Add Code</source> <target>Ajouter un Code</target> </trans-unit>
+        <source>Parts (%d)</source> <target>Parties (%d)</target> </trans-unit>
       <trans-unit id="26">
-        <source>This application requires an authentication. Please Log in with your username and password.</source> <target>Cette application nécessite une authentification. Veuillez vous authentifier avec votre identifiant et votre mot de passe.</target> </trans-unit>
+        <source>Collections</source> <target>Collections</target> </trans-unit>
       <trans-unit id="27">
-        <source>Browse Collections</source> <target>Naviguer dans les collections</target> </trans-unit>
+        <source>Add</source> <target>Ajouter</target> </trans-unit>
       <trans-unit id="28">
-        <source>Lower bound (My)</source> <target></target> </trans-unit>
+        <source>RBINS I.G. Numbers</source> <target>RBINS Numéros I.G</target> </trans-unit>
       <trans-unit id="29">
-        <source>Upper bound (My)</source>
-        <target/>
-      </trans-unit>
+        <source>Administration</source> <target>Administration</target> </trans-unit>
       <trans-unit id="30">
-        <source>Invalid</source>
-        <target/>
-      </trans-unit>
+        <source>User</source> <target>Utilisateur</target> </trans-unit>
       <trans-unit id="31">
-        <source>Deprecated</source>
-        <target/>
-      </trans-unit>
+        <source>Search</source> <target>Rechercher</target> </trans-unit>
       <trans-unit id="32">
-        <source>Choose</source>
-        <target/>
-      </trans-unit>
+        <source>Help</source> <target>Aide</target> </trans-unit>
       <trans-unit id="33">
-        <source>No Matching Items</source>
-        <target/>
-      </trans-unit>
+        <source>Loading</source> <target>Chargement</target> </trans-unit>
       <trans-unit id="34">
-        <source>New Unit</source>
-        <target/>
-      </trans-unit>
+        <source>check only editable</source> <target>Sélectionner seulement les éditables</target> </trans-unit>
       <trans-unit id="35">
-        <source>Type</source>
-        <target/>
-      </trans-unit>
+        <source>clear</source> <target>Rafraichir</target> </trans-unit>
       <trans-unit id="36">
-        <source>Keyword</source>
-        <target/>
-      </trans-unit>
+        <source>And</source> <target>Et</target> </trans-unit>
       <trans-unit id="37">
-        <source>You must select a part of the name to add a tag</source>
-        <target/>
-      </trans-unit>
+        <source>Name</source> <target>Nom</target> </trans-unit>
       <trans-unit id="38">
-        <source>Choose a Lithologic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Level</source> <target>Niveau</target> </trans-unit>
       <trans-unit id="39">
-        <source>Add Lithologic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Relation</source> <target>Relation</target> </trans-unit>
       <trans-unit id="40">
-        <source>New Lithologic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Category</source> <target>Catégorie</target> </trans-unit>
       <trans-unit id="41">
-        <source>Search Lithologic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Between</source> <target>Entre</target> </trans-unit>
       <trans-unit id="42">
-        <source>Lithologic unit Search</source>
-        <target/>
-      </trans-unit>
+        <source>and</source> <target>Et</target> </trans-unit>
       <trans-unit id="43">
-        <source>The parenty does not follow the possible upper level rule</source>
-        <target/>
-      </trans-unit>
+        <source>Add code</source> <target>Ajouter code</target> </trans-unit>
       <trans-unit id="44">
-        <source>Edit Lithologic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Choose latitude/longitude on map</source> <target>Choisir latitude/longitude sur la carte</target> </trans-unit>
       <trans-unit id="45">
-        <source>Edit User widgets</source>
-        <target/>
-      </trans-unit>
+        <source>Add Value</source> <target>Ajouter valeur</target> </trans-unit>
       <trans-unit id="46">
-        <source>Add a new login</source>
-        <target/>
-      </trans-unit>
+        <source>Cancel</source> <target>Annuler</target> </trans-unit>
       <trans-unit id="47">
-        <source>Edit your widgets</source>
-        <target/>
-      </trans-unit>
+        <source>Are you sure ?</source> <target>Etes vous sûre ?</target> </trans-unit>
       <trans-unit id="48">
-        <source>Search User</source>
-        <target/>
-      </trans-unit>
+        <source>Delete</source> <target>Supprimer</target> </trans-unit>
       <trans-unit id="49">
-        <source>Add User</source>
-        <target/>
-      </trans-unit>
+        <source>Save</source> <target>Sauver</target> </trans-unit>
       <trans-unit id="50">
-        <source>New User</source>
-        <target/>
-      </trans-unit>
+        <source>Add new Taxon</source> <target>Ajouter un nouveau taxon</target> </trans-unit>
       <trans-unit id="51">
-        <source>Surname</source>
-        <target/>
-      </trans-unit>
+        <source>Add New Specimen</source> <target>Ajouter un nouvel échantillon</target> </trans-unit>
       <trans-unit id="52">
-        <source>Search Users</source>
-        <target/>
-      </trans-unit>
+        <source>Add new specimen</source> <target>Ajouter un nouvel échantillon </target> </trans-unit>
       <trans-unit id="53">
-        <source>Users Search</source>
-        <target/>
-      </trans-unit>
+        <source>My Saved Specimens</source> <target>Mes échantillons sauvés</target> </trans-unit>
       <trans-unit id="54">
-        <source>Edit Profile</source>
-        <target/>
-      </trans-unit>
+        <source>Go to your search</source> <target>Aller à la recherche</target> </trans-unit>
       <trans-unit id="55">
-        <source>Show link with </source>
-        <target/>
-      </trans-unit>
+        <source>[0] No Items|[1] 1 Item |(1,+Inf] %1% Items</source> <target>[0] Pas d'objets|[1] 1 objet |(1,+Inf] %1% Objets</target> </trans-unit>
       <trans-unit id="56">
-        <source>Hide link with </source>
-        <target/>
-      </trans-unit>
+        <source>Manage</source> <target>Gerer</target> </trans-unit>
       <trans-unit id="57">
-        <source>Edit user widgets</source>
-        <target/>
-      </trans-unit>
+        <source>My Saved Searches</source> <target>Mes recherches sauvées</target> </trans-unit>
       <trans-unit id="58">
-        <source>Choose a Chronostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>My Lasts Items</source> <target>Mes derniers objets</target> </trans-unit>
       <trans-unit id="59">
-        <source>Add Chronostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Date</source> <target>Date</target> </trans-unit>
       <trans-unit id="60">
-        <source>New Chronostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Record Id</source> <target>Id d'enregistrement</target> </trans-unit>
       <trans-unit id="61">
-        <source>Search Chronostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Nothing here</source> <target>Rien ici</target> </trans-unit>
       <trans-unit id="62">
-        <source>Chronostratigraphic unit Search</source>
-        <target/>
-      </trans-unit>
+        <source>Week</source> <target>Semaine</target> </trans-unit>
       <trans-unit id="63">
-        <source>Edit Chronostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Month</source> <target>Mois</target> </trans-unit>
       <trans-unit id="64">
-        <source>Institution</source>
-        <target/>
-      </trans-unit>
+        <source>Year</source> <target>Année</target> </trans-unit>
       <trans-unit id="65">
-        <source>Choose a type</source>
-        <target/>
-      </trans-unit>
+        <source>you can't do that !!</source> <target>Vous ne pouvez pas faire ça !!</target> </trans-unit>
       <trans-unit id="66">
-        <source>This element already has synonyms.&lt;br /&gt;Are you sure that you want to merge them together?</source>
-        <target/>
-      </trans-unit>
+        <source>Please save your individual in order to add properties</source> <target>Veuillez sauver votre individu pour pouvoir ajouter des propriétés</target> </trans-unit>
       <trans-unit id="67">
-        <source>Yes </source>
-        <target/>
-      </trans-unit>
+        <source>Notion</source> <target>Notion</target> </trans-unit>
       <trans-unit id="68">
-        <source>Year of reference</source>
-        <target/>
-      </trans-unit>
+        <source>Comment</source> <target>Commentaire</target> </trans-unit>
       <trans-unit id="69">
-        <source>Insurer</source>
-        <target/>
-      </trans-unit>
+        <source>Add comment</source> <target>Ajouter commentaire</target> </trans-unit>
       <trans-unit id="70">
-        <source>Edit (insurances) Values</source>
-        <target/>
-      </trans-unit>
+        <source>View Lithologic unit</source> <target>Voir unité lithologique</target> </trans-unit>
       <trans-unit id="71">
-        <source>Add (insurance) Value</source>
-        <target/>
-      </trans-unit>
+        <source>Color</source> <target>Couleur</target> </trans-unit>
       <trans-unit id="72">
-        <source>Sub-Type</source>
-        <target/>
-      </trans-unit>
+        <source>Add Lithologic unit</source> <target>Ajouter unité litholo</target> </trans-unit>
       <trans-unit id="73">
-        <source>Qualifier</source>
-        <target/>
-      </trans-unit>
+        <source>New Lithologic unit</source> <target>Nouvelle unité Lithologique</target> </trans-unit>
       <trans-unit id="74">
-        <source>Date From</source>
-        <target/>
-      </trans-unit>
+        <source>Edit Lithologic unit</source> <target>Editer unité lithologique</target> </trans-unit>
       <trans-unit id="75">
-        <source>Date To</source>
-        <target/>
-      </trans-unit>
+        <source>The parenty does not follow the possible upper level rule</source> <target>La parenté ne suis pas les règles de niveaux supérieurs possibles</target> </trans-unit>
       <trans-unit id="76">
-        <source>Values</source>
-        <target/>
-      </trans-unit>
+        <source>New Unit</source> <target>Nouvelle unité</target> </trans-unit>
       <trans-unit id="77">
-        <source>Edit Properties</source>
-        <target/>
-      </trans-unit>
+        <source>Duplicate Unit</source> <target>Dupliquer unité</target> </trans-unit>
       <trans-unit id="78">
-        <source>[1]Show 1 Value|(1,+Inf]Show %1% Values</source>
-        <target/>
-      </trans-unit>
+        <source>Are you sure?</source> <target>Etes vous sûre ?</target> </trans-unit>
       <trans-unit id="79">
-        <source>Hide Values</source>
-        <target/>
-      </trans-unit>
+        <source>Search Lithologic unit</source> <target>Rechercher unité Lithologique</target> </trans-unit>
       <trans-unit id="80">
-        <source>No Values</source>
-        <target/>
-      </trans-unit>
+        <source>Lithologic unit Search</source> <target>Recherche d'unité Lithologique</target> </trans-unit>
       <trans-unit id="81">
-        <source>Add Properties</source>
-        <target/>
-      </trans-unit>
+        <source>Choose a Lithologic unit</source> <target>Choisir une unité lithologique</target> </trans-unit>
       <trans-unit id="82">
-        <source>Notion</source>
-        <target/>
-      </trans-unit>
+        <source>Dashboard</source> <target>Tableau de bord</target> </trans-unit>
       <trans-unit id="83">
-        <source>Comment</source>
-        <target/>
-      </trans-unit>
+        <source>Big Brother</source> <target>Big Brother</target> </trans-unit>
       <trans-unit id="84">
-        <source>Edit Comment</source>
-        <target/>
-      </trans-unit>
+        <source>Hi Big Brother... I'm Watching You!</source> <target>Salut Big Brother... je t'observe!</target> </trans-unit>
       <trans-unit id="85">
-        <source>Add Comment</source>
-        <target/>
-      </trans-unit>
+        <source>Action</source> <target>Action</target> </trans-unit>
       <trans-unit id="86">
-        <source>Community</source>
-        <target/>
-      </trans-unit>
+        <source>Nothing to watch...Check with the KGB ?</source> <target>Rien a voir... adressez vous au KGB ?</target> </trans-unit>
       <trans-unit id="87">
-        <source>Names</source>
-        <target/>
-      </trans-unit>
+        <source>Vernacular name</source> <target>Nom vernaculaire</target> </trans-unit>
       <trans-unit id="88">
-        <source>Edit Vernacular Names</source>
-        <target/>
-      </trans-unit>
+        <source>View specimen individual</source> <target>Voir individu d'échantillon</target> </trans-unit>
       <trans-unit id="89">
-        <source>[1]Show 1 Name|(1,+Inf]Show %1% Names</source>
-        <target/>
-      </trans-unit>
+        <source>View Specimen</source> <target>Voir échantillon</target> </trans-unit>
       <trans-unit id="90">
-        <source>Hide Names</source>
-        <target/>
-      </trans-unit>
+        <source>Individual overview</source> <target>Aperçu individu</target> </trans-unit>
       <trans-unit id="91">
-        <source>No Names</source>
-        <target/>
-      </trans-unit>
+        <source>Individual %d</source> <target>Individu %d</target> </trans-unit>
       <trans-unit id="92">
-        <source>Add Names</source>
-        <target/>
-      </trans-unit>
+        <source>Parts overview</source> <target>Aperçu Parties</target> </trans-unit>
       <trans-unit id="93">
-        <source>Items</source>
-        <target/>
-      </trans-unit>
+        <source>Back</source> <target>Retour</target> </trans-unit>
       <trans-unit id="94">
-        <source>Basionym</source>
-        <target/>
-      </trans-unit>
+        <source>Specimen individuals overview</source> <target>Aperçu individus d'échantillon</target> </trans-unit>
       <trans-unit id="95">
-        <source>Add Synonymies</source>
-        <target/>
-      </trans-unit>
+        <source>There a currently no individual</source> <target>Il n'y a actuellement pas d'individus</target> </trans-unit>
       <trans-unit id="96">
-        <source>Renamed to</source>
-        <target/>
-      </trans-unit>
+        <source>Type</source> <target>Type</target> </trans-unit>
       <trans-unit id="97">
-        <source>Rename</source>
-        <target/>
-      </trans-unit>
+        <source>Sex</source> <target>Sexe</target> </trans-unit>
       <trans-unit id="98">
-        <source>Code prefix</source>
-        <target/>
-      </trans-unit>
+        <source>State</source> <target>Etat</target> </trans-unit>
       <trans-unit id="99">
-        <source>Code prefix sep.</source>
-        <target/>
-      </trans-unit>
+        <source>Stage</source> <target>Etape</target> </trans-unit>
       <trans-unit id="100">
-        <source>Code suffix sep.</source>
-        <target/>
-      </trans-unit>
+        <source>Social status</source> <target>Statut social</target> </trans-unit>
       <trans-unit id="101">
-        <source>Code suffix</source>
-        <target/>
-      </trans-unit>
+        <source>Rock form</source> <target>Form rocheuse</target> </trans-unit>
       <trans-unit id="102">
-        <source>Auto incremented ?</source>
-        <target/>
-      </trans-unit>
+        <source>View this individual</source> <target>Voir cet individu</target> </trans-unit>
       <trans-unit id="103">
-        <source>Same for parts ?</source>
-        <target/>
-      </trans-unit>
+        <source>Edit this individual</source> <target>Editer cet individu</target> </trans-unit>
       <trans-unit id="104">
-        <source>Edit default specimen codes prefix and suffix</source>
-        <target/>
-      </trans-unit>
+        <source>Go to parts overview</source> <target>Aller à l'aperçu des parties</target> </trans-unit>
       <trans-unit id="105">
-        <source>Edit People</source>
-        <target/>
-      </trans-unit>
+        <source>Edit a new part</source> <target>Editer une nouvelle partie</target> </trans-unit>
       <trans-unit id="106">
-        <source>Add People</source>
-        <target/>
-      </trans-unit>
+        <source>Add New</source> <target>Ajouter nouveau</target> </trans-unit>
       <trans-unit id="107">
-        <source>Combination of</source>
-        <target/>
-      </trans-unit>
+        <source>New individual</source> <target>Nouvel individu</target> </trans-unit>
       <trans-unit id="108">
-        <source>Choose an expedition</source>
-        <target/>
-      </trans-unit>
+        <source>Duplicate individual</source> <target>dupliquer individu</target> </trans-unit>
       <trans-unit id="109">
-        <source>Add Expedition</source>
-        <target/>
-      </trans-unit>
+        <source>You must select a least 1 specimen</source> <target>Vous devez sélectionner au moins 1 échantillon</target> </trans-unit>
       <trans-unit id="110">
-        <source>New Expedition</source>
-        <target/>
-      </trans-unit>
+        <source>Save this search</source> <target>Sauver cet recherche</target> </trans-unit>
       <trans-unit id="111">
-        <source>Search Expeditions</source>
-        <target/>
-      </trans-unit>
+        <source>Save your search</source> <target>Sauver votre recherche</target> </trans-unit>
       <trans-unit id="112">
-        <source>Edit Expedition</source>
-        <target/>
-      </trans-unit>
+        <source>Last modification</source> <target>Dernière modification</target> </trans-unit>
       <trans-unit id="113">
-        <source>Choose an I.G. number</source>
-        <target/>
-      </trans-unit>
+        <source>Type of Search</source> <target>Type de recherche</target> </trans-unit>
       <trans-unit id="114">
-        <source>Add an I.G. number</source>
-        <target/>
-      </trans-unit>
+        <source>Number of items</source> <target>Nombre d'objets</target> </trans-unit>
       <trans-unit id="115">
-        <source>New I.G. number</source>
-        <target/>
-      </trans-unit>
+        <source>My saved specimens</source> <target>Mes échantillons sauvés</target> </trans-unit>
       <trans-unit id="116">
-        <source>I.G.</source>
-        <target/>
-      </trans-unit>
+        <source>My saved searches</source> <target>Mes recherches sauvées</target> </trans-unit>
       <trans-unit id="117">
-        <source>I.G. creation date</source>
-        <target/>
-      </trans-unit>
+        <source>Edit your specimens</source> <target>Editer vos échantillons</target> </trans-unit>
       <trans-unit id="118">
-        <source>No I.G. Matching</source>
-        <target/>
-      </trans-unit>
+        <source>Edit your search</source> <target>Editer votre recherche</target> </trans-unit>
       <trans-unit id="119">
-        <source>Search IG Number</source>
-        <target/>
-      </trans-unit>
+        <source>Save my pinned specimens</source> <target>Sauver mes spécimens épinglés</target> </trans-unit>
       <trans-unit id="120">
-        <source>General Inventory Numbers List</source>
-        <target/>
-      </trans-unit>
+        <source>New</source> <target>Nouveau</target> </trans-unit>
       <trans-unit id="121">
-        <source>I.G. number:</source>
-        <target/>
-      </trans-unit>
+        <source>To a new list</source> <target>Vers une nouvelle liste</target> </trans-unit>
       <trans-unit id="122">
-        <source>I.G. creation date:</source>
-        <target/>
-      </trans-unit>
+        <source>Existing</source> <target>Existant</target> </trans-unit>
       <trans-unit id="123">
-        <source>New I.G.</source>
-        <target/>
-      </trans-unit>
+        <source>Go</source> <target>Aller</target> </trans-unit>
       <trans-unit id="124">
-        <source>Edit I.G. number</source>
-        <target/>
-      </trans-unit>
+        <source>Save your specimens</source> <target>Sauver vos échantillons</target> </trans-unit>
       <trans-unit id="125">
-        <source>Edit I.G.</source>
-        <target/>
-      </trans-unit>
+        <source>Collection :</source> <target>Collection :</target> </trans-unit>
       <trans-unit id="126">
-        <source>Addresses</source>
-        <target/>
-      </trans-unit>
+        <source>Taxonomy :</source> <target>Taxonomie :</target> </trans-unit>
       <trans-unit id="127">
-        <source>Country</source>
-        <target/>
-      </trans-unit>
+        <source>Chronostratigraphy :</source> <target>Chronostratigraphie :</target> </trans-unit>
       <trans-unit id="128">
-        <source>Region</source>
-        <target/>
-      </trans-unit>
+        <source>Lithostratigraphy :</source> <target>Lithostratigraphie :</target> </trans-unit>
       <trans-unit id="129">
-        <source>Locality</source>
-        <target/>
-      </trans-unit>
+        <source>Lithology :</source> <target>Lithologie :</target> </trans-unit>
       <trans-unit id="130">
-        <source>Address</source>
-        <target/>
-      </trans-unit>
+        <source>Mineralogy :</source> <target>Mineralogie :</target> </trans-unit>
       <trans-unit id="131">
-        <source>Organisation</source>
-        <target/>
-      </trans-unit>
+        <source>Sampling Location :</source> <target>Point d'échantillonage :</target> </trans-unit>
       <trans-unit id="132">
-        <source>Tags</source>
-        <target/>
-      </trans-unit>
+        <source>No Items here. Please pin some items or another source to be able to do a mass action</source> <target>Pas d'objet. veuillez épingler quelques objets ou une autre source pour pouvoir faire une action de masse</target> </trans-unit>
       <trans-unit id="133">
-        <source>Edit Address</source>
-        <target/>
-      </trans-unit>
+        <source>Action Status :</source> <target>Statut de l'action :</target> </trans-unit>
       <trans-unit id="134">
-        <source>Add Address</source>
-        <target/>
-      </trans-unit>
+        <source>[0] No Item modified|[1] Everything seems to go well. Your action was applied to 1 record |(1,+Inf] Every thing seems to go well. Your action was applied to %1% records</source> <target>[0] pas d'objet modifié|[1] Tout a l'air de s'être bien déroulé. Votre action a été appliquée à 1 enregistrement |(1,+Inf] ETout a l'air de s'être bien déroulé. Votre action a été appliquée à %1% enregistrements</target> </trans-unit>
       <trans-unit id="135">
-        <source>Edit Communication Means</source>
-        <target/>
-      </trans-unit>
+        <source>Mass Actions :</source> <target>Actions de masse :</target> </trans-unit>
       <trans-unit id="136">
-        <source>Phone</source>
-        <target/>
-      </trans-unit>
+        <source>Houston, We've Got a Problem</source> <target>Houston, on a un problème</target> </trans-unit>
       <trans-unit id="137">
-        <source>e-Mail</source>
-        <target/>
-      </trans-unit>
+        <source>Type :</source> <target>Type :</target> </trans-unit>
       <trans-unit id="138">
-        <source>Add Communication Means</source>
-        <target/>
-      </trans-unit>
+        <source>Sex :</source> <target>Sexe :</target> </trans-unit>
       <trans-unit id="139">
-        <source>Language</source>
-        <target/>
-      </trans-unit>
+        <source>State :</source> <target>Etat :</target> </trans-unit>
       <trans-unit id="140">
-        <source>Is Mother Language</source>
-        <target/>
-      </trans-unit>
+        <source>Building :</source> <target>Bâtiment :</target> </trans-unit>
       <trans-unit id="141">
-        <source>Edit Languages</source>
-        <target/>
-      </trans-unit>
+        <source>Floor :</source> <target>Etage :</target> </trans-unit>
       <trans-unit id="142">
-        <source>Yes</source>
-        <target/>
-      </trans-unit>
+        <source>Room :</source> <target>Salle :</target> </trans-unit>
       <trans-unit id="143">
-        <source>Add Language</source>
-        <target/>
-      </trans-unit>
+        <source>Row :</source> <target>Rayon :</target> </trans-unit>
       <trans-unit id="144">
-        <source>Login Type</source>
-        <target/>
-      </trans-unit>
+        <source>Shelf :</source> <target>Plateau :</target> </trans-unit>
       <trans-unit id="145">
-        <source>Login System Id</source>
-        <target/>
-      </trans-unit>
+        <source>Social Status :</source> <target>Statut social :</target> </trans-unit>
       <trans-unit id="146">
-        <source>User Name</source>
-        <target/>
-      </trans-unit>
+        <source>View Institution</source> <target>voir institution</target> </trans-unit>
       <trans-unit id="147">
-        <source>Edit Login</source>
-        <target/>
-      </trans-unit>
+        <source>Add Instution</source> <target>Ajouter institution</target> </trans-unit>
       <trans-unit id="148">
-        <source>Add Login</source>
-        <target/>
-      </trans-unit>
+        <source>New Institution</source> <target>Nouvelle institution</target> </trans-unit>
       <trans-unit id="149">
-        <source>Add Value</source>
-        <target/>
-      </trans-unit>
+        <source>Edit Institution</source> <target>Editer institution</target> </trans-unit>
       <trans-unit id="150">
-        <source>Relation</source>
-        <target/>
-      </trans-unit>
+        <source>Duplicate Institution</source> <target>Dupliquer institution</target> </trans-unit>
       <trans-unit id="151">
-        <source>Role</source>
-        <target/>
-      </trans-unit>
+        <source>Search Institutions</source> <target>Rechercher institutions</target> </trans-unit>
       <trans-unit id="152">
-        <source>Period</source>
-        <target/>
-      </trans-unit>
+        <source>Institution Search</source> <target>recherche d'institution</target> </trans-unit>
       <trans-unit id="153">
-        <source>Edit Relation</source>
-        <target/>
-      </trans-unit>
+        <source>Abbreviation</source> <target>Abréviation </target> </trans-unit>
       <trans-unit id="154">
-        <source>Add Relationship</source>
-        <target/>
-      </trans-unit>
+        <source>View</source> <target>Voir</target> </trans-unit>
       <trans-unit id="155">
-        <source>Choose a Mineralogic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Choose</source> <target>Choisir</target> </trans-unit>
       <trans-unit id="156">
-        <source>Add Mineralogic unit</source>
-        <target/>
-      </trans-unit>
+        <source>No Matching Items</source> <target>Aucun enregistrements concordants</target> </trans-unit>
       <trans-unit id="157">
-        <source>New Mineralogic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Search Institution</source> <target>Rechercher institution</target> </trans-unit>
       <trans-unit id="158">
-        <source>Search Mineralogic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Collection</source> <target>Collection</target> </trans-unit>
       <trans-unit id="159">
-        <source>Mineralogic unit Search</source>
-        <target/>
-      </trans-unit>
+        <source>Taxon</source> <target>Taxon</target> </trans-unit>
       <trans-unit id="160">
-        <source>Edit Mineralogic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Sampling locations</source> <target>Point d'échantillonage</target> </trans-unit>
       <trans-unit id="161">
-        <source>Search People</source>
-        <target/>
-      </trans-unit>
+        <source>Codes</source> <target>Codes</target> </trans-unit>
       <trans-unit id="162">
-        <source>New People</source>
-        <target/>
-      </trans-unit>
+        <source>Chronostratigraphic unit</source> <target>unité chronostratigraphique</target> </trans-unit>
       <trans-unit id="163">
-        <source>Title</source>
-        <target/>
-      </trans-unit>
+        <source>Ig unit</source> <target>Unité Ig</target> </trans-unit>
       <trans-unit id="164">
-        <source>Family Name</source>
-        <target/>
-      </trans-unit>
+        <source>Lithostratigraphic unit</source> <target>Unité lithostratigraphique</target> </trans-unit>
       <trans-unit id="165">
-        <source>Given Name</source>
-        <target/>
-      </trans-unit>
+        <source>Lithologic unit</source> <target>Unité Lithologique</target> </trans-unit>
       <trans-unit id="166">
-        <source>Additional Names</source>
-        <target/>
-      </trans-unit>
+        <source>Mineralogic unit</source> <target>Unité Minéralogique</target> </trans-unit>
       <trans-unit id="167">
-        <source>Life</source>
-        <target/>
-      </trans-unit>
+        <source>Expedition</source> <target>Expedition</target> </trans-unit>
       <trans-unit id="168">
-        <source>Activity</source>
-        <target/>
-      </trans-unit>
+        <source>Social Status</source> <target>Statut social</target> </trans-unit>
       <trans-unit id="169">
-        <source>Communiction Means</source>
-        <target/>
-      </trans-unit>
+        <source>Rock Form</source> <target>Forme roch</target> </trans-unit>
       <trans-unit id="170">
-        <source>(mother)</source>
-        <target/>
-      </trans-unit>
+        <source>Individual Count</source> <target>Nombre d'invididus</target> </trans-unit>
       <trans-unit id="171">
-        <source>(preferred)</source>
-        <target/>
-      </trans-unit>
+        <source>Part</source> <target>Partie</target> </trans-unit>
       <trans-unit id="172">
-        <source>Relationships</source>
-        <target/>
-      </trans-unit>
+        <source>Part Status</source> <target>Statut de parties</target> </trans-unit>
       <trans-unit id="173">
-        <source>People Search</source>
-        <target/>
-      </trans-unit>
+        <source>Part Codes</source> <target>Codes de parties</target> </trans-unit>
       <trans-unit id="174">
-        <source>Search Institution</source>
-        <target/>
-      </trans-unit>
+        <source>Part Count</source> <target>Nombres de parties</target> </trans-unit>
       <trans-unit id="175">
-        <source>Institution Search</source>
-        <target/>
-      </trans-unit>
+        <source>Building</source> <target>Bâtiment</target> </trans-unit>
       <trans-unit id="176">
-        <source>Add Instution</source>
-        <target/>
-      </trans-unit>
+        <source>Floor</source> <target>Etage</target> </trans-unit>
       <trans-unit id="177">
-        <source>New Institution</source>
-        <target/>
-      </trans-unit>
+        <source>Room</source> <target>Salle</target> </trans-unit>
       <trans-unit id="178">
-        <source>Abbreviation</source>
-        <target/>
-      </trans-unit>
+        <source>Row</source> <target>Rayon</target> </trans-unit>
       <trans-unit id="179">
-        <source>Search Institutions</source>
-        <target/>
-      </trans-unit>
+        <source>Shelf</source> <target>Plateau</target> </trans-unit>
       <trans-unit id="180">
-        <source>Institutions Search</source>
-        <target/>
-      </trans-unit>
+        <source>Container</source> <target>Container</target> </trans-unit>
       <trans-unit id="181">
-        <source>Edit Institution</source>
-        <target/>
-      </trans-unit>
+        <source>Container Type</source> <target>Type de container</target> </trans-unit>
       <trans-unit id="182">
-        <source>Search sampling location</source>
-        <target/>
-      </trans-unit>
+        <source>Container Storage</source> <target>Conteneur de stockage</target> </trans-unit>
       <trans-unit id="183">
-        <source>Sampling location search</source>
-        <target/>
-      </trans-unit>
+        <source>Sub Container</source> <target>Sous container</target> </trans-unit>
       <trans-unit id="184">
-        <source>Add A Sampling Location</source>
-        <target/>
-      </trans-unit>
+        <source>Sub Container Type</source> <target>Type de sous container</target> </trans-unit>
       <trans-unit id="185">
-        <source>New Sampling Location</source>
-        <target/>
-      </trans-unit>
+        <source>Sub Container Storage</source> <target>Sous conteneur de stockage</target> </trans-unit>
       <trans-unit id="186">
-        <source>Location</source>
-        <target/>
-      </trans-unit>
+        <source>Duplicate this individual</source> <target>Dupliquer cet individu</target> </trans-unit>
       <trans-unit id="187">
-        <source>And</source>
-        <target/>
-      </trans-unit>
+        <source>Physical</source> <target>Physique</target> </trans-unit>
       <trans-unit id="188">
-        <source>Add Sub Group</source>
-        <target/>
-      </trans-unit>
+        <source>+</source> <target>+</target> </trans-unit>
       <trans-unit id="189">
-        <source>Add Group</source>
-        <target/>
-      </trans-unit>
+        <source>Other</source> <target>Autre</target> </trans-unit>
       <trans-unit id="190">
-        <source>New Gtu</source>
-        <target/>
-      </trans-unit>
+        <source>Country</source> <target>Pays</target> </trans-unit>
       <trans-unit id="191">
-        <source>Edit Sampling Location</source>
-        <target/>
-      </trans-unit>
+        <source>Search Specimens</source> <target>Rechercher échantillons</target> </trans-unit>
       <trans-unit id="192">
-        <source>Choose a Lithostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Specimens Search</source> <target>Recherche de échantillons</target> </trans-unit>
       <trans-unit id="193">
-        <source>Add Lithostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Specimens search result</source> <target>Résultat de recherche d'échantillons</target> </trans-unit>
       <trans-unit id="194">
-        <source>New Lithostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Specimens Search Result</source> <target>Résultat de recherche d'échantillons</target> </trans-unit>
       <trans-unit id="195">
-        <source>Search Lithostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>You must select at least one specimen.</source> <target>Vous devez sélectionner au moins un échantillon</target> </trans-unit>
       <trans-unit id="196">
-        <source>Lithostratigraphic unit Search</source>
-        <target/>
-      </trans-unit>
+        <source>Back to criteria</source> <target>Retour aux critères</target> </trans-unit>
       <trans-unit id="197">
-        <source>Edit Lithostratigraphic unit</source>
-        <target/>
-      </trans-unit>
+        <source>Remove selected</source> <target>Retirer sélectionnés </target> </trans-unit>
       <trans-unit id="198">
-        <source>There are no widgets here. Pick one from the widgets collection.</source>
-        <target/>
-      </trans-unit>
+        <source>Un-Save this result</source> <target>Annuler sauvegarde de ce résultat</target> </trans-unit>
       <trans-unit id="199">
-        <source>There are no more widgets to add</source>
-        <target/>
-      </trans-unit>
+        <source>Save this result</source> <target>Sauver ce resultat</target> </trans-unit>
       <trans-unit id="200">
-        <source>Vernacular name</source>
-        <target/>
-      </trans-unit>
+        <source>Edit</source> <target>Editer</target> </trans-unit>
       <trans-unit id="201">
-        <source>Choose a specimen</source>
-        <target/>
-      </trans-unit>
+        <source>Duplicate</source> <target>Dupliquer</target> </trans-unit>
       <trans-unit id="202">
-        <source>Identifiers</source>
-        <target/>
-      </trans-unit>
+        <source>No Specimen Matching</source> <target>Aucun échantillons concordant</target> </trans-unit>
       <trans-unit id="203">
-        <source>Code(s)</source>
-        <target/>
-      </trans-unit>
+        <source>Code</source> <target>Code</target> </trans-unit>
       <trans-unit id="204">
-        <source>Taxon</source>
-        <target/>
-      </trans-unit>
+        <source>Sub container</source> <target>Sous container</target> </trans-unit>
       <trans-unit id="205">
-        <source>No Specimen Matching</source>
-        <target/>
-      </trans-unit>
+        <source>Edit this part</source> <target>Editer cette partie</target> </trans-unit>
       <trans-unit id="206">
-        <source>Search Specimens</source>
-        <target/>
-      </trans-unit>
+        <source>Duplicate this part</source> <target>Dupliquer cette partie</target> </trans-unit>
       <trans-unit id="207">
-        <source>Specimens List</source>
-        <target/>
-      </trans-unit>
+        <source>View this part</source> <target>Voir cette partie</target> </trans-unit>
       <trans-unit id="208">
-        <source>New Taxa</source>
-        <target/>
-      </trans-unit>
+        <source>Specimen</source> <target>Echantillon</target> </trans-unit>
       <trans-unit id="209">
-        <source>Category</source>
-        <target>Catégorie</target>
-      </trans-unit>
+        <source>Individual</source> <target>Individu</target> </trans-unit>
+      <trans-unit id="210">
+        <source>Contribute</source> <target>Contributeur</target> </trans-unit>
+      <trans-unit id="211">
+        <source>Contribute :</source> <target>contributeur :</target> </trans-unit>
+      <trans-unit id="212">
+        <source>Since Darwin is Open Source, and entirely based on open source software, we would be glad if you want to contribute to the project.&lt;br /&gt; Suggestions, Patch, Bug Report or Bounties a welcome on our Request tracker : &lt;a href="http://projects.naturalsciences.be/projects/darwin"&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</source> <target>Puisque Darwin est un produit libre, et entièrement basé sur des logiciels libres, Nous serions ravis si vous vouliez contribuer à notre projet.&lt;br /&gt; Suggestions, Patch, rapport de Bug ou primes sont les bienvenues sur notre traqueur de requêtes : &lt;a href="http://projects.naturalsciences.be/projects/darwin"&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</target> </trans-unit>
+      <trans-unit id="213">
+        <source>Contact</source> <target>contact</target> </trans-unit>
+      <trans-unit id="214">
+        <source>Contact :</source> <target>Contact :</target> </trans-unit>
+      <trans-unit id="215">
+        <source>You can reach us at &lt;a href="mailto:collections+git@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</source> <target>Vous pouvez nous contacter via &lt;a href="mailto:collections+git@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</target> </trans-unit>
+      <trans-unit id="216">
+        <source>Dawin Help</source> <target>Aide Darwin</target> </trans-unit>
+      <trans-unit id="217">
+        <source>Darwin Guide :</source> <target>Guide Darwin :</target> </trans-unit>
+      <trans-unit id="218">
+        <source>About Dawin</source> <target>A propos de Darwin</target> </trans-unit>
+      <trans-unit id="219">
+        <source>About Darwin:</source> <target>A propos de Darwin:</target> </trans-unit>
+      <trans-unit id="220">
+        <source>What is DaRWIN ?</source> <target>Qu'est ce que Darwin ?</target> </trans-unit>
+      <trans-unit id="221">
+        <source>Darwin is an Open Source tool developped by the ICT-team of the Royal Belgian Institute of Natural Sciences.</source> <target>Darwin est un outil libre développé par l'équipe ICT de l'Institut Royal des Sciences Naturelle de Belgique</target> </trans-unit>
+      <trans-unit id="222">
+        <source>What is used by DaWIN ?</source> <target>Qu'est qui est utilisé dans Darwin ?</target> </trans-unit>
+      <trans-unit id="223">
+        <source>Who has developped DaWIN ?</source> <target>Qui a développé Darwin ?</target> </trans-unit>
+      <trans-unit id="224">
+        <source>The Team :</source> <target>L'équipe :</target> </trans-unit>
+      <trans-unit id="225">
+        <source>Paul-André Duchesne</source> <target>Paul-André Duchesne</target> </trans-unit>
+      <trans-unit id="226">
+        <source>Cathy Emery</source> <target>Cathy Emery</target> </trans-unit>
+      <trans-unit id="227">
+        <source>Brice Maron</source> <target>Brice Maron</target> </trans-unit>
+      <trans-unit id="228">
+        <source>Yann Chambert</source> <target>Yann Chambert</target> </trans-unit>
+      <trans-unit id="229">
+        <source>RBINS</source> <target>RBINS</target> </trans-unit>
+      <trans-unit id="230">
+        <source>Belspo</source> <target>Belspo</target> </trans-unit>
+      <trans-unit id="231">
+        <source>Add</source> <target>Ajouter</target> </trans-unit>
+      <trans-unit id="232">
+        <source>New</source> <target>Nouveau</target> </trans-unit>
+      <trans-unit id="233">
+        <source>Please define if you wish to add a new tool or method</source> <target>Veuillez spécifier si vous souhaiter ajouter un outil ou une méthode</target> </trans-unit>
+      <trans-unit id="234">
+        <source>Edit</source> <target>Editer</target> </trans-unit>
+      <trans-unit id="235">
+        <source>Please define if you wish to edit tool or method</source> <target>Veuillez spécifier si vous souhaiter éditer un outil ou une méthode</target> </trans-unit>
+      <trans-unit id="236">
+        <source>Search Collecting Tools</source> <target>Rechercher outils de collecte</target> </trans-unit>
+      <trans-unit id="237">
+        <source>Collecting Tools Search</source> <target>Recherche d'outils de collecte</target> </trans-unit>
+      <trans-unit id="238">
+        <source>You need to precise if you wish to work on tools or methods</source> <target>Vous devez préciser si vous souhaitez travailler sur des outils ou des méthodes</target> </trans-unit>
+      <trans-unit id="239">
+        <source>Duplicate</source> <target>Dupliquer</target> </trans-unit>
+      <trans-unit id="240">
+        <source>No</source> <target>Non</target> </trans-unit>
+      <trans-unit id="241">
+        <source>You need to tell if you wish to work on tools or methods</source> <target>Vous devez préciser si vous souhaitez travailler sur des outils ou des méthodes</target> </trans-unit>
+      <trans-unit id="242">
+        <source>Search Collecting Methods</source> <target>Rechercher méthodes de collecte</target> </trans-unit>
+      <trans-unit id="243">
+        <source>Collecting Methods Search</source> <target>Recherche de méthodes de collecte</target> </trans-unit>
+      <trans-unit id="244">
+        <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt; This unit is used in specimens where you &lt;strong&gt;do not&lt;/strong&gt; have encoding rights.&lt;br/&gt;Be sure of what you do!</source> <target>&lt;strong&gt;Attention!&lt;/strong&gt;&lt;br /&gt; Cette unité est utilisé dans un échantillon dont vous &lt;strong&gt;n'avez pas&lt;/strong&gt; les droits d'encodeurs.&lt;br/&gt;soyez de sûr de ce que vous faites!</target> </trans-unit>
+      <trans-unit id="245">
+        <source>Keyword</source> <target>Mot clé</target> </trans-unit>
+      <trans-unit id="246">
+        <source>You must select a part of the name to add a tag</source> <target>Vous devez sélectionnez une partie du nom pour ajouter un tag</target> </trans-unit>
+      <trans-unit id="247">
+        <source>Details :</source> <target>Détails : </target> </trans-unit>
+      <trans-unit id="248">
+        <source>Lower bound (My)</source> <target>Limite inférieure (Ma)</target> </trans-unit>
+      <trans-unit id="249">
+        <source>Upper bound (My)</source> <target>Limite supérieure (Ma)</target> </trans-unit>
+      <trans-unit id="250">
+        <source>Invalid</source> <target>Invalide</target> </trans-unit>
+      <trans-unit id="251">
+        <source>Deprecated</source> <target>Obsolète</target> </trans-unit>
+      <trans-unit id="252">
+        <source>Specimen category</source> <target>Catégorie d'échantillon</target> </trans-unit>
+      <trans-unit id="253">
+        <source>Station visible ?</source> <target>Station visible ?</target> </trans-unit>
+      <trans-unit id="254">
+        <source>yes</source> <target>Oui</target> </trans-unit>
+      <trans-unit id="255">
+        <source>no</source> <target>Non</target> </trans-unit>
+      <trans-unit id="256">
+        <source>Sampling location code</source> <target>Code de point d'échantillonnage </target> </trans-unit>
+      <trans-unit id="257">
+        <source>Latitude</source> <target>Latitude</target> </trans-unit>
+      <trans-unit id="258">
+        <source>Longitude</source> <target>Longitude</target> </trans-unit>
+      <trans-unit id="259">
+        <source>Sampling location Tags</source> <target>Tags de point d'échantillonage</target> </trans-unit>
+      <trans-unit id="260">
+        <source>No Tools defined</source> <target>Pas d'outils définis</target> </trans-unit>
+      <trans-unit id="261">
+        <source>Relationship</source> <target>Relations</target> </trans-unit>
+      <trans-unit id="262">
+        <source>Host Taxon</source> <target>Taxon hôte</target> </trans-unit>
+      <trans-unit id="263">
+        <source>Host specimen</source> <target>Echantillon hôte</target> </trans-unit>
+      <trans-unit id="264">
+        <source>Form</source> <target>Forme</target> </trans-unit>
+      <trans-unit id="265">
+        <source>Quantity</source> <target>Quantité</target> </trans-unit>
+      <trans-unit id="266">
+        <source>Acquisition category</source> <target>Catégorie d'acquisition</target> </trans-unit>
+      <trans-unit id="267">
+        <source>Acquisition date</source> <target>Date d'acquisition</target> </trans-unit>
+      <trans-unit id="268">
+        <source>Subject</source> <target>Sujet</target> </trans-unit>
+      <trans-unit id="269">
+        <source>Value</source> <target>Valeur</target> </trans-unit>
+      <trans-unit id="270">
+        <source>Det. St.</source> <target>Det. St.</target> </trans-unit>
+      <trans-unit id="271">
+        <source>Identifiers</source> <target>Identifieurs</target> </trans-unit>
+      <trans-unit id="272">
+        <source>No Methods defined</source> <target>Aucune méthodes définies</target> </trans-unit>
+      <trans-unit id="273">
+        <source>Prefix</source> <target>Préfixe</target> </trans-unit>
+      <trans-unit id="274">
+        <source>sep.</source> <target>sep.</target> </trans-unit>
+      <trans-unit id="275">
+        <source>Suffix</source> <target>Suffixe</target> </trans-unit>
+      <trans-unit id="276">
+        <source>Add collector</source> <target>Ajouter collecteur</target> </trans-unit>
+      <trans-unit id="277">
+        <source>Choose !</source> <target>Choisir !</target> </trans-unit>
+      <trans-unit id="278">
+        <source>Clear also host taxon reference ?</source> <target>Effacer aussi la référence au taxon d'hôte</target> </trans-unit>
+      <trans-unit id="279">
+        <source>Change !</source> <target>Changer !</target> </trans-unit>
+      <trans-unit id="280">
+        <source>Add element</source> <target>Ajouter élément</target> </trans-unit>
+      <trans-unit id="281">
+        <source>Please save your specimen in order to add properties</source> <target>Veuillez sauver votre échantillon afin d'ajouter une propriété</target> </trans-unit>
+      <trans-unit id="282">
+        <source>Add Donator or Seller</source> <target>Ajouter donneur et vendeur</target> </trans-unit>
+      <trans-unit id="283">
+        <source>Add identification</source> <target>Ajouter identification</target> </trans-unit>
+      <trans-unit id="284">
+        <source>Action / Observation</source> <target>Action / Observation</target> </trans-unit>
+      <trans-unit id="285">
+        <source>Description</source> <target>Description</target> </trans-unit>
+      <trans-unit id="286">
+        <source>Please save your part and use the "mass action" in order to add maintenances</source> <target>Veuillez sauver votre partie et utiliser "l'action de masse" afin d'ajouter une maintenance</target> </trans-unit>
+      <trans-unit id="287">
+        <source>Status</source> <target>Statut</target> </trans-unit>
+      <trans-unit id="288">
+        <source>Yes</source> <target>Oui</target> </trans-unit>
+      <trans-unit id="289">
+        <source>No</source> <target>Non</target> </trans-unit>
+      <trans-unit id="290">
+        <source>specimen_part</source> <target>Partie d'échantillon</target> </trans-unit>
+      <trans-unit id="291">
+        <source>Surnumerary ?</source> <target>Surnuméraire ?</target> </trans-unit>
+      <trans-unit id="292">
+        <source>Container type</source> <target>Type de container</target> </trans-unit>
+      <trans-unit id="293">
+        <source>Container storage</source> <target>Conteneur de Stockage </target> </trans-unit>
+      <trans-unit id="294">
+        <source>Sub container type</source> <target>Sous type de container</target> </trans-unit>
+      <trans-unit id="295">
+        <source>Sub container storage</source> <target>Sous conteneur de stockage</target> </trans-unit>
+      <trans-unit id="296">
+        <source>No parent</source> <target>Pas de parenté</target> </trans-unit>
+      <trans-unit id="297">
+        <source>Accuracy</source> <target>Précision</target> </trans-unit>
+      <trans-unit id="298">
+        <source>Specimen part count</source> <target>Nombre de parties d'échantillon</target> </trans-unit>
+      <trans-unit id="299">
+        <source>Specimen part count min</source> <target>Nombre min de parties d'échantillon</target> </trans-unit>
+      <trans-unit id="300">
+        <source>Specimen part count max</source> <target>Nombre max de parties d'échantillon</target> </trans-unit>
+      <trans-unit id="301">
+        <source>Currency</source> <target>Monnaie</target> </trans-unit>
+      <trans-unit id="302">
+        <source>Insurer</source> <target>Assureur </target> </trans-unit>
+      <trans-unit id="303">
+        <source>Addresses</source> <target>Adresses</target> </trans-unit>
+      <trans-unit id="304">
+        <source>Region</source> <target>Région</target> </trans-unit>
+      <trans-unit id="305">
+        <source>Locality</source> <target>Localité</target> </trans-unit>
+      <trans-unit id="306">
+        <source>Address</source> <target>Adresse</target> </trans-unit>
+      <trans-unit id="307">
+        <source>Organisation</source> <target>Organisation</target> </trans-unit>
+      <trans-unit id="308">
+        <source>Tags</source> <target>Tags</target> </trans-unit>
+      <trans-unit id="309">
+        <source>Edit Address</source> <target>Editer Adresse</target> </trans-unit>
+      <trans-unit id="310">
+        <source>Add Address</source> <target>Ajouter Adresse</target> </trans-unit>
+      <trans-unit id="311">
+        <source>Edit Communication Means</source> <target>Editer moyens de communication</target> </trans-unit>
+      <trans-unit id="312">
+        <source>Phone</source> <target>Téléphone</target> </trans-unit>
+      <trans-unit id="313">
+        <source>e-Mail</source> <target>e-Mail</target> </trans-unit>
+      <trans-unit id="314">
+        <source>Add Communication Means</source> <target>Ajouter moyen de communication</target> </trans-unit>
+      <trans-unit id="315">
+        <source>Login Type</source> <target>Type d'identifiant</target> </trans-unit>
+      <trans-unit id="316">
+        <source>Login System Id</source> <target>Id d'identifiant système</target> </trans-unit>
+      <trans-unit id="317">
+        <source>User Name</source> <target>Nom d'utilisateur</target> </trans-unit>
+      <trans-unit id="318">
+        <source>Edit Login</source> <target>Editer Identifiant</target> </trans-unit>
+      <trans-unit id="319">
+        <source>Add Login</source> <target>Ajouter identifiant</target> </trans-unit>
+      <trans-unit id="320">
+        <source>Language</source> <target>Langage</target> </trans-unit>
+      <trans-unit id="321">
+        <source>Is Mother Language</source> <target>Est langue maternelle</target> </trans-unit>
+      <trans-unit id="322">
+        <source>Edit Languages</source> <target>Editer langues</target> </trans-unit>
+      <trans-unit id="323">
+        <source>Preferred</source> <target>Préféré</target> </trans-unit>
+      <trans-unit id="324">
+        <source>Add Language</source> <target>Ajouter Langue</target> </trans-unit>
+      <trans-unit id="325">
+        <source>View Chronostratigraphic unit</source> <target>Voir unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="326">
+        <source>Add Chronostratigraphic unit</source> <target>Ajouter unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="327">
+        <source>New Chronostratigraphic unit</source> <target>Nouvelle unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="328">
+        <source>Edit Chronostratigraphic unit</source> <target>Editer unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="329">
+        <source>Search Chronostratigraphic unit</source> <target>Rechercher unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="330">
+        <source>Chronostratigraphic unit Search</source> <target>recherche d'unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="331">
+        <source>Choose a Chronostratigraphic unit</source> <target>Choisir unité chronostratigraphique</target> </trans-unit>
+      <trans-unit id="332">
+        <source>Institution</source> <target>Institution</target> </trans-unit>
+      <trans-unit id="333">
+        <source>Choose a type</source> <target>Choisir un type</target> </trans-unit>
+      <trans-unit id="334">
+        <source>View People</source> <target>Voir Personnes</target> </trans-unit>
+      <trans-unit id="335">
+        <source>Add People</source> <target>Ajouter personne</target> </trans-unit>
+      <trans-unit id="336">
+        <source>New People</source> <target>Nouvelle personne</target> </trans-unit>
+      <trans-unit id="337">
+        <source>Edit People</source> <target>Editer personne</target> </trans-unit>
+      <trans-unit id="338">
+        <source>Duplicate People</source> <target>Dipliquer personne</target> </trans-unit>
+      <trans-unit id="339">
+        <source>Search People</source> <target>Rechercher personne</target> </trans-unit>
+      <trans-unit id="340">
+        <source>People Search</source> <target>Recherche de personne</target> </trans-unit>
+      <trans-unit id="341">
+        <source>Title</source> <target>Titre</target> </trans-unit>
+      <trans-unit id="342">
+        <source>Family Name</source> <target>Nom de famille</target> </trans-unit>
+      <trans-unit id="343">
+        <source>Given Name</source> <target>Prénom</target> </trans-unit>
+      <trans-unit id="344">
+        <source>Additional Names</source> <target>Noms additionnels</target> </trans-unit>
+      <trans-unit id="345">
+        <source>Life</source> <target>Vie</target> </trans-unit>
+      <trans-unit id="346">
+        <source>Activity</source> <target>Activité</target> </trans-unit>
+      <trans-unit id="347">
+        <source>Communiction Means</source> <target>Moyens de communication</target> </trans-unit>
+      <trans-unit id="348">
+        <source>(mother)</source> <target>(Maternelle)</target> </trans-unit>
+      <trans-unit id="349">
+        <source>(preferred)</source> <target>(préféré(e))</target> </trans-unit>
+      <trans-unit id="350">
+        <source>Relationships</source> <target>Relations</target> </trans-unit>
+      <trans-unit id="351">
+        <source>View Lithostratigraphic unit</source> <target>Voir unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="352">
+        <source>Add Lithostratigraphic unit</source> <target>Ajouter unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="353">
+        <source>New Lithostratigraphic unit</source> <target>Nouvelle unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="354">
+        <source>Edit Lithostratigraphic unit</source> <target>Editer unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="355">
+        <source>Search Lithostratigraphic unit</source> <target>rechercher unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="356">
+        <source>Lithostratigraphic unit Search</source> <target>Recherche d'unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="357">
+        <source>Choose a Lithostratigraphic unit</source> <target>Choisir unité lithostratigraphique</target> </trans-unit>
+      <trans-unit id="358">
+        <source>View Igs</source> <target>Voir Igs</target> </trans-unit>
+      <trans-unit id="359">
+        <source>Add an I.G. number</source> <target>Ajouter un numéro I.G.</target> </trans-unit>
+      <trans-unit id="360">
+        <source>New I.G. number</source> <target>Nouveau numéro I.G.</target> </trans-unit>
+      <trans-unit id="361">
+        <source>Edit I.G. number</source> <target>Editer numéro I.G.</target> </trans-unit>
+      <trans-unit id="362">
+        <source>Edit I.G.</source> <target>Editer I.G.</target> </trans-unit>
+      <trans-unit id="363">
+        <source>I.G. number:</source> <target>Numéro I.G.:</target> </trans-unit>
+      <trans-unit id="364">
+        <source>I.G. creation date:</source> <target>Date de création d'I.G. :</target> </trans-unit>
+      <trans-unit id="365">
+        <source>New I.G.</source> <target>Nouvel I.G. :</target> </trans-unit>
+      <trans-unit id="366">
+        <source>Duplicate I.G.</source> <target>Dupliquer I.G. </target> </trans-unit>
+      <trans-unit id="367">
+        <source>Search IG Number</source> <target>Rechercher numéro I.G.</target> </trans-unit>
+      <trans-unit id="368">
+        <source>General Inventory Numbers Search</source> <target>Recherche de numéro d'inventaire général</target> </trans-unit>
+      <trans-unit id="369">
+        <source>I.G.</source> <target>I.G.</target> </trans-unit>
+      <trans-unit id="370">
+        <source>I.G. creation date</source> <target>Date de création d'I.G.</target> </trans-unit>
+      <trans-unit id="371">
+        <source>No I.G. Matching</source> <target>Aucun I.G correspondant</target> </trans-unit>
+      <trans-unit id="372">
+        <source>Choose an I.G. number</source> <target>Choisir un numéro I.G.</target> </trans-unit>
+      <trans-unit id="373">
+        <source>Add A Sampling Location</source> <target>Ajouter un point d'échantillonnage</target> </trans-unit>
+      <trans-unit id="374">
+        <source>New Sampling Location</source> <target>Nouveau point d'échantillonnage</target> </trans-unit>
+      <trans-unit id="375">
+        <source>Edit Sampling Location</source> <target>Editer point d'échantillonnage</target> </trans-unit>
+      <trans-unit id="376">
+        <source>Show Result as map</source> <target>Afficher résultat en carte</target> </trans-unit>
+      <trans-unit id="377">
+        <source>Add Sub Group</source> <target>Ajouter sous groupe</target> </trans-unit>
+      <trans-unit id="378">
+        <source>Add Group</source> <target>Ajouter groupe</target> </trans-unit>
+      <trans-unit id="379">
+        <source>Localisation</source> <target>Localisation</target> </trans-unit>
+      <trans-unit id="380">
+        <source>New Gtu</source> <target>Nouveau Gtu</target> </trans-unit>
+      <trans-unit id="381">
+        <source>Duplicate Gtu</source> <target>Dupliquer Gtu</target> </trans-unit>
+      <trans-unit id="382">
+        <source>Search sampling location</source> <target>Rechercher point d'échantillonnage</target> </trans-unit>
+      <trans-unit id="383">
+        <source>Sampling location search</source> <target>Recherche de point d'échantillonnage</target> </trans-unit>
+      <trans-unit id="384">
+        <source>Location</source> <target>Localité</target> </trans-unit>
+      <trans-unit id="385">
+        <source>From</source> <target>De</target> </trans-unit>
+      <trans-unit id="386">
+        <source>To</source> <target>A</target> </trans-unit>
+      <trans-unit id="387">
+        <source>This application requires an authentication. Please Log in with your username and password.</source> <target>cette application nécessite une authentication. Veuillez vous connecter avec votre identifiant et mot de passe</target> </trans-unit>
+      <trans-unit id="388">
+        <source>Log in</source> <target>Identifiant</target> </trans-unit>
+      <trans-unit id="389">
+        <source>Role</source> <target>Rôle</target> </trans-unit>
+      <trans-unit id="390">
+        <source>Period</source> <target>Période</target> </trans-unit>
+      <trans-unit id="391">
+        <source>Edit Relation</source> <target>Editer relation</target> </trans-unit>
+      <trans-unit id="392">
+        <source>Add Relationship</source> <target>Ajouter relation</target> </trans-unit>
+      <trans-unit id="393">
+        <source>Code prefix</source> <target>Code préfixe</target> </trans-unit>
+      <trans-unit id="394">
+        <source>Code prefix sep.</source> <target>Sep. code préfixe</target> </trans-unit>
+      <trans-unit id="395">
+        <source>Code suffix sep.</source> <target>sep code suffixe </target> </trans-unit>
+      <trans-unit id="396">
+        <source>Code suffix</source> <target>code suffixe</target> </trans-unit>
+      <trans-unit id="397">
+        <source>Auto incremented ?</source> <target>Auto incrémenté ?</target> </trans-unit>
+      <trans-unit id="398">
+        <source>Same for parts ?</source> <target>Meme code pour parties ?</target> </trans-unit>
+      <trans-unit id="399">
+        <source>Edit default specimen codes prefix and suffix</source> <target>Editer code préfixe et suffixe de l'échantillon par défaut </target> </trans-unit>
+      <trans-unit id="400">
+        <source>Year of reference</source> <target>Année de référence</target> </trans-unit>
+      <trans-unit id="401">
+        <source>Edit (insurances) Values</source> <target>Editer (assurances) Valeurs</target> </trans-unit>
+      <trans-unit id="402">
+        <source>Add (insurance) Value</source> <target>Ajouter (assurances) Valeurs</target> </trans-unit>
+      <trans-unit id="403">
+        <source>Edit Comment</source> <target>Editer commentaire</target> </trans-unit>
+      <trans-unit id="404">
+        <source>Add Comment</source> <target>Ajouter commentaire</target> </trans-unit>
+      <trans-unit id="405">
+        <source>Combination of</source> <target>Combinaison de</target> </trans-unit>
+      <trans-unit id="406">
+        <source>Recombination</source> <target>Re-combinaison</target> </trans-unit>
+      <trans-unit id="407">
+        <source>Sub-Type</source> <target>Sous type</target> </trans-unit>
+      <trans-unit id="408">
+        <source>Qualifier</source> <target>Qualifieur</target> </trans-unit>
+      <trans-unit id="409">
+        <source>Date From</source> <target>Date debut</target> </trans-unit>
+      <trans-unit id="410">
+        <source>Date To</source> <target>Date fin</target> </trans-unit>
+      <trans-unit id="411">
+        <source>Values</source> <target>Valeurs</target> </trans-unit>
+      <trans-unit id="412">
+        <source>Edit Properties</source> <target>Editer propriétés</target> </trans-unit>
+      <trans-unit id="413">
+        <source>[1]Show 1 Value|(1,+Inf]Show %1% Values</source> <target>[1]Afficher 1 Valeur(1,+Inf]Afficher %1% Valeurs</target> </trans-unit>
+      <trans-unit id="414">
+        <source>Hide Values</source> <target>Cacher Valeurs</target> </trans-unit>
+      <trans-unit id="415">
+        <source>No Values</source> <target>Pas de valeurs</target> </trans-unit>
+      <trans-unit id="416">
+        <source>Add Properties</source> <target>Ajouter propiétés</target> </trans-unit>
+      <trans-unit id="417">
+        <source>Community</source> <target>Communauté</target> </trans-unit>
+      <trans-unit id="418">
+        <source>Names</source> <target>Noms</target> </trans-unit>
+      <trans-unit id="419">
+        <source>Edit Vernacular Names</source> <target>Editer noms vernaculaires</target> </trans-unit>
+      <trans-unit id="420">
+        <source>[1]Show 1 Name|(1,+Inf]Show %1% Names</source> <target>[1]Afficher 1 nom|(1,+Inf]Aficher %1% Noms</target> </trans-unit>
+      <trans-unit id="421">
+        <source>Hide Names</source> <target>Cacher noms</target> </trans-unit>
+      <trans-unit id="422">
+        <source>No Names</source> <target>Pas de noms</target> </trans-unit>
+      <trans-unit id="423">
+        <source>Add Names</source> <target>Ajouter Noms</target> </trans-unit>
+      <trans-unit id="424">
+        <source>Items</source> <target>Objets</target> </trans-unit>
+      <trans-unit id="425">
+        <source>Basionym</source> <target>Basionym</target> </trans-unit>
+      <trans-unit id="426">
+        <source>Add Synonymies</source> <target>Ajouter synonymes </target> </trans-unit>
+      <trans-unit id="427">
+        <source>Renamed to</source> <target>Renommé en</target> </trans-unit>
+      <trans-unit id="428">
+        <source>Rename</source> <target>Renommé</target> </trans-unit>
+      <trans-unit id="429">
+        <source>The specimen code will be copied automaticaly.</source> <target>Le code de l'échantillon sera automatiquement copié.</target> </trans-unit>
+      <trans-unit id="430">
+        <source>Add Code</source> <target>Ajouter code</target> </trans-unit>
+      <trans-unit id="431">
+        <source>Please save your part in order to add properties</source> <target>Veuillez sauver votre partie afin d'ajouter des propriétés</target> </trans-unit>
+      <trans-unit id="432">
+        <source>Add Insurance</source> <target>Ajouter assurance</target> </trans-unit>
+      <trans-unit id="433">
+        <source>Synonym</source> <target>Synonyme</target> </trans-unit>
+      <trans-unit id="434">
+        <source>Add Collection</source> <target>Ajouter Collection</target> </trans-unit>
+      <trans-unit id="435">
+        <source>New Collection</source> <target>Nouvelle collection</target> </trans-unit>
+      <trans-unit id="436">
+        <source>Edit Collection</source> <target>Editer Collection</target> </trans-unit>
+      <trans-unit id="437">
+        <source>Category/screen</source> <target>Catégorie/Ecran</target> </trans-unit>
+      <trans-unit id="438">
+        <source>Allow visibility</source> <target>Permettre visibilité</target> </trans-unit>
+      <trans-unit id="439">
+        <source>Reset</source> <target>Réinitialiser </target> </trans-unit>
+      <trans-unit id="440">
+        <source>Public collection</source> <target>collection publique</target> </trans-unit>
+      <trans-unit id="441">
+        <source>Users</source> <target>Utilisateurs</target> </trans-unit>
+      <trans-unit id="442">
+        <source>Rights</source> <target>Droits</target> </trans-unit>
+      <trans-unit id="443">
+        <source>Add User</source> <target>Ajouter utilisateur</target> </trans-unit>
+      <trans-unit id="444">
+        <source>New collection</source> <target>Nouvelle collection</target> </trans-unit>
+      <trans-unit id="445">
+        <source>Duplicate collection</source> <target>Dupliquer collection</target> </trans-unit>
+      <trans-unit id="446">
+        <source>Browse Collections</source> <target>Parcourir Collections</target> </trans-unit>
+      <trans-unit id="447">
+        <source>Collection List</source> <target>Liste des collections</target> </trans-unit>
+      <trans-unit id="448">
+        <source>This Collection does not have any sub collections that you can manage.</source> <target>Cette collection n'a aucune sous collection que vous pouvez administrer.</target> </trans-unit>
+      <trans-unit id="449">
+        <source>sub collections</source> <target>Sous collections</target> </trans-unit>
+      <trans-unit id="450">
+        <source>On sub collections...</source> <target>Pour les sous collections...</target> </trans-unit>
+      <trans-unit id="451">
+        <source>Widgets</source> <target>Widgets</target> </trans-unit>
+      <trans-unit id="452">
+        <source>Manage widgets</source> <target>Gérer widgets</target> </trans-unit>
+      <trans-unit id="453">
+        <source>Manager</source> <target>Gestionnaire</target> </trans-unit>
+      <trans-unit id="454">
+        <source>Contacts</source> <target>Contacts</target> </trans-unit>
+      <trans-unit id="455">
+        <source>Choose a collection</source> <target>Choisir une collection</target> </trans-unit>
+      <trans-unit id="456">
+        <source>View specimen part</source> <target>voir une partie d'échantillon</target> </trans-unit>
+      <trans-unit id="457">
+        <source>Part overview</source> <target>Aperçu de partie</target> </trans-unit>
+      <trans-unit id="458">
+        <source>Part %d</source> <target>Partie %d</target> </trans-unit>
+      <trans-unit id="459">
+        <source>Edit Maintenance</source> <target>Editer Maintenance</target> </trans-unit>
+      <trans-unit id="460">
+        <source>Edit Maintenance :</source> <target>Editer Maintenance :</target> </trans-unit>
+      <trans-unit id="461">
+        <source>Add Maintenance</source> <target>Ajouter Maintenance </target> </trans-unit>
+      <trans-unit id="462">
+        <source>New part</source> <target>Nouvelle partie</target> </trans-unit>
+      <trans-unit id="463">
+        <source>Duplicate part</source> <target>Dupliquer partie</target> </trans-unit>
+      <trans-unit id="464">
+        <source>There are currently no part</source> <target>Il n'y a actuellement aucune partie</target> </trans-unit>
+      <trans-unit id="465">
+        <source>Add part</source> <target>Ajouter partie</target> </trans-unit>
+      <trans-unit id="466">
+        <source>Count</source> <target>Nombre</target> </trans-unit>
+      <trans-unit id="467">
+        <source>Surnumerary</source> <target>Surnuméraire</target> </trans-unit>
+      <trans-unit id="468">
+        <source>Complete</source> <target>Complet</target> </trans-unit>
+      <trans-unit id="469">
+        <source>Specimen %d</source> <target>Echantillon %d</target> </trans-unit>
+      <trans-unit id="470">
+        <source>Individuals overview</source> <target>Aperçu d'individus</target> </trans-unit>
+      <trans-unit id="471">
+        <source>New specimen</source> <target>Nouvel échantillon</target> </trans-unit>
+      <trans-unit id="472">
+        <source>Duplicate specimen</source> <target>Dupliquer échantillon</target> </trans-unit>
+      <trans-unit id="473">
+        <source>Specimen Search</source> <target>Rechercher échantillon</target> </trans-unit>
+      <trans-unit id="474">
+        <source>New Individual</source> <target>Nouvel individu</target> </trans-unit>
+      <trans-unit id="475">
+        <source>Individual</source> <target>Individu</target> </trans-unit>
+      <trans-unit id="476">
+        <source>New Specimen</source> <target>Nouvel échantillon</target> </trans-unit>
+      <trans-unit id="477">
+        <source>New Part</source> <target>Nouvelle partie</target> </trans-unit>
+      <trans-unit id="478">
+        <source>Edit Part</source> <target>Editer partie</target> </trans-unit>
+      <trans-unit id="479">
+        <source>Code(s)</source> <target>Code(s)</target> </trans-unit>
+      <trans-unit id="480">
+        <source>Add identifier</source> <target>Ajouter identifier</target> </trans-unit>
+      <trans-unit id="481">
+        <source>Choose a specimen</source> <target>Choisir un échantillon</target> </trans-unit>
+      <trans-unit id="482">
+        <source>Do you want to also duplicate hidden data</source> <target>Voulez vous aussi dupliquer les données cachés</target> </trans-unit>
+      <trans-unit id="483">
+        <source>Specimen individuals count</source> <target>Nombre d'individus d'échantillon</target> </trans-unit>
+      <trans-unit id="484">
+        <source>Specimen individuals count min</source> <target>Nombre min d'individus d'échantillon</target> </trans-unit>
+      <trans-unit id="485">
+        <source>Specimen individuals count max</source> <target>Nombre max d'individus d'échantillon</target> </trans-unit>
+      <trans-unit id="486">
+        <source>View Mineralogic unit</source> <target>Voir unité minéralogique</target> </trans-unit>
+      <trans-unit id="487">
+        <source>Add Mineralogic unit</source> <target>Ajouter unité minéralogique</target> </trans-unit>
+      <trans-unit id="488">
+        <source>New Mineralogic unit</source> <target>Nouvelle unité minéralogique</target> </trans-unit>
+      <trans-unit id="489">
+        <source>Edit Mineralogic unit</source> <target>Editer unité minéralogique</target> </trans-unit>
+      <trans-unit id="490">
+        <source>Search Mineralogic unit</source> <target>Rechercher unité minéralogique</target> </trans-unit>
+      <trans-unit id="491">
+        <source>Mineralogic unit Search</source> <target>Recherche d'unité minéralogique</target> </trans-unit>
+      <trans-unit id="492">
+        <source>Choose a Mineralogic unit</source> <target>choisir unité minéralogique</target> </trans-unit>
+      <trans-unit id="493">
+        <source>This element already has synonyms.&lt;br /&gt;Are you sure that you want to merge them together?</source> <target>Cet élément a déjà un synonyme.&lt;br /&gt;Etes vous sûre de vouloir les regrouper ?</target> </trans-unit>
+      <trans-unit id="494">
+        <source>Yes</source> <target>Oui</target> </trans-unit>
+      <trans-unit id="495">
+        <source>There are no widgets here. Pick one from the widgets collection.</source> <target>Il n'y a pas de widgets. Prenez en depuis la boite a widgets.</target> </trans-unit>
+      <trans-unit id="496">
+        <source>There are no more widgets to add</source> <target>Il n'a plus de widgets à ajouter</target> </trans-unit>
+      <trans-unit id="497">
+        <source>View Expeditions</source> <target>voir expéditions</target> </trans-unit>
+      <trans-unit id="498">
+        <source>Members</source> <target>Membres</target> </trans-unit>
+      <trans-unit id="499">
+        <source>Add Expedition</source> <target>Ajouter expédition</target> </trans-unit>
+      <trans-unit id="500">
+        <source>New Expedition</source> <target>Nouvelle expédition</target> </trans-unit>
+      <trans-unit id="501">
+        <source>Edit Expedition</source> <target>Editer expédition</target> </trans-unit>
+      <trans-unit id="502">
+        <source>Add Member</source> <target>Ajouter Membre</target> </trans-unit>
+      <trans-unit id="503">
+        <source>Duplicate Expedition</source> <target>Dupliquer expédition</target> </trans-unit>
+      <trans-unit id="504">
+        <source>Search Expeditions</source> <target>Rechercher expédition</target> </trans-unit>
+      <trans-unit id="505">
+        <source>Expedition Search</source> <target>Recherche d'expédition</target> </trans-unit>
+      <trans-unit id="506">
+        <source>No Expedition Matching</source> <target>Aucune expéditions correspondantes</target> </trans-unit>
+      <trans-unit id="507">
+        <source>Choose an expedition</source> <target>Choisir une expédition</target> </trans-unit>
+      <trans-unit id="508">
+        <source>View Taxonomic unit</source> <target>Voir unité taxonomique</target> </trans-unit>
+      <trans-unit id="509">
+        <source>Add Taxonomic unit</source> <target>Ajouter unité taxonomique</target> </trans-unit>
+      <trans-unit id="510">
+        <source>New Taxonomic unit</source> <target>Nouvelle unité taxonomique</target> </trans-unit>
+      <trans-unit id="511">
+        <source>Edit Taxonomic unit</source> <target>Editer unité taxonomique</target> </trans-unit>
+      <trans-unit id="512">
+        <source>New Taxa</source> <target>Nouveau taxon</target> </trans-unit>
+      <trans-unit id="513">
+        <source>Duplicate Taxa</source> <target>Dupliquer taxon</target> </trans-unit>
+      <trans-unit id="514">
+        <source>Search Taxonomic unit</source> <target>Rechercher unité taxonomique</target> </trans-unit>
+      <trans-unit id="515">
+        <source>Taxonomic unit Search</source> <target>Recherche d'unité taxonomique</target> </trans-unit>
+      <trans-unit id="516">
+        <source>Choose a Taxon</source> <target>Choisir un taxon</target> </trans-unit>
+      <trans-unit id="517">
+        <source>You can view private specimens linked to this collection</source> <target>Vous pouvez voir les échantillons privés de cette collection</target> </trans-unit>
+      <trans-unit id="518">
+        <source>You can edit specimens linked to this collection</source> <target>Vous pouvez éditer les échantillons liés à cette collection</target> </trans-unit>
+      <trans-unit id="519">
+        <source>You are Manager of this collection</source> <target>Vous êtes gestionnaire de cette collection</target> </trans-unit>
+      <trans-unit id="520">
+        <source>New User</source> <target>Nouvel utilisateur</target> </trans-unit>
+      <trans-unit id="521">
+        <source>Edit Profile</source> <target>Editer profil</target> </trans-unit>
+      <trans-unit id="522">
+        <source>Show link with</source> <target>Afficher lien avec</target> </trans-unit>
+      <trans-unit id="523">
+        <source>Hide link with</source> <target>Cacher les liens avec</target> </trans-unit>
+      <trans-unit id="524">
+        <source>Edit user widgets</source> <target>Editer les widgets de cet utilisateur</target> </trans-unit>
+      <trans-unit id="525">
+        <source>Edit your widgets</source> <target>Editer vos widgets</target> </trans-unit>
+      <trans-unit id="526">
+        <source>Rights on collections</source> <target>Droits dans les collections</target> </trans-unit>
+      <trans-unit id="527">
+        <source>View your rights on collections</source> <target>Voir vos droits dans les collections</target> </trans-unit>
+      <trans-unit id="528">
+        <source>List of rights in collections</source> <target>Liste des droits dans les collections</target> </trans-unit>
+      <trans-unit id="529">
+        <source>Edit My Profile</source> <target>Editer mon profil</target> </trans-unit>
+      <trans-unit id="530">
+        <source>Search Users</source> <target>Rechercher utilisateurs</target> </trans-unit>
+      <trans-unit id="531">
+        <source>Users Search</source> <target>Recherche d'utilisateurs</target> </trans-unit>
+      <trans-unit id="532">
+        <source>You can view only public collections</source> <target>Vous ne pouvez voir que les collections publiques</target> </trans-unit>
+      <trans-unit id="533">
+        <source>Edit User widgets</source> <target>Editer les widgets de cet utilisateur</target> </trans-unit>
+      <trans-unit id="534">
+        <source>Widget</source> <target>Widget</target> </trans-unit>
+      <trans-unit id="535">
+        <source>Deactivated</source> <target>Désactivée</target> </trans-unit>
+      <trans-unit id="536">
+        <source>Activated</source> <target>Activée</target> </trans-unit>
+      <trans-unit id="537">
+        <source>Visible</source> <target>Visible</target> </trans-unit>
+      <trans-unit id="538">
+        <source>Opened</source> <target>Ouverte</target> </trans-unit>
+      <trans-unit id="539">
+        <source>Custom title</source> <target>Titre personnalisé</target> </trans-unit>
+      <trans-unit id="540">
+        <source>Surname</source> <target>Surnom</target> </trans-unit>
+      <trans-unit id="541">
+        <source>Edit Preferences widgets</source> <target>Editer préférences de widgets</target> </trans-unit>
+      <trans-unit id="542">
+        <source>Search in Specimens</source> <target>rechercher dans les échantillons</target> </trans-unit>
+      <trans-unit id="543">
+        <source>Board Widgets</source> <target>Wigdet de bord</target> </trans-unit>
+      <trans-unit id="544">
+        <source>You can also use widgets below for this collection</source> <target>Vous avez aussi accès aux widgets ci-dessous pour cette collection</target> </trans-unit>
+      <trans-unit id="545">
+        <source>Add a new login</source> <target>Ajouter un nouvel identifiant</target> </trans-unit>
+      <trans-unit id="546">
+        <source>Search User</source> <target>Rechercher un utilisateur</target> </trans-unit>
+      <trans-unit id="547">
+        <source>Add another title</source> <target>Ajouter un autre titre</target> </trans-unit>        
     </body>
   </file>
 </xliff>

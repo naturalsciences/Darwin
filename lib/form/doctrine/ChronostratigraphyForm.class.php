@@ -41,8 +41,6 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
        'button_is_hidden' => true,
      ));
     $this->widgetSchema['local_naming'] = new sfWidgetFormInputCheckbox();
-/*    $this->widgetSchema['color'] = new widgetFormColorPicker();
-    $this->widgetSchema['color']->setAttributes(array('class'=>'lsmall_size'));*/
     $this->widgetSchema->setLabels(array('level_ref' => 'Level',
                                          'lower_bound' => 'Low. bound (My)',
                                          'upper_bound' => 'Up. bound (My)',
@@ -55,7 +53,6 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
     $this->validatorSchema['upper_bound'] = new sfValidatorNumber(array('required' => false, 'max' => 1));
     $this->validatorSchema['status'] = new sfValidatorChoice(array('choices'  => array_keys($statuses), 'required' => true));
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => false));
-/*    $this->validatorSchema['color'] = new ColorPickerValidatorSchema(array('required' => false));*/
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('lower_bound', 
                                                                           '<=', 
                                                                           'upper_bound', 
@@ -63,20 +60,6 @@ class ChronostratigraphyForm extends BaseChronostratigraphyForm
                                                                           array('invalid'=>$this->getI18N()->__('The lower bound (%left_field%) cannot be above the upper bound (%right_field%).'))
                                                                          )
                                             );
-    $this->addKeywordsRelation('chronostratigraphy');
-    $subForm = new sfForm();
-    $this->embedForm('newVal',$subForm);
-  }
-
-  public function bind(array $taintedValues = null, array $taintedFiles = null)
-  {
-    parent::bindKeywords($taintedValues,$taintedFiles);
-  }
-
-  public function saveEmbeddedForms($con = null, $forms = null)
-  {
-    parent::saveKeywordsEmbeddedForms($con, $forms);
-    return parent::saveEmbeddedForms($con, $forms);
   }
 
 }
