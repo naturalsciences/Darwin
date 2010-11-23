@@ -6,7 +6,7 @@
         <td></td>
       </tr>
       <tr>
-        <td>
+        <td colspan="2">
           <ul class="menu_link">
             <li><?php echo link_to(__('Our Collections'),'@homepage');?></li>
             <li><?php echo link_to(__('Search'),'search/search');?></li>

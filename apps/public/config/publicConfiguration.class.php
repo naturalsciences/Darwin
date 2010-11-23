@@ -4,7 +4,7 @@ class publicConfiguration extends sfApplicationConfiguration
 {
   protected $backendRouting = null;
 
-  public function generateFrontendUrl($name, $parameters = array())
+  public function generateBackendUrl($name, $parameters = array())
   {
     $env_str = '';
     switch($this->getEnvironment())

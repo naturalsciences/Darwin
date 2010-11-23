@@ -19,6 +19,11 @@ class accountActions extends DarwinActions
   {
     $this->redirectIf($this->getUser()->isAuthenticated(),'@homepage');
     $this->form = new LoginForm();
+    if ($request->hasParameter('l_err') && $request->getParameter('l_err','0') == '1')
+    {
+      $error = new sfValidatorError(new savedValidator(),'Bad login or password');
+      $this->form->getErrorSchema()->addError($error);
+    }
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('login'));
@@ -35,8 +40,8 @@ class accountActions extends DarwinActions
         }
         else
           $this->getUser()->setCulture('en') ;
-        $referer = $this->getRequest()->getReferer();
-        $this->redirect($referer ? $referer : '@homepage');
+/*        $referer = $this->getRequest()->getReferer();*/
+        $this->redirect('@homepage');
       }
     }
   }
@@ -46,6 +51,6 @@ class accountActions extends DarwinActions
     $this->getUser()->getAttributeHolder()->clear();  
     $this->getUser()->clearCredentials();
     $this->getUser()->setAuthenticated(false);
-    $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+    $this->redirect('@homepage');
   }
 }

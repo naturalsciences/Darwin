@@ -56,12 +56,8 @@
     </td>
 
     <td class="col_gtu">
-      <?php if($specimen->getGtuRef() != 0 && $specimen->getStationVisible()) : ?>
-        <?php if(isset($gtu[$specimen->getGtuRef()])) : ?>
+      <?php if($specimen->getGtuRef() != 0 && isset($gtu[$specimen->getGtuRef()])) : ?>
           <?php echo $gtu->getRaw($specimen->getGtuRef()) ; ?>
-        <?php else: ?>
-          <?php echo $specimen->getGtuCode();?>
-        <?php endif ; ?>
       <?php endif ; ?>
     </td>
     <td class="col_chrono">

@@ -31,9 +31,9 @@ class LoginForm extends BaseForm
         $this->user = Doctrine::getTable('Users')->getUserByPassword($values['username'], $values['password']);
         if (! $this->user)
         {
-            $error = new sfValidatorError($validator, 'Invalid login or password');
+            $error = new sfValidatorError($validator, 'Bad login or password');
             // throw an error bound to the password field
-            throw new sfValidatorErrorSchema($validator, array('password' => $error));
+            throw new sfValidatorErrorSchema($validator, array('global' => $error));
         }
     }
     return $values;
