@@ -11,8 +11,8 @@ class DQ extends Doctrine_Query
    *
    * @return DQ
    */
-  public static function create($conn = null) {
-    return new DQ($conn);
+  public static function create($conn = null,$class = null) {
+    return new DQ($conn,$class);
   }
 
   /**

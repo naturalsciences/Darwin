@@ -341,23 +341,15 @@ form.search_form input:focus
 
 input[type="submit"][class="search_submit"]
 {
-  background: white url(/images/widget_button.png) repeat-x;
-  border:0;
-  width:auto;
-  height:21px;
+  background-color:#5BAABD;
   color:white;
-  margin-top:1px;
-  padding-bottom:10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
-.check_right input[type="button"][class="save_search"]
-{
-  padding-bottom:0px;
-}
 
 form#save_search label.spec_nbr
 {
-  width: 7em;
   font-weight: bold;
 }
 
@@ -697,20 +689,18 @@ a.bt_close
 .new_link, #gtu_filter .right_button
 {
   float:right;
-  background: white url(/images/widget_button.png) repeat-x;
-  height:22px;
-  width:74px;
-  text-align:center;
-  font-size:small;
-  padding-right:0.4em;
-  padding-top:0.2em;
-  border:0;
+  background-color:#5BAABD;
   color:white;
+  padding-top:3px;
+  padding-bottom:3px;  
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 .new_link a
 {
 /*  vertical-align:text-bottom;*/
+  padding: 6px;
   text-decoration:none;
   color:white;
 }
@@ -1110,7 +1100,6 @@ tbody.spec_ident_identifiers_data tr td
 .add_code
 {
   height:24px;
-  width:10em;
   text-align:right;
   font-size:small;
   float:right;
@@ -2040,14 +2029,10 @@ vertical-align: super;
 
 input[type="button"][class="save_search"]
 {
-  background: #5BAABD  ;
-  border-right: 2px double white;    
-  border-bottom: 2px double white;    
-  width:123px;
-  height:21px;
+  background-color:#5BAABD;
   color:white;
-  margin-top:1px;
-  padding-bottom:10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 input[type="button"][class="save_search"]:hover

@@ -1114,6 +1114,8 @@
         <source>Add a new login</source> <target>Ajouter un nouvel identifiant</target> </trans-unit>
       <trans-unit id="546">
         <source>Search User</source> <target>Rechercher un utilisateur</target> </trans-unit>
+      <trans-unit id="547">
+        <source>Add another title</source> <target>Ajouter un autre titre</target> </trans-unit>        
     </body>
   </file>
 </xliff>

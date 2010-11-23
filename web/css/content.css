@@ -228,17 +228,14 @@ form.publicsearch_form input:focus
   border:1px inset #3390a1;
 }
 
-input[type="submit"][class="search_submit"],input[type="button"][class="result"]
+input[type="submit"][class="search_submit"],input[type="button"]
 {
-  background: white url('/images/widget_button.png') repeat-x;
-  border:0;
-  width:auto;
-  height:21px;
+  background-color:#5BAABD;
   color:white;
-  margin-top:1px;
-  padding-bottom:10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
-input[type="submit"][class="search_submit"]:hover,input[type="button"][class="result"]:hover
+input[type="submit"][class="search_submit"]:hover,input[type="button"]:hover
 {
   cursor: pointer ;
 }
