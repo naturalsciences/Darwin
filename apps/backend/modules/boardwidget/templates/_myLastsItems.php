@@ -1,4 +1,4 @@
-<?php slot('widget_title',__('AMy Lasts Items'));  ?>
+<?php slot('widget_title',__('My Lasts Items'));  ?>
 
 <?php if(count($items)):?>
 <table class="show_table">
