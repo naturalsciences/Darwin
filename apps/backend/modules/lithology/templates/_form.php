@@ -70,3 +70,10 @@
     </tfoot>
   </table>
 </form>
+<script type="text/javascript">
+$(document).ready(function () {
+  <?php if($form->hasErrors())
+      echo "$('tr#parent_ref .button').show();";
+  ?>
+});
+</script>

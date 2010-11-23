@@ -48,7 +48,7 @@
           <?php echo $form['status'] ?>
         </td>
       </tr>
-      <tr>
+      <tr id="parent_ref">
         <th class="top_aligned"><?php echo $form['parent_ref']->renderLabel() ?></th>
         <td>
           <?php echo $form['parent_ref']->renderError() ?>
@@ -63,7 +63,7 @@
           <?php echo $form['formule'] ?>
         </td>
       </tr>
-      <tr id="parent_ref">
+      <tr>
         <th class="ref_name"><?php echo $form['cristal_system']->renderLabel() ?></th>
         <td>
           <?php echo $form['cristal_system']->renderError() ?>
@@ -98,3 +98,10 @@
     </tfoot>
   </table>
 </form>
+<script type="text/javascript">
+$(document).ready(function () {
+  <?php if($form->hasErrors())
+      echo "$('tr#parent_ref .button').show();";
+  ?>
+});
+</script>
