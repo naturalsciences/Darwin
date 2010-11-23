@@ -12,7 +12,13 @@
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
     <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
 
-      <?php echo $source;?>
+      <div id="source"><?php 
+        if($source=="specimen")
+          echo __('Scope : Specimens');
+        elseif($source=="individual")
+          echo __('Scope : Individuals');
+        else
+          echo __('Scope : Parts');?></div>
       <table class="spec_results">
         <thead>
           <tr>
