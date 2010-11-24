@@ -236,6 +236,7 @@ Users:
         gender: { type: enum, values: ['M','F'] }
         db_user_type: { type: integer, notnull: true, default: 1}
         people_id: { type: integer}
+        last_seen: { type: string}
     relations:
         People:
             local: people_id
@@ -358,7 +359,6 @@ UsersLoginInfos:
         user_name: { type: string }
         password: { type: string }
         login_system: { type: string}
-        last_seen: { type: string }
     relations:
         User:
             class: Users
