@@ -2278,6 +2278,7 @@ dd
  	margin:2px 2px 0;
 	height: 20px;
 	cursor:pointer;
+  font-size : 9pt ;	
 }
 
 .tabs_view a.enabled

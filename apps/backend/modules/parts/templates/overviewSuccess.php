@@ -25,11 +25,7 @@ function removeError()
   $('ul#error_list').find('li').text(' ');
 }
 
-$(document).ready(function () {
-  check_screen_size() ;
-  $(window).resize(function(){
-    check_screen_size();
-  }); 
+$(document).ready(function () { 
   $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
 
   $('body').catalogue({}); 
