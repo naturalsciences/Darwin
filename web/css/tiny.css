@@ -1,6 +1,6 @@
-input[type="text"]
+input[type="text"].small_size
 {
-  width:85px !important ; 
+  width:120px !important ; 
 }
 
 input[type="text"].lsmall_size
@@ -13,16 +13,26 @@ input[type="text"].vvsmall_size
   width:50px !important ; 
 }
 
+input[type="text"].medium_size
+{
+  width:150px !important ; 
+}
+
+input[type="text"].xlsmall_size
+{
+  width:85px !important ; 
+}
+
 .panel
 {
-	padding-left:0px !important;
-	padding-right: 0px !important;
+	padding-left:1px !important;
+	padding-right: 1px !important;
 }
 
 .panel_view
 {
-	padding-left:0px !important;
-	padding-right: 0px !important;
+	padding-left:1px !important;
+	padding-right: 1px !important;
 }
 
 .board_spacer
@@ -35,17 +45,27 @@ input[type="text"].vvsmall_size
 	width: 49% !important;
 }
 
-select
+select.double_list_select,select.double_list_select-selected
 {
-  
-} width: 85px !important;
+  width: 13em !important;
+}
 
-select.vvsmall_size
+select.vvsmall_size,select.to_date,select.from_date
 {
   width:40px !important ;   
 }
 
-#refProperties.widget_content
+select.small_size
+{
+  width:85px !important ;   
+}
+
+#refProperties .widget_content, #refIdentifications .widget_content
 {
   padding: 2px !important;
+}
+
+.tabs a 
+{
+  font-size : 9pt !important ;
 }

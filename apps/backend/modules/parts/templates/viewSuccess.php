@@ -28,3 +28,11 @@
     </p>
   </div>
 </div>
+<script  type="text/javascript">
+$(document).ready(function () {
+  check_screen_size() ;
+  $(window).resize(function(){
+    check_screen_size();
+  });
+});
+</script>  

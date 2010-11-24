@@ -59,7 +59,10 @@ function removeError()
 }
 
 $(document).ready(function () {
-
+  check_screen_size() ;
+  $(window).resize(function(){
+    check_screen_size();
+  });   
   $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
   $('body').catalogue({});
   $("a#spec_ind_delete").click(function(){

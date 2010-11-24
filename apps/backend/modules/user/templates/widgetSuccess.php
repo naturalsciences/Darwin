@@ -4,7 +4,7 @@
 <div class="page">
   <h1 class="edit_mode"><?php echo __(sprintf("List of widgets available for <a href='%s'>%s</a>", url_for($sf_user->getAttribute('db_user_id')==$user->getId()?'user/profile':'user/edit?id='.$user->getId()),$user->getFormatedName())); ?></h1>
   <form action="" method="post">
-  <table class="widget_right edition" width='100%'>
+  <table class="edition" width='100%'>
     <tfoot>
       <tr>
         <td> 
@@ -57,6 +57,8 @@
 	<?php endforeach ?>
 	</tbody>
   <?php endforeach ; ?>
+</table>
+<table class="edition" width='100%'>  
 <tfoot>
   <tr>
     <td colspan="6"> 
@@ -70,9 +72,15 @@
 </form>
 </div>
 <script>
-$('thead input[type=radio]').change(function()
-{
-  alt_val = $(this).closest('thead').attr('alt');
-  $('tbody[alt="'+alt_val+'"] tr input[value="'+$(this).val()+'"]').attr("checked","checked");
-});
+$(document).ready(function () {
+  check_screen_size() ;
+  $(window).resize(function(){
+    check_screen_size();
+  });
+  $('thead input[type=radio]').change(function()
+  {
+    alt_val = $(this).closest('thead').attr('alt');
+    $('tbody[alt="'+alt_val+'"] tr input[value="'+$(this).val()+'"]').attr("checked","checked");
+  });
+});  
 </script>
