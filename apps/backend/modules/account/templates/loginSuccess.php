@@ -1,3 +1,4 @@
+<h1 id="login"><?php echo __("This application requires authentication.");?></h1>
 <div class="login">
     <?php echo form_tag('account/login');?>
       <table>

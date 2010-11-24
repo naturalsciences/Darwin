@@ -14,7 +14,6 @@
       </tr>
       <tr>
         <td class="content">
-          <h1 id="login"><?php echo __("This application requires authentication.");?></h1>
           <?php echo $sf_content ?>
         </td>
       </tr>
