@@ -3,6 +3,10 @@
 <script type="text/javascript">
 $(document).ready(function ()
 {
+    check_screen_size() ;
+    $(window).resize(function(){
+      check_screen_size();
+    });    
     $('.widget .widget_content:hidden .error_list:has(li)').each(function(){
         showWidgetContent($(this).closest('.widget'));
     });

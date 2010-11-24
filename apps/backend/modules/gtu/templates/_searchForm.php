@@ -63,10 +63,10 @@
 
           <div style="width:100%; height:400px;display:none;" id="smap"></div>
     </fieldset>
-
-
-                <?php echo $form->renderHiddenFields();?>
-                <input class="search_submit right_button" type="submit" name="search" value="<?php echo __('Search'); ?>" />
+    <?php echo $form->renderHiddenFields();?>
+    <div class="edit">
+      <input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" />
+    </div>
 <div class="clear"></div>
 
     <script  type="text/javascript">

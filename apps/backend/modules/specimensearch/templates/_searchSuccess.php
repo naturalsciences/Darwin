@@ -177,7 +177,10 @@
 </div>  
 <script type="text/javascript">
 $(document).ready(function () {
-
+  check_screen_size() ;
+  $(window).resize(function(){
+    check_screen_size();
+  }); 
 /****COL MANAGEMENT ***/
   $('ul.column_menu > li > ul > li').each(function(){
     hide_or_show($(this));

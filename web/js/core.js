@@ -12,6 +12,14 @@ function getIdInClasses(el)
     }
 }
 
+function check_screen_size()
+{
+  if($(window).width() < 1100)
+    $('link:last').append('<link rel="stylesheet" id="tiny" type="text/css" href="/css/tiny.css">') ;
+  else
+    $('#tiny').remove() ;
+}
+
 function getElInClasses(element,prefix)
 {
     var classes = $(element).attr("class").split(" ");

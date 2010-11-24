@@ -1,0 +1,51 @@
+input[type="text"]
+{
+  width:85px !important ; 
+}
+
+input[type="text"].lsmall_size
+{
+  width:50px !important ; 
+}
+
+input[type="text"].vvsmall_size
+{
+  width:50px !important ; 
+}
+
+.panel
+{
+	padding-left:0px !important;
+	padding-right: 0px !important;
+}
+
+.panel_view
+{
+	padding-left:0px !important;
+	padding-right: 0px !important;
+}
+
+.board_spacer
+{
+	width:2% !important;
+}
+
+.board_col
+{
+	width: 49% !important;
+}
+
+select
+{
+  
+} width: 85px !important;
+
+select.vvsmall_size
+{
+  width:40px !important ;   
+}
+
+#refProperties.widget_content
+{
+  padding: 2px !important;
+}
