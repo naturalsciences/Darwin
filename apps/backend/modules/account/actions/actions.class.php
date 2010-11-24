@@ -65,6 +65,10 @@ class accountActions extends DarwinActions
       $this->form->bind($request->getParameter('lost_pwd'));
       if ($this->form->isValid())
       {
+        $user = Doctrine::getTable('Users')->getUserByLoginAndEMail($this->form->getValue('user_name'), 
+                                                                    $this->form->getValue('user_email')
+                                                                   );
+        
       }
     }
   }
