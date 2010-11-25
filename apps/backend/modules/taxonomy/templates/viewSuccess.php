@@ -26,9 +26,6 @@ $(document).ready(function ()
         <td>
           <?php echo $taxon->getName(); ?>
         </td>
-        <td rowspan="6" class="keyword_row">
-          <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'taxonomy','field_name' => 'taxonomy_name', 'view' => true)); ?>
-        </td>
       </tr>
       <tr>
         <th><?php echo $form['level_ref']->renderLabel() ?></th>

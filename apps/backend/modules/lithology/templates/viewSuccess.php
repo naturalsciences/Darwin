@@ -26,9 +26,6 @@ $(document).ready(function ()
         <td>
           <?php echo $litho->getName(); ?>
         </td>
-        <td rowspan="6" class="keyword_row">
-          <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'lithology','field_name' => 'lithology_name', 'view' => true)); ?>
-        </td>
       </tr>
       <tr>
         <th><?php echo $form['local_naming']->renderLabel() ?></th>

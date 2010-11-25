@@ -32,9 +32,6 @@ $(document).ready(function ()
         <td>
           <?php echo $mineral->getName(); ?>
         </td>
-        <td rowspan="6" class="keyword_row">
-          <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'mineralogy','field_name' => 'mineralogy_name', 'view' => true)); ?>
-        </td>
       </tr>
       <tr>
         <th><?php echo $form['classification']->renderLabel() ?></th>
