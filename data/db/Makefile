@@ -53,21 +53,21 @@ help-target:
 	@echo ""
 	@echo "create-user"
 	@echo "   create a default user to access only the darwin schema and db"
-	@echo ""	
+	@echo ""
 	@echo ""
 	@echo "create-user-darwin1"
 	@echo "   create a darwin1 user to access only the darwin1 schema and db1. This schema is used for migration from darwin1 to darwin2"
-	@echo ""	
+	@echo ""
 	@echo "uninstall-db"
 	@echo "   remove the tables,function... from darwin. WARNING! This action can remove ALL your data"
-	@echo ""	
+	@echo ""
 	@echo "drop-db"
 	@echo "   remove the darwin database. WARNING! This action can remove ALL your data"
-	@echo ""	
+	@echo ""
 	@echo ""
 	@echo "Targets 'install-all', 'create-db', 'create-schema' and 'create-user' must be run into a privileged account (often 'postgres')"
 	@echo "other targets can be run into the account created by 'create-user' "
-help-param:	
+help-param:
 	@echo ""
 	@echo "Env Parameters :"
 	@echo "---------------"
@@ -90,7 +90,7 @@ help-param:
 	@echo "CLUSTER_PATH (Default: first line  returned by pg_lsclusters. [/var/lib/postgresql/8.3/main] on debian)"
 	@echo "   The path where to create the tablespace"
 	@echo ""
-	@echo "Other advanced parameters are available in the makefile"	
+	@echo "Other advanced parameters are available in the makefile"
 	@echo ""
 
 test:
@@ -107,11 +107,11 @@ install-db:
 	$(PARAM_PSQL) -f createdomains.sql
 	$(PARAM_PSQL) -f createtypes.sql
 	$(PARAM_PSQL) -f createtables.sql
-	$(PARAM_PSQL) -f createindexes.sql
 	$(PARAM_PSQL) -f initiate_data.sql
 	$(PARAM_PSQL) -f createfunctions.sql
 	$(PARAM_PSQL) -f createtriggers.sql
 	$(PARAM_PSQL) -f addchecks.sql
+	$(PARAM_PSQL) -f createindexes.sql
 #	$(PRIV_PSQL_DB) -f grant_d2_to_web_user.sql
 
 install-all: create-db create-user create-schema install-lib install-db
@@ -126,18 +126,18 @@ uninstall-db:
 
 create-schema:
 	$(PRIV_PSQL_DB) -f createschema.sql
-	
+
 create-test-schema:
 	$(PRIV_PSQL_DB) -f create_testschema.sql
 
-#ONLY USEFULL WHEN YOU DO A MIGRATION	
+#ONLY USEFULL WHEN YOU DO A MIGRATION
 
 create-user-darwin1:
 	-createuser -l -i -S -R -D -P -E $(DB_IMPORT_USER)
 
 create-darwin1-schema:
 	$(PRIV_PSQL_DB) -f create_darwin1_schema.sql
-	
+
 grant-d1-to-d2:
 	$(PRIV_PSQL_DB) -f grant_d1_to_d2.sql
 
@@ -179,9 +179,9 @@ else
 	$(PRIV_PSQL_DB) -c "CREATE ROLE $(DB_WEB_USER) ENCRYPTED PASSWORD '$(PASSWD)' NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;"
 endif
 
-drop-db: 
+drop-db:
 	$(PRIV_PSQL_DB) -f dropdb.sql
-	
+
 love:
 	@echo "Send Your Thanks to : collections@naturalsciences.be"
 	@echo "And chocolates or postcards to : "

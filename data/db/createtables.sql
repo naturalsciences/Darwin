@@ -427,6 +427,7 @@ create table users
         id integer not null default nextval('users_id_seq'),
         db_user_type smallint default 1 not null,
         people_id integer,
+        last_seen timestamp,
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
@@ -448,6 +449,7 @@ comment on column users.additional_names is 'Any additional names given to user'
 comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
 comment on column users.birth_date is 'Birth/Creation date composed';
 comment on column users.gender is 'For physical users give the gender: M or F';
+comment on column users.last_seen is 'Last time the user has logged in.';
 
 create sequence people_languages_id_seq;
 
@@ -697,7 +699,6 @@ create table users_login_infos
         user_name varchar,
         password varchar,
         login_system varchar,
-        last_seen timestamp,
         renew_hash varchar,
         constraint pk_users_login_infos primary key (id),
         constraint unq_users_login_infos unique (user_ref, login_type),
@@ -710,8 +711,8 @@ comment on column users_login_infos.login_type is 'Type of identification system
 comment on column users_login_infos.user_name is 'For some system (local, ldap, kerberos,...) provides the username (encrypted form)';
 comment on column users_login_infos.password is 'For some system (local, ldap, kerberos,...) provides the password (encrypted form)';
 comment on column users_login_infos.login_system is 'For some system (shibbolet, openID,...) provides the user id';
-comment on column users_login_infos.last_seen is 'Last time the user has logged in.';
 comment on column users_login_infos.renew_hash is 'Hashed key defined when asking to renew a password';
+
 create table template_people_users_multimedia
        (
         person_user_ref integer not null,
