@@ -27,7 +27,7 @@
           </th>
           <th>
 	    <a class="sort" href="<?php echo url_for($s_url.'&orderby=given_name'.( ($orderBy=='given_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
-	      <?php echo __('Surname');?>
+	      <?php echo __('Given Name');?>
 	      <?php if($orderBy=='given_name') echo $orderSign ?>
 	    </a>
           </th>
