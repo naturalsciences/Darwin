@@ -11,8 +11,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 {
   public function configure()
   { 
-    unset($this['type_group'], $this['type_search']);
-    $this->widgetSchema['id'] = new sfWidgetFormInputHidden();
+    unset($this['type_group'], $this['type_search'], $this['id']);
     $this->widgetSchema['specimen_ref'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['type'] = new widgetFormSelectComplete(array(
         'model' => 'SpecimenIndividuals',
@@ -114,7 +113,6 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
     /* Validators */
 
-    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
     $this->validatorSchema['specimen_ref'] = new sfValidatorInteger(array('required'=>false));
     $this->validatorSchema['type'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('type')));
     $this->validatorSchema['sex'] = new sfValidatorString(array('trim'=>true, 'required'=>false, 'empty_value'=>$this->getDefault('sex')));

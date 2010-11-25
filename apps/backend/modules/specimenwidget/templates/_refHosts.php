@@ -40,11 +40,6 @@
       </td>
     </tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td><?php echo $form['id']->render(); ?></td>
-    </tr>
-  </tfoot>
 </table>
 <?php $hostTaxonId = $form['host_taxon_ref']->renderId(); $hostSpecimenId = $form['host_specimen_ref']->renderId(); ?>
 <script type="text/javascript">

@@ -307,34 +307,34 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
   protected function getFieldsByGroup()
   {
-	return array(
-	  'Part' => array('specimen_part'),
-	  'Complete' => array(
-		'specimen_status',
-		'complete',
-	  ),
-	  'Localisation' => array(
-		'building',
-		'floor',
-		'room',
-		'row',
-		'shelf',
-	  ),
-	  'Container' => array(
-		'surnumerary',
-		'container',
-		'container_type',
-		'container_storage',
-		'sub_container',
-		'sub_container_type',
-		'sub_container_storage',
-	  ),
-	  'Count' => array(
-		'accuracy',
-		'specimen_part_count_min',
-		'specimen_part_count_max',
-	  ),
-	);
+    return array(
+      'Part' => array('specimen_part'),
+      'Complete' => array(
+      'specimen_status',
+      'complete',
+      ),
+      'Localisation' => array(
+      'building',
+      'floor',
+      'room',
+      'row',
+      'shelf',
+      ),
+      'Container' => array(
+      'surnumerary',
+      'container',
+      'container_type',
+      'container_storage',
+      'sub_container',
+      'sub_container_type',
+      'sub_container_storage',
+      ),
+      'Count' => array(
+      'accuracy',
+      'specimen_part_count_min',
+      'specimen_part_count_max',
+      ),
+    );
   }
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
@@ -343,65 +343,65 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     {
       if($taintedValues['accuracy'] == 0 ) //exact
       {
-	$taintedValues['specimen_part_count_max'] = $taintedValues['specimen_part_count_min'];
+        $taintedValues['specimen_part_count_max'] = $taintedValues['specimen_part_count_min'];
       }
     }
     if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
     {
       foreach($taintedValues['newCode'] as $key=>$newVal)
       {
-		if (!isset($this['newCode'][$key]))
-		{
-		  $this->addCodes($key);
-		}
-		$taintedValues['newCode'][$key]['record_id'] = 0;
-	  }
+        if (!isset($this['newCode'][$key]))
+        {
+          $this->addCodes($key);
+        }
+        $taintedValues['newCode'][$key]['record_id'] = 0;
+      }
     }
     if(isset($taintedValues['newComments']) && isset($taintedValues['comment']))
     {
       foreach($taintedValues['newComments'] as $key=>$newVal)
       {
-	if (!isset($this['newComments'][$key]))
-	{
-	  $this->addComments($key);
-	}
-	$taintedValues['newComments'][$key]['record_id'] = 0;
+        if (!isset($this['newComments'][$key]))
+        {
+          $this->addComments($key);
+        }
+        $taintedValues['newComments'][$key]['record_id'] = 0;
       }
     }
     if(isset($taintedValues['newInsurance']) && isset($taintedValues['insurance']))
     {
       foreach($taintedValues['newInsurance'] as $key=>$newVal)
       {
-	if (!isset($this['newInsurance'][$key]))
-	{
-	  $this->addInsurances($key);
-	}
-	$taintedValues['newInsurance'][$key]['record_id'] = 0;
+        if (!isset($this['newInsurance'][$key]))
+        {
+          $this->addInsurances($key);
+        }
+        $taintedValues['newInsurance'][$key]['record_id'] = 0;
       }
     }
 
-	if(!isset($taintedValues['code']))
-	{
-	  $this->offsetUnset('Codes');
-	  unset($taintedValues['Codes']);
-	  $this->offsetUnset('newCode');
-	  unset($taintedValues['newCode']);
-	}
-	if(!isset($taintedValues['comment']))
-	{
-	  $this->offsetUnset('Comments');
-	  unset($taintedValues['Comments']);
-	  $this->offsetUnset('newComments');
-	  unset($taintedValues['newComments']);
-	}
-	if(!isset($taintedValues['insurance']))
-	{
-	  $this->offsetUnset('Insurances');
-	  unset($taintedValues['Insurances']);
-	  $this->offsetUnset('newInsurance');
-	  unset($taintedValues['newInsurance']);
-	}
-	parent::bind($taintedValues, $taintedFiles);
+    if(!isset($taintedValues['code']))
+    {
+      $this->offsetUnset('Codes');
+      unset($taintedValues['Codes']);
+      $this->offsetUnset('newCode');
+      unset($taintedValues['newCode']);
+    }
+    if(!isset($taintedValues['comment']))
+    {
+      $this->offsetUnset('Comments');
+      unset($taintedValues['Comments']);
+      $this->offsetUnset('newComments');
+      unset($taintedValues['newComments']);
+    }
+    if(!isset($taintedValues['insurance']))
+    {
+      $this->offsetUnset('Insurances');
+      unset($taintedValues['Insurances']);
+      $this->offsetUnset('newInsurance');
+      unset($taintedValues['newInsurance']);
+    }
+    parent::bind($taintedValues, $taintedFiles);
   }
 
 

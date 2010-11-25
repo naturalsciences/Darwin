@@ -258,7 +258,6 @@ class specimenActions extends DarwinActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()));
-    if($request->getParameter('id') != $this->form->getValue('id')) $this->forwardToSecureAction();
     if ($form->isValid())
     {
       try
