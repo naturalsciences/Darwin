@@ -668,6 +668,11 @@ a.bt_close
   border: 1px solid #5BAABD;
 }
 
+p.tree
+{
+  border: 1px solid #C1CC33 !important;
+}
+
 .tree h3
 {
   margin-bottom: 0.5em;
