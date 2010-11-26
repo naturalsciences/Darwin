@@ -19,12 +19,12 @@ class accountActions extends DarwinActions
     $message->setFrom(array(sfConfig::get('app_mailer_sender') => 'DaRWIN 2 team'));
     if(is_array($userParams))
     {
-      if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']) && isset($userParams['request']))
+      if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']) && isset($userParams['user_id']) && isset($userParams['hash']))
       {
         if(!empty($userParams['mail']))
         {
           $message->setTo($userParams['mail']);
-          $message->setSubject($this->getI18N()->__('DaRWIN 2  password renew'));
+          $message->setSubject($this->getI18N()->__('DaRWIN 2 password renew'));
           $message->setBody($this->getPartial('pwdRenewMail', array('userParams'=>$userParams)),'text/plain');
           $this->getMailer()->send($message);
         }
@@ -102,15 +102,16 @@ class accountActions extends DarwinActions
           $userParams['name'] = $user->getFormatedName();
           $userParams['physical'] = $user->getIsPhysical();
           $userParams['title'] = $user->getTitle();
-          
+          $userParams['mail'] = $user->UsersComm[0]->getEntry();
+
           // send an email to the registered user
           $this->sendPwdRenewMail($userParams);
           
-          $this->redirect('account/pwdRenewMailSuccess', 
-                          array('name'=>$userParams['name'],
-                                'physical'=>$userParams['physical'],
-                                'title'=>$userParams['title']
-                               )
+          $this->redirect('account/pwdRenewMail?'.http_build_query(array('name'=>$userParams['name'],
+                                                                         'physical'=>$userParams['physical'],
+                                                                         'title'=>$userParams['title']
+                                                                        )
+                                                                  )
                          );
           
         }
@@ -124,12 +125,42 @@ class accountActions extends DarwinActions
     }
   }
 
-  public function executePwdRenewMailSuccess(sfWebRequest $request)
+  public function executePwdRenewMail(sfWebRequest $request)
   {
     $this->params = array('physical'=> $request->getParameter('physical', 'physical'),
                           'name' => $request->getParameter('name', ''),
                           'title' => $request->getParameter('title', '')
                          );
+  }
+
+  public function executeRenewPwd(sfWebRequest $request)
+  {
+    if(!$request->hasParameter('id') || !$request->hasParameter('hash'))
+      $this->forwardToSecureAction();
+    $userLogin = Doctrine::getTable('UsersLoginInfos')->findOneByUserRefAndRenewHash($request->getParameter('id'), $request->getParameter('hash'));
+    if(!$userLogin)
+      $this->forwardToSecureAction();
+    $this->form = new RenewPwdForm();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('renew_pwd'));
+      if ($this->form->isValid())
+      {
+        try
+        {
+          $userLogin->setPassword($this->form->getValue('new_password'));
+          $userLogin->setRenewHash('');
+          $userLogin->save();
+          $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
+      }
+    }
   }
 
 }
