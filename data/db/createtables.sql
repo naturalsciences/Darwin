@@ -722,8 +722,10 @@ create table users_login_infos
         user_name varchar,
         password varchar,
         login_system varchar,
+        renew_hash varchar,
         constraint pk_users_login_infos primary key (id),
         constraint unq_users_login_infos unique (user_ref, login_type),
+        constraint unq_users_login_infos_user_name unique (user_name, login_type),
         constraint fk_users_login_infos_users foreign key (user_ref) references users(id) on delete cascade
        );
 comment on table users_login_infos is 'Contains the login/password informations of DaRWIN 2 users';
@@ -732,6 +734,7 @@ comment on column users_login_infos.login_type is 'Type of identification system
 comment on column users_login_infos.user_name is 'For some system (local, ldap, kerberos,...) provides the username (encrypted form)';
 comment on column users_login_infos.password is 'For some system (local, ldap, kerberos,...) provides the password (encrypted form)';
 comment on column users_login_infos.login_system is 'For some system (shibbolet, openID,...) provides the user id';
+comment on column users_login_infos.renew_hash is 'Hashed key defined when asking to renew a password';
 
 create table template_people_users_multimedia
        (
@@ -1674,16 +1677,16 @@ create table specimens
         constraint pk_specimens primary key (id),
         constraint unq_specimens unique (collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref, host_taxon_ref, acquisition_category, acquisition_date),
         constraint fk_specimens_expeditions foreign key (expedition_ref) references expeditions(id),
-        constraint fk_specimens_gtu foreign key (gtu_ref) references gtu(id) on delete set default,
-        constraint fk_specimens_collections foreign key (collection_ref) references collections(id) on delete set default,
-        constraint fk_specimens_taxonomy foreign key (taxon_ref) references taxonomy(id) on delete set default,
-        constraint fk_specimens_lithostratigraphy foreign key (litho_ref) references lithostratigraphy(id) on delete set default,
-        constraint fk_specimens_lithology foreign key (lithology_ref) references lithology(id) on delete set default,
-        constraint fk_specimens_mineralogy foreign key (mineral_ref) references mineralogy(id) on delete set default,
-        constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id) on delete set default,
-        constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id) on delete set default,
+        constraint fk_specimens_gtu foreign key (gtu_ref) references gtu(id),
+        constraint fk_specimens_collections foreign key (collection_ref) references collections(id),
+        constraint fk_specimens_taxonomy foreign key (taxon_ref) references taxonomy(id),
+        constraint fk_specimens_lithostratigraphy foreign key (litho_ref) references lithostratigraphy(id),
+        constraint fk_specimens_lithology foreign key (lithology_ref) references lithology(id),
+        constraint fk_specimens_mineralogy foreign key (mineral_ref) references mineralogy(id),
+        constraint fk_specimens_chronostratigraphy foreign key (chrono_ref) references chronostratigraphy(id),
+        constraint fk_specimens_host_taxonomy foreign key (host_taxon_ref) references taxonomy(id),
         constraint fk_specimens_host_specimen foreign key (host_specimen_ref) references specimens(id) on delete set null,
-        constraint fk_specimens_igs foreign key (ig_ref) references igs(id) on delete set null
+        constraint fk_specimens_igs foreign key (ig_ref) references igs(id)
        );
 comment on table specimens is 'Specimens or batch of specimens stored in collection';
 comment on column specimens.id is 'Unique identifier of a specimen or batch of specimens';
@@ -2141,33 +2144,33 @@ create table darwin_flat
     surnumerary boolean,
     CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_collection_institution_ref FOREIGN KEY (collection_institution_ref) REFERENCES people (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_collection_main_manager_ref FOREIGN KEY (collection_main_manager_ref) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id),
+    CONSTRAINT fk_darwin_flat_collection_institution_ref FOREIGN KEY (collection_institution_ref) REFERENCES people (id) ON DELETE SET DEFAULT,
+    CONSTRAINT fk_darwin_flat_collection_main_manager_ref FOREIGN KEY (collection_main_manager_ref) REFERENCES users (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_collection_parent_ref FOREIGN KEY (collection_parent_ref) REFERENCES collections (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_expedition_ref FOREIGN KEY (expedition_ref) REFERENCES expeditions (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_gtu_ref FOREIGN KEY (gtu_ref) REFERENCES gtu (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_expedition_ref FOREIGN KEY (expedition_ref) REFERENCES expeditions (id),
+    CONSTRAINT fk_darwin_flat_gtu_ref FOREIGN KEY (gtu_ref) REFERENCES gtu (id) ,
     CONSTRAINT fk_darwin_flat_gtu_parent_ref FOREIGN KEY (gtu_parent_ref) REFERENCES gtu (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_taxon_ref FOREIGN KEY (taxon_ref) REFERENCES taxonomy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_taxon_ref FOREIGN KEY (taxon_ref) REFERENCES taxonomy (id),
     CONSTRAINT fk_darwin_flat_taxon_parent_ref FOREIGN KEY (taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_taxon_level_ref FOREIGN KEY (taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_chrono_ref FOREIGN KEY (chrono_ref) REFERENCES chronostratigraphy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_taxon_level_ref FOREIGN KEY (taxon_level_ref) REFERENCES catalogue_levels (id),
+    CONSTRAINT fk_darwin_flat_chrono_ref FOREIGN KEY (chrono_ref) REFERENCES chronostratigraphy (id),
     CONSTRAINT fk_darwin_flat_chrono_parent_ref FOREIGN KEY (chrono_parent_ref) REFERENCES chronostratigraphy (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_chrono_level_ref FOREIGN KEY (chrono_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_litho_ref FOREIGN KEY (litho_ref) REFERENCES lithostratigraphy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_chrono_level_ref FOREIGN KEY (chrono_level_ref) REFERENCES catalogue_levels (id),
+    CONSTRAINT fk_darwin_flat_litho_ref FOREIGN KEY (litho_ref) REFERENCES lithostratigraphy (id),
     CONSTRAINT fk_darwin_flat_litho_parent_ref FOREIGN KEY (litho_parent_ref) REFERENCES lithostratigraphy (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_litho_level_ref FOREIGN KEY (litho_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_lithology_ref FOREIGN KEY (lithology_ref) REFERENCES lithology (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_litho_level_ref FOREIGN KEY (litho_level_ref) REFERENCES catalogue_levels (id),
+    CONSTRAINT fk_darwin_flat_lithology_ref FOREIGN KEY (lithology_ref) REFERENCES lithology (id),
     CONSTRAINT fk_darwin_flat_lithology_parent_ref FOREIGN KEY (lithology_parent_ref) REFERENCES lithology (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_lithology_level_ref FOREIGN KEY (lithology_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_mineral_ref FOREIGN KEY (mineral_ref) REFERENCES mineralogy (id) ON DELETE CASCADE,
+    CONSTRAINT fk_darwin_flat_lithology_level_ref FOREIGN KEY (lithology_level_ref) REFERENCES catalogue_levels (id),
+    CONSTRAINT fk_darwin_flat_mineral_ref FOREIGN KEY (mineral_ref) REFERENCES mineralogy (id),
     CONSTRAINT fk_darwin_flat_mineral_parent_ref FOREIGN KEY (mineral_parent_ref) REFERENCES mineralogy (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_mineral_level_ref FOREIGN KEY (mineral_level_ref) REFERENCES catalogue_levels (id) ON DELETE CASCADE,
-    CONSTRAINT fk_darwin_flat_host_taxon_ref FOREIGN KEY (host_taxon_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
+    CONSTRAINT fk_darwin_flat_mineral_level_ref FOREIGN KEY (mineral_level_ref) REFERENCES catalogue_levels (id),
+    CONSTRAINT fk_darwin_flat_host_taxon_ref FOREIGN KEY (host_taxon_ref) REFERENCES taxonomy (id),
     CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id) ON DELETE SET DEFAULT,
+    CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id),
     CONSTRAINT fk_darwin_flat_host_specimen_ref FOREIGN KEY (host_specimen_ref) REFERENCES specimens (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id) ON DELETE SET NULL
+    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id)
 /*    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED,
     CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED*/
   );
