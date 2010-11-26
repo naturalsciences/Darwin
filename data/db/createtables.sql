@@ -178,6 +178,29 @@ comment on column comments.comment is 'Comment';
 comment on column comments.comment_ts is 'tsvector form of comment field';
 comment on column comments.comment_language_full_text is 'Corresponding language to the language/country reference recognized by full text search to_tsvector function';
 
+create sequence ext_links_id_seq;
+
+create table ext_links
+       (
+        id integer not null default nextval('ext_links_id_seq'),
+        url varchar not null,
+        comment text not null,
+        comment_ts tsvector not null,
+        comment_language_full_text full_text_language,
+        constraint pk_ext_links primary key (id),
+        constraint unq_ext_links unique (referenced_relation, record_id, url)
+       )
+       inherits (template_table_record_ref);
+comment on table ext_links is 'External link possibly refereced for a specific relation';
+comment on column ext_links.id is 'Unique identifier of a comment';
+comment on column ext_links.referenced_relation is 'Reference-Name of table a comment is posted for';
+comment on column ext_links.record_id is 'Identifier of the record concerned';
+comment on column ext_links.url is 'External URL';
+comment on column ext_links.comment is 'Comment';
+comment on column ext_links.comment_ts is 'tsvector form of comment field';
+comment on column ext_links.comment_language_full_text is 'Corresponding language to the language/country reference recognized by full text search to_tsvector function';
+
+
 create sequence gtu_id_seq;
 
 create table gtu

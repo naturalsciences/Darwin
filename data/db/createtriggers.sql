@@ -298,6 +298,10 @@ CREATE TRIGGER trg_cpy_toFullText_comments BEFORE INSERT OR UPDATE
 	ON comments FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();
 
+CREATE TRIGGER trg_cpy_toFullText_ext_links BEFORE INSERT OR UPDATE
+	ON ext_links FOR EACH ROW
+	EXECUTE PROCEDURE fct_cpy_toFullText();
+
 CREATE TRIGGER trg_cpy_toFullText_identifications BEFORE INSERT OR UPDATE
 	ON identifications FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_toFullText();
@@ -468,6 +472,10 @@ CREATE TRIGGER trg_trk_log_table_comments AFTER INSERT OR UPDATE OR  DELETE
 	ON comments FOR EACH ROW
 	EXECUTE PROCEDURE fct_trk_log_table();
 
+CREATE TRIGGER trg_trk_log_table_ext_links AFTER INSERT OR UPDATE OR  DELETE
+	ON ext_links FOR EACH ROW
+	EXECUTE PROCEDURE fct_trk_log_table();
+
 CREATE TRIGGER trg_trk_log_table_expeditions AFTER INSERT OR UPDATE OR  DELETE
 	ON expeditions FOR EACH ROW
 	EXECUTE PROCEDURE fct_trk_log_table();
@@ -497,6 +505,10 @@ CREATE TRIGGER trg_words_ts_cpy_collection_maintenance BEFORE INSERT OR UPDATE
 
 CREATE TRIGGER trg_words_ts_cpy_comments BEFORE INSERT OR UPDATE
 	ON comments FOR EACH ROW
+	EXECUTE PROCEDURE fct_trg_word();
+	
+CREATE TRIGGER trg_words_ts_cpy_ext_links BEFORE INSERT OR UPDATE
+	ON ext_links FOR EACH ROW
 	EXECUTE PROCEDURE fct_trg_word();
 
 CREATE TRIGGER trg_words_ts_cpy_vernacular_names BEFORE INSERT OR UPDATE

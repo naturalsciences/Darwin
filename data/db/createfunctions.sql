@@ -3176,6 +3176,8 @@ BEGIN
 	IF TG_OP = 'INSERT' THEN
 		IF TG_TABLE_NAME = 'comments' THEN
 			NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
+		ELSEIF TG_TABLE_NAME = 'ext_links' THEN			
+      NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);			
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
 			NEW.value_defined_ts := to_tsvector('simple', NEW.value_defined);
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
@@ -3206,6 +3208,10 @@ BEGIN
 			IF OLD.comment != NEW.comment OR OLD.comment_language_full_text != NEW.comment_language_full_text THEN
 				NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
 			END IF;
+		ELSEIF TG_TABLE_NAME = 'ext_link' THEN	
+			IF OLD.comment != NEW.comment OR OLD.comment_language_full_text != NEW.comment_language_full_text THEN
+				NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
+			END IF;				
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
 			IF OLD.value_defined != NEW.value_defined THEN
 				NEW.value_defined_ts := to_tsvector('simple', NEW.value_defined);
