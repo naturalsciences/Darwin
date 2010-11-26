@@ -24,9 +24,21 @@ class taxonomyActions extends DarwinActions
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
     $this->forward404Unless(
-      $taxa = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
+      $unit = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
       sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
     );
+
+    if(! $request->hasParameter('confirm'))
+    {
+      $this->number_child = Doctrine::getTable('Taxonomy')->hasChildrens('Taxonomy',$unit->getId());
+      if($this->number_child)
+      {
+        $this->link_delete = 'taxonomy/delete?confirm=1&id='.$unit->getId();
+        $this->link_cancel = 'taxonomy/edit?id='.$unit->getId();
+        $this->setTemplate('warndelete', 'catalogue');
+        return;
+      }
+    }
 
     try
     {
@@ -37,9 +49,10 @@ class taxonomyActions extends DarwinActions
     {
       $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-      $this->form = new TaxonomyForm($taxa);
+      $this->form = new TaxonomyForm($unit);
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
+      $this->no_right_col = Doctrine::getTable('Taxonomy')->testNoRightsCollections('taxon_ref',$request->getParameter('id'), $this->getUser()->getId());
       $this->setTemplate('edit');
     }
   }

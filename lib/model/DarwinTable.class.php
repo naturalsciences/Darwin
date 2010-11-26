@@ -2,48 +2,57 @@
 class DarwinTable extends Doctrine_Table
 {
 
-    public static function getFilterForTable($table)
-    {
-      return self::getModelForTable($table). 'FormFilter';
-    }
-    
-    /**
-     * Get the Form formating of a table name
-     * @param $table string a table name
-     * @return string The Form name formatted
-    */
-    public static function getFormForTable($table)
-    {
-      return self::getModelForTable($table). 'Form';
-    }
+  public static function getFilterForTable($table)
+  {
+    return self::getModelForTable($table). 'FormFilter';
+  }
   
-    /**
-     * Get the Model formating of a table name
-     * @param $table string a table name
-     * @return string The model name formatted
-    */
-    public static function getModelForTable($table)
-    {
-      return sfInflector::camelize($table);
-    }
+  /**
+    * Get the Form formating of a table name
+    * @param $table string a table name
+    * @return string The Form name formatted
+  */
+  public static function getFormForTable($table)
+  {
+    return self::getModelForTable($table). 'Form';
+  }
 
-   /**
-     * Finds a record by its identifier if the id is greater than 0
-     *
-     * @param integer $rowId          Database Row ID
-     * @return Doctrine_Record or false if no result
-     */
-    public function findExcept($rowId)
-    {
-        if ($rowId != 0)
-        { 
-          return parent::find($rowId);
-        }
-        else
-        {
-          return false;
-        }
-    }
+  /**
+    * Get the Model formating of a table name
+    * @param $table string a table name
+    * @return string The model name formatted
+  */
+  public static function getModelForTable($table)
+  {
+    return sfInflector::camelize($table);
+  }
+
+  /**
+    * Finds a record by its identifier if the id is greater than 0
+    *
+    * @param integer $rowId          Database Row ID
+    * @return Doctrine_Record or false if no result
+    */
+  public function findExcept($rowId)
+  {
+      if ($rowId != 0)
+      { 
+        return parent::find($rowId);
+      }
+      else
+      {
+        return false;
+      }
+  }
+
+  public function hasChildrens($table, $id)
+  {
+    $q =  Doctrine_Query::create()
+      ->select('count(id)')
+      ->from($table.' t')
+      ->where('t.parent_ref = ?',$id);
+    return $q->execute(null, Doctrine::HYDRATE_SINGLE_SCALAR);
+  }
 
   protected function getI18N()
   {

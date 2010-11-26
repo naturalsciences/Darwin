@@ -583,6 +583,27 @@ input[type="text"].xlarge_size
   margin-right:15px
 }
 
+.remove_confirm
+{
+  width: 20em;
+  padding:0.5em;
+  background-color:#FFD362;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-right: 1em;
+  margin-left: 1em;
+}
+.remove_confirm img
+{
+  vertical-align: top;
+}
+.remove_confirm a[href]
+{
+  color: #BD2602;
+  text-decoration: none;
+  font-weight:bold;
+}
+
 a.bt_close
 {
   text-decoration : none;
