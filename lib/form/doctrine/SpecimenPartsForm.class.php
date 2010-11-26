@@ -154,7 +154,21 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->setDefault('accuracy', 1);
     $this->widgetSchema['accuracy']->setLabel('Accuracy');
     $this->validatorSchema['accuracy'] = new sfValidatorPass();
+    
+    /* extLinks sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('ExtLinks',$subForm);   
+    foreach(Doctrine::getTable('ExtLinks')->findForTable('specimen_parts', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new ExtLinksForm($vals,array('table' => 'parts'));
+      $this->embeddedForms['ExtLinks']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('ExtLinks', $this->embeddedForms['ExtLinks']);
 
+    $subForm = new sfForm();
+    $this->embedForm('newExtLinks',$subForm);    
     /* Codes sub form */
 
     $subForm = new sfForm();
@@ -208,7 +222,8 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->embedForm('newComments',$subForm);
         
     $this->widgetSchema['comment'] = new sfWidgetFormInputHidden(array('default'=>1));
-
+    $this->widgetSchema['extlink'] = new sfWidgetFormInputHidden(array('default'=>1));
+    $this->validatorSchema['extlink'] = new sfValidatorPass();
 
     $this->validatorSchema['specimen_part'] = new sfValidatorString(array('required' => false, 'trim' => true));
 
@@ -243,6 +258,20 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     ));
 
   }
+
+  public function addExtLinks($num, $obj=null)
+  {
+      $options = array('referenced_relation' => 'specimen_parts', 'record_id' => $this->getObject()->getId());
+      if(!$obj) $val = new ExtLinks();
+      else $val = $obj ;      
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new ExtLinksForm($val,array('table' => 'parts'));
+      $this->embeddedForms['newExtLinks']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newExtLinks', $this->embeddedForms['newExtLinks']);
+  }
+  
 
   public function checkSelfAttached($validator, $values)
   {
@@ -361,6 +390,17 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     {
       foreach($taintedValues['newComments'] as $key=>$newVal)
       {
+    if(isset($taintedValues['newExtLinks']) && isset($taintedValues['extlink']))
+    {
+      foreach($taintedValues['newExtLinks'] as $key=>$newVal)
+      {
+        if (!isset($this['newExtLinks'][$key]))
+        {
+          $this->addExtLinks($key);
+        }
+        $taintedValues['newExtLinks'][$key]['record_id'] = 0;
+      }
+    }
 	if (!isset($this['newComments'][$key]))
 	{
 	  $this->addComments($key);
@@ -401,6 +441,13 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	  $this->offsetUnset('newInsurance');
 	  unset($taintedValues['newInsurance']);
 	}
+    if(!isset($taintedValues['extlink']))
+    {
+      $this->offsetUnset('ExtLinks');
+      unset($taintedValues['ExtLinks']);
+      $this->offsetUnset('newExtLinks');
+      unset($taintedValues['newExtLinks']);
+    }   	
 	parent::bind($taintedValues, $taintedFiles);
   }
 
@@ -493,6 +540,28 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 	  }
 	}
     } 
+    if (null === $forms && $this->getValue('extlink'))
+    {
+	    $value = $this->getValue('newExtLinks');
+	    foreach($this->embeddedForms['newExtLinks']->getEmbeddedForms() as $name => $form)
+	    {
+	      if(!isset($value[$name]['url']) || $value[$name]['url'] == '')
+	        unset($this->embeddedForms['newExtLinks'][$name]);
+	      else
+	      {
+	        $form->getObject()->setRecordId($this->getObject()->getId());
+	      }
+	    }
+	    $value = $this->getValue('ExtLinks');
+	    foreach($this->embeddedForms['ExtLinks']->getEmbeddedForms() as $name => $form)
+	    {	
+	      if(!isset($value[$name]['url']) || $value[$name]['url'] == '')
+	      {
+	        $form->getObject()->delete();
+	        unset($this->embeddedForms['ExtLinks'][$name]);
+	      }
+	    }
+    }       
 	return parent::saveEmbeddedForms($con, $forms);
   }
 }

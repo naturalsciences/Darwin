@@ -71,4 +71,6 @@ class partwidgetViewComponents extends sfComponents
   {
 	  $this->maintenances = Doctrine::getTable('CollectionMaintenance')->getRelatedArray('specimen_parts', array($this->eid));
   }
+  public function executeExtLinks()
+  {}  
 }

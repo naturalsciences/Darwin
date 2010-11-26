@@ -94,7 +94,21 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
 
     $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
-
+    
+    /* extLinks sub form */
+    
+    $subForm = new sfForm();
+    $this->embedForm('ExtLinks',$subForm);   
+    foreach(Doctrine::getTable('ExtLinks')->findForTable('specimen_individuals', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new ExtLinksForm($vals,array('table' => 'individuals'));
+      $this->embeddedForms['ExtLinks']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('ExtLinks', $this->embeddedForms['ExtLinks']);
+    
+    $subForm = new sfForm();
+    $this->embedForm('newExtLinks',$subForm);   
     /* Comments sub form */
     
     $subForm = new sfForm();
@@ -112,6 +126,8 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     
     $this->widgetSchema['comment'] = new sfWidgetFormInputHidden(array('default'=>1));
 
+    $this->widgetSchema['extlink'] = new sfWidgetFormInputHidden(array('default'=>1));
+    $this->validatorSchema['extlink'] = new sfValidatorPass();
     /* Validators */
 
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
@@ -185,6 +201,19 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
       $this->embedForm('newIdentification', $this->embeddedForms['newIdentification']);
   }
 
+  public function addExtLinks($num, $obj=null)
+  {
+      $options = array('referenced_relation' => 'specimen_individuals', 'record_id' => $this->getObject()->getId());
+      if(!$obj) $val = new ExtLinks();
+      else $val = $obj ;      
+      $val->fromArray($options);
+      $val->setRecordId($this->getObject()->getId());
+      $form = new ExtLinksForm($val,array('table' => 'individuals'));
+      $this->embeddedForms['newExtLinks']->embedForm($num, $form);
+      //Re-embedding the container
+      $this->embedForm('newExtLinks', $this->embeddedForms['newExtLinks']);
+  }
+  
   public function addComments($num, $obj=null)
   {
       $options = array('referenced_relation' => 'specimen_individuals', 'record_id' => $this->getObject()->getId());
@@ -264,6 +293,17 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
             }
 	}
     }
+    if(isset($taintedValues['newExtLinks']) && isset($taintedValues['extlink']))
+    {
+      foreach($taintedValues['newExtLinks'] as $key=>$newVal)
+      {
+        if (!isset($this['newExtLinks'][$key]))
+        {
+          $this->addExtLinks($key);
+        }
+        $taintedValues['newExtLinks'][$key]['record_id'] = 0;
+      }
+    }    
     if(isset($taintedValues['newComments']) && isset($taintedValues['comment']))
     {
      foreach($taintedValues['newComments'] as $key=>$newVal)
@@ -289,6 +329,13 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
       $this->offsetUnset('newComments');
       unset($taintedValues['newComments']);
     }
+    if(!isset($taintedValues['extlink']))
+    {
+      $this->offsetUnset('ExtLinks');
+      unset($taintedValues['ExtLinks']);
+      $this->offsetUnset('newExtLinks');
+      unset($taintedValues['newExtLinks']);
+    }       
     parent::bind($taintedValues, $taintedFiles);
   }
 
@@ -357,26 +404,48 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
     }
     if (null === $forms && $this->getValue('comment'))
     {
-	$value = $this->getValue('newComments');
-	foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
-	{
-	  if(!isset($value[$name]['comment'] ))
-	    unset($this->embeddedForms['newComments'][$name]);
-	  else
-	  {
-	    $form->getObject()->setRecordId($this->getObject()->getId());
-	  }
-	}
-	$value = $this->getValue('Comments');
-	foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
-	{	
-	  if (!isset($value[$name]['comment'] ))
-	  {
-	    $form->getObject()->delete();
-	    unset($this->embeddedForms['Comments'][$name]);
-	  }
-	}
-    } 
+	    $value = $this->getValue('newComments');
+	    foreach($this->embeddedForms['newComments']->getEmbeddedForms() as $name => $form)
+	    {
+	      if(!isset($value[$name]['comment'] ))
+	        unset($this->embeddedForms['newComments'][$name]);
+	      else
+	      {
+	        $form->getObject()->setRecordId($this->getObject()->getId());
+	      }
+	    }
+	    $value = $this->getValue('Comments');
+	    foreach($this->embeddedForms['Comments']->getEmbeddedForms() as $name => $form)
+	    {	
+	      if (!isset($value[$name]['comment'] ))
+	      {
+	        $form->getObject()->delete();
+	        unset($this->embeddedForms['Comments'][$name]);
+	      }
+	    }
+    }
+    if (null === $forms && $this->getValue('extlink'))
+    {
+	    $value = $this->getValue('newExtLinks');
+	    foreach($this->embeddedForms['newExtLinks']->getEmbeddedForms() as $name => $form)
+	    {
+	      if(!isset($value[$name]['url']) || $value[$name]['url'] == '')
+	        unset($this->embeddedForms['newExtLinks'][$name]);
+	      else
+	      {
+	        $form->getObject()->setRecordId($this->getObject()->getId());
+	      }
+	    }
+	    $value = $this->getValue('ExtLinks');
+	    foreach($this->embeddedForms['ExtLinks']->getEmbeddedForms() as $name => $form)
+	    {	
+	      if(!isset($value[$name]['url']) || $value[$name]['url'] == '')
+	      {
+	        $form->getObject()->delete();
+	        unset($this->embeddedForms['ExtLinks'][$name]);
+	      }
+	    }
+    }      
     return parent::saveEmbeddedForms($con, $forms);
   }  
 }

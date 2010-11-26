@@ -91,15 +91,7 @@ $browser->
     isStatusCode(200)->
     checkElement('input[value="Aves"]')->
   end()->
-  click('#submit',array('collections' => 
-    array(
-    'name'            => 'Paléonotologie',
-    'institution_ref' => Doctrine::getTable('People')->findOneByFamilyName('UGMM')->getId(),
-    'collection_type' => 'mix',
-    'code'            => 'paleo',
-    'main_manager_ref'=> Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId(),
-    'parent_ref'      => Doctrine::getTable('Collections')->findOneByName('Molusca')->getId(),
-        )))->
+  click('#submit',array( ))->with('form')->debug()->
   followRedirect()->
 
   with('request')->begin()->

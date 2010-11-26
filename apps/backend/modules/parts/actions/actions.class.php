@@ -62,6 +62,14 @@ class partsActions extends DarwinActions
           $comment = $this->getRecordIfDuplicate($val->getId(),$comment); 
           $this->form->addComments($key, $comment) ;          
         }
+        // reembed duplicated external url
+        $ExtLinks = Doctrine::getTable('ExtLinks')->findForTable('specimen_individuals',$duplic) ;
+        foreach ($ExtLinks as $key=>$val)
+        {
+          $links = new ExtLinks() ;
+          $links = $this->getRecordIfDuplicate($val->getId(),$comment); 
+          $this->individual->addExtLinks($key, $comment) ;          
+        }            
         // reembed duplicated codes
         $Codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts',$duplic) ;
         foreach ($Codes as $key=>$val)
@@ -192,7 +200,16 @@ class partsActions extends DarwinActions
     return $this->renderPartial('parts/insurances',array('form' => $form['newInsurance'][$number], 'rownum'=>$number));
   }
   
-  
+
+  public function executeAddExtLinks(sfWebRequest $request)
+  {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
+    $number = intval($request->getParameter('num'));
+    $form = $this->getSpecimenPartForm($request);
+    $form->addExtLinks($number);
+    return $this->renderPartial('specimen/spec_links',array('form' => $form['newExtLinks'][$number], 'rownum'=>$number));
+  }
+    
   public function executeAddComments(sfWebRequest $request)
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     

@@ -120,6 +120,9 @@ class specimenwidgetviewComponents extends sfComponents
     }    
   }
 
+  public function executeExtLinks()
+  {}
+  
   public function executeSpecimensAccompanying()
   {
     $this->accompanying = Doctrine::getTable("SpecimensAccompanying")->findBySpecimenRef($this->eid) ;

@@ -203,7 +203,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_addresses'));
-      if($request->getParameter('user_ref') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
+      if($request->getParameter('ref_id') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
@@ -245,7 +245,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_comm'));
-      if($request->getParameter('user_ref') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
+      if($request->getParameter('ref_id') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try

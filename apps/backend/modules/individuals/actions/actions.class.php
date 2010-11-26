@@ -77,6 +77,14 @@ class individualsActions extends DarwinActions
           $comment = $this->getRecordIfDuplicate($val->getId(),$comment); 
           $this->individual->addComments($key, $comment) ;          
         }
+        // reembed duplicated external url
+        $ExtLinks = Doctrine::getTable('ExtLinks')->findForTable('specimen_individuals',$duplic) ;
+        foreach ($ExtLinks as $key=>$val)
+        {
+          $links = new ExtLinks() ;
+          $links = $this->getRecordIfDuplicate($val->getId(),$comment); 
+          $this->individual->addExtLinks($key, $comment) ;          
+        }        
         //reembed identification
         $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimen_individuals',$duplic) ;
         if(!$Identifications->count()) $this->individual->addIdentifications(0,0);
@@ -203,6 +211,23 @@ class individualsActions extends DarwinActions
     return $this->renderPartial('specimen/spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
  
+  public function executeAddExtLinks(sfWebRequest $request)
+  {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
+    if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
+                                                                                                      $request->getParameter('id'), 
+                                                                                                      $this->getUser()->getId())))  
+      $this->forwardToSecureAction();    
+    $number = intval($request->getParameter('num'));
+    $spec = null;
+
+    if($request->hasParameter('id') && $request->getParameter('id'))
+      $spec = Doctrine::getTable('SpecimenIndividuals')->findExcept($request->getParameter('id') );
+    $form = new SpecimenIndividualsForm($spec);
+    $form->addExtLinks($number);
+    return $this->renderPartial('specimen/spec_links',array('form' => $form['newExtLinks'][$number], 'rownum'=>$number));
+  }
+  
   public function executeDelete(sfWebRequest $request)
   {
     if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  

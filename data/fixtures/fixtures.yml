@@ -492,7 +492,87 @@ MyWidgets:
         order_by: 2
         opened: true
         visible: true
-
+    u1ws26:
+        User: u1
+        col_num: 1
+        category: catalogue_chronostratigraphy_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true
+    u1ws27:
+        User: u1
+        col_num: 1
+        category: catalogue_taxonomy_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true      
+    u1ws28:
+        User: u1
+        col_num: 1
+        category: catalogue_mineralogy_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true   
+    u1ws29:
+        User: u1
+        col_num: 1
+        category: catalogue_expedition_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true 
+    u1ws30:
+        User: u1
+        col_num: 1
+        category: catalogue_lithology_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true      
+    u1ws31:
+        User: u1
+        col_num: 1
+        category: catalogue_lithostratigraphy_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true   
+    u1ws32:
+        User: u1
+        col_num: 1
+        category: people_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true                        
+    u1ws33:
+        User: u1
+        col_num: 1
+        category: specimen_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true      
+    u1ws34:
+        User: u1
+        col_num: 1
+        category: individual_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true   
+    u1ws35:
+        User: u1
+        col_num: 1
+        category: part_widget
+        group_name: extLinks
+        order_by: 2
+        opened: true
+        visible: true  
+        
 CatalogueProperties:
     cprop1:
         referenced_relation: taxonomy
