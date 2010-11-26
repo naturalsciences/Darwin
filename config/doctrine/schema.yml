@@ -370,6 +370,7 @@ UsersLoginInfos:
         user_name: { type: string }
         password: { type: string }
         login_system: { type: string}
+        renew_hash: {type: string}
     relations:
         User:
             class: Users

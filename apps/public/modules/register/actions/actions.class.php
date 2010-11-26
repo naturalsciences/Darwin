@@ -10,6 +10,26 @@
  */
 class registerActions extends DarwinActions
 {
+  /*Function sending an email to the specified user to confirm he's been well registered*/
+  protected function sendConfirmationMail($userParams)
+  {
+    $message = $this->getMailer()->compose();
+    $message->setFrom(array(sfConfig::get('app_mailer_sender') => 'DaRWIN 2 team'));
+    if(is_array($userParams))
+    {
+      if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']))
+      {
+        if(!empty($userParams['mail']))
+        {
+          $message->setTo($userParams['mail']);
+          $message->setSubject($this->getI18N()->__('DaRWIN 2  registration'));
+          $message->setBody($this->getPartial('confirmationMail', array('userParams'=>$userParams)),'text/plain');
+          $this->getMailer()->send($message);
+        }
+      }
+    }
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new RegisterForm();
@@ -114,4 +134,5 @@ class registerActions extends DarwinActions
     else
       $this->redirect($referer);
   }
+
 }
