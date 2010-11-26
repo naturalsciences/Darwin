@@ -33,7 +33,6 @@ $(document).ready(function ()
 
   <?php echo form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition no_border'));?>
     <div>
-      <?php echo $form['id']->render() ?>
       <?php if($form->hasGlobalErrors()):?>
         <ul class="spec_error_list">
           <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>

@@ -111,7 +111,6 @@ class individualsActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->individual->bind( $request->getParameter('specimen_individuals') );
-     if($request->getParameter('id') != $this->individual->getValue('id')) $this->forwardToSecureAction();      
       if( $this->individual->isValid())
       {
         try
@@ -147,7 +146,7 @@ class individualsActions extends DarwinActions
     if(in_array($request->getParameter('id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',
                                                                                                       $request->getParameter('id'), 
                                                                                                       $this->getUser()->getId())))  
-      $this->forwardToSecureAction();                                                                                                        
+      $this->forwardToSecureAction();
     $number = intval($request->getParameter('num'));
     $order_by = intval($request->getParameter('order_by',0));
     $individual_form = $this->getSpecimenIndividualsForm($request);

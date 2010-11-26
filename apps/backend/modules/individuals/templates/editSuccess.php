@@ -14,7 +14,6 @@
 
 <?php echo form_tag('individuals/edit'. ($individual->isNew() ? '?spec_id='.$specimen->getId() : '?id='.$individual->getObject()->getId()) );?>
   <div>
-    <?php echo $individual['id']->render(); ?>
     <?php echo $individual['specimen_ref']->render(); ?>
     <?php if($individual->hasGlobalErrors()):?>
       <ul class="spec_error_list">

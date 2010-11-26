@@ -36,6 +36,18 @@ class lithostratigraphyActions extends DarwinActions
       sprintf('Object lithostratigraphy does not exist (%s).', array($request->getParameter('id')))
     );
 
+    if(! $request->hasParameter('confirm'))
+    {
+      $this->number_child = Doctrine::getTable('Lithostratigraphy')->hasChildrens('Lithostratigraphy',$unit->getId());
+      if($this->number_child)
+      {
+        $this->link_delete = 'lithostratigraphy/delete?confirm=1&id='.$unit->getId();
+        $this->link_cancel = 'lithostratigraphy/edit?id='.$unit->getId();
+        $this->setTemplate('warndelete', 'catalogue');
+        return;
+      }
+    }
+
     try
     {
       $unit->delete();
@@ -45,10 +57,12 @@ class lithostratigraphyActions extends DarwinActions
     {
       $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-      $this->form = new InstitutionsForm($institution);
+      $this->form = new LithostratigraphyForm($unit);
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
       $this->setTemplate('edit');
+      $this->no_right_col = Doctrine::getTable('Lithostratigraphy')->testNoRightsCollections('litho_ref',$request->getParameter('id'), $this->getUser()->getId());
+
     }
   }
 

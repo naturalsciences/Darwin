@@ -12,6 +12,7 @@ class SpecimensForm extends BaseSpecimensForm
   public function configure()
   {
     unset(
+      $this['id'],
       $this['acquisition_date_mask'],
       $this['multimedia_visible']
     );
@@ -368,8 +369,6 @@ class SpecimensForm extends BaseSpecimensForm
 
     /* Validators */
     $this->validatorSchema['extlink'] = new sfValidatorPass();
-
-    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
 
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger(array('required'=>true));
 

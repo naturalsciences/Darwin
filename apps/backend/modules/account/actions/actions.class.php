@@ -34,7 +34,7 @@ class accountActions extends DarwinActions
         $this->getUser()->setAttribute('db_user_id',$this->form->user->getId());
         $this->getUser()->setAttribute('db_user_type',$this->form->user->getDbUserType());
         $lang = Doctrine::getTable("UsersLanguages")->getPreferredLanguage($this->form->user->getId());
-        if($lang) //prevent from crashing if lang is set
+        if($lang) //prevent from crashing if lang is not set
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }

@@ -36,6 +36,18 @@ class mineralogyActions extends DarwinActions
       sprintf('Object mineralogy does not exist (%s).', array($request->getParameter('id')))
     );
 
+    if(! $request->hasParameter('confirm'))
+    {
+      $this->number_child = Doctrine::getTable('Mineralogy')->hasChildrens('Mineralogy',$unit->getId());
+      if($this->number_child)
+      {
+        $this->link_delete = 'mineralogy/delete?confirm=1&id='.$unit->getId();
+        $this->link_cancel = 'mineralogy/edit?id='.$unit->getId();
+        $this->setTemplate('warndelete', 'catalogue');
+        return;
+      }
+    }
+
     try
     {
       $unit->delete();
@@ -48,6 +60,7 @@ class mineralogyActions extends DarwinActions
       $this->form = new MineralogyForm($unit);
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
+      $this->no_right_col = Doctrine::getTable('Mineralogy')->testNoRightsCollections('mineral_ref',$request->getParameter('id'), $this->getUser()->getId());
       $this->setTemplate('edit');
     }
   }
