@@ -25,6 +25,7 @@ SELECT ok('/15/11/' = (SELECT path FROM collections WHERE id = 12), 'Path of col
 SELECT ok('/15/11/' = (SELECT path FROM collections WHERE id = 13), 'Path of collections 3');
 SELECT ok('/15/11/13/' = (SELECT path FROM collections WHERE id = 14), 'Path of collections 4');
 SELECT ok('/' = (SELECT path FROM collections WHERE id = 15), 'Path of collections 5');
+-- select id, path from collections;
 
 UPDATE collections SET parent_ref = null  WHERE id=11;
 
@@ -33,7 +34,7 @@ SELECT ok('/11/' = (SELECT path FROM collections WHERE id = 12), 'Path of collec
 SELECT ok('/11/' = (SELECT path FROM collections WHERE id = 13), 'Path of collections 3');
 SELECT ok('/11/13/' = (SELECT path FROM collections WHERE id = 14), 'Path of collections 4');
 SELECT ok('/' = (SELECT path FROM collections WHERE id = 15), 'Path of collections 5');
-
+-- select id, path from collections;
 
 SELECT diag('fct_cpy_path - Multimedia');
 

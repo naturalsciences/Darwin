@@ -12,9 +12,9 @@ INSERT INTO chronostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'KÉ
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 2, 57, 3)), 'Move unit 3 (of level 58 (system)) to level 57 (sub era) allowed -> parent is an era !');
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 4, 57, 3)), 'Move unit 3 (of level 58 (system)) to level 57 (sub era) and parent 4 (era) allowed !');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 2, 59, 3)), 'Move unit 3 (of level 58 (system)) to level 59 (serie) not allowed -> parent is an era !');
-SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 59 WHERE id = 3', 'The modification of level and/or parent reference is not allowed, because unit modified won''t follow the rules of possible upper level attachement');
+SELECT throws_ok('UPDATE chronostratigraphy SET level_ref = 59 WHERE id = 3');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('chronostratigraphy', 1, 58, 3)), 'Move unit 3 to parent unit 1 (eon) not allowed -> A sub-era cannot be linked to an eon !');
-SELECT throws_ok('UPDATE chronostratigraphy SET parent_ref = 1 WHERE id = 3', 'The modification of level and/or parent reference is not allowed, because unit modified won''t follow the rules of possible upper level attachement');
+SELECT throws_ok('UPDATE chronostratigraphy SET parent_ref = 1 WHERE id = 3');
 
 SELECT diag('Lithostratigraphy level/parent update tests');
 
@@ -25,9 +25,9 @@ INSERT INTO lithostratigraphy (id, name, level_ref, parent_ref) VALUES (4, 'KÉL
 
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('lithostratigraphy', 4, 66, 3)), 'Move unit 3 (of level 66 (member)) to parent 4 (formation) allowed !');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithostratigraphy', 2, 67, 3)), 'Move unit 3 (of level 66 (member)) to level 67 (layer) not allowed -> parent is a formation !');
-SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 67 WHERE id = 3', 'P0001');
+SELECT throws_ok('UPDATE lithostratigraphy SET level_ref = 67 WHERE id = 3');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithostratigraphy', 1, 66, 3)), 'Move unit 3 to parent unit 1 (group) not allowed -> A member cannot be linked to a group !');
-SELECT throws_ok('UPDATE lithostratigraphy SET parent_ref = 1 WHERE id = 3', 'P0001');
+SELECT throws_ok('UPDATE lithostratigraphy SET parent_ref = 1 WHERE id = 3');
 
 SELECT diag('Lithology level/parent update tests');
 
@@ -38,9 +38,8 @@ INSERT INTO lithology (id, name, level_ref, parent_ref) VALUES (4, 'KÉLoWÿ', 7
 
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('lithology', 4, 77, 3)), 'Move unit 3 (of level 77 (sub-group)) to parent 4 (group) allowed !');
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('lithology', 2, 78, 3)), 'Move unit 3 (of level 77 (sub-group)) to level 78 (rock) allowed !');
-/*SELECT throws_ok('UPDATE lithology SET level_ref = 78 WHERE id = 3', 'P0001');*/
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('lithology', 1, 77, 3)), 'Move unit 3 to parent unit 1 (main group) not allowed -> A sub-group cannot be linked to a main group !');
-SELECT throws_ok('UPDATE lithology SET parent_ref = 1 WHERE id = 3', 'P0001');
+SELECT throws_ok('UPDATE lithology SET parent_ref = 1 WHERE id = 3');
 
 SELECT diag('Mineralogy level/parent update tests');
 
@@ -51,9 +50,9 @@ INSERT INTO mineralogy (id, code, name, level_ref, parent_ref) VALUES (4, '4', '
 
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('mineralogy', 4, 72, 3)), 'Move unit 3 (of level 72 (family)) to parent 4 (division) allowed !');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('mineralogy', 2, 73, 3)), 'Move unit 3 (of level 72 (family)) to level 73 (group) not allowed -> parent is a division !');
-SELECT throws_ok('UPDATE mineralogy SET level_ref = 73 WHERE id = 3', 'P0001');
+SELECT throws_ok('UPDATE mineralogy SET level_ref = 73 WHERE id = 3');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('mineralogy', 1, 72, 3)), 'Move unit 3 to parent unit 1 (class) not allowed -> A family cannot be linked to a class !');
-SELECT throws_ok('UPDATE mineralogy SET parent_ref = 1 WHERE id = 3', 'P0001');
+SELECT throws_ok('UPDATE mineralogy SET parent_ref = 1 WHERE id = 3');
 
 SELECT diag('Taxonomy level/parent update tests');
 
@@ -72,8 +71,8 @@ SELECT lives_ok('INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (
 
 SELECT ok(true = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 45, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 45 (serie) allowed ! -> parent is a genus');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 41, 8)), 'Move unit 8 (of level 42 (sub genus)) to level 41 (genus) not allowed -> parent is a genus itself !');
-SELECT throws_ok('UPDATE taxonomy SET level_ref = 41 WHERE id = 8', 'P0001');
-SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 5', 'Change parent of unit 5 (with level order (28)) from parent 4 to parent 11 (both class levels (12)) -> OK!');
+SELECT throws_ok('UPDATE taxonomy SET level_ref = 41 WHERE id = 8');
+SELECT lives_ok('UPDATE taxonomy SET parent_ref = 11 WHERE id = 5');
 SELECT ok(false = (SELECT fct_chk_possible_upper_level('taxonomy', 7, 49, 12)), 'Move unit 12 (of level 48 (species)) to level 49 (sub species) not allowed ! -> a sub species cannot be attached to a genus directly !');
 
 

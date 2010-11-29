@@ -15,20 +15,13 @@ DROP FUNCTION IF EXISTS fct_trk_log_table() CASCADE;
 
 /*** All hierarchical catalogues functions ***/
 
-DROP FUNCTION IF EXISTS fct_cpy_update_path() CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_update_levels_or_parent_cascade() CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_update_children_when_parent_updated (referenced_relation varchar, parent_id integer, parent_old_level template_classifications.level_ref%TYPE, parent_new_level template_classifications.level_ref%TYPE, parent_hierarchy_ref integer[], parent_hierarchy_indexed tsvector[]) CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_name_updt_impact_children() CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_cascade_children_indexed_names (referenced_relation varchar, new_level_ref template_classifications.level_ref%TYPE, new_name_indexed template_classifications.name_indexed%TYPE, new_id integer) CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_hierarchy_from_parents() CASCADE;
-DROP FUNCTION IF EXISTS fct_get_hierarchy_from_parents(referenced_relation varchar, id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_gtuTags() CASCADE;
 DROP FUNCTION IF EXISTS lineToTagRows(line text) CASCADE;
 
 /*** Others ***/
 
 DROP FUNCTION IF EXISTS fct_cpy_path() CASCADE;
+DROP FUNCTION IF EXISTS fct_cpy_path_catalogs() CASCADE;
 
 DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer) CASCADE;

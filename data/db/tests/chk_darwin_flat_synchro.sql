@@ -163,9 +163,8 @@ SELECT ok('240275' = (SELECT ig_num FROM darwin_flat WHERE id = 2), 'ig num "240
 
 -- Test delete of ig num -> set to null value in darwin_flat
 
-DELETE FROM igs where ig_num = '240275';
+SELECT throws_ok('DELETE FROM igs where ig_num = ''240275''');
 
-SELECT ok('0' = (SELECT coalesce(ig_num,'0') FROM darwin_flat WHERE id = 2), 'ig num reset to null for specimen 2.');
 
 -- Tests individuals interactions
 

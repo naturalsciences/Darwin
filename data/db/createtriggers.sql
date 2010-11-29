@@ -6,102 +6,6 @@ CREATE TRIGGER trg_cpy_idToCode_gtu BEFORE INSERT OR UPDATE
 	ON gtu FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_idToCode();
 
--- BEGIN HIERARCHICAL UNITS CATALOGUE COPY FROM PARENT
-
-CREATE TRIGGER trg_cpy_hierarchy_from_parents_chronostratigraphy BEFORE INSERT
-	ON chronostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
-
-CREATE TRIGGER trg_cpy_hierarchy_from_parents_lithostratigraphy BEFORE INSERT
-	ON lithostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
-
-CREATE TRIGGER trg_cpy_hierarchy_from_parents_mineralogy BEFORE INSERT
-	ON mineralogy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
-
-CREATE TRIGGER trg_cpy_hierarchy_from_parents_taxa BEFORE INSERT
-	ON taxonomy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
-
-CREATE TRIGGER trg_cpy_hierarchy_from_parents_lithology BEFORE INSERT
-	ON lithology FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_hierarchy_from_parents();
-
--- END HIERARCHICAL UNITS CATALOGUE COPY FROM PARENT
-
--- BEGIN HIERARCHICAL UNITS CATALOGUE IMPACT CHILDREN
-
-CREATE TRIGGER trg_cpy_name_updt_impact_children_chronostratigraphy BEFORE UPDATE
-	ON chronostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
-
-CREATE TRIGGER trg_cpy_name_updt_impact_children_lithostratigraphy BEFORE UPDATE
-	ON lithostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
-
-CREATE TRIGGER trg_cpy_name_updt_impact_children_mineralogy BEFORE UPDATE
-	ON mineralogy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
-
-CREATE TRIGGER trg_cpy_name_updt_impact_children_taxa BEFORE UPDATE
-	ON taxonomy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
-
-CREATE TRIGGER trg_cpy_name_updt_impact_children_lithology BEFORE UPDATE
-	ON lithology FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_name_updt_impact_children();
-
--- END HIERARCHICAL UNITS CATALOGUE IMPACT CHILDREN
-
---- BEGIN HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
-
-CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_chronostratigraphy BEFORE UPDATE
-	ON chronostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
-
-CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_lithostratigraphy BEFORE UPDATE
-	ON lithostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
-
-CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_mineralogy BEFORE UPDATE
-	ON mineralogy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
-
-CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_taxa BEFORE UPDATE
-	ON taxonomy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
-
-CREATE TRIGGER trg_cpy_update_levels_or_parent_cascade_lithology BEFORE UPDATE
-	ON lithology FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_levels_or_parent_cascade();
-
---- END HIERARCHICAL UNITS UPDATE WHEN LEVEL OR PARENT UPDATED
-
---- BEGIN CONSTRUCTION OF HIERARCHY PATH
-
-CREATE TRIGGER trg_cpy_update_path_chronostratigraphy BEFORE INSERT OR UPDATE
-	ON chronostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_path();
-
-CREATE TRIGGER trg_cpy_update_path_lithostratigraphy BEFORE INSERT OR UPDATE
-	ON lithostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_path();
-
-CREATE TRIGGER trg_cpy_update_path_mineralogy BEFORE INSERT OR UPDATE
-	ON mineralogy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_path();
-
-CREATE TRIGGER trg_cpy_update_path_taxonomy BEFORE INSERT OR UPDATE
-	ON taxonomy FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_path();
-
-CREATE TRIGGER trg_cpy_update_path_lithology BEFORE INSERT OR UPDATE
-	ON lithology FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_update_path();
-
---- END CONSTRUCTION OF HIERARCHY PATH
-
 -- BEGIN FULLTOINDEX
 CREATE TRIGGER trg_cpy_fullToIndex_catalogueproperties BEFORE INSERT OR UPDATE
 	ON catalogue_properties FOR EACH ROW
@@ -417,6 +321,45 @@ CREATE TRIGGER trg_cpy_path_habitats BEFORE INSERT OR UPDATE
 	ON habitats FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 
+CREATE TRIGGER trg_cpy_path_chronostratigraphy BEFORE INSERT OR UPDATE
+        ON chronostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path_catalogs();
+
+CREATE TRIGGER trg_chk_upper_level_for_childrens_chronostratigraphy AFTER UPDATE
+        ON chronostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_chk_upper_level_for_childrens();
+
+CREATE TRIGGER trg_cpy_path_lithology BEFORE INSERT OR UPDATE
+        ON lithology FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path_catalogs();
+
+CREATE TRIGGER trg_chk_upper_level_for_childrens_lithology AFTER UPDATE
+        ON lithology FOR EACH ROW
+        EXECUTE PROCEDURE fct_chk_upper_level_for_childrens();
+
+CREATE TRIGGER trg_cpy_path_lithostratigraphy BEFORE INSERT OR UPDATE
+        ON lithostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path_catalogs();
+
+CREATE TRIGGER trg_chk_upper_level_for_childrens_lithostratigraphy AFTER UPDATE
+        ON lithostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_chk_upper_level_for_childrens();
+
+CREATE TRIGGER trg_cpy_path_mineralogy BEFORE INSERT OR UPDATE
+        ON mineralogy FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path_catalogs();
+
+CREATE TRIGGER trg_chk_upper_level_for_childrens_mineralogy AFTER UPDATE
+        ON mineralogy FOR EACH ROW
+        EXECUTE PROCEDURE fct_chk_upper_level_for_childrens();
+
+CREATE TRIGGER trg_cpy_path_taxonomy BEFORE INSERT OR UPDATE
+        ON taxonomy FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path_catalogs();
+
+CREATE TRIGGER trg_chk_upper_level_for_childrens_taxonomy AFTER UPDATE
+        ON taxonomy FOR EACH ROW
+        EXECUTE PROCEDURE fct_chk_upper_level_for_childrens();
 
 /*** TRACKING ****/
 

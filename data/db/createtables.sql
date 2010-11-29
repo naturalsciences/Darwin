@@ -1074,173 +1074,10 @@ create sequence taxonomy_id_seq;
 create table taxonomy
        (
         id integer not null default nextval('taxonomy_id_seq'),
-        domain_ref integer default 0 not null,
-        domain_indexed classifications_names,
-        kingdom_ref integer default 0 not null,
-        kingdom_indexed classifications_names,
-        super_phylum_ref integer default 0 not null,
-        super_phylum_indexed classifications_names,
-        phylum_ref integer default 0 not null,
-        phylum_indexed classifications_names,
-        sub_phylum_ref integer default 0 not null,
-        sub_phylum_indexed classifications_names,
-        infra_phylum_ref integer default 0 not null,
-        infra_phylum_indexed classifications_names,
-        super_cohort_botany_ref integer default 0 not null,
-        super_cohort_botany_indexed classifications_names,
-        cohort_botany_ref integer default 0 not null,
-        cohort_botany_indexed classifications_names,
-        sub_cohort_botany_ref integer default 0 not null,
-        sub_cohort_botany_indexed classifications_names,
-        infra_cohort_botany_ref integer default 0 not null,
-        infra_cohort_botany_indexed classifications_names,
-        super_class_ref integer default 0 not null,
-        super_class_indexed classifications_names,
-        class_ref integer default 0 not null,
-        class_indexed classifications_names,
-        sub_class_ref integer default 0 not null,
-        sub_class_indexed classifications_names,
-        infra_class_ref integer default 0 not null,
-        infra_class_indexed classifications_names,
-        super_division_ref integer default 0 not null,
-        super_division_indexed classifications_names,
-        division_ref integer default 0 not null,
-        division_indexed classifications_names,
-        sub_division_ref integer default 0 not null,
-        sub_division_indexed classifications_names,
-        infra_division_ref integer default 0 not null,
-        infra_division_indexed classifications_names,
-        super_legion_ref integer default 0 not null,
-        super_legion_indexed classifications_names,
-        legion_ref integer default 0 not null,
-        legion_indexed classifications_names,
-        sub_legion_ref integer default 0 not null,
-        sub_legion_indexed classifications_names,
-        infra_legion_ref integer default 0 not null,
-        infra_legion_indexed classifications_names,
-        super_cohort_zoology_ref integer default 0 not null,
-        super_cohort_zoology_indexed classifications_names,
-        cohort_zoology_ref integer default 0 not null,
-        cohort_zoology_indexed classifications_names,
-        sub_cohort_zoology_ref integer default 0 not null,
-        sub_cohort_zoology_indexed classifications_names,
-        infra_cohort_zoology_ref integer default 0 not null,
-        infra_cohort_zoology_indexed classifications_names,
-        super_order_ref integer default 0 not null,
-        super_order_indexed classifications_names,
-        order_ref integer default 0 not null,
-        order_indexed classifications_names,
-        sub_order_ref integer default 0 not null,
-        sub_order_indexed classifications_names,
-        infra_order_ref integer default 0 not null,
-        infra_order_indexed classifications_names,
-        section_zoology_ref integer default 0 not null,
-        section_zoology_indexed classifications_names,
-        sub_section_zoology_ref integer default 0 not null,
-        sub_section_zoology_indexed classifications_names,
-        super_family_ref integer default 0 not null,
-        super_family_indexed classifications_names,
-        family_ref integer default 0 not null,
-        family_indexed classifications_names,
-        sub_family_ref integer default 0 not null,
-        sub_family_indexed classifications_names,
-        infra_family_ref integer default 0 not null,
-        infra_family_indexed classifications_names,
-        super_tribe_ref integer default 0 not null,
-        super_tribe_indexed classifications_names,
-        tribe_ref integer default 0 not null,
-        tribe_indexed classifications_names,
-        sub_tribe_ref integer default 0 not null,
-        sub_tribe_indexed classifications_names,
-        infra_tribe_ref integer default 0 not null,
-        infra_tribe_indexed classifications_names,
-        genus_ref integer default 0 not null,
-        genus_indexed classifications_names,
-        sub_genus_ref integer default 0 not null,
-        sub_genus_indexed classifications_names,
-        section_botany_ref integer default 0 not null,
-        section_botany_indexed classifications_names,
-        sub_section_botany_ref integer default 0 not null,
-        sub_section_botany_indexed classifications_names,
-        serie_ref integer default 0 not null,
-        serie_indexed classifications_names,
-        sub_serie_ref integer default 0 not null,
-        sub_serie_indexed classifications_names,
-        super_species_ref integer default 0 not null,
-        super_species_indexed classifications_names,
-        species_ref integer default 0 not null,
-        species_indexed classifications_names,
-        sub_species_ref integer default 0 not null,
-        sub_species_indexed classifications_names,
-        variety_ref integer default 0 not null,
-        variety_indexed classifications_names,
-        sub_variety_ref integer default 0 not null,
-        sub_variety_indexed classifications_names,
-        form_ref integer default 0 not null,
-        form_indexed classifications_names,
-        sub_form_ref integer default 0 not null,
-        sub_form_indexed classifications_names,
-        abberans_ref integer default 0 not null,
-        abberans_indexed classifications_names,
         extinct boolean default false not null,
         constraint pk_taxonomy primary key (id),
         constraint unq_taxonomy unique (path, name_indexed, level_ref),
-        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_domain_taxonomy foreign key (domain_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_kingdom_taxonomy foreign key (kingdom_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_phylum_taxonomy foreign key (super_phylum_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_phylum_taxonomy foreign key (phylum_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_phylum_taxonomy foreign key (sub_phylum_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_phylum_taxonomy foreign key (infra_phylum_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_cohort_botany_taxonomy foreign key (super_cohort_botany_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_cohort_botany_taxonomy foreign key (cohort_botany_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_cohort_botany_taxonomy foreign key (sub_cohort_botany_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_cohort_botany_taxonomy foreign key (infra_cohort_botany_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_class_taxonomy foreign key (super_class_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_class_taxonomy foreign key (class_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_class_taxonomy foreign key (sub_class_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_class_taxonomy foreign key (infra_class_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_division_taxonomy foreign key (super_division_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_division_taxonomy foreign key (division_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_division_taxonomy foreign key (sub_division_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_division_taxonomy foreign key (infra_division_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_legion_taxonomy foreign key (super_legion_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_legion_taxonomy foreign key (legion_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_legion_taxonomy foreign key (sub_legion_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_legion_taxonomy foreign key (infra_legion_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_cohort_zoology_taxonomy foreign key (super_cohort_zoology_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_cohort_zoology_taxonomy foreign key (cohort_zoology_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_cohort_zoology_taxonomy foreign key (sub_cohort_zoology_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_cohort_zoology_taxonomy foreign key (infra_cohort_zoology_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_order_taxonomy foreign key (super_order_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_order_taxonomy foreign key (order_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_order_taxonomy foreign key (sub_order_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_order_taxonomy foreign key (infra_order_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_section_zoology_taxonomy foreign key (section_zoology_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_section_zoology_taxonomy foreign key (sub_section_zoology_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_family_taxonomy foreign key (super_family_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_family_taxonomy foreign key (family_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_family_taxonomy foreign key (sub_family_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_family_taxonomy foreign key (infra_family_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_tribe_taxonomy foreign key (super_tribe_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_tribe_taxonomy foreign key (tribe_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_tribe_taxonomy foreign key (sub_tribe_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_infra_tribe_taxonomy foreign key (infra_tribe_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_genus_taxonomy foreign key (genus_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_genus_taxonomy foreign key (sub_genus_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_section_botany_taxonomy foreign key (section_botany_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_section_botany_taxonomy foreign key (sub_section_botany_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_serie_taxonomy foreign key (serie_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_serie_taxonomy foreign key (sub_serie_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_super_species_taxonomy foreign key (super_species_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_species_taxonomy foreign key (species_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_species_taxonomy foreign key (sub_species_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_variety_taxonomy foreign key (variety_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_variety_taxonomy foreign key (sub_variety_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_form_taxonomy foreign key (form_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_sub_form_taxonomy foreign key (sub_form_ref) references taxonomy(id) on delete cascade,
-        constraint fk_taxonomy_abberans_taxonomy foreign key (abberans_ref) references taxonomy(id) on delete cascade
+        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
        )
 inherits (template_classifications);
 comment on table taxonomy is 'Taxonomic classification table';
@@ -1249,114 +1086,6 @@ comment on column taxonomy.name is 'Classification unit name';
 comment on column taxonomy.name_indexed is 'Indexed form of name field';
 comment on column taxonomy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column taxonomy.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column taxonomy.domain_ref is 'Reference of domain the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.domain_indexed is 'Indexed name of domain the current taxonomy depends of';
-comment on column taxonomy.kingdom_ref is 'Reference of kingdom the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.kingdom_indexed is 'Indexed name of kingdom the current taxonomy depends of';
-comment on column taxonomy.super_phylum_ref is 'Reference of super_phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_phylum_indexed is 'Indexed name of super_phylum the current taxonomy depends of';
-comment on column taxonomy.phylum_ref is 'Reference of phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.phylum_indexed is 'Indexed name of phylum the current taxonomy depends of';
-comment on column taxonomy.sub_phylum_ref is 'Reference of sub phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_phylum_indexed is 'Indexed name of sub phylum the current taxonomy depends of';
-comment on column taxonomy.infra_phylum_ref is 'Reference of infra phylum the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_phylum_indexed is 'Indexed name of infra phylum the current taxonomy depends of';
-comment on column taxonomy.super_cohort_botany_ref is 'Reference of super cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_cohort_botany_indexed is 'Indexed name of super cohort botany the current taxonomy depends of';
-comment on column taxonomy.cohort_botany_ref is 'Reference of cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.cohort_botany_indexed is 'Indexed name of cohort botany the current taxonomy depends of';
-comment on column taxonomy.sub_cohort_botany_ref is 'Reference of sub cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_cohort_botany_indexed is 'Indexed name of sub cohort botany the current taxonomy depends of';
-comment on column taxonomy.infra_cohort_botany_ref is 'Reference of infra cohort botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_cohort_botany_indexed is 'Indexed name of infra cohort botany the current taxonomy depends of';
-comment on column taxonomy.super_class_ref is 'Reference of super class the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_class_indexed is 'Indexed name of super class the current taxonomy depends of';
-comment on column taxonomy.class_ref is 'Reference of class the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.class_indexed is 'Indexed name of class the current taxonomy depends of';
-comment on column taxonomy.sub_class_ref is 'Reference of sub class the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_class_indexed is 'Indexed name of sub class the current taxonomy depends of';
-comment on column taxonomy.infra_class_ref is 'Reference of infra class the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_class_indexed is 'Indexed name of infra class the current taxonomy depends of';
-comment on column taxonomy.super_division_ref is 'Reference of super division the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_division_indexed is 'Indexed name of super division the current taxonomy depends of';
-comment on column taxonomy.division_ref is 'Reference of division the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.division_indexed is 'Indexed name of division the current taxonomy depends of';
-comment on column taxonomy.sub_division_ref is 'Reference of sub division the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_division_indexed is 'Indexed name of sub division the current taxonomy depends of';
-comment on column taxonomy.infra_division_ref is 'Reference of infra division the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_division_indexed is 'Indexed name of infra division the current taxonomy depends of';
-comment on column taxonomy.super_legion_ref is 'Reference of super legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_legion_indexed is 'Indexed name of super legion the current taxonomy depends of';
-comment on column taxonomy.legion_ref is 'Reference of legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.legion_indexed is 'Indexed name of legion the current taxonomy depends of';
-comment on column taxonomy.sub_legion_ref is 'Reference of sub legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_legion_indexed is 'Indexed name of sub legion the current taxonomy depends of';
-comment on column taxonomy.infra_legion_ref is 'Reference of infra legion the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_legion_indexed is 'Indexed name of infra legion the current taxonomy depends of';
-comment on column taxonomy.super_cohort_zoology_ref is 'Reference of super cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_cohort_zoology_indexed is 'Indexed name of super cohort zool the current taxonomy depends of';
-comment on column taxonomy.cohort_zoology_ref is 'Reference of cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.cohort_zoology_indexed is 'Indexed name of cohort zool the current taxonomy depends of';
-comment on column taxonomy.sub_cohort_zoology_ref is 'Reference of sub cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_cohort_zoology_indexed is 'Indexed name of sub cohort zool the current taxonomy depends of';
-comment on column taxonomy.infra_cohort_zoology_ref is 'Reference of infra cohort zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_cohort_zoology_indexed is 'Indexed name of infra cohort zool the current taxonomy depends of';
-comment on column taxonomy.super_order_ref is 'Reference of super order the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_order_indexed is 'Indexed name of super order the current taxonomy depends of';
-comment on column taxonomy.order_ref is 'Reference of order the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.order_indexed is 'Indexed name of order the current taxonomy depends of';
-comment on column taxonomy.sub_order_ref is 'Reference of sub order the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_order_indexed is 'Indexed name of sub order the current taxonomy depends of';
-comment on column taxonomy.infra_order_ref is 'Reference of infra order the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_order_indexed is 'Indexed name of infra order the current taxonomy depends of';
-comment on column taxonomy.section_zoology_ref is 'Reference of section zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.section_zoology_indexed is 'Indexed name of section zool the current taxonomy depends of';
-comment on column taxonomy.sub_section_zoology_ref is 'Reference of sub section zool the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_section_zoology_indexed is 'Indexed name of sub section zool the current taxonomy depends of';
-comment on column taxonomy.super_family_ref is 'Reference of super family the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_family_indexed is 'Indexed name of super family the current taxonomy depends of';
-comment on column taxonomy.family_ref is 'Reference of family the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.family_indexed is 'Indexed name of family the current taxonomy depends of';
-comment on column taxonomy.sub_family_ref is 'Reference of sub family the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_family_indexed is 'Indexed name of sub family the current taxonomy depends of';
-comment on column taxonomy.infra_family_ref is 'Reference of infra family the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_family_indexed is 'Indexed name of infra family the current taxonomy depends of';
-comment on column taxonomy.super_tribe_ref is 'Reference of super tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_tribe_indexed is 'Indexed name of super tribe the current taxonomy depends of';
-comment on column taxonomy.tribe_ref is 'Reference of tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.tribe_indexed is 'Indexed name of tribe the current taxonomy depends of';
-comment on column taxonomy.sub_tribe_ref is 'Reference of sub tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_tribe_indexed is 'Indexed name of sub tribe the current taxonomy depends of';
-comment on column taxonomy.infra_tribe_ref is 'Reference of infra tribe the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.infra_tribe_indexed is 'Indexed name of infra tribe the current taxonomy depends of';
-comment on column taxonomy.genus_ref is 'Reference of genus the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.genus_indexed is 'Indexed name of genus the current taxonomy depends of';
-comment on column taxonomy.sub_genus_ref is 'Reference of sub genus the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_genus_indexed is 'Indexed name of sub genus the current taxonomy depends of';
-comment on column taxonomy.section_botany_ref is 'Reference of section botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.section_botany_indexed is 'Indexed name of section botany the current taxonomy depends of';
-comment on column taxonomy.sub_section_botany_ref is 'Reference of sub section botany the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_section_botany_indexed is 'Indexed name of sub section botany the current taxonomy depends of';
-comment on column taxonomy.serie_ref is 'Reference of series the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.serie_indexed is 'Indexed name of series the current taxonomy depends of';
-comment on column taxonomy.sub_serie_ref is 'Reference of sub series the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_serie_indexed is 'Indexed name of sub series the current taxonomy depends of';
-comment on column taxonomy.super_species_ref is 'Reference of super species the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.super_species_indexed is 'Indexed name of super species the current taxonomy depends of';
-comment on column taxonomy.species_ref is 'Reference of species the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.species_indexed is 'Indexed name of species the current taxonomy depends of';
-comment on column taxonomy.sub_species_ref is 'Reference of sub species the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_species_indexed is 'Indexed name of sub species the current taxonomy depends of';
-comment on column taxonomy.variety_ref is 'Reference of variety the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.variety_indexed is 'Indexed name of variety the current taxonomy depends of';
-comment on column taxonomy.sub_variety_ref is 'Reference of sub variety the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_variety_indexed is 'Indexed name of sub variety the current taxonomy depends of';
-comment on column taxonomy.form_ref is 'Reference of form the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.form_indexed is 'Indexed name of form the current taxonomy depends of';
-comment on column taxonomy.sub_form_ref is 'Reference of sub form the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.sub_form_indexed is 'Indexed name of sub form the current taxonomy depends of';
-comment on column taxonomy.abberans_ref is 'Reference of abberans the current taxonomy depends of - id field of taxonomy table - recursive reference';
-comment on column taxonomy.abberans_indexed is 'Indexed name of abberans the current taxonomy depends of';
 comment on column taxonomy.extinct is 'Tells if taxonomy is extinct or not';
 comment on column taxonomy.path is 'Hierarchy path (/ for root)';
 comment on column taxonomy.parent_ref is 'Id of parent - id field from table itself';
@@ -1366,39 +1095,12 @@ create sequence chronostratigraphy_id_seq;
 create table chronostratigraphy
        (
         id integer not null default nextval('chronostratigraphy_id_seq'),
-        eon_ref integer default 0 not null,
-        eon_indexed classifications_names,
-        era_ref integer default 0 not null,
-        era_indexed classifications_names,
-        sub_era_ref integer default 0 not null,
-        sub_era_indexed classifications_names,
-        system_ref integer default 0 not null,
-        system_indexed classifications_names,
-        serie_ref integer default 0 not null,
-        serie_indexed classifications_names,
-        stage_ref integer default 0 not null,
-        stage_indexed classifications_names,
-        sub_stage_ref integer default 0 not null,
-        sub_stage_indexed classifications_names,
-        sub_level_1_ref integer default 0 not null,
-        sub_level_1_indexed classifications_names,
-        sub_level_2_ref integer default 0 not null,
-        sub_level_2_indexed classifications_names,
         lower_bound numeric(10,3),
         upper_bound numeric(10,3),
-        constraint pk_chronostratigraphy primary key (id),
-        constraint unq_chronostratigraphy unique (path, name_indexed, level_ref),
-        constraint fk_chronostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_chronostratigraphy_parent_ref_chronostratigraphy foreign key (parent_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_eon_chronostratigraphy foreign key (eon_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_era_chronostratigraphy foreign key (era_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_sub_era_chronostratigraphy foreign key (sub_era_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_system_chronostratigraphy foreign key (system_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_serie_chronostratigraphy foreign key (serie_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_stage_chronostratigraphy foreign key (stage_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_sub_stage_chronostratigraphy foreign key (sub_stage_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_sub_level_1_chronostratigraphy foreign key (sub_level_1_ref) references chronostratigraphy(id) on delete cascade,
-        constraint fk_chronostratigraphy_sub_level_2_chronostratigraphy foreign key (sub_level_2_ref) references chronostratigraphy(id) on delete cascade
+       constraint pk_chronostratigraphy primary key (id),
+       constraint unq_chronostratigraphy unique (path, name_indexed, level_ref),
+       constraint fk_chronostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+       constraint fk_chronostratigraphy_parent_ref_chronostratigraphy foreign key (parent_ref) references chronostratigraphy(id) on delete cascade
        )
 inherits (template_classifications);
 comment on table chronostratigraphy is 'List of chronostratigraphic units';
@@ -1407,24 +1109,6 @@ comment on column chronostratigraphy.name is 'Classification unit name';
 comment on column chronostratigraphy.name_indexed is 'Indexed form of name field';
 comment on column chronostratigraphy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column chronostratigraphy.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column chronostratigraphy.eon_ref is 'Reference of eon the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.eon_indexed is 'Indexed name of eon the current unit depends of';
-comment on column chronostratigraphy.era_ref is 'Reference of era the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.era_indexed is 'Indexed name of era the current unit depends of';
-comment on column chronostratigraphy.sub_era_ref is 'Reference of sub era the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.sub_era_indexed is 'Indexed name of sub era the current unit depends of';
-comment on column chronostratigraphy.system_ref is 'Reference of system the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.system_indexed is 'Indexed name of system the current unit depends of';
-comment on column chronostratigraphy.serie_ref is 'Reference of serie the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.serie_indexed is 'Indexed name of serie the current unit depends of';
-comment on column chronostratigraphy.stage_ref is 'Reference of stage the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.stage_indexed is 'Indexed name of stage the current unit depends of';
-comment on column chronostratigraphy.sub_stage_ref is 'Reference of sub stage the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.sub_stage_indexed is 'Indexed name of sub stage the current unit depends of';
-comment on column chronostratigraphy.sub_level_1_ref is 'Reference of sub level the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.sub_level_1_indexed is 'Indexed name of sub level the current unit depends of';
-comment on column chronostratigraphy.sub_level_2_ref is 'Reference of sub level the current unit depends of - id field of chronostratigraphy table - recursive reference';
-comment on column chronostratigraphy.sub_level_2_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column chronostratigraphy.lower_bound is 'Lower age boundary in years';
 comment on column chronostratigraphy.upper_bound is 'Upper age boundary in years';
 comment on column chronostratigraphy.path is 'Hierarchy path (/ for root)';
@@ -1435,28 +1119,10 @@ create sequence lithostratigraphy_id_seq;
 create table lithostratigraphy
        (
         id integer not null default nextval('lithostratigraphy_id_seq'),
-        group_ref integer default 0 not null,
-        group_indexed classifications_names,
-        formation_ref integer default 0 not null,
-        formation_indexed classifications_names,
-        member_ref integer default 0 not null,
-        member_indexed classifications_names,
-        layer_ref integer default 0 not null,
-        layer_indexed classifications_names,
-        sub_level_1_ref integer default 0 not null,
-        sub_level_1_indexed classifications_names,
-        sub_level_2_ref integer default 0 not null,
-        sub_level_2_indexed classifications_names,
         constraint pk_lithostratigraphy primary key (id),
         constraint unq_lithostratigraphy unique (path, name_indexed, level_ref),
         constraint fk_lithostratigraphy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_lithostratigraphy_parent_ref_lithostratigraphy foreign key (parent_ref) references lithostratigraphy(id) on delete cascade,
-        constraint fk_lithostratigraphy_group_lithostratigraphy foreign key (group_ref) references lithostratigraphy(id) on delete cascade,
-        constraint fk_lithostratigraphy_formation_lithostratigraphy foreign key (formation_ref) references lithostratigraphy(id) on delete cascade,
-        constraint fk_lithostratigraphy_member_lithostratigraphy foreign key (member_ref) references lithostratigraphy(id) on delete cascade,
-        constraint fk_lithostratigraphy_layer_lithostratigraphy foreign key (layer_ref) references lithostratigraphy(id) on delete cascade,
-        constraint fk_lithostratigraphy_sub_level_1_lithostratigraphy foreign key (sub_level_1_ref) references lithostratigraphy(id) on delete cascade,
-        constraint fk_lithostratigraphy_sub_level_2_lithostratigraphy foreign key (sub_level_2_ref) references lithostratigraphy(id) on delete cascade
+        constraint fk_lithostratigraphy_parent_ref_lithostratigraphy foreign key (parent_ref) references lithostratigraphy(id) on delete cascade
        )
 inherits (template_classifications);
 comment on table lithostratigraphy is 'List of lithostratigraphic units';
@@ -1465,18 +1131,6 @@ comment on column lithostratigraphy.name is 'Classification unit name';
 comment on column lithostratigraphy.name_indexed is 'Indexed form of name field';
 comment on column lithostratigraphy.level_ref is 'Reference of classification level the unit is encoded in';
 comment on column lithostratigraphy.status is 'Validitiy status: valid, invalid, in discussion';
-comment on column lithostratigraphy.group_ref is 'Reference of group the current unit depends of - id field of lithostratigraphy table - recursive reference';
-comment on column lithostratigraphy.group_indexed is 'Indexed name of group the current unit depends of';
-comment on column lithostratigraphy.formation_ref is 'Reference of formation the current unit depends of - id field of lithostratigraphy table - recursive reference';
-comment on column lithostratigraphy.formation_indexed is 'Indexed name of formation the current unit depends of';
-comment on column lithostratigraphy.member_ref is 'Reference of member the current unit depends of - id field of lithostratigraphy table - recursive reference';
-comment on column lithostratigraphy.member_indexed is 'Indexed name of member the current unit depends of';
-comment on column lithostratigraphy.layer_ref is 'Reference of layer the current unit depends of - id field of lithostratigraphy table - recursive reference';
-comment on column lithostratigraphy.layer_indexed is 'Indexed name of layer the current unit depends of';
-comment on column lithostratigraphy.sub_level_1_ref is 'Reference of sub level the current unit depends of - id field of lithostratigraphy table - recursive reference';
-comment on column lithostratigraphy.sub_level_1_indexed is 'Indexed name of sub level the current unit depends of';
-comment on column lithostratigraphy.sub_level_2_ref is 'Reference of sub level the current unit depends of - id field of lithostratigraphy table - recursive reference';
-comment on column lithostratigraphy.sub_level_2_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column lithostratigraphy.path is 'Hierarchy path (/ for root)';
 comment on column lithostratigraphy.parent_ref is 'Id of parent - id field from table itself';
 
@@ -1490,25 +1144,10 @@ create table mineralogy
         formule varchar,
         formule_indexed varchar,
         cristal_system varchar,
-        unit_class_ref integer default 0 not null,
-        unit_class_indexed classifications_names,
-        unit_division_ref integer default 0 not null,
-        unit_division_indexed classifications_names,
-        unit_family_ref integer default 0 not null,
-        unit_family_indexed classifications_names,
-        unit_group_ref integer default 0 not null,
-        unit_group_indexed classifications_names,
-        unit_variety_ref integer default 0 not null,
-        unit_variety_indexed classifications_names,
         constraint pk_mineralogy primary key (id),
         constraint unq_mineralogy unique (path, name_indexed, level_ref),
         constraint fk_mineralogy_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_mineralogy_parent_ref_mineralogy foreign key (parent_ref) references mineralogy(id) on delete cascade,
-        constraint fk_mineralogy_unit_class_mineralogy foreign key (unit_class_ref) references mineralogy(id) on delete cascade,
-        constraint fk_mineralogy_unit_division_mineralogy foreign key (unit_division_ref) references mineralogy(id) on delete cascade,
-        constraint fk_mineralogy_unit_family_mineralogy foreign key (unit_family_ref) references mineralogy(id) on delete cascade,
-        constraint fk_mineralogy_unit_group_mineralogy foreign key (unit_group_ref) references mineralogy(id) on delete cascade,
-        constraint fk_mineralogy_unit_variety_mineralogy foreign key (unit_variety_ref) references mineralogy(id) on delete cascade
+        constraint fk_mineralogy_parent_ref_mineralogy foreign key (parent_ref) references mineralogy(id) on delete cascade
        )
 inherits (template_classifications);
 comment on table mineralogy is 'List of mineralogic units';
@@ -1522,16 +1161,6 @@ comment on column mineralogy.classification is 'Classification system used to de
 comment on column mineralogy.formule is 'Chemical formulation';
 comment on column mineralogy.formule_indexed is 'Indexed form of foumule field';
 comment on column mineralogy.cristal_system is 'Cristal system defining the mineral structure: isometric, hexagonal,...';
-comment on column mineralogy.unit_class_ref is 'Reference of class the current unit depends of - id field of mineralogy table - recursive reference';
-comment on column mineralogy.unit_class_indexed is 'Indexed name of class the current unit depends of';
-comment on column mineralogy.unit_division_ref is 'Reference of division the current unit depends of - id field of mineralogy table - recursive reference';
-comment on column mineralogy.unit_division_indexed is 'Indexed name of division the current unit depends of';
-comment on column mineralogy.unit_family_ref is 'Reference of family the current unit depends of - id field of mineralogy table - recursive reference';
-comment on column mineralogy.unit_family_indexed is 'Indexed name of family the current unit depends of';
-comment on column mineralogy.unit_group_ref is 'Reference of group the current unit depends of - id field of mineralogy table - recursive reference';
-comment on column mineralogy.unit_group_indexed is 'Indexed name of group the current unit depends of';
-comment on column mineralogy.unit_variety_ref is 'Reference of sub level the current unit depends of - id field of mineralogy table - recursive reference';
-comment on column mineralogy.unit_variety_indexed is 'Indexed name of sub level the current unit depends of';
 comment on column mineralogy.path is 'Hierarchy path (/ for root)';
 comment on column mineralogy.parent_ref is 'Id of parent - id field from table itself';
 
@@ -1540,22 +1169,10 @@ create sequence lithology_id_seq;
 create table lithology
        (
         id integer not null default nextval('lithology_id_seq'),
-        unit_main_group_ref integer default 0 not null,
-        unit_main_group_indexed classifications_names,
-        unit_group_ref integer default 0 not null,
-        unit_group_indexed classifications_names,
-        unit_sub_group_ref integer default 0 not null,
-        unit_sub_group_indexed classifications_names,
-        unit_rock_ref integer default 0 not null,
-        unit_rock_indexed classifications_names,
         constraint pk_lithology primary key (id),
         constraint unq_lithology unique (path, name_indexed, level_ref),
         constraint fk_lithology_parent_ref_lithology foreign key (parent_ref) references lithology(id) on delete cascade,
-        constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
-        constraint fk_lithology_unit_main_group_ref_lithology foreign key (unit_main_group_ref) references lithology(id) on delete cascade,
-        constraint fk_lithology_unit_group_ref_lithology foreign key (unit_group_ref) references lithology(id) on delete cascade,
-        constraint fk_lithology_unit_sub_group_ref_lithology foreign key (unit_sub_group_ref) references lithology(id) on delete cascade,
-        constraint fk_lithology_unit_rock_ref_lithology foreign key (unit_rock_ref) references lithology(id) on delete cascade
+        constraint fk_lithology_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
        )
 inherits (template_classifications);
 comment on table lithology is 'List of lithologic units';
@@ -1566,14 +1183,6 @@ comment on column lithology.level_ref is 'Reference of classification level the 
 comment on column lithology.status is 'Validitiy status: valid, invalid, in discussion';
 comment on column lithology.path is 'Hierarchy path (/ for root)';
 comment on column lithology.parent_ref is 'Id of parent - id field from table itself';
-comment on column lithology.unit_main_group_ref is 'Reference of main group the current unit depends of - id field of lithology table - recursive reference';
-comment on column lithology.unit_main_group_indexed is 'Indexed name of main group the current unit depends of';
-comment on column lithology.unit_group_ref is 'Reference of group the current unit depends of - id field of lithology table - recursive reference';
-comment on column lithology.unit_group_indexed is 'Indexed name of group the current unit depends of';
-comment on column lithology.unit_sub_group_ref is 'Reference of sub group the current unit depends of - id field of lithology table - recursive reference';
-comment on column lithology.unit_sub_group_indexed is 'Indexed name of sub group the current unit depends of';
-comment on column lithology.unit_rock_ref is 'Reference of rock the current unit depends of - id field of lithology table - recursive reference';
-comment on column lithology.unit_rock_indexed is 'Indexed name of rock the current unit depends of';
 
 create sequence habitats_id_seq;
 
