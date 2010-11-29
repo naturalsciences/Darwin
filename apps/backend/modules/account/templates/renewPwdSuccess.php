@@ -25,7 +25,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="2"><input type="submit" value="<?php echo __("Renew");?>" /></td>
+            <td colspan="2"><?php echo $form->renderHiddenFields();?><input type="submit" value="<?php echo __("Renew");?>" /></td>
           </tr>
         </tfoot>
       </table>
