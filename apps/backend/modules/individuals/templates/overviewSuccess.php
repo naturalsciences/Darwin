@@ -54,11 +54,10 @@
 	<td>
 	  <?php echo $individual->getRockFormFormated();?>
 	</td>
-  <?php if($view): ?>	
-    <td colspan="3">
-	    <?php echo link_to(image_tag('blue_eyel.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
-	  </td>
-  <?php else : ?>	    
+  <td colspan="3">
+    <?php echo link_to(image_tag('blue_eyel.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
+  </td>
+  <?php if(!$view) : ?>	    
 	  <td>
 	    <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
 	  </td>

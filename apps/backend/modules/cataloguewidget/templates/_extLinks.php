@@ -10,7 +10,10 @@
   <?php foreach($links as $link):?>
   <tr>
     <td>  
-      <?php echo link_to($link->getUrl(),'extlinks/extLinks?table='.$table.'&cid='.$link->getId().'&id='.$eid,array('class' => 'link_catalogue','title' => __('Edit Url') )) ; ?>      
+      <?php echo link_to($link->getUrl(),'extlinks/extLinks?table='.$table.'&cid='.$link->getId().'&id='.$eid,array('class' => 'link_catalogue','title' => __('Edit Url') )) ; ?>  
+      <a href="<?php echo $link->getUrl();?>" target="_pop" class='complete_widget'>
+      <?php echo image_tag('next.png',array('title'=>__('Go to this link'))) ; ?>
+      </a>          
     </td>
     <td>
       <?php echo $link->getComment();?>

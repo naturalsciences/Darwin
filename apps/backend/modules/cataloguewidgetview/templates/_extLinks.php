@@ -11,6 +11,9 @@
   <tr>
     <td>
       <?php echo $link->getUrl();?>
+      <a href="<?php echo $link->getUrl();?>" target="_pop" class='complete_widget'>
+      <?php echo image_tag('next.png',array('title'=>__('Go to this link'))) ; ?>
+      </a>        
     </td>
     <td>
       <?php echo $link->getComment();?>

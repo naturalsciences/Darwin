@@ -44,11 +44,9 @@
     <td><?php echo $part->getShelf();?></td>
     <td><?php echo $part->getContainer();?></td>
     <td><?php echo $part->getSubContainer();?></td>
-    <?php if ($view) : ?>
-      <td>
-        <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
-      </td>    
-    <?php endif ; ?>
+    <td>
+      <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
+    </td>    
     <?php if(!isset($is_choose) || $is_choose==false):?>
       <?php if (!$view): ?> 
       <td>
