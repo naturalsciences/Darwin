@@ -1811,7 +1811,7 @@ DECLARE
   indType BOOLEAN := false;
 BEGIN
   IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
-    IF NEW.expedition_name_indexed IS DISTINCT FROM OLD.expedition_name_indexed THEN
+    IF NEW.name_indexed IS DISTINCT FROM OLD.name_indexed THEN
       UPDATE darwin_flat
       SET (expedition_name, expedition_name_ts, expedition_name_indexed) =
           (NEW.name, NEW.name_ts, NEW.name_indexed)
@@ -1845,8 +1845,8 @@ BEGIN
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'people' THEN
     IF NOT NEW.is_physical THEN
       IF NEW.is_physical IS DISTINCT FROM OLD.is_physical 
-      OR NEW.collection_institution_formated_name_indexed IS DISTINCT FROM OLD.collection_institution_formated_name_indexed 
-      OR NEW.collection_institution_sub_type IS DISTINCT FROM OLD.collection_institution_sub_type
+      OR NEW.formated_name_indexed IS DISTINCT FROM OLD.formated_name_indexed 
+      OR NEW.sub_type IS DISTINCT FROM OLD.sub_type
       THEN
         UPDATE darwin_flat
         SET (collection_institution_formated_name,
@@ -1859,7 +1859,7 @@ BEGIN
       END IF;
     END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'users' THEN
-    IF NEW.collection_main_manager_formated_name_indexed IS DISTINCT FROM OLD.collection_main_manager_formated_name_indexed THEN
+    IF NEW.formated_name_indexed IS DISTINCT FROM OLD.formated_name_indexed THEN
       UPDATE darwin_flat
       SET (collection_main_manager_formated_name,
            collection_main_manager_formated_name_ts,
