@@ -30,7 +30,7 @@ class Users extends BaseUsers
     }
   }
 
-  public static function getTypes($options)
+  public static function getTypes($options = null)
   {
     if (isset($options['screen']) && $options['screen'] == 1)
       return array( self::REGISTERED_USER => Users::getTypeName(self::REGISTERED_USER) );
@@ -44,16 +44,14 @@ class Users extends BaseUsers
 
     if (isset($options['screen']) && $options['screen'] == 3)
     {
-      array_shift($db_user_type) ;
+      array_pop($db_user_type) ;
       return $db_user_type ;
     }	
     if (isset($options['screen']) && $options['screen'] == 2)
-	    array_pop($db_user_type);
-    if ($options['db_user_type'] != self::ADMIN)
     { 
       array_pop($db_user_type);
       array_pop($db_user_type);
-    }
+    } 
     return $db_user_type ;
   }
 
@@ -71,10 +69,10 @@ class Users extends BaseUsers
   {
     switch ($db_user_type)
     {
-      case self::REGISTERED_USER : return 'Registered user';
-      case self::ENCODER : return 'Encoder';
-      case self::MANAGER : return 'Collection manager';
-      case self::ADMIN : return 'Administrator';   	  
+      case self::REGISTERED_USER : return sfContext::getInstance()->getI18N()->__('Registered user');
+      case self::ENCODER : return sfContext::getInstance()->getI18N()->__('Encoder');
+      case self::MANAGER : return sfContext::getInstance()->getI18N()->__('Collection manager');
+      case self::ADMIN : return sfContext::getInstance()->getI18N()->__('Administrator');   	  
     }
   }
 

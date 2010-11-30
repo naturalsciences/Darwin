@@ -52,9 +52,9 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
       $this->widgetSchema['people_sub_type']->setDefault('General');
     $this->widgetSchema['people_sub_type']->setOption('forced_choices', Doctrine::getTable('CataloguePeople')->getDistinctSubType($this->getObject()->getPeopleType()) );
 
-    $this->widgetSchema->setLabels(array('people_type' => 'Type' ,
-                                         'people_sub_type' => 'Sub-type',
-                                         'people_ref' => 'Associated',
+    $this->widgetSchema->setLabels(array('people_type' => $this->getI18N()->__('Type'),
+                                         'people_sub_type' => $this->getI18N()->__('Sub-Type'),
+                                         'people_ref' => $this->getI18N()->__('Associated'),
                                         )
                                   );
     

@@ -53,7 +53,7 @@
           </td>
         </tr> 
       <tr>
-        <th><?php echo $form['given_name']->renderLabel('Given Name') ?></th>              
+        <th><?php echo $form['given_name']->renderLabel('Given name') ?></th>              
       <?php else : ?>
          <tr>
           <th><?php echo $form['sub_type']->renderLabel() ?></th>
@@ -145,8 +145,8 @@ $(document).ready(function () {
     {
       $('tr#is_not_physical').hide();
       $('tr#is_physical').fadeIn();
-      $('label[for="users_family_name"]').html("Family Name") ;
-      $('label[for="users_given_name"]').html("Given Name") ;
+      $('label[for="users_family_name"]').html("Family name") ;
+      $('label[for="users_given_name"]').html("Given name") ;
     }
     else
     {

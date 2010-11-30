@@ -1,4 +1,4 @@
-<table class="catalogue_tabl">
+<table class="catalogue_table">
   <thead>
     <tr>
       <th><?php echo __('Language');?></th>

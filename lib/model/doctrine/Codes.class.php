@@ -7,7 +7,11 @@ class Codes extends BaseCodes
 {
   public static function getCategories()
   {
-    return array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.', 'inventory'=> 'Invent.');
+    return array('main'=> sfContext::getInstance()->getI18N()->__('Main'),
+                 'secondary' => sfContext::getInstance()->getI18N()->__('Second.'),
+                 'temporary' => sfContext::getInstance()->getI18N()->__('Temp.'),
+                 'inventory'=> sfContext::getInstance()->getI18N()->__('Invent.')
+                );
   }
   public function getCodeFormated()
   {

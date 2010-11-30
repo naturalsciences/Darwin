@@ -73,7 +73,7 @@ class userActions extends DarwinActions
   public function executeChoose(sfWebRequest $request)
   {
     if ($request->hasParameter('num')) $screen = $request->getParameter('num') ;
-    else $screen = 0 ;
+    else $screen = 3 ;
     $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getDbUserType(), "screen" => $screen));
     $this->setLayout(false);
   }

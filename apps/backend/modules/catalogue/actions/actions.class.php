@@ -79,22 +79,14 @@ class catalogueActions extends DarwinActions
     $this->forward404Unless($r,'No such item');
     if(!$this->getUser()->isA(Users::ADMIN))
     {
-      if(in_array($request->getParameter('table'),array('comments','catalogue_properties','ext_links')))
+      if(in_array($request->getParameter('table'),array('comments','catalogue_properties','ext_links')) && in_array($r->getReferencedRelation(),$this->ref_id))
       {
         $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$r->getReferencedRelation()],$r->getRecordId());
         if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$r->getReferencedRelation()],
                                                                                                         $r->getRecordId(), 
                                                                                                         $this->getUser()->getId())))    
           $this->forwardToSecureAction();    
-      }
-      if(in_array($request->getParameter('table'),array('specimens','specimen_individuals','specimen_parts')))
-      {
-        $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$request->getParameter('table')],$request->getParameter('id'));
-        if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$request->getParameter('table')],
-                                                                                                        $request->getParameter('id'), 
-                                                                                                        $this->getUser()->getId())))    
-          $this->forwardToSecureAction();    
-      }  
+      } 
     }
       
     try{

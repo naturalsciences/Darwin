@@ -125,7 +125,7 @@
       <trans-unit id="51">
         <source>Add New Specimen</source> <target>Ajouter un nouvel échantillon</target> </trans-unit>
       <trans-unit id="52">
-        <source>Add new specimen</source> <target>Ajouter un nouvel échantillon </target> </trans-unit>
+        <source></source> <target></target> </trans-unit>
       <trans-unit id="53">
         <source>My Saved Specimens</source> <target>Mes échantillons sauvés</target> </trans-unit>
       <trans-unit id="54">
@@ -359,7 +359,7 @@
       <trans-unit id="168">
         <source>Social Status</source> <target>Statut social</target> </trans-unit>
       <trans-unit id="169">
-        <source>Rock Form</source> <target>Forme roch</target> </trans-unit>
+        <source>Rock Form</source> <target>Forme rocheuse</target> </trans-unit>
       <trans-unit id="170">
         <source>Individual Count</source> <target>Nombre d'invididus</target> </trans-unit>
       <trans-unit id="171">
@@ -539,7 +539,7 @@
       <trans-unit id="258">
         <source>Longitude</source> <target>Longitude</target> </trans-unit>
       <trans-unit id="259">
-        <source>Sampling location Tags</source> <target>Tags de point d'échantillonage</target> </trans-unit>
+        <source>Sampling location Tags</source> <target>Labels de point d'échantillonage</target> </trans-unit>
       <trans-unit id="260">
         <source>No Tools defined</source> <target>Pas d'outils définis</target> </trans-unit>
       <trans-unit id="261">
@@ -563,7 +563,7 @@
       <trans-unit id="270">
         <source>Det. St.</source> <target>Det. St.</target> </trans-unit>
       <trans-unit id="271">
-        <source>Identifiers</source> <target>Identifieurs</target> </trans-unit>
+        <source>Identifiers</source> <target>Identificateurs</target> </trans-unit>
       <trans-unit id="272">
         <source>No Methods defined</source> <target>Aucune méthodes définies</target> </trans-unit>
       <trans-unit id="273">
@@ -637,7 +637,7 @@
       <trans-unit id="307">
         <source>Organisation</source> <target>Organisation</target> </trans-unit>
       <trans-unit id="308">
-        <source>Tags</source> <target>Tags</target> </trans-unit>
+        <source>Tags</source> <target>Labels</target> </trans-unit>
       <trans-unit id="309">
         <source>Edit Address</source> <target>Editer Adresse</target> </trans-unit>
       <trans-unit id="310">
@@ -705,9 +705,9 @@
       <trans-unit id="341">
         <source>Title</source> <target>Titre</target> </trans-unit>
       <trans-unit id="342">
-        <source>Family Name</source> <target>Nom de famille</target> </trans-unit>
+        <source>Family name</source> <target>Nom de famille</target> </trans-unit>
       <trans-unit id="343">
-        <source>Given Name</source> <target>Prénom</target> </trans-unit>
+        <source>Given name</source> <target>Prénom</target> </trans-unit>
       <trans-unit id="344">
         <source>Additional Names</source> <target>Noms additionnels</target> </trans-unit>
       <trans-unit id="345">
@@ -981,7 +981,7 @@
       <trans-unit id="479">
         <source>Code(s)</source> <target>Code(s)</target> </trans-unit>
       <trans-unit id="480">
-        <source>Add identifier</source> <target>Ajouter identifier</target> </trans-unit>
+        <source>Add identifier</source> <target>Ajouter Identificateur</target> </trans-unit>
       <trans-unit id="481">
         <source>Choose a specimen</source> <target>Choisir un échantillon</target> </trans-unit>
       <trans-unit id="482">
@@ -1107,7 +1107,7 @@
       <trans-unit id="542">
         <source>Search in Specimens</source> <target>Rechercher dans les échantillons</target> </trans-unit>
       <trans-unit id="543">
-        <source>Board Widgets</source> <target>Wigdet de bord</target> </trans-unit>
+        <source>Board Widgets</source> <target>Tableau de bord</target> </trans-unit>
       <trans-unit id="544">
         <source>You can also use widgets below for this collection</source> <target>Vous avez aussi accès aux widgets ci-dessous pour cette collection</target> </trans-unit>
       <trans-unit id="545">
@@ -1151,7 +1151,7 @@
       <trans-unit id="563">
         <source>Tag</source> <target>Label</target> </trans-unit>
       <trans-unit id="564">
-        <source>Tags</source> <target>Labels</target> </trans-unit>
+        <source>Gtu from date</source> <target>Date de début du GTU</target> </trans-unit>
       <trans-unit id="565">
         <source>Organization</source> <target>Organisation</target> </trans-unit>
       <trans-unit id="566">
@@ -1331,150 +1331,150 @@
         <source>class</source> <target>classe</target> </trans-unit>
       <trans-unit id="659">
         <source>family</source> <target>famille</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="660">
+        <source>Administrator</source> <target>Administrateur</target> </trans-unit>
+      <trans-unit id="661">
+        <source>Collection manager</source> <target>Gestionnaire de collection</target> </trans-unit>
+      <trans-unit id="662">
+        <source>Encoder</source> <target>Encodeur</target> </trans-unit>
+      <trans-unit id="663">
+        <source>Registered user</source> <target>Utilisateur enregistré</target> </trans-unit>        
+      <trans-unit id="664">
+        <source>Expedition from date</source> <target>Date début d'expédition</target> </trans-unit>
+      <trans-unit id="665">
+        <source>Expedition to date</source> <target>Date fin d'expédition</target> </trans-unit>
+      <trans-unit id="666">
+        <source>Photographer</source> <target>Photographe</target> </trans-unit>
+      <trans-unit id="667">
+        <source>Identifier</source> <target>Identificateur</target> </trans-unit>
+      <trans-unit id="668">
+        <source>Collector</source> <target>Collecteur</target> </trans-unit>
+      <trans-unit id="669">
+        <source>Preparator</source> <target>Préparateur</target> </trans-unit>
+      <trans-unit id="670">
+        <source>Institution Name</source> <target>Nom de l'institution</target> </trans-unit>
+      <trans-unit id="671">
+        <source>phone/fax</source> <target>téléphone/fax</target> </trans-unit>
+      <trans-unit id="672">
+        <source>Relationship type</source> <target>Type de relation</target> </trans-unit>
+      <trans-unit id="673">
+        <source>belongs to</source> <target>Appartient à</target> </trans-unit>
+      <trans-unit id="674">
+        <source>is department of</source> <target>Est un département de</target> </trans-unit>
+      <trans-unit id="675">
+        <source>is section of</source> <target>Est une section de</target> </trans-unit>
+      <trans-unit id="676">
+        <source>works for</source> <target>Travaille pour</target> </trans-unit>
+      <trans-unit id="677">
+        <source>Birth date</source> <target>Date de naissance</target> </trans-unit>
+      <trans-unit id="678">
+        <source>End date</source> <target>Date de décès</target> </trans-unit>
+      <trans-unit id="679">
+        <source>general information</source> <target>Information générale</target> </trans-unit>
+      <trans-unit id="670">
+        <source>Gtu to date</source> <target>Date de fin du GTU</target> </trans-unit>
+      <trans-unit id="671">
+        <source>Administrative area</source> <target>Zone administrative</target> </trans-unit>
+      <trans-unit id="672">
+        <source>Topographic structure</source> <target>Structure topographique</target> </trans-unit>
+      <trans-unit id="673">
+        <source>Hydrographic</source> <target>Hydrographique</target> </trans-unit>
+      <trans-unit id="674">
+        <source>Orography</source> <target>Orography</target> </trans-unit>
+      <trans-unit id="675">
+        <source>Area</source> <target>Zone</target> </trans-unit>
+      <trans-unit id="676">
+        <source>Historical</source> <target>Historique</target> </trans-unit>
+      <trans-unit id="677">
+        <source>Populated Places</source> <target>Endroits peuplés</target> </trans-unit>
+      <trans-unit id="678">
+        <source>Underground</source> <target>Souterrain</target> </trans-unit>
+      <trans-unit id="679">
+        <source>Road</source> <target>Route</target> </trans-unit>
+      <trans-unit id="680">
+        <source>Vegetation</source> <target>Végétation</target> </trans-unit>
+      <trans-unit id="681">
+        <source>Other</source> <target>Autre</target> </trans-unit>
+      <trans-unit id="682">
+        <source>Spot</source> <target>Place</target> </trans-unit>
+      <trans-unit id="683">
+        <source>Public sampling location ?</source> <target>Point d'échantillonage public ?</target> </trans-unit>
+      <trans-unit id="684">
+        <source>Pick a relationship in the list</source> <target>Choisissez une relation dans la liste</target> </trans-unit>
+      <trans-unit id="685">
+        <source>Add another relationship</source> <target>Ajouter une autre relation</target> </trans-unit>
+      <trans-unit id="686">
+        <source>Selected</source> <target>Sélectionné</target> </trans-unit>
+      <trans-unit id="687">
+        <source>Available</source> <target>Disponible</target> </trans-unit>
+      <trans-unit id="688">
+        <source>Add new value:</source> <target>Ajouter une nouvelle valeur:</target> </trans-unit>
+      <trans-unit id="689">
+        <source>Undefined</source> <target>indéfini</target> </trans-unit>
+      <trans-unit id="690">
+        <source>Donation</source> <target>Don</target> </trans-unit>
+      <trans-unit id="691">
+        <source>Exchange</source> <target>Echange</target> </trans-unit>
+      <trans-unit id="692">
+        <source>Internal work</source> <target>Travail interne</target> </trans-unit>
+      <trans-unit id="693">
+        <source>Loan</source> <target>Prêt</target> </trans-unit>
+      <trans-unit id="694">
+        <source>Mission</source> <target>Mission</target> </trans-unit>
+      <trans-unit id="695">
+        <source>Purchase</source> <target>Achat</target> </trans-unit>
+      <trans-unit id="696">
+        <source>Judicial seizure</source> <target>Saisie judiciaire</target> </trans-unit>
+      <trans-unit id="697">
+        <source>Trip</source> <target>Voyage</target> </trans-unit>
+      <trans-unit id="698">
+        <source>Excavation</source> <target>Fouille</target> </trans-unit>
+      <trans-unit id="699">
+        <source>Exploration</source> <target>Exploration</target> </trans-unit>
+      <trans-unit id="700">
+        <source>Collect</source> <target>Collecte</target> </trans-unit>
+      <trans-unit id="701">
+        <source>Choose Collection</source> <target>Choisir Collection</target> </trans-unit>
+      <trans-unit id="702">
+        <source>observation</source> <target>Observation</target> </trans-unit>
+      <trans-unit id="703">
+        <source>physical</source> <target>physique</target> </trans-unit>
+      <trans-unit id="704">
+        <source>Main</source> <target>Prim</target> </trans-unit>
+      <trans-unit id="705">
+        <source>Second.</source> <target>Sec.</target> </trans-unit>
+      <trans-unit id="706">
+        <source>Temp.</source> <target>Temp.</target> </trans-unit>
+      <trans-unit id="707">
+        <source>Invent.</source> <target>Invent.</target> </trans-unit>
+      <trans-unit id="708">
+        <source>Choose a Collector</source> <target>Choisir un collecteur</target> </trans-unit>
+      <trans-unit id="709">
+        <source>Choose !</source> <target>Choisir !</target> </trans-unit>
+      <trans-unit id="710">
+        <source>Change !</source> <target>Change !</target> </trans-unit>
+      <trans-unit id="711">
+        <source>Biological</source> <target>Biologique</target> </trans-unit>
+      <trans-unit id="712">
+        <source>Mineral</source> <target>Minerale</target> </trans-unit>
+      <trans-unit id="713">
+        <source>Choose Taxon</source> <target>Choisir Taxon</target> </trans-unit>
+      <trans-unit id="714">
+        <source>Choose Mineral</source> <target>Choisir Minerai</target> </trans-unit>
+      <trans-unit id="715">
+        <source>Unit:</source> <target>Unité:</target> </trans-unit>
+      <trans-unit id="716">
+        <source>What would you like to search ?</source> <target>Que voulez vous chercher ?</target> </trans-unit>
+      <trans-unit id="717">
+        <source>Code of</source> <target>Code de</target> </trans-unit>
+      <trans-unit id="718">
+        <source>Sampling Location code</source> <target>Code du point d'échantillonage</target> </trans-unit>
+      <trans-unit id="719">
+        <source>Individuals</source> <target>Individus</target> </trans-unit>
+      <trans-unit id="720">
+        <source>Parts</source> <target>Parties</target> </trans-unit>
+      <trans-unit id="721">
+        <source>All</source> <target>Tous</target> </trans-unit>
       <trans-unit id="649">
         <source>Corrector</source> <target>Correcteur</target> </trans-unit>
       <trans-unit id="649">

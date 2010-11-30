@@ -11,7 +11,7 @@ class UsersComm extends BaseUsersComm
   */
   public static function getCommTypes()
   {
-    return array('phone/fax'=> 'phone/fax', 'e-mail' => 'e-mail');
+    return array('phone/fax'=> sfContext::getInstance()->getI18N()->__('phone/fax'), 'e-mail' => 'e-mail');
   }
 
   /**
