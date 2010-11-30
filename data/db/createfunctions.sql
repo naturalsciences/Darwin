@@ -1811,10 +1811,12 @@ DECLARE
   indType BOOLEAN := false;
 BEGIN
   IF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'expeditions' THEN
-    UPDATE darwin_flat
-    SET (expedition_name, expedition_name_ts, expedition_name_indexed) =
-        (NEW.name, NEW.name_ts, NEW.name_indexed)
-    WHERE expedition_ref = NEW.id;
+    IF NEW.expedition_name_indexed IS DISTINCT FROM OLD.expedition_name_indexed THEN
+      UPDATE darwin_flat
+      SET (expedition_name, expedition_name_ts, expedition_name_indexed) =
+          (NEW.name, NEW.name_ts, NEW.name_indexed)
+      WHERE expedition_ref = NEW.id;
+    END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'collections' THEN
     UPDATE darwin_flat
     SET (collection_type, collection_code, collection_name, collection_is_public,
@@ -1842,23 +1844,30 @@ BEGIN
     WHERE collection_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'people' THEN
     IF NOT NEW.is_physical THEN
-      UPDATE darwin_flat
-      SET (collection_institution_formated_name,
-           collection_institution_formated_name_ts,
-           collection_institution_formated_name_indexed,
-           collection_institution_sub_type
-          ) =
-          (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed, NEW.sub_type)
-      WHERE collection_institution_ref = NEW.id;
+      IF NEW.is_physical IS DISTINCT FROM OLD.is_physical 
+      OR NEW.collection_institution_formated_name_indexed IS DISTINCT FROM OLD.collection_institution_formated_name_indexed 
+      OR NEW.collection_institution_sub_type IS DISTINCT FROM OLD.collection_institution_sub_type
+      THEN
+        UPDATE darwin_flat
+        SET (collection_institution_formated_name,
+             collection_institution_formated_name_ts,
+             collection_institution_formated_name_indexed,
+             collection_institution_sub_type
+            ) =
+            (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed, NEW.sub_type)
+        WHERE collection_institution_ref = NEW.id;
+      END IF;
     END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'users' THEN
-    UPDATE darwin_flat
-    SET (collection_main_manager_formated_name,
-         collection_main_manager_formated_name_ts,
-         collection_main_manager_formated_name_indexed
-        ) =
-        (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
-    WHERE collection_main_manager_ref = NEW.id;
+    IF NEW.collection_main_manager_formated_name_indexed IS DISTINCT FROM OLD.collection_main_manager_formated_name_indexed THEN
+      UPDATE darwin_flat
+      SET (collection_main_manager_formated_name,
+           collection_main_manager_formated_name_ts,
+           collection_main_manager_formated_name_indexed
+          ) =
+          (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
+      WHERE collection_main_manager_ref = NEW.id;
+    END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'gtu' THEN
     UPDATE darwin_flat
     SET (gtu_code, gtu_parent_ref, gtu_path, gtu_from_date, gtu_from_date_mask,
@@ -1869,10 +1878,12 @@ BEGIN
         )
     WHERE gtu_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'igs' THEN
-    UPDATE darwin_flat
-    SET (ig_num, ig_num_indexed, ig_date, ig_date_mask) =
-        (NEW.ig_num, NEW.ig_num_indexed, NEW.ig_date, NEW.ig_date_mask)
-    WHERE ig_ref = NEW.id;
+    IF NEW.ig_num_indexed IS DISTINCT FROM OLD.ig_num_indexed OR NEW.ig_date IS DISTINCT FROM OLD.ig_date THEN
+      UPDATE darwin_flat
+      SET (ig_num, ig_num_indexed, ig_date, ig_date_mask) =
+          (NEW.ig_num, NEW.ig_num_indexed, NEW.ig_date, NEW.ig_date_mask)
+      WHERE ig_ref = NEW.id;
+    END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'taxonomy' THEN
     UPDATE darwin_flat
     SET (taxon_name, taxon_name_indexed, taxon_name_order_by,
