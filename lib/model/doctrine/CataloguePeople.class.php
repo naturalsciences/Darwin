@@ -7,8 +7,12 @@ class CataloguePeople extends BaseCataloguePeople
 {
   public static function getAuthorTypes()
   {
-        return array('Main Author' => 'Main Author','Secondary Author' => 'Secondary Author',
-	'Reviewer'=> 'Reviewer', 'Publisher' => 'Publisher', 'Corrector' => 'Corrector', 'Related' => 'Related');
+        return array('Main Author' => sfContext::getInstance()->getI18N()->__('Main Author'),
+                     'Secondary Author' => sfContext::getInstance()->getI18N()->__('Secondary Author'),
+	                   'Reviewer'=> sfContext::getInstance()->getI18N()->__('Reviewer'),
+	                   'Publisher' => sfContext::getInstance()->getI18N()->__('Publisher'), 
+	                   'Corrector' => sfContext::getInstance()->getI18N()->__('Corrector'), 
+	                   'Related' => sfContext::getInstance()->getI18N()->__('Related'));
   }
  
 }

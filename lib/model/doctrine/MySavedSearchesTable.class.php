@@ -66,7 +66,7 @@ class MySavedSearchesTable extends DarwinTable
       'type'=>'Type',
       'gtu'=>'Sampling Location',
       'codes'=>'Codes',
-      'chrono'=>'Chronology',
+      'chrono'=>'Chronostratigraphy',
       'ig'=>'Inv. General',
       'litho'=>'Lithostratigraphy',
       'lithologic'=>'Lithology',

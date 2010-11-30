@@ -8,12 +8,12 @@ class People extends BasePeople
   public static function getTypes()
   {
     return array(
-      2 => 'Author',
-      4 => 'Identifier',
-      8 => 'Expert',
-      16 => 'Collector',
-      32 => 'Preparator',
-      64 => 'Photographer'
+      2 => sfContext::getInstance()->getI18N()->__('Author'),
+      4 => sfContext::getInstance()->getI18N()->__('Identifier'),
+      8 => sfContext::getInstance()->getI18N()->__('Expert'),
+      16 => sfContext::getInstance()->getI18N()->__('Collector'),
+      32 => sfContext::getInstance()->getI18N()->__('Preparator'),
+      64 => sfContext::getInstance()->getI18N()->__('Photographer')
     );
   }
 

@@ -134,10 +134,14 @@ class individualsActions extends DarwinActions
     $this->specimen = Doctrine::getTable('Specimens')->findExcept($request->getParameter('spec_id',0));
     $this->forward404Unless($this->specimen, sprintf('Specimen does not exist (%s).', $request->getParameter('spec_id',0)));
     $this->individuals = Doctrine::getTable('SpecimenIndividuals')->findBySpecimenRef($this->specimen->getId());
-    $this->view = false ;    
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->view=true ;
-    if(in_array($request->getParameter('spec_id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('spec_id'), $this->getUser()->getId())))  // if this user is not in collection Right, so the overview is displayed in readOnly
-      $this->view = true;
+    $this->view_only = false ;    
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->view_only=true ;
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {    
+      if(in_array($this->specimen->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('spec_ref',$this->specimen->getId(), $this->getUser()->getId())))  
+      // if this user is not in collection Right, so the overview is displayed in readOnly
+        $this->view_only = true;
+    }
   }
 
   public function executeAddIdentification(sfWebRequest $request)

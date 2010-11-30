@@ -1,4 +1,3 @@
-<?php if(isset($view) && $view) $view= true ; else $view = false ; ?>
 <?php if(count($parts)==0):?>
   <h2><?php echo __('There are currently no part');?></h2>
 <?php else:?>

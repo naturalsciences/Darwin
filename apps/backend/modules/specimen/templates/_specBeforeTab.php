@@ -1,4 +1,3 @@
-<?php if(isset($view) && $view) $view= true ; else $view = false ; ?>
 <?php use_stylesheet('encod.css') ?>
 <?php $specimen_id = ($specimen->isNew())?'':$specimen->getId();?>
 <?php $specimen_name = ($specimen->isNew())?'': sprintf(__('Specimen %d'),$specimen->getId());?>

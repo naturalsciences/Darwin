@@ -1,6 +1,5 @@
 <?php slot('title', __('Specimen individuals overview'));  ?>
-
-<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview', 'view' => $view));?>
+<?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview', 'view' => $view_only));?>
 <?php if(count($individuals)==0):?>
   <h2><?php echo __('There a currently no individual');?></h2>
 <?php else : ?>
@@ -10,7 +9,7 @@
 </ul>
 </div>
 
-<table class="catalogue_table<?php if($view) echo '_view' ; ?>">
+<table class="catalogue_table<?php if($view_only) echo '_view' ; ?>">
   <thead style="<?php echo (count($individuals))?'':'display: none;';?>">
     <tr>
       <th>
@@ -57,7 +56,7 @@
   <td colspan="3">
     <?php echo link_to(image_tag('blue_eyel.png'),'individuals/view?id='.$individual->getId(), array('title'=>__('View this individual')));?>
   </td>
-  <?php if(!$view) : ?>	    
+  <?php if(!$view_only) : ?>	    
 	  <td>
 	    <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
 	  </td>
@@ -70,17 +69,17 @@
 	  </td>
   <?php endif ; ?>	
 	<td>
-	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId().($view?'&view=true':''), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
+	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId(), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
 	</td>
-  <?php if (!$view): ?>	
+  <?php if (!$view_only): ?>	
 	<td>
-	  <?php echo link_to(image_tag('slide_right_enable_new.png'),'parts/edit?indid='.$individual->getId().($view?'&view=true':''), array('class'=>'part_detail_slide', 'title'=>__('Edit a new part')));?>
+	  <?php echo link_to(image_tag('slide_right_enable_new.png'),'parts/edit?indid='.$individual->getId(), array('class'=>'part_detail_slide', 'title'=>__('Edit a new part')));?>
 	</td>
 	<?php endif ; ?>
       </tr>
     <?php endforeach;?>
   </tbody>
-  <?php if (!$view): ?>  
+  <?php if (!$view_only): ?>  
   <tfoot>
     <tr>
       <td colspan='10'>

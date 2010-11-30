@@ -152,8 +152,12 @@ class partsActions extends DarwinActions
     }
     $this->view = false ;    
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->view=true ;
-    if(in_array($request->getParameter('spec_id'),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('spec_id'), $this->getUser()->getId())))  // if this user is not in collection Right, so the overview is displayed in readOnly
+    if(!$this->getUser()->isA(Users::ADMIN))
+    {
+      $specimen = Doctrine::getTable('SpecimenSearch')->findOneByIndividualRef($request->getParameter('id',0));
+      if(in_array($specimen->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections('individual_ref',$request->getParameter('id'), $this->getUser()->getId())))  // if this user is not in collection Right, so the overview is displayed in readOnly
       $this->view = true;
+    }
   }
 
   public function executeGetStorage(sfWebRequest $request)
