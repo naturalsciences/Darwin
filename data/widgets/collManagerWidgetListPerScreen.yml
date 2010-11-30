@@ -19,7 +19,7 @@ col1:
 col2:
    col_num: 1
    category: catalogue_collections_widget
-   group_name: extLink
+   group_name: extLinks
    mandatory: false
    order_by: 1
    opened: true
