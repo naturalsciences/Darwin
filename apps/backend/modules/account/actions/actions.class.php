@@ -13,11 +13,11 @@ class accountActions extends DarwinActions
   /**
    * Send an e-mail for password renew
    */
-  protected function sendPwdRenewMail($userParams)
+  protected function sendPwdRenewMail($userParams, $partial='pwdRenewMail')
   {
     $message = $this->getMailer()->compose();
     $message->setFrom(array(sfConfig::get('app_mailer_sender') => 'DaRWIN 2 team'));
-    if(is_array($userParams))
+    if(is_array($userParams) && ! empty($partial))
     {
       if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']) && isset($userParams['user_id']) && isset($userParams['hash']))
       {
@@ -25,7 +25,7 @@ class accountActions extends DarwinActions
         {
           $message->setTo($userParams['mail']);
           $message->setSubject($this->getI18N()->__('DaRWIN 2 password renew'));
-          $message->setBody($this->getPartial('pwdRenewMail', array('userParams'=>$userParams)),'text/plain');
+          $message->setBody($this->getPartial($partial, array('userParams'=>$userParams)),'text/plain');
           $this->getMailer()->send($message);
         }
       }
@@ -135,23 +135,33 @@ class accountActions extends DarwinActions
 
   public function executeRenewPwd(sfWebRequest $request)
   {
-    if(!$request->hasParameter('id') || !$request->hasParameter('hash'))
-      $this->forwardToSecureAction();
-    $userLogin = Doctrine::getTable('UsersLoginInfos')->findOneByUserRefAndRenewHash($request->getParameter('id'), $request->getParameter('hash'));
-    if(!$userLogin)
-      $this->forwardToSecureAction();
-    $this->form = new RenewPwdForm();
+    if($request->hasParameter('id') && $request->hasParameter('hash'))
+    {
+      $this->form = new RenewPwdForm(array('id'=>$request->getParameter('id'), 'hash'=>$request->getParameter('hash')));
+      $userLogin = Doctrine::getTable('UsersLoginInfos')->findOneByUserRefAndRenewHash($request->getParameter('id'), $request->getParameter('hash'));
+      $this->forward404Unless($userLogin);
+    }
+    else
+      $this->form = new RenewPwdForm();
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('renew_pwd'));
       if ($this->form->isValid())
       {
+        $id = $this->form->getValue('id');
+        $hash = $this->form->getValue('hash');
+        $this->forward404If(empty($id) || empty($hash));
+        if(!isset($userLogin))
+          $userLogin = Doctrine::getTable('UsersLoginInfos')->findOneByUserRefAndRenewHash($id, $hash);
+        $this->forward404Unless($userLogin);
         try
         {
-          $userLogin->setPassword($this->form->getValue('new_password'));
-          $userLogin->setRenewHash('');
+
+          $userLogin->setNewPassword($this->form->getValue('new_password'));
+          $userLogin->setRenewHash(null);
           $userLogin->save();
-          $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+
+          $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage').'register/renewPwdSucceeded');
         }
         catch(Doctrine_Exception $ne)
         {

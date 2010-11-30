@@ -7,11 +7,13 @@
  * @subpackage RegisterLoginInfos
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class RegisterLoginInfosForm extends sfForm
+class RenewPwdForm extends sfForm
 {
 
   public function configure()
   {
+    $this->widgetSchema['id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['hash'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['new_password'] = new sfWidgetFormInputPassword();
     $this->widgetSchema['confirm_password'] = new sfWidgetFormInputPassword();
 
@@ -47,6 +49,8 @@ class RegisterLoginInfosForm extends sfForm
                                                       )
                                                   )
                                                 );
+    $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>true));
+    $this->validatorSchema['hash'] = new sfValidatorString(array('required'=>true, 'trim'=>true));
     $this->validatorSchema->setPostValidator(new sfValidatorSchemaCompare('new_password', '==', 'confirm_password',
                                                                           array(),
                                                                           array('invalid' => 'Passwords must be equals and can not contains spaces')

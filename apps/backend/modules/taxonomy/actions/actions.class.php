@@ -24,17 +24,17 @@ class taxonomyActions extends DarwinActions
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
     $this->forward404Unless(
-      $unit = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
+      $taxon = Doctrine::getTable('Taxonomy')->findExcept($request->getParameter('id')),
       sprintf('Object taxonomy does not exist (%s).', array($request->getParameter('id')))
     );
 
     if(! $request->hasParameter('confirm'))
     {
-      $this->number_child = Doctrine::getTable('Taxonomy')->hasChildrens('Taxonomy',$unit->getId());
+      $this->number_child = Doctrine::getTable('Taxonomy')->hasChildrens('Taxonomy',$taxon->getId());
       if($this->number_child)
       {
-        $this->link_delete = 'taxonomy/delete?confirm=1&id='.$unit->getId();
-        $this->link_cancel = 'taxonomy/edit?id='.$unit->getId();
+        $this->link_delete = 'taxonomy/delete?confirm=1&id='.$taxon->getId();
+        $this->link_cancel = 'taxonomy/edit?id='.$taxon->getId();
         $this->setTemplate('warndelete', 'catalogue');
         return;
       }
@@ -42,7 +42,7 @@ class taxonomyActions extends DarwinActions
 
     try
     {
-      $taxa->delete();
+      $taxon->delete();
       $this->redirect('taxonomy/index');
     }
     catch(Doctrine_Exception $ne)
