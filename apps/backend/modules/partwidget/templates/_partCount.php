@@ -21,14 +21,14 @@
 	</td>
   </tr>
 </table>
-<script>
-jQuery(function(){
+<script type="text/javascript">
+$(document).ready(function()
     if($('input#specimen_parts_accuracy_0:checked').length || ( $('#specimen_parts_specimen_part_count_max').val() == $('#specimen_parts_specimen_part_count_min').val()) )
     {
 	$('input#specimen_parts_accuracy_0').click();
         $('tr#specimen_parts_count_max').hide();
     }
-    $("input[name=specimen_parts\\[accuracy\\]]").click(function ()
+    $("input[name=\"specimen_parts\\[accuracy\\]\"]").click(function ()
     {
         if($('input#specimen_parts_accuracy_0:checked').length)
         {
