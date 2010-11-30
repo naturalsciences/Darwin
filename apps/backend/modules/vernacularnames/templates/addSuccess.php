@@ -35,7 +35,7 @@
     </tbody>
   </table>
   <div class='add_value'>
-    <a href="<?php echo url_for('vernacularnames/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value">Add Value</a>
+    <a href="<?php echo url_for('vernacularnames/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" id="add_prop_value"><?php echo __("Add Value") ; ?></a>
   </div>
   <table class="bottom_actions">
     <tfoot>

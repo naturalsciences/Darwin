@@ -11,7 +11,7 @@
         </td>
     </tr>
     <tr>
-      <th><?php echo $form['record_id_2']->renderLabel( ($form->getObject()->getRelationshipType() == 'current_name')? 'Renamed in': 'Recombined From' );?></th>
+      <th><?php echo $form['record_id_2']->renderLabel( ($form->getObject()->getRelationshipType() == 'current_name')? 'Renamed in': 'Recombined from' );?></th>
       <td>
         <?php echo $form['record_id_2']->renderError(); ?>
         <?php echo $form['record_id_2'];?>

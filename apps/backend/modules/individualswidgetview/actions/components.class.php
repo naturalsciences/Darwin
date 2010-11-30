@@ -71,5 +71,7 @@ class individualswidgetViewComponents extends sfComponents
   public function executeRefProperties()
   {
   }
-
+  
+  public function executeExtLinks()
+  {}
 }

@@ -140,19 +140,33 @@ class gtuActions extends DarwinActions
   {
     $request->checkCSRFProtection();
 
-    $this->forward404Unless($gtu = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id')), sprintf('Object gtu does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($unit = Doctrine::getTable('Gtu')->findExcept($request->getParameter('id')), sprintf('Object gtu does not exist (%s).', $request->getParameter('id')));
+
+    if(! $request->hasParameter('confirm'))
+    {
+      $this->number_child = Doctrine::getTable('Gtu')->hasChildrens('Gtu',$unit->getId());
+      if($this->number_child)
+      {
+        $this->link_delete = 'gtu/delete?confirm=1&id='.$unit->getId();
+        $this->link_cancel = 'gtu/edit?id='.$unit->getId();
+        $this->setTemplate('warndelete', 'catalogue');
+        return;
+      }
+    }
+
     try
     {
-        $gtu->delete();
+        $unit->delete();
         $this->redirect('gtu/index');
     }
     catch(Doctrine_Exception $ne)
     {
       $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-      $this->form = new GtuForm($gtu);
+      $this->form = new GtuForm($unit);
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
+      $this->no_right_col = Doctrine::getTable('Gtu')->testNoRightsCollections('gtu_ref',$request->getParameter('id'), $this->getUser()->getId());
       $this->setTemplate('edit');
     }
   }

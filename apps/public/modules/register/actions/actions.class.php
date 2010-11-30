@@ -10,6 +10,26 @@
  */
 class registerActions extends DarwinActions
 {
+  /*Function sending an email to the specified user to confirm he's been well registered*/
+  protected function sendConfirmationMail($userParams)
+  {
+    $message = $this->getMailer()->compose();
+    $message->setFrom(array(sfConfig::get('app_mailer_sender') => 'DaRWIN 2 team'));
+    if(is_array($userParams))
+    {
+      if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']))
+      {
+        if(!empty($userParams['mail']))
+        {
+          $message->setTo($userParams['mail']);
+          $message->setSubject($this->getI18N()->__('DaRWIN 2  registration'));
+          $message->setBody($this->getPartial('confirmationMail', array('userParams'=>$userParams)),'text/plain');
+          $this->getMailer()->send($message);
+        }
+      }
+    }
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = new RegisterForm();
@@ -38,16 +58,12 @@ class registerActions extends DarwinActions
           $username = '';
           if (isset($userInfos['RegisterLoginInfosForm'][0]['user_name']))
             $username = $userInfos['RegisterLoginInfosForm'][0]['user_name'];
-          $password = '';
-          if (isset($userInfos['RegisterLoginInfosForm'][0]['new_password']))
-            $password = $userInfos['RegisterLoginInfosForm'][0]['new_password'];
           $base_params =  array('physical' => $this->user->getIsPhysical(),
                                 'name' => $this->user->getFormatedName(),
                                 'title' => $this->user->getTitle()
                                );
           $suppl_params = array('mail' => $mail,
-                                'username' => $username,
-                                'password' => $password
+                                'username' => $username
                                );
           // send an email to the registered user
           $this->sendConfirmationMail(array_merge($base_params,$suppl_params));
@@ -70,6 +86,11 @@ class registerActions extends DarwinActions
                           'name' => $request->getParameter('name', ''),
                           'title' => $request->getParameter('title', '')
                          );
+  }
+
+  /*When password renew succeeded redirect on a succeeded page*/
+  public function executeRenewPwdSucceeded()
+  {
   }
 
   public function executeLogin(sfWebRequest $request)
@@ -114,4 +135,5 @@ class registerActions extends DarwinActions
     else
       $this->redirect($referer);
   }
+
 }

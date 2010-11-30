@@ -18,7 +18,7 @@ abstract class BaseUsersLoginInfosFormFilter extends BaseFormFilterDoctrine
       'user_name'    => new sfWidgetFormFilterInput(),
       'password'     => new sfWidgetFormFilterInput(),
       'login_system' => new sfWidgetFormFilterInput(),
-      'last_seen'    => new sfWidgetFormFilterInput(),
+      'renew_hash'   => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -27,7 +27,7 @@ abstract class BaseUsersLoginInfosFormFilter extends BaseFormFilterDoctrine
       'user_name'    => new sfValidatorPass(array('required' => false)),
       'password'     => new sfValidatorPass(array('required' => false)),
       'login_system' => new sfValidatorPass(array('required' => false)),
-      'last_seen'    => new sfValidatorPass(array('required' => false)),
+      'renew_hash'   => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_login_infos_filters[%s]');
@@ -53,7 +53,7 @@ abstract class BaseUsersLoginInfosFormFilter extends BaseFormFilterDoctrine
       'user_name'    => 'Text',
       'password'     => 'Text',
       'login_system' => 'Text',
-      'last_seen'    => 'Text',
+      'renew_hash'   => 'Text',
     );
   }
 }

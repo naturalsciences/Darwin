@@ -24,8 +24,12 @@ class cataloguewidgetComponents extends sfComponents
   public function executeComment()
   {
     $this->comments =  Doctrine::getTable('Comments')->findForTable($this->table, $this->eid);
-    $this->addAllowed = ($this->comments->count() != count(Doctrine::getTable('Comments')->getNotionsFor($this->table) ));
   }
+  
+  public function executeExtLinks()
+  {
+    $this->links =  Doctrine::getTable('ExtLinks')->findForTable($this->table, $this->eid);
+  }  
 
   public function executeInsurances()
   {

@@ -343,10 +343,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
      // LAT LON 
     $this->widgetSchema['lat_from'] = new sfWidgetForminput();
     $this->widgetSchema['lat_from']->setLabel('Latitude');
+    $this->widgetSchema['lat_from']->setAttributes(array('class'=>'medium_small_size'));    
     $this->widgetSchema['lat_to'] = new sfWidgetForminput();
+    $this->widgetSchema['lat_to']->setAttributes(array('class'=>'medium_small_size'));        
     $this->widgetSchema['lon_from'] = new sfWidgetForminput();
     $this->widgetSchema['lon_from']->setLabel('Longitude');
+    $this->widgetSchema['lon_from']->setAttributes(array('class'=>'medium_small_size'));        
     $this->widgetSchema['lon_to'] = new sfWidgetForminput();
+    $this->widgetSchema['lon_to']->setAttributes(array('class'=>'medium_small_size'));        
 
     $this->validatorSchema['lat_from'] = new sfValidatorNumber(array('required'=>false,'min' => '-90', 'max'=>'90'));
     $this->validatorSchema['lon_from'] = new sfValidatorNumber(array('required'=>false,'min' => '-180', 'max'=>'180'));
@@ -757,7 +761,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       }
 
       $query = DQ::create()
-        ->from('IndividualSearch s')
+        ->from('SpecimenSearch s')
         ->select($str .' MIN(id) as id,  false as with_types')
         ->andWhere('individual_ref != 0 ')
         ->groupBy('individual_ref');
@@ -770,12 +774,12 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query = DQ::create()
         ->select($str.' , false as with_types')
         ->andWhere('part_ref != 0 ')
-        ->from('PartSearch s');
+        ->from('SpecimenSearch s');
     }
     if($values['what_searched'] != 'part')
       $query->addSelect('dummy_first(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
     else
-      $query->addSelect('collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().')) as has_encoding_rights');
+      $query->addSelect('(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
 
     $this->options['query'] = $query;
 

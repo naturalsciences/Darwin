@@ -10,6 +10,28 @@
  */
 class accountActions extends DarwinActions
 {
+  /**
+   * Send an e-mail for password renew
+   */
+  protected function sendPwdRenewMail($userParams, $partial='pwdRenewMail')
+  {
+    $message = $this->getMailer()->compose();
+    $message->setFrom(array(sfConfig::get('app_mailer_sender') => 'DaRWIN 2 team'));
+    if(is_array($userParams) && ! empty($partial))
+    {
+      if (isset($userParams['mail']) && isset($userParams['name']) && isset($userParams['physical']) && isset($userParams['user_id']) && isset($userParams['hash']))
+      {
+        if(!empty($userParams['mail']))
+        {
+          $message->setTo($userParams['mail']);
+          $message->setSubject($this->getI18N()->__('DaRWIN 2 password renew'));
+          $message->setBody($this->getPartial($partial, array('userParams'=>$userParams)),'text/plain');
+          $this->getMailer()->send($message);
+        }
+      }
+    }
+  }
+
  /**
   * Executes index action
   *
@@ -34,7 +56,7 @@ class accountActions extends DarwinActions
         $this->getUser()->setAttribute('db_user_id',$this->form->user->getId());
         $this->getUser()->setAttribute('db_user_type',$this->form->user->getDbUserType());
         $lang = Doctrine::getTable("UsersLanguages")->getPreferredLanguage($this->form->user->getId());
-        if($lang) //prevent from crashing if lang is set
+        if($lang) //prevent from crashing if lang is not set
         {
             $this->getUser()->setCulture($lang->getLanguageCountry());
         }
@@ -65,6 +87,88 @@ class accountActions extends DarwinActions
       $this->form->bind($request->getParameter('lost_pwd'));
       if ($this->form->isValid())
       {
+        try
+        {
+          $user = Doctrine::getTable('Users')->getUserByLoginAndEMail($this->form->getValue('user_name'), 
+                                                                      $this->form->getValue('user_email')
+                                                                    );
+          
+          $renewHash = hash('sha1', sfConfig::get('app_salt').$user->UsersLoginInfos[0]->getUserName());
+          $user->UsersLoginInfos[0]->setRenewHash($renewHash);
+          $user->UsersLoginInfos[0]->save();
+          
+          $userParams['user_id'] = $user->getId();
+          $userParams['hash'] = $user->UsersLoginInfos[0]->getRenewHash();
+          $userParams['name'] = $user->getFormatedName();
+          $userParams['physical'] = $user->getIsPhysical();
+          $userParams['title'] = $user->getTitle();
+          $userParams['mail'] = $user->UsersComm[0]->getEntry();
+
+          // send an email to the registered user
+          $this->sendPwdRenewMail($userParams);
+          
+          $this->redirect('account/pwdRenewMail?'.http_build_query(array('name'=>$userParams['name'],
+                                                                         'physical'=>$userParams['physical'],
+                                                                         'title'=>$userParams['title']
+                                                                        )
+                                                                  )
+                         );
+          
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
+      }
+    }
+  }
+
+  public function executePwdRenewMail(sfWebRequest $request)
+  {
+    $this->params = array('physical'=> $request->getParameter('physical', 'physical'),
+                          'name' => $request->getParameter('name', ''),
+                          'title' => $request->getParameter('title', '')
+                         );
+  }
+
+  public function executeRenewPwd(sfWebRequest $request)
+  {
+    if($request->hasParameter('id') && $request->hasParameter('hash'))
+    {
+      $this->form = new RenewPwdForm(array('id'=>$request->getParameter('id'), 'hash'=>$request->getParameter('hash')));
+      $userLogin = Doctrine::getTable('UsersLoginInfos')->findOneByUserRefAndRenewHash($request->getParameter('id'), $request->getParameter('hash'));
+      $this->forward404Unless($userLogin);
+    }
+    else
+      $this->form = new RenewPwdForm();
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('renew_pwd'));
+      if ($this->form->isValid())
+      {
+        $id = $this->form->getValue('id');
+        $hash = $this->form->getValue('hash');
+        $this->forward404If(empty($id) || empty($hash));
+        if(!isset($userLogin))
+          $userLogin = Doctrine::getTable('UsersLoginInfos')->findOneByUserRefAndRenewHash($id, $hash);
+        $this->forward404Unless($userLogin);
+        try
+        {
+
+          $userLogin->setNewPassword($this->form->getValue('new_password'));
+          $userLogin->setRenewHash(null);
+          $userLogin->save();
+
+          $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage').'register/renewPwdSucceeded');
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+          $this->form->getErrorSchema()->addError($error);
+        }
       }
     }
   }

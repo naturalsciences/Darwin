@@ -92,5 +92,9 @@ class individualswidgetComponents extends sfComponents
     if(isset($this->form) )
       $this->eid = $this->form->getObject()->getId() ;
   }
-
+  
+  public function executeExtLinks()
+  {
+    $this->defineForm();
+  }  
 }

@@ -176,7 +176,6 @@ class collectionActions extends DarwinActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->level = $this->getUser()->getDbUserType() ;    
     $collection = Doctrine::getTable('Collections')->findExcept($request->getParameter('id'));
-
     $this->forward404Unless($collection, 'collections does not exist');
     $this->form = new CollectionsForm($collection);
 

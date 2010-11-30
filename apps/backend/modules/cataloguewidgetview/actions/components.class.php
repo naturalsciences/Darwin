@@ -24,9 +24,13 @@ class cataloguewidgetViewComponents extends sfComponents
   public function executeComment()
   {
     $this->comments =  Doctrine::getTable('Comments')->findForTable($this->table, $this->eid);
-    $this->addAllowed = ($this->comments->count() != count(Doctrine::getTable('Comments')->getNotionsFor($this->table) ));
   }
 
+  public function executeExtLinks()
+  {
+    $this->links =  Doctrine::getTable('ExtLinks')->findForTable($this->table, $this->eid);
+  }
+  
   public function executeInsurances()
   {
     $this->insurances =  Doctrine::getTable('Insurances')->findForTable($this->table, $this->eid);
@@ -55,5 +59,10 @@ class cataloguewidgetViewComponents extends sfComponents
   public function executeCollectionsCodes()
   {
     $this->collCodes = Doctrine::getTable('Collections')->findExcept($this->eid);
+  }
+
+  public function executeKeywords()
+  {
+    $this->keywords = Doctrine::getTable('ClassificationKeywords')->findForTable($this->table, $this->eid);
   }
 }

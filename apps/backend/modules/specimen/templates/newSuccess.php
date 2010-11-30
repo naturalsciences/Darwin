@@ -3,8 +3,12 @@
 <script type="text/javascript">
 $(document).ready(function ()
 {
+    check_screen_size() ;
+    $(window).resize(function(){
+      check_screen_size();
+    });    
     $('.widget .widget_content:hidden .error_list:has(li)').each(function(){
-        showWidgetContent($(this).closest('.widget'));
+        $(this).closest('.widget').find('.widget_bottom_button').click();
     });
     
     $('.spec_error_list li.hidden').each(function(){
@@ -29,7 +33,6 @@ $(document).ready(function ()
 
   <?php echo form_tag('specimen/'.($form->getObject()->isNew() ? 'create' : 'update?id='.$form->getObject()->getId()), array('class'=>'edition no_border'));?>
     <div>
-      <?php echo $form['id']->render() ?>
       <?php if($form->hasGlobalErrors()):?>
         <ul class="spec_error_list">
           <?php foreach ($form->getErrorSchema()->getErrors() as $name => $error): ?>

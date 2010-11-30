@@ -20,7 +20,7 @@ $browser->
     checkElement('h2:last','UGMM')->
     checkElement('.treelist:first > ul > li',1)->
     checkElement('.treelist:first > ul > li:first span','/Vertebrates/')->
-    checkElement('.treelist:first > ul > li:first span a img')->
+    checkElement('.treelist:first > ul > li:first a img')->
     checkElement('.treelist:first > ul > li:first > ul > li',2)->
     checkElement('.treelist:first > ul > li:first > ul > li:first span', '/Amphibia/')->
     checkElement('.treelist:last > ul > li',1)->
@@ -81,7 +81,7 @@ $browser->
   
   get('/collection/index')->
   info('Edit')->
-  click('span > a', array(), array('position' => 5))->
+  click('.treelist:first > ul > li:first > ul > li:nth-child(2) div a', array())->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
@@ -91,15 +91,7 @@ $browser->
     isStatusCode(200)->
     checkElement('input[value="Aves"]')->
   end()->
-  click('Save',array('collections' => 
-    array(
-    'name'            => 'Paléonotologie',
-    'institution_ref' => Doctrine::getTable('People')->findOneByFamilyName('UGMM')->getId(),
-    'collection_type' => 'mix',
-    'code'            => 'paleo',
-    'main_manager_ref'=> Doctrine::getTable('Users')->findOneByFamilyName('Evil')->getId(),
-    'parent_ref'      => Doctrine::getTable('Collections')->findOneByName('Molusca')->getId(),
-        )))->
+  click('#submit',array( ))->with('form')->debug()->
   followRedirect()->
 
   with('request')->begin()->

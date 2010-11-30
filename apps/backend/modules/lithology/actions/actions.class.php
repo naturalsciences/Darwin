@@ -36,7 +36,17 @@ class lithologyActions extends DarwinActions
       $unit = Doctrine::getTable('Lithology')->findExcept($request->getParameter('id')),
       sprintf('Object lithology does not exist (%s).', array($request->getParameter('id')))
     );
-
+    if(! $request->hasParameter('confirm'))
+    {
+      $this->number_child = Doctrine::getTable('Lithology')->hasChildrens('Lithology',$unit->getId());
+      if($this->number_child)
+      {
+        $this->link_delete = 'lithology/delete?confirm=1&id='.$unit->getId();
+        $this->link_cancel = 'lithology/edit?id='.$unit->getId();
+        $this->setTemplate('warndelete', 'catalogue');
+        return;
+      }
+    }
     try
     {
       $unit->delete();
@@ -46,10 +56,11 @@ class lithologyActions extends DarwinActions
     {
       $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-      $this->form = new InstitutionsForm($institution);
+      $this->form = new LithologyForm($unit);
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
       $this->setTemplate('edit');
+      $this->no_right_col = Doctrine::getTable('Lithology')->testNoRightsCollections('lithology_ref',$request->getParameter('id'), $this->getUser()->getId());
     }
   }
 

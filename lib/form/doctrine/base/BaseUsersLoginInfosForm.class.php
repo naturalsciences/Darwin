@@ -21,7 +21,7 @@ abstract class BaseUsersLoginInfosForm extends BaseFormDoctrine
       'user_name'    => new sfWidgetFormTextarea(),
       'password'     => new sfWidgetFormTextarea(),
       'login_system' => new sfWidgetFormTextarea(),
-      'last_seen'    => new sfWidgetFormTextarea(),
+      'renew_hash'   => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -31,7 +31,7 @@ abstract class BaseUsersLoginInfosForm extends BaseFormDoctrine
       'user_name'    => new sfValidatorString(array('required' => false)),
       'password'     => new sfValidatorString(array('required' => false)),
       'login_system' => new sfValidatorString(array('required' => false)),
-      'last_seen'    => new sfValidatorString(array('required' => false)),
+      'renew_hash'   => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('users_login_infos[%s]');

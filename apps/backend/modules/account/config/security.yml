@@ -4,5 +4,9 @@ login:
   is_secure:  false
 lostPwd:
   is_secure:  false
+pwdRenewMail:
+  is_secure:  false
+renewPwd:
+  is_secure:  false
 submit:
   is_secure:  false

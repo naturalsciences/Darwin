@@ -13,7 +13,7 @@ class SpecimensAccompanyingForm extends BaseSpecimensAccompanyingForm
   {
     unset($this['id'],
           $this['specimen_ref']) ;  
-    $accompanying_types = array('biological'=>'Biological', 'mineral'=>'Mineral');
+    $accompanying_types = $this->getObject()->getAccompanyingTypes();
     $units = array(''=>'','%'=>'%');
     $this->widgetSchema['id'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));   

@@ -7,8 +7,11 @@
       <tr>
         <td>
           <ul class="menu_link">
-            <li><?php echo link_to(__('Public search'),$sf_context->getConfiguration()->generatePublicUrl('homepage').'search/search');?></li>
+            <li><?php echo link_to(__('Our collections'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
+            <li><?php echo link_to(__('Search'),$sf_context->getConfiguration()->generatePublicUrl('homepage').'search/search');?></li>
+            <li><?php echo link_to(__('Take a tour'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
             <li><?php echo link_to(__('Contacts'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
+            <li><?php echo link_to(__('Links'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
           </ul>
         </td>
       </tr>

@@ -5,10 +5,24 @@
  */
 class Codes extends BaseCodes
 {
+  private static $category = array('main'=> 'Main',
+                 'secondary' => 'Second.',
+                 'temporary' => 'Temp.',
+                 'inventory'=> 'Invent.'
+                );
+
   public static function getCategories()
   {
-    return array('main'=> 'Main', 'secondary' => 'Second.', 'temporary' => 'Temp.', 'inventory'=> 'Invent.');
-  }
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$category;
+    }
+    return array_map(array($i18n_object, '__'), self::$category);
+  }  
+  
   public function getCodeFormated()
   {
     $code_prefix = $this->_get('code_prefix');

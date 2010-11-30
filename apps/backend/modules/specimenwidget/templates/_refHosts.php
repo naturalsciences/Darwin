@@ -40,11 +40,6 @@
       </td>
     </tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td><?php echo $form['id']->render(); ?></td>
-    </tr>
-  </tfoot>
 </table>
 <?php $hostTaxonId = $form['host_taxon_ref']->renderId(); $hostSpecimenId = $form['host_specimen_ref']->renderId(); ?>
 <script type="text/javascript">
@@ -54,7 +49,7 @@ $(document).ready(function ()
   {
     $('#'+fieldCleared).val('');
     $('#'+fieldCleared+'_name').text('-');
-    $('#'+fieldCleared+'_button').find('.but_text').text('<?php echo __('Choose !');?>');
+    $('#'+fieldCleared+'_button').find('.but_text').text('<?php echo addslashes(__('Choose !'));?>');
     $('#'+fieldCleared+'_clear').hide();
   }
 
@@ -87,7 +82,7 @@ $(document).ready(function ()
     {
       if($('#<?php echo $hostTaxonId; ?>').val() != '')
       {
-        if(confirm('<?php echo __('Clear also host taxon reference ?'); ?>'))
+        if(confirm('<?php echo addslashes(__('Clear also host taxon reference ?')); ?>'))
         {
           clearVals('<?php echo $hostTaxonId; ?>');
         }
@@ -126,12 +121,12 @@ $(document).ready(function ()
                        if($('#<?php echo $hostTaxonId; ?>_name').text() == '-')
                        {
                          $('#<?php echo $hostTaxonId; ?>_clear').hide();
-                         $('#<?php echo $hostTaxonId; ?>_button').find('.but_text').text('<?php echo __('Choose !'); ?>');
+                         $('#<?php echo $hostTaxonId; ?>_button').find('.but_text').text('<?php echo addslashes(__('Choose !')); ?>');
                        }
                        else
                        {
                          $('#<?php echo $hostTaxonId; ?>_clear').show();
-                         $('#<?php echo $hostTaxonId; ?>_button').find('.but_text').text('<?php echo __('Change !'); ?>');
+                         $('#<?php echo $hostTaxonId; ?>_button').find('.but_text').text('<?php echo addslashes(__('Change !')); ?>');
                        }
                      }
           });

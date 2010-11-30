@@ -7,7 +7,7 @@
  * @subpackage Comments
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class CommentsSubForm extends BaseCommentsForm
+class CommentsSubForm extends CommentsForm
 {
   public function configure()
   {
@@ -19,6 +19,7 @@ class CommentsSubForm extends BaseCommentsForm
     $this->widgetSchema['notion_concerned'] =  new sfWidgetFormChoice(array(
       'choices' =>  $choices,  
     ));
+    $this->widgetSchema['notion_concerned']->setAttributes(array('class' => 'small_size')) ;
 
     /* Validators */
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));

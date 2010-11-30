@@ -8,14 +8,14 @@
       </td>
   </tr>
   <tr>
-    <th><?php echo $form['people_type']->renderLabel();?></th>
+    <th><?php echo $form['people_type']->renderLabel();?>:</th>
     <td>
       <?php echo $form['people_type']->renderError(); ?>
       <?php echo $form['people_type'];?>
     </td>
   </tr>
   <tr>
-    <th><?php echo $form['people_sub_type']->renderLabel();?></th>
+    <th><?php echo $form['people_sub_type']->renderLabel();?>:</th>
     <td>
       <?php echo $form['people_sub_type']->renderError(); ?>
       <?php echo $form['people_sub_type'];?>
@@ -23,7 +23,7 @@
   </tr>
 
   <tr>
-    <th><?php echo $form['people_ref']->renderLabel();?></th>
+    <th><?php echo $form['people_ref']->renderLabel();?>:</th>
     <td>
       <?php echo $form['people_ref']->renderError(); ?>
       <?php echo $form['people_ref'];?>

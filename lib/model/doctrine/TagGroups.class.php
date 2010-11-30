@@ -5,9 +5,7 @@
  */
 class TagGroups extends BaseTagGroups
 {
-  static public function getGroups()
-  {
-    return array(
+  private static $groups =  array(
       'administrative area' => 'Administrative area',
       'topographic' => 'Topographic structure',
       'hydrographic' => 'Hydrographic',
@@ -21,7 +19,19 @@ class TagGroups extends BaseTagGroups
       'vegetation' => 'Vegetation',
       'other' => 'Other'
     );
-  }
+
+
+  public static function getGroups()
+  {
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$groups;
+    }
+    return array_map(array($i18n_object, '__'), self::$groups);
+  }  
 
   static public function getGroup($name)
   {

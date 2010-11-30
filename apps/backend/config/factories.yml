@@ -1,9 +1,51 @@
 prod:
   logger:
-    class:   sfNoLogger
+    class: sfAggregateLogger
     param:
-      level:   err
-      loggers: ~
+      level: notice
+      loggers:
+        sf_web_debug:
+          class: sfWebDebugLogger
+          param:
+            level: notice
+            condition:       %SF_WEB_DEBUG%
+            xdebug_logging:  false
+            web_debug_class: sfWebDebug
+        sf_file_debug:
+          class: sfFileLogger
+          param:
+            level: notice
+            file: %SF_LOG_DIR%/%SF_APP%_%SF_ENVIRONMENT%.log
+  mailer:
+    class: sfMailer
+    param:
+      logging:           %SF_LOGGING_ENABLED%
+      charset:           %SF_CHARSET%
+      delivery_strategy: realtime
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host:       bernie
+          port:       25
+          encryption: ~
+          username:   ~
+          password:   ~
+
+dev:
+  mailer:
+    class: sfMailer
+    param:
+      logging:           %SF_LOGGING_ENABLED%
+      charset:           %SF_CHARSET%
+      delivery_strategy: realtime
+      transport:
+        class: Swift_SmtpTransport
+        param:
+          host:       bernie
+          port:       25
+          encryption: ~
+          username:   ~
+          password:   ~
 
 cli:
   controller:

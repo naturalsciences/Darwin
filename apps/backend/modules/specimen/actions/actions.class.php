@@ -19,7 +19,7 @@ class specimenActions extends DarwinActions
     $spec = null;
 
     if ($fwd404)
-      $this->forward404Unless($spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter,0)), $this->getI18N('Specimen not found'));
+      $this->forward404Unless($spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter,0)));
     elseif($request->hasParameter($parameter) && $request->getParameter($parameter))
       $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter) );
 
@@ -75,6 +75,15 @@ class specimenActions extends DarwinActions
     return $this->renderPartial('spec_comments',array('form' => $form['newComments'][$number], 'rownum'=>$number));
   }
 
+  public function executeAddExtLinks(sfWebRequest $request)
+  {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
+    $number = intval($request->getParameter('num'));
+    $form = $this->getSpecimenForm($request);
+    $form->addExtLinks($number);
+    return $this->renderPartial('spec_links',array('form' => $form['newExtLinks'][$number], 'rownum'=>$number));
+  }
+  
   public function executeAddSpecimensAccompanying(sfWebRequest $request)
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
@@ -160,7 +169,14 @@ class specimenActions extends DarwinActions
           $comment = $this->getRecordIfDuplicate($val->getId(),$comment);
           $this->form->addComments($key, $comment) ;
         }
-
+        // reembed duplicated external url
+        $ExtLinks = Doctrine::getTable('ExtLinks')->findForTable('specimen_individuals',$duplic) ;
+        foreach ($ExtLinks as $key=>$val)
+        {
+          $links = new ExtLinks() ;
+          $links = $this->getRecordIfDuplicate($val->getId(),$comment); 
+          $this->individual->addExtLinks($key, $comment) ;          
+        } 
         $Catalogue = Doctrine::getTable('CataloguePeople')->findForTableByType('specimens',$duplic) ;
         // reembed duplicated collector
         if(count($Catalogue))
@@ -258,7 +274,6 @@ class specimenActions extends DarwinActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()));
-    if($request->getParameter('id') != $this->form->getValue('id')) $this->forwardToSecureAction();
     if ($form->isValid())
     {
       try

@@ -388,7 +388,7 @@ input[type="text"].vvsmall_size
 
 input[type="text"].vsmall_size
 {
-  width:60px;
+  width:50px;
 }
 
 input[type="text"].lsmall_size
@@ -583,6 +583,27 @@ input[type="text"].xlarge_size
   margin-right:15px
 }
 
+.remove_confirm
+{
+  width: 20em;
+  padding:0.5em;
+  background-color:#FFD362;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-right: 1em;
+  margin-left: 1em;
+}
+.remove_confirm img
+{
+  vertical-align: top;
+}
+.remove_confirm a[href]
+{
+  color: #BD2602;
+  text-decoration: none;
+  font-weight:bold;
+}
+
 a.bt_close
 {
   text-decoration : none;
@@ -666,6 +687,11 @@ a.bt_close
   margin: 1em;
   background-color: #ebf5f5;
   border: 1px solid #5BAABD;
+}
+
+p.tree
+{
+  border: 1px solid #C1CC33 !important;
 }
 
 .tree h3
@@ -2271,13 +2297,14 @@ dd
 
 .tabs_view a{
 
-	width: 204px;
+	width: 164px;
 	padding-top: 10px;
 	text-align:center;
 	float:left;
  	margin:2px 2px 0;
 	height: 20px;
 	cursor:pointer;
+  font-size : 9pt ;	
 }
 
 .tabs_view a.enabled

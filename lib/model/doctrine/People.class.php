@@ -5,9 +5,7 @@
  */
 class People extends BasePeople
 {
-  public static function getTypes()
-  {
-    return array(
+  private static $type = array(
       2 => 'Author',
       4 => 'Identifier',
       8 => 'Expert',
@@ -15,7 +13,18 @@ class People extends BasePeople
       32 => 'Preparator',
       64 => 'Photographer'
     );
-  }
+  
+  public static function getTypes()
+  {
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$type;
+    }
+    return array_map(array($i18n_object, '__'), self::$type);
+  }  
 
   public static function getCorrespondingType($type)
   {

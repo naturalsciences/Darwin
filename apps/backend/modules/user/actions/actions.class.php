@@ -73,7 +73,7 @@ class userActions extends DarwinActions
   public function executeChoose(sfWebRequest $request)
   {
     if ($request->hasParameter('num')) $screen = $request->getParameter('num') ;
-    else $screen = 0 ;
+    else $screen = 3 ;
     $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getDbUserType(), "screen" => $screen));
     $this->setLayout(false);
   }
@@ -203,7 +203,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_addresses'));
-      if($request->getParameter('user_ref') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
+      if($request->getParameter('ref_id') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
@@ -245,7 +245,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_comm'));
-      if($request->getParameter('user_ref') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
+      if($request->getParameter('ref_id') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try

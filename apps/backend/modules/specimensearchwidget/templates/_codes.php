@@ -14,8 +14,8 @@
       <?php include_partial('specimensearchwidget/codeline',array('code' => $code,'row_line'=>$i));?>
     <?php endforeach;?>
       <tr class="and_row">
-        <td colspan="3"></td>
-        <td colspan="4"><?php echo image_tag('add_blue.png'). link_to(__('Add code'),'specimensearch/addCode', array('class'=>'add_search_code'));?></td>
+        <td colspan="2"></td>
+        <td colspan="5"><?php echo image_tag('add_blue.png'). link_to(__('Add code'),'specimensearch/addCode', array('class'=>'add_search_code'));?></td>
       </tr>
   </tbody>
 </table>
@@ -31,7 +31,7 @@ function checkBetween()
 $(document).ready(function () {
 
   var num_fld = $('#code_search tbody tr').length;
-  $('.add_code').click(function(event)
+  $('.add_search_code').click(function(event)
   {
     event.preventDefault();
     $.ajax({

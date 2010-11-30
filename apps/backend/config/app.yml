@@ -14,3 +14,5 @@ all:
 #dev:
    tracking:
        enabled: true
+   mailer:
+       sender: collections@naturalsciences.be

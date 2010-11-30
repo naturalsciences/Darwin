@@ -125,7 +125,7 @@
       <trans-unit id="51">
         <source>Add New Specimen</source> <target>Ajouter un nouvel échantillon</target> </trans-unit>
       <trans-unit id="52">
-        <source>Add new specimen</source> <target>Ajouter un nouvel échantillon </target> </trans-unit>
+        <source></source> <target></target> </trans-unit>
       <trans-unit id="53">
         <source>My Saved Specimens</source> <target>Mes échantillons sauvés</target> </trans-unit>
       <trans-unit id="54">
@@ -359,7 +359,7 @@
       <trans-unit id="168">
         <source>Social Status</source> <target>Statut social</target> </trans-unit>
       <trans-unit id="169">
-        <source>Rock Form</source> <target>Forme roch</target> </trans-unit>
+        <source>Rock Form</source> <target>Forme rocheuse</target> </trans-unit>
       <trans-unit id="170">
         <source>Individual Count</source> <target>Nombre d'invididus</target> </trans-unit>
       <trans-unit id="171">
@@ -539,7 +539,7 @@
       <trans-unit id="258">
         <source>Longitude</source> <target>Longitude</target> </trans-unit>
       <trans-unit id="259">
-        <source>Sampling location Tags</source> <target>Tags de point d'échantillonage</target> </trans-unit>
+        <source>Sampling location Tags</source> <target>Labels de point d'échantillonage</target> </trans-unit>
       <trans-unit id="260">
         <source>No Tools defined</source> <target>Pas d'outils définis</target> </trans-unit>
       <trans-unit id="261">
@@ -563,7 +563,7 @@
       <trans-unit id="270">
         <source>Det. St.</source> <target>Det. St.</target> </trans-unit>
       <trans-unit id="271">
-        <source>Identifiers</source> <target>Identifieurs</target> </trans-unit>
+        <source>Identifiers</source> <target>Identificateurs</target> </trans-unit>
       <trans-unit id="272">
         <source>No Methods defined</source> <target>Aucune méthodes définies</target> </trans-unit>
       <trans-unit id="273">
@@ -637,7 +637,7 @@
       <trans-unit id="307">
         <source>Organisation</source> <target>Organisation</target> </trans-unit>
       <trans-unit id="308">
-        <source>Tags</source> <target>Tags</target> </trans-unit>
+        <source>Tags</source> <target>Labels</target> </trans-unit>
       <trans-unit id="309">
         <source>Edit Address</source> <target>Editer Adresse</target> </trans-unit>
       <trans-unit id="310">
@@ -705,9 +705,9 @@
       <trans-unit id="341">
         <source>Title</source> <target>Titre</target> </trans-unit>
       <trans-unit id="342">
-        <source>Family Name</source> <target>Nom de famille</target> </trans-unit>
+        <source>Family name</source> <target>Nom de famille</target> </trans-unit>
       <trans-unit id="343">
-        <source>Given Name</source> <target>Prénom</target> </trans-unit>
+        <source>Given name</source> <target>Prénom</target> </trans-unit>
       <trans-unit id="344">
         <source>Additional Names</source> <target>Noms additionnels</target> </trans-unit>
       <trans-unit id="345">
@@ -837,7 +837,7 @@
       <trans-unit id="407">
         <source>Sub-Type</source> <target>Sous type</target> </trans-unit>
       <trans-unit id="408">
-        <source>Qualifier</source> <target>Qualifieur</target> </trans-unit>
+        <source>Qualifier</source> <target>Qualificatif</target> </trans-unit>
       <trans-unit id="409">
         <source>Date From</source> <target>Date debut</target> </trans-unit>
       <trans-unit id="410">
@@ -921,7 +921,7 @@
       <trans-unit id="449">
         <source>sub collections</source> <target>Sous collections</target> </trans-unit>
       <trans-unit id="450">
-        <source>On sub collections...</source> <target>Pour les sous collections...</target> </trans-unit>
+        <source>On sub collections...</source> <target>Sous collections...</target> </trans-unit>
       <trans-unit id="451">
         <source>Widgets</source> <target>Widgets</target> </trans-unit>
       <trans-unit id="452">
@@ -981,7 +981,7 @@
       <trans-unit id="479">
         <source>Code(s)</source> <target>Code(s)</target> </trans-unit>
       <trans-unit id="480">
-        <source>Add identifier</source> <target>Ajouter identifier</target> </trans-unit>
+        <source>Add identifier</source> <target>Ajouter Identificateur</target> </trans-unit>
       <trans-unit id="481">
         <source>Choose a specimen</source> <target>Choisir un échantillon</target> </trans-unit>
       <trans-unit id="482">
@@ -1105,9 +1105,9 @@
       <trans-unit id="541">
         <source>Edit Preferences widgets</source> <target>Editer préférences de widgets</target> </trans-unit>
       <trans-unit id="542">
-        <source>Search in Specimens</source> <target>rechercher dans les échantillons</target> </trans-unit>
+        <source>Search in Specimens</source> <target>Rechercher dans les échantillons</target> </trans-unit>
       <trans-unit id="543">
-        <source>Board Widgets</source> <target>Wigdet de bord</target> </trans-unit>
+        <source>Board Widgets</source> <target>Tableau de bord</target> </trans-unit>
       <trans-unit id="544">
         <source>You can also use widgets below for this collection</source> <target>Vous avez aussi accès aux widgets ci-dessous pour cette collection</target> </trans-unit>
       <trans-unit id="545">
@@ -1115,7 +1115,438 @@
       <trans-unit id="546">
         <source>Search User</source> <target>Rechercher un utilisateur</target> </trans-unit>
       <trans-unit id="547">
-        <source>Add another title</source> <target>Ajouter un autre titre</target> </trans-unit>        
-    </body>
+        <source>Add another title</source> <target>Ajouter un autre titre</target> </trans-unit>
+      <trans-unit id="548">
+        <source>Hide link with people</source> <target>Cacher lien avec les personnes</target> </trans-unit>
+      <trans-unit id="549">
+        <source>Hide link with institution</source> <target>Cacher lien avec les institutions</target> </trans-unit>
+      <trans-unit id="550">
+        <source>Show link with people</source> <target>Voir lien avec les personnes</target> </trans-unit>
+      <trans-unit id="551">
+        <source>Show link with institution</source> <target>Voir lien avec les institutions</target> </trans-unit> 
+      <trans-unit id="552">
+        <source>Gender</source> <target>Titre</target> </trans-unit>
+      <trans-unit id="553">
+        <source>family name</source> <target>Nom de famille</target> </trans-unit>
+      <trans-unit id="554">
+        <source>Additional names</source> <target>Nom additionels</target> </trans-unit>
+      <trans-unit id="555">
+        <source>Languages</source> <target>Langues</target> </trans-unit>
+      <trans-unit id="556">
+        <source>Login info</source> <target>Information de connexion</target> </trans-unit>
+      <trans-unit id="557">
+        <source>Is physical</source> <target>Personne physique ?</target> </trans-unit>
+      <trans-unit id="558">
+        <source>Sub type</source> <target>Sous type</target> </trans-unit>
+      <trans-unit id="559">
+        <source>Language country</source> <target>Pays</target> </trans-unit>
+      <trans-unit id="560">
+        <source>Mother</source> <target>Maternelle</target> </trans-unit>
+      <trans-unit id="560">
+        <source>Preferred language</source> <target>Langue préférée</target> </trans-unit>        
+      <trans-unit id="561">
+        <source>Comm type</source> <target>Type de comm</target> </trans-unit>
+     <trans-unit id="562">
+        <source>Entry</source> <target>Entrée</target> </trans-unit>
+      <trans-unit id="563">
+        <source>Tag</source> <target>Label</target> </trans-unit>
+      <trans-unit id="564">
+        <source>Gtu from date</source> <target>Date de début du GTU</target> </trans-unit>
+      <trans-unit id="565">
+        <source>Organization</source> <target>Organisation</target> </trans-unit>
+      <trans-unit id="566">
+        <source>Role in the organization</source> <target>Rôle dans l'organisation</target> </trans-unit>
+      <trans-unit id="567">
+        <source>Mass Actions</source> <target>Actions massives</target> </trans-unit>
+      <trans-unit id="568">
+        <source>Street</source> <target>Rue</target> </trans-unit>
+      <trans-unit id="569">
+        <source>Extended address</source> <target>Adresse complémentaire</target> </trans-unit>
+      <trans-unit id="570">
+        <source>Po box</source> <target>Numéro de boite</target> </trans-unit>
+      <trans-unit id="571">
+        <source>Zip code</source> <target>Code postal</target> </trans-unit>
+      <trans-unit id="572">
+        <source>Home</source> <target>Domicile</target> </trans-unit>
+      <trans-unit id="573">
+        <source>Work</source> <target>Travail</target> </trans-unit>
+      <trans-unit id="574">
+        <source>Pager</source> <target>Bipper</target> </trans-unit>
+      <trans-unit id="575">
+        <source>Voice</source> <target>Vocal</target> </trans-unit>
+      <trans-unit id="576">
+        <source>User name</source> <target>Nom d'utilisateur</target> </trans-unit>
+      <trans-unit id="577">
+        <source>New password</source> <target>Nouveau mot de passe</target> </trans-unit>
+      <trans-unit id="578">
+        <source>Confirm password</source> <target>Confirme mot de passe</target> </trans-unit>
+      <trans-unit id="579">
+        <source>Login type</source> <target>Type de connexion</target> </trans-unit>       
+      <trans-unit id="580">
+        <source>List of widgets available for</source> <target>Liste de widgets disponibles pour</target> </trans-unit>
+      <trans-unit id="581">
+        <source>Mandatory</source> <target>Indispensable</target> </trans-unit>
+      <trans-unit id="582">
+        <source>Right</source> <target>Droit</target> </trans-unit>
+      <trans-unit id="583">
+        <source>Default specimens visible columns</source> <target>Colones d'échantillon visibles par défaut</target> </trans-unit>
+      <trans-unit id="584">
+        <source>Default individuals visible columns</source> <target>Colones d'individu visibles par défaut</target> </trans-unit>
+      <trans-unit id="585">
+        <source>Default parts visible columns</source> <target>Colones de partie visibles par défaut</target> </trans-unit>
+      <trans-unit id="586">
+        <source>Number of saved specimens</source> <target>Nombre d'échantillons sauvés</target> </trans-unit>
+      <trans-unit id="587">
+        <source>Number of saved searches</source> <target>Nombre de recherches sauvées</target> </trans-unit>
+      <trans-unit id="588">
+        <source>Visibility of fields in results :</source> <target>Champs visibles dans le résultat :</target> </trans-unit>
+      <trans-unit id="589">
+        <source>Define which field will be available by default into the specimen search</source> 
+        <target>Défini quels champs seront disponibles par défaut dans la recherche d'échantillon</target> </trans-unit>        
+      <trans-unit id="590">
+        <source>Define which field will be available by default into the specimen individual search</source> 
+        <target>Défini quels champs seront disponibles par défaut dans la recherche d'individu d'échantillon</target> </trans-unit>
+      <trans-unit id="591">
+        <source>Define which field will be available by default into the specimen part search</source> 
+        <target>Défini quels champs seront disponibles par défaut dans la recherche de partie d'échantillon</target> </trans-unit>                
+      <trans-unit id="600">
+        <source>Sampling Location</source> <target>Point d'échantillonage</target> </trans-unit>                  
+      <trans-unit id="601">
+        <source>All specimens encoded by me</source> <target>Tous les échantillons que j'ai encodé</target> </trans-unit>                 
+      <trans-unit id="602">
+        <source>All Mamals</source> <target>Tous les mammifères</target> </trans-unit>                 
+      <trans-unit id="603">
+        <source>Records per page: </source> <target>Enregistrement par page: </target> </trans-unit>                 
+      <trans-unit id="604">
+        <source>Extinct</source> <target>Eteinte</target> </trans-unit>                 
+      <trans-unit id="605">
+        <source>Synonymies</source> <target>Synomymes</target> </trans-unit>                 
+      <trans-unit id="606">
+        <source>External Url</source> <target>Lien externe</target> </trans-unit>                 
+      <trans-unit id="607">
+        <source>Link</source> <target>Lien</target> </trans-unit>                 
+      <trans-unit id="608">
+        <source>Keywords</source> <target>Mots clés</target> </trans-unit>                 
+      <trans-unit id="609">
+        <source>Properties</source> <target>Propriétés</target> </trans-unit>                 
+      <trans-unit id="610">
+        <source>Unit Name :</source> <target>Nom de l'unité :</target> </trans-unit>                 
+      <trans-unit id="611">
+        <source>Possible Keywords</source> <target>Mots clés possibles</target> </trans-unit>                 
+      <trans-unit id="612">
+        <source>Property type</source> <target>Type de propiété</target> </trans-unit>                 
+      <trans-unit id="613">
+        <source>Add another type</source> <target>Ajouter un autre type</target> </trans-unit>
+      <trans-unit id="614">
+        <source>Add another sub-type</source> <target>Ajouter un autre sous type</target> </trans-unit>        
+      <trans-unit id="615">
+        <source>Add another qualifier</source> <target>Ajouter un qualificatif</target> </trans-unit>        
+      <trans-unit id="616">
+        <source>Property sub type</source> <target>Sous type de la propriété</target> </trans-unit>                 
+      <trans-unit id="617">
+        <source>Property qualifier</source> <target>Qualificatif de la propriété</target> </trans-unit>                 
+      <trans-unit id="618">
+        <source>Date from</source> <target>Date début</target> </trans-unit>                 
+      <trans-unit id="619">
+        <source>Date to</source> <target>Date fin</target> </trans-unit>                 
+      <trans-unit id="620">
+        <source>Property method</source> <target>Méthode de la propriété</target> </trans-unit>                 
+      <trans-unit id="621">
+        <source>Property tool</source> <target>Outil de la propriété</target> </trans-unit>                 
+      <trans-unit id="622">
+        <source>Value units</source> <target>Unité de valeur</target> </trans-unit>                 
+      <trans-unit id="623">
+        <source>Accuracy units</source> <target>Unité de précision</target> </trans-unit>                 
+      <trans-unit id="624">
+        <source>Vernacular names</source> <target>Noms vernaculaires</target> </trans-unit>                 
+      <trans-unit id="625">
+        <source>Recombined from</source> <target>Recomposé depuis</target> </trans-unit>                 
+      <trans-unit id="626">
+        <source>Current name</source> <target>Nom actuel</target> </trans-unit>                 
+      <trans-unit id="627">
+        <source>Renamed in</source> <target>Renommé en</target> </trans-unit>                 
+      <trans-unit id="628">
+        <source>Group name</source> <target>Groupe</target> </trans-unit>                 
+      <trans-unit id="629">
+        <source>Item</source> <target>Objet</target> </trans-unit>        
+      <trans-unit id="630">
+        <source>Associated</source> <target>Association</target> </trans-unit>                 
+      <trans-unit id="631">
+        <source>Comments</source> <target>Commentaires</target> </trans-unit>        
+      <trans-unit id="632">
+        <source>Notion concerned</source> <target>Notion concernée</target> </trans-unit>                 
+      <trans-unit id="633">
+        <source>Add another community</source> <target>Ajouter une autre communauté</target> </trans-unit>                 
+      <trans-unit id="634">
+        <source>taxon information</source> <target>Information sur le taxon</target> </trans-unit>                 
+      <trans-unit id="635">
+        <source>taxon life history</source> <target>Historique de vie du taxon</target> </trans-unit>                 
+      <trans-unit id="636">
+        <source>Synonyms</source> <target>Synonymes</target> </trans-unit>
+      <trans-unit id="637">
+        <source>Hommonyms</source> <target>Homonymes</target> </trans-unit>
+      <trans-unit id="637">
+        <source>Isonyms</source> <target>Isonymes</target> </trans-unit>                
+      <trans-unit id="638">
+        <source>valid</source> <target>valide</target> </trans-unit>                 
+      <trans-unit id="639">
+        <source>invalid</source> <target>invalide</target> </trans-unit>                 
+      <trans-unit id="640">
+        <source>deprecated</source> <target>Obsolète</target> </trans-unit>                 
+      <trans-unit id="641">
+        <source>domain</source> <target>domaine</target> </trans-unit>                 
+      <trans-unit id="642">
+        <source>kingdom</source> <target>royaume</target> </trans-unit>                 
+      <trans-unit id="643">
+        <source>Choose Parent</source> <target>Choisir un parent</target> </trans-unit>                 
+      <trans-unit id="644">
+        <source>Author</source> <target>Autheur</target> </trans-unit>                 
+      <trans-unit id="645">
+        <source>Main Author</source> <target>Autheur principal</target> </trans-unit>                 
+      <trans-unit id="646">
+        <source>Secondary Author</source> <target>Autheur secondaire</target> </trans-unit>         
+      <trans-unit id="647">      
+        <source>Reviewer</source> <target>Critique</target> </trans-unit>
+      <trans-unit id="648">
+        <source>Publisher</source> <target>Editeur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="650">
+        <source>Related</source> <target>Proche</target> </trans-unit>
+      <trans-unit id="651">
+        <source>Activity date from</source> <target>Date d'activité de</target> </trans-unit>
+      <trans-unit id="652">
+        <source>Activity date to</source> <target>Date d'activé à</target> </trans-unit>
+      <trans-unit id="653">
+        <source>Add Link</source> <target>Ajouter un lien</target> </trans-unit>
+      <trans-unit id="654">
+        <source>Low. bound (My)</source> <target>Limite inf. (Ma)</target> </trans-unit>
+      <trans-unit id="655">
+        <source>Up. bound (My)</source> <target>Limite sup. (Ma)</target> </trans-unit>        
+      <trans-unit id="656">      
+        <source>Local unit ?</source> <target>Unité locale ?</target> </trans-unit>
+      <trans-unit id="657">
+        <source>Cristalographic system</source> <target>Système cristalographique</target> </trans-unit>
+      <trans-unit id="658">
+        <source>class</source> <target>classe</target> </trans-unit>
+      <trans-unit id="659">
+        <source>family</source> <target>famille</target> </trans-unit>
+      <trans-unit id="660">
+        <source>Administrator</source> <target>Administrateur</target> </trans-unit>
+      <trans-unit id="661">
+        <source>Collection manager</source> <target>Gestionnaire de collection</target> </trans-unit>
+      <trans-unit id="662">
+        <source>Encoder</source> <target>Encodeur</target> </trans-unit>
+      <trans-unit id="663">
+        <source>Registered user</source> <target>Utilisateur enregistré</target> </trans-unit>        
+      <trans-unit id="664">
+        <source>Expedition from date</source> <target>Date début d'expédition</target> </trans-unit>
+      <trans-unit id="665">
+        <source>Expedition to date</source> <target>Date fin d'expédition</target> </trans-unit>
+      <trans-unit id="666">
+        <source>Photographer</source> <target>Photographe</target> </trans-unit>
+      <trans-unit id="667">
+        <source>Identifier</source> <target>Identificateur</target> </trans-unit>
+      <trans-unit id="668">
+        <source>Collector</source> <target>Collecteur</target> </trans-unit>
+      <trans-unit id="669">
+        <source>Preparator</source> <target>Préparateur</target> </trans-unit>
+      <trans-unit id="670">
+        <source>Institution Name</source> <target>Nom de l'institution</target> </trans-unit>
+      <trans-unit id="671">
+        <source>phone/fax</source> <target>téléphone/fax</target> </trans-unit>
+      <trans-unit id="672">
+        <source>Relationship type</source> <target>Type de relation</target> </trans-unit>
+      <trans-unit id="673">
+        <source>belongs to</source> <target>Appartient à</target> </trans-unit>
+      <trans-unit id="674">
+        <source>is department of</source> <target>Est un département de</target> </trans-unit>
+      <trans-unit id="675">
+        <source>is section of</source> <target>Est une section de</target> </trans-unit>
+      <trans-unit id="676">
+        <source>works for</source> <target>Travaille pour</target> </trans-unit>
+      <trans-unit id="677">
+        <source>Birth date</source> <target>Date de naissance</target> </trans-unit>
+      <trans-unit id="678">
+        <source>End date</source> <target>Date de décès</target> </trans-unit>
+      <trans-unit id="679">
+        <source>general information</source> <target>Information générale</target> </trans-unit>
+      <trans-unit id="670">
+        <source>Gtu to date</source> <target>Date de fin du GTU</target> </trans-unit>
+      <trans-unit id="671">
+        <source>Administrative area</source> <target>Zone administrative</target> </trans-unit>
+      <trans-unit id="672">
+        <source>Topographic structure</source> <target>Structure topographique</target> </trans-unit>
+      <trans-unit id="673">
+        <source>Hydrographic</source> <target>Hydrographique</target> </trans-unit>
+      <trans-unit id="674">
+        <source>Orography</source> <target>Orography</target> </trans-unit>
+      <trans-unit id="675">
+        <source>Area</source> <target>Zone</target> </trans-unit>
+      <trans-unit id="676">
+        <source>Historical</source> <target>Historique</target> </trans-unit>
+      <trans-unit id="677">
+        <source>Populated Places</source> <target>Endroits peuplés</target> </trans-unit>
+      <trans-unit id="678">
+        <source>Underground</source> <target>Souterrain</target> </trans-unit>
+      <trans-unit id="679">
+        <source>Road</source> <target>Route</target> </trans-unit>
+      <trans-unit id="680">
+        <source>Vegetation</source> <target>Végétation</target> </trans-unit>
+      <trans-unit id="681">
+        <source>Other</source> <target>Autre</target> </trans-unit>
+      <trans-unit id="682">
+        <source>Spot</source> <target>Place</target> </trans-unit>
+      <trans-unit id="683">
+        <source>Public sampling location ?</source> <target>Point d'échantillonage public ?</target> </trans-unit>
+      <trans-unit id="684">
+        <source>Pick a relationship in the list</source> <target>Choisissez une relation dans la liste</target> </trans-unit>
+      <trans-unit id="685">
+        <source>Add another relationship</source> <target>Ajouter une autre relation</target> </trans-unit>
+      <trans-unit id="686">
+        <source>Selected</source> <target>Sélectionné</target> </trans-unit>
+      <trans-unit id="687">
+        <source>Available</source> <target>Disponible</target> </trans-unit>
+      <trans-unit id="688">
+        <source>Add new value:</source> <target>Ajouter une nouvelle valeur:</target> </trans-unit>
+      <trans-unit id="689">
+        <source>Undefined</source> <target>indéfini</target> </trans-unit>
+      <trans-unit id="690">
+        <source>Donation</source> <target>Don</target> </trans-unit>
+      <trans-unit id="691">
+        <source>Exchange</source> <target>Echange</target> </trans-unit>
+      <trans-unit id="692">
+        <source>Internal work</source> <target>Travail interne</target> </trans-unit>
+      <trans-unit id="693">
+        <source>Loan</source> <target>Prêt</target> </trans-unit>
+      <trans-unit id="694">
+        <source>Mission</source> <target>Mission</target> </trans-unit>
+      <trans-unit id="695">
+        <source>Purchase</source> <target>Achat</target> </trans-unit>
+      <trans-unit id="696">
+        <source>Judicial seizure</source> <target>Saisie judiciaire</target> </trans-unit>
+      <trans-unit id="697">
+        <source>Trip</source> <target>Voyage</target> </trans-unit>
+      <trans-unit id="698">
+        <source>Excavation</source> <target>Fouille</target> </trans-unit>
+      <trans-unit id="699">
+        <source>Exploration</source> <target>Exploration</target> </trans-unit>
+      <trans-unit id="700">
+        <source>Collect</source> <target>Collecte</target> </trans-unit>
+      <trans-unit id="701">
+        <source>Choose Collection</source> <target>Choisir Collection</target> </trans-unit>
+      <trans-unit id="702">
+        <source>observation</source> <target>Observation</target> </trans-unit>
+      <trans-unit id="703">
+        <source>physical</source> <target>physique</target> </trans-unit>
+      <trans-unit id="704">
+        <source>Main</source> <target>Prim</target> </trans-unit>
+      <trans-unit id="705">
+        <source>Second.</source> <target>Sec.</target> </trans-unit>
+      <trans-unit id="706">
+        <source>Temp.</source> <target>Temp.</target> </trans-unit>
+      <trans-unit id="707">
+        <source>Invent.</source> <target>Invent.</target> </trans-unit>
+      <trans-unit id="708">
+        <source>Choose a Collector</source> <target>Choisir un collecteur</target> </trans-unit>
+      <trans-unit id="709">
+        <source>Choose !</source> <target>Choisir !</target> </trans-unit>
+      <trans-unit id="710">
+        <source>Change !</source> <target>Change !</target> </trans-unit>
+      <trans-unit id="711">
+        <source>Biological</source> <target>Biologique</target> </trans-unit>
+      <trans-unit id="712">
+        <source>Mineral</source> <target>Minerale</target> </trans-unit>
+      <trans-unit id="713">
+        <source>Choose Taxon</source> <target>Choisir Taxon</target> </trans-unit>
+      <trans-unit id="714">
+        <source>Choose Mineral</source> <target>Choisir Minerai</target> </trans-unit>
+      <trans-unit id="715">
+        <source>Unit:</source> <target>Unité:</target> </trans-unit>
+      <trans-unit id="716">
+        <source>What would you like to search ?</source> <target>Que voulez vous chercher ?</target> </trans-unit>
+      <trans-unit id="717">
+        <source>Code of</source> <target>Code de</target> </trans-unit>
+      <trans-unit id="718">
+        <source>Sampling Location code</source> <target>Code du point d'échantillonage</target> </trans-unit>
+      <trans-unit id="719">
+        <source>Individuals</source> <target>Individus</target> </trans-unit>
+      <trans-unit id="720">
+        <source>Parts</source> <target>Parties</target> </trans-unit>
+      <trans-unit id="721">
+        <source>All</source> <target>Tous</target> </trans-unit>
+      <trans-unit id="722">
+        <source>Given Name</source> <target>Prénom</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="649">
+        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+    </body>    
   </file>
 </xliff>

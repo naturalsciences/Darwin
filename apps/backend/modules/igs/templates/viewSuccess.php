@@ -6,13 +6,13 @@
   <table>
     <tbody>
       <tr>
-        <th><?php echo $form['ig_num']->renderLabel() ?></th>
+        <th><?php echo __('I.G. number:');?></th>
         <td>
           <?php echo $igs->getIgNum(); ?>
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['ig_date']->renderLabel() ?></th>
+        <th><?php echo __('I.G. creation date:'); ?></th>
         <td>
           <?php echo FuzzyDateTime::getDateTimeStringFromArray($igs->getIgDate()->getRawValue()) ?>
         </td>
@@ -24,6 +24,6 @@
 	'widgets' => $widgets,
 	'category' => 'cataloguewidgetview',
 	'columns' => 1,
-	'options' => array('eid' => $form->getObject()->getId(), 'table' => 'igs', 'view' => true)
+	'options' => array('eid' => $igs->getId(), 'table' => 'igs', 'view' => true)
 	)); ?>
 </div>

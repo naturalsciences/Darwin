@@ -38,6 +38,18 @@ class chronostratigraphyActions extends DarwinActions
       sprintf('Object chronostratigraphy does not exist (%s).', array($request->getParameter('id')))
     );
 
+    if(! $request->hasParameter('confirm'))
+    {
+      $this->number_child = Doctrine::getTable('Chronostratigraphy')->hasChildrens('Chronostratigraphy',$unit->getId());
+      if($this->number_child)
+      {
+        $this->link_delete = 'chronostratigraphy/delete?confirm=1&id='.$unit->getId();
+        $this->link_cancel = 'chronostratigraphy/edit?id='.$unit->getId();
+        $this->setTemplate('warndelete', 'catalogue');
+        return;
+      }
+    }
+
     try
     {
       $unit->delete();
@@ -50,6 +62,7 @@ class chronostratigraphyActions extends DarwinActions
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
       $this->setTemplate('edit');
+      $this->no_right_col = Doctrine::getTable('Chronostratigraphy')->testNoRightsCollections('chrono_ref',$request->getParameter('id'), $this->getUser()->getId());
       return ;
     }
     $this->redirect('chronostratigraphy/index');

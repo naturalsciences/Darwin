@@ -97,6 +97,11 @@ class partwidgetComponents extends sfComponents
   {
     $this->defineForm();
   }
+
+  public function executeExtLinks()
+  {
+    $this->defineForm();
+  }  
   public function executeMaintenance()
   {
     if(isset($this->form) )

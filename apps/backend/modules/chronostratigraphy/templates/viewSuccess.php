@@ -26,9 +26,6 @@ $(document).ready(function ()
         <td>
           <?php echo $chrono->getName(); ?>
         </td>
-        <td rowspan="6" class="keyword_row">
-          <?php include_partial('catalogue/keywordsView', array('form' => $form,'table_name' => 'chronostratigraphy','field_name' => 'chronostratigraphy_name', 'view' => true)); ?>
-        </td>
       </tr>
       <tr>
         <th><?php echo $form['local_naming']->renderLabel() ?></th>

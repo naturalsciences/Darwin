@@ -48,7 +48,7 @@ $(document).ready(function () {
   {
 
     event.preventDefault();  
-    var answer = confirm('<?php echo __('Are you sure ?');?>');
+    var answer = confirm('<?php echo addslashes(__('Are you sure ?'));?>');
     if( answer )
     {
       $.get($(this).attr('href'),function (html){

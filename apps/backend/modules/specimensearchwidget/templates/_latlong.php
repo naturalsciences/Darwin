@@ -1,4 +1,4 @@
- <div id="lat_long_set"><p><strong><?php echo __(' Choose latitude/longitude on map');?></strong><input type="checkbox" id="show_as_map"></p>
+ <div id="lat_long_set"><p><strong><?php echo __('Choose latitude/longitude on map');?></strong><input type="checkbox" id="show_as_map"></p>
   <br /><br />
   <table>
     <tr>

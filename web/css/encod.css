@@ -9,13 +9,14 @@
 }
 
 .tabs a{
-	width: 204px;
+	width: 164px;
 	padding-top: 10px;
 	text-align:center;
 	float:left;
  	margin:2px 2px 0;
 	height: 20px;
 	cursor:pointer;
+  font-size : 9pt;	
 }
 
 .tabs a.enabled

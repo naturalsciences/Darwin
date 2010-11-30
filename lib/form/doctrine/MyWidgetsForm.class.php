@@ -23,6 +23,7 @@ class MyWidgetsForm extends BaseMyWidgetsForm
 	  'renderer_options' => array('formatter' => array($this, 'formatter'))     
     ));
     $this->widgetSchema['title_perso'] = new sfWidgetFormInputText() ;
+    $this->widgetSchema['title_perso']->setAttributes(array('class' => 'medium_size')) ;
     $this->widgetSchema['user_ref'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['group_name'] = new sfWidgetFormInputHidden() ;
     $this->widgetSchema['category'] = new sfWidgetFormInputHidden() ;

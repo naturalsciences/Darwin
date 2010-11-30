@@ -1,4 +1,3 @@
-<?php if(isset($view) && $view) $view= true ; else $view = false ; ?>
 <?php if(count($parts)==0):?>
   <h2><?php echo __('There are currently no part');?></h2>
 <?php else:?>
@@ -39,16 +38,18 @@
     <?php endif;?>
     </td>
     <td class="item_name"><?php echo $part->getSpecimenPart();?></td>
-    <td><?php echo $part->getRoom();?></td>
-    <td><?php echo $part->getRow();?></td>
-    <td><?php echo $part->getShelf();?></td>
-    <td><?php echo $part->getContainer();?></td>
-    <td><?php echo $part->getSubContainer();?></td>
-    <?php if ($view) : ?>
-      <td>
-        <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
-      </td>    
+    <?php if($sf_user->isA(Users::REGISTERED_USER)) : ?>
+      <td colspan="5">&nbsp;</td>
+    <?php else : ?>
+      <td><?php echo $part->getRoom();?></td>
+      <td><?php echo $part->getRow();?></td>
+      <td><?php echo $part->getShelf();?></td>
+      <td><?php echo $part->getContainer();?></td>
+      <td><?php echo $part->getSubContainer();?></td>
     <?php endif ; ?>
+    <td>
+      <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
+    </td>    
     <?php if(!isset($is_choose) || $is_choose==false):?>
       <?php if (!$view): ?> 
       <td>

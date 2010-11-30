@@ -25,7 +25,7 @@ function removeError()
   $('ul#error_list').find('li').text(' ');
 }
 
-$(document).ready(function () {
+$(document).ready(function () { 
   $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
 
   $('body').catalogue({}); 

@@ -36,7 +36,7 @@ class PeopleRelationshipsForm extends BasePeopleRelationshipsForm
       ),
       array('class' => 'hidden',)
     );
-    $this->widgetSchema['relationship_type'] = new sfWidgetFormChoice(array('choices' => PeopleRelationships::$possible_types));
+    $this->widgetSchema['relationship_type'] = new sfWidgetFormChoice(array('choices' => PeopleRelationships::getPossibleTypes()));
     $this->Postvalidators = array();
     $this->initiateActivityItems();
     $this->validatorSchema->setPostValidator(new sfValidatorAnd($this->Postvalidators));

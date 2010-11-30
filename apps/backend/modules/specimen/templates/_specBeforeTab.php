@@ -1,4 +1,3 @@
-<?php if(isset($view) && $view) $view= true ; else $view = false ; ?>
 <?php use_stylesheet('encod.css') ?>
 <?php $specimen_id = ($specimen->isNew())?'':$specimen->getId();?>
 <?php $specimen_name = ($specimen->isNew())?'': sprintf(__('Specimen %d'),$specimen->getId());?>
@@ -12,7 +11,7 @@
 <?php endif;?>
 <div class="encoding">
 	<div class="page">
-		<div class="tabs<?php if($view) echo '_view' ; ?>">
+		<div class="tabs<?php if(isset($view) && $view) echo '_view' ; ?>">
 			  <?php if($specimen->isNew()):?>
 
 				<a class="enabled selected" id="tab_0"> &lt; <?php echo __('New Specimen');?> &gt; </a>
@@ -81,4 +80,4 @@
         <?php endif ; ?>
 			  <?php endif;?>
 		  </div>
- 		<div class="<?php if($view) echo 'panel_view' ; else echo 'panel edition ' ?> encod_screen" id="intro">
+ 		<div class="<?php if(isset($view) && $view) echo 'panel_view' ; else echo 'panel edition ' ?> encod_screen" id="intro">
