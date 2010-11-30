@@ -921,7 +921,7 @@
       <trans-unit id="449">
         <source>sub collections</source> <target>Sous collections</target> </trans-unit>
       <trans-unit id="450">
-        <source>On sub collections...</source> <target>Pour les sous collections...</target> </trans-unit>
+        <source>On sub collections...</source> <target>Sous collections...</target> </trans-unit>
       <trans-unit id="451">
         <source>Widgets</source> <target>Widgets</target> </trans-unit>
       <trans-unit id="452">

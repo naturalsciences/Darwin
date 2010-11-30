@@ -11,7 +11,7 @@
 class catalogueActions extends DarwinActions
 {
   protected $catalogue = array(
-   'catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments','specimens','specimen_individuals','specimen_parts','ext_links');
+   'catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments','specimens','specimen_individuals','specimen_parts','ext_links','collection_maintenance');
   protected $ref_id = array('specimens' => 'spec_ref','specimen_individuals' => 'individual_ref','specimen_parts' => 'part_ref') ;
   public function executeRelation(sfWebRequest $request)
   {
@@ -88,7 +88,7 @@ class catalogueActions extends DarwinActions
           $this->forwardToSecureAction();    
       } 
     }
-      
+
     try{
       $r->delete();
     }
