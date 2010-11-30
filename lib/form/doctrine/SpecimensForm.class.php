@@ -391,7 +391,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->validatorSchema['host_taxon_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
 
     $this->validatorSchema['acquisition_category'] = new sfValidatorChoice(array(
-        'choices' => SpecimensTable::getDistinctCategories(),
+        'choices' => array_keys(SpecimensTable::getDistinctCategories()),
         'required' => false,
         ));
     $this->validatorSchema['category'] = new sfValidatorDoctrineChoice(

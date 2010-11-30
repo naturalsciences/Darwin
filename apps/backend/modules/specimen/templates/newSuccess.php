@@ -8,7 +8,7 @@ $(document).ready(function ()
       check_screen_size();
     });    
     $('.widget .widget_content:hidden .error_list:has(li)').each(function(){
-        showWidgetContent($(this).closest('.widget'));
+        $(this).closest('.widget').find('.widget_bottom_button').click();
     });
     
     $('.spec_error_list li.hidden').each(function(){
