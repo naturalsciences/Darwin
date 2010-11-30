@@ -833,7 +833,7 @@ BEGIN
 
 
 
-        SELECT COALESCE(get_setting('darwin.track_level'),'10')::integer INTO track_level
+        SELECT COALESCE(get_setting('darwin.track_level'),'10')::integer INTO track_level;
         IF track_level = 0 THEN --NO Tracking
           RETURN NEW;
         ELSIF track_level = 1 THEN -- Track Only Main tables

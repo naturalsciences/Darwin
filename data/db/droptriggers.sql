@@ -209,7 +209,7 @@ DROP TRIGGER trg_trk_log_table_codes
         ON codes;
 
 DROP TRIGGER trg_trk_log_table_insurances 
-        ON insurances
+        ON insurances;
 
 DROP TRIGGER trg_trk_log_table_specimens 
         ON specimens;
