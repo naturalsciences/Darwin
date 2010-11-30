@@ -75,7 +75,7 @@
             }
             else
             {
-              if(confirm('<?php echo __('Are you sure?');?>'))
+              if(confirm('<?php echo addslashes(__('Are you sure?'));?>'))
               {
                 $.get('<?php echo url_for('savesearch/removePin?search='.$is_specimen_search);?>/ids/' + pins_array.join(',') ,function (html){
                   for(var i = 0; i < pins_array.length; ++i)

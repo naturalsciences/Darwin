@@ -11,7 +11,7 @@ class Codes extends BaseCodes
                  'inventory'=> 'Invent.'
                 );
 
-  public function getCategories()
+  public static function getCategories()
   {
     try{
         $i18n_object = sfContext::getInstance()->getI18n();

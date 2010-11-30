@@ -21,7 +21,7 @@ class TagGroups extends BaseTagGroups
     );
 
 
-  static public function getGroups()
+  public static function getGroups()
   {
     try{
         $i18n_object = sfContext::getInstance()->getI18n();
