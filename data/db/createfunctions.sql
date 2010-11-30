@@ -823,6 +823,7 @@ CREATE OR REPLACE FUNCTION fct_trk_log_table() RETURNS TRIGGER
 AS $$
 DECLARE
 	user_id integer;
+        track_level integer;
 	track_fields integer;
 	trk_id bigint;
 	tbl_row RECORD;
@@ -830,10 +831,23 @@ DECLARE
 	old_val varchar;
 BEGIN
 
+
+
+        SELECT COALESCE(get_setting('darwin.track_level'),'10')::integer INTO track_level
+        IF track_level = 0 THEN --NO Tracking
+          RETURN NEW;
+        ELSIF track_level = 1 THEN -- Track Only Main tables
+          IF TG_TABLE_NAME::text NOT IN ('specimens', 'specimen_individuals', 'specimen_parts', 'taxonomy', 'chronostratigraphy', 'lithostratigraphy',
+            'mineralogy', 'lithology', 'habitats', 'people') THEN
+            RETURN NEW;
+          END IF;
+        END IF;
+
 	SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
 	IF user_id = 0 THEN
 	  RETURN NEW;
 	END IF;
+
 	IF TG_OP = 'INSERT' THEN
 		INSERT INTO users_tracking (referenced_relation, record_id, user_ref, action, modification_date_time, new_value)
 				VALUES (TG_TABLE_NAME::text, NEW.id, user_id, 'insert', now(), hstore(NEW)) RETURNING id into trk_id;

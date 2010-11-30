@@ -121,50 +121,127 @@ DROP TRIGGER trg_words_ts_cpy_codes
 	ON codes;
 
 /*** Tracking ***/
+DROP TRIGGER trg_trk_log_table_catalogue_relationships 
+        ON catalogue_relationships;
 
-DROP TRIGGER trg_trk_log_table_taxonomy
-	ON taxonomy;
+DROP TRIGGER trg_trk_log_table_classification_keywords 
+        ON classification_keywords;
 
-DROP TRIGGER trg_trk_log_table_lithology
-	ON lithology;
+DROP TRIGGER trg_trk_log_table_classification_synonymies 
+        ON classification_synonymies;
 
-DROP TRIGGER trg_trk_log_table_chronostratigraphy
-	ON chronostratigraphy;
+DROP TRIGGER trg_trk_log_table_catalogue_properties 
+        ON catalogue_properties;
 
-DROP TRIGGER trg_trk_log_table_mineralogy
-	ON mineralogy;
+DROP TRIGGER trg_trk_log_table_properties_values 
+        ON properties_values;
 
-DROP TRIGGER trg_trk_log_table_people
-	ON people;
+DROP TRIGGER trg_trk_log_table_identifications 
+        ON identifications;
 
-DROP TRIGGER trg_trk_log_table_insurances
-	ON insurances;
+DROP TRIGGER trg_trk_log_table_class_vernacular_names 
+        ON class_vernacular_names;
 
-DROP TRIGGER trg_trk_log_table_specimens
-	ON specimens;
+DROP TRIGGER trg_trk_log_table_vernacular_names 
+        ON vernacular_names;
 
-DROP TRIGGER trg_trk_log_table_specimen_individuals
-	ON specimen_individuals;
+DROP TRIGGER trg_trk_log_table_people_relationships 
+        ON people_relationships;
 
-DROP TRIGGER trg_trk_log_table_specimen_parts
-	ON specimen_parts;
+DROP TRIGGER trg_trk_log_table_people_comm 
+        ON people_comm;
 
-DROP TRIGGER trg_trk_log_table_gtu
-	ON gtu;
+DROP TRIGGER trg_trk_log_table_people_addresses 
+        ON people_addresses;
 
-DROP TRIGGER trg_trk_log_table_tag_groups
-	ON tag_groups;
+DROP TRIGGER trg_trk_log_table_people_multimedia 
+        ON people_multimedia;
 
-DROP TRIGGER trg_trk_log_table_collections
-	ON collections;
+DROP TRIGGER trg_trk_log_table_collections_rights 
+        ON collections_rights;
 
-DROP TRIGGER trg_trk_log_table_comments
-	ON comments;
-DROP TRIGGER trg_trk_log_table_expeditions
-	ON expeditions;
+DROP TRIGGER trg_trk_log_table_specimens_accompanying 
+        ON specimens_accompanying;
 
-DROP TRIGGER trg_cpy_location
-        ON gtu ;
+DROP TRIGGER trg_trk_log_table_collecting_tools 
+        ON collecting_tools;
+
+DROP TRIGGER trg_trk_log_table_specimen_collecting_tools 
+        ON specimen_collecting_tools;
+
+DROP TRIGGER trg_trk_log_table_collecting_methods 
+        ON collecting_methods;
+
+DROP TRIGGER trg_trk_log_table_specimen_collecting_methods 
+        ON specimen_collecting_methods;
+
+DROP TRIGGER trg_trk_log_table_comments 
+        ON comments;
+
+DROP TRIGGER trg_trk_log_table_ext_links 
+        ON ext_links;
+
+DROP TRIGGER trg_trk_log_table_gtu 
+        ON gtu;
+
+DROP TRIGGER trg_trk_log_table_tag_groups 
+        ON tag_groups;
+
+DROP TRIGGER trg_trk_log_table_expeditions 
+        ON expeditions;
+
+DROP TRIGGER trg_trk_log_table_multimedia 
+        ON multimedia;
+
+DROP TRIGGER trg_trk_log_table_collections 
+        ON collections;
+
+DROP TRIGGER trg_trk_log_table_collection_maintenance 
+        ON collection_maintenance;
+
+DROP TRIGGER trg_trk_log_table_soortenregister 
+        ON soortenregister;
+
+DROP TRIGGER trg_trk_log_table_igs 
+        ON igs;
+
+DROP TRIGGER trg_trk_log_table_codes 
+        ON codes;
+
+DROP TRIGGER trg_trk_log_table_insurances 
+        ON insurances
+
+DROP TRIGGER trg_trk_log_table_specimens 
+        ON specimens;
+
+DROP TRIGGER trg_trk_log_table_specimen_individuals 
+        ON specimen_individuals;
+
+DROP TRIGGER trg_trk_log_table_specimen_parts 
+        ON specimen_parts;
+
+DROP TRIGGER trg_trk_log_table_taxonomy 
+        ON taxonomy;
+
+DROP TRIGGER trg_trk_log_table_chronostratigraphy 
+        ON chronostratigraphy;
+
+DROP TRIGGER trg_trk_log_table_lithostratigraphy 
+        ON lithostratigraphy;
+
+DROP TRIGGER trg_trk_log_table_mineralogy 
+        ON mineralogy;
+
+DROP TRIGGER trg_trk_log_table_lithology 
+        ON lithology;
+
+DROP TRIGGER trg_trk_log_table_habitats 
+        ON habitats;
+
+DROP TRIGGER trg_trk_log_table_people 
+        ON people;
+
+
 /*** darwin flat synchro triggers ***/
 
 DROP TRIGGER trg_update_expeditions_darwin_flat

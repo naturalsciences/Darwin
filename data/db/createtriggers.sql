@@ -363,65 +363,165 @@ CREATE TRIGGER trg_chk_upper_level_for_childrens_taxonomy AFTER UPDATE
 
 /*** TRACKING ****/
 
-CREATE TRIGGER trg_trk_log_table_taxonomy AFTER INSERT OR UPDATE OR  DELETE
-	ON taxonomy FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_catalogue_relationships AFTER INSERT OR UPDATE OR DELETE
+        ON catalogue_relationships FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_lithology AFTER INSERT OR UPDATE OR  DELETE
-	ON lithology FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_classification_keywords AFTER INSERT OR UPDATE OR DELETE
+        ON classification_keywords FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_chronostratigraphy AFTER INSERT OR UPDATE OR  DELETE
-	ON chronostratigraphy FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_classification_synonymies AFTER INSERT OR UPDATE OR DELETE
+        ON classification_synonymies FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_mineralogy AFTER INSERT OR UPDATE OR  DELETE
-	ON mineralogy FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_catalogue_properties AFTER INSERT OR UPDATE OR DELETE
+        ON catalogue_properties FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_people AFTER INSERT OR UPDATE OR  DELETE
-	ON people FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_properties_values AFTER INSERT OR UPDATE OR DELETE
+        ON properties_values FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_insurances AFTER INSERT OR UPDATE OR  DELETE
-	ON insurances FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_identifications AFTER INSERT OR UPDATE OR DELETE
+        ON identifications FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_specimens AFTER INSERT OR UPDATE OR  DELETE
-	ON specimens FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_class_vernacular_names AFTER INSERT OR UPDATE OR DELETE
+        ON class_vernacular_names FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_specimen_individuals AFTER INSERT OR UPDATE OR  DELETE
-	ON specimen_individuals FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_vernacular_names AFTER INSERT OR UPDATE OR DELETE
+        ON vernacular_names FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_specimen_parts AFTER INSERT OR UPDATE OR  DELETE
-	ON specimen_parts FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_people_relationships AFTER INSERT OR UPDATE OR DELETE
+        ON people_relationships FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_gtu AFTER INSERT OR UPDATE OR  DELETE
-	ON gtu FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_people_comm AFTER INSERT OR UPDATE OR DELETE
+        ON people_comm FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_tag_groups AFTER INSERT OR UPDATE OR  DELETE
-	ON tag_groups FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_people_addresses AFTER INSERT OR UPDATE OR DELETE
+        ON people_addresses FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_collections AFTER INSERT OR UPDATE OR  DELETE
-	ON collections FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_people_multimedia AFTER INSERT OR UPDATE OR DELETE
+        ON people_multimedia FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_comments AFTER INSERT OR UPDATE OR  DELETE
-	ON comments FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_collections_rights AFTER INSERT OR UPDATE OR DELETE
+        ON collections_rights FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_ext_links AFTER INSERT OR UPDATE OR  DELETE
-	ON ext_links FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_specimens_accompanying AFTER INSERT OR UPDATE OR DELETE
+        ON specimens_accompanying FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
-CREATE TRIGGER trg_trk_log_table_expeditions AFTER INSERT OR UPDATE OR  DELETE
-	ON expeditions FOR EACH ROW
-	EXECUTE PROCEDURE fct_trk_log_table();
+CREATE TRIGGER trg_trk_log_table_collecting_tools AFTER INSERT OR UPDATE OR DELETE
+        ON collecting_tools FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimen_collecting_tools AFTER INSERT OR UPDATE OR DELETE
+        ON specimen_collecting_tools FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_collecting_methods AFTER INSERT OR UPDATE OR DELETE
+        ON collecting_methods FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimen_collecting_methods AFTER INSERT OR UPDATE OR DELETE
+        ON specimen_collecting_methods FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_comments AFTER INSERT OR UPDATE OR DELETE
+        ON comments FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_ext_links AFTER INSERT OR UPDATE OR DELETE
+        ON ext_links FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_gtu AFTER INSERT OR UPDATE OR DELETE
+        ON gtu FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_tag_groups AFTER INSERT OR UPDATE OR DELETE
+        ON tag_groups FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_expeditions AFTER INSERT OR UPDATE OR DELETE
+        ON expeditions FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_multimedia AFTER INSERT OR UPDATE OR DELETE
+        ON multimedia FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_collections AFTER INSERT OR UPDATE OR DELETE
+        ON collections FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_collection_maintenance AFTER INSERT OR UPDATE OR DELETE
+        ON collection_maintenance FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_soortenregister AFTER INSERT OR UPDATE OR DELETE
+        ON soortenregister FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_igs AFTER INSERT OR UPDATE OR DELETE
+        ON igs FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_codes AFTER INSERT OR UPDATE OR DELETE
+        ON codes FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_insurances AFTER INSERT OR UPDATE OR DELETE
+        ON insurances FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimens AFTER INSERT OR UPDATE OR DELETE
+        ON specimens FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimen_individuals AFTER INSERT OR UPDATE OR DELETE
+        ON specimen_individuals FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_specimen_parts AFTER INSERT OR UPDATE OR DELETE
+        ON specimen_parts FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_taxonomy AFTER INSERT OR UPDATE OR DELETE
+        ON taxonomy FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_chronostratigraphy AFTER INSERT OR UPDATE OR DELETE
+        ON chronostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_lithostratigraphy AFTER INSERT OR UPDATE OR DELETE
+        ON lithostratigraphy FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_mineralogy AFTER INSERT OR UPDATE OR DELETE
+        ON mineralogy FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_lithology AFTER INSERT OR UPDATE OR DELETE
+        ON lithology FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_habitats AFTER INSERT OR UPDATE OR DELETE
+        ON habitats FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
+
+CREATE TRIGGER trg_trk_log_table_people AFTER INSERT OR UPDATE OR DELETE
+        ON people FOR EACH ROW
+        EXECUTE PROCEDURE fct_trk_log_table();
 
 /*
 ** Trigger aimed at calculating unified values
