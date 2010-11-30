@@ -11,7 +11,7 @@
 class catalogueActions extends DarwinActions
 {
   protected $catalogue = array(
-   'catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments','specimens','specimen_individuals','specimen_parts','ext_links');
+   'catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments','specimens','specimen_individuals','specimen_parts','ext_links','collection_maintenance');
   protected $ref_id = array('specimens' => 'spec_ref','specimen_individuals' => 'individual_ref','specimen_parts' => 'part_ref') ;
   public function executeRelation(sfWebRequest $request)
   {
@@ -79,7 +79,7 @@ class catalogueActions extends DarwinActions
     $this->forward404Unless($r,'No such item');
     if(!$this->getUser()->isA(Users::ADMIN))
     {
-      if(in_array($request->getParameter('table'),array('comments','catalogue_properties','ext_links')))
+      if(in_array($request->getParameter('table'),array('comments','catalogue_properties','ext_links','collection_maintenance')))
       {
         $spec = Doctrine::getTable('specimenSearch')->getRecordByRef($this->ref_id[$r->getReferencedRelation()],$r->getRecordId());
         if(in_array($spec->getCollectionRef(),Doctrine::getTable('Specimens')->testNoRightsCollections($this->ref_id[$r->getReferencedRelation()],
@@ -96,7 +96,7 @@ class catalogueActions extends DarwinActions
           $this->forwardToSecureAction();    
       }  
     }
-      
+
     try{
       $r->delete();
     }
