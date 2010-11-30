@@ -25,13 +25,16 @@ class UsersTracking extends BaseUsersTracking
         break;
       case 'taxonomy':
       case 'lithology':
+      case 'lithostratigraphy':
       case 'chronostratigraphy':
       case 'mineralogy':
       case 'people':
       case 'insurances':
       case 'gtu':
-      default:
+      case 'expeditions':
         $link = $this->_get('referenced_relation').'/edit?id='.$id; break;
+      default:
+        $link = ''; break;
     }
     return $link;
   }
