@@ -5,14 +5,24 @@
  */
 class Codes extends BaseCodes
 {
-  public static function getCategories()
-  {
-    return array('main'=> sfContext::getInstance()->getI18N()->__('Main'),
-                 'secondary' => sfContext::getInstance()->getI18N()->__('Second.'),
-                 'temporary' => sfContext::getInstance()->getI18N()->__('Temp.'),
-                 'inventory'=> sfContext::getInstance()->getI18N()->__('Invent.')
+  private static $category = array('main'=> 'Main',
+                 'secondary' => 'Second.',
+                 'temporary' => 'Temp.',
+                 'inventory'=> 'Invent.'
                 );
-  }
+
+  public function getCategories()
+  {
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$category;
+    }
+    return array_map(array($i18n_object, '__'), self::$category);
+  }  
+  
   public function getCodeFormated()
   {
     $code_prefix = $this->_get('code_prefix');

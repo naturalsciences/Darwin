@@ -5,14 +5,23 @@
  */
 class CataloguePeople extends BaseCataloguePeople
 {
+  private static $auth_type = array('Main Author' => 'Main Author',
+                     'Secondary Author' => 'Secondary Author',
+	                   'Reviewer'=> 'Reviewer',
+	                   'Publisher' => 'Publisher', 
+	                   'Corrector' => 'Corrector', 
+	                   'Related' => 'Related');
+
   public static function getAuthorTypes()
   {
-        return array('Main Author' => sfContext::getInstance()->getI18N()->__('Main Author'),
-                     'Secondary Author' => sfContext::getInstance()->getI18N()->__('Secondary Author'),
-	                   'Reviewer'=> sfContext::getInstance()->getI18N()->__('Reviewer'),
-	                   'Publisher' => sfContext::getInstance()->getI18N()->__('Publisher'), 
-	                   'Corrector' => sfContext::getInstance()->getI18N()->__('Corrector'), 
-	                   'Related' => sfContext::getInstance()->getI18N()->__('Related'));
-  }
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$auth_type;
+    }
+    return array_map(array($i18n_object, '__'), self::$auth_type);
+  }  
  
 }

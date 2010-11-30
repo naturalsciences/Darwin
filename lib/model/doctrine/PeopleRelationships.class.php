@@ -5,14 +5,23 @@
  */
 class PeopleRelationships extends BasePeopleRelationships
 {
+  private static $possible_type = array('belongs to' => 'belongs to',
+                 'is department of' => 'is department of',
+                 'is section of' => 'is section of',
+                 'works for' => 'works for'
+                );
+ 
   public static function getPossibleTypes()
   {
-    return array('belongs to' => sfContext::getInstance()->getI18N()->__('belongs to'),
-                 'is department of' => sfContext::getInstance()->getI18N()->__('is department of'),
-                 'is section of' =>  sfContext::getInstance()->getI18N()->__('is section of'),
-                 'works for' => sfContext::getInstance()->getI18N()->__('works for')
-                );
-  }
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$possible_type;
+    }
+    return array_map(array($i18n_object, '__'), self::$possible_type);
+  }  
  
   public function getLevel()
   {

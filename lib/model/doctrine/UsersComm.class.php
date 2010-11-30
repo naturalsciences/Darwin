@@ -5,13 +5,21 @@
  */
 class UsersComm extends BaseUsersComm
 {
+  private static $comm_type = array('phone/fax'=> 'phone/fax', 'e-mail' => 'e-mail');
   /**
   * Get list of communication types available
   * @return array Array of list of communication types
   */
   public static function getCommTypes()
   {
-    return array('phone/fax'=> sfContext::getInstance()->getI18N()->__('phone/fax'), 'e-mail' => 'e-mail');
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$comm_type;
+    }
+    return array_map(array($i18n_object, '__'), self::$comm_type);
   }
 
   /**

@@ -5,23 +5,33 @@
  */
 class TagGroups extends BaseTagGroups
 {
+  private static $groups =  array(
+      'administrative area' => 'Administrative area',
+      'topographic' => 'Topographic structure',
+      'hydrographic' => 'Hydrographic',
+      'orography' => 'Orography',
+      'spot' => 'Spot',
+      'area' => 'Area',
+      'historical' => 'Historical',
+      'populated' => 'Populated Places',
+      'underground' => 'Underground',
+      'road' => 'Road',
+      'vegetation' => 'Vegetation',
+      'other' => 'Other'
+    );
+
+
   static public function getGroups()
   {
-    return array(
-      'administrative area' => sfContext::getInstance()->getI18N()->__('Administrative area'),
-      'topographic' => sfContext::getInstance()->getI18N()->__('Topographic structure'),
-      'hydrographic' => sfContext::getInstance()->getI18N()->__('Hydrographic'),
-      'orography' => sfContext::getInstance()->getI18N()->__('Orography'),
-      'spot' => sfContext::getInstance()->getI18N()->__('Spot'),
-      'area' => sfContext::getInstance()->getI18N()->__('Area'),
-      'historical' => sfContext::getInstance()->getI18N()->__('Historical'),
-      'populated' => sfContext::getInstance()->getI18N()->__('Populated Places'),
-      'underground' => sfContext::getInstance()->getI18N()->__('Underground'),
-      'road' => sfContext::getInstance()->getI18N()->__('Road'),
-      'vegetation' => sfContext::getInstance()->getI18N()->__('Vegetation'),
-      'other' => sfContext::getInstance()->getI18N()->__('Other')
-    );
-  }
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$groups;
+    }
+    return array_map(array($i18n_object, '__'), self::$groups);
+  }  
 
   static public function getGroup($name)
   {

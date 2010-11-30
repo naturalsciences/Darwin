@@ -19,7 +19,7 @@ class specimenActions extends DarwinActions
     $spec = null;
 
     if ($fwd404)
-      $this->forward404Unless($spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter,0)), $this->getI18N('Specimen not found'));
+      $this->forward404Unless($spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter,0)));
     elseif($request->hasParameter($parameter) && $request->getParameter($parameter))
       $spec = Doctrine::getTable('Specimens')->findExcept($request->getParameter($parameter) );
 

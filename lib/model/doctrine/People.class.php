@@ -5,17 +5,26 @@
  */
 class People extends BasePeople
 {
+  private static $type = array(
+      2 => 'Author',
+      4 => 'Identifier',
+      8 => 'Expert',
+      16 => 'Collector',
+      32 => 'Preparator',
+      64 => 'Photographer'
+    );
+  
   public static function getTypes()
   {
-    return array(
-      2 => sfContext::getInstance()->getI18N()->__('Author'),
-      4 => sfContext::getInstance()->getI18N()->__('Identifier'),
-      8 => sfContext::getInstance()->getI18N()->__('Expert'),
-      16 => sfContext::getInstance()->getI18N()->__('Collector'),
-      32 => sfContext::getInstance()->getI18N()->__('Preparator'),
-      64 => sfContext::getInstance()->getI18N()->__('Photographer')
-    );
-  }
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return self::$type;
+    }
+    return array_map(array($i18n_object, '__'), self::$type);
+  }  
 
   public static function getCorrespondingType($type)
   {

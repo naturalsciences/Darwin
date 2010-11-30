@@ -69,12 +69,21 @@ class Users extends BaseUsers
   {
     switch ($db_user_type)
     {
-      case self::REGISTERED_USER : return sfContext::getInstance()->getI18N()->__('Registered user');
-      case self::ENCODER : return sfContext::getInstance()->getI18N()->__('Encoder');
-      case self::MANAGER : return sfContext::getInstance()->getI18N()->__('Collection manager');
-      case self::ADMIN : return sfContext::getInstance()->getI18N()->__('Administrator');   	  
+      case self::REGISTERED_USER : $type = 'Registered user';
+      case self::ENCODER : return $type = 'Encoder';
+      case self::MANAGER : return $type = 'Collection manager';
+      case self::ADMIN : return $type = 'Administrator';   	  
     }
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return $type;
+    }
+    return array_map(array($i18n_object, '__'), $type);    
   }
+
 
   /**
   * function to add all user's widgets in my_widgets table

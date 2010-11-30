@@ -1475,8 +1475,8 @@
         <source>Parts</source> <target>Parties</target> </trans-unit>
       <trans-unit id="721">
         <source>All</source> <target>Tous</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="722">
+        <source>Given Name</source> <target>Prénom</target> </trans-unit>
       <trans-unit id="649">
         <source>Corrector</source> <target>Correcteur</target> </trans-unit>
       <trans-unit id="649">
