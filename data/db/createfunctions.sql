@@ -126,32 +126,6 @@ END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
 /***
-* Trigger function fct_cpy_cascade_children_indexed_names
-* Update the corresponding givenlevel_indexed and givenlevel_ref of related children when name of a catalogue unit have been updated
-*/
-CREATE OR REPLACE FUNCTION fct_cpy_cascade_children_indexed_names (referenced_relation varchar, new_level_ref template_classifications.level_ref%TYPE, new_name_indexed template_classifications.name_indexed%TYPE, new_id integer) RETURNS boolean
-AS $$
-DECLARE
-	level_prefix catalogue_levels.level_sys_name%TYPE;
-	response boolean default false;
-BEGIN
-	SELECT level_sys_name INTO level_prefix FROM catalogue_levels WHERE id = new_level_ref;
-	IF level_prefix IS NOT NULL THEN
-		EXECUTE 'UPDATE ' ||
-			quote_ident(referenced_relation) ||
-			' SET ' || quote_ident(level_prefix || '_indexed') || ' = ' || quote_literal(new_name_indexed) ||
-			' WHERE ' || quote_ident(level_prefix || '_ref') || ' = ' || new_id ||
-			'   AND ' || quote_ident('id') || ' <> ' || new_id ;
-		response := true;
-	END IF;
-	return response;
-EXCEPTION
-	WHEN OTHERS THEN
-		return response;
-END;
-$$ LANGUAGE plpgsql;
-
-/***
 * Trigger function fct_cpy_fullToIndex
 * Call the fulltoIndex function for different tables
 */

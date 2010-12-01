@@ -77,6 +77,8 @@ DROP FUNCTION IF EXISTS fct_chk_parentCollInstitution() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updateCollInstitutionCascade() CASCADE;
 DROP FUNCTION IF EXISTS fct_unpromotion_impact_prefs() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_canUpdateCollectionsRights() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_upper_level_for_childrens() CASCADE;
 
 DROP AGGREGATE array_accum (anyelement);
 DROP AGGREGATE dummy_first(anyelement);
