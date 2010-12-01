@@ -127,7 +127,7 @@ $(document).ready(function () {
   $('#mass_action .fld_group ul :checkbox').change(chooseAction);
   $('#mass_submit').closest('form').submit(function (event)
   {
-    if(! confirm('<?php echo __('Are you sure ?') ?>'))
+    if(! confirm('<?php echo addslashes(__('Are you sure ?')) ?>'))
     {
       event.preventDefault();
     }
