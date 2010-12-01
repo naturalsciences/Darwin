@@ -61,11 +61,11 @@
 	    <?php echo link_to(image_tag('edit.png'),'individuals/edit?id='.$individual->getId(), array('title'=>__('Edit this individual')));?>
 	  </td>
 	  <td>
-      <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this Individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
+      <?php echo link_to(image_tag('duplicate.png',array('title'=>'Duplicate this individual')), 'individuals/edit?spec_id='.$individual->getSpecimenRef().
         '&duplicate_id='.$individual->getId(),array('class' => 'duplicate_link')) ?>	
 	  </td>
 	  <td class="row_delete">
-	    <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Are you sure ?')));?>
+	    <?php echo link_to(image_tag('remove.png'),'catalogue/deleteRelated?table=specimen_individuals&id='.$individual->getId(), array('class'=>'row_delete', 'title'=>__('Delete this individual')));?>
 	  </td>
   <?php endif ; ?>	
 	<td>

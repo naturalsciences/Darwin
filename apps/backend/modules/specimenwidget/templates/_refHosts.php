@@ -49,7 +49,7 @@ $(document).ready(function ()
   {
     $('#'+fieldCleared).val('');
     $('#'+fieldCleared+'_name').text('-');
-    $('#'+fieldCleared+'_button').find('.but_text').text('<?php echo __('Choose !');?>');
+    $('#'+fieldCleared+'_button').find('.but_text').text('<?php echo __("Choose !");?>');
     $('#'+fieldCleared+'_clear').hide();
   }
 
@@ -82,7 +82,7 @@ $(document).ready(function ()
     {
       if($('#<?php echo $hostTaxonId; ?>').val() != '')
       {
-        if(confirm('<?php echo __('Clear also host taxon reference ?'); ?>'))
+        if(confirm('<?php echo __("Clear also host taxon reference ?"); ?>'))
         {
           clearVals('<?php echo $hostTaxonId; ?>');
         }
@@ -95,7 +95,7 @@ $(document).ready(function ()
       {
         $.ajax(
           {
-            url: '<?php echo url_for('specimen/sameTaxon');?>'+'?specId='+$('#<?php echo $hostSpecimenId; ?>').val()+'&taxonId='+$(this).val(),
+            url: '<?php echo url_for("specimen/sameTaxon");?>'+'?specId='+$('#<?php echo $hostSpecimenId; ?>').val()+'&taxonId='+$(this).val(),
             success: function(html) {
                        if(html != "ok" )
                        {

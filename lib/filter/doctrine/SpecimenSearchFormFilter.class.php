@@ -26,21 +26,21 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['taxon_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
     $this->widgetSchema['lithology_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['lithology_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'lithology'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
     $this->widgetSchema['litho_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['litho_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'lithostratigraphy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
 
@@ -48,14 +48,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['chrono_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'chronostratigraphy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
     $this->widgetSchema['mineral_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['mineral_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));

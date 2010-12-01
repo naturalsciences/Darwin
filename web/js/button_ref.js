@@ -62,7 +62,7 @@ $(document).ready(function () {
   {
     $(this).prevAll('.ref_name').text('-').show();
     $(this).prevAll('input').val('');
-    $(this).next().find('.but_text').text('Choose !');
+    $(this).next().find('.but_text').text('<?php echo __("Choose !");?>');
     $(this).hide();
   });
 });

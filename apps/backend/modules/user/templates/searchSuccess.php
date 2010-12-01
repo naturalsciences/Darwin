@@ -50,7 +50,9 @@
             <td><?php echo $item->getTypeName($item->getDbUserType()) ?></td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(!$is_choose):?>
-                <?php echo link_to(image_tag('edit.png'),'user/edit?id='.$item->getId());?>
+                  <?php if($sf_user->isA(Users::ADMIN) || ($item->getDbUserType() < $sf_user->getDbUserType())) : ?>
+                    <?php echo link_to(image_tag('edit.png'),'user/edit?id='.$item->getId());?>
+                  <?php endif ; ?>
                 <?php else:?>
                   <div class="result_choose<?php if ($screen== 3) echo ('_coll_rights') ?>"><?php echo __('Choose');?></div>
                 <?php endif;?>

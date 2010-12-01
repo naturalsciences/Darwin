@@ -1477,74 +1477,104 @@
         <source>All</source> <target>Tous</target> </trans-unit>
       <trans-unit id="722">
         <source>Given Name</source> <target>Prénom</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="723">
+        <source>Not applicable</source> <target>Non Applicable</target> </trans-unit>
+      <trans-unit id="724">
+        <source>Collectors</source> <target>Collecteurs</target> </trans-unit>        
+      <trans-unit id="725">
+        <source>This I.G. number does not exist. Would you like to automatically insert it ?</source>
+        <target>Ce numéro d'Ig n'éxiste pas. Voulez vous l'insérer automatiquement ?</target>
+      </trans-unit>
+      <trans-unit id="726">
+        <source>Add an other type</source> <target>Ajouter un autre type</target> </trans-unit>
+      <trans-unit id="727">
+        <source>Add an other sex</source> <target>Ajouter un autre sexe</target> </trans-unit>
+      <trans-unit id="728">
+        <source>Pick a type in the list</source> <target>Choisir un type dans la liste</target> </trans-unit>
+      <trans-unit id="729">
+        <source>Pick a sex in the list</source> <target>Choisir un sexe dans la liste</target> </trans-unit>
+      <trans-unit id="730">
+        <source>not applicable</source> <target>Non applicable</target> </trans-unit>
+      <trans-unit id="731">
+        <source>undefined</source> <target>indéfini</target> </trans-unit>
+      <trans-unit id="732">
+        <source>Pick a "sexual" state in the list</source> <target>Choisir un état "sexuel" dans la liste</target> </trans-unit>
+      <trans-unit id="733">
+        <source>Add an other "sexual" state</source> <target>Ajouter un autre état "sexuel"</target> </trans-unit>
+      <trans-unit id="734">
+        <source>Add an other stage</source> <target>Ajouter une autre étape</target> </trans-unit>
+      <trans-unit id="735">
+        <source>Pick a stage in the list</source> <target>Choisir une étape dans la liste</target> </trans-unit>
+      <trans-unit id="736">
+        <source>imprecise</source> <target>imprécis</target> </trans-unit>
+      <trans-unit id="737">
+        <source>exact</source> <target>exacte</target> </trans-unit>
+      <trans-unit id="738">
+        <source>Pick a social status in the list</source> <target>Choisir un status social dans la liste</target> </trans-unit>
+      <trans-unit id="739">
+        <source>Add an other social status</source> <target>Ajouter un autre status social</target> </trans-unit>
+      <trans-unit id="740">
+        <source>Add an other rock form</source> <target>Ajouter une autre forme rocheuse</target> </trans-unit>
+      <trans-unit id="741">
+        <source>Pick a rock form in the list</source> <target>Choisir une forme rocheuse dans la liste</target> </trans-unit>
+      <trans-unit id="742">
+        <source>Delete this individual</source> <target>Supprimer cet individu</target> </trans-unit>
+      <trans-unit id="743">
+        <source>Delete this part</source> <target>Supprimer cette partie</target> </trans-unit>
+      <trans-unit id="744">
+        <source>Pick parts in the list</source> <target>Choisir une partie dans la liste</target> </trans-unit>
+      <trans-unit id="745">
+        <source>Add another parts</source> <target>Ajouter une autre partie</target> </trans-unit>
+      <trans-unit id="746">
+        <source>Add another container</source> <target>Ajouter un autre conteneur</target> </trans-unit>
+      <trans-unit id="747">
+        <source>Pick a container in the list</source> <target>Choisir un conteneur dans la liste</target> </trans-unit>
+      <trans-unit id="748">
+        <source>Pick a container storage in the list</source> <target>Choisir un conteneur de stockage dans la liste</target> </trans-unit>
+      <trans-unit id="749">
+        <source>Add another container storage</source> <target>Ajouter un autre conteneur de stockage</target> </trans-unit>
+      <trans-unit id="750">
+        <source>Add another sub container type</source> <target>Ajouter un autre type de sous conteneur</target> </trans-unit>
+      <trans-unit id="751">
+        <source>Pick a sub container type in the list</source> <target>Choisir un type de sous conteneur dans la liste</target> </trans-unit>
+      <trans-unit id="752">
+        <source>Pick a sub container storage in the list</source> <target>Choisir un sous conteneur de stockage dans la liste</target> </trans-unit>
+      <trans-unit id="753">
+        <source>Add another sub container storage</source> <target>Ajouter un autre sous conteneur de stockage</target> </trans-unit>        
+      <trans-unit id="744">
+        <source>Insurer:</source> <target>Assureur:</target> </trans-unit>
+      <trans-unit id="745">
+        <source>Add another status</source> <target>Ajouter un autre status</target> </trans-unit>
+      <trans-unit id="746">
+        <source>Pick a status in the list</source> <target>Choisir un status dans la liste</target> </trans-unit>
+      <trans-unit id="747">
+        <source>Add another building</source> <target>Ajouter un autre bâtiment</target> </trans-unit>
+      <trans-unit id="748">
+        <source>Pick a building in the list</source> <target>Choisir un bâtiment dans la liste</target> </trans-unit> 
+      <trans-unit id="749">
+        <source>Add another floor</source> <target>Ajouter un autre étage</target> </trans-unit>
+      <trans-unit id="750">
+        <source>Pick a floor in the list</source> <target>Choisir un étage dans la liste</target> </trans-unit>  
+      <trans-unit id="751">
+        <source>Add another room</source> <target>Ajouter une autre salle</target> </trans-unit>
+      <trans-unit id="752">
+        <source>Pick a room in the list</source> <target>Choisir une salle dans la liste</target> </trans-unit>
+      <trans-unit id="753">
+        <source>Add another row</source> <target>Ajouter un rayon bâtiment</target> </trans-unit>
+      <trans-unit id="754">
+        <source>Pick a row in the list</source> <target>Choisir un rayon dans la liste</target> </trans-unit>
+      <trans-unit id="755">
+        <source>Add another building</source> <target>Ajouter un autre bâtiment</target> </trans-unit>
+      <trans-unit id="756">
+        <source>Pick a building in the list</source> <target>Choisir un bâtiment dans la liste</target> </trans-unit>       
+      <trans-unit id="757">
+        <source>Pick a shelf in the list</source> <target>Choisir un plateau dans la liste</target> </trans-unit>
+      <trans-unit id="758">
+        <source>Add another shelf</source> <target>Ajouter un autre plateau</target> </trans-unit>
+      <trans-unit id="759">
+        <source>Field action</source> <target>Agir sur le champs</target> </trans-unit>
+      <trans-unit id="760">
+        <source>Record</source> <target>Enregistrement</target> </trans-unit>
       <trans-unit id="649">
         <source>Corrector</source> <target>Correcteur</target> </trans-unit>
     </body>    
