@@ -18,7 +18,7 @@ class Insurances extends BaseInsurances
   */
   public function getFormatedInsuranceValue()
   {
-    $insuranceValue = $this->_get('insurance_value').'&nbsp;'.$this->_get('insurance_currency');
+    $insuranceValue = $this->_get('insurance_value').' '.$this->_get('insurance_currency');
     return $insuranceValue;
   }
   
