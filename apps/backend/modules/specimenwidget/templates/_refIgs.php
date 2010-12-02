@@ -1,6 +1,19 @@
-<?php if(isset($view) && $view) : ?>
-  <?php echo $form->getObject()->Igs->getIgNum() ; ?>
-<?php else  : ?>
-  <?php echo $form['ig_ref']->renderError() ?>
-  <?php echo $form['ig_ref']->render() ?>
-<?php endif ?>
+<?php echo $form['ig_ref']->renderError() ?>
+<?php echo $form['ig_ref']->render() ?>
+
+<script type="text/javascript">
+$('#specimen_ig_ref_check').change(function(){
+  if($(this).val()) 
+  {
+    $.ajax({
+      type: 'POST',
+      url: "<?php echo url_for('igs/addNew') ?>",
+      data: "num="+$('#specimen_ig_ref_name').val(),
+      success: function(html){
+        $('li#toggledMsg').attr('style','display:none') ;
+        $('#specimen_ig_ref').val(html) ;
+      }
+    });  
+  }
+}) ;
+</script>

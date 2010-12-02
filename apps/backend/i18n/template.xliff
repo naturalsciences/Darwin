@@ -1575,8 +1575,10 @@
         <source>Field action</source> <target>Agir sur le champs</target> </trans-unit>
       <trans-unit id="760">
         <source>Record</source> <target>Enregistrement</target> </trans-unit>
-      <trans-unit id="649">
-        <source>Corrector</source> <target>Correcteur</target> </trans-unit>
+      <trans-unit id="761">
+        <source>Your Ig number will be lost ! are you sure you want continue ?</source>
+        <target>Votre numéro Ig va être perdu ! êtes vous sur de vouloir continuer ?</target>
+      </trans-unit>
     </body>    
   </file>
 </xliff>

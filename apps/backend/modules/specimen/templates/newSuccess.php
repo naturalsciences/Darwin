@@ -76,6 +76,14 @@ function removeError()
 $(document).ready(function () {
   $('body').duplicatable({duplicate_href: '<?php echo url_for('specimen/confirm');?>'});
   $('body').catalogue({});
+  
+  $('#submit_spec_f1').click(function(){
+    if($('#specimen_ig_ref_check').val() == 0 && $('#specimen_ig_ref').val() == "" && $('#specimen_ig_ref_name').val() != "")
+    {
+      if(!window.confirm('<?php echo __("Your Ig number will be lost ! are you sure you want continue ?") ; ?>'))
+        event.preventDefault();
+    }
+  }) ;
 });
 </script>
 <?php include_partial('specAfterTab', array('specimen'=> $form->getObject()) );?>

@@ -133,11 +133,11 @@ class SpecimensForm extends BaseSpecimensForm
                                                                      'nullable' => true,
                                                                      'link_url' => 'igs/searchFor',
                                                                      'notExistingAddTitle' => $this->getI18N()->__('This I.G. number does not exist. Would you like to automatically insert it ?'),
-                                                                     'notExistingAddValues' => array($this->getI18N()->__('Yes'),
-                                                                                                     $this->getI18N()->__('No')
+                                                                     'notExistingAddValues' => array($this->getI18N()->__('No'),
+                                                                                                     $this->getI18N()->__('Yes')
                                                                                                     ),
                                                                     )
-                                                              );
+                                                              );                                                      
 
     /* Gtu Reference */
     $this->widgetSchema['gtu_ref'] = new widgetFormButtonRef(array(
