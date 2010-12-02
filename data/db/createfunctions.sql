@@ -163,7 +163,7 @@ BEGIN
 	ELSIF TG_TABLE_NAME = 'people' THEN
 		NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
 	ELSIF TG_TABLE_NAME = 'codes' THEN
-		IF NEW.code ~ '[0-9]+' THEN
+		IF NEW.code ~ '^[0-9]+$' THEN
 		   NEW.code_num := NEW.code;
 		ELSE
     		   NEW.code_num := null;
