@@ -3,7 +3,7 @@
   <?php if(isset($common_names['taxonomy'][$spec->getTaxonRef()])) : ?>
     <ul class="common_name_tags">
       <?php foreach($common_names['taxonomy'][$spec->getTaxonRef()]['community'] as $lang => $tag) : ?>
-        <li style="border-left:3px solid #<?php echo word2color($lang);?>;"><?php echo $tag;?></li>
+        <li style="border-left:6px solid #<?php echo word2color($lang);?>;"><?php echo $tag;?></li>
       <?php endforeach;?>
     </ul>
   <?php endif ; ?>
