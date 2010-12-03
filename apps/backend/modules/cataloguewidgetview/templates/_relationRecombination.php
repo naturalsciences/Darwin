@@ -9,7 +9,7 @@
   <tr>
     <td>
       <a class="link_catalogue" title="<?php echo __('Recombination');?>" href="<?php echo url_for('taxonomy/view?id='.$renamed['record_id_2']) ?>">      
-        <?php echo $renamed['ref_item']->getNameWithFormat()?>
+        <?php echo $renamed['ref_item']->getNameWithFormat(ESC_RAW)?>
       </a>
       <?php echo image_tag('info.png',"title=info class=info");?>
       <div class="tree">
