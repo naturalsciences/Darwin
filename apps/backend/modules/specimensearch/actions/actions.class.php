@@ -92,7 +92,7 @@ class specimensearchActions extends DarwinActions
       // If not available, not found -> forward on 404 page
       $this->forward404Unless($saved_search);
 
-      if($saved_search->getisOnlyId())
+      if($saved_search->getIsOnlyId())
         $this->is_specimen_search = $saved_search->getId();
       // Get all search criterias from DB
       $criterias = unserialize($saved_search->getSearchCriterias());

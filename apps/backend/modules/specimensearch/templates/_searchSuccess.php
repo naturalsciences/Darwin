@@ -22,7 +22,12 @@
       <table class="spec_results">
         <thead>
           <tr>
-            <th><!-- checkbox for selected when pinned --></th>
+            <th><!-- checkbox for selection of records to be removed -->
+              <?php if($is_specimen_search):?>
+                <?php echo image_tag('checkbox_remove_off.png', array('class'=>'top_remove_but remove_off','alt' =>  __('Keep all elements in list'))) ; ?>
+                <?php echo image_tag('checkbox_remove_on.png', array('class'=>'top_remove_but remove_on', 'alt' =>  __('Remove all elements from list'))) ; ?>
+              <?php endif;?>
+            </th>
             <th><!-- + / - buttons  --></th>
             <th><!-- Pin -->
                <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
@@ -54,7 +59,8 @@
 
               <td rowspan="2">
                 <?php if($is_specimen_search):?>
-                  <input type="checkbox" value="<?php echo $itemRef;?>" class="spec_selected"/>
+                  <?php echo image_tag('checkbox_remove_off.png', array('class'=>'remove_but remove_off','alt' =>  __('Keep all elements in list'))) ; ?>
+                  <?php echo image_tag('checkbox_remove_on.png', array('class'=>'remove_but remove_on hidden', 'alt' =>  __('Remove all elements from list'))) ; ?>
                 <?php endif;?>
               </td>
               <td rowspan="2">
@@ -217,6 +223,17 @@ $(document).ready(function () {
       $('.top_pin_but').parent().find('.pin_on').addClass('hidden') ;
   }
   
+  if($('.spec_results tbody .remove_on').not('.hidden').length == $('.spec_results tbody .remove_on').length)
+  {
+      $('.top_remove_but').parent().find('.remove_on').removeClass('hidden');
+      $('.top_remove_but').parent().find('.remove_off').addClass('hidden') ;
+  }
+  else
+  {
+      $('.top_remove_but').parent().find('.remove_off').removeClass('hidden');
+      $('.top_remove_but').parent().find('.remove_on').addClass('hidden') ;
+  }
+  
   $('.spec_results .top_pin_but').click(function(){
     /** Multiple pin behavior ***/
     if($(this).hasClass('pin_on'))
@@ -239,6 +256,29 @@ $(document).ready(function () {
       else
         pins += ','+rid;
     });
+
+  $('.spec_results .top_remove_but').click(function(){
+    /** Multiple pin behavior ***/
+    if($(this).hasClass('remove_on'))
+    {
+      $(this).parent().find('.remove_off').removeClass('hidden'); 
+      $(this).addClass('hidden') ;
+/*      remove_status = 0;*/
+    }
+    else
+    {
+      $(this).parent().find('.remove_on').removeClass('hidden');
+      $(this).addClass('hidden') ;
+/*      remove_status = 1;*/
+    }
+/*    pins = '';
+    $('.spec_results tbody tr').not('.sub_row').each(function(){
+      rid = getIdInClasses($(this));
+      if(pins == '')
+        pins = rid;
+      else
+        pins += ','+rid;*/
+   });
 
     if(pin_status == 0)
     {
