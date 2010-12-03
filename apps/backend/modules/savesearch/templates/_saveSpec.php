@@ -72,10 +72,9 @@ $(document).ready(function () {
             },
          onHide: function()
          {
-            $(this).attr('value','Search Saved') ;
             $("#save_specs").qtip("destroy");
             if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
-              window.location.replace('<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved);
+              window.location.href = '<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved;
          }
          }
     });
