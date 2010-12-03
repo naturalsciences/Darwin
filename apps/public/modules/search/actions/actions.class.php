@@ -80,7 +80,7 @@ class searchActions extends DarwinActions
       $this->field_to_show = $this->getVisibleColumns($this->form);
       $this->defineFields();
       $ids = $this->FecthIdForCommonNames() ;
-      $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;                    
+      $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;
       if(!count($this->common_names))
         $this->common_names = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 
                                     'lithology' => array(),'mineralogy' => array()) ;
