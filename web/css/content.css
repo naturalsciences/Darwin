@@ -368,6 +368,22 @@ table#gtu_search tr.and_row td:nth-child(2)
   border: 1px solid #878988;
 }
 
+.common_name_tags li
+{
+   background-color: #FAFAFA;
+  min-height:1em;
+  min-width:1em;
+  margin-bottom:2em;
+  cursor: pointer;
+  float:left;
+  padding:0.2em;
+  margin:0.3em;
+  border: 1px solid #878988;
+  
+  font-size: x-small;
+  border-color: #878988;  
+}
+
 .country_tags li
 {
   font-size: x-small;

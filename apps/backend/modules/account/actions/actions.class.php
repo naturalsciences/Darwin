@@ -173,4 +173,13 @@ class accountActions extends DarwinActions
     }
   }
 
+  public function executeLang(sfWebRequest $request)
+  {
+    if(! in_array($request->getParameter('lang'), array('en','fr','nl')))
+      $this->forward404();
+    $this->getUser()->setCulture($request->getParameter('lang'));
+    $referer = $this->getRequest()->getReferer();
+    $this->redirect($referer ? $referer : '@homepage');
+  }
+
 }

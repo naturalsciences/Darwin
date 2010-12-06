@@ -22,7 +22,12 @@
       <table class="spec_results">
         <thead>
           <tr>
-            <th><!-- checkbox for selected when pinned --></th>
+            <th><!-- checkbox for selection of records to be removed -->
+              <?php if($is_specimen_search):?>
+                <?php echo image_tag('checkbox_remove_off.png', array('class'=>'top_remove_but remove_off','alt' =>  __('Keep all elements in list'))) ; ?>
+                <?php echo image_tag('checkbox_remove_on.png', array('class'=>'top_remove_but remove_on hidden', 'alt' =>  __('Remove all elements from list'))) ; ?>
+              <?php endif;?>
+            </th>
             <th><!-- + / - buttons  --></th>
             <th><!-- Pin -->
                <?php echo image_tag('white_pin_off.png', array('class'=>'top_pin_but pin_off','alt' =>  __('Un-Save this result'))) ; ?>
@@ -54,7 +59,8 @@
 
               <td rowspan="2">
                 <?php if($is_specimen_search):?>
-                  <input type="checkbox" value="<?php echo $itemRef;?>" class="spec_selected"/>
+                  <?php echo image_tag('checkbox_remove_off.png', array('class'=>'remove_but remove_off','alt' =>  __('Keep all elements in list'))) ; ?>
+                  <?php echo image_tag('checkbox_remove_on.png', array('class'=>'remove_but remove_on hidden', 'alt' =>  __('Remove all elements from list'))) ; ?>
                 <?php endif;?>
               </td>
               <td rowspan="2">
@@ -252,6 +258,47 @@ $(document).ready(function () {
     }
     $.get('<?php echo url_for('savesearch/pin?source='.$source);?>/mid/' + pins + '/status/' + pin_status,function (html){});
   }); 
+
+  /*Remove management*/
+
+  $('.spec_results .top_remove_but').click(function(){
+    /** Multiple pin behavior ***/
+    if($(this).hasClass('remove_on'))
+    {
+      $(this).parent().find('.remove_off').removeClass('hidden'); 
+      $(this).addClass('hidden');
+      $('.spec_results tbody .remove_off').removeClass('hidden');
+      $('.spec_results tbody .remove_on').addClass('hidden');
+    }
+    else
+    {
+      $(this).parent().find('.remove_on').removeClass('hidden');
+      $(this).addClass('hidden');
+      $('.spec_results tbody .remove_on').removeClass('hidden');
+      $('.spec_results tbody .remove_off').addClass('hidden');
+    }
+  });
+
+  $('.spec_results tbody .remove_but').click(function(){
+    /** Multiple pin behavior ***/
+    if($(this).hasClass('remove_on'))
+    {
+      $(this).parent().find('.remove_off').removeClass('hidden'); 
+      $(this).addClass('hidden');
+      $('.spec_results thead th .remove_off').removeClass('hidden');
+      $('.spec_results thead th .remove_on').addClass('hidden');
+    }
+    else
+    {
+      $(this).parent().find('.remove_on').removeClass('hidden');
+      $(this).addClass('hidden');
+      if($('.spec_results tbody .remove_on').not('.hidden').length == $('.spec_results tbody .remove_on').length)
+      {
+        $('.spec_results thead th .remove_on').removeClass('hidden');
+        $('.spec_results thead th .remove_off').addClass('hidden');
+      }
+    }
+  });
 
 });
 </script>

@@ -1,5 +1,12 @@
 <!-- <label><?php //echo format_number_choice('[1] Save my pinned specimen|(1,+Inf] Save my %1% pinned specimens', array('%1%' =>  count($sf_user->getAllPinned())), count($sf_user->getAllPinned()) );?></label> -->
-<label><?php echo __('Save my pinned specimens');?></label>
+<?php
+  switch($source){
+    case 'individual': $saveText = __('Save my pinned individuals'); break;
+    case 'part': $saveText = __('Save my pinned parts'); break;
+    default: $saveText = __('Save my pinned specimens');
+  }
+?>
+<label><?php echo $saveText;?></label>
 <select id="save_specs_choice">
     <option value="" selected="selected"></option>
     <optgroup label="<?php echo __('New');?>">
@@ -65,10 +72,9 @@ $(document).ready(function () {
             },
          onHide: function()
          {
-            $(this).attr('value','Search Saved') ;
             $("#save_specs").qtip("destroy");
             if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
-              window.location.replace('<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved);
+              window.location.href = '<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved;
          }
          }
     });

@@ -99,7 +99,8 @@ $(document).ready(function () {
           url: $(this).attr('action'),
           data: $(this).serialize(),
           success: function(html){
-            if(/^ok/.test(html))
+            re = new RegExp("^ok");  
+            if(re.test(html))
             {
               id_arr = html.split(',');
               spec_list_saved = id_arr[1];

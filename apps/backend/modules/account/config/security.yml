@@ -8,5 +8,7 @@ pwdRenewMail:
   is_secure:  false
 renewPwd:
   is_secure:  false
+lang:
+  is_secure:  false
 submit:
   is_secure:  false

@@ -49,9 +49,7 @@ class specimensearchActions extends DarwinActions
     // Initialize filter
     $this->form = new SpecimenSearchFormFilter(null,array('user' => $this->getUser()));
     // If the search has been triggered by clicking on the search button or with pinned specimens
-    if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ) || 
-       $request->hasParameter('pinned') 
-      )
+    if(($request->isMethod('post') && $request->getParameter('specimen_search_filters','') !== '' ) || $request->hasParameter('pinned') )
     {
       // Store all post parameters
       $criterias = $request->getPostParameters();
@@ -72,7 +70,7 @@ class specimensearchActions extends DarwinActions
       elseif($request->hasParameter('spec_search'))
       {
         // Get the saved search concerned
-        $criterias['specimen_search_filters']['what_searched'] = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
+        $saved_search = Doctrine::getTable('MySavedSearches')->getSavedSearchByKey($request->getParameter('spec_search'), $this->getUser()->getId());
         // Forward 404 if we don't get the search requested
         $this->forward404Unless($saved_search);
 
@@ -92,7 +90,7 @@ class specimensearchActions extends DarwinActions
       // If not available, not found -> forward on 404 page
       $this->forward404Unless($saved_search);
 
-      if($saved_search->getisOnlyId())
+      if($saved_search->getIsOnlyId())
         $this->is_specimen_search = $saved_search->getId();
       // Get all search criterias from DB
       $criterias = unserialize($saved_search->getSearchCriterias());

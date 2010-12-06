@@ -18,11 +18,11 @@
       <tr>
         <td class="lang_picker">
           <ul style="">
-            <li><?php echo link_to('En','board/lang?lang=en');?></li>
+            <li><?php echo link_to('En','account/lang?lang=en');?></li>
             <li class="sep">|<li>
-            <li><?php echo link_to('Fr','board/lang?lang=fr');?></li>
+            <li><?php echo link_to('Fr','account/lang?lang=fr');?></li>
             <li class="sep">|<li>
-            <li><?php echo link_to('Nl','board/lang?lang=nl');?></li>
+            <li><?php echo link_to('Nl','account/lang?lang=nl');?></li>
           </ul>
         </td>
       </tr>
