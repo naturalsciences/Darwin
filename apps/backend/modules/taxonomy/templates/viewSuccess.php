@@ -36,13 +36,13 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['status']->renderLabel() ?></th>
         <td>
-          <?php echo $taxon->getStatus() ?>
+          <?php echo __($taxon->getStatus()) ?>
         </td>
       </tr>
       <tr>
         <th><?php echo $form['extinct']->renderLabel() ?></th>
         <td>
-  		    <?php if($form['extinct']->getValue()) echo image_tag('checkbox_checked.png') ; else echo image_tag('checkbox_unchecked.png') ;?>             
+  		    <?php if($form['extinct']->getValue()) echo __("Yes") ; else echo __("No") ;?>             
         </td>
       </tr> 
       <tr>

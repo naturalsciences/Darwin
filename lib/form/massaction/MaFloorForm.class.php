@@ -11,7 +11,7 @@ class MaFloorForm extends BaseForm
       'key_method' => 'getFloors',
       'add_empty' => true,
       'change_label' => 'Pick a floor in the list',
-      'add_label' => 'Add another floor',
+      'add_label' => 'Add another Floor',
     ));
 
     $this->widgetSchema['floor']->setLabel('Choose New Floor');

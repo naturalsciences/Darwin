@@ -28,7 +28,7 @@
       </script>       
     </td>
     <td class="widget_row_delete">   
-      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$renamed['id']);?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_relationships&id='.$renamed['id']);?>" title="<?php echo __('Delete Recombination') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>

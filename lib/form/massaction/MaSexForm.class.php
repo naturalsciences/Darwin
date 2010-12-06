@@ -11,7 +11,7 @@ class MaSexForm extends BaseForm
       'key_method' => 'getSex',
       'add_empty' => true,
       'change_label' => 'Pick a sex in the list',
-      'add_label' => 'Add another sex',
+      'add_label' => 'Add another Sex',
     ));
 
     $this->widgetSchema['sex']->setLabel('Choose New Sex');

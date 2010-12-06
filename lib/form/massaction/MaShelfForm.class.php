@@ -11,7 +11,7 @@ class MaShelfForm extends BaseForm
       'key_method' => 'getShelfs',
       'add_empty' => true,
       'change_label' => 'Pick a shelf in the list',
-      'add_label' => 'Add another shelf',
+      'add_label' => 'Add another Shelf',
     ));
 
     $this->widgetSchema['shelf']->setLabel('Choose New Shelf');

@@ -11,7 +11,7 @@ class MaRowForm extends BaseForm
       'key_method' => 'getRows',
       'add_empty' => true,
       'change_label' => 'Pick a row in the list',
-      'add_label' => 'Add another row',
+      'add_label' => 'Add another Row',
     ));
 
     $this->widgetSchema['row']->setLabel('Choose New Row');

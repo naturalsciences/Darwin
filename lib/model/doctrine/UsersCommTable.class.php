@@ -7,9 +7,18 @@ class UsersCommTable extends DarwinTable
   public function getTags($type)
   {
     if($type=="phone/fax")
-      return array('home'=>'Home', 'pager'=>'Pager', 'work'=>'Work', 'pref'=>'Preferred', 'voice'=>'Voice', 'fax'=>'Fax', 'cell'=>'Cell');
+      $tag_comm = array('home'=>'Home', 'pager'=>'Pager', 'work'=>'Work', 'pref'=>'Preferred', 'voice'=>'Voice', 'fax'=>'Fax', 'cell'=>'Cell');
     else
-      return array('home'=>'Home','pref'=>'Preferred', 'work'=>'Work','internet'=> 'Internet');
+      $tag_comm = array('home'=>'Home','pref'=>'Preferred', 'work'=>'Work','internet'=> 'Internet');
+
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return $tag_comm;
+    }
+    return array_map(array($i18n_object, '__'), $tag_comm);      
   }
 
   public function fetchByUser($id)

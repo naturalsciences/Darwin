@@ -11,7 +11,7 @@ class MaRoomForm extends BaseForm
       'key_method' => 'getRooms',
       'add_empty' => true,
       'change_label' => 'Pick a room in the list',
-      'add_label' => 'Add another room',
+      'add_label' => 'Add another Room',
     ));
 
     $this->widgetSchema['room']->setLabel('Choose New Room');

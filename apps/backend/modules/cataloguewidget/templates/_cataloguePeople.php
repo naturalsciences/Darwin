@@ -31,10 +31,10 @@
                   </a>	  
               </td>
               <td class="catalogue_people_sub_type">
-                <?php echo $person->getPeopleSubType();?>
+                <?php echo __($person->getPeopleSubType());?>
               </td>
               <td class="widget_row_delete">	
-                <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_people&id='.$person->getId());?>" title="<?php echo __('Are you sure ?') ?>">
+                <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=catalogue_people&id='.$person->getId());?>" title="<?php echo __('Delete People') ?>">
                   <?php echo image_tag('remove.png'); ?>
                 </a>  
               </td>

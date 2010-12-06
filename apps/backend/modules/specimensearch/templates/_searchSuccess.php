@@ -107,7 +107,7 @@
                   default:           $v_link = 'parts/view?id='.$specimen->getPartRef();break;
                   };?>
               <?php endif ; ?>
-              <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link);?>
+              <?php echo link_to(image_tag('blue_eyel.png', array("title" => __("View"))),$v_link,array('target' => 'pop'));?>
               </td>
             </tr>
 

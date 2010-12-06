@@ -112,6 +112,7 @@
         base.catalogueLinkEdit = function(event)
         {
           event.preventDefault();
+          var last_position = $('body').scrollTop() ;
           scroll(0,0);
 
           $(this).qtip({
@@ -144,7 +145,8 @@
               },
               onHide: function(event)
               {
-                 $(this.elements.target).qtip("destroy");
+                $(this.elements.target).qtip("destroy");
+                scroll(0,last_position);                
                 $('body').data('widgets_screen').refreshWidget(event, $(this.elements.target));
               }
             }

@@ -18,7 +18,7 @@
         <?php echo $keyword->getKeyword();?>
       </td>
       <td class="widget_row_delete">
-        <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=classification_keywords&id='.$keyword->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+        <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=classification_keywords&id='.$keyword->getId());?>" title="<?php echo __('Delete Keywords') ?>"><?php echo image_tag('remove.png'); ?>
         </a>
       </td>
     </tr>
@@ -26,4 +26,4 @@
   </tbody>
 </table>
 <br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Properties');?>" class="link_catalogue" href="<?php echo url_for('catalogue/keyword?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
+<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Keywords');?>" class="link_catalogue" href="<?php echo url_for('catalogue/keyword?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>

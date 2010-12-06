@@ -797,7 +797,7 @@
       <trans-unit id="387">
         <source>This application requires an authentication. Please Log in with your username and password.</source> <target>cette application nécessite une authentication. Veuillez vous connecter avec votre identifiant et mot de passe</target> </trans-unit>
       <trans-unit id="388">
-        <source>Log in</source> <target>Identifiant</target> </trans-unit>
+        <source>Log in</source> <target>Connexion</target> </trans-unit>
       <trans-unit id="389">
         <source>Role</source> <target>Rôle</target> </trans-unit>
       <trans-unit id="390">
@@ -871,7 +871,7 @@
       <trans-unit id="424">
         <source>Items</source> <target>Objets</target> </trans-unit>
       <trans-unit id="425">
-        <source>Basionym</source> <target>Basionym</target> </trans-unit>
+        <source>Basionym</source> <target>Basionyme</target> </trans-unit>
       <trans-unit id="426">
         <source>Add Synonymies</source> <target>Ajouter synonymes </target> </trans-unit>
       <trans-unit id="427">
@@ -1015,7 +1015,7 @@
       <trans-unit id="496">
         <source>There are no more widgets to add</source> <target>Il n'a plus de widgets à ajouter</target> </trans-unit>
       <trans-unit id="497">
-        <source>View Expeditions</source> <target>voir expéditions</target> </trans-unit>
+        <source>View Expeditions</source> <target>Voir expéditions</target> </trans-unit>
       <trans-unit id="498">
         <source>Members</source> <target>Membres</target> </trans-unit>
       <trans-unit id="499">
@@ -1179,11 +1179,11 @@
       <trans-unit id="577">
         <source>New password</source> <target>Nouveau mot de passe</target> </trans-unit>
       <trans-unit id="578">
-        <source>Confirm password</source> <target>Confirme mot de passe</target> </trans-unit>
+        <source>Confirm password</source> <target>Confirmer mot de passe</target> </trans-unit>
       <trans-unit id="579">
         <source>Login type</source> <target>Type de connexion</target> </trans-unit>       
       <trans-unit id="580">
-        <source>List of widgets available for</source> <target>Liste de widgets disponibles pour</target> </trans-unit>
+        <source>List of widgets available for </source> <target>Liste de widgets disponibles pour </target> </trans-unit>
       <trans-unit id="581">
         <source>Mandatory</source> <target>Indispensable</target> </trans-unit>
       <trans-unit id="582">
@@ -1579,6 +1579,396 @@
         <source>Your Ig number will be lost ! are you sure you want continue ?</source>
         <target>Votre numéro Ig va être perdu ! êtes vous sur de vouloir continuer ?</target>
       </trans-unit>
+      <trans-unit id="762">
+        <source>Required.</source> <target>Requis.</target> </trans-unit>
+      <trans-unit id="763">
+        <source>This People is still referenced as an author</source> <target>Cette personne est toujours référencée comme autheur</target> </trans-unit> 
+      <trans-unit id="764">
+        <source>Impossible to impact children names</source> <target>Impossible d'impacter les noms d'enfants</target> </trans-unit>
+      <trans-unit id="765">
+        <source>The modification does not follow the rules of Upper levels attachements</source> 
+        <target>La modification de respecte pas les règles d'attachement au niveau suppérieur</target> </trans-unit>
+      <trans-unit id="766">
+        <source>The author must be defined as such to be attached</source> 
+        <target>Veuillez attribuer le rôle "Autheur" aux personnes à qui vous voulez donner ce droit</target> </trans-unit>
+      <trans-unit id="767">
+        <source>The expert must be defined as such to be attached</source>
+        <target>Veuillez attribuer le rôle "Expert" aux personnes à qui vous voulez donner ce droit</target> </trans-unit>
+      <trans-unit id="768">
+        <source>Maximum number of "current names" reach</source> <target>Nombre Max de 'nom courrant' atteind</target> </trans-unit>
+      <trans-unit id="769">
+        <source>Maximum number of "recombination" reach</source> <target>Nombre Max de 'recombinaison' atteind</target> </trans-unit>
+      <trans-unit id="770">
+        <source>You cannot add a particular comment notion twice</source>
+        <target>Vous ne pouvez pas avoir deux fois la même notion dans les commentaires</target> </trans-unit>
+      <trans-unit id="771">
+        <source>Error in dates overlaping</source> <target>Problème de chevauchement de dates</target> </trans-unit>
+      <trans-unit id="772">
+        <source>This specimen already exist</source> <target>Cet échantillon existe déjà</target> </trans-unit>
+      <trans-unit id="773">
+        <source>This individual already exist for this specimen</source> <target>Cet individu existe déjà pour cet échantillon</target> </trans-unit>
+      <trans-unit id="774">
+        <source>This property already exist</source> <target>Cette proprété existe déjà</target> </trans-unit>
+      <trans-unit id="775">
+        <source>This method already exist</source> <target>Cette méthode existe déjà</target> </trans-unit>
+      <trans-unit id="776">
+        <source>This tool already exist</source> <target>Cet outil existe déjà</target> </trans-unit>
+      <trans-unit id="777">
+        <source>Max count value must be superior or equal to Min count value</source>
+        <target>La valeur Max doit être suppérieure ou égale à la valeur Min</target> </trans-unit>
+      <trans-unit id="778">
+        <source>Min count value must be a positive number</source>
+        <target>La valeur Min doit être positive</target> </trans-unit>
+      <trans-unit id="779">
+        <source>Method inserted cannot be empty</source> <target>La méthode insérée ne peut pas être vide</target> </trans-unit>
+      <trans-unit id="780">
+        <source>Tool inserted cannot be empty</source> <target>L'outil inséré ne peut pas être vide</target> </trans-unit>
+      <trans-unit id="781">
+        <source>This user already exist</source> <target>cet utilisateur existe déjà</target> </trans-unit>
+      <trans-unit id="782">
+        <source>This community already exists, you should edit it instead of adding new one</source> 
+        <target>Cette communauté existe déjà, vous devriez éditer l'existante plutôt que d'en ajouter une nouvelle</target> </trans-unit>
+      <trans-unit id="783">
+        <source>You cannot recombinate to itself</source> <target>Vous ne pouvez pas faire une auto recombinaison</target> </trans-unit>
+      <trans-unit id="784">
+        <source>You don\'t have the rights to insert into or update a specimen in this collection</source> 
+        <target>vous n'avez pas la permissiion d'insérer ou mettre à jour dans cet échantillon</target> </trans-unit>
+      <trans-unit id="785">
+        <source>The parenty does not follow the possible upper level rule</source>
+        <target>La parenté ne respecte pas la règle du niveau suppérieur possible</target> </trans-unit>
+      <trans-unit id="786">
+        <source>Unknown Error : </source> <target>Erreur inconnue :</target> </trans-unit>
+      <trans-unit id="787">
+        <source>This people allready have this role</source> <target>Cette personne à déjà ce rôle</target> </trans-unit>
+      <trans-unit id="788">
+        <source>Username</source> <target>Nom d'utilisateur</target> </trans-unit>
+      <trans-unit id="789">
+        <source>Password</source> <target>Mot de passe</target> </trans-unit>
+      <trans-unit id="790">
+        <source>This application requires authentication.</source> <target>Cette application nécessite une authentification.</target> </trans-unit>
+      <trans-unit id="791">
+        <source>Login</source> <target>Connexion</target> </trans-unit>
+      <trans-unit id="792">
+        <source>If you don't have an account yet, please</source> 
+        <target>Si vous n'avez pas encore de compte, veuillez vous</target> </trans-unit>
+      <trans-unit id="793">
+        <source>Logout</source> <target>Déconnexion</target> </trans-unit>
+      <trans-unit id="794">
+        <source>register</source> <target>enregistrer</target> </trans-unit>
+      <trans-unit id="795">
+        <source>If you've lost your password, please</source> <target>Si vous avez perdu votre mot de passe, veuillez</target> </trans-unit>
+      <trans-unit id="796">
+        <source>reset your password</source> <target>Réinitialiser votre mot de passe</target> </trans-unit>
+      <trans-unit id="797">
+        <source>Send me a 'reset account' mail</source> <target>Envoyez moi un mail de 'reinitialisation de compte'</target> </trans-unit>
+      <trans-unit id="798">
+        <source>Reset your account.</source> <target>Réinitialiser votre compte.</target> </trans-unit>
+      <trans-unit id="799">
+        <source>Your login</source> <target>Votre nom d'utilisateur</target> </trans-unit>
+      <trans-unit id="800">
+        <source>Your login</source> <target>Votre E-mail</target> </trans-unit>
+      <trans-unit id="801">
+        <source>We didn't find any reference with the login and password you provided</source>
+        <target>Nous n'avons pas trouvé de correspondance avec le nom d'utilisateur et le mot de passe que vous avez spécifié</target> </trans-unit>
+      <trans-unit id="802">
+        <source>E-mail is required</source> <target>Le champs E-mail est requis</target> </trans-unit>
+      <trans-unit id="803">
+        <source>E-mail is not of a valid form</source> <target>Cet E-mail n'est pas une adresse valide</target> </trans-unit>
+      <trans-unit id="804">
+        <source>must be at least 4 characters.</source> <target>Doit être au moins de 4 caractères.</target> </trans-unit>
+      <trans-unit id="805">
+        <source>Bad login or password</source> <target>Mauvais nom d'utilisateur et/ou mot de passe</target> </trans-unit>
+      <trans-unit id="806">
+        <source>Add new Specimen</source> <target>Ajouter un nouvel échantillon</target> </trans-unit>
+      <trans-unit id="807">
+        <source>Add new Taxon</source> <target>Ajouter un nouveau Taxon</target> </trans-unit>
+      <trans-unit id="808">
+        <source>Record Id</source> <target>Id d'enregistrement</target> </trans-unit>
+      <trans-unit id="809">
+        <source>board_widget</source> <target>Widgets du tableau de bord</target> </trans-unit>
+      <trans-unit id="810">
+        <source>catalogue_chronostratigraphy_widget</source> <target>Widgets Chronostratigraphie</target> </trans-unit>
+      <trans-unit id="811">
+        <source>catalogue_collections_widget</source> <target>Widgets Collections</target> </trans-unit>
+      <trans-unit id="812">
+        <source>catalogue_expeditions_widget</source> <target>Widgets Expéditions</target> </trans-unit>
+      <trans-unit id="813">
+        <source>catalogue_gtu_widget</source> <target>Widgets Point d'échantillonage (GTU)</target> </trans-unit>
+      <trans-unit id="814">
+        <source>catalogue_igs_widget</source> <target>Widgets numéro d'Ig</target> </trans-unit>
+      <trans-unit id="815">
+        <source>catalogue_lithology_widget</source> <target>Widgets Lithologie</target> </trans-unit>
+      <trans-unit id="816">
+        <source>catalogue_lithostratigraphy_widget</source> <target>Widgets Lithostratigraphie</target> </trans-unit>
+      <trans-unit id="817">
+        <source>catalogue_methods_and_tools_widget</source> <target>Widgets Méthode et Outils</target> </trans-unit>
+      <trans-unit id="818">
+        <source>catalogue_mineralogy_widget</source> <target>Widgets Minéralogie</target> </trans-unit>
+      <trans-unit id="819">
+        <source>catalogue_taxonomy_widget</source> <target>Widgets Taxonomie</target> </trans-unit>
+      <trans-unit id="820">
+        <source>individuals_widget</source> <target>Widgets des Individus</target> </trans-unit>
+      <trans-unit id="821">
+        <source>part_widget</source> <target>Widgets des parties</target> </trans-unit>
+      <trans-unit id="822">
+        <source>people_institution_widget</source> <target>Widgets des Institutions</target> </trans-unit>
+      <trans-unit id="823">
+        <source>people_widget</source> <target>Widgets des Personnes</target> </trans-unit>
+      <trans-unit id="824">
+        <source>specimensearch_widget</source> <target>Widgets de la Recherche d'échantillons</target> </trans-unit>
+      <trans-unit id="825">
+        <source>specimen_widget</source> <target>Widgets des Echantillons</target> </trans-unit>
+      <trans-unit id="826">
+        <source>users_widget</source> <target>Widgets Utilisateurs</target> </trans-unit>
+      <trans-unit id="827">
+        <source>Pick a title in the list</source> <target>Choisir un titre dans la liste</target> </trans-unit>
+      <trans-unit id="828">
+        <source>Choose Yourself</source> <target>Choisissez vous-même</target> </trans-unit>
+      <trans-unit id="829">
+        <source>Add another country</source> <target>Ajouter un autre pays</target> </trans-unit>
+      <trans-unit id="830">
+        <source>Pick a country in the list</source> <target>Choisir un pays dans la liste</target> </trans-unit>
+      <trans-unit id="831">
+        <source>Number of saved specimens list showed on the board widget. (You browse every specimen lists on the dedicated page)</source>
+         <target>Nombre d'échantillons sauvés affiché dans la widget du tableau de bord. (La liste exaustive des spécimens est dans une page dédiée)</target>
+      </trans-unit>
+      <trans-unit id="832">
+        <source>Number of Saved searches showed on the board widget. (You browse every searches on the dedicated page)</source>
+        <target>Nombre de recherches sauvées affiché dans la widget du tableau de bord. (La liste exaustive des spécimens est dans une page dédiée)</target>
+      </trans-unit>
+      <trans-unit id="834">
+        <source>Add Keywords</source> <target>Ajouter mots clés</target> </trans-unit>
+      <trans-unit id="835">
+        <source>Edit Keywords</source> <target>Editer mots clés</target> </trans-unit>
+      <trans-unit id="836">
+        <source>Delete Keywords</source> <target>Supprimer ce mot clé</target> </trans-unit>
+      <trans-unit id="837">
+        <source>Pick a sub-type in the list</source> <target>Choisir un sous-type dans la liste</target> </trans-unit>
+      <trans-unit id="838">
+        <source>Pick a qualifier in the list</source> <target>Choisir un qualiticatif dans la liste</target> </trans-unit>
+      <trans-unit id="839">
+        <source>Pick a community in the list</source> <target>Choisir une communauté dans la liste</target> </trans-unit>
+      <trans-unit id="840">
+        <source>Delete Vernacular Names</source> <target>Supprimer nom vernaculaire</target> </trans-unit>
+      <trans-unit id="841">
+        <source>Delete Properties</source> <target>Supprimer cette propriété</target> </trans-unit>
+      <trans-unit id="842">
+        <source>Delete Recombination</source> <target>Supprimer cette recombinaison</target> </trans-unit>
+      <trans-unit id="843">
+        <source>Delete Name</source> <target>Supprimer ce nom</target> </trans-unit>
+      <trans-unit id="844">
+        <source>Edit Name</source> <target>Editer Nom</target> </trans-unit>
+      <trans-unit id="845">
+        <source>Delete People</source> <target>Supprimer cette personne</target> </trans-unit>
+      <trans-unit id="846">
+        <source>Delete Synonym</source> <target>Supprimer synomyme</target> </trans-unit>
+      <trans-unit id="847">
+        <source>Hommonyms</source> <target>Homonymes</target> </trans-unit>        
+      <trans-unit id="848">
+        <source>Delete Comment</source> <target>Supprimer ce commentaire</target> </trans-unit>
+      <trans-unit id="849">
+        <source>Delete Link</source> <target>Supprimer ce lien</target> </trans-unit>
+      <trans-unit id="850">
+        <source>Choose a Member</source> <target>Choisir un membre</target> </trans-unit>
+      <trans-unit id="851">
+        <source>Reference year</source> <target>Année de référence</target> </trans-unit>
+      <trans-unit id="852">
+        <source>Pick a currency in the list</source> <target>Choisir une monnaie dans la liste</target> </trans-unit>
+      <trans-unit id="853">
+        <source>Add another currency</source> <target>Ajouter une autre monnaie</target> </trans-unit>
+      <trans-unit id="854">
+        <source>"%value%" must be at least %min_length% characters.</source>
+        <target>"%value%" Doit être d'au moins %min_length% caractères.</target> </trans-unit>
+      <trans-unit id="856">
+        <source>Password must be at least %min_length% characters length</source>
+        <target>Le mot de passe doit avoir une longueur d'au moins %min_length% caratères</target> </trans-unit>
+      <trans-unit id="857">
+        <source>Passwords must be equals and can not contains spaces</source>
+        <target>Les mots de passe doivent être identiques et ne pas contenir d'espaces</target> </trans-unit>
+      <trans-unit id="858">
+        <source>You cannot register without accepting DaRWIN 2  term of use</source>
+        <target>Vous ne pouvez pas vous inscrire sans accepter les termes d'utilisation de DaRWIN 2</target> </trans-unit>
+      <trans-unit id="860">
+        <source>Change Collection</source> <target>Changer de collection</target> </trans-unit>
+      <trans-unit id="661">
+        <source>Change Taxonomy</source> <target>Changer de Taxonomie</target> </trans-unit>
+      <trans-unit id="862">
+        <source>Change Lithology</source> <target>Changer de Lithologie</target> </trans-unit>
+      <trans-unit id="863">
+        <source>Change Chronostratigraphy</source> <target>Changer de Chronostratigraphie</target> </trans-unit>
+      <trans-unit id="864">
+        <source>Change Lithostratigraphy</source> <target>Changer de Lithostratigraphie</target> </trans-unit>
+      <trans-unit id="865">
+        <source>Change Mineralogy</source> <target>Changer de Mineralogie</target> </trans-unit>
+      <trans-unit id="866">
+        <source>Change Station visibility</source> <target>Changer la visibilité d'une station</target> </trans-unit>
+      <trans-unit id="867">
+        <source>Change Individual Type</source> <target>Changer de type d'un individu</target> </trans-unit>
+      <trans-unit id="868">
+        <source>Change Individual Social Status</source> <target>Changer le status social d'un individu</target> </trans-unit>
+      <trans-unit id="869">
+        <source>Change Individual Sex</source> <target>Changer le sexe d'un individu</target> </trans-unit>
+      <trans-unit id="870">
+        <source>Change Individual Stage</source> <target>Changer l'étape d'un individu</target> </trans-unit>
+      <trans-unit id="871">
+        <source>Change Building</source> <target>Changer de bâtiment</target> </trans-unit>
+      <trans-unit id="872">
+        <source>Change Floor</source> <target>Changer d'étage</target> </trans-unit>
+      <trans-unit id="873">
+        <source>Change Room</source> <target>Changer de salle</target> </trans-unit>
+      <trans-unit id="874">
+        <source>Change Row</source> <target>Changer de rayon</target> </trans-unit>
+      <trans-unit id="875">
+        <source>Change Shelf</source> <target>Changer de plateau</target> </trans-unit>
+      <trans-unit id="876">
+        <source>Change Container</source> <target>Changer de conteneur</target> </trans-unit>
+      <trans-unit id="877">
+        <source>Change Sub Container</source> <target>Changer de sous conteneur</target> </trans-unit>
+      <trans-unit id="878">
+        <source>Choose New Building</source> <target>Choisir un nouveau bâtiment</target> </trans-unit>
+      <trans-unit id="879">
+        <source>Add another building</source> <target>Ajouter un nouveau bâtiment</target> </trans-unit>
+      <trans-unit id="880">
+        <source>Choose Chronostratigraphy unit</source> <target>Choisir une unité de Chronostratigraphie</target> </trans-unit>
+      <trans-unit id="881">
+        <source>Choose New Chronostratigraphy unit</source> <target>Choisir une nouvelle unité de Chronostratigraphie</target> </trans-unit>
+      <trans-unit id="882">
+        <source>Choose Collection</source> <target>Choisir une collection</target> </trans-unit>
+      <trans-unit id="883">
+        <source>Choose New Collection</source> <target>Choisir une nouvelle collection</target> </trans-unit>
+      <trans-unit id="884">
+        <source>Add another Floor</source> <target>Ajouter un nouvel étage</target> </trans-unit>
+      <trans-unit id="885">
+        <source>Choose New Floor</source> <target>Choisir un nouvel étage</target> </trans-unit>
+      <trans-unit id="886">
+        <source>Choose Lithologic unit</source> <target>Choisir une unité de Lithologie</target> </trans-unit>
+      <trans-unit id="887">
+        <source>Choose New Lithologic unit</source> <target>Choisir une nouvelle unité de Lithologie</target> </trans-unit>
+      <trans-unit id="888">
+        <source>Choose Lithostratigraphic unit</source> <target>Choisir une unité de Lithostratigraphie</target> </trans-unit>
+      <trans-unit id="889">
+        <source>Choose New Lithostratigraphic unit</source> <target>Choisir une nouvelle unité de Lithostratigraphie</target> </trans-unit>        
+      <trans-unit id="890">
+        <source>Maintenance Achieved</source> <target>Maintenance Archivée</target> </trans-unit>
+      <trans-unit id="891">
+        <source>Add another action</source> <target>Ajouter une autre action</target> </trans-unit>
+      <trans-unit id="892">
+        <source>Choose Mineralogic unit</source> <target>Choisir une unité de Mineralogie</target> </trans-unit>
+      <trans-unit id="893">
+        <source>Choose new Mineralogic unit</source> <target>Choisir une nouvelle unité de Mineralogie</target> </trans-unit>
+      <trans-unit id="894">
+        <source>Add another Room</source> <target>Ajouter une nouvelle salle</target> </trans-unit>
+      <trans-unit id="895">
+        <source>Choose New Room</source> <target>Choisir une nouvelle salle</target> </trans-unit>
+      <trans-unit id="896">
+        <source>Add another Row</source> <target>Ajouter un nouveau rayon</target> </trans-unit>
+      <trans-unit id="897">
+        <source>Choose New Row</source> <target>Choisir un nouveau rayon</target> </trans-unit>
+      <trans-unit id="898">
+        <source>Add another Sex</source> <target>Ajouter un nouveau sexe</target> </trans-unit>
+      <trans-unit id="899">
+        <source>Choose New Sex</source> <target>Choisir un nouveau sexe</target> </trans-unit>
+      <trans-unit id="900">
+        <source>Add another Shelf</source> <target>Ajouter un nouveau plateau</target> </trans-unit>
+      <trans-unit id="901">
+        <source>Choose New Shelf</source> <target>Choisir un nouveau plateau</target> </trans-unit>
+      <trans-unit id="902">
+        <source>Add another Status</source> <target>Ajouter un nouveau status</target> </trans-unit>
+      <trans-unit id="903">
+        <source>Choose New Status</source> <target>Choisir un nouveau status</target> </trans-unit>
+      <trans-unit id="904">
+        <source>Add another Stage</source> <target>Ajouter un nouvel état</target> </trans-unit>
+      <trans-unit id="905">
+        <source>Choose New Stage</source> <target>Choisir un nouvel état</target> </trans-unit>
+      <trans-unit id="906">
+        <source>Is Station Visible</source> <target>Station visible</target> </trans-unit>
+      <trans-unit id="907">
+        <source>Invalid date "from"</source> <target>Date de "début" invalide</target> </trans-unit>
+      <trans-unit id="908">
+        <source>Invalid date "to"</source> <target>Date de "fin" invalide</target> </trans-unit>
+      <trans-unit id="909">
+        <source>The "from" date cannot be above the "to" date.</source> <target>La date de "début" ne peut pas être après la datede "fin"</target> </trans-unit>
+      <trans-unit id="910">
+        <source>The lower bound (%left_field%) cannot be above the upper bound (%right_field%).</source>
+        <target>La limite inférieure (%left_field%) ne peut pas dépasser la limite suppérieure (%right_field%).</target> </trans-unit>
+      <trans-unit id="911">
+        <source>Auto copy code from specimen to parts</source> <target>Auto copier le code de l'échantillon vers les parties</target> </trans-unit>
+      <trans-unit id="912">
+        <source>Auto incrementation of specimen code</source> <target>Auto incrémentation du code d'échantillon</target> </trans-unit>
+      <trans-unit id="913">
+        <source>Default specimen code prefix used</source> <target>Préfixe par défaut du code des échantillons utilisé</target> </trans-unit>
+      <trans-unit id="914">
+        <source>Default separator after prefix</source> <target>Séparateur par défaut après le préfixe</target> </trans-unit>
+      <trans-unit id="915">
+        <source>Default specimen code suffix used</source> <target>Suffixe par défaut du code des échantillons utilisé</target> </trans-unit>
+      <trans-unit id="916">
+        <source>Default separator before suffix</source> <target>Séparateur par défaut avant le préfixe</target> </trans-unit>
+      <trans-unit id="917">
+        <source>A collection can't be attached to itself</source> <target>Une collection ne peut être attachée à elle même</target> </trans-unit>
+      <trans-unit id="918">
+        <source>Date provided is not valid</source> <target>La date spécifiée n'est pas valide</target> </trans-unit>
+      <trans-unit id="919">
+        <source>The "begin" date cannot be above the "end" date.</source>
+        <target>La date de "début" ne peut pas être suppérieure à la date de "fin"</target> </trans-unit>
+      <trans-unit id="920">
+        <source>You must enter an accuracy for the elevation.</source>
+        <target>vous devez entrer une précision pour l'altitude</target> </trans-unit>
+      <trans-unit id="921">
+        <source>You must enter valid latitude And longitude</source> <target>Vous devez entrer une latitude et longitude valide</target> </trans-unit>
+      <trans-unit id="922">
+        <source>You must enter an accuracy for your position</source> <target>Vous devez ajouter une précision sur votre position</target> </trans-unit>
+      <trans-unit id="923">
+        <source>The start of the activity must be after the birth</source>
+        <target>L'activité de départ doit être supérieure à la date de naissance</target> </trans-unit>
+      <trans-unit id="924">
+        <source>The end of the activity must be before the death</source>
+        <target>La fin d'activité doit être avant la date de décès</target> </trans-unit>
+      <trans-unit id="925">
+        <source>The begin activity date cannot be above the end activity date.</source>
+        <target>Il est assez rare de mourir avant de naître</target> </trans-unit>
+      <trans-unit id="926">
+        <source>The min number ("%left_field%") must be lower or equal the max number ("%right_field%")</source>
+        <target>Le nombre Min ("%left_field%") doit être inférieur ou égal au nombre Max ("%right_field%")</target> </trans-unit>
+      <trans-unit id="927">
+        <source>A Part can't be attached to itself</source> <target>Une partie ne peut pas être rattachée à elle-même</target> </trans-unit>
+      <trans-unit id="928">
+        <source>type %s already exist for this user</source> <target>Le type %s éxiste déjà pour cet utilisateur</target> </trans-unit>
+      <trans-unit id="929">
+        <source>Password does not match</source> <target>Les mots de passe sont différents</target> </trans-unit>
+      <trans-unit id="930">
+        <source>The code have to be Numerical OR Alphabetical, not twice</source>
+        <target>Le code doit être numérique OU aplhabétique, pas les deux en même temps</target> </trans-unit>
+      <trans-unit id="931">
+        <source>At least one code is required.</source> <target>Au moins un code est requis.</target> </trans-unit>
+      <trans-unit id="932">
+        <source>The value is required.</source> <target>La 'valeur' est requise</target> </trans-unit>
+      <trans-unit id="934">
+        <source>At least a comment is required.</source> <target>Au moins un commentaire est requis.</target> </trans-unit>
+      <trans-unit id="935">
+        <source>You have to specify the Url</source> <target>Vous devez donner une URL</target> </trans-unit>
+      <trans-unit id="936">
+        <source>Year missing.</source> <target>Année manquante</target> </trans-unit>
+      <trans-unit id="937">
+        <source>Month missing or remove the day and time.</source> <target>Mois manquant, ou retirez le jour et les heures</target> </trans-unit>
+      <trans-unit id="938">
+        <source>Day missing or remove the time.</source> <target>Jour manquant, ou retirez les heures</target> </trans-unit>
+      <trans-unit id="939">
+        <source>Hour missing or remove the time.</source> <target>Heure manquante, ou retirez les minutes et secondes</target> </trans-unit>
+      <trans-unit id="940">
+        <source>minute missing or remove the seconds.</source> <target>Minute manquante, ou retirez les secondes</target> </trans-unit>
+      <trans-unit id="941">
+        <source>A part of date is wrong.</source> <target>Une partie de la date est invalide.</target> </trans-unit>
+      <trans-unit id="942">
+        <source>We didn't find any reference with the login and password you provided</source>
+        <target>Nous n'avons trouvé aucune réfécence à cet utilisateur et mot de passe</target> </trans-unit>
+      <trans-unit id="943">
+        <source>The captcha is not valid (%error%).</source> <target>Le captcha n'est pas valide (%error%).</target> </trans-unit>
+      <trans-unit id="944">
+        <source>Unable to check the captcha from the server (%error%).</source>
+        <target>Impossible de vérifier le capcha depuis le serveur (%error%)</target> </trans-unit>
+      <trans-unit id="945">
+        <source>At least a reference to an accompanying element is required.</source>
+        <target>Au moins une référence à l'élément accompagnateur est requis</target> </trans-unit>                    
     </body>    
   </file>
 </xliff>

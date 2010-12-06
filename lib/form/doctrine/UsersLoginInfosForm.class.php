@@ -54,7 +54,7 @@ class UsersLoginInfosForm extends BaseUsersLoginInfosForm
     {
       if($this->password)
       {
-        $error = new sfValidatorError($validator, 'type '.$values['login_type'].' already exist for this user');
+        $error = new sfValidatorError($validator, sprintf('type %s already exist for this user',$values['login_type']));
         // throw an error bound to the password field
         throw new sfValidatorErrorSchema($validator, array('login_type' => $error));   	   
       }

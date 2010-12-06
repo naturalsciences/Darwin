@@ -116,7 +116,7 @@ function addMember(people_ref, people_name)
 }
 
 
-$("#exp_member_table").catalogue_people({add_button: 'a.add_member',update_row_fct: addMember });
+$("#exp_member_table").catalogue_people({add_button: 'a.add_member',update_row_fct: addMember,q_tip_text : '<?php echo __("Choose a Member") ;?>' });
 
 
 });

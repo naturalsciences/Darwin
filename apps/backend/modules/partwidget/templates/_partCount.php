@@ -22,7 +22,7 @@
   </tr>
 </table>
 <script type="text/javascript">
-$(document).ready(function()
+$(document).ready(function(){
     if($('input#specimen_parts_accuracy_0:checked').length || ( $('#specimen_parts_specimen_part_count_max').val() == $('#specimen_parts_specimen_part_count_min').val()) )
     {
 	$('input#specimen_parts_accuracy_0').click();

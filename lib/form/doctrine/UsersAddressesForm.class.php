@@ -13,7 +13,7 @@ class UsersAddressesForm extends BaseUsersAddressesForm
   {
     unset($this['id'],$this['address_parts_ts']);
     $this->widgetSchema['person_user_ref'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['tag'] = new widgetFormTagEntry(array('choices' => PeopleAddresses::$possible_tags));
+    $this->widgetSchema['tag'] = new widgetFormTagEntry(array('choices' => PeopleAddresses::getPossibleTags()));
     $this->widgetSchema['entry'] = new sfWidgetFormInput();
     $this->widgetSchema['po_box'] = new sfWidgetFormInput();
     $this->widgetSchema['extended_address'] = new sfWidgetFormInput();

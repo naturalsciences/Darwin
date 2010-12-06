@@ -15,6 +15,7 @@
       });
 
       $(options['add_button']).click(function(){
+        var last_position = $('body').scrollTop() ;      
         scroll(0,0) ;
         $(this).qtip({
           content: {
@@ -51,6 +52,7 @@
             onHide: function()
             {
               $('.result_choose').die('click') ;
+              scroll(0,last_position) ;
               $(this.elements.target).qtip("destroy");
             }
           }

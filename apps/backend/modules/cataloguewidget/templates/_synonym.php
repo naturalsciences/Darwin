@@ -13,7 +13,7 @@
 	<?php echo __(ucfirst($group_name));?>
       </td>
       <td>
-	  <table class="grp_id_<?php echo $group[0]['group_id'];?> widget_sub_table" alt="<?php echo $group_name;?>">
+	  <table class="grp_id_<?php echo $group[0]['group_id'];?> widget_sub_table" alt="<?php echo __($group_name);?>">
 	    <thead>
 	      <tr>
 		<th></th>
@@ -44,7 +44,7 @@
 		</td>
 		<td class="widget_row_delete">	
 		  <?php if($synonym['record_id'] == $eid):?>
-		    <a class="widget_row_delete" href="<?php echo url_for('synonym/delete?id='.$synonym['id']);?>" title="<?php echo __('Are you sure ?') ?>">
+		    <a class="widget_row_delete" href="<?php echo url_for('synonym/delete?id='.$synonym['id']);?>" title="<?php echo __('Delete Synonym') ?>">
 		     <?php echo image_tag('remove.png'); ?>
 		    </a>
 		  <?php endif;?>
