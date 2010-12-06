@@ -1471,4 +1471,16 @@ MyWidgets:
         opened: false
         visible: false
         is_available: true
-        title_perso: Latitude Longitude 
+        title_perso: Latitude Longitude
+
+    u1sps21:
+        User: u1
+        col_num: 1
+        category: specimensearch_widget
+        group_name: expedition
+        mandatory: false
+        order_by: 11
+        opened: false
+        visible: false
+        is_available: true
+        title_perso: Expedition
