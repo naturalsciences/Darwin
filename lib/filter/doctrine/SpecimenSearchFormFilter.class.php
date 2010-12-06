@@ -687,7 +687,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         }
       }
     }
-    else $this->offsetUnset('Codes') ;
+    else
+    {
+      $this->offsetUnset('Codes') ;
+      $subForm = new sfForm();
+      $this->embedForm('Codes',$subForm);
+      $taintedValues['Codes'] = array();
+    }
 
     if(isset($taintedValues['Tags'])&& is_array($taintedValues['Tags']))
     {
@@ -699,7 +705,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         }
       }
     }
-    else $this->offsetUnset('Tags') ;
+    else
+    {
+      $this->offsetUnset('Tags') ;
+      $subForm = new sfForm();
+      $this->embedForm('Tags',$subForm);
+      $taintedValues['Tags'] = array();
+    }
     parent::bind($taintedValues, $taintedFiles);
   }
   
