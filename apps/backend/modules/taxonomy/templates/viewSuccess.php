@@ -24,7 +24,7 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['name']->renderLabel() ?></th>
         <td>
-          <?php echo $taxon->getName(); ?>
+          <?php echo $taxon->getNameWithFormat(ESC_RAW); ?>
         </td>
       </tr>
       <tr>
@@ -49,7 +49,7 @@ $(document).ready(function ()
         <th><?php echo $form['parent_ref']->renderLabel() ?></th>
         <td>
           <?php if ($taxon->Parent->getName() != "-") : ?>
-          <?php echo link_to(__($taxon->Parent->getName()), 'taxonomy/view?id='.$taxon->Parent->getId(), array('id' => $taxon->Parent->getId())) ?>
+          <?php echo link_to(__($taxon->Parent->getNameWithFormat(ESC_RAW)), 'taxonomy/view?id='.$taxon->Parent->getId(), array('id' => $taxon->Parent->getId())) ?>
           <?php echo image_tag('info.png',"title=info class=info");?>
           <div class="tree">
           </div>
@@ -58,6 +58,21 @@ $(document).ready(function ()
           <?php endif ; ?>
         </td>
       </tr>
+      <tr>
+        <td colspan="2"><?php echo image_tag('magnifier.gif');?> <?php echo link_to(__('Search related specimens'),'specimensearch/search', array('class'=>'link_to_search'));?>
+<script type="text/javascript">
+  $(document).ready(function (){
+    search_data = <?php echo json_encode(array('specimen_search_filters[taxon_name]'=>$taxon->getName(), 'specimen_search_filters[taxon_level_ref]'=>$taxon->getLevelRef()));?>;
+    $('.link_to_search').click(function (event){
+      event.preventDefault();
+      postToUrl($(this).attr('href'), search_data);
+    });
+  });
+</script></td>
+      </tr>
+      <?php if($sf_user->isAtLeast(Users::ENCODER)):?>
+        <tr><td colspan="2"><?php echo image_tag('edit.png');?> <?php echo link_to(__('Edit this taxon'),'taxonomy/edit?id='.$taxon->getId());?></td></tr>
+      <?php endif;?>
     </tbody>
   </table>
 </div>  
