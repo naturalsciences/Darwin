@@ -30,21 +30,17 @@
 	      <tr class="syn_id_<?php echo $synonym['id'];?>" id="id_<?php echo $synonym['id'];?>">
 		<td>
 		  <?php if($synonym['record_id'] == $eid):?>
-		      <strong>
-		        <a class="link_catalogue" title="<?php echo __('Synonym');?>" href="<?php echo url_for('taxonomy/view?id='.$synonym['record_id']) ?>">
-		          <?php echo $synonym['ref_item']->getNameWithFormat();?>
-		        </a>
-		      </strong>
+		      <strong><?php echo $synonym['ref_item']->getNameWithFormat(ESC_RAW);?></strong>
 		  <?php else:?>
-        <a class="link_catalogue" title="<?php echo __('Synonym');?>" href="<?php echo url_for('taxonomy/view?id='.$synonym['record_id']) ?>">		  
-  		    <?php echo $synonym['ref_item']->getNameWithFormat();?>
+        <a class="link_catalogue" title="<?php echo __('Synonym');?>" href="<?php echo url_for('taxonomy/view?id='.$synonym['record_id']) ?>">
+  		    <?php echo $synonym['ref_item']->getNameWithFormat(ESC_RAW);?>
   		  </a>
 		  <?php endif;?>
-      <?php echo image_tag('info.png',"title=info class=info");?>
+      <?php echo image_tag('info.png',"title=info class=info id=info_".$synonym['id']);?>
       <div class="tree">
       </div>
       <script type="text/javascript">
-       $('table.catalogue_table_view').find('.info').click(function() 
+       $('#info_<?php echo $synonym['id'];?>').click(function() 
        {   
          item_row = $(this).closest('td') ;
          if(item_row.find('.tree').is(":hidden"))

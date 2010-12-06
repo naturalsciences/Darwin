@@ -37,11 +37,11 @@ class ClassVernacularNamesTable extends DarwinTable
 	    ->from('ClassVernacularNames cv')
 	    ->innerJoin('cv.VernacularNames v') 
       ->orderBy('cv.record_id');	     
-    if(count($listId['taxonomy'])) $q->andWhere('referenced_relation=?','taxonomy')->andWhereIn('record_id',$listId['taxonomy']);
-    if(count($listId['chronostratigraphy'])) $q->andWhere('referenced_relation=?','chronostratigraphy')->andWhereIn('record_id',$listId['chronostratigraphy']);
-    if(count($listId['lithostratigraphy'])) $q->andWhere('referenced_relation=?',"lithostratigraphy")->andWhereIn('record_id',$listId['lithostratigraphy']) ;
-    if(count($listId['lithology'])) $q->andWhere('referenced_relation=?',"lithology")->andWhereIn('record_id',$listId['lithology']);
-    if(count($listId['mineralogy'])) $q->andWhere('referenced_relation=?',"mineralogy")->andWhereIn('record_id',$listId['mineralogy']) ;    
+    if(count($listId['taxonomy'])) $q->orWhere('referenced_relation=?','taxonomy')->andWhereIn('record_id',$listId['taxonomy']);
+    if(count($listId['chronostratigraphy'])) $q->orWhere('referenced_relation=?','chronostratigraphy')->andWhereIn('record_id',$listId['chronostratigraphy']);
+    if(count($listId['lithostratigraphy'])) $q->orWhere('referenced_relation=?',"lithostratigraphy")->andWhereIn('record_id',$listId['lithostratigraphy']) ;
+    if(count($listId['lithology'])) $q->orWhere('referenced_relation=?',"lithology")->andWhereIn('record_id',$listId['lithology']);
+    if(count($listId['mineralogy'])) $q->orWhere('referenced_relation=?',"mineralogy")->andWhereIn('record_id',$listId['mineralogy']) ;    
     // if the array have no data, then there a nothing to look for 
     if(count($listId['mineralogy'])+count($listId['mineralogy'])+count($listId['lithology'])+count($listId['lithostratigraphy'])+count($listId['taxonomy']) == 0) 
       return array() ;

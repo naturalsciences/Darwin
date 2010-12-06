@@ -19,7 +19,7 @@
       <?php echo $link->getComment();?>
     </td>
     <td class="widget_row_delete">   
-      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=ext_links&id='.$link->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
+      <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=ext_links&id='.$link->getId());?>" title="<?php echo __('Delete Link') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     </td>
   </tr>

@@ -36,22 +36,17 @@ class Users extends BaseUsers
       return array( self::REGISTERED_USER => Users::getTypeName(self::REGISTERED_USER) );
 
     $db_user_type = array(
-      self::REGISTERED_USER => Users::getTypeName(self::REGISTERED_USER),
-      self::ENCODER => Users::getTypeName(self::ENCODER),
-      self::MANAGER => Users::getTypeName(self::MANAGER),
-      self::ADMIN => Users::getTypeName(self::ADMIN)
+      self::REGISTERED_USER => self::getTypeName(self::REGISTERED_USER),
+      self::ENCODER => self::getTypeName(self::ENCODER),
+      self::MANAGER => self::getTypeName(self::MANAGER),
+      self::ADMIN => self::getTypeName(self::ADMIN)
     );
-
+    
     if (isset($options['screen']) && $options['screen'] == 3)
     {
       array_pop($db_user_type) ;
       return $db_user_type ;
-    }	
-    if (isset($options['screen']) && $options['screen'] == 2)
-    { 
-      array_pop($db_user_type);
-      array_pop($db_user_type);
-    } 
+    }	 
     return $db_user_type ;
   }
 
@@ -69,10 +64,10 @@ class Users extends BaseUsers
   {
     switch ($db_user_type)
     {
-      case self::REGISTERED_USER : $type = 'Registered user';
-      case self::ENCODER : return $type = 'Encoder';
-      case self::MANAGER : return $type = 'Collection manager';
-      case self::ADMIN : return $type = 'Administrator';   	  
+      case self::REGISTERED_USER : $type = 'Registered user'; break ;
+      case self::ENCODER : $type = 'Encoder'; break ;
+      case self::MANAGER : $type = 'Collection manager'; break ;
+      case self::ADMIN : $type = 'Administrator'; break ;  
     }
     try{
         $i18n_object = sfContext::getInstance()->getI18n();
@@ -81,7 +76,7 @@ class Users extends BaseUsers
     {
         return $type;
     }
-    return array_map(array($i18n_object, '__'), $type);    
+    return $i18n_object->__($type);    
   }
 
 

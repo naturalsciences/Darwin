@@ -44,10 +44,10 @@ class InsurancesForm extends BaseInsurancesForm
       array('class' => 'hidden',)
     );
 
-    $this->widgetSchema->setLabels(array('insurance_value' => 'Value:' ,
-                                         'insurance_currency' => 'Currency:',
-                                         'insurance_year' => 'Reference year:',
-                                         'insurer_ref' => 'Insurer:'
+    $this->widgetSchema->setLabels(array('insurance_value' => 'Value' ,
+                                         'insurance_currency' => 'Currency',
+                                         'insurance_year' => 'Reference year',
+                                         'insurer_ref' => 'Insurer'
                                         )
                                   );
     $this->validatorSchema['insurance_year'] = new sfValidatorChoice(array('choices' => $yearsKeyVal));

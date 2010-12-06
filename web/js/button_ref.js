@@ -5,6 +5,7 @@ var ref_caller_id = '';
 $(document).ready(function () {
   $("a.but_text").live('click', function(event){
     event.preventDefault();
+    var last_position = $('body').scrollTop() ;              
     scroll(0,0) ;
     $(this).parent().parent().find('input[type="hidden"]').trigger({ type:"loadref"});
     $(this).qtip({
@@ -52,6 +53,7 @@ $(document).ready(function () {
             }
             $('.result_choose_coll_rights').die('click') ;
             $(this.elements.target).qtip("destroy");
+            scroll(0,last_position) ;            
         }
       }
     });

@@ -63,7 +63,21 @@ $(document).ready(function ()
           <span class='round_color' style="background-color:<?php echo $litho->getColor() ?>">&nbsp;</span>
         </td>
       </tr>         
+      <tr>
+        <td colspan="2"><?php echo image_tag('magnifier.gif');?> <?php echo link_to(__('Search related specimens'),'specimensearch/search', array('class'=>'link_to_search'));?>
+<script type="text/javascript">
+  $(document).ready(function (){
+    search_data = <?php echo json_encode(array('specimen_search_filters[lithology_name]'=>$litho->getName(), 'specimen_search_filters[lithology_level_ref]'=>$litho->getLevelRef()));?>;
+    $('.link_to_search').click(function (event){
+      event.preventDefault();
+      postToUrl($(this).attr('href'), search_data);
+    });
+  });
+</script></td>
       </tr>
+      <?php if($sf_user->isAtLeast(Users::ENCODER)):?>
+        <tr><td colspan="2"><?php echo image_tag('edit.png');?> <?php echo link_to(__('Edit this lithology unit'),'lithology/edit?id='.$litho->getId());?></td></tr>
+      <?php endif;?>
     </tbody>
   </table>
 </div>  

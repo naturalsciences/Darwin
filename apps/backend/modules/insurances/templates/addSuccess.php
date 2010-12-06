@@ -16,28 +16,28 @@
         </td>
     </tr>
     <tr>
-      <th><?php echo $form['insurance_value']->renderLabel();?></th>
+      <th><?php echo $form['insurance_value']->renderLabel();?>:</th>
       <td>
         <?php echo $form['insurance_value']->renderError(); ?>
         <?php echo $form['insurance_value'];?>
       </td>
     </tr>
     <tr>
-      <th class="top_aligned"><?php echo $form['insurance_currency']->renderLabel();?></th>
+      <th class="top_aligned"><?php echo $form['insurance_currency']->renderLabel();?>:</th>
       <td>
         <?php echo $form['insurance_currency']->renderError(); ?>
         <?php echo $form['insurance_currency'];?>
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['insurance_year']->renderLabel();?></th>
+      <th><?php echo $form['insurance_year']->renderLabel();?>:</th>
       <td>
         <?php echo $form['insurance_year']->renderError(); ?>
         <?php echo $form['insurance_year'];?>
       </td>
     </tr>
     <tr>
-      <th><?php echo $form['insurer_ref']->renderLabel();?></th>
+      <th><?php echo $form['insurer_ref']->renderLabel();?>:</th>
       <td>
         <?php echo $form['insurer_ref']->renderError(); ?>
         <?php echo $form['insurer_ref'];?>

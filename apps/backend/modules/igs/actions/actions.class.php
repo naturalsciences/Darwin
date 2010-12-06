@@ -215,4 +215,25 @@ class igsActions extends DarwinActions
     $this->form = new igsForm($this->igs);    
     $this->loadWidgets();
   }
+  
+  public function executeAddNew(sfWebRequest $request)
+  {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();  
+    if($request->hasParameter('num'))
+    {
+      $igs = new Igs() ;
+      $igs->setIgNum($request->getParameter('num')) ;
+      try
+      {
+	      $igs->save();
+	      return $this->renderText($igs->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+	      $e = new DarwinPgErrorParser($ne);
+	      $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+	      return($error); 
+      }          
+    }
+  }
 }

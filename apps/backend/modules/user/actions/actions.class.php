@@ -81,14 +81,13 @@ class userActions extends DarwinActions
   public function executeIndex(sfWebRequest $request)
   {
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();
-    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getDbUserType(), "screen" => 2));
+    $this->form = new UsersFormFilter(null, array("db_user_type" => $this->getUser()->getDbUserType()));
   }
 
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post')) ;
     $user_filter = $request->getParameter("users_filters") ;
-    $this->screen = $user_filter['screen'] ;
     $this->setCommonValues('user', 'family_name', $request);
     $this->form = new UsersFormFilter(null, array("db_user_type" =>$this->getUser()->getDbUserType(), "screen" => $this->screen));
     $this->is_choose = ($request->getParameter('is_choose', '') == '')?0:intval($request->getParameter('is_choose'));

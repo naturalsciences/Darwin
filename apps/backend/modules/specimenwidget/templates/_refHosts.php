@@ -55,7 +55,7 @@ $(document).ready(function ()
 
   $('tr#host_specimen_ref input[type="hidden"]').bind('loadref',function()
     {
-      ref_caller_id = $('input[id$=\"_id\"]').val();
+      ref_caller_id = '<?php echo $form->getObject()->getId() ; ?>';
       if (ref_caller_id.length)
       {
         ref_caller_id = '/caller_id/'+ref_caller_id;
@@ -69,13 +69,12 @@ $(document).ready(function ()
       }
       
       button.attr('href', button.data('href') + ref_caller_id);
-
     });
 
 
   $('#<?php echo $hostTaxonId; ?>_clear').click(function()
     {
-      clearVals('<?php echo $hostSpecimenId; ?>');
+      clearVals('<?php echo $hostSpecimenId; ?>');   
     });
   
   $('#<?php echo $hostSpecimenId; ?>_clear').click(function()
@@ -95,7 +94,7 @@ $(document).ready(function ()
       {
         $.ajax(
           {
-            url: '<?php echo url_for('specimen/sameTaxon');?>'+'?specId='+$('#<?php echo $hostSpecimenId; ?>').val()+'&taxonId='+$(this).val(),
+            url: '<?php echo url_for("specimen/sameTaxon");?>'+'?specId='+$('#<?php echo $hostSpecimenId; ?>').val()+'&taxonId='+$(this).val(),
             success: function(html) {
                        if(html != "ok" )
                        {
@@ -109,7 +108,7 @@ $(document).ready(function ()
   $('#<?php echo $hostSpecimenId; ?>').change(function()
     {
       if($(this).val() != '')
-      {
+      {      
         $.ajax(
           {
             url: '<?php echo url_for('specimen/getTaxon');?>'+'?specId='+$(this).val()+'&targetField=<?php echo $hostTaxonId; ?>',
@@ -117,7 +116,7 @@ $(document).ready(function ()
             success: function(html) 
                      {
                        $('#<?php echo $hostTaxonId; ?>').val(html.<?php echo $hostTaxonId; ?>);
-                       $('#<?php echo $hostTaxonId; ?>_name').text(html.<?php echo $hostTaxonId.'_name'; ?>);
+                       $('#<?php echo $hostTaxonId; ?>_name').html(html.<?php echo $hostTaxonId.'_name'; ?>);
                        if($('#<?php echo $hostTaxonId; ?>_name').text() == '-')
                        {
                          $('#<?php echo $hostTaxonId; ?>_clear').hide();

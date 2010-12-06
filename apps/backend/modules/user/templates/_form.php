@@ -145,15 +145,15 @@ $(document).ready(function () {
     {
       $('tr#is_not_physical').hide();
       $('tr#is_physical').fadeIn();
-      $('label[for="users_family_name"]').html("Family name") ;
-      $('label[for="users_given_name"]').html("Given name") ;
+      $('label[for="users_family_name"]').html("<?php echo __('Family name') ;?>") ;
+      $('label[for="users_given_name"]').html("<?php echo __('Given name') ; ?>") ;
     }
     else
     {
       $('tr#is_physical').hide();
       $('tr#is_not_physical').fadeIn();
-      $('label[for="users_family_name"]').html("Name") ;
-      $('label[for="users_given_name"]').html("Abbreviation") ;
+      $('label[for="users_family_name"]').html("<?php echo __('Name') ; ?>") ;
+      $('label[for="users_given_name"]').html("<?php echo __('Abbreviation') ; ?>") ;
     }
   });
 

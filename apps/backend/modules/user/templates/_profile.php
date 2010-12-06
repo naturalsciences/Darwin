@@ -14,7 +14,7 @@
 	    <?php endif ;?>
 	  </tr>
 	  <tr>
-	    <th><?php echo $form['given_name']->renderLabel(isset($form['title'])?'Given name':'Abreviation') ?>
+	    <th><?php echo $form['given_name']->renderLabel(isset($form['title'])?__('Given name'):__('Abreviation')) ?>
 		<?php echo $form->renderGlobalErrors() ?>
 	    </th>
 	    <td>

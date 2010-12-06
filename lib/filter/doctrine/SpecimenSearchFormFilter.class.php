@@ -14,33 +14,34 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
   {
 
 
-      $this->useFields(array('building','floor','room','row','shelf','gtu_code','gtu_from_date','gtu_to_date',
-        'taxon_name', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
+      $this->useFields(array('building','floor','room','row','shelf','gtu_code','gtu_from_date','gtu_to_date', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
         'chrono_level_name', 'lithology_name', 'lithology_level_ref', 'lithology_level_name', 'mineral_name', 'mineral_level_ref',
         'mineral_level_name','ig_num'));
 
     $this->addPagerItems();
 
     $this->widgetSchema['gtu_code'] = new sfWidgetFormInputText();
+    $this->widgetSchema['expedition_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
+
     $this->widgetSchema['taxon_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['taxon_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
     $this->widgetSchema['lithology_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['lithology_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'lithology'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
     $this->widgetSchema['litho_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['litho_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'lithostratigraphy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
 
@@ -48,14 +49,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['chrono_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'chronostratigraphy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
 
     $this->widgetSchema['mineral_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['mineral_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
-        'add_empty' => 'All'
+        'add_empty' => $this->getI18N()->__('All')
       ));
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));
@@ -115,6 +116,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                                                  'trim' => true
                                                                 )
                                                           );
+
+    $this->validatorSchema['expedition_name'] = new sfValidatorString(array('required' => false,
+                                                                       'trim' => true
+                                                                      )
+                                                                );
     $this->validatorSchema['taxon_name'] = new sfValidatorString(array('required' => false,
                                                                        'trim' => true
                                                                       )
@@ -687,7 +693,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         }
       }
     }
-    else $this->offsetUnset('Codes') ;
+    else
+    {
+      $this->offsetUnset('Codes') ;
+      $subForm = new sfForm();
+      $this->embedForm('Codes',$subForm);
+      $taintedValues['Codes'] = array();
+    }
 
     if(isset($taintedValues['Tags'])&& is_array($taintedValues['Tags']))
     {
@@ -699,7 +711,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         }
       }
     }
-    else $this->offsetUnset('Tags') ;
+    else
+    {
+      $this->offsetUnset('Tags') ;
+      $subForm = new sfForm();
+      $this->embedForm('Tags',$subForm);
+      $taintedValues['Tags'] = array();
+    }
     parent::bind($taintedValues, $taintedFiles);
   }
   
@@ -795,6 +813,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     if ($values['mineral_level_ref'] != '') $query->andWhere('mineral_level_ref = ?', intval($values['mineral_level_ref']));
     $this->addLatLonColumnQuery($query, $values);
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['taxon_name'],null,'taxon_name_indexed');
+    $this->addNamingColumnQuery($query, 'expeditions', 'name_ts', $values['expedition_name'],null,'expedition_name_ts');
+
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['chrono_name'],null,'chrono_name_indexed');
     $this->addNamingColumnQuery($query, 'lithostratigraphy', 'name_indexed', $values['litho_name'],null,'litho_name_indexed');
     $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['lithology_name'],null,'lithology_name_indexed');

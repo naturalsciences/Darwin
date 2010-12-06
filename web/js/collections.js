@@ -49,6 +49,7 @@ $(document).ready(function () {
  
  $("a.set_rights").live('click', function(){
     if ($(this).attr('id') == 'widget') { min_width = 476 } else { min_width = 876 }
+    var last_position = $('body').scrollTop() ;          
     scroll(0,0) ;
     $(this).qtip({
         content: {
@@ -85,6 +86,7 @@ $(document).ready(function () {
 	       onHide: function()
 	       {
 	          $(this.elements.target).qtip("destroy");
+            scroll(0,last_position) ;	          
 	       }
          }
     });

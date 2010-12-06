@@ -11,7 +11,7 @@ class MaStageForm extends BaseForm
       'key_method' => 'getStage',
       'add_empty' => true,
       'change_label' => 'Pick a stage in the list',
-      'add_label' => 'Add another stage',
+      'add_label' => 'Add another Stage',
     ));
 
     $this->widgetSchema['stage']->setLabel('Choose New Stage');

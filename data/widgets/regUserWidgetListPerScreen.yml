@@ -283,7 +283,18 @@ sps20:
    visible: true
    title_perso: Igs  
    all_public: true  
-   
+
+sps21:
+   col_num: 1
+   category: specimensearch_widget
+   group_name: expedition
+   mandatory: false
+   order_by: 11
+   opened: false
+   visible: false
+   title_perso: Expedition  
+   all_public: true
+
 sw1:
    col_num: 1
    category: specimen_widget

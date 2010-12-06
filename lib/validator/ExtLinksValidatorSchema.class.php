@@ -3,7 +3,7 @@ class ExtLinksValidatorSchema extends sfValidatorSchema
 {
   protected function configure($options = array(), $messages = array())
   {
-    $this->addMessage('url', 'You have to specily the Url');
+    $this->addMessage('url', 'You have to specify the Url');
   }
  
   protected function doClean($value)

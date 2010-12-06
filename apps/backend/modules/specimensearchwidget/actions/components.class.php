@@ -127,4 +127,9 @@ class specimensearchwidgetComponents extends sfComponents
   {
      if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+
+  public function executeExpedition()
+  {
+     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }
 }

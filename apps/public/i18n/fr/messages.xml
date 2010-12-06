@@ -1131,6 +1131,20 @@
         <source>New Taxa</source>
         <target/>
       </trans-unit>
+      <trans-unit id="209">
+        <source>Our Collections</source> <target>Nos Collections</target> </trans-unit>
+      <trans-unit id="210">
+        <source>Take a tour</source> <target>Visite guidée</target> </trans-unit>
+      <trans-unit id="211">
+        <source>Contacts</source> <target>Contacts</target> </trans-unit>
+      <trans-unit id="212">
+        <source>Links</source> <target>Liens</target> </trans-unit>      
+      <trans-unit id="213">
+        <source>Passwords must be equals and can not contains spaces</source>
+        <target>Les mots de passe doivent être identiques et ne pas contenir d'espaces</target> </trans-unit>
+      <trans-unit id="214">
+        <source>You cannot register without accepting DaRWIN 2  term of use</source>
+        <target>Vous ne pouvez pas vous inscrire sans accepter les termes d'utilisation de DaRWIN 2</target> </trans-unit>        
     </body>
   </file>
 </xliff>

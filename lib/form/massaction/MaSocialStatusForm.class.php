@@ -11,7 +11,7 @@ class MaSocialStatusForm extends BaseForm
       'key_method' => 'getSocialStatus',
       'add_empty' => true,
       'change_label' => 'Pick a status in the list',
-      'add_label' => 'Add another status',
+      'add_label' => 'Add another Status',
     ));
 
     $this->widgetSchema['social_status']->setLabel('Choose New Status');

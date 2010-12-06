@@ -65,7 +65,7 @@
           $('#del_from_spec').click(function(){
             pins = '';
             pins_array = new Array();
-            $('.spec_results tbody tr input.spec_selected:checked').each(function(){
+            $('.spec_results tbody tr .remove_on').not('.hidden').each(function(){
               rid = getIdInClasses($(this).closest('tr'));
               pins_array.push(rid);
             });
@@ -81,6 +81,10 @@
                   for(var i = 0; i < pins_array.length; ++i)
                   {
                     $('.rid_' + pins_array[i]).closest('tbody').remove();
+                  }
+                  if($('.spec_results tbody').length == 0)
+                  {
+                    location.reload();
                   }
                 });
               }

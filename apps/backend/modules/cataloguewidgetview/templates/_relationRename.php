@@ -9,13 +9,13 @@
   <tr>
     <td>
       <a class="link_catalogue" title="<?php echo __('Rename');?>" href="<?php echo url_for('taxonomy/view?id='.$renamed['record_id_2']) ?>">          
-      <?php echo $renamed['ref_item']->getNameWithFormat()?>
+      <?php echo $renamed['ref_item']->getNameWithFormat(ESC_RAW)?>
       </a>      
-      <?php echo image_tag('info.png',"title=info class=info");?>
+      <?php echo image_tag('info.png',"title=info class=info id=info_rename");?>
       <div class="tree">
       </div>
       <script type="text/javascript">
-       $('table.catalogue_table_view').find('.info').click(function() 
+       $('#info_rename').click(function() 
        {   
          item_row = $(this).closest('td') ;
          if(item_row.find('.tree').is(":hidden"))
