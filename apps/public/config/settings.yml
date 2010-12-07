@@ -35,3 +35,4 @@ all:
     charset:                utf-8    
     i18n:                   on       # Enable interface translation. Set to off if your application should not be translated.    
     default_culture:        en    
+    check_lock:             on
