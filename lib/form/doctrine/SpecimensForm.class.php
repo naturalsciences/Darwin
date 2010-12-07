@@ -191,7 +191,7 @@ class SpecimensForm extends BaseSpecimensForm
 
     $this->widgetSchema['collecting_methods_list'] = new widgetFormSelectDoubleListFilterable(
       array(
-            'choices' => Doctrine::getTable('CollectingMethods')->fetchMethods(),
+            'choices' => new sfCallable(array(Doctrine::getTable('CollectingMethods'), 'fetchMethods')),
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available'),
             'add_active'=>true,
@@ -201,10 +201,10 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['coll_methods'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Collecting tools */
-
+   
     $this->widgetSchema['collecting_tools_list'] = new widgetFormSelectDoubleListFilterable(
       array(
-            'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),
+            'choices' => new sfCallable(array(Doctrine::getTable('CollectingTools'),'fetchTools')),
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available'),
             'add_active'=>true,
@@ -291,10 +291,16 @@ class SpecimensForm extends BaseSpecimensForm
 
     $subForm = new sfForm();
     $this->embedForm('Collectors',$subForm);
-    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
+
+    $subForm2 = new sfForm();
+    $this->embedForm('Donators',$subForm2);
+    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens',array('collector','donator'), $this->getObject()->getId()) as $key=>$vals)
     {
       $form = new PeopleAssociationsForm($vals);
-      $this->embeddedForms['Collectors']->embedForm($key, $form);
+      if($vals->getPeopleType() == 'collector')
+        $this->embeddedForms['Collectors']->embedForm($key, $form);
+      else
+        $this->embeddedForms['Donators']->embedForm($key, $form);
     }
     //Re-embedding the container
     $this->embedForm('Collectors', $this->embeddedForms['Collectors']);
@@ -305,14 +311,6 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema['collector'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Donators sub form */
-
-    $subForm = new sfForm();
-    $this->embedForm('Donators',$subForm);
-    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator', $this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new PeopleAssociationsForm($vals);
-      $this->embeddedForms['Donators']->embedForm($key, $form);
-    }
     //Re-embedding the container
     $this->embedForm('Donators', $this->embeddedForms['Donators']);
 
@@ -410,9 +408,9 @@ class SpecimensForm extends BaseSpecimensForm
                                                                              )
                                                                        );
 
-    $this->validatorSchema['collecting_tools_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingTools')->fetchTools()), 'required' => false, 'multiple' => true));
+    $this->validatorSchema['collecting_tools_list'] = new sfValidatorDoctrineChoice(array('model' => 'CollectingTools','column' => 'id', 'required' => false, 'multiple' => true));
 
-    $this->validatorSchema['collecting_methods_list'] = new sfValidatorChoice(array('choices' => array_keys(Doctrine::getTable('CollectingMethods')->fetchMethods()), 'required' => false, 'multiple' => true));
+    $this->validatorSchema['collecting_methods_list'] = new sfValidatorDoctrineChoice(array('model' => 'CollectingMethods','column' => 'id', 'required' => false, 'multiple' => true));
 
     $this->validatorSchema['prefix_separator'] = new sfValidatorPass();
 

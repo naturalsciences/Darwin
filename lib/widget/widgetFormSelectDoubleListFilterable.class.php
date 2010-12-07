@@ -17,11 +17,14 @@
  * @subpackage doctrine
  * @author     DaRWIN Team <collections@naturalsciences.be>
  */
-class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
+class widgetFormSelectDoubleListFilterable extends sfWidgetForm
 {
   protected function configure($options = array(), $attributes = array())
   {
     parent::configure($options, $attributes);
+    $this->addRequiredOption('choices');
+
+    $this->addOption('class', 'double_list');
     $this->addOption('filter_class', 'double_list_filter_input');
     /* Flag for add option input box activation */
     $this->addOption('add_active', false);
@@ -29,6 +32,12 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetFormSelectDoubleList
     $this->addOption('add_class', 'double_list_add_input');
     /* Add action url */
     $this->addOption('add_url', '');
+    $this->addOption('class_select', 'double_list_select');
+    $this->addOption('label_unassociated', 'Unassociated');
+    $this->addOption('label_associated', 'Associated');
+    $this->addOption('unassociate', '<img src="/images/previous.png" alt="unassociate" />');
+    $this->addOption('associate', '<img src="/images/next.png" alt="associate" />');
+
     $this->addOption('template', <<<EOF
 <ul id=%error_id% class="error_list" style="display:none;">
   <li></li>

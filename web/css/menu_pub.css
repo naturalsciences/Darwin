@@ -229,3 +229,54 @@ input.small
   color : white ;
   text-decoration: underline ;    
 }
+
+.dw_logo
+{
+  background-color: #474747; 
+  height: 151px;
+  text-align:center;
+}
+
+.lyt_content
+{
+  width:1000px;
+  margin:auto;
+  margin-top: 2em;
+}
+
+.sfTMessageContainer
+{
+  float:left;
+  padding: 1em;
+  border: 2px solid #F4BB0F;
+  background-color:#FFEFBF;
+  margin-bottom:2em;
+}
+.sfTMessageContainer img.sfTMessageIcon
+{
+  float:left;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.sfTMessageWrap
+{
+  float:left;
+    width:500px;
+}
+.sfTMessageInfo
+{
+  clear:both;
+  color:gray;
+}
+
+.sfTMessageInfo dt
+{
+  margin-bottom: 0.5em;
+  margin-top:1em;
+}
+
+.sfTMessageInfo dd
+{
+  
+}

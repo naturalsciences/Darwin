@@ -9,11 +9,11 @@ class publicConfiguration extends sfApplicationConfiguration
     $env_str = '';
     switch($this->getEnvironment())
     {
-      case 'prod': $env_str = '/backend.php';break;
-      case 'dev': $env_str = '/backend_dev.php';break;
-      case 'preprod': $env_str = '/backend_pre.php';break;
+      case 'prod': $env_str = '';break;
+      case 'dev': $env_str = '_dev';break;
+      case 'preprod': $env_str = '_pre';break;
     }
-    return 'http://'.$_SERVER['SERVER_NAME'].$env_str.$this->getBackendRouting()->generate($name, $parameters);
+    return 'http://'.$_SERVER['SERVER_NAME'].'/backend'.$env_str.'.php'.$this->getBackendRouting()->generate($name, $parameters);
   }
 
   public function getBackendRouting()
