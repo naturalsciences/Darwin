@@ -72,8 +72,12 @@ class CataloguePeopleTable extends DarwinTable
          from('CataloguePeople')->
          where('referenced_relation = ?', $table)->
          andWhere('record_id = ?', $rec_id)->
-         andWhere('people_type = ?', $type)->
          orderBy('order_by ASC');
+
+    if(is_array($type))
+      $q->andWhereIn('people_type',$type);
+    else
+      $q->andWhere('people_type = ?', $type);
     return $q->execute();
   }
 
