@@ -76,7 +76,8 @@ function addIdentifierValue(people_ref,ref_table)
 $(document).ready(function () {
 
     $('#add_identification').click(function()
-    {                  
+    {
+        hideForRefresh('#refIdentifications');
         parent = $(this).closest('table#identifications');
         $.ajax(
         {
@@ -86,6 +87,7 @@ $(document).ready(function () {
           {
             $(parent).append(html);
             $(parent).find('thead.spec_ident_head:hidden').show();
+            showAfterRefresh('#refIdentifications');
           }
         });
         return false;

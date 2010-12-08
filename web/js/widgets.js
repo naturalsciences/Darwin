@@ -100,6 +100,7 @@
     
     base.addWidget = function(event){
       event.preventDefault();
+      hideForRefresh('.widget_collection_container');
       var insertionDone = false;
       var widget_id = $(this).find('img').attr('alt');
       // Change Widget Status
@@ -122,7 +123,8 @@
       {
         col = $(html).attr('col-ref');
         col -= 1;
-        $('.board_col:eq(' + col + ') > li:eq('+ positions[col] +')').before(html)
+        $('.board_col:eq(' + col + ') > li:eq('+ positions[col] +')').before(html);
+        showAfterRefresh('.widget_collection_container');
       });
 
       $(this).parent().hide();

@@ -40,6 +40,8 @@ $(document).ready(function () {
 
     $('#add_accompanying').click(function()
     {
+        hideForRefresh('#specimensAccompanying');
+
         parent = $(this).closest('table.property_values');
         $.ajax(
         {
@@ -49,6 +51,7 @@ $(document).ready(function () {
           {
             $(parent).append(html);
             $(parent).find('thead:hidden').show();
+            showAfterRefresh('#specimensAccompanying');
           }
         });
         return false;

@@ -105,6 +105,23 @@
 $(document).ready(function () {
   $('form.qtiped_form').modal_screen();
 
+  function addPropertyValue(event)
+  {
+    hideForRefresh('#property_screen');
+    event.preventDefault();
+    $.ajax(
+    {
+      type: "GET",
+      url: $(this).attr('href')+ (0+$('.property_values tbody#property tr').length),
+      success: function(html)
+      {
+        $('.property_values tbody#property').append(html);
+        showAfterRefresh('#property_screen');
+      }
+    });
+    return false;
+  }
+
     $('#catalogue_properties_property_type').change(function() {
       $.get("<?php echo url_for('property/getUnit');?>/type/"+$(this).val(), function (data) {
       $("#catalogue_properties_property_unit_parent select").html(data);

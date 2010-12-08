@@ -65,7 +65,7 @@ foreach($form['newVal'] as $group)
   $tag_grouped[$type][] = $group;
 }
 ?>
-
+<div id="gtu_group_screen">
 <div class="tag_parts_screen" alt="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>">
 <?php foreach($tag_grouped as  $group_key => $sub_forms):?>
   <fieldset alt="<?php echo $group_key;?>">
@@ -85,12 +85,12 @@ foreach($form['newVal'] as $group)
     <select id="groups_select">
       <option value=""></option>
       <?php foreach(TagGroups::getGroups() as $k => $v):?>
-	<option value="<?php echo $k;?>"><?php echo $v;?></option>
+        <option value="<?php echo $k;?>"><?php echo $v;?></option>
       <?php endforeach;?>
     </select>
     <a href="<?php echo url_for('gtu/addGroup'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>" id="add_group"><?php echo __('Add Group');?></a>
   </div>
-
+</div>
   <fieldset id="location">
     <legend><?php echo __('Localisation');?></legend>
     <table>
@@ -236,9 +236,9 @@ $(document).ready(function () {
     {
       input_el = $(this).parent().closest('li').find('input[id$="_tag_value"]');
       if(input_el.val().match("\;\s*$"))
-	input_el.val( input_el.val() + $(this).text() );
+        input_el.val( input_el.val() + $(this).text() );
       else
-	input_el.val( input_el.val() + " ; " +$(this).text() );
+        input_el.val( input_el.val() + " ; " +$(this).text() );
       input_el.trigger('click');
     });
 
@@ -248,8 +248,8 @@ $(document).ready(function () {
    {
       if (event.type == 'keydown')
       {
-	var code = (event.keyCode ? event.keyCode : event.which);
-	if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
+        var code = (event.keyCode ? event.keyCode : event.which);
+        if (code != 59 /* ;*/ && code != $.ui.keyCode.SPACE ) return;
       }
       parent_el = $(this).closest('li');
       group_name = parent_el.find('input[name$="\[group_name\]"]').val();
@@ -257,13 +257,13 @@ $(document).ready(function () {
       if(sub_group_name == '' || $(this).val() == '') return;
       $('.purposed_tags').hide();
       $.ajax({
-	  type: "GET",
-	  url: "<?php echo url_for('gtu/purposeTag');?>" + '/group_name/' + group_name + '/sub_group_name/' + sub_group_name + '/value/'+ $(this).val(),
-	  success: function(html)
-	  {
-	    parent_el.find('.purposed_tags').html(html);
-	    parent_el.find('.purposed_tags').show();
-	  }
+        type: "GET",
+        url: "<?php echo url_for('gtu/purposeTag');?>" + '/group_name/' + group_name + '/sub_group_name/' + sub_group_name + '/value/'+ $(this).val(),
+        success: function(html)
+        {
+          parent_el.find('.purposed_tags').html(html);
+          parent_el.find('.purposed_tags').show();
+        }
       });
     }
 
@@ -273,42 +273,46 @@ $(document).ready(function () {
       selected_group_name = $('#groups_select option:selected').text();
       if(selected_group != '')
       {
-	$.ajax({
-	    type: "GET",
-	    url: $('.tag_parts_screen').attr('alt')+'/group/'+ selected_group + '/num/' + (0+$('.tag_parts_screen ul li').length),
-	    success: function(html)
-	    {
-	      if( $('fieldset[alt="'+selected_group+'"]').length != 0)
-	      {
-		fld_set = $('fieldset[alt="'+selected_group+'"]');
-		fld_set.find('> ul').append(html);
-		fld_set.show();
-	      }
-	      else
-	      {
-		html = '<fieldset alt="'+ selected_group +'"><legend>' + selected_group_name + '</legend><ul>'+html+'</ul><a class="sub_group"><?php echo __('Add Sub Group');?></a></fieldset>';
-		$('.tag_parts_screen').append(html);
-	      }
-	      disableUsedGroups();
-	    }
-	  });
+        hideForRefresh('#gtu_group_screen');
+        $.ajax({
+          type: "GET",
+          url: $('.tag_parts_screen').attr('alt')+'/group/'+ selected_group + '/num/' + (0+$('.tag_parts_screen ul li').length),
+          success: function(html)
+          {
+            if( $('fieldset[alt="'+selected_group+'"]').length != 0)
+            {
+              fld_set = $('fieldset[alt="'+selected_group+'"]');
+              fld_set.find('> ul').append(html);
+              fld_set.show();
+            }
+            else
+            {
+              html = '<fieldset alt="'+ selected_group +'"><legend>' + selected_group_name + '</legend><ul>'+html+'</ul><a class="sub_group"><?php echo __('Add Sub Group');?></a></fieldset>';
+              $('.tag_parts_screen').append(html);    
+            }
+            disableUsedGroups();
+            showAfterRefresh('#gtu_group_screen');
+          }
+        });
       }
       return false;
     });
 
     $('a.sub_group').live('click',function()
     {
+      hideForRefresh('#gtu_group_screen');
       fieldset = $(this).closest('fieldset');
       selected_group = fieldset.attr('alt');
       list =  fieldset.find('> ul');
       $.ajax({
-	  type: "GET",
-	  url: $('.tag_parts_screen').attr('alt')+'/group/'+ selected_group + '/num/' + (0+$('.tag_parts_screen ul li').length),
-	  success: function(html)
-	  {
-	    list.append(html);
-	  }
-	});
+        type: "GET",
+        url: $('.tag_parts_screen').attr('alt')+'/group/'+ selected_group + '/num/' + (0+$('.tag_parts_screen ul li').length),
+        success: function(html)
+        {
+          list.append(html);
+          showAfterRefresh('#gtu_group_screen');
+        }
+      });
       return false;
     });
 

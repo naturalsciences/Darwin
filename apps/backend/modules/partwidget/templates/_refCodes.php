@@ -65,6 +65,7 @@ $(document).ready(function () {
 
     $('#add_code').click(function()
     {
+        hideForRefresh('#refCodes');
         parent = $(this).closest('table.property_values');
         $.ajax(
         {
@@ -74,6 +75,7 @@ $(document).ready(function () {
           {
             $(parent).append(html);
             $(parent).find('thead:hidden').show();
+            showAfterRefresh('#refCodes');
           }
         });
         return false;

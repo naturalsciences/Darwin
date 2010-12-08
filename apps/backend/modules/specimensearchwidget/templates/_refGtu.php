@@ -36,12 +36,14 @@
       var num_fld = 1;
       $('.and_tag').click(function()
       {
+        hideForRefresh('#refGtu');
         $.ajax({
           type: "GET",
           url: $(this).attr('href') + '/num/' + (num_fld++) ,
           success: function(html)
           {
             $('table#gtu_search > tbody .and_row').before(html);
+            showAfterRefresh('#refGtu');
           }
         });
         return false;
