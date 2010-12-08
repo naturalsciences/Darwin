@@ -1,6 +1,6 @@
 <?php $read_only = (isset($options['view']) && $options['view'])?true:false ; ?>
 <?php $widget_content = get_component($category, $widget, $sf_data->getRaw('options')); ?>
-<li class="widget" id="<?php echo $widget;?>">
+<li class="widget" id="<?php echo $widget;?>" <?php if(isset($col_num)):?> col-ref="<?php echo $col_num;?>" <?php endif;?>>
   <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
         <?php if($category=='boardwidget'||$category=='specimensearchwidget'|| $read_only):?>
             <?php echo image_tag('widget_box_expand_button.png', 'alt=Close');?>

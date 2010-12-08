@@ -17,56 +17,52 @@ class widgetsActions extends DarwinActions
  */
   public function executeGetWidgetPosition(sfWebRequest $request)
   {
-    $this->forward404unless($request->getParameter('widget',false));
-    //get widget position and order by in json parseable structure
-    $defaultResponse = array('col_num'=>'1', 'order_by'=>'0');
-    $position = Doctrine::getTable('MyWidgets')->getWidgetPosition($this->getUser()->getAttribute('db_user_id'),
-                                                                       $request->getParameter('widget'),
-                                                                       $request->getParameter('category')."_widget");
-    if($position)
-    {
-      return $this->renderText(json_encode($position[0]->toArray()));
-    }
-    return $this->renderText(json_encode($defaultResponse));
+    $widget = Doctrine::getTable('MyWidgets')->getWidget(
+      $this->getUser()->getAttribute('db_user_id'),
+      $request->getParameter('widget',false),
+      $request->getParameter('category')."_widget"
+    );
+
+    $this->forward404unless($widget);
+
+    return $this->renderText(json_encode(array('col_num'=>$widget->getColNum(), 'order_by'=>$widget->getOrderBy())));
   }
 
   public function executeAddWidget(sfWebRequest $request)
   {
-    $this->forward404unless($request->getParameter('widget',false));
-    //mark widget as visible
-    Doctrine::getTable('MyWidgets')
-      ->setUserRef($this->getUser()->getAttribute('db_user_id'))
-      ->changeWidgetStatus($request->getParameter('category')."_widget", $request->getParameter('widget'), 'visible');
-
-    $title = Doctrine::getTable('MyWidgets')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
-                                                             $request->getParameter('widget'),
+    $widget = Doctrine::getTable('MyWidgets')->getWidget($this->getUser()->getAttribute('db_user_id'),
+                                                             $request->getParameter('widget',false),
                                                              $request->getParameter('category')."_widget");
-    if($title)
-    {
-      $title = $title[0]['title'];
-    }
-    
-    $mandatory = Doctrine::getTable('MyWidgets')->getWidgetTitle($this->getUser()->getAttribute('db_user_id'),
-                                                                 $request->getParameter('widget'),
-                                                                 $request->getParameter('category')."_widget");
-    if($mandatory)
-    {
-      $mandatory = $mandatory[0]['mandatory'];
-    }
-    $category = $this->getComponentFromCategory($request->getParameter('category')) ;
+    $this->forward404unless($widget);
+  
+    $positions = explode(',', $request->getParameter('place','0'));
+    $this->forward404unless(count($positions) >= $widget->getColNum() );
+
+    $widget->setVisible(true);
+    $widget->setOrderBy($positions[$widget->getColNum()-1]);
+    $widget->save();
+
+    Doctrine::getTable('MyWidgets')->incrementOrder(
+      $this->getUser()->getAttribute('db_user_id'),
+      $request->getParameter('category')."_widget",
+      $widget->getColNum(),
+      $positions[$widget->getColNum()-1]
+    );
+
     if ($request->hasParameter('view')) $category .= "view" ;
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
-            'is_mandatory' => $mandatory,
-            'category' => $category,
-            'title' => $title,
+            'is_mandatory' => $widget->getMandatory(),
+            'category' => $widget->getComponentFromCategory(),
+            'title' => $widget->getTitlePerso(),
+            'col_num' => $widget->getColNum(),
             'options' => array(
               'eid' =>  $request->getParameter('eid',null),
-              'table' => $this->getTableFromCategory($request->getParameter('category')),
+              'table' => $widget->getTableFromCategory(),
               'view' => $request->hasParameter('view')?true:false,
             ),
-           ));
+    ));
   }
 
   public function executeChangeStatus(sfWebRequest $request)
@@ -87,30 +83,18 @@ class widgetsActions extends DarwinActions
     return $this->renderText(var_export($col1,true).var_export($col2,true));
   }
 
-  static protected function getComponentFromCategory($category)
-  {
-    $cat_array = explode('_',$category);
-    return $cat_array[0].'widget';
-  }
-
-  static protected function getTableFromCategory($category)
-  {
-    $cat_array = explode('_',$category);
-    if(count($cat_array) == 2)
-      return $cat_array[1];
-    return null;
-  }
-
   public function executeReloadContent(sfWebRequest $request)
   {
+    $w = new MyWidgets();
+    $w->setCategory($request->getParameter('category'));
     return $this->renderComponent(
-	$this->getComponentFromCategory($request->getParameter('category')),
-	$request->getParameter('widget'),
-	array(
-	    'eid' =>  $request->getParameter('eid',null),
-	    'table' => $this->getTableFromCategory($request->getParameter('category')),
-	    'level' => $this->getUser()->getAttribute('db_user_type')
-	)
+      $w->getComponentFromCategory(),
+      $request->getParameter('widget'),
+      array(
+        'eid' =>  $request->getParameter('eid',null),
+        'table' => $w->getTableFromCategory(),
+        'level' => $this->getUser()->getAttribute('db_user_type')
+      )
     );
   }
 

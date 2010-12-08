@@ -24,35 +24,49 @@ class MyWidgets extends BaseMyWidgets
 
   public function getWidgetField()
   {
-        if ($this->getMandatory()) return('opened') ;
-        if (!$this->getIsAvailable()) return ('unused') ;
-  	   if ($this->getOpened()) return('opened') ;
-  	   if ($this->getVisible()) return('visible') ;
-  	   if ($this->getIsAvailable()) return('is_available') ;
+    if ($this->getMandatory()) return('opened') ;
+    if (!$this->getIsAvailable()) return ('unused') ;
+    if ($this->getOpened()) return('opened') ;
+    if ($this->getVisible()) return('visible') ;
+    if ($this->getIsAvailable()) return('is_available') ;
   }
-  
+
   public function getWidgetChoice()
   {
-  	return $this->getWidgetField() ;
+    return $this->getWidgetField() ;
   }
-  
+
   public function setWidgetChoice($value)
   {
-      $values_array = array('opened' => false, 'visible' => false, 'is_available' => false);
+    $values_array = array('opened' => false, 'visible' => false, 'is_available' => false);
 
-      if ($this->getMandatory()) $values_array = array_fill_keys(array_keys($values_array), true);
-      if ($value == 'opened') $values_array = array_fill_keys(array_keys($values_array), true);
-      if ($value == 'is_available') $values_array['is_available'] = true;
-      if ($value == 'visible')
-      {
-	$values_array['visible'] = true;
-	$values_array['is_available'] = true;
-      }
+    if ($this->getMandatory()) $values_array = array_fill_keys(array_keys($values_array), true);
+    if ($value == 'opened') $values_array = array_fill_keys(array_keys($values_array), true);
+    if ($value == 'is_available') $values_array['is_available'] = true;
+    if ($value == 'visible')
+    {
+      $values_array['visible'] = true;
+      $values_array['is_available'] = true;
+    }
 
-      foreach($values_array as $key => $new_value)
-      {
-	if($this[$key] != $new_value)
-	  $this[$key] = $new_value;
-      }
+    foreach($values_array as $key => $new_value)
+    {
+      if($this[$key] != $new_value)
+        $this[$key] = $new_value;
+    }
+  }
+
+  public function getComponentFromCategory()
+  {
+    $cat_array = explode('_',$this->_get('category'));
+    return $cat_array[0].'widget';
+  }
+
+  public function getTableFromCategory()
+  {
+    $cat_array = explode('_', $this->_get('category'));
+    if(count($cat_array) == 2)
+      return $cat_array[1];
+    return null;
   }
 }

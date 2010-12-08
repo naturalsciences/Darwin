@@ -5,40 +5,15 @@
 class MyWidgetsTable extends DarwinTable
 {
   
-  public function getWidgetTitle($userId, $widget, $category)
+  public function getWidget($userId, $widget, $category)
   {
     $q = Doctrine_Query::create()
-         ->select('p.title_perso as title')
          ->from('MyWidgets p')
          ->andWhere('p.user_ref = ?', $userId)
          ->andWhere('p.category = ?', $category)
          ->andWhere('p.group_name = ?', $widget)
          ->andWhere('p.is_available = true') ;
-    return $q->execute();
-  }
-
-  public function getWidgetPosition($userId, $widget, $category)
-  {
-    $q = Doctrine_Query::create()
-         ->select('p.col_num, p.order_by')
-         ->from('MyWidgets p')
-         ->andWhere('p.user_ref = ?', $userId)
-         ->andWhere('p.category = ?', $category)
-         ->andWhere('p.group_name = ?', $widget)
-         ->andWhere('p.is_available = true') ;
-    return $q->execute();
-  }
-
-  public function getWidgetMandatory($userId, $widget, $category)
-  {
-    $q = Doctrine_Query::create()
-         ->select('p.mandatory')
-         ->from('MyWidgets p')
-         ->andWhere('p.user_ref = ?', $userId)
-         ->andWhere('p.category = ?', $category)
-         ->andWhere('p.group_name = ?', $widget)
-         ->andWhere('p.is_available = true') ;
-    return $q->execute();
+    return $q->fetchOne();
   }
 
   public function getWidgets($category, $collection = null)
@@ -77,8 +52,7 @@ class MyWidgetsTable extends DarwinTable
     {
         $q->set('p.visible', 'true');
         $q->set('p.opened', 'true');
-//         $q->set('p.col_num', 1);
-        
+
         $q2 = Doctrine_Query::create()
               ->select('MIN(p.order_by) as ord')
               ->from('MyWidgets p')
@@ -215,6 +189,19 @@ class MyWidgetsTable extends DarwinTable
           ->andWhere('category = ?',$category);
     if (is_array($widget_array)) 
       $q->andWhereIn('p.group_name',$widget_array);
+    return $q->execute() ;
+  }
+
+  public function incrementOrder($user_id, $category, $col_num, $position)
+  {
+    $q = Doctrine_Query::create()
+      ->update('MyWidgets p')
+      ->where('p.user_ref = ?',$user_id)
+      ->andWhere('category = ?',$category)
+      ->andWhere('p.is_available = true')
+      ->andWhere('p.col_num = ?', $col_num)
+      ->andWhere('p.order_by > ?', $position)
+      ->set('p.order_by','p.order_by+1');
     return $q->execute() ;
   }
   
