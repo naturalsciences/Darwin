@@ -54,7 +54,7 @@
                     <?php echo link_to(image_tag('edit.png'),'user/edit?id='.$item->getId());?>
                   <?php endif ; ?>
                 <?php else:?>
-                  <div class="result_choose<?php if ($screen== 3) echo ('_coll_rights') ?>"><?php echo __('Choose');?></div>
+                  <div class="result_choose"><?php echo __('Choose');?></div>
                 <?php endif;?>
             </td>
           </tr>

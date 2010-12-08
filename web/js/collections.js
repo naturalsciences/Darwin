@@ -95,6 +95,7 @@ $(document).ready(function () {
 });
 function addCollRightValue(user_ref)
 {
+   hideForRefresh('#users_filter');
   $.ajax(
   {
     type: "GET",
@@ -103,6 +104,7 @@ function addCollRightValue(user_ref)
     {
       $('table#user_right tbody').append(html);
       $('table#user_right tbody tr:last').attr("id" , user_ref) ;
+      showAfterRefresh('#users_filter');
     }
   });
   return false;
