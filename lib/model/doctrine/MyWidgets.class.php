@@ -12,14 +12,14 @@ class MyWidgets extends BaseMyWidgets
   */
   public static function getFileByRight($role)
   {
-     $file=sfConfig::get('sf_data_dir').'/widgets/' ; 
-  	switch ($role) {
-     	case Users::ENCODER : $file .='encoderWidgetListPerScreen.yml' ; break ;
-     	case Users::MANAGER : $file .='collManagerWidgetListPerScreen.yml' ; break ;
-		case Users::REGISTERED_USER : $file .='regUserWidgetListPerScreen.yml' ; break ;
-		default : return(0);
-     }  
-     return($file) ;  
+    $file=sfConfig::get('sf_data_dir').'/widgets/' ;
+    switch ($role) {
+      case Users::ENCODER : $file .='encoderWidgetListPerScreen.yml' ; break ;
+      case Users::MANAGER : $file .='collManagerWidgetListPerScreen.yml' ; break ;
+      case Users::REGISTERED_USER : $file .='regUserWidgetListPerScreen.yml' ; break ;
+      default : return(0);
+    }
+    return($file) ;
   }
 
   public function getWidgetField()
