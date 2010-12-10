@@ -13,13 +13,13 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         }
         $class = ' '.$class['class'];
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
-        $obj_name = $this->getName($value);       
+        $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
         $input .= $this->renderContentTag('div',$obj_name, array(
           'id' => $this->generateId($name)."_name",
           'class' => "ref_name" . $class,
         ));
-              
+
         if($this->getOption('nullable'))
         {
           $options = array(
@@ -75,7 +75,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 
     public function getName($value)
     {
-        if(is_numeric($value))
+        if(is_numeric($value) && $value !=0)
             $object = Doctrine::getTable($this->getOption('model'))->find($value);
         else
             return '-';

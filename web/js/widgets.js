@@ -97,7 +97,7 @@
             $('.widget_collection_button img').attr('src',base.options['collection_img_down']);
         }
     };
-    
+
     base.addWidget = function(event){
       event.preventDefault();
       hideForRefresh('.widget_collection_container');
@@ -123,7 +123,10 @@
       {
         col = $(html).attr('col-ref');
         col -= 1;
-        $('.board_col:eq(' + col + ') > li:eq('+ positions[col] +')').before(html);
+        if( $('.board_col:eq(' + col + ') > li').length == 0)
+          $('.board_col:eq(' + col + ')').append(html);
+        else
+          $('.board_col:eq(' + col + ') > li:eq('+ positions[col] +')').before(html);
         showAfterRefresh('.widget_collection_container');
       });
 
