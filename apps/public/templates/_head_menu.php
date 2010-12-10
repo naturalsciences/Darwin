@@ -10,9 +10,9 @@
           <ul class="menu_link">
             <li><?php echo link_to(__('Our Collections'),'@homepage');?></li>
             <li><?php echo link_to(__('Search'),'search/search');?></li>
-            <li><?php echo link_to(__('Take a tour'),'@homepage');?></li>
-            <li><?php echo link_to(__('Contacts'),'@homepage');?></li>
-            <li><?php echo link_to(__('Links'),'@homepage');?></li>
+            <li><?php echo link_to(__('Take a tour'),'board/tour');?></li>
+            <li><?php echo link_to(__('Contacts'),'board/contact');?></li>
+            <li><?php echo link_to(__('About'),'board/about');?></li>
           </ul>
         </td>
       </tr>

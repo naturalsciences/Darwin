@@ -10,12 +10,17 @@
  */
 class boardActions extends DarwinActions
 {
-  protected $widgetCategory = 'board_widget';
-
   public function executeIndex(sfWebRequest $request)
-  {
-   //  $this->loadWidgets();
-  }
+  {  }
+
+  public function executeTour(sfWebRequest $request)
+  {  }
+
+  public function executeContact(sfWebRequest $request)
+  {  }
+
+  public function executeAbout(sfWebRequest $request)
+  {  }
 
   public function executeLang(sfWebRequest $request)
   {

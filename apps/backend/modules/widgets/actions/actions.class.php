@@ -48,13 +48,13 @@ class widgetsActions extends DarwinActions
       $widget->getColNum(),
       $positions[$widget->getColNum()-1]
     );
-
+    $category = $widget->getComponentFromCategory();
     if ($request->hasParameter('view')) $category .= "view" ;
     return $this->renderPartial('widgets/wlayout',array(
             'widget' => $request->getParameter('widget'),
             'is_opened' => true,
             'is_mandatory' => $widget->getMandatory(),
-            'category' => $widget->getComponentFromCategory(),
+            'category' => $category,
             'title' => $widget->getTitlePerso(),
             'col_num' => $widget->getColNum(),
             'options' => array(
