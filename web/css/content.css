@@ -205,7 +205,7 @@ height: 1px;
 h1
 {
   color:#3390a1;
-  font-size:large;
+  font-size:xx-large;
   margin-bottom: 0.5em;
 }
 
@@ -827,10 +827,6 @@ a#login_register, a#login_lostpwd
   width:900px !important;
 }
 
-.tour h1
-{
-  font-size:xx-large;
-}
 .tour h2
 {
   font-size:x-large;
@@ -871,8 +867,6 @@ a#login_register, a#login_lostpwd
 
 .tour_text p
 {
-/*   position:absolute;    */
-/*   top: 50%;  */
   height: 75px; 
   margin-top: 75px; /* moitié de la hauteur */ 
 }
@@ -925,5 +919,34 @@ a#login_register, a#login_lostpwd
 }
 .tour .last_item
 {
-  margin-top: 120px;;
+  margin-top: 120px;
+}
+
+.about_content a[href]
+{
+  text-decoration:none;
+  color:#6C6C6C;
+}
+
+.about_content ul li
+{
+  margin-bottom: 2em;
+  text-align:center;
+}
+.about_content ul li span
+{
+  display:block;
+  
+}
+.about_content h2
+{
+  text-align:center;
+  margin:3em;
+  font-size:large;
+  margin: 1em;
+  color:#3390a1;
+}
+.contact_content
+{
+  line-height:1.2em;
 }
