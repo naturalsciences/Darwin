@@ -1604,7 +1604,7 @@ BEGIN
   ELSIF TG_OP = 'UPDATE' THEN
     IF NEW.main_manager_ref != OLD.main_manager_ref THEN
       SELECT db_user_type INTO db_user_type_val FROM collections_rights WHERE collection_ref = NEW.id AND user_ref = NEW.main_manager_ref;
-      IF FOUND THEN
+      IF FOUND AND db_user_type_val is distinct from 4 THEN
         UPDATE collections_rights
         SET db_user_type = 4
         WHERE collection_ref = NEW.id
