@@ -114,11 +114,14 @@ BEGIN
     temp_string := TRANSLATE(temp_string,'Ð','d');
     temp_string := TRANSLATE(temp_string,'ó','o');
     temp_string := TRANSLATE(temp_string,'ę','e');
-	temp_string := LOWER(
+    temp_string := LOWER(to_ascii(temp_string, 'LATIN9'));
+/*  @TODO Check the better way to convert things with this function...
+          Think carefully at the use of the function for unique indexes
+    temp_string := LOWER(
 				public.to_ascii(
 					CONVERT_TO(temp_string, 'iso-8859-15'),
 					'iso-8859-15')
-				);
+				);*/
 	--Remove ALL none alphanumerical char
 	temp_string := regexp_replace(temp_string,'[^[:alnum:]]','', 'g');
 	return substring(temp_string from 0 for 40);
@@ -647,11 +650,11 @@ BEGIN
 	END IF;
 
 	IF NEW.is_physical THEN
-                IF NEW.title = '' THEN
-		        NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'');
+    IF COALESCE(NEW.title, '') = '' THEN
+      NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'');
 		ELSE
-		        NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'') || ' (' || NEW.title || ')';
-                END IF;
+		  NEW.formated_name := COALESCE(NEW.family_name,'') || ' ' || COALESCE(NEW.given_name,'') || ' (' || NEW.title || ')';
+    END IF;
 	ELSE
 		NEW.formated_name := NEW.family_name;
 	END IF;
