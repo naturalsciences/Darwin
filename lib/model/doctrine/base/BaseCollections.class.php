@@ -9,6 +9,7 @@
  * @property enum $collection_type
  * @property string $code
  * @property string $name
+ * @property string $name_indexed
  * @property integer $institution_ref
  * @property integer $main_manager_ref
  * @property integer $parent_ref
@@ -35,6 +36,7 @@
  * @method enum                getCollectionType()           Returns the current record's "collection_type" value
  * @method string              getCode()                     Returns the current record's "code" value
  * @method string              getName()                     Returns the current record's "name" value
+ * @method string              getNameIndexed()              Returns the current record's "name_indexed" value
  * @method integer             getInstitutionRef()           Returns the current record's "institution_ref" value
  * @method integer             getMainManagerRef()           Returns the current record's "main_manager_ref" value
  * @method integer             getParentRef()                Returns the current record's "parent_ref" value
@@ -60,6 +62,7 @@
  * @method Collections         setCollectionType()           Sets the current record's "collection_type" value
  * @method Collections         setCode()                     Sets the current record's "code" value
  * @method Collections         setName()                     Sets the current record's "name" value
+ * @method Collections         setNameIndexed()              Sets the current record's "name_indexed" value
  * @method Collections         setInstitutionRef()           Sets the current record's "institution_ref" value
  * @method Collections         setMainManagerRef()           Sets the current record's "main_manager_ref" value
  * @method Collections         setParentRef()                Sets the current record's "parent_ref" value
@@ -115,6 +118,9 @@ abstract class BaseCollections extends sfDoctrineRecord
         $this->hasColumn('name', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
+             ));
+        $this->hasColumn('name_indexed', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('institution_ref', 'integer', null, array(
              'type' => 'integer',

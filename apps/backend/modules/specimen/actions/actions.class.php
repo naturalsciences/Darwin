@@ -318,9 +318,9 @@ class specimenActions extends DarwinActions
   {
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
-    $this->setCommonValues('specimen', 't.name', $request);
+    $this->setCommonValues('specimen', 'collection_name', $request);
     $item = $request->getParameter('searchSpecimen',array(''));
-    // Instantiate a new expedition form
+    // Instantiate a new specimen form
     $this->form = new SpecimensFormFilter(array('caller_id'=>$item['caller_id']));
     // Triggers the search result function
     $this->searchResults($this->form, $request);
@@ -362,7 +362,7 @@ class specimenActions extends DarwinActions
         $specs = array();
         foreach($this->specimens as $specimen)
         {
-          $specs[$specimen->getId()] = $specimen->getId();
+          $specs[$specimen->getSpecRef()] = $specimen->getSpecRef();
         }
         $specCodes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimens', $specs);
         $this->codes = array();
