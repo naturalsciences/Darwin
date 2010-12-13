@@ -527,6 +527,7 @@ class SpecimensForm extends BaseSpecimensForm
     $subForm = new sfForm();
     $this->embedForm('newSpecimensAccompanying',$subForm);
   }
+
   public function loadEmbedIndentifications()
   {
     /* Identifications sub form */
