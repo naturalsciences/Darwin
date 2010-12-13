@@ -291,6 +291,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addExtLinks($num, $obj=null)
   {
+      $this->loadEmbedLink();
       $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
       if(!$obj) $val = new ExtLinks();
       else $val = $obj ;      
@@ -305,6 +306,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addCodes($num, $collectionId=null, $code=null)
   {
+      $this->loadEmbedCode();
       $options = array('referenced_relation' => 'specimens');
       $form_options = array();
       if ($collectionId)
@@ -331,6 +333,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addCollectors($num, $people_ref, $order_by=0)
   {
+      $this->loadEmbedCollectors();
       $options = array('referenced_relation' => 'specimens', 'people_type' => 'collector', 'people_ref' => $people_ref, 'order_by' => $order_by);
       $val = new CataloguePeople();
       $val->fromArray($options);
@@ -343,6 +346,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addDonators($num, $people_ref, $order_by=0)
   {
+      $this->loadEmbedDonators();
       $options = array('referenced_relation' => 'specimens', 'people_type' => 'donator', 'people_ref' => $people_ref, 'order_by' => $order_by);
       $val = new CataloguePeople();
       $val->fromArray($options);
@@ -356,6 +360,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addSpecimensAccompanying($num, $obj=null)
   {
+      $this->loadEmbedAccompanying();
       $options = array('unit' => '%', 'specimen_ref' => $this->getObject()->getId());
       if (!$obj) $val = new SpecimensAccompanying();
       else $val = $obj ;
@@ -370,6 +375,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addComments($num, $obj=null)
   {
+      $this->loadEmbedComment();
       $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
       if (!$obj) $val = new Comments();
       else $val = $obj ;
@@ -383,6 +389,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addIdentifications($num, $order_by=0, $obj=null)
   {
+      $this->loadEmbedIndentifications();
       $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
       if (!$obj) $val = new Identifications();
       else $val = $obj ;
@@ -477,13 +484,16 @@ class SpecimensForm extends BaseSpecimensForm
 
     $subForm = new sfForm();
     $this->embedForm('Collectors',$subForm);
-    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
+    if($this->getObject()->getId() !='')
     {
-      $form = new PeopleAssociationsForm($vals);
-      $this->embeddedForms['Collectors']->embedForm($key, $form);
+      foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
+      {
+        $form = new PeopleAssociationsForm($vals);
+        $this->embeddedForms['Collectors']->embedForm($key, $form);
+      }
+      //Re-embedding the container
+      $this->embedForm('Collectors', $this->embeddedForms['Collectors']);
     }
-    //Re-embedding the container
-    $this->embedForm('Collectors', $this->embeddedForms['Collectors']);
     $subForm = new sfForm();
     $this->embedForm('newCollectors',$subForm);
   }
@@ -492,12 +502,15 @@ class SpecimensForm extends BaseSpecimensForm
   {
     $subForm2 = new sfForm();
     $this->embedForm('Donators',$subForm2);
-    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator', $this->getObject()->getId()) as $key=>$vals)
+    if($this->getObject()->getId() !='')
     {
-      $form = new PeopleAssociationsForm($vals);
-      $this->embeddedForms['Donators']->embedForm($key, $form);
+      foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator', $this->getObject()->getId()) as $key=>$vals)
+      {
+        $form = new PeopleAssociationsForm($vals);
+        $this->embeddedForms['Donators']->embedForm($key, $form);
+      }
+      $this->embedForm('Donators', $this->embeddedForms['Donators']);
     }
-    $this->embedForm('Donators', $this->embeddedForms['Donators']);
 
     $subForm = new sfForm();
     $this->embedForm('newDonators',$subForm);
@@ -507,8 +520,10 @@ class SpecimensForm extends BaseSpecimensForm
   {
     /* Accompanying elements sub form */
 
-    $this->embedRelation('SpecimensAccompanying');
-
+    if($this->getObject()->getId() !='')
+    {
+      $this->embedRelation('SpecimensAccompanying');
+    }
     $subForm = new sfForm();
     $this->embedForm('newSpecimensAccompanying',$subForm);
   }
@@ -518,14 +533,16 @@ class SpecimensForm extends BaseSpecimensForm
 
     $subForm = new sfForm();
     $this->embedForm('Identifications',$subForm);
-    foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+    if($this->getObject()->getId() !='')
     {
-      $form = new IdentificationsForm($vals);
-      $this->embeddedForms['Identifications']->embedForm($key, $form);
+      foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+      {
+        $form = new IdentificationsForm($vals);
+        $this->embeddedForms['Identifications']->embedForm($key, $form);
+      }
+      //Re-embedding the container
+      $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
     }
-    //Re-embedding the container
-    $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
-
     $subForm = new sfForm();
     $this->embedForm('newIdentification',$subForm);
   }
@@ -535,14 +552,16 @@ class SpecimensForm extends BaseSpecimensForm
     /* Comments sub form */
     $subForm = new sfForm();
     $this->embedForm('Comments',$subForm);
-    foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+    if($this->getObject()->getId() !='')
     {
-      $form = new CommentsSubForm($vals,array('table' => 'specimens'));
-      $this->embeddedForms['Comments']->embedForm($key, $form);
+      foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+      {
+        $form = new CommentsSubForm($vals,array('table' => 'specimens'));
+        $this->embeddedForms['Comments']->embedForm($key, $form);
+      }
+      //Re-embedding the container
+      $this->embedForm('Comments', $this->embeddedForms['Comments']);
     }
-    //Re-embedding the container
-    $this->embedForm('Comments', $this->embeddedForms['Comments']);
-
 
     $subForm = new sfForm();
     $this->embedForm('newComments',$subForm);
@@ -552,15 +571,17 @@ class SpecimensForm extends BaseSpecimensForm
   {
     /* extLinks sub form */
     $subForm = new sfForm();
-    $this->embedForm('ExtLinks',$subForm);   
-    foreach(Doctrine::getTable('ExtLinks')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+    $this->embedForm('ExtLinks',$subForm);
+    if($this->getObject()->getId() !='')
     {
-      $form = new ExtLinksForm($vals,array('table' => 'specimens'));
-      $this->embeddedForms['ExtLinks']->embedForm($key, $form);
+      foreach(Doctrine::getTable('ExtLinks')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+      {
+        $form = new ExtLinksForm($vals,array('table' => 'specimens'));
+        $this->embeddedForms['ExtLinks']->embedForm($key, $form);
+      }
+      //Re-embedding the container
+      $this->embedForm('ExtLinks', $this->embeddedForms['ExtLinks']);
     }
-    //Re-embedding the container
-    $this->embedForm('ExtLinks', $this->embeddedForms['ExtLinks']);
-
     $subForm = new sfForm();
     $this->embedForm('newExtLinks',$subForm);
   }
@@ -570,14 +591,16 @@ class SpecimensForm extends BaseSpecimensForm
     /* Codes sub form */
     $subForm = new sfForm();
     $this->embedForm('Codes',$subForm);
-    foreach(Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+    if($this->getObject()->getId() !='')
     {
-      $form = new CodesForm($vals);
-      $this->embeddedForms['Codes']->embedForm($key, $form);
+      foreach(Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+      {
+        $form = new CodesForm($vals);
+        $this->embeddedForms['Codes']->embedForm($key, $form);
+      }
+      //Re-embedding the container
+      $this->embedForm('Codes', $this->embeddedForms['Codes']);
     }
-    //Re-embedding the container
-    $this->embedForm('Codes', $this->embeddedForms['Codes']);
-
     $subForm = new sfForm();
     $this->embedForm('newCode',$subForm);
 
