@@ -13,6 +13,7 @@ DROP TRIGGER trg_cpy_fullToIndex_codes ON codes ;
 DROP TRIGGER trg_cpy_fullToIndex_multimediakeywords ON multimedia_keywords;
 DROP TRIGGER trg_cpy_fullToIndex_taggroups ON tag_groups;
 DROP TRIGGER trg_cpy_fullToIndex_taxa ON taxonomy;
+DROP TRIGGER trg_cpy_fullToIndex_collection ON collections;
 DROP TRIGGER trg_cpy_fullToIndex_classvernacularnames ON class_vernacular_names;
 DROP TRIGGER trg_cpy_fullToIndex_vernacularnames ON vernacular_names;
 DROP TRIGGER trg_cpy_fullToIndex_collecting_tools ON collecting_tools;

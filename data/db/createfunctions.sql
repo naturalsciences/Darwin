@@ -143,6 +143,8 @@ BEGIN
 	ELSIF TG_TABLE_NAME = 'chronostratigraphy' THEN
 		NEW.name_indexed := to_tsvector('simple', NEW.name);
 		NEW.name_order_by := fullToIndex(NEW.name);
+	ELSIF TG_TABLE_NAME = 'collections' THEN
+		NEW.name_indexed := fullToIndex(NEW.name);		
 	ELSIF TG_TABLE_NAME = 'expeditions' THEN
 		NEW.name_indexed := fullToIndex(NEW.name);
 	ELSIF TG_TABLE_NAME = 'habitats' THEN

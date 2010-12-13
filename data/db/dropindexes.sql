@@ -22,6 +22,7 @@
  DROP INDEX IF EXISTS idx_gin_users_formated_name_ts;
  DROP INDEX IF EXISTS idx_gin_users_addresses_address_parts_ts;
  DROP INDEX IF EXISTS idx_gin_taxonomy_naming;
+ DROP INDEX IF EXISTS idx_gin_collection_naming; 
  DROP INDEX IF EXISTS idx_gin_darwin_flat_collection_institution_formated_name_ts;
  DROP INDEX IF EXISTS idx_gin_darwin_flat_collection_main_manager_formated_name_ts;
  DROP INDEX IF EXISTS idx_gin_darwin_flat_expedition_name_ts;

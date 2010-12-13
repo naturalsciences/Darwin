@@ -776,6 +776,7 @@ create table collections
         collection_type varchar not null default 'mix',
         code varchar not null,
         name varchar not null,
+        name_indexed varchar not null,
         institution_ref integer not null,
         main_manager_ref integer not null,
         parent_ref integer,
@@ -800,6 +801,7 @@ comment on column collections.id is 'Unique identifier of a collection';
 comment on column collections.collection_type is 'Type of collection: physical for a collection of only physical objects, observations for a collection of only observations, mix for any kind of entry catalogued in collection';
 comment on column collections.code is 'Code given to collection';
 comment on column collections.name is 'Collection name';
+comment on column collections.name_indexed is 'Collection name indexed';
 comment on column collections.institution_ref is 'Reference of institution current collection belongs to - id field of people table';
 comment on column collections.parent_ref is 'Recursive reference to collection table itself to represent collection parenty/hierarchy';
 comment on column collections.path is 'Descriptive path for collection hierarchy, each level separated by a /';
