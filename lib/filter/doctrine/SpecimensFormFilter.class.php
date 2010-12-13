@@ -56,16 +56,17 @@ class SpecimensFormFilter extends BaseSpecimensFormFilter
 
   protected function joinTaxa(Doctrine_Query $query)
   {
-	if($this->hasJoinTaxa)
-	  return;
-	$alias = $query->getRootAlias();
-	$query->innerJoin($alias.'.Taxonomy t')
-          ->innerJoin('t.Level cl');
-	$this->hasJoinTaxa = true;
+    if($this->hasJoinTaxa)
+      return;
+    $alias = $query->getRootAlias();
+    $query->innerJoin($alias.'.Taxonomy t')
+      ->innerJoin('t.Level cl');
+    $this->hasJoinTaxa = true;
   }
+
   public function addTaxonNameColumnQuery(Doctrine_Query $query, $field, $values)
   {
-	$this->joinTaxa($query);
+    $this->joinTaxa($query);
     if ($values != "")
     {
       $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values, 't');

@@ -33,7 +33,7 @@ class specimenActions extends DarwinActions
   
   public function callSecureAction()
   {
-    $this->forwardToSecureAction();     
+    $this->forwardToSecureAction();
   }
 
   public function executeAddCode(sfWebRequest $request)

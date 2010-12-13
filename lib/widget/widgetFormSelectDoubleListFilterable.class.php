@@ -62,9 +62,9 @@ class widgetFormSelectDoubleListFilterable extends sfWidgetForm
   </div>
   <br style="clear: both" />
   <script type="text/javascript">
-    sfDoubleList.init(document.getElementById('%id%'), '%class_select%');
 
     $(document).ready(function () {
+      sfDoubleList.init(document.getElementById('%id%'), '%class_select%');
 
       // Generate one array for the list corresponding to what's in unassociated (displayed or not)
       var unassociated_array_%id% = array_from_options($('#unassociated_%id%'));
@@ -314,15 +314,4 @@ EOF
       '%error_id%'           => $error_id
     ));
   }
-
-  /**
-   * Gets the JavaScript paths associated with the widget.
-   *
-   * @return array An array of JavaScript paths
-   */
-  public function getJavascripts()
-  {
-    return array('/js/double_list.js','/js/double_list_filter.js');
-  }
-
 }

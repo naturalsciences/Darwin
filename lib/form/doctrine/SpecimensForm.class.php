@@ -14,7 +14,9 @@ class SpecimensForm extends BaseSpecimensForm
     unset(
       $this['id'],
       $this['acquisition_date_mask'],
-      $this['multimedia_visible']
+      $this['multimedia_visible'],
+      $this['collecting_tools_list'],
+      $this['collecting_methods_list']
     );
 
     $yearsKeyVal = range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')));
@@ -29,13 +31,12 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema->setNameFormat('specimen[%s]');
     /* Fields */
 
-    $this->widgetSchema['category'] = new sfWidgetFormDoctrineChoice(
+    $categoy_values = array('observation'=>'observation','physical'=>'physical');
+    $this->widgetSchema['category'] = new sfWidgetFormChoice(
       array(
-        'model' => 'Specimens',
-        'table_method' => 'getDistinctCategory',
-        'method' => 'getCategory',
-        'key_method' => 'getCategory',
-    ));
+        'choices' => $categoy_values
+      )
+    );
 
     /* Collection Reference */
     $this->widgetSchema['collection_ref'] = new widgetFormButtonRef(
@@ -128,16 +129,19 @@ class SpecimensForm extends BaseSpecimensForm
     );
 
     /* IG number Reference */
-    $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(array('model' => 'Igs',
-                                                                     'method' => 'getIgNum',
-                                                                     'nullable' => true,
-                                                                     'link_url' => 'igs/searchFor',
-                                                                     'notExistingAddTitle' => $this->getI18N()->__('This I.G. number does not exist. Would you like to automatically insert it ?'),
-                                                                     'notExistingAddValues' => array($this->getI18N()->__('No'),
-                                                                                                     $this->getI18N()->__('Yes')
-                                                                                                    ),
-                                                                    )
-                                                              );                                                      
+    $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(
+      array(
+        'model' => 'Igs',
+        'method' => 'getIgNum',
+        'nullable' => true,
+        'link_url' => 'igs/searchFor',
+        'notExistingAddTitle' => $this->getI18N()->__('This I.G. number does not exist. Would you like to automatically insert it ?'),
+        'notExistingAddValues' => array(
+          $this->getI18N()->__('No'),
+          $this->getI18N()->__('Yes')
+        ),
+      )
+    );
 
     /* Gtu Reference */
     $this->widgetSchema['gtu_ref'] = new widgetFormButtonRef(array(
@@ -148,8 +152,7 @@ class SpecimensForm extends BaseSpecimensForm
        'nullable' => true,
        'button_class'=>'',
      ),
-      array('class'=>'inline',
-           )
+      array('class'=>'inline')
     );
 
     /* Host Reference */
@@ -187,30 +190,8 @@ class SpecimensForm extends BaseSpecimensForm
         'add_label' => 'Add another relationship',
     ));
 
-    /* Collecting methods */
-
-    $this->widgetSchema['collecting_methods_list'] = new widgetFormSelectDoubleListFilterable(
-      array(
-            'choices' => new sfCallable(array(Doctrine::getTable('CollectingMethods'), 'fetchMethods')),
-            'label_associated'=>$this->getI18N()->__('Selected'),
-            'label_unassociated'=>$this->getI18N()->__('Available'),
-            'add_active'=>true,
-            'add_url'=>'methods_and_tools/addMethod'
-           )
-    );
     $this->widgetSchema['coll_methods'] = new sfWidgetFormInputHidden(array('default'=>1));
 
-    /* Collecting tools */
-   
-    $this->widgetSchema['collecting_tools_list'] = new widgetFormSelectDoubleListFilterable(
-      array(
-            'choices' => new sfCallable(array(Doctrine::getTable('CollectingTools'),'fetchTools')),
-            'label_associated'=>$this->getI18N()->__('Selected'),
-            'label_unassociated'=>$this->getI18N()->__('Available'),
-            'add_active'=>true,
-            'add_url'=>'methods_and_tools/addTool'
-           )
-    );
     $this->widgetSchema['coll_tools'] = new sfWidgetFormInputHidden(array('default'=>1));
 
     /* Acquisition categories */
@@ -227,131 +208,16 @@ class SpecimensForm extends BaseSpecimensForm
                                                                             array('class' => 'to_date')
                                                                            );
 
-    /* Accompanying elements sub form */
-
-    $this->embedRelation('SpecimensAccompanying');
-
-    $subForm = new sfForm();
-    $this->embedForm('newSpecimensAccompanying',$subForm);
     $this->widgetSchema['accompanying'] = new sfWidgetFormInputHidden(array('default'=>1));
-    
-    /* extLinks sub form */
-    
-    $subForm = new sfForm();
-    $this->embedForm('ExtLinks',$subForm);   
-    foreach(Doctrine::getTable('ExtLinks')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new ExtLinksForm($vals,array('table' => 'specimens'));
-      $this->embeddedForms['ExtLinks']->embedForm($key, $form);
-    }
-    //Re-embedding the container
-    $this->embedForm('ExtLinks', $this->embeddedForms['ExtLinks']);
-
-    $subForm = new sfForm();
-    $this->embedForm('newExtLinks',$subForm);    
-    
-    /* Codes sub form */
-
-    $subForm = new sfForm();
-    $this->embedForm('Codes',$subForm);
-    foreach(Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new CodesForm($vals);
-      $this->embeddedForms['Codes']->embedForm($key, $form);
-    }
-    //Re-embedding the container
-    $this->embedForm('Codes', $this->embeddedForms['Codes']);
-
-    $subForm = new sfForm();
-    $this->embedForm('newCode',$subForm);
-
-    $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
-        'model' => 'Codes',
-        'table_method' => 'getDistinctPrefixSep',
-        'method' => 'getCodePrefixSeparator',
-        'key_method' => 'getCodePrefixSeparator',
-        'add_empty' => true,
-    ));
-
-    $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
-
-    $this->widgetSchema['suffix_separator'] = new sfWidgetFormDoctrineChoice(array(
-        'model' => 'Codes',
-        'table_method' => 'getDistinctSuffixSep',
-        'method' => 'getCodeSuffixSeparator',
-        'key_method' => 'getCodeSuffixSeparator',
-        'add_empty' => true,
-    ));
-
-    $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
-
+    $this->widgetSchema['collector'] = new sfWidgetFormInputHidden(array('default'=>1));
     $this->widgetSchema['code'] = new sfWidgetFormInputHidden(array('default'=>1));
-
-    /* Collectors sub form */
-
-    $subForm = new sfForm();
-    $this->embedForm('Collectors',$subForm);
-
-    $subForm2 = new sfForm();
-    $this->embedForm('Donators',$subForm2);
-    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens',array('collector','donator'), $this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new PeopleAssociationsForm($vals);
-      if($vals->getPeopleType() == 'collector')
-        $this->embeddedForms['Collectors']->embedForm($key, $form);
-      else
-        $this->embeddedForms['Donators']->embedForm($key, $form);
-    }
-    //Re-embedding the container
-    $this->embedForm('Collectors', $this->embeddedForms['Collectors']);
-
-    $subForm = new sfForm();
-    $this->embedForm('newCollectors',$subForm);
 
     $this->widgetSchema['collector'] = new sfWidgetFormInputHidden(array('default'=>1));
 
-    /* Donators sub form */
-    //Re-embedding the container
-    $this->embedForm('Donators', $this->embeddedForms['Donators']);
-
-    $subForm = new sfForm();
-    $this->embedForm('newDonators',$subForm);
 
     $this->widgetSchema['donator'] = new sfWidgetFormInputHidden(array('default'=>1));
 
-    /* Identifications sub form */
-
-    $subForm = new sfForm();
-    $this->embedForm('Identifications',$subForm);
-    foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new IdentificationsForm($vals);
-      $this->embeddedForms['Identifications']->embedForm($key, $form);
-    }
-    //Re-embedding the container
-    $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
-
-    $subForm = new sfForm();
-    $this->embedForm('newIdentification',$subForm);
-
-
     $this->widgetSchema['ident'] = new sfWidgetFormInputHidden(array('default'=>1));
-
-    /* Comments sub form */
-
-    $subForm = new sfForm();
-    $this->embedForm('Comments',$subForm);
-    foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
-    {
-      $form = new CommentsSubForm($vals,array('table' => 'specimens'));
-      $this->embeddedForms['Comments']->embedForm($key, $form);
-    }
-    //Re-embedding the container
-    $this->embedForm('Comments', $this->embeddedForms['Comments']);
-
-
-    $subForm = new sfForm();
-    $this->embedForm('newComments',$subForm);
 
     $this->widgetSchema['comment'] = new sfWidgetFormInputHidden(array('default'=>1));
     $this->widgetSchema['extlink'] = new sfWidgetFormInputHidden(array('default'=>1));
@@ -392,11 +258,8 @@ class SpecimensForm extends BaseSpecimensForm
         'choices' => array_keys(SpecimensTable::getDistinctCategories()),
         'required' => false,
         ));
-    $this->validatorSchema['category'] = new sfValidatorDoctrineChoice(
-      array(
-        'model' => 'Specimens',
-        'column' => 'category',
-    ));
+    $this->validatorSchema['category'] = new sfValidatorChoice(
+      array('choices'=> array_keys($categoy_values) ));
 
     $this->validatorSchema['acquisition_date'] = new fuzzyDateValidator(array('required' => false,
                                                                               'from_date' => true,
@@ -407,14 +270,6 @@ class SpecimensForm extends BaseSpecimensForm
                                                                         array('invalid' => 'Date provided is not valid',
                                                                              )
                                                                        );
-
-    $this->validatorSchema['collecting_tools_list'] = new sfValidatorDoctrineChoice(array('model' => 'CollectingTools','column' => 'id', 'required' => false, 'multiple' => true));
-
-    $this->validatorSchema['collecting_methods_list'] = new sfValidatorDoctrineChoice(array('model' => 'CollectingMethods','column' => 'id', 'required' => false, 'multiple' => true));
-
-    $this->validatorSchema['prefix_separator'] = new sfValidatorPass();
-
-    $this->validatorSchema['suffix_separator'] = new sfValidatorPass();
 
     $this->validatorSchema['collector'] = new sfValidatorPass();
 
@@ -483,7 +338,7 @@ class SpecimensForm extends BaseSpecimensForm
       $form = new PeopleAssociationsForm($val);
       $this->embeddedForms['newCollectors']->embedForm($num, $form);
       //Re-embedding the container
-      $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
+//       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
   }
 
   public function addDonators($num, $people_ref, $order_by=0)
@@ -496,6 +351,7 @@ class SpecimensForm extends BaseSpecimensForm
       $this->embeddedForms['newDonators']->embedForm($num, $form);
       //Re-embedding the container
       $this->embedForm('newDonators', $this->embeddedForms['newDonators']);
+
   }
 
   public function addSpecimensAccompanying($num, $obj=null)
@@ -582,6 +438,174 @@ class SpecimensForm extends BaseSpecimensForm
       'Method' => array('collecting_methods_list'),
     );
   }
+  
+  public function loadEmbedTools()
+  {
+    /* Collecting tools */
+    $this->widgetSchema['collecting_tools_list'] = new widgetFormSelectDoubleListFilterable(
+      array(
+            'choices' => new sfCallable(array(Doctrine::getTable('CollectingTools'),'fetchTools')),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available'),
+            'add_active'=>true,
+            'add_url'=>'methods_and_tools/addTool'
+           )
+    );
+    $this->validatorSchema['collecting_tools_list'] = new sfValidatorDoctrineChoice(array('model' => 'CollectingTools','column' => 'id', 'required' => false, 'multiple' => true));
+    $this->setDefault('collecting_tools_list', $this->object->CollectingTools->getPrimaryKeys());
+  }
+
+  public function loadEmbedMethods()
+  {
+    /* Collecting methods */
+    $this->widgetSchema['collecting_methods_list'] = new widgetFormSelectDoubleListFilterable(
+      array(
+            'choices' => new sfCallable(array(Doctrine::getTable('CollectingMethods'), 'fetchMethods')),
+            'label_associated'=>$this->getI18N()->__('Selected'),
+            'label_unassociated'=>$this->getI18N()->__('Available'),
+            'add_active'=>true,
+            'add_url'=>'methods_and_tools/addMethod'
+           )
+    );
+    $this->validatorSchema['collecting_methods_list'] = new sfValidatorDoctrineChoice(array('model' => 'CollectingMethods','column' => 'id', 'required' => false, 'multiple' => true));
+    $this->setDefault('collecting_methods_list', $this->object->CollectingMethods->getPrimaryKeys());
+  }
+  
+
+  public function loadEmbedCollectors()
+  {
+
+    $subForm = new sfForm();
+    $this->embedForm('Collectors',$subForm);
+    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','collector', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new PeopleAssociationsForm($vals);
+      $this->embeddedForms['Collectors']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Collectors', $this->embeddedForms['Collectors']);
+    $subForm = new sfForm();
+    $this->embedForm('newCollectors',$subForm);
+  }
+
+  public function loadEmbedDonators()
+  {
+    $subForm2 = new sfForm();
+    $this->embedForm('Donators',$subForm2);
+    foreach(Doctrine::getTable('CataloguePeople')->getPeopleRelated('specimens','donator', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new PeopleAssociationsForm($vals);
+      $this->embeddedForms['Donators']->embedForm($key, $form);
+    }
+    $this->embedForm('Donators', $this->embeddedForms['Donators']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newDonators',$subForm);
+  }
+
+  public function loadEmbedAccompanying()
+  {
+    /* Accompanying elements sub form */
+
+    $this->embedRelation('SpecimensAccompanying');
+
+    $subForm = new sfForm();
+    $this->embedForm('newSpecimensAccompanying',$subForm);
+  }
+  public function loadEmbedIndentifications()
+  {
+    /* Identifications sub form */
+
+    $subForm = new sfForm();
+    $this->embedForm('Identifications',$subForm);
+    foreach(Doctrine::getTable('Identifications')->getIdentificationsRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new IdentificationsForm($vals);
+      $this->embeddedForms['Identifications']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Identifications', $this->embeddedForms['Identifications']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newIdentification',$subForm);
+  }
+
+  public function loadEmbedComment()
+  {
+    /* Comments sub form */
+    $subForm = new sfForm();
+    $this->embedForm('Comments',$subForm);
+    foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CommentsSubForm($vals,array('table' => 'specimens'));
+      $this->embeddedForms['Comments']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Comments', $this->embeddedForms['Comments']);
+
+
+    $subForm = new sfForm();
+    $this->embedForm('newComments',$subForm);
+  }
+
+  public function loadEmbedLink()
+  {
+    /* extLinks sub form */
+    $subForm = new sfForm();
+    $this->embedForm('ExtLinks',$subForm);   
+    foreach(Doctrine::getTable('ExtLinks')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new ExtLinksForm($vals,array('table' => 'specimens'));
+      $this->embeddedForms['ExtLinks']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('ExtLinks', $this->embeddedForms['ExtLinks']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newExtLinks',$subForm);
+  }
+
+  public function loadEmbedCode()
+  {
+    /* Codes sub form */
+    $subForm = new sfForm();
+    $this->embedForm('Codes',$subForm);
+    foreach(Doctrine::getTable('Codes')->getCodesRelated('specimens', $this->getObject()->getId()) as $key=>$vals)
+    {
+      $form = new CodesForm($vals);
+      $this->embeddedForms['Codes']->embedForm($key, $form);
+    }
+    //Re-embedding the container
+    $this->embedForm('Codes', $this->embeddedForms['Codes']);
+
+    $subForm = new sfForm();
+    $this->embedForm('newCode',$subForm);
+
+
+    $this->widgetSchema['prefix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Codes',
+        'table_method' => 'getDistinctPrefixSep',
+        'method' => 'getCodePrefixSeparator',
+        'key_method' => 'getCodePrefixSeparator',
+        'add_empty' => true,
+    ));
+
+    $this->widgetSchema['prefix_separator']->setAttributes(array('class'=>'vvsmall_size'));
+
+    $this->widgetSchema['suffix_separator'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'Codes',
+        'table_method' => 'getDistinctSuffixSep',
+        'method' => 'getCodeSuffixSeparator',
+        'key_method' => 'getCodeSuffixSeparator',
+        'add_empty' => true,
+    ));
+
+    $this->widgetSchema['suffix_separator']->setAttributes(array('class'=>'vvsmall_size'));
+    $this->validatorSchema['prefix_separator'] = new sfValidatorPass();
+
+    $this->validatorSchema['suffix_separator'] = new sfValidatorPass();
+  }
+
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
     if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
@@ -721,6 +745,8 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newCode');
       unset($taintedValues['newCode']);
     }
+    else
+      $this->loadEmbedCode();
 
     if(!isset($taintedValues['collector']))
     {
@@ -729,6 +755,9 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newCollectors');
       unset($taintedValues['newCollectors']);
     }
+    else
+      $this->loadEmbedCollectors();
+
 
     if(!isset($taintedValues['donator']))
     {
@@ -737,6 +766,8 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newDonators');
       unset($taintedValues['newDonators']);
     }
+    else
+      $this->loadEmbedDonators();
 
     if(!isset($taintedValues['accompanying']))
     {
@@ -745,6 +776,9 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newSpecimensAccompanying');
       unset($taintedValues['newSpecimensAccompanying']);
     }
+    else
+      $this->loadEmbedAccompanying();
+
     if(!isset($taintedValues['comment']))
     {
       $this->offsetUnset('Comments');
@@ -752,13 +786,19 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newComments');
       unset($taintedValues['newComments']);
     }
+    else
+      $this->loadEmbedComment();
+
     if(!isset($taintedValues['extlink']))
     {
       $this->offsetUnset('ExtLinks');
       unset($taintedValues['ExtLinks']);
       $this->offsetUnset('newExtLinks');
       unset($taintedValues['newExtLinks']);
-    }    
+    }
+    else
+      $this->loadEmbedLink();
+
     if(!isset($taintedValues['ident']))
     {
       $this->offsetUnset('Identifications');
@@ -766,16 +806,24 @@ class SpecimensForm extends BaseSpecimensForm
       $this->offsetUnset('newIdentification');
       unset($taintedValues['newIdentification']);
     }
+    else
+      $this->loadEmbedIndentifications();
+
     if(!isset($taintedValues['coll_tools']))
     {
       $this->offsetUnset('collecting_tools_list');
       unset($taintedValues['collecting_tools_list']);
     }
+    else
+      $this->loadEmbedTools();
+
     if(!isset($taintedValues['coll_methods']))
     {
       $this->offsetUnset('collecting_methods_list');
       unset($taintedValues['collecting_methods_list']);
     }
+    else
+      $this->loadEmbedMethods();
 
     parent::bind($taintedValues, $taintedFiles);
   }

@@ -68,11 +68,13 @@ class specimenwidgetComponents extends sfComponents
   public function executeTool()
   {
     $this->defineForm();
+    $this->form->loadEmbedTools();
   }
 
   public function executeMethod()
   {
     $this->defineForm();
+    $this->form->loadEmbedMethods();
   }
 
   public function executeRefTaxon()
@@ -113,16 +115,19 @@ class specimenwidgetComponents extends sfComponents
   public function executeRefCodes()
   {
     $this->defineForm();
+    $this->form->loadEmbedCode();
   }
 
   public function executeRefCollectors()
   {
     $this->defineForm();
+    $this->form->loadEmbedCollectors();
   }
 
   public function executeRefDonators()
   {
     $this->defineForm();
+    $this->form->loadEmbedDonators();
   }
 
   public function executeRefProperties()
@@ -134,21 +139,26 @@ class specimenwidgetComponents extends sfComponents
   public function executeRefComment()
   {    
     $this->defineForm();
+    $this->form->loadEmbedComment();
   }
 
   public function executeExtLinks()
   {
     $this->defineForm();
+    $this->form->loadEmbedLink();
   }    
   
   public function executeRefIdentifications()
   {
     $this->defineForm();
+    $this->form->loadEmbedIndentifications();
+
   }
 
   public function executeSpecimensAccompanying()
   {
     $this->defineForm();
+    $this->form->loadEmbedAccompanying();
   }
 
   public function executeLinkHabitat()
