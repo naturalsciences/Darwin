@@ -31,7 +31,7 @@ class SpecimensForm extends BaseSpecimensForm
     $this->widgetSchema->setNameFormat('specimen[%s]');
     /* Fields */
 
-    $categoy_values = array('observation'=>'observation','physical'=>'physical');
+    $categoy_values = array('observation'=>'Observation','physical'=>'Physical');
     $this->widgetSchema['category'] = new sfWidgetFormChoice(
       array(
         'choices' => $categoy_values
@@ -521,10 +521,7 @@ class SpecimensForm extends BaseSpecimensForm
   {
     /* Accompanying elements sub form */
     if($this->isBound()) return;
-    if($this->getObject()->getId() !='')
-    {
-      $this->embedRelation('SpecimensAccompanying');
-    }
+    $this->embedRelation('SpecimensAccompanying');
     $subForm = new sfForm();
     $this->embedForm('newSpecimensAccompanying',$subForm);
   }
