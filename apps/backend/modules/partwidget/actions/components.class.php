@@ -62,11 +62,14 @@ class partwidgetComponents extends sfComponents
   public function executeContainer()
   {
     $this->defineForm();
+    $this->form->forceContainerChoices();
   }
 
   public function executeRefCodes()
   {
     $this->defineForm();  
+    $this->form->loadEmbedCode();
+
     $this->code_copy = false;
     if($this->form->getObject()->isNew())
     {
@@ -85,6 +88,8 @@ class partwidgetComponents extends sfComponents
   public function executeRefInsurances()
   {
     $this->defineForm();
+    $this->form->loadEmbedInsurance();
+
   }
 
   public function executeRefProperties()
@@ -96,20 +101,23 @@ class partwidgetComponents extends sfComponents
   public function executeComments()
   {
     $this->defineForm();
+    $this->form->loadEmbedComment();
   }
 
   public function executeExtLinks()
   {
     $this->defineForm();
+    $this->form->loadEmbedLink();
+
   }  
   public function executeMaintenance()
   {
     if(isset($this->form) )
       $this->eid = $this->form->getObject()->getId();
 
-	if($this->eid)
-	{
-	  $this->maintenances = Doctrine::getTable('CollectionMaintenance')->getRelatedArray('specimen_parts', array($this->eid));
-	}
+    if($this->eid)
+    {
+      $this->maintenances = Doctrine::getTable('CollectionMaintenance')->getRelatedArray('specimen_parts', array($this->eid));
+    }
   }
 }

@@ -55,6 +55,7 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
      endif;
      return $query;
   } 
+  
   public function addCollectionNameColumnQuery(Doctrine_Query $query, $field, $values)
   {
      if ($values != ""):
