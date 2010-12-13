@@ -1,7 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
-<?php echo form_tag('specimen/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'search_form','id'=>'specimen_filter'));?>
+<?php echo form_tag('specimen/search'.( isset($is_choose) ? '?is_choose='.$is_choose : '') , array('class'=>'search_form'));?>
 
   <div class="container">
     <table class="search" id="<?php echo ($is_choose)?'search_and_choose':'search' ?>">

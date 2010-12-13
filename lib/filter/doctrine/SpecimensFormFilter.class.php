@@ -62,8 +62,18 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
        $query->andWhere("collection_ref in (SELECT c.id FROM Collections c WHERE c.name_indexed like concat(fullToIndex(?), '%')) ", $values);
      endif;
      return $query;
-  }   
-
+  }  
+   
+  public function addCallerIdColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+     if ($values != "")
+     {
+       $alias = $query->getRootAlias();       
+       $query->andWhere($alias.'.spec_ref != ?', $values);
+     }
+     return $query;
+  }
+  
   public function doBuildQuery(array $values)
   {  
     $query = parent::doBuildQuery($values);
