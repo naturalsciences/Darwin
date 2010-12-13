@@ -481,7 +481,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function loadEmbedCollectors()
   {
-
+    if($this->isBound()) return;
     $subForm = new sfForm();
     $this->embedForm('Collectors',$subForm);
     if($this->getObject()->getId() !='')
@@ -500,6 +500,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function loadEmbedDonators()
   {
+    if($this->isBound()) return;
     $subForm2 = new sfForm();
     $this->embedForm('Donators',$subForm2);
     if($this->getObject()->getId() !='')
@@ -519,7 +520,7 @@ class SpecimensForm extends BaseSpecimensForm
   public function loadEmbedAccompanying()
   {
     /* Accompanying elements sub form */
-
+    if($this->isBound()) return;
     if($this->getObject()->getId() !='')
     {
       $this->embedRelation('SpecimensAccompanying');
@@ -531,7 +532,7 @@ class SpecimensForm extends BaseSpecimensForm
   public function loadEmbedIndentifications()
   {
     /* Identifications sub form */
-
+    if($this->isBound()) return;
     $subForm = new sfForm();
     $this->embedForm('Identifications',$subForm);
     if($this->getObject()->getId() !='')
@@ -550,6 +551,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function loadEmbedComment()
   {
+    if($this->isBound()) return;
     /* Comments sub form */
     $subForm = new sfForm();
     $this->embedForm('Comments',$subForm);
@@ -570,6 +572,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function loadEmbedLink()
   {
+    if($this->isBound()) return;
     /* extLinks sub form */
     $subForm = new sfForm();
     $this->embedForm('ExtLinks',$subForm);
@@ -589,6 +592,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function loadEmbedCode()
   {
+    if($this->isBound()) return;
     /* Codes sub form */
     $subForm = new sfForm();
     $this->embedForm('Codes',$subForm);
@@ -632,131 +636,6 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-    if(isset($taintedValues['newCode']) && isset($taintedValues['code']))
-    {
-      foreach($taintedValues['newCode'] as $key=>$newVal)
-      {
-        if (!isset($this['newCode'][$key]))
-        {
-          $this->addCodes($key);
-        }
-        $taintedValues['newCode'][$key]['record_id'] = 0;
-      }
-    }
-
-    if(isset($taintedValues['newCollectors']) && isset($taintedValues['collector']))
-    {
-      foreach($taintedValues['newCollectors'] as $key=>$newVal)
-      {
-        if (!isset($this['newCollectors'][$key]))
-        {
-          $this->addCollectors($key,$newVal['people_ref'],$newVal['order_by']);
-        }
-          $taintedValues['newCollectors'][$key]['record_id'] = 0;
-      }
-    }
-
-    if(isset($taintedValues['newDonators']) && isset($taintedValues['donator']))
-    {
-      foreach($taintedValues['newDonators'] as $key=>$newVal)
-      {
-        if (!isset($this['newDonators'][$key]))
-        {
-          $this->addDonators($key,$newVal['people_ref'],$newVal['order_by']);
-        }
-          $taintedValues['newDonators'][$key]['record_id'] = 0;
-      }
-    }
-    if(isset($taintedValues['newExtLinks']) && isset($taintedValues['extlink']))
-    {
-      foreach($taintedValues['newExtLinks'] as $key=>$newVal)
-      {
-        if (!isset($this['newExtLinks'][$key]))
-        {
-          $this->addExtLinks($key);
-        }
-        $taintedValues['newExtLinks'][$key]['record_id'] = 0;
-      }
-    }
-    if(isset($taintedValues['newComments']) && isset($taintedValues['comment']))
-    {
-      foreach($taintedValues['newComments'] as $key=>$newVal)
-      {
-        if (!isset($this['newComments'][$key]))
-        {
-          $this->addComments($key);
-        }
-        $taintedValues['newComments'][$key]['record_id'] = 0;
-      }
-    }
-    if(isset($taintedValues['newSpecimensAccompanying']) && isset($taintedValues['accompanying']))
-    {
-      foreach($taintedValues['newSpecimensAccompanying'] as $key=>$newVal)
-      {
-        if (!isset($this['newSpecimensAccompanying'][$key]))
-        {
-          $this->addSpecimensAccompanying($key);
-        }
-      }
-    }
-    if(isset($taintedValues['newIdentification']) && isset($taintedValues['ident']))
-    {
-      foreach($taintedValues['newIdentification'] as $key=>$newVal)
-      {
-        if (!isset($this['newIdentification'][$key]))
-        {
-          $this->addIdentifications($key);
-                if(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
-                {
-                  foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
-                  {
-                    if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
-                    {
-                      $identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
-                      $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
-                      $this->reembedNewIdentification($identification, $key);
-                    }
-                    $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
-                  }
-          }
-              }
-        elseif(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
-        {
-
-          foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
-          {
-            if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
-            {
-              $identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
-              $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
-              $this->reembedNewIdentification($identification, $key);
-            }
-            $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
-          }
-        }
-        $taintedValues['newIdentification'][$key]['record_id'] = 0;
-      }
-    }
-
-    if(isset($taintedValues['Identifications']) && isset($taintedValues['ident']))
-    {
-      foreach($taintedValues['Identifications'] as $key=>$newval)
-      {
-        if(isset($newval['newIdentifier']))
-        {
-          foreach($taintedValues['Identifications'][$key]['newIdentifier'] as $ikey=>$ival)
-          {
-            if(!isset($this['Identifications'][$key]['newIdentifier'][$ikey]))
-            {
-              $identification = $this->getEmbeddedForm('Identifications')->getEmbeddedForm($key);
-              $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
-              $this->reembedIdentifications($identification, $key);
-            }
-            $taintedValues['Identifications'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
-          }
-        }
-      }
-    }
 
     /* For each embedded informations or many-to-many data such as collecting tools and methods
      * test if the widget is on screen by testing a flag field present on the concerned widget
@@ -770,7 +649,20 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newCode']);
     }
     else
+    {
       $this->loadEmbedCode();
+      if(isset($taintedValues['newCode']))
+      {
+        foreach($taintedValues['newCode'] as $key=>$newVal)
+        {
+          if (!isset($this['newCode'][$key]))
+          {
+            $this->addCodes($key);
+          }
+          $taintedValues['newCode'][$key]['record_id'] = 0;
+        }
+      }
+    }
 
     if(!isset($taintedValues['collector']))
     {
@@ -780,7 +672,20 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newCollectors']);
     }
     else
+    {
       $this->loadEmbedCollectors();
+      if(isset($taintedValues['newCollectors']))
+      {
+        foreach($taintedValues['newCollectors'] as $key=>$newVal)
+        {
+          if (!isset($this['newCollectors'][$key]))
+          {
+            $this->addCollectors($key,$newVal['people_ref'],$newVal['order_by']);
+          }
+          $taintedValues['newCollectors'][$key]['record_id'] = 0;
+        }
+      }
+    }
 
 
     if(!isset($taintedValues['donator']))
@@ -791,7 +696,20 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newDonators']);
     }
     else
+    {
       $this->loadEmbedDonators();
+      if(isset($taintedValues['newDonators']))
+      {
+        foreach($taintedValues['newDonators'] as $key=>$newVal)
+        {
+          if (!isset($this['newDonators'][$key]))
+          {
+            $this->addDonators($key,$newVal['people_ref'],$newVal['order_by']);
+          }
+          $taintedValues['newDonators'][$key]['record_id'] = 0;
+        }
+      }
+    }
 
     if(!isset($taintedValues['accompanying']))
     {
@@ -801,7 +719,19 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newSpecimensAccompanying']);
     }
     else
+    {
       $this->loadEmbedAccompanying();
+      if(isset($taintedValues['newSpecimensAccompanying']))
+      {
+        foreach($taintedValues['newSpecimensAccompanying'] as $key=>$newVal)
+        {
+          if (!isset($this['newSpecimensAccompanying'][$key]))
+          {
+            $this->addSpecimensAccompanying($key);
+          }
+        }
+      }
+    }
 
     if(!isset($taintedValues['comment']))
     {
@@ -811,7 +741,20 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newComments']);
     }
     else
+    {
       $this->loadEmbedComment();
+      if(isset($taintedValues['newComments']))
+      {
+        foreach($taintedValues['newComments'] as $key=>$newVal)
+        {
+          if (!isset($this['newComments'][$key]))
+          {
+            $this->addComments($key);
+          }
+          $taintedValues['newComments'][$key]['record_id'] = 0;
+        }
+      }
+    }
 
     if(!isset($taintedValues['extlink']))
     {
@@ -821,7 +764,20 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newExtLinks']);
     }
     else
+    {
       $this->loadEmbedLink();
+      if(isset($taintedValues['newExtLinks']))
+      {
+        foreach($taintedValues['newExtLinks'] as $key=>$newVal)
+        {
+          if (!isset($this['newExtLinks'][$key]))
+          {
+            $this->addExtLinks($key);
+          }
+          $taintedValues['newExtLinks'][$key]['record_id'] = 0;
+        }
+      }
+    }
 
     if(!isset($taintedValues['ident']))
     {
@@ -831,7 +787,66 @@ class SpecimensForm extends BaseSpecimensForm
       unset($taintedValues['newIdentification']);
     }
     else
+    {
       $this->loadEmbedIndentifications();
+      if(isset($taintedValues['newIdentification']))
+      {
+        foreach($taintedValues['newIdentification'] as $key=>$newVal)
+        {
+          if (!isset($this['newIdentification'][$key]))
+          {
+            $this->addIdentifications($key);
+            if(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
+            {
+              foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
+              {
+                if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
+                {
+                  $identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+                  $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
+                  $this->reembedNewIdentification($identification, $key);
+                }
+                $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+              }
+            }
+          }
+          elseif(isset($taintedValues['newIdentification'][$key]['newIdentifier']))
+          {
+            foreach($taintedValues['newIdentification'][$key]['newIdentifier'] as $ikey=>$ival)
+            {
+              if(!isset($this['newIdentification'][$key]['newIdentifier'][$ikey]))
+              {
+                $identification = $this->getEmbeddedForm('newIdentification')->getEmbeddedForm($key);
+                $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
+                $this->reembedNewIdentification($identification, $key);
+              }
+              $taintedValues['newIdentification'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+            }
+          }
+          $taintedValues['newIdentification'][$key]['record_id'] = 0;
+        }
+      }
+
+      if(isset($taintedValues['Identifications']))
+      {
+        foreach($taintedValues['Identifications'] as $key=>$newval)
+        {
+          if(isset($newval['newIdentifier']))
+          {
+            foreach($taintedValues['Identifications'][$key]['newIdentifier'] as $ikey=>$ival)
+            {
+              if(!isset($this['Identifications'][$key]['newIdentifier'][$ikey]))
+              {
+                $identification = $this->getEmbeddedForm('Identifications')->getEmbeddedForm($key);
+                $identification->addIdentifiers($ikey,$ival['people_ref'], $ival['order_by']);
+                $this->reembedIdentifications($identification, $key);
+              }
+              $taintedValues['Identifications'][$key]['newIdentifier'][$ikey]['record_id'] = 0;
+            }
+          }
+        }
+      }
+    }
 
     if(!isset($taintedValues['coll_tools']))
     {
