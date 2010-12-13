@@ -123,7 +123,8 @@
       {
         col = $(html).attr('col-ref');
         col -= 1;
-        if( $('.board_col:eq(' + col + ') > li').length == 0)
+
+        if( $('.board_col:eq(' + col + ') > li.widget a.widget_close').length == 0)
           $('.board_col:eq(' + col + ')').append(html);
         else
           $('.board_col:eq(' + col + ') > li:eq('+ positions[col] +')').before(html);
