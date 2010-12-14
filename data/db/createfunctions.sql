@@ -671,8 +671,6 @@ END;
 $$
 LANGUAGE plpgsql;
 
-
-
 CREATE OR REPLACE FUNCTION fct_cpy_path() RETURNS TRIGGER
 AS $$
 BEGIN
