@@ -5,6 +5,7 @@ create table template_people
         sub_type varchar,
         formated_name varchar not null,
         formated_name_indexed varchar not null,
+        formated_name_unique varchar not null,
         formated_name_ts tsvector not null,
         title varchar not null default '',
         family_name varchar not null,
@@ -21,6 +22,7 @@ comment on column template_people.sub_type is 'Used for moral user/persons: prec
 comment on column template_people.formated_name is 'Complete user/person formated name (with honorific mention, prefixes, suffixes,...) - By default composed with family_name and given_name fields, but can be modified by hand';
 comment on column template_people.formated_name_ts is 'tsvector form of formated_name field';
 comment on column template_people.formated_name_indexed is 'Indexed form of formated_name field';
+comment on column template_people.formated_name_unique is 'Indexed form of formated_name field (for unique index purpose)';
 comment on column template_people.family_name is 'Family name for physical user/persons and Organisation name for moral user/persons';
 comment on column template_people.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column template_people.given_name is 'User/person''s given name - usually first name';
@@ -52,7 +54,7 @@ create table people
         activity_date_to_mask integer not null default 0,
         activity_date_to date not null default '01/01/0001',
         constraint pk_people primary key (id),
-        constraint unq_people unique (is_physical,gender, formated_name_indexed, birth_date, end_date)
+        constraint unq_people unique (is_physical,gender, formated_name_unique, birth_date, birth_date_mask, end_date, end_date_mask)
        )
 inherits (template_people);
 comment on table people is 'All physical and moral persons used in the application are here stored';
@@ -452,7 +454,7 @@ create table users
         people_id integer,
         last_seen timestamp,
         constraint pk_users primary key (id),
-        constraint unq_users unique (is_physical, gender, formated_name_indexed, birth_date),
+        constraint unq_users unique (is_physical, gender, formated_name_unique, birth_date, birth_date_mask),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
        )
 inherits (template_people);
@@ -465,6 +467,7 @@ comment on column users.db_user_type is 'Integer is representing a role: 1 for r
 comment on column users.people_id is 'Reference to a people if this user is also known as a people';
 comment on column users.formated_name_ts is 'tsvector form of formated_name field';
 comment on column users.formated_name_indexed is 'Indexed form of formated_name field';
+comment on column users.formated_name_unique is 'Indexed form of formated_name field (for unique index use)';
 comment on column users.family_name is 'Family name for physical users and Organisation name for moral users';
 comment on column users.title is 'Title of a physical user/person like Mr or Mrs or phd,...';
 comment on column users.given_name is 'User/user''s given name - usually first name';

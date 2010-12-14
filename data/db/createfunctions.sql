@@ -101,7 +101,7 @@ $$ LANGUAGE plpgsql;
 * Function fullToIndex
 * Remove all the accents special chars from a string
 */
-CREATE OR REPLACE FUNCTION fullToIndex(to_indexed varchar) RETURNS varchar STRICT
+CREATE OR REPLACE FUNCTION fullToIndex(to_indexed varchar, forUniqueness boolean default false) RETURNS varchar STRICT
 AS $$
 DECLARE
 	temp_string varchar;
@@ -114,17 +114,18 @@ BEGIN
     temp_string := TRANSLATE(temp_string,'Ð','d');
     temp_string := TRANSLATE(temp_string,'ó','o');
     temp_string := TRANSLATE(temp_string,'ę','e');
-    temp_string := LOWER(to_ascii(temp_string, 'LATIN9'));
-/*  @TODO Check the better way to convert things with this function...
-          Think carefully at the use of the function for unique indexes
-    temp_string := LOWER(
-				public.to_ascii(
-					CONVERT_TO(temp_string, 'iso-8859-15'),
-					'iso-8859-15')
-				);*/
+    IF forUniqueness THEN
+      temp_string := LOWER(to_ascii(temp_string, 'LATIN9'));
+    ELSE
+      temp_string := LOWER(
+          public.to_ascii(
+            CONVERT_TO(temp_string, 'iso-8859-15'),
+            'iso-8859-15')
+          );
+    END IF;
 	--Remove ALL none alphanumerical char
-	temp_string := regexp_replace(temp_string,'[^[:alnum:]]','', 'g');
-	return substring(temp_string from 0 for 40);
+    temp_string := regexp_replace(temp_string,'[^[:alnum:]]','', 'g');
+    return substring(temp_string from 0 for 40);
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
@@ -167,6 +168,7 @@ BEGIN
 		NEW.keyword_indexed := fullToIndex(NEW.keyword);
 	ELSIF TG_TABLE_NAME = 'people' THEN
 		NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
+    NEW.formated_name_unique := COALESCE(fullToIndex(NEW.formated_name, true),'');
 	ELSIF TG_TABLE_NAME = 'codes' THEN
 		IF NEW.code ~ '^[0-9]+$' THEN
 		   NEW.code_num := NEW.code;
@@ -185,6 +187,7 @@ BEGIN
 		NEW.keyword_indexed := fullToIndex(NEW.keyword);
 	ELSIF TG_TABLE_NAME = 'users' THEN
 		NEW.formated_name_indexed := COALESCE(fullToIndex(NEW.formated_name),'');
+    NEW.formated_name_unique := COALESCE(fullToIndex(NEW.formated_name, true),'');
 	ELSIF TG_TABLE_NAME = 'class_vernacular_names' THEN
 		NEW.community_indexed := fullToIndex(NEW.community);
 	ELSIF TG_TABLE_NAME = 'vernacular_names' THEN
@@ -661,6 +664,7 @@ BEGIN
 		NEW.formated_name := NEW.family_name;
 	END IF;
 	NEW.formated_name_indexed := fullToIndex(NEW.formated_name);
+  NEW.formated_name_unique := fullToIndex(NEW.formated_name, true);
 	NEW.formated_name_ts := to_tsvector('simple', NEW.formated_name);
 	RETURN NEW;
 END;
