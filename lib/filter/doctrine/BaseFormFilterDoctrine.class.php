@@ -335,4 +335,32 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     if($list == "") return (-1) ;      
     return (substr($list,0,strlen($list)-1)) ; //return list of id without the last ','
   }
+
+  
+  public function addRelationItemColumnQuery($query, $values)
+  {
+    $relation = $values['relation'];
+    $val= $values['item_ref'];
+    if($val != 0)
+    {
+      if($relation == 'child')
+      {
+        $item  = $this->getTable()->find($val);
+        $query->andWhere("path like ?", $item->getPath().''.$item->getId().'/%');
+      }
+      elseif($relation == 'direct_child')
+      {
+        $query->andWhere("parent_ref = ?",$val);
+      }
+      elseif($relation =='synonym')
+      {
+        $synonyms = Doctrine::getTable('ClassificationSynonymies')->findSynonymsIds($this->getTable()->getTableName(), $val);
+        if(empty($synonyms))
+          $query->andWhere('0=1'); //False
+        $query->andWhereIn("id",$synonyms)
+          ->andWhere('id != ?',$val); // remove himself
+      }
+    }
+    return $query ;
+  }
 }

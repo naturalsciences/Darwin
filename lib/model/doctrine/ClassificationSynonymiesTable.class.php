@@ -42,6 +42,24 @@ class ClassificationSynonymiesTable extends DarwinTable
     return $groups;
   }
 
+  public function findSynonymsIds($table_name, $record_id)
+  {
+    $groups = $this->findGroupsIdsForRecord($table_name, $record_id);
+    if(empty($groups))
+      return array();
+    $q = Doctrine_Query::create()
+      ->select('distinct(s.record_id) as record_id')
+      ->from('ClassificationSynonymies s')
+      ->andwhereIn('s.group_id', $groups);
+    $results = $q->execute();
+    $res_array = array();
+    foreach($results as $val)
+    {
+      $res_array[] = $val->getRecordId();
+    }
+    return $res_array;
+  }
+
   /**
    * findAllForRecord
    * Find all synoyms (including self) of a given table_name and record_id (and group if specified).
@@ -58,38 +76,39 @@ class ClassificationSynonymiesTable extends DarwinTable
 
     if(empty($groups))
       return array();
+
     $q = Doctrine_Query::create()
-	 ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id ' .
-	    ($table_name=='taxonomy' ? ', t.extinct' : '') )
-	 ->from('ClassificationSynonymies s, '.DarwinTable::getModelForTable($table_name). ' t')
-	 ->where('s.referenced_relation = ?',$table_name) //Not really necessay but....
-	 ->andWhere('s.record_id=t.id')
-	 ->andwhereIn('s.group_id', $groups)
-	 ->orderBy('s.group_name ASC, s.order_by ASC')
-	 ->setHydrationMode(Doctrine::HYDRATE_NONE);
+      ->select('s.group_name, s.id, s.record_id, s.group_id, s.is_basionym, s.order_by, t.name, t.id ' .
+        ($table_name=='taxonomy' ? ', t.extinct' : '') )
+      ->from('ClassificationSynonymies s, '.DarwinTable::getModelForTable($table_name). ' t')
+      ->where('s.referenced_relation = ?',$table_name) //Not really necessay but....
+      ->andWhere('s.record_id=t.id')
+      ->andwhereIn('s.group_id', $groups)
+      ->orderBy('s.group_name ASC, s.order_by ASC')
+      ->setHydrationMode(Doctrine::HYDRATE_NONE);
     $items = $q->execute();
+
     $results = array();
     foreach($items as $item)
     {
-  	$catalogue = DarwinTable::getModelForTable($table_name);
-	$cRecord = new $catalogue();
-	$cRecord->setName($item[6]);
-	$cRecord->setId($item[7]);
-	if($table_name=='taxonomy')
-	  $cRecord->setExtinct($item[8]);
+      $catalogue = DarwinTable::getModelForTable($table_name);
+      $cRecord = new $catalogue();
+      $cRecord->setName($item[6]);
+      $cRecord->setId($item[7]);
+      if($table_name=='taxonomy')
+        $cRecord->setExtinct($item[8]);
 
-	//group_name 
-	if(! isset($results[$item[0]]) )
-	  $results[$item[0]]=array();
-	$results[$item[0]][] = array(
-	  'id' => $item[1],
-	  'record_id' => $item[2],
-	  'group_id' => $item[3],
-	  'is_basionym' => $item[4],
-	  'order_by' => $item[5],
-	  'ref_item' => $cRecord,
-	);
-
+      //group_name 
+      if(! isset($results[$item[0]]) )
+        $results[$item[0]]=array();
+      $results[$item[0]][] = array(
+        'id' => $item[1],
+        'record_id' => $item[2],
+        'group_id' => $item[3],
+        'is_basionym' => $item[4],
+        'order_by' => $item[5],
+        'ref_item' => $cRecord,
+      );
     }
     return $results;
   }
@@ -212,20 +231,20 @@ class ClassificationSynonymiesTable extends DarwinTable
 
       if($ref_group_id_1 == 0 && $ref_group_id_2 == 0) //If there is no group
       {
-	$c1->setGroupId( $this->findNextGroupId());
+        $c1->setGroupId( $this->findNextGroupId());
 
-	$c2 = clone $c1;
-	$c2->setRecordId($record_id_1);
-	$c2->save();
+        $c2 = clone $c1;
+        $c2->setRecordId($record_id_1);
+        $c2->save();
       }
       elseif($ref_group_id_1 == 0)
       {
-	$c1->setRecordId($record_id_1);
-	$c1->setGroupId($ref_group_id_2);
+        $c1->setRecordId($record_id_1);
+        $c1->setGroupId($ref_group_id_2);
       }
       else
       {
-	$c1->setGroupId( $ref_group_id_1 );
+        $c1->setGroupId( $ref_group_id_1 );
       }
       $c1->save();
     }

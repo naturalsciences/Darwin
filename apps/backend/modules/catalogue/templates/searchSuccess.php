@@ -98,6 +98,7 @@
               </td>
             <?php endif;?>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
+              <a href="#" class="search_related"><?php echo image_tag('link.png', array("title" => __("Search Related")));?></a>
               <?php if(! $is_choose):?>
                 <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>
                   <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))),$searchForm->getValue('table').'/edit?id='.$item->getId());?>
@@ -114,6 +115,20 @@
     </table>
   </div>
   <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      $('a.search_related').click(function(event)
+      {
+        event.preventDefault();
+        row = $(this).closest('tr');
+        iname = row.find('.item_name');
+        $('.search_item_name').html(iname.html());
+        rid = getIdInClasses(row);
+        $('#searchCatalogue_item_ref').val(rid);
+        $('.search_item_name').closest('tr').show();
+      });
+    });
+    </script>
 <?php else:?>
   <?php echo __('No Matching Items');?>
 <?php endif;?>
