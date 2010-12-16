@@ -1143,6 +1143,14 @@ tbody.spec_ident_identifiers_data tr td
   color:white;
   margin-top:0.3em ;
   margin-bottom:0.3em ;    
+
+  border:1px solid #C1CC33;
+  background-color:#C1CF56;
+  
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  padding:2px;
+  font-size:90%;
 }
 
 .bottom_actions

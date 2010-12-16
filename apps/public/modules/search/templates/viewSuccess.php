@@ -1,9 +1,7 @@
 <?php slot('title', __('View Specimens'));  ?>  
 
 <div class="page viewer">
-  <h1><?php echo __("Darwin Specimen ");?></h1>
-  <h2 class="title"><?php echo __("Fiche") ?></h2>
-  <div class="borded padded">
+  <h1><?php echo __("Specimen Record");?></h1>
     <h2 class="title"><?php echo __("Collection") ?></h2>  
     <div class="borded right_padded">
       <table>
@@ -278,9 +276,8 @@
         </tr>
       </table>
     </div>
-  </div>
   <div class="check_right"> 
-    <input type="button" id="close_butt" value="<?php echo __('Close this file'); ?>">
+    <input type="button" id="close_butt" value="<?php echo __('Close this record'); ?>">
   </div>  
   <script>
     $('#close_butt').click(function(){

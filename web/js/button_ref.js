@@ -43,12 +43,13 @@ $(document).ready(function () {
         {
             if(ref_element_id != null && ref_element_name != null)
             {
-              parent_el = $(this.elements.target).parent().prevAll('.ref_name');
-              parent_el.text(ref_element_name);
+              parent_el = $(this.elements.target).parent().prevAll('.ref_name');                           
+              parent_el.text(ref_element_name);         
               parent_el.prev().val(ref_element_id);
               $(this.elements.target).parent().prevAll('.ref_clear').show();
               $(this.elements.target).parent().prevAll('.ref_clear').removeClass('hidden');
-              $(this.elements.target).text('change !');
+              $(this.elements.target).find('.off').removeClass('hidden');
+              $(this.elements.target).find('.on').addClass('hidden');
               parent_el.prev().trigger('change');
             }
             $('.result_choose_coll_rights').die('click') ;
@@ -64,7 +65,8 @@ $(document).ready(function () {
   {
     $(this).prevAll('.ref_name').text('-').show();
     $(this).prevAll('input').val('');
-    $(this).next().find('.but_text').text('Choose !');
+    $(this).next().find('.but_text .on').removeClass('hidden');
+    $(this).next().find('.but_text .off').addClass('hidden');
     $(this).hide();
   });
 });

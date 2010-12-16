@@ -5,13 +5,13 @@
  */
 class UsersAddresses extends BaseUsersAddresses
 {
- /* public static $possible_tags = array('home'=>'Home', 'work'=>'Work', 'pref'=>'Preferred', 'intl'=>'International', 'postal'=>'Postal');
+  public static $possible_tags = array('home'=>'Home', 'work'=>'Work', 'pref'=>'Preferred', 'intl'=>'International', 'postal'=>'Postal');
 
   /**
   * Get tags of the address as an array (only label not keys)
   * @return array Array of tags for this address
   */
- /* public function getTagsAsArray()
+  public function getTagsAsArray()
   {
     $array = explode(',',$this->_get('tag'));
     $result = array();
@@ -43,5 +43,5 @@ class UsersAddresses extends BaseUsersAddresses
         return self::$possible_tags;
     }
     return array_map(array($i18n_object, '__'), self::$possible_tags);    
-  }      */
+  }
 }

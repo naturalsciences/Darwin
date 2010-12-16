@@ -383,6 +383,7 @@ Collections:
         collection_type: { type: enum, notnull: true, default: mix, values: [mix, observation, physical] }
         code: { type: string, notnull: true}
         name: { type: string, notnull: true}
+        name_indexed: { type: string} 
         institution_ref: { type: integer, notnull: true}
         main_manager_ref: { type: integer, notnull: true}
         parent_ref: { type: integer}

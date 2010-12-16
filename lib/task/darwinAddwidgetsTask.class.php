@@ -20,7 +20,7 @@ class darwinAddwidgetsTask extends sfBaseTask
     $this->name             = 'add-widgets';
     $this->briefDescription = 'Add default widgets for a user';
     $this->detailedDescription = <<<EOF
-The [darwin:add-widgets|INFO] task insert all widgets for an user.
+The [darwin:add-widgets|INFO] task insert all widgets for a user.
 
 Example:
   [php symfony darwin:add-widgets 1|INFO]
@@ -37,19 +37,28 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
+    
+    if($arguments['user_id'] == 'all')
+    {
+      $userIds = Doctrine_Query::create()->select('id')->from('Users')->fetchArray();
+    }
+    else
+      $userIds = explode(",",$arguments['user_id']);
 
-	$user = Doctrine::getTable('Users')->find($arguments['user_id']);
-	
-	if($options['reset'])
-	{
-	  Doctrine_Query::create()
-             ->delete('MyWidgets p') 
-			 ->where('p.user_ref = ?', $user->getId())
-			 ->execute();
-	  $this->logSection('add-widgets', sprintf('Remove old widgets successfully!',$cnt));
-	}
-    $cnt = $user->addUserWidgets();
-    $this->logSection('add-widgets', sprintf('Added %d widgets successfully!',$cnt));
-
+    foreach($userIds as $key=>$value)
+    {
+      $user = Doctrine::getTable('Users')->find($value);
+      
+      if($options['reset'])
+      {
+        Doctrine_Query::create()
+          ->delete('MyWidgets p') 
+          ->where('p.user_ref = ?', $user->getId())
+          ->execute();
+        $this->logSection('add-widgets', sprintf('Remove old widgets successfully!',$cnt));
+      }
+      $cnt = $user->addUserWidgets();
+      $this->logSection('add-widgets', sprintf('Added %d widgets successfully!',$cnt));
+    }
   }
 }

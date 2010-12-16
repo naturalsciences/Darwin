@@ -50,6 +50,13 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
                                                                           array('invalid'=>$this->getI18N()->__('The lower bound (%left_field%) cannot be above the upper bound (%right_field%).'))
                                                                          )
                                             );
+    $rel = array('child'=>'Is a Child Of','direct_child'=>'Is a Direct Child','synonym'=> 'Is a Synonym Of');
+    $this->widgetSchema['relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    
+    $this->widgetSchema['item_ref'] = new sfWidgetFormInputHidden();
+
+    $this->validatorSchema['relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+    $this->validatorSchema['item_ref'] = new sfValidatorInteger(array('required'=>false));
   }
 
   public function addBoundRangeColumnQuery(Doctrine_Query $query, $val_from, $val_to)
@@ -64,6 +71,7 @@ class ChronostratigraphyFormFilter extends BaseChronostratigraphyFormFilter
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'chronostratigraphy', 'name_indexed', $values['name']);
+    $this->addRelationItemColumnQuery($query, $values);
     $this->addBoundRangeColumnQuery($query, $values['lower_bound'], $values['upper_bound']);
     $query->andWhere("id != 0 ")
 	  ->innerJoin($query->getRootAlias().".Level")

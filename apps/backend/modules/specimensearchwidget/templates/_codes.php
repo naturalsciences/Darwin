@@ -33,6 +33,7 @@ $(document).ready(function () {
   var num_fld = $('#code_search tbody tr').length;
   $('.add_search_code').click(function(event)
   {
+    hideForRefresh('#codes');
     event.preventDefault();
     $.ajax({
       type: "GET",
@@ -41,6 +42,7 @@ $(document).ready(function () {
       {
         $('#code_search > tbody .and_row').before(html);
         $('#code_search > tbody tr:not(.and_row):last .between_col').hide();
+        showAfterRefresh('#codes');
       }
     });
   });

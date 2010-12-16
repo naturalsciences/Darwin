@@ -11,11 +11,14 @@
 class catalogueActions extends DarwinActions
 {
   protected $catalogue = array(
-   'catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments','specimens','specimen_individuals','specimen_parts','ext_links','collection_maintenance');
+   'catalogue_relationships','catalogue_people','class_vernacular_names','catalogue_properties','comments',
+   'specimens','specimen_individuals','specimen_parts','ext_links','collection_maintenance', 'insurances',
+   'people_addresses', 'people_comm','people_languages', 'people_relationships', 'classification_keywords');
+
   protected $ref_id = array('specimens' => 'spec_ref','specimen_individuals' => 'individual_ref','specimen_parts' => 'part_ref') ;
   public function executeRelation(sfWebRequest $request)
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();  
+    if(! $this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();  
     $this->relation = null;
     if($request->hasParameter('id'))
     {
@@ -73,10 +76,36 @@ class catalogueActions extends DarwinActions
 
   public function executeDeleteRelated(sfWebRequest $request)
   {
-    if($this->getUser()->getDbUserType() < Users::ENCODER) $this->forwardToSecureAction();
-    if(! in_array($request->getParameter('table'),$this->catalogue)) $this->forwardToSecureAction();   
+    if(in_array($request->getParameter('table'), array('users_languages','users_comm','users_addresses')))
+    {
+      $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
+      $this->forward404Unless($r,'No such item');
+
+      if((in_array($request->getParameter('table'), array('users_comm','users_addresses'))
+          && ($r->getPersonUserRef() == $this->getUser()->getId() || $this->getUser()->isAtLeast(Users::MANAGER)))
+        || (in_array($request->getParameter('table'), array('users_languages'))
+          && ($r->getUsersRef() == $this->getUser()->getId() || $this->getUser()->isAtLeast(Users::MANAGER)) ))
+      {
+        try
+        {
+          $r->delete();
+        }
+        catch(Doctrine_Exception $ne)
+        {
+          $e = new DarwinPgErrorParser($ne);
+          return $this->renderText($e->getMessage());
+        }
+        return $this->renderText('ok');
+      }
+    }
+
+    if(! $this->getUser()->isAtLeast(Users::ENCODER))
+      $this->forwardToSecureAction();
+    if(! in_array($request->getParameter('table'),$this->catalogue))
+      $this->forwardToSecureAction();   
     $r = Doctrine::getTable( DarwinTable::getModelForTable($request->getParameter('table')) )->find($request->getParameter('id'));
     $this->forward404Unless($r,'No such item');
+
     if(!$this->getUser()->isA(Users::ADMIN))
     {
       if(in_array($request->getParameter('table'),array('comments','catalogue_properties','ext_links')) && in_array($r->getReferencedRelation(),$this->ref_id))

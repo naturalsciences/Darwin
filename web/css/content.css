@@ -205,7 +205,7 @@ height: 1px;
 h1
 {
   color:#3390a1;
-  font-size:large;
+  font-size:x-large;
   margin-bottom: 0.5em;
 }
 
@@ -819,4 +819,134 @@ table#login_register td
 a#login_register, a#login_lostpwd
 {
   color:#3390A1;
+}
+
+.tour
+{
+  padding: 1.5em;
+  width:900px !important;
+}
+
+.tour h2
+{
+  font-size:x-large;
+  color: #404040;
+  margin-bottom: 0.7em;
+  border-bottom: 1px solid #C1CF56;
+}
+.tour_head
+{
+  margin-bottom:1em;
+}
+.tour_left
+{
+  text-align:left;
+  margin-bottom:1.5em;
+}
+.tour_right
+{
+  text-align:right;
+}
+.tour_left .tour_img
+{
+ float:left; 
+ margin-right: 2em;
+}
+
+.tour_img
+{
+  border: 2px dashed  #C1CF56;
+  padding: 0.5em;
+}
+
+.tour_right .tour_img
+{
+  float:right;
+  margin-left: 2em;
+}
+
+.tour_text p
+{
+  height: 75px; 
+  margin-top: 75px; /* moitié de la hauteur */ 
+}
+
+.fan_register_but {
+  display:block;
+  background: #7fbf4d;
+  background: -moz-linear-gradient(0% 100% 90deg,#63a62f, #7fbf4d);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7fbf4d), to(#63a62f));
+  border: 1px solid #63a62f;
+  border-width: 1px 1px 0 1px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+  -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+  box-shadow: inset 0 1px 0 0 #96ca6d;
+  color: #fff;
+  font-family: "lucida grande", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 7px 0 8px 0;
+  text-align: center;
+  text-shadow: 0 -1px 0 #4c9021;
+  width: 200px;
+}
+
+.fan_register_but:hover {
+  background: #5a962c;
+  background: -moz-linear-gradient(0% 100% 90deg,#5a962c, #72ac45);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#72ac45), to(#5a962c));
+}
+
+.fan_register_but:active {
+  background: #7fbf4d;
+  background: -moz-linear-gradient(0% 100% 90deg,#7fbf4d, #63a62f);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#63a62f), to(#7fbf4d));
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-width: 0 1px 1px 1px;
+  padding: 8px 0 7px 0;
+}
+
+.reg_bottom .fan_register_but
+{
+  margin:auto;
+  clear:both;
+}
+.tour .last_item
+{
+  margin-top: 120px;
+}
+
+.about_content a[href]
+{
+  text-decoration:none;
+  color:#6C6C6C;
+}
+
+.about_content ul li
+{
+  margin-bottom: 2em;
+  text-align:center;
+}
+.about_content ul li span
+{
+  display:block;
+  
+}
+.about_content h2
+{
+  text-align:center;
+  margin:3em;
+  font-size:large;
+  margin: 1em;
+  color:#3390a1;
+}
+.contact_content
+{
+  line-height:1.2em;
 }

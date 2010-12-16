@@ -50,16 +50,7 @@
     $("#clear_accompanying_unit_<?php echo $rownum;?>").click( function()
     {
       parent = $(this).closest('tbody');
-      nvalue='';
-      tvalue = '-';
-      bvalue = 'Change !';
-      $(parent).find('input[id$=\"_taxon_ref\"]').val(nvalue);
-      $(parent).find('input[id$=\"_taxon_ref_name\"]').val(tvalue);
-      $(parent).find('div[id$=\"_taxon_ref_button\"]').find('a').html(bvalue);
-      $(parent).find('input[id$=\"_mineral_ref\"]').val(nvalue);
-      $(parent).find('input[id$=\"_mineral_ref_name\"]').val(tvalue);
-      $(parent).find('div[id$=\"_mineral_ref_button\"]').find('a').html(bvalue);
-      $(parent).find('input[id$=\"_quantity\"]').val(nvalue);
+      $(parent).find('input').val('');
       $(parent).hide();
       visibles = $(parent).closest('table.property_values').find('tbody:visible').size();
       if(!visibles)

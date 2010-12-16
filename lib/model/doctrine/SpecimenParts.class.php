@@ -7,13 +7,13 @@ class SpecimenParts extends BaseSpecimenParts
 {
   public static function getCategories()
   {
-	return array(
-	  'physical' => 'Physical',
-	  'observation' => 'observation',
-	  'figurate' => 'figurate',
-	);
+    return array(
+      'physical' => 'Physical',
+      'observation' => 'Observation',
+      'figurate' => 'Figurate',
+    );
   }
-  
+
   public function getName()
   {
     return $this->getSpecimenPart();

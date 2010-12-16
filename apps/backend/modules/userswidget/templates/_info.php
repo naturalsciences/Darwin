@@ -22,7 +22,7 @@
        <?php echo($login_info->getUserName());?>
     </td>
     <td class="widget_row_delete">
-    <?php if(Doctrine::getTable('Users')->findUser($sf_user->getAttribute('db_user_id'))->getDbUserType() > 2) : ?>
+    <?php if($sf_user->isAtLeast(Users::MANAGER)) : ?>
       <a id='edit_info' class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=users_login_infos&id='.$login_info->getId());?>" title="<?php echo __('Are you sure ?') ?>"><?php echo image_tag('remove.png'); ?>
       </a>
     <?php endif ; ?>
@@ -32,7 +32,7 @@
   </tbody>
 </table>
 <br />
-<?php if($sf_user->getAttribute('db_user_type') > 2) : ?>
+<?php if($sf_user->isAtLeast(Users::MANAGER)) : ?>
 <?php echo image_tag('add_green.png');?>
 <a id='add_info' title="<?php echo __('Add Login');?>" class="link_catalogue" href="<?php echo url_for('user/loginInfo?user_ref='.$eid);?>"> 
 <?php echo __('Add');?>

@@ -24,7 +24,7 @@ $(document).ready(function ()
 <?php include_partial('specBeforeTab', array('specimen' => $form->getObject(),'form'=> $form, 'mode'=>'specimen_edit') );?>
   <?php include_stylesheets_for_form($form) ?>
   <?php include_javascripts_for_form($form) ?>
-
+  <?php use_javascript('double_list.js');?>
   <div>
     <ul id="error_list" class="error_list" style="display:none">
       <li></li>

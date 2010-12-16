@@ -1125,7 +1125,7 @@
       <trans-unit id="551">
         <source>Show link with institution</source> <target>Voir lien avec les institutions</target> </trans-unit> 
       <trans-unit id="552">
-        <source>Gender</source> <target>Titre</target> </trans-unit>
+        <source>Gender</source> <target>Genre</target> </trans-unit>
       <trans-unit id="553">
         <source>family name</source> <target>Nom de famille</target> </trans-unit>
       <trans-unit id="554">

@@ -9,9 +9,9 @@
           <ul class="menu_link">
             <li><?php echo link_to(__('Our collections'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
             <li><?php echo link_to(__('Search'),$sf_context->getConfiguration()->generatePublicUrl('homepage').'search/search');?></li>
-            <li><?php echo link_to(__('Take a tour'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
-            <li><?php echo link_to(__('Contacts'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
-            <li><?php echo link_to(__('Links'),$sf_context->getConfiguration()->generatePublicUrl('homepage'));?></li>
+            <li><?php echo link_to(__('Take a tour'),$sf_context->getConfiguration()->generatePublicUrl('tour'));?></li>
+            <li><?php echo link_to(__('Contacts'),$sf_context->getConfiguration()->generatePublicUrl('contact'));?></li>
+            <li><?php echo link_to(__('About'),$sf_context->getConfiguration()->generatePublicUrl('about'));?></li>
           </ul>
         </td>
       </tr>

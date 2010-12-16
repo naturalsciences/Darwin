@@ -38,6 +38,7 @@
   $(document).ready(function () {
     $('#add_insurance').click(function()
     {
+        hideForRefresh('#refInsurances');
         parent = $(this).closest('table.property_values');
         $.ajax(
         {
@@ -47,6 +48,7 @@
           {
             $(parent).append(html);
             $(parent).find('thead:hidden').show();
+            showAfterRefresh('#refInsurances');
           }
         });
         return false;

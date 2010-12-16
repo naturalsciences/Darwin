@@ -28,6 +28,13 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
     $this->widgetSchema->setLabels(array('level_ref' => 'Level'
                                         )
                                   );
+    $rel = array('child'=>'Is a Child Of','direct_child'=>'Is a Direct Child','synonym'=> 'Is a Synonym Of');
+    $this->widgetSchema['relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    
+    $this->widgetSchema['item_ref'] = new sfWidgetFormInputHidden();
+
+    $this->validatorSchema['relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+    $this->validatorSchema['item_ref'] = new sfValidatorInteger(array('required'=>false));
     $this->validatorSchema['name'] = new sfValidatorString(array('required' => false,
                                                                  'trim' => true
                                                                 )
@@ -41,6 +48,7 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'taxonomy', 'name_indexed', $values['name']);
+    $this->addRelationItemColumnQuery($query, $values);
     $query->andWhere("id > 0 ")
 	  ->innerJoin($query->getRootAlias().".Level")
           ->limit($this->getCatalogueRecLimits());

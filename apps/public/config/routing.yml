@@ -2,12 +2,20 @@
 # http://www.symfony-project.org/reference/1_4/en/10-Routing
 
 # default rules
+about:
+  url:   /about
+  param: { module: board, action: about }
+contact:
+  url:   /contact
+  param: { module: board, action: contact }
+tour:
+  url:   /tour
+  param: { module: board, action: tour }
+
 homepage:
   url:   /
   param: { module: board, action: index }
 
-# generic rules
-# please, remove them by adding more specific rules
 default_index:
   url:   /:module
   param: { action: index }

@@ -50,6 +50,7 @@
   $(document).ready(function () {
     $('.name_tags li a').click(function(event)
     {
+      hideForRefresh('#keyword_screen');
       event.preventDefault();
       var tag_value = returnText($('#original_name'));
 
@@ -65,6 +66,7 @@
             $('#keyword_table tr:last td input[type="text"]').val(tag_value);
             tag_value='';
           }
+          showAfterRefresh('#keyword_screen');
         }
       });
     });

@@ -104,8 +104,8 @@ $(document).ready(function () {
             {
               id_arr = html.split(',');
               spec_list_saved = id_arr[1];
-
               $('.qtip-button').click();
+              return;
             }
             $('form#save_search').parent().before(html).remove();
           }

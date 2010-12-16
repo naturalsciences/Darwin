@@ -13,34 +13,47 @@
         <thead>
           <tr>
             <th>
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=collection_name'.( ($orderBy=='collection_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+                <?php echo __('Collection');?>
+                <?php if($orderBy=='collection_name') echo $orderSign ?>
+              </a>
+            </th>          
+            <th>
               <?php echo __('Code(s)');?>
             </th>
             <th>
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=t.name'.( ($orderBy=='t.name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=taxon_name'.( ($orderBy=='taxon_name' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('Taxon');?>
-                <?php if($orderBy=='t.name') echo $orderSign ?>
+                <?php if($orderBy=='taxon_name') echo $orderSign ?>
               </a>
             </th>
             <th>
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=t.level_ref'.( ($orderBy=='t.level_ref' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=taxon_level_ref'.( ($orderBy=='taxon_level_ref' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('Level');?>
-                <?php if($orderBy=='t.level_ref') echo $orderSign ?>
+                <?php if($orderBy=='taxon_level_ref') echo $orderSign ?>
               </a>
             </th>
+            <th>
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_num'.( ($orderBy=='ig_num' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+                <?php echo __('Ig num');?>
+                <?php if($orderBy=='ig_num') echo $orderSign ?>
+              </a>
+            </th>            
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach($specimens as $specimen):?>
-            <tr class="rid_<?php echo $specimen->getId(); ?>">
+            <tr class="rid_<?php echo $specimen->getSpecRef(); ?>">
+              <td class="top_aligned"><?php echo $specimen->getCollectionName();?></td>            
               <td>
                 <ul>
-                  <?php if (!isset($codes[$specimen->getId()])): ?>
+                  <?php if (!isset($codes[$specimen->getSpecRef()])): ?>
                     <li>
                       <?php echo '-';?>
                     </li>
                   <?php else:?>
-					<?php foreach($codes[$specimen->getId()] as $code):?>
+					<?php foreach($codes[$specimen->getSpecRef()] as $code):?>
 					  <li style="font-weight:<?php echo ($code->getCodeCategory()=='main')?'bold':'normal';?>">
 						<?php echo $code->getCodeFormated(); ?>
 					  </li>
@@ -48,14 +61,11 @@
 				  <?php endif;?>
                 </ul>
               </td>
-              <td class="top_aligned"><?php echo $specimen->Taxonomy->getName();?></td>
-              <td class="top_aligned"><?php echo $specimen->Taxonomy->Level->getLevelName();?></td>
-              <td class="<?php echo (! $is_choose)?'edit':'choose';?> top_aligned">
-                <?php if(! $is_choose):?>
-                  <?php echo link_to(image_tag('edit.png'),'specimen/edit?id='.$specimen->getId());?>
-                <?php else:?>
-                  <div class="result_choose"><?php echo __('Choose');?></div>
-                <?php endif;?>
+              <td class="top_aligned"><?php echo $specimen->getTaxonName();?></td>
+              <td class="top_aligned"><?php echo $specimen->getTaxonLevelName();?></td>
+              <td class="top_aligned"><?php echo $specimen->getIgNum();?></td>              
+              <td class="choose top_aligned">
+                <div class="result_choose"><?php echo __('Choose');?></div>
               </td>
             </tr>
           <?php endforeach;?>

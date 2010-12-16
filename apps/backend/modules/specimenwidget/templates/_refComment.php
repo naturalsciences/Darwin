@@ -31,6 +31,7 @@ $(document).ready(function () {
 
     $('#add_comment').click( function()
     {
+        hideForRefresh('#refComment');
         parent = $(this).closest('table.comments');
         parentId = $(parent).attr('id');
         $.ajax(
@@ -40,6 +41,7 @@ $(document).ready(function () {
           success: function(html)
           {                    
             $(parent).append(html);
+            showAfterRefresh('#refComment');
           }
         });
         $(this).closest('table.comments').find('thead').show();

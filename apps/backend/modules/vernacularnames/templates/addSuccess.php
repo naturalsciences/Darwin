@@ -55,7 +55,25 @@
 </form>
 
 <script  type="text/javascript">
+  function addPropertyValue(event)
+  {
+    hideForRefresh('#vernacular_screen');
+    event.preventDefault();
+    $.ajax(
+    {
+      type: "GET",
+      url: $(this).attr('href')+ (0+$('.property_values tbody#property tr').length),
+      success: function(html)
+      {
+        $('.property_values tbody#property').append(html);
+        showAfterRefresh('#vernacular_screen');
+      }
+    });
+    return false;
+  }
+
   $(document).ready(function () {
+
     $('.clear_prop').live('click', clearPropertyValue);
 
     $('#add_prop_value').click(addPropertyValue);

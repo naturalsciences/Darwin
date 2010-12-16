@@ -80,6 +80,7 @@ class individualswidgetComponents extends sfComponents
   public function executeSpecimenIndividualComments()
   {
     $this->defineForm();
+    $this->form->loadEmbedComment();
   }
   
   public function executeRefIdentifications()
@@ -96,5 +97,6 @@ class individualswidgetComponents extends sfComponents
   public function executeExtLinks()
   {
     $this->defineForm();
+    $this->form->loadEmbedLink();
   }  
 }

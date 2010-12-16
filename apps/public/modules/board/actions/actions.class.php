@@ -10,12 +10,20 @@
  */
 class boardActions extends DarwinActions
 {
-  protected $widgetCategory = 'board_widget';
-
   public function executeIndex(sfWebRequest $request)
   {
-   //  $this->loadWidgets();
+    $this->specimens = Doctrine::getTable('SpecimenSearch')->getRandomSpecimens();
+    $this->count = Doctrine::getTable('SpecimenSearch')->getSpecIndivCount();
   }
+
+  public function executeTour(sfWebRequest $request)
+  {  }
+
+  public function executeContact(sfWebRequest $request)
+  {  }
+
+  public function executeAbout(sfWebRequest $request)
+  {  }
 
   public function executeLang(sfWebRequest $request)
   {

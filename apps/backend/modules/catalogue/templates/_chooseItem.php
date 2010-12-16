@@ -15,6 +15,15 @@ $(document).ready(function ()
      }
      $('.tree').slideUp();
    });
+
+  $('#clear_cat_relation').click(function (event)
+  {
+    event.preventDefault();
+    $('.search_item_name').html('');
+    $('#searchCatalogue_item_ref').val('');
+    $('.search_item_name').closest('tr').hide();
+  });
+
 });
 </script>
 
@@ -53,6 +62,13 @@ $(document).ready(function ()
             <td class="datesNum"><?php echo $searchForm['upper_bound'];?></td>
           <?php endif;?>
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search');?>" /></td>
+        </tr>
+        <tr class="hidden">
+          <td><?php echo $searchForm['relation'];?></td>
+          <td <?php if(isset($searchForm['lower_bound'])) echo 'colspan="3"'; elseif(isset($searchForm['classification'])) echo 'colspan="3"';?>><span class="search_item_name"></span></td>
+          <td class="widget_row_delete">
+            <?php echo image_tag('remove.png', 'alt=Delete class=clear_relation id=clear_cat_relation'); ?>
+          </td>   
         </tr>
       </tbody>
     </table>

@@ -101,19 +101,6 @@ function clearPropertyValue()
   $(parent).hide();
 }
 
-function addPropertyValue()
-{
-  $.ajax(
-  {
-    type: "GET",
-    url: $(this).attr('href')+ (0+$('.property_values tbody#property tr').length),
-    success: function(html)
-    {
-      $('.property_values tbody#property').append(html);
-    }
-  });
-  return false;
-}
 $(document).ready(function()
 {
   $(this).ajaxStart(function(){ 

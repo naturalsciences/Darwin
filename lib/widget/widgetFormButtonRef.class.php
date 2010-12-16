@@ -13,13 +13,13 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         }
         $class = ' '.$class['class'];
         $values = array_merge(array('text' => '', 'is_empty' => false), is_array($value) ? $value : array());
-        $obj_name = $this->getName($value);       
+        $obj_name = $this->getName($value);
         $input = parent::render($name, $value, $attributes, $errors);
         $input .= $this->renderContentTag('div',$obj_name, array(
           'id' => $this->generateId($name)."_name",
           'class' => "ref_name" . $class,
         ));
-              
+
         if($this->getOption('nullable'))
         {
           $options = array(
@@ -43,11 +43,12 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
           $class .= ' hidden';
         }
         $input .= '<div title="'.$this->getOption('box_title').'" id="'.$this->generateId($name).'_button" class="ref_name' .$class. '">';
-
-        $input .= link_to( ($obj_name=='' || $obj_name=='-') ? __('Choose !') : __('Change !'),
-            $this->getOption('link_url'),
-            array('class' => 'but_text'  )
-        ); 
+        $in_text = '<span class="on';
+        if(! ($obj_name=='' || $obj_name=='-'))  $in_text .=' hidden';
+        $in_text .='">'. __('Choose !').'</span><span class="off';
+        if($obj_name=='' || $obj_name=='-')  $in_text .=' hidden';
+        $in_text .= '">'. __('Change !').'</span>';
+        $input .= link_to($in_text, $this->getOption('link_url'), array('class' => 'but_text' )); 
 
         $input .= '</div>';
 
@@ -74,7 +75,7 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
 
     public function getName($value)
     {
-        if(is_numeric($value))
+        if(is_numeric($value) && $value !=0)
             $object = Doctrine::getTable($this->getOption('model'))->find($value);
         else
             return '-';

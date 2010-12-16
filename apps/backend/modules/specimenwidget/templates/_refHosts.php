@@ -107,6 +107,7 @@ $(document).ready(function ()
 
   $('#<?php echo $hostSpecimenId; ?>').change(function()
     {
+
       if($(this).val() != '')
       {      
         $.ajax(

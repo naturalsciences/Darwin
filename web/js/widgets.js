@@ -27,7 +27,7 @@
       $('.widget_top_button img').live('click', base.showWidgetContent);
       $('.widget_bottom_button img').live('click',base.hideWidgetContent);
     };
-    
+
     base.showWidgetContent = function()
     {
       elem = $(this).closest('.widget');
@@ -36,7 +36,7 @@
       elem.find('.widget_bottom_button').slideDown();
       elem.find('.widget_top_button').slideUp();
     };
-    
+
     base.hideWidgetContent = function()
     {
       elem = $(this).closest('.widget');
@@ -97,29 +97,42 @@
             $('.widget_collection_button img').attr('src',base.options['collection_img_down']);
         }
     };
-    
+
     base.addWidget = function(event){
       event.preventDefault();
+      hideForRefresh('.widget_collection_container');
       var insertionDone = false;
       var widget_id = $(this).find('img').attr('alt');
       // Change Widget Status
-      $.get($(this).attr('href'), function(html)
+      var add_url = $(this).attr('href');
+      var positions = [];
+      $('.board_col').each(function (i,el)
       {
-        //Get last position
-        $.get(base.options['position_url'] + '/widget/' + widget_id, function(response)
+        first_non_mandatory = $(el).find('li.widget a.widget_close:first');
+        if(!first_non_mandatory.length)
+          positions.push($(el).find('li.widget').length);
+        else
         {
-          var position = jQuery.parseJSON(response);
-          first_non_mandatory = $('.board_col:eq(' + (position.col_num-1) + ') li.widget a.widget_close:first');
-          if(! first_non_mandatory.length)
-            $('.board_col:eq(' + (position.col_num-1) + ')').append(html)
-
-          //Insert Before last mandatory
-          first_non_mandatory.closest('li.widget').before(html);
-          base.changeOrder();
-        });
+           widget_id = first_non_mandatory.closest('.widget').attr('id');
+           positions.push( $(el).find('>li').index($('#'+widget_id)) );
+        } 
       });
-      
+
+      add_url += '/place/' + positions.join(',');
+      $.get(add_url, function(html)
+      {
+        col = $(html).attr('col-ref');
+        col -= 1;
+
+        if( $('.board_col:eq(' + col + ') > li.widget a.widget_close').length == 0)
+          $('.board_col:eq(' + col + ')').append(html);
+        else
+          $('.board_col:eq(' + col + ') > li:eq('+ positions[col] +')').before(html);
+        showAfterRefresh('.widget_collection_container');
+      });
+
       $(this).parent().hide();
+      
       if($('.widget_collection_container .widget_preview:visible').length == 0)
           $('.widget_collection_container .no_more').removeClass('hidden');
       $('.no_more_wigets').addClass('hidden');

@@ -218,12 +218,14 @@ function addMarkersFromFeatures()
       var num_fld = 1;
       $('.and_tag').click(function()
       {
+        hideForRefresh('#gtu_filter');
         $.ajax({
             type: "GET",
             url: $(this).attr('href') + '/num/' + (num_fld++) ,
             success: function(html)
             {
               $('table.search > tbody .and_row').before(html);
+              showAfterRefresh('#gtu_filter');
             }
         });
         return false;

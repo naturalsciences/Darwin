@@ -5,7 +5,7 @@
       $('.results tbody tr').live('click', function () {
           ref_element_id = getIdInClasses($(this));
           ref_element_name = '';
-          $(this).children("td:first").find("ul li").each(function(index) {ref_element_name = ref_element_name + '[' + $(this).text().trim() + '] ';});
+          $(this).children("td:nth-child(2)").find("ul li").each(function(index) {ref_element_name = ref_element_name + '[' + $(this).text().trim() + '] ';});
           $('.results tbody tr').die('click');
           $('.qtip-button').click();
       });

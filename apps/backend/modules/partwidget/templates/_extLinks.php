@@ -31,6 +31,7 @@ $(document).ready(function () {
 
     $('#add_links').click( function()
     {
+        hideForRefresh('#extLinks');
         parent = $(this).closest('table.extlinks');
         parentId = $(parent).attr('id');
         $.ajax(
@@ -40,6 +41,7 @@ $(document).ready(function () {
           success: function(html)
           {                    
             $(parent).append(html);
+            showAfterRefresh('#extLinks');
           }
         });
         $(this).closest('table.extlinks').find('thead').show();
