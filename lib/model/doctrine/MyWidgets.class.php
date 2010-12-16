@@ -65,7 +65,7 @@ class MyWidgets extends BaseMyWidgets
   public function getTableFromCategory()
   {
     $cat_array = explode('_', $this->_get('category'));
-    if(count($cat_array) == 2)
+    if(count($cat_array) >= 2)
       return $cat_array[1];
     return null;
   }
