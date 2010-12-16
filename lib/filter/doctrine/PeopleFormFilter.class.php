@@ -96,6 +96,7 @@ class PeopleFormFilter extends BasePeopleFormFilter
     $query = parent::doBuildQuery($values);
     $fields = array('activity_date_from', 'activity_date_to');
     $this->addDateFromToColumnQuery($query, $fields, $values['activity_date_from'], $values['activity_date_to']);
+    $query->andWhere('id != 0');
     return $query;
   }
 
