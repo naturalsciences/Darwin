@@ -60,7 +60,7 @@
  grant all on "darwin1"."tbl_people_taxa_names" to darwin2;
  grant all on "darwin1"."tbl_address_e_mails" to darwin2;
  grant all on "darwin1"."tbl_location_categories" to darwin2;
- grant all  on "darwin1"."tbl_locations" to darwin2;
+ grant all on "darwin1"."tbl_locations" to darwin2;
  grant all on "darwin1"."tbl_projections" to darwin2;
  grant all on "darwin1"."tbl_location_children_parents" to darwin2;
  grant all on "darwin1"."tbl_datums" to darwin2;
