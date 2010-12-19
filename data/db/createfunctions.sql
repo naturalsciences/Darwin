@@ -3033,7 +3033,7 @@ BEGIN
     BEGIN
         v_int_value := v_input::INTEGER;
     EXCEPTION WHEN OTHERS THEN
-        RAISE NOTICE 'Invalid integer value: "%".  Returning NULL.', v_input;
+/*        RAISE NOTICE 'Invalid integer value: "%".  Returning NULL.', v_input;*/
         RETURN 0;
     END;
 RETURN v_int_value;
