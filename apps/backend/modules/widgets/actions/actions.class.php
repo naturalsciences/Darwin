@@ -59,7 +59,7 @@ class widgetsActions extends DarwinActions
             'col_num' => $widget->getColNum(),
             'options' => array(
               'eid' =>  $request->getParameter('eid',null),
-              'table' => $widget->getTableFromCategory(),
+              'table' => $widget->getTableFromCategory($request->getParameter('table',null)),
               'view' => $request->hasParameter('view')?true:false,
             ),
     ));
@@ -92,7 +92,7 @@ class widgetsActions extends DarwinActions
       $request->getParameter('widget'),
       array(
         'eid' =>  $request->getParameter('eid',null),
-        'table' => $w->getTableFromCategory(),
+        'table' => $w->getTableFromCategory($request->getParameter('table')),
         'level' => $this->getUser()->getAttribute('db_user_type')
       )
     );
