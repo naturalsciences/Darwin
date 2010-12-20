@@ -26,10 +26,10 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', '/10/')->
-    checkElement('table.results tbody tr:nth-child(6) td:nth-child(2)', '/Invalid/')->
+    checkElement('table.results tbody tr:nth-child(6) td:nth-child(3)', '/Invalid/')->
   end()->
   info('Edit this record')->
-  click('table.results tbody tr:nth-child(6) td.edit a')->
+  click('table.results tbody tr:nth-child(6) td.edit a:nth-child(2)')->
   with('response')->begin()->
     isStatusCode(200)->
     setField('lithology[name]', '')->
@@ -37,11 +37,13 @@ $browser->
   end()->
   click('Save')->
   with('form')->begin()->
-    hasErrors(2)->
+    hasErrors(3)->
     isError('name', 'required')->
     isError('level_ref', 'required')->
+    isError('color', 'required')->
     setField('lithology[name]', 'Proutprout')->
     setField('lithology[level_ref]', '77')->
+    setField('lithology[color]', '#000000')->
   end()->
   click('Save')->
   info('Test the record has been saved in DB');
@@ -55,7 +57,7 @@ $browser->
   with('response')->begin()->
     isStatusCode('200')->
   end()->
-  click('Save', array('lithology'=>array('name'=>'Paxien', 'level_ref'=>'78', 'parent_ref'=>$unit->getId())));
+  click('Save', array('lithology'=>array('name'=>'Paxien','color'=>'#000000','level_ref'=>'78', 'parent_ref'=>$unit->getId())));
 $unit = Doctrine::getTable('lithology')->findOneByName('Paxien');
 $browser->
   test()->is($unit->getName(),'Paxien', 'We have the new encoded unit');

@@ -291,7 +291,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addExtLinks($num, $obj=null)
   {
-      $this->loadEmbedLink();
+      if(! isset($this['newExtLinks'])) $this->loadEmbedLink();
       $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
       if(!$obj) $val = new ExtLinks();
       else $val = $obj ;      
@@ -306,7 +306,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addCodes($num, $collectionId=null, $code=null)
   {
-      $this->loadEmbedCode();
+      if(! isset($this['newCode'])) $this->loadEmbedCode();
       $options = array('referenced_relation' => 'specimens');
       $form_options = array();
       if ($collectionId)
@@ -333,7 +333,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addCollectors($num, $people_ref, $order_by=0)
   {
-      $this->loadEmbedCollectors();
+      if(! isset($this['newCollectors']))  $this->loadEmbedCollectors();
       $options = array('referenced_relation' => 'specimens', 'people_type' => 'collector', 'people_ref' => $people_ref, 'order_by' => $order_by);
       $val = new CataloguePeople();
       $val->fromArray($options);
@@ -341,12 +341,12 @@ class SpecimensForm extends BaseSpecimensForm
       $form = new PeopleAssociationsForm($val);
       $this->embeddedForms['newCollectors']->embedForm($num, $form);
       //Re-embedding the container
-//       $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
+      $this->embedForm('newCollectors', $this->embeddedForms['newCollectors']);
   }
 
   public function addDonators($num, $people_ref, $order_by=0)
   {
-      $this->loadEmbedDonators();
+      if(! isset($this['newDonators']))  $this->loadEmbedDonators();
       $options = array('referenced_relation' => 'specimens', 'people_type' => 'donator', 'people_ref' => $people_ref, 'order_by' => $order_by);
       $val = new CataloguePeople();
       $val->fromArray($options);
@@ -360,7 +360,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addSpecimensAccompanying($num, $obj=null)
   {
-      $this->loadEmbedAccompanying();
+      if(! isset($this['newSpecimensAccompanying'])) $this->loadEmbedAccompanying();
       $options = array('unit' => '%', 'specimen_ref' => $this->getObject()->getId());
       if (!$obj) $val = new SpecimensAccompanying();
       else $val = $obj ;
@@ -375,7 +375,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addComments($num, $obj=null)
   {
-      $this->loadEmbedComment();
+      if(! isset($this['newComments'])) $this->loadEmbedComment();
       $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
       if (!$obj) $val = new Comments();
       else $val = $obj ;
@@ -389,7 +389,7 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function addIdentifications($num, $order_by=0, $obj=null)
   {
-      $this->loadEmbedIndentifications();
+      if(! isset($this['newIdentification'])) $this->loadEmbedIndentifications();
       $options = array('referenced_relation' => 'specimens', 'order_by' => $order_by);
       if (!$obj) $val = new Identifications();
       else $val = $obj ;
@@ -633,7 +633,6 @@ class SpecimensForm extends BaseSpecimensForm
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
   {
-
     /* For each embedded informations or many-to-many data such as collecting tools and methods
      * test if the widget is on screen by testing a flag field present on the concerned widget
      * If widget is not on screen, remove the field from list of fields to be bound, and than potentially saved

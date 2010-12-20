@@ -187,7 +187,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
   public function addIdentifications($num, $order_by=0, $obj=null)
   {
-      $this->loadEmbedIndentifications();
+      if(! isset($this['newIdentification'])) $this->loadEmbedIndentifications();
       $options = array('referenced_relation' => 'specimen_individuals', 'order_by' => $order_by);
       if(!$obj) $val = new Identifications();
       else $val = $obj ;
@@ -220,7 +220,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
 
   public function addExtLinks($num, $obj=null)
   {
-      $this->loadEmbedLink();
+      if(! isset($this['newExtLinks'])) $this->loadEmbedLink();
       $options = array('referenced_relation' => 'specimen_individuals', 'record_id' => $this->getObject()->getId());
       if(!$obj) $val = new ExtLinks();
       else $val = $obj ;      
@@ -234,7 +234,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
   
   public function addComments($num, $obj=null)
   {
-      $this->loadEmbedComment();
+      if(! isset($this['newComments'])) $this->loadEmbedComment();
 
       $options = array('referenced_relation' => 'specimen_individuals', 'record_id' => $this->getObject()->getId());
       if(!$obj) $val = new Comments();
