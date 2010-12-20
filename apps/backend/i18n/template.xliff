@@ -73,19 +73,62 @@
       <source>In this widget you can specify one or more values of the whole collection belonging to the same IG number as estimated by a particular insurance institution and /or on a particular date</source>
       <target>Dans cette widget vous pouvez spécifier une ou plusieur valeurs de la globalité de la collection appartenant au même numéro Ig comme estimé par une institution assurance particulière et/ou à une date définie</target>
       </trans-unit>
-      <trans-unit id="963"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="964"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="965"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="966"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="967"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="968"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="969"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="970"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="971"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="972"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="973"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="974"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
-      <trans-unit id="975"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
+      <trans-unit id="963">
+        <source>Dear %s %s,</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="971">
+        <source>Dear %s</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="964">
+        <source>You should have received a link to renew your password on the e-mail address provided.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="965">
+        <source>Please check your mail box.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="966">
+        <source>DaRWIN 2  team.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="967">
+        <source>Please check your mail box.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="968">
+        <source>Your password has been successfully renewed.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="969">
+        <source>You can now log you in and enjoy enhanced services to our collections.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="970">
+        <source>Dear member of %s,</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="971">
+        <source>Thank you for having registered on DaRWIN 2.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="972">
+        <source>You can now log you in and enjoy enhanced services to our collections.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="973">
+        <source>For your recall, here is your user name:</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="974">
+        <source>User name: %s</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="975">
+        <source>To log you in, you can visit us on %s</source>
+        <target></target>
+      </trans-unit>
       <trans-unit id="976"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
       <trans-unit id="977"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
       <trans-unit id="978"><source>Display help icons</source><target>Afficher les icônes d'aide</target></trans-unit>
