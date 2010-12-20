@@ -74,7 +74,7 @@
             ?>
             <td><?php echo image_tag('info.png',"title=info class=info");?></td>
             <?php if(isset($item['color'])): ?>
-              <td><span class='round_color' style="background-color:<?php echo $item->getColor() ?>">&nbsp;</span></td>
+              <td><span class='round_color' style="<?php if($item->getColor()!= ""):?>background-color:<?php echo $item->getColor();?><?php endif;?>">&nbsp;</span></td>
             <?php endif ; ?>
             <?php if(isset($item['code'])): ?>
               <td>
