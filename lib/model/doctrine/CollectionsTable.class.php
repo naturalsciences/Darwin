@@ -12,7 +12,7 @@ class CollectionsTable extends DarwinTable
             ->from('People p')
             ->innerJoin('p.Collections col')
             ->andWhere('p.is_physical = false')
-            ->orderBy('p.id ASC, col.name ASC, col_path_id ASC');
+            ->orderBy('p.id ASC, col_path_id ASC, col.name ASC');
 
       if($user && ! $user->isA(Users::ADMIN) )
       {
@@ -42,7 +42,7 @@ class CollectionsTable extends DarwinTable
       $q = Doctrine_Query::create()
            ->select('c.*, CONCAT(c.path,c.id,E\'/\') as col_path_id')
            ->from('Collections c')
-           ->orderBy('c.name ASC, col_path_id ASC');
+           ->orderBy('col_path_id ASC,c.name ASC');
       if($inst != null)
         $q->andWhere('c.institution_ref = ?',$inst);
 
