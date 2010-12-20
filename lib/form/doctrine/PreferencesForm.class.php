@@ -82,9 +82,9 @@ class PreferencesForm extends BaseForm
     $this->widgetSchema->setHelp('board_spec_rec_pp',"Number of saved specimens list showed on the board widget. (You browse every specimen lists on the dedicated page)");
     $this->widgetSchema['board_spec_rec_pp']->setDefault($this->db_keys['board_spec_rec_pp']? $this->db_keys['board_spec_rec_pp'] : Doctrine::getTable('Preferences')->getDefaultValue('board_spec_rec_pp'));
 
-    $this->widgetSchema['help_message_activated'] = new sfWidgetFormChoice(array('choices' => array(0 => 'No', 1 => 'Yes'))) ;
-    $this->widgetSchema->setHelp('help_message_activated',"Display help icons in forms or hide icons");    
-    $this->widgetSchema['help_message_activated']->setDefault($this->db_keys['help_message_activated']) ;
+    $this->widgetSchema['help_message_activated'] = new sfWidgetFormInputCheckbox() ;
+    $this->widgetSchema->setHelp('help_message_activated',"Display help icons in forms or hide icons");
+    $this->widgetSchema['help_message_activated']->setDefault((boolean)$this->db_keys['help_message_activated']) ;
     $this->widgetSchema['help_message_activated']->setLabel("Display help icons") ;
     $this->validatorSchema['help_message_activated'] = new sfValidatorboolean() ;
     
