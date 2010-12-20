@@ -265,4 +265,28 @@ class SpecimenSearchTable extends Doctrine_Table
         ) ;
       return $fields;
     }
+
+    public function getRandomSpecimens($nbr=5)
+    {
+      $q = Doctrine_Query::create()
+        ->from('SpecimenSearch s')
+        ->where('s.collection_is_public=true')
+        ->orderBy('random()')
+        ->limit($nbr)
+        ->useResultCache(new Doctrine_Cache_Apc())
+        ->setResultCacheLifeSpan(60 * 60 * 24); //1 day
+      return $q->execute();
+    }
+    
+    public function getSpecIndivCount()
+    {
+      $q = Doctrine_Query::create()
+        ->select('count(individual_ref)')
+        ->from('SpecimenSearch s')
+        ->useResultCache(new Doctrine_Cache_Apc())
+        ->setResultCacheLifeSpan(60 * 60 * 24); //1 day
+      $result = $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+      return $result;
+    }
+
 }

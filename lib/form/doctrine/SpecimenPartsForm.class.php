@@ -132,15 +132,6 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       'add_label' => 'Add another sub container storage',
       ));
 
-
-//     $this->widgetSchema['container_storage']->setOption('forced_choices',
-//       Doctrine::getTable('SpecimenParts')->getDistinctContainerStorages($this->getObject()->getContainerType())
-//     );
-// 
-//     $this->widgetSchema['sub_container_storage']->setOption('forced_choices',
-//       Doctrine::getTable('SpecimenParts')->getDistinctSubContainerStorages($this->getObject()->getSubContainerType())
-//     );
-
     $this->widgetSchema['category'] = new sfWidgetFormChoice(array(
       'choices' => SpecimenParts::getCategories(),
     ));

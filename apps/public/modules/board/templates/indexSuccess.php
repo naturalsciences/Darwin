@@ -20,7 +20,19 @@
    <li>Aliquam tincidunt mauris eu risus.</li>
 </ul>
 
+<br /><br />
 
+<?php echo sprintf(__('We have about %d specimens in our collections'),$count);?>
+<br /><br />
+<div class="preview">
+  <h2><?php echo __('Discover some of our specimens');?></h2>
+  <ul>
+    <?php foreach($specimens as $specimen):?>
+      <li>
+        <?php echo link_to($specimen->getTaxonName(),'search/view?id='.$specimen->getSpecRef());?>
+      </li>
+    <?php endforeach;?>
+  </ul>
 </div>
 
-
+</div>

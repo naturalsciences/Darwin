@@ -21,9 +21,10 @@ class PeopleTable extends DarwinTable
   public function searchPysical($name)
   {
     $q = Doctrine_Query::create()
-	 ->from('People p')
-	->andWhere('p.is_physical = ?', true)
-	->andWhere('p.formated_name_ts @@ to_tsquery(\'simple\',?)',$name);
+      ->from('People p')
+      ->andWhere('p.is_physical = ?', true)
+      ->andWhere('p.id != 0')
+      ->andWhere('p.formated_name_ts @@ to_tsquery(\'simple\',?)',$name);
     return $q->execute();
   }
 
@@ -38,6 +39,7 @@ class PeopleTable extends DarwinTable
     $q = Doctrine_Query::create()
 	 ->from('People p')
 	 ->where('p.id = ?', $id)
+   ->andWhere('p.id != 0')
 	 ->andWhere('p.is_physical = ?', true);
 
     return $q->fetchOne(); 
@@ -50,12 +52,11 @@ class PeopleTable extends DarwinTable
   */
     public function getPeopleByName($name)
     {
-	   $q = Doctrine_Query::create()
-		->from('people p')
-		->where('p.family_name = ?', $name);
+      $q = Doctrine_Query::create()
+      ->from('people p')
+      ->where('p.family_name = ?', $name);
 
-	   return $q->fetchOne(); 
+      return $q->fetchOne(); 
     }
-    
 
 }

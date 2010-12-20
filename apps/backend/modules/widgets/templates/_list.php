@@ -6,7 +6,7 @@ if(!isset($table)) $table = '';
 else $table = '&table='.$table;
 if(isset($view)) $read_only = '&view=true' ;
 else $read_only = '' ;
-$other_query = '';
+$other_query = $table;
 if(isset($query_options))
 {
   $other_query = http_build_query($query_options->getRawValue());

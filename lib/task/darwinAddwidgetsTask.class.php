@@ -37,7 +37,7 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
-    
+
     if($arguments['user_id'] == 'all')
     {
       $userIds = Doctrine_Query::create()->select('id')->from('Users')->fetchArray();
@@ -48,14 +48,14 @@ EOF;
     foreach($userIds as $key=>$value)
     {
       $user = Doctrine::getTable('Users')->find($value);
-      
+
       if($options['reset'])
       {
         Doctrine_Query::create()
-          ->delete('MyWidgets p') 
+          ->delete('MyWidgets p')
           ->where('p.user_ref = ?', $user->getId())
           ->execute();
-        $this->logSection('add-widgets', sprintf('Remove old widgets successfully!',$cnt));
+        $this->logSection('add-widgets', 'Remove old widgets successfully!');
       }
       $cnt = $user->addUserWidgets();
       $this->logSection('add-widgets', sprintf('Added %d widgets successfully!',$cnt));

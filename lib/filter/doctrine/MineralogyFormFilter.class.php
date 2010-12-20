@@ -63,6 +63,14 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
     $this->validatorSchema['table'] = new sfValidatorString(array('required' => true));
     $this->validatorSchema['level'] = new sfValidatorString(array('required' => false));
     $this->validatorSchema['caller_id'] = new sfValidatorString(array('required' => false));
+
+    $rel = array('child'=>'Is a Child Of','direct_child'=>'Is a Direct Child','synonym'=> 'Is a Synonym Of');
+    $this->widgetSchema['relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    
+    $this->widgetSchema['item_ref'] = new sfWidgetFormInputHidden();
+
+    $this->validatorSchema['relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+    $this->validatorSchema['item_ref'] = new sfValidatorInteger(array('required'=>false));
   }
 
   public function addCodeColumnQuery(Doctrine_Query $query, $field, $values)
@@ -85,6 +93,7 @@ class MineralogyFormFilter extends BaseMineralogyFormFilter
   {
     $query = parent::doBuildQuery($values);
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['name']);
+    $this->addRelationItemColumnQuery($query, $values);
     $query->andWhere("id != 0 ")
 	  ->innerJoin($query->getRootAlias().".Level")
           ->limit($this->getCatalogueRecLimits());

@@ -50,6 +50,7 @@ class institutionActions extends DarwinActions
       if ($this->form->isValid())
       {
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
+        $query->andWhere('id != 0');
         $this->pagerLayout = new PagerLayoutWithArrows(
 	  new Doctrine_Pager(
 	    $query,

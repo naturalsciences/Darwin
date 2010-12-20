@@ -165,10 +165,14 @@ class MyWidgets extends BaseMyWidgets
     return $cat_array[0].'widget';
   }
 
-  public function getTableFromCategory()
+  public function getTableFromCategory($table_param)
   {
+    if($table_param != null)
+    {
+      return $table_param;
+    }
     $cat_array = explode('_', $this->_get('category'));
-    if(count($cat_array) == 2)
+    if(count($cat_array) >= 2)
       return $cat_array[1];
     return null;
   }
