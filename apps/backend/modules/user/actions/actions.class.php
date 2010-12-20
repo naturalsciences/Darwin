@@ -202,7 +202,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_addresses'));
-      if($request->getParameter('ref_id') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
+      if($request->getParameter('ref_id') != $this->form->getObject()->getPersonUserRef()) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
@@ -244,7 +244,7 @@ class userActions extends DarwinActions
     if($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter('users_comm'));
-      if($request->getParameter('ref_id') != $this->form->getValue('person_user_ref')) $this->forwardToSecureAction();      
+      if($request->getParameter('ref_id') != $this->form->getObject()->getPersonUserRef()) $this->forwardToSecureAction();      
       if($this->form->isValid())
       {
         try
@@ -370,6 +370,8 @@ class userActions extends DarwinActions
       if($this->form->isValid())
       {
         $this->form->save();
+        if($this->getUser()->getHelpIcon() != $this->form['help_message_activated']->getValue()) 
+          $this->getUser()->setHelpIcon($this->form['help_message_activated']->getValue()) ;
         return $this->redirect('user/preferences');
       }
     }

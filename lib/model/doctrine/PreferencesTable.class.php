@@ -82,6 +82,7 @@ class PreferencesTable extends Doctrine_Table
       case 'search_cols_part': return 'taxon|individual_type|sex|stage|building|floor|room|row|shelf|container|container_storage'; break;
       case 'board_search_rec_pp': return '10'; break;
       case 'board_spec_rec_pp': return '10'; break;
+      case 'help_message_activated': return true; break;
     }
   }
 }

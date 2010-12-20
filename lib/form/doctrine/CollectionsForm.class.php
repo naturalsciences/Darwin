@@ -47,6 +47,10 @@ class CollectionsForm extends BaseCollectionsForm
     ));
     $this->widgetSchema['parent_ref']->setLabel('Parent collection');
 
+    $this->widgetSchema->setHelps(array(
+                                       'is_public' => "Uncheck this option if you want your collection to be private. So this collection won't be visible in the public interface neither by simply registered user",
+                                       'main_manager_ref' => "Specify the main manager for this collection, you can add other manager on the rights table below", )
+                                 );
 
     $this->validatorSchema['collection_type'] = new sfValidatorChoice(array('choices' => array('mix' => 'mix', 'observation' => 'observation', 'physical' => 'physical'), 'required' => true));
 

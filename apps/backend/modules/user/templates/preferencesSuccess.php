@@ -14,21 +14,27 @@
         <tr>
           <th>
           <?php echo $form['search_cols_specimen']->renderLabel();?>
-          <div class="help_ico" alt="<?php echo $form['search_cols_specimen']->renderHelp();?>"></div>
+          <?php if($sf_user->getHelpIcon()) : ?>          
+            <div class="help_ico" alt="<?php echo $form['search_cols_specimen']->renderHelp();?>"></div>
+          <?php endif ; ?>
           </th>
           <td><div class="search_cols_specimen" ><table><?php echo $form['search_cols_specimen'];?></table></div></td>
         </tr>
         <tr>
           <th>
-          <?php echo $form['search_cols_individual']->renderLabel();?>
-          <div class="help_ico" alt="<?php echo $form['search_cols_individual']->renderHelp();?>"></div>
+            <?php echo $form['search_cols_individual']->renderLabel();?>
+            <?php if($sf_user->getHelpIcon()) : ?>          
+              <div class="help_ico" alt="<?php echo $form['search_cols_individual']->renderHelp();?>"></div>
+            <?php endif ; ?>
           </th>
           <td><div class="search_cols_individual" ><table><?php echo $form['search_cols_individual'];?></table></div></td>
         </tr>
         <tr>
           <th>
-          <?php echo $form['search_cols_part']->renderLabel();?>
-          <div class="help_ico" alt="<?php echo $form['search_cols_part']->renderHelp();?>"></div>
+            <?php echo $form['search_cols_part']->renderLabel();?>
+            <?php if($sf_user->getHelpIcon()) : ?>          
+              <div class="help_ico" alt="<?php echo $form['search_cols_part']->renderHelp();?>"></div>
+            <?php endif ; ?>
           </th>
           <td><div class="search_cols_part" ><table><?php echo $form['search_cols_part'];?></table></div></td>
         </tr>
@@ -42,17 +48,38 @@
         <tr>
           <th>
             <?php echo $form['board_spec_rec_pp']->renderLabel();?>
-            <div class="help_ico" alt="<?php echo $form['board_spec_rec_pp']->renderHelp();?>"></div>
+            <?php if($sf_user->getHelpIcon()) : ?>
+              <div class="help_ico" alt="<?php echo $form['board_spec_rec_pp']->renderHelp();?>"></div>
+            <?php endif ; ?>
           </th>
           <td><?php echo $form['board_spec_rec_pp'];?></td>
         </tr>
         <tr>
           <th>
             <?php echo $form['board_search_rec_pp']->renderLabel();?>
-            <div class="help_ico" alt="<?php echo $form['board_search_rec_pp']->renderHelp();?>"></div>
+            <?php if($sf_user->getHelpIcon()) : ?>            
+              <div class="help_ico" alt="<?php echo $form['board_search_rec_pp']->renderHelp();?>"></div>
+            <?php endif ; ?>
           </th>
           <td><?php echo $form['board_search_rec_pp'];?></td>
         </tr>
+      <thead>
+        <tr>
+          <th colspan="2"><?php echo __("Forms");?></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>
+            <?php echo $form['help_message_activated']->renderLabel();?>
+            <?php if($sf_user->getHelpIcon()) : ?>            
+              <div class="help_ico" alt="<?php echo $form['help_message_activated']->renderHelp();?>"></div>
+            <?php endif ; ?>
+          </th>
+          <td><?php echo $form['help_message_activated'];?></td>
+        </tr>
+        <tr> 
+      </tbody>       
       <tfoot>
         <tr>
           <td colspan='2'>

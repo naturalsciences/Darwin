@@ -37,7 +37,7 @@ class UsersForm extends BaseUsersForm
       $this->validatorSchema['gender'] = new sfValidatorChoice(array('choices' => array('M' => 'M', 'F' => 'F'), 'required' => false)); 
       $this->widgetSchema['title']->setAttributes(array('class'=>'small_size')) ;     
       $this->validatorSchema['title'] =  new sfValidatorString(array('required' => false));
-      $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));
+      $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));        
     }
     elseif($this->options['is_physical'])
     {
@@ -60,7 +60,7 @@ class UsersForm extends BaseUsersForm
                                                                    );       
       $this->widgetSchema['title']->setAttributes(array('class'=>'small_size')) ;     
       $this->validatorSchema['title'] =  new sfValidatorString(array('required' => false)); 
-      $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;                                                                
+      $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;                                                                      
     }
     else
     {
@@ -82,11 +82,11 @@ class UsersForm extends BaseUsersForm
                                                                       )
                                                                 );   
       $this->validatorSchema['sub_type'] =  new sfValidatorString(array('required' => false));
-      $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;
+      $this->validatorSchema['people_id'] = new sfValidatorInteger(array('required' => false)) ;     
     }
-                                         
+    $this->widgetSchema->setHelp('people_id','With this field, you can associate this user to a people recorded in the database (because user and people are not the same in DaRWIN2), the real interest is it will improve the synchronisation between the two record associated');                                             
     $this->widgetSchema['given_name'] = new sfWidgetFormInput();
-    $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));    
+    $this->widgetSchema['given_name']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['family_name'] = new sfWidgetFormInput();
     $this->widgetSchema['family_name']->setAttributes(array('class'=>'medium_size'));
 

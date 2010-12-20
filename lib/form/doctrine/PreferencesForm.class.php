@@ -12,7 +12,7 @@ class PreferencesForm extends BaseForm
 {
   public function configure()
   {
-    $pref_keys = array('search_cols_specimen', 'search_cols_individual', 'search_cols_part', 'board_search_rec_pp', 'board_spec_rec_pp');
+    $pref_keys = array('search_cols_specimen', 'search_cols_individual', 'search_cols_part', 'board_search_rec_pp', 'board_spec_rec_pp','help_message_activated');
     $this->db_keys = Doctrine::getTable('Preferences')->getAllPreferences($this->options['user']->getId(), $pref_keys);
     $is_reg_user = $this->options['user']->isA(Users::REGISTERED_USER) ;
     $choices = Doctrine::getTable('MySavedSearches')->getAllFields('specimen') ;
@@ -82,6 +82,12 @@ class PreferencesForm extends BaseForm
     $this->widgetSchema->setHelp('board_spec_rec_pp',"Number of saved specimens list showed on the board widget. (You browse every specimen lists on the dedicated page)");
     $this->widgetSchema['board_spec_rec_pp']->setDefault($this->db_keys['board_spec_rec_pp']? $this->db_keys['board_spec_rec_pp'] : Doctrine::getTable('Preferences')->getDefaultValue('board_spec_rec_pp'));
 
+    $this->widgetSchema['help_message_activated'] = new sfWidgetFormChoice(array('choices' => array(0 => 'No', 1 => 'Yes'))) ;
+    $this->widgetSchema->setHelp('help_message_activated',"Display help icons in forms or hide icons");    
+    $this->widgetSchema['help_message_activated']->setDefault($this->db_keys['help_message_activated']) ;
+    $this->widgetSchema['help_message_activated']->setLabel("Display help icons") ;
+    $this->validatorSchema['help_message_activated'] = new sfValidatorboolean() ;
+    
     $this->widgetSchema->setNameFormat('preferences[%s]');
   }
 
@@ -106,6 +112,7 @@ class PreferencesForm extends BaseForm
       'search_cols_part'=> implode('|',$this->getValue('search_cols_part')),
       'board_search_rec_pp'=> $this->getValue('board_search_rec_pp'),
       'board_spec_rec_pp'=> $this->getValue('board_spec_rec_pp'),
+      'help_message_activated' => intval($this->getValue('help_message_activated')),
     );
     Doctrine::getTable('Preferences')->saveAllPreferences($this->options['user']->getId(),$results);
   }

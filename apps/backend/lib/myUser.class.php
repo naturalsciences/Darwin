@@ -101,5 +101,18 @@ class myUser extends sfBasicSecurityUser
   {
     return $this->getDbUserType() == $role;
   }
+  
+  /**
+   * @return a boolean to know if the help icon is displayed on forms or not
+   */
+  public function getHelpIcon()
+  {  
+    return $this->getAttribute('helpIcon') ;
+  }
+  
+  public function setHelpIcon($val)
+  {
+    $this->setAttribute('helpIcon',$val);    
+  }
 
 }

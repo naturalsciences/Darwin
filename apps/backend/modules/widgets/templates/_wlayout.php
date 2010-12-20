@@ -4,7 +4,7 @@
   <div class="widget_top_button" <?php if(! $is_opened):?> style="display:block"<?php endif;?>>
         <?php if($category=='boardwidget'||$category=='specimensearchwidget'|| $read_only):?>
             <?php echo image_tag('widget_box_expand_button.png', 'alt=Close');?>
-        <?php else:?>
+        <?php else:?>            
             <?php echo image_tag('widget_box_expand_green_button.png', 'alt=Close');?>
         <?php endif;?>
   </div>
@@ -17,7 +17,12 @@
                 <a href="#" class="widget_close" ><?php echo image_tag('widget_close.png', 'alt=Close');?></a>
             <?php endif;?>
     </div>
-    <span><?php echo __($title); ?></span>
+    <span>
+      <?php if($sf_user->getHelpIcon() && $category!='boardwidget' && !$read_only) : ?>          
+        <div class="help_ico" alt="<?php echo MyWidgets::getHelpIcon($category,$widget) ;?>"></div>
+      <?php endif ; ?>
+      <?php echo __($title); ?>
+    </span>
   </div>
   <div class="widget_content <?php if(! $is_opened):?>hidden<?php endif;?>">
 

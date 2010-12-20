@@ -64,5 +64,4 @@ class UsersTable extends DarwinTable
           ->andWhere('lower(uc.entry) = lower(?)', $email);
     return $q->fetchOne();
   }
-
 }

@@ -226,4 +226,5 @@ class MyWidgetsTable extends DarwinTable
     $result = $conn->fetchAssoc($q);  
     $conn->close() ; 
   }
+ 
 }

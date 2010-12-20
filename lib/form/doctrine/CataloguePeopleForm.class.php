@@ -57,7 +57,11 @@ class CataloguePeopleForm extends BaseCataloguePeopleForm
                                          'people_ref' => $this->getI18N()->__('Associated'),
                                         )
                                   );
-    
+    $this->widgetSchema->setHelps(array('people_type' => $this->getI18N()->__('Type'),
+                                         'people_sub_type' => $this->getI18N()->__('Sub-Type'),
+                                         'people_ref' => $this->getI18N()->__('Associated'),
+                                        )
+                                  );
   }
   
   public function forceSubType()

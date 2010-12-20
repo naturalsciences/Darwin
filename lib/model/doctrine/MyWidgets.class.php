@@ -5,6 +5,109 @@
  */
 class MyWidgets extends BaseMyWidgets
 {
+  public static $help_widget = array(
+    "cataloguewidget"=> array(
+        "cataloguePeople" => "This widget allows you to add people that can have different roles. e.g. an author, a reviewer, an expert in a certain domain, etc.",    
+        "comment" => "This widget is used to add commentary.If you wish, You can add more than one commentary notion per record. You cannot add the same notion twice in one record, however",    
+        "extLinks" => "This widget allows you to add a URL address to the record (ex : http://www.naturalsciences.be)",    
+        "properties" => "This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= measurement, sub type= lenght, qualifier= wing, method= manual, tool= ruler, value units= cm, Accuracy units= mm , value= 3, accuracy=0.2",
+        "keywords" => "This widget allows you to split the entire record name into smaller fields. Most of the keyword will follow the ABCDEFG standard",
+        "vernacularNames" => "This widget can be used to add the equivalent vernacular name of the record in different languages. You can even add more than one vernacular name in the same language ",
+        "relationRename" => "In this widget you can add the current name of the catalogue item",
+        "synonym" => "This widget allows you to add synonyms, isonyms or homonyms of the catalogue item",
+        "relationRecombination" => "In this widget you can add the original combination(s) that constitutes the present catalogue item",        
+        "collectionsCodes" => "This widget allows you to preset the default prefix and/or separator and/or code and/or separator and/or suffix of the main code that will be used when choosing this collection in the specimen screen",
+        "insurances" => "In this widget you can specify one or more values of the whole collection belonging to the same IG number as estimated by a particular insurance institution and /or on a particular date",        
+        ),
+    "individualswidget"=>array(
+        "refIdentifications" => "",
+        "socialStatus" => "This widget is mainly used for entering the social class of an animal living in a social group. e.g. to indicate that an individual is a workerbee",
+        "rockForm" => "",
+        "specimenIndividualCount" => "In this widget you can specify the exact number of individuals belonging to the same specimen or you can specify a lower and upperbound estimate of the number of individuals",
+        "stage" => "This widget lets you describe the stage of the present individual e.g. a larva",
+        "specimenIndividualComments" =>  "This widget is used to add commentary. You can sometimes add more than one commentary notion per record. You cannot add the same notion twice in one record, however",    
+        "refProperties" => "This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= measurement, sub type= lenght, qualifier= wing, method= manual, tool= ruler, value units= cm, Accuracy units= mm , value= 3, accuracy=0.2",
+        "type" => "This widget allows you to add the information regarding the status of the individual e.g. holotype. You can, however, also add non conformistic nomenclatura types",
+        "sex" => "This widget allows you to enter the sex of a particular individual. You can also add a specific attribute e.g. pregnant with eggs",
+        "extLinks" => "This widget allows you to add a URL address to the record", 
+        ),
+    "partwidget"=> array(
+        "complete" => "",
+        "container" => "",
+        "partCount" => "",
+        "comments" => "This widget is used to add commentary. You can sometimes add more than one commentary notion per record. You cannot add the same notion twice in one record, however",
+        "refInsurances" => "",
+        "extLinks" => "This widget allows you to add a URL address to the record", 
+        "parent" => "",
+        "specPart" => "",
+        "localisation" => "",
+        "refCodes" => "",
+        "maintenance" => "",
+        "refProperties" => "This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= measurement, sub type= weight, qualifier= shell, method= electronic, tool= scale, value units= g, value=2",
+        ),      
+    "peoplewidget"=>array(
+        "comment" => "This widget is used to add commentary. You can sometimes add more than one commentary notion per record. You cannot add the same notion twice in one record, however",
+        "comm" => "This wigdet regroups all communication information of a user, such as phone/fax number, email. You can use our tags to set the type of entry (work or home phone for instance)",
+        "lang" => "",
+        "properties" => "This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= domicile, Date from=01/02/1960, Date to= 05/06/1962 , value= Solomon Islands",
+        "address" => "This widget allows you to add one or more addresses, it can be home address, work or more. The locality and the country are required fields", 
+        "relation" => "This widget will allow you to add e.g. the institution/department/section the person works/worked for",
+        "extLinks" => "",
+        ),
+    "specimensearchwidget"=>array(
+        "localisation" => "",
+        "stage" => "",
+        "whatSearched" => "",
+        "refLithology" => "",
+        "specIds" => "",
+        "refTaxon" => "",
+        "refGtu" => "",
+        "refChrono" => "",
+        "tools" => "",
+        "type" => "",
+        "methods" => "",
+        "codes" => "",
+        "refCollection" => "",
+        "sex" => "",
+        "status" => "",
+        "expedition" => "",
+        "refLitho" => "",
+        "container" => "",
+        "refMineral" => "",
+        "latlong" => "",
+        "social" => "",
+        "rockform" => "",
+        ),
+    "specimenwidget"=> array(
+        "refChrono" => "",
+        "extLinks" => "This widget allows you to add a URL address to the record", 
+        "refCollection" => "",
+        "refIgs" => "",
+        "refExpedition" => "",
+        "refHosts" => "",
+        "method" => "",
+        "refComment" => "This widget is used to add commentary. You can sometimes add more than one commentary notion per record. You cannot add the same notion twice in one record, however",
+        "refDonators" => "",
+        "refProperties" => "This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= watertemperature, sub type= C°,Date from=01/07/1974 10:05:00, value= 15",
+        "refCollectors" => "",
+        "refMineral" => "",
+        "refLithology" => "",
+        "refCodes" => "",
+        "specimensAccompanying" => "",
+        "refGtu" => "",
+        "refLitho" => "",
+        "refTaxon" => "",
+        "tool" => "",
+        "refIdentifications" => "",
+        "acquisitionCategory" => "",
+        ),
+    "userswidget"=>array(
+        "address" => "This widget allow you to add one or more addresses, it can be home address, work or more. The locality and the country are required fields", 
+        "lang" => "This widget show all known languages of this user, Some language can be set as mother tongue. A language can also be set as prefered, this prefered language will be used by DaRWIN. If our application can translate the prefered language the default language will be used (english) ",
+        "info" => "This widget is used to specify or change a login and password. if wished, a user can have more than one couple of Login/password.",
+        "comm" => "This wigdet groups all communication information of a user, such as phone/fax number, email. You can use our tags to set the type of entry (work or home phone for instance)",
+        )
+  ) ;
   /**
   * Get Widget list file for a given role
   * @param int $role The Role of the user
@@ -69,4 +172,17 @@ class MyWidgets extends BaseMyWidgets
       return $cat_array[1];
     return null;
   }
+  
+  public static function getHelpIcon($category,$groupname)
+  {
+    $help_widget = MyWidgets::$help_widget[$category][$groupname] ;
+    try{
+        $i18n_object = sfContext::getInstance()->getI18n();
+    }
+    catch( Exception $e )
+    {
+        return $help_widget;
+    }
+    return $i18n_object->__($help_widget);    
+  }   
 }

@@ -40,5 +40,6 @@ class UsersAddressesForm extends BaseUsersAddressesForm
     $this->widgetSchema['country']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['organization_unit']->setAttributes(array('class'=>'medium_size'));
     $this->widgetSchema['person_user_role']->setAttributes(array('class'=>'medium_size'));
+    $this->widgetSchema->setHelp('people_id','With this field, you can associate this user to a people recorded in the database (because user and people are not the same in DaRWIN2), the real interest is it will improve the synchronisation between the two record associated');     
   }
 }

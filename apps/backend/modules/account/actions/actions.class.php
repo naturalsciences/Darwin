@@ -62,6 +62,7 @@ class accountActions extends DarwinActions
         }
         else
           $this->getUser()->setCulture('en') ;
+        $this->getUser()->setHelpIcon(Doctrine::getTable("Preferences")->getPreference($this->form->user->getId(),'help_message_activated',true));        
         $this->redirect('@homepage');
       }
     }

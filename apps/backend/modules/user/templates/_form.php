@@ -95,7 +95,10 @@
           </td>
         </tr>
         <tr class="trusted_user hidden">
-          <th><?php echo $form['people_id']->renderLabel('Reference to a '.isset($form['title'])?'People':'Institution') ?></th>
+          <th><?php echo $form['people_id']->renderLabel('Reference to a '.isset($form['title'])?'People':'Institution') ?>
+          <?php if($sf_user->getHelpIcon()) : ?>          
+            <div class="help_ico" alt="<?php echo $form['people_id']->renderHelp();?>"></div>
+          <?php endif ; ?></th>
           <td class="trust_level_2">
             <?php echo $form['people_id']->renderError() ?>
             <?php echo $form['people_id'] ?>
