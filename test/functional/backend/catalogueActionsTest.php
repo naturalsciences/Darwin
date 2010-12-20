@@ -50,7 +50,7 @@ $browser->
   get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[0]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined from')->
     checkElement('form')->
     checkElement('input[id="catalogue_relationships_record_id_2_name"][value="Falco Peregrinus recombinus"]')->
   end()->
@@ -60,7 +60,7 @@ $browser->
   get('/catalogue/relation?type=recombined&table=taxonomy&rid=4')->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined from')->
     checkElement('form')->
     checkElement('input[id="catalogue_relationships_record_id_2_name"][value=""]')->
   end()->
@@ -82,7 +82,7 @@ $browser->
   get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined from')->
     checkElement('form')->
     checkElement('input[id="catalogue_relationships_record_id_2_name"]')->
     checkElement('input[id="catalogue_relationships_record_id_2_name"][value="'.$tax->getName().'"]')->
@@ -98,7 +98,7 @@ $browser->
   get('/catalogue/relation?type=recombined&table=taxonomy&rid=4&id='.$items[1]['id'])->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined From')->
+    checkElement('label[for="catalogue_relationships_record_id_2"]','Recombined from')->
     checkElement('form')->
     checkElement('#relation_catalogue_name','')->
   end();
