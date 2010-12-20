@@ -91,25 +91,17 @@ $browser->
     isStatusCode(200)->
     checkElement('input[value="Aves"]')->
   end()->
-  click('#submit',array( ))->with('form')->debug()->
-  followRedirect()->
-
-  with('request')->begin()->
-    isParameter('module', 'collection')->
-    isParameter('action', 'edit')->
-  end()->
 
   get('/collection/index')->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('.treelist:first > ul > li',2)->
     checkElement('.treelist:last > ul > li',1)->
-    checkElement('.treelist:last > ul > li > ul > li',1)->
   end()->
 
+  info('Delete')->
 
- info('Delete')->
-  click('span > a', array(), array('position' => 5))->
+  click('.col_name:eq(5) > a:first')->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
@@ -124,7 +116,7 @@ $browser->
   
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('.treelist:first > ul > li',1)->
+    checkElement('.treelist:first > ul > li',2)->
   end();
 
 $user_id = $browser->addCustomUserAndLogin();
@@ -150,7 +142,7 @@ $browser->
         'check_right' => true),
       1 => array(
         'user_ref'       => $user_id,
-        'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Fossile Aves')->getId(),
+        'collection_ref' => Doctrine::getTable('collections')->getCollectionByName('Aves')->getId(),
         'check_right' => false)
     )
     )));
@@ -162,13 +154,8 @@ $browser->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
   end()->
-  with('response')->begin()->
-    isStatusCode(200)->
-// @ TODO: Y!, you should rework this line because I don't find any reference to what you're looking for here - P!
-//     checkElement('#'.$user_id.' > td:first > label',Doctrine::getTable('users')->findUser($user_id)->getFormatedName())->
-    end()->
     
-  get('collection/edit/id/'.Doctrine::getTable('collections')->getCollectionByName('Fossile Aves')->getId())->
+  get('collection/edit/id/'.Doctrine::getTable('collections')->getCollectionByName('Aves')->getId())->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->

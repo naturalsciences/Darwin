@@ -13,6 +13,7 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
   public function configure()
   {
     $this->useFields(array('taxon_name','collection_name','ig_num','taxon_level_ref')) ;
+
     $this->addPagerItems();
     $this->widgetSchema->setNameFormat('searchSpecimen[%s]');
     $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
@@ -25,6 +26,11 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
                                          'ig_num' => 'Ig unit'
                                         )
                                   );
+    $this->widgetSchema['taxon_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
+        'model' => 'CatalogueLevels',
+        'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
+        'add_empty' => $this->getI18N()->__('All')
+      ));
     $this->widgetSchema['collection_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));                             
     $this->widgetSchema['ig_num'] = new sfWidgetFormInputText();                                     
     $this->widgetSchema['ig_num']->setAttributes(array('class'=>'medium_size'));

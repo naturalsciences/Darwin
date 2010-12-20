@@ -314,16 +314,21 @@ class DarwinTestFunctional extends sfTestFunctional
      	with('response')->begin()->  	
      	click('#submit_spec_f1', array('specimen_parts' => array(
      										'container' => 'Test for parts',
+                                                                                'code'=>1,
+                                                                                'comment'=>1,
      										'surnumerary' => true,
      										'sub_container' => 'Sub test for parts',
      										'newInsurance' => array(
      													0 => array(
+                                                                                                          'referenced_relation' => 'specimen_parts',
      															'insurance_year' => 1977,
      															'insurance_value' => 666,
      															'insurance_currency' => '120€',
      															'insurer_ref' => $institution))	,
-     										 'newComments' => array(0 => array('notion_concerned'=> 'preparation',
-     															'comment' => 'part preparation')),
+     										 'newComments' => array(0 => array(
+                                                                                    'referenced_relation' => 'specimen_parts',
+                                                                                    'notion_concerned'=> 'preparation',
+                                                                                    'comment' => 'part preparation')),
      										 'newCode' => array(
                 	  	  			0 => array('code_category' => 'temporary','code_prefix' => 'sec', 'code_prefix_separator' => '/','code' => '987', 
                 	  	  			    'code_suffix' => 'ary', 'code_suffix_separator' => '/', 'referenced_relation' => 'specimen_parts'))

@@ -57,12 +57,6 @@ $browser->
 
   followRedirect()->
 
-  with('response')->begin()->
-    isRedirected()->
-  end()->
-
-  followRedirect()->
-
   with('request')->begin()->
     isParameter('module', 'board')->
     isParameter('action', 'index')->

@@ -21,6 +21,6 @@ $browser->
     checkElement('.board_col',2)->
     checkElement('.board_col:first .widget', 2)->
     checkElement('.board_col:last .widget', 2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','/My saved specimens/')->
   end()
 ;

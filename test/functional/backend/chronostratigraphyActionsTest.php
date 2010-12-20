@@ -28,7 +28,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', '/12/')->
-    checkElement('table.results tbody tr:nth-child(4) td:nth-child(2)', '/Invalid/')->
+    checkElement('table.results tbody tr:nth-child(4) td:nth-child(3)', '/Invalid/')->
   end()->
   info('Search with a wrong lower bound criteria')->
   post('/catalogue/search/', array('searchCatalogue'=>array('table'=>'chronostratigraphy', 'lower_bound'=>'-500000')))->
@@ -49,7 +49,7 @@ $browser->
     checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', 1)->
   end()->
   info('Edit this record')->
-  click('td.edit a')->
+  click('td.edit a:nth-child(2)')->
   with('response')->begin()->
     isStatusCode(200)->
     setField('chronostratigraphy[name]', '')->
@@ -58,15 +58,17 @@ $browser->
   end()->
   click('Save')->
   with('form')->begin()->
-    hasErrors(4)->
+    hasErrors(5)->
     isError('name', 'required')->
     isError('level_ref', 'required')->
+    isError('color', 'required')->
     isError('upper_bound', 'max')->
     hasGlobalError('invalid')->
     setField('chronostratigraphy[name]', 'Proutprout')->
     setField('chronostratigraphy[level_ref]', '58')->
     setField('chronostratigraphy[upper_bound]', '-1')->
     setField('chronostratigraphy[lower_bound]', '-4800')->
+    setField('chronostratigraphy[color]', '#555666')->
   end()->
   click('Save')->
   with('form')->begin()->
@@ -86,7 +88,7 @@ $browser->
   with('response')->begin()->
     isStatusCode('200')->
   end()->
-  click('Save', array('chronostratigraphy'=>array('name'=>'Paxien', 'level_ref'=>'59', 'parent_ref'=>$unit->getId())));
+  click('Save', array('chronostratigraphy'=>array('name'=>'Paxien', 'color'=>'#565656','level_ref'=>'59', 'parent_ref'=>$unit->getId())));
 $unit = Doctrine::getTable('chronostratigraphy')->findOneByName('Paxien');
 $browser->
   test()->is($unit->getName(),'Paxien', 'We have the new encoded unit');

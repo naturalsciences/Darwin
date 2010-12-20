@@ -29,7 +29,7 @@ $browser->
   get('/specimen/new')->
   with('response')->begin()->
     checkElement('.board_col:first .widget',6)->
-    checkElement('.board_col:last .widget',8)->
+    checkElement('.board_col:last .widget',9)->
   end()->
   
   info('1.3 - add widget when the category is ok')->
@@ -92,8 +92,8 @@ $browser->
   get('/board/index')->
   with('response')->begin()->
     checkElement('.board_col:first .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved specimens')-> //First widget
-    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My saved searches')->//Second widget
+    checkElement('.board_col:first .widget:first .widget_top_bar span','/My saved specimens/')-> //First widget
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','/My saved searches/')->//Second widget
   end()->
   get('/widgets/changeOrder?category=board&col1=savedSearch,savedSpecimens&col2=')->
   with('response')->begin()->
@@ -102,8 +102,8 @@ $browser->
   get('/board/index')->
   with('response')->begin()->
     checkElement('.board_col:first .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')-> //First widget
-    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','My saved specimens')->//Second widget
+    checkElement('.board_col:first .widget:first .widget_top_bar span','/My saved searches/')-> //First widget
+    checkElement('.board_col:first .widget:nth-child(2) .widget_top_bar span','/My saved specimens/')->//Second widget
   end()->
   
   
@@ -116,8 +116,8 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',0)->
     checkElement('.board_col:last .widget',3)->
-    checkElement('.board_col:last .widget:first .widget_top_bar span','Add specimens')-> //First widget
-    checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','My saved specimens')->//Second widget
+    checkElement('.board_col:last .widget:first .widget_top_bar span','/Add specimens/')-> //First widget
+    checkElement('.board_col:last .widget:nth-child(2) .widget_top_bar span','/My saved specimens/')->//Second widget
   end()->
   
   
@@ -130,8 +130,8 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',1)->
     checkElement('.board_col:last .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')-> 
-    checkElement('.board_col:last .widget:first .widget_top_bar span','Add specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','/My saved searches/')-> 
+    checkElement('.board_col:last .widget:first .widget_top_bar span','/Add specimens/')->
   end()->
 
 
@@ -144,8 +144,8 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',1)->
     checkElement('.board_col:last .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')-> 
-    checkElement('.board_col:last .widget:first .widget_top_bar span','Add specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','/My saved searches/')-> 
+    checkElement('.board_col:last .widget:first .widget_top_bar span','/Add specimens/')->
   end()->
 
 
@@ -158,7 +158,7 @@ $browser->
   with('response')->begin()->
     checkElement('.board_col:first .widget',1)->
     checkElement('.board_col:last .widget',2)->
-    checkElement('.board_col:first .widget:first .widget_top_bar span','My saved searches')->
-    checkElement('.board_col:last .widget:first .widget_top_bar span','Add specimens')->
+    checkElement('.board_col:first .widget:first .widget_top_bar span','/My saved searches/')->
+    checkElement('.board_col:last .widget:first .widget_top_bar span','/Add specimens/')->
   end()
 ;
