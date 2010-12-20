@@ -68,6 +68,9 @@ $(document).ready(function ()
           <td <?php if(isset($searchForm['lower_bound'])) echo 'colspan="3"'; elseif(isset($searchForm['classification'])) echo 'colspan="3"';?>><span class="search_item_name"></span></td>
           <td class="widget_row_delete">
             <?php echo image_tag('remove.png', 'alt=Delete class=clear_relation id=clear_cat_relation'); ?>
+            <?php if($sf_user->getHelpIcon()) : ?>          
+            <div class="help_ico" alt="<?php echo $searchForm['relation']->renderHelp();?>"></div>
+            <?php endif ; ?>
           </td>   
         </tr>
       </tbody>

@@ -30,6 +30,7 @@ class TaxonomyFormFilter extends BaseTaxonomyFormFilter
                                   );
     $rel = array('child'=>'Is a Child Of','direct_child'=>'Is a Direct Child','synonym'=> 'Is a Synonym Of');
     $this->widgetSchema['relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    $this->widgetSchema->setHelp('relation','This line allow you to look for synonym or child of the selected item (ex : look for all item X children)');
     
     $this->widgetSchema['item_ref'] = new sfWidgetFormInputHidden();
 
