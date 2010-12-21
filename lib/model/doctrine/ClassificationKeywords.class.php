@@ -60,11 +60,5 @@ class ClassificationKeywords extends BaseClassificationKeywords
   {
     return  sfInflector::humanize( sfInflector::tableize($this->getKeywordType()));
   }
-  
-  
-  public static function getTagNameFor($tag)
-  {
-    $tags = self::getTags();
-    return $tags[$tag];
-  }
+
 }

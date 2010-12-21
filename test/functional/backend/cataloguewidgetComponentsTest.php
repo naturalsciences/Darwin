@@ -31,7 +31,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tbody tr',1)->
         checkElement('table tbody tr td:first a.link_catalogue','/Falco Peregrinus Tunstall/')->
-	checkElement('img', 2)->
+	checkElement('img', 3)->
     end()->
 
     info('2 - Recombined')->
@@ -40,7 +40,7 @@ $browser->
         isStatusCode(200)->
         checkElement('table tbody tr',1)->
         checkElement('table tbody tr td:first a.link_catalogue','/recombinus/')->
-	checkElement('img',2)->
+	checkElement('img',3)->
     end();
 
  $items = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable('taxonomy', 4, 'current_name');

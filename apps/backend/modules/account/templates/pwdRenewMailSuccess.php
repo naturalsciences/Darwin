@@ -2,7 +2,13 @@
   <div class="white_content">
     <?php if(isset($params['name']) && isset($params['physical']) && isset($params['title'])):?>
       <?php if($params['physical'] && !empty($params['name'])):?>
-        <p><?php echo __('Dear').' '.((empty($params['title']))?'':$params['title'].' ').$params['name'].',';?></p>
+        <p>
+          <?php if(empty($params['title'])):?>
+            <?php echo __(sprintf('Dear %s,', $params['title']));?>
+          <?php else:?>
+            <?php echo __(sprintf('Dear %s %s,', $params['title'], $params['name']));?>
+          <?php endif;?>
+        </p>
       <?php endif;?>
     <?php endif;?>
     </br>

@@ -245,7 +245,7 @@ $browser->
   get('/user/widget')->
   with('response')->begin()->
     isStatusCode(200)->
-    checkElement('tbody[alt="board_widget"] tr',6)->
+    checkElement('tbody[alt="board_widget"] tr',2)->
   end()->
 
   click('#submit', array('user_widget' => array(
@@ -282,9 +282,9 @@ $browser->
   with('response')->begin()->
     isStatusCode()->
     checkElement('h1','/My Preferences/')->
-    checkElement('.user_table > thead',2)->
-    checkElement('.user_table > tbody',2)->
-    checkElement('.user_table > tbody > tr',5)->
+    checkElement('.user_table > thead',3)->
+    checkElement('.user_table > tbody',3)->
+    checkElement('.user_table > tbody > tr',7)->
     checkElement('#preferences_board_spec_rec_pp option[selected]','10')->
     checkElement('#preferences_board_search_rec_pp option[selected]','10')->
   end()->

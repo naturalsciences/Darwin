@@ -203,21 +203,28 @@ class DarwinTestFunctional extends sfTestFunctional
   	  click('#submit_spec_f1', array('specimen' => array(
   	  	  'collection_ref' => $collection_id,
   	  	  'taxon_ref' => $taxon_id,
+                  'code' => 1,
+                  'collector' => 1,
+                  'comment'=>1,
+                  'ident' => 1,
   	  	  'newCode' => array(
-  	  	  			0 => array('code_category' => 'secondary','code_prefix' => 'sec', 'code_prefix_separator' => '/','code' => '987', 'code_suffix' => 'ary',           								        'code_suffix_separator' => '/', 'referenced_relation' => 'specimens'),
-  	  	  			1 => array('code_category' => 'main','code_prefix' => 'mn', 'code_prefix_separator' => '/','code' => '112', 'code_suffix' => 'nn', 								          'code_suffix_separator' => '/', 'referenced_relation' => 'specimens')  	  	  			
-  	  	  			),
+                    0 => array('code_category' => 'secondary','code_prefix' => 'sec', 'code_prefix_separator' => '/','code' => '987', 'code_suffix' => 'ary','code_suffix_separator' => '/', 'referenced_relation' => 'specimens'),
+                    1 => array('code_category' => 'main','code_prefix' => 'mn', 'code_prefix_separator' => '/','code' => '112', 'code_suffix' => 'nn','code_suffix_separator' => '/', 'referenced_relation' => 'specimens')  	  	  			
+                  ),
   	  	  'newCollectors' => array(
 	              0 => array('people_ref' => $collector_1, 'referenced_relation' => 'specimens', 'order_by' => 1, 'people_type' => 'collector'),
 	              1 => array('people_ref' => $collector_2, 'referenced_relation' => 'specimens', 'order_by' => 2, 'people_type' => 'collector')
 	              ), 			
 	        'newComments' => array(
-	              0 => array('notion_concerned' => 'collectors', 'comment' => 'Test comment for a collector')
+	              0 => array('referenced_relation'=> 'specimens','notion_concerned' => 'collectors', 'comment' => 'Test comment for a collector')
 	              ),
   	  	  'newIdentification' => array(
   	  	  			0 => array('notion_date' => array('day' => 10, 'month' => 02,'year' => 1945),
   	  	  					 'notion_concerned' => 'taxonomy',
   	  	  					 'value_defined' => 'tst val ind',
+                                                         'determination_status'=> '',
+                                                         'referenced_relation' => 'specimens',
+                                                         'order_by' => '1',
   	  	  					 'newIdentifier' => array(
 	                          0 => array('people_ref' => $collector_1, 'referenced_relation' => 'identifications', 'order_by' => 1, 'people_type' => 'identifier'),
             	              1 => array('people_ref' => $collector_2, 'referenced_relation' => 'identifications', 'order_by' => 2, 'people_type' => 'identifier')
@@ -230,7 +237,7 @@ class DarwinTestFunctional extends sfTestFunctional
 	                    'taxon_ref' => $taxon_id
   	  	  					)),
 		  'acquisition_category' => 'Mission',
-		  'acquisition_date' => array('day' => 01, 'month' => 06, 'year' => 1984)  	  	  			
+		  'acquisition_date' => array('day' => 01, 'month' => 06, 'year' => 1984)
   	       )))->
       end()->
 
@@ -271,20 +278,30 @@ class DarwinTestFunctional extends sfTestFunctional
      	get('individuals/edit/spec_id/'.$specimen_id)->
      	with('response')->begin()->
      	click('#submit_spec_individual_f1', array('specimen_individuals' => array(
-     	                  'newComments' => array(0 => array('notion_concerned'=> 'stage',
-     																	'comment' => 'stage of individual')),
-     										'newIdentification' => array(
-                        	  	  			0 => array('notion_date' => array('day' => 01, 'month' => 02,'year' => 1830),
-                          	          			   'notion_concerned' => 'rock_form',
-  	  	  					                           'value_defined' => 'identifier for individual',
-                             	  	  					 'newIdentifier' => array(
-	                                                      0 => array('people_ref' => $indiv_id, 'referenced_relation' => 'identifications',
-	                                                                                   'order_by' => 1,         'people_type' => 'identifier')
-	                                      ))),												  
-     																						  
-     														        )))->
-	  end();   
-	  return(Doctrine::getTable('SpecimenIndividuals')->findOneBySpecimenRef($specimen_id)->getId()) ;
+                          'comment'=>1,
+     	                  'newComments' => array(0 => array(
+                            'referenced_relation'=>'specimen_individuals',
+                            'notion_concerned'=> 'stage',
+                            'comment' => 'stage of individual')
+                          ),
+                          'newIdentification' => array(0 => array(
+                            'referenced_relation'=>'specimen_individuals',
+                            'notion_date' => array('day' => 01, 'month' => 02,'year' => 1830),
+                            'notion_concerned' => 'rock_form',
+                            'order_by' => 1,
+                            'value_defined' => 'identifier for individual',
+                            'newIdentifier' => array(0 => array(
+                              'people_ref' => $indiv_id,
+                              'referenced_relation' => 'identifications',
+                              'order_by' => 1,
+                              'people_type' => 'identifier'
+                            )
+                          )
+                      )
+                    ),
+        )))->
+    end();
+    return(Doctrine::getTable('SpecimenIndividuals')->findOneBySpecimenRef($specimen_id)->getId()) ;
   }
   
   public function addCustomPart($individual_id)
@@ -297,16 +314,21 @@ class DarwinTestFunctional extends sfTestFunctional
      	with('response')->begin()->  	
      	click('#submit_spec_f1', array('specimen_parts' => array(
      										'container' => 'Test for parts',
+                                                                                'code'=>1,
+                                                                                'comment'=>1,
      										'surnumerary' => true,
      										'sub_container' => 'Sub test for parts',
      										'newInsurance' => array(
      													0 => array(
+                                                                                                          'referenced_relation' => 'specimen_parts',
      															'insurance_year' => 1977,
      															'insurance_value' => 666,
      															'insurance_currency' => '120€',
      															'insurer_ref' => $institution))	,
-     										 'newComments' => array(0 => array('notion_concerned'=> 'preparation',
-     															'comment' => 'part preparation')),
+     										 'newComments' => array(0 => array(
+                                                                                    'referenced_relation' => 'specimen_parts',
+                                                                                    'notion_concerned'=> 'preparation',
+                                                                                    'comment' => 'part preparation')),
      										 'newCode' => array(
                 	  	  			0 => array('code_category' => 'temporary','code_prefix' => 'sec', 'code_prefix_separator' => '/','code' => '987', 
                 	  	  			    'code_suffix' => 'ary', 'code_suffix_separator' => '/', 'referenced_relation' => 'specimen_parts'))

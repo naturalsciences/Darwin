@@ -181,7 +181,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
   }
   public function addExtLinks($num, $obj=null)
   {
-      $this->loadEmbedLink();
+      if(! isset($this['newExtLinks'])) $this->loadEmbedLink();
       $options = array('referenced_relation' => 'specimen_parts', 'record_id' => $this->getObject()->getId());
       if(!$obj) $val = new ExtLinks();
       else $val = $obj ;      
@@ -205,7 +205,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
   public function addCodes($num, $collectionId=null, $obj=null)
   {
-      $this->loadEmbedCode();
+      if(! isset($this['newCode'])) $this->loadEmbedCode();
       $options = array('referenced_relation' => 'specimen_parts');
       $form_options = array();
       if ($collectionId)
@@ -231,7 +231,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
   
   public function addInsurances($num, $obj=null)
   {
-      $this->loadEmbedInsurance();
+      if(! isset($this['newInsurance'])) $this->loadEmbedInsurance();
       $options = array('referenced_relation' => 'specimen_parts');
       if(!$obj) $val = new Insurances();
       else $val = $obj ;
@@ -245,7 +245,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
 
   public function addComments($num,$obj=null)
   {
-      $this->loadEmbedComment();
+      if(! isset($this['newComments'])) $this->loadEmbedComment();
       $options = array('referenced_relation' => 'specimen_parts', 'record_id' => $this->getObject()->getId());
       if(!$obj) $val = new Comments();
       else $val = $obj ;

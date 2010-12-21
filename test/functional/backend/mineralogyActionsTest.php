@@ -38,10 +38,10 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('div[class="pager paging_info"] table tr td:nth-child(2)', '/11/')->
-    checkElement('table.results tbody tr:first td:nth-child(3)', '/Invalid/')->
+    checkElement('table.results tbody tr:first td:nth-child(4)', '/Invalid/')->
   end()->
   info('Edit invalid record')->
-  click('table.results tbody tr:first td.edit a')->
+  click('table.results tbody tr:first td.edit a:nth-child(2)')->
   with('response')->begin()->
     isStatusCode(200)->
     setField('mineralogy[code]', '')->
@@ -51,15 +51,17 @@ $browser->
   end()->
   click('Save')->
   with('form')->begin()->
-    hasErrors(4)->
+    hasErrors(5)->
     isError('code', 'required')->
     isError('name', 'required')->
     isError('level_ref', 'required')->
     isError('classification', 'required')->
+    isError('color', 'required')->
     setField('mineralogy[code]', '5.AA')->
     setField('mineralogy[name]', 'Proutprout')->
     setField('mineralogy[level_ref]', '72')->
     setField('mineralogy[classification]', 'Bouc')->
+    setField('mineralogy[color]', '#555555')->
   end()->
   click('Save')->
   with('form')->begin()->
@@ -79,7 +81,7 @@ $browser->
   with('response')->begin()->
     isStatusCode('200')->
   end()->
-  click('Save', array('mineralogy'=>array('code'=>'5.AAH', 'name'=>'Paxien', 'level_ref'=>'73', 'parent_ref'=>$unit->getId())));
+  click('Save', array('mineralogy'=>array('code'=>'5.AAH','color'=>'#554554', 'name'=>'Paxien', 'level_ref'=>'73', 'parent_ref'=>$unit->getId())));
 $unit = Doctrine::getTable('mineralogy')->findOneByName('Paxien');
 $browser->
   test()->is($unit->getName(),'Paxien', 'We have the new encoded unit');

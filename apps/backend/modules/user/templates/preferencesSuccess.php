@@ -63,6 +63,7 @@
           </th>
           <td><?php echo $form['board_search_rec_pp'];?></td>
         </tr>
+      </tbody>
       <thead>
         <tr>
           <th colspan="2"><?php echo __("Forms");?></th>
@@ -79,7 +80,7 @@
           <td><?php echo $form['help_message_activated'];?></td>
         </tr>
         <tr> 
-      </tbody>       
+      </tbody>
       <tfoot>
         <tr>
           <td colspan='2'>

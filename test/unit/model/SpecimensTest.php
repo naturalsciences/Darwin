@@ -33,7 +33,7 @@ $t->is( $specimens[1]->getAcquisitionDateMasked() , '<em>31/12</em>/2009', 'Corr
 $t->is( $specimens[1]->getAcquisitionDate() , array('year'=>2009, 'month'=>'', 'day'=>'', 'hour'=>'', 'minute'=>'', 'second'=>''), 'Correct date masked as array');
 $t->is( $specimens[1]->getName(), '-', 'This specimen has the formated name: "-"');
 $t->is( $specimens[3]->getName(), '[TEST-12345-AFTER] [TEST-54321-AFTER]', 'Last specimen has the formated name: "[TEST-12345-AFTER] [TEST-54321-AFTER]"');
-$t->is( $specimens[3]->Taxonomy->getNameWithFormat(), 'Falco Peregrinus Tunstall, 1771', 'Last specimen has the formated name: "Falco Peregrinus Tunstall, 1771"');
+$t->is( $specimens[3]->Taxonomy->getNameWithFormat(), '<i>Falco Peregrinus Tunstall, 1771</i>', 'Last specimen has the formated name: "Falco Peregrinus Tunstall, 1771"');
 $specimens[3]->Taxonomy->setExtinct(true);
 $specimens[3]->Taxonomy->save();
-$t->is( $specimens[3]->Taxonomy->getNameWithFormat(), 'Falco Peregrinus Tunstall, 1771 †', 'Now this specimen with a taxon definition set at extinct has the formated name: "Falco Peregrinus Tunstall, 1771 †"');
+$t->is( $specimens[3]->Taxonomy->getNameWithFormat(), '<i>Falco Peregrinus Tunstall, 1771</i> †', 'Now this specimen with a taxon definition set at extinct has the formated name: "Falco Peregrinus Tunstall, 1771 †"');
