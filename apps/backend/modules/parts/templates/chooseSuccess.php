@@ -16,4 +16,4 @@ $(document).ready(function () {
   });
 });
 </script>
-<?php include_partial('overviewTable', array('parts' => $parts, 'codes' => $codes, 'individual'=> $individual, 'is_choose'=>true)); ?>
+<?php include_partial('overviewTable', array('parts' => $parts, 'codes' => $codes, 'individual'=> $individual, 'is_choose'=>true, 'view' => true)); ?>

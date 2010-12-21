@@ -1,5 +1,5 @@
 <div class="edition">
-  <h2><?php echo __('Do you want to also duplicate hidden data');?></h2>
+  <h2><?php echo __('Do you also want to duplicate hidden data');?></h2>
   <script language="javascript">
     $(document).ready(function () {
       $('.check_right > input[type=submit]').click(function () {

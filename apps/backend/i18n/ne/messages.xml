@@ -1284,7 +1284,7 @@
       <trans-unit id="636">
         <source>Synonyms</source> <target>Synonymes</target> </trans-unit>
       <trans-unit id="637">
-        <source>Hommonyms</source> <target>Homonymes</target> </trans-unit>
+        <source>Homonyms</source> <target>Homonymes</target> </trans-unit>
       <trans-unit id="637">
         <source>Isonyms</source> <target>Isonymes</target> </trans-unit>                
       <trans-unit id="638">
@@ -1763,7 +1763,7 @@
       <trans-unit id="846">
         <source>Delete Synonym</source> <target>Supprimer synomyme</target> </trans-unit>
       <trans-unit id="847">
-        <source>Hommonyms</source> <target>Homonymes</target> </trans-unit>        
+        <source>Homonyms</source> <target>Homonymes</target> </trans-unit>        
       <trans-unit id="848">
         <source>Delete Comment</source> <target>Supprimer ce commentaire</target> </trans-unit>
       <trans-unit id="849">

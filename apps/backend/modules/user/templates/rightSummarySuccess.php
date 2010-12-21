@@ -43,5 +43,5 @@
   </tbody>
 </table>
 <?php else : ?>
-  <?php echo __("You can view only public collections"); ?>
+  <?php echo __("You can only view public collections"); ?>
 <?php endif ; ?>

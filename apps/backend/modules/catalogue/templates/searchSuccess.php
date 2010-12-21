@@ -16,7 +16,7 @@
         <?php if(isset($items[0]['color'])): ?>
           <th>
             <a class="sort" href="<?php echo url_for($s_url.'&orderby=color'.( ($orderBy=='color' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">            
-            <?php echo __('Color');?>
+            <?php echo __('Colour');?>
             <?php if($orderBy=='color') echo $orderSign ?>
           </th>
         <?php endif ; ?>       

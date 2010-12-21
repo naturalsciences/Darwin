@@ -793,7 +793,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="198">
-        <source>Un-Save this result</source>
+        <source>Cancel this result</source>
         <target/>
       </trans-unit>
       <trans-unit id="199">
@@ -891,11 +891,11 @@
         <target/>
       </trans-unit>
       <trans-unit id="222">
-        <source>What is used by DaWIN ?</source>
+        <source>What can be found in DaRWIN?</source>
         <target/>
       </trans-unit>
       <trans-unit id="223">
-        <source>Who has developped DaWIN ?</source>
+        <source>Who has developped DaRWIN ?</source>
         <target/>
       </trans-unit>
       <trans-unit id="224">
@@ -923,7 +923,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="230">
-        <source>Belspo</source>
+        <source>Belgian Science Policy</source>
         <target/>
       </trans-unit>
       <trans-unit id="231">
@@ -943,7 +943,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="235">
-        <source>Please define if you wish to edit tool or method</source>
+        <source>Please define if you wish to edit a tool or method</source>
         <target/>
       </trans-unit>
       <trans-unit id="236">
@@ -955,7 +955,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="238">
-        <source>You need to precise if you wish to work on tools or methods</source>
+        <source>You need to specify if you wish to work on tools or methods</source>
         <target/>
       </trans-unit>
       <trans-unit id="239">
@@ -1287,7 +1287,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="321">
-        <source>Is Mother Language</source>
+        <source>Is Mothertongue</source>
         <target/>
       </trans-unit>
       <trans-unit id="322">
@@ -1391,7 +1391,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="347">
-        <source>Communiction Means</source>
+        <source>Communication Means</source>
         <target/>
       </trans-unit>
       <trans-unit id="348">
@@ -1860,7 +1860,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="464">
-        <source>There are currently no part</source>
+        <source>Currently, there are no parts</source>
         <target/>
       </trans-unit>
       <trans-unit id="465">
@@ -1932,7 +1932,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="482">
-        <source>Do you want to also duplicate hidden data</source>
+        <source>Do you also want to duplicate hidden data</source>
         <target/>
       </trans-unit>
       <trans-unit id="483">
@@ -2132,7 +2132,7 @@
         <target/>
       </trans-unit>
       <trans-unit id="532">
-        <source>You can view only public collections</source>
+        <source>You can only view public collections</source>
         <target/>
       </trans-unit>
       <trans-unit id="533">

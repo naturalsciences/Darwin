@@ -10,7 +10,7 @@
     </td>
 
     <td class="details_comm">
-      <h3><?php echo __('Communiction Means');?> :</h3>
+      <h3><?php echo __('Communication Means');?> :</h3>
       <ul>
       <?php foreach($item->PeopleComm as $comm):?>
 	  <li><?php echo $comm->getCommType();?> - <?php echo $comm->getEntry();?></li>

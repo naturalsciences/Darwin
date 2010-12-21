@@ -14,5 +14,5 @@
     )); ?>
   </div>
 <?php else:?>
-  <?php echo __('Please define if you wish to edit tool or method');?>
+  <?php echo __('Please define if you wish to edit a tool or method');?>
 <?php endif;?>

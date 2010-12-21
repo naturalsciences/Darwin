@@ -163,7 +163,7 @@
       <trans-unit id="70">
         <source>View Lithologic unit</source> <target>Voir unité lithologique</target> </trans-unit>
       <trans-unit id="71">
-        <source>Color</source> <target>Couleur</target> </trans-unit>
+        <source>Colour</source> <target>Couleur</target> </trans-unit>
       <trans-unit id="72">
         <source>Add Lithologic unit</source> <target>Ajouter unité litholo</target> </trans-unit>
       <trans-unit id="73">
@@ -211,7 +211,7 @@
       <trans-unit id="94">
         <source>Specimen individuals overview</source> <target>Aperçu individus d'échantillon</target> </trans-unit>
       <trans-unit id="95">
-        <source>There a currently no individual</source> <target>Il n'y a actuellement pas d'individus</target> </trans-unit>
+        <source>Currently, there are no individuals</source> <target>Il n'y a actuellement pas d'individus</target> </trans-unit>
       <trans-unit id="96">
         <source>Type</source> <target>Type</target> </trans-unit>
       <trans-unit id="97">
@@ -289,7 +289,7 @@
       <trans-unit id="133">
         <source>Action Status :</source> <target>Statut de l'action :</target> </trans-unit>
       <trans-unit id="134">
-        <source>[0] No Item modified|[1] Everything seems to go well. Your action was applied to 1 record |(1,+Inf] Every thing seems to go well. Your action was applied to %1% records</source> <target>[0] pas d'objet modifié|[1] Tout a l'air de s'être bien déroulé. Votre action a été appliquée à 1 enregistrement |(1,+Inf] ETout a l'air de s'être bien déroulé. Votre action a été appliquée à %1% enregistrements</target> </trans-unit>
+        <source>[0] No Item modified|[1] Everything seems to go well. Your action was applied to 1 record |(1,+Inf] Everything seems to go well. Your action was applied to %1% records</source> <target>[0] pas d'objet modifié|[1] Tout a l'air de s'être bien déroulé. Votre action a été appliquée à 1 enregistrement |(1,+Inf] ETout a l'air de s'être bien déroulé. Votre action a été appliquée à %1% enregistrements</target> </trans-unit>
       <trans-unit id="135">
         <source>Mass Actions :</source> <target>Actions de masse :</target> </trans-unit>
       <trans-unit id="136">
@@ -417,7 +417,7 @@
       <trans-unit id="197">
         <source>Remove selected</source> <target>Retirer sélectionnés </target> </trans-unit>
       <trans-unit id="198">
-        <source>Un-Save this result</source> <target>Annuler sauvegarde de ce résultat</target> </trans-unit>
+        <source>Cancel this result</source> <target>Annuler sauvegarde de ce résultat</target> </trans-unit>
       <trans-unit id="199">
         <source>Save this result</source> <target>Sauver ce resultat</target> </trans-unit>
       <trans-unit id="200">
@@ -445,7 +445,7 @@
       <trans-unit id="211">
         <source>Contribute :</source> <target>contributeur :</target> </trans-unit>
       <trans-unit id="212">
-        <source>Since Darwin is Open Source, and entirely based on open source software, we would be glad if you want to contribute to the project.&lt;br /&gt; Suggestions, Patch, Bug Report or Bounties a welcome on our Request tracker : &lt;a href="http://projects.naturalsciences.be/projects/darwin"&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</source> <target>Puisque Darwin est un produit libre, et entièrement basé sur des logiciels libres, Nous serions ravis si vous vouliez contribuer à notre projet.&lt;br /&gt; Suggestions, Patch, rapport de Bug ou primes sont les bienvenues sur notre traqueur de requêtes : &lt;a href="http://projects.naturalsciences.be/projects/darwin"&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</target> </trans-unit>
+        <source>Since Darwin is Open Source application, and entirely based on open source software, we would be glad if you want to contribute to the project.&lt;br /&gt;  Suggestions, Patches, Bug Reports or Code Donations are welcome on our Request tracker : &lt;a href="http://projects.naturalsciences.be/projects/darwin"&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</source> <target>Puisque Darwin est un produit libre, et entièrement basé sur des logiciels libres, Nous serions ravis si vous vouliez contribuer à notre projet.&lt;br /&gt; Suggestions, Patch, rapport de Bug ou primes sont les bienvenues sur notre traqueur de requêtes : &lt;a href="http://projects.naturalsciences.be/projects/darwin"&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</target> </trans-unit>
       <trans-unit id="213">
         <source>Contact</source> <target>contact</target> </trans-unit>
       <trans-unit id="214">
@@ -465,9 +465,9 @@
       <trans-unit id="221">
         <source>Darwin is an Open Source tool developped by the ICT-team of the Royal Belgian Institute of Natural Sciences.</source> <target>Darwin est un outil libre développé par l'équipe ICT de l'Institut Royal des Sciences Naturelle de Belgique</target> </trans-unit>
       <trans-unit id="222">
-        <source>What is used by DaWIN ?</source> <target>Qu'est qui est utilisé dans Darwin ?</target> </trans-unit>
+        <source>What can be found in DaRWIN?</source> <target>Qu'est qui est utilisé dans Darwin ?</target> </trans-unit>
       <trans-unit id="223">
-        <source>Who has developped DaWIN ?</source> <target>Qui a développé Darwin ?</target> </trans-unit>
+        <source>Who has developped DaRWIN ?</source> <target>Qui a développé Darwin ?</target> </trans-unit>
       <trans-unit id="224">
         <source>The Team :</source> <target>L'équipe :</target> </trans-unit>
       <trans-unit id="225">
@@ -481,7 +481,7 @@
       <trans-unit id="229">
         <source>RBINS</source> <target>RBINS</target> </trans-unit>
       <trans-unit id="230">
-        <source>Belspo</source> <target>Belspo</target> </trans-unit>
+        <source>Belgian Science Policy</source> <target>Belspo</target> </trans-unit>
       <trans-unit id="231">
         <source>Add</source> <target>Ajouter</target> </trans-unit>
       <trans-unit id="232">
@@ -491,13 +491,13 @@
       <trans-unit id="234">
         <source>Edit</source> <target>Editer</target> </trans-unit>
       <trans-unit id="235">
-        <source>Please define if you wish to edit tool or method</source> <target>Veuillez spécifier si vous souhaiter éditer un outil ou une méthode</target> </trans-unit>
+        <source>Please define if you wish to edit a tool or method</source> <target>Veuillez spécifier si vous souhaiter éditer un outil ou une méthode</target> </trans-unit>
       <trans-unit id="236">
         <source>Search Collecting Tools</source> <target>Rechercher outils de collecte</target> </trans-unit>
       <trans-unit id="237">
         <source>Collecting Tools Search</source> <target>Recherche d'outils de collecte</target> </trans-unit>
       <trans-unit id="238">
-        <source>You need to precise if you wish to work on tools or methods</source> <target>Vous devez préciser si vous souhaitez travailler sur des outils ou des méthodes</target> </trans-unit>
+        <source>You need to specify if you wish to work on tools or methods</source> <target>Vous devez préciser si vous souhaitez travailler sur des outils ou des méthodes</target> </trans-unit>
       <trans-unit id="239">
         <source>Duplicate</source> <target>Dupliquer</target> </trans-unit>
       <trans-unit id="240">
@@ -663,7 +663,7 @@
       <trans-unit id="320">
         <source>Language</source> <target>Langage</target> </trans-unit>
       <trans-unit id="321">
-        <source>Is Mother Language</source> <target>Est langue maternelle</target> </trans-unit>
+        <source>Is Mothertongue</source> <target>Est langue maternelle</target> </trans-unit>
       <trans-unit id="322">
         <source>Edit Languages</source> <target>Editer langues</target> </trans-unit>
       <trans-unit id="323">
@@ -715,7 +715,7 @@
       <trans-unit id="346">
         <source>Activity</source> <target>Activité</target> </trans-unit>
       <trans-unit id="347">
-        <source>Communiction Means</source> <target>Moyens de communication</target> </trans-unit>
+        <source>Communication Means</source> <target>Moyens de communication</target> </trans-unit>
       <trans-unit id="348">
         <source>(mother)</source> <target>(Maternelle)</target> </trans-unit>
       <trans-unit id="349">
@@ -949,7 +949,7 @@
       <trans-unit id="463">
         <source>Duplicate part</source> <target>Dupliquer partie</target> </trans-unit>
       <trans-unit id="464">
-        <source>There are currently no part</source> <target>Il n'y a actuellement aucune partie</target> </trans-unit>
+        <source>Currently, there are no parts</source> <target>Il n'y a actuellement aucune partie</target> </trans-unit>
       <trans-unit id="465">
         <source>Add part</source> <target>Ajouter partie</target> </trans-unit>
       <trans-unit id="466">
@@ -985,7 +985,7 @@
       <trans-unit id="481">
         <source>Choose a specimen</source> <target>Choisir un échantillon</target> </trans-unit>
       <trans-unit id="482">
-        <source>Do you want to also duplicate hidden data</source> <target>Voulez vous aussi dupliquer les données cachés</target> </trans-unit>
+        <source>o you also want to duplicate hidden data</source> <target>Voulez vous aussi dupliquer les données cachés</target> </trans-unit>
       <trans-unit id="483">
         <source>Specimen individuals count</source> <target>Nombre d'individus d'échantillon</target> </trans-unit>
       <trans-unit id="484">
@@ -1085,7 +1085,7 @@
       <trans-unit id="531">
         <source>Users Search</source> <target>Recherche d'utilisateurs</target> </trans-unit>
       <trans-unit id="532">
-        <source>You can view only public collections</source> <target>Vous ne pouvez voir que les collections publiques</target> </trans-unit>
+        <source>You can only view public collections</source> <target>Vous ne pouvez voir que les collections publiques</target> </trans-unit>
       <trans-unit id="533">
         <source>Edit User widgets</source> <target>Editer les widgets de cet utilisateur</target> </trans-unit>
       <trans-unit id="534">
@@ -1189,11 +1189,11 @@
       <trans-unit id="582">
         <source>Right</source> <target>Droit</target> </trans-unit>
       <trans-unit id="583">
-        <source>Default specimens visible columns</source> <target>Colones d'échantillon visibles par défaut</target> </trans-unit>
+        <source>pecimens default visible columns</source> <target>Colones d'échantillon visibles par défaut</target> </trans-unit>
       <trans-unit id="584">
-        <source>Default individuals visible columns</source> <target>Colones d'individu visibles par défaut</target> </trans-unit>
+        <source>Individuals default visible columns</source> <target>Colones d'individu visibles par défaut</target> </trans-unit>
       <trans-unit id="585">
-        <source>Default parts visible columns</source> <target>Colones de partie visibles par défaut</target> </trans-unit>
+        <source>Parts default visible columns</source> <target>Colones de partie visibles par défaut</target> </trans-unit>
       <trans-unit id="586">
         <source>Number of saved specimens</source> <target>Nombre d'échantillons sauvés</target> </trans-unit>
       <trans-unit id="587">
@@ -1284,7 +1284,7 @@
       <trans-unit id="636">
         <source>Synonyms</source> <target>Synonymes</target> </trans-unit>
       <trans-unit id="637">
-        <source>Hommonyms</source> <target>Homonymes</target> </trans-unit>
+        <source>Homonyms</source> <target>Homonymes</target> </trans-unit>
       <trans-unit id="637">
         <source>Isonyms</source> <target>Isonymes</target> </trans-unit>                
       <trans-unit id="638">
@@ -1514,7 +1514,7 @@
       <trans-unit id="739">
         <source>Add an other social status</source> <target>Ajouter un autre status social</target> </trans-unit>
       <trans-unit id="740">
-        <source>Add an other rock form</source> <target>Ajouter une autre forme rocheuse</target> </trans-unit>
+        <source>Add another rock form</source> <target>Ajouter une autre forme rocheuse</target> </trans-unit>
       <trans-unit id="741">
         <source>Pick a rock form in the list</source> <target>Choisir une forme rocheuse dans la liste</target> </trans-unit>
       <trans-unit id="742">
@@ -1524,7 +1524,7 @@
       <trans-unit id="744">
         <source>Pick parts in the list</source> <target>Choisir une partie dans la liste</target> </trans-unit>
       <trans-unit id="745">
-        <source>Add another parts</source> <target>Ajouter une autre partie</target> </trans-unit>
+        <source>Add another part</source> <target>Ajouter une autre partie</target> </trans-unit>
       <trans-unit id="746">
         <source>Add another container</source> <target>Ajouter un autre conteneur</target> </trans-unit>
       <trans-unit id="747">
@@ -1582,7 +1582,7 @@
       <trans-unit id="762">
         <source>Required.</source> <target>Requis.</target> </trans-unit>
       <trans-unit id="763">
-        <source>This People is still referenced as an author</source> <target>Cette personne est toujours référencée comme autheur</target> </trans-unit> 
+        <source>This Person is still referenced as an author</source> <target>Cette personne est toujours référencée comme autheur</target> </trans-unit> 
       <trans-unit id="764">
         <source>Impossible to impact children names</source> <target>Impossible d'impacter les noms d'enfants</target> </trans-unit>
       <trans-unit id="765">
@@ -1595,22 +1595,22 @@
         <source>The expert must be defined as such to be attached</source>
         <target>Veuillez attribuer le rôle "Expert" aux personnes à qui vous voulez donner ce droit</target> </trans-unit>
       <trans-unit id="768">
-        <source>Maximum number of "current names" reach</source> <target>Nombre Max de 'nom courrant' atteind</target> </trans-unit>
+        <source>Maximum number of "current names" reached</source> <target>Nombre Max de 'nom courrant' atteind</target> </trans-unit>
       <trans-unit id="769">
-        <source>Maximum number of "recombination" reach</source> <target>Nombre Max de 'recombinaison' atteind</target> </trans-unit>
+        <source>Maximum number of "recombination" reached</source> <target>Nombre Max de 'recombinaison' atteind</target> </trans-unit>
       <trans-unit id="770">
         <source>You cannot add a particular comment notion twice</source>
         <target>Vous ne pouvez pas avoir deux fois la même notion dans les commentaires</target> </trans-unit>
       <trans-unit id="771">
-        <source>Error in dates overlaping</source> <target>Problème de chevauchement de dates</target> </trans-unit>
+        <source>Error in dates overlapping</source> <target>Problème de chevauchement de dates</target> </trans-unit>
       <trans-unit id="772">
         <source>This specimen already exist</source> <target>Cet échantillon existe déjà</target> </trans-unit>
       <trans-unit id="773">
-        <source>This individual already exist for this specimen</source> <target>Cet individu existe déjà pour cet échantillon</target> </trans-unit>
+        <source>This individual already exists for this specimen</source> <target>Cet individu existe déjà pour cet échantillon</target> </trans-unit>
       <trans-unit id="774">
-        <source>This property already exist</source> <target>Cette proprété existe déjà</target> </trans-unit>
+        <source>This property already exists</source> <target>Cette proprété existe déjà</target> </trans-unit>
       <trans-unit id="775">
-        <source>This method already exist</source> <target>Cette méthode existe déjà</target> </trans-unit>
+        <source>This method already exists</source> <target>Cette méthode existe déjà</target> </trans-unit>
       <trans-unit id="776">
         <source>This tool already exist</source> <target>Cet outil existe déjà</target> </trans-unit>
       <trans-unit id="777">
@@ -1624,12 +1624,12 @@
       <trans-unit id="780">
         <source>Tool inserted cannot be empty</source> <target>L'outil inséré ne peut pas être vide</target> </trans-unit>
       <trans-unit id="781">
-        <source>This user already exist</source> <target>cet utilisateur existe déjà</target> </trans-unit>
+        <source>This user already exists</source> <target>cet utilisateur existe déjà</target> </trans-unit>
       <trans-unit id="782">
         <source>This community already exists, you should edit it instead of adding new one</source> 
         <target>Cette communauté existe déjà, vous devriez éditer l'existante plutôt que d'en ajouter une nouvelle</target> </trans-unit>
       <trans-unit id="783">
-        <source>You cannot recombinate to itself</source> <target>Vous ne pouvez pas faire une auto recombinaison</target> </trans-unit>
+        <source>You cannot recombine to itself</source> <target>Vous ne pouvez pas faire une auto recombinaison</target> </trans-unit>
       <trans-unit id="784">
         <source>You don\'t have the rights to insert into or update a specimen in this collection</source> 
         <target>vous n'avez pas la permissiion d'insérer ou mettre à jour dans cet échantillon</target> </trans-unit>
@@ -1639,7 +1639,7 @@
       <trans-unit id="786">
         <source>Unknown Error : </source> <target>Erreur inconnue :</target> </trans-unit>
       <trans-unit id="787">
-        <source>This people allready have this role</source> <target>Cette personne à déjà ce rôle</target> </trans-unit>
+        <source>This people already has this role</source> <target>Cette personne à déjà ce rôle</target> </trans-unit>
       <trans-unit id="788">
         <source>Username</source> <target>Nom d'utilisateur</target> </trans-unit>
       <trans-unit id="789">
@@ -1673,7 +1673,7 @@
       <trans-unit id="802">
         <source>E-mail is required</source> <target>Le champs E-mail est requis</target> </trans-unit>
       <trans-unit id="803">
-        <source>E-mail is not of a valid form</source> <target>Cet E-mail n'est pas une adresse valide</target> </trans-unit>
+        <source>Invalid E-mail address</source> <target>Cet E-mail n'est pas une adresse valide</target> </trans-unit>
       <trans-unit id="804">
         <source>must be at least 4 characters.</source> <target>Doit être au moins de 4 caractères.</target> </trans-unit>
       <trans-unit id="805">
@@ -1763,7 +1763,7 @@
       <trans-unit id="846">
         <source>Delete Synonym</source> <target>Supprimer synomyme</target> </trans-unit>
       <trans-unit id="847">
-        <source>Hommonyms</source> <target>Homonymes</target> </trans-unit>        
+        <source>Homonyms</source> <target>Homonymes</target> </trans-unit>        
       <trans-unit id="848">
         <source>Delete Comment</source> <target>Supprimer ce commentaire</target> </trans-unit>
       <trans-unit id="849">
@@ -1783,7 +1783,7 @@
         <source>Password must be at least %min_length% characters length</source>
         <target>Le mot de passe doit avoir une longueur d'au moins %min_length% caratères</target> </trans-unit>
       <trans-unit id="857">
-        <source>Passwords must be equals and can not contains spaces</source>
+        <source>Passwords must be equal and may not contain spaces</source>
         <target>Les mots de passe doivent être identiques et ne pas contenir d'espaces</target> </trans-unit>
       <trans-unit id="858">
         <source>You cannot register without accepting DaRWIN 2  term of use</source>
@@ -1932,11 +1932,11 @@
       <trans-unit id="927">
         <source>A Part can't be attached to itself</source> <target>Une partie ne peut pas être rattachée à elle-même</target> </trans-unit>
       <trans-unit id="928">
-        <source>type %s already exist for this user</source> <target>Le type %s éxiste déjà pour cet utilisateur</target> </trans-unit>
+        <source>type %s already exists for this user</source> <target>Le type %s éxiste déjà pour cet utilisateur</target> </trans-unit>
       <trans-unit id="929">
         <source>Password does not match</source> <target>Les mots de passe sont différents</target> </trans-unit>
       <trans-unit id="930">
-        <source>The code have to be Numerical OR Alphabetical, not twice</source>
+        <source> The code has to contain either all nummers or letters, but not a mix of both</source>
         <target>Le code doit être numérique OU aplhabétique, pas les deux en même temps</target> </trans-unit>
       <trans-unit id="931">
         <source>At least one code is required.</source> <target>Au moins un code est requis.</target> </trans-unit>
@@ -1957,7 +1957,7 @@
       <trans-unit id="940">
         <source>minute missing or remove the seconds.</source> <target>Minute manquante, ou retirez les secondes</target> </trans-unit>
       <trans-unit id="941">
-        <source>A part of date is wrong.</source> <target>Une partie de la date est invalide.</target> </trans-unit>
+        <source>A part of the date is wrong.</source> <target>Une partie de la date est invalide.</target> </trans-unit>
       <trans-unit id="942">
         <source>We didn't find any reference with the login and password you provided</source>
         <target>Nous n'avons trouvé aucune réfécence à cet utilisateur et mot de passe</target> </trans-unit>
@@ -1968,7 +1968,349 @@
         <target>Impossible de vérifier le capcha depuis le serveur (%error%)</target> </trans-unit>
       <trans-unit id="945">
         <source>At least a reference to an accompanying element is required.</source>
-        <target>Au moins une référence à l'élément accompagnateur est requis</target> </trans-unit>                    
+        <target>Au moins une référence à l'élément accompagnateur est requis</target> </trans-unit>  
+      <trans-unit id="946">
+        <source>Display help icons in forms or hide icons</source>
+        <target>Afficher les icônes d'aide dans les formulaires ou les cacher</target>
+      </trans-unit>            
+      <trans-unit id="948">
+        <source>With this field, you can associate this user to a people recorded in the database (because user and people are not the same in DaRWIN2), the real interest is it will improve the synchronisation between the two record associated</source>
+        <target>Avec ce champ, vous pouvez associer cet utilisateur à une personne enregistré dans la base de donnée (car un utilisateur et une personne n'ont pas la même fonction dans DaRWIN2), l'interet est que cette association améliorera la syncronisation entre les deux enregistrements</target></trans-unit>
+      <trans-unit id="949">
+        <source>Uncheck this option if you want your collection to be private. So this collection won't be visible in the public interface neither by simply registered user</source>
+        <target>Decochez cette option si vous souhaitez rendre cette collection privée. Elle ne sera ni visible dans l'interface de recherche publique ni visible pour un simple utilisateur enregistré</target>
+      </trans-unit>
+      <trans-unit id="950">
+        <source>Specify the main manager for this collection, you can add other manager on the rights table below</source>
+        <target>Spécifiez le responsable principal de cette collection, vous pouvez ajouter des responsables dans la table des droits ci-dessous</target>
+      </trans-unit>
+      <trans-unit id="951">
+        <source>
+          Specify witch function you want to give to this user for your collection. Two buttons are available on edition. The button 'on sub collection...' allow you to also give right for this user on sub collections managed by you. With the button 'manage widget' (visible only for register_user function), you can allow the visibility (read only) of private widget wicth a registered user normaly won't have right to see it        
+        </source>
+        <target>
+          Spécifiez quelle fonction attribuer à cet utilisateur pour votre collection. Deux boutons sont disponibles en édition. Le bouton 'sous collections...' vous permet également d'attribuer des droits à cet utilisateur sur des sous collections dont vous êtes gestionnaire. Avec le boutton 'gerer widget' (visible uniquement avec la fonction utilisateur_enregistré), vous pouvez octroyer la visibilité (lecture seule) sur des widgets privées qui lui sont normalement innacessible
+        </target>
+      </trans-unit>
+      <trans-unit id="952">
+        <source>This widget allows you to add people that can have different roles. e.g. an author, a reviewer, an expert in a certain domain, etc.
+        </source>
+        <target>Ce widget vous permet d'ajouter des personnes en leur octroyant différents rôles. Ex : un autheur, un correcteur, un expert dans certain domaine, etc.
+        </target>
+      </trans-unit>
+      <trans-unit id="953">
+        <source>This widget is used to add commentary. If you wish, You can add more than one commentary notion per record. You cannot add the same notion twice in one record, however</source>
+        <target>cette widget est utilisée pour ajouter des commentaires. Si vous le souhaitez, vous pouvez plus d'un commentaire par enregistrement. Vous ne pouvez cependant pas écrire deux commentaires avec la même notion.</target>
+      </trans-unit>
+      <trans-unit id="954">
+        <source>This widget allows you to add a URL address to the record (ex : http://www.naturalsciences.be)</source>
+        <target>Cette widget vous permet d'ajouter des URL au enregistrements (ex : http://www.naturalsciences.be)</target>
+      </trans-unit>
+      <trans-unit id="955">
+      <source>This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= measurement, sub type= lenght, qualifier= wing, method= manual, tool= ruler, value units= cm, Accuracy units= mm , value= 3, accuracy=0.2</source>
+      <target>Cette widget vous permet des informations plus structurées, mais assurez vous que les informations rentrées soient consistantes. Vous pouvez par exemple ajouter : type:mesure, sous type:longueur, qualificatif:aile, méthode :manuelle, outils:règle, unité de valeur:cm, unité de précision :mn, valeur:3,précision : 0.2 (ce qui signifie à 0.2mn près)</target>
+      </trans-unit>
+      <trans-unit id="956">
+      <source>This widget allows you to split the entire record name into smaller fields. Most of the keyword will follow the ABCDEFG standard"</source>
+      <target>Cette widget vous permet de découper un enregistrement entier en potion plus petite. La plupart des mots clés respecte le standard ABCDEFG</target>
+      </trans-unit>
+      <trans-unit id="957">
+      <source>This widget can be used to add the equivalent vernacular name of the record in different languages. You can even add more than one vernacular name in the same language </source>
+      <target>Cette widget peut être utilisée pour ajouter un nom vernaculaire équivalent à l'enregistrement sous une langue différente. vous pouvez même ajouter plus d'un nom vernaculaire dans le même langage.</target>
+      </trans-unit>
+      <trans-unit id="958">
+      <source>In this widget you can add the current name of the catalogue item</source>
+      <target>Dans cette widget vous pouvez ajouter le nom courant de ce catalogue</target>
+      </trans-unit>
+      <trans-unit id="959">
+      <source>This widget allows you to add synonyms, isonyms or homonyms of the catalogue item</source>
+      <target>Cette widget vous permet d'ajouter des synomymes. isonyme ou homonymes de ce catalogue</target>
+      </trans-unit>
+      <trans-unit id="960">
+      <source>In this widget you can add the original combination(s) that constitutes the present catalogue item</source>
+      <target>Dans cette widget vous pouvez ajouter l'associassion original qui contitue la catalogue actuel</target>
+      </trans-unit>
+      <trans-unit id="961">
+      <source>This widget allows you to preset the default prefix and/or separator and/or code and/or separator and/or suffix of the main code that will be used when choosing this collection in the specimen screen</source>
+      <target>cette widget vous permet définir le préfixe et/ou le séparateur et/ou le code et/ou le suffixe par défaut du code principal qui sera utilisé quand cette collection sera choisie dans l'écran des échantillons.</target>
+      </trans-unit>
+      <trans-unit id="962">
+      <source>In this widget you can specify one or more values of the whole collection belonging to the same IG number as estimated by a particular insurance institution and /or on a particular date</source>
+      <target>Dans cette widget vous pouvez spécifier une ou plusieur valeurs de la globalité de la collection appartenant au même numéro Ig comme estimé par une institution assurance particulière et/ou à une date définie</target>
+      </trans-unit>
+      <trans-unit id="963">
+        <source>This widget allows you to add some information regarding the determination of either the type, sex, stage, social status and/or rock formation. You can potentially add the date on which the determination was made, what value was given as well as the determinators' names.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="964">
+        <source>This widget is mainly used for entering the social class of an animal living in a social group. e.g. to indicate that an individual is a workerbee</source>
+        <target>Cette widget est principalement utilisée pour saisir la classe sociale d'un animal vivant dans un groupe spécial. Par ex : pour indiquer que cette individue est une ouvrière</target>
+      </trans-unit>
+      <trans-unit id="965">
+      <source>This widget allows you to add a sterioscopic form that you can find when analysing a mineral composition.</source>
+      <target>Cette widget vous permet d'ajouter des formes stérioscopiques que vous pouvez trouver en analysant la composition d'un minerai.</target>
+      </trans-unit>
+      <trans-unit id="966">
+      <source>In this widget you can specify the exact number of individuals belonging to the same specimen or you can specify a lower and upperbound estimate of the number of individuals</source>
+      <target>Dans cette widget, vous pouvez spécifier le nombre exact d'individus appartement au même échantillon, ou vous pouvez spécifier un minimum et un maximum approximatif du nombre d'individus.</target>
+      </trans-unit>
+      <trans-unit id="967">
+      <source>This widget lets you describe the stage of the present individual e.g. a larva</source>
+      <target>Cette widget vous permet de décrire l'étape de l'individu actuel (ex : une larve)</target>
+      </trans-unit>
+      <trans-unit id="968">
+      <source>This widget allows you to add the information regarding the status of the individual e.g. holotype. You can, however, also add non conformistic nomenclatura types</source>
+      <target>Cette widget vous permet d'ajouter des informations en fonction du status de l'individu (ex : Holotype). Vous pouvez aussi, cependant, ajouter une nomeclature type non conforme</target>
+      </trans-unit>
+      <trans-unit id="969">
+        <source>This widget allows you to enter the sex of a particular individual. You can also add a specific attribute e.g. pregnant with eggs</source>
+        <target>Cette widget vous permet d'entrer le sexe d'un individu particulier. Vous pouvez aussi ajouter un attribut spécifique (ex : enceinte avec oeuf)</target>
+      </trans-unit>
+      <trans-unit id="970">
+      <source>This widget allows you to add information with regards to the physical state of the object. E.g. damaged. You can also indicate whether you have a complete object or a partial object by using the tickbox.</source>
+      <target>Cette widget vous permet d'ajouter des informations en rapport avec l'état physique de l'objet. Ex : endommagé. vous pouvez aussi indiquer si cet objet est complet ou si c'est une partie.</target>
+      </trans-unit>
+      <trans-unit id="971">
+      <source>This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The surnumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.</source>
+      <target>Cette widget vous permet d'ajouter des informations en rapport avec les conditions de stockage dans les dépots de l'institut. Vous pouvez définir un conteneur et/ou un sous conteneur ainsi que la condition dans lequel l'objet est conservé. L'option surnuméraire vous permet d'indiquer que l'objet est succeptible d'être déplacé vers un conteneur plus spacieux.</target>
+      </trans-unit>
+      <trans-unit id="972">
+      <source>In this widget you can specify the exact number of objects belonging to the same individual or you can specify a lower and upperbound estimate of the number of objects</source>
+      <target>Dans cette widget, vous pouvez spécifier le nombre exact d'objet appartement au même individu, ou vous pouvez spécifier un minimum et un maximum approximatif du nombre d'objets.</target>
+      </trans-unit>
+      <trans-unit id="973">
+      <source>In this widget you can specify one or more values with regards to the object(s) as estimated by a particular insurance institution and /or on a particular date.</source>
+      <target>!!!!! CATHY HELP !!!!!!!</target>
+      </trans-unit>
+      <trans-unit id="974">
+      <source>This widget allows you to link the current object to a parent object. E.g. link a DNA sample to a Tissue sample.</source>
+      <target>Cette widget vous permet de lier l'élément actuel à un parent. Ex : Lier un échantillon ADN à un échantillon de tissus</target>
+      </trans-unit>
+      <trans-unit id="975">
+      <source>This mandatory widget specifies the type of object in more detail.</source>
+      <target>Cette widget obligatoire spécifie le type de l'élémant en détail.</target>
+      </trans-unit>
+      <trans-unit id="976">
+      <source>This widget allows you to add information with regards to the placement in the depositories of the institute. You can specify the building, floor, room, row and/or shelf where the object(s) are stored.</source>
+      <target>Cette widget vous permet d'ajouter des informations au sujet du placement dans les entrepots de l'institution. Vous pouvez spécificier le bâtiment, l'étage, la pièce, le rayon et/ou la plateau où l'objet est entreposé.</target>
+      </trans-unit>
+      <trans-unit id="977">
+      <source>This widget allows you to link one or more codes to an object. You can either associate a prefix, a separator, a aphanumeric code, a separator and/or a suffix to each type of code (main, temporary,etc.)</source>
+      <target>Cette widget vous permet de lier un ou plusieur codes à un élément. Vous pouvez associer un préfixe, un séparateur, un code alphanumérique, et/ou un suffixe pour chaque type de cose (principal, temporaire, etc.) </target>
+      </trans-unit>
+      <trans-unit id="978">
+      <source>This widget shows you types of actions or observations with regards to the object. This can e.g. show you the date on which a person added alcohol to the container that houses the object or it could be the date on which a person observed that an object seemed to be broken. Information in this widget can, however, only be inserted by using the mass update functionality!</source>
+      <target>Cette widget vous montre les types d'actions ou d'observations en fonction de l'élément. Vous pouvez y voir par exemple la date à laquelle une personne a ajouté de l'alcool dans un conteneur qui accueille l'élément, ou cela pourrait être la date à laquelle un personne a remarqué que l'élément semblait cassé.</target>
+      </trans-unit>
+      <trans-unit id="979">
+      <source>This widget regroups all communication information of a user, such as phone/fax number, email. You can use our tags to set the type of entry (work or home phone for instance)</source>
+      <target>Cette widget regroupe tout les moyens de communication d'un utlisateur, tel que le numéro de téléphone/fax, l'email. Vous pouvez utliser vos labels pour définir le type d'entrée (télphone de travail ou de domicile par exemple)</target>
+      </trans-unit>
+      <trans-unit id="980">
+      <source>This widget shows all known languages for this person. A language can be set as mothertongue and /or as preferred language.</source>
+      <target>Cette widget montre toutes les langues connues par cette personne. Une ou plusieur langues maternelle et/ou préférée peuvent être définies.</target>
+      </trans-unit>
+      <trans-unit id="981">
+      <source>This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= domicile, Date from=01/02/1960, Date to= 05/06/1962 , value= Solomon Islands</source>
+      <target>Cette widget vous permet d'ajouter des commentaires plus structurés, mais assurez vous que vos informations soient consistantes. Vous pouvez par exemple ajouter ceci : type= domicile, date debut:01/02/1960, Date de fin= 05/06/1962, valeur= Iles Salomon.</target>
+      </trans-unit>
+      <trans-unit id="982">
+      <source>This widget allows you to add one or more addresses, it can be home address, work or more. The locality and the country are required fields</source>
+      <target>Cette widget vous permet d'ajouter une ou plusieurs adresses, cela peut être des adresses de domicile, de travail ou autre. La localité et le pays sont des champs requis.</target>
+      </trans-unit>
+      <trans-unit id="983">
+      <source>This widget will allow you to add e.g. the institution/department/section the person works/worked for</source>
+      <target>Cette widget vous permettra d'ajouter par exemple l'intitution/département/section où la personne travaille(ait)</target>
+      </trans-unit>
+      <trans-unit id="984">
+      <source>Via this widget you can search a specimen/individual/part by looking up a particular position in a particular depositary.</source>
+      <target>Via cette widget, vous pouvez rechercher un échantillon/individu/partie en cherchant un emplacement particulier dans un dépot particulier</target>
+      </trans-unit>
+      <trans-unit id="985">
+      <source>Via this widget you can look up all records belonging to one or more life stages, e.g. adults or larvae.</source>
+      <target>Via cette widget, vous pouvez rechercher tout les enregistrements appartenant a un ou plusieurs état de vie, ex : adulte ou larve.</target>
+      </trans-unit>
+      <trans-unit id="986">
+      <source>Via this widget you can predetermin whether you are looking for specimens as a whole, individuals having the same characteristics or objects with the same features.</source>
+      <target>Via cette widget, vous pouvez determiner si vous recherchez dans la totalité des échantillons, individus ayant les même propriétés ou des parties avec la même caractéristiques</target>
+      </trans-unit>
+      <trans-unit id="987">
+      <source>Via this widget you can search all records that refer to a particular lithological unit.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements référant à une unité lithologique particulière.</target>
+      </trans-unit>
+      <trans-unit id="988">
+      <source>Via this widget you can look up a record via the internal database number.</source>
+      <target>Via cette widget vous pouvez rechercher des enregistrements grâce à leur identifiants stockés dans la base de données</target>
+      </trans-unit>
+      <trans-unit id="989">
+      <source>Via this widget you can search all records that refer to a particular taxonomic unit.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements référant à une unité taxonomique particulière.</target>
+      </trans-unit>
+      <trans-unit id="990">
+      <source>Via this widget you can look up records that refer to a particular sampling location. You can look up via code, date and/or related tags.</source>
+      <target>Via cette widget, vous pouvez rechercher des enregistrements référant à un poitn d'échantillonage particulier. vous pou vez rechercher ce dernier via le code, la date et/ou les labels associés</target>
+      </trans-unit>
+      <trans-unit id="991">
+      <source>Via this widget you can search all records that refer to a particular chronostratigraphic unit.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements référant à une unité chronostratigraphique particulière.</target>
+      </trans-unit>
+      <trans-unit id="992">
+      <source>Via this widget you can find all records where the selected tool(s) where used for collecting the specimens.</source>
+      <target>Via cette widget vous pouvez trouver tout les enregistrements ou l'outils selectionné est utlilisé pour collecter les échantillons.</target>
+      </trans-unit>
+      <trans-unit id="993">
+      <source>Via this widget you can look up those records where the nomenclatura types and non nomenclatura types selected can be found.</source>
+      <target>!!!!!!! CATHY HELP !!!!!</target>
+      </trans-unit>
+      <trans-unit id="994">
+      <source>Via this widget you can find all records where the selected method(s) where used for collecting the specimens.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements ou la(les) méthode(s) sélectionnée(s) est(sont) utilisée(s) pour collecter les échantillons.</target>
+      </trans-unit>
+      <trans-unit id="995">
+      <source>Via this widget you can look up records via either the specimen code(s) or the part code(s).</source>
+      <target>Via cette widget vous pouvez rechercher des enregistrements soit par le(s) code(s) des échantillons, soit par le(s) code(s) des parties</target>
+      </trans-unit>
+      <trans-unit id="996">
+      <source>Via this widget you can look up the records belonging to one or more specific collections.</source>
+      <target>Via cette widget vous pouvez rechercher les enregistrements appartenant à une ou plusieurs collections spécifiques</target>
+      </trans-unit>
+      <trans-unit id="997">
+      <source>Via this widget you can look up those records where the individuals belong to the selected sex.</source>
+      <target>Via cette widget vous pouvez rechercher les enregistrements où l'individu appartient au sexe sélectionné</target>
+      </trans-unit>
+      <trans-unit id="998">
+      <source>Via this widget you can look up all individuals that have a particular sexual state. You could e.g. look up all individuals that have the characteristic of carrying eggs.</source>
+      <target>Via cette widget vous pouvez rechercher tout les individus qui ont un état sexuel particulier. vous pouvez par exemple rechercher tout les individus qui ont la caractéristique de porter des oeufs.</target>
+      </trans-unit>
+      <trans-unit id="999">
+      <source>Via this widget you can look up all records belonging to the same expedition.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements appartenant à la même expédition.</target>
+      </trans-unit>
+      <trans-unit id="1000">
+      <source>Via this widget you can search all records that refer to a particular lithostratigraphic unit.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements référant à une unité lithostratigraphique spécifique.</target>
+      </trans-unit>
+      <trans-unit id="1001">
+      <source>Via this widget you can look up all objects that are held in the container and/or subcontainer selected.</source>
+      <target>Via cette widget vous pouvez rechercher les éléments enfermés dans le conteneur ou sous conteneur sélectionné.</target>
+      </trans-unit>
+      <trans-unit id="1002">
+      <source>Via this widget you can search all records that refer to a particular mineralogic unit.</source>
+      <target>Via cette widget vous pouvez rechercher tout les enregistrements référant à une unité minéralogique spécifique.</target>
+      </trans-unit>
+      <trans-unit id="1003">
+      <source>Via this widget you can look up specimens found in a range of latitudes/longitudes by entering them manually. Beware of the formatting used: (-)000.000000. You can also decide to look for a range on the map by ticking the box above. The area shown on the map will be the range in which the search will be performed. Beware that existing sampling locations will be indicated with a flag on the map.</source>
+      <target>Via cette widget vous pouvez rechercher les échantillons trouvés dans une plage de longitude/latitude en les entrant manuellement. Attention au format utilisé: (-)000.000000. Vous pouvez aussi décider de rechercher une plage sur la carte en cliquant sur la case a coser. La zone affichée sur la carte sera la plage dans laquelle la recherche sera effectuée. Les points d'échantillonages éxistants seront indiqués avec un drapeau sur la carte.</target>
+      </trans-unit>
+      <trans-unit id="1004">
+      <source>Via this widget you can look up those records where the individuals belong to the selected social status. E.g. look up all worker ants.</source>
+      <target>Via cette widget vous pouvez rechercher les enregistrements où l'individu appartient au status social sélectionné. Ex: rechercher toutes les fourmies travailleuses.</target>
+      </trans-unit>
+      <trans-unit id="1005">
+      <source>Via this widget you can look up one or more sterioscopic rock forms.</source>
+      <target>Via cette widget vous pouvez rechercher une ou plusieur formes rocheuses stérioscopiques.</target>
+      </trans-unit>
+      <trans-unit id="1006">
+      <source>Via this widget you can either look up by General inventory number (I.G.) or by looking up in a range of I.G. creation dates.</source>
+      <target>Via cette widget vous pouvez soit rechercher par numéro d'inventaire général (I.G.) ou par recherche dans une plage de date de création de numéro d'I.G.</target
+      ></trans-unit>
+      <trans-unit id="1007">
+      <source>This widget allows you to add the reference to a chonostratigraphic unit.</source>
+      <target>Via cette widget vous pouvez ajouter la référance à une unité chronostratigraphique.</target>
+      </trans-unit>
+      <trans-unit id="1008">
+      <source>This mandatory widget specifies to which collection your specimen should be attached. You should also specify whether the specimen contains physical objects or whether it refers to an observation made.</source>
+      <target>Cette widget obligatoire spécifie dans quelle collection votre échantillon devrait être attaché. Vous devez aussi spécifier si cet échantillon contient un élément physique ou si il fait référence à une observation</target>
+      </trans-unit>
+      <trans-unit id="1009">
+      <source>This widget allows you to link this specimen to a particular I.G number.</source>
+      <target>Cette widget vous permet de lier cet échantillon à un numéro d'I.G particulier.</target>
+      </trans-unit>
+      <trans-unit id="1010">
+      <source>This widget allows you to link this specimen to a particular expedition.</source>
+      <target>Cette widget vous permet de lier un échantillon à une expédition spécifique.</target>
+      </trans-unit>
+      <trans-unit id="1011">
+      <source>This widget allows you to specify either a Host Taxon (e.g. your specimen is a parasite and you specify its natural host's taxonomic name). You can also add a Host Specimen, indicating that the specimen is also kept in one of the existing collections.</source>
+      <target>Cette widget vous permet de spécifier un Taxon d'hôte (ex: votre échantillon est un parasite et vous spécifiez le nom taxonomique de son hôte naturel). vous pouvez aussi ajouter un hôte d'échantiloon, indiquant que l'échantillon est aussi gardé dans une des collections existantes.</target>
+      </trans-unit>
+      <trans-unit id="1012">
+      <source>This widget allows you to add one or more methods used to collect the specimen.</source>
+      <target>Cette widget vous permet d'ajouter une ou plusieur méthodes pour recueillir un échantillon.</target>
+      </trans-unit>
+      <trans-unit id="1013">
+      <source>This widget allows you to add the names of the donators or sellers (people or institutions) that gave or sold this specimen to your institution.</source>
+      <target>Cette widget vous permet d'ajouter les noms des donneurs ou vendeurs (personnes ou institutions) qui ont donnés ou vendus leurs échantillons à notre institution</target>
+      </trans-unit>
+      <trans-unit id="1014">
+      <source>This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= watertemperature, sub type= C°,Date from=01/07/1974 10:05:00, value= 15</source>
+      <target>Cette widget vous permet des informations plus structurées, mais assurez vous que les informations rentrées soient consistantes. Vous pouvez par exemple ajouter : type:température de l'eau, sous type:C°, Date de début :01/07/1974 10;05;00, valeur:15</target>
+      </trans-unit>
+      <trans-unit id="1015">
+      <source>This widget allows you to add the names of the collectors that where involved in collecting this specimen.</source>
+      <target>Cette widget vous permet d'ajouter les noms des collecteurs qui ont participés à la récupération de cet échantillon.</target>
+      </trans-unit>
+      <trans-unit id="1016">
+      <source>This widget allows you to add the reference to a mineralogic unit.</source>
+      <target>Cette widget vous permet d'ajouter une référence à une unité minéralogique</target>
+      </trans-unit>
+      <trans-unit id="1017">
+      <source>This widget allows you to add the reference to a lithological unit.</source>
+      <target>Cette widget vous permet d'ajouter une référence à une unité lithologique</target>
+      </trans-unit>
+      <trans-unit id="1018">
+      <source>This widget allows you to link one or more codes to a specimen. You can either associate a prefix, a separator, a aphanumeric code, a separator and/or a suffix to each type of code (main, temporary,etc.)</source>
+      <target>Cette widget vous permet de lier un ou plusieur codes à un échantillon. Vous pouvez associer un préfixe, un séprateru, un code alphanumérique et/ou un suffixepour chaque type de code (principal, temporaire,etc.)</target>
+      </trans-unit>
+      <trans-unit id="1019">
+      <source>This widget allows you to add two types of accompanying elements. In the first case, you could add a biological type of element. E.g Imagine that you have a shell that is covered by a colony of moss animals. You could add the Taxonomic name Membranipora tenuis Desor, 1848 in the widget and you could also specify the amount() of the area covered by the colony. In a second case, you could describe the different elements that constitute the whole mineral that you are encoding. E.g. your rock is made up by two mineralogic elements, one being 95% quartz and the second 5% calcite.</source>
+      <target>Cette widget vous permet d'ajouter deux types d'éléments accompagnateurs. Dans le premier cas, vous pouvez ajouter un élément biologique. Ex: imaginez que vous avez un coquillage couvert par une colonie d'animaux (bryozoaires). Vous pouvez ajouter un nom taxonomique Membranipora tenuis Desor, 1848 dans la widget et vous pouvez aussi spécifier la quantité de la zone couverte par la colonie. En second temps, vous pouvez décrire les différents éléments qui constituent la globalité du minerai que vous êtes en train d'encoder. Ex : votre roche est fait de deux éléments minéralogiques, 95% de quartz et 5% de calcite.</target>
+      </trans-unit>
+      <trans-unit id="1020">
+      <source>This widget allows you to add the reference to a Sampling location unit (Gtu).</source>
+      <target>Cette widget vous permet d'ajouter une référence à un point d'échantillonage (Gtu)</target>
+      </trans-unit>
+      <trans-unit id="1021">
+      <source>This widget allows you to add the reference to a lithostratigraphic unit.</source>
+      <target>Cette widget vous permet d'ajouter une référence a une unité lithostratigrahique</target>
+      </trans-unit>
+      <trans-unit id="1022">
+      <source>This widget allows you to add a reference to a Taxon name.</source>
+      <target>Cette widget vous permet d'ajouter une référence à un nom de taxon</target>
+      </trans-unit>
+      <trans-unit id="1023">
+      <source>This widget allows you to add one or more tools used to collect the specimen.</source>
+      <target>Cette widget vous permet d'ajouter un ou plusieurs outils utilisés pour collecter les échantillons</target>
+      </trans-unit>
+      <trans-unit id="1024">
+      <source>This widget allows you to add some information regarding the determination of either the taxonomic, lithostratigraphic, chronostratigraphic, mineralogic unit or rock formation. You can potentially add the date on which the determination was made, what value was given as well as the determinators' names.</source>
+      <target>Cette widget vous permet d'ajouter quelques informations en rapport avec une unité taxonomique, lithostratigraphique, chronostratigraphique, mineralogique ou une formation rocheuse. Vous pouvez éventuellement ajouter la date à laquelle la détermination a été faites, quelle valeur a été donnée aussi bien que le nom des détermineurs</target>
+      </trans-unit>
+      <trans-unit id="1025">
+      <source>This widget specifies the manner in which the specimen was obtained. E.g. it was part of a donation on the 01/01/2010.</source>
+      <target>Cette widget détermine la façon par laquelle l'échantillon a été obtenu. Ex : c'etait une partie d'un don le 01/01/2010.</target>
+      </trans-unit>
+      <trans-unit id="1026">
+      <source>This widget allows you to add one or more addresses, it can be home address, work or more. The locality and the country are required fields</source>
+      <target>Cette widget vous permet d'ajouter une ou plusieurs adresses, cela peut être une adresse de domicile, de travail ou autre. La localité et le pays sont des champs requis.</target>
+      </trans-unit>
+      <trans-unit id="1027">
+      <source>This widget shows all known languages for this user. A language can be set as mothertongue. A language can also be set as preferred that will be used by DaRWIN. If our application cannot translate the preferred language the default language will be used (English)</source>
+      <target>Cette widget montre tout les langages connus par cet utilisateur. une langue maternelle peut être définie. Une langue préférée peut aussi être définie et sera utilisée par DaRWIN. Si notre application ne peut pas traduire la langue préférée, le langage par défaut sera utilisé (anglais)</target>
+      </trans-unit>
+      <trans-unit id="1028">
+      <source>This widget is used to specify or change a login and password. if wished, a user can have more than one couple of Login/password.</source>
+      <target>Cette widget est utilisée pour spécifier ou changer un identifiant et mot de passe. Si souhaité, un utilisateur peut avoir plus d'un couple d'identifiant/mot de passe</target>
+      </trans-unit>
+      <trans-unit id="1029">
+      <source>This widget regroups all communication information of a user, such as phone/fax number, email. You can use our tags to set the type of entry (work or home phone for instance)</source>
+      <target>Cette widget regroupe tout les moyens de communication de cet utilisateur, tel que numéro de téléphone/fax, email. Vous pouvez utiliser nos label pour définier le type de communication (téléphone de travail ou de domicile par exemple)</target>
+      </trans-unit>   
+      <trans-unit id="1030"><source>Our collections</source><target>Nos collections</target></trans-unit>
+      <trans-unit id="1031"><source>Take a tour</source><target>Visite guidée</target></trans-unit>
+      <trans-unit id="1032"><source>Contacts</source><target>Contacts</target></trans-unit>
+      <trans-unit id="1033"><source>About</source><target>A propos</target></trans-unit>
+      <trans-unit id="1034"><source>Search</source><target>Rechercher</target></trans-unit>                                 
     </body>    
   </file>
 </xliff>

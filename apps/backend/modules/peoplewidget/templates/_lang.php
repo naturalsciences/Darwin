@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th><?php echo __('Language');?></th>
-      <th><?php echo __('Is Mother Language');?></th>
+      <th><?php echo __('Is Mothertongue');?></th>
     </tr>
   </thead>
   <tbody>

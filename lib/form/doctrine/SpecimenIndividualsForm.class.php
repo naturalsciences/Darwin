@@ -65,7 +65,7 @@ class SpecimenIndividualsForm extends BaseSpecimenIndividualsForm
         'key_method' => 'getRockForm',
         'add_empty' => false,
         'change_label' => 'Pick a rock form in the list',
-        'add_label' => 'Add an other rock form',
+        'add_label' => 'Add another rock form',
     ));
 
     $this->widgetSchema['accuracy'] = new sfWidgetFormChoice(array(

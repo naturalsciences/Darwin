@@ -33,7 +33,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
       'key_method' => 'getSpecimenPart',
       'add_empty' => false,
       'change_label' => 'Pick parts in the list',
-      'add_label' => 'Add another parts',
+      'add_label' => 'Add another part',
       ));
 
     $this->widgetSchema['building'] = new widgetFormSelectComplete(array(

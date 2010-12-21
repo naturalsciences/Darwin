@@ -1,7 +1,7 @@
 <?php slot('title', __('Specimen individuals overview'));  ?>
 <?php include_partial('specimen/specBeforeTab', array('specimen' => $specimen, 'mode'=>'individuals_overview', 'view' => $view_only));?>
 <?php if(count($individuals)==0):?>
-  <h2><?php echo __('There a currently no individual');?></h2>
+  <h2><?php echo __('Currently, there are no individuals');?></h2>
 <?php else : ?>
 <div>
 <ul id="error_list" class="error_list" style="display:none">

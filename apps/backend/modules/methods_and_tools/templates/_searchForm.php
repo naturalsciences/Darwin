@@ -27,7 +27,7 @@
     </div>
   </form>
 <?php else:?>
-  <?php echo __('You need to precise if you wish to work on tools or methods');?>
+  <?php echo __('You need to specify if you wish to work on tools or methods');?>
 <?php endif;?>
 <script language="javascript">
 $(document).ready(function () {

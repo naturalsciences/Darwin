@@ -1,5 +1,5 @@
 <?php if(count($parts)==0):?>
-  <h2><?php echo __('There are currently no part');?></h2>
+  <h2><?php echo __('Currently, there are no parts');?></h2>
 <?php else:?>
 <table class="catalogue_table<?php if($view) echo '_view' ; ?>">
   <thead>
@@ -46,11 +46,11 @@
       <td><?php echo $part->getShelf();?></td>
       <td><?php echo $part->getContainer();?></td>
       <td><?php echo $part->getSubContainer();?></td>
-    <?php endif ; ?>
-    <td>
-      <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
-    </td>    
+    <?php endif ; ?>  
     <?php if(!isset($is_choose) || $is_choose==false):?>
+      <td>
+        <?php echo link_to(image_tag('blue_eyel.png'),'parts/view?id='.$part->getId(), array('title'=>__('View this part')));?>
+      </td>      
       <?php if (!$view): ?> 
       <td>
         <?php echo link_to(image_tag('edit.png'),'parts/edit?id='.$part->getId(), array('title'=>__('Edit this part')));?>

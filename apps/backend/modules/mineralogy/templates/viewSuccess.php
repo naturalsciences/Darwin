@@ -77,7 +77,7 @@ $(document).ready(function ()
         </td>
       </tr> 
       <tr>
-        <th><?php echo __("Color") ?></th>
+        <th><?php echo __("Colour") ?></th>
         <td>
           <span class='round_color' style="background-color:<?php echo $mineral->getColor() ?>">&nbsp;</span>
         </td>
