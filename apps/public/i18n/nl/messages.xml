@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file original="messages" product-name="messages" target-language="ne" datatype="plaintext" source-language="EN" date="2010-12-22T14:10:50Z">
+    <header>
+      <phase-group>
+        <phase contact-name="Brice Maron" tool-id="lokalize-1.0" phase-name="approval-1" contact-email="bmaron@naturalsciences.be" process-name="approval" date="2009-10-13"/>
+      </phase-group>
+      <tool tool-id="lokalize-1.0" tool-name="Lokalize" tool-version="1.0"/>
+    </header>
+    <body>
+      <trans-unit approved="yes">
+        <source>Logout</source> <target>Logout</target> </trans-unit>
+      <trans-unit id="1" approved="yes">
+        <source>Collections</source> <target phase-name="approval-1">Collecties</target> </trans-unit>
+      <trans-unit id="4" approved="yes">
+        <source>Collection</source> <target phase-name="approval-1">Collectie</target> </trans-unit>
+      <trans-unit approved="yes">
+        <source>Name</source> <target phase-name="approval-1">Naam</target> </trans-unit>
+      <trans-unit approved="yes">
+        <source>Search</source> <target phase-name="approval-1">Zoeken</target> </trans-unit>
+      <trans-unit id="5" approved="yes">
+        <source>Details :</source> <target phase-name="approval-1">Details :</target> </trans-unit>
+      <trans-unit id="17" approved="yes">
+        <source>Taxonomy</source> <target phase-name="approval-1">Taxonomie</target> </trans-unit>
+      <trans-unit id="21" approved="yes">
+        <source>Level</source> <target phase-name="approval-1">Niveau</target> </trans-unit>
+      <trans-unit id="2" approved="yes">
+        <source>Chronostratigraphy</source> <target>Chronostratigrafie</target> </trans-unit>
+      <trans-unit id="3" approved="yes">
+        <source>Lithostratigraphy</source> <target>Lithostratigrafie</target> </trans-unit>
+      <trans-unit id="4" approved="yes">
+        <source>Lithology</source> <target>Lithologie</target> </trans-unit>
+      <trans-unit id="5" approved="yes">
+        <source>Mineralogy</source> <target>Mineralogie</target> </trans-unit>
+      <trans-unit id="20" approved="yes">
+        <source>Category</source> <target>Categorie</target> </trans-unit>
+      <trans-unit id="35" approved="yes">
+        <source>Type</source> <target>Type status</target> </trans-unit>
+      <trans-unit id="64" approved="yes">
+        <source>Institution</source> <target>Instelling</target> </trans-unit>
+      <trans-unit id="87" approved="yes">
+        <source>Names</source> <target>Namen</target> </trans-unit>
+      <trans-unit id="127" approved="yes">
+        <source>Country</source> <target>Land</target> </trans-unit>
+      <trans-unit id="132" approved="yes">
+        <source>Tags</source> <target>Tags</target> </trans-unit>
+      <trans-unit id="204" approved="yes">
+        <source>Taxon</source> <target>Taxon</target> </trans-unit>
+      <trans-unit id="205" approved="yes">
+        <source>No Specimen Matching</source> <target>Geen overeenkomstig Staal</target> </trans-unit>
+      <trans-unit id="209" approved="yes">
+        <source>Our Collections</source> <target>Onze Collecties</target> </trans-unit>
+      <trans-unit id="210" approved="yes">
+        <source>Take a tour</source> <target>rondleiding</target> </trans-unit>
+      <trans-unit id="211" approved="yes">
+        <source>Contacts</source> <target>Contacten</target> </trans-unit>
+      <trans-unit id="1" approved="yes">
+        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target>[0]Geen resultaat|[1]Uw opzoeking levert 1 record op|(1,+Inf]Uw opzoeking levert %1% records op</target> </trans-unit>
+      <trans-unit id="2" approved="yes">
+        <source>About</source> <target>Over</target> </trans-unit>
+      <trans-unit id="3" approved="yes">
+        <source>About Us</source> <target>Over ons</target> </trans-unit>
+      <trans-unit id="4" approved="yes">
+        <source>Contact</source> <target>Contact</target> </trans-unit>
+      <trans-unit id="5" approved="yes">
+        <source>If you have a problem using the tool, or if you want to help : write a mail at &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</source> <target>Indien u moeilijkheden ondervind in het gebruik van onze tool, of indien u ons wilt helpen: schrijf ons een berichtje op &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</target> </trans-unit>
+      <trans-unit id="6" approved="yes">
+        <source>If you have a question about a specimen, please contact the collection manager of the specimen. &lt;br /&gt; you can find his or her e-mail address in the record.</source> <target>Heeft u echter een vraag over een specimen, gelieve dan rechtstreeks contact op te nemen met de collectiebeheerder van het staal. &lt;br /&gt; U vindt zijn of haar email adres op de fiche van het gezochte specimen bovenaan rechts.</target> </trans-unit>
+      <trans-unit id="7" approved="yes">
+        <source>Welcome In DaRWIN</source> <target>Welkom bij DaRWIN</target> </trans-unit>
+      <trans-unit id="8" approved="yes">
+        <source>Discover DaRWIN</source> <target>Ontdek DaRWIN</target> </trans-unit>
+      <trans-unit id="9" approved="yes">
+        <source>Discover the DaRWIN Interface</source> <target>Ontdek de DaRWIN interface</target> </trans-unit>
+      <trans-unit id="10" approved="yes">
+        <source>DaRWIN is not just a website for displaying our collections, it's an entire product of collection management. &lt;br /&gt;You can register free of charge and discover this nice tool.&lt;br /&gt; Let's take a look of some of our amazing features :</source> <target>DaRWIN is niet zomaar een webstek waar u onze collecties kunt ondekken, maar het is een volwaardig collectiebeheer systeem.&lt;br /&gt;U kunt zich gratis registreren en deze aangename tool verder verkennen.&lt;br /&gt; Laten we eens een kijkje nemen naar enkele van onze grote troeven :</target> </trans-unit>
+      <trans-unit id="11" approved="yes">
+        <source>Register Now!</source> <target>Registreer u NU!</target> </trans-unit>
+      <trans-unit id="12" approved="yes">
+        <source>Friendly Working Space:</source> <target>Een aangename werkomgeving:</target> </trans-unit>
+      <trans-unit id="13" approved="yes">
+        <source>Everything in the DaRWIN interface is build to make &lt;strong&gt;YOUR&lt;/strong&gt; job easier.&lt;br /&gt; You want to work on a set of specimens? You want to save a search you often use? You want to know who has changed the info?&lt;br /&gt; &lt;strong&gt;DaRWIN can do that!&lt;/strong&gt;</source> <target>Binnen DaRWIN stellen we alles in het werk om &lt;strong&gt;UW&lt;/strong&gt; taak te verlichten.&lt;br /&gt; Werkt u op een set van stalen? Wenst u vaak zaken op te zoeken en uw resultaten te bewaren? Wilt u graag op de hoogte blijven wie de informatie heeft gewijzigd?&lt;br /&gt; &lt;strong&gt;DaRWIN Kan u daarbij zeker helpen!&lt;/strong&gt;</target> </trans-unit>
+      <trans-unit id="14" approved="yes">
+        <source>Enhanced Search :</source> <target>Verbeterde zoekfunctie:</target> </trans-unit>
+      <trans-unit id="15" approved="yes">
+        <source>You find the public search a little bit too restrictive? &lt;br /&gt; Let's try our DaRWIN search tool. You will be able to search for tons of information.&lt;br /&gt; From Map to complex taxonomy and synonymy searches.</source> <target>Vindt u onze publieke zoekfunctie wat te restrictief?&lt;br /&gt; Probeer eens onze DaRWIN tool. U zult er een schat aan informatie vinden.&lt;br /&gt;Van resultaten op kaarten tot ingewikkelde zoekcriteria voor taxonomy and synonymie.</target> </trans-unit>
+      <trans-unit id="16" approved="yes">
+        <source>Customizable Interface :</source> <target>Een interface die kan worden aangepast:</target> </trans-unit>
+      <trans-unit id="17" approved="yes">
+        <source>In the DaRWIN tool you have the ability to customize freely your interface.&lt;br /&gt; You are only interested in taxomy? No problem, no other infos will clutter your tool.&lt;br /&gt; Hide or mininize the information you don't need to focus on.</source> <target>DaRWIN biedt u de mogelijkheid om uw eigen interface te customiseren.&lt;br /&gt; Bent u bv. alleen geïnteresseerd in taxonomie? Geen probleem, geen enkele andere informatie hoeft te worden getoont.&lt;br /&gt; Verberg of minimaliseer dus gewoon die info waar u zich niet wenst in te verdiepen.</target> </trans-unit>
+      <trans-unit id="18" approved="yes">
+        <source>About us</source> <target>Over ons</target> </trans-unit>
+      <trans-unit id="19" approved="yes">
+        <source>DaRWIN is an &lt;strong&gt;Open Source&lt;/strong&gt; tool for collection management.&lt;br /&gt; It has been build by the IT departement of the Royal Belgian Institute of Natural Sciences.&lt;br /&gt;</source> <target>DaRWIN is een &lt;strong&gt;Open Source&lt;/strong&gt; tool vooe collectiebeheer&lt;br /&gt; Het werd ontwikkeld door het IT departement van het Koninklijk Belgische Instituut voor Natuurwetenschappen.&lt;br /&gt;</target> </trans-unit>
+      <trans-unit id="20" approved="yes">
+        <source>Our Partners :</source> <target>Onze Partners: </target> </trans-unit>
+      <trans-unit id="21" approved="yes">
+        <source>http://www.naturalsciences.be</source> <target>http://www.natuurwetenschappen.be</target> </trans-unit>
+      <trans-unit id="22" approved="yes">
+        <source>Royal Belgian Institute of Natural Sciences</source> <target>Koninklijk Belgisch Instituut voor Natuurwetenschappen</target> </trans-unit>
+      <trans-unit id="23" approved="yes">
+        <source>http://www.belspo.be</source> <target>http://www.belspo.be</target> </trans-unit>
+      <trans-unit id="24" approved="yes">
+        <source>The Belgian Federal Science Policy Office</source> <target>Federaal wetenschapsbeleid</target> </trans-unit>
+      <trans-unit id="25" approved="yes">
+        <source>Register</source> <target>Registreren</target> </trans-unit>
+      <trans-unit id="26" approved="yes">
+        <source>Go to Backend</source> <target>Naar de Backoffice applicatie</target> </trans-unit>
+      <trans-unit id="27" approved="yes">
+        <source>Chronostratigraphic unit</source> <target>Chronostratigrafische eenheid</target> </trans-unit>
+      <trans-unit id="28" approved="yes">
+        <source>Lithostratigraphic unit</source> <target>Lithostratigrafische eenheid</target> </trans-unit>
+      <trans-unit id="29" approved="yes">
+        <source>Lithologic unit</source> <target>Lithologische eenheid</target> </trans-unit>
+      <trans-unit id="30" approved="yes">
+        <source>Mineralogic unit</source> <target>Mineralogische eenheid</target> </trans-unit>
+      <trans-unit id="31" approved="yes">
+        <source>Expedition</source> <target>Expeditie</target> </trans-unit>
+      <trans-unit id="32" approved="yes">
+        <source>Taxon common name</source> <target>Taxon inheemse naam </target> </trans-unit>
+      <trans-unit id="33" approved="yes">
+        <source>Chrono common name</source> <target>Chrono inheemse naam</target> </trans-unit>
+      <trans-unit id="34" approved="yes">
+        <source>Litho common name</source> <target>Litho inheemse naam</target> </trans-unit>
+      <trans-unit id="35" approved="yes">
+        <source>Lithologic common name</source> <target>Lithologische inheemse naam</target> </trans-unit>
+      <trans-unit id="36" approved="yes">
+        <source>Mineral common name</source> <target>Inheemse naam Mineraal</target> </trans-unit>
+      <trans-unit id="37" approved="yes">
+        <source>Sex</source> <target>Geslacht</target> </trans-unit>
+      <trans-unit id="38" approved="yes">
+        <source>State</source> <target>Toestand</target> </trans-unit>
+      <trans-unit id="39" approved="yes">
+        <source>Stage</source> <target>Stadium</target> </trans-unit>
+      <trans-unit id="40" approved="yes">
+        <source>Social Status</source> <target>Sociale status</target> </trans-unit>
+      <trans-unit id="41" approved="yes">
+        <source>Rock Form</source> <target>Rotsformatie</target> </trans-unit>
+      <trans-unit id="42" approved="yes">
+        <source>Individual Count</source> <target>Aantal individuen</target> </trans-unit>
+      <trans-unit id="43" approved="yes">
+        <source>View Specimens</source> <target>Bekijk Stalen</target> </trans-unit>
+      <trans-unit id="44" approved="yes">
+        <source>Specimen Record</source> <target>Staal record</target> </trans-unit>
+      <trans-unit id="45" approved="yes">
+        <source>Collection manager</source> <target>Collectiebeheerder</target> </trans-unit>
+      <trans-unit id="46" approved="yes">
+        <source>Common Names</source> <target>Inheemse namen</target> </trans-unit>
+      <trans-unit id="47" approved="yes">
+        <source>Classification</source> <target>Classificatie</target> </trans-unit>
+      <trans-unit id="48" approved="yes">
+        <source>Community/language</source> <target>Gemeenschap/taal</target> </trans-unit>
+      <trans-unit id="49" approved="yes">
+        <source>Classifications</source> <target>Classificaties</target> </trans-unit>
+      <trans-unit id="50" approved="yes">
+        <source>level</source> <target>Niveau</target> </trans-unit>
+      <trans-unit id="51" approved="yes">
+        <source>Chronostatigraphy</source> <target>Chronostratigrafie</target> </trans-unit>
+      <trans-unit id="52" approved="yes">
+        <source>Lithostatigraphy</source> <target>Lithostratigrafie</target> </trans-unit>
+      <trans-unit id="53" approved="yes">
+        <source>Specimen Characteristics</source> <target>Characteristieken stalen</target> </trans-unit>
+      <trans-unit id="54" approved="yes">
+        <source>Number of individual</source> <target>Aantal individuen</target> </trans-unit>
+      <trans-unit id="55" approved="yes">
+        <source>Between</source> <target>Tussen</target> </trans-unit>
+      <trans-unit id="56" approved="yes">
+        <source>Close this record</source> <target>Sluit dit record</target> </trans-unit>
+      <trans-unit id="57" approved="yes">
+        <source>Physical</source> <target>Tastbaar</target> </trans-unit>
+      <trans-unit id="58" approved="yes">
+        <source>+</source> <target>+</target> </trans-unit>
+      <trans-unit id="59" approved="yes">
+        <source>Other</source> <target>Andere</target> </trans-unit>
+      <trans-unit id="60" approved="yes">
+        <source>Search Specimens/Rocks/Minerals</source> <target>Zoek Stalen/Stenen/Mineralen</target> </trans-unit>
+      <trans-unit id="61" approved="yes">
+        <source>Specimen search criteria</source> <target>Zoekcriteria stalen</target> </trans-unit>
+      <trans-unit id="62" approved="yes">
+        <source>Scientific Name</source> <target>Wetenschappelijke naam</target> </trans-unit>
+      <trans-unit id="63" approved="yes">
+        <source>Common Name</source> <target>Inheemse naam</target> </trans-unit>
+      <trans-unit id="64" approved="yes">
+        <source>Countries</source> <target>Landen</target> </trans-unit>
+      <trans-unit id="65" approved="yes">
+        <source>Please use ";" as tag separator.</source> <target>Gelieve de ";" te gebruiken als tag scheidingsteken.</target> </trans-unit>
+      <trans-unit id="66" approved="yes">
+        <source>Types</source> <target>Type statussen</target> </trans-unit>
+      <trans-unit id="67" approved="yes">
+        <source>Sexes</source> <target>Geslachten</target> </trans-unit>
+      <trans-unit id="68" approved="yes">
+        <source>Stages</source> <target>Stadia</target> </trans-unit>
+      <trans-unit id="69" approved="yes">
+        <source>Clear</source> <target>Wissen</target> </trans-unit>
+      <trans-unit id="70" approved="yes">
+        <source>Search results</source> <target>Zoekresultaten</target> </trans-unit>
+      <trans-unit id="71" approved="yes">
+        <source>Search Results</source> <target>Zoekresultaten</target> </trans-unit>
+      <trans-unit id="72" approved="yes">
+        <source>Back to criteria</source> <target>Terug naar de criteria</target> </trans-unit>
+      <trans-unit id="73" approved="yes">
+        <source>View</source> <target>Overzicht</target> </trans-unit>
+      <trans-unit id="74" approved="yes">
+        <source>Specimen criteria</source> <target>Zoekcriteria stalen</target> </trans-unit>
+      <trans-unit id="75" approved="yes">
+        <source>Specimen</source> <target>Staal</target> </trans-unit>
+      <trans-unit id="76" approved="yes">
+        <source>Individual</source> <target>Individu</target> </trans-unit>
+      <trans-unit id="77" approved="yes">
+        <source>DaRWIN 2 registration</source> <target>DaRWIN 2 registratie</target> </trans-unit>
+      <trans-unit id="78" approved="yes">
+        <source>Your password has been successfully renewed.</source> <target>Uw paswoord werd succesvol hernieuwd</target> </trans-unit>
+      <trans-unit id="79" approved="yes">
+        <source>You can now log in and enjoy our enhanced collection services.</source> <target>U kunt zich nu inloggen en genieten van onze vernieuwde collectiefunctionaliteiten.</target> </trans-unit>
+      <trans-unit id="80" approved="yes">
+        <source>DaRWIN 2 team.</source> <target>DaRWIN 2 team.</target> </trans-unit>
+      <trans-unit id="81" approved="yes">
+        <source>Dear</source> <target>Beste</target> </trans-unit>
+      <trans-unit id="82" approved="yes">
+        <source>Thank you for having registered on DaRWIN 2.</source> <target>Dank u voor uw registratie op DaRWIN 2.</target> </trans-unit>
+      <trans-unit id="83" approved="yes">
+        <source>You should have received a reminder of your username and password on the e-mail address provided.</source> <target>U zult een herinnering ontvangen van uw gebruikersnaam en paswoord via het email adres dat u heeft opgegeven.</target> </trans-unit>
+      <trans-unit id="84" approved="yes">
+        <source>Please fill in the application form</source> <target>Gelieve het aanvraagformulier in te vullen</target> </trans-unit>
+      <trans-unit id="85" approved="yes">
+        <source>For your reminder, here is your user name:</source> <target>Ter herinnering, hier is uw gebruikersnaam:</target> </trans-unit>
+      <trans-unit id="86" approved="yes">
+        <source>DaRWIN 2 team</source> <target>DaRWIN 2 team</target> </trans-unit>
+      <trans-unit id="87" approved="yes">
+      <source>Rocks</source> <target>Stenen</target> </trans-unit>
+      <trans-unit id="88" approved="yes">
+      <source>Mineral</source> <target>Mineraal</target> </trans-unit>
+      <trans-unit id="89" approved="yes">
+      <source>Records per page:</source> <target>Records per pagina:</target> </trans-unit> 
+      <trans-unit id="90" approved="yes">
+        <source>"%value%" must be at least %min_length% characters.</source> <target>"%value%" moet ten minste %min_length% karakters bevatten.</target> </trans-unit>
+      <trans-unit id="91" approved="yes">
+        <source>Password must be at least %min_length% characters length</source> <target>Het paswoord moet ten minste %min_length% karakters lang zijn</target> </trans-unit>
+      <trans-unit id="92" approved="yes">
+        <source>Passwords must be equal and may not contain spaces</source> <target>Beide paswoorden moeten gelijk zijn en mogen geen spaties bevatten</target> </trans-unit>
+      <trans-unit id="93" approved="yes">
+        <source>You cannot register without accepting DaRWIN 2 terms of use</source> <target>U kunt zich niet registreren zonder de terms of use DaRWIN 2</target> </trans-unit>                 
+      <trans-unit id="94" approved="yes">
+        <source>Required.</source> <target>Verplicht.</target> </trans-unit>
+      <trans-unit id="95" approved="yes">
+        <source>If you've lost your password, please</source> <target>Indien u uw paswoord heeft vergeten, gelieve</target> </trans-unit>
+      <trans-unit id="96" approved="yes">
+        <source>reset your password</source> <target>Herinitialiseer uw paswoord</target> </trans-unit>
+      <trans-unit id="97" approved="yes">
+        <source>Send me a 'reset account' mail</source> <target>Zend mij een bericht 'heractiveer mijn account'</target> </trans-unit>
+      <trans-unit id="98" approved="yes">
+        <source>Reset your account.</source> <target>Heractiveer mijn account.</target> </trans-unit>
+      <trans-unit id="99" approved="yes">
+        <source>Your login</source> <target>Uw gebruikersnaam</target> </trans-unit>
+      <trans-unit id="100" approved="yes">
+        <source>Your login</source> <target>Uw email adres</target> </trans-unit>
+      <trans-unit id="101" approved="yes">
+        <source>We didn't find any reference with the login and password you provided</source> <target>Wij hebben geen overeenkomst gevonden met de gebruikersnaam en het paswoord dat u heeft opgegeven</target> </trans-unit>
+      <trans-unit id="102" approved="yes">
+        <source>E-mail is required</source> <target>Het veld email is verplicht</target> </trans-unit>
+      <trans-unit id="103" approved="yes">
+        <source>Invalid E-mail address</source> <target>Ongeldig email adres</target> </trans-unit>
+      <trans-unit id="104" approved="yes">
+        <source>must be at least 4 characters.</source> <target>Moet ten minste 4 karakters bevatten.</target> </trans-unit>
+      <trans-unit id="105" approved="yes">
+        <source>Bad login or password</source> <target>Ongeldige login of paswoord</target> </trans-unit>        
+      <trans-unit id="106" approved="yes">
+        <source>Login is required</source> <target>Uw gebruikersnaam is verplicht</target> </trans-unit>
+      <trans-unit id="107" approved="yes">
+        <source>The captcha is not valid (%error%).</source> <target>De captcha is ongeldig (%error%).</target> </trans-unit>
+      <trans-unit id="108" approved="yes">
+        <source>I accept the </source> <target>Ik aanvaard de </target> </trans-unit>
+      <trans-unit id="109" approved="yes"><source>Status</source> <target>Status</target></trans-unit>
+      <trans-unit id="110" approved="yes"><source>Gender</source> <target>Geslacht</target></trans-unit>
+      <trans-unit id="111" approved="yes"><source>Family Name</source> <target>Familienaam</target></trans-unit>
+      <trans-unit id="112" approved="yes"><source>Given Name</source> <target>Voornaam</target></trans-unit>
+      <trans-unit id="113" approved="yes"><source>Login</source> <target>Login</target></trans-unit>
+      <trans-unit id="114" approved="yes"><source>Password</source> <target>Paswoord</target></trans-unit>
+      <trans-unit id="115" approved="yes"><source>Confirm password</source> <target>Bevestig uw paswoord</target></trans-unit>
+      <trans-unit id="116" approved="yes"><source>e-mail</source> <target>Email</target></trans-unit>
+      <trans-unit id="117" approved="yes"><source>Preferred language</source> <target>Voorkeurtaal</target></trans-unit>
+      <trans-unit id="118" approved="yes"><source>Title</source> <target>Titel</target></trans-unit>
+      <trans-unit id="119" approved="yes"><source>Captcha</source> <target>Captcha</target></trans-unit>
+      <trans-unit id="120" approved="yes"><source>Moral person</source> <target>Instituut</target></trans-unit>
+      <trans-unit id="121" approved="yes"><source>Physical person</source> <target>Persoon</target></trans-unit>
+      <trans-unit id="122" approved="yes"><source>Name is required</source> <target>De naam is verplicht</target></trans-unit>      
+      <trans-unit id="123" approved="yes"><source>E-mail is not of a valid form</source> <target>Ongeldig email formaat</target></trans-unit>  
+      <trans-unit id="124" approved="yes"><source>Password must contain at least a case mix and at least one digit</source> <target>Het paswoord moet zowel hoofdletters als kleine letters bevatten, evenals één getal </target></trans-unit>  
+      <trans-unit id="125" approved="yes"><source>"%value%" must be at least %min_length% characters.</source> <target>"%value%" moet ten minste %min_length% karakters bevatten.</target></trans-unit>  
+      <trans-unit id="126" approved="yes"><source>Bad login or password</source> <target>Ongeldige login of paswoord</target></trans-unit>  
+      <trans-unit id="127" approved="yes"><source>Username</source> <target>Gebruikersnaam</target></trans-unit>  
+      <trans-unit id="128" approved="yes"><source>Password</source> <target>Paswoord</target></trans-unit>
+      <trans-unit id="129" approved="yes"><source>Scientists wishing to visit one of our collections should contact the collection manager directly. For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
+      <target>Wetenschappers die één van onze collecties wenst te bezoeken, dient rechtstreeks contact op te nemen met de desbetreffende collectiebeheerder. Indien u meer informatie wenst omtrent de praktische regelingen voor uw bezoek, gelieve onderstaande KBIN bezoekreglementen te raadplegen.</target> </trans-unit>
+      <trans-unit id="130" approved="yes">
+      <source>Academic personnel wishing to loan collection objects should contact the collection manager directly.  For more information on how to apply for a loan, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
+      <target>Academici die collectieobjecten wensen  te ontlenen, dienen rechtstreeks contact op te nemen met de desbetreffende collectiebeheerder. Indien u meer informatie wenst omtrent de praktische regelingen omtrent ontleningen, gelieve onderstaande KBIN reglementen te raadplegen.</target> </trans-unit>
+      <trans-unit id="131" approved="yes">
+      <source>Règlement des prêts pour étude</source>
+      <target>Reglement voor uitleningen voor onderzoek</target> </trans-unit>
+      <trans-unit id="132" approved="yes">
+      <source>Règlement des visiteurs scientifiques externes</source>
+      <target>Reglement voor externe bezoekende wetenschappers</target> </trans-unit> 
+      <trans-unit id="133" approved="yes">
+      <source>terms of use</source> <target>terms of use</target> </trans-unit>
+      <trans-unit id="134" approved="yes">
+            <source>Password must be at least 6 characters length</source> <target>Het passwoord moet zes karakters doen</target> </trans-unit>      
+    </body>
+  </file>
+</xliff>

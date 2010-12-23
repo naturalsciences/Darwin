@@ -777,7 +777,7 @@
       <trans-unit id="386" approved="yes">
         <source>To</source> <target>Tot</target> </trans-unit>
       <trans-unit id="387" approved="yes">
-        <source>This application requires an authentication. Please Log in with your username and password.</source> <target>Voor deze applicatie moet u over een geldige toegang beschikken. Gelieve u in te loggen met uw gebruikersnaam en paswoord.</target> </trans-unit>
+        <source>This application requires an authentification. Please Log in with your username and password.</source> <target>Voor deze applicatie moet u over een geldige toegang beschikken. Gelieve u in te loggen met uw gebruikersnaam en paswoord.</target> </trans-unit>
       <trans-unit id="388" approved="yes">
         <source>Log in</source> <target>Login</target> </trans-unit>
       <trans-unit id="389" approved="yes">

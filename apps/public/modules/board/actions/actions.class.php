@@ -41,6 +41,9 @@ class boardActions extends DarwinActions
   public function executeAbout(sfWebRequest $request)
   {  }
 
+  public function executeTermOfUse(sfWebRequest $request)
+  {  }
+
   public function executeLang(sfWebRequest $request)
   {
     if(! in_array($request->getParameter('lang'), array('en','fr','nl')))

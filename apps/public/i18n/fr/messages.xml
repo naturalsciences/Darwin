@@ -483,7 +483,7 @@
         <source>Passwords must be equal and may not contain spaces</source>
         <target>Les mots de passe doivent être identiques et ne pas contenir d'espaces</target> </trans-unit>
       <trans-unit id="93">
-        <source>You cannot register without accepting DaRWIN 2  term of use</source>
+        <source>You cannot register without accepting DaRWIN 2  terms of use</source>
         <target>Vous ne pouvez pas vous inscrire sans accepter les termes d'utilisation de DaRWIN 2</target> </trans-unit>                 
       <trans-unit id="94">
         <source>Required.</source> <target>Requis.</target> </trans-unit>
@@ -515,7 +515,7 @@
       <trans-unit id="107">
         <source>The captcha is not valid (%error%).</source> <target>Le captcha est invalide (%error%).</target> </trans-unit>
       <trans-unit id="108">
-        <source>I accept the &lt;a href='#'&gt;terms of use&lt;/a&gt;</source> <target>J'accepte les &lt;a href='#'&gt;conditions d'utilisation&lt;/a&gt;</target> </trans-unit>
+        <source>I accept the </source> <target>J'accepte les </target> </trans-unit>
       <trans-unit id="109"><source>Status</source> <target>Statut</target></trans-unit>
       <trans-unit id="110"><source>Gender</source> <target>Genre</target></trans-unit>
       <trans-unit id="111"><source>Family Name</source> <target>Nom de famille</target></trans-unit>
@@ -526,7 +526,7 @@
       <trans-unit id="116"><source>e-mail</source> <target>Email</target></trans-unit>
       <trans-unit id="117"><source>Preferred language</source> <target>Langue préférée</target></trans-unit>
       <trans-unit id="118"><source>Title</source> <target>Titre</target></trans-unit>
-      <trans-unit id="119"><source>Capcha</source> <target>Capcha</target></trans-unit>
+      <trans-unit id="119"><source>Captcha</source> <target>Captcha</target></trans-unit>
       <trans-unit id="120"><source>Moral person</source> <target>Personne morale</target></trans-unit>
       <trans-unit id="121"><source>Physical person</source> <target>Personne physique</target></trans-unit>
       <trans-unit id="122"><source>Name is required</source> <target>Le nom est requis</target></trans-unit>      
@@ -544,11 +544,15 @@
             <source>Academic personnel wishing to loan collection objects should contact the collection manager directly.  For more information on how to apply for a loan, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
             <target>Tout personnels académique souhaitant de prêter des objets de collection sont prier de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de prêt, nous vous referons aux règlements IRScNB ci-dessous.</target> </trans-unit>
       <trans-unit id="131" approved="yes">
-            <source>Annexe 4 : Règlement des prêts pour étude</source>
-            <target>Annexe 4 : Règlement des prêts pour étude</target> </trans-unit>
+            <source>Règlement des prêts pour étude</source>
+            <target>Règlement des prêts pour étude</target> </trans-unit>
       <trans-unit id="132" approved="yes">
             <source>Règlement des visiteurs scientifiques externes</source>
-            <target>Règlement des visiteurs scientifiques externes</target> </trans-unit>            
+            <target>Règlement des visiteurs scientifiques externes</target> </trans-unit>    
+       <trans-unit id="133" approved="yes">
+            <source>terms of use</source> <target>conditions d'utilisation</target> </trans-unit>
+       <trans-unit id="134" approved="yes">
+            <source>Password must be at least 6 characters length</source> <target>Le mot de passe doit contenir au minimum 6 caractères</target> </trans-unit>
     </body>
   </file>
 </xliff>

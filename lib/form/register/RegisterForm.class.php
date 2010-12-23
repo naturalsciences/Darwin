@@ -47,7 +47,7 @@ class RegisterForm extends BaseUsersForm
     /* Validators */
 
     $this->validatorSchema['terms_of_use'] = new sfValidatorBoolean(array('required'=>true),
-                                                                    array('required'=> 'You cannot register without accepting DaRWIN 2  term of use',
+                                                                    array('required'=> 'You cannot register without accepting DaRWIN 2 terms of use',
                                                                           'invalid' => 'The value provided for term of use is invalid'
                                                                          )
                                                                    );

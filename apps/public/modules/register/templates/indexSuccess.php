@@ -80,7 +80,7 @@
           </tr>
           <tr>
             <th></th>
-            <td><?php echo $form['terms_of_use']->render();?>&nbsp;<?php echo __("I accept the <a href='#'>terms of use</a>") ; ?></td>
+            <td><?php echo $form['terms_of_use']->render();?>&nbsp;<?php echo __("I accept the ").link_to(__("terms of use"),"board/termOfUse",array('target'=>'_pop')) ; ?></td>
             <td><?php echo $form['terms_of_use']->renderError();?></td>
           </tr>
           <tr>
@@ -114,7 +114,7 @@
             text: '&nbsp;',
             button: 'X'
           },
-          text : '<p>Password must contain at least one uppercase character and at least one digit</p><hr><p>Password must be at least 6 characters length</p>',
+          text : '<p><?php echo __("Password must contain at least a case mix and at least one digit"); ?></p><hr><p><?php echo __("Password must be at least 6 characters length"); ?></p>',
           method: 'get'
         }
       });
