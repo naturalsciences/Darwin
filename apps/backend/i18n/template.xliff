@@ -4,54 +4,9 @@
   <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2010-11-18T14:14:52Z" product-name="messages">
     <header/>
     <body>                      
-      <trans-unit id="1035">
-        <source>Dear %s %s,</source>
-        <target>Cher(e) %s %s,</target>
-      </trans-unit>
-      <trans-unit id="1036">
-        <source>Dear %s</source>
-        <target>Cher(e) %</target>
-      </trans-unit>
-      <trans-unit id="1037">
-        <source>You should have received a link to renew your password on the e-mail address provided.</source>
-        <target>Vous devriez recevoir un lien pour renouveler votre mot de passe à l'adresse email que vous nous avez fournit.</target>
-      </trans-unit>
-      <trans-unit id="1038">
-        <source>Please check your mail box.</source>
-        <target>Veuillez consultez votre boite aux lettres.</target>
-      </trans-unit>
-      <trans-unit id="1039">
-        <source>DaRWIN 2  team.</source>
-        <target>L'équipe DaRWIN 2</target>
-      </trans-unit>
-      </trans-unit>
-      <trans-unit id="1040">
-        <source>Your password has been successfully renewed.</source>
-        <target>votre mot de passe a été renouvelé avec succès.</target>
-      </trans-unit>
-      <trans-unit id="1041">
-        <source>You can now log you in and enjoy enhanced services to our collections.</source>
-        <target>Vous pouvez à présent vous connecter et profiter des services améliorés de nos collections</target>
-      </trans-unit>
-      <trans-unit id="1042">
-        <source>Dear member of %s,</source>
-        <target>Cher membre de %t,</target>
-      </trans-unit>
-      <trans-unit id="1043">
-        <source>Thank you for having registered on DaRWIN 2.</source>
-        <target>Merci de vous être enregistré sur DaRWIN 2.</target>
-      </trans-unit>
-      <trans-unit id="1044">
-        <source>For your recall, here is your user name:</source>
-        <target>Pour rappel, voici votre nom d'utilisateur:</target>
-      </trans-unit>
-      <trans-unit id="1045">
-        <source>User name: %s</source>
-        <target>Nom d'utilisateur: %t</target>
-      </trans-unit>
-      <trans-unit id="1046">
-        <source>To log you in, you can visit us on %s</source>
-        <target>Vous vous authentifier, vous pouvez visiter notre site au %s</target>
+      <trans-unit id="1047">
+        <source></source>
+        <target></target>
       </trans-unit>
     </body>    
   </file>

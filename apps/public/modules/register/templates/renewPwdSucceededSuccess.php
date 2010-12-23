@@ -15,7 +15,7 @@
   </div>
   <div class="white_content">
     <p><?php echo __('Your password has been successfully renewed.');?></p>
-    <p><?php echo __('You can now log you in and enjoy enhanced services to our collections.');?></p>
+    <p><?php echo __('You can now log in and enjoy our enhanced collection services.');?></p>
     <p id="team_signature"><?php echo __('DaRWIN 2  team.');?></p>
   </div>
 </div>

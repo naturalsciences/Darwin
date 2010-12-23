@@ -165,7 +165,7 @@
       <trans-unit id="71">
         <source>Colour</source> <target>Couleur</target> </trans-unit>
       <trans-unit id="72">
-        <source>Add Lithologic unit</source> <target>Ajouter unité litholo</target> </trans-unit>
+        <source>Add Lithologic unit</source> <target>Ajouter unité Lithologique</target> </trans-unit>
       <trans-unit id="73">
         <source>New Lithologic unit</source> <target>Nouvelle unité Lithologique</target> </trans-unit>
       <trans-unit id="74">
@@ -603,7 +603,7 @@
       <trans-unit id="290">
         <source>specimen_part</source> <target>Partie d'échantillon</target> </trans-unit>
       <trans-unit id="291">
-        <source>Surnumerary ?</source> <target>Surnuméraire ?</target> </trans-unit>
+        <source>supernumerary ?</source> <target>Surnuméraire ?</target> </trans-unit>
       <trans-unit id="292">
         <source>Container type</source> <target>Type de container</target> </trans-unit>
       <trans-unit id="293">
@@ -795,7 +795,9 @@
       <trans-unit id="386">
         <source>To</source> <target>A</target> </trans-unit>
       <trans-unit id="387">
-        <source>This application requires an authentication. Please Log in with your username and password.</source> <target>cette application nécessite une authentication. Veuillez vous connecter avec votre identifiant et mot de passe</target> </trans-unit>
+        <source>This application requires an authentification.</source> <target>cette application nécessite une authentication</target> </trans-unit>
+      <trans-unit id="387">
+        <source> Please Log in with your username and password.</source> <target>Veuillez vous connecter avec votre identifiant et mot de passe</target> </trans-unit>
       <trans-unit id="388">
         <source>Log in</source> <target>Connexion</target> </trans-unit>
       <trans-unit id="389">
@@ -955,7 +957,7 @@
       <trans-unit id="466">
         <source>Count</source> <target>Nombre</target> </trans-unit>
       <trans-unit id="467">
-        <source>Surnumerary</source> <target>Surnuméraire</target> </trans-unit>
+        <source>supernumerary</source> <target>Surnuméraire</target> </trans-unit>
       <trans-unit id="468">
         <source>Complete</source> <target>Complet</target> </trans-unit>
       <trans-unit id="469">
@@ -2071,7 +2073,7 @@
       <target>Cette widget vous permet d'ajouter des informations en rapport avec l'état physique de l'objet. Ex : endommagé. vous pouvez aussi indiquer si cet objet est complet ou si c'est une partie.</target>
       </trans-unit>
       <trans-unit id="971">
-      <source>This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The surnumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.</source>
+      <source>This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The supernumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.</source>
       <target>Cette widget vous permet d'ajouter des informations en rapport avec les conditions de stockage dans les dépots de l'institut. Vous pouvez définir un conteneur et/ou un sous conteneur ainsi que la condition dans lequel l'objet est conservé. L'option surnuméraire vous permet d'indiquer que l'objet est succeptible d'être déplacé vers un conteneur plus spacieux.</target>
       </trans-unit>
       <trans-unit id="972">
@@ -2080,7 +2082,7 @@
       </trans-unit>
       <trans-unit id="973">
       <source>In this widget you can specify one or more values with regards to the object(s) as estimated by a particular insurance institution and /or on a particular date.</source>
-      <target>!!!!! CATHY HELP !!!!!!!</target>
+      <target>Via ce widget, vous pouvez spécifier une ou plusieurs valeurs d'assurance de(s) 'objet (s) telle qu'elle est estimée par une institution d'assurance particulière et / ou à une date donnée.</target>
       </trans-unit>
       <trans-unit id="974">
       <source>This widget allows you to link the current object to a parent object. E.g. link a DNA sample to a Tissue sample.</source>
@@ -2095,7 +2097,7 @@
       <target>Cette widget vous permet d'ajouter des informations au sujet du placement dans les entrepots de l'institution. Vous pouvez spécificier le bâtiment, l'étage, la pièce, le rayon et/ou la plateau où l'objet est entreposé.</target>
       </trans-unit>
       <trans-unit id="977">
-      <source>This widget allows you to link one or more codes to an object. You can either associate a prefix, a separator, a aphanumeric code, a separator and/or a suffix to each type of code (main, temporary,etc.)</source>
+      <source>This widget allows you to link one or more codes to an object. You can either associate a prefix, a separator, a code, a separator and/or a suffix to each type of code (main, temporary,etc.)</source>
       <target>Cette widget vous permet de lier un ou plusieur codes à un élément. Vous pouvez associer un préfixe, un séparateur, un code alphanumérique, et/ou un suffixe pour chaque type de cose (principal, temporaire, etc.) </target>
       </trans-unit>
       <trans-unit id="978">
@@ -2160,7 +2162,8 @@
       </trans-unit>
       <trans-unit id="993">
       <source>Via this widget you can look up those records where the nomenclatura types and non nomenclatura types selected can be found.</source>
-      <target>!!!!!!! CATHY HELP !!!!!</target>
+      <target>Ce widget vous permet de rechercher les enregistrements pour lesquels les types nomenclatura ainsi que les types non repris dans le code international de la  nomenclatura peuvent être trouvées.
+      </target>
       </trans-unit>
       <trans-unit id="994">
       <source>Via this widget you can find all records where the selected method(s) where used for collecting the specimens.</source>
@@ -2299,7 +2302,7 @@
       <target>Cette widget montre tout les langages connus par cet utilisateur. une langue maternelle peut être définie. Une langue préférée peut aussi être définie et sera utilisée par DaRWIN. Si notre application ne peut pas traduire la langue préférée, le langage par défaut sera utilisé (anglais)</target>
       </trans-unit>
       <trans-unit id="1028">
-      <source>This widget is used to specify or change a login and password. if wished, a user can have more than one couple of Login/password.</source>
+      <source>This widget is used to specify or change a login and password. if desired, a user can have more than one couple of Login/password.</source>
       <target>Cette widget est utilisée pour spécifier ou changer un identifiant et mot de passe. Si souhaité, un utilisateur peut avoir plus d'un couple d'identifiant/mot de passe</target>
       </trans-unit>
       <trans-unit id="1029">
@@ -2310,7 +2313,56 @@
       <trans-unit id="1031"><source>Take a tour</source><target>Visite guidée</target></trans-unit>
       <trans-unit id="1032"><source>Contacts</source><target>Contacts</target></trans-unit>
       <trans-unit id="1033"><source>About</source><target>A propos</target></trans-unit>
-      <trans-unit id="1034"><source>Search</source><target>Rechercher</target></trans-unit>                                 
+      <trans-unit id="1034"><source>Search</source><target>Rechercher</target></trans-unit>   
+      <trans-unit id="1035">
+        <source>Dear %s %s,</source>
+        <target>Cher(e) %s %s,</target>
+      </trans-unit>
+      <trans-unit id="1036">
+        <source>Dear %s</source>
+        <target>Cher(e) %</target>
+      </trans-unit>
+      <trans-unit id="1037">
+        <source>You should have received a link to renew your password on the e-mail address provided.</source>
+        <target>Vous devriez recevoir un lien pour renouveler votre mot de passe à l'adresse email que vous nous avez fournit.</target>
+      </trans-unit>
+      <trans-unit id="1038">
+        <source>Please check your mail box.</source>
+        <target>Veuillez consultez votre boite aux lettres.</target>
+      </trans-unit>
+      <trans-unit id="1039">
+        <source>DaRWIN 2  team.</source>
+        <target>L'équipe DaRWIN 2</target>
+      </trans-unit>
+      </trans-unit>
+      <trans-unit id="1040">
+        <source>Your password has been successfully renewed.</source>
+        <target>votre mot de passe a été renouvelé avec succès.</target>
+      </trans-unit>
+      <trans-unit id="1041">
+        <source>You can now log in and enjoy our enhanced collection services.</source>
+        <target>Vous pouvez à présent vous connecter et profiter des services améliorés de nos collections</target>
+      </trans-unit>
+      <trans-unit id="1042">
+        <source>Dear member of %s,</source>
+        <target>Cher membre de %t,</target>
+      </trans-unit>
+      <trans-unit id="1043">
+        <source>Thank you for having registered on DaRWIN 2.</source>
+        <target>Merci de vous être enregistré sur DaRWIN 2.</target>
+      </trans-unit>
+      <trans-unit id="1044">
+        <source>For your reminder, here is your user name:</source>
+        <target>Pour rappel, voici votre nom d'utilisateur:</target>
+      </trans-unit>
+      <trans-unit id="1045">
+        <source>User name: %s</source>
+        <target>Nom d'utilisateur: %t</target>
+      </trans-unit>
+      <trans-unit id="1046">
+        <source>To log you in, you can visit us on %s</source>
+        <target>Vous vous authentifier, vous pouvez visiter notre site au %s</target>
+      </trans-unit>                                    
     </body>    
   </file>
 </xliff>

@@ -50,8 +50,8 @@
 
   
   <tr>
-	<th><?php echo __('Surnumerary');?></th>
-	<td><?php if($part->getSurnumerary()):?><?php echo __('Yes');?><?php else:?><?php echo __('No');?><?php endif;?></td>
+	<th><?php echo __('supernumerary');?></th>
+	<td><?php if($part->getsupernumerary()):?><?php echo __('Yes');?><?php else:?><?php echo __('No');?><?php endif;?></td>
   </tr>
 
   <tr>

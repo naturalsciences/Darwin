@@ -80,7 +80,7 @@
           </tr>
           <tr>
             <th></th>
-            <td><?php echo $form['terms_of_use']->render();?>&nbsp;I accept the <a href="#">terms of use</a></td>
+            <td><?php echo $form['terms_of_use']->render();?>&nbsp;<?php echo __("I accept the <a href='#'>terms of use</a>") ; ?></td>
             <td><?php echo $form['terms_of_use']->renderError();?></td>
           </tr>
           <tr>

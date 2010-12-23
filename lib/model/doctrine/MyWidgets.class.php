@@ -33,7 +33,7 @@ class MyWidgets extends BaseMyWidgets
         ),
     "partwidget"=> array(
         "complete" => "This widget allows you to add information with regards to the physical state of the object. E.g. damaged. You can also indicate whether you have a complete object or a partial object by using the tickbox.",
-        "container" => "This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The surnumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.",
+        "container" => "This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The supernumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.",
         "partCount" => "In this widget you can specify the exact number of objects belonging to the same individual or you can specify a lower and upperbound estimate of the number of objects",
         "comments" => "This widget is used to add commentary.If you wish, You can add more than one commentary notion per record. You cannot add the same notion twice in one record, however",
         "refInsurances" => "In this widget you can specify one or more values with regards to the object(s) as estimated by a particular insurance institution and /or on a particular date.",
@@ -41,7 +41,7 @@ class MyWidgets extends BaseMyWidgets
         "parent" => "This widget allows you to link the current object to a parent object. E.g. link a DNA sample to a Tissue sample.",
         "specPart" => "This mandatory widget specifies the type of object in more detail.",
         "localisation" => "This widget allows you to add information with regards to the placement in the depositories of the institute. You can specify the building, floor, room, row and/or shelf where the object(s) are stored.",
-        "refCodes" => "This widget allows you to link one or more codes to an object. You can either associate a prefix, a separator, a aphanumeric code, a separator and/or a suffix to each type of code (main, temporary,etc.)",
+        "refCodes" => "This widget allows you to link one or more codes to an object. You can either associate a prefix, a separator, a code, a separator and/or a suffix to each type of code (main, temporary,etc.)",
         "maintenance" => "This widget shows you types of actions or observations with regards to the object. This can e.g. show you the date on which a person added alcohol to the container that houses the object or it could be the date on which a person observed that an object seemed to be broken. Information in this widget can, however, only be inserted by using the mass update functionality!",
         "refProperties" => "This widget allows you to add some more structured commentary, but be sure that your information is entered consistently. You could e.g. add the following: type= measurement, sub type= weight, qualifier= shell, method= electronic, tool= scale, value units= g, value=2",
         ),      
@@ -105,7 +105,7 @@ class MyWidgets extends BaseMyWidgets
     "userswidget"=>array(
         "address" => "This widget allows you to add one or more addresses, it can be home address, work or more. The locality and the country are required fields", 
         "lang" => "This widget shows all known languages for this user. A language can be set as mothertongue. A language can also be set as preferred that will be used by DaRWIN. If our application cannot translate the preferred language the default language will be used (English)",
-        "info" => "This widget is used to specify or change a login and password. if wished, a user can have more than one couple of Login/password.",
+        "info" => "This widget is used to specify or change a login and password. if desired, a user can have more than one couple of Login/password.",
         "comm" => "This widget regroups all communication information of a user, such as phone/fax number, email. You can use our tags to set the type of entry (work or home phone for instance)",
         )
   ) ;

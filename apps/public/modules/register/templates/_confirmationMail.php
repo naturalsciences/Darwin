@@ -17,10 +17,10 @@
     }
     echo "\r\r";?>
 <?php echo __('Thank you for having registered on DaRWIN 2.')."\r";?>
-<?php echo __('You can now log you in and enjoy enhanced services to our collections.')."\r";?>
+<?php echo __('You can now log in and enjoy our enhanced collection services.')."\r";?>
 <?php if(!empty($userParams['username']))
       {
-        echo __('For your recall, here is your user name:')."\r\r";
+        echo __('For your reminder, here is your user name:')."\r\r";
         echo __(sprintf('User name: %s',$userParams['username']))."\r\r";
       }?>
 <?php echo __(sprintf('To log you in, you can visit us on %s','http://'.$_SERVER['SERVER_NAME']))."\r\r";?>
