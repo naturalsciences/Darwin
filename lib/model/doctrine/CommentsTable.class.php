@@ -23,9 +23,11 @@ class CommentsTable extends DarwinTable
                                     'collections' => array('collection information' => 'collection information',
                                                          ),
                                     'people' => array('general information' => 'general information',
+                                                      'people history' => 'people history',
                                                          ),
                                     'gtu' => array('position information' => 'Position information',
                                                    'period information' => 'Period information',
+                                                   'general comments' => 'sampling point information',
                                                   ),
                                     'collecting_methods' => array('general information' => 'general information',
                                                                   'method description' => 'method description',
@@ -62,7 +64,7 @@ class CommentsTable extends DarwinTable
      $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
     return $q->execute();
   }
-  
+
   /**
   * Get commentable notions for a given table as an array
   * @param string $table_name The table name
