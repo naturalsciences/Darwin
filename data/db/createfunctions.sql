@@ -1504,10 +1504,12 @@ BEGIN
                   AND tag_indexed = entry_row.u_tag
                 LIMIT 1;
       IF FOUND THEN
-        IF OLD.sub_group_name = NEW.sub_group_name THEN
-          UPDATE tags
-          SET sub_group_type = NEW.sub_group_name
-          WHERE group_ref = NEW.id;
+        IF TG_OP = 'UPDATE' THEN
+          IF OLD.sub_group_name != NEW.sub_group_name THEN
+            UPDATE tags
+            SET sub_group_type = NEW.sub_group_name
+            WHERE group_ref = NEW.id;
+          END IF;
         END IF;
         CONTINUE;
       ELSE
