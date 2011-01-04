@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
 <xliff version="1.0">
-  <file original="messages" product-name="messages" target-language="ne" datatype="plaintext" source-language="EN" date="2010-12-22T14:10:50Z">
+  <file original="messages" product-name="messages" target-language="nl" datatype="plaintext" source-language="EN" date="2010-12-22T14:10:50Z">
     <header>
       <phase-group>
         <phase contact-name="Brice Maron" tool-id="lokalize-1.0" phase-name="approval-1" contact-email="bmaron@naturalsciences.be" process-name="approval" date="2009-10-13"/>
@@ -66,7 +66,9 @@
       <trans-unit id="5" approved="yes">
         <source>If you have a problem using the tool, or if you want to help : write a mail at &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</source> <target>Indien u moeilijkheden ondervind in het gebruik van onze tool, of indien u ons wilt helpen: schrijf ons een berichtje op &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</target> </trans-unit>
       <trans-unit id="6" approved="yes">
-        <source>If you have a question about a specimen, please contact the collection manager of the specimen. &lt;br /&gt; you can find his or her e-mail address in the record.</source> <target>Heeft u echter een vraag over een specimen, gelieve dan rechtstreeks contact op te nemen met de collectiebeheerder van het staal. &lt;br /&gt; U vindt zijn of haar email adres op de fiche van het gezochte specimen bovenaan rechts.</target> </trans-unit>
+        <source>If you have a question about a specimen, please contact the collection manager of the specimen. &lt;br /&gt;
+      you can find his or her e-mail address in the record.</source>
+        <target>Heeft u echter een vraag over een specimen, gelieve dan rechtstreeks contact op te nemen met de collectiebeheerder van het staal. &lt;br /&gt; U vindt zijn of haar email adres op de fiche van het gezochte specimen bovenaan rechts.</target> </trans-unit>
       <trans-unit id="7" approved="yes">
         <source>Welcome In DaRWIN</source> <target>Welkom bij DaRWIN</target> </trans-unit>
       <trans-unit id="8" approved="yes">
@@ -92,7 +94,11 @@
       <trans-unit id="18" approved="yes">
         <source>About us</source> <target>Over ons</target> </trans-unit>
       <trans-unit id="19" approved="yes">
-        <source>DaRWIN is an &lt;strong&gt;Open Source&lt;/strong&gt; tool for collection management.&lt;br /&gt; It has been build by the IT departement of the Royal Belgian Institute of Natural Sciences.&lt;br /&gt;</source> <target>DaRWIN is een &lt;strong&gt;Open Source&lt;/strong&gt; tool vooe collectiebeheer&lt;br /&gt; Het werd ontwikkeld door het IT departement van het Koninklijk Belgische Instituut voor Natuurwetenschappen.&lt;br /&gt;</target> </trans-unit>
+        <source>Darwin is an &lt;strong&gt;Open Source&lt;/strong&gt; tool for collection management.&lt;br /&gt;
+    It has been build by the IT departement of the Royal Belgian Institute of Natural Sciences.&lt;br /&gt;</source>
+        <target>DaRWIN is een &lt;strong&gt;Open Source&lt;/strong&gt; tool vooe collectiebeheer&lt;br /&gt;
+          Het werd ontwikkeld door het IT departement van het Koninklijk Belgische Instituut voor Natuurwetenschappen.&lt;br /&gt;</target>
+      </trans-unit>
       <trans-unit id="20" approved="yes">
         <source>Our Partners :</source> <target>Onze Partners: </target> </trans-unit>
       <trans-unit id="21" approved="yes">
@@ -291,16 +297,18 @@
       <trans-unit id="126" approved="yes"><source>Bad login or password</source> <target>Ongeldige login of paswoord</target></trans-unit>  
       <trans-unit id="127" approved="yes"><source>Username</source> <target>Gebruikersnaam</target></trans-unit>  
       <trans-unit id="128" approved="yes"><source>Password</source> <target>Paswoord</target></trans-unit>
-      <trans-unit id="129" approved="yes"><source>Scientists wishing to visit one of our collections should contact the collection manager directly. For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
-      <target>Wetenschappers die één van onze collecties wenst te bezoeken, dient rechtstreeks contact op te nemen met de desbetreffende collectiebeheerder. Indien u meer informatie wenst omtrent de praktische regelingen voor uw bezoek, gelieve onderstaande KBIN bezoekreglementen te raadplegen.</target> </trans-unit>
+      <trans-unit id="129" approved="yes">
+        <source>Scientists wishing to visit one of our collections should contact the collection manager directly.  For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
+        <target>Wetenschappers die één van onze collecties wenst te bezoeken, dient rechtstreeks contact op te nemen met de desbetreffende collectiebeheerder. Indien u meer informatie wenst omtrent de praktische regelingen voor uw bezoek, gelieve onderstaande KBIN bezoekreglementen te raadplegen.</target>
+      </trans-unit>
       <trans-unit id="130" approved="yes">
       <source>Academic personnel wishing to loan collection objects should contact the collection manager directly.  For more information on how to apply for a loan, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
       <target>Academici die collectieobjecten wensen  te ontlenen, dienen rechtstreeks contact op te nemen met de desbetreffende collectiebeheerder. Indien u meer informatie wenst omtrent de praktische regelingen omtrent ontleningen, gelieve onderstaande KBIN reglementen te raadplegen.</target> </trans-unit>
       <trans-unit id="131" approved="yes">
-      <source>Règlement des prêts pour étude</source>
+      <source>Settlement of loans for study</source>
       <target>Reglement voor uitleningen voor onderzoek</target> </trans-unit>
       <trans-unit id="132" approved="yes">
-      <source>Règlement des visiteurs scientifiques externes</source>
+      <source>Settlement of external visiting scientists</source>
       <target>Reglement voor externe bezoekende wetenschappers</target> </trans-unit> 
       <trans-unit id="133" approved="yes">
       <source>terms of use</source> <target>terms of use</target> </trans-unit>
