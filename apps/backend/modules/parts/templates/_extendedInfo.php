@@ -51,7 +51,7 @@
   
   <tr>
 	<th><?php echo __('supernumerary');?></th>
-	<td><?php if($part->getSurnmerary()):?><?php echo __('Yes');?><?php else:?><?php echo __('No');?><?php endif;?></td>
+	<td><?php if($part->getSurnumerary()):?><?php echo __('Yes');?><?php else:?><?php echo __('No');?><?php endif;?></td>
   </tr>
 
   <tr>
