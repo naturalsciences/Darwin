@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(17);
+SELECT plan(21);
 
 INSERT INTO gtu(id,code) VALUES( 1, '001');
 INSERT INTO gtu(id,code) VALUES( 2, '002');
@@ -40,6 +40,12 @@ select ok('brussels' = (select tag_indexed from tags where group_ref=3 ORDER BY 
 
 DELETE FROM tag_groups WHERE id=3;
 select ok(6 = (select count(*) from tags) ,'we deleted 2 tags');
+
+
+SELECT lives_ok('INSERT INTO gtu(id, code, latitude, longitude, lat_long_accuracy) VALUES( 3, ''003'', 0,0 , 2);', 'test different lat/long accuracy');
+SELECT lives_ok('INSERT INTO gtu(id, code, latitude, longitude, lat_long_accuracy) VALUES( 4, ''004'', 84 , 178 , 200);', 'test different lat/long accuracy');
+SELECT lives_ok('INSERT INTO gtu(id, code, latitude, longitude, lat_long_accuracy) VALUES( 5, ''005'', 55 , 109 , 0.05);', 'test different lat/long accuracy');
+SELECT lives_ok('INSERT INTO gtu(id, code, latitude, longitude, lat_long_accuracy) VALUES( 6, ''006'', -84,178 , 2000);', 'test different lat/long accuracy');
 
 SELECT * FROM finish();
 ROLLBACK;
