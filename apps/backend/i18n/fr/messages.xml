@@ -2369,6 +2369,10 @@
         <source>To log you in, you can visit us on %s</source>
         <target>Vous vous authentifier, vous pouvez visiter notre site au %s</target>
       </trans-unit>
+      <trans-unit id="1047">
+        <source>Show accuracy of each points</source>
+        <target>Afficher la précision de chaque point</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

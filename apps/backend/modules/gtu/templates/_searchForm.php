@@ -60,8 +60,10 @@
               <td><?php echo $form['lon_to'];?><?php echo image_tag('remove.png', 'alt=Delete class=clear_prop'); ?></td>
             </tr>
           </table>
-
-          <div style="width:100%; height:400px;display:none;" id="smap"></div>
+          <div id="map_search_form" style="display:none">
+            <?php echo __('Show accuracy of each point');?> <input type="checkbox" id="show_accuracy" checked="checked" /><br /><br />
+            <div style="width:100%; height:400px;" id="smap"></div>
+         </div>
     </fieldset>
     <?php echo $form->renderHiddenFields();?>
     <div class="edit">
@@ -74,10 +76,13 @@
     var selectControl=0;
     $(document).ready(function()
     {
+       $('#show_accuracy').change(function(){
+          results.setVisibility($('#show_accuracy').is(':checked'));
+        });
        $('#show_as_map').click(function(){
           if($(this).is(':checked'))
           {
-            $('#smap').show();
+            $('#map_search_form').show();
             setMapCenter(new OpenLayers.LonLat(0,0), 2);
             //$(this).closest('form').removeClass('search_form');
             $('#gtu_filter').unbind('submit.sform');
@@ -96,7 +101,7 @@
             $('#gtu_filters_lat_to').val('');
             $('#gtu_filters_lon_to').val('');
             $('#lat_long_set table').show();
-            $('#smap').hide();
+            $('#map_search_form').hide();
           }
        });
        initMap("smap");

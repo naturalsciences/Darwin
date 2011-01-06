@@ -2191,6 +2191,10 @@
         <source>Search User</source>
         <target/>
       </trans-unit>
+      <trans-unit id="1047">
+        <source>Show accuracy of each points</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>
