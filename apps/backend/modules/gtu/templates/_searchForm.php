@@ -149,7 +149,7 @@
       });
       map.addLayer(results);
       results.events.register("loadend", results, addMarkersFromFeatures);
-
+      results.setVisibility($('#show_accuracy').is(':checked'));
 
       selectControl = new OpenLayers.Control.SelectFeature(results, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
       map.addControl(selectControl);
