@@ -2112,8 +2112,8 @@
         <target>Om u in te loggen, kunt u ons bezoeken op %s</target>
       </trans-unit>
       <trans-unit id="1047">
-        <source>Show accuracy of each points</source>
-        <target>Toon nauwkeurigheid van iedere punten</target>
+        <source>Show accuracy of each point</source>
+        <target>Toon nauwkeurigheid van iedere punt</target>
       </trans-unit>
     </body>
   </file>

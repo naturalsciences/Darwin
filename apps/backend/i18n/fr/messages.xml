@@ -2370,7 +2370,7 @@
         <target>Vous vous authentifier, vous pouvez visiter notre site au %s</target>
       </trans-unit>
       <trans-unit id="1047">
-        <source>Show accuracy of each points</source>
+        <source>Show accuracy of each point</source>
         <target>Afficher la précision de chaque point</target>
       </trans-unit>
     </body>
