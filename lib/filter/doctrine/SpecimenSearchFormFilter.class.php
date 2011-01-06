@@ -779,7 +779,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       }
 
       $query = DQ::create()
-        ->from('SpecimenSearch s')
+        ->from('IndividualSearch s')
         ->select($str .' MIN(id) as id,  false as with_types')
         ->andWhere('individual_ref != 0 ')
         ->groupBy('individual_ref');
@@ -790,9 +790,9 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $array_fld = array_merge($array_fld,$fields['parts']);
       $str = implode(', ',$array_fld);
       $query = DQ::create()
-        ->select($str.' , false as with_types')
+        ->select($str.' , false as with_types,id')
         ->andWhere('part_ref != 0 ')
-        ->from('SpecimenSearch s');
+        ->from('PartSearch s');
     }
     if($values['what_searched'] != 'part')
       $query->addSelect('dummy_first(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');

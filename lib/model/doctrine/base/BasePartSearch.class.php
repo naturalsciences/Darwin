@@ -536,10 +536,11 @@ abstract class BasePartSearch extends sfDoctrineRecord
         $this->hasColumn('id', 'integer', null, array(
              'type' => 'integer',
              'autoincrement' => true,
+             'primary' => true,
              ));
         $this->hasColumn('spec_ref', 'integer', null, array(
              'type' => 'integer',
-             'primary' => true,
+             'notnull' => true,
              ));
         $this->hasColumn('category', 'string', null, array(
              'type' => 'string',
@@ -913,7 +914,6 @@ abstract class BasePartSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('individual_ref', 'integer', null, array(
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('individual_type', 'string', null, array(
              'type' => 'string',
@@ -966,7 +966,6 @@ abstract class BasePartSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('part_ref', 'integer', null, array(
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('part', 'string', null, array(
              'type' => 'string',
