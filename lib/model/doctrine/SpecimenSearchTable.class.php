@@ -105,10 +105,10 @@ class SpecimenSearchTable extends Doctrine_Table
       elseif($type == 'part')
       {
         $q = Doctrine_Query::create()
-        ->select('s.spec_ref, s.individual_ref, s.part_ref, s.taxon_name')
+        ->select('s.id, s.spec_ref, s.individual_ref, s.part_ref, s.taxon_name')
         ->from('PartSearch s')
         ->wherein('s.part_ref', $ids)
-        ->groupBy('s.spec_ref, s.individual_ref, s.part_ref, s.taxon_name')
+        ->groupBy('s.spec_ref, s.individual_ref, s.part_ref, s.taxon_name, s.id')
         ->orderBy('spec_ref, individual_ref, part_ref');  
       }
       else return array(); //Error
