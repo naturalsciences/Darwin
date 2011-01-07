@@ -2108,7 +2108,13 @@
       <trans-unit id="1045" approved="yes">
         <source>User name: %s</source> <target>Gebruikersnaam: %t</target> </trans-unit>
       <trans-unit id="1046" approved="yes">
-        <source>To log you in, you can visit us on %s</source> <target>Om u in te loggen, kunt u ons bezoeken op %s</target> </trans-unit>
-	  </body>    
+        <source>To log you in, you can visit us on %s</source>
+        <target>Om u in te loggen, kunt u ons bezoeken op %s</target>
+      </trans-unit>
+      <trans-unit id="1047">
+        <source>Show accuracy of each point</source>
+        <target>Toon nauwkeurigheid van iedere punt</target>
+      </trans-unit>
+    </body>
   </file>
 </xliff>

@@ -13,7 +13,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                                            => new sfWidgetFormFilterInput(),
+      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'), 'add_empty' => true)),
       'category'                                      => new sfWidgetFormFilterInput(),
       'collection_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'add_empty' => true)),
       'collection_type'                               => new sfWidgetFormFilterInput(),
@@ -123,6 +123,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'acquisition_date'                              => new sfWidgetFormFilterInput(),
       'with_types'                                    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'with_individuals'                              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'individual_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividual'), 'add_empty' => true)),
       'individual_type'                               => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'individual_type_group'                         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'individual_type_search'                        => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -134,6 +135,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'individual_count_min'                          => new sfWidgetFormFilterInput(),
       'individual_count_max'                          => new sfWidgetFormFilterInput(),
       'with_parts'                                    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'part_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PartRelation'), 'add_empty' => true)),
       'part'                                          => new sfWidgetFormFilterInput(),
       'part_status'                                   => new sfWidgetFormFilterInput(),
       'building'                                      => new sfWidgetFormFilterInput(),
@@ -155,7 +157,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                                            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Specimen'), 'column' => 'id')),
       'category'                                      => new sfValidatorPass(array('required' => false)),
       'collection_ref'                                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Collection'), 'column' => 'id')),
       'collection_type'                               => new sfValidatorPass(array('required' => false)),
@@ -265,6 +267,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'acquisition_date'                              => new sfValidatorPass(array('required' => false)),
       'with_types'                                    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'with_individuals'                              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'individual_ref'                                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('SpecimenIndividual'), 'column' => 'id')),
       'individual_type'                               => new sfValidatorPass(array('required' => false)),
       'individual_type_group'                         => new sfValidatorPass(array('required' => false)),
       'individual_type_search'                        => new sfValidatorPass(array('required' => false)),
@@ -276,6 +279,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'individual_count_min'                          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'individual_count_max'                          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'with_parts'                                    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'part_ref'                                      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('PartRelation'), 'column' => 'id')),
       'part'                                          => new sfValidatorPass(array('required' => false)),
       'part_status'                                   => new sfValidatorPass(array('required' => false)),
       'building'                                      => new sfValidatorPass(array('required' => false)),
@@ -314,7 +318,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                                            => 'Number',
-      'spec_ref'                                      => 'Number',
+      'spec_ref'                                      => 'ForeignKey',
       'category'                                      => 'Text',
       'collection_ref'                                => 'ForeignKey',
       'collection_type'                               => 'Text',
@@ -424,7 +428,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'acquisition_date'                              => 'Text',
       'with_types'                                    => 'Boolean',
       'with_individuals'                              => 'Boolean',
-      'individual_ref'                                => 'Number',
+      'individual_ref'                                => 'ForeignKey',
       'individual_type'                               => 'Text',
       'individual_type_group'                         => 'Text',
       'individual_type_search'                        => 'Text',
@@ -436,7 +440,7 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'individual_count_min'                          => 'Number',
       'individual_count_max'                          => 'Number',
       'with_parts'                                    => 'Boolean',
-      'part_ref'                                      => 'Number',
+      'part_ref'                                      => 'ForeignKey',
       'part'                                          => 'Text',
       'part_status'                                   => 'Text',
       'building'                                      => 'Text',

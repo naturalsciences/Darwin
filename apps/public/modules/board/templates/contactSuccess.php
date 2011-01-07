@@ -12,10 +12,10 @@
     </p>
     <p><?php echo __("Scientists wishing to visit one of our collections should contact the collection manager directly.  For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.") ; ?>
     <br />
-    <?php echo link_to('Règlement des visiteurs scientifiques externes',$file1);?>
+    <?php echo link_to(__('Settlement of external visiting scientists'),$file1);?>
     </p>
     <p><?php echo __("Academic personnel wishing to loan collection objects should contact the collection manager directly.  For more information on how to apply for a loan, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.") ; ?> 
     <br />
-    <?php echo link_to('Règlement des prêts pour étude',$file2);?>  
+    <?php echo link_to(__('Settlement of loans for study'),$file2);?>  
   </div>
 </div>

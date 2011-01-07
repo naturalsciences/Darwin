@@ -539,15 +539,16 @@
       <trans-unit id="127"><source>Username</source> <target>Nom d'utilisateur</target></trans-unit>  
       <trans-unit id="128"><source>Password</source> <target>Mot de passe</target></trans-unit>   
       <trans-unit id="129" approved="yes">
-            <source>Scientists wishing to visit one of our collections should contact the collection manager directly.  For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source> <target>Les scientifiques souhaitant de visiter l'un de nos collections sont prier de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de visite, nous vous referons aux règlements IRScNB ci-dessous.</target> </trans-unit>
+            <source>Scientists wishing to visit one of our collections should contact the collection manager directly.  For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
+            <target>Les scientifiques souhaitant de visiter l'un de nos collections sont prier de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de visite, nous vous referons aux règlements IRScNB ci-dessous.</target> </trans-unit>
       <trans-unit id="130" approved="yes">
             <source>Academic personnel wishing to loan collection objects should contact the collection manager directly.  For more information on how to apply for a loan, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
             <target>Tout personnels académique souhaitant de prêter des objets de collection sont prier de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de prêt, nous vous referons aux règlements IRScNB ci-dessous.</target> </trans-unit>
       <trans-unit id="131" approved="yes">
-            <source>Règlement des prêts pour étude</source>
+            <source>Settlement of loans for study</source>
             <target>Règlement des prêts pour étude</target> </trans-unit>
       <trans-unit id="132" approved="yes">
-            <source>Règlement des visiteurs scientifiques externes</source>
+            <source>Settlement of external visiting scientists</source>
             <target>Règlement des visiteurs scientifiques externes</target> </trans-unit>    
        <trans-unit id="133" approved="yes">
             <source>terms of use</source> <target>conditions d'utilisation</target> </trans-unit>

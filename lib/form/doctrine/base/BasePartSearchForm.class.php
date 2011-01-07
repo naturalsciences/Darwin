@@ -15,8 +15,8 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'                                            => new sfWidgetFormInputText(),
-      'spec_ref'                                      => new sfWidgetFormInputHidden(),
+      'id'                                            => new sfWidgetFormInputHidden(),
+      'spec_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'), 'add_empty' => false)),
       'category'                                      => new sfWidgetFormTextarea(),
       'collection_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'add_empty' => false)),
       'collection_type'                               => new sfWidgetFormTextarea(),
@@ -126,7 +126,7 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
       'acquisition_date'                              => new sfWidgetFormTextarea(),
       'with_types'                                    => new sfWidgetFormInputCheckbox(),
       'with_individuals'                              => new sfWidgetFormInputCheckbox(),
-      'individual_ref'                                => new sfWidgetFormInputHidden(),
+      'individual_ref'                                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividual'), 'add_empty' => true)),
       'individual_type'                               => new sfWidgetFormTextarea(),
       'individual_type_group'                         => new sfWidgetFormTextarea(),
       'individual_type_search'                        => new sfWidgetFormTextarea(),
@@ -138,7 +138,7 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
       'individual_count_min'                          => new sfWidgetFormInputText(),
       'individual_count_max'                          => new sfWidgetFormInputText(),
       'with_parts'                                    => new sfWidgetFormInputCheckbox(),
-      'part_ref'                                      => new sfWidgetFormInputHidden(),
+      'part_ref'                                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PartRelation'), 'add_empty' => true)),
       'part'                                          => new sfWidgetFormTextarea(),
       'part_status'                                   => new sfWidgetFormTextarea(),
       'building'                                      => new sfWidgetFormTextarea(),
@@ -160,8 +160,8 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                                            => new sfValidatorInteger(array('required' => false)),
-      'spec_ref'                                      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('spec_ref')), 'empty_value' => $this->getObject()->get('spec_ref'), 'required' => false)),
+      'id'                                            => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'spec_ref'                                      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Specimen'))),
       'category'                                      => new sfValidatorString(array('required' => false)),
       'collection_ref'                                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Collection'), 'required' => false)),
       'collection_type'                               => new sfValidatorString(array('required' => false)),
@@ -271,7 +271,7 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
       'acquisition_date'                              => new sfValidatorString(array('required' => false)),
       'with_types'                                    => new sfValidatorBoolean(array('required' => false)),
       'with_individuals'                              => new sfValidatorBoolean(array('required' => false)),
-      'individual_ref'                                => new sfValidatorChoice(array('choices' => array($this->getObject()->get('individual_ref')), 'empty_value' => $this->getObject()->get('individual_ref'), 'required' => false)),
+      'individual_ref'                                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('SpecimenIndividual'), 'required' => false)),
       'individual_type'                               => new sfValidatorString(array('required' => false)),
       'individual_type_group'                         => new sfValidatorString(array('required' => false)),
       'individual_type_search'                        => new sfValidatorString(array('required' => false)),
@@ -283,7 +283,7 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
       'individual_count_min'                          => new sfValidatorInteger(array('required' => false)),
       'individual_count_max'                          => new sfValidatorInteger(array('required' => false)),
       'with_parts'                                    => new sfValidatorBoolean(array('required' => false)),
-      'part_ref'                                      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('part_ref')), 'empty_value' => $this->getObject()->get('part_ref'), 'required' => false)),
+      'part_ref'                                      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PartRelation'), 'required' => false)),
       'part'                                          => new sfValidatorString(array('required' => false)),
       'part_status'                                   => new sfValidatorString(array('required' => false)),
       'building'                                      => new sfValidatorString(array('required' => false)),

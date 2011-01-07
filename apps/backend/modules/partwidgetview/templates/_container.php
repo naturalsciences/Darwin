@@ -1,7 +1,7 @@
 <table class="catalogue_table_view">
   <tr>
 	<th><?php echo __("supernumerary ? ");?></th>
-	<td><?php echo ($part->getsupernumerary()?__('Yes'):__('No')); ?></td>
+	<td><?php echo ($part->getSurnumerary()?__('Yes'):__('No')); ?></td>
   </tr>
 
   <tr>

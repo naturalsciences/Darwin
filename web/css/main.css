@@ -2378,3 +2378,9 @@ tbody .col_taxon a
 	padding-left : 15px;
 	background-color:#ededee;	 
 }
+
+/** Tooltip for the map **/
+#chicken
+{
+  z-index:2400 !important;
+}

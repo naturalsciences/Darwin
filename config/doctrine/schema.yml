@@ -1429,8 +1429,8 @@ IndividualSearch:
 PartSearch:
     tableName: darwin_flat
     columns:
-        id: { type: integer, autoincrement: true}
-        spec_ref: { type: integer, notnull: true, primary: true}
+        id: { type: integer, autoincrement: true,  primary: true}
+        spec_ref: { type: integer, notnull: true}
         category: { type: string}
         collection_ref: { type: integer, notnull: true, default:0}
         collection_type: { type: string}
@@ -1540,7 +1540,7 @@ PartSearch:
         acquisition_date: { type: string}
         with_types: {type: boolean }
         with_individuals: {type:boolean}
-        individual_ref: {type: integer, primary: true}
+        individual_ref: {type: integer}
         individual_type: {type: string, notnull: true, default:'specimen'}
         individual_type_group: {type: string, notnull: true, default: 'specimen'}
         individual_type_search: {type: string, notnull: true, default: 'specimen'}
@@ -1552,7 +1552,7 @@ PartSearch:
         individual_count_min: {type: integer }
         individual_count_max: {type: integer }
         with_parts: {type:boolean}
-        part_ref: {type: integer , primary: true}
+        part_ref: {type: integer}
         part: {type: string }
         part_status: {type: string }
         building: {type: string }
