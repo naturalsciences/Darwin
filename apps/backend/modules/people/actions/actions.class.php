@@ -293,7 +293,7 @@ class peopleActions extends DarwinActions
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
     $this->level = $request->getParameter('level',1);
     $this->relations  = Doctrine::getTable('PeopleRelationships')->findAllRelated($request->getParameter('id'));
-    if(!$this->relations)
+    if($this->relations->count() == 0)
       return $this->renderText('nothing');
   }
   

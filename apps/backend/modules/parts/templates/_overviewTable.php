@@ -31,7 +31,7 @@
     <?php else : ?>
       <td>&nbsp;</td>
     <?php endif ; ?>  
-    <td><?php if(isset($codes[$part->getId()])):?>
+    <td class="code_name"><?php if(isset($codes[$part->getId()])):?>
       <ul><?php foreach($codes[$part->getId()] as $code):?>
       <li><?php echo $code->getCodeFormated();?></li>
       <?php endforeach;?></ul>

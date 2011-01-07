@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th></th>
-      <th></th>
       <th><?php echo __('Relation');?></th>
+      <th></th>      
       <th></th>
       <th><?php echo __('Role');?></th>
       <th class="datesNum"><?php echo __('Period');?></th>
@@ -13,14 +13,16 @@
   <tbody>
   <?php foreach($relations as $relation):?>
     <tr class="rid_<?php echo $relation->Parent->getId();?>">
-    <td><?php echo image_tag('info.png',"title=info class='info lid_1'");?></td>
     <td>  
       <a class="link_catalogue" title="<?php echo __('Edit Relation');?>"  href="<?php echo url_for('people/relation?ref_id='.$eid.'&id='.$relation->getId());?>">
 	<?php echo $relation->Child;?>
       </a>
     </td>
     <td><?php echo $relation->getRelationshipType();?></td>
-    <td><?php echo $relation->Parent;?></td>
+    <td><?php echo image_tag('info.png',"title=info class='info lid_1' id='info_".$relation->Parent->getId()."'");?><?php echo $relation->Parent;?>
+      <div class="tree">
+      </div>
+    </td>
     <td><?php echo $relation->getPersonUserRole();?></td>
     <td class="datesNum">
 	<?php echo $relation->getActivityDateFromObject()->getDateMasked('em','Y',ESC_RAW);?> - 
@@ -42,25 +44,25 @@
 <script language="javascript">
   function fetchRelDetails()
   { 
-      item_row=$(this).closest('tr');
-      el_id  = getIdInClasses(item_row);
-      level = getIdInClasses(this);
-      if($('.detail_'+el_id).length == 0)
-      {
-	$.get('<?php echo url_for('people/relationDetails');?>/id/'+el_id+'/level/'+level,function (html){
-	  if(html=='')
-	  {
-	    item_row.find('.info').attr('src','<?php echo url_for('/images/info-bw.png');?>');
-	  }
-	  else
-	  {
-	    if($('.detail_'+el_id).length == 0)
-	    {
-	      $(item_row).after(html);
-	    }
-	  }
-	});
-      }
+    item_row=$(this).closest('tr');
+    el_id  = getIdInClasses(item_row);
+    level = getIdInClasses(this);
+    if($(item_row).find('.tree').is(":hidden"))
+    {	    
+      $.get('<?php echo url_for('people/relationDetails');?>/id/'+el_id+'/level/'+level,function (html){
+        if(html=='nothing')
+        {
+          item_row.find('.info').attr('src','<?php echo url_for('/images/info-bw.png');?>');
+        }
+        else
+        {  
+             $(item_row).find('.tree').html(html).slideDown();
+
+        }
+      });
+    }
+    else
+      $(item_row).find('.tree').slideUp();   
   }
-   $("img.info").click(fetchRelDetails);
+  $(".info").live('click',fetchRelDetails);
 </script>

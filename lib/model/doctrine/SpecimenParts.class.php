@@ -16,7 +16,14 @@ class SpecimenParts extends BaseSpecimenParts
 
   public function getName()
   {
-    return $this->getSpecimenPart();
+    $code_name = "" ;
+    $codes = Doctrine::getTable('Codes')->getCodesRelated('specimen_parts', $this->getId()) ;
+    foreach($codes as $code)
+    {
+      $code_name = $code->getCodePrefix().$code->getCodePrefixSeparator().$code->getCode().$code->getCodeSuffixSeparator().$code->getCodeSuffix()." - " ;
+      break;
+    }
+    return $code_name.$this->getSpecimenPart();
   }
 
   public function getLevel()
