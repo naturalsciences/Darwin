@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd">
+<xliff version="1.0">
+  <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2010-11-18T14:14:52Z" product-name="messages">
+    <header/>
+    <body>
+      <trans-unit id="1048">
+        <source>This relationship allready exists</source>
+        <target>Cette relation existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1049">
+        <source>This Chrono unit allready exists</source>
+        <target>Cette unité Chrono existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1050">
+        <source>This Litho unit allready exists</source>
+        <target>Cette unité Litho existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1051">
+        <source>This Lithologic unit allready exists</source>
+        <target>Cette unité Lithologique existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1052">
+        <source>This Mineralogic unit allready exists</source>
+        <target>Cette unité Minéralogique existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1053">
+        <source>This Expedition unit allready exists</source>
+        <target>Cette expédition existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1054">
+        <source>This synonym allready exist</source>
+        <target>Ce synonyme existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1055">
+        <source>This code allready exists</source>
+        <target>Ce code existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1056">
+        <source>This collection allready exists</source>
+        <target>Cette collection existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1057">
+        <source>This External link is allready set</source>
+        <target>Ce lien extérieur existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1058">
+        <source>You cannot set the same identification twice</source>
+        <target>vous ne pouvez pas définir la même identification deux fois</target>
+      </trans-unit>
+      <trans-unit id="1059">
+        <source>This Ig allready exists</source>
+        <target>Cet Ig existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1060">
+        <source>This code allready exists</source>
+        <target>Ce code existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1061">
+        <source>You've allready saved a search with this name</source>
+        <target>Vous avez déjà sauvé une recherche avec ce nom</target>
+      </trans-unit>
+      <trans-unit id="1062">
+        <source>You've allready saved a list of specimen with this name</source>
+        <target>vous avez déjà sauvé une liste d'échantillon avec ce nom</target>
+      </trans-unit>
+      <trans-unit id="1063">
+        <source>This people allready exists</source>
+        <target>Cette personne existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1064">
+        <source>This accompanying allready exists</source>
+        <target>Cet accompagnement existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1065">
+        <source>This tag group allready exists</source>
+        <target>Ce groupe de label existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1067">
+        <source>This user login allready exists</source>
+        <target>Cet utilisateur existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1068">
+        <source>This user login allready exists</source>
+        <target>Ce nom de connection existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1069">
+        <source>This vernacular name allready exists</source>
+        <target>Ce nom vernaculaire existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1070">
+        <source>The code has to contain either all numbers or letters, but not a mix of both</source>
+        <target>Le code ne doit contenir que des chiffres ou des lettres, mais pas les deux</target>
+      </trans-unit>
+      <trans-unit id="1071">
+        <source>The gender can only be M or F</source>
+        <target>Le genre ne peut être que M ou F</target>
+      </trans-unit>
+      <trans-unit id="1072">
+        <source>This catalogue level allready exists</source>
+        <target>Ce niveau de catalogue existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1073">
+        <source>This upper level allready exists</source>
+        <target>Ce niveau suppérieur existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1074">
+        <source>You cannot write a comment for the same notion twice (write on the one allready created)</source>
+        <target>Vous ne pouvez pas écrire un commentaire avec la même notion deux fois (écrivez dans celui déjà créé)</target>
+      </trans-unit>
+      <trans-unit id="1075">
+        <source>This class vernacular name allready exists</source>
+        <target>Cette classe de nom vernaculaire existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1076">
+        <source>This vernacular name allready exists</source>
+        <target>Ce nom vernaculaire existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1077">
+        <source>This user allready exists</source>
+        <target>Cet utilisateur existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1078">
+        <source>You have allready set this language for this people</source>
+        <target>Vous avez déjà défini cette langue pour cette personne</target>
+      </trans-unit>
+      <trans-unit id="1080">
+        <source>You have allready set this language for this user</source>
+        <target>Vous avez déjà défini cette langue pour cet utilisateur</target>
+      </trans-unit>
+      <trans-unit id="1081">
+        <source>This multimedia has allready be set for this people</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1082">
+        <source>This multimedia has allready be set for this user</source>
+        <target>Ce multimédia a déjà été défini pour cet utilisateur</target>
+      </trans-unit>
+      <trans-unit id="1083">
+        <source>This user allready have rights on this collection</source>
+        <target>Cet utilisateur a déjà des droits sur cette collection</target>
+      </trans-unit>
+      <trans-unit id="1085">
+        <source>This user cannot have this widget twice</source>
+        <target>cet utilisateur ne peut pas avoir cette widget deux foçis</target>
+      </trans-unit>
+      <trans-unit id="1086">
+        <source>This taxonomy allready exists</source>
+        <target>Ce taxon existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1087">
+        <source>This habitat allready exists</source>
+        <target>Cet habitat existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1088">
+        <source>This  multimedia keyword allready exists</source>
+        <target>Ce mot clé multimédia existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1089">
+        <source>This associated multimedia allready exists</source>
+        <target>Ce multimédia associé existe déjà</target>
+      </trans-unit>
+      <trans-unit id="1090">
+        <source>This word allready exists</source>
+        <target>Ce mot existe déjà</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
