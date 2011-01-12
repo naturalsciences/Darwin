@@ -50,9 +50,9 @@
   $(document).ready(function () {
     $('.name_tags li a').click(function(event)
     {
+      var tag_value = returnText($('#original_name'));    
       hideForRefresh('#keyword_screen');
       event.preventDefault();
-      var tag_value = returnText($('#original_name'));
 
       $.ajax(
       {
