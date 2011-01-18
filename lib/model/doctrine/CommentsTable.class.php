@@ -6,6 +6,7 @@ class CommentsTable extends DarwinTable
 {
   protected static $notions = array('taxonomy' => array('taxon information' => 'taxon information',
                                                         'taxon life history' => 'taxon life history',
+                                                        'taxon sp comments' => 'taxon old sp. comments',
                                                        ),
                                     'chronostratigraphy' => array('unit information' => 'unit information',
                                                                  ),
@@ -42,7 +43,7 @@ class CommentsTable extends DarwinTable
                                     'specimens' => array('general' => 'General', 'taxonomy' => 'Taxonomy', 'chronostratigraphy' => 'Chronostratigraphy',
                                     		'lithostratigraphy' => 'Lithostratigraphy', 'lithology' => 'Lithology', 'mineralogy' => 'Mineralogy',
                                     		'sampling_locations' => 'Sampling locations', 'igs' => 'IGs', 'identifications' => 'Identifications',
-                                    		'collectors' => 'Collectors'
+                                    		'collectors' => 'Collectors', 'hosting' => 'Hosting'
                                     		            ),
                                     'individuals' => array('general' => 'General', 'type' => 'Type', 'stage' => 'Stage', 'sex' => 'Sex',
                                     		'social_status' => 'Social status', 'rock_form' => 'Rock form', 'identifications' => 'Identifications'
