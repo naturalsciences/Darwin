@@ -2115,6 +2115,87 @@
         <source>Show accuracy of each point</source>
         <target>Toon nauwkeurigheid van iedere punt</target>
       </trans-unit>
+      <trans-unit id="1048" approved="yes">
+        <source>This relationship already exists</source> <target>Deze relatie bestaat reeds</target> </trans-unit>
+      <trans-unit id="1049" approved="yes">
+        <source>This Chrono unit already exists</source> <target>Deze Chrono eenheid bestaat reeds</target> </trans-unit>
+      <trans-unit id="1050" approved="yes">
+        <source>This Litho unit already exists</source> <target>Deze Litho eenheid bestaat reeds</target> </trans-unit>
+      <trans-unit id="1051" approved="yes">
+        <source>This Lithologic unit already exists</source> <target>Deze Lithologische eenheid bestaat reeds</target> </trans-unit>
+      <trans-unit id="1052" approved="yes">
+        <source>This Mineralogic unit already exists</source> <target>Deze Mineralogische eenheid bestaat reeds</target> </trans-unit>
+      <trans-unit id="1053" approved="yes">
+        <source>This Expedition unit already exists</source> <target>Deze Expeditie bestaat reeds</target> </trans-unit>
+      <trans-unit id="1054" approved="yes">
+        <source>This synonym already exist</source> <target>Dit synoniem bestaat reeds</target> </trans-unit>
+      <trans-unit id="1055" approved="yes">
+        <source>This code already exists</source> <target>Deze code bestaat reeds</target> </trans-unit>
+      <trans-unit id="1056" approved="yes">
+        <source>This collection already exists</source> <target>Deze collectie bestaat reeds</target> </trans-unit>
+      <trans-unit id="1057" approved="yes">
+        <source>This External link is already set</source> <target>Deze Externe link bestaat reeds</target> </trans-unit>
+      <trans-unit id="1058" approved="yes">
+        <source>You cannot set the same identification twice</source> <target>U kunt dezelfde determinatie niet opnieuw invoeren</target> </trans-unit>
+      <trans-unit id="1059" approved="yes">
+        <source>This Ig already exists</source> <target>Dit IG nummer bestaat reeds</target> </trans-unit>
+      <trans-unit id="1060" approved="yes">
+        <source>This code already exists</source> <target>Deze code bestaat reeds</target> </trans-unit>
+      <trans-unit id="1061" approved="yes">
+        <source>You've already saved a search with this name</source> <target>U heeft deze naam reeds gebruikt voor een bewaarde zoekcriteria</target> </trans-unit>
+      <trans-unit id="1062" approved="yes">
+        <source>You've already saved a list of specimen with this name</source> <target>U heeft deze naam reeds gebruikt voor een bewaarde specimen lijst</target> </trans-unit>
+      <trans-unit id="1063" approved="yes">
+        <source>This people already exists</source> <target>Deze persoon bestaat reeds</target> </trans-unit>
+      <trans-unit id="1064" approved="yes">
+        <source>This accompanying element already exists</source> <target>Dit bijkomende element bestaat reeds</target> </trans-unit>
+      <trans-unit id="1065" approved="yes">
+        <source>This tag group already exists</source> <target>Deze tag groep bestaat reeds</target> </trans-unit>
+      <trans-unit id="1067" approved="yes">
+        <source>This user login already exists</source> <target>Deze gebruikersnaam bestaat reeds</target> </trans-unit>
+      <trans-unit id="1068" approved="yes">
+        <source>This user login already exists</source> <target>Deze gebruikersnaam bestaat reeds</target> </trans-unit>
+      <trans-unit id="1069" approved="yes">
+        <source>This vernacular name already exists</source> <target>Deze vernaculaire benaming bestaat reeds</target> </trans-unit>
+      <trans-unit id="1070" approved="yes">
+        <source>The code has to contain either all numbers or letters, but not a mix of both</source> <target>Deze code moet ofwel alleen uit nummers of letters bestaan, maar niet een mix van beide</target> </trans-unit>
+      <trans-unit id="1071" approved="yes">
+        <source>The gender can only be M or F</source> <target>Het geslacht kan alleen M of F zijn</target> </trans-unit>
+      <trans-unit id="1072" approved="yes">
+        <source>This catalogue level already exists</source> <target>Dit catalogus niveau bestaat reeds</target> </trans-unit>
+      <trans-unit id="1073" approved="yes">
+        <source>This upper level already exists</source> <target>Het hoger niveau bestaat reeds</target> </trans-unit>
+      <trans-unit id="1074" approved="yes">
+        <source>You cannot write a comment for the same notion twice (write on the one already created)</source> <target>U kunt dezelfde commentaar notie geen twee keer gebruiken (voeg gegevens bij in de reeds bestaande notie)</target> </trans-unit>
+      <trans-unit id="1075" approved="yes">
+        <source>This class vernacular name already exists</source> <target>Deze soort vernaculaire benaming bestaat reeds</target> </trans-unit>
+      <trans-unit id="1076" approved="yes">
+        <source>This vernacular name already exists</source> <target>Deze vernaculaire benaming bestaat reeds</target> </trans-unit>
+      <trans-unit id="1077" approved="yes">
+        <source>This user already exists</source> <target>Deze gebruiker bestaat reeds</target> </trans-unit>
+      <trans-unit id="1078" approved="yes">
+        <source>You have already set this language for this person</source> <target>U heeft de taal reeds ingesteld voor deze persoon</target> </trans-unit>
+      <trans-unit id="1080" approved="yes">
+        <source>You have already set this language for this user</source> <target>U heeft de taal reeds ingesteld voor deze gebruiker</target> </trans-unit>
+      <trans-unit id="1081" approved="yes">
+        <source>This multimedia has already been set for this person</source> <target>Deze multimedia werd reeds ingevoerd voor deze persoon</target> </trans-unit>
+      <trans-unit id="1082" approved="yes">
+        <source>This multimedia has already been set for this user</source> <target>Deze multimedia werd reeds ingevoerd voor deze gebruiker</target> </trans-unit>
+      <trans-unit id="1083" approved="yes">
+        <source>This user already has rights on this collection</source> <target>Deze gebruiker heeft reeds rechten op deze collectie</target> </trans-unit>
+      <trans-unit id="1085" approved="yes">
+        <source>This user cannot have this widget twice</source> <target>Deze gebruiker kan geen twee keer toegang krijgen tot deze widget</target> </trans-unit>
+      <trans-unit id="1086" approved="yes">
+        <source>This taxonomy already exists</source> <target>Deze taxonomie bestaat reeds</target> </trans-unit>
+      <trans-unit id="1087" approved="yes">
+        <source>This habitat already exists</source> <target>Deze habitat bestaat reeds</target> </trans-unit>
+      <trans-unit id="1088" approved="yes">
+        <source>This multimedia keyword already exists</source> <target>Dit multimedia kernwoord bestaat reeds</target> </trans-unit>
+      <trans-unit id="1089" approved="yes">
+        <source>This associated multimedia already exists</source> <target>De geassocieerde multimedia bestaat reeds</target> </trans-unit>
+      <trans-unit id="1090" approved="yes">
+        <source>This word already exists</source> <target>Dit woord bestaat reeds</target> </trans-unit>
+      
     </body>
   </file>
 </xliff>
