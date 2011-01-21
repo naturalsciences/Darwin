@@ -76,6 +76,12 @@ all:
     class: sfSessionStorage
     param:
       session_name: darwin2
+user:
+  class: myUser
+  param:
+    timeout: 3600
+    logging:         %SF_LOGGING_ENABLED%
+    default_culture: %SF_DEFAULT_CULTURE%
 
 #all:
 #  controller:
