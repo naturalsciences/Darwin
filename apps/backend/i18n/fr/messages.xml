@@ -1309,11 +1309,11 @@
       <trans-unit id="643">
         <source>Choose Parent</source> <target>Choisir un parent</target> </trans-unit>                 
       <trans-unit id="644">
-        <source>Author</source> <target>Autheur</target> </trans-unit>                 
+        <source>Author</source> <target>Auteur</target> </trans-unit>                 
       <trans-unit id="645">
-        <source>Main Author</source> <target>Autheur principal</target> </trans-unit>                 
+        <source>Main Author</source> <target>Auteur principal</target> </trans-unit>                 
       <trans-unit id="646">
-        <source>Secondary Author</source> <target>Autheur secondaire</target> </trans-unit>         
+        <source>Secondary Author</source> <target>Auteur secondaire</target> </trans-unit>         
       <trans-unit id="647">      
         <source>Reviewer</source> <target>Critique</target> </trans-unit>
       <trans-unit id="648">
@@ -1591,7 +1591,7 @@
       <trans-unit id="762">
         <source>Required.</source> <target>Requis.</target> </trans-unit>
       <trans-unit id="763">
-        <source>This Person is still referenced as an author</source> <target>Cette personne est toujours référencée comme autheur</target> </trans-unit> 
+        <source>This Person is still referenced as an author</source> <target>Cette personne est toujours référencée comme auteur</target> </trans-unit> 
       <trans-unit id="764">
         <source>Impossible to impact children names</source> <target>Impossible d'impacter les noms d'enfants</target> </trans-unit>
       <trans-unit id="765">
@@ -1599,7 +1599,7 @@
         <target>La modification de respecte pas les règles d'attachement au niveau suppérieur</target> </trans-unit>
       <trans-unit id="766">
         <source>The author must be defined as such to be attached</source> 
-        <target>Veuillez attribuer le rôle "Autheur" aux personnes à qui vous voulez donner ce droit</target> </trans-unit>
+        <target>Veuillez attribuer le rôle "Auteur" aux personnes à qui vous voulez donner ce droit</target> </trans-unit>
       <trans-unit id="767">
         <source>The expert must be defined as such to be attached</source>
         <target>Veuillez attribuer le rôle "Expert" aux personnes à qui vous voulez donner ce droit</target> </trans-unit>
@@ -2004,7 +2004,7 @@
       <trans-unit id="952">
         <source>This widget allows you to add people that can have different roles. e.g. an author, a reviewer, an expert in a certain domain, etc.
         </source>
-        <target>Ce widget vous permet d'ajouter des personnes en leur octroyant différents rôles. Ex : un autheur, un correcteur, un expert dans certain domaine, etc.
+        <target>Ce widget vous permet d'ajouter des personnes en leur octroyant différents rôles. Ex : un auteur, un correcteur, un expert dans certain domaine, etc.
         </target>
       </trans-unit>
       <trans-unit id="953">
@@ -2374,43 +2374,43 @@
         <target>Afficher la précision de chaque point</target>
       </trans-unit>
       <trans-unit id="1048">
-        <source>This relationship allready exists</source>
+        <source>This relationship already exists</source>
         <target>Cette relation existe déjà</target>
       </trans-unit>
       <trans-unit id="1049">
-        <source>This Chrono unit allready exists</source>
+        <source>This Chrono unit already exists</source>
         <target>Cette unité Chrono existe déjà</target>
       </trans-unit>
       <trans-unit id="1050">
-        <source>This Litho unit allready exists</source>
+        <source>This Litho unit already exists</source>
         <target>Cette unité Litho existe déjà</target>
       </trans-unit>
       <trans-unit id="1051">
-        <source>This Lithologic unit allready exists</source>
+        <source>This Lithologic unit already exists</source>
         <target>Cette unité Lithologique existe déjà</target>
       </trans-unit>
       <trans-unit id="1052">
-        <source>This Mineralogic unit allready exists</source>
+        <source>This Mineralogic unit already exists</source>
         <target>Cette unité Minéralogique existe déjà</target>
       </trans-unit>
       <trans-unit id="1053">
-        <source>This Expedition unit allready exists</source>
+        <source>This Expedition unit already exists</source>
         <target>Cette expédition existe déjà</target>
       </trans-unit>
       <trans-unit id="1054">
-        <source>This synonym allready exist</source>
+        <source>This synonym already exist</source>
         <target>Ce synonyme existe déjà</target>
       </trans-unit>
       <trans-unit id="1055">
-        <source>This code allready exists</source>
+        <source>This code already exists</source>
         <target>Ce code existe déjà</target>
       </trans-unit>
       <trans-unit id="1056">
-        <source>This collection allready exists</source>
+        <source>This collection already exists</source>
         <target>Cette collection existe déjà</target>
       </trans-unit>
       <trans-unit id="1057">
-        <source>This External link is allready set</source>
+        <source>This External link is already set</source>
         <target>Ce lien extérieur existe déjà</target>
       </trans-unit>
       <trans-unit id="1058">
@@ -2418,43 +2418,43 @@
         <target>vous ne pouvez pas définir la même identification deux fois</target>
       </trans-unit>
       <trans-unit id="1059">
-        <source>This Ig allready exists</source>
+        <source>This Ig already exists</source>
         <target>Cet Ig existe déjà</target>
       </trans-unit>
       <trans-unit id="1060">
-        <source>This code allready exists</source>
+        <source>This code already exists</source>
         <target>Ce code existe déjà</target>
       </trans-unit>
       <trans-unit id="1061">
-        <source>You've allready saved a search with this name</source>
+        <source>You've already saved a search with this name</source>
         <target>Vous avez déjà sauvé une recherche avec ce nom</target>
       </trans-unit>
       <trans-unit id="1062">
-        <source>You've allready saved a list of specimen with this name</source>
+        <source>You've already saved a list of specimen with this name</source>
         <target>vous avez déjà sauvé une liste d'échantillon avec ce nom</target>
       </trans-unit>
       <trans-unit id="1063">
-        <source>This people allready exists</source>
+        <source>This people already exists</source>
         <target>Cette personne existe déjà</target>
       </trans-unit>
       <trans-unit id="1064">
-        <source>This accompanying allready exists</source>
-        <target>Cet accompagnement existe déjà</target>
+        <source>This accompanying element already exists</source>
+        <target>Cet élément d'accompagnement existe déjà</target>
       </trans-unit>
       <trans-unit id="1065">
-        <source>This tag group allready exists</source>
+        <source>This tag group already exists</source>
         <target>Ce groupe de label existe déjà</target>
       </trans-unit>
       <trans-unit id="1067">
-        <source>This user login allready exists</source>
+        <source>This user login already exists</source>
         <target>Cet utilisateur existe déjà</target>
       </trans-unit>
       <trans-unit id="1068">
-        <source>This user login allready exists</source>
+        <source>This user login already exists</source>
         <target>Ce nom de connection existe déjà</target>
       </trans-unit>
       <trans-unit id="1069">
-        <source>This vernacular name allready exists</source>
+        <source>This vernacular name already exists</source>
         <target>Ce nom vernaculaire existe déjà</target>
       </trans-unit>
       <trans-unit id="1070">
@@ -2466,71 +2466,71 @@
         <target>Le genre ne peut être que M ou F</target>
       </trans-unit>
       <trans-unit id="1072">
-        <source>This catalogue level allready exists</source>
+        <source>This catalogue level already exists</source>
         <target>Ce niveau de catalogue existe déjà</target>
       </trans-unit>
       <trans-unit id="1073">
-        <source>This upper level allready exists</source>
+        <source>This upper level already exists</source>
         <target>Ce niveau suppérieur existe déjà</target>
       </trans-unit>
       <trans-unit id="1074">
-        <source>You cannot write a comment for the same notion twice (write on the one allready created)</source>
+        <source>You cannot write a comment for the same notion twice (write on the one already created)</source>
         <target>Vous ne pouvez pas écrire un commentaire avec la même notion deux fois (écrivez dans celui déjà créé)</target>
       </trans-unit>
       <trans-unit id="1075">
-        <source>This class vernacular name allready exists</source>
+        <source>This class vernacular name already exists</source>
         <target>Cette classe de nom vernaculaire existe déjà</target>
       </trans-unit>
       <trans-unit id="1076">
-        <source>This vernacular name allready exists</source>
+        <source>This vernacular name already exists</source>
         <target>Ce nom vernaculaire existe déjà</target>
       </trans-unit>
       <trans-unit id="1077">
-        <source>This user allready exists</source>
+        <source>This user already exists</source>
         <target>Cet utilisateur existe déjà</target>
       </trans-unit>
       <trans-unit id="1078">
-        <source>You have allready set this language for this people</source>
+        <source>You have already set this language for this person</source>
         <target>Vous avez déjà défini cette langue pour cette personne</target>
       </trans-unit>
       <trans-unit id="1080">
-        <source>You have allready set this language for this user</source>
+        <source>You have already set this language for this user</source>
         <target>Vous avez déjà défini cette langue pour cet utilisateur</target>
       </trans-unit>
       <trans-unit id="1081">
-        <source>This multimedia has allready be set for this people</source>
+        <source>This multimedia has already been set for this prson</source>
         <target></target>
       </trans-unit>
       <trans-unit id="1082">
-        <source>This multimedia has allready be set for this user</source>
+        <source>This multimedia has already be set for this user</source>
         <target>Ce multimédia a déjà été défini pour cet utilisateur</target>
       </trans-unit>
       <trans-unit id="1083">
-        <source>This user allready have rights on this collection</source>
+        <source>This user already has rights on this collection</source>
         <target>Cet utilisateur a déjà des droits sur cette collection</target>
       </trans-unit>
       <trans-unit id="1085">
         <source>This user cannot have this widget twice</source>
-        <target>cet utilisateur ne peut pas avoir cette widget deux foçis</target>
+        <target>cet utilisateur ne peut pas avoir cette widget deux fois</target>
       </trans-unit>
       <trans-unit id="1086">
-        <source>This taxonomy allready exists</source>
+        <source>This taxonomy already exists</source>
         <target>Ce taxon existe déjà</target>
       </trans-unit>
       <trans-unit id="1087">
-        <source>This habitat allready exists</source>
+        <source>This habitat already exists</source>
         <target>Cet habitat existe déjà</target>
       </trans-unit>
       <trans-unit id="1088">
-        <source>This  multimedia keyword allready exists</source>
+        <source>This  multimedia keyword already exists</source>
         <target>Ce mot clé multimédia existe déjà</target>
       </trans-unit>
       <trans-unit id="1089">
-        <source>This associated multimedia allready exists</source>
+        <source>This associated multimedia already exists</source>
         <target>Ce multimédia associé existe déjà</target>
       </trans-unit>
       <trans-unit id="1090">
-        <source>This word allready exists</source>
+        <source>This word already exists</source>
         <target>Ce mot existe déjà</target>
       </trans-unit>      
     </body>
