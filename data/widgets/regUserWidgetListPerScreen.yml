@@ -647,17 +647,6 @@ chw4:
    title_perso: Vernacular names
    all_public: true
 
-chw5:
-   col_num: 1
-   category: catalogue_chronostratigraphy_widget
-   group_name: keywords
-   mandatory: false
-   order_by: 5
-   opened: true
-   visible: true
-   title_perso: Keywords
-   all_public: true
-
 lhw1:
    col_num: 1
    category: catalogue_lithostratigraphy_widget
@@ -702,17 +691,6 @@ lhw4:
    title_perso: Vernacular names
    all_public: true
 
-lhw5:
-   col_num: 1
-   category: catalogue_lithostratigraphy_widget
-   group_name: keywords
-   mandatory: false
-   order_by: 5
-   opened: true
-   visible: true
-   title_perso: Keywords
-   all_public: true   
-
 liw1:
    col_num: 1
    category: catalogue_lithology_widget
@@ -755,17 +733,6 @@ liw4:
    opened: true
    visible: true
    title_perso: Vernacular names
-   all_public: true
-
-liw5:
-   col_num: 1
-   category: catalogue_lithology_widget
-   group_name: keywords
-   mandatory: false
-   order_by: 6
-   opened: true
-   visible: true
-   title_perso: Keywords
    all_public: true
 
 miw1:
