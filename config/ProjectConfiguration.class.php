@@ -8,6 +8,7 @@ class ProjectConfiguration extends sfProjectConfiguration
   public function setup()
   {
     // for compatibility / remove and enable only the plugins you want
+    $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, new Doctrine_Cache_Apc());
     $this->enableAllPluginsExcept(array('sfPropelPlugin'));
   }
 }
