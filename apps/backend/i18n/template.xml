@@ -4,165 +4,97 @@
   <file source-language="EN" target-language="fr" datatype="plaintext" original="messages" date="2010-11-18T14:14:52Z" product-name="messages">
     <header/>
     <body>
-      <trans-unit id="1048">
-        <source>This relationship allready exists</source>
-        <target>Cette relation existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1049">
-        <source>This Chrono unit allready exists</source>
-        <target>Cette unité Chrono existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1050">
-        <source>This Litho unit allready exists</source>
-        <target>Cette unité Litho existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1051">
-        <source>This Lithologic unit allready exists</source>
-        <target>Cette unité Lithologique existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1052">
-        <source>This Mineralogic unit allready exists</source>
-        <target>Cette unité Minéralogique existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1053">
-        <source>This Expedition unit allready exists</source>
-        <target>Cette expédition existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1054">
-        <source>This synonym allready exist</source>
-        <target>Ce synonyme existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1055">
-        <source>This code allready exists</source>
-        <target>Ce code existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1056">
-        <source>This collection allready exists</source>
-        <target>Cette collection existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1057">
-        <source>This External link is allready set</source>
-        <target>Ce lien extérieur existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1058">
-        <source>You cannot set the same identification twice</source>
-        <target>vous ne pouvez pas définir la même identification deux fois</target>
-      </trans-unit>
-      <trans-unit id="1059">
-        <source>This Ig allready exists</source>
-        <target>Cet Ig existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1060">
-        <source>This code allready exists</source>
-        <target>Ce code existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1061">
-        <source>You've allready saved a search with this name</source>
-        <target>Vous avez déjà sauvé une recherche avec ce nom</target>
-      </trans-unit>
-      <trans-unit id="1062">
-        <source>You've allready saved a list of specimen with this name</source>
-        <target>vous avez déjà sauvé une liste d'échantillon avec ce nom</target>
-      </trans-unit>
-      <trans-unit id="1063">
-        <source>This people allready exists</source>
-        <target>Cette personne existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1064">
-        <source>This accompanying allready exists</source>
-        <target>Cet accompagnement existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1065">
-        <source>This tag group allready exists</source>
-        <target>Ce groupe de label existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1067">
-        <source>This user login allready exists</source>
-        <target>Cet utilisateur existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1068">
-        <source>This user login allready exists</source>
-        <target>Ce nom de connection existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1069">
-        <source>This vernacular name allready exists</source>
-        <target>Ce nom vernaculaire existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1070">
-        <source>The code has to contain either all numbers or letters, but not a mix of both</source>
-        <target>Le code ne doit contenir que des chiffres ou des lettres, mais pas les deux</target>
-      </trans-unit>
-      <trans-unit id="1071">
-        <source>The gender can only be M or F</source>
-        <target>Le genre ne peut être que M ou F</target>
-      </trans-unit>
-      <trans-unit id="1072">
-        <source>This catalogue level allready exists</source>
-        <target>Ce niveau de catalogue existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1073">
-        <source>This upper level allready exists</source>
-        <target>Ce niveau suppérieur existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1074">
-        <source>You cannot write a comment for the same notion twice (write on the one allready created)</source>
-        <target>Vous ne pouvez pas écrire un commentaire avec la même notion deux fois (écrivez dans celui déjà créé)</target>
-      </trans-unit>
-      <trans-unit id="1075">
-        <source>This class vernacular name allready exists</source>
-        <target>Cette classe de nom vernaculaire existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1076">
-        <source>This vernacular name allready exists</source>
-        <target>Ce nom vernaculaire existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1077">
-        <source>This user allready exists</source>
-        <target>Cet utilisateur existe déjà</target>
-      </trans-unit>
-      <trans-unit id="1078">
-        <source>You have allready set this language for this people</source>
-        <target>Vous avez déjà défini cette langue pour cette personne</target>
-      </trans-unit>
-      <trans-unit id="1080">
-        <source>You have allready set this language for this user</source>
-        <target>Vous avez déjà défini cette langue pour cet utilisateur</target>
-      </trans-unit>
-      <trans-unit id="1081">
-        <source>This multimedia has allready be set for this people</source>
+      <trans-unit id="1091">
+        <source>The author(s) who published the full name</source>
         <target></target>
       </trans-unit>
-      <trans-unit id="1082">
-        <source>This multimedia has allready be set for this user</source>
-        <target>Ce multimédia a déjà été défini pour cet utilisateur</target>
+      <trans-unit id="1092">
+        <source>Author name and year, used in mineralogy or bacterology</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1083">
-        <source>This user allready have rights on this collection</source>
-        <target>Cet utilisateur a déjà des droits sur cette collection</target>
+      <trans-unit id="1093">
+        <source>The first person(s) who validly published a species</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1085">
-        <source>This user cannot have this widget twice</source>
-        <target>cet utilisateur ne peut pas avoir cette widget deux foçis</target>
+      <trans-unit id="1094">
+        <source>Author team of the basionym of a combination</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1086">
-        <source>This taxonomy allready exists</source>
-        <target>Ce taxon existe déjà</target>
+      <trans-unit id="1095">
+        <source>The original author when a species was transferred to another genus and the year of the original publication</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1087">
-        <source>This habitat allready exists</source>
-        <target>Cet habitat existe déjà</target>
+      <trans-unit id="1096">
+        <source>The citation of the authors responsible for the new combination and the year of its publication</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1088">
-        <source>This  multimedia keyword allready exists</source>
-        <target>Ce mot clé multimédia existe déjà</target>
+      <trans-unit id="1097">
+        <source>Genus or higher taxon name, used in each domain</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1089">
-        <source>This associated multimedia allready exists</source>
-        <target>Ce multimédia associé existe déjà</target>
+      <trans-unit id="1098">
+        <source>Flag indicating that this is a  hybrid ("x") or a  chimaera ("+")</source>
+        <target></target>
       </trans-unit>
-      <trans-unit id="1090">
-        <source>This word allready exists</source>
-        <target>Ce mot existe déjà</target>
+      <trans-unit id="1099">
+        <source>Valid name</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1100">
+        <source>Used for cultivated plant name elements</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1101">
+        <source>Author team and Year of the basionym of a species or subspecies</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1102">
+        <source>Species name, used in zoology or bacteriology</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1103">
+        <source>Subgenus name, used in zoology or bacteriology</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1104">
+        <source>Used to indicate the author and year</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1105">
+        <source>Subspecies name, used in zoology or bacteriology</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1106">
+        <source>A formal category for cultivars , individual plants or assemblages of plants on the basis of defined similarity</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1107">
+        <source>a cultivar name, which is a Latin botanical name followed by an epithet, mostly in a vernacular language</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1108">
+        <source>species epithet or the epithet of the subdivision of a genus</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1109">
+        <source>The final epithet of a botanical name of infraspecific rank</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1110">
+        <source>Trade name used for a specific cultivar</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1111">
+        <source>Name of the breed of an animal</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1112">
+        <source>The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="1113">
+        <source>The formal name of a viral species. Example: Saccharomyces cerevisiae virus L-A</source>
+        <target></target>
       </trans-unit>
     </body>
   </file>

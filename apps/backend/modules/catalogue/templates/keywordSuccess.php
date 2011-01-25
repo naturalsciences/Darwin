@@ -29,8 +29,9 @@
 
 <h3><?php echo __('Possible Keywords');?></h3>
 <ul class="name_tags">
-  <?php foreach(ClassificationKeywords::getTags($sf_request->getParameter('table')) as $key => $name):?>
-    <li><?php echo link_to( __($name),'catalogue/addKeyword?key='.$key); ?></li>
+  <?php foreach(ClassificationKeywords::getTags($sf_request->getParameter('table'),$sf_request->getParameter('kingdom')) as $key => $name):?>
+    <?php $keyword = ClassificationKeywords::getTagsTitleAndColor($key) ; ?>
+    <li <?php echo ('class ='.$keyword['class']) ?>><?php echo link_to( __($name),'catalogue/addKeyword?key='.$key,array('title' => __($keyword['title']))); ?></li>
   <?php endforeach;?>
 </ul>
 

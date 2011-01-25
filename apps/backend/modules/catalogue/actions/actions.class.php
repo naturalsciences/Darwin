@@ -208,7 +208,7 @@ class catalogueActions extends DarwinActions
     $this->forward404Unless( $request->hasParameter('id') && $request->hasParameter('table'));
     $this->ref_object = Doctrine::getTable(DarwinTable::getModelForTable($request->getParameter('table')))->find($request->getParameter('id'));
     $this->forward404Unless($this->ref_object);
-    $this->form = new  KeywordsForm(null,array('table' => $request->getParameter('table'), 'id' => $request->getParameter('id') ));
+    $this->form = new  KeywordsForm(null,array('table' => $request->getParameter('table'), 'id' => $request->getParameter('id')));
 
     if($request->isMethod('post'))
     {

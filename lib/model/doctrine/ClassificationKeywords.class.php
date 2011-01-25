@@ -12,50 +12,93 @@
  */
 class ClassificationKeywords extends BaseClassificationKeywords
 {
-  public static function getTags($type)
+  public static function getTags($type,$kingdom = null)
   {
     $ts = array(
-      'mixed' => array(
-        "AuthorTeam",
-        "AuthorTeamAndYear",
-        "AuthorTeamOriginalAndYear",
-        "AuthorTeamParenthesis",
-        "AuthorTeamParenthesisAndYear",
-        "CombinationAuthorTeamAndYear",
-        "GenusOrMonomial",  ///-->
-        "HybridFlag",
-        "NameApprobation",
-        "NamedIndividual",
-        "ParentheticalAuthorTeamAndYear",
-        "SpeciesEpithet",  ///-->
-        "Subgenus",  ///-->
-        "SubgenusAuthorAndYear",
-        "SubspeciesEpithet",  ///-->
+      'mineral' => array(
+        "AuthorTeam", //mineral
+        "AuthorTeamAndYear", //mineral     
+        "NamedIndividual", // mineral           
       ),
-      'zoobota' => array(
+      'botany' => array(
+        "GenusOrMonomial",
+        "HybridFlag",
+        "AuthorTeam",
+        "AuthorTeamParenthesis",
         "CultivarGroupName",
         "CultivarName",
-        "FirstEpithet",  ///-->
-        "InfraspecificEpithet",  ///-->
-        "TradeDesignationName", ///Bota
-        "Breed", ///Zoo
+        "FirstEpithet",
+        "InfraspecificEpithet",
+        "TradeDesignationName",
+      ),
+      'zoology' => array(
+        "GenusOrMonomial",
+        "Subgenus",
+        "SpeciesEpithet",
+        "SubspeciesEpithet",
+        "AuthorTeamOriginalAndYear",
+        "AuthorTeamParenthesisAndYear",
+        "CombinationAuthorTeamAndYear",
+        "Breed",
+      ),
+      'bacterology' => array(
+        "GenusOrMonomial",
+        "Subgenus",
+        "SpeciesEpithet",
+        "SubspeciesEpithet",
+        "ParentheticalAuthorTeamAndYear",
+        "NameApprobation",
+        "AuthorTeamandYear",
+        "SubgenusAuthorandYear",      
       ),
       'virus' => array(
+        "GenusOrMonomial",
         "Acronym",
         "ViralSpeciesDesignation",  ///-->
       )
     );
-    if($type='taxonomy')
-      $k_tags = $ts['mixed'] + $ts['zoobota'];
-
-    $tags = array();
+    if($type=='taxonomy' && $kingdom)
+    {
+      $k_tags = $ts[$kingdom] ;
+    }
+    else $k_tags = $ts['mineral'] ;
     foreach($k_tags as $t)
     {
         $tags[$t] = sfInflector::humanize( sfInflector::tableize($t));
     }
     return $tags; 
   }
-
+  
+  public static function getTagsTitleAndColor($key)
+  {
+    $ts = array(
+        "AuthorTeam" => array('title' => 'The author(s) who published the full name', 'class' => 'Tags_Bota'),
+        "AuthorTeamAndYear" => array('title' => 'Author name and year, used in mineralogy or bacterology', 'class' => 'Tags_mix'),
+        "AuthorTeamOriginalAndYear" => array('title' => 'The first person(s) who validly published a species', 'class' => 'Tags_Zoo'),
+        "AuthorTeamParenthesis" => array('title' => 'Author team of the basionym of a combination', 'class' => 'Tags_Bota'),
+        "AuthorTeamParenthesisAndYear" => array('title' => 'The original author when a species was transferred to another genus and the year of the original publication', 'class' => 'Tags_Zoo'),
+        "CombinationAuthorTeamAndYear" => array('title' => 'The citation of the authors responsible for the new combination and the year of its publication', 'class' => 'Tags_Zoo'),
+        "GenusOrMonomial" => array('title' => 'Genus or higher taxon name, used in each domain', 'class' => 'Tags_mix'),  ///-->
+        "HybridFlag" => array('title' => 'Flag indicating that this is a  hybrid ("x") or a  chimaera ("+")', 'class' => 'Tags_Bota'),
+        "NameApprobation" => array('title' => 'Valid name', 'class' => 'Tags_Bac'),
+        "NamedIndividual" => array('title' => 'Used for cultivated plant name elements', 'class' => 'Tags_Bota'),
+        "ParentheticalAuthorTeamAndYear" => array('title' => 'Author team and Year of the basionym of a species or subspecies', 'class' => 'Tags_Bac'),
+        "SpeciesEpithet" => array('title' => 'Species name, used in zoology or bacteriology', 'class' => 'Tags_mix'),  ///-->
+        "Subgenus" => array('title' => 'Subgenus name, used in zoology or bacteriology', 'class' => 'Tags_mix'),  ///-->
+        "SubgenusAuthorAndYear" => array('title' => 'Used to indicate the author and year', 'class' => 'Tags_Bac'),
+        "SubspeciesEpithet" => array('title' => 'Subspecies name, used in zoology or bacteriology', 'class' => 'Tags_mix'),  ///-->
+        "CultivarGroupName" => array('title' => 'A formal category for cultivars , individual plants or assemblages of plants on the basis of defined similarity', 'class' => 'Tags_Bota'),
+        "CultivarName" => array('title' => 'a cultivar name, which is a Latin botanical name followed by an epithet, mostly in a vernacular language', 'class' => 'Tags_Bota'),
+        "FirstEpithet" => array('title' => 'species epithet or the epithet of the subdivision of a genus', 'class' => 'Tags_Bota'),  ///-->
+        "InfraspecificEpithet" => array('title' => 'The final epithet of a botanical name of infraspecific rank', 'class' => 'Tags_Bota'),  ///-->
+        "TradeDesignationName" => array('title' => 'Trade name used for a specific cultivar', 'class' => 'Tags_Bota'), ///Bota
+        "Breed" => array('title' => 'Name of the breed of an animal', 'class' => 'Tags_Vir'), ///Tags_Zoo
+        "Acronym" => array('title' => 'The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus', 'class' => 'Tags_Vir'),
+        "ViralSpeciesDesignation" => array('title' => 'The formal name of a viral species. Example: Saccharomyces cerevisiae virus L-A', 'class' => 'Tags_Vir'),  ///-->
+      )  ;
+      return($ts[$key]) ;
+  }
+   
   public function getReadableKeywordType()
   {
     return  sfInflector::humanize( sfInflector::tableize($this->getKeywordType()));

@@ -10,7 +10,7 @@
     <?php foreach($keywords as $keyword):?>
     <tr>
       <td>
-      <a class="link_catalogue" title="<?php echo __('Edit Keywords');?>"  href="<?php echo url_for('catalogue/keyword?table='.$table.'&id='.$eid); ?>">
+      <a class="link_catalogue" title="<?php echo __('Edit Keywords');?>"  href="<?php echo url_for('catalogue/keyword?table='.$table.'&id='.$eid.'&kingdom='.$kingdom); ?>">
         <?php echo $keyword->getReadableKeywordType();?>
       </a>
       </td>
@@ -26,4 +26,4 @@
   </tbody>
 </table>
 <br />
-<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Keywords');?>" class="link_catalogue" href="<?php echo url_for('catalogue/keyword?table='.$table.'&id='.$eid); ?>"><?php echo __('Add');?></a>
+<?php echo image_tag('add_green.png');?><a title="<?php echo __('Add Keywords');?>" class="link_catalogue" href="<?php echo url_for('catalogue/keyword?table='.$table.'&id='.$eid.'&kingdom='.$kingdom); ?>"><?php echo __('Add');?></a>

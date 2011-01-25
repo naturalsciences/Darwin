@@ -1419,6 +1419,31 @@ tr.details .details_info tr:hover
   border: 1px solid #E3E3E3;
 }
 
+.Tags_Bota
+{
+  border-left: 6px solid #C1CF56 !important;
+}
+
+.Tags_mix
+{
+  border-left: 6px solid #999999 !important;
+}
+
+.Tags_Bac
+{
+  border-left: 6px solid #d97d12 !important;  
+}
+
+.Tags_Zoo
+{
+  border-left: 6px solid #FF0000 !important;  
+}
+
+.Tags_Vir
+{
+  border-left: 6px solid #0000FF !important;  
+}
+
 .name_tags_view li, .purposed_tags_view li
 {
   background-color: #FAFAFA;
