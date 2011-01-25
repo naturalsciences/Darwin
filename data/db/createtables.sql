@@ -367,7 +367,7 @@ create table identifications
         determination_status varchar,
         order_by integer not null default 1,
         constraint pk_identifications primary key (id),
-        constraint unq_identifications unique (referenced_relation, record_id, notion_concerned, value_defined_indexed)
+        constraint unq_identifications unique (referenced_relation, record_id, notion_concerned, notion_date, value_defined_indexed)
        )
 inherits (template_table_record_ref);
 comment on table identifications is 'History of identifications';
@@ -1377,6 +1377,7 @@ create table specimen_individuals
         specimen_individuals_count_max integer not null default 1,
         with_parts boolean not null default false,
         constraint pk_specimen_individuals primary key (id),
+        constraint unq_specimen_individuals unique (specimen_ref, type, sex, stage, state, social_status, rock_form),
         constraint fk_specimen_individuals_specimens foreign key (specimen_ref) references specimens(id) on delete cascade,
         constraint chk_chk_specimen_individuals_minmax check (specimen_individuals_count_min <= specimen_individuals_count_max),
         constraint chk_chk_specimens_individuals_min check (specimen_individuals_count_min >= 0)
@@ -1427,6 +1428,9 @@ create table specimen_parts
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
         constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
+
+CREATE UNIQUE INDEX CONCURRENTLY unq_specimen_parts ON specimen_parts (specimen_individual_ref, specimen_part, coalesce("building", ''), coalesce("floor", ''), coalesce("room", ''), coalesce("row", ''), coalesce("shelf", ''), coalesce("container", ''), coalesce("sub_container", ''));
+
 comment on table specimen_parts is 'List of individuals or parts of individuals stored in conservatories';
 comment on column specimen_parts.id is 'Unique identifier of a specimen part/individual';
 comment on column specimen_parts.specimen_individual_ref is 'Reference of corresponding characterized specimen';
@@ -1541,7 +1545,7 @@ create table specimen_collecting_tools
     constraint pk_specimen_collecting_tools primary key (id),
     constraint unq_specimen_collecting_tools unique (specimen_ref, collecting_tool_ref),
     constraint fk_specimen_collecting_tools_specimen foreign key (specimen_ref) references specimens (id) on delete cascade,
-    constraint fk_specimen_collecting_tools_tool foreign key (collecting_tool_ref) references collecting_tools (id)
+    constraint fk_specimen_collecting_tools_tool foreign key (collecting_tool_ref) references collecting_tools (id) on delete cascade
   );
 
 comment on table specimen_collecting_tools is 'Association of collecting tools with specimens';
@@ -1575,7 +1579,7 @@ create table specimen_collecting_methods
     constraint pk_specimen_collecting_methods primary key (id),
     constraint unq_specimen_collecting_methods unique (specimen_ref, collecting_method_ref),
     constraint fk_specimen_collecting_methods_specimen foreign key (specimen_ref) references specimens (id) on delete cascade,
-    constraint fk_specimen_collecting_methods_method foreign key (collecting_method_ref) references collecting_methods (id)
+    constraint fk_specimen_collecting_methods_method foreign key (collecting_method_ref) references collecting_methods (id) on delete cascade
   );
 
 comment on table specimen_collecting_methods is 'Association of collecting methods with specimens';
