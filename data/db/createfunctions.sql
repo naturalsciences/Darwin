@@ -471,15 +471,15 @@ BEGIN
 		END IF;
 	ELSE
 		IF TG_TABLE_NAME = 'comments' THEN
-			IF OLD.comment != NEW.comment OR OLD.comment_language_full_text != NEW.comment_language_full_text THEN
+			IF OLD.comment IS DISTINCT FROM NEW.comment OR OLD.comment_language_full_text IS DISTINCT FROM NEW.comment_language_full_text THEN
 				NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'ext_link' THEN	
-			IF OLD.comment != NEW.comment OR OLD.comment_language_full_text != NEW.comment_language_full_text THEN
+			IF OLD.comment IS DISTINCT FROM NEW.comment OR OLD.comment_language_full_text IS DISTINCT FROM NEW.comment_language_full_text THEN
 				NEW.comment_ts := to_tsvector(NEW.comment_language_full_text::regconfig, NEW.comment);
 			END IF;				
 		ELSEIF TG_TABLE_NAME = 'identifications' THEN
-			IF OLD.value_defined != NEW.value_defined THEN
+			IF OLD.value_defined IS DISTINCT FROM NEW.value_defined THEN
 				NEW.value_defined_ts := to_tsvector('simple', NEW.value_defined);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'people_addresses' THEN
@@ -495,23 +495,23 @@ BEGIN
 							|| ' ' || COALESCE(NEW.zip_code,'') || ' ' || COALESCE(NEW.country,'')
 					);
 		ELSEIF TG_TABLE_NAME = 'multimedia' THEN
-			IF OLD.title != NEW.title OR  OLD.subject != NEW.subject OR OLD.descriptive_language_full_text != NEW.descriptive_language_full_text THEN
+			IF OLD.title IS DISTINCT FROM NEW.title OR  OLD.subject IS DISTINCT FROM NEW.subject OR OLD.descriptive_language_full_text IS DISTINCT FROM NEW.descriptive_language_full_text THEN
 				NEW.descriptive_ts := to_tsvector(NEW.descriptive_language_full_text::regconfig, NEW.title ||' '|| NEW.subject);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'collection_maintenance' THEN
-			IF OLD.description != NEW.description THEN
+			IF OLD.description IS DISTINCT FROM NEW.description THEN
 				NEW.description_ts := to_tsvector('simple', NEW.description);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'expeditions' THEN
-			IF OLD.name != NEW.name OR OLD.name_language_full_text != NEW.name_language_full_text THEN
+			IF OLD.name IS DISTINCT FROM NEW.name OR OLD.name_language_full_text IS DISTINCT FROM NEW.name_language_full_text THEN
 				NEW.name_ts := to_tsvector(NEW.name_language_full_text::regconfig, NEW.name);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'habitats' THEN
-			IF OLD.description != NEW.descriptiont OR OLD.description_language_full_text != NEW.description_language_full_text THEN
+			IF OLD.description IS DISTINCT FROM NEW.descriptiont OR OLD.description_language_full_text IS DISTINCT FROM NEW.description_language_full_text THEN
 				NEW.description_ts := to_tsvector(NEW.description_language_full_text::regconfig, NEW.description);
 			END IF;
 		ELSEIF TG_TABLE_NAME = 'vernacular_names' THEN
-			IF OLD.name != NEW.name THEN
+			IF OLD.name IS DISTINCT FROM NEW.name THEN
 				NEW.name_ts := to_tsvector('simple', NEW.name);
 			END IF;
 		END IF;
@@ -556,15 +556,15 @@ DECLARE
 	still_referenced integer;
 BEGIN
 	/** AUTHOR FLAG IS 2 **/
-	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
+	IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
 		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='author';
-		IF still_referenced !=0 THEN
+		IF still_referenced != 0 THEN
 			RAISE EXCEPTION 'Author still used as author.';
 		END IF;
 	END IF;
 
 	/** IDENTIFIER FLAG IS 4 **/
-	IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 4)>0 )  THEN
+	IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 4)>0 )  THEN
 		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='identifier';
 		IF still_referenced !=0 THEN
 			RAISE EXCEPTION 'Identifier still used as identifier.';
@@ -572,17 +572,17 @@ BEGIN
 	END IF;
 
         /** Expert Flag is 8 **/
-        IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
+        IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
                 SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='expert';
-                IF still_referenced !=0 THEN
+                IF still_referenced != 0 THEN
                         RAISE EXCEPTION 'Expert still used as expert.';
                 END IF;
         END IF;
 
         /** COLLECTOR Flag is 16 **/
-        IF NEW.db_people_type != OLD.db_people_type AND NOT ( (NEW.db_people_type & 16)>0 )  THEN
+        IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 16)>0 )  THEN
                 SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='collector';
-                IF still_referenced !=0 THEN
+                IF still_referenced != 0 THEN
                         RAISE EXCEPTION 'Collector still used as collector.';
                 END IF;
         END IF;
@@ -717,7 +717,7 @@ BEGIN
               ' WHERE path like ' || quote_literal(OLD.path || OLD.id || '/%');
           END IF;
         ELSE
-          IF NEW.person_1_ref != OLD.person_1_ref OR NEW.person_2_ref != OLD.person_2_ref THEN
+          IF NEW.person_1_ref IS DISTINCT FROM OLD.person_1_ref OR NEW.person_2_ref IS DISTINCT FROM OLD.person_2_ref THEN
             SELECT path ||  NEW.person_1_ref || '/' INTO NEW.path FROM people_relationships WHERE person_2_ref=NEW.person_1_ref;
 
               IF NEW.path is NULL THEN
@@ -1180,171 +1180,171 @@ BEGIN
    IF TG_TABLE_NAME ='collection_maintenance' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.description_ts != NEW.description_ts THEN
-	  PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
-	END IF;
+        IF OLD.description_ts IS DISTINCT FROM NEW.description_ts THEN
+          PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
+        PERFORM fct_cpy_word('collection_maintenance','description_ts', NEW.description_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='comments' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.comment_ts != NEW.comment_ts THEN
-	  PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
-	END IF;
+        IF OLD.comment_ts IS DISTINCT FROM NEW.comment_ts THEN
+          PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
+        PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='vernacular_names' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_ts != NEW.name_ts THEN
-	  PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
-	END IF;
+        IF OLD.name_ts IS DISTINCT FROM NEW.name_ts THEN
+          PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
+        PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='identifications' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.value_defined_ts != NEW.value_defined_ts THEN
-	  PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
-	END IF;
+        IF OLD.value_defined_ts IS DISTINCT FROM NEW.value_defined_ts THEN
+          PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
+        PERFORM fct_cpy_word('identifications','value_defined_ts', NEW.value_defined_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='multimedia' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.descriptive_ts != NEW.descriptive_ts THEN
-	  PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
-	END IF;
+        IF OLD.descriptive_ts IS DISTINCT FROM NEW.descriptive_ts THEN
+          PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
+        PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='people' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
-	  PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
-	END IF;
+        IF OLD.formated_name_ts IS DISTINCT FROM NEW.formated_name_ts THEN
+          PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
+        PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='people_addresses' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.address_parts_ts != NEW.address_parts_ts THEN
-	  PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
-	END IF;
+        IF OLD.address_parts_ts IS DISTINCT FROM NEW.address_parts_ts THEN
+          PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
+        PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='users_addresses' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.address_parts_ts != NEW.address_parts_ts THEN
-	   PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
-	END IF;
+        IF OLD.address_parts_ts IS DISTINCT FROM NEW.address_parts_ts THEN
+          PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
+        PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='users' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.formated_name_ts != NEW.formated_name_ts THEN
-	  PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
-	END IF;
+        IF OLD.formated_name_ts IS DISTINCT FROM NEW.formated_name_ts THEN
+          PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
+        PERFORM fct_cpy_word('users','formated_name_ts', NEW.formated_name_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='expeditions' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_ts != NEW.name_ts THEN
-	  PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
-	END IF;
+        IF OLD.name_ts IS DISTINCT FROM NEW.name_ts THEN
+          PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
+        PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='habitats' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.description_ts != NEW.description_ts THEN
-	  PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
-	END IF;
+        IF OLD.description_ts IS DISTINCT FROM NEW.description_ts THEN
+          PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
+        PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='mineralogy' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_indexed != NEW.name_indexed THEN
-	  PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
-	END IF;
+        IF OLD.name_indexed IS DISTINCT FROM NEW.name_indexed THEN
+          PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
+        PERFORM fct_cpy_word('mineralogy','name_indexed', NEW.name_indexed);
       END IF;
 
    ELSIF TG_TABLE_NAME ='chronostratigraphy' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_indexed != NEW.name_indexed THEN
-	  PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
-	END IF;
+        IF OLD.name_indexed IS DISTINCT FROM NEW.name_indexed THEN
+          PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
+        PERFORM fct_cpy_word('chronostratigraphy','name_indexed', NEW.name_indexed);
       END IF;
 
    ELSIF TG_TABLE_NAME ='lithostratigraphy' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_indexed != NEW.name_indexed THEN
-	  PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
-	END IF;
+        IF OLD.name_indexed IS DISTINCT FROM NEW.name_indexed THEN
+          PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
+        PERFORM fct_cpy_word('lithostratigraphy','name_indexed', NEW.name_indexed);
       END IF;
 
    ELSIF TG_TABLE_NAME ='lithology' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_indexed != NEW.name_indexed THEN
-	  PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
-	END IF;
+        IF OLD.name_indexed IS DISTINCT FROM NEW.name_indexed THEN
+          PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
+        PERFORM fct_cpy_word('lithology','name_indexed', NEW.name_indexed);
       END IF;
 
    ELSIF TG_TABLE_NAME ='taxonomy' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.name_indexed != NEW.name_indexed THEN
-	  PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
-	END IF;
+        IF OLD.name_indexed IS DISTINCT FROM NEW.name_indexed THEN
+          PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
+        PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
       END IF;
 
    ELSIF TG_TABLE_NAME ='codes' THEN
 
       IF TG_OP = 'UPDATE' THEN
-	IF OLD.full_code_indexed != NEW.full_code_indexed THEN
-	  PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
-	END IF;
+        IF OLD.full_code_indexed IS DISTINCT FROM NEW.full_code_indexed THEN
+          PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
+        END IF;
       ELSE
-	PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
+        PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
       END IF;
 
    END IF;
@@ -1562,7 +1562,7 @@ AS
 $$
 BEGIN
   IF TG_OP = 'UPDATE' THEN
-    IF NEW.taxon_ref <> OLD.taxon_ref THEN
+    IF NEW.taxon_ref IS DISTINCT FROM OLD.taxon_ref THEN
       UPDATE specimens SET host_taxon_ref = NEW.taxon_ref WHERE host_specimen_ref = NEW.id AND id <> NEW.id;
     END IF;
   END IF;
@@ -1579,7 +1579,7 @@ DECLARE
   newTaxonRef specimens.host_taxon_ref%TYPE := 0;
 BEGIN
   IF TG_OP = 'UPDATE' THEN
-    IF NEW.host_specimen_ref <> OLD.host_specimen_ref AND NEW.host_specimen_ref IS NOT NULL THEN
+    IF NEW.host_specimen_ref IS DISTINCT FROM OLD.host_specimen_ref AND NEW.host_specimen_ref IS NOT NULL THEN
       SELECT taxon_ref INTO STRICT NEW.host_taxon_ref FROM specimens WHERE id = NEW.host_specimen_ref;
     END IF;
   END IF;
@@ -1608,7 +1608,7 @@ BEGIN
        AND db_user_type = 4
     );
   ELSIF TG_OP = 'UPDATE' THEN
-    IF NEW.main_manager_ref != OLD.main_manager_ref THEN
+    IF NEW.main_manager_ref IS DISTINCT FROM OLD.main_manager_ref THEN
       SELECT db_user_type INTO db_user_type_val FROM collections_rights WHERE collection_ref = NEW.id AND user_ref = NEW.main_manager_ref;
       IF FOUND AND db_user_type_val is distinct from 4 THEN
         UPDATE collections_rights
@@ -1620,7 +1620,7 @@ BEGIN
         VALUES(NEW.id,NEW.main_manager_ref,4);
       END IF;
     END IF;
-    IF NEW.parent_ref != OLD.parent_ref THEN
+    IF NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
       INSERT INTO collections_rights (collection_ref, user_ref, db_user_type)
       (
         SELECT NEW.id, user_ref, db_user_type
@@ -1661,7 +1661,7 @@ BEGIN
   /*Check an unpromotion occurs by modifying db_user_type explicitely or implicitely by replacing a user by an other
     or moving a user from one collection to an other
   */
-  IF (NEW.db_user_type < 4 AND OLD.db_user_type >=4) OR NEW.collection_ref != OLD.collection_ref OR NEW.user_ref != OLD.user_ref THEN
+  IF (NEW.db_user_type < 4 AND OLD.db_user_type >=4) OR NEW.collection_ref IS DISTINCT FROM OLD.collection_ref OR NEW.user_ref IS DISTINCT FROM OLD.user_ref THEN
     SELECT formated_name INTO mgrName
     FROM collections INNER JOIN users ON users.id = collections.main_manager_ref
     WHERE collections.id = OLD.collection_ref
@@ -1695,7 +1695,7 @@ BEGIN
       An insertion as it's creating an entry in collections_rights will trigger this current trigger again ;)
     */
     IF TG_OP = 'UPDATE' THEN
-      IF NEW.main_manager_ref != OLD.main_manager_ref THEN
+      IF NEW.main_manager_ref IS DISTINCT FROM OLD.main_manager_ref THEN
         UPDATE users
         SET db_user_type = 4
         WHERE id = NEW.main_manager_ref
@@ -1714,7 +1714,7 @@ BEGIN
     END IF;
     IF TG_OP = 'UPDATE' THEN
       /*First case: replacing a user by an other*/
-      IF NEW.user_ref != OLD.user_ref THEN
+      IF NEW.user_ref IS DISTINCT FROM OLD.user_ref THEN
         /*Update the user db_user_type chosen as the new one as if it would be an insertion*/
         UPDATE users
         SET db_user_type = NEW.db_user_type
@@ -1731,7 +1731,7 @@ BEGIN
           WHERE id = OLD.user_ref
             AND db_user_type != 8;
       END IF;
-      IF NEW.db_user_type != OLD.db_user_type THEN
+      IF NEW.db_user_type IS DISTINCT FROM OLD.db_user_type THEN
         /* Promotion */
         IF NEW.db_user_type > OLD.db_user_type THEN
           UPDATE users
@@ -2341,7 +2341,7 @@ BEGIN
       )
       WHERE individual_ref = NEW.id;
       /*If it's a move from one specimen to an other, then...*/
-      IF OLD.specimen_ref != NEW.specimen_ref THEN
+      IF OLD.specimen_ref IS DISTINCT FROM NEW.specimen_ref THEN
         /*Check first if the individual moved was the last one attached to the specimen concerned*/
         SELECT COUNT(*) INTO indCount FROM specimen_individuals WHERE specimen_ref = OLD.specimen_ref AND id != OLD.id;
         IF indCount = 0 THEN
@@ -2683,7 +2683,7 @@ BEGIN
       )
       WHERE part_ref = NEW.id;
       /*Check if the part is moved from one individual to an other*/
-      IF OLD.specimen_individual_ref != NEW.specimen_individual_ref THEN
+      IF OLD.specimen_individual_ref IS DISTINCT FROM NEW.specimen_individual_ref THEN
         /*Check if the part moved is the last one attached to the individual concerned*/
         SELECT COUNT(*) INTO partCount FROM specimen_parts WHERE specimen_individual_ref = OLD.specimen_individual_ref AND id != OLD.id;
         IF partCount = 0 THEN
@@ -3262,7 +3262,7 @@ BEGIN
     IF TG_OP = 'DELETE' THEN
       booContinue := true;
     ELSE
-      IF OLD.collection_ref != NEW.collection_ref OR OLD.user_ref != NEW.user_ref THEN
+      IF OLD.collection_ref IS DISTINCT FROM NEW.collection_ref OR OLD.user_ref IS DISTINCT FROM NEW.user_ref THEN
         booContinue := true;
       END IF;
     END IF;
@@ -3295,7 +3295,7 @@ BEGIN
   IF TG_OP = 'INSERT' THEN
     booContinue := true;
   ELSIF TG_OP = 'UPDATE' THEN
-    IF NEW.institution_ref != OLD.institution_ref OR NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
+    IF NEW.institution_ref IS DISTINCT FROM OLD.institution_ref OR NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
       booContinue := true;
     END IF;
   END IF;
@@ -3317,7 +3317,7 @@ language plpgsql
 AS
 $$
 BEGIN
-  IF NEW.institution_ref != OLD.institution_ref THEN
+  IF NEW.institution_ref IS DISTINCT FROM OLD.institution_ref THEN
     UPDATE collections
     SET institution_ref = NEW.institution_ref
     WHERE id != NEW.id
