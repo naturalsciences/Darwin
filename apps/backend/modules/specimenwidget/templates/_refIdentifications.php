@@ -53,7 +53,7 @@ function addIdentifierValue(people_ref,ref_table)
   </thead>   
     <?php $retainedKey = 0;?>
     <?php foreach($form['Identifications'] as $form_value):?>
-      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$retainedKey, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id, 'identification_id'=>$retainedKey));?>
+      <?php include_partial('specimen/spec_identifications', array('form' => $form_value, 'row_num'=>$retainedKey, 'module'=>$module, 'spec_id'=>$spec_id, 'individual_id'=>$individual_id, 'identification_id'=> $retainedKey));?>
       <?php $retainedKey = $retainedKey+1;?>
     <?php endforeach;?>
     <?php foreach($form['newIdentification'] as $form_value):?>

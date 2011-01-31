@@ -106,8 +106,8 @@ class specimenActions extends DarwinActions
   public function executeAddIdentifier(sfWebRequest $request)
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();     
- //  die("ref : ".$request->getParameter('people_ref')) ;
     $spec_form = $this->getSpecimenForm($request, false, 'spec_id');
+    $spec_form->loadEmbedIndentifications();
     $number = intval($request->getParameter('num'));
     $people_ref = intval($request->getParameter('people_ref')) ;
     $identifier_number = intval($request->getParameter('identifier_num'));
