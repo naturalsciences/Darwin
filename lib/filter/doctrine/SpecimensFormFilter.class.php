@@ -44,12 +44,12 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
 
   public function addCodeColumnQuery(Doctrine_Query $query, $field, $values)
   {
-    $alias = $query->getRootAlias();    
-    $query->leftJoin('SpecimensCodes cod')
-          ->andWhere("referenced_relation = ?", array('specimens'))
-          ->andWhere("cod.record_id = $alias.spec_ref") ;
     if ($values != "")
     {
+      $alias = $query->getRootAlias();    
+      $query->leftJoin($alias.'.SpecimensCodes cod')
+          ->andWhere("referenced_relation = ?", array('specimens'))
+          ->andWhere("cod.record_id = $alias.spec_ref");
       $this->addNamingColumnQuery($query, 'codes', 'full_code_indexed', $values , 'cod');
     }
     return $query;

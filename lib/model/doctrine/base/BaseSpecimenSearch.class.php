@@ -176,6 +176,7 @@
  * @property Taxonomy $HostTaxonParent
  * @property Specimens $HostSpecimen
  * @property Igs $Ig
+ * @property Doctrine_Collection $SpecimensCodes
  * 
  * @method integer             getSpecRef()                                       Returns the current record's "spec_ref" value
  * @method string              getCategory()                                      Returns the current record's "category" value
@@ -348,6 +349,7 @@
  * @method Taxonomy            getHostTaxonParent()                               Returns the current record's "HostTaxonParent" value
  * @method Specimens           getHostSpecimen()                                  Returns the current record's "HostSpecimen" value
  * @method Igs                 getIg()                                            Returns the current record's "Ig" value
+ * @method Doctrine_Collection getSpecimensCodes()                                Returns the current record's "SpecimensCodes" collection
  * @method SpecimenSearch      setSpecRef()                                       Sets the current record's "spec_ref" value
  * @method SpecimenSearch      setCategory()                                      Sets the current record's "category" value
  * @method SpecimenSearch      setCollectionRef()                                 Sets the current record's "collection_ref" value
@@ -519,6 +521,7 @@
  * @method SpecimenSearch      setHostTaxonParent()                               Sets the current record's "HostTaxonParent" value
  * @method SpecimenSearch      setHostSpecimen()                                  Sets the current record's "HostSpecimen" value
  * @method SpecimenSearch      setIg()                                            Sets the current record's "Ig" value
+ * @method SpecimenSearch      setSpecimensCodes()                                Sets the current record's "SpecimensCodes" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -1137,5 +1140,9 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
         $this->hasOne('Igs as Ig', array(
              'local' => 'ig_ref',
              'foreign' => 'id'));
+
+        $this->hasMany('SpecimensCodes', array(
+             'local' => 'spec_ref',
+             'foreign' => 'record_id'));
     }
 }
