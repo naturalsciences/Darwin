@@ -239,7 +239,7 @@ class partsActions extends DarwinActions
         try
         {
           $this->form->save();
-          return $this->redirect('parts/edit?id='.$this->form->getObject()->getRecordId()); //Only true if no other maintenance than parts
+          return $this->renderText('ok');
         }
         catch(Doctrine_Exception $ne)
         {

@@ -14,7 +14,7 @@
     <?php foreach($maintenances as $maintenance):?>
     <tr>
       <td>
-		<?php echo link_to($maintenance->getCategory(),'parts/editMaintenance?id='.$maintenance->getId(),array('popup'=>true)); ?>
+        <?php echo link_to($maintenance->getCategory(),'parts/editMaintenance?id='.$maintenance->getId(),array('class'=>"link_catalogue",'title'=> __('Edit Maintenance'))); ?>
       </td>
       <td><?php echo $maintenance->getActionObservation();?></td>
       <td class="datesNum"><?php echo $maintenance->getModificationDateTimeMasked(ESC_RAW);?></td>
