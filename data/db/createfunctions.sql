@@ -1070,6 +1070,65 @@ $$
 		END::real;
 $$;
 
+/*
+** fct_cpy_volume_conversion
+** Convert volume into unified version (m³ - cube meter)
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_volume_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
+language SQL STABLE
+AS
+$$
+  SELECT  CASE
+      WHEN $2 = 'l' THEN
+        ($1)*10^(-3)
+      WHEN $2 = 'cm³' OR $2 = 'ml' THEN
+        ($1)*10^(-6)
+      WHEN $2 = 'mm³' OR $2 = 'µl' THEN
+        ($1)*10^(-9)
+      WHEN $2 = 'µm³' THEN
+        ($1)*10^(-18)
+      WHEN $2 = 'km³' THEN
+        ($1)*10^(9)
+      WHEN $2 = 'Ml' THEN
+        ($1)*10^(3)
+      WHEN $2 = 'hl' THEN
+        ($1)*10
+      ELSE
+        $1
+    END::real;
+$$;
+
+/*
+** fct_cpy_weight_conversion
+** Convert weight into unified version (g - gram)
+*/
+CREATE OR REPLACE FUNCTION fct_cpy_weight_conversion (IN property real, IN property_unit catalogue_properties.property_unit%TYPE) RETURNS real
+language SQL STABLE
+AS
+$$
+  SELECT  CASE
+      WHEN $2 = 'hg' THEN
+        ($1)*10^(2)
+      WHEN $2 = 'kg' THEN
+        ($1)*10^(3)
+      WHEN $2 = 'Mg' OR $2 = 'ton' THEN
+        ($1)*10^(6)
+      WHEN $2 = 'dg' THEN
+        ($1)*10^(-1)
+      WHEN $2 = 'cg' THEN
+        ($1)*10^(-2)
+      WHEN $2 = 'mg' THEN
+        ($1)*10^(-3)
+      WHEN $2 = 'lb' OR $2 = 'lbs' OR $2 = 'pound' THEN
+        ($1)*453.59237
+      WHEN $2 = 'ounce' THEN
+        ($1)*28.349523125
+      WHEN $2 = 'grain' THEN
+        ($1)*6.479891*10^(-2)
+      ELSE
+        $1
+    END::real;
+$$;
 
 /*
 ** convert_to_unified
@@ -1086,6 +1145,14 @@ BEGIN
 
     IF property_type = 'speed' THEN
         RETURN fct_cpy_speed_conversion(property::real, property_unit)::text;
+    END IF;
+
+    IF property_type = 'weight' THEN
+        RETURN fct_cpy_weight_conversion(property::real, property_unit)::text;
+    END IF;
+
+    IF property_type = 'volume' THEN
+        RETURN fct_cpy_volume_conversion(property::real, property_unit)::text;
     END IF;
 
     IF property_type = 'temperature' AND property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
@@ -1117,7 +1184,7 @@ BEGIN
         SELECT * INTO property_line FROM  catalogue_properties WHERE id=NEW.property_ref;
         NEW.property_value_unified := convert_to_unified(NEW.property_value,  property_line.property_unit, property_line.property_sub_type_indexed);
         NEW.property_accuracy_unified := convert_to_unified(NEW.property_accuracy::varchar,  property_line.property_accuracy_unit, property_line.property_sub_type_indexed)::real;
-    ELSE
+    ELSIF TG_OP = 'UPDATE' THEN
         UPDATE properties_values SET
             property_value_unified = convert_to_unified(property_value, NEW.property_unit, NEW.property_sub_type_indexed),
             property_accuracy_unified = convert_to_unified(property_accuracy::varchar,  NEW.property_accuracy_unit, NEW.property_sub_type_indexed)::real
