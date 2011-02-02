@@ -6,31 +6,31 @@
     <body>
       <trans-unit id="1091">
         <source>The author(s) who published the full name</source>
-        <target></target>
+        <target>L'auteur qui a publié le nom complet</target>
       </trans-unit>
       <trans-unit id="1092">
         <source>Author name and year, used in mineralogy or bacterology</source>
-        <target></target>
+        <target>Le nom de l'auteur et l'année, utilisé en minéralogie ou bactériologie</target>
       </trans-unit>
       <trans-unit id="1093">
         <source>The first person(s) who validly published a species</source>
-        <target></target>
+        <target>La(les) première(s) personne(s) à avoir validement publiée(s) une espèce</target>
       </trans-unit>
       <trans-unit id="1094">
         <source>Author team of the basionym of a combination</source>
-        <target></target>
+        <target>L'équipe d'auteur du basionyme d'une combinaison</target>
       </trans-unit>
       <trans-unit id="1095">
         <source>The original author when a species was transferred to another genus and the year of the original publication</source>
-        <target></target>
+        <target>L'auteur original lorsqu'une espèce a été transformée par un autre gène et l'année de la publication originale</target>
       </trans-unit>
       <trans-unit id="1096">
         <source>The citation of the authors responsible for the new combination and the year of its publication</source>
-        <target></target>
+        <target>La citation des auteurs responsables de la nouvelle combinaison et l'année de cette publication</target>
       </trans-unit>
       <trans-unit id="1097">
         <source>Genus or higher taxon name, used in each domain</source>
-        <target></target>
+        <target>Genres ou nom taxonomique supérieure, utilisé dans chaque domaine</target>
       </trans-unit>
       <trans-unit id="1098">
         <source>Flag indicating that this is a  hybrid ("x") or a  chimaera ("+")</source>
@@ -38,31 +38,31 @@
       </trans-unit>
       <trans-unit id="1099">
         <source>Valid name</source>
-        <target></target>
+        <target>Nom valide</target>
       </trans-unit>
       <trans-unit id="1100">
         <source>Used for cultivated plant name elements</source>
-        <target></target>
+        <target>Utilisé pour le nom élémentaire des plantes cultivées</target>
       </trans-unit>
       <trans-unit id="1101">
         <source>Author team and Year of the basionym of a species or subspecies</source>
-        <target></target>
+        <target>Equipe d'auteurs et année du basionyme des espèces et sous-espèces</target>
       </trans-unit>
       <trans-unit id="1102">
         <source>Species name, used in zoology or bacteriology</source>
-        <target></target>
+        <target>Nom d'espèce, utilisé en zoologie ou bactériologie</target>
       </trans-unit>
       <trans-unit id="1103">
         <source>Subgenus name, used in zoology or bacteriology</source>
-        <target></target>
+        <target>Nom de sous-genre, utilisé en zoologie ou bactériologie</target>
       </trans-unit>
       <trans-unit id="1104">
         <source>Used to indicate the author and year</source>
-        <target></target>
+        <target>Utilisé pour indiquer l'auteur et l'année</target>
       </trans-unit>
       <trans-unit id="1105">
         <source>Subspecies name, used in zoology or bacteriology</source>
-        <target></target>
+        <target>Nom des sous-espèces, utilisé en zoologie ou bactériologie</target>
       </trans-unit>
       <trans-unit id="1106">
         <source>A formal category for cultivars , individual plants or assemblages of plants on the basis of defined similarity</source>
