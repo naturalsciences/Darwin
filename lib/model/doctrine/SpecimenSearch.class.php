@@ -41,6 +41,13 @@ class SpecimenSearch extends BaseSpecimenSearch
       return $str;
     }
 
+  public function getAcquisitionDateMasked ()
+  {
+    $dateTime = new FuzzyDateTime($this->_get('acquisition_date'), $this->_get('acquisition_date_mask'));
+    return $dateTime->getDateMasked();
+  }
+
+
   public function getAggregatedName($sep = ' / ')
   {
     $items = array(
@@ -54,7 +61,8 @@ class SpecimenSearch extends BaseSpecimenSearch
 
     $items = array_filter($items);
     return implode($sep, $items);
-  }  
+  } 
+
   /* function witch check if there at least 1 common name for a specific specimen */
   public function checkCommonNameForSpecimen($common_name,$spec) 
   {
@@ -65,5 +73,6 @@ class SpecimenSearch extends BaseSpecimenSearch
     if(Individualsearch::checkIfCommonName($spec->getLithologyRef(), $common_name['lithology'])) $bool = true ;
     if(Individualsearch::checkIfCommonName($spec->getMineralRef(), $common_name['mineralogy'])) $bool = true ;   
     return $bool ;             
-  }   
+  }
+
 }

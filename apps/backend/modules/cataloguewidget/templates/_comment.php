@@ -1,3 +1,4 @@
+<?php use_helper('Text');?>
 <table class="catalogue_table">
   <thead>
     <tr>
@@ -16,7 +17,7 @@
       </a>
     </td>
     <td>
-      <?php echo $comment->getComment();?>
+      <?php echo auto_link_text( nl2br( $comment->getComment() ));?>
     </td>
     <td class="widget_row_delete">   
       <a class="widget_row_delete" href="<?php echo url_for('catalogue/deleteRelated?table=comments&id='.$comment->getId());?>" title="<?php echo __('Delete Comment') ?>"><?php echo image_tag('remove.png'); ?>
