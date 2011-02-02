@@ -1,3 +1,4 @@
+<?php use_helper('Text');?>
 <table class="catalogue_table_view">
   <thead>
     <tr>
@@ -13,7 +14,7 @@
       <?php echo $comment->getNotionConcerned();?>
     </td>
     <td>
-      <?php echo $comment->getComment();?>
+      <?php echo auto_link_text( nl2br( $comment->getComment() ));?>
     </td>
   </tr>
   <?php endforeach;?>
