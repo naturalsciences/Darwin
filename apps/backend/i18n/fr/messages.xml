@@ -760,7 +760,7 @@
       <trans-unit id="365">
         <source>New I.G.</source> <target>Nouvel I.G. :</target> </trans-unit>
       <trans-unit id="366">
-        <source>Duplicate I.G.</source> <target>Dupliquer I.G. </target> </trans-unit>
+        <source>Duplicate I.G.</source> <target>Dupliquer I.G.</target> </trans-unit>
       <trans-unit id="367">
         <source>Search IG Number</source> <target>Rechercher numéro I.G.</target> </trans-unit>
       <trans-unit id="368">
@@ -2532,7 +2532,15 @@
       <trans-unit id="1090">
         <source>This word already exists</source>
         <target>Ce mot existe déjà</target>
-      </trans-unit>      
+      </trans-unit>     
+      <trans-unit id="1091">
+        <source>No Expedition or Igs Matching</source>
+        <target>Aucune expeditions ou numéro d'IG correspondant</target>
+      </trans-unit>  
+      <trans-unit id="1092">
+        <source>Use this search if you look for an I.G Number via an Expedition, or if you look for an expedition via an I.G Number</source>
+        <target>Utilisez ce menu si vous recherchez un numéro I.G via une expédition, ou si vous recherchez une expédition via un numéro I.G</target>
+      </trans-unit>             
     </body>
   </file>
 </xliff>

@@ -2195,7 +2195,14 @@
         <source>This associated multimedia already exists</source> <target>De geassocieerde multimedia bestaat reeds</target> </trans-unit>
       <trans-unit id="1090" approved="yes">
         <source>This word already exists</source> <target>Dit woord bestaat reeds</target> </trans-unit>
-      
+      <trans-unit id="1091">
+        <source>No Expedition or Igs Matching</source>
+        <target>Geen Expedities of Igs gevonden</target>
+      </trans-unit>  
+      <trans-unit id="1092">
+        <source>Use this search if you look for an I.G Number via an Expedition, or if you look for an expedition via an I.G Number</source>
+        <target>Gebruik deze opzoeking indien je een IG nummer via een Expeditie zoekt, of een Expeditie via een IG nummer</target>
+      </trans-unit>       
     </body>
   </file>
 </xliff>
