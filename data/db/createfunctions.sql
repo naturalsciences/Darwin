@@ -1868,55 +1868,20 @@ BEGIN
       WHERE expedition_ref = NEW.id;
     END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'collections' THEN
-    UPDATE darwin_flat
-    SET (collection_type, collection_code, collection_name, collection_is_public,
-         collection_institution_ref, collection_institution_formated_name, collection_institution_formated_name_ts,
-         collection_institution_formated_name_indexed, collection_institution_sub_type, collection_main_manager_ref,
-         collection_main_manager_formated_name, collection_main_manager_formated_name_ts, collection_main_manager_formated_name_indexed,
-         collection_parent_ref, collection_path
-        ) =
-        (NEW.collection_type, NEW.code, NEW.name, NEW.is_public,
-         NEW.institution_ref, subq.ins_formated_name, subq.ins_formated_name_ts,
-         subq.ins_formated_name_indexed, subq.ins_sub_type, NEW.main_manager_ref,
-         subq.peo_formated_name, subq.peo_formated_name_ts, subq.peo_formated_name_indexed,
-         NEW.parent_ref, NEW.path
-        )
-        FROM
-        (SELECT ins.formated_name as ins_formated_name, ins.formated_name_ts as ins_formated_name_ts,
-                ins.formated_name_indexed as ins_formated_name_indexed, ins.sub_type as ins_sub_type,
-                peo.formated_name as peo_formated_name, peo.formated_name_ts as peo_formated_name_ts,
-                peo.formated_name_indexed as peo_formated_name_indexed
-         FROM people ins, users peo
-         WHERE ins.id = NEW.institution_ref
-           AND peo.id = NEW.main_manager_ref
-         LIMIT 1
-        ) subq
-    WHERE collection_ref = NEW.id;
-  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'people' THEN
-    IF NOT NEW.is_physical THEN
-      IF NEW.is_physical IS DISTINCT FROM OLD.is_physical 
-      OR NEW.formated_name_indexed IS DISTINCT FROM OLD.formated_name_indexed 
-      OR NEW.sub_type IS DISTINCT FROM OLD.sub_type
-      THEN
-        UPDATE darwin_flat
-        SET (collection_institution_formated_name,
-             collection_institution_formated_name_ts,
-             collection_institution_formated_name_indexed,
-             collection_institution_sub_type
-            ) =
-            (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed, NEW.sub_type)
-        WHERE collection_institution_ref = NEW.id;
-      END IF;
-    END IF;
-  ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'users' THEN
-    IF NEW.formated_name_indexed IS DISTINCT FROM OLD.formated_name_indexed THEN
+    IF OLD.collection_type IS DISTINCT FROM NEW.collection_type
+    OR OLD.code IS DISTINCT FROM NEW.code
+    OR OLD.name IS DISTINCT FROM NEW.name
+    OR OLD.is_public IS DISTINCT FROM NEW.is_public
+    OR OLD.path IS DISTINCT FROM NEW.path
+    THEN
       UPDATE darwin_flat
-      SET (collection_main_manager_formated_name,
-           collection_main_manager_formated_name_ts,
-           collection_main_manager_formated_name_indexed
+      SET (collection_type, collection_code, collection_name, collection_is_public,
+          collection_parent_ref, collection_path
           ) =
-          (NEW.formated_name, NEW.formated_name_ts, NEW.formated_name_indexed)
-      WHERE collection_main_manager_ref = NEW.id;
+          (NEW.collection_type, NEW.code, NEW.name, NEW.is_public,
+          NEW.parent_ref, NEW.path
+          )
+      WHERE collection_ref = NEW.id;
     END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'gtu' THEN
     UPDATE darwin_flat
@@ -2049,10 +2014,6 @@ BEGIN
     UPDATE darwin_flat
     SET (category,
          collection_ref,collection_type,collection_code,collection_name, collection_is_public,
-         collection_institution_ref,collection_institution_formated_name,
-         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-         collection_main_manager_ref,collection_main_manager_formated_name,
-         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
          collection_parent_ref,collection_path,
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2079,10 +2040,6 @@ BEGIN
         )=
         (NEW.category,
          NEW.collection_ref, subq.coll_collection_type, subq.coll_code, subq.coll_name, subq.coll_is_public,
-         subq.coll_institution_ref, subq.ins_formated_name,
-         subq.ins_formated_name_ts, subq.ins_formated_name_indexed, subq.ins_sub_type,
-         subq.coll_main_manager_ref, subq.peo_formated_name,
-         subq.peo_formated_name_ts, subq.peo_formated_name_indexed,
          subq.coll_parent_ref, subq.coll_path,
          NEW.expedition_ref, subq.expe_name, subq.expe_name_ts, subq.expe_name_indexed,
          NEW.station_visible, NEW.gtu_ref, subq.gtu_code, subq.gtu_parent_ref, subq.gtu_path, subq.gtu_location,
@@ -2115,10 +2072,6 @@ BEGIN
         )
         FROM
         (SELECT coll.collection_type coll_collection_type, coll.code coll_code, coll.name coll_name, coll.is_public coll_is_public,
-                coll.institution_ref coll_institution_ref, ins.formated_name ins_formated_name,
-                ins.formated_name_ts ins_formated_name_ts, ins.formated_name_indexed ins_formated_name_indexed, ins.sub_type ins_sub_type,
-                coll.main_manager_ref coll_main_manager_ref, peo.formated_name peo_formated_name,
-                peo.formated_name_ts peo_formated_name_ts, peo.formated_name_indexed peo_formated_name_indexed,
                 coll.parent_ref coll_parent_ref, coll.path coll_path,
                 expe.name expe_name, expe.name_ts expe_name_ts, expe.name_indexed expe_name_indexed,
                 gtu.code gtu_code, gtu.parent_ref gtu_parent_ref, gtu.path gtu_path,gtu.location gtu_location,
@@ -2146,9 +2099,7 @@ BEGIN
                 host_taxon.name host_taxon_name, host_taxon.name_indexed host_taxon_name_indexed, host_taxon.name_order_by host_taxon_name_order_by,
                 host_taxon.level_ref host_taxon_level_ref, host_taxon_level.level_name host_taxon_level_level_name, host_taxon.status host_taxon_status,
                 host_taxon.path host_taxon_path, host_taxon.parent_ref host_taxon_parent_ref, host_taxon.extinct host_taxon_extinct
-         FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
-                                INNER JOIN users peo ON coll.main_manager_ref = peo.id
-              ),
+         FROM collections coll,
               expeditions expe,
               (gtu LEFT JOIN tag_groups taggr ON gtu.id = taggr.gtu_ref AND taggr.group_name_indexed = 'administrativearea' AND taggr.sub_group_name_indexed = 'country'),
               (taxonomy taxon INNER JOIN catalogue_levels taxon_level ON taxon.level_ref = taxon_level.id),
@@ -2173,10 +2124,6 @@ BEGIN
     INSERT INTO darwin_flat
     (spec_ref,category,
      collection_ref,collection_type,collection_code,collection_name, collection_is_public,
-     collection_institution_ref,collection_institution_formated_name,
-     collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-     collection_main_manager_ref,collection_main_manager_formated_name,
-     collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
      collection_parent_ref,collection_path,
      expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
      station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2203,10 +2150,6 @@ BEGIN
     )
     (SELECT NEW.id, NEW.category,
             NEW.collection_ref, coll.collection_type, coll.code, coll.name, coll.is_public,
-            coll.institution_ref, ins.formated_name,
-            ins.formated_name_ts, ins.formated_name_indexed, ins.sub_type,
-            coll.main_manager_ref, peo.formated_name,
-            peo.formated_name_ts, peo.formated_name_indexed,
             coll.parent_ref, coll.path,
             NEW.expedition_ref, expe.name, expe.name_ts, expe.name_indexed,
             NEW.station_visible, NEW.gtu_ref, gtu.code, gtu.parent_ref, gtu.path, gtu.location,
@@ -2230,9 +2173,7 @@ BEGIN
             host_taxon.path, host_taxon.parent_ref, host_taxon.extinct,
             NEW.host_specimen_ref,
             NEW.acquisition_category, NEW.acquisition_date_mask, NEW.acquisition_date
-     FROM (collections coll INNER JOIN people ins ON coll.institution_ref = ins.id
-                            INNER JOIN users peo ON coll.main_manager_ref = peo.id
-          ),
+     FROM collections coll,
           expeditions expe,
           (gtu LEFT JOIN tag_groups taggr ON gtu.id = taggr.gtu_ref AND taggr.group_name_indexed = 'administrativearea' AND taggr.sub_group_name_indexed = 'country'),
           (taxonomy taxon INNER JOIN catalogue_levels taxon_level ON taxon.level_ref = taxon_level.id),
@@ -2312,10 +2253,6 @@ BEGIN
         INSERT INTO darwin_flat
         (spec_ref,category,
          collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-         collection_institution_ref,collection_institution_formated_name,
-         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-         collection_main_manager_ref,collection_main_manager_formated_name,
-         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
          collection_parent_ref,collection_path,
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2350,10 +2287,6 @@ BEGIN
         (SELECT
          spec_ref,category,
          collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-         collection_institution_ref,collection_institution_formated_name,
-         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-         collection_main_manager_ref,collection_main_manager_formated_name,
-         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
          collection_parent_ref,collection_path,
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2416,10 +2349,6 @@ BEGIN
           INSERT INTO darwin_flat
           ( spec_ref,category,
             collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-            collection_institution_ref,collection_institution_formated_name,
-            collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-            collection_main_manager_ref,collection_main_manager_formated_name,
-            collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
             collection_parent_ref,collection_path,
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2448,10 +2377,6 @@ BEGIN
           (SELECT
             spec_ref,category,
             collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-            collection_institution_ref,collection_institution_formated_name,
-            collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-            collection_main_manager_ref,collection_main_manager_formated_name,
-            collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
             collection_parent_ref,collection_path,
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2485,10 +2410,6 @@ BEGIN
         UPDATE darwin_flat
         SET ( spec_ref,category,
               collection_ref,collection_type,collection_code,collection_name, collection_is_public,
-              collection_institution_ref,collection_institution_formated_name,
-              collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-              collection_main_manager_ref,collection_main_manager_formated_name,
-              collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
               collection_parent_ref,collection_path,
               expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
               station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2516,10 +2437,6 @@ BEGIN
             )=
             ( subq.spec_ref,subq.category,
               subq.collection_ref,subq.collection_type,subq.collection_code,subq.collection_name,subq. collection_is_public,
-              subq.collection_institution_ref,subq.collection_institution_formated_name,
-              subq.collection_institution_formated_name_ts,subq.collection_institution_formated_name_indexed,subq.collection_institution_sub_type,
-              subq.collection_main_manager_ref,subq.collection_main_manager_formated_name,
-              subq.collection_main_manager_formated_name_ts,subq.collection_main_manager_formated_name_indexed,
               subq.collection_parent_ref,subq.collection_path,
               subq.expedition_ref,subq.expedition_name,subq.expedition_name_ts,subq.expedition_name_indexed,
               subq.station_visible,subq.gtu_ref,subq.gtu_code,subq.gtu_parent_ref,subq.gtu_path,subq.gtu_location,
@@ -2549,10 +2466,6 @@ BEGIN
           ( SELECT
             spec_ref,category,
             collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-            collection_institution_ref,collection_institution_formated_name,
-            collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-            collection_main_manager_ref,collection_main_manager_formated_name,
-            collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
             collection_parent_ref,collection_path,
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2638,10 +2551,6 @@ BEGIN
         INSERT INTO darwin_flat
         (spec_ref,category,
          collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-         collection_institution_ref,collection_institution_formated_name,
-         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-         collection_main_manager_ref,collection_main_manager_formated_name,
-         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
          collection_parent_ref,collection_path,
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2683,10 +2592,6 @@ BEGIN
         (SELECT
          spec_ref,category,
          collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-         collection_institution_ref,collection_institution_formated_name,
-         collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-         collection_main_manager_ref,collection_main_manager_formated_name,
-         collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
          collection_parent_ref,collection_path,
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2757,10 +2662,6 @@ BEGIN
           INSERT INTO darwin_flat
           ( spec_ref,category,
             collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-            collection_institution_ref,collection_institution_formated_name,
-            collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-            collection_main_manager_ref,collection_main_manager_formated_name,
-            collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
             collection_parent_ref,collection_path,
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2795,10 +2696,6 @@ BEGIN
           (SELECT
             spec_ref,category,
             collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-            collection_institution_ref,collection_institution_formated_name,
-            collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-            collection_main_manager_ref,collection_main_manager_formated_name,
-            collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
             collection_parent_ref,collection_path,
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2838,10 +2735,6 @@ BEGIN
         UPDATE darwin_flat
         SET ( spec_ref,category,
               collection_ref,collection_type,collection_code,collection_name, collection_is_public,
-              collection_institution_ref,collection_institution_formated_name,
-              collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-              collection_main_manager_ref,collection_main_manager_formated_name,
-              collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
               collection_parent_ref,collection_path,
               expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
               station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
@@ -2875,10 +2768,6 @@ BEGIN
             )=
             ( subq.spec_ref,subq.category,
               subq.collection_ref,subq.collection_type,subq.collection_code,subq.collection_name,subq. collection_is_public,
-              subq.collection_institution_ref,subq.collection_institution_formated_name,
-              subq.collection_institution_formated_name_ts,subq.collection_institution_formated_name_indexed,subq.collection_institution_sub_type,
-              subq.collection_main_manager_ref,subq.collection_main_manager_formated_name,
-              subq.collection_main_manager_formated_name_ts,subq.collection_main_manager_formated_name_indexed,
               subq.collection_parent_ref,subq.collection_path,
               subq.expedition_ref,subq.expedition_name,subq.expedition_name_ts,subq.expedition_name_indexed,
               subq.station_visible,subq.gtu_ref,subq.gtu_code,subq.gtu_parent_ref,subq.gtu_path,subq.gtu_location,
@@ -2914,10 +2803,6 @@ BEGIN
           ( SELECT
             spec_ref,category,
             collection_ref,collection_type,collection_code,collection_name,collection_is_public,
-            collection_institution_ref,collection_institution_formated_name,
-            collection_institution_formated_name_ts,collection_institution_formated_name_indexed,collection_institution_sub_type,
-            collection_main_manager_ref,collection_main_manager_formated_name,
-            collection_main_manager_formated_name_ts,collection_main_manager_formated_name_indexed,
             collection_parent_ref,collection_path,
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
