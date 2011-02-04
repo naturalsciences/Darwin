@@ -107,8 +107,10 @@ class searchActions extends DarwinActions
     $this->forward404Unless($this->specimen);
     if(!$this->specimen->getCollectionIsPublic()) $this->forwardToSecureAction();
     
-    $this->institute = Doctrine::getTable('People')->findOneById($this->specimen->getCollectionInstitutionRef()) ;
-    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($this->specimen->getCollectionMainManagerRef());      
+    $collection = Doctrine::getTable('Collections')->findOneById($this->specimen->getCollectionRef());
+    $this->institute = Doctrine::getTable('People')->findOneById($collection->getInstitutionRef()) ;
+    $this->col_manager = Doctrine::getTable('Users')->find($collection->getMainManagerRef()) ;
+    $this->manager = Doctrine::getTable('UsersComm')->fetchByUser($collection->getMainManagerRef());      
     $ids = $this->FecthIdForCommonNames() ;
     $this->common_names = Doctrine::getTable('ClassVernacularNames')->findAllCommonNames($ids) ;    
     

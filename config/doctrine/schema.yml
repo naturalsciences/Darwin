@@ -914,15 +914,6 @@ SpecimenSearch:
         collection_code: { type: string}
         collection_name: { type: string}
         collection_is_public: {type: boolean, notnull: true, default: true}
-        collection_institution_ref: { type: integer, notnull: true, default:0}
-        collection_institution_formated_name: { type: string}
-        collection_institution_formated_name_ts: { type: string}
-        collection_institution_formated_name_indexed: { type: string}
-        collection_institution_sub_type: { type: string}
-        collection_main_manager_ref: { type: integer, notnull: true, default:0}
-        collection_main_manager_formated_name: { type: string}
-        collection_main_manager_formated_name_ts: { type: string}
-        collection_main_manager_formated_name_indexed: { type: string}
         collection_parent_ref: { type: integer, default:0}
         collection_path: { type: string}
         expedition_ref: { type: integer, notnull: true, default:0}
@@ -1065,14 +1056,6 @@ SpecimenSearch:
             class: Collections
             local: collection_ref
             foreign: id
-        CollectionInstitution:
-            class: Institutions
-            local: collection_institution_ref
-            foreign: id
-        CollectionMainManager:
-            class: Users
-            local: collection_main_manager_ref
-            foreign: id
         CollectionParent:
             local: collection_parent_ref
             foreign: id
@@ -1175,15 +1158,6 @@ IndividualSearch:
         collection_code: { type: string}
         collection_name: { type: string}
         collection_is_public: {type: boolean, notnull: true, default: true}
-        collection_institution_ref: { type: integer, notnull: true, default:0}
-        collection_institution_formated_name: { type: string}
-        collection_institution_formated_name_ts: { type: string}
-        collection_institution_formated_name_indexed: { type: string}
-        collection_institution_sub_type: { type: string}
-        collection_main_manager_ref: { type: integer, notnull: true, default:0}
-        collection_main_manager_formated_name: { type: string}
-        collection_main_manager_formated_name_ts: { type: string}
-        collection_main_manager_formated_name_indexed: { type: string}
         collection_parent_ref: { type: integer, default:0}
         collection_path: { type: string}
         expedition_ref: { type: integer, notnull: true, default:0}
@@ -1326,14 +1300,6 @@ IndividualSearch:
             class: Collections
             local: collection_ref
             foreign: id
-        CollectionInstitution:
-            class: Institutions
-            local: collection_institution_ref
-            foreign: id
-        CollectionMainManager:
-            class: Users
-            local: collection_main_manager_ref
-            foreign: id
         CollectionParent:
             local: collection_parent_ref
             foreign: id
@@ -1437,15 +1403,6 @@ PartSearch:
         collection_code: { type: string}
         collection_name: { type: string}
         collection_is_public: {type: boolean, notnull: true, default: true}
-        collection_institution_ref: { type: integer, notnull: true, default:0}
-        collection_institution_formated_name: { type: string}
-        collection_institution_formated_name_ts: { type: string}
-        collection_institution_formated_name_indexed: { type: string}
-        collection_institution_sub_type: { type: string}
-        collection_main_manager_ref: { type: integer, notnull: true, default:0}
-        collection_main_manager_formated_name: { type: string}
-        collection_main_manager_formated_name_ts: { type: string}
-        collection_main_manager_formated_name_indexed: { type: string}
         collection_parent_ref: { type: integer, default:0}
         collection_path: { type: string}
         expedition_ref: { type: integer, notnull: true, default:0}
@@ -1587,14 +1544,6 @@ PartSearch:
         Collection:
             class: Collections
             local: collection_ref
-            foreign: id
-        CollectionInstitution:
-            class: Institutions
-            local: collection_institution_ref
-            foreign: id
-        CollectionMainManager:
-            class: Users
-            local: collection_main_manager_ref
             foreign: id
         CollectionParent:
             local: collection_parent_ref

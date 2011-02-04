@@ -13,15 +13,6 @@
  * @property string $collection_code
  * @property string $collection_name
  * @property boolean $collection_is_public
- * @property integer $collection_institution_ref
- * @property string $collection_institution_formated_name
- * @property string $collection_institution_formated_name_ts
- * @property string $collection_institution_formated_name_indexed
- * @property string $collection_institution_sub_type
- * @property integer $collection_main_manager_ref
- * @property string $collection_main_manager_formated_name
- * @property string $collection_main_manager_formated_name_ts
- * @property string $collection_main_manager_formated_name_indexed
  * @property integer $collection_parent_ref
  * @property string $collection_path
  * @property integer $expedition_ref
@@ -151,8 +142,6 @@
  * @property SpecimenIndividuals $SpecimenIndividual
  * @property SpecimenParts $PartRelation
  * @property Collections $Collection
- * @property Institutions $CollectionInstitution
- * @property Users $CollectionMainManager
  * @property Collections $CollectionParent
  * @property Expeditions $Expedition
  * @property Gtu $Gtu
@@ -178,350 +167,328 @@
  * @property Specimens $HostSpecimen
  * @property Igs $Ig
  * 
- * @method integer             getId()                                            Returns the current record's "id" value
- * @method integer             getSpecRef()                                       Returns the current record's "spec_ref" value
- * @method string              getCategory()                                      Returns the current record's "category" value
- * @method integer             getCollectionRef()                                 Returns the current record's "collection_ref" value
- * @method string              getCollectionType()                                Returns the current record's "collection_type" value
- * @method string              getCollectionCode()                                Returns the current record's "collection_code" value
- * @method string              getCollectionName()                                Returns the current record's "collection_name" value
- * @method boolean             getCollectionIsPublic()                            Returns the current record's "collection_is_public" value
- * @method integer             getCollectionInstitutionRef()                      Returns the current record's "collection_institution_ref" value
- * @method string              getCollectionInstitutionFormatedName()             Returns the current record's "collection_institution_formated_name" value
- * @method string              getCollectionInstitutionFormatedNameTs()           Returns the current record's "collection_institution_formated_name_ts" value
- * @method string              getCollectionInstitutionFormatedNameIndexed()      Returns the current record's "collection_institution_formated_name_indexed" value
- * @method string              getCollectionInstitutionSubType()                  Returns the current record's "collection_institution_sub_type" value
- * @method integer             getCollectionMainManagerRef()                      Returns the current record's "collection_main_manager_ref" value
- * @method string              getCollectionMainManagerFormatedName()             Returns the current record's "collection_main_manager_formated_name" value
- * @method string              getCollectionMainManagerFormatedNameTs()           Returns the current record's "collection_main_manager_formated_name_ts" value
- * @method string              getCollectionMainManagerFormatedNameIndexed()      Returns the current record's "collection_main_manager_formated_name_indexed" value
- * @method integer             getCollectionParentRef()                           Returns the current record's "collection_parent_ref" value
- * @method string              getCollectionPath()                                Returns the current record's "collection_path" value
- * @method integer             getExpeditionRef()                                 Returns the current record's "expedition_ref" value
- * @method string              getExpeditionName()                                Returns the current record's "expedition_name" value
- * @method string              getExpeditionNameTs()                              Returns the current record's "expedition_name_ts" value
- * @method string              getExpeditionNameIndexed()                         Returns the current record's "expedition_name_indexed" value
- * @method boolean             getStationVisible()                                Returns the current record's "station_visible" value
- * @method integer             getGtuRef()                                        Returns the current record's "gtu_ref" value
- * @method string              getGtuCode()                                       Returns the current record's "gtu_code" value
- * @method integer             getGtuParentRef()                                  Returns the current record's "gtu_parent_ref" value
- * @method string              getGtuPath()                                       Returns the current record's "gtu_path" value
- * @method integer             getGtuFromDateMask()                               Returns the current record's "gtu_from_date_mask" value
- * @method string              getGtuFromDate()                                   Returns the current record's "gtu_from_date" value
- * @method integer             getGtuToDateMask()                                 Returns the current record's "gtu_to_date_mask" value
- * @method string              getGtuToDate()                                     Returns the current record's "gtu_to_date" value
- * @method string              getGtuTagValuesIndexed()                           Returns the current record's "gtu_tag_values_indexed" value
- * @method string              getGtuCountryTagValue()                            Returns the current record's "gtu_country_tag_value" value
- * @method string              getGtuLocation()                                   Returns the current record's "gtu_location" value
- * @method integer             getTaxonRef()                                      Returns the current record's "taxon_ref" value
- * @method string              getTaxonName()                                     Returns the current record's "taxon_name" value
- * @method string              getTaxonNameIndexed()                              Returns the current record's "taxon_name_indexed" value
- * @method string              getTaxonNameOrderBy()                              Returns the current record's "taxon_name_order_by" value
- * @method integer             getTaxonLevelRef()                                 Returns the current record's "taxon_level_ref" value
- * @method string              getTaxonLevelName()                                Returns the current record's "taxon_level_name" value
- * @method string              getTaxonStatus()                                   Returns the current record's "taxon_status" value
- * @method string              getTaxonPath()                                     Returns the current record's "taxon_path" value
- * @method integer             getTaxonParentRef()                                Returns the current record's "taxon_parent_ref" value
- * @method boolean             getTaxonExtinct()                                  Returns the current record's "taxon_extinct" value
- * @method integer             getLithoRef()                                      Returns the current record's "litho_ref" value
- * @method string              getLithoName()                                     Returns the current record's "litho_name" value
- * @method string              getLithoNameIndexed()                              Returns the current record's "litho_name_indexed" value
- * @method string              getLithoNameOrderBy()                              Returns the current record's "litho_name_order_by" value
- * @method integer             getLithoLevelRef()                                 Returns the current record's "litho_level_ref" value
- * @method string              getLithoLevelName()                                Returns the current record's "litho_level_name" value
- * @method string              getLithoStatus()                                   Returns the current record's "litho_status" value
- * @method boolean             getLithoLocal()                                    Returns the current record's "litho_local" value
- * @method string              getLithoColor()                                    Returns the current record's "litho_color" value
- * @method string              getLithoPath()                                     Returns the current record's "litho_path" value
- * @method integer             getLithoParentRef()                                Returns the current record's "litho_parent_ref" value
- * @method integer             getChronoRef()                                     Returns the current record's "chrono_ref" value
- * @method string              getChronoName()                                    Returns the current record's "chrono_name" value
- * @method string              getChronoNameIndexed()                             Returns the current record's "chrono_name_indexed" value
- * @method string              getChronoNameOrderBy()                             Returns the current record's "chrono_name_order_by" value
- * @method integer             getChronoLevelRef()                                Returns the current record's "chrono_level_ref" value
- * @method string              getChronoLevelName()                               Returns the current record's "chrono_level_name" value
- * @method string              getChronoStatus()                                  Returns the current record's "chrono_status" value
- * @method boolean             getChronoLocal()                                   Returns the current record's "chrono_local" value
- * @method string              getChronoColor()                                   Returns the current record's "chrono_color" value
- * @method string              getChronoPath()                                    Returns the current record's "chrono_path" value
- * @method integer             getChronoParentRef()                               Returns the current record's "chrono_parent_ref" value
- * @method integer             getLithologyRef()                                  Returns the current record's "lithology_ref" value
- * @method string              getLithologyName()                                 Returns the current record's "lithology_name" value
- * @method string              getLithologyNameIndexed()                          Returns the current record's "lithology_name_indexed" value
- * @method string              getLithologyNameOrderBy()                          Returns the current record's "lithology_name_order_by" value
- * @method integer             getLithologyLevelRef()                             Returns the current record's "lithology_level_ref" value
- * @method string              getLithologyLevelName()                            Returns the current record's "lithology_level_name" value
- * @method string              getLithologyStatus()                               Returns the current record's "lithology_status" value
- * @method boolean             getLithologyLocal()                                Returns the current record's "lithology_local" value
- * @method string              getLithologyColor()                                Returns the current record's "lithology_color" value
- * @method string              getLithologyPath()                                 Returns the current record's "lithology_path" value
- * @method integer             getLithologyParentRef()                            Returns the current record's "lithology_parent_ref" value
- * @method integer             getMineralRef()                                    Returns the current record's "mineral_ref" value
- * @method string              getMineralName()                                   Returns the current record's "mineral_name" value
- * @method string              getMineralNameIndexed()                            Returns the current record's "mineral_name_indexed" value
- * @method string              getMineralNameOrderBy()                            Returns the current record's "mineral_name_order_by" value
- * @method integer             getMineralLevelRef()                               Returns the current record's "mineral_level_ref" value
- * @method string              getMineralLevelName()                              Returns the current record's "mineral_level_name" value
- * @method string              getMineralStatus()                                 Returns the current record's "mineral_status" value
- * @method boolean             getMineralLocal()                                  Returns the current record's "mineral_local" value
- * @method string              getMineralColor()                                  Returns the current record's "mineral_color" value
- * @method string              getMineralPath()                                   Returns the current record's "mineral_path" value
- * @method integer             getMineralParentRef()                              Returns the current record's "mineral_parent_ref" value
- * @method integer             getHostTaxonRef()                                  Returns the current record's "host_taxon_ref" value
- * @method string              getHostRelationship()                              Returns the current record's "host_relationship" value
- * @method string              getHostTaxonName()                                 Returns the current record's "host_taxon_name" value
- * @method string              getHostTaxonNameIndexed()                          Returns the current record's "host_taxon_name_indexed" value
- * @method string              getHostTaxonNameOrderBy()                          Returns the current record's "host_taxon_name_order_by" value
- * @method integer             getHostTaxonLevelRef()                             Returns the current record's "host_taxon_level_ref" value
- * @method string              getHostTaxonLevelName()                            Returns the current record's "host_taxon_level_name" value
- * @method string              getHostTaxonStatus()                               Returns the current record's "host_taxon_status" value
- * @method string              getHostTaxonPath()                                 Returns the current record's "host_taxon_path" value
- * @method integer             getHostTaxonParentRef()                            Returns the current record's "host_taxon_parent_ref" value
- * @method boolean             getHostTaxonExtinct()                              Returns the current record's "host_taxon_extinct" value
- * @method integer             getHostSpecimenRef()                               Returns the current record's "host_specimen_ref" value
- * @method integer             getIgRef()                                         Returns the current record's "ig_ref" value
- * @method string              getIgNum()                                         Returns the current record's "ig_num" value
- * @method string              getIgNumIndexed()                                  Returns the current record's "ig_num_indexed" value
- * @method integer             getIgDateMask()                                    Returns the current record's "ig_date_mask" value
- * @method string              getIgDate()                                        Returns the current record's "ig_date" value
- * @method string              getAcquisitionCategory()                           Returns the current record's "acquisition_category" value
- * @method integer             getAcquisitionDateMask()                           Returns the current record's "acquisition_date_mask" value
- * @method string              getAcquisitionDate()                               Returns the current record's "acquisition_date" value
- * @method boolean             getWithTypes()                                     Returns the current record's "with_types" value
- * @method boolean             getWithIndividuals()                               Returns the current record's "with_individuals" value
- * @method integer             getIndividualRef()                                 Returns the current record's "individual_ref" value
- * @method string              getIndividualType()                                Returns the current record's "individual_type" value
- * @method string              getIndividualTypeGroup()                           Returns the current record's "individual_type_group" value
- * @method string              getIndividualTypeSearch()                          Returns the current record's "individual_type_search" value
- * @method string              getIndividualSex()                                 Returns the current record's "individual_sex" value
- * @method string              getIndividualState()                               Returns the current record's "individual_state" value
- * @method string              getIndividualStage()                               Returns the current record's "individual_stage" value
- * @method string              getIndividualSocialStatus()                        Returns the current record's "individual_social_status" value
- * @method string              getIndividualRockForm()                            Returns the current record's "individual_rock_form" value
- * @method integer             getIndividualCountMin()                            Returns the current record's "individual_count_min" value
- * @method integer             getIndividualCountMax()                            Returns the current record's "individual_count_max" value
- * @method boolean             getWithParts()                                     Returns the current record's "with_parts" value
- * @method integer             getPartRef()                                       Returns the current record's "part_ref" value
- * @method string              getPart()                                          Returns the current record's "part" value
- * @method string              getPartStatus()                                    Returns the current record's "part_status" value
- * @method string              getBuilding()                                      Returns the current record's "building" value
- * @method string              getFloor()                                         Returns the current record's "floor" value
- * @method string              getRoom()                                          Returns the current record's "room" value
- * @method string              getRow()                                           Returns the current record's "row" value
- * @method string              getShelf()                                         Returns the current record's "shelf" value
- * @method string              getContainerType()                                 Returns the current record's "container_type" value
- * @method string              getContainerStorage()                              Returns the current record's "container_storage" value
- * @method string              getContainer()                                     Returns the current record's "container" value
- * @method string              getSubContainerType()                              Returns the current record's "sub_container_type" value
- * @method string              getSubContainerStorage()                           Returns the current record's "sub_container_storage" value
- * @method string              getSubContainer()                                  Returns the current record's "sub_container" value
- * @method integer             getPartCountMin()                                  Returns the current record's "part_count_min" value
- * @method integer             getPartCountMax()                                  Returns the current record's "part_count_max" value
- * @method string              getSpecimenStatus()                                Returns the current record's "specimen_status" value
- * @method boolean             getComplete()                                      Returns the current record's "complete" value
- * @method boolean             getSurnumerary()                                   Returns the current record's "surnumerary" value
- * @method Specimens           getSpecimen()                                      Returns the current record's "Specimen" value
- * @method SpecimenIndividuals getSpecimenIndividual()                            Returns the current record's "SpecimenIndividual" value
- * @method SpecimenParts       getPartRelation()                                  Returns the current record's "PartRelation" value
- * @method Collections         getCollection()                                    Returns the current record's "Collection" value
- * @method Institutions        getCollectionInstitution()                         Returns the current record's "CollectionInstitution" value
- * @method Users               getCollectionMainManager()                         Returns the current record's "CollectionMainManager" value
- * @method Collections         getCollectionParent()                              Returns the current record's "CollectionParent" value
- * @method Expeditions         getExpedition()                                    Returns the current record's "Expedition" value
- * @method Gtu                 getGtu()                                           Returns the current record's "Gtu" value
- * @method Gtu                 getGtuParent()                                     Returns the current record's "GtuParent" value
- * @method Taxonomy            getTaxonomy()                                      Returns the current record's "Taxonomy" value
- * @method CatalogueLevels     getTaxonomyLevel()                                 Returns the current record's "TaxonomyLevel" value
- * @method Taxonomy            getTaxonomyParent()                                Returns the current record's "TaxonomyParent" value
- * @method Lithostratigraphy   getLithostratigraphy()                             Returns the current record's "Lithostratigraphy" value
- * @method CatalogueLevels     getLithostratigraphyLevel()                        Returns the current record's "LithostratigraphyLevel" value
- * @method Lithostratigraphy   getLithostratigraphyParent()                       Returns the current record's "LithostratigraphyParent" value
- * @method Chronostratigraphy  getChronostratigraphy()                            Returns the current record's "Chronostratigraphy" value
- * @method CatalogueLevels     getChronostratigraphyLevel()                       Returns the current record's "ChronostratigraphyLevel" value
- * @method Chronostratigraphy  getChronostratigraphyParent()                      Returns the current record's "ChronostratigraphyParent" value
- * @method Lithology           getLithology()                                     Returns the current record's "Lithology" value
- * @method CatalogueLevels     getLithologyLevel()                                Returns the current record's "LithologyLevel" value
- * @method Lithology           getLithologyParent()                               Returns the current record's "LithologyParent" value
- * @method Mineralogy          getMineralogy()                                    Returns the current record's "Mineralogy" value
- * @method CatalogueLevels     getMineralogyLevel()                               Returns the current record's "MineralogyLevel" value
- * @method Mineralogy          getMineralogyParent()                              Returns the current record's "MineralogyParent" value
- * @method Taxonomy            getHostTaxon()                                     Returns the current record's "HostTaxon" value
- * @method CatalogueLevels     getHostTaxonLevel()                                Returns the current record's "HostTaxonLevel" value
- * @method Taxonomy            getHostTaxonParent()                               Returns the current record's "HostTaxonParent" value
- * @method Specimens           getHostSpecimen()                                  Returns the current record's "HostSpecimen" value
- * @method Igs                 getIg()                                            Returns the current record's "Ig" value
- * @method PartSearch          setId()                                            Sets the current record's "id" value
- * @method PartSearch          setSpecRef()                                       Sets the current record's "spec_ref" value
- * @method PartSearch          setCategory()                                      Sets the current record's "category" value
- * @method PartSearch          setCollectionRef()                                 Sets the current record's "collection_ref" value
- * @method PartSearch          setCollectionType()                                Sets the current record's "collection_type" value
- * @method PartSearch          setCollectionCode()                                Sets the current record's "collection_code" value
- * @method PartSearch          setCollectionName()                                Sets the current record's "collection_name" value
- * @method PartSearch          setCollectionIsPublic()                            Sets the current record's "collection_is_public" value
- * @method PartSearch          setCollectionInstitutionRef()                      Sets the current record's "collection_institution_ref" value
- * @method PartSearch          setCollectionInstitutionFormatedName()             Sets the current record's "collection_institution_formated_name" value
- * @method PartSearch          setCollectionInstitutionFormatedNameTs()           Sets the current record's "collection_institution_formated_name_ts" value
- * @method PartSearch          setCollectionInstitutionFormatedNameIndexed()      Sets the current record's "collection_institution_formated_name_indexed" value
- * @method PartSearch          setCollectionInstitutionSubType()                  Sets the current record's "collection_institution_sub_type" value
- * @method PartSearch          setCollectionMainManagerRef()                      Sets the current record's "collection_main_manager_ref" value
- * @method PartSearch          setCollectionMainManagerFormatedName()             Sets the current record's "collection_main_manager_formated_name" value
- * @method PartSearch          setCollectionMainManagerFormatedNameTs()           Sets the current record's "collection_main_manager_formated_name_ts" value
- * @method PartSearch          setCollectionMainManagerFormatedNameIndexed()      Sets the current record's "collection_main_manager_formated_name_indexed" value
- * @method PartSearch          setCollectionParentRef()                           Sets the current record's "collection_parent_ref" value
- * @method PartSearch          setCollectionPath()                                Sets the current record's "collection_path" value
- * @method PartSearch          setExpeditionRef()                                 Sets the current record's "expedition_ref" value
- * @method PartSearch          setExpeditionName()                                Sets the current record's "expedition_name" value
- * @method PartSearch          setExpeditionNameTs()                              Sets the current record's "expedition_name_ts" value
- * @method PartSearch          setExpeditionNameIndexed()                         Sets the current record's "expedition_name_indexed" value
- * @method PartSearch          setStationVisible()                                Sets the current record's "station_visible" value
- * @method PartSearch          setGtuRef()                                        Sets the current record's "gtu_ref" value
- * @method PartSearch          setGtuCode()                                       Sets the current record's "gtu_code" value
- * @method PartSearch          setGtuParentRef()                                  Sets the current record's "gtu_parent_ref" value
- * @method PartSearch          setGtuPath()                                       Sets the current record's "gtu_path" value
- * @method PartSearch          setGtuFromDateMask()                               Sets the current record's "gtu_from_date_mask" value
- * @method PartSearch          setGtuFromDate()                                   Sets the current record's "gtu_from_date" value
- * @method PartSearch          setGtuToDateMask()                                 Sets the current record's "gtu_to_date_mask" value
- * @method PartSearch          setGtuToDate()                                     Sets the current record's "gtu_to_date" value
- * @method PartSearch          setGtuTagValuesIndexed()                           Sets the current record's "gtu_tag_values_indexed" value
- * @method PartSearch          setGtuCountryTagValue()                            Sets the current record's "gtu_country_tag_value" value
- * @method PartSearch          setGtuLocation()                                   Sets the current record's "gtu_location" value
- * @method PartSearch          setTaxonRef()                                      Sets the current record's "taxon_ref" value
- * @method PartSearch          setTaxonName()                                     Sets the current record's "taxon_name" value
- * @method PartSearch          setTaxonNameIndexed()                              Sets the current record's "taxon_name_indexed" value
- * @method PartSearch          setTaxonNameOrderBy()                              Sets the current record's "taxon_name_order_by" value
- * @method PartSearch          setTaxonLevelRef()                                 Sets the current record's "taxon_level_ref" value
- * @method PartSearch          setTaxonLevelName()                                Sets the current record's "taxon_level_name" value
- * @method PartSearch          setTaxonStatus()                                   Sets the current record's "taxon_status" value
- * @method PartSearch          setTaxonPath()                                     Sets the current record's "taxon_path" value
- * @method PartSearch          setTaxonParentRef()                                Sets the current record's "taxon_parent_ref" value
- * @method PartSearch          setTaxonExtinct()                                  Sets the current record's "taxon_extinct" value
- * @method PartSearch          setLithoRef()                                      Sets the current record's "litho_ref" value
- * @method PartSearch          setLithoName()                                     Sets the current record's "litho_name" value
- * @method PartSearch          setLithoNameIndexed()                              Sets the current record's "litho_name_indexed" value
- * @method PartSearch          setLithoNameOrderBy()                              Sets the current record's "litho_name_order_by" value
- * @method PartSearch          setLithoLevelRef()                                 Sets the current record's "litho_level_ref" value
- * @method PartSearch          setLithoLevelName()                                Sets the current record's "litho_level_name" value
- * @method PartSearch          setLithoStatus()                                   Sets the current record's "litho_status" value
- * @method PartSearch          setLithoLocal()                                    Sets the current record's "litho_local" value
- * @method PartSearch          setLithoColor()                                    Sets the current record's "litho_color" value
- * @method PartSearch          setLithoPath()                                     Sets the current record's "litho_path" value
- * @method PartSearch          setLithoParentRef()                                Sets the current record's "litho_parent_ref" value
- * @method PartSearch          setChronoRef()                                     Sets the current record's "chrono_ref" value
- * @method PartSearch          setChronoName()                                    Sets the current record's "chrono_name" value
- * @method PartSearch          setChronoNameIndexed()                             Sets the current record's "chrono_name_indexed" value
- * @method PartSearch          setChronoNameOrderBy()                             Sets the current record's "chrono_name_order_by" value
- * @method PartSearch          setChronoLevelRef()                                Sets the current record's "chrono_level_ref" value
- * @method PartSearch          setChronoLevelName()                               Sets the current record's "chrono_level_name" value
- * @method PartSearch          setChronoStatus()                                  Sets the current record's "chrono_status" value
- * @method PartSearch          setChronoLocal()                                   Sets the current record's "chrono_local" value
- * @method PartSearch          setChronoColor()                                   Sets the current record's "chrono_color" value
- * @method PartSearch          setChronoPath()                                    Sets the current record's "chrono_path" value
- * @method PartSearch          setChronoParentRef()                               Sets the current record's "chrono_parent_ref" value
- * @method PartSearch          setLithologyRef()                                  Sets the current record's "lithology_ref" value
- * @method PartSearch          setLithologyName()                                 Sets the current record's "lithology_name" value
- * @method PartSearch          setLithologyNameIndexed()                          Sets the current record's "lithology_name_indexed" value
- * @method PartSearch          setLithologyNameOrderBy()                          Sets the current record's "lithology_name_order_by" value
- * @method PartSearch          setLithologyLevelRef()                             Sets the current record's "lithology_level_ref" value
- * @method PartSearch          setLithologyLevelName()                            Sets the current record's "lithology_level_name" value
- * @method PartSearch          setLithologyStatus()                               Sets the current record's "lithology_status" value
- * @method PartSearch          setLithologyLocal()                                Sets the current record's "lithology_local" value
- * @method PartSearch          setLithologyColor()                                Sets the current record's "lithology_color" value
- * @method PartSearch          setLithologyPath()                                 Sets the current record's "lithology_path" value
- * @method PartSearch          setLithologyParentRef()                            Sets the current record's "lithology_parent_ref" value
- * @method PartSearch          setMineralRef()                                    Sets the current record's "mineral_ref" value
- * @method PartSearch          setMineralName()                                   Sets the current record's "mineral_name" value
- * @method PartSearch          setMineralNameIndexed()                            Sets the current record's "mineral_name_indexed" value
- * @method PartSearch          setMineralNameOrderBy()                            Sets the current record's "mineral_name_order_by" value
- * @method PartSearch          setMineralLevelRef()                               Sets the current record's "mineral_level_ref" value
- * @method PartSearch          setMineralLevelName()                              Sets the current record's "mineral_level_name" value
- * @method PartSearch          setMineralStatus()                                 Sets the current record's "mineral_status" value
- * @method PartSearch          setMineralLocal()                                  Sets the current record's "mineral_local" value
- * @method PartSearch          setMineralColor()                                  Sets the current record's "mineral_color" value
- * @method PartSearch          setMineralPath()                                   Sets the current record's "mineral_path" value
- * @method PartSearch          setMineralParentRef()                              Sets the current record's "mineral_parent_ref" value
- * @method PartSearch          setHostTaxonRef()                                  Sets the current record's "host_taxon_ref" value
- * @method PartSearch          setHostRelationship()                              Sets the current record's "host_relationship" value
- * @method PartSearch          setHostTaxonName()                                 Sets the current record's "host_taxon_name" value
- * @method PartSearch          setHostTaxonNameIndexed()                          Sets the current record's "host_taxon_name_indexed" value
- * @method PartSearch          setHostTaxonNameOrderBy()                          Sets the current record's "host_taxon_name_order_by" value
- * @method PartSearch          setHostTaxonLevelRef()                             Sets the current record's "host_taxon_level_ref" value
- * @method PartSearch          setHostTaxonLevelName()                            Sets the current record's "host_taxon_level_name" value
- * @method PartSearch          setHostTaxonStatus()                               Sets the current record's "host_taxon_status" value
- * @method PartSearch          setHostTaxonPath()                                 Sets the current record's "host_taxon_path" value
- * @method PartSearch          setHostTaxonParentRef()                            Sets the current record's "host_taxon_parent_ref" value
- * @method PartSearch          setHostTaxonExtinct()                              Sets the current record's "host_taxon_extinct" value
- * @method PartSearch          setHostSpecimenRef()                               Sets the current record's "host_specimen_ref" value
- * @method PartSearch          setIgRef()                                         Sets the current record's "ig_ref" value
- * @method PartSearch          setIgNum()                                         Sets the current record's "ig_num" value
- * @method PartSearch          setIgNumIndexed()                                  Sets the current record's "ig_num_indexed" value
- * @method PartSearch          setIgDateMask()                                    Sets the current record's "ig_date_mask" value
- * @method PartSearch          setIgDate()                                        Sets the current record's "ig_date" value
- * @method PartSearch          setAcquisitionCategory()                           Sets the current record's "acquisition_category" value
- * @method PartSearch          setAcquisitionDateMask()                           Sets the current record's "acquisition_date_mask" value
- * @method PartSearch          setAcquisitionDate()                               Sets the current record's "acquisition_date" value
- * @method PartSearch          setWithTypes()                                     Sets the current record's "with_types" value
- * @method PartSearch          setWithIndividuals()                               Sets the current record's "with_individuals" value
- * @method PartSearch          setIndividualRef()                                 Sets the current record's "individual_ref" value
- * @method PartSearch          setIndividualType()                                Sets the current record's "individual_type" value
- * @method PartSearch          setIndividualTypeGroup()                           Sets the current record's "individual_type_group" value
- * @method PartSearch          setIndividualTypeSearch()                          Sets the current record's "individual_type_search" value
- * @method PartSearch          setIndividualSex()                                 Sets the current record's "individual_sex" value
- * @method PartSearch          setIndividualState()                               Sets the current record's "individual_state" value
- * @method PartSearch          setIndividualStage()                               Sets the current record's "individual_stage" value
- * @method PartSearch          setIndividualSocialStatus()                        Sets the current record's "individual_social_status" value
- * @method PartSearch          setIndividualRockForm()                            Sets the current record's "individual_rock_form" value
- * @method PartSearch          setIndividualCountMin()                            Sets the current record's "individual_count_min" value
- * @method PartSearch          setIndividualCountMax()                            Sets the current record's "individual_count_max" value
- * @method PartSearch          setWithParts()                                     Sets the current record's "with_parts" value
- * @method PartSearch          setPartRef()                                       Sets the current record's "part_ref" value
- * @method PartSearch          setPart()                                          Sets the current record's "part" value
- * @method PartSearch          setPartStatus()                                    Sets the current record's "part_status" value
- * @method PartSearch          setBuilding()                                      Sets the current record's "building" value
- * @method PartSearch          setFloor()                                         Sets the current record's "floor" value
- * @method PartSearch          setRoom()                                          Sets the current record's "room" value
- * @method PartSearch          setRow()                                           Sets the current record's "row" value
- * @method PartSearch          setShelf()                                         Sets the current record's "shelf" value
- * @method PartSearch          setContainerType()                                 Sets the current record's "container_type" value
- * @method PartSearch          setContainerStorage()                              Sets the current record's "container_storage" value
- * @method PartSearch          setContainer()                                     Sets the current record's "container" value
- * @method PartSearch          setSubContainerType()                              Sets the current record's "sub_container_type" value
- * @method PartSearch          setSubContainerStorage()                           Sets the current record's "sub_container_storage" value
- * @method PartSearch          setSubContainer()                                  Sets the current record's "sub_container" value
- * @method PartSearch          setPartCountMin()                                  Sets the current record's "part_count_min" value
- * @method PartSearch          setPartCountMax()                                  Sets the current record's "part_count_max" value
- * @method PartSearch          setSpecimenStatus()                                Sets the current record's "specimen_status" value
- * @method PartSearch          setComplete()                                      Sets the current record's "complete" value
- * @method PartSearch          setSurnumerary()                                   Sets the current record's "surnumerary" value
- * @method PartSearch          setSpecimen()                                      Sets the current record's "Specimen" value
- * @method PartSearch          setSpecimenIndividual()                            Sets the current record's "SpecimenIndividual" value
- * @method PartSearch          setPartRelation()                                  Sets the current record's "PartRelation" value
- * @method PartSearch          setCollection()                                    Sets the current record's "Collection" value
- * @method PartSearch          setCollectionInstitution()                         Sets the current record's "CollectionInstitution" value
- * @method PartSearch          setCollectionMainManager()                         Sets the current record's "CollectionMainManager" value
- * @method PartSearch          setCollectionParent()                              Sets the current record's "CollectionParent" value
- * @method PartSearch          setExpedition()                                    Sets the current record's "Expedition" value
- * @method PartSearch          setGtu()                                           Sets the current record's "Gtu" value
- * @method PartSearch          setGtuParent()                                     Sets the current record's "GtuParent" value
- * @method PartSearch          setTaxonomy()                                      Sets the current record's "Taxonomy" value
- * @method PartSearch          setTaxonomyLevel()                                 Sets the current record's "TaxonomyLevel" value
- * @method PartSearch          setTaxonomyParent()                                Sets the current record's "TaxonomyParent" value
- * @method PartSearch          setLithostratigraphy()                             Sets the current record's "Lithostratigraphy" value
- * @method PartSearch          setLithostratigraphyLevel()                        Sets the current record's "LithostratigraphyLevel" value
- * @method PartSearch          setLithostratigraphyParent()                       Sets the current record's "LithostratigraphyParent" value
- * @method PartSearch          setChronostratigraphy()                            Sets the current record's "Chronostratigraphy" value
- * @method PartSearch          setChronostratigraphyLevel()                       Sets the current record's "ChronostratigraphyLevel" value
- * @method PartSearch          setChronostratigraphyParent()                      Sets the current record's "ChronostratigraphyParent" value
- * @method PartSearch          setLithology()                                     Sets the current record's "Lithology" value
- * @method PartSearch          setLithologyLevel()                                Sets the current record's "LithologyLevel" value
- * @method PartSearch          setLithologyParent()                               Sets the current record's "LithologyParent" value
- * @method PartSearch          setMineralogy()                                    Sets the current record's "Mineralogy" value
- * @method PartSearch          setMineralogyLevel()                               Sets the current record's "MineralogyLevel" value
- * @method PartSearch          setMineralogyParent()                              Sets the current record's "MineralogyParent" value
- * @method PartSearch          setHostTaxon()                                     Sets the current record's "HostTaxon" value
- * @method PartSearch          setHostTaxonLevel()                                Sets the current record's "HostTaxonLevel" value
- * @method PartSearch          setHostTaxonParent()                               Sets the current record's "HostTaxonParent" value
- * @method PartSearch          setHostSpecimen()                                  Sets the current record's "HostSpecimen" value
- * @method PartSearch          setIg()                                            Sets the current record's "Ig" value
+ * @method integer             getId()                       Returns the current record's "id" value
+ * @method integer             getSpecRef()                  Returns the current record's "spec_ref" value
+ * @method string              getCategory()                 Returns the current record's "category" value
+ * @method integer             getCollectionRef()            Returns the current record's "collection_ref" value
+ * @method string              getCollectionType()           Returns the current record's "collection_type" value
+ * @method string              getCollectionCode()           Returns the current record's "collection_code" value
+ * @method string              getCollectionName()           Returns the current record's "collection_name" value
+ * @method boolean             getCollectionIsPublic()       Returns the current record's "collection_is_public" value
+ * @method integer             getCollectionParentRef()      Returns the current record's "collection_parent_ref" value
+ * @method string              getCollectionPath()           Returns the current record's "collection_path" value
+ * @method integer             getExpeditionRef()            Returns the current record's "expedition_ref" value
+ * @method string              getExpeditionName()           Returns the current record's "expedition_name" value
+ * @method string              getExpeditionNameTs()         Returns the current record's "expedition_name_ts" value
+ * @method string              getExpeditionNameIndexed()    Returns the current record's "expedition_name_indexed" value
+ * @method boolean             getStationVisible()           Returns the current record's "station_visible" value
+ * @method integer             getGtuRef()                   Returns the current record's "gtu_ref" value
+ * @method string              getGtuCode()                  Returns the current record's "gtu_code" value
+ * @method integer             getGtuParentRef()             Returns the current record's "gtu_parent_ref" value
+ * @method string              getGtuPath()                  Returns the current record's "gtu_path" value
+ * @method integer             getGtuFromDateMask()          Returns the current record's "gtu_from_date_mask" value
+ * @method string              getGtuFromDate()              Returns the current record's "gtu_from_date" value
+ * @method integer             getGtuToDateMask()            Returns the current record's "gtu_to_date_mask" value
+ * @method string              getGtuToDate()                Returns the current record's "gtu_to_date" value
+ * @method string              getGtuTagValuesIndexed()      Returns the current record's "gtu_tag_values_indexed" value
+ * @method string              getGtuCountryTagValue()       Returns the current record's "gtu_country_tag_value" value
+ * @method string              getGtuLocation()              Returns the current record's "gtu_location" value
+ * @method integer             getTaxonRef()                 Returns the current record's "taxon_ref" value
+ * @method string              getTaxonName()                Returns the current record's "taxon_name" value
+ * @method string              getTaxonNameIndexed()         Returns the current record's "taxon_name_indexed" value
+ * @method string              getTaxonNameOrderBy()         Returns the current record's "taxon_name_order_by" value
+ * @method integer             getTaxonLevelRef()            Returns the current record's "taxon_level_ref" value
+ * @method string              getTaxonLevelName()           Returns the current record's "taxon_level_name" value
+ * @method string              getTaxonStatus()              Returns the current record's "taxon_status" value
+ * @method string              getTaxonPath()                Returns the current record's "taxon_path" value
+ * @method integer             getTaxonParentRef()           Returns the current record's "taxon_parent_ref" value
+ * @method boolean             getTaxonExtinct()             Returns the current record's "taxon_extinct" value
+ * @method integer             getLithoRef()                 Returns the current record's "litho_ref" value
+ * @method string              getLithoName()                Returns the current record's "litho_name" value
+ * @method string              getLithoNameIndexed()         Returns the current record's "litho_name_indexed" value
+ * @method string              getLithoNameOrderBy()         Returns the current record's "litho_name_order_by" value
+ * @method integer             getLithoLevelRef()            Returns the current record's "litho_level_ref" value
+ * @method string              getLithoLevelName()           Returns the current record's "litho_level_name" value
+ * @method string              getLithoStatus()              Returns the current record's "litho_status" value
+ * @method boolean             getLithoLocal()               Returns the current record's "litho_local" value
+ * @method string              getLithoColor()               Returns the current record's "litho_color" value
+ * @method string              getLithoPath()                Returns the current record's "litho_path" value
+ * @method integer             getLithoParentRef()           Returns the current record's "litho_parent_ref" value
+ * @method integer             getChronoRef()                Returns the current record's "chrono_ref" value
+ * @method string              getChronoName()               Returns the current record's "chrono_name" value
+ * @method string              getChronoNameIndexed()        Returns the current record's "chrono_name_indexed" value
+ * @method string              getChronoNameOrderBy()        Returns the current record's "chrono_name_order_by" value
+ * @method integer             getChronoLevelRef()           Returns the current record's "chrono_level_ref" value
+ * @method string              getChronoLevelName()          Returns the current record's "chrono_level_name" value
+ * @method string              getChronoStatus()             Returns the current record's "chrono_status" value
+ * @method boolean             getChronoLocal()              Returns the current record's "chrono_local" value
+ * @method string              getChronoColor()              Returns the current record's "chrono_color" value
+ * @method string              getChronoPath()               Returns the current record's "chrono_path" value
+ * @method integer             getChronoParentRef()          Returns the current record's "chrono_parent_ref" value
+ * @method integer             getLithologyRef()             Returns the current record's "lithology_ref" value
+ * @method string              getLithologyName()            Returns the current record's "lithology_name" value
+ * @method string              getLithologyNameIndexed()     Returns the current record's "lithology_name_indexed" value
+ * @method string              getLithologyNameOrderBy()     Returns the current record's "lithology_name_order_by" value
+ * @method integer             getLithologyLevelRef()        Returns the current record's "lithology_level_ref" value
+ * @method string              getLithologyLevelName()       Returns the current record's "lithology_level_name" value
+ * @method string              getLithologyStatus()          Returns the current record's "lithology_status" value
+ * @method boolean             getLithologyLocal()           Returns the current record's "lithology_local" value
+ * @method string              getLithologyColor()           Returns the current record's "lithology_color" value
+ * @method string              getLithologyPath()            Returns the current record's "lithology_path" value
+ * @method integer             getLithologyParentRef()       Returns the current record's "lithology_parent_ref" value
+ * @method integer             getMineralRef()               Returns the current record's "mineral_ref" value
+ * @method string              getMineralName()              Returns the current record's "mineral_name" value
+ * @method string              getMineralNameIndexed()       Returns the current record's "mineral_name_indexed" value
+ * @method string              getMineralNameOrderBy()       Returns the current record's "mineral_name_order_by" value
+ * @method integer             getMineralLevelRef()          Returns the current record's "mineral_level_ref" value
+ * @method string              getMineralLevelName()         Returns the current record's "mineral_level_name" value
+ * @method string              getMineralStatus()            Returns the current record's "mineral_status" value
+ * @method boolean             getMineralLocal()             Returns the current record's "mineral_local" value
+ * @method string              getMineralColor()             Returns the current record's "mineral_color" value
+ * @method string              getMineralPath()              Returns the current record's "mineral_path" value
+ * @method integer             getMineralParentRef()         Returns the current record's "mineral_parent_ref" value
+ * @method integer             getHostTaxonRef()             Returns the current record's "host_taxon_ref" value
+ * @method string              getHostRelationship()         Returns the current record's "host_relationship" value
+ * @method string              getHostTaxonName()            Returns the current record's "host_taxon_name" value
+ * @method string              getHostTaxonNameIndexed()     Returns the current record's "host_taxon_name_indexed" value
+ * @method string              getHostTaxonNameOrderBy()     Returns the current record's "host_taxon_name_order_by" value
+ * @method integer             getHostTaxonLevelRef()        Returns the current record's "host_taxon_level_ref" value
+ * @method string              getHostTaxonLevelName()       Returns the current record's "host_taxon_level_name" value
+ * @method string              getHostTaxonStatus()          Returns the current record's "host_taxon_status" value
+ * @method string              getHostTaxonPath()            Returns the current record's "host_taxon_path" value
+ * @method integer             getHostTaxonParentRef()       Returns the current record's "host_taxon_parent_ref" value
+ * @method boolean             getHostTaxonExtinct()         Returns the current record's "host_taxon_extinct" value
+ * @method integer             getHostSpecimenRef()          Returns the current record's "host_specimen_ref" value
+ * @method integer             getIgRef()                    Returns the current record's "ig_ref" value
+ * @method string              getIgNum()                    Returns the current record's "ig_num" value
+ * @method string              getIgNumIndexed()             Returns the current record's "ig_num_indexed" value
+ * @method integer             getIgDateMask()               Returns the current record's "ig_date_mask" value
+ * @method string              getIgDate()                   Returns the current record's "ig_date" value
+ * @method string              getAcquisitionCategory()      Returns the current record's "acquisition_category" value
+ * @method integer             getAcquisitionDateMask()      Returns the current record's "acquisition_date_mask" value
+ * @method string              getAcquisitionDate()          Returns the current record's "acquisition_date" value
+ * @method boolean             getWithTypes()                Returns the current record's "with_types" value
+ * @method boolean             getWithIndividuals()          Returns the current record's "with_individuals" value
+ * @method integer             getIndividualRef()            Returns the current record's "individual_ref" value
+ * @method string              getIndividualType()           Returns the current record's "individual_type" value
+ * @method string              getIndividualTypeGroup()      Returns the current record's "individual_type_group" value
+ * @method string              getIndividualTypeSearch()     Returns the current record's "individual_type_search" value
+ * @method string              getIndividualSex()            Returns the current record's "individual_sex" value
+ * @method string              getIndividualState()          Returns the current record's "individual_state" value
+ * @method string              getIndividualStage()          Returns the current record's "individual_stage" value
+ * @method string              getIndividualSocialStatus()   Returns the current record's "individual_social_status" value
+ * @method string              getIndividualRockForm()       Returns the current record's "individual_rock_form" value
+ * @method integer             getIndividualCountMin()       Returns the current record's "individual_count_min" value
+ * @method integer             getIndividualCountMax()       Returns the current record's "individual_count_max" value
+ * @method boolean             getWithParts()                Returns the current record's "with_parts" value
+ * @method integer             getPartRef()                  Returns the current record's "part_ref" value
+ * @method string              getPart()                     Returns the current record's "part" value
+ * @method string              getPartStatus()               Returns the current record's "part_status" value
+ * @method string              getBuilding()                 Returns the current record's "building" value
+ * @method string              getFloor()                    Returns the current record's "floor" value
+ * @method string              getRoom()                     Returns the current record's "room" value
+ * @method string              getRow()                      Returns the current record's "row" value
+ * @method string              getShelf()                    Returns the current record's "shelf" value
+ * @method string              getContainerType()            Returns the current record's "container_type" value
+ * @method string              getContainerStorage()         Returns the current record's "container_storage" value
+ * @method string              getContainer()                Returns the current record's "container" value
+ * @method string              getSubContainerType()         Returns the current record's "sub_container_type" value
+ * @method string              getSubContainerStorage()      Returns the current record's "sub_container_storage" value
+ * @method string              getSubContainer()             Returns the current record's "sub_container" value
+ * @method integer             getPartCountMin()             Returns the current record's "part_count_min" value
+ * @method integer             getPartCountMax()             Returns the current record's "part_count_max" value
+ * @method string              getSpecimenStatus()           Returns the current record's "specimen_status" value
+ * @method boolean             getComplete()                 Returns the current record's "complete" value
+ * @method boolean             getSurnumerary()              Returns the current record's "surnumerary" value
+ * @method Specimens           getSpecimen()                 Returns the current record's "Specimen" value
+ * @method SpecimenIndividuals getSpecimenIndividual()       Returns the current record's "SpecimenIndividual" value
+ * @method SpecimenParts       getPartRelation()             Returns the current record's "PartRelation" value
+ * @method Collections         getCollection()               Returns the current record's "Collection" value
+ * @method Collections         getCollectionParent()         Returns the current record's "CollectionParent" value
+ * @method Expeditions         getExpedition()               Returns the current record's "Expedition" value
+ * @method Gtu                 getGtu()                      Returns the current record's "Gtu" value
+ * @method Gtu                 getGtuParent()                Returns the current record's "GtuParent" value
+ * @method Taxonomy            getTaxonomy()                 Returns the current record's "Taxonomy" value
+ * @method CatalogueLevels     getTaxonomyLevel()            Returns the current record's "TaxonomyLevel" value
+ * @method Taxonomy            getTaxonomyParent()           Returns the current record's "TaxonomyParent" value
+ * @method Lithostratigraphy   getLithostratigraphy()        Returns the current record's "Lithostratigraphy" value
+ * @method CatalogueLevels     getLithostratigraphyLevel()   Returns the current record's "LithostratigraphyLevel" value
+ * @method Lithostratigraphy   getLithostratigraphyParent()  Returns the current record's "LithostratigraphyParent" value
+ * @method Chronostratigraphy  getChronostratigraphy()       Returns the current record's "Chronostratigraphy" value
+ * @method CatalogueLevels     getChronostratigraphyLevel()  Returns the current record's "ChronostratigraphyLevel" value
+ * @method Chronostratigraphy  getChronostratigraphyParent() Returns the current record's "ChronostratigraphyParent" value
+ * @method Lithology           getLithology()                Returns the current record's "Lithology" value
+ * @method CatalogueLevels     getLithologyLevel()           Returns the current record's "LithologyLevel" value
+ * @method Lithology           getLithologyParent()          Returns the current record's "LithologyParent" value
+ * @method Mineralogy          getMineralogy()               Returns the current record's "Mineralogy" value
+ * @method CatalogueLevels     getMineralogyLevel()          Returns the current record's "MineralogyLevel" value
+ * @method Mineralogy          getMineralogyParent()         Returns the current record's "MineralogyParent" value
+ * @method Taxonomy            getHostTaxon()                Returns the current record's "HostTaxon" value
+ * @method CatalogueLevels     getHostTaxonLevel()           Returns the current record's "HostTaxonLevel" value
+ * @method Taxonomy            getHostTaxonParent()          Returns the current record's "HostTaxonParent" value
+ * @method Specimens           getHostSpecimen()             Returns the current record's "HostSpecimen" value
+ * @method Igs                 getIg()                       Returns the current record's "Ig" value
+ * @method PartSearch          setId()                       Sets the current record's "id" value
+ * @method PartSearch          setSpecRef()                  Sets the current record's "spec_ref" value
+ * @method PartSearch          setCategory()                 Sets the current record's "category" value
+ * @method PartSearch          setCollectionRef()            Sets the current record's "collection_ref" value
+ * @method PartSearch          setCollectionType()           Sets the current record's "collection_type" value
+ * @method PartSearch          setCollectionCode()           Sets the current record's "collection_code" value
+ * @method PartSearch          setCollectionName()           Sets the current record's "collection_name" value
+ * @method PartSearch          setCollectionIsPublic()       Sets the current record's "collection_is_public" value
+ * @method PartSearch          setCollectionParentRef()      Sets the current record's "collection_parent_ref" value
+ * @method PartSearch          setCollectionPath()           Sets the current record's "collection_path" value
+ * @method PartSearch          setExpeditionRef()            Sets the current record's "expedition_ref" value
+ * @method PartSearch          setExpeditionName()           Sets the current record's "expedition_name" value
+ * @method PartSearch          setExpeditionNameTs()         Sets the current record's "expedition_name_ts" value
+ * @method PartSearch          setExpeditionNameIndexed()    Sets the current record's "expedition_name_indexed" value
+ * @method PartSearch          setStationVisible()           Sets the current record's "station_visible" value
+ * @method PartSearch          setGtuRef()                   Sets the current record's "gtu_ref" value
+ * @method PartSearch          setGtuCode()                  Sets the current record's "gtu_code" value
+ * @method PartSearch          setGtuParentRef()             Sets the current record's "gtu_parent_ref" value
+ * @method PartSearch          setGtuPath()                  Sets the current record's "gtu_path" value
+ * @method PartSearch          setGtuFromDateMask()          Sets the current record's "gtu_from_date_mask" value
+ * @method PartSearch          setGtuFromDate()              Sets the current record's "gtu_from_date" value
+ * @method PartSearch          setGtuToDateMask()            Sets the current record's "gtu_to_date_mask" value
+ * @method PartSearch          setGtuToDate()                Sets the current record's "gtu_to_date" value
+ * @method PartSearch          setGtuTagValuesIndexed()      Sets the current record's "gtu_tag_values_indexed" value
+ * @method PartSearch          setGtuCountryTagValue()       Sets the current record's "gtu_country_tag_value" value
+ * @method PartSearch          setGtuLocation()              Sets the current record's "gtu_location" value
+ * @method PartSearch          setTaxonRef()                 Sets the current record's "taxon_ref" value
+ * @method PartSearch          setTaxonName()                Sets the current record's "taxon_name" value
+ * @method PartSearch          setTaxonNameIndexed()         Sets the current record's "taxon_name_indexed" value
+ * @method PartSearch          setTaxonNameOrderBy()         Sets the current record's "taxon_name_order_by" value
+ * @method PartSearch          setTaxonLevelRef()            Sets the current record's "taxon_level_ref" value
+ * @method PartSearch          setTaxonLevelName()           Sets the current record's "taxon_level_name" value
+ * @method PartSearch          setTaxonStatus()              Sets the current record's "taxon_status" value
+ * @method PartSearch          setTaxonPath()                Sets the current record's "taxon_path" value
+ * @method PartSearch          setTaxonParentRef()           Sets the current record's "taxon_parent_ref" value
+ * @method PartSearch          setTaxonExtinct()             Sets the current record's "taxon_extinct" value
+ * @method PartSearch          setLithoRef()                 Sets the current record's "litho_ref" value
+ * @method PartSearch          setLithoName()                Sets the current record's "litho_name" value
+ * @method PartSearch          setLithoNameIndexed()         Sets the current record's "litho_name_indexed" value
+ * @method PartSearch          setLithoNameOrderBy()         Sets the current record's "litho_name_order_by" value
+ * @method PartSearch          setLithoLevelRef()            Sets the current record's "litho_level_ref" value
+ * @method PartSearch          setLithoLevelName()           Sets the current record's "litho_level_name" value
+ * @method PartSearch          setLithoStatus()              Sets the current record's "litho_status" value
+ * @method PartSearch          setLithoLocal()               Sets the current record's "litho_local" value
+ * @method PartSearch          setLithoColor()               Sets the current record's "litho_color" value
+ * @method PartSearch          setLithoPath()                Sets the current record's "litho_path" value
+ * @method PartSearch          setLithoParentRef()           Sets the current record's "litho_parent_ref" value
+ * @method PartSearch          setChronoRef()                Sets the current record's "chrono_ref" value
+ * @method PartSearch          setChronoName()               Sets the current record's "chrono_name" value
+ * @method PartSearch          setChronoNameIndexed()        Sets the current record's "chrono_name_indexed" value
+ * @method PartSearch          setChronoNameOrderBy()        Sets the current record's "chrono_name_order_by" value
+ * @method PartSearch          setChronoLevelRef()           Sets the current record's "chrono_level_ref" value
+ * @method PartSearch          setChronoLevelName()          Sets the current record's "chrono_level_name" value
+ * @method PartSearch          setChronoStatus()             Sets the current record's "chrono_status" value
+ * @method PartSearch          setChronoLocal()              Sets the current record's "chrono_local" value
+ * @method PartSearch          setChronoColor()              Sets the current record's "chrono_color" value
+ * @method PartSearch          setChronoPath()               Sets the current record's "chrono_path" value
+ * @method PartSearch          setChronoParentRef()          Sets the current record's "chrono_parent_ref" value
+ * @method PartSearch          setLithologyRef()             Sets the current record's "lithology_ref" value
+ * @method PartSearch          setLithologyName()            Sets the current record's "lithology_name" value
+ * @method PartSearch          setLithologyNameIndexed()     Sets the current record's "lithology_name_indexed" value
+ * @method PartSearch          setLithologyNameOrderBy()     Sets the current record's "lithology_name_order_by" value
+ * @method PartSearch          setLithologyLevelRef()        Sets the current record's "lithology_level_ref" value
+ * @method PartSearch          setLithologyLevelName()       Sets the current record's "lithology_level_name" value
+ * @method PartSearch          setLithologyStatus()          Sets the current record's "lithology_status" value
+ * @method PartSearch          setLithologyLocal()           Sets the current record's "lithology_local" value
+ * @method PartSearch          setLithologyColor()           Sets the current record's "lithology_color" value
+ * @method PartSearch          setLithologyPath()            Sets the current record's "lithology_path" value
+ * @method PartSearch          setLithologyParentRef()       Sets the current record's "lithology_parent_ref" value
+ * @method PartSearch          setMineralRef()               Sets the current record's "mineral_ref" value
+ * @method PartSearch          setMineralName()              Sets the current record's "mineral_name" value
+ * @method PartSearch          setMineralNameIndexed()       Sets the current record's "mineral_name_indexed" value
+ * @method PartSearch          setMineralNameOrderBy()       Sets the current record's "mineral_name_order_by" value
+ * @method PartSearch          setMineralLevelRef()          Sets the current record's "mineral_level_ref" value
+ * @method PartSearch          setMineralLevelName()         Sets the current record's "mineral_level_name" value
+ * @method PartSearch          setMineralStatus()            Sets the current record's "mineral_status" value
+ * @method PartSearch          setMineralLocal()             Sets the current record's "mineral_local" value
+ * @method PartSearch          setMineralColor()             Sets the current record's "mineral_color" value
+ * @method PartSearch          setMineralPath()              Sets the current record's "mineral_path" value
+ * @method PartSearch          setMineralParentRef()         Sets the current record's "mineral_parent_ref" value
+ * @method PartSearch          setHostTaxonRef()             Sets the current record's "host_taxon_ref" value
+ * @method PartSearch          setHostRelationship()         Sets the current record's "host_relationship" value
+ * @method PartSearch          setHostTaxonName()            Sets the current record's "host_taxon_name" value
+ * @method PartSearch          setHostTaxonNameIndexed()     Sets the current record's "host_taxon_name_indexed" value
+ * @method PartSearch          setHostTaxonNameOrderBy()     Sets the current record's "host_taxon_name_order_by" value
+ * @method PartSearch          setHostTaxonLevelRef()        Sets the current record's "host_taxon_level_ref" value
+ * @method PartSearch          setHostTaxonLevelName()       Sets the current record's "host_taxon_level_name" value
+ * @method PartSearch          setHostTaxonStatus()          Sets the current record's "host_taxon_status" value
+ * @method PartSearch          setHostTaxonPath()            Sets the current record's "host_taxon_path" value
+ * @method PartSearch          setHostTaxonParentRef()       Sets the current record's "host_taxon_parent_ref" value
+ * @method PartSearch          setHostTaxonExtinct()         Sets the current record's "host_taxon_extinct" value
+ * @method PartSearch          setHostSpecimenRef()          Sets the current record's "host_specimen_ref" value
+ * @method PartSearch          setIgRef()                    Sets the current record's "ig_ref" value
+ * @method PartSearch          setIgNum()                    Sets the current record's "ig_num" value
+ * @method PartSearch          setIgNumIndexed()             Sets the current record's "ig_num_indexed" value
+ * @method PartSearch          setIgDateMask()               Sets the current record's "ig_date_mask" value
+ * @method PartSearch          setIgDate()                   Sets the current record's "ig_date" value
+ * @method PartSearch          setAcquisitionCategory()      Sets the current record's "acquisition_category" value
+ * @method PartSearch          setAcquisitionDateMask()      Sets the current record's "acquisition_date_mask" value
+ * @method PartSearch          setAcquisitionDate()          Sets the current record's "acquisition_date" value
+ * @method PartSearch          setWithTypes()                Sets the current record's "with_types" value
+ * @method PartSearch          setWithIndividuals()          Sets the current record's "with_individuals" value
+ * @method PartSearch          setIndividualRef()            Sets the current record's "individual_ref" value
+ * @method PartSearch          setIndividualType()           Sets the current record's "individual_type" value
+ * @method PartSearch          setIndividualTypeGroup()      Sets the current record's "individual_type_group" value
+ * @method PartSearch          setIndividualTypeSearch()     Sets the current record's "individual_type_search" value
+ * @method PartSearch          setIndividualSex()            Sets the current record's "individual_sex" value
+ * @method PartSearch          setIndividualState()          Sets the current record's "individual_state" value
+ * @method PartSearch          setIndividualStage()          Sets the current record's "individual_stage" value
+ * @method PartSearch          setIndividualSocialStatus()   Sets the current record's "individual_social_status" value
+ * @method PartSearch          setIndividualRockForm()       Sets the current record's "individual_rock_form" value
+ * @method PartSearch          setIndividualCountMin()       Sets the current record's "individual_count_min" value
+ * @method PartSearch          setIndividualCountMax()       Sets the current record's "individual_count_max" value
+ * @method PartSearch          setWithParts()                Sets the current record's "with_parts" value
+ * @method PartSearch          setPartRef()                  Sets the current record's "part_ref" value
+ * @method PartSearch          setPart()                     Sets the current record's "part" value
+ * @method PartSearch          setPartStatus()               Sets the current record's "part_status" value
+ * @method PartSearch          setBuilding()                 Sets the current record's "building" value
+ * @method PartSearch          setFloor()                    Sets the current record's "floor" value
+ * @method PartSearch          setRoom()                     Sets the current record's "room" value
+ * @method PartSearch          setRow()                      Sets the current record's "row" value
+ * @method PartSearch          setShelf()                    Sets the current record's "shelf" value
+ * @method PartSearch          setContainerType()            Sets the current record's "container_type" value
+ * @method PartSearch          setContainerStorage()         Sets the current record's "container_storage" value
+ * @method PartSearch          setContainer()                Sets the current record's "container" value
+ * @method PartSearch          setSubContainerType()         Sets the current record's "sub_container_type" value
+ * @method PartSearch          setSubContainerStorage()      Sets the current record's "sub_container_storage" value
+ * @method PartSearch          setSubContainer()             Sets the current record's "sub_container" value
+ * @method PartSearch          setPartCountMin()             Sets the current record's "part_count_min" value
+ * @method PartSearch          setPartCountMax()             Sets the current record's "part_count_max" value
+ * @method PartSearch          setSpecimenStatus()           Sets the current record's "specimen_status" value
+ * @method PartSearch          setComplete()                 Sets the current record's "complete" value
+ * @method PartSearch          setSurnumerary()              Sets the current record's "surnumerary" value
+ * @method PartSearch          setSpecimen()                 Sets the current record's "Specimen" value
+ * @method PartSearch          setSpecimenIndividual()       Sets the current record's "SpecimenIndividual" value
+ * @method PartSearch          setPartRelation()             Sets the current record's "PartRelation" value
+ * @method PartSearch          setCollection()               Sets the current record's "Collection" value
+ * @method PartSearch          setCollectionParent()         Sets the current record's "CollectionParent" value
+ * @method PartSearch          setExpedition()               Sets the current record's "Expedition" value
+ * @method PartSearch          setGtu()                      Sets the current record's "Gtu" value
+ * @method PartSearch          setGtuParent()                Sets the current record's "GtuParent" value
+ * @method PartSearch          setTaxonomy()                 Sets the current record's "Taxonomy" value
+ * @method PartSearch          setTaxonomyLevel()            Sets the current record's "TaxonomyLevel" value
+ * @method PartSearch          setTaxonomyParent()           Sets the current record's "TaxonomyParent" value
+ * @method PartSearch          setLithostratigraphy()        Sets the current record's "Lithostratigraphy" value
+ * @method PartSearch          setLithostratigraphyLevel()   Sets the current record's "LithostratigraphyLevel" value
+ * @method PartSearch          setLithostratigraphyParent()  Sets the current record's "LithostratigraphyParent" value
+ * @method PartSearch          setChronostratigraphy()       Sets the current record's "Chronostratigraphy" value
+ * @method PartSearch          setChronostratigraphyLevel()  Sets the current record's "ChronostratigraphyLevel" value
+ * @method PartSearch          setChronostratigraphyParent() Sets the current record's "ChronostratigraphyParent" value
+ * @method PartSearch          setLithology()                Sets the current record's "Lithology" value
+ * @method PartSearch          setLithologyLevel()           Sets the current record's "LithologyLevel" value
+ * @method PartSearch          setLithologyParent()          Sets the current record's "LithologyParent" value
+ * @method PartSearch          setMineralogy()               Sets the current record's "Mineralogy" value
+ * @method PartSearch          setMineralogyLevel()          Sets the current record's "MineralogyLevel" value
+ * @method PartSearch          setMineralogyParent()         Sets the current record's "MineralogyParent" value
+ * @method PartSearch          setHostTaxon()                Sets the current record's "HostTaxon" value
+ * @method PartSearch          setHostTaxonLevel()           Sets the current record's "HostTaxonLevel" value
+ * @method PartSearch          setHostTaxonParent()          Sets the current record's "HostTaxonParent" value
+ * @method PartSearch          setHostSpecimen()             Sets the current record's "HostSpecimen" value
+ * @method PartSearch          setIg()                       Sets the current record's "Ig" value
  * 
  * @package    darwin
  * @subpackage model
@@ -563,37 +530,6 @@ abstract class BasePartSearch extends sfDoctrineRecord
              'type' => 'boolean',
              'notnull' => true,
              'default' => true,
-             ));
-        $this->hasColumn('collection_institution_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
-             ));
-        $this->hasColumn('collection_institution_formated_name', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collection_institution_formated_name_ts', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collection_institution_formated_name_indexed', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collection_institution_sub_type', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collection_main_manager_ref', 'integer', null, array(
-             'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
-             ));
-        $this->hasColumn('collection_main_manager_formated_name', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collection_main_manager_formated_name_ts', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('collection_main_manager_formated_name_indexed', 'string', null, array(
-             'type' => 'string',
              ));
         $this->hasColumn('collection_parent_ref', 'integer', null, array(
              'type' => 'integer',
@@ -1040,14 +976,6 @@ abstract class BasePartSearch extends sfDoctrineRecord
 
         $this->hasOne('Collections as Collection', array(
              'local' => 'collection_ref',
-             'foreign' => 'id'));
-
-        $this->hasOne('Institutions as CollectionInstitution', array(
-             'local' => 'collection_institution_ref',
-             'foreign' => 'id'));
-
-        $this->hasOne('Users as CollectionMainManager', array(
-             'local' => 'collection_main_manager_ref',
              'foreign' => 'id'));
 
         $this->hasOne('Collections as CollectionParent', array(
