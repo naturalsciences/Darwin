@@ -1627,15 +1627,6 @@ create table darwin_flat
     collection_code varchar,
     collection_name varchar,
     collection_is_public boolean not null default true,
-    collection_institution_ref integer not null default 0,
-    collection_institution_formated_name varchar,
-    collection_institution_formated_name_ts tsvector,
-    collection_institution_formated_name_indexed varchar,
-    collection_institution_sub_type varchar,
-    collection_main_manager_ref integer not null default 0,
-    collection_main_manager_formated_name varchar,
-    collection_main_manager_formated_name_ts tsvector,
-    collection_main_manager_formated_name_indexed varchar,
     collection_parent_ref integer default 0,
     collection_path varchar,
     expedition_ref integer not null default 0,
@@ -1764,8 +1755,6 @@ create table darwin_flat
     CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id),
-    CONSTRAINT fk_darwin_flat_collection_institution_ref FOREIGN KEY (collection_institution_ref) REFERENCES people (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_collection_main_manager_ref FOREIGN KEY (collection_main_manager_ref) REFERENCES users (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_collection_parent_ref FOREIGN KEY (collection_parent_ref) REFERENCES collections (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_expedition_ref FOREIGN KEY (expedition_ref) REFERENCES expeditions (id),
     CONSTRAINT fk_darwin_flat_gtu_ref FOREIGN KEY (gtu_ref) REFERENCES gtu (id) ,
@@ -1803,15 +1792,6 @@ comment on column darwin_flat.collection_ref is 'Reference of collection the spe
 comment on column darwin_flat.collection_code is 'Collection code';
 comment on column darwin_flat.collection_name is 'Collection name - i.e.: Vertebrates,...';
 comment on column darwin_flat.collection_is_public is 'Flag telling if collection is public or not';
-comment on column darwin_flat.collection_institution_ref is 'Institution the collection referenced belongs to';
-comment on column darwin_flat.collection_institution_formated_name is 'Institution the collection referenced belongs to - Formated name';
-comment on column darwin_flat.collection_institution_formated_name_ts is 'Institution the collection referenced belongs to - Formated name ts_vector form - used for search purposes';
-comment on column darwin_flat.collection_institution_formated_name_indexed is 'Institution the collection referenced belongs to - Formated name indexed form with fullToIndex - for ordering purposes';
-comment on column darwin_flat.collection_institution_sub_type is 'Institution the collection referenced belongs to - sub type: caracterize the institution: ASBL, Federal institution,...';
-comment on column darwin_flat.collection_main_manager_ref is 'Collection main manager reference';
-comment on column darwin_flat.collection_main_manager_formated_name is 'Collection main manager formated name';
-comment on column darwin_flat.collection_main_manager_formated_name_ts is 'Collection main manager formated name ts vector form - used for search purposes';
-comment on column darwin_flat.collection_main_manager_formated_name_indexed is 'Collection main manager formated name indexed form with fullToIndex - used for ordering purposes';
 comment on column darwin_flat.collection_parent_ref is 'Reference of parent collection';
 comment on column darwin_flat.collection_path is 'Hierarchical path of current collection';
 comment on column darwin_flat.expedition_ref is 'Reference of expedition the current specimen was collected in';
