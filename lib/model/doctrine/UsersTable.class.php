@@ -75,7 +75,7 @@ class UsersTable extends DarwinTable
           ->andWhere('ul.user_name = ?',$username)
           ->andWhere('ul.login_system is null')
           ->andWhere('ul.login_type = ?', 'local')
-          ->andWhere('uc.comm_type = ?', 'e-mail')
+          ->andWhere('uc.comm_type = ?', 'e-mail');
     return $q->fetchOne();
   }
 }
