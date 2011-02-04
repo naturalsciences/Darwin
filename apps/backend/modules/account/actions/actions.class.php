@@ -93,7 +93,11 @@ class accountActions extends DarwinActions
           $user = Doctrine::getTable('Users')->getUserByLoginAndEMail($this->form->getValue('user_name'), 
                                                                       $this->form->getValue('user_email')
                                                                     );
-          
+          if(! $user)
+          {
+            $user = Doctrine::getTable('Users')->getUserByLoginOnly($this->form->getValue('user_name'));
+          }
+
           $renewHash = hash('sha1', sfConfig::get('app_salt').$user->UsersLoginInfos[0]->getUserName());
           $user->UsersLoginInfos[0]->setRenewHash($renewHash);
           $user->UsersLoginInfos[0]->save();
