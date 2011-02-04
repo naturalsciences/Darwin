@@ -104,6 +104,7 @@ class accountActions extends DarwinActions
           $userParams['physical'] = $user->getIsPhysical();
           $userParams['title'] = $user->getTitle();
           $userParams['mail'] = $user->UsersComm[0]->getEntry();
+          $userParams['servername'] = sfConfig::get('app_servername');
 
           // send an email to the registered user
           $this->sendPwdRenewMail($userParams);
