@@ -2202,7 +2202,15 @@
       <trans-unit id="1092">
         <source>Use this search if you look for an I.G Number via an Expedition, or if you look for an expedition via an I.G Number</source>
         <target>Gebruik deze opzoeking indien je een IG nummer via een Expeditie zoekt, of een Expeditie via een IG nummer</target>
-      </trans-unit>       
+      </trans-unit>    
+      <trans-unit id="1093">
+        <source>Expeditions and Igs</source>
+        <target>Expedities en Igs</target>
+      </trans-unit> 
+      <trans-unit id="1094">
+        <source>Forms</source>
+        <target>Formulieren</target>
+      </trans-unit>                
     </body>
   </file>
 </xliff>

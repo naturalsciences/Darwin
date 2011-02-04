@@ -64,7 +64,7 @@
 		                  <?php echo $form['collection_ref'] ; ?>        
                     </div>
                     <div class="check_right">
-                      <input type="button" class="result" value="clear" id="clear_collections">
+                      <input type="button" class="result" value="<?php echo __('Clear') ; ?>" id="clear_collections">
                     </div>
 	                </td>
 	              </tr>

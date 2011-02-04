@@ -98,7 +98,7 @@
       <trans-unit id="34">
         <source>check only editable</source> <target>Sélectionner seulement les éditables</target> </trans-unit>
       <trans-unit id="35">
-        <source>clear</source> <target>Rafraichir</target> </trans-unit>
+        <source>clear</source> <target>Réinitialiser</target> </trans-unit>
       <trans-unit id="36">
         <source>And</source> <target>Et</target> </trans-unit>
       <trans-unit id="37">
@@ -2540,7 +2540,35 @@
       <trans-unit id="1092">
         <source>Use this search if you look for an I.G Number via an Expedition, or if you look for an expedition via an I.G Number</source>
         <target>Utilisez ce menu si vous recherchez un numéro I.G via une expédition, ou si vous recherchez une expédition via un numéro I.G</target>
-      </trans-unit>             
+      </trans-unit>     
+      <trans-unit id="1093">
+        <source>Expeditions and Igs</source>
+        <target>Expéditions et Igs</target>
+      </trans-unit>   
+      <trans-unit id="1094">
+        <source>Forms</source>
+        <target>Formulaires</target>
+      </trans-unit>                
+      <trans-unit id="1095">
+        <source>Display help icons</source>
+        <target>Afficher les icônes d'aide</target>
+      </trans-unit>   
+      <trans-unit id="1096">
+        <source>Is a Child Of</source>
+        <target>Est un enfant de</target>
+      </trans-unit>   
+      <trans-unit id="1097">
+        <source>Is a Direct Child</source>
+        <target>Est un enfant direct de</target>
+      </trans-unit>   
+      <trans-unit id="1098">
+        <source>Is a Synonym Of</source>
+        <target>Est un synonyme de</target>
+      </trans-unit>   
+      <trans-unit id="1099">
+        <source></source>
+        <target></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

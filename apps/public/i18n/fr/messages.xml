@@ -395,7 +395,7 @@
       </trans-unit>
       <trans-unit id="69">
         <source>Clear</source>
-        <target>Nettoyer</target>
+        <target>Réinitialiser</target>
       </trans-unit>
       <trans-unit id="70">
         <source>Search results</source>
