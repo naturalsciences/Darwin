@@ -13,7 +13,7 @@
         <?php echo __('Acquisition date') ?>
       </th>
       <td>
-        <?php echo $spec->getAcquisitionDateMasked(); ?>
+        <?php echo $spec->getAcquisitionDateMasked(ESC_RAW); ?>
       </td>
     </tr>
   </tbody>
