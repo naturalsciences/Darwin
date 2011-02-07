@@ -12,7 +12,7 @@
       <th>
         <?php echo __('Acquisition date') ?>
       </th>
-      <td>
+      <td class="datesNum">
         <?php echo $spec->getAcquisitionDateMasked(ESC_RAW); ?>
       </td>
     </tr>
