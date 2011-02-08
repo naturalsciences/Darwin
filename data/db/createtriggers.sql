@@ -647,14 +647,6 @@ CREATE TRIGGER trg_update_gtu_darwin_flat AFTER UPDATE
         ON gtu FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();
 
-CREATE TRIGGER trg_update_tag_groups_darwin_flat AFTER INSERT OR UPDATE OR DELETE
-        ON tag_groups FOR EACH ROW
-        EXECUTE PROCEDURE fct_update_darwin_flat();
-
-CREATE TRIGGER trg_update_people_darwin_flat AFTER UPDATE
-        ON people FOR EACH ROW
-        EXECUTE PROCEDURE fct_update_darwin_flat();
-
 CREATE TRIGGER trg_update_users_darwin_flat AFTER UPDATE
         ON users FOR EACH ROW
         EXECUTE PROCEDURE fct_update_darwin_flat();
