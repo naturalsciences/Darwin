@@ -432,7 +432,8 @@ create table expeditions
         expedition_from_date date not null default '01/01/0001',
         expedition_to_date_mask integer not null default 0,
         expedition_to_date date not null default '01/01/0001',
-        constraint pk_expeditions primary key (id)
+        constraint pk_expeditions primary key (id),
+        constraint unq_expeditions unique (name_indexed, expedition_from_date, expedition_from_date_mask, expedition_to_date, expedition_to_date_mask)
        );
 comment on table expeditions is 'List of expeditions made to collect specimens';
 comment on column expeditions.id is 'Unique identifier of an expedition';
