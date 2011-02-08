@@ -1185,10 +1185,15 @@ BEGIN
         NEW.property_value_unified := convert_to_unified(NEW.property_value,  property_line.property_unit, property_line.property_sub_type_indexed);
         NEW.property_accuracy_unified := convert_to_unified(NEW.property_accuracy::varchar,  property_line.property_accuracy_unit, property_line.property_sub_type_indexed)::real;
     ELSIF TG_OP = 'UPDATE' THEN
+      IF NEW.property_sub_type_indexed IS DISTINCT FROM OLD.property_sub_type_indexed 
+      OR NEW.property_unit IS DISTINCT FROM OLD.property_unit
+      OR NEW.property_accuracy_unit IS DISTINCT FROM OLD.property_accuracy_unit
+      THEN
         UPDATE properties_values SET
             property_value_unified = convert_to_unified(property_value, NEW.property_unit, NEW.property_sub_type_indexed),
             property_accuracy_unified = convert_to_unified(property_accuracy::varchar,  NEW.property_accuracy_unit, NEW.property_sub_type_indexed)::real
             WHERE property_ref = NEW.id;
+      END IF;
     END IF;
 	RETURN NEW;
 END;
@@ -1879,17 +1884,17 @@ BEGIN
           collection_parent_ref, collection_path
           ) =
           (NEW.collection_type, NEW.code, NEW.name, NEW.is_public,
-          NEW.parent_ref, NEW.path
+           NEW.parent_ref, NEW.path
           )
       WHERE collection_ref = NEW.id;
     END IF;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'gtu' THEN
     UPDATE darwin_flat
     SET (gtu_code, gtu_parent_ref, gtu_path, gtu_from_date, gtu_from_date_mask,
-         gtu_to_date, gtu_to_date_mask, gtu_tag_values_indexed, gtu_location
+        gtu_to_date, gtu_to_date_mask, gtu_tag_values_indexed, gtu_location
         ) =
         (NEW.code, NEW.parent_ref, NEW.path, NEW.gtu_from_date, NEW.gtu_from_date_mask,
-         NEW.gtu_to_date, NEW.gtu_to_date_mask, NEW.tag_values_indexed, new.location
+        NEW.gtu_to_date, NEW.gtu_to_date_mask, NEW.tag_values_indexed, new.location
         )
     WHERE gtu_ref = NEW.id;
   ELSIF TG_OP = 'UPDATE' AND TG_TABLE_NAME = 'igs' THEN
@@ -3005,16 +3010,16 @@ DECLARE
   relation varchar;
   word varchar;
 BEGIN
-  FOR i in 1..array_upper( $1, 1 ) BY 5 LOOP
+  FOR i in 1 .. array_upper( $1, 1 ) BY 5 LOOP
     code_category := $1[i];
     code_part := $1[i+1];
     code_from := $1[i+2];
     code_to := $1[i+3];
     relation := $1[i+4] ;
 
-    IF relation != '' THEN
+    IF relation IS DISTINCT FROM '' AND i = 1 THEN
       sqlString := sqlString || ' where referenced_relation=' || quote_literal(relation) ;
-    ELSE
+    ELSIF i = 1 THEN
       sqlString := sqlString || E' where referenced_relation=\'specimens\''  ;
     END IF ;
 
