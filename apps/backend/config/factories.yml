@@ -76,6 +76,7 @@ all:
     class: sfSessionStorage
     param:
       session_name: darwin2
+      session_cookie_lifetime: 7200
   user:
     class: myUser
     param:
