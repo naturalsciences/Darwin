@@ -28,13 +28,13 @@ class ExpeditionsIgsFormFilter extends SpecimenSearchFormFilter
     $query = DQ::create()
       ->select('DISTINCT i.ig_num, e.name, ig_ref, expedition_ref')
       ->from('SpecimenSearch s')
-      ->leftJoin('s.Expedition e')
-      ->leftJoin('s.Ig i')
+      ->leftJoin('s.Expedition e, s.Ig i')
       ->orderBy('ig_num, name') 
       ->andWhere('i.ig_num != \'\'')
       ->andWhere('e.name != \'\'') ;
-    $this->addNamingColumnQuery($query, 'ig_num', 'indexed', $values['ig_num'],null,'ig_num_indexed');
-    $this->addNamingColumnQuery($query, 'expedition_name', 'indexed', $values['expedition_name'],null,'expedition_name_indexed');    
+    if($values['ig_num'] != '') $query->andWhere('i.ig_num = ?', $values['ig_num']) ;
+    $this->addNamingColumnQuery($query, 'expeditions', 'name_ts', $values['expedition_name'],null,'expedition_name_ts');
+    
     return $query;
   }
   

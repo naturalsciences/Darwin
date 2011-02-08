@@ -2210,7 +2210,24 @@
       <trans-unit id="1094">
         <source>Forms</source>
         <target>Formulieren</target>
-      </trans-unit>                
+      </trans-unit>
+      <trans-unit id="1095">
+        <source>Display help icons</source>
+        <target>Toon de Help iconen </target>
+      </trans-unit>   
+      <trans-unit id="1096">
+        <source>Is a Child Of</source>
+        <target>Is een Kind van</target>
+      </trans-unit>   
+      <trans-unit id="1097">
+        <source>Is a Direct Child</source>
+        <target>Is een rechtstreeks Kind</target>
+      </trans-unit>   
+      <trans-unit id="1098">
+        <source>Is a Synonym Of</source>
+        <target>Is een synoniem van</target>
+      </trans-unit> 
+                           
     </body>
   </file>
 </xliff>
