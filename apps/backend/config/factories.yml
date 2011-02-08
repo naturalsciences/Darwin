@@ -80,6 +80,11 @@ all:
     class: myUser
     param:
       timeout:         3600
+  view_cache:
+    class: sfAPCCache
+#    param:
+#      automaticCleaningFactor: 0
+#      cacheDir:                %SF_TEMPLATE_CACHE_DIR%
 #all:
 #  controller:
 #    class: sfFrontWebController

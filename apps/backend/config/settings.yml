@@ -2,7 +2,7 @@ prod:
   .settings:
     no_script_name:         false
     logging_enabled:        true
-
+    cache:                  on
 dev:
   .settings:
     error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>

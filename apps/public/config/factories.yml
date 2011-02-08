@@ -86,3 +86,7 @@ all:
     param:
       session_name: darwin2
 
+   user:
+     class: myUser
+    param:
+      timeout: 3600
