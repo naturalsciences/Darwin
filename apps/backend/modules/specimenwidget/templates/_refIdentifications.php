@@ -45,8 +45,8 @@ function addIdentifierValue(people_ref,ref_table)
     <tr>
       <th><?php echo $form['ident'];?></th>
       <th><?php echo __('Date'); ?></th>
-      <th><?php echo __('Subject');?></th>
-      <th><?php echo __('Value'); ?></th>
+      <th><?php echo __('Category');?></th>
+      <th><?php echo __('Subject'); ?></th>
       <th><?php echo __('Det. St.'); ?></th>
       <th></th>
     </tr>
