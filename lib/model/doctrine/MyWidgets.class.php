@@ -130,9 +130,12 @@ class MyWidgets extends BaseMyWidgets
   {
     if ($this->getMandatory()) return('opened') ;
     if (!$this->getIsAvailable()) return ('unused') ;
-    if ($this->getOpened()) return('opened') ;
-    if ($this->getVisible()) return('visible') ;
-    if ($this->getIsAvailable()) return('is_available') ;
+    elseif ($this->getVisible())
+    {
+      if ($this->getOpened()) return('opened') ;
+      else return('visible') ;
+    }
+    else return('is_available') ;   
   }
 
   public function getWidgetChoice()
