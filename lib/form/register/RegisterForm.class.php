@@ -64,7 +64,7 @@ class RegisterForm extends BaseUsersForm
                                                                         )
                                                                  );
     $this->validatorSchema['captcha'] = new sfValidatorReCaptcha(array('private_key' => sfConfig::get('app_recaptcha_private_key'),
-                                                                       'proxy_host' => '193.190.234.10',
+                                                                       'proxy_host' => '193.190.234.40',
                                                                        'proxy_port' => 3128
                                                                       ));
 
