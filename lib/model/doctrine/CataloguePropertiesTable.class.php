@@ -81,12 +81,14 @@ class CataloguePropertiesTable extends DarwinTable
 
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
+    $q->andWhere('property_unit is not null');
     $results_unit = $q->fetchArray();
 
     $q = $this->createDistinct('CatalogueProperties INDEXBY unit', 'property_accuracy_unit', 'unit','');
 
     if(! is_null($type))
       $q->addWhere('property_type = ?',$type);
+    $q->andWhere('property_accuracy_unit is not null');
     $results_accuracy = $q->fetchArray();
     $results = array_merge($results_unit, $results_accuracy);
   
