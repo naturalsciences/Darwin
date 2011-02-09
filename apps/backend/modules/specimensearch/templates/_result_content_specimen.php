@@ -6,7 +6,7 @@
       <?php if($specimen->getCategory() == 'mixed' ):?>
         <?php echo __('+');?>
       <?php endif;?>
-      <?php if($specimen->getCategory() == ''  || $specimen->getCategory() == 'mixed' ):?>
+      <?php if($specimen->getCategory() == 'observation'  || $specimen->getCategory() == 'mixed' ):?>
         <?php echo image_tag('blue_eyel.png', array('alt' => __('Other'), 'title'=> __('Other')));?>
       <?php endif;?>
     </td>

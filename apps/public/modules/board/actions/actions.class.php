@@ -12,8 +12,8 @@ class boardActions extends DarwinActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->specimens = Doctrine::getTable('SpecimenSearch')->getRandomSpecimens();
-    $this->count = Doctrine::getTable('SpecimenSearch')->getSpecIndivCount();
+//     $this->specimens = Doctrine::getTable('SpecimenSearch')->getRandomSpecimens();
+//     $this->count = Doctrine::getTable('SpecimenSearch')->getSpecIndivCount();
   }
 
   public function executeTour(sfWebRequest $request)

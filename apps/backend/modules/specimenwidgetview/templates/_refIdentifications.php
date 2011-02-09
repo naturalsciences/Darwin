@@ -2,8 +2,8 @@
   <thead style="<?php echo ($identifications->count()?'':'display: none;');?>" class="spec_ident_head">
     <tr>
       <th><?php echo __('Date'); ?></th>
-      <th><?php echo __('Subject');?></th>
-      <th><?php echo __('Value'); ?></th>
+      <th><?php echo __('Category');?></th>
+      <th><?php echo __('Subject'); ?></th>
       <th><?php echo __('Det. St.'); ?></th>
       <th><?php echo __("Identifiers") ; ?></th>
     </tr>
