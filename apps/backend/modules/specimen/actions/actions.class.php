@@ -418,12 +418,11 @@ class specimenActions extends DarwinActions
     }
     catch(Doctrine_Connection_Pgsql_Exception $e)
     {
-      $request->checkCSRFProtection();
       $this->form = new specimensForm($spec);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
-      $this->setTemplate('edit');
+      $this->setTemplate('new');
       return ;
     }
     $this->redirect('specimensearch/index');
