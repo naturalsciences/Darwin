@@ -29,6 +29,7 @@ class ExpeditionsIgsFormFilter extends SpecimenSearchFormFilter
       ->select('DISTINCT i.ig_num, e.name, ig_ref, expedition_ref')
       ->from('SpecimenSearch s')
       ->leftJoin('s.Expedition e, s.Ig i')
+      ->groupBy('i.ig_num')
       ->orderBy('ig_num, name') 
       ->andWhere('i.ig_num != \'\'')
       ->andWhere('e.name != \'\'') ;
