@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(115);
+SELECT plan(101);
 
 SELECT diag('Darwin flat synchro tests');
 
@@ -48,8 +48,6 @@ SELECT ok('physical' = (SELECT category FROM darwin_flat WHERE id = 1), 'It''s w
 SELECT ok(100001 = (SELECT collection_ref FROM darwin_flat WHERE id = 1), 'Collection referenced is well "100001".');
 SELECT ok('mix' = (SELECT collection_type FROM darwin_flat WHERE id = 1), 'Collection referenced type is well "mix".');
 SELECT ok('Bulots Af.' = (SELECT collection_code FROM darwin_flat WHERE id = 1), 'Collection referenced code is well "Bulots Af.".');
-SELECT ok('Institut des Cocinnelles' = (SELECT collection_institution_formated_name FROM darwin_flat WHERE id = 1), 'Collection referenced institution is well "Institut des Cocinnelles".');
-SELECT ok('Jos Chevremont' = (SELECT trim(collection_main_manager_formated_name) FROM darwin_flat WHERE id = 1), 'Collection referenced manager is well "Jos Chevremont".');
 SELECT ok('Atlantic city 2010' = (SELECT expedition_name FROM darwin_flat WHERE id = 1), 'Expedition is well "Atlantic city 2010".');
 SELECT ok (ARRAY['belgium','belgie','belgique','brussel','bruxelles','brussels','brusel']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 1), 'Tag list is correct');
 SELECT ok ('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwin_flat WHERE id = 1), 'Country Tag value is correct');
@@ -64,8 +62,6 @@ SELECT ok('physical' = (SELECT category FROM darwin_flat WHERE id = 2), 'It''s w
 SELECT ok(100005 = (SELECT collection_ref FROM darwin_flat WHERE id = 2), 'Collection referenced is well "100002".');
 SELECT ok('mix' = (SELECT collection_type FROM darwin_flat WHERE id = 2), 'Collection referenced type is well "mix".');
 SELECT ok('Crétins EU' = (SELECT collection_code FROM darwin_flat WHERE id = 2), 'Collection referenced code is well "Crétins EU".');
-SELECT ok('Centre d''écologie urbaine' = (SELECT collection_institution_formated_name FROM darwin_flat WHERE id = 2), 'Collection referenced institution is well "Centre d''écologie urbaine".');
-SELECT ok('Paul Damblon' = (SELECT trim(collection_main_manager_formated_name) FROM darwin_flat WHERE id = 2), 'Collection referenced manager is well "Paul Damblon".');
 SELECT ok('Bruxelles-Brussels' = (SELECT expedition_name FROM darwin_flat WHERE id = 2), 'Expedition is well "Bruxelles-Brussels".');
 SELECT ok (ARRAY['belgium','belgie','belgique','brugge','bruge']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 2), 'Tag list is correct');
 SELECT ok ('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwin_flat WHERE id = 2), 'Country Tag value is correct');
@@ -81,24 +77,15 @@ SELECT ok('240276' = (SELECT ig_num FROM darwin_flat WHERE id = 2), 'ig num "240
 UPDATE users SET family_name = 'Jojoba', formated_name = 'Jojoba' WHERE id = 100000;
 UPDATE users SET family_name = 'Caloulou', formated_name = 'Caloulou' WHERE id = 100001;
 
-SELECT ok('Jojoba' = (SELECT trim(collection_main_manager_formated_name) FROM darwin_flat WHERE id = 1), 'Collection referenced manager is well now "Jojoba" for specimen 1.');
-SELECT ok('Caloulou' = (SELECT trim(collection_main_manager_formated_name) FROM darwin_flat WHERE id = 2), 'Collection referenced manager is well now "Caloulou" for specimen 2.');
 
 -- UPDATE of collection institution data -> for people trigger check
 
 UPDATE people SET sub_type = 'Small Institution' WHERE id = 100002;
 UPDATE people SET family_name = 'ECOLO', formated_name = 'ECOLO' WHERE id = 100003;
 
-SELECT ok('Small Institution' = (SELECT collection_institution_sub_type FROM darwin_flat WHERE id = 1), 'Collection referenced institution sub type is well now "Small Institution" for specimen 1.');
-SELECT ok('ASBL' = (SELECT collection_institution_sub_type FROM darwin_flat WHERE id = 2), 'Collection referenced institution sub type is well "ASBL" for specimen 2.');
-SELECT ok('ECOLO' = (SELECT collection_institution_formated_name FROM darwin_flat WHERE id = 2), 'Collection referenced institution is well now "ECOLO" for specimen 2.');
-
 -- UPDATE of 3 collections institution and main manager reference data -> for collections trigger check
 
 UPDATE collections SET institution_ref = 100003, main_manager_ref = 100001 WHERE id = 100000;
-
-SELECT ok('ASBL' = (SELECT collection_institution_sub_type FROM darwin_flat WHERE id = 1), 'Collection referenced institution sub type is well "ASBL" for specimen 1.');
-SELECT ok('ECOLO' = (SELECT collection_institution_formated_name FROM darwin_flat WHERE id = 1), 'Collection referenced institution is well now "ECOLO" for specimen 1.');
 
 -- UPDATE of tag_value of cities for gtu 100001 -> should have no impact on gtu_country_tag_value but well on gtu_tag_values_indexed
 
@@ -152,9 +139,6 @@ UPDATE specimens SET collection_ref = 100006, gtu_ref = 100000, taxon_ref = 1000
 
 SELECT ok('Crétins US.' = (SELECT collection_code FROM darwin_flat WHERE id = 2), 'Collection referenced code is well "Crétins US".');
 SELECT ok('Crétins américains' = (SELECT collection_name FROM darwin_flat WHERE id = 2), 'Collection referenced name is well "Crétins américains".');
-SELECT ok('ASBL' = (SELECT collection_institution_sub_type FROM darwin_flat WHERE id = 2), 'Collection referenced institution sub type is well "ASBL".');
-SELECT ok('ECOLO' = (SELECT collection_institution_formated_name FROM darwin_flat WHERE id = 2), 'Collection referenced institution is well "ECOLO".');
-SELECT ok('Caloulou' = (SELECT trim(collection_main_manager_formated_name) FROM darwin_flat WHERE id = 2), 'Collection referenced manager is well "Caloulou".');
 SELECT ok(ARRAY['belgium','belgie','belgique']::varchar[] = (SELECT gtu_tag_values_indexed FROM darwin_flat WHERE id = 2), 'Tag list is correct');
 SELECT ok('Belgique;Belgium;Belgïe' = (SELECT gtu_country_tag_value FROM darwin_flat WHERE id = 2), 'Country Tag value is correct');
 SELECT ok('BELGO' = (SELECT gtu_code FROM darwin_flat WHERE id = 2), 'The gtu has been well updated ;)');
