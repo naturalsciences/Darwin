@@ -28,6 +28,7 @@
  * @property Doctrine_Collection $SpecimenSearch
  * @property Doctrine_Collection $IndividualSearch
  * @property Doctrine_Collection $PartSearch
+ * @property Doctrine_Collection $IgsSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getName()                  Returns the current record's "name" value
@@ -52,6 +53,7 @@
  * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
  * @method Doctrine_Collection getIndividualSearch()      Returns the current record's "IndividualSearch" collection
  * @method Doctrine_Collection getPartSearch()            Returns the current record's "PartSearch" collection
+ * @method Doctrine_Collection getIgsSearch()             Returns the current record's "IgsSearch" collection
  * @method Mineralogy          setId()                    Sets the current record's "id" value
  * @method Mineralogy          setName()                  Sets the current record's "name" value
  * @method Mineralogy          setNameIndexed()           Sets the current record's "name_indexed" value
@@ -75,6 +77,7 @@
  * @method Mineralogy          setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * @method Mineralogy          setIndividualSearch()      Sets the current record's "IndividualSearch" collection
  * @method Mineralogy          setPartSearch()            Sets the current record's "PartSearch" collection
+ * @method Mineralogy          setIgsSearch()             Sets the current record's "IgsSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -179,6 +182,10 @@ abstract class BaseMineralogy extends sfDoctrineRecord
              'foreign' => 'mineral_ref'));
 
         $this->hasMany('PartSearch', array(
+             'local' => 'id',
+             'foreign' => 'mineral_ref'));
+
+        $this->hasMany('IgsSearch', array(
              'local' => 'id',
              'foreign' => 'mineral_ref'));
     }

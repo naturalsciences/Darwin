@@ -27,7 +27,7 @@ class expeditionsIgsActions extends DarwinActions
   {
     // Forward to a 404 page if the method used is not a post
     $this->forward404Unless($request->isMethod('post'));
-    $this->setCommonValues('expeditionIgs', 'i.ig_num', $request);
+    $this->setCommonValues('expeditionIgs', 'ig_num', $request);
     // Instantiate a new expedition form
     $this->form = new ExpeditionsIgsFormFilter();
     // Triggers the search result function

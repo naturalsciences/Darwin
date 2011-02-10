@@ -23,6 +23,7 @@
  * @property Doctrine_Collection $SpecimenSearch
  * @property Doctrine_Collection $IndividualSearch
  * @property Doctrine_Collection $PartSearch
+ * @property Doctrine_Collection $IgsSearch
  * 
  * @method integer             getId()                             Returns the current record's "id" value
  * @method integer             getSpecimenRef()                    Returns the current record's "specimen_ref" value
@@ -42,6 +43,7 @@
  * @method Doctrine_Collection getSpecimenSearch()                 Returns the current record's "SpecimenSearch" collection
  * @method Doctrine_Collection getIndividualSearch()               Returns the current record's "IndividualSearch" collection
  * @method Doctrine_Collection getPartSearch()                     Returns the current record's "PartSearch" collection
+ * @method Doctrine_Collection getIgsSearch()                      Returns the current record's "IgsSearch" collection
  * @method SpecimenIndividuals setId()                             Sets the current record's "id" value
  * @method SpecimenIndividuals setSpecimenRef()                    Sets the current record's "specimen_ref" value
  * @method SpecimenIndividuals setType()                           Sets the current record's "type" value
@@ -60,6 +62,7 @@
  * @method SpecimenIndividuals setSpecimenSearch()                 Sets the current record's "SpecimenSearch" collection
  * @method SpecimenIndividuals setIndividualSearch()               Sets the current record's "IndividualSearch" collection
  * @method SpecimenIndividuals setPartSearch()                     Sets the current record's "PartSearch" collection
+ * @method SpecimenIndividuals setIgsSearch()                      Sets the current record's "IgsSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -155,6 +158,10 @@ abstract class BaseSpecimenIndividuals extends sfDoctrineRecord
              'foreign' => 'individual_ref'));
 
         $this->hasMany('PartSearch', array(
+             'local' => 'id',
+             'foreign' => 'individual_ref'));
+
+        $this->hasMany('IgsSearch', array(
              'local' => 'id',
              'foreign' => 'individual_ref'));
     }

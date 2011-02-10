@@ -423,7 +423,7 @@ class specimenActions extends DarwinActions
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
-      $this->setTemplate('edit');
+      $this->setTemplate('new');
       return ;
     }
     $this->redirect('specimensearch/index');
