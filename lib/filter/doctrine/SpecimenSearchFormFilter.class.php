@@ -781,7 +781,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query = DQ::create()
         ->from('IndividualSearch s')
         ->select($str .' MIN(id) as id,  false as with_types')
-        ->andWhere('individual_ref != 0 ')
+        ->andWhere('individual_ref is not null ')
         ->groupBy('individual_ref');
     }
     else
@@ -791,7 +791,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $str = implode(', ',$array_fld);
       $query = DQ::create()
         ->select($str.' , false as with_types,id')
-        ->andWhere('part_ref != 0 ')
+        ->andWhere('part_ref is not null ')
         ->from('PartSearch s');
     }
     if($values['what_searched'] != 'part')
