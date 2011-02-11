@@ -61,7 +61,7 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_path on darwin_flat(litholog
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_path on darwin_flat(mineral_path);*/
 CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_extinct on darwin_flat(taxon_extinct);
 /*CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_extinct on darwin_flat(host_taxon_extinct);*/
-CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_num on darwin_flat(ig_num);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_num on darwin_flat(ig_num_indexed);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_acquisition_category on darwin_flat(acquisition_category);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_count_min on darwin_flat(individual_count_min);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_count_max on darwin_flat(individual_count_max);
