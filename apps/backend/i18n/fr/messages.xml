@@ -314,7 +314,7 @@
       <trans-unit id="142">
         <source>Room :</source> <target>Salle :</target> </trans-unit>
       <trans-unit id="143">
-        <source>Row :</source> <target>Rayon :</target> </trans-unit>
+        <source>Row :</source> <target>Rangée :</target> </trans-unit>
       <trans-unit id="144">
         <source>Shelf :</source> <target>Plateau :</target> </trans-unit>
       <trans-unit id="145">
@@ -384,7 +384,7 @@
       <trans-unit id="177">
         <source>Room</source> <target>Salle</target> </trans-unit>
       <trans-unit id="178">
-        <source>Row</source> <target>Rayon</target> </trans-unit>
+        <source>Row</source> <target>Rangée</target> </trans-unit>
       <trans-unit id="179">
         <source>Shelf</source> <target>Plateau</target> </trans-unit>
       <trans-unit id="180">
@@ -1826,7 +1826,7 @@
       <trans-unit id="873">
         <source>Change Room</source> <target>Changer de salle</target> </trans-unit>
       <trans-unit id="874">
-        <source>Change Row</source> <target>Changer de rayon</target> </trans-unit>
+        <source>Change Row</source> <target>Changer de rangée</target> </trans-unit>
       <trans-unit id="875">
         <source>Change Shelf</source> <target>Changer de plateau</target> </trans-unit>
       <trans-unit id="876">
@@ -1870,9 +1870,9 @@
       <trans-unit id="895">
         <source>Choose New Room</source> <target>Choisir une nouvelle salle</target> </trans-unit>
       <trans-unit id="896">
-        <source>Add another Row</source> <target>Ajouter un nouveau rayon</target> </trans-unit>
+        <source>Add another Row</source> <target>Ajouter une nouvelle rangée</target> </trans-unit>
       <trans-unit id="897">
-        <source>Choose New Row</source> <target>Choisir un nouveau rayon</target> </trans-unit>
+        <source>Choose New Row</source> <target>Choisir une nouvelle rangée</target> </trans-unit>
       <trans-unit id="898">
         <source>Add another Sex</source> <target>Ajouter un nouveau sexe</target> </trans-unit>
       <trans-unit id="899">

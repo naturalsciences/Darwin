@@ -32,6 +32,7 @@
  * @property Doctrine_Collection $SpecimenSearch
  * @property Doctrine_Collection $IndividualSearch
  * @property Doctrine_Collection $PartSearch
+ * @property Doctrine_Collection $IgsSearch
  * 
  * @method integer             getId()                      Returns the current record's "id" value
  * @method string              getPath()                    Returns the current record's "path" value
@@ -60,6 +61,7 @@
  * @method Doctrine_Collection getSpecimenSearch()          Returns the current record's "SpecimenSearch" collection
  * @method Doctrine_Collection getIndividualSearch()        Returns the current record's "IndividualSearch" collection
  * @method Doctrine_Collection getPartSearch()              Returns the current record's "PartSearch" collection
+ * @method Doctrine_Collection getIgsSearch()               Returns the current record's "IgsSearch" collection
  * @method SpecimenParts       setId()                      Sets the current record's "id" value
  * @method SpecimenParts       setPath()                    Sets the current record's "path" value
  * @method SpecimenParts       setParentRef()               Sets the current record's "parent_ref" value
@@ -87,6 +89,7 @@
  * @method SpecimenParts       setSpecimenSearch()          Sets the current record's "SpecimenSearch" collection
  * @method SpecimenParts       setIndividualSearch()        Sets the current record's "IndividualSearch" collection
  * @method SpecimenParts       setPartSearch()              Sets the current record's "PartSearch" collection
+ * @method SpecimenParts       setIgsSearch()               Sets the current record's "IgsSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -212,6 +215,10 @@ abstract class BaseSpecimenParts extends sfDoctrineRecord
              'foreign' => 'part_ref'));
 
         $this->hasMany('PartSearch', array(
+             'local' => 'id',
+             'foreign' => 'part_ref'));
+
+        $this->hasMany('IgsSearch', array(
              'local' => 'id',
              'foreign' => 'part_ref'));
     }

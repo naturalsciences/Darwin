@@ -45,6 +45,7 @@
  * @property Doctrine_Collection $SpecimenSearch
  * @property Doctrine_Collection $IndividualSearch
  * @property Doctrine_Collection $PartSearch
+ * @property Doctrine_Collection $IgsSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getCategory()              Returns the current record's "category" value
@@ -86,6 +87,7 @@
  * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
  * @method Doctrine_Collection getIndividualSearch()      Returns the current record's "IndividualSearch" collection
  * @method Doctrine_Collection getPartSearch()            Returns the current record's "PartSearch" collection
+ * @method Doctrine_Collection getIgsSearch()             Returns the current record's "IgsSearch" collection
  * @method Specimens           setId()                    Sets the current record's "id" value
  * @method Specimens           setCategory()              Sets the current record's "category" value
  * @method Specimens           setCollectionRef()         Sets the current record's "collection_ref" value
@@ -126,6 +128,7 @@
  * @method Specimens           setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * @method Specimens           setIndividualSearch()      Sets the current record's "IndividualSearch" collection
  * @method Specimens           setPartSearch()            Sets the current record's "PartSearch" collection
+ * @method Specimens           setIgsSearch()             Sets the current record's "IgsSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -301,6 +304,10 @@ abstract class BaseSpecimens extends sfDoctrineRecord
              'foreign' => 'spec_ref'));
 
         $this->hasMany('PartSearch', array(
+             'local' => 'id',
+             'foreign' => 'spec_ref'));
+
+        $this->hasMany('IgsSearch', array(
              'local' => 'id',
              'foreign' => 'spec_ref'));
     }

@@ -22,6 +22,7 @@
  * @property Doctrine_Collection $SpecimenSearch
  * @property Doctrine_Collection $IndividualSearch
  * @property Doctrine_Collection $PartSearch
+ * @property Doctrine_Collection $IgsSearch
  * 
  * @method integer             getId()                    Returns the current record's "id" value
  * @method string              getName()                  Returns the current record's "name" value
@@ -40,6 +41,7 @@
  * @method Doctrine_Collection getSpecimenSearch()        Returns the current record's "SpecimenSearch" collection
  * @method Doctrine_Collection getIndividualSearch()      Returns the current record's "IndividualSearch" collection
  * @method Doctrine_Collection getPartSearch()            Returns the current record's "PartSearch" collection
+ * @method Doctrine_Collection getIgsSearch()             Returns the current record's "IgsSearch" collection
  * @method Taxonomy            setId()                    Sets the current record's "id" value
  * @method Taxonomy            setName()                  Sets the current record's "name" value
  * @method Taxonomy            setNameIndexed()           Sets the current record's "name_indexed" value
@@ -57,6 +59,7 @@
  * @method Taxonomy            setSpecimenSearch()        Sets the current record's "SpecimenSearch" collection
  * @method Taxonomy            setIndividualSearch()      Sets the current record's "IndividualSearch" collection
  * @method Taxonomy            setPartSearch()            Sets the current record's "PartSearch" collection
+ * @method Taxonomy            setIgsSearch()             Sets the current record's "IgsSearch" collection
  * 
  * @package    darwin
  * @subpackage model
@@ -140,6 +143,10 @@ abstract class BaseTaxonomy extends sfDoctrineRecord
              'foreign' => 'taxon_ref'));
 
         $this->hasMany('PartSearch', array(
+             'local' => 'id',
+             'foreign' => 'taxon_ref'));
+
+        $this->hasMany('IgsSearch', array(
              'local' => 'id',
              'foreign' => 'taxon_ref'));
     }
