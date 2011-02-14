@@ -121,8 +121,23 @@ class individualsActions extends DarwinActions
         catch(Doctrine_Exception $ne)
         {
           $e = new DarwinPgErrorParser($ne);
-          $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-          $this->individual->getErrorSchema()->addError($error, 'Darwin2 :'); 
+          $extd_message = '';
+          if(preg_match('/unique constraint "unq_specimen_individuals"/i',$ne->getMessage()))
+          {
+            $dup_spec = Doctrine::getTable('SpecimenIndividuals')->findDuplicate($this->individual->getObject());
+            if(!$dup_spec)
+            {
+                $this->logMessage('Duplicate Individual not found: '. json_encode($this->individual->getObject()->toArray()), 'err');
+            }
+            else
+            {
+              $extd_message = '<br /><a href="'.$this->getController()->genUrl( 'individuals/edit?id='.$dup_spec->getId() ).'">'.
+                $this->getI18N()->__('Go the the original record')
+                .'</a>';
+            }
+          }
+          $error = new sfValidatorError(new savedValidator(),$e->getMessage().$extd_message);
+          $this->individual->getErrorSchema()->addError($error, 'Darwin2 :');
         }
       }
     }

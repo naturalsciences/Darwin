@@ -17,6 +17,10 @@ class Specimens extends BaseSpecimens
     return $from_date->getDateTimeMaskedAsArray();
   }
 
+  public function getRawAcquisitionDate()
+  {
+    return $this->_get('acquisition_date');
+  }
   public function setAcquisitionDate($fd)
   {
     if ($fd instanceof FuzzyDateTime)

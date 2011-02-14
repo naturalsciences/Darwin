@@ -16,6 +16,22 @@ class SpecimenIndividualsTable extends DarwinTable
       'specimen_individuals_count_min' => 'specimenIndividualCount' ,
       'specimen_individuals_count_min' => 'specimenIndividualCount' 
     );
+
+
+  public function findDuplicate($object)
+  {
+    $q = Doctrine_Query::create()
+      ->from('SpecimenIndividuals s')
+      ->andwhere('s.specimen_ref = ?', $object->getSpecimenRef())
+      ->andwhere('s.type = ?', $object->getType())
+      ->andwhere('s.sex = ?', $object->getSex())
+      ->andwhere('s.stage = ?', $object->getStage())
+      ->andwhere('s.state = ?', $object->getState())
+      ->andwhere('s.social_status = ?', $object->getSocialStatus())
+      ->andwhere('s.rock_form = ?', $object->getRockForm());
+    return $q->fetchOne(); 
+  }
+
     /**
     * Get distinct Types
     * @return Doctrine_collection with distinct "types" as column

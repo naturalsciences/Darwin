@@ -40,6 +40,26 @@ class SpecimensTable extends DarwinTable
     'collecting_method' => 'tool' ,
     'collecting_tool' => 'tool' ,
   );
+
+
+  public function findDuplicate($object)
+  {
+    $q = Doctrine_Query::create()
+      ->from('Specimens s')
+      ->where('s.collection_ref = ?', $object->getCollectionRef())
+      ->andwhere('s.expedition_ref = ?', $object->getExpeditionRef())
+      ->andwhere('s.gtu_ref = ?', $object->getGtuRef())
+      ->andwhere('s.taxon_ref = ?', $object->getTaxonRef())
+      ->andwhere('s.litho_ref = ?', $object->getLithoRef())
+      ->andwhere('s.chrono_ref = ?', $object->getChronoRef())
+      ->andwhere('s.lithology_ref = ?', $object->getLithologyRef())
+      ->andwhere('s.mineral_ref = ?', $object->getMineralRef())
+      ->andwhere('s.host_taxon_ref = ?', $object->getHostTaxonRef())
+      ->andwhere('s.acquisition_category = ?', $object->getAcquisitionCategory())
+      ->andwhere('s.acquisition_date = ?', $object->getRawAcquisitionDate());
+    return $q->fetchOne(); 
+  }
+
   /**
   * Get differents acquisition categories
   * @return array of key/value of acquisition categories

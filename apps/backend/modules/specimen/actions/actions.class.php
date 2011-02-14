@@ -284,7 +284,22 @@ class specimenActions extends DarwinActions
       catch(Doctrine_Exception $ne)
       {
         $e = new DarwinPgErrorParser($ne);
-        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $extd_message = '';
+        if(preg_match('/unique constraint "unq_specimens"/i',$ne->getMessage()))
+        {
+          $dup_spec = Doctrine::getTable('Specimens')->findDuplicate($form->getObject());
+          if(!$dup_spec)
+          {
+              $this->logMessage('Duplicate Specimen not found: '. json_encode($form->getObject()->toArray()), 'err');
+          }
+          else
+          {
+            $extd_message = '<br /><a href="'.$this->getController()->genUrl( 'specimen/edit?id='.$dup_spec->getId() ).'">'.
+              $this->getI18N()->__('Go the the original record')
+              .'</a>';
+          }
+        }
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage().$extd_message);
         $form->getErrorSchema()->addError($error, 'Darwin2 :');
       }
     }
