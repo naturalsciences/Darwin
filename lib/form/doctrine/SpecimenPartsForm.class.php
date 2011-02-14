@@ -300,7 +300,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     {
       foreach(Doctrine::getTable('Insurances')->findForTable('specimen_parts', $this->getObject()->getId()) as $key=>$vals)
       {
-        $form = new CommentsSubForm($vals,array('table' => 'parts'));
+        $form = new InsurancesSubForm($vals,array('table' => 'parts'));
         $this->embeddedForms['Insurances']->embedForm($key, $form);
       }
       //Re-embedding the container
