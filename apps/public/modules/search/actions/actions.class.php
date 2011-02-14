@@ -84,10 +84,6 @@ class searchActions extends DarwinActions
       if(!count($this->common_names))
         $this->common_names = array('taxonomy'=> array(), 'chronostratigraphy' => array(), 'lithostratigraphy' => array(), 
                                     'lithology' => array(),'mineralogy' => array()) ;
-      $listId = array() ;
-      foreach($this->search as $spec)
-          if ($spec->getGtuRef()!=0) $listId[] = $spec->getGtuRef() ;
-      $this->gtu = Doctrine::getTable('Gtu')->getCountries($listId);
       return;
     }
     $this->setTemplate('index'); 

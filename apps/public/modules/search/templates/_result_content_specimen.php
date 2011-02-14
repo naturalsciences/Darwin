@@ -56,8 +56,8 @@
     </td>
 
     <td class="col_gtu">
-      <?php if($specimen->getGtuRef() != 0 && isset($gtu[$specimen->getGtuRef()])) : ?>
-          <?php echo $gtu->getRaw($specimen->getGtuRef()) ; ?>
+      <?php if($specimen->getGtuRef() != 0 ) : ?>
+          <?php echo $specimen->getCountryTags(ESC_RAW) ; ?>
       <?php endif ; ?>
     </td>
     <td class="col_chrono">
