@@ -105,7 +105,7 @@ class BaseMassActionForm extends sfFormSymfony
       return 'sfForm';
   }
 
-  public function doMassAction($user_id)
+  public function doMassAction($user_id, $is_admin = false)
   {
     if($this->isBound() && $this->isValid())
     {
@@ -113,19 +113,22 @@ class BaseMassActionForm extends sfFormSymfony
       if($this->getValue('source') == 'specimen')
       {
         $query = Doctrine_Query::create()->update('Specimens s');
-        $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$this->getValue('item_list')),'spec_ref', $user_id));
+        if($is_admin == false)
+           $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$this->getValue('item_list')),'spec_ref', $user_id));
 
       }
       elseif($this->getValue('source') == 'individual')
       {
         $query = Doctrine_Query::create()->update('SpecimenIndividuals s');
-        $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$this->getValue('item_list')),'individual_ref', $user_id));
+        if($is_admin == false)
+          $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array(implode(',',$this->getValue('item_list')),'individual_ref', $user_id));
 
       }
       else
       {
         $query = Doctrine_Query::create()->update('SpecimenParts s');
-        $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array( implode(',',$this->getValue('item_list')),'part_ref', $user_id));
+        if($is_admin == false)
+          $query->andWhere('s.id in (select fct_filter_encodable_row(?,?,?))', array( implode(',',$this->getValue('item_list')),'part_ref', $user_id));
       }
 
 

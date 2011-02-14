@@ -27,7 +27,7 @@ class massactionsActions extends DarwinActions
       $this->form->bind($actions);
       if($this->form->isValid())
       {
-        $this->form->doMassAction($this->getUser()->getId());
+        $this->form->doMassAction($this->getUser()->getId(), $this->getUser()->isAtLeast(Users::ADMIN));
         $nb_item = count($this->form->getValue('item_list'));
         $this->redirect('massactions/status?nb_item='.$nb_item);
       }
@@ -56,7 +56,7 @@ class massactionsActions extends DarwinActions
   {
     $this->source = $request->getParameter('source','specimen');
     $items_ids = $this->getUser()->getAllPinned($this->source);
-    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids, $this->source, $this->getUser()->getId());
+    $this->items = Doctrine::getTable('SpecimenSearch')->getByMultipleIds($items_ids, $this->source, $this->getUser()->getId(), $this->getUser()->isAtLeast(Users::ADMIN));
   }
   
 }
