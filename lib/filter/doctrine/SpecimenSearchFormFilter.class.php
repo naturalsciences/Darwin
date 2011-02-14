@@ -221,7 +221,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                   );
     /* Acquisition categories */
     $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
-      'choices' =>  SpecimensTable::getDistinctCategories(),
+      'choices' =>  array_merge(array('' => ''),SpecimensTable::getDistinctCategories()),
     ));
 
     $this->widgetSchema['acquisition_from_date'] = new widgetFormJQueryFuzzyDate($this->getDateItemOptions(),
@@ -835,7 +835,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $query = parent::doBuildQuery($values);
 
     $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());
-    if ($values['acquisition_category'] != 'undefined' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
+    if ($values['acquisition_category'] != '' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));    
