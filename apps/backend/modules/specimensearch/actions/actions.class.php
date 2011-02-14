@@ -224,7 +224,7 @@ class specimensearchActions extends DarwinActions
   */
   private function getVisibleColumns(sfBasicSecurityUser $user, sfForm $form, $as_string = false)
   {
-    $flds = array('category','collection','taxon','type','gtu','codes','chrono','ig',
+    $flds = array('category','collection','taxon','type','gtu','codes','chrono','ig','acquisition_category',
               'litho','lithologic','mineral','expedition','type', 'individual_type','sex','state','stage','social_status','rock_form','individual_count',
               'part','part_status', 'building', 'floor', 'room', 'row', 'shelf', 'container', 'container_type',  'container_storage', 'sub_container',
               'sub_container_type' , 'sub_container_storage', 'part_count','part_codes');
@@ -375,6 +375,9 @@ class specimensearchActions extends DarwinActions
       'expedition' => array(
         'expedition_name_indexed',
         $this->getI18N()->__('Expedition'),),
+      'acquisition_category' => array(
+        'acquisition_category_name_order_by',
+        $this->getI18N()->__('Acquisition category'),),        
     );
 
     if($source != 'specimen')

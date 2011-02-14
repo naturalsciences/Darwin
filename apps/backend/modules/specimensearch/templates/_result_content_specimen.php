@@ -244,3 +244,6 @@
         <a href="<?php echo url_for('expedition/'.$action.'?id='.$specimen->getExpeditionRef());?>"><?php echo $specimen->getExpeditionName();?></a>
       <?php endif ; ?>
     </td>
+    <td class="col_acquisition_category">
+        <?php echo $specimen->getAcquisitionCategory();?>
+    </td>    

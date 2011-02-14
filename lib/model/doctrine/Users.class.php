@@ -85,7 +85,7 @@ class Users extends BaseUsers
   * use user id and db_user_type
   * @return the number of widget added
   */
-  public function addUserWidgets()
+  public function addUserWidgets($thisWidget = null)
   {
     $count_widget = 0;
     $array_right = Users::getTypes(array('db_user_type' => self::ADMIN)) ;
@@ -98,6 +98,7 @@ class Users extends BaseUsers
         $array = $data->loadData($file);
         foreach ($array as $widget => $array_values)
         {
+          if($thisWidget && ($thisWidget['name'] != $array_values['group_name'] || $thisWidget['category'] != $array_values['category'])) continue;
           $pref = new MyWidgets() ;
           $array_values['user_ref'] = $this->getId();
           $pref->fromArray($array_values);

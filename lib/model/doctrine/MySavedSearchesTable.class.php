@@ -72,7 +72,8 @@ class MySavedSearchesTable extends DarwinTable
       'lithologic'=>'Lithology',
       'expedition'=>'Expedition',
       'mineral'=>'Mineralogy',
-      'count'=>'Count'
+      'count'=>'Count',
+      'acquisition_category' => 'Acquisition category'
     );
     if($source == 'individual' || $source == 'part')
     {

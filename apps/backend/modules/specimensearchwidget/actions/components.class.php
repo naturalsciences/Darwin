@@ -117,7 +117,12 @@ class specimensearchwidgetComponents extends sfComponents
   {
     $this->defineForm();
   }
-
+  
+  public function executeAcquisitions()
+  {
+    $this->defineForm();
+  }
+  
   public function executeContainer()
   {
     $this->defineForm();

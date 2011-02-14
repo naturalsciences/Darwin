@@ -78,6 +78,7 @@ class MyWidgets extends BaseMyWidgets
         "social" => "Via this widget you can look up those records where the individuals belong to the selected social status. E.g. look up all worker ants.",
         "rockform" => "Via this widget you can look up one or more sterioscopic rock forms.",
         "refIgs" => "Via this widget you can either look up by General inventory number (I.G.) or by looking up in a range of I.G. creation dates.",
+        "acquisitions" => "Via this widget you can either look up by type of acquisition or by looking up in a range acquisition dates.",        
         ),
     "specimenwidget"=> array(
         "refChrono" => "This widget allows you to add the reference to a chonostratigraphic unit.",

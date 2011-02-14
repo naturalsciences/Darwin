@@ -294,6 +294,17 @@ sps21:
    visible: false
    title_perso: Expedition  
    all_public: true
+   
+sps22:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: acquisitions
+   mandatory: false
+   order_by: 10
+   opened: true
+   visible: false
+   title_perso: Acquisitions  
+   all_public: true   
 
 sw1:
    col_num: 1

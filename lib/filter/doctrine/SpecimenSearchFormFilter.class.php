@@ -16,7 +16,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
       $this->useFields(array('building','floor','room','row','shelf','gtu_code','gtu_from_date','gtu_to_date', 'taxon_level_ref', 'litho_name', 'litho_level_ref', 'litho_level_name', 'chrono_name', 'chrono_level_ref',
         'chrono_level_name', 'lithology_name', 'lithology_level_ref', 'lithology_level_name', 'mineral_name', 'mineral_level_ref',
-        'mineral_level_name','ig_num'));
+        'mineral_level_name','ig_num','acquisition_category','acquisition_date'));
 
     $this->addPagerItems();
 
@@ -219,7 +219,37 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                          'code_ref_relation' => 'Code of'
                                         )
                                   );
+    /* Acquisition categories */
+    $this->widgetSchema['acquisition_category'] = new sfWidgetFormChoice(array(
+      'choices' =>  SpecimensTable::getDistinctCategories(),
+    ));
 
+    $this->widgetSchema['acquisition_from_date'] = new widgetFormJQueryFuzzyDate($this->getDateItemOptions(),
+                                                                                array('class' => 'from_date')
+                                                                               );
+    $this->widgetSchema['acquisition_to_date'] = new widgetFormJQueryFuzzyDate($this->getDateItemOptions(),
+                                                                              array('class' => 'to_date')
+                                                                             );
+    $this->widgetSchema->setLabels(array('acquisition_from_date' => 'Between',
+                                         'acquisition_to_date' => 'and',
+                                        )
+                                  );
+    $this->validatorSchema['acquisition_from_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                                  'from_date' => true,
+                                                                                  'min' => $minDate,
+                                                                                  'max' => $maxDate, 
+                                                                                  'empty_value' => $dateLowerBound,
+                                                                                 ),
+                                                                            array('invalid' => 'Date provided is not valid',)
+                                                                           );
+    $this->validatorSchema['acquisition_to_date'] = new fuzzyDateValidator(array('required' => false,
+                                                                                'from_date' => false,
+                                                                                'min' => $minDate,
+                                                                                'max' => $maxDate,
+                                                                                'empty_value' => $dateUpperBound,
+                                                                               ),
+                                                                          array('invalid' => 'Date provided is not valid',)
+                                                                         );
   /**
   * Individuals Fields
   */
@@ -805,7 +835,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $query = parent::doBuildQuery($values);
 
     $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());
-
+    if ($values['acquisition_category'] != 'undefined' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));
     if ($values['litho_level_ref'] != '') $query->andWhere('litho_level_ref = ?', intval($values['litho_level_ref']));    
@@ -822,6 +852,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
     $this->addDateFromToColumnQuery($query, array('ig_date'), $values['ig_from_date'], $values['ig_to_date']);    
+    $this->addDateFromToColumnQuery($query, array('acquisition_date'), $values['acquisition_from_date'], $values['acquisition_to_date']);        
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }

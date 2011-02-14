@@ -2657,6 +2657,10 @@
         <source>Author team and Year of the basionym of a species or subspecies</source>
         <target>Equipe d'auteurs et année du basionyme des espèces et sous-espèces</target>
       </trans-unit>      
+      <trans-unit id="1122">
+        <source>Via this widget you can either look up by type of acquisition or by looking up in a range acquisition dates.</source>
+        <target>Via cette widget vous pouvez rechercher par un type d'acquisition ou via une plage de date d'acquisition</target>
+      </trans-unit>        
     </body>
   </file>
 </xliff>
