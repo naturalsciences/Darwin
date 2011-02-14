@@ -263,7 +263,7 @@
           <td><span class="pager_nav"><?php echo __("Country") ; ?> :</span></td>
           <td>
             <?php if($tags) : ?> 
-            <ul class="country_tags">
+            <ul class="name_tags_view">
               <?php foreach($tags as $key=>$tag):?>
                 <?php if($tag == "") echo "-" ; ?>
                 <li class="tag_size_2"><?php echo $tag ;?></li>

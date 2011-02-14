@@ -32,7 +32,7 @@ class SpecimenSearch extends BaseSpecimenSearch
       $tags = explode(';',$this->getGtuCountryTagValue(''));
       $nbr = count($tags);
       if(! $nbr) return "-";
-      $str = '<ul class="name_tags">';
+      $str = '<ul class="name_tags_view">';
       foreach($tags as $value)
         if (strlen($value))
           $str .=  '<li>' . trim($value).'</li>';

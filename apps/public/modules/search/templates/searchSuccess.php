@@ -31,7 +31,6 @@
                                       'field_to_show' => $field_to_show,
                                       'pagerLayout' => $pagerLayout,
                                       'common_names' => $common_names,
-                                      'gtu' => $gtu,
                                       'columns' => $columns
                                      )
                                ); ?>

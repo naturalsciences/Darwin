@@ -420,7 +420,7 @@ class specimensearchActions extends DarwinActions
             'part_status',
             $this->getI18N()->__('Part Status'),),
           'part_codes' => array(
-            'part_codes',
+            false,
             $this->getI18N()->__('Part Codes'),),            
           'part_count' => array(
             'part_count_max',
@@ -471,7 +471,7 @@ class specimensearchActions extends DarwinActions
             'sub_container_storage',
             $this->getI18N()->__('Sub Container Storage'),),
           'part_codes' => array(
-            'part_codes',
+           false,
             $this->getI18N()->__('Part Codes'),),             
           'part_count' => array(
             'part_count_max',
