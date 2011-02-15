@@ -95,8 +95,8 @@ class partsActions extends DarwinActions
       {
         try
         {
-          $this->form->save();
-          $this->redirect('parts/overview?id='.$this->individual->getId());
+          $part = $this->form->save();
+          $this->redirect('parts/edit?id='.$part->getId());
         }
         catch(Doctrine_Exception $ne)
         {
