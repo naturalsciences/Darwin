@@ -3103,6 +3103,7 @@ $$
 DECLARE
   user_id integer;
   db_user_type_cpy smallint;
+  col_ref integer;
 BEGIN
   SELECT COALESCE(get_setting('darwin.userid'),'0')::integer INTO user_id;
   /*If no user id allows modification -> if we do a modif in SQL it should be possible*/
@@ -3141,9 +3142,12 @@ BEGIN
         RAISE EXCEPTION 'You don''t have the rights to insert into or update an individual in this collection';
       END IF;
     ELSE /*Delete*/
-      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE spec_ref = OLD.specimen_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
-      IF NOT FOUND THEN
-        RAISE EXCEPTION 'You don''t have the rights to delete an individual from this collection';
+      SELECT collection_ref::integer INTO col_ref FROM darwin_flat WHERE spec_ref = OLD.specimen_ref LIMIT 1;
+      IF FOUND THEN
+        PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE spec_ref = OLD.specimen_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+        IF NOT FOUND THEN
+          RAISE EXCEPTION 'You don''t have the rights to delete an individual from this collection';
+        END IF;
       END IF;
     END IF;
   ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
@@ -3153,9 +3157,12 @@ BEGIN
         RAISE EXCEPTION 'You don''t have the rights to insert into or update a part in this collection';
       END IF;
     ELSE /*Delete*/
-      PERFORM true WHERE (SELECT collection_ref::integer FROM darwin_flat WHERE individual_ref = OLD.specimen_individual_ref LIMIT 1) IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
-      IF NOT FOUND THEN
-        RAISE EXCEPTION 'You don''t have the rights to delete a part from this collection';
+      SELECT collection_ref::integer INTO col_ref FROM darwin_flat WHERE individual_ref = OLD.specimen_individual_ref LIMIT 1;
+      IF FOUND THEN
+        PERFORM true WHERE col_ref IN (SELECT * FROM fct_search_authorized_encoding_collections(user_id));
+        IF NOT FOUND THEN
+          RAISE EXCEPTION 'You don''t have the rights to delete a part from this collection';
+        END IF;
       END IF;
     END IF;
   END IF;
