@@ -190,7 +190,7 @@ Identifications:
         id: { type: integer, primary: true, autoincrement: true }
         referenced_relation: { type: string, notnull: true}
         record_id: { type: integer, notnull: true}
-        notion_concerned: { type: string, notnull: true}
+        notion_concerned: { type: string, notnull: true, default:taxonomy}
         notion_date: { type: string, notnull: true, default: '0001-01-01'}
         notion_date_mask: { type: integer, notnull: true, default:0}
         value_defined:  { type: string}

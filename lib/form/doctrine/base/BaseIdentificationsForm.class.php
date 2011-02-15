@@ -32,7 +32,7 @@ abstract class BaseIdentificationsForm extends BaseFormDoctrine
       'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'referenced_relation'   => new sfValidatorString(),
       'record_id'             => new sfValidatorInteger(),
-      'notion_concerned'      => new sfValidatorString(),
+      'notion_concerned'      => new sfValidatorString(array('required' => false)),
       'notion_date'           => new sfValidatorString(array('required' => false)),
       'notion_date_mask'      => new sfValidatorInteger(array('required' => false)),
       'value_defined'         => new sfValidatorString(array('required' => false)),

@@ -17,7 +17,7 @@ class InsurancesSubForm extends BaseInsurancesForm
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
     $years[0]='-';
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
-    $this->validatorSchema['referenced_relation'] = new sfValidatorString();
+    $this->validatorSchema['referenced_relation'] = new sfValidatorString(array('required'=>false));
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    
     $this->validatorSchema['record_id'] = new sfValidatorInteger();
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
@@ -53,9 +53,10 @@ class InsurancesSubForm extends BaseInsurancesForm
                                   );
 
     $this->widgetSchema['insurance_currency']->setAttributes(array('class'=>'vsmall_size'));
+    $this->validatorSchema['insurance_currency']->setOption('required', false);
 
     $this->validatorSchema['insurance_value'] = new sfValidatorNumber(array('required'=>false));
-    $this->validatorSchema['insurance_year'] = new sfValidatorChoice(array('choices' => $yearsKeyVal));
+    $this->validatorSchema['insurance_year'] = new sfValidatorChoice(array('choices' => $yearsKeyVal,'required'=>false));
 
     /*Insurances post-validation to empty null values*/
     $this->mergePostValidator(new InsurancesValidatorSchema());

@@ -1,3 +1,4 @@
+<?php if($form['referenced_relation']->getValue()!=""):?>
 <tbody  class="parts_insurances_data" id="parts_insurances_data_<?php echo $rownum;?>">
   <?php if($form->hasError()): ?>
   <tr>
@@ -36,8 +37,10 @@
     {
       parent = $(this).closest('tbody');
       parent_tr = $(this).closest('tr');
-      nvalue='';
-      $(parent).find('input[id$=\"_insurance_value\"]').val(nvalue);
+      $(parent).find('input[id$=\"_insurance_value\"]').val('');
+      $(parent).find('input[id$=\"_insurance_currency_input\"]').val('');
+      $(parent).find('input[id$=\"_referenced_relation\"]').val('');
+      $(parent).find('select').val('');
       $(parent).hide();
       $(parent_tr).next('tr').hide();
       visibles = $(parent).find('tr:visible').size();
@@ -48,3 +51,4 @@
     });
   });
 </script>
+<?php endif;?>

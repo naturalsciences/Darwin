@@ -1,3 +1,4 @@
+<?php if($form['accompanying_type']->getValue()!=""):?>
 <tbody id="specimens_accompanying_<?php echo $rownum;?>">
   <?php if($form->hasError()): ?>
   <tr>
@@ -51,6 +52,7 @@
     {
       parent = $(this).closest('tbody');
       $(parent).find('input').val('');
+      $(parent).find('select').val('');
       $(parent).hide();
       visibles = $(parent).closest('table.property_values').find('tbody:visible').size();
       if(!visibles)
@@ -58,10 +60,11 @@
         $(this).closest('table.property_values').find('thead').hide();
       }
     });
-
     $('select[id$=\"SpecimensAccompanying_<?php echo $rownum;?>_accompanying_type\"]').change(function()
     {
       $(this).closest('tbody').find('tr.accompanying_unit').toggle();
     });
+
   });
 </script>
+<?php endif;?>

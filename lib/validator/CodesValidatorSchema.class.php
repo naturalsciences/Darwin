@@ -11,10 +11,15 @@ class CodesValidatorSchema extends sfValidatorSchema
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
 
-    if ($value['deleted'])
+    if (!$value['code_category'])
     {
       return array();
     }
+    elseif (!$value['code'] && !$value['code_prefix'] && !$value['code_suffix'])
+    {
+      $errorSchemaLocal->addError(new sfValidatorError($this, 'code'));
+    }
+    
 
     if (count($errorSchemaLocal))
     {

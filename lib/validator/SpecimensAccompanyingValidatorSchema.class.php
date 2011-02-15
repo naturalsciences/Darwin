@@ -20,7 +20,13 @@ class SpecimensAccompanyingValidatorSchema extends sfValidatorSchema
       $value['taxon_ref'] = 0;
     }
     
-    if (!$value['taxon_ref'] && !$value['mineral_ref'])
+    // If type is known but nothing else
+    if (!$value['taxon_ref'] && !$value['mineral_ref'] && $value['accompanying_type'])
+    {
+      $errorSchemaLocal->addError(new sfValidatorError($this, 'unit_ref'));
+    }
+
+    if (!$value['taxon_ref'] && !$value['mineral_ref'] && !$value['accompanying_type'])
     {
       return array();
     }

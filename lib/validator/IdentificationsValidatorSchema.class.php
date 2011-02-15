@@ -11,7 +11,11 @@ class IdentificationsValidatorSchema extends sfValidatorSchema
     $errorSchema = new sfValidatorErrorSchema($this);
     $errorSchemaLocal = new sfValidatorErrorSchema($this);
 
-    if (!$value['value_defined'])
+    if (!$value['value_defined'] && $value['notion_concerned'])
+    {
+      $errorSchemaLocal->addError(new sfValidatorError($this, 'value_defined'));
+    }
+    elseif (!$value['value_defined'] && !$value['notion_concerned'])
     {
       return array();
     }

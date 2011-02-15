@@ -1,3 +1,4 @@
+<?php if($form['code_category']->getValue()!=""):?>
 <tbody id="code_<?php echo $rownum;?>">
   <?php if($form->hasError()): ?>
   <tr>
@@ -36,11 +37,8 @@
     $("#clear_code_<?php echo $rownum;?>").click( function()
     {
       parent = $(this).closest('tbody');
-      nvalue='';
-      $(parent).find('input[id$=\"_code_prefix\"]').val(nvalue);
-      $(parent).find('input[id$=\"_code\"]').val(nvalue);
-      $(parent).find('input[id$=\"_code_suffix\"]').val(nvalue);
-      $(parent).find('input[id$=\"_deleted\"]').val(1);
+      $(parent).find('input[type="text"]').val('');
+      $(parent).find('select').val('');      
       $(parent).hide();
       visibles = $(parent).closest('table.property_values').find('tbody:visible').size();
       if(!visibles)
@@ -50,3 +48,4 @@
     });
   });
 </script>
+<?php endif;?>

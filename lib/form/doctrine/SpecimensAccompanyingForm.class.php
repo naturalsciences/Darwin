@@ -20,7 +20,7 @@ class SpecimensAccompanyingForm extends BaseSpecimensAccompanyingForm
     $this->widgetSchema['accompanying_type'] = new sfWidgetFormChoice(array('choices'=>$accompanying_types));
     $this->validatorSchema['accompanying_type'] = new sfValidatorChoice(array('choices'=>array_keys($accompanying_types), 'required'=>true));
     $this->widgetSchema['unit'] = new sfWidgetFormChoice(array('choices'=>$units, 'default'=>'%'));
-    $this->validatorSchema['unit'] = new sfValidatorChoice(array('choices'=>array_keys($units), 'empty_value'=>null));
+    $this->validatorSchema['unit'] = new sfValidatorChoice(array('choices'=>array_keys($units), 'empty_value'=>null,'required'=>false));
     $this->widgetSchema['form'] = new widgetFormSelectComplete(array('model' => 'SpecimensAccompanying',
                                                                      'table_method' => 'getDistinctForms',
                                                                      'method' => 'getForm',
@@ -30,6 +30,8 @@ class SpecimensAccompanyingForm extends BaseSpecimensAccompanyingForm
                                                                      'add_label' => '',
                                                                     )
                                                               );
+
+    $this->validatorSchema['accompanying_type']->setOption('required', false);
     $this->widgetSchema['taxon_ref'] = new widgetFormButtonRef(array(
        'model' => 'Taxonomy',
        'link_url' => 'taxonomy/choose',

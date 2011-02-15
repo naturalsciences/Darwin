@@ -16,11 +16,10 @@ class CodesForm extends BaseCodesForm
 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['deleted'] = new sfWidgetFormInputHidden(array('default'=>0));
     $this->widgetSchema['code_category'] = new sfWidgetFormChoice(array(
         'choices' => Codes::getCategories()
       ));
-    $this->validatorSchema['code_category'] = new sfValidatorChoice(array('required' => true, 'choices'=>array_keys(Codes::getCategories())));
+    $this->validatorSchema['code_category'] = new sfValidatorChoice(array('required' => false, 'choices'=>array_keys(Codes::getCategories())));
     $this->widgetSchema['code_prefix'] = new sfWidgetFormInput();
     $this->widgetSchema['code_prefix']->setAttributes(array('class'=>'lsmall_size'));
     $this->validatorSchema['code_prefix'] = new sfValidatorString(array('required' => false, 'trim'=>true));
@@ -53,7 +52,6 @@ class CodesForm extends BaseCodesForm
 
     $this->validatorSchema['referenced_relation'] = new sfValidatorString();
     $this->validatorSchema['record_id'] = new sfValidatorInteger();
-    $this->validatorSchema['deleted'] = new sfValidatorPass();
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
     $this->mergePostValidator(new CodesValidatorSchema());
   }

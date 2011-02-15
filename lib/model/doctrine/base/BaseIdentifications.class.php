@@ -66,6 +66,7 @@ abstract class BaseIdentifications extends sfDoctrineRecord
         $this->hasColumn('notion_concerned', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
+             'default' => 'taxonomy',
              ));
         $this->hasColumn('notion_date', 'string', null, array(
              'type' => 'string',

@@ -1,3 +1,4 @@
+<?php if($form['notion_concerned']->getValue()!=""):?>
 <tbody class="spec_ident_data" id="spec_ident_data_<?php echo $row_num;?>">
   <?php if($form->hasError()): ?>
   <tr>
@@ -68,7 +69,10 @@
       parent = $(this).closest('tbody');
 
       $(parent).find('input[id$=\"_value_defined\"]').val('');
-      $(parent).find('select.to_date').val('');
+      $(parent).find('input[id$=\"_is_removed\"]').val('');
+
+      $(parent).find('select').val('');
+
       $(parent).hide();
       reOrderIdent();
       visibles = $('table#identifications tbody.spec_ident_data:visible').size();
@@ -112,3 +116,4 @@
 </script></td>
   </tr>
 </tbody>
+<?php endif;?>
