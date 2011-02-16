@@ -47,6 +47,9 @@
                   <?php if($col_name == 'codes') : ?>
                     <?php echo image_tag('blue_expand.png', array('id' => 'display_all_codes','title' => 'Display all codes', 'class'=> 'tree_cmd_td collapsed')); ?>
                     <?php echo image_tag('blue_expand_up.png', array('id' => 'hide_all_codes','title' => 'Hide all codes', 'class'=> 'tree_cmd_td expanded')); ?>
+                  <?php elseif($col_name == 'part_codes') : ?>
+                    <?php echo image_tag('blue_expand.png', array('id' => 'display_part_codes','title' => 'Display all codes', 'class'=> 'tree_cmd_td collapsed')); ?>
+                    <?php echo image_tag('blue_expand_up.png', array('id' => 'hide_part_codes','title' => 'Hide all codes', 'class'=> 'tree_cmd_td expanded')); ?>
                   <?php endif ; ?>
                 <?php endif;?>
               </th>
@@ -316,6 +319,23 @@ $(document).ready(function () {
     $(this).hide();
     $('#display_all_codes').show();
     $('td.col_codes li.code_supp').each(function() {
+      $(this).addClass('hidden'); 
+    });
+  });
+
+  $('#display_part_codes').click(function() 
+  {
+    $(this).hide();
+    $('#hide_part_codes').show();
+    $('td.col_part_codes li.code_supp').each(function() {
+      $(this).removeClass('hidden');    
+    });
+  });  
+  $('#hide_part_codes').click(function() 
+  {
+    $(this).hide();
+    $('#display_part_codes').show();
+    $('td.col_part_codes li.code_supp').each(function() {
       $(this).addClass('hidden'); 
     });
   });
