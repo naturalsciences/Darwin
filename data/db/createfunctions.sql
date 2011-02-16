@@ -24,19 +24,16 @@ BEGIN
 				WHERE specimen_individuals.id = NEW.specimen_individual_ref;
 
 	IF must_be_copied = true THEN
-		SELECT codes.* into spec_code FROM codes
-			INNER JOIN specimens ON record_id = specimens.id
-			INNER JOIN specimen_individuals ON specimen_individuals.specimen_ref=specimens.id
-			WHERE
-                referenced_relation = 'specimens'
-                AND  specimen_individuals.id = NEW.specimen_individual_ref
-				AND code_category = 'main'
-				ORDER BY codes.code DESC
-					LIMIT 1;
-		IF FOUND THEN
-			INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code, code_suffix)
-					VALUES ('specimen_parts',NEW.id, 'main', spec_code.code_prefix, spec_code.code , spec_code.code_suffix );
-		END IF;
+
+		INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code, code_suffix)
+		(
+			SELECT 'specimen_parts',NEW.id, code_category, code_prefix, code, code_suffix FROM codes
+        	               INNER JOIN specimens ON record_id = specimens.id
+                	       INNER JOIN specimen_individuals ON specimen_individuals.specimen_ref=specimens.id
+                        	WHERE referenced_relation = 'specimens'
+		                  AND  specimen_individuals.id = NEW.specimen_individual_ref
+                                  AND code_category = 'main'
+		);
 	END IF;
 	RETURN NEW;
 END;
