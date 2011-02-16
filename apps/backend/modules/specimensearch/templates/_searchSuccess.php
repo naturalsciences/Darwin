@@ -44,6 +44,10 @@
                   </a>
                 <?php else:?>
                   <?php echo $col[1];?>
+                  <?php if($col_name == 'codes') : ?>
+                    <?php echo image_tag('blue_expand.png', array('id' => 'display_all_codes','title' => 'Display all codes', 'class'=> 'tree_cmd_td collapsed')); ?>
+                    <?php echo image_tag('blue_expand_up.png', array('id' => 'hide_all_codes','title' => 'Hide all codes', 'class'=> 'tree_cmd_td expanded')); ?>
+                  <?php endif ; ?>
                 <?php endif;?>
               </th>
             <?php endforeach;?>
@@ -299,6 +303,21 @@ $(document).ready(function () {
       }
     }
   });
-
+  $('#display_all_codes').click(function() 
+  {
+    $(this).hide();
+    $('#hide_all_codes').show();
+    $('td.col_codes li.code_supp').each(function() {
+      $(this).removeClass('hidden');    
+    });
+  });  
+  $('#hide_all_codes').click(function() 
+  {
+    $(this).hide();
+    $('#display_all_codes').show();
+    $('td.col_codes li.code_supp').each(function() {
+      $(this).addClass('hidden'); 
+    });
+  });
 });
 </script>
