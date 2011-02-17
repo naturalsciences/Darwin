@@ -26,7 +26,7 @@
             <tr class="peo_id_<?php echo $person->getId();?>" id="id_<?php echo $person->getId();?>">
               <td class="handle"><?php echo image_tag('drag.png');?></td>
               <td>
-                <a class="link_catalogue" title="<?php echo __('View People');?>" href="<?php echo url_for('people/view?id='.$person->getId()); ?>">		  
+                <a class="link_catalogue" title="<?php echo __('View People');?>" href="<?php echo url_for('people/view?id='.$person->getPeopleRef()); ?>">		  
                   <?php echo $person->People->getFormatedName();?>	  
                 </a>		  
               </td>
