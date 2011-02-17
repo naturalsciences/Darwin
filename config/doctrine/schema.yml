@@ -998,7 +998,7 @@ SpecimenSearch:
         host_taxon_parent_ref: { type: integer, default:0}
         host_taxon_extinct: { type: boolean}      
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer, notnull: true, default:0 }                  
+        ig_ref: { type: integer}                  
         ig_num: { type: string}           
         ig_num_indexed: { type: string}
         ig_date_mask: { type: integer }                 
@@ -1242,7 +1242,7 @@ IndividualSearch:
         host_taxon_parent_ref: { type: integer, default:0}
         host_taxon_extinct: { type: boolean}      
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer, notnull: true, default:0 }                  
+        ig_ref: { type: integer}                  
         ig_num: { type: string}           
         ig_num_indexed: { type: string}
         ig_date_mask: { type: integer }                 
@@ -1487,7 +1487,7 @@ PartSearch:
         host_taxon_parent_ref: { type: integer, default:0}
         host_taxon_extinct: { type: boolean}
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer, notnull: true, default:0 }
+        ig_ref: { type: integer }
         ig_num: { type: string}
         ig_num_indexed: { type: string}
         ig_date_mask: { type: integer }
@@ -1732,7 +1732,7 @@ IgsSearch:
         host_taxon_parent_ref: { type: integer, default:0}
         host_taxon_extinct: { type: boolean}      
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer, primary: true, notnull: true, default:0 }                  
+        ig_ref: { type: integer, primary: true}                  
         ig_num: { type: string}           
         ig_num_indexed: { type: string}
         ig_date_mask: { type: integer }                 

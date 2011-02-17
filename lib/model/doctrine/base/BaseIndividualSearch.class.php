@@ -812,8 +812,6 @@ abstract class BaseIndividualSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('ig_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('ig_num', 'string', null, array(
              'type' => 'string',

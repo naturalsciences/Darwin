@@ -227,10 +227,6 @@ class specimenActions extends DarwinActions
     else
     {
       $this->form = new SpecimensForm();
-      $this->form->addIdentifications(0,0);
-      $this->form->addComments(0);
-      $this->form->addCodes(0);
-      $this->form->addSpecimensAccompanying(0);
     }
     $this->loadWidgets();
   }

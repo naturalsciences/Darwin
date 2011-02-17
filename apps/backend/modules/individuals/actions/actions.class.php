@@ -102,11 +102,6 @@ class individualsActions extends DarwinActions
           }
         }
       }
-      else
-      {
-        $this->individual->addIdentifications(0,0);
-        $this->individual->addComments(0);      
-      }
     }
     if($request->isMethod('post'))
     {

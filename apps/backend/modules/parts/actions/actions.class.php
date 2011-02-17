@@ -50,8 +50,6 @@ class partsActions extends DarwinActions
 
     if($this->form->getObject()->isNew())
     {
-      $this->form->addInsurances(0);
-      $this->form->addComments(0);
       if($duplic)
       {
         // reembed duplicated comment
