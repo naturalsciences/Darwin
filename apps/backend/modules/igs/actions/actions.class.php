@@ -14,7 +14,7 @@ class igsActions extends DarwinActions
   protected $widgetCategory = 'catalogue_igs_widget';
   public function preExecute()
   {
-    if (strstr('view,index,searchforlimited,search',$this->getActionName()) )
+    if (! strstr('view',$this->getActionName()) && ! strstr('index',$this->getActionName()) && ! strstr('search',$this->getActionName()) && ! strstr('searchForLimited',$this->getActionName()))
     {
       if(! $this->getUser()->isAtLeast(Users::ENCODER))
       {
