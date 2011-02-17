@@ -6,14 +6,14 @@
     <table class="search" id="search">
       <thead>
         <tr>
-          <th><?php echo $form['ig_num']->renderLabel() ?></th>
+          <th><?php echo $form['ig_ref']->renderLabel() ?></th>
           <th><?php echo $form['expedition_name']->renderLabel(); ?></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><?php echo $form['ig_num']->render() ?></td>
+          <td><?php echo $form['ig_ref']->render() ?></td>
           <td><?php echo $form['expedition_name']->render() ?></td>
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Search'); ?>" /></td>
         </tr>
@@ -25,3 +25,4 @@
     </div>
   </div>
 </form>
+

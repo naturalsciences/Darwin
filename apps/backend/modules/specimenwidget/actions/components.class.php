@@ -115,18 +115,21 @@ class specimenwidgetComponents extends sfComponents
   public function executeRefCodes()
   {
     $this->defineForm();
+    if(!isset($this->form['newCode']))
     $this->form->loadEmbedCode();
   }
 
   public function executeRefCollectors()
   {
     $this->defineForm();
+    if(!isset($this->form['newCollectors']))
     $this->form->loadEmbedCollectors();
   }
 
   public function executeRefDonators()
   {
     $this->defineForm();
+    if(!isset($this->form['newDonators']))
     $this->form->loadEmbedDonators();
   }
 
@@ -139,18 +142,21 @@ class specimenwidgetComponents extends sfComponents
   public function executeRefComment()
   {    
     $this->defineForm();
-    $this->form->loadEmbedComment();
+    if(!isset($this->form['newComments']))
+      $this->form->loadEmbedComment();
   }
 
   public function executeExtLinks()
   {
     $this->defineForm();
-    $this->form->loadEmbedLink();
+    if(!isset($this->form['newExtLinks']))
+      $this->form->loadEmbedLink();
   }    
   
   public function executeRefIdentifications()
   {
     $this->defineForm();
+    if(!isset($this->form['newIdentification']))
     $this->form->loadEmbedIndentifications();
 
   }
@@ -158,6 +164,7 @@ class specimenwidgetComponents extends sfComponents
   public function executeSpecimensAccompanying()
   {
     $this->defineForm();
+    if(!isset($this->form['newSpecimensAccompanying']))
     $this->form->loadEmbedAccompanying();
   }
 

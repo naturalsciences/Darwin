@@ -826,7 +826,7 @@
       <trans-unit id="397">
         <source>Auto incremented ?</source> <target>Auto incrémenté ?</target> </trans-unit>
       <trans-unit id="398">
-        <source>Same for parts ?</source> <target>Meme code pour parties ?</target> </trans-unit>
+        <source>Same for parts ?</source> <target>Même code pour parties ?</target> </trans-unit>
       <trans-unit id="399">
         <source>Edit default specimen codes prefix and suffix</source> <target>Editer code préfixe et suffixe de l'échantillon par défaut </target> </trans-unit>
       <trans-unit id="400">
@@ -2664,6 +2664,10 @@
       <trans-unit id="1123">
         <source>Go the the original record</source>
         <target>Aller à l'enregistrement d'origine</target>
+      </trans-unit>
+      <trans-unit id="1124">
+        <source>At least a value is required.</source>
+        <target>Au moins une valeur est requise</target>
       </trans-unit>
     </body>
   </file>

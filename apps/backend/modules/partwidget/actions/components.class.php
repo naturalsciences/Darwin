@@ -67,8 +67,9 @@ class partwidgetComponents extends sfComponents
 
   public function executeRefCodes()
   {
-    $this->defineForm();  
-    $this->form->loadEmbedCode();
+    $this->defineForm();
+    if(!isset($this->form['newCode']))  
+     $this->form->loadEmbedCode();
 
     $this->code_copy = false;
     if($this->form->getObject()->isNew())
@@ -88,7 +89,8 @@ class partwidgetComponents extends sfComponents
   public function executeRefInsurances()
   {
     $this->defineForm();
-    $this->form->loadEmbedInsurance();
+    if(!isset($this->form['newInsurance']))
+      $this->form->loadEmbedInsurance();
 
   }
 
@@ -101,12 +103,14 @@ class partwidgetComponents extends sfComponents
   public function executeComments()
   {
     $this->defineForm();
+    if(!isset($this->form['newComments']))
     $this->form->loadEmbedComment();
   }
 
   public function executeExtLinks()
   {
     $this->defineForm();
+    if(!isset($this->form['newExtLinks']))
     $this->form->loadEmbedLink();
 
   }  

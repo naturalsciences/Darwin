@@ -13,7 +13,7 @@
         <thead>
           <tr>
             <th>
-              <a class="sort" href="<?php echo url_for($s_url.'&orderby=name'.( ($orderBy=='ig_num' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <a class="sort" href="<?php echo url_for($s_url.'&orderby=ig_num'.( ($orderBy=='ig_num' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
                 <?php echo __('I.G. number:');?>
                 <?php if($orderBy=='ig_num') echo $orderSign ?>
               </a>
@@ -28,7 +28,7 @@
             <th>&nbsp;</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody>      
           <?php foreach($expeditions as $expedition):?>
             <tr class="rid_<?php echo $expedition->getIgNum(); ?>">
               <td><?php echo $expedition->getIgNum();?></td>

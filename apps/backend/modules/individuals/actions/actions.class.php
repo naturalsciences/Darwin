@@ -82,8 +82,8 @@ class individualsActions extends DarwinActions
         foreach ($ExtLinks as $key=>$val)
         {
           $links = new ExtLinks() ;
-          $links = $this->getRecordIfDuplicate($val->getId(),$comment); 
-          $this->individual->addExtLinks($key, $comment) ;          
+          $links = $this->getRecordIfDuplicate($val->getId(),$links); 
+          $this->individual->addExtLinks($key, $links) ;          
         }        
         //reembed identification
         $Identifications = Doctrine::getTable('Identifications')->getIdentificationsRelated('specimen_individuals',$duplic) ;

@@ -532,8 +532,7 @@ abstract class BaseIgsSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('expedition_ref', 'integer', null, array(
              'type' => 'integer',
-             'notnull' => true,
-             'default' => 0,
+             'primary' => true,
              ));
         $this->hasColumn('expedition_name', 'string', null, array(
              'type' => 'string',

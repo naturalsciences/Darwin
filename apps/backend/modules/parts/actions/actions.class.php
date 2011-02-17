@@ -63,12 +63,12 @@ class partsActions extends DarwinActions
           $this->form->addComments($key, $comment) ;          
         }
         // reembed duplicated external url
-        $ExtLinks = Doctrine::getTable('ExtLinks')->findForTable('specimen_individuals',$duplic) ;
+        $ExtLinks = Doctrine::getTable('ExtLinks')->findForTable('specimen_parts',$duplic) ;
         foreach ($ExtLinks as $key=>$val)
         {
           $links = new ExtLinks() ;
-          $links = $this->getRecordIfDuplicate($val->getId(),$comment); 
-          $this->individual->addExtLinks($key, $comment) ;          
+          $links = $this->getRecordIfDuplicate($val->getId(),$links); 
+          $this->form->addExtLinks($key, $links) ;          
         }            
         // reembed duplicated codes
         $Codes = Doctrine::getTable('Codes')->getCodesRelatedArray('specimen_parts',$duplic) ;

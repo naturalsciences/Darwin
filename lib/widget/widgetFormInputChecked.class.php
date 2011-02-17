@@ -84,10 +84,11 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
             'selected' => ($this->getOption('notExistingAddSelected') == $key) ? "selected" : "",
             'value' => $key,
           )
-        );
+        );       
       }
+      $input .= '</select></li>';       
     }
-    $input .= '</select></li></ul>';
+    $input .= '</ul>';
     if(!function_exists('url_for'))
       sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
 

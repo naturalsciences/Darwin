@@ -378,7 +378,7 @@ class SpecimensForm extends BaseSpecimensForm
       if(! isset($this['newComments'])) $this->loadEmbedComment();
       $options = array('referenced_relation' => 'specimens', 'record_id' => $this->getObject()->getId());
       if (!$obj) $val = new Comments();
-      else $val = $obj ;
+      else $val = $obj ;      
       $val->fromArray($options);
       $val->setRecordId($this->getObject()->getId());
       $form = new CommentsSubForm($val,array('table' => 'specimens'));
@@ -551,7 +551,7 @@ class SpecimensForm extends BaseSpecimensForm
     if($this->isBound()) return;
     /* Comments sub form */
     $subForm = new sfForm();
-    $this->embedForm('Comments',$subForm);
+    $this->embedForm('Comments',$subForm);    
     if($this->getObject()->getId() !='')
     {
       foreach(Doctrine::getTable('comments')->findForTable('specimens', $this->getObject()->getId()) as $key=>$vals)

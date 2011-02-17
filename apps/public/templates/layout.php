@@ -18,7 +18,7 @@
           <?php echo $sf_content ?>
         </td>
       </tr>
-      <tr><td class="menu_bottom">&nbsp;</td></tr>
+      <tr><td class="menu_bottom">Coucou ici</td></tr>
     </table>
   </body>
 </html>

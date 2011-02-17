@@ -107,7 +107,7 @@ abstract class BasePartSearchForm extends BaseFormDoctrine
       'host_taxon_parent_ref'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('HostTaxonParent'), 'add_empty' => true)),
       'host_taxon_extinct'       => new sfWidgetFormInputCheckbox(),
       'host_specimen_ref'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('HostSpecimen'), 'add_empty' => true)),
-      'ig_ref'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Ig'), 'add_empty' => true)),
+      'ig_ref'                   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Ig'), 'add_empty' => false)),
       'ig_num'                   => new sfWidgetFormTextarea(),
       'ig_num_indexed'           => new sfWidgetFormTextarea(),
       'ig_date_mask'             => new sfWidgetFormInputText(),

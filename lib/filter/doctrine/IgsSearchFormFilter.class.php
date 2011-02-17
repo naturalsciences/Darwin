@@ -12,5 +12,35 @@ class IgsSearchFormFilter extends BaseIgsSearchFormFilter
 {
   public function configure()
   {
+    $this->useFields(array('expedition_name'));
+    $this->addPagerItems();
+    /* IG number Reference */
+    $this->widgetSchema['ig_ref'] = new widgetFormInputChecked(
+      array(
+        'model' => 'Igs',
+        'method' => 'getIgNum',
+        'nullable' => true,
+        'link_url' => 'igs/searchFor',
+        'notExistingAddDisplay' => false
+      )
+    );
+    $this->widgetSchema['expedition_name'] = new sfWidgetFormInputText();
+    $this->widgetSchema->setNameFormat('searchExpeditionIgs[%s]');
+    $this->validatorSchema['ig_ref'] = new sfValidatorInteger(array('required' => false));
+    $this->validatorSchema['expedition_name'] = new sfValidatorString(array('required' => false, 'trim' => true));
   }
+
+  public function doBuildQuery(array $values)
+  {
+    $query = DQ::create()
+      ->select('DISTINCT ig_ref, expedition_ref, expedition_name, ig_num')
+      ->from('IgsSearch i')
+      ->orderBy('ig_ref, expedition_name')
+      ->andWhere('expedition_ref != 0') ;
+    if($values['ig_ref'] != '') $query->andWhere('ig_ref = ?', $values['ig_ref']) ;
+    else $query->andWhere('ig_ref != 0') ;
+    $this->addNamingColumnQuery($query, 'expeditions', 'name_ts', $values['expedition_name'],null,'expedition_name_ts');
+    
+    return $query;
+  }  
 }
