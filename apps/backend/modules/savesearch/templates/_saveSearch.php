@@ -61,8 +61,12 @@ $(document).ready(function () {
             },
          onHide: function()
          {
-            $(this).attr('value','Search Saved') ;
-            $("#save_search").qtip("destroy");
+            $('#save_search').attr('value','Search Saved') ;
+            try{
+              $('#save_search').qtip("destroy");
+            }
+            catch(err)
+            {}
          }
          }
     });

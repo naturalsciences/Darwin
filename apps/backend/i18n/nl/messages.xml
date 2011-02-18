@@ -2227,6 +2227,110 @@
         <source>Is a Synonym Of</source>
         <target>Is een synoniem van</target>
       </trans-unit>
+      <trans-unit id="1099">
+        <source>The author(s) who published the full name</source>
+        <target>De auteur die de volledige naam heeft gepubliceerd</target>
+      </trans-unit>
+      <trans-unit id="1100">
+        <source>Author name and year, used in mineralogy or bacterology</source>
+        <target>Naam auteur en jaartal, gebruikt in mineralogie of bacteriologie</target>
+      </trans-unit>
+      <trans-unit id="1101">
+        <source>The first person(s) who validly published a species</source>
+        <target>De eerste persoon/personen die de species geldig hebben gepubliceerd</target>
+      </trans-unit>
+      <trans-unit id="1102">
+        <source>Species name, used in zoology or bacteriology</source>
+        <target>Naam species, gebruikt in de zoologie of de bacteriologie</target>
+      </trans-unit>
+      <trans-unit id="1103">
+        <source>Subgenus naam, used in zoology or bacteriology</source>
+        <target>Subgenus naam, gebruikt in de zoologie of de bacteriologie</target>
+      </trans-unit>
+      <trans-unit id="1104">
+        <source>Used to indicate the author and year</source>
+        <target>Gebruikt om naam auteur en jaartal aan te duiden</target>
+      </trans-unit>
+      <trans-unit id="1105">
+        <source>Subspecies name, used in zoology or bacteriology</source>
+        <target>Subspecies naam, gebruikt in zoologie of bacteriologie</target>
+      </trans-unit>
+      <trans-unit id="1106">
+        <source>A formal category for cultivars , individual plants or assemblages of plants on the basis of defined similarity</source>
+        <target> Een formele categorie van cultivars, individuele of samengestelde planten op basis van gelijkaardige definities</target>
+      </trans-unit>
+      <trans-unit id="1107">
+        <source>a cultivar name, which is a Latin botanical name followed by an epithet, mostly in a vernacular language</source>
+        <target>Een cultivar naam, die bestaat uit een Latijnse botanische naam gevolgd door een epitet, vaak in gewone spreektaal</target>
+      </trans-unit>
+      <trans-unit id="1108">
+        <source>species epithet or the epithet of the subdivision of a genus</source>
+        <target>Species epitet of de epitet van de onderverdeling van een genus</target>
+      </trans-unit>
+      <trans-unit id="1109">
+        <source>The final epithet of a botanical name of infraspecific rank</source>
+        <target>De laatste epitet van een botanische naam van een infraspecifieke rang</target>
+      </trans-unit>
+      <trans-unit id="1110">
+        <source>Trade name used for a specific cultivar</source>
+        <target>Geregistreerde naam van een specifieke cultivar</target>
+      </trans-unit>
+      <trans-unit id="1111">
+        <source>Name of the breed of an animal</source>
+        <target>Naam van een ras van een dier</target>
+      </trans-unit>
+      <trans-unit id="1112">
+        <source>The accepted acronym for the Virus, e.g. PCV for Peanut Clump Virus</source>
+        <target>Het geaccepteerde acroniem van een virus, bv : PCV voor Peanut Clump Virus</target>
+      </trans-unit>
+      <trans-unit id="1113">
+        <source>The formal name of a viral species. Example: Saccharomyces cerevisiae virus L-A</source>
+        <target>De formele naam van een soort van virus. Bv: Saccharomyces cerevisiae virus L-A</target>
+      </trans-unit>
+      <trans-unit id="1114">
+        <source>Author team of the basionym of a combination</source>
+        <target>Naam van alle auteurs van het basioniem van een combinatie</target>
+      </trans-unit>
+      <trans-unit id="1115">
+        <source>The original author when a species was transferred to another genus and the year of the original publication</source>
+        <target>De oorspronkelijke auteur wanneer een species naar een ander genus werd overgeplaatst en het jaartal van de oorspronkelijke publicatie</target>
+      </trans-unit>
+      <trans-unit id="1116">
+      <source>The citation of the authors responsible for the new combination and the year of its publication</source>
+      <target>De citatie van de auteurs die verantwoordelijk zijn voor de nieuwe combinatie en het jaartal van deze publicatie</target>
+      </trans-unit>
+      <trans-unit id="1117">
+        <source>Genus or higher taxon name, used in each domain</source>
+        <target>Genus of hoger taxon naam, gebruikt in alle domeinen</target>
+      </trans-unit>
+      <trans-unit id="1118">
+        <source>Flag indicating that this is a  hybrid ("x") or a  chimaera ("+")</source>
+        <target>Vlag die aanduid of het een hybride ("x") of een chimaera ("+") betreft</target>
+      </trans-unit>
+      <trans-unit id="1119">
+        <source>Valid name</source>
+        <target>geldige naam</target>
+      </trans-unit>
+      <trans-unit id="1120">
+        <source>Used for cultivated plant name elements</source>
+        <target>Gebruikt voor de elementen van een plantnaam</target>
+      </trans-unit>
+      <trans-unit id="1121">
+        <source>Author team and Year of the basionym of a species or subspecies</source>
+        <target>Alle auteurs en het jaartal van het basioniem van een species of subspecies</target>
+      </trans-unit>
+      <trans-unit id="1122">
+        <source>Via this widget you can either look up by type of acquisition or by looking up in a range acquisition dates.</source>
+        <target>Via deze widget kunt u zoeken op aanschaf categorie of via op datum van aanschaf</target>
+      </trans-unit>
+      <trans-unit id="1123">
+        <source>Go the the original record</source>
+        <target>Ga naar het oorspronkelijke record</target>
+      </trans-unit>
+      <trans-unit id="1124">
+        <source>At least a value is required.</source>
+        <target>Minstens één waarde is verplicht</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
