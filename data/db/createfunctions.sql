@@ -516,50 +516,36 @@ $$ LANGUAGE plpgsql;
 /**
 * fct_chk_possible_upper_levels
 * When inserting or updating a hierarchical unit, checks, considering parent level, that unit level is ok (depending on definitions given in possible_upper_levels_table)
-*//*
+*/
 CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) RETURNS boolean
 AS $$
 DECLARE
-	response boolean default false;
+        response boolean default false;
 BEGIN
-	IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70, 75)) THEN
-		response := true;
-	ELSE
-		EXECUTE 'select count(*)::integer::boolean ' ||
-			'from possible_upper_levels ' ||
-			'where level_ref = ' || new_level_ref ||
-			'  and level_upper_ref = (select level_ref from ' || quote_ident(referenced_relation) || ' where id = ' || new_parent_ref || ')'
-		INTO response;
-	END IF;
-	RETURN response;
+        IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70, 75)) THEN
+                response := true;
+        ELSE
+                EXECUTE 'select count(*)::integer::boolean ' ||
+                        'from possible_upper_levels ' ||
+                        'where level_ref = ' || new_level_ref ||
+                        '  and level_upper_ref = (select level_ref from ' || quote_ident(referenced_relation) || ' where id = ' || new_parent_ref || ')'
+                INTO response;
+        END IF;
+        RETURN response;
 EXCEPTION
-	WHEN OTHERS THEN
-		RETURN response;
+        WHEN OTHERS THEN
+                RETURN response;
 END;
 $$ LANGUAGE plpgsql;
-*/
-CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level() RETURNS TRIGGER
+
+CREATE OR REPLACE FUNCTION fct_trg_chk_possible_upper_level() RETURNS TRIGGER
 AS $$
 DECLARE
-  rec_exists integer;
 BEGIN
-
-    IF NEW.id = 0 OR (NEW.parent_ref = 0 AND NEW.level_ref IN (1, 55, 64, 70, 75)) THEN
-      RETURN NEW;
-    END IF;
-
-    EXECUTE 'select count(*)::integer ' ||
-        'from possible_upper_levels ' ||
-        'where level_ref = ' || NEW.level_ref ||
-        '  and level_upper_ref = (select level_ref from ' || TG_TABLE_NAME::text || ' where id = ' || NEW.parent_ref || ')'
-      INTO rec_exists;
-
-
-  IF rec_exists = 0 THEN
+  IF fct_chk_possible_upper_level(TG_TABLE_NAME::text, NEW.parent_ref, NEW.level_ref, NEW.id) = false THEN
     RAISE EXCEPTION 'This record does not follow the level hierarchy';
   END IF;
   RETURN NEW;
-
 END;
 $$
 language plpgsql;

@@ -15,9 +15,6 @@ DROP FUNCTION fct_chk_one_pref_language(id people_languages.id%TYPE, person peop
 DROP FUNCTION fct_chk_one_pref_language(id people_languages.id%TYPE, person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE);
 DROP FUNCTION fct_chk_PeopleIsMoral(people_ref people.id%TYPE);
 DROP FUNCTION fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer);
---CREATE OR REPLACE FUNCTION fct_chk_upper_level_for_childrens() ;
-
-
 
 
 /*************** CHECK of Referenced Records **************/

@@ -86,7 +86,9 @@ DROP FUNCTION IF EXISTS fct_filter_encodable_row(ids varchar, col_name varchar, 
 
 DROP FUNCTION IF EXISTS fct_chk_PeopleIsMoral() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_one_pref_language() CASCADE;
+DROP FUNCTION IF EXISTS fct_trg_chk_possible_upper_level () CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_possible_upper_level () CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_upper_level_for_childrens() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecordRelationShip() CASCADE;
+DROP FUNCTION IF EXISTS trg_fct_chk_possible_upper_level() CASCADE;
