@@ -18,7 +18,8 @@
         helper: 'clone',
         connectWith: ['.board_col'],
         handle: '.widget_top_bar',
-        update: base.changeOrder
+        update: base.changeOrder,
+        create: base.onInitialize
       });
       
       $('.widget_refresh').live('click', base.refreshWidget);
@@ -48,6 +49,11 @@
     };
     
     var last_notified = {};
+
+    base.onInitialize = function (event, ui)
+    {
+      $('.widget script').remove();
+    }
     
     base.changeOrder = function ()
     {

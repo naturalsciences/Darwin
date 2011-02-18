@@ -38,7 +38,7 @@
     {
       parent = $(this).closest('tbody');
       $(parent).find('input[type="text"]').val('');
-      $(parent).find('select').val('');      
+      $(parent).find('select').append("<option value=''></option>").val('');   
       $(parent).hide();
       visibles = $(parent).closest('table.property_values').find('tbody:visible').size();
       if(!visibles)
