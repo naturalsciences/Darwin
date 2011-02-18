@@ -24,7 +24,6 @@ DROP FUNCTION IF EXISTS fct_cpy_path() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_path_catalogs() CASCADE;
 
 DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_AreRole() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_peopleType() CASCADE;
 DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
@@ -37,11 +36,8 @@ DROP FUNCTION IF EXISTS fct_clear_referencedRecord() CASCADE;
 DROP FUNCTION IF EXISTS fct_compose_date(day integer, month integer, year integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_compose_timestamp(day integer, month integer, year integer, hour integer, minute integer, second integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_clr_specialstatus() CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_PeopleIsMoral(people_ref people.id%TYPE) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_fullToIndex() CASCADE;
 DROP FUNCTION IF EXISTS fullToIndex(to_indexed varchar) CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_one_pref_language(id people_languages.id%TYPE,person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE) CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_one_pref_language(id people_languages.id%TYPE,person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE, table_prefix varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_idToCode() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_specimensMainCode() CASCADE;
 DROP FUNCTION IF EXISTS fct_trg_word() CASCADE;
@@ -77,8 +73,6 @@ DROP FUNCTION IF EXISTS fct_chk_parentCollInstitution() CASCADE;
 DROP FUNCTION IF EXISTS fct_cpy_updateCollInstitutionCascade() CASCADE;
 DROP FUNCTION IF EXISTS fct_unpromotion_impact_prefs() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_canUpdateCollectionsRights() CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) CASCADE;
-DROP FUNCTION IF EXISTS fct_chk_upper_level_for_childrens() CASCADE;
 
 DROP AGGREGATE array_accum (anyelement);
 DROP AGGREGATE dummy_first(anyelement);
@@ -88,3 +82,11 @@ DROP FUNCTION IF EXISTS convert_to_integer(v_input varchar) CASCADE;
 DROP FUNCTION IF EXISTS fct_search_authorized_encoding_collections (user_id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_search_authorized_view_collections (user_id integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_filter_encodable_row(ids varchar, col_name varchar, user_id integer) CASCADE;
+
+
+DROP FUNCTION IF EXISTS fct_chk_PeopleIsMoral() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_one_pref_language() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_possible_upper_level () CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_upper_level_for_childrens() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord() CASCADE;
+DROP FUNCTION IF EXISTS fct_chk_ReferencedRecordRelationShip() CASCADE;

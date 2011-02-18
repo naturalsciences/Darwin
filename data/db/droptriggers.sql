@@ -373,3 +373,61 @@ DROP TRIGGER trg_nbr_in_synonym
 
 DROP TRIGGER trg_unpromotion_remove_cols
         ON users;
+
+
+
+
+
+/*************** CHECK of Referenced Records **************/
+
+DROP TRIGGER trg_chk_ref_record_catalogue_people ON catalogue_people;
+
+DROP TRIGGER trg_chk_ref_record_comments ON comments;
+
+DROP TRIGGER trg_chk_ref_record_ext_links ON ext_links;
+
+DROP TRIGGER trg_chk_ref_record_catalogue_properties ON catalogue_properties;
+
+DROP TRIGGER trg_chk_ref_record_identifications ON identifications;
+
+DROP TRIGGER trg_chk_ref_record_class_vernacular_names ON class_vernacular_names;
+
+DROP TRIGGER trg_chk_ref_record_users_workflow ON users_workflow;
+
+DROP TRIGGER trg_chk_ref_record_collection_maintenance ON collection_maintenance;
+
+DROP TRIGGER trg_chk_ref_record_template_table_record_ref ON template_table_record_ref;
+
+DROP TRIGGER trg_chk_ref_record_classification_synonymies ON classification_synonymies;
+
+DROP TRIGGER trg_chk_ref_record_catalogue_codes ON codes;
+
+DROP TRIGGER trg_chk_ref_record_associated_multimedia ON associated_multimedia;
+
+DROP TRIGGER trg_chk_ref_record_insurances ON insurances;
+
+DROP TRIGGER trg_chk_ref_record_relationship_catalogue_relationships ON catalogue_relationships;
+
+
+/************* Possible upper level Check ***********/
+
+DROP TRIGGER trg_chk_possible_upper_level_chronostratigraphy ON chronostratigraphy;
+
+DROP TRIGGER trg_chk_possible_upper_level_lithostratigraphy ON lithostratigraphy;
+
+DROP TRIGGER trg_chk_possible_upper_level_mineralogy ON mineralogy;
+
+DROP TRIGGER trg_chk_possible_upper_level_lithology ON lithology;
+
+DROP TRIGGER trg_chk_possible_upper_level_taxonomy ON taxonomy;
+
+/************ CHk Only One Lang ***************/
+
+DROP TRIGGER fct_chk_upper_level_for_childrens_people ON people_languages;
+
+DROP TRIGGER fct_chk_upper_level_for_childrens_users ON users_languages;
+
+
+/************* Check If Institution is a Moral Person ***********/
+
+DROP TRIGGER fct_chk_PeopleIsMoral_collections ON collections;

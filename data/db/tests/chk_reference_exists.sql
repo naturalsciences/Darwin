@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(11);
+SELECT plan(14);
 INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Méàleis Gùbularis&', 1);
 
 SELECT lives_ok('INSERT INTO users_tracking (referenced_relation, record_id,user_ref, modification_date_time)
@@ -32,6 +32,16 @@ SELECT throws_ok('INSERT INTO catalogue_relationships (referenced_relation, reco
 
 SELECT throws_ok('UPDATE catalogue_relationships relationship_type=''recombined from'' WHERE id=162');
 SELECT lives_ok('UPDATE catalogue_relationships SET id=12 WHERE id=162');
+
+
+SELECT lives_ok('INSERT INTO codes (referenced_relation, record_id, code)
+        VALUES (''taxonomy'', 3, ''Booorl'')');
+
+SELECT throws_ok('INSERT INTO codes (referenced_relation, record_id, code)
+        VALUES (''taxonomy'', 4, ''Booorl'')');
+
+SELECT throws_ok('INSERT INTO codes (referenced_relation, record_id, code)
+        VALUES (''taxonomyz'', 3, ''Booorl'')');
 
 SELECT * FROM finish();
 ROLLBACK;

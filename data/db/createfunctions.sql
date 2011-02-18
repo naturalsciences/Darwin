@@ -53,45 +53,55 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+
+/***
+* function fct_chk_collectionsInstitutionIsMoral
+* Check if an institution referenced in collections is moral
+*/
+CREATE OR REPLACE FUNCTION fct_chk_PeopleIsMoral() RETURNS TRIGGER
+AS $$
+DECLARE
+  rec_exists boolean;
+BEGIN
+   SELECT is_physical FROM people WHERE id=NEW.institution_ref into rec_exists;
+   
+   IF rec_exists = TRUE THEN
+    RAISE EXCEPTION 'You cannot link a moral person as Institution';
+   END IF;
+
+   RETURN NEW;
+END;
+$$
+language plpgsql;
+
+
 /***
 * Function fct_chk_one_pref_language
 * Check if there is only ONE preferred language for a user
-* Return false if there is already a preferred language true otherwise
+* Return an error if there is already a preferred language true otherwise
 */
-CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(id people_languages.id%TYPE, person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE, table_prefix varchar) returns boolean
-as $$
+CREATE OR REPLACE FUNCTION fct_chk_one_pref_language() RETURNS TRIGGER
+AS $$
 DECLARE
-	response boolean default false;
-	prefix varchar default coalesce(table_prefix, 'people');
-	tabl varchar default prefix || '_languages';
-	tableExist boolean default false;
+  rec_exists integer;
 BEGIN
-	select count(*)::integer::boolean into tableExist from pg_tables where schemaname not in ('pg_catalog','information_schema') and tablename = tabl;
-	IF tableExist THEN
-		IF preferred THEN
-			EXECUTE 'select not count(*)::integer::boolean from ' || quote_ident(tabl) || ' where ' || quote_ident(prefix || '_ref') || ' = ' || $2 || ' and preferred_language = ' || $3 || ' and id <> ' || $1 INTO response;
+    IF NEW.preferred_language = TRUE THEN
+      rec_exists := 0;
+      IF TG_TABLE_NAME = 'people_languages' THEN
+        SELECT count(*)::integer FROM people_languages WHERE people_ref = NEW.people_ref and preferred_language = NEW.preferred_language and id <> NEW.id INTO rec_exists;
+      ELSIF TG_TABLE_NAME = 'users_languages' THEN
+        SELECT count(*)::integer FROM users_languages WHERE users_ref = NEW.users_ref and preferred_language = NEW.preferred_language and id <> NEW.id INTO rec_exists;
+      END IF;
+      IF rec_exists != 0 THEN
+          RAISE EXCEPTION 'You cannot have more than 1 preferred language';
+      END IF;
+    END IF;
 
-		ELSE
-			response := true;
-		END IF;
-	END IF;
-	return response;
+    RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
-
-/***
-* Trigger Function fct_chk_one_pref_language
-* Trigger that call the fct_chk_one_pref_language fct
-*/
-CREATE OR REPLACE FUNCTION fct_chk_one_pref_language(id people_languages.id%TYPE, person people_languages.people_ref%TYPE, preferred people_languages.preferred_language%TYPE) returns boolean
-as $$
-DECLARE
-        response boolean default false;
-BEGIN
-	response := fct_chk_one_pref_language(id, person, preferred, 'people');
-	return response;
-END;
-$$ LANGUAGE plpgsql;
+$$
+language plpgsql;
 
 
 /***
@@ -200,20 +210,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-/***
-* function fct_chk_collectionsInstitutionIsMoral
-* Check if an institution referenced in collections is moral
-* return Boolean
-*/
-CREATE OR REPLACE FUNCTION fct_chk_PeopleIsMoral(people_ref people.id%TYPE) RETURNS boolean
-AS $$
-DECLARE
-	is_physical boolean;
-BEGIN
-	SELECT NOT people.is_physical INTO is_physical FROM people WHERE people.id=people_ref;
-	return is_physical;
-END;
-$$ LANGUAGE plpgsql;
 
 /***
 * fct_clr_specialstatus
@@ -520,7 +516,7 @@ $$ LANGUAGE plpgsql;
 /**
 * fct_chk_possible_upper_levels
 * When inserting or updating a hierarchical unit, checks, considering parent level, that unit level is ok (depending on definitions given in possible_upper_levels_table)
-*/
+*//*
 CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) RETURNS boolean
 AS $$
 DECLARE
@@ -541,7 +537,49 @@ EXCEPTION
 		RETURN response;
 END;
 $$ LANGUAGE plpgsql;
+*/
+CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level() RETURNS TRIGGER
+AS $$
+DECLARE
+  rec_exists integer;
+BEGIN
 
+    IF NEW.id = 0 OR (NEW.parent_ref = 0 AND NEW.level_ref IN (1, 55, 64, 70, 75)) THEN
+      RETURN NEW;
+    END IF;
+
+    EXECUTE 'select count(*)::integer ' ||
+        'from possible_upper_levels ' ||
+        'where level_ref = ' || NEW.level_ref ||
+        '  and level_upper_ref = (select level_ref from ' || TG_TABLE_NAME::text || ' where id = ' || NEW.parent_ref || ')'
+      INTO rec_exists;
+
+
+  IF rec_exists = 0 THEN
+    RAISE EXCEPTION 'This record does not follow the level hierarchy';
+  END IF;
+  RETURN NEW;
+
+END;
+$$
+language plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_chk_upper_level_for_childrens() RETURNS TRIGGER
+AS $$
+DECLARE
+  rec_exists integer;
+BEGIN
+
+  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(TG_TABLE_NAME::text) || ' WHERE parent_ref=' || quote_literal(NEW.id) || ' AND fct_chk_possible_upper_level('|| quote_literal(TG_TABLE_NAME::text) ||', parent_ref, level_ref, id) = false ' INTO rec_exists;
+  
+  IF rec_exists > 0 THEN
+    RAISE EXCEPTION 'Children of this record does not follow the level hierarchy';
+  END IF;
+  RETURN NEW;
+
+END;
+$$
+language plpgsql;
 
 /**
 * fct_chk_peopleType
@@ -631,16 +669,43 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_chk_ReferencedRecord(referenced_relation varchar,record_id integer) RETURNS boolean
+
+CREATE OR REPLACE FUNCTION fct_chk_ReferencedRecord() RETURNS TRIGGER
 AS $$
 DECLARE
-	rec_exists boolean;
+  rec_exists integer;
 BEGIN
- 	EXECUTE 'SELECT count(id)>0 FROM ' || quote_ident(referenced_relation) || ' WHERE id=' || quote_literal(record_id::varchar) INTO rec_exists;
-	RETURN rec_exists;
+
+  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(NEW.referenced_relation)  || ' WHERE id=' || quote_literal(NEW.record_id::varchar) INTO rec_exists;
+  
+  IF rec_exists != 1 THEN
+    RAISE EXCEPTION 'The referenced record does not exists';
+  END IF;
+
+  RETURN NEW;
+
 END;
 $$
-LANGUAGE plpgsql;
+language plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_chk_ReferencedRecordRelationShip() RETURNS TRIGGER
+AS $$
+DECLARE
+  rec_exists integer;
+BEGIN
+
+  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(NEW.referenced_relation)  || ' WHERE id=' || quote_literal(NEW.record_id_1::varchar) ||  ' OR id=' || quote_literal(NEW.record_id_2::varchar) INTO rec_exists;
+  
+  IF rec_exists != 2 THEN
+    RAISE EXCEPTION 'The referenced record does not exists';
+  END IF;
+
+  RETURN NEW;
+
+END;
+$$
+language plpgsql;
+
 
 CREATE OR REPLACE FUNCTION fct_cpy_FormattedName() RETURNS TRIGGER
 AS $$
@@ -771,22 +836,7 @@ $$
 language plpgsql;
 
 
-CREATE OR REPLACE FUNCTION fct_chk_upper_level_for_childrens() RETURNS TRIGGER
-AS $$
-DECLARE
-  rec_exists integer;
-BEGIN
 
-  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(TG_TABLE_NAME::text) || ' WHERE parent_ref=' || quote_literal(NEW.id) || ' AND fct_chk_possible_upper_level('|| quote_literal(TG_TABLE_NAME::text) ||', parent_ref, level_ref, id) = false ' INTO rec_exists;
-  
-  IF rec_exists > 0 THEN
-    RAISE EXCEPTION 'Children of this record does not follow the level hierarchy';
-  END IF;
-  RETURN NEW;
-
-END;
-$$
-language plpgsql;
 
 CREATE OR REPLACE FUNCTION get_setting(IN param text, OUT value text)
 LANGUAGE plpgsql STABLE STRICT AS
