@@ -71,7 +71,7 @@
       $(parent).find('input[id$=\"_value_defined\"]').val('');
       $(parent).find('input[id$=\"_is_removed\"]').val('');
 
-      $(parent).find('select').val('');
+      $(parent).find('select').append("<option value=''></option>").val('');
 
       $(parent).hide();
       reOrderIdent();

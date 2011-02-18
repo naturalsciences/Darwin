@@ -40,7 +40,7 @@
       $(parent).find('input[id$=\"_insurance_value\"]').val('');
       $(parent).find('input[id$=\"_insurance_currency_input\"]').val('');
       $(parent).find('input[id$=\"_referenced_relation\"]').val('');
-      $(parent).find('select').val('');
+      $(parent).find('select').append("<option value=''></option>").val('');
       $(parent).hide();
       $(parent_tr).next('tr').hide();
       visibles = $(parent).find('tr:visible').size();
