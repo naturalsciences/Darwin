@@ -15,6 +15,7 @@
       base.options = $.extend({},$.widgets_screen.defaultOptions, options);
 
       $('.board_col').sortable({
+        helper: 'clone',
         connectWith: ['.board_col'],
         handle: '.widget_top_bar',
         update: base.changeOrder

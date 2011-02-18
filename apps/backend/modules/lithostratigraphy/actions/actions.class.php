@@ -14,7 +14,7 @@ class lithostratigraphyActions extends DarwinActions
   protected $table = 'lithostratigraphy';
   public function preExecute()
   {
-    if (strstr('view,index',$this->getActionName()) )
+    if (! strstr('view',$this->getActionName()) && ! strstr('index',$this->getActionName()))
     {
       if(! $this->getUser()->isAtLeast(Users::ENCODER))
       {
