@@ -81,23 +81,23 @@ CREATE TRIGGER trg_chk_ref_record_relationship_catalogue_relationships AFTER INS
 
 CREATE TRIGGER trg_chk_possible_upper_level_chronostratigraphy AFTER INSERT OR UPDATE
         ON chronostratigraphy FOR EACH ROW
-        EXECUTE PROCEDURE fct_chk_possible_upper_level();
+        EXECUTE PROCEDURE fct_trg_chk_possible_upper_level();
 
 CREATE TRIGGER trg_chk_possible_upper_level_lithostratigraphy AFTER INSERT OR UPDATE
         ON lithostratigraphy FOR EACH ROW
-        EXECUTE PROCEDURE fct_chk_possible_upper_level();
+        EXECUTE PROCEDURE fct_trg_chk_possible_upper_level();
 
 CREATE TRIGGER trg_chk_possible_upper_level_mineralogy AFTER INSERT OR UPDATE
         ON mineralogy FOR EACH ROW
-        EXECUTE PROCEDURE fct_chk_possible_upper_level();
+        EXECUTE PROCEDURE fct_trg_chk_possible_upper_level();
 
 CREATE TRIGGER trg_chk_possible_upper_level_lithology AFTER INSERT OR UPDATE
         ON lithology FOR EACH ROW
-        EXECUTE PROCEDURE fct_chk_possible_upper_level();
+        EXECUTE PROCEDURE fct_trg_chk_possible_upper_level();
 
 CREATE TRIGGER trg_chk_possible_upper_level_taxonomy AFTER INSERT OR UPDATE
         ON taxonomy FOR EACH ROW
-        EXECUTE PROCEDURE fct_chk_possible_upper_level();
+        EXECUTE PROCEDURE fct_trg_chk_possible_upper_level();
 
 /************ CHk Only One Lang ***************/
 
