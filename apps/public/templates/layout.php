@@ -18,7 +18,22 @@
           <?php echo $sf_content ?>
         </td>
       </tr>
-      <tr><td class="menu_bottom">&nbsp;</td></tr>
+      <tr>
+        <td class="menu_bottom">
+          <div class="page">
+            <table>
+              <tr>
+                <td class="browser_img "><ul style="">
+                  <li><?php echo __('Recommended browser for DaRWIN :') ; ?></li>
+                  <li><?php echo image_tag('chrome.png',array('title' =>'Google Chrome'));?></li>
+                  <li><?php echo image_tag('firefox.png',array('title' =>'Firefox >= 3.6'));?></li>
+                  <li><?php echo image_tag('Safari.png',array('title' =>'Safari'));?></li>
+                </ul></td>
+              </tr>
+            </table>    
+          </div>
+        </td>     
+      </tr>
     </table>
   </body>
 </html>

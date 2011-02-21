@@ -1,4 +1,4 @@
-.lang_picker 
+.lang_picker, .browser_img 
 {
   color:white;
   font-size:small;
@@ -16,6 +16,22 @@
   text-decoration: none ;
 }
 
+.browser_img li
+{
+  display:inline;
+  margin-left: 0.5em;
+}
+.browser_img img
+{
+  color:white;
+  font-size:small;
+  opacity:0.4; 
+}
+
+.browser_img img:hover 
+{
+  opacity:1.0;  
+}
 .all_content
 {
   height: 100%
@@ -47,6 +63,8 @@
 .menu_bottom
 {
   background: #404040 repeat-y; 
+  vertical-align: top !important;
+  padding-top : 0.4em;
   position: relative;
 	min-height: 50px ;
 	clear:both;  
