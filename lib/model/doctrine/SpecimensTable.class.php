@@ -77,24 +77,6 @@ class SpecimensTable extends DarwinTable
   }
 
   /**
-  * Get distinct tools
-  * @return Doctrine_collection with distinct "tool" as column
-  */
-  public function getDistinctTools()
-  {
-    return $this->createDistinct('Specimens', 'collecting_tool', 'tool')->execute();
-  }
-
-  /**
-  * Get distinct Method
-  * @return Doctrine_collection with distinct "method" as column
-  */
-  public function getDistinctMethods()
-  {
-      return $this->createDistinct('Specimens', 'collecting_method', 'method')->execute();
-  }
-
-  /**
   * Get distinct Host Relationships
   * @return Doctrine_collection with distinct "host_relationship" as column
   */

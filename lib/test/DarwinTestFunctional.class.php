@@ -230,22 +230,21 @@ class DarwinTestFunctional extends sfTestFunctional
             	              1 => array('people_ref' => $collector_2, 'referenced_relation' => 'identifications', 'order_by' => 2, 'people_type' => 'identifier')
 	              ))),
 	         'newSpecimensAccompanying' => array(
-	              0 => array('accompanying_type' => 'mineral',
+	              0 => array('accompanying_type' => 'biological',
 	                    'form' => 'Test form',
 	                    'quantity' => 12,
 	                    'unit' => '%',
 	                    'taxon_ref' => $taxon_id
   	  	  					)),
-		  'acquisition_category' => 'Mission',
+		  'acquisition_category' => 'mission',
 		  'acquisition_date' => array('day' => 01, 'month' => 06, 'year' => 1984)
   	       )))->
       end()->
-
       with('doctrine')->begin()-> 
         check('Specimens', array(
           'collection_ref' => $collection_id,
           'taxon_ref' => $taxon_id,
-          'acquisition_category' => 'Mission'
+          'acquisition_category' => 'mission'
           ))->
       end(); 
 	  return ($this) ;

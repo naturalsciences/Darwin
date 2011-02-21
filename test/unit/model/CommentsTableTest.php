@@ -12,4 +12,5 @@ $t->is_deeply(Doctrine::getTable('Comments')->getNotionsFor('taxonomy'),
   array(
     'taxon information' => 'taxon information',
     'taxon life history' => 'taxon life history',
+    'taxon sp comments' => 'taxon old sp. comments'
     ),'Notions are the same');

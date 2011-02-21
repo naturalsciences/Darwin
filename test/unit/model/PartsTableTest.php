@@ -32,7 +32,7 @@ $t->is(count($parts),1,'Get All parts for individuals');
 
 $part = new SpecimenParts();
 $part->setSpecimenIndividualRef($individual->getId());
-$part->setContainer('container');
+$part->setContainer('container2');
 $part->setContainerStorage('cont store');
 $part->setSubContainer('container');
 $part->setSubContainerStorage('subcont store');
