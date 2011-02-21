@@ -1,4 +1,5 @@
 cache/*
+data/feed/*.xml
 !cache/.gitignore
 log/*
 !log/.gitignore
