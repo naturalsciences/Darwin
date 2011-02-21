@@ -62,9 +62,7 @@ $browser->
       'complete' => '1',
     )
   ))->
-  with('form')->begin()->
-    hasError(0)->
-  end()->
+
   followRedirect()->
   
   get('parts/overview/id/'.$indivId)-> 
