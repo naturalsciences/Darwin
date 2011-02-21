@@ -62,8 +62,12 @@ $browser->
       'complete' => '1',
     )
   ))->
+  with('form')->begin()->
+    hasError(0)->
+  end()->
   followRedirect()->
-
+  
+  get('parts/overview/id/'.$indivId)-> 
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('title', 'Parts overview')->
