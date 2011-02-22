@@ -30,7 +30,7 @@ bw3:
    visible: true
    title_perso: News
    all_public: true
-   is_available:false
+   is_available: false
 
 usr0:
    col_num: 1
