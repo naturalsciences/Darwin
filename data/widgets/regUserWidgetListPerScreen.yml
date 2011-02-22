@@ -20,6 +20,18 @@ bw2:
    title_perso: My saved specimens
    all_public: true
 
+bw3:
+   col_num: 1
+   category: board_widget
+   group_name: news
+   mandatory: false
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: News
+   all_public: true
+   is_available:false
+
 usr0:
    col_num: 1
    category: users_widget
