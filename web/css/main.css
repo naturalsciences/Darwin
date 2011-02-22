@@ -2148,6 +2148,7 @@ table.saved_searches div.date
 /*   text-align:right; */
   color:gray;
 }
+
 table.saved_spec_board .saved_count, table.saved_searches .saved_count
 {
   font-size:x-small;
@@ -2408,4 +2409,30 @@ tbody .col_taxon a
 #chicken
 {
   z-index:2400 !important;
+}
+
+ul.board_news li
+{
+  background-image: url(/images/rounded_blue_square.png);
+  background-repeat: no-repeat;
+  background-position: 0 .3em;
+  padding: 0.3em;
+  padding-left: 1em;
+  margin-top: 0.5em;
+  border-bottom: 1px dashed #E0E0E0;
+/*   margin-bottom: 0.3em; */
+}
+ul.board_news li:hover
+{
+  background-color: #ebf5f5;/*}#ececec;*/
+}
+
+ul.board_news li div.news_info
+{
+  display:block;
+  font-size:x-small;
+/*   text-align:right; */
+  margin-left: 1.5em;
+  margin-top: 0.5em;
+  color:gray;
 }

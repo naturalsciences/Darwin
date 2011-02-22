@@ -59,6 +59,17 @@ MyWidgets:
         visible: true
         is_available: false
         title_perso: My activity
+    u1wb7:
+        User: u1
+        col_num: 1
+        category: board_widget
+        group_name: news
+        mandatory: false
+        order_by: 3
+        opened: true
+        visible: true
+        title_perso: News
+        all_public: true
     u1ws1:
         User: u1
         col_num: 1
