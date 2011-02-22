@@ -33,6 +33,12 @@
                 <?php if($orderBy=='gtu_to_date') echo $orderSign ?>
               </a>
           </th>
+          <th>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=elevation'.( ($orderBy=='elevation' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <?php echo __('Elevation');?>
+              <?php if($orderBy=='elevation') echo $orderSign ?>
+            </a>
+          </th>
           <th></th>
       </thead>
       <tbody>
@@ -45,6 +51,7 @@
             <td class=""><?php echo $item->getLongitude();?></td>
             <td class="datesNum"><?php echo $item->getGtuFromDateMasked(ESC_RAW);?></td>
             <td class="datesNum"><?php echo $item->getGtuToDateMasked(ESC_RAW);?></td>
+            <td class=""><?php echo $item->getElevation();?></td>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?> top_aligned">
               <?php if(! $is_choose):?>
                 <?php echo link_to(image_tag('edit.png',array('title' => 'Edit')),'gtu/edit?id='.$item->getId());?>
