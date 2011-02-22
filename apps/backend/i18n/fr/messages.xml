@@ -2669,6 +2669,10 @@
         <source>At least a value is required.</source>
         <target>Au moins une valeur est requise</target>
       </trans-unit>
+      <trans-unit id="1125">
+        <source>Elevation</source>
+        <target>Altitude</target>
+      </trans-unit>      
     </body>
   </file>
 </xliff>
