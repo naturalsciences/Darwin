@@ -24,7 +24,7 @@ class UsersTrackingFormFilter extends BaseUsersTrackingFormFilter
 
    $this->widgetSchema['referenced_relation']->setLabel('Table');
    $this->widgetSchema['action'] =  new sfWidgetFormChoice(array(
-      'choices' => array(''=>'','update' => 'Update','delete' => 'Delete')
+      'choices' => array(''=>'','insert' => 'Insert', 'update' => 'Update','delete' => 'Delete')
     ));
     $yearsKeyVal = range(intval('2000'), date('Y'));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
@@ -96,6 +96,8 @@ class UsersTrackingFormFilter extends BaseUsersTrackingFormFilter
     $query = parent::doBuildQuery($values);
     $alias = $query->getRootAlias();
     $fields = array('modification_date_time');
+    if($values['action'] != '') $query->addWhere('action = ?',$values['action']) ;
+    if($values['referenced_relation'] != '') $query->addWhere('referenced_relation = ?',$values['referenced_relation']) ;    
     $query->select($alias.'.*, u.*, new_value-old_value as new_diff,  old_value-new_value as old_diff');
     $this->addDateTimeColumnQuery($query, $fields, $values['from_date'], $values['to_date']);
     $query->leftJoin($alias.'.Users u');
