@@ -26,11 +26,11 @@ bw3:
    group_name: news
    mandatory: false
    order_by: 3
-   opened: true
+   opened: false
    visible: true
    title_perso: News
    all_public: true
-   is_available: false
+   is_available: true
 
 usr0:
    col_num: 1
