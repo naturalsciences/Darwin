@@ -822,6 +822,7 @@ p.tree
 #ui-datepicker-div
 {
   z-index: 9000;
+  display:none;
 }
 
 .add_item_button img, .change_item_button img
