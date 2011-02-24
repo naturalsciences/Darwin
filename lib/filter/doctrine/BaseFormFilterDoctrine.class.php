@@ -363,4 +363,33 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     }
     return $query ;
   }
+
+  public function addCatalogueRelationColumnQuery($query, $item_ref, $relation, $table, $field_prefix)
+  {
+    if($item_ref != 0)
+    {
+      if($relation == 'equal')
+      {
+        $query->andWhere($field_prefix."_ref = ?", $item_ref);
+      }
+      elseif($relation == 'child')
+      {
+        $item  = Doctrine::getTable($table)->find($item_ref);
+        $query->andWhere($field_prefix."_path like ?", $item->getPath().''.$item->getId().'/%');
+      }
+      elseif($relation == 'direct_child')
+      {
+        $query->andWhere($field_prefix."_parent_ref = ?",$item_ref);
+      }
+      elseif($relation =='synonym')
+      {
+        $synonyms = Doctrine::getTable('ClassificationSynonymies')->findSynonymsIds($table, $item_ref);
+        if(empty($synonyms))
+          $query->andWhere('0=1'); //False
+        $query->andWhereIn($field_prefix."_ref",$synonyms)
+          ->andWhere($field_prefix."_ref != ?",$item_ref); // remove himself 
+      }
+    }
+    return $query ;
+  }
 }

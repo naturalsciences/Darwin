@@ -29,6 +29,43 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'taxonomy'))),
         'add_empty' => $this->getI18N()->__('All')
       ));
+    $rel = array('child'=>'Is a Child Of','direct_child'=>'Is a Direct Child','synonym'=> 'Is a Synonym Of', 'equal' => 'Is strictly equal to');
+    
+    $this->widgetSchema['taxon_relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    //$this->widgetSchema->setHelp('taxon_relation','This line allow you to look for synonym or child of the selected item (ex : look for all item X children)');
+    $this->widgetSchema['taxon_item_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Taxonomy',
+       'link_url' => 'taxonomy/choose',
+       'method' => 'getNameWithFormat',
+       'box_title' => $this->getI18N()->__('Choose Taxon'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    $this->validatorSchema['taxon_item_ref'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['taxon_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+
+
+    $this->widgetSchema['lithology_relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    //$this->widgetSchema->setHelp('taxon_relation','This line allow you to look for synonym or child of the selected item (ex : look for all item X children)');
+    $this->widgetSchema['lithology_item_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Lithology',
+       'link_url' => 'lithology/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Lithologic unit'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    $this->validatorSchema['lithology_item_ref'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['lithology_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+
 
     $this->widgetSchema['lithology_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['lithology_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
@@ -44,6 +81,22 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'add_empty' => $this->getI18N()->__('All')
       ));
 
+    $this->widgetSchema['litho_relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    /* Lithology Reference */
+    $this->widgetSchema['litho_item_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Lithostratigraphy',
+       'link_url' => 'lithostratigraphy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Lithostratigraphic unit'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    $this->validatorSchema['litho_item_ref'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['litho_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
 
     $this->widgetSchema['chrono_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['chrono_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
@@ -52,12 +105,49 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         'add_empty' => $this->getI18N()->__('All')
       ));
 
+    $this->widgetSchema['chrono_relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+    /* Lithology Reference */
+    $this->widgetSchema['chrono_item_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Chronostratigraphy',
+       'link_url' => 'chronostratigraphy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Chronostratigraphic unit'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+
+    $this->validatorSchema['chrono_item_ref'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['chrono_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+
+
     $this->widgetSchema['mineral_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['mineral_level_ref'] = new sfWidgetFormDarwinDoctrineChoice(array(
         'model' => 'CatalogueLevels',
         'table_method' => array('method'=>'getLevelsByTypes','parameters'=>array(array('table'=>'mineralogy'))),
         'add_empty' => $this->getI18N()->__('All')
       ));
+
+    /* Mineralogy Reference */
+    $this->widgetSchema['mineral_item_ref'] = new widgetFormButtonRef(array(
+       'model' => 'Mineralogy',
+       'link_url' => 'mineralogy/choose',
+       'method' => 'getName',
+       'box_title' => $this->getI18N()->__('Choose Mineralogic unit'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );
+    $this->widgetSchema['mineral_relation'] = new sfWidgetFormChoice(array('choices'=> $rel));
+
+    $this->validatorSchema['mineral_item_ref'] = new sfValidatorInteger(array('required'=>false));
+    $this->validatorSchema['mineral_relation'] = new sfValidatorChoice(array('required'=>false, 'choices'=> array_keys($rel)));
+
+
     $minDate = new FuzzyDateTime(strval(min(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/01/01'));
     $maxDate = new FuzzyDateTime(strval(max(range(intval(sfConfig::get('app_yearRangeMin')), intval(sfConfig::get('app_yearRangeMax')))).'/12/31'));
     $maxDate->setStart(false);
@@ -213,7 +303,11 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
    
     /* Labels */
     $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
-                                         'taxon_name' => 'Taxon',
+                                         'taxon_name' => 'Taxon text search',
+                                         'litho_name' => 'Litho text search',
+                                         'lithology_name' => 'Lithology text search',
+                                         'chrono_name' => 'Chrono text search',
+                                         'mineral_name' => 'Mineralo text search',
                                          'taxon_level_ref' => 'Level',
                                          'what_searched' => 'What would you like to search ?',
                                          'code_ref_relation' => 'Code of'
@@ -852,7 +946,14 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $fields = array('gtu_from_date', 'gtu_to_date');
     $this->addDateFromToColumnQuery($query, $fields, $values['gtu_from_date'], $values['gtu_to_date']);
     $this->addDateFromToColumnQuery($query, array('ig_date'), $values['ig_from_date'], $values['ig_to_date']);    
-    $this->addDateFromToColumnQuery($query, array('acquisition_date'), $values['acquisition_from_date'], $values['acquisition_to_date']);        
+    $this->addDateFromToColumnQuery($query, array('acquisition_date'), $values['acquisition_from_date'], $values['acquisition_to_date']);
+
+    $this->addCatalogueRelationColumnQuery($query, $values['taxon_item_ref'], $values['taxon_relation'],'Taxonomy','taxon');
+    $this->addCatalogueRelationColumnQuery($query, $values['chrono_item_ref'], $values['chrono_relation'],'Chronostratigraphy','chrono');
+    $this->addCatalogueRelationColumnQuery($query, $values['litho_item_ref'], $values['litho_relation'],'Lithostratigraphy','litho');
+    $this->addCatalogueRelationColumnQuery($query, $values['lithology_item_ref'], $values['lithology_relation'],'Lithology','lithology');
+    $this->addCatalogueRelationColumnQuery($query, $values['mineral_item_ref'], $values['mineral_relation'],'Mineralogy','mineral');
+
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }

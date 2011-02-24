@@ -2343,6 +2343,30 @@
          <source>Last seen</source>
          <target>Laatst gezien</target>
        </trans-unit>
+       <trans-unit id="1128">
+         <source>Is strictly equal to</source>
+         <target>Is identiek aan</target>
+       </trans-unit>
+       <trans-unit id="1129">
+         <source>Taxon text search</source>
+         <target>Tekstuele taxon opzoeking</target>
+       </trans-unit>
+       <trans-unit id="1130">
+         <source>Litho text search</source>
+         <target>Tekstuele litho opzoeking</target>
+       </trans-unit>
+       <trans-unit id="1131">
+         <source>Lithology text search</source>
+         <target>Tekstuele lithologie opzoeking</target>
+       </trans-unit>  
+       <trans-unit id="1132">
+         <source>Chrono text search</source>
+         <target>Tekstuele chrono opzoeking</target>
+       </trans-unit>        
+       <trans-unit id="1132">
+         <source>Mineralo text search</source>
+         <target>Tekstuele mineralo opzoeking</target>
+       </trans-unit> 
     </body>
   </file>
 </xliff>
