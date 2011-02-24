@@ -2339,6 +2339,10 @@
          <source>More</source>
          <target>Meer</target>
        </trans-unit>
+       <trans-unit id="1127">
+         <source>Last seen</source>
+         <target>Laatst gezien</target>
+       </trans-unit>
     </body>
   </file>
 </xliff>

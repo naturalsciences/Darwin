@@ -2677,6 +2677,10 @@
         <source>More</source>
         <target>Plus</target>
       </trans-unit>
+      <trans-unit id="1127">
+        <source>Last seen</source>
+        <target>Dernière visite</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
