@@ -506,7 +506,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         ( station_visible = true AND gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
         ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326) )
        OR 
-        ( station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().')) 
+        ( station_visible = false AND collection_ref in ('.implode(',',$this->encoding_collection).') 
         AND gtu_location && ST_SetSRID(ST_MakeBox2D(ST_Point('.$values['lon_from'].', '.$values['lat_from'].'),
         ST_Point('.$values['lon_to'].', '.$values['lat_to'].')),4326) )
       ');
@@ -725,7 +725,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
               (station_visible = false
                AND (
                     (
-                      collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
+                      collection_ref in (".implode(',',$this->encoding_collection).")
                       AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
                     )
                     OR
@@ -790,7 +790,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
       $query->andWhere("
         (station_visible = true AND  LOWER(gtu_code) like ? )
         OR
-        (station_visible = false AND collection_ref in (select fct_search_authorized_encoding_collections(".$this->options['user']->getId()."))
+        (station_visible = false AND collection_ref in (".implode(',',$this->encoding_collection).")
           AND LOWER(gtu_code) like ?)", array(strtolower('%'.$val.'%'),strtolower('%'.$val.'%')));
       $query->whereParenWrap();
     }
@@ -869,16 +869,22 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
   public function addCollectionRefColumnQuery($query, $field, $val)
   {
-    if (count($val) > 0) 
-    {
-      $query->andWhereIn('collection_ref',$val) ;
-    }
+    //Do Nothing here, the job is done in the doBuildQuery with check collection rights
+
     return $query;
   }
 
   public function doBuildQuery(array $values)
   {
     $fields = SpecimenSearchTable::getFieldsByType($this->options['user']->getDbUserType());
+
+    $this->encoding_collection = $this->getCollectionWithRights($this->options['user'],true);
+    $this->cols = $this->getCollectionWithRights($this->options['user']);
+
+    if(!empty($values['collection_ref']))
+    {
+      $this->cols = array_intersect($values['collection_ref'], $this->cols);
+    }
 
     if($values['what_searched'] == 'specimen')
     {
@@ -919,16 +925,20 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
         ->from('PartSearch s');
     }
     if($values['what_searched'] != 'part')
-      $query->addSelect('dummy_first(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
+      $query->addSelect('dummy_first(collection_ref in ('.implode(',',$this->encoding_collection).')) as has_encoding_rights');
     else
-      $query->addSelect('(collection_ref in (select fct_search_authorized_encoding_collections('.$this->options['user']->getId().'))) as has_encoding_rights');
+      $query->addSelect('(collection_ref in ('.implode(',',$this->encoding_collection).')) as has_encoding_rights');
+
+
+
 
     $this->options['query'] = $query;
 
-
     $query = parent::doBuildQuery($values);
 
-    $query->andWhere('s.collection_ref in (select fct_search_authorized_view_collections(?))', $this->options['user']->getId());
+    $query->andwhere('collection_ref in ( '.implode(',',$this->cols). ') ');
+
+
     if ($values['acquisition_category'] != '' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));
@@ -955,6 +965,8 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->addCatalogueRelationColumnQuery($query, $values['mineral_item_ref'], $values['mineral_relation'],'Mineralogy','mineral');
 
     $query->limit($this->getCatalogueRecLimits());
+//     print $query->getSqlQuery();
+//     die();
     return $query;
   }
 
