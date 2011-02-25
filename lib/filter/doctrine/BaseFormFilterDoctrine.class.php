@@ -363,4 +363,65 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
     }
     return $query ;
   }
+
+  public function addCatalogueRelationColumnQuery($query, $item_ref, $relation, $table, $field_prefix)
+  {
+    if($item_ref != 0)
+    {
+      if($relation == 'equal')
+      {
+        $query->andWhere($field_prefix."_ref = ?", $item_ref);
+      }
+      elseif($relation == 'child')
+      {
+        $item  = Doctrine::getTable($table)->find($item_ref);
+        $query->andWhere($field_prefix."_path like ?", $item->getPath().''.$item->getId().'/%');
+      }
+      elseif($relation == 'direct_child')
+      {
+        $query->andWhere($field_prefix."_parent_ref = ?",$item_ref);
+      }
+      elseif($relation =='synonym')
+      {
+        $synonyms = Doctrine::getTable('ClassificationSynonymies')->findSynonymsIds($table, $item_ref);
+        if(empty($synonyms))
+          $query->andWhere('0=1'); //False
+        $query->andWhereIn($field_prefix."_ref",$synonyms)
+          ->andWhere($field_prefix."_ref != ?",$item_ref); // remove himself 
+      }
+    }
+    return $query ;
+  }
+
+  public static function getCollectionWithRights($user, $with_writing=false)
+  {
+      if($user->isA(Users::ADMIN))
+      {
+        $res = array(0=>0);
+        $results = Doctrine_Query::create()
+          ->select('id')
+          ->from('Collections')->fetchArray();
+        foreach($results as $row)
+        {
+          $res[] = $row['id'];
+        }
+        return $res;
+      }
+      $conn = Doctrine_Manager::connection();
+      $sql = "SELECT collection_ref from collections_rights where user_ref = :userid ";
+      if($with_writing == false)
+        $sql .= "UNION select id as collection_ref from collections where is_public = true";
+      else
+        $sql .= " and db_user_type >= 2";
+
+      $q = $conn->prepare($sql);
+      $q->execute(array(':userid' => $user->getId()));
+      $colls = $q->fetchAll();
+      $results = array(0=>0);
+      foreach($colls as $col)
+      {
+        $results[] = $col[0];
+      }
+      return $results;
+  }
 }

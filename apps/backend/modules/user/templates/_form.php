@@ -88,6 +88,13 @@
         <tr>
           <td colspan="2"><hr /></td>
         </tr>
+        <?php if($sf_user->isAtLeast(Users::ADMIN)):?>
+          <tr>
+            <th><?php echo __('Last seen');?></th>
+            <?php use_helper('Date');?>
+            <td><?php echo format_datetime($form->getObject()->getLastSeen(),'f');?></td>
+          </tr>
+        <?php endif;?>
         <tr class="trusted_user_links">
           <td colspan="2">
 	      <a href="#" class="display_value"> &gt; <?php echo __('Show link with '.(isset($form['title'])?'people':'institution'));?> &lt;</a>

@@ -2672,12 +2672,45 @@
       <trans-unit id="1125">
         <source>Elevation</source>
         <target>Altitude</target>
-      </trans-unit>     
+      </trans-unit>
       <trans-unit id="1126">
+        <source>More</source>
+        <target>Plus</target>
+      </trans-unit>
+      <trans-unit id="1127">
+        <source>Last seen</source>
+        <target>Dernière visite</target>
+      </trans-unit>
+      <trans-unit id="1128">
+        <source>Is strictly equal to</source>
+        <target>Est strictement égal à</target>
+      </trans-unit>
+      <trans-unit id="1129">
+        <source>Taxon text search</source>
+        <target>Recherche Taxon textuelle</target>
+      </trans-unit>
+      <trans-unit id="1130">
+        <source>Litho text search</source>
+        <target>Recherche Litho textuelle</target>
+      </trans-unit>
+      <trans-unit id="1131">
+        <source>Lithology text search</source>
+        <target>Recherche Lithologique textuelle</target>
+      </trans-unit>  
+      <trans-unit id="1132">
+        <source>Chrono text search</source>
+        <target>Recherche Chrono textuelle</target>
+      </trans-unit>        
+      <trans-unit id="1132">
+        <source>Mineralo text search</source>
+        <target>Recherche Mineralo textuelle</target>
+      </trans-unit>  
+      </trans-unit>     
+      <trans-unit id="1133">
         <source>Insert</source>
         <target>Insérer</target>
       </trans-unit> 
-      <trans-unit id="1127">
+      <trans-unit id="1134">
         <source>Update</source>
         <target>Mise à jour</target>
       </trans-unit>              

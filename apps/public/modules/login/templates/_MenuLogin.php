@@ -8,8 +8,8 @@
             <table>
               <tr>
                 <?php if(! $sf_user->isAuthenticated()):?>
-                  <td class="field"><?php echo $form['username']->render(array('class'=>'small')); ?></td>
-                  <td class="field"><?php echo $form['password']->render(array('class'=>'small')); ?></td>
+                  <td class="field"><?php echo $form['username']->render(array('class'=>'small','title'=>__('Username') )); ?></td>
+                  <td class="field"><?php echo $form['password']->render(array('class'=>'small','title'=>__('Password'))); ?></td>
                   <td id="login_bt"><?php echo $form['_csrf_token'] ; ?>
                     <input type="submit" value="&gt;&gt;">
                   </td>
