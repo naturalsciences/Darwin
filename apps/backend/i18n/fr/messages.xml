@@ -2672,7 +2672,15 @@
       <trans-unit id="1125">
         <source>Elevation</source>
         <target>Altitude</target>
-      </trans-unit>      
+      </trans-unit>     
+      <trans-unit id="1126">
+        <source>Insert</source>
+        <target>Insérer</target>
+      </trans-unit> 
+      <trans-unit id="1127">
+        <source>Update</source>
+        <target>Mise à jour</target>
+      </trans-unit>              
     </body>
   </file>
 </xliff>
