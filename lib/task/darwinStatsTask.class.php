@@ -2,6 +2,7 @@
 
 class darwinStatsTask extends sfBaseTask
 {
+  private $request_array = array() ;
   protected function configure()
   {
     $this->namespace        = 'darwin';
