@@ -121,6 +121,11 @@ BEGIN
     temp_string := TRANSLATE(temp_string,'Ð','d');
     temp_string := TRANSLATE(temp_string,'ó','o');
     temp_string := TRANSLATE(temp_string,'ę','e');
+    temp_string := TRANSLATE(temp_string,'ā','a');
+    temp_string := TRANSLATE(temp_string,'ē','e');
+    temp_string := TRANSLATE(temp_string,'ī','i');
+    temp_string := TRANSLATE(temp_string,'ō','o');
+    temp_string := TRANSLATE(temp_string,'ū','u');
     IF forUniqueness THEN
       temp_string := LOWER(to_ascii(temp_string, 'LATIN9'));
     ELSE
