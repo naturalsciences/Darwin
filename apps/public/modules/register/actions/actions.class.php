@@ -95,7 +95,7 @@ class registerActions extends DarwinActions
 
   public function executeLogin(sfWebRequest $request)
   {
-    $this->redirectIf($this->getUser()->isAuthenticated(), $this->getContext()->getConfiguration()->generateBackendUrl('homepage'));
+    $this->redirectIf($this->getUser()->isAuthenticated(), $this->getContext()->getConfiguration()->generateBackendUrl('homepage', array(), $request));
     $referer = $this->getRequest()->getReferer();
     $login_params = array();
     $this->form = new LoginForm();
@@ -120,7 +120,7 @@ class registerActions extends DarwinActions
       {
         $login_params['l_err'] = '1';
       }
-      $this->redirect($this->getContext()->getConfiguration()->generateBackendUrl('homepage', $login_params));
+      $this->redirect($this->getContext()->getConfiguration()->generateBackendUrl('homepage', $login_params, $request));
     }
     $this->redirect($referer);
   }

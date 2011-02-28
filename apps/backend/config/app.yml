@@ -11,7 +11,6 @@ all:
        pagerSlidingSize: 5
        catalogueRecLimit: 200
        queryTimeout: 30000
-       servername: darwin.naturalsciences.be
 #dev:
    tracking:
        enabled: true

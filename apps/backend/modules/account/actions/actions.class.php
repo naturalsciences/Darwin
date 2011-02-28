@@ -108,7 +108,6 @@ class accountActions extends DarwinActions
           $userParams['physical'] = $user->getIsPhysical();
           $userParams['title'] = $user->getTitle();
           $userParams['mail'] = $user->UsersComm[0]->getEntry();
-          $userParams['servername'] = sfConfig::get('app_servername');
 
           // send an email to the registered user
           $this->sendPwdRenewMail($userParams);
@@ -167,7 +166,7 @@ class accountActions extends DarwinActions
           $userLogin->setRenewHash(null);
           $userLogin->save();
 
-          $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage').'register/renewPwdSucceeded');
+          $this->redirect($this->getContext()->getConfiguration()->generatePublicUrl('renewed', array(), $request));
         }
         catch(Doctrine_Exception $ne)
         {

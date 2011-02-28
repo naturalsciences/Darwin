@@ -12,6 +12,18 @@ tour:
   url:   /tour
   param: { module: board, action: tour }
 
+search:
+  url:   /search/search
+  param: { module: search, action: search }
+
+register:
+  url:   /register
+  param: { module: register, action: index }
+
+renewed:
+  url:   /register/renewPwdSucceeded
+  param: { module: register, action: renewPwdSucceeded }
+
 homepage:
   url:   /
   param: { module: board, action: index }
