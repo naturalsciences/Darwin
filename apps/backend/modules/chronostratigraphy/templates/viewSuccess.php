@@ -30,7 +30,7 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['local_naming']->renderLabel() ?></th>
         <td>
-          <?php echo ($chrono->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$chrono->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$chrono->getLocalNaming()));?>
+          <?php echo ($chrono->getLocalNaming())?image_tag('checkbox_checked.png', array('alt'=>$chrono->getLocalNaming())):image_tag('checkbox_unchecked.png', array('alt'=>$chrono->getLocalNaming()));?>
         </td>
       </tr>
       <tr>
