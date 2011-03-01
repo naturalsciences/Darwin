@@ -96,8 +96,8 @@ class TagGroupsTable extends DarwinTable
 
       $sql .= $order_by;
 
-      $sql = "select distinct tag, 2 as size, 0 as precision
-              from (" .$sql.") as subquery ".$limit;
+      $sql = "select distinct tag, 2 as size, 0 as precision,sims
+              from (" .$sql.") as subquery order by sims desc ".$limit;
       $fuzzyResults = $conn->fetchAssoc($sql);
       $result = array_merge($result, $fuzzyResults);
     }
