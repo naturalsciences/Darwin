@@ -723,6 +723,10 @@ p.tree
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+#gtu_filter .result_choose
+{
+  display: inline;
+}
 
 .new_link a
 {
