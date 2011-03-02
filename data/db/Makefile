@@ -145,7 +145,7 @@ grant-d2-to-web:
 
 create-db:
 	-createlang -d template1 plpgsql
-	$(PRIV_PSQL) -v -f createdb.sql
+	$(PRIV_PSQL) -f createdb.sql
 
 install-lib:
 	$(PRIV_PSQL_DB) -f lib/accent.sql
