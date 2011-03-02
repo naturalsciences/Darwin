@@ -97,6 +97,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       //print_r($results);
       if(count($results) == 0)
       {
+            $values = str_replace(' ',' & ',$values);
             $query->andWhere($alias.'.'.$field." @@ to_tsquery('simple',?) ",$values);
             return $query;
       }
