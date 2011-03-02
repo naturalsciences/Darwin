@@ -118,6 +118,10 @@ BEGIN
     temp_string := REPLACE(temp_string, 'Ӕ', 'ae');
     temp_string := REPLACE(temp_string, 'œ', 'oe');
     temp_string := REPLACE(temp_string, 'æ', 'ae');
+    temp_string := REPLACE(temp_string, 'ë', 'e');
+    temp_string := REPLACE(temp_string, 'ï', 'i');
+    temp_string := REPLACE(temp_string, 'ö', 'o');
+    temp_string := REPLACE(temp_string, 'ü', 'u');
     temp_string := TRANSLATE(temp_string,'Ð','d');
     temp_string := TRANSLATE(temp_string,'ó','o');
     temp_string := TRANSLATE(temp_string,'ę','e');
