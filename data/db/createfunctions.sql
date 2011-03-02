@@ -122,6 +122,9 @@ BEGIN
     temp_string := REPLACE(temp_string, 'ï', 'i');
     temp_string := REPLACE(temp_string, 'ö', 'o');
     temp_string := REPLACE(temp_string, 'ü', 'u');
+    temp_string := REPLACE(temp_string, '\'', '');
+    temp_string := REPLACE(temp_string, '"', '');
+    temp_string := REPLACE(temp_string, 'ñ', 'n');
     temp_string := TRANSLATE(temp_string,'Ð','d');
     temp_string := TRANSLATE(temp_string,'ó','o');
     temp_string := TRANSLATE(temp_string,'ę','e');
