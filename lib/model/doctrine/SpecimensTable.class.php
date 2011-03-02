@@ -55,6 +55,7 @@ class SpecimensTable extends DarwinTable
       ->andwhere('s.lithology_ref = ?', $object->getLithologyRef())
       ->andwhere('s.mineral_ref = ?', $object->getMineralRef())
       ->andwhere('s.host_taxon_ref = ?', $object->getHostTaxonRef())
+      ->andwhere('s.ig_ref = ?', $object->getIgRef())
       ->andwhere('s.acquisition_category = ?', $object->getAcquisitionCategory())
       ->andwhere('s.acquisition_date = ?', $object->getRawAcquisitionDate());
     return $q->fetchOne(); 
