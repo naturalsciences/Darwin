@@ -15,7 +15,6 @@ PG_PROVE = /usr/local/bin/pg_prove
 #CLUSTER_NAME = darwin
 #CLUSTER_PATH = /var/lib/postgresql/$(PG_VER)/$(CLUSTER_NAME)
 CLUSTER_PATH = $(shell pg_lsclusters -h | awk '{print $$6}' )
-TB_SPACE_DIR = $(CLUSTER_PATH)/$(DB_NAME)
 PASSWD = ''
 
 help: help-target help-param
@@ -145,10 +144,8 @@ grant-d2-to-web:
 	$(PRIV_PSQL_DB) -f grant_d2_to_web_user.sql
 
 create-db:
-	-mkdir $(TB_SPACE_DIR)
 	-createlang -d template1 plpgsql
-	#-createlang -d template1 plpythonu
-	$(PRIV_PSQL) -v dbpath=\'$(TB_SPACE_DIR)\' -f createdb.sql
+	$(PRIV_PSQL) -v -f createdb.sql
 
 install-lib:
 	$(PRIV_PSQL_DB) -f lib/accent.sql

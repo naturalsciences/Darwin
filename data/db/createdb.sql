@@ -1,4 +1,2 @@
-create tablespace :dbname location :dbpath ;
-create database :dbname template DEFAULT tablespace :dbname;
-comment on tablespace :dbname is 'Collection management tool tablespace';
+create database :dbname;
 comment on database :dbname is 'Collection management tool database';
