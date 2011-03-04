@@ -176,7 +176,7 @@ function attachHelpQtip(element)
                   color: '#95bd4c'
               },
               tip: 'bottomLeft',
-              name: 'dark', // Inherit the rest of the attributes from the preset dark style
+              name: 'dark' // Inherit the rest of the attributes from the preset dark style
           },
           position: {
               corner: {
