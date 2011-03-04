@@ -54,7 +54,7 @@ function addBlackScreen()
             .css({
                 top: $(document).scrollTop(), // Use document scrollTop so it's on-screen even if the window is scrolled
                 left: 0,
-                height: $(document).height(), // Span the full document height...
+                height: $(document).height() // Span the full document height...
             })
             .appendTo(document.body) // Append to the document body
             .hide(); // Hide it initially
