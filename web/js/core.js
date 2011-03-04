@@ -183,7 +183,7 @@ function attachHelpQtip(element)
                   target: 'topRight',
                   tooltip: 'bottomLeft'
               }
-          },
+          }
       });
 }
 
