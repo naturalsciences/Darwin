@@ -30,7 +30,7 @@ $(document).ready(function ()
       <tr>
         <th><?php echo $form['local_naming']->renderLabel() ?></th>
         <td>
-          <?php echo ($chrono->getLocalNaming())?image_tag('/images/checkbox_checked.png', array('alt'=>$chrono->getLocalNaming())):image_tag('/images/checkbox_unchecked.png', array('alt'=>$chrono->getLocalNaming()));?>
+          <?php echo ($chrono->getLocalNaming())?image_tag('checkbox_checked.png', array('alt'=>$chrono->getLocalNaming())):image_tag('checkbox_unchecked.png', array('alt'=>$chrono->getLocalNaming()));?>
         </td>
       </tr>
       <tr>
@@ -80,7 +80,7 @@ $(document).ready(function ()
         <td colspan="2"><?php echo image_tag('magnifier.gif');?> <?php echo link_to(__('Search related specimens'),'specimensearch/search', array('class'=>'link_to_search'));?>
 <script type="text/javascript">
   $(document).ready(function (){
-    search_data = <?php echo json_encode(array('specimen_search_filters[chrono_name]'=>$chrono->getName(), 'specimen_search_filters[chrono_level_ref]'=>$chrono->getLevelRef()));?>;
+    search_data = <?php echo json_encode(array('specimen_search_filters[chrono_item_ref]' => $chrono->getId(), 'specimen_search_filters[chrono_relation]' => 'equal' ));?>;
     $('.link_to_search').click(function (event){
       event.preventDefault();
       postToUrl($(this).attr('href'), search_data);

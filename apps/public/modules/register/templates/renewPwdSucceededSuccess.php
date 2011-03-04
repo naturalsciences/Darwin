@@ -1,16 +1,16 @@
 <div class="page well_registered">
   <div id="login_arrow">
     <div id="login_arrow_top_blue">
-      <?php echo image_tag('/images/collapse_big.png', array('alt'=>'Login above'));?>
+      <?php echo image_tag('collapse_big.png', array('alt'=>'Login above'));?>
     </div>
     <div id="login_arrow_top_white">
-      <?php echo image_tag('/images/collapse_white.png', array('alt'=>'Login above'));?>
+      <?php echo image_tag('collapse_white.png', array('alt'=>'Login above'));?>
     </div>
     <div id="login_arrow_middle_blue">
-      <?php echo image_tag('/images/collapse.png', array('alt'=>'Login above'));?>
+      <?php echo image_tag('collapse.png', array('alt'=>'Login above'));?>
     </div>
     <div id="login_arrow_middle_white">
-      <?php echo image_tag('/images/collapse_white.png', array('alt'=>'Login above'));?>
+      <?php echo image_tag('collapse_white.png', array('alt'=>'Login above'));?>
     </div>
   </div>
   <div class="white_content">

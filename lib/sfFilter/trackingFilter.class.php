@@ -23,22 +23,14 @@ class trackingFilter extends sfFilter
           $user->clearCredentials();
           $user->setAuthenticated(false);
 
-          return $this->getContext()->getController()->redirect($this->getContext()->getConfiguration()->generatePublicUrl('homepage'));
+          return $this->getContext()->getController()->redirect('homepage');
         }
-        /*  $time = date('Y-m-d H:i:s');
-        if($time - $user->getAttribute('last_seen',0) > 20)
-        { 
-          $usr->setLastSeen($time);
-          $usr->save();
-          $user->setAttribute('last_seen', $time);
-        }*/
         $user->setAttribute('db_user_type', $usr->getDbUserType());
       }
       if($user->isAuthenticated() && sfConfig::get('app_tracking_enabled',null))
       {
         $conn = Doctrine_Manager::connection();
         $conn->exec("select fct_set_user(".$user->getId().");");
-        //$conn->exec("SELECT set_config('darwin.userid', '".$user->getId()."', false);");
       }
     }
 

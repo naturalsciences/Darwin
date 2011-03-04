@@ -188,7 +188,7 @@
     
     $.catalogue.defaultOptions = {
       link_catalogue: "a.link_catalogue",
-      delete_link: "a.widget_row_delete",
+      delete_link: "a.widget_row_delete"
     };
 
     $.fn.catalogue = function(options){

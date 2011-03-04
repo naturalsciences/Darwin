@@ -4,7 +4,7 @@ class publicConfiguration extends sfApplicationConfiguration
 {
   protected $backendRouting = null;
 
-  public function generateBackendUrl($name, $parameters = array())
+  public function generateBackendUrl($name, $parameters = array(), $request=null)
   {
     $env_str = '';
     switch($this->getEnvironment())
@@ -13,7 +13,12 @@ class publicConfiguration extends sfApplicationConfiguration
       case 'dev': $env_str = '_dev';break;
       case 'preprod': $env_str = '_pre';break;
     }
-    return 'http://'.$_SERVER['SERVER_NAME'].'/backend'.$env_str.'.php'.$this->getBackendRouting()->generate($name, $parameters);
+    if($request)
+      $server = $request->getHost();
+    else
+      $server = $_SERVER['SERVER_NAME'];
+
+    return 'http://'.$server.'/backend'.$env_str.'.php'.$this->getBackendRouting()->generate($name, $parameters);
   }
 
   public function getBackendRouting()

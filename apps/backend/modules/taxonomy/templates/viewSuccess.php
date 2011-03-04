@@ -62,7 +62,7 @@ $(document).ready(function ()
         <td colspan="2"><?php echo image_tag('magnifier.gif');?> <?php echo link_to(__('Search related specimens'),'specimensearch/search', array('class'=>'link_to_search'));?>
 <script type="text/javascript">
   $(document).ready(function (){
-    search_data = <?php echo json_encode(array('specimen_search_filters[taxon_name]'=>$taxon->getName(), 'specimen_search_filters[taxon_level_ref]'=>$taxon->getLevelRef()));?>;
+    search_data = <?php echo json_encode(array('specimen_search_filters[taxon_item_ref]' => $taxon->getId(), 'specimen_search_filters[taxon_relation]' => 'equal' ));?>;
     $('.link_to_search').click(function (event){
       event.preventDefault();
       postToUrl($(this).attr('href'), search_data);

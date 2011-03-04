@@ -8,6 +8,7 @@
   ?>
   <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
   <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>
+  <?php use_helper('Date');?>
   <div class="results_container">
     <table class="results <?php if($is_choose) echo 'is_choose';?>">
       <thead>
@@ -37,6 +38,14 @@
 	      <?php if($orderBy=='db_user_type') echo $orderSign ?>
 	    </a>
           </th>
+         <?php if($sf_user->isAtLeast(Users::ADMIN)):?>
+          <th>
+            <a class="sort" href="<?php echo url_for($s_url.'&orderby=last_seen'.( ($orderBy=='last_seen' && $orderDir=='asc') ? '&orderdir=desc' : '').'&page='.$currentPage);?>">
+              <?php echo __('Last Seen');?>
+              <?php if($orderBy=='last_seen') echo $orderSign ?>
+            </a>
+          </th>
+          <?php endif;?>
           <th></th>
         <tr>
       </thead>
@@ -48,6 +57,9 @@
             <td><?php echo $item->getFamilyName();?></td>
             <td><?php echo $item->getGivenName();?></td>
             <td><?php echo $item->getTypeName($item->getDbUserType()) ?></td>
+            <?php if($sf_user->isAtLeast(Users::ADMIN)):?>
+              <td><?php echo format_datetime($item->getLastSeen(),'f'); ?></td>
+            <?php endif;?>
             <td class="<?php echo (! $is_choose)?'edit':'choose';?>">
                 <?php if(!$is_choose):?>
                   <?php if($sf_user->isA(Users::ADMIN) || ($item->getDbUserType() < $sf_user->getDbUserType())) : ?>

@@ -58,6 +58,8 @@
                 <?php echo link_to(image_tag('duplicate.png',array('title' => 'Duplicate')),'gtu/new?duplicate_id='.$item->getId());?>
               <?php else:?>
                 <div class="result_choose"><?php echo __('Choose');?></div>
+                <?php echo link_to(image_tag('edit.png',array('title' => 'Edit')),'gtu/edit?id='.$item->getId(),array('target'=>'_blank'));?>
+                <?php echo link_to(image_tag('duplicate.png',array('title' => 'Duplicate')),'gtu/new?duplicate_id='.$item->getId(),array('target'=>'_blank'));?>
               <?php endif;?>
             </td>
           </tr>
