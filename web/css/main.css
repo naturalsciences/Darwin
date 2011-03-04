@@ -527,7 +527,7 @@ input[type="text"].xlarge_size
   border: 1px solid #5BAABD;
 }
 
-.results thead
+.results thead, .results thead th
 {
   background-color: #5BAABD;
   text-align: left;

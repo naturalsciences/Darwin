@@ -1,11 +1,12 @@
 <td class="header_menu">
   <div class="menu_top">
     <table>
-      <tr>
-        <td rowspan="2" style="height:90px">&nbsp;</td>
+      <tr class="menu_header_image">
+        <td></td>
+        <td>&nbsp;</td>
       </tr>
       <tr>
-        <td>
+        <td colspan="2">
           <ul class="menu_link">
             <li><?php echo link_to(__('Our collections'),$sf_context->getConfiguration()->generatePublicUrl('homepage', array(), $sf_request));?></li>
             <li><?php echo link_to(__('Search'),$sf_context->getConfiguration()->generatePublicUrl('search', array(), $sf_request));?></li>
@@ -16,17 +17,17 @@
         </td>
       </tr>
       <tr>
-        <td class="lang_picker">
-          <ul style="">
+        <td class="lang_picker"  colspan="2">
+          <ul>
             <li><?php echo link_to('En','account/lang?lang=en');?></li>
-            <li class="sep">|<li>
+            <li class="sep">|</li>
             <li><?php echo link_to('Fr','account/lang?lang=fr');?></li>
-            <li class="sep">|<li>
+            <li class="sep">|</li>
             <li><?php echo link_to('Nl','account/lang?lang=nl');?></li>
           </ul>
         </td>
       </tr>
     </table>
-    <div class="blue_line"></div>
+    <div class="small_blue_line"></div>
   </div>
 </td>

@@ -1,7 +1,7 @@
   <div class="blue_line">
     <table>
       <tr>
-        <td>
+        <td class="blue_line_left">
         </td>
         <td class="blue_line_right">
           <?php echo form_tag('register/login', array('class'=>'register_form'));?>
