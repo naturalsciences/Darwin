@@ -40,6 +40,7 @@
 .header_menu
 {
   height: 174px;  
+  vertical-align:top;
 }
 
 .menu_top
@@ -47,6 +48,11 @@
   background: #474747 url(/images/photo_bckg.jpg) no-repeat; 
   background-position:center top;
   height: 151px;
+}
+
+.menu_header_image
+{
+  height: 90px;
 }
 
 .main
@@ -62,7 +68,7 @@
 
 .menu_bottom
 {
-  background: #404040 repeat-y; 
+  background: #404040;
   vertical-align: top !important;
   padding-top : 0.4em;
   position: relative;
@@ -108,25 +114,36 @@
   color: #FFFFFF ;
 } 
 
-.blue_line
+.blue_line, .small_blue_line
 {
   z-index: 400; 
-  background:  #3390A1 repeat-x;
-  height: 23px ;
+  background:  #3390A1;
+  height: 32px ;
   text-align : center ;  
 }
 
+.blue_line_left
+{
+  border-bottom: 20px solid white;
+  height: 32px;
+}
 .blue_line_right
 {
   z-index: 400; 
   background: #3390A1 url(/images/corner.png) no-repeat ;
+  background-position:left bottom;
+  padding-left: 1em;
   height: 32px ;
 }
 
-.blue_line table td
+.blue_line > table > tbody td
 {
   width:50% ;
-  height: 32px ;    
+  height: 20px ;    
+}
+.small_blue_line
+{
+  height: 20px ;
 }
 
 /* style for the login section */

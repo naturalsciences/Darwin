@@ -551,7 +551,7 @@ ul.column_menu:hover
   clear:both;
 }
 
-.spec_results thead
+.spec_results thead, .spec_results thead th
 {
   background-color: #5BAABD;
   text-align: left;
@@ -572,7 +572,7 @@ ul.column_menu:hover
 .spec_results tbody:nth-child(even) tr {background: #E9F2F7}
 .spec_results tbody:nth-child(odd) tr {background: white}
 
-.spec_results th, .spec_results td
+.spec_results th/*, .spec_results td*/
 {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
@@ -811,7 +811,7 @@ table#login_register td
   padding-bottom:0.3em;
 }
 
-a#login_register, a#login_lostpwd
+a#register_link, a#login_lostpwd
 {
   color:#3390A1;
 }

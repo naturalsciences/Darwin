@@ -4,7 +4,6 @@
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <?php include_title() ?>
-    <title><?php include_slot('title') ?></title>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body id="login_page">
@@ -22,11 +21,11 @@
           <div class="page">
             <table>
               <tr>
-                <td class="browser_img"><ul style="">
+                <td class="browser_img"><ul>
                   <li><?php echo __('Recommended browser for DaRWIN :') ; ?></li>
-                  <li><?php echo image_tag('chrome.png',array('title' =>'Google Chrome'));?></li>
-                  <li><?php echo image_tag('firefox.png',array('title' =>'Firefox >= 3.6'));?></li>
-                  <li><?php echo image_tag('Safari.png',array('title' =>'Safari'));?></li>
+                  <li><?php echo image_tag('chrome.png',array('title' =>'Google Chrome','alt'=>'Google Chrome'));?></li>
+                  <li><?php echo image_tag('firefox.png',array('title' =>'Firefox >= 3.6','alt'=>'Firefox'));?></li>
+                  <li><?php echo image_tag('Safari.png',array('title' =>'Safari','alt'=>'Safari'));?></li>
                 </ul></td>
               </tr>
             </table>    

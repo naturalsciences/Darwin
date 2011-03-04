@@ -34,7 +34,7 @@
     <table id="login_register">
       <tbody>
         <tr>
-          <td><?php echo __("If you don't have an account yet, please");?>&nbsp;<?php echo link_to(__('register'), $sf_context->getConfiguration()->generatePublicUrl('register', array(),$sf_request), array('id'=>'login_register'));?></td>
+          <td><?php echo __("If you don't have an account yet, please");?>&nbsp;<?php echo link_to(__('register'), $sf_context->getConfiguration()->generatePublicUrl('register', array(),$sf_request), array('id'=>'register_link'));?></td>
         </tr>
         <tr>
           <td><?php echo __("If you've lost your password, please");?>&nbsp;<?php echo link_to(__('reset your password'), 'account/lostPwd', array('id'=>'login_lostpwd'));?></td>
