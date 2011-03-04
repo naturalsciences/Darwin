@@ -22,6 +22,6 @@ class ExtLinksForm extends BaseExtLinksForm
     /* Validators */
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));
     $this->validatorSchema['url'] = new sfValidatorString(array('required'=>false));
- //   $this->validatorSchema['comment'] = new sfValidatorString(array('trim'=>true, 'required'=>false));
+    $this->validatorSchema['comment'] = new sfValidatorString(array('trim'=>true, 'required'=>false));
   }
 }
