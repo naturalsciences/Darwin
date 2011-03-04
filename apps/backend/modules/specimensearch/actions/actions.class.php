@@ -279,7 +279,8 @@ class specimensearchActions extends DarwinActions
        
       $this->user_allowed = false ;  
     else 
-      $this->user_allowed = true ;      
+      $this->user_allowed = true ;  
+    if($this->getUser()->isA(Users::ADMIN)) $this->user_allowed = true ;  
     $this->items = Doctrine::getTable('SpecimenIndividuals')
       ->getIndividualBySpecimen($request->getParameter('id'));
   }
@@ -294,6 +295,7 @@ class specimensearchActions extends DarwinActions
       $this->user_allowed = false ;  
     else 
       $this->user_allowed = true ;      
+    if($this->getUser()->isA(Users::ADMIN)) $this->user_allowed = true ;        
     $this->parts = Doctrine::getTable('SpecimenParts')
       ->findForIndividual($request->getParameter('id'));
     $this->individual = $request->getParameter('id') ;

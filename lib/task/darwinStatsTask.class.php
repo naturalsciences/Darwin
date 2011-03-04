@@ -2,7 +2,11 @@
 
 class darwinStatsTask extends sfBaseTask
 {
-  private $request_array = array() ;
+  private $request_array = array(
+  "SELECT DISTINCT individual_type, count(individual_type) as Count FROM darwin_flat Group by individual_type Order by individual_type;",
+  
+  
+  ) ;
   protected function configure()
   {
     $this->namespace        = 'darwin';
