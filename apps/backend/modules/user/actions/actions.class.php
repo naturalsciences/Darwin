@@ -132,16 +132,16 @@ class userActions extends DarwinActions
     if($this->getUser()->getDbUserType() < Users::MANAGER) $this->forwardToSecureAction();  
     $request->checkCSRFProtection();
 
-    $this->forward404Unless($user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($this->user = Doctrine::getTable('users')->findUser($request->getParameter('id')), sprintf('User does not exist (%s).', $request->getParameter('id')));
     try{
-      $user->delete();
+      $this->user->delete();
       $this->redirect('user/index');
     }
     catch(Doctrine_Exception $ne)
     {
       $e = new DarwinPgErrorParser($ne);
       $error = new sfValidatorError(new savedValidator(),$e->getMessage());
-      $this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $user->getIsPhysical()));
+      $this->form = new UsersForm($user,array("db_user_type" => $this->getUser()->getDbUserType(), "is_physical" => $this->user->getIsPhysical()));
       $this->form->getErrorSchema()->addError($error); 
       $this->loadWidgets();
       $this->setTemplate('edit');
