@@ -1611,6 +1611,12 @@ SELECT distinct(fulltoIndex(tags)) FROM regexp_split_to_table($1, ';') as tags W
 $$
 LANGUAGE 'sql' IMMUTABLE STRICT;
 
+CREATE OR REPLACE FUNCTION lineToTagArray(IN line text) RETURNS varchar[] AS
+$$
+select array_agg(tags_list) FROM (SELECT lineToTagRows($1) AS tags_list ) as x;
+$$
+LANGUAGE 'sql' IMMUTABLE STRICT;
+
 CREATE OR REPLACE FUNCTION fct_cpy_gtuTags() RETURNS TRIGGER
 language plpgsql
 AS
@@ -2083,7 +2089,7 @@ BEGIN
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
          gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-         gtu_tag_values_indexed,gtu_country_tag_value,
+         gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed,
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2109,7 +2115,7 @@ BEGIN
          NEW.expedition_ref, subq.expe_name, subq.expe_name_ts, subq.expe_name_indexed,
          NEW.station_visible, NEW.gtu_ref, subq.gtu_code, subq.gtu_parent_ref, subq.gtu_path, subq.gtu_location,
          subq.gtu_from_date_mask, subq.gtu_from_date, subq.gtu_to_date_mask, subq.gtu_to_date,
-         subq.gtu_tag_values_indexed, subq.taggr_tag_value,
+         subq.gtu_tag_values_indexed, subq.taggr_tag_value, lineToTagArray(subq.taggr_tag_value),
          NEW.taxon_ref, subq.taxon_name, subq.taxon_name_indexed, subq.taxon_name_order_by,
          subq.taxon_level_ref, subq.taxon_level_level_name, subq.taxon_status,
          subq.taxon_path, subq.taxon_parent_ref, subq.taxon_extinct,
@@ -2141,7 +2147,7 @@ BEGIN
                 expe.name expe_name, expe.name_ts expe_name_ts, expe.name_indexed expe_name_indexed,
                 gtu.code gtu_code, gtu.parent_ref gtu_parent_ref, gtu.path gtu_path,gtu.location gtu_location,
                 gtu.gtu_from_date_mask, gtu.gtu_from_date, gtu.gtu_to_date_mask, gtu.gtu_to_date,
-                gtu.tag_values_indexed gtu_tag_values_indexed, taggr.tag_value taggr_tag_value,
+                gtu.tag_values_indexed gtu_tag_values_indexed, taggr.tag_value taggr_tag_value, 
                 taxon.name taxon_name, taxon.name_indexed taxon_name_indexed, taxon.name_order_by taxon_name_order_by,
                 taxon.level_ref taxon_level_ref, taxon_level.level_name taxon_level_level_name, taxon.status taxon_status,
                 taxon.path taxon_path, taxon.parent_ref taxon_parent_ref, taxon.extinct taxon_extinct,
@@ -2193,7 +2199,7 @@ BEGIN
      expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
      station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
      gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-     gtu_tag_values_indexed,gtu_country_tag_value,
+     gtu_tag_values_indexed,gtu_country_tag_value,gtu_country_tag_indexed,
      taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
      taxon_path,taxon_parent_ref,taxon_extinct,
      chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2219,7 +2225,7 @@ BEGIN
             NEW.expedition_ref, expe.name, expe.name_ts, expe.name_indexed,
             NEW.station_visible, NEW.gtu_ref, gtu.code, gtu.parent_ref, gtu.path, gtu.location,
             gtu.gtu_from_date_mask, gtu.gtu_from_date, gtu.gtu_to_date_mask, gtu.gtu_to_date,
-            gtu.tag_values_indexed, taggr.tag_value,
+            gtu.tag_values_indexed, taggr.tag_value,  lineToTagArray(taggr.tag_value),
             NEW.taxon_ref, taxon.name, taxon.name_indexed, taxon.name_order_by, taxon.level_ref, taxon_level.level_name, taxon.status,
             taxon.path, taxon.parent_ref, taxon.extinct,
             NEW.chrono_ref, chrono.name, chrono.name_indexed, chrono.name_order_by, chrono.level_ref, chrono_level.level_name, chrono.status,
@@ -2263,23 +2269,28 @@ BEGIN
     IF TG_OP = 'INSERT' THEN
       IF NEW.group_name_indexed = 'administrativearea' AND NEW.sub_group_name_indexed = 'country' THEN
         UPDATE darwin_flat
-        SET gtu_country_tag_value = NEW.tag_value
+        SET gtu_country_tag_value = NEW.tag_value,
+        gtu_country_tag_indexed = lineToTagArray(NEW.tag_value)
         WHERE gtu_ref = NEW.gtu_ref;
       END IF;
     ELSIF TG_OP = 'UPDATE' THEN
       IF NEW.group_name_indexed = 'administrativearea' AND NEW.sub_group_name_indexed = 'country' THEN
         UPDATE darwin_flat
-        SET gtu_country_tag_value = NEW.tag_value
+        SET gtu_country_tag_value = NEW.tag_value,
+        gtu_country_tag_indexed = lineToTagArray(NEW.tag_value)
         WHERE gtu_ref = NEW.gtu_ref;
+
       ELSIF OLD.group_name_indexed = 'administrativearea' AND OLD.sub_group_name_indexed = 'country' THEN
         UPDATE darwin_flat
-        SET gtu_country_tag_value = NULL
+        SET gtu_country_tag_value = NULL,
+        gtu_country_tag_indexed = NULL
         WHERE gtu_ref = NEW.gtu_ref;
       END IF;
     ELSIF TG_OP = 'DELETE' THEN
       IF OLD.group_name_indexed = 'administrativearea' AND OLD.sub_group_name_indexed = 'country' THEN
         UPDATE darwin_flat
-        SET gtu_country_tag_value = NULL
+        SET gtu_country_tag_value = NULL,
+        gtu_country_tag_indexed = NULL
         WHERE gtu_ref = OLD.gtu_ref;
       END IF;
     END IF;
@@ -2322,7 +2333,7 @@ BEGIN
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
          gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-         gtu_tag_values_indexed,gtu_country_tag_value,
+         gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed,
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2356,7 +2367,7 @@ BEGIN
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
          gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-         gtu_tag_values_indexed,gtu_country_tag_value,
+         gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed,
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2418,7 +2429,7 @@ BEGIN
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
             gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-            gtu_tag_values_indexed,gtu_country_tag_value,
+            gtu_tag_values_indexed, gtu_country_tag_value, gtu_country_tag_indexed,
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2446,7 +2457,7 @@ BEGIN
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
             gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-            gtu_tag_values_indexed,gtu_country_tag_value,
+            gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2479,7 +2490,7 @@ BEGIN
               expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
               station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
               gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-              gtu_tag_values_indexed,gtu_country_tag_value,
+              gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
               taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
               taxon_path,taxon_parent_ref,taxon_extinct,
               chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2506,7 +2517,7 @@ BEGIN
               subq.expedition_ref,subq.expedition_name,subq.expedition_name_ts,subq.expedition_name_indexed,
               subq.station_visible,subq.gtu_ref,subq.gtu_code,subq.gtu_parent_ref,subq.gtu_path,subq.gtu_location,
               subq.gtu_from_date_mask,subq.gtu_from_date,subq.gtu_to_date_mask,subq.gtu_to_date,
-              subq.gtu_tag_values_indexed,subq.gtu_country_tag_value,
+              subq.gtu_tag_values_indexed,subq.gtu_country_tag_value, subq.gtu_country_tag_indexed,
               subq.taxon_ref,subq.taxon_name,subq.taxon_name_indexed,subq.taxon_name_order_by,subq.taxon_level_ref,subq.taxon_level_name,subq.taxon_status,
               subq.taxon_path,subq.taxon_parent_ref,subq.taxon_extinct,
               subq.chrono_ref,subq.chrono_name,subq.chrono_name_indexed,subq.chrono_name_order_by,subq.chrono_level_ref,subq.chrono_level_name,subq.chrono_status,
@@ -2535,7 +2546,7 @@ BEGIN
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
             gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-            gtu_tag_values_indexed,gtu_country_tag_value,
+            gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2620,7 +2631,7 @@ BEGIN
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
          gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-         gtu_tag_values_indexed,gtu_country_tag_value,
+         gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2661,7 +2672,7 @@ BEGIN
          expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
          station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
          gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-         gtu_tag_values_indexed,gtu_country_tag_value,
+         gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
          taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
          taxon_path,taxon_parent_ref,taxon_extinct,
          chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2731,7 +2742,7 @@ BEGIN
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
             gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-            gtu_tag_values_indexed,gtu_country_tag_value,
+            gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2765,7 +2776,7 @@ BEGIN
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
             gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-            gtu_tag_values_indexed,gtu_country_tag_value,
+            gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2804,7 +2815,7 @@ BEGIN
               expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
               station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
               gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-              gtu_tag_values_indexed,gtu_country_tag_value,
+              gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed,
               taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
               taxon_path,taxon_parent_ref,taxon_extinct,
               chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,
@@ -2837,7 +2848,7 @@ BEGIN
               subq.expedition_ref,subq.expedition_name,subq.expedition_name_ts,subq.expedition_name_indexed,
               subq.station_visible,subq.gtu_ref,subq.gtu_code,subq.gtu_parent_ref,subq.gtu_path,subq.gtu_location,
               subq.gtu_from_date_mask,subq.gtu_from_date,subq.gtu_to_date_mask,subq.gtu_to_date,
-              subq.gtu_tag_values_indexed,subq.gtu_country_tag_value,
+              subq.gtu_tag_values_indexed,subq.gtu_country_tag_value, subq.gtu_country_tag_indexed,
               subq.taxon_ref,subq.taxon_name,subq.taxon_name_indexed,subq.taxon_name_order_by,subq.taxon_level_ref,subq.taxon_level_name,subq.taxon_status,
               subq.taxon_path,subq.taxon_parent_ref,subq.taxon_extinct,
               subq.chrono_ref,subq.chrono_name,subq.chrono_name_indexed,subq.chrono_name_order_by,subq.chrono_level_ref,subq.chrono_level_name,subq.chrono_status,
@@ -2872,7 +2883,7 @@ BEGIN
             expedition_ref,expedition_name,expedition_name_ts,expedition_name_indexed,
             station_visible,gtu_ref,gtu_code,gtu_parent_ref,gtu_path,gtu_location,
             gtu_from_date_mask,gtu_from_date,gtu_to_date_mask,gtu_to_date,
-            gtu_tag_values_indexed,gtu_country_tag_value,
+            gtu_tag_values_indexed,gtu_country_tag_value, gtu_country_tag_indexed, 
             taxon_ref,taxon_name,taxon_name_indexed,taxon_name_order_by,taxon_level_ref,taxon_level_name,taxon_status,
             taxon_path,taxon_parent_ref,taxon_extinct,
             chrono_ref,chrono_name,chrono_name_indexed,chrono_name_order_by,chrono_level_ref,chrono_level_name,chrono_status,

@@ -17,6 +17,7 @@ DROP FUNCTION IF EXISTS fct_trk_log_table() CASCADE;
 
 DROP FUNCTION IF EXISTS fct_cpy_gtuTags() CASCADE;
 DROP FUNCTION IF EXISTS lineToTagRows(line text) CASCADE;
+DROP FUNCTION IF EXISTS lineToTagArray(line text) CASCADE;
 
 /*** Others ***/
 

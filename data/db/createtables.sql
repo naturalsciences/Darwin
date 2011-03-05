@@ -1645,6 +1645,7 @@ create table darwin_flat
     gtu_to_date timestamp,
     gtu_tag_values_indexed varchar[],
     gtu_country_tag_value varchar,
+    gtu_country_tag_indexed varchar[],
     gtu_location GEOGRAPHY(POLYGON,4326),
     taxon_ref integer not null default 0,
     taxon_name varchar,
@@ -1810,6 +1811,7 @@ comment on column darwin_flat.gtu_to_date_mask is 'Sampling location to date mas
 comment on column darwin_flat.gtu_to_date is 'Sampling location to date';
 comment on column darwin_flat.gtu_tag_values_indexed is 'Array of all the tags entered for this gtu - all the tags are of the indexed form with fullToIndex function';
 comment on column darwin_flat.gtu_country_tag_value is 'List of "Administrative area-Country" tags associated to the sampling location referenced';
+comment on column darwin_flat.gtu_country_tag_indexed is 'List of "Administrative area-Country" tags associated to the sampling location referenced  all the tags are of the indexed form with fullToIndex function';
 comment on column darwin_flat.taxon_ref is 'Taxon unit referenced';
 comment on column darwin_flat.taxon_name is 'Taxon unit referenced name';
 comment on column darwin_flat.taxon_name_indexed is 'Taxon unit referenced name - ts vector form - used for searches purposes';
