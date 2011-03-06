@@ -19,7 +19,7 @@ class IndividualSearch extends BaseIndividualSearch
       if(! $nbr) return "-";
       $str = '<ul class="name_tags_view">';
       foreach($tags as $value)
-        if (strlen($value))
+        if (strlen(trim($value)))
           $str .=  '<li>' . trim($value).'</li>';
       $str .= '</ul>';
       
