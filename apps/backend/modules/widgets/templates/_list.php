@@ -53,7 +53,7 @@ else{e.value="no";location.reload();}
   
 	  <?php endforeach;?>
 	<div class="no_more<?php if($has_one_visible) echo ' hidden';?>"><?php echo __("There are no more widgets to add");?></div>
-        <br />
+        <p class="clear">&nbsp;</p>
 	</div>	
 	<div class="widget_collection_top">
 	</div>
