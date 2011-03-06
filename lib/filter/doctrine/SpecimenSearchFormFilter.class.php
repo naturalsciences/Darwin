@@ -729,7 +729,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                       AND gtu_tag_values_indexed && getTagsIndexedAsArray($tagList)
                     )
                     OR
-                    (getTagsIndexedAsArray(gtu_country_tag_value) && getTagsIndexedAsArray($tagList))
+                    (gtu_country_tag_indexed && getTagsIndexedAsArray($tagList))
                   )
               )");
         $query->whereParenWrap();

@@ -28,6 +28,7 @@
  * @property integer $gtu_to_date_mask
  * @property string $gtu_to_date
  * @property string $gtu_tag_values_indexed
+ * @property string $gtu_country_tag_indexed
  * @property string $gtu_country_tag_value
  * @property string $gtu_location
  * @property integer $taxon_ref
@@ -189,6 +190,7 @@
  * @method integer             getGtuToDateMask()            Returns the current record's "gtu_to_date_mask" value
  * @method string              getGtuToDate()                Returns the current record's "gtu_to_date" value
  * @method string              getGtuTagValuesIndexed()      Returns the current record's "gtu_tag_values_indexed" value
+ * @method string              getGtuCountryTagIndexed()     Returns the current record's "gtu_country_tag_indexed" value
  * @method string              getGtuCountryTagValue()       Returns the current record's "gtu_country_tag_value" value
  * @method string              getGtuLocation()              Returns the current record's "gtu_location" value
  * @method integer             getTaxonRef()                 Returns the current record's "taxon_ref" value
@@ -349,6 +351,7 @@
  * @method IgsSearch           setGtuToDateMask()            Sets the current record's "gtu_to_date_mask" value
  * @method IgsSearch           setGtuToDate()                Sets the current record's "gtu_to_date" value
  * @method IgsSearch           setGtuTagValuesIndexed()      Sets the current record's "gtu_tag_values_indexed" value
+ * @method IgsSearch           setGtuCountryTagIndexed()     Sets the current record's "gtu_country_tag_indexed" value
  * @method IgsSearch           setGtuCountryTagValue()       Sets the current record's "gtu_country_tag_value" value
  * @method IgsSearch           setGtuLocation()              Sets the current record's "gtu_location" value
  * @method IgsSearch           setTaxonRef()                 Sets the current record's "taxon_ref" value
@@ -574,6 +577,9 @@ abstract class BaseIgsSearch extends sfDoctrineRecord
              'type' => 'string',
              ));
         $this->hasColumn('gtu_tag_values_indexed', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('gtu_country_tag_indexed', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('gtu_country_tag_value', 'string', null, array(

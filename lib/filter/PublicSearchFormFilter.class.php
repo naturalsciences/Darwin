@@ -256,7 +256,7 @@ class PublicSearchFormFilter extends BaseSpecimenSearchFormFilter
     $this->addNamingColumnQuery($query, 'lithology', 'name_indexed', $values['lithology_name'],null,'lithology_name_indexed');    
     $this->addNamingColumnQuery($query, 'mineralogy', 'name_indexed', $values['mineral_name'],null,'mineral_name_indexed');           
     $query->andWhere('collection_is_public = true') ;
-    if($values['tags'] != '') $query->andWhere("getTagsIndexedAsArray(gtu_country_tag_value) && getTagsIndexedAsArray(?)",$values['tags']);   
+    if($values['tags'] != '') $query->andWhere("gtu_country_tag_indexed && getTagsIndexedAsArray(?)",$values['tags']);   
     $query->limit($this->getCatalogueRecLimits());
     return $query;
   }
