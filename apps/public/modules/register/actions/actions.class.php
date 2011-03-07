@@ -59,13 +59,15 @@ class registerActions extends DarwinActions
           if (isset($userInfos['RegisterLoginInfosForm'][0]['user_name']))
             $username = $userInfos['RegisterLoginInfosForm'][0]['user_name'];
           $base_params =  array('physical' => $this->user->getIsPhysical(),
-                                'name' => $this->user->getFormatedName(),
+                                'name' => $this->user->getFamilyName(),
                                 'title' => $this->user->getTitle()
                                );
           $suppl_params = array('mail' => $mail,
                                 'username' => $username
                                );
           // send an email to the registered user
+          if(isset($userInfos['RegisterLanguagesForm'][0]['language_country']) && $userInfos['RegisterLanguagesForm'][0]['language_country'] != '')
+            $this->getUser()->setCulture($userInfos['RegisterLanguagesForm'][0]['language_country']);
           $this->sendConfirmationMail(array_merge($base_params,$suppl_params));
           $this->redirect('register/succeeded?'.http_build_query($base_params));
         }

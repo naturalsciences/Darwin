@@ -447,7 +447,7 @@
       </trans-unit>
       <trans-unit id="82">
         <source>Thank you for having registered on DaRWIN 2.</source>
-        <target>Merci de vous vous êtes inscrit sur DaRWIN 2.</target>
+        <target>Merci de vous être inscrit(e) sur DaRWIN 2.</target>
       </trans-unit>
       <trans-unit id="83">
         <source>You should have received a reminder of your username and password on the e-mail address provided.</source>
@@ -459,7 +459,7 @@
       </trans-unit>
       <trans-unit id="85">
         <source>For your reminder, here is your user name:</source>
-        <target>A titre de rappel, voici vos nom d'utilisateur:</target>
+        <target>A titre de rappel, voici votre nom d'utilisateur:</target>
       </trans-unit>
       <trans-unit id="87">
         <source>Rocks</source>
@@ -553,7 +553,28 @@
        <trans-unit id="133" approved="yes">
             <source>terms of use</source> <target>conditions d'utilisation</target> </trans-unit>
        <trans-unit id="134" approved="yes">
-            <source>Password must be at least 6 characters length</source> <target>Le mot de passe doit contenir au minimum 6 caractères</target> </trans-unit>
+            <source>Password must be at least 6 characters length</source> <target>Le mot de passe doit contenir au minimum 6 caractères</target> 
+       </trans-unit>
+      <trans-unit id="135">
+        <source>Dear %name%</source>
+        <target>Cher(e) %name%</target>
+      </trans-unit>
+      <trans-unit id="136">
+        <source>Dear %name% %title%</source>
+        <target>Cher(e) %name% %title%</target>
+      </trans-unit> 
+      <trans-unit id="137">
+        <source>To log you in, you can visit us on %address%</source>
+        <target>Vous pouvez à présent vous connecter sur %address%</target>
+      </trans-unit>    
+      <trans-unit id="138">
+        <source>DaRWIN 2 team</source>
+        <target>L'équipe DaRWIN 2</target>
+      </trans-unit>     
+      <trans-unit id="139">
+        <source>User name: %username%</source>
+        <target>Nom d'utilisateur: %username%</target>
+      </trans-unit>                       
     </body>
   </file>
 </xliff>

@@ -2367,7 +2367,7 @@
       </trans-unit>
       <trans-unit id="1046">
         <source>To log you in, you can visit us on %s</source>
-        <target>Vous vous authentifier, vous pouvez visiter notre site au %s</target>
+        <target>Pour vous authentifier, vous pouvez visiter notre site au %s</target>
       </trans-unit>
       <trans-unit id="1047">
         <source>Show accuracy of each point</source>
