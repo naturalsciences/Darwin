@@ -195,7 +195,7 @@ class expeditionActions extends DarwinActions
         $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
         // Define in one line a pager Layout based on a pagerLayoutWithArrows object
         // This pager layout is based on a Doctrine_Pager, itself based on a customed Doctrine_Query object (call to the getExpLike method of ExpeditionTable class)
-        $this->pagerLayout = new PagerLayoutWithArrows(new Doctrine_Pager($query,
+        $this->pagerLayout = new PagerLayoutWithArrows(new DarwinPager($query,
                                                                           $this->currentPage,
                                                                           $form->getValue('rec_per_page')
                                                                          ),

@@ -47,7 +47,7 @@ class boardwidgetComponents extends sfComponents
     $this->pagerSlidingSize = intval(sfConfig::get('app_pagerSlidingSize'));
     $query = Doctrine::getTable('UsersTracking')->getMyItems($this->getUser()->getId());
      $this->pagerLayout = new PagerLayoutWithArrows(
-	    new Doctrine_Pager(
+	    new DarwinPager(
 	      $query,
 	       $this->getRequestParameter('page',1),
 	      10 /** nb p p**/

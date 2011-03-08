@@ -56,7 +56,7 @@ class expeditionsIgsActions extends DarwinActions
         // They take their values from the request. If not present, a default value is defined
         $query = $form->getQuery()->orderby($this->orderBy . ' ' . $this->orderDir);
 
-          $pager = new Doctrine_Pager($query,
+          $pager = new DarwinPager($query,
             $this->currentPage,
             $this->form->getValue('rec_per_page')
           );

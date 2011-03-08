@@ -106,7 +106,7 @@ class userActions extends DarwinActions
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$order);
         // if this is not an admin, make sure no admin and collection manager are visible in the search form
         $this->pagerLayout = new PagerLayoutWithArrows(
-          new Doctrine_Pager(
+          new DarwinPager(
             $query,
             $this->currentPage,
             $this->form->getValue('rec_per_page')

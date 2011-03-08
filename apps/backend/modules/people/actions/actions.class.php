@@ -42,7 +42,7 @@ class peopleActions extends DarwinActions
       {
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         $this->pagerLayout = new PagerLayoutWithArrows(
-	  new Doctrine_Pager(
+	  new DarwinPager(
 	    $query,
 	    $this->currentPage,
 	    $this->form->getValue('rec_per_page')

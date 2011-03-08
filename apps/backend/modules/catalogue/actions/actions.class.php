@@ -142,7 +142,7 @@ class catalogueActions extends DarwinActions
         if($this->is_choose == 0)
           $query->andWhere('id > 0');
 
-        $pager = new Doctrine_Pager($query,
+        $pager = new DarwinPager($query,
           $this->currentPage,
           $form->getValue('rec_per_page')
         );

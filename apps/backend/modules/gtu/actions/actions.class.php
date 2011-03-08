@@ -51,7 +51,7 @@ class gtuActions extends DarwinActions
         $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
         if($request->getParameter('format') == 'xml') $query->andWhere('latitude is not null');
         $this->pagerLayout = new PagerLayoutWithArrows(
-                              new Doctrine_Pager(
+                              new DarwinPager(
                                 $query,
                                 $this->currentPage,
                                 $this->form->getValue('rec_per_page')
