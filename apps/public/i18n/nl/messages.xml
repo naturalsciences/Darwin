@@ -316,21 +316,25 @@
             <source>Password must be at least 6 characters length</source> <target>Het passwoord moet zes karakters doen</target> 
       </trans-unit>      
       <trans-unit id="135">
-        <source>Dear %name%</source>
-        <target>Beste %name%</target>
+        <source>Dear %username%</source>
+        <target>Beste %username%</target>
       </trans-unit>
       <trans-unit id="136">
-        <source>Dear %name% %title%</source>
-        <target>Beste %name% %title%</target>
+        <source>Dear %usertitle% %username%</source>
+        <target>Beste %usertitle% %username%</target>
       </trans-unit> 
       <trans-unit id="137">
-        <source>To log you in, you can visit us on %address%</source>
-        <target>Om u in te loggen, kunt u ons bereiken op %address%</target>
+        <source>To log you in, you can visit us on %darwinurl%</source>
+        <target>Om u in te loggen, kunt u ons bereiken op %darwinurl%</target>
       </trans-unit>       
       <trans-unit id="139">
         <source>User name: %username%</source>
         <target>Gebruikersnaam: %username%</target>
-      </trans-unit>             
+      </trans-unit>   
+      <trans-unit id="140">
+        <source>Abbreviation</source>
+        <target>Afkorting</target>
+      </trans-unit>                 
     </body>
   </file>
 </xliff>

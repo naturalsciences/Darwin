@@ -36,9 +36,18 @@ class IgsSearchFormFilter extends BaseIgsSearchFormFilter
       ->select('DISTINCT ig_ref, expedition_ref, expedition_name, ig_num')
       ->from('IgsSearch i')
       ->orderBy('ig_ref, expedition_name')
-      ->andWhere('expedition_ref != 0') 
-      ->addWhere('ig_ref = ?', $values['ig_ref']) ;
-    $this->addNamingColumnQuery($query, 'expeditions', 'name_ts', $values['expedition_name'],null,'expedition_name_ts');
+      ->andWhere('expedition_ref != 0') ;
+    if($values['ig_ref'])
+    {
+      $query->addWhere('ig_ref = ?', $values['ig_ref']) ;
+      if($values['expedition_name']) $this->addNamingColumnQuery($query, 'expeditions', 'name_ts', $values['expedition_name'],null,'expedition_name_ts');
+    
+    }
+    else
+    {
+      if(!$values['expedition_name']) $query->addWhere('ig_ref = ?', $values['ig_ref']) ;
+      else $this->addNamingColumnQuery($query, 'expeditions', 'name_ts', $values['expedition_name'],null,'expedition_name_ts');
+    }
     return $query;
   }  
 }

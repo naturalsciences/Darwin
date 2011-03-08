@@ -556,16 +556,16 @@
             <source>Password must be at least 6 characters length</source> <target>Le mot de passe doit contenir au minimum 6 caractères</target> 
        </trans-unit>
       <trans-unit id="135">
-        <source>Dear %name%</source>
-        <target>Cher(e) %name%</target>
+        <source>Dear %username%</source>
+        <target>Cher(e) %username%</target>
       </trans-unit>
       <trans-unit id="136">
-        <source>Dear %name% %title%</source>
-        <target>Cher(e) %name% %title%</target>
+        <source>Dear %usertitle% %username%</source>
+        <target>Cher(e) %usertitle% %username%</target>
       </trans-unit> 
       <trans-unit id="137">
-        <source>To log you in, you can visit us on %address%</source>
-        <target>Vous pouvez à présent vous connecter sur %address%</target>
+        <source>To log you in, you can visit us on %darwinurl%</source>
+        <target>Vous pouvez à présent vous connecter sur %darwinurl%</target>
       </trans-unit>    
       <trans-unit id="138">
         <source>DaRWIN 2 team</source>
@@ -574,7 +574,11 @@
       <trans-unit id="139">
         <source>User name: %username%</source>
         <target>Nom d'utilisateur: %username%</target>
-      </trans-unit>                       
+      </trans-unit>      
+      <trans-unit id="140">
+        <source>Abbreviation</source>
+        <target>Abréviation</target>
+      </trans-unit>      
     </body>
   </file>
 </xliff>

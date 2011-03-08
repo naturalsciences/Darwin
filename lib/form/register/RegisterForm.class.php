@@ -69,10 +69,10 @@ class RegisterForm extends BaseUsersForm
                                                                       ));
 
     /* Labels */
-    $this->widgetSchema->setLabels(array('family_name'=>'Name',
-                                         'given_name'=>'First name',
-                                         'is_physical'=>'Status',
-                                         'sub_type'=>'Type'
+    $this->widgetSchema->setLabels(array('family_name'=>$this->getI18N()->__('Name'),
+                                         'given_name'=>$this->getI18N()->__('First name'),
+                                         'is_physical'=>$this->getI18N()->__('Status'),
+                                         'sub_type'=>$this->getI18N()->__('Type')
                                         )
                                   );
 
