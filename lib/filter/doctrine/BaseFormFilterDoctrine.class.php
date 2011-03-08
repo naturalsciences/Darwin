@@ -69,6 +69,8 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
   {
     if ($values != "" && $table != "" && $field != "")
     {
+      $values = trim(str_replace('&',' ',$values));
+      $values = trim(str_replace('|',' ',$values));
       if(! $alias)
             $alias = $query->getRootAlias();
       $search = self::splitNameQuery($values);
