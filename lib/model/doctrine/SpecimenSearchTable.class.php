@@ -213,7 +213,7 @@ class SpecimenSearchTable extends Doctrine_Table
 //           'ig_num_indexed',
 //           'ig_date_mask',
 //           'ig_date',
-//           'acquisition_category',
+          'acquisition_category',
 //           'acquisition_date_mask',
 //           'acquisition_date',
           'with_types',
