@@ -19,7 +19,7 @@
 </head>
 <body>
 <div class="dw_logo">
-  <a href="<?php echo 'http://'.$_SERVER['SERVER_NAME'].'/';?>"><img src="/images/photo_bckg.jpg"/></a>
+  <a href="/"><img src="/images/photo_bckg.jpg"/></a>
 </div>
 <div class="lyt_content">
     <div class="sfTMessageContainer sfTAlert">
