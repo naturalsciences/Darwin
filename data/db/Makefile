@@ -1,7 +1,6 @@
 TESTS = $(wildcard tests/*.sql)
 HOST = 127.0.0.1
 DB_USER = darwin2
-DB_IMPORT_USER = darwin1
 DB_WEB_USER = cebmpad
 DB_NAME = darwin2
 TEST_CMD = pg_prove
@@ -53,10 +52,6 @@ help-target:
 	@echo "create-user"
 	@echo "   create a default user to access only the darwin schema and db"
 	@echo ""
-	@echo ""
-	@echo "create-user-darwin1"
-	@echo "   create a darwin1 user to access only the darwin1 schema and db1. This schema is used for migration from darwin1 to darwin2"
-	@echo ""
 	@echo "uninstall-db"
 	@echo "   remove the tables,function... from darwin. WARNING! This action can remove ALL your data"
 	@echo ""
@@ -76,9 +71,6 @@ help-param:
 	@echo ""
 	@echo "DB_USER (Default: darwin2)"
 	@echo "   username for the connection to the database"
-	@echo ""
-	@echo "DB_IMPORT_USER (Default: darwin1)"
-	@echo "   username for the connection to the migration schema in database"
 	@echo ""
 	@echo "DB_NAME (Default: darwin2)"
 	@echo "   database name to be created or to be used (depends of the target)"
@@ -128,17 +120,6 @@ create-schema:
 
 create-test-schema:
 	$(PRIV_PSQL_DB) -f create_testschema.sql
-
-#ONLY USEFULL WHEN YOU DO A MIGRATION
-
-create-user-darwin1:
-	-createuser -l -i -S -R -D -P -E $(DB_IMPORT_USER)
-
-create-darwin1-schema:
-	$(PRIV_PSQL_DB) -f create_darwin1_schema.sql
-
-grant-d1-to-d2:
-	$(PRIV_PSQL_DB) -f grant_d1_to_d2.sql
 
 grant-d2-to-web:
 	$(PRIV_PSQL_DB) -f grant_d2_to_web_user.sql
