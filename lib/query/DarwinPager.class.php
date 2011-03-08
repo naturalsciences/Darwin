@@ -18,7 +18,10 @@ class DarwinPager extends Doctrine_Pager
             $this->_initialize($params);
         }
         if( $this->getNumResults() == 0 )
-          return new  Doctrine_collection($this->getQuery()->getRoot()->getComponentName());
+        {
+          $this->getQuery()->getSqlQuery();
+          return new  Doctrine_Collection($this->getQuery()->getRoot()->getComponentName());
+        }
         else
           return $this->getQuery()->execute($params, $hydrationMode);
     }

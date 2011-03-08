@@ -47,12 +47,12 @@ class searchActions extends DarwinActions
       $query->groupBy($this->form->getValue('order_by') . ', spec_ref, individual_ref ');
 
       // Define the pager
-      $pager = new Doctrine_Pager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
+      $pager = new DarwinPager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
 
       // Replace the count query triggered by the Pager to get the number of records retrieved
       $count_q = clone $query;
       // Remove from query the group by and order by clauses
-      $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby');
+      $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby')->limit(0);
       // Initialize an empty count query
       $counted = new DoctrineCounted();
       // Define the correct select count() of the count query
