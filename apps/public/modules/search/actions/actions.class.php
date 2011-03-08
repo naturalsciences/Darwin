@@ -44,7 +44,7 @@ class searchActions extends DarwinActions
       // Get the generated query from the filter and add order criterion to the query
       $query = $this->form->getWithOrderCriteria();
 
-      $query->groupBy($this->form->getValue('order_by') . ', spec_ref ');
+      $query->groupBy($this->form->getValue('order_by') . ', spec_ref, individual_ref ');
 
       // Define the pager
       $pager = new Doctrine_Pager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
@@ -99,7 +99,7 @@ class searchActions extends DarwinActions
 
   public function executeView(sfWebRequest $request)
   {
-    $this->specimen = Doctrine::getTable('specimenSearch')->findOneBySpecRef($request->getParameter('id'));   
+    $this->specimen = Doctrine::getTable('specimenSearch')->findOneByIndividualRef($request->getParameter('id'));   
     $this->forward404Unless($this->specimen);
     if(!$this->specimen->getCollectionIsPublic()) $this->forwardToSecureAction();
     
