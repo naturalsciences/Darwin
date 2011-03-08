@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="dw_logo">
-  <?php echo link_to(image_tag('photo_bckg.jpg', array('alt' => 'Darwin2')), $sf_request->getHost()) ?>
+  <a href="/"><?php echo image_tag('photo_bckg.jpg', array('alt' => 'Darwin2')) ?></a>
 </div>
 <div class="lyt_content">
   <?php echo $sf_content ?>
