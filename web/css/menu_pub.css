@@ -258,13 +258,6 @@ input.small
   margin-right : 1em ;
 }
 
-.menu_bottom div:hover
-{
-  cursor : pointer ;
-  color : white ;
-  text-decoration: underline ;    
-}
-
 .dw_logo
 {
   background-color: #474747; 
