@@ -317,7 +317,7 @@ input, textarea
   border:1px solid #BBBDBC;
 }
 
-input[type="radio"]
+input[type="radio"], input[type="checkbox"]
 {
   border:none;  
 }
