@@ -317,6 +317,11 @@ input, textarea
   border:1px solid #BBBDBC;
 }
 
+input[type="radio"]
+{
+  border:none;  
+}
+
 input:focus, textarea:focus
 {
   border:1px solid #C1CF56;
