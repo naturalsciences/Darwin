@@ -69,9 +69,9 @@ $(document).ready(function()
       deactivate: function(event, ui) {
 	  el_Array = $(this).sortable('toArray');
 	  result='';
-	  for(item in el_Array)
+    for(i=0;i<el_Array.length;i++)
 	  {
-	    result += getIdInClasses( $('#'+el_Array[item]) )+',';
+	    result += getIdInClasses( $('#'+el_Array[i]) )+',';
 	  }
 	  $.ajax({
 	    type: "POST",
