@@ -115,7 +115,7 @@ class sfWidgetCollectionList extends sfWidgetFormChoice
           $options['checked'] = "checked";
 
         if($name != '')
-          $html .= $this->renderTag('input', $options);
+          $html .= $this->renderTag('input', $options).'<b class="clear">&nbsp;</b>';
         else
         {
           if(! $this->getOption('is_choose') )

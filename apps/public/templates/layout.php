@@ -6,6 +6,9 @@
     <?php include_javascripts() ?>
     <?php include_stylesheets() ?>
     <title><?php include_slot('title') ?></title>
+    <!--[if IE]>
+    <?php echo stylesheet_tag('ie.css') ?>
+    <![endif]-->
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
   <body>

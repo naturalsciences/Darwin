@@ -5,6 +5,9 @@
     <?php include_metas() ?>
     <title><?php include_slot('title') ?></title>
     <link rel="shortcut icon" href="/favicon.ico" />
+    <!--[if IE]>
+    <?php echo stylesheet_tag('ie.css') ?>
+    <![endif]-->
   </head>
   <body>
     <?php include_partial('global/head_menu') ?>
