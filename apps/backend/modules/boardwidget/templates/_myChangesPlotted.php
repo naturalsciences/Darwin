@@ -1,4 +1,5 @@
 <?php echo javascript_include_tag('jquery.flot.min.js');?> 
+<!--[if IE]><?php echo javascript_include_tag('excanvas.min.js');?><![endif]-->
 <script id="source" language="javascript" type="text/javascript"> 
 $(function () {
 	var reclose = false;
