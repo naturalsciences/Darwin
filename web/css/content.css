@@ -2,7 +2,7 @@ html, body
 {
   min-width: 996px;
   font-size: 10pt;
-  font-family: Arial,Regular,sans-serif;
+  font-family: sans-serif;
   height: 100%;  
 }
 
@@ -651,12 +651,14 @@ fieldset legend
 
 li.check span
 {
-  color: green;  
+  color: green; 
+  font-family:Arial Unicode MS,sans-serif;
 }
 
 li.uncheck span
 {
   color: red;
+  font-family:Arial Unicode MS,sans-serif;
 }
 
 .hidden

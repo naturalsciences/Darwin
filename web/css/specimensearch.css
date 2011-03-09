@@ -161,12 +161,15 @@ td.col_codes > ul, td.col_part_codes > ul
 
 li.check span
 {
-  color: green;  
+  color: green;
+  font-family:Arial Unicode MS,sans-serif;
+
 }
 
 li.uncheck span
 {
   color: red;
+  font-family:Arial Unicode MS,sans-serif;
 }
 
 div.aligned_fields
