@@ -2,6 +2,14 @@
 
 class darwinStatsTask extends sfBaseTask
 {
+  /* Add your requests in the array $request_array
+     - title : is the title of the statistic displayed
+     - description : will appear in our help icon 
+     - fields : set yours fields here they MUST be the same as the fields name in the query 
+     - request : the request which will be executed
+     - expandable : set it to true if your request return too much record, the expandable option will add a "+" button in the widget to avoid having a too big widget
+     - level : is level on wich a user is allowed to see or not the stat ( 1 : everybody, 2 : encoder and more, 4 : collection manager ans more, 8 : admin only)
+  */
   private $request_array = array(
   "req1" => array(    
     "title" => "All individual types and the count associated",
@@ -9,6 +17,7 @@ class darwinStatsTask extends sfBaseTask
     "fields" => array("Type","Count"),
     "request" => "SELECT individual_type as Type, count(DISTINCT individual_ref) as Count FROM darwin_flat Group by individual_type Order by individual_type",
     "expandable" => true,
+    "level" => 1,
     ),
   "req2" => array(    
     "title" => "All objects encoded in DaRWIN2",
@@ -16,6 +25,7 @@ class darwinStatsTask extends sfBaseTask
     "fields" => array("Total"),    
     "request" => "SELECT count(id) as Total from specimens",
     "expandable" => false,
+    "level" => 8, 
     ),   
   ) ;
   protected function configure()
