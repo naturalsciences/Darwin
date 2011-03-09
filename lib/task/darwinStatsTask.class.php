@@ -6,15 +6,15 @@ class darwinStatsTask extends sfBaseTask
   "req1" => array(    
     "title" => "All individual types and the count associated",
     "description" => "",
-    "help" => "",
-    "request" => "SELECT individual_type, count(DISTINCT individual_type) as Count FROM darwin_flat Group by individual_type Order by individual_type",
+    "fields" => array("Type","Count"),
+    "request" => "SELECT individual_type as Type, count(DISTINCT individual_ref) as Count FROM darwin_flat Group by individual_type Order by individual_type",
     "expandable" => true,
     ),
   "req2" => array(    
     "title" => "All objects encoded in DaRWIN2",
     "description" => "",
-    "help" => "",
-    "request" => "SELECT count(id) as total from specimens",
+    "fields" => array("Total"),    
+    "request" => "SELECT count(id) as Total from specimens",
     "expandable" => false,
     ),   
   ) ;
@@ -39,11 +39,17 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();  
+    $array = array() ;
     foreach($this->request_array as $key=>$request)
     {
-      $conn = $connection->getDbh();
+      $conn = Doctrine_Manager::connection()->getDbh();    
       $statement = $conn->prepare($request['request']);
       $statement->execute(); 
+      $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+      $array[$key] = array_merge($request, array('result' => $results)) ;
     }
+    $array['date_gen_stat'] = date('d/m/Y - H:i');
+    $yaml = sfYaml::dump($array);    
+    file_put_contents(sfConfig::get('sf_data_dir').'/stats/stats.yml', $yaml);
   }
 }

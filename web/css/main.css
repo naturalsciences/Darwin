@@ -1189,6 +1189,11 @@ background-color: #c1cf56;
 height: 1px;
 }
 
+#stats hr
+{
+background-color: #5BAABD;
+}
+
 form.edition, form.renamed, .edit_syn_screen
 {
   border:1px solid #C1CC33;
@@ -2443,4 +2448,53 @@ ul.board_news li div.news_info
   margin-left: 1.5em;
   margin-top: 0.5em;
   color:gray;
+}
+
+/* style for the statistic widget */
+.expanded_stats table
+{
+  width:100% ;
+}
+
+.expanded_stats thead
+{
+  background-color: #5BAABD ;
+}
+
+.expanded_stats th
+{
+  padding-top: 2px;
+  padding-bottom: 2px;  
+}
+
+
+.expanded_stats tbody > tr:hover
+{
+  border-top: 1px dashed #5BAABD ;
+  border-bottom: 1px dashed #5BAABD ;
+}
+
+.expanded_stats ul
+{
+  margin-top: 10px ;
+  margin-left: 15px;
+}
+
+.expanded_stats li
+{
+  margin-left : 30px;
+  list-style-type: circle;
+}
+
+.expanded_stats li:hover
+{
+  list-style-type: disc;
+
+}
+
+.stat_date
+{
+  text-align:right;
+  color: gray;
+  font-style: italic ;  
 }

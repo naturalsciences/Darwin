@@ -70,4 +70,18 @@ class boardwidgetComponents extends sfComponents
   {
 	$this->items = Doctrine::getTable('UsersTracking')->getMyItemsForPlot($this->getUser()->getId(),$this->getRequestParameter('range','week'));
   }
+  
+  public function executeStats()
+  {
+    $yaml = new sfYamlParser();
+    try
+    {
+      $this->stats = $yaml->parse(file_get_contents(sfConfig::get('sf_data_dir').'/stats/stats.yml'));
+    }
+    catch (InvalidArgumentException $e)
+    {
+      // an error occurred during parsing
+      echo "Unable to parse the YAML string: ".$e->getMessage();
+    } 
+  }  
 }

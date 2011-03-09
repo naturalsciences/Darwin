@@ -36,6 +36,15 @@ bw5:
    visible: true
    title_perso: My activity
 
+bw6:
+   col_num: 1
+   category: board_widget
+   group_name: stats
+   order_by: 3
+   opened: true
+   visible: true
+   title_perso: Statistics
+   
 sps18:
    col_num: 2
    category: specimensearch_widget
