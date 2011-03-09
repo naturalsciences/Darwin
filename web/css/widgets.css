@@ -135,11 +135,18 @@
 	margin-bottom: 20px;
 }
 
+.widget_preview a[href]
+{
+  display:block;
+  background:url(/images/widged_preview_1.png) no-repeat;
+  width:155px;
+  height:113px;
+}
 .widget_preview span
 {
 	display:block;
 	position:relative;
-	top: -60px;
+	top: 50px;
 	width:155px;
 	color:#336f89;
 	text-align:center;

@@ -43,10 +43,8 @@ else{e.value="no";location.reload();}
 	  <?php $has_one_visible = false;?>
 	  <?php foreach($widgets as $widget):?>
 	    <?php if(! $widget->getVisible()) $has_one_visible = true;?>
-            <div class="widget_preview" <?php if($widget->getVisible()) echo 'style="display:none"';?>
-                id="boardprev_<?php echo $widget->getGroupName();?>">
+            <div class="widget_preview <?php if($widget->getVisible()) echo 'hidden';?>" id="boardprev_<?php echo $widget->getGroupName();?>">
               <a href="<?php echo url_for('widgets/addWidget?widget='.$widget->getGroupName()."&category=".$category.$record_ref.$table.$other_query.$read_only);?>">
-                <?php echo image_tag('widged_preview_1.png','alt='.$widget->getGroupName());?>
                 <span class="widget_prev_title"><?php echo $widget->getTitlePerso();?></span>
               </a>
             </div>
