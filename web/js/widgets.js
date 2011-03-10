@@ -69,7 +69,6 @@
     };
     
     base.refreshWidget = function(event, element){
-      event.preventDefault();
       if(element == null)
         element = $(this);
       widget = element.closest('.widget');

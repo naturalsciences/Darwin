@@ -144,7 +144,8 @@
               onHide: function(event)
               {
                 $(this.elements.target).qtip("destroy");
-                scroll(0,last_position);                
+                scroll(0,last_position);          
+
                 $('body').data('widgets_screen').refreshWidget(event, $(this.elements.target));
               }
             }
