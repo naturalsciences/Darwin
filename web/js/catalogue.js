@@ -39,7 +39,6 @@
             hide: false,
             style: {
               width: { min: 200, max: 500},
-              border: {radius:3},
               title: { background: '#C1CF56', color:'white'}
             },
             api: {
@@ -129,7 +128,6 @@
             hide: false,
             style: {
               width: { min: 876, max: 1000},
-              border: {radius:3},
               title: { background: '#C1CF56', color:'white'}
             },
             api: {

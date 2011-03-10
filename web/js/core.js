@@ -172,7 +172,6 @@ function attachHelpQtip(element)
               color: 'black',
               border: {
                   width: 7,
-                  radius: 5,
                   color: '#95bd4c'
               },
               tip: 'bottomLeft',

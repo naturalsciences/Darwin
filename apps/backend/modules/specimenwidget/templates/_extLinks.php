@@ -29,11 +29,12 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-    $('#add_links').click( function()
+    $('#add_links').click( function(event)
     {
+        event.preventDefault();
         hideForRefresh('#extLinks');
         parent_el = $(this).closest('table.extlinks');
-        parentId = $(parent).attr('id');
+        parentId = $(parent_el).attr('id');
         $.ajax(
         {
           type: "GET",

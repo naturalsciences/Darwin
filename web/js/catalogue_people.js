@@ -14,12 +14,13 @@
         }
       });
 
-      $(options['add_button']).click(function(){
+      $(options['add_button']).click(function(event){
+        event.preventDefault();
         var last_position = $('body').scrollTop() ;      
         scroll(0,0) ;
         $(this).qtip({
           content: {
-            title: { text : options['q_tip_text'], button: 'X' },
+            title: { text: options['q_tip_text'], button: 'X' },
             url: $(this).attr('href')
           },
           show: { when: 'click', ready: true },
@@ -31,7 +32,6 @@
           hide: false,
           style: {
             width: { min: 876, max: 1000},
-            border: {radius:3},
             title: { background: '#5BABBD', color:'white'}
           },
           api: {

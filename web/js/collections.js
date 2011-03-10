@@ -20,7 +20,6 @@ $(document).ready(function () {
       hide: false,
       style: {
         width: { min: 620, max: 1000},
-        border: {radius:3},
         title: { background: '#5BABBD', color:'white'}
       },
       api: {
@@ -68,7 +67,6 @@ $(document).ready(function () {
         hide: false,
         style: {
             width: { min: min_width, max: 1000},
-            border: {radius:3},
             title: { background: '#C1CF56', color:'white'}
         },
         api: {
