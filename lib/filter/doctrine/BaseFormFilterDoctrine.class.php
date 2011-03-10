@@ -195,7 +195,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       foreach($words as $word)
       {
         $word = trim($word);
-        if($word == '') continue;
+        if($word == '' || $word == '-') continue;
         $searched_terms[$i][] = $word;
       }
       if(empty($searched_terms[$i]))

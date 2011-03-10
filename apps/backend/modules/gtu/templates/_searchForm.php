@@ -77,9 +77,11 @@
     $(document).ready(function()
     {
        $('#show_accuracy').change(function(){
+          if(results)
           results.setVisibility($('#show_accuracy').is(':checked'));
         });
        $('#show_as_map').click(function(){
+
           if($(this).is(':checked'))
           {
             $('#map_search_form').show();
@@ -106,8 +108,9 @@
        });
        initMap("smap");
        map.events.register("moveend", map, updateLatLong);
-       $('#lat_long_set .clear_prop').click(function()
+       $('#lat_long_set .clear_prop').click(function(event)
         {
+          event.preventDefault();
           $(this).closest('tr').find('input').val('');
         });
 
