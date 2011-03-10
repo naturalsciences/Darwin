@@ -206,12 +206,11 @@ $(document).ready(function () {
 
     $('.tag_parts_screen .clear_prop').live('click', function()
     {
-      parent = $(this).closest('li');
-      nvalue='';
-      $(parent).find('input').val(nvalue);
-      $(parent).hide();
+      parent_el = $(this).closest('li');
+      $(parent_el).find('input').val('');
+      $(parent_el).hide();
 
-      sub_groups  = parent.parent();
+      sub_groups  = parent_el.parent();
       if(sub_groups.find("li:visible").length == 0)
       {
 	      sub_groups.closest('fieldset').hide();

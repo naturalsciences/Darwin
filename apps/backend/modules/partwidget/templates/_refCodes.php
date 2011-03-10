@@ -66,15 +66,15 @@ $(document).ready(function () {
     $('#add_code').click(function()
     {
         hideForRefresh('#refCodes');
-        parent = $(this).closest('table.property_values');
+        parent_el = $(this).closest('table.property_values');
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$(parent).find('tbody').length) + '/collection_id/' + $('#collection_id').val(),
+          url: $(this).attr('href')+ (0+$(parent_el).find('tbody').length) + '/collection_id/' + $('#collection_id').val(),
           success: function(html)
           {
-            $(parent).append(html);
-            $(parent).find('thead:hidden').show();
+            $(parent_el).append(html);
+            $(parent_el).find('thead:hidden').show();
             showAfterRefresh('#refCodes');
           }
         });
@@ -83,14 +83,14 @@ $(document).ready(function () {
     
     $('select#specimen_prefix_separator').change(function()
     {
-      parent = $(this).closest('table');
-      $(parent).find('tbody select[id$=\"_prefix_separator\"]').val($(this).val());
+      parent_el = $(this).closest('table');
+      $(parent_el).find('tbody select[id$=\"_prefix_separator\"]').val($(this).val());
     });
 
     $('select#specimen_suffix_separator').change(function()
     {
-      parent = $(this).closest('table');
-      $(parent).find('tbody select[id$=\"_suffix_separator\"]').val($(this).val());
+      parent_el = $(this).closest('table');
+      $(parent_el).find('tbody select[id$=\"_suffix_separator\"]').val($(this).val());
     });
 
 });

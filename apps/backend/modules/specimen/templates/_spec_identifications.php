@@ -66,12 +66,12 @@
   $(document).ready(function () {
     $("#clear_identification_<?php echo $row_num;?>").click( function()
     {
-      parent = $(this).closest('tbody');
+      parent_el = $(this).closest('tbody');
 
-      $(parent).find('input[id$=\"_value_defined\"]').val('');
-      $(parent).find('input[id$=\"_is_removed\"]').val('');
+      $(parent_el).find('input[id$=\"_value_defined\"]').val('');
+      $(parent_el).find('input[id$=\"_is_removed\"]').val('');
 
-      $(parent).find('select').append("<option value=''></option>").val('');
+      $(parent_el).find('select').append("<option value=''></option>").val('');
 
       $(parent).hide();
       reOrderIdent();

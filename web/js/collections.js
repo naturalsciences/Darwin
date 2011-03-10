@@ -112,8 +112,8 @@ function addCollRightValue(user_ref)
 
 function detachCollRightValue()
 {
-  parent = $(this).closest('tr');
-  $(parent).hide();
-  $(parent).attr('id','') ;
-  $(parent).find('input[type=hidden]:first').val('') ;
+  parent_el = $(this).closest('tr');
+  $(parent_el).hide();
+  $(parent_el).attr('id','') ;
+  $(parent_el).find('input[type=hidden]:first').val('') ;
 }

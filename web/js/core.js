@@ -96,9 +96,9 @@ function hideValues()
 
 function clearPropertyValue()
 {
-  parent = $(this).closest('tr');
-  $(parent).find('input').val('');
-  $(parent).hide();
+  parent_el = $(this).closest('tr');
+  $(parent_el).find('input').val('');
+  $(parent_el).hide();
 }
 
 $(document).ready(function()

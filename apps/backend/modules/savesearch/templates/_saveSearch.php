@@ -42,7 +42,6 @@ $(document).ready(function () {
         hide: false,
         style: {
             width: { min: 620, max: 800},
-            border: {radius:3},
             title: { background: '#5BABBD', color:'white'}
         },
         api: {

@@ -11,11 +11,11 @@
               $(document).ready(function () {
                 $("#clear_ident_<?php echo $identnum ?>_identifiers_<?php echo $rownum;?>").click( function()
                 {
-                  parent = $(this).closest('tr');
-                  parentTableId = $(parent).closest('table').attr('id');
-                  $(parent).find('input[id$=\"_people_ref\"]').val('');
-                  $(parent).hide();
-                  $.fn.catalogue_people.reorder($(parent).closest('table'));
+                  parent_el = $(this).closest('tr');
+                  parentTableId = $(parent_el).closest('table').attr('id');
+                  $(parent_el).find('input[id$=\"_people_ref\"]').val('');
+                  $(parent_el).hide();
+                  $.fn.catalogue_people.reorder($(parent_el).closest('table'));
                   if(!$('table#'+parentTableId+' body:visible').size())
                   {
                     $(this).closest('table#'+parentTableId).find('thead').hide();

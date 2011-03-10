@@ -21,11 +21,10 @@
     $(document).ready(function () {
       $("#clear_comment_<?php echo $rownum;?>").click( function()
       {
-        parent = $(this).closest('tbody');
-        parentTableId = $(parent).closest('table').attr('id');
-        nvalue="";
-        $(parent).find('textarea[id$=\"_comment\"]').html(nvalue);      
-        $(parent).hide();
+        parent_el = $(this).closest('tbody');
+        parentTableId = $(parent_el).closest('table').attr('id');
+        $(parent_el).find('textarea[id$=\"_comment\"]').html('');      
+        $(parent_el).hide();
         visibles = $('table#'+parentTableId+' tbody.spec_ident_comments_data:visible').size();
         if(!visibles)
         {

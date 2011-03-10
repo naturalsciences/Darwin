@@ -78,15 +78,15 @@ $(document).ready(function () {
     $('#add_identification').click(function()
     {
         hideForRefresh('#refIdentifications');
-        parent = $(this).closest('table#identifications');
+        parent_el = $(this).closest('table#identifications');
         $.ajax(
         {
           type: "GET",
           url: $(this).attr('href')+ ($('tbody.spec_ident_data').length) + '/order_by/' + ($('tbody.spec_ident_data:visible').length+1),
           success: function(html)
           {
-            $(parent).append(html);
-            $(parent).find('thead.spec_ident_head:hidden').show();
+            $(parent_el).append(html);
+            $(parent_el).find('thead.spec_ident_head:hidden').show();
             showAfterRefresh('#refIdentifications');
           }
         });

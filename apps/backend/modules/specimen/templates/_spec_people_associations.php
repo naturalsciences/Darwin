@@ -13,12 +13,11 @@
       $(document).ready(function () {
         $("#clear_<?php echo $type;?>_<?php echo $row_num;?>").click( function()
         {
-           parent = $(this).closest('tr');
-           parentTableId = $(parent).closest('table').attr('id')
-           nvalue='';
-           $(parent).find('input[id$=\"_people_ref\"]').val(nvalue);
-           $(parent).hide();
-           $.fn.catalogue_people.reorder( $(parent).closest('table') );
+           parent_el = $(this).closest('tr');
+           parentTableId = $(parent_el).closest('table').attr('id')
+           $(parent_el).find('input[id$=\"_people_ref\"]').val('');
+           $(parent_el).hide();
+           $.fn.catalogue_people.reorder( $(parent_el).closest('table') );
            visibles = $('table#'+parentTableId+' .spec_ident_<?php echo $type;?>_data:visible').size();
            if(!visibles)
            {

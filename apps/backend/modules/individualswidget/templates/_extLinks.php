@@ -32,15 +32,15 @@ $(document).ready(function () {
     $('#add_links').click( function()
     {
         hideForRefresh('#extLinks');
-        parent = $(this).closest('table.extlinks');
-        parentId = $(parent).attr('id');
+        parent_el = $(this).closest('table.extlinks');
+        parentId = $(parent_el).attr('id');
         $.ajax(
         {
           type: "GET",
           url: $(this).attr('href')+ ($('table#'+parentId+' tbody.spec_ident_extlinks_data').length),
           success: function(html)
           {                    
-            $(parent).append(html);
+            $(parent_el).append(html);
             showAfterRefresh('#extLinks');
           }
         });

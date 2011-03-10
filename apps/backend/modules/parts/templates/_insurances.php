@@ -35,15 +35,15 @@
   $(document).ready(function () {
     $("#clear_insurance_<?php echo $rownum;?>").click( function()
     {
-      parent = $(this).closest('tbody');
+      parent_el = $(this).closest('tbody');
       parent_tr = $(this).closest('tr');
-      $(parent).find('input[id$=\"_insurance_value\"]').val('');
-      $(parent).find('input[id$=\"_insurance_currency_input\"]').val('');
-      $(parent).find('input[id$=\"_referenced_relation\"]').val('');
-      $(parent).find('select').append("<option value=''></option>").val('');
-      $(parent).hide();
+      $(parent_el).find('input[id$=\"_insurance_value\"]').val('');
+      $(parent_el).find('input[id$=\"_insurance_currency_input\"]').val('');
+      $(parent_el).find('input[id$=\"_referenced_relation\"]').val('');
+      $(parent_el).find('select').append("<option value=''></option>").val('');
+      $(parent_el).hide();
       $(parent_tr).next('tr').hide();
-      visibles = $(parent).find('tr:visible').size();
+      visibles = $(parent_el).find('tr:visible').size();
       if(!visibles)
       {
         $(this).closest('table.property_values').find('thead').hide();

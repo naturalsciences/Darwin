@@ -78,9 +78,9 @@
     $('.clear_prop').live('click', function(event)
     {
       $('li#'+$(this).attr('id')).show() ;  
-      parent = $(this).closest('tr');
-      $(parent).find('input').val('');
-      $(parent).hide();      
+      parent_el = $(this).closest('tr');
+      $(parent_el).find('input').val('');
+      $(parent_el).hide();      
     }); 
     
     $('form.qtiped_form').modal_screen();

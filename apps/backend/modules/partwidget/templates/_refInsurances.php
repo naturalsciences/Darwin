@@ -39,15 +39,15 @@
     $('#add_insurance').click(function()
     {
         hideForRefresh('#refInsurances');
-        parent = $(this).closest('table.property_values');
+        parent_el = $(this).closest('table.property_values');
         $.ajax(
         {
           type: "GET",
-          url: $(this).attr('href')+ (0+$(parent).find('tbody').length),
+          url: $(this).attr('href')+ (0+$(parent_el).find('tbody').length),
           success: function(html)
           {
-            $(parent).append(html);
-            $(parent).find('thead:hidden').show();
+            $(parent_el).append(html);
+            $(parent_el).find('thead:hidden').show();
             showAfterRefresh('#refInsurances');
           }
         });

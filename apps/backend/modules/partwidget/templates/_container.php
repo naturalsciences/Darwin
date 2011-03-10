@@ -33,16 +33,16 @@
 <script type="text/javascript">
 $(document).ready(function () {
     $('select[name$="[container_type]"]').change(function() {
-      parent = $(this).closest('.widget');
+      parent_el = $(this).closest('.widget');
       $.get("<?php echo url_for('parts/getStorage');?>/item/container/type/"+$(this).val(), function (data) {
-              parent.find('select[name$="[container_storage]"]').html(data);
+              parent_el.find('select[name$="[container_storage]"]').html(data);
             });
     });
 
     $('select[name$="[sub_container_type]"]').change(function() {
-      parent = $(this).closest('.widget');
+      parent_el = $(this).closest('.widget');
       $.get("<?php echo url_for('parts/getStorage');?>/item/sub_container/type/"+$(this).val(), function (data) {
-             parent.find('select[name$="[sub_container_storage]"]').html(data);
+             parent_el.find('select[name$="[sub_container_storage]"]').html(data);
             });
     });
 });

@@ -32,15 +32,15 @@ $(document).ready(function () {
     $('#add_comment').click( function()
     {
         hideForRefresh('#refComment');
-        parent = $(this).closest('table.comments');
-        parentId = $(parent).attr('id');
+        parent_el = $(this).closest('table.comments');
+        parentId = $(parent_el).attr('id');
         $.ajax(
         {
           type: "GET",
           url: $(this).attr('href')+ ($('table#'+parentId+' tbody.spec_ident_comments_data').length),
           success: function(html)
           {                    
-            $(parent).append(html);
+            $(parent_el).append(html);
             showAfterRefresh('#refComment');
           }
         });

@@ -21,11 +21,10 @@
     $(document).ready(function () {
       $("#clear_extlinks_<?php echo $rownum;?>").click( function()
       {      
-	      parent = $(this).closest('tbody');
-	      parentTableId = $(parent).closest('table').attr('id');
-	      nvalue="";
-	      $(parent).find('input[id$=\"_<?php echo $rownum;?>_url\"]').val(nvalue);      
-        $(parent).hide();
+	      parent_el = $(this).closest('tbody');
+	      parentTableId = $(parent_el).closest('table').attr('id');
+	      $(parent_el).find('input[id$=\"_<?php echo $rownum;?>_url\"]').val('');      
+        $(parent_el).hide();
 	      visibles = $('table#'+parentTableId+' tbody.spec_ident_extlinks_data:visible').size();
 	      if(!visibles)
 	      {

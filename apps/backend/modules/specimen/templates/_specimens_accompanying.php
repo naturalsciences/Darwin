@@ -50,11 +50,11 @@
   $(document).ready(function () {
     $("#clear_accompanying_unit_<?php echo $rownum;?>").click( function()
     {
-      parent = $(this).closest('tbody');
-      $(parent).find('input').val('');
-      $(parent).find('select').append("<option value=''></option>").val('');
-      $(parent).hide();
-      visibles = $(parent).closest('table.property_values').find('tbody:visible').size();
+      parent_el = $(this).closest('tbody');
+      $(parent_el).find('input').val('');
+      $(parent_el).find('select').append("<option value=''></option>").val('');
+      $(parent_el).hide();
+      visibles = $(parent_el).closest('table.property_values').find('tbody:visible').size();
       if(!visibles)
       {
         $(this).closest('table.property_values').find('thead').hide();
