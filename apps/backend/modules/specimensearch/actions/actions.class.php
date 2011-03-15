@@ -378,7 +378,7 @@ class specimensearchActions extends DarwinActions
         'expedition_name_indexed',
         $this->getI18N()->__('Expedition'),),
       'acquisition_category' => array(
-        'acquisition_category_name_order_by',
+        'acquisition_category',
         $this->getI18N()->__('Acquisition category'),),        
     );
 

@@ -531,8 +531,8 @@
       <trans-unit id="121"><source>Physical person</source> <target>Personne physique</target></trans-unit>
       <trans-unit id="122"><source>Name is required</source> <target>Le nom est requis</target></trans-unit>      
       <trans-unit id="123"><source>E-mail is not of a valid form</source> <target>L'Email saisi n'est pas un Email correct</target></trans-unit>  
-      <trans-unit id="124"><source>Password must contain at least a case mix and at least one digit</source>
-      <target>Le mot de passe doit contenir au moins une majuscule et au moins un chiffre</target></trans-unit>  
+      <trans-unit id="124"><source>Password must contain at least :&lt;br /&gt; * a case mix&lt;br /&gt; * one digit&lt;br /&gt; * minimum 6 characters length</source>
+      <target>Le mot de passe doit contenir au moins :&lt;br /&gt; * une majuscule&lt;br /&gt; * un chiffre&lt;br /&gt; * 6 caractères</target></trans-unit>  
       <trans-unit id="125"><source>"%value%" must be at least %min_length% characters.</source>
       <target>"%value%" Doit être d'au moins %min_length% caractères.</target></trans-unit>  
       <trans-unit id="126"><source>Bad login or password</source> <target>Mauvais identifiant ou mot de passe</target></trans-unit>  
@@ -552,9 +552,6 @@
             <target>Règlement des visiteurs scientifiques externes</target> </trans-unit>    
        <trans-unit id="133" approved="yes">
             <source>terms of use</source> <target>conditions d'utilisation</target> </trans-unit>
-       <trans-unit id="134" approved="yes">
-            <source>Password must be at least 6 characters length</source> <target>Le mot de passe doit contenir au minimum 6 caractères</target> 
-       </trans-unit>
       <trans-unit id="135">
         <source>Dear %username%</source>
         <target>Cher(e) %username%</target>

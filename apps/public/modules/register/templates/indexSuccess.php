@@ -19,14 +19,14 @@
             <td><?php echo $form['is_physical']->renderError();?></td>
           </tr>
           <tr id="is_not_physical">
-            <th><?php echo $form['sub_type']->renderLabel() ?></th>
+            <th><?php echo $form['sub_type']->renderLabel() ?>:</th>
             <td>
               <?php echo $form['sub_type']->renderError() ?>
               <?php echo $form['sub_type'] ?>
             </td>
           </tr>
           <tr id="is_physical">
-            <th><?php echo $form['gender']->renderLabel() ?></th>
+            <th><?php echo $form['gender']->renderLabel() ?>:</th>
             <td>
               <?php echo $form['gender']->renderError() ?>
               <?php echo $form['gender'] ?>
@@ -48,9 +48,10 @@
             <td><?php echo $form['RegisterLoginInfosForm'][0]['user_name']->renderError();?></td>
           </tr>
           <tr>
-            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>:
-                <?php echo image_tag('info.png', array('class'=> 'passwd_info')) ; ?></th>
-            <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->render();?></td>
+            <th><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderLabel();?>:</th>
+            <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->render();?>
+                <p class="small_message" style="float:right;"><?php echo __("Password must contain at least :<br /> * a case mix<br /> * one digit<br /> * minimum 6 characters length"); ?></p>
+            </td>
             <td><?php echo $form['RegisterLoginInfosForm'][0]['new_password']->renderError();?></td>
           </tr>
           <tr>
@@ -103,22 +104,6 @@
       $('input#submit').attr('disabled', 'true');
       return true;
     });
-    $(".passwd_info").each(function ()
-    {
-      $(this).qtip({
-        show: { solo: true, when: { event: 'click' } },
-        hide: { when: { event: 'click' } },// May be replaced by smth else
-        style: {  name: "light", title: { padding: '3px'} },
-        content: {
-          title: {
-            text: '&nbsp;',
-            button: 'X'
-          },
-          text : '<p><?php echo __("Password must contain at least a case mix and at least one digit"); ?></p><hr><p><?php echo __("Password must be at least 6 characters length"); ?></p>',
-          method: 'get'
-        }
-      });
-    }); 
   $('#users_is_physical').change(function(){
     if ($(this).val() == 1)
     {
