@@ -12,20 +12,20 @@ class darwinStatsTask extends sfBaseTask
   */
   private $request_array = array(
   "req1" => array(    
-    "title" => "All individual types and the count associated",
+    "title" => "All types and the record count associated",
     "description" => "",
     "fields" => array("Type","Count"),
     "request" => "SELECT individual_type as Type, count(DISTINCT individual_ref) as Count FROM darwin_flat Group by individual_type Order by individual_type",
     "expandable" => true,
-    "level" => 1,
+    "level" => 2,
     ),
   "req2" => array(    
-    "title" => "All objects encoded in DaRWIN2",
-    "description" => "",
+    "title" => "All objects in DaRWIN",
+    "description" => "An average result of all objects already stored in our database",
     "fields" => array("Total"),    
-    "request" => "SELECT count(id) as Total from specimens",
+    "request" => "SELECT sum((specimen_part_count_min+specimen_part_count_max)/2) as total FROM specimen_parts",
     "expandable" => false,
-    "level" => 8, 
+    "level" => 1, 
     ),   
   ) ;
   protected function configure()
