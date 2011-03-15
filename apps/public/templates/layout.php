@@ -28,9 +28,9 @@
               <tr>
                 <td class="browser_img "><ul style="">
                   <li><?php echo __('Recommended browser for DaRWIN :') ; ?></li>
-                  <li><?php echo image_tag('chrome.png',array('title' =>'Google Chrome'));?></li>
-                  <li><?php echo image_tag('firefox.png',array('title' =>'Firefox >= 3.6'));?></li>
-                  <li><?php echo image_tag('Safari.png',array('title' =>'Safari'));?></li>
+                  <li><?php echo image_tag('chrome.png',array('title' =>'Google Chrome','width'=>'32'));?></li>
+                  <li><?php echo image_tag('firefox.png',array('title' =>'Firefox >= 3.6','width'=>'32'));?></li>
+                  <li><?php echo image_tag('Safari.png',array('title' =>'Safari','width'=>'32'));?></li>
                 </ul></td>
               </tr>
             </table>    
