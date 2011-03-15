@@ -308,3 +308,8 @@ input.small
 {
   
 }
+
+.small_message {
+  font-size:x-small;
+  color:gray;
+}
