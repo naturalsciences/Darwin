@@ -4,9 +4,3 @@
 [submodule "web/openlayers"]
 	path = web/openlayers
 	url = http://github.com/openlayers/openlayers.git
-[submodule "plugins"]
-	path = plugins
-	url = http://github.com/arlo/sfSyslogPlugin.git
-[submodule "plugin/sfSyslogPlugin"]
-	path = plugin/sfSyslogPlugin
-	url = http://github.com/arlo/sfSyslogPlugin.git
