@@ -180,7 +180,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       continue;
 
 //       $query_part = preg_replace('/[^A-Za-z0-9\-_]/', ' ', $query_part);
-      $query_part = preg_replace('/[\(&\;\,\|\?\.\)]/', ' ', $query_part);
+      $query_part = preg_replace('/[\(&\;\,\|\↑\€\←\↓\œ\→\?\.\'\"\)]/', ' ', $query_part);
 
       if($i == 0)
         $query_array['with'] = trim($query_part);
