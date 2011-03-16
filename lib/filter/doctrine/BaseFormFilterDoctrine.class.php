@@ -84,13 +84,11 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
             $pg_array_string .= $conn_MGR->quote($term, 'string').',';
       $conn->exec('SELECT set_limit(0.1)');
       $pg_array_string = substr($pg_array_string, 0, -1); //remove last ','
-      $statement = $conn->prepare("SELECT vt.anyelement as search, word from fct_explode_array(array[$pg_array_string]) as vt  
+      $statement = $conn->prepare("SELECT distinct vt.orig as search, word from (select e.anyelement,e.anyelement as orig from fct_explode_array(array[$pg_array_string]) e union select fulltoindex(f.anyelement),f.anyelement as orig from fct_explode_array(array[$pg_array_string]) as f) as vt  
             LEFT JOIN words on word % vt.anyelement
             WHERE referenced_relation = :table
             AND field_name = :field
-            AND word ilike '%' || vt.anyelement || '%'
-            GROUP BY word,  vt.anyelement");
-
+            AND fulltoindex(word) ilike '%' || fulltoindex(vt.anyelement) || '%'");
       $statement->execute(array(':table' => $table, ':field' => $field));
       $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
@@ -180,7 +178,7 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       continue;
 
 //       $query_part = preg_replace('/[^A-Za-z0-9\-_]/', ' ', $query_part);
-      $query_part = preg_replace('/[\(&\;\,\|\↑\€\←\↓\œ\→\?\.\'\"\)]/', ' ', $query_part);
+      $query_part = preg_replace('/[\(&\;\,\|\↑\€\←\↓\œ\→\?\.\\\'\"\)]/', ' ', $query_part);
 
       if($i == 0)
         $query_array['with'] = trim($query_part);
