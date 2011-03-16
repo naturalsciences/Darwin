@@ -143,10 +143,10 @@ $t->comment('->updateWigetsAvailabilityForRole()');
 $t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($brol_user->getId())
         ->setDbUserType(Users::REGISTERED_USER)
-        ->getWidgets('board_widget')),3,'4 board widgets but only 2 visible for a registered user');
+        ->getWidgets('board_widget')),4,'6 board widgets but only 4 visible for a registered user');
 
 Doctrine::getTable('MyWidgets')->setUserRef($brol_user->getId())->updateWigetsAvailabilityForRole(Users::REGISTERED_USER, false) ;
 
 $t->is(count(Doctrine::getTable('MyWidgets')
         ->setUserRef($brol_user->getId())
-        ->getWidgets('board_widget')),0,'Removing \'Registered user\' right : 0 board widgets visible now');     
+        ->getWidgets('board_widget')),1,'Removing \'Registered user\' right : 1 board widgets visible now (stats)');     
