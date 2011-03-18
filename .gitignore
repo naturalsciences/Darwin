@@ -1,6 +1,6 @@
 cache/*
 data/feed/*.xml
-data/stat/*.yml
+data/stats/*.yml
 !cache/.gitignore
 log/*
 !log/.gitignore
