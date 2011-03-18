@@ -2712,7 +2712,11 @@
       <trans-unit id="1134">
         <source>Update</source>
         <target>Mise à jour</target>
-      </trans-unit>              
+      </trans-unit>    
+      <trans-unit id="1135">
+        <source>Statistics are not available actually</source>  
+        <target>Les statistiques ne sont actuellement pas disponibles</source>
+      </trans-unit>
     </body>
   </file>
 </xliff>

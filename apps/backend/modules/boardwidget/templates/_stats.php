@@ -1,4 +1,5 @@
 <?php slot('widget_title',__('DaRWIN 2 Statistics'));  ?>
+<?php if(!empty($stats)) : ?>
 <?php foreach($stats as $id=>$stat) : ?>
   <?php if($id !="date_gen_stat") : ?>
     <?php if($sf_user->isAtleast($stat['level'])) : ?>
@@ -57,6 +58,8 @@
     <div class="stat_date"><?php echo __("Statistics generated at %stat_date%",array("%stat_date%" => $stat)) ; ?></div>
   <?php endif ; ?>
 <?php endforeach ; ?>
-
+<?php else : ?>
+<?php echo __("Statistics are not available actually") ; ?>
+<?php endif ; ?>
 
 
