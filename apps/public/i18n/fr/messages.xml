@@ -119,12 +119,12 @@
       </trans-unit>
       <trans-unit id="5">
         <source>If you have a problem using the tool, or if you want to help : write a mail at &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</source>
-        <target>Si vous rencontrez des ploblèmes sur l'utilisation de l'outil, ou si vous souhaitez de de l'aide : écrivez un mail à &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</target>
+        <target>Si vous rencontrez des ploblèmes sur l'utilisation de l'outil ou si vous souhaitez de l'aide : écrivez un mail à &lt;a href="mailto:collections@naturalsciences.be"&gt;collections@naturalsciences.be&lt;/a&gt;</target>
       </trans-unit>
       <trans-unit id="6">
         <source>If you have a question about a specimen, please contact the collection manager of the specimen. &lt;br /&gt;
       you can find his or her e-mail address in the record.</source>
-        <target>Si vous avez des questions au sujet des échantillons, veuillez contacter l'administrateur de la collection associée. &lt;br /&gt; vous pouvez trouver son adresse email dans l'enregistrement</target>
+        <target>Si vous avez des questions au sujet des échantillons, veuillez contacter l'administrateur de la collection associée. &lt;br /&gt; Vous pouvez trouver son adresse mail dans l'enregistrement</target>
       </trans-unit>
       <trans-unit id="7">
         <source>Welcome In DaRWIN</source>
@@ -144,7 +144,7 @@
     Let's take a look of some of our amazing features :</source>
         <target>DaRWIN n'est pas qu'un simple site web affichant nos collections, c'est un produit de gestion de collections.
         &lt;br /&gt;Vous pouvez vous enregistrer librement et découvrir ce merveilleux outils.&lt;br /&gt;
-        voyons ensemble quelques une de nos surprenantes fonctionnalité :
+        Voyons ensemble quelques-unes de nos surprenantes fonctionnalité :
         </target>
       </trans-unit>
       <trans-unit id="11">
@@ -171,9 +171,9 @@
         <source>You find the public search a little bit too restrictive? &lt;br /&gt;
       Let's try our DaRWIN search tool. You will be able to search for tons of information.&lt;br /&gt;
       From Map to complex taxonomy and synonymies searches.</source>
-        <target>vous trouvez la recherche publique un peu trop restrictive? &lt;br /&gt;
+        <target>Vous trouvez la recherche publique un peu trop restrictive? &lt;br /&gt;
       Venez essayer l'outil de recherche DaRWIN. Vous serez capable de rechercher une tonne d'information.&lt;br /&gt;
-      De la recherche sur carte, à la recherche complexe taxonomic et de synonymes.</target>
+      De la recherche sur carte à la recherche complexe taxonomic et de synonymes.</target>
       </trans-unit>
       <trans-unit id="16">
         <source>Customizable Interface :</source>
@@ -184,7 +184,7 @@
       You are only interested in taxomy? No problem, no other infos will clutter your tool.&lt;br /&gt;
       Hide or minimize the information you don't need to focus on.</source>
         <target>Dans l'outil DaRWIN, vous avez la possiblilité de personnaliser librement votre interface.&lt;br /&gt;
-      Vous êtes interessé uniquement par la taxonomie? Aucun problème, aucunesautres informations ne viendra perturber votre outils.&lt;br /&gt;
+      Vous êtes interessé uniquement par la taxonomie? Aucun problème, aucunes autres informations ne viendront perturber votre outils.&lt;br /&gt;
       Cacher ou minimiser les informations dont vous n'avez pas besoin pour vous concentrer sur votre travail.</target>
       </trans-unit>
       <trans-unit id="18">
@@ -540,10 +540,10 @@
       <trans-unit id="128"><source>Password</source> <target>Mot de passe</target></trans-unit>   
       <trans-unit id="129" approved="yes">
             <source>Scientists wishing to visit one of our collections should contact the collection manager directly.  For more information on how to apply for a visit, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
-            <target>Les scientifiques souhaitant de visiter l'un de nos collections sont prier de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de visite, nous vous referons aux règlements IRScNB ci-dessous.</target> </trans-unit>
+            <target>Les scientifiques souhaitant visiter l'une de nos collections sont priés de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de visite, veuillez vous référer aux règlements IRSNB ci-dessous.</target> </trans-unit>
       <trans-unit id="130" approved="yes">
             <source>Academic personnel wishing to loan collection objects should contact the collection manager directly.  For more information on how to apply for a loan, please refer to the RBINS rules and regulations below . Currently, this pdf document is not yet available in English.</source>
-            <target>Tout personnels académique souhaitant de prêter des objets de collection sont prier de prendre contact avec le gestionnaire de collections. Pour plus d'informations sur la façon de faire une demande de prêt, nous vous referons aux règlements IRScNB ci-dessous.</target> </trans-unit>
+            <target>Toute personne académique souhaitant emprunter des objets de collection est priée de prendre contact avec le gestionnaire de collections. Pour plus d'informations concernant la façon de faire une demande de prêt, veuillez vous référer aux règlements IRSNB ci-dessous.</target> </trans-unit>
       <trans-unit id="131" approved="yes">
             <source>Settlement of loans for study</source>
             <target>Règlement des prêts pour étude</target> </trans-unit>
