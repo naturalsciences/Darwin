@@ -124,7 +124,6 @@
     
       p1.transform(map.getProjectionObject(), epsg4326).wrapDateLine();
       p2.transform(map.getProjectionObject(), epsg4326).wrapDateLine();
-//       console.log(p1.lat +" , " +p1.lon + '   '+ p2.lat +" , " +p2.lon);
       $('#gtu_filters_lat_from').val(p1.lat);
       $('#gtu_filters_lon_from').val(p1.lon);
       
