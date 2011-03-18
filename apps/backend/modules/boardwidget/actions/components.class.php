@@ -74,14 +74,18 @@ class boardwidgetComponents extends sfComponents
   public function executeStats()
   {
     $yaml = new sfYamlParser();
-    try
+    $this->stats = "" ;    
+    if(file_exists(sfConfig::get('sf_data_dir').'/stats/stats.yml'))
     {
-      $this->stats = $yaml->parse(file_get_contents(sfConfig::get('sf_data_dir').'/stats/stats.yml'));
-    }
-    catch (InvalidArgumentException $e)
-    {
-      // an error occurred during parsing
-      echo "Unable to parse the YAML string: ".$e->getMessage();
-    } 
+      try
+      {
+        $this->stats = $yaml->parse(file_get_contents(sfConfig::get('sf_data_dir').'/stats/stats.yml'));
+      }
+      catch (InvalidArgumentException $e)
+      {
+        // an error occurred during parsing
+        echo __("Unable to parse statistics file");
+      } 
+    }    
   }  
 }
