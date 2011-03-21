@@ -2715,8 +2715,7 @@
       </trans-unit>    
       <trans-unit id="1135">
         <source>Statistics are not available actually</source>  
-        <target>Les statistiques ne sont actuellement pas disponibles</target>
-      </trans-unit>
+      <target>Les statistiques ne sont actuellement pas disponibles</target>
     </body>
   </file>
 </xliff>
