@@ -2717,6 +2717,34 @@
         <source>Statistics are not available actually</source>  
         <target>Les statistiques ne sont actuellement pas disponibles</target>
       </trans-unit>
+      <trans-unit id="1136">
+        <source>All types and the record count associated</source>
+        <target>Tous les types et leurs enregistrements associés</target>
+      </trans-unit> 
+      <trans-unit id="1137">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit> 
+      <trans-unit id="1138">
+        <source>Count</source>
+        <target>Nombre</target>
+      </trans-unit> 
+      <trans-unit id="1139">
+        <source>All objects in DaRWIN</source>
+        <target>Tous les objets encodés dans DaRWIN</target>
+      </trans-unit> 
+      <trans-unit id="1140">
+        <source>An average result of all objects already stored in our database</source>
+        <target>Un résultat approximatif de tous les objets enregistrés dans notre base de données</target>
+      </trans-unit> 
+      <trans-unit id="1141">
+        <source>Total</source>
+        <target>Total</target>
+      </trans-unit> 
+      <trans-unit id="1142">
+        <source>Statistics generated at %stat_date%</source>
+        <target>Statistiques générées à %stat_date%</target>
+      </trans-unit>                                                 
     </body>
   </file>
 </xliff>

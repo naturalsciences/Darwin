@@ -2374,7 +2374,39 @@
       <trans-unit id="1134">
         <source>Update</source>
         <target>Update</target>
-      </trans-unit>   
+      </trans-unit>
+      <trans-unit id="1135">
+        <source>Statistics are not available actually</source>  
+        <target>De statistieken zijn momenteel niet beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="1136">
+        <source>All types and the record count associated</source>
+        <target>Alle types en de bijbehorende records</target>
+      </trans-unit> 
+      <trans-unit id="1137">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit> 
+      <trans-unit id="1138">
+        <source>Count</source>
+        <target>Aantal</target>
+      </trans-unit> 
+      <trans-unit id="1139">
+        <source>All objects in DaRWIN</source>
+        <target>Alle objecten gecodeerd in DaRWIN</target>
+      </trans-unit> 
+      <trans-unit id="1140">
+        <source>An average result of all objects already stored in our database</source>
+        <target>Een geschatte resultaat van alle objecten zijn geregistreerd in onze database</target>
+      </trans-unit> 
+      <trans-unit id="1141">
+        <source>Total</source>
+        <target>Totaal</target>
+      </trans-unit> 
+      <trans-unit id="1142">
+        <source>Statistics generated at %stat_date%</source>
+        <target>Statistieken gegenereerd %stat_date%</target>
+      </trans-unit>           
     </body>
   </file>
 </xliff>

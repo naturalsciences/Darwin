@@ -13,9 +13,9 @@
             <?php else: ?>
               <?php echo image_tag('grey_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td')); ?>            
             <?php endif ; ?>
-            <?php echo $stat['title'] ; ?>
+            <?php echo __($stat['title']) ; ?>
             <?php if($sf_user->getHelpIcon() && $stat['description']!= '') : ?>          
-              <div class="help_ico" alt="<?php echo $stat['description'] ;?>"></div>
+              <div class="help_ico" alt="<?php echo __($stat['description']) ;?>"></div>
             <?php endif ; ?>      
           </th>
         </tr>
@@ -59,7 +59,7 @@
   <?php endif ; ?>
 <?php endforeach ; ?>
 <?php else : ?>
-<?php echo __("Statistics are not available actually") ; ?>
+<?php echo __("The statistics are not available actually") ; ?>
 <?php endif ; ?>
 
 
