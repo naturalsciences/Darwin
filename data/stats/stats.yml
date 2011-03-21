@@ -5,7 +5,7 @@ req1:
   request: 'SELECT individual_type as Type, count(DISTINCT individual_ref) as Count FROM darwin_flat Group by individual_type Order by individual_type'
   expandable: true
   level: 2
-  result: [{ type: allotype, count: '481' }, { type: cotype, count: '320' }, { type: genotype, count: '4' }, { type: holotype, count: '2363' }, { type: hypotype, count: '37' }, { type: lectotype, count: '132' }, { type: locotype, count: '2' }, { type: neotype, count: '9' }, { type: paralectotype, count: '149' }, { type: paratype, count: '10609' }, { type: plastotype, count: '4' }, { type: plesiotype, count: '14' }, { type: specimen, count: '263939' }, { type: syntype, count: '819' }, { type: topotype, count: '123' }, { type: type, count: '1458' }, { type: 'type in litteris', count: '110' }]
+  result: [{ type: allotype, count: '481' }, { type: cotype, count: '319' }, { type: genotype, count: '4' }, { type: holotype, count: '2367' }, { type: hypotype, count: '37' }, { type: lectotype, count: '146' }, { type: locotype, count: '2' }, { type: neotype, count: '9' }, { type: paralectotype, count: '160' }, { type: paratype, count: '10623' }, { type: plastotype, count: '4' }, { type: plesiotype, count: '14' }, { type: specimen, count: '265201' }, { type: syntype, count: '849' }, { type: topotype, count: '123' }, { type: type, count: '1452' }, { type: 'type in litteris', count: '110' }]
 req2:
   title: 'All objects in DaRWIN'
   description: 'An average result of all objects already stored in our database'
@@ -13,5 +13,5 @@ req2:
   request: 'SELECT sum((specimen_part_count_min+specimen_part_count_max)/2) as total FROM specimen_parts'
   expandable: false
   level: 1
-  result: [{ total: '2350727' }]
-date_gen_stat: '18/03/2011 - 15:17'
+  result: [{ total: '2358411' }]
+date_gen_stat: '21/03/2011 - 11:17'
