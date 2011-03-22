@@ -103,7 +103,7 @@
       </trans-unit>
       <trans-unit id="1">
         <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source>
-        <target>[0]Aucun résultats trouvés|[1]Votre requête a trouvé 1 enregistrement|(1,+Inf]Votre requête a trouvé %1% enregistrements</target>
+        <target>[0]Aucun résultat |[1]Votre requête a trouvé 1 enregistrement|(1,+Inf]Votre requête a trouvé %1% enregistrements</target>
       </trans-unit>
       <trans-unit id="2">
         <source>About</source>
