@@ -63,6 +63,12 @@
           <div id="map_search_form" style="display:none">
             <?php echo __('Show accuracy of each point');?> <input type="checkbox" id="show_accuracy" checked="checked" /><br /><br />
             <div style="width:100%; height:400px;" id="smap"></div>
+
+ <div class="pager paging_info hidden">
+   <?php echo image_tag('info2.png');?>
+    <span class="inner_text"></span>
+  </div>
+
          </div>
     </fieldset>
     <?php echo $form->renderHiddenFields();?>
@@ -141,6 +147,7 @@
       }
       updateLatLong()
       removeAllPopups();
+      $('.paging_info').hide();
       results = new OpenLayers.Layer.Vector("Results", {
         units: "m", 
         strategies: [new OpenLayers.Strategy.Fixed()],
@@ -149,8 +156,19 @@
           format: new OpenLayers.Format.KML()
         })
       });
+
+      
       map.addLayer(results);
       results.events.register("loadend", results, addMarkersFromFeatures);
+      $.ajax(
+      {
+        url: $('#gtu_filter').attr('action')+'/format/text/extd/count?gtu_filters%5Brec_per_page%5D=50&'+ $('#gtu_filter').serialize(),
+        success: function(html) {
+         $('.paging_info .inner_text').html(html);
+        }
+       }
+      );
+
       results.setVisibility($('#show_accuracy').is(':checked'));
 
       selectControl = new OpenLayers.Control.SelectFeature(results, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
@@ -203,6 +221,7 @@ if (feature.popup) {
 }
 function addMarkersFromFeatures()
 {
+  $('.paging_info').show();
   markers.setZIndex(2300);
 
   for( var i = 0; i < results.features.length; i++ )
