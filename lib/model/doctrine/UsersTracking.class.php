@@ -37,6 +37,7 @@ class UsersTracking extends BaseUsersTracking
       case 'mineralogy':
       case 'people':
       case 'insurances':
+      case 'igs':
       case 'gtu':
         $link = $table.'/edit?id='.$id; break;
       default:
@@ -51,6 +52,19 @@ class UsersTracking extends BaseUsersTracking
     eval("\$hvals = array({$hstore});");
     if(isset($hvals['referenced_relation']) && isset($hvals['record_id']))
       return $this->getLinkforKnownTable($hvals['referenced_relation'],$hvals['record_id']);
+
+    if(isset($hvals['referenced_relation']) && isset($hvals['record_id_1']))
+      return $this->getLinkforKnownTable($hvals['referenced_relation'],$hvals['record_id_1']);
+
+    if($table == 'collections_rights')
+      return $this->getLinkforKnownTable('collections',$hvals['collection_ref']);
+
+    if($table == 'tag_groups')
+      return $this->getLinkforKnownTable('gtu',$hvals['gtu_ref']);
+
+    if($table == 'specimen_collecting_methods' || $table == 'specimen_collecting_tools')
+      return $this->getLinkforKnownTable('specimens',$hvals['specimen_ref']);
+
     return false;
   }
 
