@@ -2455,6 +2455,12 @@
         <source>Insurances</source> <target>Verzekeringen</target> </trans-unit> 
       <trans-unit id="1161">
         <source>Accompanying elements</source> <target>Verwijzende elementen</target> </trans-unit>          
+      <trans-unit id="1162">
+        <source>deleted</source> <target>gewist</target> </trans-unit>
+      <trans-unit id="1163">
+        <source>inserted</source> <target>ingevoerd</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>updated</source> <target>geactualiseerd</target> </trans-unit>
     </body>
   </file>
 </xliff>

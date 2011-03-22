@@ -2792,7 +2792,13 @@
       <trans-unit id="1160">
         <source>Insurances</source> <target>Assurances</target> </trans-unit> 
       <trans-unit id="1161">
-        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>               
+        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>
+      <trans-unit id="1162">
+        <source>deleted</source> <target>supprimé</target> </trans-unit>
+      <trans-unit id="1163">
+        <source>inserted</source> <target>ajouté</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>updated</source> <target>modifié</target> </trans-unit>
     </body>
   </file>
 </xliff>

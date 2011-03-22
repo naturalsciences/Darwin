@@ -7,9 +7,18 @@ class UsersTracking extends BaseUsersTracking
 {
   public function getLink()
   {
-    $id = $this->_get('record_id');
-    $link = '';
-    switch($this->_get('referenced_relation'))
+    $result = $this->getLinkforKnownTable($this->_get('referenced_relation') , $this->_get('record_id'));
+    if($result)
+      return $result;
+    $result = $this->getLinkforRefTable($this->_get('referenced_relation') , $this->_get('record_id'));
+    if($result)
+      return $result;
+    return "";
+  }
+  
+  protected function getLinkforKnownTable($table, $id)
+  {
+    switch($table)
     {
       case 'collections':
         $link = 'collection/edit?id='.$id; break;
@@ -29,13 +38,22 @@ class UsersTracking extends BaseUsersTracking
       case 'people':
       case 'insurances':
       case 'gtu':
-        $link = $this->_get('referenced_relation').'/edit?id='.$id; break;
+        $link = $table.'/edit?id='.$id; break;
       default:
-        $link = ''; break;
+        $link = false; break;
     }
     return $link;
   }
-  
+
+  protected function getLinkforRefTable($table, $id)
+  {
+    $hstore = $this->_get('new_value');
+    eval("\$hvals = array({$hstore});");
+    if(isset($hvals['referenced_relation']) && isset($hvals['record_id']))
+      return $this->getLinkforKnownTable($hvals['referenced_relation'],$hvals['record_id']);
+    return false;
+  }
+
   /** When using the form filter **/
   public function getDiffAsArray($is_old = true)
   {
