@@ -103,11 +103,6 @@
              //$(this).closest('form').addClass('search_form');
             $('#gtu_filter').unbind('submit.map_form');
             $('#gtu_filter').bind('submit.sform',search_form_submit);
-            $('#gtu_filters_lat_from').val('');
-            $('#gtu_filters_lon_from').val('');
-
-            $('#gtu_filters_lat_to').val('');
-            $('#gtu_filters_lon_to').val('');
             $('#lat_long_set table').show();
             $('#map_search_form').hide();
           }
