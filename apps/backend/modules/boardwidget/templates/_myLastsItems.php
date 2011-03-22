@@ -22,11 +22,13 @@
       <?php foreach($items as $item):?>
       <tr>
         <td><?php $date = new DateTime($item['modification_date_time']); echo $date->format('d.m.y (a)'); ?></td>
-        <td><?php if($item['action'] != 'delete' && $item->getLink() != ''):?>
-            <?php echo link_to(image_tag('next.png'), $item->getLink());?>
-          <?php else:?>
-            <span class="small_item"><?php echo __('deleted');?></span>
-          <?php endif;?>
+        <td><?php if($item['action'] != 'delete'):?>
+             <?php if($item->getLink() != ''):?>
+                <?php echo link_to(image_tag('next.png'), $item->getLink());?>
+              <?php endif;?>
+            <?php else:?>
+              <span class="small_item"><?php echo __('deleted');?></span>
+            <?php endif;?>
         </td>
         <td><?php echo $item['referenced_relation'];?></td>
         <td>
