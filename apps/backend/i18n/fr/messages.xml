@@ -2714,7 +2714,7 @@
         <target>Mise à jour</target>
       </trans-unit>    
       <trans-unit id="1135">
-        <source>Statistics are not available actually</source>  
+        <source>Statistics are currently not available</source>  
         <target>Les statistiques ne sont actuellement pas disponibles</target>
       </trans-unit>
       <trans-unit id="1136">
@@ -2771,8 +2771,6 @@
         <source>Collecting method</source> <target>Méthode de collecte</target> </trans-unit>
       <trans-unit id="1150">
         <source>Collecting tools</source> <target>Outils de collecte</target> </trans-unit>                
-      <trans-unit id="1150">
-        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>
       <trans-unit id="1151">
         <source>#ID list</source> <target>Liste d'#ID</target> </trans-unit>
       <trans-unit id="1152">
@@ -2792,14 +2790,9 @@
       <trans-unit id="1159">
         <source>User information</source> <target>Information utilisateur</target> </trans-unit>
       <trans-unit id="1160">
-        <source>Insurances</source> <target>Assurances</target> </trans-unit>
+        <source>Insurances</source> <target>Assurances</target> </trans-unit> 
       <trans-unit id="1161">
-        <source></source> <target></target> </trans-unit>
-      <trans-unit id="1162">
-        <source></source> <target></target> </trans-unit>
-      <trans-unit id="1163">
-        <source></source> <target></target> </trans-unit>
-        
+        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>               
     </body>
   </file>
 </xliff>
