@@ -3403,3 +3403,26 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+/*Function to split a catalogue unit path and try to find the corresponding unit opf a given level*/
+create or replace function getSpecificParentForLevel(referenced_relation IN catalogue_levels.level_type%TYPE, path IN template_classifications.path%TYPE, level_searched IN catalogue_levels.level_name%TYPE) RETURNS template_classifications.name%TYPE LANGUAGE plpgsql AS
+$$
+DECLARE
+  response template_classifications.name%TYPE := ''; 
+BEGIN
+  EXECUTE
+  'SELECT name ' ||
+  ' FROM ' 
+  || quote_ident(referenced_relation) || ' cat '
+  ' INNER JOIN catalogue_levels ON cat.level_ref = catalogue_levels.id '
+  ' WHERE level_name = '
+  || quote_literal(level_searched) || 
+  '   AND cat.id IN (SELECT i_id::integer FROM regexp_split_to_table(' || quote_literal(path) || ', E''\/'') as i_id WHERE i_id != '''')' 
+  INTO response;
+  RETURN response;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE WARNING 'Error in getSpecificParentForLevel: %', SQLERRM;
+    RETURN response;
+END;
+$$;
