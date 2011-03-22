@@ -91,7 +91,30 @@
           if($(this).is(':checked'))
           {
             $('#map_search_form').show();
-            setMapCenter(new OpenLayers.LonLat(0,0), 2);
+            if($('#gtu_filters_lat_from').val() != '' &&  $('#gtu_filters_lat_to').val() != '' && 
+              $('#gtu_filters_lon_from').val() != '' &&  $('#gtu_filters_lon_to').val() != '')
+            {
+                try{
+                  lat_from = parseFloat($('#gtu_filters_lat_from').val());
+                  lat_to = parseFloat($('#gtu_filters_lat_to').val());
+                  lon_from = parseFloat($('#gtu_filters_lon_from').val());
+                  lon_to = parseFloat($('#gtu_filters_lon_to').val());
+                  var bounds = new OpenLayers.Bounds();
+                  bounds.extend(new OpenLayers.LonLat(lon_from, lat_from));
+                  bounds.extend(new OpenLayers.LonLat(lon_to,lat_to));
+                  bounds.transform(epsg4326, map.getProjectionObject());
+                  map.zoomToExtent(bounds);
+                  map.setCenter(bounds.getCenterLonLat());
+                }
+                catch (e)
+                {
+                  setMapCenter(new OpenLayers.LonLat(0,0), 2);
+                }
+            }
+            else
+            {
+              setMapCenter(new OpenLayers.LonLat(0,0), 2);
+            }
             //$(this).closest('form').removeClass('search_form');
             $('#gtu_filter').unbind('submit.sform');
             $('#gtu_filter').bind('submit.map_form',map_submit);
