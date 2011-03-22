@@ -24,7 +24,7 @@ class PreferencesForm extends BaseForm
       'multiple' => true,
       'renderer_options' => array('formatter' => array($this, 'formatter'))
     ));
-    $this->widgetSchema['search_cols_specimen']->setLabel('pecimens default visible columns');
+    $this->widgetSchema['search_cols_specimen']->setLabel('Specimens default visible columns');
     $default = $this->db_keys['search_cols_specimen'];
     if($default == '')
       $default = Doctrine::getTable('Preferences')->getDefaultValue('search_cols_specimen');

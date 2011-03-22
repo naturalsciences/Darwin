@@ -2406,7 +2406,35 @@
       <trans-unit id="1142">
         <source>Statistics generated at %stat_date%</source>
         <target>Statistieken gegenereerd %stat_date%</target>
-      </trans-unit>           
+      </trans-unit> 
+      <trans-unit id="1143">
+        <source>Statistics</source>
+        <target>Statistieken</target>
+      </trans-unit>   
+      <trans-unit id="1144">
+        <source>Add specimens</source>
+        <target>Staal toevoegen</target>
+      </trans-unit>  
+      <trans-unit id="1145">
+        <source>Add taxa</source>
+        <target>Taxon toevoegen</target>
+      </trans-unit>         
+      <trans-unit id="1146">
+        <source>Host</source>
+        <target>Hôte</target>
+      </trans-unit> 
+      <trans-unit id="1147">
+        <source>Donators or Sellers</source>
+        <target>Donoren of verkopers</target>
+      </trans-unit>   
+      <trans-unit id="1148">
+        <source>I.G. number</source> <target>I.G nummer</target> </trans-unit>
+      <trans-unit id="1149">
+        <source>Collecting method</source> <target>Verzamelmethodes</target> </trans-unit>
+      <trans-unit id="1150">
+        <source>Collecting tools</source> <target>Verzamel werktuigen</target> </trans-unit>                
+      <trans-unit id="1150">
+        <source>Accompanying elements</source> <target>Verwijzend element</target> </trans-unit>                      
     </body>
   </file>
 </xliff>
