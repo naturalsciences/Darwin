@@ -7,28 +7,37 @@
             <th>
                 <?php echo __('Date');?>
             </th>
+            <th>
+            </th>
             <th class="referenced_relation">
                 <?php echo __('Relation');?>
             </th>
-            <th class="record_id">
-                <?php echo __('Record Id');?>
+
+            <th>
+              <?php echo __('Action');?>
             </th>
-	    <th></th>
           </tr>
         </thead>
     <tbody>
       <?php foreach($items as $item):?>
-	<tr>
-	  <td><?php $date = new DateTime($item['modification_date_time']);
-		echo $date->format('d M Y ( a )'); ?></td>
-	  <td><?php echo $item['referenced_relation'];?></td>
-	  <td><?php if($item['action'] != 'delete' && $item->getLink() != ''):?>
-		    <?php echo link_to($item['record_id'], $item->getLink());?>
-		  <?php else:?>
-		    <?php echo $item['record_id'];?>
-		  <?php endif;?>
-	  </td>
-      </tr>
+      <tr>
+        <td><?php $date = new DateTime($item['modification_date_time']); echo $date->format('d.m.y (a)'); ?></td>
+        <td><?php if($item['action'] != 'delete'):?>
+             <?php if($item->getLink() != ''):?>
+                <?php echo link_to(image_tag('next.png'), $item->getLink());?>
+              <?php endif;?>
+            <?php else:?>
+              <span class="small_item"><?php echo __('deleted');?></span>
+            <?php endif;?>
+        </td>
+        <td><?php echo $item['referenced_relation'];?></td>
+        <td>
+          <?php if($item['action'] == 'insert') echo __('inserted');
+                elseif($item['action'] == 'update') echo __('updated');
+                elseif($item['action'] == 'delete') echo __('deleted');?>
+        </td>
+    </tr>
+            
     <?php endforeach;?>
     </tbody>
   </table>

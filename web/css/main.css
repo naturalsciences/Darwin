@@ -2163,7 +2163,7 @@ table.saved_searches tr , table.saved_searches_board tr
   border-bottom: 1px dashed #E0E0E0;
 }
 
-table.saved_searches div.date
+table.saved_searches div.date, span.small_item
 {
   font-size:x-small;
 /*   text-align:right; */
@@ -2507,5 +2507,9 @@ ul.board_news li div.news_info
   font-style: italic ;  
 }
 
+.underlined
+{
+  text-decoration:underline;
+}
 
 .olLayerGoogleCopyright{right:3px;bottom:2px;left:auto;}.olLayerGoogleV3.olLayerGoogleCopyright{display:none;bottom:0;right:0!important;}.olLayerGooglePoweredBy{left:2px;bottom:2px;}.olLayerGoogleV3.olLayerGooglePoweredBy{bottom:0!important;}

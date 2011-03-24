@@ -63,21 +63,37 @@
 	      <?php endif;?>
 	      <?php echo image_tag('next.png','class=search_with_record alt='.$change['record_id'].' ref='.$change['referenced_relation']);?>
 	    </td>
-	    <td class="trk_action"><?php echo $change['action'];?></td>
+	    <td class="trk_action"><?php if($change['action'] == 'insert') echo __('inserted');
+                elseif($change['action'] == 'update') echo __('updated');
+                elseif($change['action'] == 'delete') echo __('deleted');?>
+        </td>
 	    <td>
-	      <?php if($change['action']=='update' && count($change->getDiffAsArray()) >0 ):?>
-		  <?php echo image_tag('info.png', 'class=more_trk');?>
-		  <ul class="field_change">
-		  <?php $old_change = $change->getDiffAsArray(true);foreach($change->getDiffAsArray(false) as $field => $value):?>
-		    <li><strong><?php echo $field;?></strong> <em><?php echo $old_change[$field];?></em> -> <?php echo $value;?></li>
-		  <?php endforeach;?>
-		  </ul>
-	      <?php else:?>
-		<?php echo image_tag('info-bw.png');?>
-	      <?php endif;?>
+        <?php if($change['action']=='update'):?>
+          <?php echo image_tag('info.png', 'class=more_trk');?>
+          <ul class="field_change">
+          <?php $old_change = $change->getDiffAsArray(true);foreach($change->getDiffAsArray(false) as $field => $value):?>
+              <li <?php if($old_change[$field] != $value):?> class="underlined"<?php endif;?>>
+                <strong><?php echo $field;?></strong>  
+                <?php if($old_change[$field] != $value):?>
+                  <em><?php echo $old_change[$field];?></em> -> <?php echo $value;?>
+                <?php else:?>
+                  <?php echo $value;?>
+                <?php endif;?></li>
+          <?php endforeach;?>
+        </ul>
+
+        <?php else:?>
+          <?php echo image_tag('info.png', 'class=more_trk');?>
+          <ul class="field_change">
+            <?php foreach($change->getDiffAsArray($change['action']=='delete' ? true : false) as $field => $value):?>
+              <li><strong><?php echo $field;?></strong> <?php echo $value;?></li>
+          <?php endforeach;?>	      
+          </ul>
+        <?php endif;?>
 	    </td>
 	  </tr>
 	<?php endforeach;?>
+
         </tbody>
       </table>
     </div>

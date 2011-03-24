@@ -11,7 +11,7 @@ default:
 
   stylesheets:    [reset.css, main.css, menu.css]
 
-  javascripts:    [jquery-1.4.4.min.js, jquery.ui.all.min.js, core.js, jquery.hoverIntent.minified.js, superfish.js, supersubs.js, jquery.qtip-1.0.0-rc3.min.js, catalogue.js]
+  javascripts:    [jquery-1.5.1.min.js, jquery.ui.all.min.js, core.js, jquery.hoverIntent.minified.js, superfish.js, supersubs.js, jquery.qtip-1.0.0-rc3.min.js, catalogue.js]
 
   has_layout:     true
   layout:         layout

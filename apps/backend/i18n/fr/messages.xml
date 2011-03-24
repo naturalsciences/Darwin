@@ -5,7 +5,7 @@
     <header/>
     <body>
       <trans-unit id="1">
-        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target>[0]Aucun résultat trouvé|[1]Votre requête à trouvé 1 enregistrement(1,+Inf]Votre requête à trouvé %1% enregistrements</target>
+        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target>[0]Aucun résultat |[1]Votre requête a trouvé 1 enregistrement(1,+Inf]Votre requête a trouvé %1% enregistrements</target>
       </trans-unit>
       <trans-unit id="2">
         <source>My Preferences</source> <target>Mes Préférences</target>
@@ -2792,7 +2792,13 @@
       <trans-unit id="1160">
         <source>Insurances</source> <target>Assurances</target> </trans-unit> 
       <trans-unit id="1161">
-        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>               
+        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>
+      <trans-unit id="1162">
+        <source>deleted</source> <target>supprimé</target> </trans-unit>
+      <trans-unit id="1163">
+        <source>inserted</source> <target>ajouté</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>updated</source> <target>modifié</target> </trans-unit>
     </body>
   </file>
 </xliff>

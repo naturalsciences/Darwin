@@ -24,7 +24,7 @@ class UsersTrackingFormFilter extends BaseUsersTrackingFormFilter
 
    $this->widgetSchema['referenced_relation']->setLabel('Table');
    $this->widgetSchema['action'] =  new sfWidgetFormChoice(array(
-      'choices' => array(''=>'','insert' => 'Insert', 'update' => 'Update','delete' => 'Delete')
+      'choices' => array(''=>'','insert' => 'inserted', 'update' => 'updated','delete' => 'deleted')
     ));
     $yearsKeyVal = range(intval('2000'), date('Y'));
     $years = array_combine($yearsKeyVal, $yearsKeyVal);
