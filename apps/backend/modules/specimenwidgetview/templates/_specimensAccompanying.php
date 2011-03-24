@@ -20,7 +20,7 @@
     <td><?php echo $val->getQuantity();?><?php echo $val->getUnit();?></td> 
     <td>
       <?php if ($val->getAccompanyingType()=="mineral") : ?>     
-        <a href="<?php echo url_for('mineral/view?id='.$val->getMineralRef()) ; ?>"><?php echo $val->Mineral->getName() ; ?></a>
+        <a href="<?php echo url_for('mineral/view?id='.$val->getMineralRef()) ; ?>"><?php echo $val->Mineralogy->getName() ; ?></a>
       <?php else : ?>
         <a href="<?php echo url_for('taxonomy/view?id='.$val->getTaxonRef()) ; ?>"><?php echo $val->Taxonomy->getName(); ?></a>
       <?php endif ; ?>
