@@ -11,9 +11,12 @@ $(document).ready(function ()
     });
   });
   $("#collections_parent_ref").change(function() {   
-    $.get("<?php echo url_for('collection/setInstitution');?>/parent_ref/"+$(this).val(), function (data) {
-      $("#institution_to_change").html(data);
-    });
+    if($(this).val())
+    {
+      $.get("<?php echo url_for('collection/setInstitution');?>/parent_ref/"+$(this).val(), function (data) {
+        $("#institution_to_change").html(data);
+      });
+    }
   });
 });
 </script>
