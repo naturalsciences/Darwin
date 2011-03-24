@@ -5,7 +5,7 @@
     <header/>
     <body>
       <trans-unit id="1">
-        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target>[0]Aucun résultat trouvé|[1]Votre requête à trouvé 1 enregistrement(1,+Inf]Votre requête à trouvé %1% enregistrements</target>
+        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source> <target>[0]Aucun résultat |[1]Votre requête a trouvé 1 enregistrement(1,+Inf]Votre requête a trouvé %1% enregistrements</target>
       </trans-unit>
       <trans-unit id="2">
         <source>My Preferences</source> <target>Mes Préférences</target>
@@ -226,7 +226,7 @@
       <trans-unit id="98">
         <source>State</source> <target>Etat</target> </trans-unit>
       <trans-unit id="99">
-        <source>Stage</source> <target>Etape</target> </trans-unit>
+        <source>Stage</source> <target>Stade</target> </trans-unit>
       <trans-unit id="100">
         <source>Social status</source> <target>Statut social</target> </trans-unit>
       <trans-unit id="101">
@@ -1198,7 +1198,7 @@
       <trans-unit id="582">
         <source>Right</source> <target>Droit</target> </trans-unit>
       <trans-unit id="583">
-        <source>pecimens default visible columns</source> <target>Colones d'échantillon visibles par défaut</target> </trans-unit>
+        <source>Specimens default visible columns</source> <target>Colones d'échantillon visibles par défaut</target> </trans-unit>
       <trans-unit id="584">
         <source>Individuals default visible columns</source> <target>Colones d'individu visibles par défaut</target> </trans-unit>
       <trans-unit id="585">
@@ -1511,9 +1511,9 @@
       <trans-unit id="733">
         <source>Add an other "sexual" state</source> <target>Ajouter un autre état "sexuel"</target> </trans-unit>
       <trans-unit id="734">
-        <source>Add an other stage</source> <target>Ajouter une autre étape</target> </trans-unit>
+        <source>Add an other stage</source> <target>Ajouter un autre stade</target> </trans-unit>
       <trans-unit id="735">
-        <source>Pick a stage in the list</source> <target>Choisir une étape dans la liste</target> </trans-unit>
+        <source>Pick a stage in the list</source> <target>Choisir un stade dans la liste</target> </trans-unit>
       <trans-unit id="736">
         <source>imprecise</source> <target>imprécis</target> </trans-unit>
       <trans-unit id="737">
@@ -1818,7 +1818,7 @@
       <trans-unit id="869">
         <source>Change Individual Sex</source> <target>Changer le sexe d'un individu</target> </trans-unit>
       <trans-unit id="870">
-        <source>Change Individual Stage</source> <target>Changer l'étape d'un individu</target> </trans-unit>
+        <source>Change Individual Stage</source> <target>Changer le stade d'un individu</target> </trans-unit>
       <trans-unit id="871">
         <source>Change Building</source> <target>Changer de bâtiment</target> </trans-unit>
       <trans-unit id="872">
@@ -1886,9 +1886,9 @@
       <trans-unit id="903">
         <source>Choose New Status</source> <target>Choisir un nouveau status</target> </trans-unit>
       <trans-unit id="904">
-        <source>Add another Stage</source> <target>Ajouter un nouvel état</target> </trans-unit>
+        <source>Add another Stage</source> <target>Ajouter un nouveau stade</target> </trans-unit>
       <trans-unit id="905">
-        <source>Choose New Stage</source> <target>Choisir un nouvel état</target> </trans-unit>
+        <source>Choose New Stage</source> <target>Choisir un nouveau stade</target> </trans-unit>
       <trans-unit id="906">
         <source>Is Station Visible</source> <target>Station visible</target> </trans-unit>
       <trans-unit id="907">
@@ -2049,7 +2049,7 @@
       </trans-unit>
       <trans-unit id="963">
         <source>This widget allows you to add some information regarding the determination of either the type, sex, stage, social status and/or rock formation. You can potentially add the date on which the determination was made, what value was given as well as the determinators' names.</source>
-        <target></target>
+        <target>Ce widget vous permet d'ajouter des informations précisant la détermination, tels que le type, le sexe, le stade de développement, la position sociale (insectes sociaux) et/ou la formation rocheuse. Vous pouvez égallement complèter l'historique de détermination du spécimen (date, dénomination et déterminateur)</target>
       </trans-unit>
       <trans-unit id="964">
         <source>This widget is mainly used for entering the social class of an animal living in a social group. e.g. to indicate that an individual is a workerbee</source>
@@ -2714,9 +2714,91 @@
         <target>Mise à jour</target>
       </trans-unit>    
       <trans-unit id="1135">
-        <source>Statistics are not available actually</source>  
+        <source>Statistics are currently not available</source>  
         <target>Les statistiques ne sont actuellement pas disponibles</target>
       </trans-unit>
+      <trans-unit id="1136">
+        <source>All types and the record count associated</source>
+        <target>Tous les types et leurs enregistrements associés</target>
+      </trans-unit> 
+      <trans-unit id="1137">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit> 
+      <trans-unit id="1138">
+        <source>Count</source>
+        <target>Nombre</target>
+      </trans-unit> 
+      <trans-unit id="1139">
+        <source>All objects in DaRWIN</source>
+        <target>Tous les objets encodés dans DaRWIN</target>
+      </trans-unit> 
+      <trans-unit id="1140">
+        <source>An average result of all objects already stored in our database</source>
+        <target>Un résultat approximatif de tous les objets enregistrés dans notre base de données</target>
+      </trans-unit> 
+      <trans-unit id="1141">
+        <source>Total</source>
+        <target>Total</target>
+      </trans-unit> 
+      <trans-unit id="1142">
+        <source>Statistics generated at %stat_date%</source>
+        <target>Statistiques générées à %stat_date%</target>
+      </trans-unit>
+      <trans-unit id="1143">
+        <source>Statistics</source>
+        <target>Statistiques</target>
+      </trans-unit>  
+      <trans-unit id="1144">
+        <source>Add specimens</source>
+        <target>Ajouter échantillon</target>
+      </trans-unit>  
+      <trans-unit id="1145">
+        <source>Add taxa</source>
+        <target>Ajouter taxon</target>
+      </trans-unit>   
+      <trans-unit id="1146">
+        <source>Host</source>
+        <target>Hôte</target>
+      </trans-unit> 
+      <trans-unit id="1147">
+        <source>Donators or Sellers</source>
+        <target>Donneurs ou Vendeurs</target>
+      </trans-unit>   
+      <trans-unit id="1148">
+        <source>I.G. number</source> <target>Numéro I.G.</target> </trans-unit>
+      <trans-unit id="1149">
+        <source>Collecting method</source> <target>Méthode de collecte</target> </trans-unit>
+      <trans-unit id="1150">
+        <source>Collecting tools</source> <target>Outils de collecte</target> </trans-unit>                
+      <trans-unit id="1151">
+        <source>#ID list</source> <target>Liste d'#ID</target> </trans-unit>
+      <trans-unit id="1152">
+        <source>Advanced: Search By ID</source> <target>Avancée: recherche par ID</target> </trans-unit>
+      <trans-unit id="1153">
+        <source>Methods</source> <target>Methodes</target> </trans-unit>
+      <trans-unit id="1154">
+        <source>Type of search</source> <target>Type de recherche</target> </trans-unit>
+      <trans-unit id="1155">
+        <source>Tools</source> <target>Outils</target> </trans-unit>
+      <trans-unit id="1156">
+        <source>Sexual State</source> <target>Etat (sexuel)</target> </trans-unit>
+      <trans-unit id="1157">
+        <source>External Links</source> <target>Liens externes</target> </trans-unit>
+      <trans-unit id="1158">
+        <source>Default specimens codes</source> <target>Codes d'échantillons par défaut</target> </trans-unit>
+      <trans-unit id="1159">
+        <source>User information</source> <target>Information utilisateur</target> </trans-unit>
+      <trans-unit id="1160">
+        <source>Insurances</source> <target>Assurances</target> </trans-unit> 
+      <trans-unit id="1161">
+        <source>Accompanying elements</source> <target>Eléments d'accompagnement</target> </trans-unit>
+      <trans-unit id="1162">
+        <source>deleted</source> <target>supprimé</target> </trans-unit>
+      <trans-unit id="1163">
+        <source>inserted</source> <target>ajouté</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>updated</source> <target>modifié</target> </trans-unit>
     </body>
   </file>
 </xliff>

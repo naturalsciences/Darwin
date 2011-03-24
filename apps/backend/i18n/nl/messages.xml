@@ -2374,7 +2374,93 @@
       <trans-unit id="1134">
         <source>Update</source>
         <target>Update</target>
+      </trans-unit>
+      <trans-unit id="1135">
+        <source>Statistics are currently not available</source>  
+        <target>De statistieken zijn momenteel niet beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="1136">
+        <source>All types and the record count associated</source>
+        <target>Alle typemateriaal en het antaal bijbehorende records</target>
+      </trans-unit> 
+      <trans-unit id="1137">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit> 
+      <trans-unit id="1138">
+        <source>Count</source>
+        <target>Aantal</target>
+      </trans-unit> 
+      <trans-unit id="1139">
+        <source>All objects in DaRWIN</source>
+        <target>Alle objecten in DaRWIN</target>
+      </trans-unit> 
+      <trans-unit id="1140">
+        <source>An average result of all objects already stored in our database</source>
+        <target>Een schatting resultaat van alle geregistreerd objecten in onze databank</target>
+      </trans-unit> 
+      <trans-unit id="1141">
+        <source>Total</source>
+        <target>Totaal</target>
+      </trans-unit> 
+      <trans-unit id="1142">
+        <source>Statistics generated at %stat_date%</source>
+        <target>Statistieken gegenereerd op %stat_date%</target>
+      </trans-unit> 
+      <trans-unit id="1143">
+        <source>Statistics</source>
+        <target>Statistieken</target>
       </trans-unit>   
+      <trans-unit id="1144">
+        <source>Add specimens</source>
+        <target>Staal toevoegen</target>
+      </trans-unit>  
+      <trans-unit id="1145">
+        <source>Add taxa</source>
+        <target>Taxon toevoegen</target>
+      </trans-unit>         
+      <trans-unit id="1146">
+        <source>Host</source>
+        <target>Gastheer</target>
+      </trans-unit> 
+      <trans-unit id="1147">
+        <source>Donators or Sellers</source>
+        <target>Schenkers of verkopers</target>
+      </trans-unit>   
+      <trans-unit id="1148">
+        <source>I.G. number</source> <target>I.G nummer</target> </trans-unit>
+      <trans-unit id="1149">
+        <source>Collecting method</source> <target>Verzamelmethodes</target> </trans-unit>
+      <trans-unit id="1150">
+        <source>Collecting tools</source> <target>Verzamelwerktuigen</target> </trans-unit>                
+      <trans-unit id="1151">
+        <source>#ID list</source> <target>Lijst van #ID</target> </trans-unit>
+      <trans-unit id="1152">
+        <source>Advanced: Search By ID</source> <target>Geavanceerd: Zoeken op ID</target> </trans-unit>
+      <trans-unit id="1153">
+        <source>Methods</source> <target>Methodes</target> </trans-unit>
+      <trans-unit id="1154">
+        <source>Type of search</source> <target>Soort van opzoeking</target> </trans-unit>
+      <trans-unit id="1155">
+        <source>Tools</source> <target>Werktuigen</target> </trans-unit>
+      <trans-unit id="1156">
+        <source>Sexual State</source> <target>Toestand (sexuele)</target> </trans-unit>
+      <trans-unit id="1157">
+        <source>External Links</source> <target>Externe links</target> </trans-unit>
+      <trans-unit id="1158">
+        <source>Default specimens codes</source> <target>Standaard staal codes</target> </trans-unit>
+      <trans-unit id="1159">
+        <source>User information</source> <target>Informatie voor de gebruiker</target> </trans-unit>
+      <trans-unit id="1160">
+        <source>Insurances</source> <target>Verzekeringen</target> </trans-unit> 
+      <trans-unit id="1161">
+        <source>Accompanying elements</source> <target>Verwijzende elementen</target> </trans-unit>          
+      <trans-unit id="1162">
+        <source>deleted</source> <target>gewist</target> </trans-unit>
+      <trans-unit id="1163">
+        <source>inserted</source> <target>ingevoerd</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>updated</source> <target>geactualiseerd</target> </trans-unit>
     </body>
   </file>
 </xliff>

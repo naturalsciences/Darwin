@@ -63,6 +63,12 @@
           <div id="map_search_form" style="display:none">
             <?php echo __('Show accuracy of each point');?> <input type="checkbox" id="show_accuracy" checked="checked" /><br /><br />
             <div style="width:100%; height:400px;" id="smap"></div>
+
+ <div class="pager paging_info hidden">
+   <?php echo image_tag('info2.png');?>
+    <span class="inner_text"></span>
+  </div>
+
          </div>
     </fieldset>
     <?php echo $form->renderHiddenFields();?>
@@ -85,7 +91,30 @@
           if($(this).is(':checked'))
           {
             $('#map_search_form').show();
-            setMapCenter(new OpenLayers.LonLat(0,0), 2);
+            if($('#gtu_filters_lat_from').val() != '' &&  $('#gtu_filters_lat_to').val() != '' && 
+              $('#gtu_filters_lon_from').val() != '' &&  $('#gtu_filters_lon_to').val() != '')
+            {
+                try{
+                  lat_from = parseFloat($('#gtu_filters_lat_from').val());
+                  lat_to = parseFloat($('#gtu_filters_lat_to').val());
+                  lon_from = parseFloat($('#gtu_filters_lon_from').val());
+                  lon_to = parseFloat($('#gtu_filters_lon_to').val());
+                  var bounds = new OpenLayers.Bounds();
+                  bounds.extend(new OpenLayers.LonLat(lon_from, lat_from));
+                  bounds.extend(new OpenLayers.LonLat(lon_to,lat_to));
+                  bounds.transform(epsg4326, map.getProjectionObject());
+                  map.zoomToExtent(bounds);
+                  map.setCenter(bounds.getCenterLonLat());
+                }
+                catch (e)
+                {
+                  setMapCenter(new OpenLayers.LonLat(0,0), 2);
+                }
+            }
+            else
+            {
+              setMapCenter(new OpenLayers.LonLat(0,0), 2);
+            }
             //$(this).closest('form').removeClass('search_form');
             $('#gtu_filter').unbind('submit.sform');
             $('#gtu_filter').bind('submit.map_form',map_submit);
@@ -97,11 +126,6 @@
              //$(this).closest('form').addClass('search_form');
             $('#gtu_filter').unbind('submit.map_form');
             $('#gtu_filter').bind('submit.sform',search_form_submit);
-            $('#gtu_filters_lat_from').val('');
-            $('#gtu_filters_lon_from').val('');
-
-            $('#gtu_filters_lat_to').val('');
-            $('#gtu_filters_lon_to').val('');
             $('#lat_long_set table').show();
             $('#map_search_form').hide();
           }
@@ -141,6 +165,7 @@
       }
       updateLatLong()
       removeAllPopups();
+      $('.paging_info').hide();
       results = new OpenLayers.Layer.Vector("Results", {
         units: "m", 
         strategies: [new OpenLayers.Strategy.Fixed()],
@@ -149,8 +174,19 @@
           format: new OpenLayers.Format.KML()
         })
       });
+
+      
       map.addLayer(results);
       results.events.register("loadend", results, addMarkersFromFeatures);
+      $.ajax(
+      {
+        url: $('#gtu_filter').attr('action')+'/format/text/extd/count?gtu_filters%5Brec_per_page%5D=50&'+ $('#gtu_filter').serialize(),
+        success: function(html) {
+         $('.paging_info .inner_text').html(html);
+        }
+       }
+      );
+
       results.setVisibility($('#show_accuracy').is(':checked'));
 
       selectControl = new OpenLayers.Control.SelectFeature(results, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
@@ -203,6 +239,7 @@ if (feature.popup) {
 }
 function addMarkersFromFeatures()
 {
+  $('.paging_info').show();
   markers.setZIndex(2300);
 
   for( var i = 0; i < results.features.length; i++ )

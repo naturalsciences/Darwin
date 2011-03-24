@@ -48,32 +48,51 @@ class gtuActions extends DarwinActions
 
       if ($this->form->isValid())
       {
-        $query = $this->form->getQuery()->orderBy($this->orderBy .' '.$this->orderDir);
-        if($request->getParameter('format') == 'xml') $query->andWhere('latitude is not null');
-        $this->pagerLayout = new PagerLayoutWithArrows(
-                              new DarwinPager(
-                                $query,
-                                $this->currentPage,
-                                $this->form->getValue('rec_per_page')
-                              ),
-                              new Doctrine_Pager_Range_Sliding(
-                                array('chunk' => $this->pagerSlidingSize)
-                              ),
-                              $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
-                            );
-
-        // Sets the Pager Layout templates
-        $this->setDefaultPaggingLayout($this->pagerLayout);
-        // If pager not yet executed, this means the query has to be executed for data loading
-        if (! $this->pagerLayout->getPager()->getExecuted())
-           $this->items = $this->pagerLayout->execute();
-        
-        if($request->getParameter('format') == 'xml')
+        //@TODO: We need to refactor and avoid doing too much queries when format is xml
+        $query = $this->form->getQuery();
+        if($request->getParameter('format') == 'xml' || $request->getParameter('format') == 'text')
         {
+          $query->orderBy($this->orderBy .' '.$this->orderDir)
+            ->andWhere('latitude is not null');
+
           $this->setLayout(false);
-          $this->getResponse()->setContentType('application/xml');
-          $this->setTemplate('georss');
-          return;
+          if($request->getParameter('format') == 'xml')
+          {
+            $query->Limit($this->form->getValue('rec_per_page'));
+
+            $this->getResponse()->setContentType('application/xml');
+            $this->items = $query->execute();
+            $this->setTemplate('georss');
+            return;
+          }
+          else
+          {
+            //return $this->renderText($this->form->getValue('rec_per_page').'/'.$query->count());
+            sfContext::getInstance()->getConfiguration()->loadHelpers('I18N');
+            $str = format_number_choice('[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records', array('%1%' =>  $query->count()),  $query->count());
+            return $this->renderText($str);
+          }
+          
+        }
+        else
+        {
+          $query->orderBy($this->orderBy .' '.$this->orderDir);
+          $this->pagerLayout = new PagerLayoutWithArrows(
+            new DarwinPager(
+              $query,
+              $this->currentPage,
+              $this->form->getValue('rec_per_page')
+            ),
+            new Doctrine_Pager_Range_Sliding(
+              array('chunk' => $this->pagerSlidingSize)
+            ),
+            $this->getController()->genUrl($this->s_url.$this->o_url).'/page/{%page_number}'
+          );
+          // Sets the Pager Layout templates
+          $this->setDefaultPaggingLayout($this->pagerLayout);
+          // If pager not yet executed, this means the query has to be executed for data loading
+          if (! $this->pagerLayout->getPager()->getExecuted())
+            $this->items = $this->pagerLayout->execute();
         }
       }
     }
