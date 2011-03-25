@@ -49,6 +49,7 @@
 
 function checkGroup()
 {
+  alert('coucou') ;
   if($("#classification_synonymies_record_id").val() == '')
     return;
 
