@@ -1200,29 +1200,37 @@ CREATE OR REPLACE FUNCTION convert_to_unified (IN property varchar, IN property_
 language plpgsql
 AS
 $$
+DECLARE
+    r_val real :=0;
 BEGIN
     IF property is NULL THEN
         RETURN NULL;
     END IF;
 
+    BEGIN
+      r_val := property::real;
+    EXCEPTION WHEN SQLSTATE '22P02' THEN
+      RETURN '';
+    END;
+
     IF property_type = 'speed' THEN
-        RETURN fct_cpy_speed_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_speed_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'weight' THEN
-        RETURN fct_cpy_weight_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_weight_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'volume' THEN
-        RETURN fct_cpy_volume_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_volume_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'temperature' AND property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
-        RETURN fct_cpy_temperature_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_temperature_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'length' AND property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
-        RETURN fct_cpy_length_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_length_conversion(r_val, property_unit)::text;
     END IF;
 
     RETURN  property;
