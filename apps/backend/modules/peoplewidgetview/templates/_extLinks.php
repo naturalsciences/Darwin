@@ -1,1 +1,1 @@
-<?php echo get_component('cataloguewidgetview', 'extLinks', array('table' => 'specimen_individuals', 'eid' => $eid));?>
+<?php echo get_component('cataloguewidgetview', 'extLinks', array('table' => 'people', 'eid' => $eid));?>
