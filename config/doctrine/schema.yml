@@ -28,10 +28,10 @@ People:
         gender: { type: enum, values: ['M','F'] }
         db_people_type:  { type: integer, notnull: true, default:0}
         end_date_mask:  { type: integer, notnull: true, default:0}
-        end_date: { type: string, notnull: true, default: '0001-01-01'}
+        end_date: { type: string, notnull: true, default: '2038-12-31'}
         activity_date_from: { type: string, notnull: true, default: '0001-01-01'}
         activity_date_from_mask: { type: integer, notnull: true, default:0}
-        activity_date_to: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_to: { type: string, notnull: true, default: '2038-12-31'}
         activity_date_to_mask: { type: integer, notnull: true, default:0}
 
 CatalogueRelationships:
@@ -138,7 +138,7 @@ Gtu:
         gtu_from_date_mask: { type: integer, notnull: true, default:0}
         gtu_from_date: { type: string, notnull: true, default: '0001-01-01'}
         gtu_to_date_mask: { type: integer, notnull: true, default:0}
-        gtu_to_date: { type: string, notnull: true, default: '0001-01-01'}
+        gtu_to_date: { type: string, notnull: true, default: '2038-12-31'}
         latitude: {type: float}
         longitude: {type: float}
         location: {type: string}
@@ -228,7 +228,7 @@ Expeditions:
         expedition_from_date_mask: { type: integer, notnull: true, default:0}
         expedition_from_date: { type: string, default:'0001-01-01'}
         expedition_to_date_mask: { type: integer, notnull: true, default:0}
-        expedition_to_date: { type: string, default: '0001-01-01'}
+        expedition_to_date: { type: string, default: '2038-12-31'}
 
 Users:
     columns:
@@ -287,7 +287,7 @@ PeopleRelationships:
         path: { type: string }
         activity_date_from: { type: string, notnull: true, default: '0001-01-01'}
         activity_date_from_mask: { type: integer, notnull: true, default:0}
-        activity_date_to: { type: string, notnull: true, default: '0001-01-01'}
+        activity_date_to: { type: string, notnull: true, default: '2038-12-31'}
         activity_date_to_mask: { type: integer, notnull: true, default:0}
         person_user_role: { type: string }
     relations:
