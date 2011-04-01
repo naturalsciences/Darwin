@@ -1922,11 +1922,17 @@ comment on column darwin_flat.surnumerary is 'Tells if this part/individual has 
 create sequence flat_dict_id_seq;
 
 create table flat_dict
-       (
-        id integer not null default nextval('flat_dict_id_seq'),
-        referenced_relation varchar not null,
-        dict_field varchar not null,
-        dict_value varchar not null,
-        constraint unq_flat_dict unique (dict_value, dict_field, referenced_relation),
-        constraint pk_flat_dict primary key (id)
-       );
+(
+  id integer not null default nextval('flat_dict_id_seq'),
+  referenced_relation varchar not null,
+  dict_field varchar not null,
+  dict_value varchar not null,
+  constraint unq_flat_dict unique (dict_value, dict_field, referenced_relation),
+  constraint pk_flat_dict primary key (id)
+);
+
+
+comment on table flat_dict is 'Flat table compiling all small distinct values for a faster search like types, code prefixes ,...';
+comment on column flat_dict.referenced_relation is 'The table where the value come from';
+comment on column flat_dict.dict_field is 'the field name of where the value come from';
+comment on column flat_dict.dict_value is 'the distinct value';

@@ -3437,85 +3437,171 @@ END;
 $$;
 
 
-CREATE OR REPLACE FUNCTION update_dict() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION fct_add_in_dict(ref_relation text, ref_field text, dict_val text) RETURNS boolean
+AS
+$$
+DECLARE
+  query_str varchar;
+BEGIN
+    query_str := ' INSERT INTO flat_dict (referenced_relation, dict_field, dict_value)
+    (
+      SELECT ' || quote_literal(ref_relation) || ' , ' || quote_literal(ref_field) || ', ' || quote_literal(dict_val) || ' WHERE NOT EXISTS
+      (SELECT id FROM flat_dict WHERE
+        referenced_relation = ' || quote_literal(ref_relation) || '
+        AND dict_field = ' || quote_literal(ref_field) || '
+        AND dict_value = ' || quote_literal(dict_val) || ')
+    );';
+    execute query_str;
+    RETURN true;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_del_in_dict(ref_relation text, ref_field text, dict_val text) RETURNS boolean
 AS $$
 DECLARE
+  result integer;
+  query_str text;
+BEGIN
+  query_str := ' SELECT 1 WHERE EXISTS( SELECT id from ' || quote_ident(ref_relation) || ' where ' || quote_ident(ref_field) || ' = ' || quote_literal(dict_val) || ');';
+  execute query_str into result;
+
+  IF result is distinct from 1 THEN
+    DELETE FROM flat_dict where 
+          referenced_relation = ref_table
+          AND dict_field = ref_field
+          AND dict_value = dict_val;
+  END IF;
+  RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION trg_del_dict() RETURNS TRIGGER
+AS $$
 BEGIN
 
-        IF TG_TABLE_NAME = 'catalogue_people' THEN
-    ('CataloguePeople INDEXBY sub_type', 'people_sub_type', 'sub_type','');
+  IF TG_TABLE_NAME = 'catalogue_people' THEN
+    PERFORM fct_del_in_dict('catalogue_people','people_sub_type', OLD.people_sub_type);
 
-        ELSIF TG_TABLE_NAME = 'catalogue_properties' THEN
+  ELSIF TG_TABLE_NAME = 'codes' THEN
+    PERFORM fct_del_in_dict('codes','code_prefix_separator', OLD.code_prefix_separator);
+    PERFORM fct_del_in_dict('codes','code_suffix_separator', OLD.code_suffix_separator);
 
-    ('CatalogueProperties', 'property_type', 'type');
-    ('CatalogueProperties INDEXBY sub_type', 'property_sub_type', 'sub_type','');
-    ('CatalogueProperties', 'property_qualifier', 'qualifier','');
-    ('CatalogueProperties INDEXBY unit', 'property_unit', 'unit','');
-    ('CatalogueProperties INDEXBY unit', 'property_accuracy_unit', 'unit','');
-        ELSIF TG_TABLE_NAME = 'class_vernacular_names' THEN
-    ('ClassVernacularNames', 'community', 'community')
+  ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
+    PERFORM fct_del_in_dict('collection_maintenance','action_observation', OLD.action_observation);
 
-        ELSIF TG_TABLE_NAME = 'codes' THEN
+  ELSIF TG_TABLE_NAME = 'identifications' THEN
+    PERFORM fct_del_in_dict('identifications','determination_status', OLD.determination_status);
 
-     ('Codes', 'code_prefix_separator', 'code_prefix_separator')
-     ('Codes', 'code_suffix_separator', 'code_suffix_separator')
-        ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
-     ('CollectionMaintenance', 'action_observation', 'action')
+  ELSIF TG_TABLE_NAME = 'people' THEN
+    PERFORM fct_del_in_dict('people','sub_type', OLD.sub_type);
+    PERFORM fct_del_in_dict('people','title', OLD.title);
 
-        ELSIF TG_TABLE_NAME = 'identifications' THEN
-     ('Identifications', 'determination_status', 'determination_status')
+  ELSIF TG_TABLE_NAME = 'people_addresses' THEN
+    PERFORM fct_del_in_dict('people_addresses','country', OLD.country);
 
-        ELSIF TG_TABLE_NAME = 'people' THEN
-     ('Institutions', 'sub_type', 'type')
-     ('People', 'title', 'titles')
+  ELSIF TG_TABLE_NAME = 'insurances' THEN
+    PERFORM fct_del_in_dict('insurances','insurance_currency', OLD.insurance_currency);
 
-        ELSIF TG_TABLE_NAME = 'people_addresses' THEN
-     ('PeopleAddresses', 'country', 'countries')
+  ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+    PERFORM fct_del_in_dict('mineralogy','cristal_system', OLD.cristal_system);
 
-        ELSIF TG_TABLE_NAME = 'insurances' THEN
-     ('Insurances', 'insurance_currency', 'currencies')
+  ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+    PERFORM fct_del_in_dict('specimen_individuals','type', OLD.type);
+    PERFORM fct_del_in_dict('specimen_individuals','type_group', OLD.type_group);
+    PERFORM fct_del_in_dict('specimen_individuals','type_search', OLD.type_search);
+    PERFORM fct_del_in_dict('specimen_individuals','sex', OLD.sex);
+    PERFORM fct_del_in_dict('specimen_individuals','state', OLD.state);
+    PERFORM fct_del_in_dict('specimen_individuals','stage', OLD.stage);
+    PERFORM fct_del_in_dict('specimen_individuals','social_status', OLD.social_status);
+    PERFORM fct_del_in_dict('specimen_individuals','rock_form', OLD.rock_form);
+    
+  ELSIF TG_TABLE_NAME = 'specimens' THEN
+    PERFORM fct_del_in_dict('specimens','host_relationship', OLD.host_relationship);
 
-        ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-     ('Mineralogy', 'cristal_system', 'c_system')
+  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
+    PERFORM fct_del_in_dict('specimens_acccompanying','form', OLD.form);
 
-        ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+  ELSIF TG_TABLE_NAME = 'users' THEN
+    PERFORM fct_del_in_dict('users','title', OLD.title);
+    PERFORM fct_del_in_dict('users','sub_type', OLD.sub_type);
 
-      ('SpecimenIndividuals', 'type', 'type', 't')
-       ('SpecimenIndividuals', 'type_group', 'type_group', 't')
-       ('SpecimenIndividuals', 'type_search', 'type_search', 't')
-       ('SpecimenIndividuals', 'sex', 'sex')
-       ('SpecimenIndividuals', 'state', 'state')
-       ('SpecimenIndividuals', 'stage', 'stage')
-       ('SpecimenIndividuals', 'social_status', 'social_status')
-       ('SpecimenIndividuals', 'rock_form', 'rock_form')
-        ELSIF TG_TABLE_NAME = 'specimens' THEN
-     ('Specimens', 'host_relationship', 'host_relationship')
-     ('Specimens', 'category', 'category')
-        ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
-     ('SpecimensAccompanying', 'form', 'form')
-        ELSIF TG_TABLE_NAME = 'users' THEN
-     ('Users', 'title', 'title')
-     ('Users', 'sub_type', 'sub_type')
-        ELSIF TG_TABLE_NAME = 'users_addresses' THEN
-     ('UsersAddresses', 'country', 'countries')
-        ELSIF TG_TABLE_NAME = 'tag_groups' THEN ---???
-     ('TagGroups  INDEXBY sgn', 'sub_group_name', 'sgn','');
-        ELSIF TG_TABLE_NAME = 'specimen_parts' THEN -- ???
+  ELSIF TG_TABLE_NAME = 'users_addresses' THEN
+    PERFORM fct_del_in_dict('users_addresses','country', OLD.country);
 
-     ('SpecimenParts', 'building', 'buildings')
-     ('SpecimenParts', 'floor', 'floors');
-     ('SpecimenParts', 'room', 'rooms');
-     ('SpecimenParts', 'row', 'rows');
-     ('SpecimenParts', 'shelf', 'shelfs');
-     ('SpecimenParts', 'container_type', 'container_type')
-     ('SpecimenParts', 'sub_container_type', 'sub_container_type')
-     ('SpecimenParts', 'specimen_part', 'specimen_part')
-     ('SpecimenParts', 'specimen_status', 'specimen_status')
-     ('SpecimenParts INDEXBY storage', 'container_storage', 'storage','');
-     ('SpecimenParts INDEXBY storage', 'sub_container_storage', 'storage','');
+  ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
+    PERFORM fct_del_in_dict('specimen_parts','container_type', OLD.container_type);
+    PERFORM fct_del_in_dict('specimen_parts','sub_container_type', OLD.sub_container_type);
+    PERFORM fct_del_in_dict('specimen_parts','specimen_part', OLD.specimen_part);
+    PERFORM fct_del_in_dict('specimen_parts','specimen_status', OLD.specimen_status);
+  END IF;
 
-        END IF;
---flat_dict
-        RETURN NEW;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION trg_ins_update_dict() RETURNS TRIGGER
+AS $$
+BEGIN
+
+  IF TG_TABLE_NAME = 'catalogue_people' THEN
+    PERFORM fct_add_in_dict('catalogue_people','people_sub_type', NEW.people_sub_type);
+
+  ELSIF TG_TABLE_NAME = 'codes' THEN
+    PERFORM fct_add_in_dict('codes','code_prefix_separator', NEW.code_prefix_separator);
+    PERFORM fct_add_in_dict('codes','code_suffix_separator', NEW.code_suffix_separator);
+
+  ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
+    PERFORM fct_add_in_dict('collection_maintenance','action_observation', NEW.action_observation);
+
+  ELSIF TG_TABLE_NAME = 'identifications' THEN
+    PERFORM fct_add_in_dict('identifications','determination_status', NEW.determination_status);
+
+  ELSIF TG_TABLE_NAME = 'people' THEN
+    PERFORM fct_add_in_dict('people','sub_type', NEW.sub_type);
+    PERFORM fct_add_in_dict('people','title', NEW.title);
+
+  ELSIF TG_TABLE_NAME = 'people_addresses' THEN
+    PERFORM fct_add_in_dict('people_addresses','country', NEW.country);
+
+  ELSIF TG_TABLE_NAME = 'insurances' THEN
+    PERFORM fct_add_in_dict('insurances','insurance_currency', NEW.insurance_currency);
+
+  ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+    PERFORM fct_add_in_dict('mineralogy','cristal_system', NEW.cristal_system);
+
+  ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+    PERFORM fct_add_in_dict('specimen_individuals','type', NEW.type);
+    PERFORM fct_add_in_dict('specimen_individuals','type_group', NEW.type_group);
+    PERFORM fct_add_in_dict('specimen_individuals','type_search', NEW.type_search);
+    PERFORM fct_add_in_dict('specimen_individuals','sex', NEW.sex);
+    PERFORM fct_add_in_dict('specimen_individuals','state', NEW.state);
+    PERFORM fct_add_in_dict('specimen_individuals','stage', NEW.stage);
+    PERFORM fct_add_in_dict('specimen_individuals','social_status', NEW.social_status);
+    PERFORM fct_add_in_dict('specimen_individuals','rock_form', NEW.rock_form);
+    
+  ELSIF TG_TABLE_NAME = 'specimens' THEN
+    PERFORM fct_add_in_dict('specimens','host_relationship', NEW.host_relationship);
+
+  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
+    PERFORM fct_add_in_dict('specimens_acccompanying','form', NEW.form);
+
+  ELSIF TG_TABLE_NAME = 'users' THEN
+    PERFORM fct_add_in_dict('users','title', NEW.title);
+    PERFORM fct_add_in_dict('users','sub_type', NEW.sub_type);
+
+  ELSIF TG_TABLE_NAME = 'users_addresses' THEN
+    PERFORM fct_add_in_dict('users_addresses','country', NEW.country);
+
+  ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
+    PERFORM fct_add_in_dict('specimen_parts','container_type', NEW.container_type);
+    PERFORM fct_add_in_dict('specimen_parts','sub_container_type', NEW.sub_container_type);
+    PERFORM fct_add_in_dict('specimen_parts','specimen_part', NEW.specimen_part);
+    PERFORM fct_add_in_dict('specimen_parts','specimen_status', NEW.specimen_status);
+  END IF;
+
+  RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
