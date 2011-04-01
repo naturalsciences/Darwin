@@ -1917,3 +1917,16 @@ comment on column darwin_flat.part_count_max is 'Maximum number of parts stored'
 comment on column darwin_flat.specimen_status is 'Tells the status of part concerned: lost, damaged, good shape,...';
 comment on column darwin_flat.complete is 'Flag telling if the specimen is complete or not';
 comment on column darwin_flat.surnumerary is 'Tells if this part/individual has been added after first inventory';
+
+
+create sequence flat_dict_id_seq;
+
+create table flat_dict
+       (
+        id integer not null default nextval('flat_dict_id_seq'),
+        referenced_relation varchar not null,
+        dict_field varchar not null,
+        dict_value varchar not null,
+        constraint unq_flat_dict unique (dict_value, dict_field, referenced_relation),
+        constraint pk_flat_dict primary key (id)
+       );

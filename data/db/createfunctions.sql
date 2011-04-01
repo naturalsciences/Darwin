@@ -3435,3 +3435,87 @@ EXCEPTION
     RETURN response;
 END;
 $$;
+
+
+CREATE OR REPLACE FUNCTION update_dict() RETURNS TRIGGER
+AS $$
+DECLARE
+BEGIN
+
+        IF TG_TABLE_NAME = 'catalogue_people' THEN
+    ('CataloguePeople INDEXBY sub_type', 'people_sub_type', 'sub_type','');
+
+        ELSIF TG_TABLE_NAME = 'catalogue_properties' THEN
+
+    ('CatalogueProperties', 'property_type', 'type');
+    ('CatalogueProperties INDEXBY sub_type', 'property_sub_type', 'sub_type','');
+    ('CatalogueProperties', 'property_qualifier', 'qualifier','');
+    ('CatalogueProperties INDEXBY unit', 'property_unit', 'unit','');
+    ('CatalogueProperties INDEXBY unit', 'property_accuracy_unit', 'unit','');
+        ELSIF TG_TABLE_NAME = 'class_vernacular_names' THEN
+    ('ClassVernacularNames', 'community', 'community')
+
+        ELSIF TG_TABLE_NAME = 'codes' THEN
+
+     ('Codes', 'code_prefix_separator', 'code_prefix_separator')
+     ('Codes', 'code_suffix_separator', 'code_suffix_separator')
+        ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
+     ('CollectionMaintenance', 'action_observation', 'action')
+
+        ELSIF TG_TABLE_NAME = 'identifications' THEN
+     ('Identifications', 'determination_status', 'determination_status')
+
+        ELSIF TG_TABLE_NAME = 'people' THEN
+     ('Institutions', 'sub_type', 'type')
+     ('People', 'title', 'titles')
+
+        ELSIF TG_TABLE_NAME = 'people_addresses' THEN
+     ('PeopleAddresses', 'country', 'countries')
+
+        ELSIF TG_TABLE_NAME = 'insurances' THEN
+     ('Insurances', 'insurance_currency', 'currencies')
+
+        ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+     ('Mineralogy', 'cristal_system', 'c_system')
+
+        ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+
+      ('SpecimenIndividuals', 'type', 'type', 't')
+       ('SpecimenIndividuals', 'type_group', 'type_group', 't')
+       ('SpecimenIndividuals', 'type_search', 'type_search', 't')
+       ('SpecimenIndividuals', 'sex', 'sex')
+       ('SpecimenIndividuals', 'state', 'state')
+       ('SpecimenIndividuals', 'stage', 'stage')
+       ('SpecimenIndividuals', 'social_status', 'social_status')
+       ('SpecimenIndividuals', 'rock_form', 'rock_form')
+        ELSIF TG_TABLE_NAME = 'specimens' THEN
+     ('Specimens', 'host_relationship', 'host_relationship')
+     ('Specimens', 'category', 'category')
+        ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
+     ('SpecimensAccompanying', 'form', 'form')
+        ELSIF TG_TABLE_NAME = 'users' THEN
+     ('Users', 'title', 'title')
+     ('Users', 'sub_type', 'sub_type')
+        ELSIF TG_TABLE_NAME = 'users_addresses' THEN
+     ('UsersAddresses', 'country', 'countries')
+        ELSIF TG_TABLE_NAME = 'tag_groups' THEN ---???
+     ('TagGroups  INDEXBY sgn', 'sub_group_name', 'sgn','');
+        ELSIF TG_TABLE_NAME = 'specimen_parts' THEN -- ???
+
+     ('SpecimenParts', 'building', 'buildings')
+     ('SpecimenParts', 'floor', 'floors');
+     ('SpecimenParts', 'room', 'rooms');
+     ('SpecimenParts', 'row', 'rows');
+     ('SpecimenParts', 'shelf', 'shelfs');
+     ('SpecimenParts', 'container_type', 'container_type')
+     ('SpecimenParts', 'sub_container_type', 'sub_container_type')
+     ('SpecimenParts', 'specimen_part', 'specimen_part')
+     ('SpecimenParts', 'specimen_status', 'specimen_status')
+     ('SpecimenParts INDEXBY storage', 'container_storage', 'storage','');
+     ('SpecimenParts INDEXBY storage', 'sub_container_storage', 'storage','');
+
+        END IF;
+--flat_dict
+        RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
