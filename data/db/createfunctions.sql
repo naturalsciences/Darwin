@@ -3443,6 +3443,9 @@ $$
 DECLARE
   query_str varchar;
 BEGIN
+  IF dict_val is NULL THEN 
+    RETURN TRUE;
+  END IF;
     query_str := ' INSERT INTO flat_dict (referenced_relation, dict_field, dict_value)
     (
       SELECT ' || quote_literal(ref_relation) || ' , ' || quote_literal(ref_field) || ', ' || quote_literal(dict_val) || ' WHERE NOT EXISTS
@@ -3464,12 +3467,15 @@ DECLARE
   result integer;
   query_str text;
 BEGIN
+  IF dict_val is NULL THEN 
+    RETURN TRUE;
+  END IF;
   query_str := ' SELECT 1 WHERE EXISTS( SELECT id from ' || quote_ident(ref_relation) || ' where ' || quote_ident(ref_field) || ' = ' || quote_literal(dict_val) || ');';
   execute query_str into result;
 
   IF result is distinct from 1 THEN
     DELETE FROM flat_dict where 
-          referenced_relation = ref_table
+          referenced_relation = ref_relation
           AND dict_field = ref_field
           AND dict_value = dict_val;
   END IF;
