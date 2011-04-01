@@ -93,7 +93,7 @@ abstract class BaseExpeditions extends sfDoctrineRecord
              ));
         $this->hasColumn('expedition_to_date', 'string', null, array(
              'type' => 'string',
-             'default' => '0001-01-01',
+             'default' => '2038-12-31',
              ));
     }
 

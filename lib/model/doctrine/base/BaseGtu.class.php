@@ -115,7 +115,7 @@ abstract class BaseGtu extends sfDoctrineRecord
         $this->hasColumn('gtu_to_date', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => '0001-01-01',
+             'default' => '2038-12-31',
              ));
         $this->hasColumn('latitude', 'float', null, array(
              'type' => 'float',

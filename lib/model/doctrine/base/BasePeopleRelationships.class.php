@@ -87,7 +87,7 @@ abstract class BasePeopleRelationships extends sfDoctrineRecord
         $this->hasColumn('activity_date_to', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => '0001-01-01',
+             'default' => '2038-12-31',
              ));
         $this->hasColumn('activity_date_to_mask', 'integer', null, array(
              'type' => 'integer',
