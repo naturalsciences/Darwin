@@ -135,6 +135,7 @@ BEGIN
     temp_string := TRANSLATE(temp_string,'ū','u');
     temp_string := TRANSLATE(temp_string,'ş','s');
     temp_string := TRANSLATE(temp_string,'Ş','s');
+    temp_string := TRANSLATE(temp_string,'†','');
     IF forUniqueness THEN
       temp_string := LOWER(to_ascii(temp_string, 'LATIN9'));
     ELSE
@@ -1200,29 +1201,37 @@ CREATE OR REPLACE FUNCTION convert_to_unified (IN property varchar, IN property_
 language plpgsql
 AS
 $$
+DECLARE
+    r_val real :=0;
 BEGIN
     IF property is NULL THEN
         RETURN NULL;
     END IF;
 
+    BEGIN
+      r_val := property::real;
+    EXCEPTION WHEN SQLSTATE '22P02' THEN
+      RETURN '';
+    END;
+
     IF property_type = 'speed' THEN
-        RETURN fct_cpy_speed_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_speed_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'weight' THEN
-        RETURN fct_cpy_weight_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_weight_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'volume' THEN
-        RETURN fct_cpy_volume_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_volume_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'temperature' AND property_unit IN ('K', '°C', '°F', '°Ra', '°Re', '°r', '°N', '°Rø', '°De') THEN
-        RETURN fct_cpy_temperature_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_temperature_conversion(r_val, property_unit)::text;
     END IF;
 
     IF property_type = 'length' AND property_unit IN ('m', 'dm', 'cm', 'mm', 'µm', 'nm', 'pm', 'fm', 'am', 'zm', 'ym', 'am', 'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em', 'Zm', 'Ym', 'mam', 'mom', 'Å', 'ua', 'ch', 'fathom', 'fermi', 'ft', 'in', 'K', 'l.y.', 'ly', 'µ', 'mil', 'mi', 'nautical mi', 'pc', 'point', 'pt', 'pica', 'rd', 'yd', 'arp', 'lieue', 'league', 'cal', 'twp', 'p', 'P', 'fur', 'brasse', 'vadem', 'fms') THEN
-        RETURN fct_cpy_length_conversion(property::real, property_unit)::text;
+        RETURN fct_cpy_length_conversion(r_val, property_unit)::text;
     END IF;
 
     RETURN  property;
@@ -3403,3 +3412,202 @@ BEGIN
   RETURN NEW;
 END;
 $$;
+
+/*Function to split a catalogue unit path and try to find the corresponding unit opf a given level*/
+create or replace function getSpecificParentForLevel(referenced_relation IN catalogue_levels.level_type%TYPE, path IN template_classifications.path%TYPE, level_searched IN catalogue_levels.level_name%TYPE) RETURNS template_classifications.name%TYPE LANGUAGE plpgsql AS
+$$
+DECLARE
+  response template_classifications.name%TYPE := ''; 
+BEGIN
+  EXECUTE
+  'SELECT name ' ||
+  ' FROM ' 
+  || quote_ident(lower(referenced_relation)) || ' cat '
+  ' INNER JOIN catalogue_levels ON cat.level_ref = catalogue_levels.id '
+  ' WHERE level_name = '
+  || quote_literal(lower(level_searched)) || 
+  '   AND cat.id IN (SELECT i_id::integer FROM regexp_split_to_table(' || quote_literal(path) || E', E''\/'') as i_id WHERE i_id != '''')' 
+  INTO response;
+  RETURN response;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE WARNING 'Error in getSpecificParentForLevel: %', SQLERRM;
+    RETURN response;
+END;
+$$;
+
+
+CREATE OR REPLACE FUNCTION fct_add_in_dict(ref_relation text, ref_field text, dict_val text) RETURNS boolean
+AS
+$$
+DECLARE
+  query_str varchar;
+BEGIN
+  IF dict_val is NULL THEN 
+    RETURN TRUE;
+  END IF;
+    query_str := ' INSERT INTO flat_dict (referenced_relation, dict_field, dict_value)
+    (
+      SELECT ' || quote_literal(ref_relation) || ' , ' || quote_literal(ref_field) || ', ' || quote_literal(dict_val) || ' WHERE NOT EXISTS
+      (SELECT id FROM flat_dict WHERE
+        referenced_relation = ' || quote_literal(ref_relation) || '
+        AND dict_field = ' || quote_literal(ref_field) || '
+        AND dict_value = ' || quote_literal(dict_val) || ')
+    );';
+    execute query_str;
+    RETURN true;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_del_in_dict(ref_relation text, ref_field text, dict_val text) RETURNS boolean
+AS $$
+DECLARE
+  result integer;
+  query_str text;
+BEGIN
+  IF dict_val is NULL THEN 
+    RETURN TRUE;
+  END IF;
+  query_str := ' SELECT 1 WHERE EXISTS( SELECT id from ' || quote_ident(ref_relation) || ' where ' || quote_ident(ref_field) || ' = ' || quote_literal(dict_val) || ');';
+  execute query_str into result;
+
+  IF result is distinct from 1 THEN
+    DELETE FROM flat_dict where 
+          referenced_relation = ref_relation
+          AND dict_field = ref_field
+          AND dict_value = dict_val;
+  END IF;
+  RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION trg_del_dict() RETURNS TRIGGER
+AS $$
+BEGIN
+
+  IF TG_TABLE_NAME = 'catalogue_people' THEN
+    PERFORM fct_del_in_dict('catalogue_people','people_sub_type', OLD.people_sub_type);
+
+  ELSIF TG_TABLE_NAME = 'codes' THEN
+    PERFORM fct_del_in_dict('codes','code_prefix_separator', OLD.code_prefix_separator);
+    PERFORM fct_del_in_dict('codes','code_suffix_separator', OLD.code_suffix_separator);
+
+  ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
+    PERFORM fct_del_in_dict('collection_maintenance','action_observation', OLD.action_observation);
+
+  ELSIF TG_TABLE_NAME = 'identifications' THEN
+    PERFORM fct_del_in_dict('identifications','determination_status', OLD.determination_status);
+
+  ELSIF TG_TABLE_NAME = 'people' THEN
+    PERFORM fct_del_in_dict('people','sub_type', OLD.sub_type);
+    PERFORM fct_del_in_dict('people','title', OLD.title);
+
+  ELSIF TG_TABLE_NAME = 'people_addresses' THEN
+    PERFORM fct_del_in_dict('people_addresses','country', OLD.country);
+
+  ELSIF TG_TABLE_NAME = 'insurances' THEN
+    PERFORM fct_del_in_dict('insurances','insurance_currency', OLD.insurance_currency);
+
+  ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+    PERFORM fct_del_in_dict('mineralogy','cristal_system', OLD.cristal_system);
+
+  ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+    PERFORM fct_del_in_dict('specimen_individuals','type', OLD.type);
+    PERFORM fct_del_in_dict('specimen_individuals','type_group', OLD.type_group);
+    PERFORM fct_del_in_dict('specimen_individuals','type_search', OLD.type_search);
+    PERFORM fct_del_in_dict('specimen_individuals','sex', OLD.sex);
+    PERFORM fct_del_in_dict('specimen_individuals','state', OLD.state);
+    PERFORM fct_del_in_dict('specimen_individuals','stage', OLD.stage);
+    PERFORM fct_del_in_dict('specimen_individuals','social_status', OLD.social_status);
+    PERFORM fct_del_in_dict('specimen_individuals','rock_form', OLD.rock_form);
+    
+  ELSIF TG_TABLE_NAME = 'specimens' THEN
+    PERFORM fct_del_in_dict('specimens','host_relationship', OLD.host_relationship);
+
+  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
+    PERFORM fct_del_in_dict('specimens_acccompanying','form', OLD.form);
+
+  ELSIF TG_TABLE_NAME = 'users' THEN
+    PERFORM fct_del_in_dict('users','title', OLD.title);
+    PERFORM fct_del_in_dict('users','sub_type', OLD.sub_type);
+
+  ELSIF TG_TABLE_NAME = 'users_addresses' THEN
+    PERFORM fct_del_in_dict('users_addresses','country', OLD.country);
+
+  ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
+    PERFORM fct_del_in_dict('specimen_parts','container_type', OLD.container_type);
+    PERFORM fct_del_in_dict('specimen_parts','sub_container_type', OLD.sub_container_type);
+    PERFORM fct_del_in_dict('specimen_parts','specimen_part', OLD.specimen_part);
+    PERFORM fct_del_in_dict('specimen_parts','specimen_status', OLD.specimen_status);
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION trg_ins_update_dict() RETURNS TRIGGER
+AS $$
+BEGIN
+
+  IF TG_TABLE_NAME = 'catalogue_people' THEN
+    PERFORM fct_add_in_dict('catalogue_people','people_sub_type', NEW.people_sub_type);
+
+  ELSIF TG_TABLE_NAME = 'codes' THEN
+    PERFORM fct_add_in_dict('codes','code_prefix_separator', NEW.code_prefix_separator);
+    PERFORM fct_add_in_dict('codes','code_suffix_separator', NEW.code_suffix_separator);
+
+  ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
+    PERFORM fct_add_in_dict('collection_maintenance','action_observation', NEW.action_observation);
+
+  ELSIF TG_TABLE_NAME = 'identifications' THEN
+    PERFORM fct_add_in_dict('identifications','determination_status', NEW.determination_status);
+
+  ELSIF TG_TABLE_NAME = 'people' THEN
+    PERFORM fct_add_in_dict('people','sub_type', NEW.sub_type);
+    PERFORM fct_add_in_dict('people','title', NEW.title);
+
+  ELSIF TG_TABLE_NAME = 'people_addresses' THEN
+    PERFORM fct_add_in_dict('people_addresses','country', NEW.country);
+
+  ELSIF TG_TABLE_NAME = 'insurances' THEN
+    PERFORM fct_add_in_dict('insurances','insurance_currency', NEW.insurance_currency);
+
+  ELSIF TG_TABLE_NAME = 'mineralogy' THEN
+    PERFORM fct_add_in_dict('mineralogy','cristal_system', NEW.cristal_system);
+
+  ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
+    PERFORM fct_add_in_dict('specimen_individuals','type', NEW.type);
+    PERFORM fct_add_in_dict('specimen_individuals','type_group', NEW.type_group);
+    PERFORM fct_add_in_dict('specimen_individuals','type_search', NEW.type_search);
+    PERFORM fct_add_in_dict('specimen_individuals','sex', NEW.sex);
+    PERFORM fct_add_in_dict('specimen_individuals','state', NEW.state);
+    PERFORM fct_add_in_dict('specimen_individuals','stage', NEW.stage);
+    PERFORM fct_add_in_dict('specimen_individuals','social_status', NEW.social_status);
+    PERFORM fct_add_in_dict('specimen_individuals','rock_form', NEW.rock_form);
+    
+  ELSIF TG_TABLE_NAME = 'specimens' THEN
+    PERFORM fct_add_in_dict('specimens','host_relationship', NEW.host_relationship);
+
+  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
+    PERFORM fct_add_in_dict('specimens_acccompanying','form', NEW.form);
+
+  ELSIF TG_TABLE_NAME = 'users' THEN
+    PERFORM fct_add_in_dict('users','title', NEW.title);
+    PERFORM fct_add_in_dict('users','sub_type', NEW.sub_type);
+
+  ELSIF TG_TABLE_NAME = 'users_addresses' THEN
+    PERFORM fct_add_in_dict('users_addresses','country', NEW.country);
+
+  ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
+    PERFORM fct_add_in_dict('specimen_parts','container_type', NEW.container_type);
+    PERFORM fct_add_in_dict('specimen_parts','sub_container_type', NEW.sub_container_type);
+    PERFORM fct_add_in_dict('specimen_parts','specimen_part', NEW.specimen_part);
+    PERFORM fct_add_in_dict('specimen_parts','specimen_status', NEW.specimen_status);
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;

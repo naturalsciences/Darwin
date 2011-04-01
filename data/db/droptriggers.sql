@@ -431,3 +431,120 @@ DROP TRIGGER fct_chk_upper_level_for_childrens_users ON users_languages;
 /************* Check If Institution is a Moral Person ***********/
 
 DROP TRIGGER fct_chk_PeopleIsMoral_collections ON collections;
+
+
+/********************* DICT Add / remove  **************/
+
+CREATE TRIGGER fct_cpy_ins_update_dict_codes AFTER INSERT OR UPDATE
+        ON codes FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_catalogue_people AFTER INSERT OR UPDATE
+        ON catalogue_people FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_collection_maintenance AFTER INSERT OR UPDATE
+        ON collection_maintenance FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_identifications AFTER INSERT OR UPDATE
+        ON identifications FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_people AFTER INSERT OR UPDATE
+        ON people FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_people_addresses AFTER INSERT OR UPDATE
+        ON people_addresses FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_insurances AFTER INSERT OR UPDATE
+        ON insurances FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_mineralogy AFTER INSERT OR UPDATE
+        ON mineralogy FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_specimen_individuals AFTER INSERT OR UPDATE
+        ON specimen_individuals FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_specimens AFTER INSERT OR UPDATE
+        ON specimens FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_specimens_acccompanying AFTER INSERT OR UPDATE
+        ON specimens_acccompanying FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_users AFTER INSERT OR UPDATE
+        ON users FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_users_addresses AFTER INSERT OR UPDATE
+        ON users_addresses FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+CREATE TRIGGER fct_cpy_ins_update_dict_specimen_parts AFTER INSERT OR UPDATE
+        ON specimen_parts FOR EACH ROW
+        EXECUTE PROCEDURE ins_update_dict();
+
+/******************* DELETE FROM DICT ******************/
+
+CREATE TRIGGER fct_cpy_del_dict_codes AFTER INSERT OR UPDATE
+        ON codes FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_catalogue_people AFTER INSERT OR UPDATE
+        ON catalogue_people FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_collection_maintenance AFTER INSERT OR UPDATE
+        ON collection_maintenance FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_identifications AFTER INSERT OR UPDATE
+        ON identifications FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_people AFTER INSERT OR UPDATE
+        ON people FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_people_addresses AFTER INSERT OR UPDATE
+        ON people_addresses FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_insurances AFTER INSERT OR UPDATE
+        ON insurances FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_mineralogy AFTER INSERT OR UPDATE
+        ON mineralogy FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_specimen_individuals AFTER INSERT OR UPDATE
+        ON specimen_individuals FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_specimens AFTER INSERT OR UPDATE
+        ON specimens FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_specimens_acccompanying AFTER INSERT OR UPDATE
+        ON specimens_acccompanying FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_users AFTER INSERT OR UPDATE
+        ON users FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_users_addresses AFTER INSERT OR UPDATE
+        ON users_addresses FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();
+
+CREATE TRIGGER fct_cpy_del_dict_specimen_parts AFTER INSERT OR UPDATE
+        ON specimen_parts FOR EACH ROW
+        EXECUTE PROCEDURE del_dict();

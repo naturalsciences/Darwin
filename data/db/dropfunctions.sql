@@ -93,3 +93,10 @@ DROP FUNCTION IF EXISTS fct_chk_upper_level_for_childrens() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecord() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_ReferencedRecordRelationShip() CASCADE;
 DROP FUNCTION IF EXISTS trg_fct_chk_possible_upper_level() CASCADE;
+
+
+
+DROP FUNCTION IF EXISTS fct_add_in_dict(ref_table, ref_field, dict_value) CASCADE;
+DROP FUNCTION IF EXISTS fct_del_in_dict(ref_table, ref_field, dict_value) CASCADE;
+DROP FUNCTION IF EXISTS trg_ins_update_dict() CASCADE;
+DROP FUNCTION IF EXISTS trg_del_dict() CASCADE;
