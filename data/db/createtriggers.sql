@@ -859,59 +859,59 @@ CREATE TRIGGER fct_cpy_trg_ins_update_dict_specimen_parts AFTER INSERT OR UPDATE
 
 /******************* DELETE FROM DICT ******************/
 
-CREATE TRIGGER fct_cpy_trg_del_dict_codes AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_codes AFTER DELETE  OR UPDATE
         ON codes FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_catalogue_people AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_catalogue_people AFTER DELETE  OR UPDATE
         ON catalogue_people FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_collection_maintenance AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_collection_maintenance AFTER DELETE  OR UPDATE
         ON collection_maintenance FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_identifications AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_identifications AFTER DELETE  OR UPDATE
         ON identifications FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_people AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_people AFTER DELETE  OR UPDATE
         ON people FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_people_addresses AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_people_addresses AFTER DELETE  OR UPDATE
         ON people_addresses FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_insurances AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_insurances AFTER DELETE  OR UPDATE
         ON insurances FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_mineralogy AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_mineralogy AFTER DELETE  OR UPDATE
         ON mineralogy FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_specimen_individuals AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_specimen_individuals AFTER DELETE  OR UPDATE
         ON specimen_individuals FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_specimens AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_specimens AFTER DELETE  OR UPDATE
         ON specimens FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_specimens_accompanying AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_specimens_accompanying AFTER DELETE  OR UPDATE
         ON specimens_accompanying FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_users AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_users AFTER DELETE  OR UPDATE
         ON users FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_users_addresses AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_users_addresses AFTER DELETE  OR UPDATE
         ON users_addresses FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
-CREATE TRIGGER fct_cpy_trg_del_dict_specimen_parts AFTER INSERT OR UPDATE
+CREATE TRIGGER fct_cpy_trg_del_dict_specimen_parts AFTER DELETE  OR UPDATE
         ON specimen_parts FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
