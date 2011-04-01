@@ -1754,6 +1754,10 @@ create table darwin_flat
     specimen_status varchar,
     complete boolean,
     surnumerary boolean,
+    spec_ident_ids integer[],
+    ind_ident_ids integer[],
+    spec_collector_ids integer[],
+    spec_don_sel_ids integer[],
     CONSTRAINT pk_darwin_flat PRIMARY KEY (id),
     CONSTRAINT fk_darwin_flat_spec_ref FOREIGN KEY (spec_ref) REFERENCES specimens (id) ON DELETE CASCADE,
     CONSTRAINT fk_darwin_flat_collection_ref FOREIGN KEY (collection_ref) REFERENCES collections (id),
@@ -1917,3 +1921,7 @@ comment on column darwin_flat.part_count_max is 'Maximum number of parts stored'
 comment on column darwin_flat.specimen_status is 'Tells the status of part concerned: lost, damaged, good shape,...';
 comment on column darwin_flat.complete is 'Flag telling if the specimen is complete or not';
 comment on column darwin_flat.surnumerary is 'Tells if this part/individual has been added after first inventory';
+comment on column darwin_flat.spec_ident_ids is 'Array of identifiers referenced in this specimen';
+comment on column darwin_flat.ind_ident_ids is 'Array of identifiers referenced in this individual';
+comment on column darwin_flat.spec_colletor_ids is 'Array of collectors referenced in this specimen';
+comment on column darwin_flat.spec_don_sel_ids is 'Array of donators or sellers referenced in this specimen';
