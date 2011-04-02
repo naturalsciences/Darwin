@@ -106,7 +106,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctContainerTypes()
   {
-    $contTypes = $this->createDistinct('SpecimenParts', 'container_type', 'container_type')->execute();
+    $contTypes = $this->createFlatDistinct('specimen_parts', 'container_type', 'container_type')->execute();
     $contTypes->add(new SpecimenParts);
     return $contTypes;
   }
@@ -117,7 +117,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctSubContainerTypes()
   {
-    $subContTypes = $this->createDistinct('SpecimenParts', 'sub_container_type', 'sub_container_type')->execute();
+    $subContTypes = $this->createFlatDistinct('specimen_parts', 'sub_container_type', 'sub_container_type')->execute();
     $subContTypes->add(new SpecimenParts);
     return $subContTypes;
   }
@@ -128,7 +128,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctParts()
   {
-    $parts = $this->createDistinct('SpecimenParts', 'specimen_part', 'specimen_part')->execute();
+    $parts = $this->createFlatDistinct('specimen_parts', 'specimen_part', 'specimen_part')->execute();
     $parts->add(new SpecimenParts);
     return $parts;
   }
@@ -139,7 +139,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctStatus()
   {
-    $statuses = $this->createDistinct('SpecimenParts', 'specimen_status', 'specimen_status')->execute();
+    $statuses = $this->createFlatDistinct('specimen_parts', 'specimen_status', 'specimen_status')->execute();
     $statuses->add(new SpecimenParts);
     return $statuses;
   }

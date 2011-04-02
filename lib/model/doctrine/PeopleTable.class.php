@@ -10,7 +10,8 @@ class PeopleTable extends DarwinTable
   */
   public function getDistinctTitles()
   {
-    return $this->createDistinct('People', 'title', 'titles')->execute();
+    return $this->createFlatDistinct('people', 'title', 'titles')->execute();
+
   }
 
   /**

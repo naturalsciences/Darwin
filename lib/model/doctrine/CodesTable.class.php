@@ -10,7 +10,7 @@ class CodesTable extends DarwinTable
   */
   public function getDistinctPrefixSep()
   {
-    return $this->createDistinct('Codes', 'code_prefix_separator', 'code_prefix_separator')->execute();
+    return $this->createFlatDistinct('codes', 'code_prefix_separator', 'code_prefix_separator')->execute();
   }
 
   /**
@@ -19,7 +19,7 @@ class CodesTable extends DarwinTable
   */
   public function getDistinctSuffixSep()
   {
-    return $this->createDistinct('Codes', 'code_suffix_separator', 'code_suffix_separator')->execute();
+    return $this->createFlatDistinct('codes', 'code_suffix_separator', 'code_suffix_separator')->execute();
   }
 
   public function getCodesRelated($table='specimens', $specId = null)

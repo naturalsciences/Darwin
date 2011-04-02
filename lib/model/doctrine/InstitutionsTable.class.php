@@ -8,7 +8,7 @@ class InstitutionsTable extends DarwinTable
   */
   public function getDistinctSubType()
   {
-    return $this->createDistinct('Institutions', 'sub_type', 'type')->execute();
+    return $this->createFlatDistinct('institutions', 'sub_type', 'type')->execute();
   }
 
   /**

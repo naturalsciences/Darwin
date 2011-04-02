@@ -10,7 +10,7 @@ class IdentificationsTable extends DarwinTable
   */
   public function getDistinctDeterminationStatus()
   {
-    return $this->createDistinct('Identifications', 'determination_status', 'determination_status')->execute();
+    return $this->createFlatDistinct('identifications', 'determination_status', 'determination_status')->execute();
   }
 
   public function getIdentificationsRelated($table='specimens', $specId)

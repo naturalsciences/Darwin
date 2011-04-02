@@ -1883,8 +1883,13 @@ IgsSearch:
         Ig:
             local: ig_ref
             foreign: id
-            class: Igs          
-
+            class: Igs    
+FlatDict:
+    columns:
+        id: { type: integer, primary: true, autoincrement: true }
+        referenced_relation: { type: string, notnull: true}
+        dict_field: { type: string, notnull: true}
+        dict_value: { type: string, notnull: true}
 
 # CollectionsFieldsVisibilities:
 #     columns:

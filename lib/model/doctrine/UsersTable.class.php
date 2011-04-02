@@ -42,12 +42,12 @@ class UsersTable extends DarwinTable
   }
   public function getDistinctTitle()
   {
-      return $this->createDistinct('Users', 'title', 'title')->execute();
+      return $this->createFlatDistinct('users', 'title', 'title')->execute();
   }	
   
   public function getDistinctSubType()
   {
-      return $this->createDistinct('Users', 'sub_type', 'sub_type')->execute();
+      return $this->createFlatDistinct('users', 'sub_type', 'sub_type')->execute();
   }
 
   public function getUserByLoginAndEMail($username, $email)

@@ -38,7 +38,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctTypes()
     {
-      $types = $this->createDistinct('SpecimenIndividuals', 'type', 'type', 't')->execute();
+      $types = $this->createFlatDistinct('specimen_individuals', 'type', 'type')->execute();
       $types->add(new SpecimenIndividuals);
       return $types;
     }
@@ -49,7 +49,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctTypeGroups()
     {
-      $types = $this->createDistinct('SpecimenIndividuals', 'type_group', 'type_group', 't')->execute();
+      $types = $this->createFlatDistinct('specimen_individuals', 'type_group', 'type_group')->execute();
       $types->add(new SpecimenIndividuals);
       return $types;
     }
@@ -60,7 +60,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctTypeSearches()
     {
-      $types = $this->createDistinct('SpecimenIndividuals', 'type_search', 'type_search', 't')->execute();
+      $types = $this->createFlatDistinct('specimen_individuals', 'type_search', 'type_search')->execute();
       $types->add(new SpecimenIndividuals);
       return $types;
     }
@@ -71,7 +71,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctSexes()
     {
-      $sexes = $this->createDistinct('SpecimenIndividuals', 'sex', 'sex')->execute();
+      $sexes = $this->createFlatDistinct('specimen_individuals', 'sex', 'sex')->execute();
       $sexes->add(new SpecimenIndividuals);
       return $sexes;
     }
@@ -82,7 +82,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctStates()
     {
-      $states = $this->createDistinct('SpecimenIndividuals', 'state', 'state')->execute();
+      $states = $this->createFlatDistinct('specimen_individuals', 'state', 'state')->execute();
       $states->add(new SpecimenIndividuals);
       return $states;
     }
@@ -93,7 +93,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctStages()
     {
-      $stages = $this->createDistinct('SpecimenIndividuals', 'stage', 'stage')->execute();
+      $stages = $this->createFlatDistinct('specimen_individuals', 'stage', 'stage')->execute();
       $stages->add(new SpecimenIndividuals);
       return $stages;
     }
@@ -104,7 +104,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctSocialStatuses()
     {
-      $social_statuses = $this->createDistinct('SpecimenIndividuals', 'social_status', 'social_status')->execute();
+      $social_statuses = $this->createFlatDistinct('specimen_individuals', 'social_status', 'social_status')->execute();
       $social_statuses->add(new SpecimenIndividuals);
       return $social_statuses;
     }
@@ -115,7 +115,7 @@ class SpecimenIndividualsTable extends DarwinTable
     */
     public function getDistinctRockForms()
     {
-      $rock_forms = $this->createDistinct('SpecimenIndividuals', 'rock_form', 'rock_form')->execute();
+      $rock_forms = $this->createFlatDistinct('specimen_individuals', 'rock_form', 'rock_form')->execute();
       $rock_forms->add(new SpecimenIndividuals);
       return $rock_forms;
     }

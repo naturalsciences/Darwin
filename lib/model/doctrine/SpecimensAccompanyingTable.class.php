@@ -10,7 +10,7 @@ class SpecimensAccompanyingTable extends DarwinTable
   */
   public function getDistinctForms()
   {
-    return $this->createDistinct('SpecimensAccompanying', 'form', 'form')->execute();
+    return $this->createFlatDistinct('specimens_accompanying', 'form', 'form')->execute();
   }
   
   public function findBySpecimen($spec_id)

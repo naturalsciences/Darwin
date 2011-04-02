@@ -27,7 +27,7 @@ class InsurancesTable extends DarwinTable
   */
   public function getDistinctCurrencies()
   {
-    return $this->createDistinct('Insurances', 'insurance_currency', 'currencies')->execute();
+    return $this->createFlatDistinct('insurances', 'insurance_currency', 'currencies')->execute();
   }
 
   public function getInsurancesRelated($table='specimen_parts', $partId = null)

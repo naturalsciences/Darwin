@@ -10,7 +10,7 @@ class UsersAddressesTable extends DarwinTable
   */
   public function getDistinctCountries()
   {
-    return $this->createDistinct('UsersAddresses', 'country', 'countries')->execute();
+    return $this->createFlatDistinct('users_addresses', 'country', 'countries')->execute();
   }
 
   public function fetchByUser($id)
