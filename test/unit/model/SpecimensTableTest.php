@@ -10,5 +10,5 @@ $t->is($cat['collect'],'Collect','get the last category: "Collect"');
 
 $t->info('getDistinctHostRelationships');
 $cat = Doctrine::getTable('Specimens')->getDistinctHostRelationships();
-$t->is($cat->count(),2,'Number of differents host relationships: "2"');
+$t->is($cat->count(),1,'Number of differents host relationships: "1"');
 $t->is($cat[0]->getHostRelationship(),'Symbiosis','get the first host relationship: "Symbiosis"');

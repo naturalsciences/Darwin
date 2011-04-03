@@ -38,6 +38,8 @@ class DarwinTestFunctional extends sfTestFunctional
 
     $conn->exec("TRUNCATE TABLE specimens CASCADE");
     $conn->exec("TRUNCATE TABLE insurances CASCADE");
+    $conn->exec("TRUNCATE TABLE flat_dict CASCADE");
+    
   }
 
   public function login($user,$pass)

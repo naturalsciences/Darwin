@@ -10,7 +10,7 @@ $t->info('fetchByCodeLimited($code, 2)');
 $t->is($mineralo->count(), 2, 'Got the right number of units with code begining with 4');
 $t->info('Get the distinct cristal systems');
 $cristalo = Doctrine::getTable('Mineralogy')->getDistinctSystems();
-$t->is($cristalo[0]->getCSystem(), '', 'No System encoded yet...');
+$t->is($cristalo->count(), 0, 'No System encoded yet...');
 $mineralo = new Mineralogy;
 $mineralo->setCode('6');
 $mineralo->setName('Test');
