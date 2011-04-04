@@ -3523,8 +3523,8 @@ BEGIN
   ELSIF TG_TABLE_NAME = 'specimens' THEN
     PERFORM fct_del_in_dict('specimens','host_relationship', OLD.host_relationship);
 
-  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
-    PERFORM fct_del_in_dict('specimens_acccompanying','form', OLD.form);
+  ELSIF TG_TABLE_NAME = 'specimens_accompanying' THEN
+    PERFORM fct_del_in_dict('specimens_accompanying','form', OLD.form);
 
   ELSIF TG_TABLE_NAME = 'users' THEN
     PERFORM fct_del_in_dict('users','title', OLD.title);
@@ -3584,8 +3584,8 @@ BEGIN
   ELSIF TG_TABLE_NAME = 'specimens' THEN
     PERFORM fct_add_in_dict('specimens','host_relationship', NEW.host_relationship);
 
-  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
-    PERFORM fct_add_in_dict('specimens_acccompanying','form', NEW.form);
+  ELSIF TG_TABLE_NAME = 'specimens_accompanying' THEN
+    PERFORM fct_add_in_dict('specimens_accompanying','form', NEW.form);
 
   ELSIF TG_TABLE_NAME = 'users' THEN
     PERFORM fct_add_in_dict('users','title', NEW.title);

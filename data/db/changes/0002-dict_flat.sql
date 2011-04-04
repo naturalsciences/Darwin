@@ -111,8 +111,8 @@ INSERT INTO flat_dict (dict_value, referenced_relation, dict_field)
 
   UNION
 
-  select distinct form , 'specimens_acccompanying' ,'form'
-    FROM specimens_acccompanying where form is not null  
+  select distinct form , 'specimens_accompanying' ,'form'
+    FROM specimens_accompanying where form is not null  
 
   UNION
 

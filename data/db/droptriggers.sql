@@ -475,8 +475,8 @@ CREATE TRIGGER fct_cpy_ins_update_dict_specimens AFTER INSERT OR UPDATE
         ON specimens FOR EACH ROW
         EXECUTE PROCEDURE ins_update_dict();
 
-CREATE TRIGGER fct_cpy_ins_update_dict_specimens_acccompanying AFTER INSERT OR UPDATE
-        ON specimens_acccompanying FOR EACH ROW
+CREATE TRIGGER fct_cpy_ins_update_dict_specimens_accompanying AFTER INSERT OR UPDATE
+        ON specimens_accompanying FOR EACH ROW
         EXECUTE PROCEDURE ins_update_dict();
 
 CREATE TRIGGER fct_cpy_ins_update_dict_users AFTER INSERT OR UPDATE
@@ -533,8 +533,8 @@ CREATE TRIGGER fct_cpy_del_dict_specimens AFTER INSERT OR UPDATE
         ON specimens FOR EACH ROW
         EXECUTE PROCEDURE del_dict();
 
-CREATE TRIGGER fct_cpy_del_dict_specimens_acccompanying AFTER INSERT OR UPDATE
-        ON specimens_acccompanying FOR EACH ROW
+CREATE TRIGGER fct_cpy_del_dict_specimens_accompanying AFTER INSERT OR UPDATE
+        ON specimens_accompanying FOR EACH ROW
         EXECUTE PROCEDURE del_dict();
 
 CREATE TRIGGER fct_cpy_del_dict_users AFTER INSERT OR UPDATE
