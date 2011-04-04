@@ -86,16 +86,6 @@ class SpecimensTable extends DarwinTable
       return $this->createFlatDistinct('specimens', 'host_relationship', 'host_relationship')->execute();
   }
 
-  /**
-  * Get distinct category
-  * @return Doctrine_collection with distinct "categories" as column
-  * @TODO CHANGE THIS to fixed list 
-  */
-  public function getDistinctCategory()
-  {
-      return $this->createDistinct('Specimens', 'category', 'category')->execute();
-  }   
-    
   public function getSpecimenByRef($collection_id,$taxon_id)
   {
           $q = Doctrine_Query::create()
