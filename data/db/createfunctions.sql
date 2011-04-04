@@ -3548,10 +3548,7 @@ CREATE OR REPLACE FUNCTION trg_ins_update_dict() RETURNS TRIGGER
 AS $$
 BEGIN
 
-  IF TG_TABLE_NAME = 'catalogue_people' THEN
-    PERFORM fct_add_in_dict('catalogue_people','people_sub_type', NEW.people_sub_type);
-
-  ELSIF TG_TABLE_NAME = 'codes' THEN
+  IF TG_TABLE_NAME = 'codes' THEN
     PERFORM fct_add_in_dict('codes','code_prefix_separator', NEW.code_prefix_separator);
     PERFORM fct_add_in_dict('codes','code_suffix_separator', NEW.code_suffix_separator);
 
