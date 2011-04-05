@@ -3313,7 +3313,7 @@ BEGIN
       END IF;
     END IF;
     IF booContinue THEN
-      /*!!! What's done is only removing the old collection reference from list of collections set in widgets !!!
+      /*!!! Whats done is only removing the old collection reference from list of collections set in widgets !!!
         !!! We considered the add of widgets available for someone in a collection still be a manual action !!!
       */
       UPDATE my_widgets
@@ -3611,3 +3611,68 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_upd_plp_flat() RETURNS TRIGGER
+AS
+$$
+DECLARE
+  ref_field_id integer ;
+  field_to_update varchar ;
+  ref_field varchar := 'spec_ref' ;
+  ref_relation varchar ;
+BEGIN
+  IF TG_OP = 'DELETE' THEN
+	  IF OLD.people_type = 'collector' THEN
+			field_to_update := 'spec_coll_ids';
+			ref_field_id := OLD.record_id ;
+		ELSEIF OLD.people_type = 'donator' THEN
+			field_to_update := 'spec_don_sel_ids';
+			ref_field_id := OLD.record_id ;				  
+		ELSEIF OLD.people_type = 'identifier' THEN
+      SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=OLD.record_id ;    
+      IF (ref_relation = 'specimens') THEN
+        field_to_update := 'spec_ident_ids';
+      ELSE
+        field_to_update := 'ind_ident_ids';
+        ref_field := 'individual_ref' ;
+      END IF ;
+    ELSE RETURN NEW ;
+	  END IF ;
+  ELSE
+    IF NEW.people_type = 'collector' THEN
+		  field_to_update := 'spec_coll_ids';
+		  ref_field_id := NEW.record_id;
+	  ELSEIF NEW.people_type = 'donator' THEN
+		  field_to_update := 'spec_don_sel_ids';
+		  ref_field_id := NEW.record_id	;			  
+	  ELSEIF NEW.people_type = 'identifier' THEN 
+      SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=NEW.record_id ;    
+      IF (ref_relation = 'specimens') THEN
+        field_to_update := 'spec_ident_ids';
+      ELSE
+        field_to_update := 'ind_ident_ids';   
+        ref_field := 'individual_ref';             
+      END IF ;
+    ELSE RETURN NEW ;      
+  	END IF;  
+  END IF ;
+  
+  IF TG_OP = 'DELETE' THEN
+    EXECUTE 'UPDATE darwin_flat
+      SET ' || quote_ident(field_to_update) || '= fct_remove_array_elem(' || quote_ident(field_to_update) || ',' || quote_literal(OLD.people_ref) ||
+      ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
+  ELSEIF TG_OP = 'INSERT' THEN
+    EXECUTE 'UPDATE darwin_flat
+      SET ' || quote_ident(field_to_update) || ' = array_append(' || quote_ident(field_to_update) || ',' || quote_literal(NEW.people_ref::integer) ||
+      ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id);
+  ELSE
+    IF OLD.people_ref != NEW.people_ref THEN
+      EXECUTE 'UPDATE darwin_flat
+        SET ' || quote_ident(field_to_update) || ' = array_append(fct_remove_array_elem(' || quote_literal(field_to_update) || ',' || quote_literal(OLD.people_ref)
+        || '),' || quote_literal(NEW.people_ref::integer) || 
+        ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
+    END IF;
+  END IF;  
+  RETURN NEW;
+END;
+$$ language plpgsql;
