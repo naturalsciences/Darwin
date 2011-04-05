@@ -16,8 +16,6 @@ comment on column flat_dict.referenced_relation is 'The table where the value co
 comment on column flat_dict.dict_field is 'the field name of where the value come from';
 comment on column flat_dict.dict_value is 'the distinct value';
 
-\i createfunctions.sql
-\i createtriggers.sql
 
 INSERT INTO flat_dict (dict_value, referenced_relation, dict_field)
  (
@@ -148,3 +146,6 @@ INSERT INTO flat_dict (dict_value, referenced_relation, dict_field)
   select distinct specimen_status , 'specimen_parts' ,'specimen_status'
     FROM specimen_parts where specimen_status is not null  
  );
+
+\i createfunctions.sql
+\i createtriggers.sql
