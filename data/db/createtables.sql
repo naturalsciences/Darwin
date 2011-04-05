@@ -52,7 +52,7 @@ create table people
         activity_date_from_mask integer not null default 0,
         activity_date_from date not null default '01/01/0001',
         activity_date_to_mask integer not null default 0,
-        activity_date_to date not null default '01/01/0001',
+        activity_date_to date not null default '31/12/2038',
         constraint pk_people primary key (id),
         constraint unq_people unique (is_physical,gender, formated_name_unique, birth_date, birth_date_mask, end_date, end_date_mask)
        )
@@ -213,7 +213,7 @@ create table gtu
         gtu_from_date_mask integer not null default 0,
         gtu_from_date timestamp not null default '01/01/0001 00:00:00',
         gtu_to_date_mask integer not null default 0,
-        gtu_to_date timestamp not null default '01/01/0001 00:00:00',
+        gtu_to_date timestamp not null default '31/12/2038 00:00:00',
         path varchar not null default '/',
         tag_values_indexed varchar[],
         latitude float,
@@ -302,7 +302,7 @@ create table catalogue_properties
         date_from_mask integer not null default 0,
         date_from timestamp not null default '01/01/0001 00:00:00',
         date_to_mask integer not null default 0,
-        date_to timestamp not null default '01/01/0001 00:00:00',
+        date_to timestamp not null default '31/12/2038 00:00:00',
         property_unit varchar not null default '',
         property_accuracy_unit varchar not null default '',
         property_method varchar,
@@ -431,7 +431,7 @@ create table expeditions
         expedition_from_date_mask integer not null default 0,
         expedition_from_date date not null default '01/01/0001',
         expedition_to_date_mask integer not null default 0,
-        expedition_to_date date not null default '01/01/0001',
+        expedition_to_date date not null default '31/12/2038',
         constraint pk_expeditions primary key (id),
         constraint unq_expeditions unique (name_indexed, expedition_from_date, expedition_from_date_mask, expedition_to_date, expedition_to_date_mask)
        );
@@ -533,7 +533,7 @@ create table multimedia
         creation_date_mask integer not null default 0,
         publication_date_from date not null default '01/01/0001',
         publication_date_from_mask integer not null default 0,
-        publication_date_to date not null default '01/01/0001',
+        publication_date_to date not null default '31/12/2038',
         publication_date_to_mask integer not null default 0,
         parent_ref integer,
         path varchar not null default '/',
@@ -610,7 +610,7 @@ create table people_relationships
         activity_date_from_mask integer not null default 0,
         activity_date_from date not null default '01/01/0001',
         activity_date_to_mask integer not null default 0,
-        activity_date_to date not null default '01/01/0001',
+        activity_date_to date not null default '31/12/2038',
         constraint pk_people_relationships primary key (id),
         constraint fk_people_relationships_people_01 foreign key (person_1_ref) references people(id) on delete cascade,
         constraint fk_people_relationships_people_02 foreign key (person_2_ref) references people(id)

@@ -89,11 +89,15 @@ BEGIN
     IF NEW.preferred_language = TRUE THEN
       rec_exists := 0;
       IF TG_TABLE_NAME = 'people_languages' THEN
-        SELECT count(*)::integer FROM people_languages WHERE people_ref = NEW.people_ref and preferred_language = NEW.preferred_language and id <> NEW.id INTO rec_exists;
+        SELECT 1 INTO rec_exists WHERE EXISTS(
+          SELECT id FROM people_languages WHERE people_ref = NEW.people_ref and preferred_language = NEW.preferred_language and id <> NEW.id
+        );
       ELSIF TG_TABLE_NAME = 'users_languages' THEN
-        SELECT count(*)::integer FROM users_languages WHERE users_ref = NEW.users_ref and preferred_language = NEW.preferred_language and id <> NEW.id INTO rec_exists;
+        SELECT 1 INTO rec_exists WHERE EXISTS(
+         SELECT id FROM users_languages WHERE users_ref = NEW.users_ref and preferred_language = NEW.preferred_language and id <> NEW.id
+        );
       END IF;
-      IF rec_exists != 0 THEN
+      IF rec_exists = 1 THEN
           RAISE EXCEPTION 'You cannot have more than 1 preferred language';
       END IF;
     END IF;
@@ -400,7 +404,6 @@ BEGIN
 	DELETE FROM class_vernacular_names WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM classification_synonymies WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM classification_keywords WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
-/*	DELETE FROM record_visibilities WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;*/
 	DELETE FROM users_workflow WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM collection_maintenance WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
 	DELETE FROM associated_multimedia WHERE referenced_relation = TG_TABLE_NAME AND record_id = OLD.id;
@@ -535,21 +538,24 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_chk_possible_upper_level (referenced_relation varchar, new_parent_ref template_classifications.parent_ref%TYPE, new_level_ref template_classifications.level_ref%TYPE, new_id integer) RETURNS boolean
 AS $$
 DECLARE
-        response boolean default false;
+response boolean;
 BEGIN
-        IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70, 75)) THEN
-                response := true;
-        ELSE
-                EXECUTE 'select count(*)::integer::boolean ' ||
-                        'from possible_upper_levels ' ||
-                        'where level_ref = ' || new_level_ref ||
-                        '  and level_upper_ref = (select level_ref from ' || quote_ident(referenced_relation) || ' where id = ' || new_parent_ref || ')'
-                INTO response;
-        END IF;
-        RETURN response;
-EXCEPTION
-        WHEN OTHERS THEN
-                RETURN response;
+  IF new_id = 0 OR (new_parent_ref = 0 AND new_level_ref IN (1, 55, 64, 70, 75)) THEN
+    RETURN TRUE;
+  ELSE
+    EXECUTE 'SELECT true WHERE EXISTS( SELECT * ' ||
+      'from possible_upper_levels ' ||
+      'where level_ref = ' || quote_literal(new_level_ref) ||
+      '  and level_upper_ref = (select level_ref from ' || quote_ident(referenced_relation) || ' where id = ' || quote_literal(new_parent_ref) || '))'
+      INTO response;
+    IF response IS NULL THEN 
+      RETURN FALSE;
+    ELSE 
+      RETURN TRUE;
+    END IF;
+  END IF;
+
+  RETURN FALSE;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -589,40 +595,39 @@ language plpgsql;
 CREATE OR REPLACE FUNCTION fct_chk_peopleType() RETURNS TRIGGER
 AS $$
 DECLARE
-	still_referenced integer;
 BEGIN
-	/** AUTHOR FLAG IS 2 **/
-	IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 2)>0 )  THEN
-		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='author';
-		IF still_referenced != 0 THEN
-			RAISE EXCEPTION 'Author still used as author.';
-		END IF;
-	END IF;
+  IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type THEN
 
-	/** IDENTIFIER FLAG IS 4 **/
-	IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 4)>0 )  THEN
-		SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='identifier';
-		IF still_referenced !=0 THEN
-			RAISE EXCEPTION 'Identifier still used as identifier.';
-		END IF;
-	END IF;
+    /** AUTHOR FLAG IS 2 **/
+    IF NOT (NEW.db_people_type & 2)>0  THEN
+      IF EXISTS( SELECT * FROM catalogue_people WHERE people_ref=NEW.id AND people_type='author')  THEN
+        RAISE EXCEPTION 'Author still used as author.';
+      END IF;
+    END IF;
 
-        /** Expert Flag is 8 **/
-        IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 8)>0 )  THEN
-                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='expert';
-                IF still_referenced != 0 THEN
-                        RAISE EXCEPTION 'Expert still used as expert.';
-                END IF;
-        END IF;
+    /** IDENTIFIER FLAG IS 4 **/
+    IF NOT (NEW.db_people_type & 4)>0  THEN
+      IF EXISTS( SELECT * FROM catalogue_people WHERE people_ref=NEW.id AND people_type='identifier')  THEN
+        RAISE EXCEPTION 'Identifier still used as identifier.';
+      END IF;
+    END IF;
 
-        /** COLLECTOR Flag is 16 **/
-        IF NEW.db_people_type IS DISTINCT FROM OLD.db_people_type AND NOT ( (NEW.db_people_type & 16)>0 )  THEN
-                SELECT count(*) INTO still_referenced FROM catalogue_people WHERE people_ref=NEW.id AND people_type='collector';
-                IF still_referenced != 0 THEN
-                        RAISE EXCEPTION 'Collector still used as collector.';
-                END IF;
-        END IF;
-	RETURN NEW;
+    /** Expert Flag is 8 **/
+    IF NOT (NEW.db_people_type & 8)>0  THEN
+      IF EXISTS( SELECT * FROM catalogue_people WHERE people_ref=NEW.id AND people_type='expert')  THEN
+        RAISE EXCEPTION 'Expert still used as expert.';
+      END IF;
+    END IF;
+
+          /** COLLECTOR Flag is 16 **/
+    IF NOT (NEW.db_people_type & 16)>0   THEN
+      IF EXISTS( SELECT * FROM catalogue_people WHERE people_ref=NEW.id AND people_type='collector')  THEN
+        RAISE EXCEPTION 'Collector still used as collector.';
+      END IF;
+    END IF;
+  END IF;
+  RETURN NEW;
+
 END;
 $$
 LANGUAGE plpgsql;
@@ -631,41 +636,34 @@ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_chk_AreRole() RETURNS TRIGGER
 AS $$
 DECLARE
-	are_not_author boolean;
 BEGIN
-	IF NEW.people_type = 'author' THEN
+  IF NEW.people_type = 'author' THEN
 
-		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 2)=0 AND id=NEW.people_ref;
+    IF NOT EXISTS( SELECT id FROM people WHERE (db_people_type & 2)!=0 AND id=NEW.people_ref) THEN
+      RAISE EXCEPTION 'Author must be defined as author.';
+    END IF;
 
-		IF are_not_author THEN
-			RAISE EXCEPTION 'Author must be defined as author.';
-		END IF;
+  ELSIF NEW.people_type = 'identifier' THEN
 
-	ELSIF NEW.people_type = 'identifier' THEN
+    IF NOT EXISTS( SELECT id FROM people WHERE (db_people_type & 4)!=0 AND id=NEW.people_ref) THEN
+      RAISE EXCEPTION 'Experts must be defined as identifier.';
+    END IF;
 
-		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 4)=0 AND id=NEW.people_ref;
+  ELSIF NEW.people_type = 'expert' THEN
 
-                IF are_not_author THEN
-                        RAISE EXCEPTION 'Experts must be defined as identifier.';
-                END IF;
+    IF NOT EXISTS( SELECT id FROM people WHERE (db_people_type & 8)!=0 AND id=NEW.people_ref) THEN
+      RAISE EXCEPTION 'Experts must be defined as expert.';
+    END IF;
 
-	ELSIF NEW.people_type = 'expert' THEN
+  ELSIF NEW.people_type = 'collector' THEN
 
-		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 8)=0 AND id=NEW.people_ref;
+    IF NOT EXISTS( SELECT id FROM people WHERE (db_people_type & 16)!=0 AND id=NEW.people_ref) THEN
+      RAISE EXCEPTION 'Collectors must be defined as collector.';
+    END IF;
 
-		IF are_not_author THEN
-			RAISE EXCEPTION 'Experts must be defined as expert.';
-		END IF;
-	ELSIF NEW.people_type = 'collector' THEN
+  END IF;
 
-		SELECT COUNT(*)>0 INTO are_not_author FROM people WHERE (db_people_type & 16)=0 AND id=NEW.people_ref;
-
-		IF are_not_author THEN
-			RAISE EXCEPTION 'Collectors must be defined as collector.';
-		END IF;
-	END IF;
-
-	RETURN NEW;
+  RETURN NEW;
 END;
 $$
 LANGUAGE plpgsql;
@@ -677,14 +675,12 @@ DECLARE
   rec_exists integer;
 BEGIN
 
-  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(NEW.referenced_relation)  || ' WHERE id=' || quote_literal(NEW.record_id::varchar) INTO rec_exists;
-  
-  IF rec_exists != 1 THEN
-    RAISE EXCEPTION 'The referenced record does not exists';
+  EXECUTE 'SELECT 1 WHERE EXISTS ( SELECT id FROM ' || quote_ident(NEW.referenced_relation)  || ' WHERE id=' || quote_literal(NEW.record_id) || ')' INTO rec_exists;
+  IF rec_exists IS NULL THEN
+    RAISE EXCEPTION 'The referenced record does not exists % %',NEW.referenced_relation, NEW.record_id;
   END IF;
 
   RETURN NEW;
-
 END;
 $$
 language plpgsql;
@@ -695,7 +691,7 @@ DECLARE
   rec_exists integer;
 BEGIN
 
-  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(NEW.referenced_relation)  || ' WHERE id=' || quote_literal(NEW.record_id_1::varchar) ||  ' OR id=' || quote_literal(NEW.record_id_2::varchar) INTO rec_exists;
+  EXECUTE 'SELECT count(id)  FROM ' || quote_ident(NEW.referenced_relation)  || ' WHERE id=' || quote_literal(NEW.record_id_1) ||  ' OR id=' || quote_literal(NEW.record_id_2) INTO rec_exists;
   
   IF rec_exists != 2 THEN
     RAISE EXCEPTION 'The referenced record does not exists';
@@ -1536,7 +1532,6 @@ LANGUAGE SQL IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION fct_nbr_in_relation() RETURNS TRIGGER
 AS
---fct_chk_nbr_in_relation(relation_type catalogue_relationships.relationship_type%TYPE, table_name catalogue_relationships.referenced_relation%TYPE, rid  catalogue_relationships.record_id_1%TYPE ) RETURNS BOOLEAN AS
 $$
 DECLARE
   nbr integer = 0 ;
@@ -3473,7 +3468,7 @@ BEGIN
   query_str := ' SELECT 1 WHERE EXISTS( SELECT id from ' || quote_ident(ref_relation) || ' where ' || quote_ident(ref_field) || ' = ' || quote_literal(dict_val) || ');';
   execute query_str into result;
 
-  IF result is distinct from 1 THEN
+  IF result IS NULL THEN
     DELETE FROM flat_dict where 
           referenced_relation = ref_relation
           AND dict_field = ref_field
@@ -3527,8 +3522,8 @@ BEGIN
   ELSIF TG_TABLE_NAME = 'specimens' THEN
     PERFORM fct_del_in_dict('specimens','host_relationship', OLD.host_relationship);
 
-  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
-    PERFORM fct_del_in_dict('specimens_acccompanying','form', OLD.form);
+  ELSIF TG_TABLE_NAME = 'specimens_accompanying' THEN
+    PERFORM fct_del_in_dict('specimens_accompanying','form', OLD.form);
 
   ELSIF TG_TABLE_NAME = 'users' THEN
     PERFORM fct_del_in_dict('users','title', OLD.title);
@@ -3552,10 +3547,7 @@ CREATE OR REPLACE FUNCTION trg_ins_update_dict() RETURNS TRIGGER
 AS $$
 BEGIN
 
-  IF TG_TABLE_NAME = 'catalogue_people' THEN
-    PERFORM fct_add_in_dict('catalogue_people','people_sub_type', NEW.people_sub_type);
-
-  ELSIF TG_TABLE_NAME = 'codes' THEN
+  IF TG_TABLE_NAME = 'codes' THEN
     PERFORM fct_add_in_dict('codes','code_prefix_separator', NEW.code_prefix_separator);
     PERFORM fct_add_in_dict('codes','code_suffix_separator', NEW.code_suffix_separator);
 
@@ -3591,8 +3583,8 @@ BEGIN
   ELSIF TG_TABLE_NAME = 'specimens' THEN
     PERFORM fct_add_in_dict('specimens','host_relationship', NEW.host_relationship);
 
-  ELSIF TG_TABLE_NAME = 'specimens_acccompanying' THEN
-    PERFORM fct_add_in_dict('specimens_acccompanying','form', NEW.form);
+  ELSIF TG_TABLE_NAME = 'specimens_accompanying' THEN
+    PERFORM fct_add_in_dict('specimens_accompanying','form', NEW.form);
 
   ELSIF TG_TABLE_NAME = 'users' THEN
     PERFORM fct_add_in_dict('users','title', NEW.title);
