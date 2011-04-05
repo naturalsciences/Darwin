@@ -915,6 +915,6 @@ CREATE TRIGGER fct_cpy_trg_del_dict_specimen_parts AFTER DELETE  OR UPDATE
         ON specimen_parts FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
         
-CREATE TRIGGER trg_upd_plp_flat AFTER INSERT OR UPDATE OR DELETE
+CREATE TRIGGER trg_upd_peopple_in_flat AFTER INSERT OR UPDATE OR DELETE
   ON catalogue_people FOR EACH ROW
   EXECUTE PROCEDURE fct_upd_plp_flat();
