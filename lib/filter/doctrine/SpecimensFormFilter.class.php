@@ -19,7 +19,7 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
     $this->widgetSchema['caller_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['code'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
     $this->widgetSchema['taxon_name'] = new sfWidgetFormInputText(array(), array('class'=>'medium_size'));
-    $this->widgetSchema->setLabels(array('code' => 'Specimen code(s)',
+    $this->widgetSchema->setLabels(array('code' => 'Exact Specimen code',
                                          'taxon_name' => 'Taxon',
                                          'taxon_level' => 'Level',
                                          'collection_name' => 'Collections',
@@ -50,7 +50,7 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
       $query->leftJoin($alias.'.SpecimensCodes cod')
           ->andWhere("cod.referenced_relation = ?", array('specimens'))
           ->andWhere("cod.record_id = $alias.spec_ref")
-          ->andWhere("cod.full_code_order_by like '%' || fulltoindex(?) || '%'",$values);
+          ->andWhere("cod.full_code_order_by = fullToIndex(?) ",$values);
     }
     return $query;
   }

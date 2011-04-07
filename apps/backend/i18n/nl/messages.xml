@@ -1885,7 +1885,9 @@
       <trans-unit id="929" approved="yes">
         <source>Password does not match</source> <target>Paswoord komt niet overeen</target> </trans-unit>
       <trans-unit id="930" approved="yes">
-        <source>The code has to contain either all numbers or letters, but not a mix of both</source> <target>De code dient ofwel enkel cijfers ofwel letters te bevatten, maar niet beide</target> </trans-unit>
+        <source>There is a problem with a special character. Please contact the administrators</source>
+        <target>Er is een probleem met een speciaal karakter. Gelieve de administratoren te contacteren</target>
+      </trans-unit>
       <trans-unit id="931" approved="yes">
         <source>At least one code is required.</source> <target>Ten minste één code is verplicht.</target> </trans-unit>
       <trans-unit id="932" approved="yes">

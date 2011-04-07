@@ -55,7 +55,7 @@ class DarwinPgErrorParser
     '/\bunq_users_login_infos_user_name\b/' => 'This user login already exists',
     '/\bunq_users_login_infos\b/' => 'This user login already exists',
     '/\bunq_vernacular_names\b/' => 'This vernacular name already exists',
-    '/\bfct_cpy_fulltoindex\b/' => 'The code has to contain either all numbers or letters, but not a mix of both',
+    '/\bfct_cpy_fulltoindex\b/' => 'There is a problem with a special character. Please contact the administrators.',
     '/\bgenders_chk\b/' => 'The gender can only be M or F',
     '/\bunq_catalogue_levels\b/' => 'This catalogue level already exists',
     '/\bunq_possible_upper_levels\b/' => 'This upper level already exists',
