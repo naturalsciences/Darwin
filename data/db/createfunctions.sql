@@ -1336,7 +1336,7 @@ BEGIN
         PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
       END IF;
 */
-   ELSIF TG_TABLE_NAME ='vernacular_names' THEN
+   IF TG_TABLE_NAME ='vernacular_names' THEN
 
       IF TG_OP = 'UPDATE' THEN
         IF OLD.name_ts IS DISTINCT FROM NEW.name_ts THEN
