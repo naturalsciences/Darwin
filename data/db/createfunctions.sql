@@ -1466,9 +1466,9 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('codes','full_code_indexed', NEW.full_code_indexed);
       END IF;
-
-   END IF;
 */
+   END IF;
+
    RETURN NEW;
 END;
 $$
