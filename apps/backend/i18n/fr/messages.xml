@@ -1945,8 +1945,9 @@
       <trans-unit id="929">
         <source>Password does not match</source> <target>Les mots de passe sont différents</target> </trans-unit>
       <trans-unit id="930">
-        <source> The code has to contain either all nummers or letters, but not a mix of both</source>
-        <target>Le code doit être numérique OU aplhabétique, pas les deux en même temps</target> </trans-unit>
+        <source>There is a problem with a special character. Please contact the administrators</source>
+        <target>Il y a un problème avec un caractère spécial. merci de contacter les administrateurs</target>
+      </trans-unit>
       <trans-unit id="931">
         <source>At least one code is required.</source> <target>Au moins un code est requis.</target> </trans-unit>
       <trans-unit id="932">
