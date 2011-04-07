@@ -1315,7 +1315,7 @@ CREATE OR REPLACE FUNCTION fct_trg_word() RETURNS TRIGGER
 AS
 $$
 BEGIN
-
+/*
    IF TG_TABLE_NAME ='collection_maintenance' THEN
 
       IF TG_OP = 'UPDATE' THEN
@@ -1335,7 +1335,7 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('comments','comment_ts', NEW.comment_ts);
       END IF;
-
+*/
    ELSIF TG_TABLE_NAME ='vernacular_names' THEN
 
       IF TG_OP = 'UPDATE' THEN
@@ -1345,7 +1345,7 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('vernacular_names','name_ts', NEW.name_ts);
       END IF;
-
+/*
    ELSIF TG_TABLE_NAME ='identifications' THEN
 
       IF TG_OP = 'UPDATE' THEN
@@ -1365,7 +1365,7 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('multimedia','descriptive_ts', NEW.descriptive_ts);
       END IF;
-
+*/
    ELSIF TG_TABLE_NAME ='people' THEN
 
       IF TG_OP = 'UPDATE' THEN
@@ -1374,26 +1374,6 @@ BEGIN
         END IF;
       ELSE
         PERFORM fct_cpy_word('people','formated_name_ts', NEW.formated_name_ts);
-      END IF;
-
-   ELSIF TG_TABLE_NAME ='people_addresses' THEN
-
-      IF TG_OP = 'UPDATE' THEN
-        IF OLD.address_parts_ts IS DISTINCT FROM NEW.address_parts_ts THEN
-          PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
-        END IF;
-      ELSE
-        PERFORM fct_cpy_word('people_addresses','address_parts_ts', NEW.address_parts_ts);
-      END IF;
-
-   ELSIF TG_TABLE_NAME ='users_addresses' THEN
-
-      IF TG_OP = 'UPDATE' THEN
-        IF OLD.address_parts_ts IS DISTINCT FROM NEW.address_parts_ts THEN
-          PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
-        END IF;
-      ELSE
-        PERFORM fct_cpy_word('users_addresses','address_parts_ts', NEW.address_parts_ts);
       END IF;
 
    ELSIF TG_TABLE_NAME ='users' THEN
@@ -1415,7 +1395,7 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('expeditions','name_ts', NEW.name_ts);
       END IF;
-
+/*
    ELSIF TG_TABLE_NAME ='habitats' THEN
 
       IF TG_OP = 'UPDATE' THEN
@@ -1425,6 +1405,7 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('habitats','description_ts', NEW.description_ts);
       END IF;
+*/
 
    ELSIF TG_TABLE_NAME ='mineralogy' THEN
 
@@ -1475,7 +1456,7 @@ BEGIN
       ELSE
         PERFORM fct_cpy_word('taxonomy','name_indexed', NEW.name_indexed);
       END IF;
-
+/*
    ELSIF TG_TABLE_NAME ='codes' THEN
 
       IF TG_OP = 'UPDATE' THEN
@@ -1487,7 +1468,7 @@ BEGIN
       END IF;
 
    END IF;
-
+*/
    RETURN NEW;
 END;
 $$
