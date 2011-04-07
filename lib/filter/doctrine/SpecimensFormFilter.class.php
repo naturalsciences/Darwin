@@ -48,9 +48,9 @@ class SpecimensFormFilter extends BaseSpecimenSearchFormFilter
     {
       $alias = $query->getRootAlias();    
       $query->leftJoin($alias.'.SpecimensCodes cod')
-          ->andWhere("referenced_relation = ?", array('specimens'))
-          ->andWhere("cod.record_id = $alias.spec_ref");
-      $this->addNamingColumnQuery($query, 'codes', 'full_code_indexed', $values , 'cod');
+          ->andWhere("cod.referenced_relation = ?", array('specimens'))
+          ->andWhere("cod.record_id = $alias.spec_ref")
+          ->andWhere("cod.full_code_order_by like '%' || fulltoindex(?) || '%'",$values);
     }
     return $query;
   }
