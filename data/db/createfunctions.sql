@@ -3602,6 +3602,11 @@ BEGIN
 			field_to_update := 'spec_don_sel_ids';
 			ref_field_id := OLD.record_id ;				  
 		ELSIF OLD.people_type = 'identifier' THEN
+    /**********
+    * TEMP RETURN NEW BECAUSE IF FAIL WHEN DELETING A specimen_individuals
+    * @Todo: NEED TO REWORK THIS IN ANOTER TRIGGER
+    ***************/
+      RETURN NEW;
       SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=OLD.record_id ;    
       IF (ref_relation = 'specimens') THEN
         field_to_update := 'spec_ident_ids';
@@ -3620,6 +3625,11 @@ BEGIN
 		  field_to_update := 'spec_don_sel_ids';
 		  ref_field_id := NEW.record_id	;			  
 	  ELSIF NEW.people_type = 'identifier' THEN 
+    /**********
+    * TEMP RETURN NEW BECAUSE IF FAIL WHEN DELETING A specimen_individuals
+    * @Todo: NEED TO REWORK THIS IN ANOTER TRIGGER
+    ***************/
+      return NEW;
       SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=NEW.record_id ;    
       IF (ref_relation = 'specimens') THEN
         field_to_update := 'spec_ident_ids';

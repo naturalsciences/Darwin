@@ -112,6 +112,7 @@ CREATE INDEX CONCURRENTLY idx_codes_code_prefix_separator on codes(code_prefix_s
 CREATE INDEX CONCURRENTLY idx_codes_code_suffix_separator on codes(code_suffix_separator) WHERE NOT code_suffix_separator IS NULL;
 CREATE INDEX CONCURRENTLY idx_codes_code on codes(code) WHERE NOT code IS NULL;
 CREATE INDEX CONCURRENTLY idx_codes_referenced_record on codes(referenced_relation, record_id, code_category, code_date, full_code_order_by);
+CREATE INDEX CONCURRENTLY idx_codes_full_code_order_by ON codes USING btree (full_code_order_by);
 CREATE INDEX CONCURRENTLY idx_collecting_methods_method_indexed on collecting_methods(method_indexed);
 CREATE INDEX CONCURRENTLY idx_collecting_tools_tool_indexed on collecting_tools(tool_indexed);
 CREATE INDEX CONCURRENTLY idx_collection_maintenance_action on collection_maintenance(action_observation);
