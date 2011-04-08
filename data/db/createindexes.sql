@@ -96,6 +96,7 @@ CREATE INDEX CONCURRENTLY idx_catalogue_properties_property_accuracy_unit on cat
 CREATE INDEX CONCURRENTLY idx_catalogue_properties_property_method_indexed on catalogue_properties(property_method_indexed);
 CREATE INDEX CONCURRENTLY idx_catalogue_properties_property_tool_indexed on catalogue_properties(property_tool_indexed);
 CREATE INDEX CONCURRENTLY idx_catalogue_relationships_relations on catalogue_relationships (referenced_relation, record_id_1, relationship_type);
+CREATE INDEX CONCURRENTLY idx_properties_values_property_ref ON properties_values (property_ref);
 CREATE INDEX CONCURRENTLY idx_chronostratigraphy_lower_bound on chronostratigraphy(coalesce(lower_bound, -4600));
 CREATE INDEX CONCURRENTLY idx_chronostratigraphy_upper_bound on chronostratigraphy(coalesce(upper_bound, 1));
 CREATE INDEX CONCURRENTLY idx_chronostratigraphy_name_order_by on chronostratigraphy(name_order_by);
