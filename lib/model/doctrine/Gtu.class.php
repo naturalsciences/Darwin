@@ -92,6 +92,9 @@ class Gtu extends BaseGtu
     $str .=  '<b class="code">'.$this->getCode().'</b>';
     $str .=  '<b class="lat">'.$this->getLatitude().'</b>';
     $str .=  '<b class="lon">'.$this->getLongitude().'</b>';
+    $str .=  '<b class="date_from">'.$this->getGtuFromDateMasked().'</b>';
+    $str .=  '<b class="date_to">'.$this->getGtuToDateMasked().'</b>';
+
     return $str;
   }
 

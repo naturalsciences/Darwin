@@ -74,4 +74,25 @@ class Specimens extends BaseSpecimens
     return $name;
   }
 
+  public function getNbrIndiv()
+  {
+    if($this->isNew()) return 0;
+    $q = Doctrine_Query::create()
+                  ->select('count(id)')
+                  ->from('SpecimenIndividuals i')
+                  ->Where('i.specimen_ref = ?',$this->getId());
+        return $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+  }
+
+  public function getNbrPart()
+  {
+    if($this->isNew()) return 0;
+    $q = Doctrine_Query::create()
+                  ->select('count(p.id)')
+                  ->from('SpecimenParts p')
+                  ->innerJoin('p.Individual i')
+                  ->Where('i.specimen_ref = ?',$this->getId());
+        return $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+  }
+
 }

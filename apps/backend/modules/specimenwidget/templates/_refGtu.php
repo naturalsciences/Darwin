@@ -31,6 +31,14 @@
       <td id="specimen_gtu_ref_lon"></td>
     </tr>
     <tr>
+      <th><label><?php echo __('Date from');?></label></th>
+      <td id="specimen_gtu_date_from" class="datesNum"></td>
+    </tr>
+    <tr>
+      <th><label><?php echo __('Date to');?></label></th>
+      <td id="specimen_gtu_date_to" class="datesNum"></td>
+    </tr>
+    <tr>
       <th class="top_aligned">
         <?php echo $form['gtu_ref']->renderLabel() ?>
       </th>
@@ -56,10 +64,14 @@ $(document).ready(function () {
         $("#specimen_gtu_ref_map").html($("#specimen_gtu_ref_name .img").html());
         $("#specimen_gtu_ref_lat").html($("#specimen_gtu_ref_name .lat").html());
         $("#specimen_gtu_ref_lon").html($("#specimen_gtu_ref_name .lon").html());
+        $("#specimen_gtu_date_from").html($("#specimen_gtu_ref_name .date_from").html());
+        $("#specimen_gtu_date_to").html($("#specimen_gtu_ref_name .date_to").html());
         $("#specimen_gtu_ref_name .code").remove();
         $("#specimen_gtu_ref_name .lat").remove();
         $("#specimen_gtu_ref_name .lon").remove();
         $("#specimen_gtu_ref_name .img").remove();
+        $("#specimen_gtu_ref_name .date_from").remove();
+        $("#specimen_gtu_ref_name .date_to").remove();
       }
     }
 
@@ -75,6 +87,9 @@ $(document).ready(function () {
         $("#specimen_gtu_ref_map").html('');
         $("#specimen_gtu_ref_lat").html('');
         $("#specimen_gtu_ref_lon").html('');
+        $("#specimen_gtu_date_from").html('');
+        $("#specimen_gtu_date_to").html('');
+
     });
     splitGtu();
 

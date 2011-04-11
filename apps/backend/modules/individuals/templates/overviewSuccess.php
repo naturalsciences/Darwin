@@ -69,7 +69,9 @@
 	  </td>
   <?php endif ; ?>	
 	<td>
-	  <?php echo link_to(image_tag('slide_right_enable.png'),'parts/overview?id='.$individual->getId(), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
+	  <?php echo link_to(
+            $individual->getWithParts() ? image_tag('slide_right_enable.png') : image_tag('slide_right_enable_empty.png') 
+            ,'parts/overview?id='.$individual->getId(), array('class'=>'part_detail_slide', 'title'=>__('Go to parts overview')));?>
 	</td>
   <?php if (!$view_only): ?>	
 	<td>
@@ -79,7 +81,7 @@
       </tr>
     <?php endforeach;?>
   </tbody>
-  <?php if (!$view_only): ?>  
+  <?php if (!$view_only): ?> 
   <tfoot>
     <tr>
       <td colspan='10'>
