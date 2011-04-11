@@ -23,6 +23,15 @@ class UsersTable extends DarwinTable
       return $q->fetchOne();
   }
 
+  public function getTrackingUsers()
+  {
+    $q = Doctrine_Query::create()
+      ->from('Users u')
+      //->innerJoin('u.UsersTracking t');
+      ->where('exists( select user_ref from users_tracking where user_ref=u.id)');
+    return $q->execute();
+  }
+
   public function findUser($id)
   {
     $q = Doctrine_Query::create()

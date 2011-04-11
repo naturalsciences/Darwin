@@ -34,7 +34,12 @@ class UsersTrackingFormFilter extends BaseUsersTrackingFormFilter
     $dateLowerBound = new FuzzyDateTime(sfConfig::get('app_dateLowerBound'));
     $dateUpperBound = new FuzzyDateTime('now');
 
-  
+    $this->widgetSchema['user_ref'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => $this->getRelatedModelName('Users'),
+      'add_empty' => true,
+      'table_method' => 'getTrackingUsers',
+    ));
+
 
     $this->widgetSchema['from_date'] = new widgetFormJQueryFuzzyDate(array('culture'=>$this->getCurrentCulture(), 
             'image'=>'/images/calendar.gif',       
