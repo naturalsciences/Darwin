@@ -80,4 +80,14 @@ class SpecimenIndividuals extends BaseSpecimenIndividuals
     return ucfirst($this->_get('rock_form'));
   }
 
+  public function getNbrPart()
+  {
+    if($this->isNew()) return 0;
+    $q = Doctrine_Query::create()
+                  ->select('count(p.id)')
+                  ->from('SpecimenParts p')
+                  ->Where('p.specimen_individual_ref = ?',$this->getId());
+        return $q->execute(array(), Doctrine::HYDRATE_SINGLE_SCALAR);
+  }
+
 }

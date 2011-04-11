@@ -2019,7 +2019,7 @@ div#maintenance h2
   text-decoration:underline;
 }
 
-sup
+sup,.tab_item_count
 {
 font-size: smaller;
 vertical-align: super;
