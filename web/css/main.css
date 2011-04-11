@@ -630,6 +630,10 @@ a.bt_close
   text-align: right;
 }
 
+#refGtu .datesNum
+{
+  text-align: left;
+}
 .datesNum em, #properties table em
 {
   color:#C1C1C1;
