@@ -3615,10 +3615,10 @@ BEGIN
         ref_field := 'individual_ref' ;
       END IF ;
       EXECUTE 'SELECT true from catalogue_people cp INNER JOIN identifications i ON cp.record_id = i.id 
-      AND cp.referenced_relation = ' || quote_literal('identifications') || ' WHERE i.record_id = ' || quote_literal(ref_field_id) || ' AND people_ref = ' || quote_literal(OLD.people_ref)
-      INTO rec_exists ;
+      AND cp.referenced_relation = ' || quote_literal('identifications') || ' WHERE i.record_id = ' || quote_literal(ref_field_id) || ' AND people_ref = ' ||
+      quote_literal(OLD.people_ref) || ' AND i.referenced_relation = ' || quote_literal(ref_relation) INTO rec_exists ;
       /* 'IF rec_exists then that people exist in an other identification of the same record, so we must not remove it from flat' */
-      IF rec_exists IS TRUE THEN
+      IF rec_exists IS NOT NULL THEN
         RETURN OLD;
       END IF ;
     ELSE
