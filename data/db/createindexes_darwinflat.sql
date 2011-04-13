@@ -169,5 +169,10 @@ CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_gtu_tag_values_indexed on darwin_f
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_gtu_country_tag_indexed_indexed on darwin_flat using gin(gtu_country_tag_indexed);
 CREATE INDEX CONCURRENTLY idx_gist_darwin_flat_gtu_location ON darwin_flat USING GIST ( gtu_location );
 
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_spec_ident_ids on darwin_flat using gin(spec_ident_ids);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_spec_coll_ids on darwin_flat using gin(spec_coll_ids);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_spec_don_sel_ids on darwin_flat using gin(spec_don_sel_ids);
+CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_ind_ident_ids on darwin_flat using gin(ind_ident_ids);
+
 /*** For Public search ***/
 CREATE INDEX CONCURRENTLY idx_gin_darwin_flat_gtu_country_tags on darwin_flat using gin (getTagsIndexedAsArray(gtu_country_tag_value));

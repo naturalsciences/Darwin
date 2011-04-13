@@ -413,10 +413,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_remove_array_elem(IN in_array anyarray, IN elem anyelement,OUT out_array anyarray)
+CREATE OR REPLACE FUNCTION fct_remove_array_elem(IN in_array anyarray, IN elem anyarray,OUT out_array anyarray)
 AS $$
 BEGIN
-	SELECT array(select s FROM fct_explode_array (in_array)  as s WHERE s != elem) INTO out_array;
+	SELECT array(select s FROM fct_explode_array (in_array)  as s WHERE NOT elem @> ARRAY[s]) INTO out_array;
 END;
 $$
 LANGUAGE plpgsql immutable;
@@ -3593,6 +3593,7 @@ DECLARE
   field_to_update varchar ;
   ref_field varchar := 'spec_ref' ;
   ref_relation varchar ;
+  rec_exists boolean ;
 BEGIN
   IF TG_OP = 'DELETE' THEN
 	  IF OLD.people_type = 'collector' THEN
@@ -3602,20 +3603,26 @@ BEGIN
 			field_to_update := 'spec_don_sel_ids';
 			ref_field_id := OLD.record_id ;				  
 		ELSIF OLD.people_type = 'identifier' THEN
-    /**********
-    * TEMP RETURN NEW BECAUSE IF FAIL WHEN DELETING A specimen_individuals
-    * @Todo: NEED TO REWORK THIS IN ANOTER TRIGGER
-    ***************/
-      RETURN NEW;
-      SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=OLD.record_id ;    
+      SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=OLD.record_id ;
+      /* 'IF ref_field_id is Null, so the identification associated must have been deleted, we have nothing to do because an other trigger have done the job' */
+      IF ref_field_id is NULL THEN
+        RETURN OLD ;
+      END IF ;      
       IF (ref_relation = 'specimens') THEN
         field_to_update := 'spec_ident_ids';
       ELSE
         field_to_update := 'ind_ident_ids';
         ref_field := 'individual_ref' ;
       END IF ;
+      EXECUTE 'SELECT true from catalogue_people cp INNER JOIN identifications i ON cp.record_id = i.id 
+      AND cp.referenced_relation = ' || quote_literal('identifications') || ' WHERE i.record_id = ' || quote_literal(ref_field_id) || ' AND people_ref = ' || quote_literal(OLD.people_ref)
+      INTO rec_exists ;
+      /* 'IF rec_exists then that people exist in an other identification of the same record, so we must not remove it from flat' */
+      IF rec_exists IS TRUE THEN
+        RETURN OLD;
+      END IF ;
     ELSE
-      RETURN NEW ;
+      RETURN OLD ;
 	  END IF ;
   ELSE
     IF NEW.people_type = 'collector' THEN
@@ -3625,11 +3632,6 @@ BEGIN
 		  field_to_update := 'spec_don_sel_ids';
 		  ref_field_id := NEW.record_id	;			  
 	  ELSIF NEW.people_type = 'identifier' THEN 
-    /**********
-    * TEMP RETURN NEW BECAUSE IF FAIL WHEN DELETING A specimen_individuals
-    * @Todo: NEED TO REWORK THIS IN ANOTER TRIGGER
-    ***************/
-      return NEW;
       SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=NEW.record_id ;    
       IF (ref_relation = 'specimens') THEN
         field_to_update := 'spec_ident_ids';
@@ -3644,20 +3646,48 @@ BEGIN
   
   IF TG_OP = 'DELETE' THEN
     EXECUTE 'UPDATE darwin_flat
-      SET ' || quote_ident(field_to_update) || '= fct_remove_array_elem(' || quote_ident(field_to_update) || ',' || quote_literal(OLD.people_ref) ||
-      ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
+      SET ' || quote_ident(field_to_update) || '= fct_remove_array_elem(' || quote_ident(field_to_update) || ',ARRAY[' || OLD.people_ref ||
+      ']) WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
   ELSIF TG_OP = 'INSERT' THEN
+    EXECUTE 'SELECT TRUE FROM darwin_flat WHERE ' || quote_ident(field_to_update) || ' && ARRAY[' || NEW.people_ref::integer || '] ' INTO rec_exists ;
+    /* 'If true then this id is allready in this field, so we do not want to add it again' */
+    IF rec_exists = TRUE THEN
+      RETURN NEW ;
+    END IF;
     EXECUTE 'UPDATE darwin_flat
       SET ' || quote_ident(field_to_update) || ' = array_append(' || quote_ident(field_to_update) || ',' || quote_literal(NEW.people_ref::integer) ||
-      ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id);
+      ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
   ELSE
     IF OLD.people_ref != NEW.people_ref THEN
       EXECUTE 'UPDATE darwin_flat
-        SET ' || quote_ident(field_to_update) || ' = array_append(fct_remove_array_elem(' || quote_literal(field_to_update) || ',' || quote_literal(OLD.people_ref)
+        SET ' || quote_ident(field_to_update) || ' = array_append(fct_remove_array_elem(' || quote_literal(field_to_update) || ',ARRAY[' || OLD.people_ref
         || '),' || quote_literal(NEW.people_ref::integer) || 
-        ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
+        ']) WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
     END IF;
   END IF;  
   RETURN NEW;
+END;
+$$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_clear_identifiers_in_flat() RETURNS TRIGGER
+AS
+$$
+DECLARE
+  people_to_delete integer[] ;
+  field_to_update varchar := 'spec_ident_ids';
+  ref_field varchar := 'spec_ref' ;
+BEGIN
+    IF OLD.referenced_relation = 'specimen_individuals' THEN
+      field_to_update := 'ind_ident_ids' ;
+      ref_field := 'individual_ref' ;
+    END IF;
+    EXECUTE 'SELECT array_accum(people_ref) FROM catalogue_people p INNER JOIN identifications i ON p.record_id = i.id AND i.id =' || OLD.id || ' AND people_ref NOT in
+    (SELECT people_ref from catalogue_people p INNER JOIN identifications i ON p.record_id = i.id AND p.referenced_relation =' ||  quote_literal(TG_TABLE_NAME) ||
+    ' AND p.people_type=' || quote_literal('identifier') || ' where i.record_id=' || OLD.record_id || ' AND i.referenced_relation=' || 
+    quote_literal(OLD.referenced_relation) || ' AND i.id !=' || OLD.id || ')' INTO people_to_delete ;
+    EXECUTE 'UPDATE darwin_flat
+      SET ' || quote_ident(field_to_update) || '= fct_remove_array_elem(' || quote_ident(field_to_update) || ',' || quote_literal(people_to_delete) ||
+      ') WHERE ' || quote_ident(ref_field) || ' = ' || OLD.record_id ;	      
+  RETURN OLD;
 END;
 $$ language plpgsql;

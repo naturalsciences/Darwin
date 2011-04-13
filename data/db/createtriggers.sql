@@ -116,6 +116,10 @@ CREATE TRIGGER trg_clr_referenceRecord_catalogueproperties AFTER DELETE
 	ON catalogue_properties FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
+CREATE TRIGGER trg_clr_identifiers_in_flat BEFORE DELETE
+	ON identifications FOR EACH ROW
+	EXECUTE PROCEDURE fct_clear_identifiers_in_flat();
+
 CREATE TRIGGER trg_clr_referenceRecord_identifications AFTER DELETE
 	ON identifications FOR EACH ROW
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
@@ -911,6 +915,6 @@ CREATE TRIGGER fct_cpy_trg_del_dict_specimen_parts AFTER DELETE  OR UPDATE
         ON specimen_parts FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
         
-CREATE TRIGGER trg_upd_peopple_in_flat AFTER INSERT OR UPDATE OR DELETE
+CREATE TRIGGER trg_upd_people_in_flat AFTER INSERT OR UPDATE OR DELETE
   ON catalogue_people FOR EACH ROW
   EXECUTE PROCEDURE fct_upd_people_in_flat();
