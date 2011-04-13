@@ -64,7 +64,7 @@ INSERT INTO flat_dict (dict_value, referenced_relation, dict_field)
 
   UNION
 
-  select distinct "type" , 'mineralogy' ,'type'
+  select distinct "type" , 'specimen_individuals' ,'type'
     FROM specimen_individuals where "type" is not null  
 
   UNION
