@@ -79,6 +79,7 @@ class MyWidgets extends BaseMyWidgets
         "rockform" => "Via this widget you can look up one or more sterioscopic rock forms.",
         "refIgs" => "Via this widget you can either look up by General inventory number (I.G.) or by looking up in a range of I.G. creation dates.",
         "acquisitions" => "Via this widget you can either look up by type of acquisition or by looking up in a range acquisition dates.",        
+        "people_role" => "Via this widget you can perform a search in order to find all record where a specific people (or institution) appear. You can also choose one or more role for this people (such as collector, identifier and/or donator/seller)",
         ),
     "specimenwidget"=> array(
         "refChrono" => "This widget allows you to add the reference to a chonostratigraphic unit.",

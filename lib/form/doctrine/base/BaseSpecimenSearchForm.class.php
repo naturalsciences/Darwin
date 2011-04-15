@@ -148,6 +148,10 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
       'specimen_status'          => new sfWidgetFormTextarea(),
       'complete'                 => new sfWidgetFormInputCheckbox(),
       'surnumerary'              => new sfWidgetFormInputCheckbox(),
+      'spec_ident_ids'           => new sfWidgetFormTextarea(),
+      'ind_ident_ids'            => new sfWidgetFormTextarea(),
+      'spec_coll_ids'            => new sfWidgetFormTextarea(),
+      'spec_don_sel_ids'         => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -284,6 +288,10 @@ abstract class BaseSpecimenSearchForm extends BaseFormDoctrine
       'specimen_status'          => new sfValidatorString(array('required' => false)),
       'complete'                 => new sfValidatorBoolean(array('required' => false)),
       'surnumerary'              => new sfValidatorBoolean(array('required' => false)),
+      'spec_ident_ids'           => new sfValidatorString(array('required' => false)),
+      'ind_ident_ids'            => new sfValidatorString(array('required' => false)),
+      'spec_coll_ids'            => new sfValidatorString(array('required' => false)),
+      'spec_don_sel_ids'         => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('specimen_search[%s]');

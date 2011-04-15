@@ -300,7 +300,30 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
     ));
 
     $this->validatorSchema['what_searched'] = new sfValidatorChoice(array('choices'=>array_keys($what_searched), 'required'=>false,'empty_value'=>'specimen'));
-   
+
+    //people widget
+    $this->widgetSchema['people_ref'] = new widgetFormButtonRef(array(
+       'model' => 'People',
+       'link_url' => 'people/searchBoth',
+       'box_title' => $this->getI18N()->__('Choose people role'),
+       'nullable' => true,
+       'button_class'=>'',
+     ),
+      array('class'=>'inline',
+           )
+    );    
+    $fields_to_search = array('spec_coll_ids' => $this->getI18N()->__('Collector'),
+                              'spec_don_sel_ids' => $this->getI18N()->__('Donator or seller'),
+                              'ident_ids' => $this->getI18N()->__('Identifier')) ;
+
+    $this->widgetSchema['role_ref'] = new sfWidgetFormChoice(
+      array('choices'=> $fields_to_search,
+            'multiple' => true,
+            'expanded' => true,
+      ));
+    $this->validatorSchema['people_ref'] = new sfValidatorInteger(array('required' => false)) ;
+    $this->validatorSchema['role_ref'] = new sfValidatorChoice(array('choices'=>array_keys($fields_to_search), 'required'=>false)) ;
+$this->validatorSchema['role_ref'] = new sfValidatorPass() ;    
     /* Labels */
     $this->widgetSchema->setLabels(array('gtu_code' => 'Sampling Location code',
                                          'taxon_name' => 'Taxon text search',
@@ -310,7 +333,9 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
                                          'mineral_name' => 'Mineralo text search',
                                          'taxon_level_ref' => 'Level',
                                          'what_searched' => 'What would you like to search ?',
-                                         'code_ref_relation' => 'Code of'
+                                         'code_ref_relation' => 'Code of',
+                                         'people_ref' => 'You look for who/whom ?',
+                                         'role_ref' => 'Which role'
                                         )
                                   );
     /* Acquisition categories */
@@ -938,7 +963,7 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     $query->andwhere('collection_ref in ( '.implode(',',$this->cols). ') ');
 
-
+    if ($values['people_ref'] != '') $this->addPeopleSearchColumnQuery($query, $values['people_ref'], $values['role_ref']);
     if ($values['acquisition_category'] != '' ) $query->andWhere('acquisition_category = ?',$values['acquisition_category']);
     if ($values['taxon_level_ref'] != '') $query->andWhere('taxon_level_ref = ?', intval($values['taxon_level_ref']));
     if ($values['chrono_level_ref'] != '') $query->andWhere('chrono_level_ref = ?', intval($values['chrono_level_ref']));

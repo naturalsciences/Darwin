@@ -1040,6 +1040,10 @@ SpecimenSearch:
         specimen_status: {type: string}
         complete: {type: boolean}
         surnumerary: {type: boolean}
+        spec_ident_ids: { type: string}
+        ind_ident_ids: { type: string}
+        spec_coll_ids: { type: string}
+        spec_don_sel_ids: { type: string}
     relations:
         Specimen:
             class: Specimens
@@ -1285,6 +1289,10 @@ IndividualSearch:
         specimen_status: {type: string}
         complete: {type: boolean}
         surnumerary: {type: boolean}
+        spec_ident_ids: { type: string}
+        ind_ident_ids: { type: string}
+        spec_coll_ids: { type: string}
+        spec_don_sel_ids: { type: string}
     relations:
         Specimen:
             class: Specimens
@@ -1531,6 +1539,10 @@ PartSearch:
         specimen_status: {type: string}
         complete: {type: boolean}
         surnumerary: {type: boolean}
+        spec_ident_ids: { type: string}
+        ind_ident_ids: { type: string}
+        spec_coll_ids: { type: string}
+        spec_don_sel_ids: { type: string}
     relations:
         Specimen:
             class: Specimens

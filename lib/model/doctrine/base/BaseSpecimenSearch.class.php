@@ -138,6 +138,10 @@
  * @property string $specimen_status
  * @property boolean $complete
  * @property boolean $surnumerary
+ * @property string $spec_ident_ids
+ * @property string $ind_ident_ids
+ * @property string $spec_coll_ids
+ * @property string $spec_don_sel_ids
  * @property Specimens $Specimen
  * @property SpecimenIndividuals $SpecimenIndividual
  * @property SpecimenParts $PartRelation
@@ -301,6 +305,10 @@
  * @method string              getSpecimenStatus()           Returns the current record's "specimen_status" value
  * @method boolean             getComplete()                 Returns the current record's "complete" value
  * @method boolean             getSurnumerary()              Returns the current record's "surnumerary" value
+ * @method string              getSpecIdentIds()             Returns the current record's "spec_ident_ids" value
+ * @method string              getIndIdentIds()              Returns the current record's "ind_ident_ids" value
+ * @method string              getSpecCollIds()              Returns the current record's "spec_coll_ids" value
+ * @method string              getSpecDonSelIds()            Returns the current record's "spec_don_sel_ids" value
  * @method Specimens           getSpecimen()                 Returns the current record's "Specimen" value
  * @method SpecimenIndividuals getSpecimenIndividual()       Returns the current record's "SpecimenIndividual" value
  * @method SpecimenParts       getPartRelation()             Returns the current record's "PartRelation" value
@@ -463,6 +471,10 @@
  * @method SpecimenSearch      setSpecimenStatus()           Sets the current record's "specimen_status" value
  * @method SpecimenSearch      setComplete()                 Sets the current record's "complete" value
  * @method SpecimenSearch      setSurnumerary()              Sets the current record's "surnumerary" value
+ * @method SpecimenSearch      setSpecIdentIds()             Sets the current record's "spec_ident_ids" value
+ * @method SpecimenSearch      setIndIdentIds()              Sets the current record's "ind_ident_ids" value
+ * @method SpecimenSearch      setSpecCollIds()              Sets the current record's "spec_coll_ids" value
+ * @method SpecimenSearch      setSpecDonSelIds()            Sets the current record's "spec_don_sel_ids" value
  * @method SpecimenSearch      setSpecimen()                 Sets the current record's "Specimen" value
  * @method SpecimenSearch      setSpecimenIndividual()       Sets the current record's "SpecimenIndividual" value
  * @method SpecimenSearch      setPartRelation()             Sets the current record's "PartRelation" value
@@ -957,6 +969,18 @@ abstract class BaseSpecimenSearch extends sfDoctrineRecord
              ));
         $this->hasColumn('surnumerary', 'boolean', null, array(
              'type' => 'boolean',
+             ));
+        $this->hasColumn('spec_ident_ids', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('ind_ident_ids', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('spec_coll_ids', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('spec_don_sel_ids', 'string', null, array(
+             'type' => 'string',
              ));
     }
 
