@@ -137,4 +137,8 @@ class specimensearchwidgetComponents extends sfComponents
   {
      if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
   }
+  public function executePeople_role()
+  {
+     if(!$this->form) $this->form = new SpecimenSearchFormFilter() ;
+  }  
 }

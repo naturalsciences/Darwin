@@ -318,6 +318,17 @@ sps22:
    title_perso: Acquisitions  
    all_public: true   
 
+sps23:
+   col_num: 2
+   category: specimensearch_widget
+   group_name: people_role
+   mandatory: false
+   order_by: 11
+   opened: true
+   visible: false
+   title_perso: People role  
+   all_public: true  
+
 sw1:
    col_num: 1
    category: specimen_widget

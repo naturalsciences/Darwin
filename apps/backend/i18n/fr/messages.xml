@@ -2800,6 +2800,48 @@
         <source>inserted</source> <target>ajouté</target> </trans-unit>
       <trans-unit id="1164">
         <source>updated</source> <target>modifié</target> </trans-unit>
+        
+        
+      <trans-unit id="1165">
+        <source>People role search</source> <target>Recherche par rôle d'une personne</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>Choose people role</source> <target>Choisir le rôle d'une personne</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>You look for who/whom ?</source> <target>Vous recherchez qui/quoi ?</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>Which role</source> <target>Quel rôle</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>People role</source> <target>Rôle d'une personne</target> </trans-unit>
+      <trans-unit id="1164">
+        <source>Via this widget you can perform a search in order to find all record where a specific people (or institution) appear. You can also choose one or more role for this people (such as collector, identifier and/or donator/seller)</source>
+        <target>Via cette widget, vous pouvez effectuer une recherche afin de trouver tous les enregistrements où une personne spécifique (ou un institut) apparait. Vous pouvez aussi choisir un ou plusieurs rôles pour cette personne (tel que collecteur, Identificateur et/ou donnateur/vendeur)</target>
+      </trans-unit>
+      <trans-unit id="1164">
+        <source>Donator or seller</source> <target>Donnateur ou vendeur</target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>
+      <trans-unit id="1164">
+        <source></source> <target></target> </trans-unit>                                
     </body>
   </file>
 </xliff>

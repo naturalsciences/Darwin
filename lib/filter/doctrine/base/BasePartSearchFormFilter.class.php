@@ -146,6 +146,10 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'specimen_status'          => new sfWidgetFormFilterInput(),
       'complete'                 => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'surnumerary'              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'spec_ident_ids'           => new sfWidgetFormFilterInput(),
+      'ind_ident_ids'            => new sfWidgetFormFilterInput(),
+      'spec_coll_ids'            => new sfWidgetFormFilterInput(),
+      'spec_don_sel_ids'         => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -282,6 +286,10 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'specimen_status'          => new sfValidatorPass(array('required' => false)),
       'complete'                 => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'surnumerary'              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'spec_ident_ids'           => new sfValidatorPass(array('required' => false)),
+      'ind_ident_ids'            => new sfValidatorPass(array('required' => false)),
+      'spec_coll_ids'            => new sfValidatorPass(array('required' => false)),
+      'spec_don_sel_ids'         => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('part_search_filters[%s]');
@@ -435,6 +443,10 @@ abstract class BasePartSearchFormFilter extends BaseFormFilterDoctrine
       'specimen_status'          => 'Text',
       'complete'                 => 'Boolean',
       'surnumerary'              => 'Boolean',
+      'spec_ident_ids'           => 'Text',
+      'ind_ident_ids'            => 'Text',
+      'spec_coll_ids'            => 'Text',
+      'spec_don_sel_ids'         => 'Text',
     );
   }
 }

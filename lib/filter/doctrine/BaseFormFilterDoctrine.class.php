@@ -426,4 +426,22 @@ abstract class BaseFormFilterDoctrine extends sfFormFilterDoctrine
       }
       return $results;
   }
+  
+  public function addPeopleSearchColumnQuery(Doctrine_Query $query, $people_id, $field_to_use)
+  {
+    $alias = $query->getRootAlias();
+    $build_query = ''; 
+    if(count($field_to_use) < 1) $field_to_use = array('ident_ids','spec_coll_ids','spec_don_sel_ids') ;
+    foreach($field_to_use as $field)
+    {
+      if($field == 'ident_ids')
+       $build_query .= "($people_id = ANY($alias.spec_ident_ids) OR $people_id = ANY($alias.ind_ident_ids)) OR " ;
+      elseif($field == 'spec_coll_ids') $build_query .= "$people_id = ANY($alias.spec_coll_ids) OR " ;
+      else $build_query .= "$people_id = ANY($alias.spec_don_sel_ids) OR " ;    
+    }
+    // I remove the last 'OR ' at the end of the string
+    $build_query = substr($build_query,0,strlen($build_query) -3) ;
+    $query->AndWhere($build_query) ;
+    return $query ;
+  }  
 }
