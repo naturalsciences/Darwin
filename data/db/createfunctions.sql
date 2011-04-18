@@ -3057,7 +3057,7 @@ RETURN v_int_value;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer AS $$
+CREATE OR REPLACE FUNCTION fct_searchCodes(VARIADIC varchar[]) RETURNS SETOF integer  AS $$
 DECLARE
   sqlString varchar := E'select record_id from codes';
   sqlWhere varchar := '';
@@ -3103,7 +3103,7 @@ BEGIN
   RAISE INFO 'Sql : %',sqlString ;
   RETURN QUERY EXECUTE sqlString;
 END;
-$$ LANGUAGE plpgSQL;
+$$ LANGUAGE plpgSQL STABLE;
 
 
 CREATE OR REPLACE FUNCTION fct_search_tools (IN str_ids varchar) RETURNS SETOF integer
