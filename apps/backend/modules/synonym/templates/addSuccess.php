@@ -49,7 +49,7 @@
 
 function checkGroup()
 {
-  if($("#classification_synonymies_record_id").val() == '')
+  if($("#classification_synonymies_record_id").val() == '' || typeof $("#classification_synonymies_record_id").val() == 'undefined')
     return;
 
   $('#save').attr("disabled","disabled");
