@@ -1,5 +1,5 @@
 <?php slot('title', __('Specimens search result'));  ?>
-
+<?php use_javascript('double_list.js');?>
 <?php include_partial('result_cols', array('source' => $source, 'columns' => $columns, 'field_to_show' => $field_to_show));?>
 
 <div class="encoding">

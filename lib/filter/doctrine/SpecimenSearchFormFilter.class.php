@@ -277,13 +277,13 @@ class SpecimenSearchFormFilter extends BaseSpecimenSearchFormFilter
 
     $this->widgetSchema['tools'] = new widgetFormSelectDoubleListFilterable(
       array(
-            'choices' => Doctrine::getTable('CollectingTools')->fetchTools(),
+            'choices' => new sfCallable(array(Doctrine::getTable('CollectingTools'),'fetchTools')),
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available')
            ));
     $this->widgetSchema['methods'] = new widgetFormSelectDoubleListFilterable(
       array(
-            'choices' => Doctrine::getTable('CollectingMethods')->fetchMethods(),
+            'choices' => new sfCallable(array(Doctrine::getTable('CollectingMethods'),'fetchMethods')),
             'label_associated'=>$this->getI18N()->__('Selected'),
             'label_unassociated'=>$this->getI18N()->__('Available')
            ));
