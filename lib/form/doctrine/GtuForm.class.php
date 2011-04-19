@@ -39,6 +39,7 @@ class GtuForm extends BaseGtuForm
                                                                                       'format' => '%day%/%month%/%year%', 
                                                                                       'years' => $years,
                                                                                       'empty_values' => $dateText,
+                                                                                      'with_time' => true
                                                                                      ),
                                                                                 array('class' => 'from_date')
                                                                                );
@@ -46,7 +47,8 @@ class GtuForm extends BaseGtuForm
                                                                                     'image'=>'/images/calendar.gif', 
                                                                                     'format' => '%day%/%month%/%year%', 
                                                                                     'years' => $years,
-                                                                                    'empty_values' => $dateText, 
+                                                                                    'empty_values' => $dateText,
+                                                                                    'with_time' => true 
                                                                                    ),
                                                                               array('class' => 'to_date')
                                                                              );
@@ -56,6 +58,7 @@ class GtuForm extends BaseGtuForm
                                                                                   'min' => $minDate,
                                                                                   'max' => $maxDate, 
                                                                                   'empty_value' => $dateLowerBound,
+                                                                                  'with_time' => true
                                                                                  ),
                                                                             array('invalid' => 'Date provided is not valid',
                                                                                  )
@@ -65,6 +68,7 @@ class GtuForm extends BaseGtuForm
                                                                                 'min' => $minDate,
                                                                                 'max' => $maxDate,
                                                                                 'empty_value' => $dateUpperBound,
+                                                                                'with_time' => true
                                                                                ),
                                                                           array('invalid' => 'Date provided is not valid',
                                                                                )
