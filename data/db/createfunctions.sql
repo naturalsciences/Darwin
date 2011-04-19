@@ -3462,62 +3462,222 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION trg_del_dict() RETURNS TRIGGER
 AS $$
+DECLARE
+	booContinue boolean := true;
 BEGIN
 
-  IF TG_TABLE_NAME = 'catalogue_people' THEN
-    PERFORM fct_del_in_dict('catalogue_people','people_sub_type', OLD.people_sub_type);
-
-  ELSIF TG_TABLE_NAME = 'codes' THEN
-    PERFORM fct_del_in_dict('codes','code_prefix_separator', OLD.code_prefix_separator);
-    PERFORM fct_del_in_dict('codes','code_suffix_separator', OLD.code_suffix_separator);
+	IF TG_TABLE_NAME = 'codes' THEN
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.code_prefix_separator IS NOT DISTINCT FROM NEW.code_prefix_separator
+				 AND OLD.code_suffix_separator IS NOT DISTINCT FROM NEW.code_suffix_separator
+			THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('codes','code_prefix_separator', OLD.code_prefix_separator);
+			PERFORM fct_del_in_dict('codes','code_suffix_separator', OLD.code_suffix_separator);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
-    PERFORM fct_del_in_dict('collection_maintenance','action_observation', OLD.action_observation);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.action_observation IS NOT DISTINCT FROM NEW.action_observation THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('collection_maintenance','action_observation', OLD.action_observation);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'identifications' THEN
-    PERFORM fct_del_in_dict('identifications','determination_status', OLD.determination_status);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.determination_status IS NOT DISTINCT FROM NEW.determination_status THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('identifications','determination_status', OLD.determination_status);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'people' THEN
-    PERFORM fct_del_in_dict('people','sub_type', OLD.sub_type);
-    PERFORM fct_del_in_dict('people','title', OLD.title);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.sub_type IS NOT DISTINCT FROM NEW.sub_type
+				 AND OLD.title IS NOT DISTINCT FROM NEW.title
+			THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('people','sub_type', OLD.sub_type);
+			PERFORM fct_del_in_dict('people','title', OLD.title);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'people_addresses' THEN
-    PERFORM fct_del_in_dict('people_addresses','country', OLD.country);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.country IS NOT DISTINCT FROM NEW.country THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('people_addresses','country', OLD.country);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'insurances' THEN
-    PERFORM fct_del_in_dict('insurances','insurance_currency', OLD.insurance_currency);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.insurance_currency IS NOT DISTINCT FROM NEW.insurance_currency THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('insurances','insurance_currency', OLD.insurance_currency);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-    PERFORM fct_del_in_dict('mineralogy','cristal_system', OLD.cristal_system);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.cristal_system IS NOT DISTINCT FROM NEW.cristal_system THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('mineralogy','cristal_system', OLD.cristal_system);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
-    PERFORM fct_del_in_dict('specimen_individuals','type', OLD.type);
-    PERFORM fct_del_in_dict('specimen_individuals','type_group', OLD.type_group);
-    PERFORM fct_del_in_dict('specimen_individuals','type_search', OLD.type_search);
-    PERFORM fct_del_in_dict('specimen_individuals','sex', OLD.sex);
-    PERFORM fct_del_in_dict('specimen_individuals','state', OLD.state);
-    PERFORM fct_del_in_dict('specimen_individuals','stage', OLD.stage);
-    PERFORM fct_del_in_dict('specimen_individuals','social_status', OLD.social_status);
-    PERFORM fct_del_in_dict('specimen_individuals','rock_form', OLD.rock_form);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.type IS NOT DISTINCT FROM NEW.type THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_individuals','type', OLD.type);
+			PERFORM fct_del_in_dict('specimen_individuals','type_group', OLD.type_group);
+			PERFORM fct_del_in_dict('specimen_individuals','type_search', OLD.type_search);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.sex IS NOT DISTINCT FROM NEW.sex THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_individuals','sex', OLD.sex);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.state IS NOT DISTINCT FROM NEW.state THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_individuals','state', OLD.state);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.stage IS NOT DISTINCT FROM NEW.stage THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_individuals','stage', OLD.stage);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.social_status IS NOT DISTINCT FROM NEW.social_status THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_individuals','social_status', OLD.social_status);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.rock_form IS NOT DISTINCT FROM NEW.rock_form THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_individuals','rock_form', OLD.rock_form);
+		END IF;
     
   ELSIF TG_TABLE_NAME = 'specimens' THEN
-    PERFORM fct_del_in_dict('specimens','host_relationship', OLD.host_relationship);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.host_relationship IS NOT DISTINCT FROM NEW.host_relationship THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimens','host_relationship', OLD.host_relationship);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'specimens_accompanying' THEN
-    PERFORM fct_del_in_dict('specimens_accompanying','form', OLD.form);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.form IS NOT DISTINCT FROM NEW.form THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimens_accompanying','form', OLD.form);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'users' THEN
-    PERFORM fct_del_in_dict('users','title', OLD.title);
-    PERFORM fct_del_in_dict('users','sub_type', OLD.sub_type);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.sub_type IS NOT DISTINCT FROM NEW.sub_type
+				 AND OLD.title IS NOT DISTINCT FROM NEW.title
+			THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('users','title', OLD.title);
+			PERFORM fct_del_in_dict('users','sub_type', OLD.sub_type);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'users_addresses' THEN
-    PERFORM fct_del_in_dict('users_addresses','country', OLD.country);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.country IS NOT DISTINCT FROM NEW.country THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('users_addresses','country', OLD.country);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
-    PERFORM fct_del_in_dict('specimen_parts','container_type', OLD.container_type);
-    PERFORM fct_del_in_dict('specimen_parts','sub_container_type', OLD.sub_container_type);
-    PERFORM fct_del_in_dict('specimen_parts','specimen_part', OLD.specimen_part);
-    PERFORM fct_del_in_dict('specimen_parts','specimen_status', OLD.specimen_status);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.container_type IS NOT DISTINCT FROM NEW.container_type THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_parts','container_type', OLD.container_type);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.sub_container_type IS NOT DISTINCT FROM NEW.sub_container_type THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_parts','sub_container_type', OLD.sub_container_type);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.specimen_part IS NOT DISTINCT FROM NEW.specimen_part THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_parts','specimen_part', OLD.specimen_part);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.specimen_status IS NOT DISTINCT FROM NEW.specimen_status THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_del_in_dict('specimen_parts','specimen_status', OLD.specimen_status);
+		END IF;
   END IF;
 
   RETURN NEW;
@@ -3526,59 +3686,222 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION trg_ins_update_dict() RETURNS TRIGGER
 AS $$
+DECLARE
+	booContinue boolean := true;
 BEGIN
 
   IF TG_TABLE_NAME = 'codes' THEN
-    PERFORM fct_add_in_dict('codes','code_prefix_separator', NEW.code_prefix_separator);
-    PERFORM fct_add_in_dict('codes','code_suffix_separator', NEW.code_suffix_separator);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.code_prefix_separator IS NOT DISTINCT FROM NEW.code_prefix_separator 
+				 AND OLD.code_suffix_separator IS NOT DISTINCT FROM NEW.code_suffix_separator 
+			THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('codes','code_prefix_separator', NEW.code_prefix_separator);
+			PERFORM fct_add_in_dict('codes','code_suffix_separator', NEW.code_suffix_separator);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'collection_maintenance' THEN
-    PERFORM fct_add_in_dict('collection_maintenance','action_observation', NEW.action_observation);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.action_observation IS NOT DISTINCT FROM NEW.action_observation THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('collection_maintenance','action_observation', NEW.action_observation);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'identifications' THEN
-    PERFORM fct_add_in_dict('identifications','determination_status', NEW.determination_status);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.determination_status IS NOT DISTINCT FROM NEW.determination_status THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('identifications','determination_status', NEW.determination_status);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'people' THEN
-    PERFORM fct_add_in_dict('people','sub_type', NEW.sub_type);
-    PERFORM fct_add_in_dict('people','title', NEW.title);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.sub_type IS NOT DISTINCT FROM NEW.sub_type
+				 AND OLD.title IS NOT DISTINCT FROM NEW.title
+			THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('people','sub_type', NEW.sub_type);
+			PERFORM fct_add_in_dict('people','title', NEW.title);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'people_addresses' THEN
-    PERFORM fct_add_in_dict('people_addresses','country', NEW.country);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.country IS NOT DISTINCT FROM NEW.country THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('people_addresses','country', NEW.country);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'insurances' THEN
-    PERFORM fct_add_in_dict('insurances','insurance_currency', NEW.insurance_currency);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.insurance_currency IS NOT DISTINCT FROM NEW.insurance_currency THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('insurances','insurance_currency', NEW.insurance_currency);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'mineralogy' THEN
-    PERFORM fct_add_in_dict('mineralogy','cristal_system', NEW.cristal_system);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.cristal_system IS NOT DISTINCT FROM NEW.cristal_system THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('mineralogy','cristal_system', NEW.cristal_system);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'specimen_individuals' THEN
-    PERFORM fct_add_in_dict('specimen_individuals','type', NEW.type);
-    PERFORM fct_add_in_dict('specimen_individuals','type_group', NEW.type_group);
-    PERFORM fct_add_in_dict('specimen_individuals','type_search', NEW.type_search);
-    PERFORM fct_add_in_dict('specimen_individuals','sex', NEW.sex);
-    PERFORM fct_add_in_dict('specimen_individuals','state', NEW.state);
-    PERFORM fct_add_in_dict('specimen_individuals','stage', NEW.stage);
-    PERFORM fct_add_in_dict('specimen_individuals','social_status', NEW.social_status);
-    PERFORM fct_add_in_dict('specimen_individuals','rock_form', NEW.rock_form);
+		IF TG_OP = 'UPDATE' THEN
+			IF NEW.type IS NOT DISTINCT FROM OLD.type THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_individuals','type', NEW.type);
+			PERFORM fct_add_in_dict('specimen_individuals','type_group', NEW.type_group);
+			PERFORM fct_add_in_dict('specimen_individuals','type_search', NEW.type_search);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF NEW.sex IS NOT DISTINCT FROM OLD.sex THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_individuals','sex', NEW.sex);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF NEW.state IS NOT DISTINCT FROM OLD.state THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_individuals','state', NEW.state);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF NEW.stage IS NOT DISTINCT FROM OLD.stage THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_individuals','stage', NEW.stage);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF NEW.social_status IS NOT DISTINCT FROM OLD.social_status THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_individuals','social_status', NEW.social_status);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF NEW.rock_form IS NOT DISTINCT FROM OLD.rock_form THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_individuals','rock_form', NEW.rock_form);
+		END IF;
     
   ELSIF TG_TABLE_NAME = 'specimens' THEN
-    PERFORM fct_add_in_dict('specimens','host_relationship', NEW.host_relationship);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.host_relationship IS NOT DISTINCT FROM NEW.host_relationship THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimens','host_relationship', NEW.host_relationship);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'specimens_accompanying' THEN
-    PERFORM fct_add_in_dict('specimens_accompanying','form', NEW.form);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.form IS NOT DISTINCT FROM NEW.form THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimens_accompanying','form', NEW.form);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'users' THEN
-    PERFORM fct_add_in_dict('users','title', NEW.title);
-    PERFORM fct_add_in_dict('users','sub_type', NEW.sub_type);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.title IS NOT DISTINCT FROM NEW.title
+				AND OLD.sub_type IS NOT DISTINCT FROM NEW.sub_type
+			THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('users','title', NEW.title);
+			PERFORM fct_add_in_dict('users','sub_type', NEW.sub_type);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'users_addresses' THEN
-    PERFORM fct_add_in_dict('users_addresses','country', NEW.country);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.country IS NOT DISTINCT FROM NEW.country THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('users_addresses','country', NEW.country);
+		END IF;
 
   ELSIF TG_TABLE_NAME = 'specimen_parts' THEN
-    PERFORM fct_add_in_dict('specimen_parts','container_type', NEW.container_type);
-    PERFORM fct_add_in_dict('specimen_parts','sub_container_type', NEW.sub_container_type);
-    PERFORM fct_add_in_dict('specimen_parts','specimen_part', NEW.specimen_part);
-    PERFORM fct_add_in_dict('specimen_parts','specimen_status', NEW.specimen_status);
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.container_type IS NOT DISTINCT FROM NEW.container_type THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_parts','container_type', NEW.container_type);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.sub_container_type IS NOT DISTINCT FROM NEW.sub_container_type THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_parts','sub_container_type', NEW.sub_container_type);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.specimen_part IS NOT DISTINCT FROM NEW.specimen_part THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_parts','specimen_part', NEW.specimen_part);
+		END IF;
+		booContinue := true;
+		IF TG_OP = 'UPDATE' THEN
+			IF OLD.specimen_status IS NOT DISTINCT FROM NEW.specimen_status THEN
+				booContinue := false;
+			END IF;
+		END IF;
+		IF booContinue THEN
+			PERFORM fct_add_in_dict('specimen_parts','specimen_status', NEW.specimen_status);
+		END IF;
   END IF;
 
   RETURN NEW;
