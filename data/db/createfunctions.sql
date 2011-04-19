@@ -3676,18 +3676,24 @@ DECLARE
   people_to_delete integer[] ;
   field_to_update varchar := 'spec_ident_ids';
   ref_field varchar := 'spec_ref' ;
+  result boolean ;
 BEGIN
     IF OLD.referenced_relation = 'specimen_individuals' THEN
       field_to_update := 'ind_ident_ids' ;
       ref_field := 'individual_ref' ;
     END IF;
+    PERFORM * FROM catalogue_people cp INNER JOIN identifications i ON cp.record_id = i.id AND cp.referenced_relation = 'identifications' where i.id=OLD.id  ;
+    /* 'IF FALSE SO THERE NO identifier associated to this identification' */
+    IF NOT FOUND THEN
+      RETURN OLD ;
+    END IF ;     
     EXECUTE 'SELECT array_accum(people_ref) FROM catalogue_people p INNER JOIN identifications i ON p.record_id = i.id AND i.id =' || OLD.id || ' AND people_ref NOT in
     (SELECT people_ref from catalogue_people p INNER JOIN identifications i ON p.record_id = i.id AND p.referenced_relation =' ||  quote_literal(TG_TABLE_NAME) ||
     ' AND p.people_type=' || quote_literal('identifier') || ' where i.record_id=' || OLD.record_id || ' AND i.referenced_relation=' || 
     quote_literal(OLD.referenced_relation) || ' AND i.id !=' || OLD.id || ')' INTO people_to_delete ;
     EXECUTE 'UPDATE darwin_flat
       SET ' || quote_ident(field_to_update) || '= fct_remove_array_elem(' || quote_ident(field_to_update) || ',' || quote_literal(people_to_delete) ||
-      ') WHERE ' || quote_ident(ref_field) || ' = ' || OLD.record_id ;	      
+      '::int[]) WHERE ' || quote_ident(ref_field) || ' = ' || OLD.record_id ;	      
   RETURN OLD;
 END;
 $$ language plpgsql;
