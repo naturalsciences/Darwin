@@ -2463,6 +2463,21 @@
         <source>inserted</source> <target>ingevoerd</target> </trans-unit>
       <trans-unit id="1164">
         <source>updated</source> <target>geactualiseerd</target> </trans-unit>
+        <trans-unit id="1165">
+        <source>People role search</source> <target>Zoeken op functie van persoon</target> </trans-unit>
+        <trans-unit id="1166">
+        <source>Choose people role</source> <target>De functie van een persoon selecteren</target> </trans-unit>
+        <trans-unit id="1167">
+        <source>You look for whom </source> <target>Wie zoekt u </target> </trans-unit>
+        <trans-unit id="1168">
+        <source>Which role</source> <target>Welke functie</target> </trans-unit>
+        <trans-unit id="1169">
+        <source>People role</source> <target>Functie van persoon</target> </trans-unit>
+        <trans-unit id="1170">
+        <source>Via this widget you can perform a search in order to find all records where a specific person (or institution) appears. You can also choose one or more roles for this person (such as collector, identifier and/or donator/seller)</source>
+        <target>Via deze widget kunt u alle records zoeken waar een specifieke persoon (of instelling) in voorkomt. U kunt ook één of meerdere functies voor deze persoon selecteren (zoals verzamelaar, determinator en/of schenker/verkoper) </target>
+        </trans-unit> 
+        <source>Donator or seller</source> <target>Schenkers of verkopers</target> </trans-unit>           
     </body>
   </file>
 </xliff>
