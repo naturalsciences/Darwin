@@ -85,6 +85,7 @@ CREATE INDEX CONCURRENTLY idx_catalogue_levels_level_type on catalogue_levels(le
 CREATE INDEX CONCURRENTLY idx_catalogue_people_people_type on catalogue_people(people_type);
 CREATE INDEX CONCURRENTLY idx_catalogue_people_people_sub_type on catalogue_people(people_sub_type);
 CREATE INDEX CONCURRENTLY idx_catalogue_people_people_order_by on catalogue_people(order_by);
+CREATE INDEX CONCURRENTLY idx_catalogue_people_people_ref on catalogue_people(people_ref);
 CREATE INDEX CONCURRENTLY idx_catalogue_people_referenced_record on catalogue_people(referenced_relation, record_id, people_type);
 CREATE INDEX CONCURRENTLY idx_catalogue_properties_property_type on catalogue_properties(property_type);
 CREATE INDEX CONCURRENTLY idx_catalogue_properties_property_sub_type on catalogue_properties(property_sub_type);
@@ -140,6 +141,7 @@ CREATE INDEX CONCURRENTLY idx_mineralogy_name_order_by on mineralogy(name_order_
 CREATE INDEX CONCURRENTLY idx_mineralogy_cristal_system on mineralogy(cristal_system) WHERE cristal_system <> '';
 CREATE INDEX CONCURRENTLY idx_multimedia_is_digital on multimedia(is_digital);
 CREATE INDEX CONCURRENTLY idx_multimedia_type on multimedia(type);
+CREATE INDEX CONCURRENTLY idx_multimedia_ref on multimedia(parent_ref);
 CREATE INDEX CONCURRENTLY idx_multimedia_keywords_keyword_indexed on multimedia_keywords(keyword_indexed);
 CREATE INDEX CONCURRENTLY idx_my_widgets_user_category on my_widgets(user_ref, category, group_name);
 CREATE INDEX CONCURRENTLY idx_my_widgets_group_name on my_widgets(user_ref, group_name);
@@ -166,6 +168,7 @@ CREATE INDEX CONCURRENTLY idx_specimen_individuals_state on specimen_individuals
 CREATE INDEX CONCURRENTLY idx_specimen_individuals_social_status on specimen_individuals(social_status);
 CREATE INDEX CONCURRENTLY idx_specimen_individuals_rock_form on specimen_individuals(rock_form);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_specimen_part on specimen_parts(specimen_part);
+CREATE INDEX CONCURRENTLY idx_specimen_parts_parent_ref on specimen_parts(parent_ref);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_room on specimen_parts(room) WHERE NOT room IS NULL;
 CREATE INDEX CONCURRENTLY idx_specimen_parts_row on specimen_parts(row) WHERE NOT row IS NULL;
 CREATE INDEX CONCURRENTLY idx_specimen_parts_shelf on specimen_parts(shelf) WHERE NOT shelf IS NULL;

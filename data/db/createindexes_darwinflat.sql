@@ -103,7 +103,7 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_expedition_name on darwin_fla
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_with_types on darwin_flat(spec_ref, with_types);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_with_individuals on darwin_flat(spec_ref, with_individuals);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref_with_parts on darwin_flat(spec_ref, with_parts);
-
+CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_host_specimens on darwin_flat(host_specimen_ref);
 /**** For individual search ****/
 CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_category on darwin_flat(individual_ref, category) where not individual_ref is null;
 CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_ref_coll_name on darwin_flat(individual_ref, collection_name) where not individual_ref is null;

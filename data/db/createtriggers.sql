@@ -805,10 +805,6 @@ CREATE TRIGGER fct_cpy_trg_ins_update_dict_codes AFTER INSERT OR UPDATE
         ON codes FOR EACH ROW
         EXECUTE PROCEDURE trg_ins_update_dict();
 
-CREATE TRIGGER fct_cpy_trg_ins_update_dict_catalogue_people AFTER INSERT OR UPDATE
-        ON catalogue_people FOR EACH ROW
-        EXECUTE PROCEDURE trg_ins_update_dict();
-
 CREATE TRIGGER fct_cpy_trg_ins_update_dict_collection_maintenance AFTER INSERT OR UPDATE
         ON collection_maintenance FOR EACH ROW
         EXECUTE PROCEDURE trg_ins_update_dict();
@@ -861,10 +857,6 @@ CREATE TRIGGER fct_cpy_trg_ins_update_dict_specimen_parts AFTER INSERT OR UPDATE
 
 CREATE TRIGGER fct_cpy_trg_del_dict_codes AFTER DELETE  OR UPDATE
         ON codes FOR EACH ROW
-        EXECUTE PROCEDURE trg_del_dict();
-
-CREATE TRIGGER fct_cpy_trg_del_dict_catalogue_people AFTER DELETE  OR UPDATE
-        ON catalogue_people FOR EACH ROW
         EXECUTE PROCEDURE trg_del_dict();
 
 CREATE TRIGGER fct_cpy_trg_del_dict_collection_maintenance AFTER DELETE  OR UPDATE
