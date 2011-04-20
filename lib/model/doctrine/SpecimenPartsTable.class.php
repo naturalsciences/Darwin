@@ -29,7 +29,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctBuildings()
   {
-    return $this->createDistinct('SpecimenParts', 'building', 'buildings')->execute();
+    return $this->createFlatDistinct('specimen_parts', 'building', 'buildings')->execute();
   }
 
   /**
@@ -38,6 +38,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctFloors($building = null)
   {
+    if($building == null) return $this->createFlatDistinct('specimen_parts', 'floor', 'floors')->execute();
     $q = $this->createDistinct('SpecimenParts', 'floor', 'floors');
 	if(! is_null($building))
 	  $q->addWhere('building = ?', $building);
@@ -50,6 +51,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctRooms($building = null, $floor = null)
   {
+    if($building == null && $floor == null) return $this->createFlatDistinct('specimen_parts', 'room', 'rooms')->execute();
     $q = $this->createDistinct('SpecimenParts', 'room', 'rooms');
 	if(! is_null($building))
 	  $q->addWhere('building = ?', $building);
@@ -66,6 +68,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctRows($building = null, $floor = null, $room = null)
   {
+    if($building == null && $floor == null && $room == null) return $this->createFlatDistinct('specimen_parts', 'row', 'rows')->execute();
     $q = $this->createDistinct('SpecimenParts', 'row', 'rows');
 	if(! is_null($building))
 	  $q->addWhere('building = ?', $building);
@@ -85,6 +88,7 @@ class SpecimenPartsTable extends DarwinTable
   */
   public function getDistinctShelfs($building = null, $floor = null, $room = null, $rows = null)
   {
+    if($building == null && $floor == null && $room == null && $rows == null) return $this->createFlatDistinct('specimen_parts', 'shelf', 'shelfs')->execute();
     $q = $this->createDistinct('SpecimenParts', 'shelf', 'shelfs');
 	if(! is_null($building))
 	  $q->addWhere('building = ?', $building);
