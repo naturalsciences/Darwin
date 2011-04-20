@@ -37,7 +37,7 @@
       <?php echo link_to(__('New individual'), 'individuals/edit?spec_id='.$specimen->getId()) ?>
       &nbsp;<?php echo link_to(__('Duplicate individual'), 'individuals/edit?spec_id='.$individual->getObject()->getSpecimenRef().
       '&duplicate_id='.$individual->getObject()->getId(),array('class' => 'duplicate_link')) ?>
-        &nbsp;<?php echo link_to('Delete', 'individuals/delete?id='.$individual->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
+        &nbsp;<?php echo link_to(__('Delete'), 'individuals/delete?id='.$individual->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
     <?php endif?>
     &nbsp;<a href="<?php echo url_for('individuals/overview?spec_id='.$specimen->getId()) ?>"><?php echo __('Cancel');?></a>
     <input type="submit" value="<?php echo __('Save');?>" id="submit_spec_individual_f1"/>

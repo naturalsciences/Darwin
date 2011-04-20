@@ -39,7 +39,7 @@
           <?php if (!$form->getObject()->isNew()): ?>
             <?php echo link_to(__('New part'), 'parts/edit?indid='.$individual->getId()) ?>
             &nbsp;<?php echo link_to(__('Duplicate part'), 'parts/edit?indid='.$individual->getId().'&duplicate_id='.$part->getId(),array('class' => 'duplicate_link')) ?>
-        &nbsp;<?php echo link_to('Delete', 'parts/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
+        &nbsp;<?php echo link_to(__('Delete'), 'parts/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
           <?php endif?>
 
           &nbsp;<a href="<?php echo url_for('parts/overview?id='.$individual->getId()) ?>"><?php echo __('Cancel');?></a>
