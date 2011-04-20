@@ -15,7 +15,7 @@ class darwinStatsTask extends sfBaseTask
     "title" => "All types and the record count associated",
     "description" => "",
     "fields" => array("Type","Count"),
-    "request" => "SELECT individual_type as Type, count(DISTINCT individual_ref) as Count FROM darwin_flat Group by individual_type Order by individual_type",
+    "request" => "SELECT Type, count(id) AS Count FROM specimen_individuals GROUP BY Type ORDER BY Type",
     "expandable" => true,
     "level" => 2,
     ),
