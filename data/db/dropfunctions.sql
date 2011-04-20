@@ -96,7 +96,7 @@ DROP FUNCTION IF EXISTS trg_fct_chk_possible_upper_level() CASCADE;
 
 
 
-DROP FUNCTION IF EXISTS fct_add_in_dict(ref_table, ref_field, dict_value) CASCADE;
-DROP FUNCTION IF EXISTS fct_del_in_dict(ref_table, ref_field, dict_value) CASCADE;
+DROP FUNCTION IF EXISTS fct_add_in_dict(ref_table, ref_field, old_value, dict_value) CASCADE;
+DROP FUNCTION IF EXISTS fct_del_in_dict(ref_table, ref_field, dict_value, old_value) CASCADE;
 DROP FUNCTION IF EXISTS trg_ins_update_dict() CASCADE;
 DROP FUNCTION IF EXISTS trg_del_dict() CASCADE;
