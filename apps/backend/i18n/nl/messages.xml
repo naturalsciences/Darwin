@@ -2477,6 +2477,7 @@
         <source>Via this widget you can perform a search in order to find all records where a specific person (or institution) appears. You can also choose one or more roles for this person (such as collector, identifier and/or donator/seller)</source>
         <target>Via deze widget kunt u alle records zoeken waar een specifieke persoon (of instelling) in voorkomt. U kunt ook één of meerdere functies voor deze persoon selecteren (zoals verzamelaar, determinator en/of schenker/verkoper) </target>
         </trans-unit> 
+        <trans-unit id="1171">        
         <source>Donator or seller</source> <target>Schenkers of verkopers</target> </trans-unit>           
     </body>
   </file>

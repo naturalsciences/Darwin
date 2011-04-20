@@ -17,7 +17,7 @@ class ExtLinksForm extends BaseExtLinksForm
     unset($this['comment_ts']);
     unset($this['comment_language_full_text']); // @TODO : check this!
     $this->widgetSchema['url'] = new sfWidgetFormInputText();
-    $this->widgetSchema['url']->setAttributes(array('class'=>'medium_size'));
+    $this->widgetSchema['url']->setAttributes(array('class'=>'small_medium_size'));
 
     /* Validators */
     $this->validatorSchema['id'] = new sfValidatorInteger(array('required'=>false));

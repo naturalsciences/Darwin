@@ -416,6 +416,11 @@ input[type="text"].medium_small_size
   width:180px;
 }
 
+input[type="text"].small_medium_size
+{
+  width:240px;
+}
+
 input[type="text"].medium_size
 {
   width:320px;
@@ -2514,6 +2519,11 @@ ul.board_news li div.news_info
 .underlined
 {
   text-decoration:underline;
+}
+
+.spec_ident_extlinks_data
+{
+  max-width:723px;
 }
 
 .olLayerGoogleCopyright{right:3px;bottom:2px;left:auto;}.olLayerGoogleV3.olLayerGoogleCopyright{display:none;bottom:0;right:0!important;}.olLayerGooglePoweredBy{left:2px;bottom:2px;}.olLayerGoogleV3.olLayerGooglePoweredBy{bottom:0!important;}
