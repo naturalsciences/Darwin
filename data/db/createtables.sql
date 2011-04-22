@@ -1785,7 +1785,7 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id),
     CONSTRAINT fk_darwin_flat_host_specimen_ref FOREIGN KEY (host_specimen_ref) REFERENCES specimens (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id)
+    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id),
     CONSTRAINT unq_darwin_flat_part_ref UNIQUE (part_ref);
 
 /*    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED,
