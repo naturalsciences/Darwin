@@ -1083,7 +1083,8 @@ create table taxonomy
         extinct boolean default false not null,
         constraint pk_taxonomy primary key (id),
         constraint unq_taxonomy unique (path, name_indexed, level_ref),
-        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
+        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+        constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id)
        )
 inherits (template_classifications);
 comment on table taxonomy is 'Taxonomic classification table';
