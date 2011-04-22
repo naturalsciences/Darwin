@@ -138,7 +138,7 @@ class catalogueActions extends DarwinActions
       {
         $query = $form
                  ->getQuery()
-                 ->orderBy($this->orderBy .' '.$this->orderDir);
+                 ->orderBy($this->orderBy .' '.$this->orderDir .', id' );
         if($this->is_choose == 0)
           $query->andWhere('id > 0');
 
