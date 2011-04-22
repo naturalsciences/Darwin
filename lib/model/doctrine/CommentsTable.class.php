@@ -62,7 +62,8 @@ class CommentsTable extends DarwinTable
   {
      $q = Doctrine_Query::create()
         ->from('Comments c');
-     $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true);
+     $q = $this->addCatalogueReferences($q, $table_name, $record_id, 'c', true)
+      ->orderby('notion_concerned asc');
     return $q->execute();
   }
 
