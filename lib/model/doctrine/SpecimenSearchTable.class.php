@@ -234,7 +234,7 @@ class SpecimenSearchTable extends Doctrine_Table
           'with_parts',
         )
       );
-      if ($db_user_type == (null || Users::REGISTERED_USER))
+      if ($db_user_type == null || $db_user_type == Users::REGISTERED_USER)
         $fields['parts'] = array(
           'part_ref',
           'part',
