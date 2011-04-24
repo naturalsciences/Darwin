@@ -28,7 +28,6 @@ DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_AreRole() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_peopleType() CASCADE;
 DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_toFullText() CASCADE;
 DROP FUNCTION IF EXISTS fct_array_find(IN in_array varchar, IN elem anyelement,OUT item_order integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_array_find(IN in_array anyarray, IN elem anyelement,OUT item_order integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_explode_array(in_array anyarray) CASCADE;
