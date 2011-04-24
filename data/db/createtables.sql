@@ -454,6 +454,7 @@ create table users
         db_user_type smallint default 1 not null,
         people_id integer,
         last_seen timestamp,
+        created_at timestamp default now(),
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_unique, birth_date, birth_date_mask),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
