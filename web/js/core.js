@@ -164,26 +164,21 @@ function objectsAreSame(x, y) {
 
 function attachHelpQtip(element)
 {
-        $(element).find(".help_ico").qtip({
-          style: { 
-              width: 200,
-              padding: 5,
-              background: '#95bd4c',
-              color: 'black',
-              border: {
-                  width: 7,
-                  color: '#95bd4c'
-              },
-              tip: 'bottomLeft',
-              name: 'dark' // Inherit the rest of the attributes from the preset dark style
-          },
-          position: {
-              corner: {
-                  target: 'topRight',
-                  tooltip: 'bottomLeft'
-              }
-          }
-      });
+  $(element).find(".help_ico").qtip({
+    content: {
+      text: function(api) {
+        return $(this).find('span').html();
+      }
+    },
+    style: {
+      tip: "bottomLeft",
+      classes: "ui-tooltip-dwgreen"
+    },
+    position: {
+      at: "top right",
+      my: "bottom left"
+    }
+  });
 }
 
 function postToUrl(url, params, newWindow)

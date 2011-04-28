@@ -2222,6 +2222,10 @@ a.and_search_code
   display:inline-block;
 }
 
+.help_ico>span
+{
+  display:none;
+}
 /**** MASS Action Screen  *****/
 
 #mass_action #item_list
@@ -2527,3 +2531,19 @@ ul.board_news li div.news_info
 }
 
 .olLayerGoogleCopyright{right:3px;bottom:2px;left:auto;}.olLayerGoogleV3.olLayerGoogleCopyright{display:none;bottom:0;right:0!important;}.olLayerGooglePoweredBy{left:2px;bottom:2px;}.olLayerGoogleV3.olLayerGooglePoweredBy{bottom:0!important;}
+
+.ui-tooltip-dwgreen {
+  width: 200px;
+  padding: 5px;
+  background: #95bd4c;
+  color: black;
+  border-width: 7px;
+  border-color: #95bd4c;
+}
+.ui-tooltip-dwgreen .ui-tooltip-content
+{
+  background: #95bd4c;
+  border:none ;
+  color:black;
+}
+
