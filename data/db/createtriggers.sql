@@ -206,33 +206,46 @@ CREATE TRIGGER trg_clr_referenceRecord_specimensaccompanying AFTER DELETE
 	EXECUTE PROCEDURE fct_clear_referencedRecord();
 
 /**** BEGIN _TS *****/
+
 CREATE TRIGGER trg_cpy_toFullText_comments BEFORE INSERT OR UPDATE
 	ON comments FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(comment_ts, 'pg_catalog.simple', comment);
 
 CREATE TRIGGER trg_cpy_toFullText_ext_links BEFORE INSERT OR UPDATE
 	ON ext_links FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(comment_ts, 'pg_catalog.simple', comment);
 
 CREATE TRIGGER trg_cpy_toFullText_identifications BEFORE INSERT OR UPDATE
 	ON identifications FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(value_defined_ts, 'pg_catalog.simple', value_defined);
 
 CREATE TRIGGER trg_cpy_toFullText_peopleaddresses BEFORE INSERT OR UPDATE
 	ON people_addresses FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(address_parts_ts, 'pg_catalog.simple', entry, po_box, extended_address, locality, region, zip_code, country);
 
 CREATE TRIGGER trg_cpy_toFullText_usersaddresses BEFORE INSERT OR UPDATE
 	ON users_addresses FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(address_parts_ts, 'pg_catalog.simple', entry, po_box, extended_address, locality, region, zip_code, country);
 
 CREATE TRIGGER trg_cpy_toFullText_multimedia BEFORE INSERT OR UPDATE
 	ON multimedia FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(descriptive_ts, 'pg_catalog.simple', title, subject );
+
+CREATE TRIGGER trg_cpy_toFullText_expeditions BEFORE INSERT OR UPDATE
+  ON expeditions FOR EACH ROW
+  EXECUTE PROCEDURE tsvector_update_trigger(name_ts, 'pg_catalog.simple', name);
+
+CREATE TRIGGER trg_cpy_toFullText_habitats BEFORE INSERT OR UPDATE
+  ON habitats FOR EACH ROW
+  EXECUTE PROCEDURE tsvector_update_trigger(description_ts, 'pg_catalog.simple', description );
+
+CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
+  ON vernacular_names FOR EACH ROW
+  EXECUTE PROCEDURE tsvector_update_trigger(name_ts, 'pg_catalog.simple', name);
 
 CREATE TRIGGER trg_cpy_toFullText_collectionmaintenance BEFORE INSERT OR UPDATE
 	ON collection_maintenance FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
+	EXECUTE PROCEDURE tsvector_update_trigger(description_ts, 'pg_catalog.simple', description);
 
 CREATE TRIGGER trg_cpy_updateCollectionRights AFTER INSERT OR UPDATE
 	ON collections FOR EACH ROW
@@ -253,18 +266,6 @@ CREATE TRIGGER trg_cpy_updateUserRightsCollections AFTER INSERT OR UPDATE
 CREATE TRIGGER trg_cpy_updateMyWidgetsCollRights AFTER UPDATE OR DELETE
   ON collections_rights FOR EACH ROW
   EXECUTE PROCEDURE fct_cpy_updateMyWidgetsColl();
-
-CREATE TRIGGER trg_cpy_toFullText_expeditions BEFORE INSERT OR UPDATE
-	ON expeditions FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
-
-CREATE TRIGGER trg_cpy_toFullText_habitats BEFORE INSERT OR UPDATE
-	ON habitats FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
-
-CREATE TRIGGER trg_cpy_toFullText_vernacularnames BEFORE INSERT OR UPDATE
-	ON vernacular_names FOR EACH ROW
-	EXECUTE PROCEDURE fct_cpy_toFullText();
 
 CREATE TRIGGER trg_chk_specimenCollectionAllowed BEFORE INSERT OR UPDATE OR DELETE
   ON specimens FOR EACH ROW

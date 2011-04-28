@@ -454,6 +454,7 @@ create table users
         db_user_type smallint default 1 not null,
         people_id integer,
         last_seen timestamp,
+        created_at timestamp default now(),
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_unique, birth_date, birth_date_mask),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
@@ -1083,7 +1084,8 @@ create table taxonomy
         extinct boolean default false not null,
         constraint pk_taxonomy primary key (id),
         constraint unq_taxonomy unique (path, name_indexed, level_ref),
-        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id)
+        constraint fk_taxonomy_level_ref_catalogue_levels foreign key (level_ref) references catalogue_levels(id),
+        constraint fk_taxonomy_parent_ref_taxonomy foreign key (parent_ref) references taxonomy(id)
        )
 inherits (template_classifications);
 comment on table taxonomy is 'Taxonomic classification table';
@@ -1784,8 +1786,10 @@ create table darwin_flat
     CONSTRAINT fk_darwin_flat_host_taxon_parent_ref FOREIGN KEY (host_taxon_parent_ref) REFERENCES taxonomy (id) ON DELETE SET DEFAULT,
     CONSTRAINT fk_darwin_flat_host_taxon_level_ref FOREIGN KEY (host_taxon_level_ref) REFERENCES catalogue_levels (id),
     CONSTRAINT fk_darwin_flat_host_specimen_ref FOREIGN KEY (host_specimen_ref) REFERENCES specimens (id) ON DELETE SET DEFAULT,
-    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id)
+    CONSTRAINT fk_darwin_flat_ig_ref FOREIGN KEY (ig_ref) REFERENCES igs (id),
+    CONSTRAINT unq_darwin_flat_part_ref UNIQUE (part_ref)
 /*    CONSTRAINT fk_darwin_flat_individual_ref FOREIGN KEY (individual_ref) REFERENCES specimen_individuals (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED,
+
     CONSTRAINT fk_darwin_flat_part_ref FOREIGN KEY (part_ref) REFERENCES specimen_parts (id) ON DELETE SET NULL DEFERRABLE INITIALLY DEFERRED*/
   );
 --SELECT substring(AddGeometryColumn('darwin_flat', 'gtu_location', 4326, 'POLYGON', 2) for 0);

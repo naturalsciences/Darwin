@@ -28,7 +28,6 @@ DROP FUNCTION IF EXISTS fct_cpy_FormattedName() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_AreRole() CASCADE;
 DROP FUNCTION IF EXISTS fct_chk_peopleType() CASCADE;
 DROP FUNCTION IF EXISTS fct_cas_userType() CASCADE;
-DROP FUNCTION IF EXISTS fct_cpy_toFullText() CASCADE;
 DROP FUNCTION IF EXISTS fct_array_find(IN in_array varchar, IN elem anyelement,OUT item_order integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_array_find(IN in_array anyarray, IN elem anyelement,OUT item_order integer) CASCADE;
 DROP FUNCTION IF EXISTS fct_explode_array(in_array anyarray) CASCADE;
@@ -96,7 +95,7 @@ DROP FUNCTION IF EXISTS trg_fct_chk_possible_upper_level() CASCADE;
 
 
 
-DROP FUNCTION IF EXISTS fct_add_in_dict(ref_table, ref_field, dict_value) CASCADE;
-DROP FUNCTION IF EXISTS fct_del_in_dict(ref_table, ref_field, dict_value) CASCADE;
+DROP FUNCTION IF EXISTS fct_add_in_dict(ref_table, ref_field, old_value, dict_value) CASCADE;
+DROP FUNCTION IF EXISTS fct_del_in_dict(ref_table, ref_field, dict_value, old_value) CASCADE;
 DROP FUNCTION IF EXISTS trg_ins_update_dict() CASCADE;
 DROP FUNCTION IF EXISTS trg_del_dict() CASCADE;

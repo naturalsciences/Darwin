@@ -144,7 +144,29 @@ INSERT INTO flat_dict (dict_value, referenced_relation, dict_field)
 
   UNION
   select distinct specimen_status , 'specimen_parts' ,'specimen_status'
-    FROM specimen_parts where specimen_status is not null  
+    FROM specimen_parts where specimen_status is not null 
+
+  UNION
+  select distinct floor , 'specimen_parts' ,'floor'
+    FROM specimen_parts where floor is not null  
+  
+  UNION 
+   select distinct shelf , 'specimen_parts' ,'shelf'
+    FROM specimen_parts where shelf is not null  
+
+  UNION
+
+  select distinct row  , 'specimen_parts' ,'row'
+    FROM specimen_parts where row is not null  
+
+  UNION
+
+  select distinct room , 'specimen_parts' ,'room'
+    FROM specimen_parts where room is not null  
+
+  UNION
+  select distinct building , 'specimen_parts' ,'building'
+    FROM specimen_parts where building is not null  
  );
 
 \i createfunctions.sql
