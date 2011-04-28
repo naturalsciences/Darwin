@@ -172,7 +172,7 @@ function attachHelpQtip(element)
     },
     style: {
       tip: "bottomLeft",
-      classes: "ui-tooltip-dwgreen"
+      classes: "ui-tooltip-dwgreen ui-tooltip-rounded"
     },
     position: {
       at: "top right",

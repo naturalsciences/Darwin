@@ -2224,7 +2224,7 @@ a.and_search_code
 
 .help_ico>span
 {
-  display:none;
+  display:none !important;
 }
 /**** MASS Action Screen  *****/
 

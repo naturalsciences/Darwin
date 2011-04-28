@@ -18,8 +18,8 @@
             <?php endif;?>
     </div>
     <span>
-      <?php if($sf_user->getHelpIcon() && $category!='boardwidget' && !$read_only) : ?>          
-        <div class="help_ico" alt="<?php echo MyWidgets::getHelpIcon($category,$widget) ;?>"></div>
+      <?php if($category!='boardwidget' && !$read_only) : ?>          
+        <?php echo help_ico(MyWidgets::getHelpIcon($category,$widget),$sf_user);?>
       <?php endif ; ?>
       <?php echo __($title); ?>
     </span>

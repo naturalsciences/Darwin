@@ -14,8 +14,8 @@
               <?php echo image_tag('grey_expand.png', array('alt' => '+', 'class'=> 'tree_cmd_td')); ?>            
             <?php endif ; ?>
             <?php echo __($stat['title']) ; ?>
-            <?php if($sf_user->getHelpIcon() && $stat['description']!= '') : ?>          
-              <div class="help_ico" alt="<?php echo __($stat['description']) ;?>"></div>
+            <?php if($stat['description']!= '') : ?>         
+              <?php echo help_ico($form['description']->renderHelp(),$sf_user);?>
             <?php endif ; ?>
           </th>
         </tr>
