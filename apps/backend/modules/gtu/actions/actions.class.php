@@ -50,6 +50,7 @@ class gtuActions extends DarwinActions
       {
         //@TODO: We need to refactor and avoid doing too much queries when format is xml
         $query = $this->form->getQuery();
+        $query->andWhere('code=code');
         if($request->getParameter('format') == 'xml' || $request->getParameter('format') == 'text')
         {
           $query->orderBy($this->orderBy .' '.$this->orderDir)
@@ -93,6 +94,22 @@ class gtuActions extends DarwinActions
           // If pager not yet executed, this means the query has to be executed for data loading
           if (! $this->pagerLayout->getPager()->getExecuted())
             $this->items = $this->pagerLayout->execute();
+        }
+        $gtu_ids = array();
+        foreach($this->items as $i)
+          $gtu_ids[] = $i->getId();
+        $tag_groups  = Doctrine::getTable('TagGroups')->fetchByGtuRefs($gtu_ids);
+        foreach($this->items as $i)
+        {
+          $i->TagGroups = new Doctrine_Collection('TagGroups');
+          foreach($tag_groups as $t)
+          {
+
+            if( $t->getGtuRef() == $i->getId())
+            {               
+              $i->TagGroups[]= $t;
+            }
+          }
         }
       }
     }

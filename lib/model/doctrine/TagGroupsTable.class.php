@@ -123,4 +123,13 @@ class TagGroupsTable extends DarwinTable
     return $results;
   }
 
+  public function fetchByGtuRefs($ids)
+  {
+    if(empty($ids)) return array();
+    $q = Doctrine_Query::create()
+         ->from('TagGroups g')
+         ->andWherein('g.gtu_ref', $ids);
+     return  $q->execute();
+  }
+
 }

@@ -36,7 +36,7 @@ class Collections extends BaseCollections
   public function addChild($CollectionTree)
   {
     $CollectionTree->setParentNode($this);
-    $this->children[] = $CollectionTree;
+    $this->children[strtolower($CollectionTree->getName())] = $CollectionTree;
   }
 
   public function hasChild()
@@ -46,6 +46,7 @@ class Collections extends BaseCollections
 
   public function getChilds()
   {
+    ksort($this->children);
     return $this->children;
   }
 
