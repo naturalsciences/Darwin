@@ -68,11 +68,12 @@ $(document).ready(function ()
           <td <?php if(isset($searchForm['lower_bound'])) echo 'colspan="3"'; elseif(isset($searchForm['classification'])) echo 'colspan="3"';?>><span class="search_item_name"></span></td>
           <td class="widget_row_delete">
             <?php echo image_tag('remove.png', 'alt=Delete class=clear_relation id=clear_cat_relation'); ?>
-            <?php echo help_ico($form['relation']->renderHelp(),$sf_user);?>
+            <?php echo help_ico($searchForm['relation']->renderHelp(),$sf_user);?>
           </td>   
         </tr>
       </tbody>
     </table>
+
     <div class="search_results">
       <div class="search_results_content">
       </div>

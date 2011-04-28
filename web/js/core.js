@@ -148,7 +148,7 @@ function result_choose ()
         ref_element_id = getIdInClasses(el);
         ref_element_name = el.find('span.item_name').text();
         $('.result_choose').die('click');
-        $('.qtip-button').click();
+        $('body').trigger('close_modal');
 }
 
 function objectsAreSame(x, y) {

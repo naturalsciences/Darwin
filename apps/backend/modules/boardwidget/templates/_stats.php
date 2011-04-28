@@ -15,7 +15,7 @@
             <?php endif ; ?>
             <?php echo __($stat['title']) ; ?>
             <?php if($stat['description']!= '') : ?>         
-              <?php echo help_ico($form['description']->renderHelp(),$sf_user);?>
+              <?php echo help_ico($stat['description']->renderHelp(),$sf_user);?>
             <?php endif ; ?>
           </th>
         </tr>
