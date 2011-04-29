@@ -4,18 +4,6 @@
 <script type="text/javascript">
 $(document).ready(function () 
 {
-   $('.search_results_content tbody tr .info').live('click',function() 
-   {
-     item_row=$(this).closest('tr');
-     if(item_row.find('.tree').is(":hidden"))
-     {
-       $.get('<?php echo url_for('catalogue/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses(item_row),function (html){
-         item_row.find('.tree').html(html).slideDown();
-         });
-     }
-     $('.tree').slideUp();
-   });
-
   $('#clear_cat_relation').click(function (event)
   {
     event.preventDefault();
