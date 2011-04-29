@@ -2571,4 +2571,9 @@ ul.board_news li div.news_info
   color:white;
 }
 
+.dialog-modal-edit .ui-tooltip-titlebar
+{
+  background-color:#C1CF56 !important;
+  color:white;
+}
 
