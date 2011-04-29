@@ -994,7 +994,7 @@
       <trans-unit id="481">
         <source>Choose a specimen</source> <target>Choisir un échantillon</target> </trans-unit>
       <trans-unit id="482">
-        <source>o you also want to duplicate hidden data</source> <target>Voulez vous aussi dupliquer les données cachés</target> </trans-unit>
+        <source>Do you also want to duplicate hidden data</source> <target>Voulez vous aussi dupliquer les données cachés</target> </trans-unit>
       <trans-unit id="483">
         <source>Specimen individuals count</source> <target>Nombre d'individus d'échantillon</target> </trans-unit>
       <trans-unit id="484">
