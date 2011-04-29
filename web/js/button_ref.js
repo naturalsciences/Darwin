@@ -58,11 +58,11 @@ function button_ref_modal(event)
       content: {
         text: '<img src="/images/loader.gif" alt="loading"> Loading ...',
         title: { button: true, text: $(this).parent().attr('title') },
-                 ajax: {
-                   url: $(this).attr('href'),
-                          type: 'GET',
-                          data: {with_js:1}
-                 }
+        ajax: {
+          url: $(this).attr('href'),
+                type: 'GET',
+                data: {with_js:1}
+        }
       },
       position: {
         my: 'center',

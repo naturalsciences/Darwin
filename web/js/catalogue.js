@@ -15,48 +15,44 @@
               $(base.options['duplicate_link']).live('click',base.duplicateItem);
             }
             else
-            {
+            { 
               $(base.options['duplicate_link']).click(base.duplicateItem);
             }
         };
 
         base.duplicateItem = function(event)
-        {        
+        {
           self = this;
           event.preventDefault();
-          scroll(0,0);
           $(this).qtip({
             content: {
-              title: { text : 'duplicate', button: 'X' },
-              url: base.options['duplicate_href']
+              title: $(self).text(),
+              ajax: {
+                url: base.options['duplicate_href'],
+                type: 'GET'
+              },
+              text: ' '
             },
-            show: { when: 'click', ready: true },
+            show: {
+              ready: true,
+              delay: 0,
+              modal: {
+                on: true,
+                blur: false
+              },
+            },
+            hide: {
+              event: 'close_modal',
+              target: $('body')
+            },
             position: {
-              target: $(document.body), // Position it via the document body...
-              adjust: { y: 210 },
-              corner: 'topMiddle' // ...at the topMiddle of the viewport
+              my: 'center', at: 'center', // Center it...
+              target: $(window) // ... in the window
             },
             hide: false,
-            style: {
-              width: { min: 200, max: 500},
-              title: { background: '#C1CF56', color:'white'}
-            },
-            api: {
-              beforeShow: function()
-              {
-                  // Fade in the modal "blanket" using the defined show speed
-                element_name = null;
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-              },
-              beforeHide: function()
-              {
-                  // Fade out the modal "blanket" using the defined hide speed
-                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-              },
-              onHide: function()
-              {
-                $(this.elements.target).qtip("destroy");
+            style: ' ui-tooltip-rounded ui-tooltip-dialogue',
+            events: {
+              hide: function(event, api) {
                 if (element_name == null)
                 {
                   return false ;
@@ -68,8 +64,9 @@
                 }
               }
             }
-          });
-        }
+            });
+            
+          };
         
         base.init();
     };
