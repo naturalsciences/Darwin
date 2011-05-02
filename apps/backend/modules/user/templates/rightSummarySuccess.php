@@ -2,8 +2,8 @@
 <table class="summary">
   <thead>
     <tr>
-      <th><?php echo ('Collection') ; ?></th>
-      <th><?php echo ('Right') ; ?></th>
+      <th><?php echo __('Collection') ; ?></th>
+      <th><?php echo __('Right') ; ?></th>
     </tr>
   </thead>
   <tbody>  

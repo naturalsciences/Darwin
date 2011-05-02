@@ -87,14 +87,9 @@
 <script  type="text/javascript">
 $(document).ready(function () {
   $('img.extd_info').each(function(){
-    tip_content = $(this).next().html();
-    $(this).qtip(
+    $('img.extd_info').qtip(
     {
-         content: tip_content,
-         style: {
-            tip: true, // Give it a speech bubble tip with automatic corner detection
-            name: 'cream'
-         }
+      content: $(this).next().html(),
     });
   });
 });
