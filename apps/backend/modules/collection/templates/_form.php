@@ -124,5 +124,7 @@ $(document).ready(function ()
 <script  type="text/javascript">
 $(document).ready(function () {
     $('.clear_coll').live('click', detachCollRightValue);
-  });
+    $('a.coll_right').click(collection_add_user);
+    $('a.set_rights').click(collection_add_rights);
+});
 </script>

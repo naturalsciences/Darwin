@@ -19,44 +19,50 @@
         var last_position = $('body').scrollTop() ;      
         scroll(0,0) ;
         $(this).qtip({
+          id: 'modal',
           content: {
-            title: { text: options['q_tip_text'], button: 'X' },
-            url: $(this).attr('href')
+            text: '<img src="/images/loader.gif" alt="loading"> Loading ...',
+            title: { button: true, text: options['q_tip_text'] },
+            ajax: {
+              url: $(this).attr('href'),
+              type: 'GET'
+            }
           },
-          show: { when: 'click', ready: true },
           position: {
-            target: $(document.body), // Position it via the document body...
-            adjust: { y: 210 },
-            corner: 'topMiddle' // ...at the topMiddle of the viewport
+            my: 'center',
+            at: 'center',
+            target: $(document.body)
           },
-          hide: false,
-          style: {
-            width: { min: 876, max: 1000},
-            title: { background: '#5BABBD', color:'white'}
+          show: {
+            ready: true,
+            delay: 0,
+            event: event.type,
+            solo: true,
+            modal: {
+              on: true,
+              blur: false
+            },
           },
-          api: {
-            beforeShow: function()
-            {
-                // Fade in the modal "blanket" using the defined show speed
+          hide: {
+            event: 'close_modal',
+            target: $('body')
+          },
+          events: {
+            show: function () {
               ref_element_id = null;
               ref_element_name = null;
               fct_update = options['update_row_fct'];
-              addBlackScreen()
-              $('#qtip-blanket').fadeIn(this.options.show.effect.length);
             },
-            beforeHide: function()
-            {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-            },
-            onHide: function()
-            {
+            hide: function(event, api) {
               $('.result_choose').die('click') ;
               scroll(0,last_position) ;
-              $(this.elements.target).qtip("destroy");
+              api.destroy();
             }
-          }
-        });
+          },
+          style: 'ui-tooltip-light ui-tooltip-rounded'
+        }
+          
+        );
         return false;
       });      
       return this;

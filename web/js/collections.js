@@ -2,8 +2,8 @@ var ref_element_id = null;
 var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
-$(document).ready(function () {
- $("a.coll_right").click(function(event){
+
+function collection_add_user(event){
    var last_position = $('body').scrollTop() ;
     scroll(0,0) ;
     referer = 'collection' ;
@@ -51,9 +51,9 @@ $(document).ready(function () {
       style: 'ui-tooltip-light ui-tooltip-rounded'
     });
     return false;
- });
+}
  
- $("a.set_rights").live('click', function(event){
+function collection_add_rights(event){
    // if ($(this).attr('id') == 'widget') { min_width = 476 } else { min_width = 876 }
     var last_position = $('body').scrollTop() ;          
     scroll(0,0) ;
@@ -99,8 +99,8 @@ $(document).ready(function () {
     style: 'ui-tooltip-light ui-tooltip-rounded'
     });
     return false;
- });
-});
+ }
+ 
 
 function addCollRightValue(user_ref)
 {
