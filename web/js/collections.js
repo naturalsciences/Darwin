@@ -96,7 +96,7 @@ function collection_add_rights(event){
         api.destroy();
       }
     },
-    style: 'ui-tooltip-light ui-tooltip-rounded'
+    style: 'ui-tooltip-light ui-tooltip-rounded dialog-modal-edit'
     });
     return false;
  }

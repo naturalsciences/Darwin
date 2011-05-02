@@ -3,7 +3,8 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-  $("#save_search").click(function(){
+  $("#save_search").click(function(event){
+    event.preventDefault();
     source = '<?php if(isset($source)) echo $source;?>';
     column_str = ' ';
     if($('.column_menu ul > li.check').length)
@@ -18,57 +19,50 @@ $(document).ready(function () {
     {
       column_str = $('#specimen_search_filters_col_fields').val();
     }
-
+    var last_position = $('body').scrollTop() ;              
     scroll(0,0) ;
 
     $('form.specimensearch_form select.double_list_select-selected option').attr('selected', 'selected');
     if(source == '')
       source = $('#specimen_search_filters_what_searched').val();
     $("#save_search").qtip({
+        id: 'modal',
         content: {
-            title: { text : '<?php echo __('Save your search')?>', button: 'X' },        
-            url: '<?php echo url_for("savesearch/saveSearch");?>/source/' + source + '/cols/' + column_str,
-            data: $('.specimensearch_form').serialize(),
-            method: 'post'
+          text: '<img src="/images/loader.gif" alt="loading"> loading ...',
+          title: { button: true, text: '<?php echo __('Save your search')?>' },
+          ajax: {
+            url: '<?php echo url_for("savesearch/saveSearch");?>/source/' + source + '/cols/' + encodeURI(column_str),
+            type: 'POST'
+          }
         },
-        show: { when: 'click', ready: true },
         position: {
-            target: $(document.body), // Position it via the document body...
-            corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
-            adjust:{
-              y: 150 // option set in case of the qtip become too big
-            },
+          my: 'center', // ...at the center of the viewport
+          at: 'center',
+          target: $(window)
         },
-        hide: false,
-        style: {
-            width: { min: 620, max: 800},
-            title: { background: '#5BABBD', color:'white'}
+        
+        show: {
+          ready: true,
+          delay: 0,
+          event: event.type,
+          solo: true,
+          modal: {
+            on: true,
+            blur: false
+          },
         },
-        api: {
-            beforeShow: function()
-            {
-                // Fade in the modal "blanket" using the defined show speed
-               ref_element_id = null;
-               ref_element_name = null;
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-            },
-            beforeHide: function()
-            {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-            },
-         onHide: function()
-         {
-            $('#save_search').attr('value','Search Saved') ;
-            try{
-              $('#save_search').qtip("destroy");
-            }
-            catch(err)
-            {}
-         }
-         }
-    });
+        hide: {
+          event: 'close_modal',
+          target: $('body')
+        },
+        events: {
+          hide: function(event, api) {                
+            scroll(0,last_position);
+            api.destroy();
+          }
+        },
+        style: 'ui-tooltip-light ui-tooltip-rounded'
+      });
     return false;
  });
 }); 
