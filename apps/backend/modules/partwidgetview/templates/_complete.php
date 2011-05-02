@@ -4,7 +4,7 @@
 	<td><?php echo $part->getSpecimenStatus() ?></td>
   </tr>
   <tr>
-	<th><?php echo ("Complete ? ");?></th>
+	<th><?php echo __("Complete ?");?></th>
 	<td><?php echo ($part->getcomplete()?__("Yes"):__("No")) ; ?></td>
   </tr>
 </table>

@@ -2478,7 +2478,25 @@
         <target>Via deze widget kunt u alle records zoeken waar een specifieke persoon (of instelling) in voorkomt. U kunt ook één of meerdere functies voor deze persoon selecteren (zoals verzamelaar, determinator en/of schenker/verkoper) </target>
         </trans-unit> 
         <trans-unit id="1171">        
-        <source>Donator or seller</source> <target>Schenkers of verkopers</target> </trans-unit>           
+          <source>Donator or seller</source>
+          <target>Schenkers of verkopers</target>
+        </trans-unit>
+        <trans-unit id="1172">
+          <source>Search Saved</source>
+          <target>Zoekcriteria werd bewaard</target>
+        </trans-unit>
+        <trans-unit id="1173">
+          <source>Fields</source>
+          <target>Velden</target>
+        </trans-unit>
+        <trans-unit id="1174">
+          <source>Visible ?</source>
+          <target>Zichtbaar?</target>
+        </trans-unit>
+        <trans-unit id="1175">
+          <source>Complete</source>
+          <target>Volledig</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
