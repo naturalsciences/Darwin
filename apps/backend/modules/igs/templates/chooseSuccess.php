@@ -6,7 +6,7 @@
           ref_element_id = getIdInClasses($(this));
           ref_element_name = $(this).children("td:first").text();
 	  $('.results tbody tr').die('click');
-          $('.qtip-button').click();
+	  $('body').trigger('close_modal');
       });
     });
   </script>

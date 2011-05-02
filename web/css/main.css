@@ -100,7 +100,7 @@ table td.centered, table th.centered
   display:inline-block;
 }
 
-.qtip-content .page
+.ui-tooltip-content .page
 {
   padding-top: 10px;
   margin-top: 15px;
