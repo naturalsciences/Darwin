@@ -3,94 +3,105 @@ var ref_element_name = null;
 var ref_level_id = '';
 var ref_caller_id = '';
 $(document).ready(function () {
- $("a.coll_right").click(function(){
-    referer = 'collection' ;
+ $("a.coll_right").click(function(event){
+   var last_position = $('body').scrollTop() ;
     scroll(0,0) ;
+    referer = 'collection' ;
     $(this).qtip({
+      id: 'modal',
       content: {
-        title: { text : 'Choose a User', button: 'X' },
-        url: $(this).attr('href')
+        text: '<img src="/images/loader.gif" alt="loading"> Loading ...',
+        title: { button: true, text: 'Choose a User' },
+        ajax: {
+          url: $(this).attr('href'),
+          type: 'GET'
+        }
       },
-      show: { when: 'click', ready: true },
       position: {
-        target: $(document.body), // Position it via the document body...
-        adjust: { y: 210 },
-        corner: 'topMiddle' // ...at the topMiddle of the viewport
+        my: 'center',
+        at: 'center',
+        target: $(document.body)
       },
-      hide: false,
-      style: {
-        width: { min: 620, max: 1000},
-        title: { background: '#5BABBD', color:'white'}
+      
+      show: {
+        ready: true,
+        delay: 0,
+        event: event.type,
+        solo: true,
+        modal: {
+          on: true,
+          blur: false
+        },
       },
-      api: {
-        beforeShow: function()
-        {
-          // Fade in the modal "blanket" using the defined show speed
+      hide: {
+        event: 'close_modal',
+        target: $('body')
+      },
+      events: {
+        show: function () {
           ref_element_id = null;
           ref_element_name = null;
-          addBlackScreen()
-          $('#qtip-blanket').fadeIn(this.options.show.effect.length);
         },
-        beforeHide: function()
-        {
-          // Fade out the modal "blanket" using the defined hide speed
-          $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-        },
-        onHide: function()
-        {
+        hide: function(event, api) {
           $('.result_choose').die('click') ;
-          $(this.elements.target).qtip("destroy");
+          scroll(0,last_position) ;
+          api.destroy();
         }
-      }
+      },
+      style: 'ui-tooltip-light ui-tooltip-rounded'
     });
     return false;
  });
  
- $("a.set_rights").live('click', function(){
-    if ($(this).attr('id') == 'widget') { min_width = 476 } else { min_width = 876 }
+ $("a.set_rights").live('click', function(event){
+   // if ($(this).attr('id') == 'widget') { min_width = 476 } else { min_width = 876 }
     var last_position = $('body').scrollTop() ;          
     scroll(0,0) ;
     $(this).qtip({
-        content: {
-            title: { text : 'List of '+$(this).attr('name'), button: 'X' },
-            url: $(this).attr('href')
-        },
-        show: { when: 'click', ready: true },
-        position: {
-            target: $(document.body), // Position it via the document body...
-            adjust: { y: 210 },
-            corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
-            adjust:{
-        	  	y: 150 // option set in case of the qtip become too big
-            },
-        },
-        hide: false,
-        style: {
-            width: { min: min_width, max: 1000},
-            title: { background: '#C1CF56', color:'white'}
-        },
-        api: {
-            beforeShow: function()
-            {
-                // Fade in the modal "blanket" using the defined show speed
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-            },
-            beforeHide: function()
-            {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-            },
-	       onHide: function()
-	       {
-	          $(this.elements.target).qtip("destroy");
-            scroll(0,last_position) ;	          
-	       }
-         }
+      id: 'modal',
+      content: {
+        text: '<img src="/images/loader.gif" alt="loading"> Loading ...',
+        title: { button: true, text: 'List of '+$(this).attr('name') },
+        ajax: {
+          url: $(this).attr('href'),
+                 type: 'GET'
+        }
+    },
+    position: {
+      my: 'center',
+      at: 'center',
+      target: $(document.body)
+    },
+    show: {
+      ready: true,
+      delay: 0,
+      event: event.type,
+      solo: true,
+      modal: {
+        on: true,
+        blur: false
+      },
+    },
+    hide: {
+      event: 'close_modal',
+      target: $('body')
+    },
+    events: {
+      show: function () {
+        ref_element_id = null;
+        ref_element_name = null;
+      },
+      hide: function(event, api) {
+        scroll(0,last_position) ;
+        api.destroy();
+      }
+    },
+    style: 'ui-tooltip-light ui-tooltip-rounded'
     });
     return false;
  });
 });
+
 function addCollRightValue(user_ref)
 {
    hideForRefresh('#users_filter');

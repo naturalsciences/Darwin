@@ -26,7 +26,7 @@ $(document).ready(function ()
     <tbody>
       <tr>
         <th>
-	  <?php echo $form['is_public']->renderLabel(__("Public collection")) ?>
+	  <?php echo $form['is_public']->renderLabel("Public collection") ?>
           <?php echo help_ico($form['is_public']->renderHelp(),$sf_user);?>
         </th>
         <td>
@@ -65,7 +65,7 @@ $(document).ready(function ()
       <tr>
         <th>
           <?php echo $form['main_manager_ref']->renderLabel() ?>
-	  <?php echo help_ico($form['main_mananger_ref']->renderHelp(),$sf_user);?>
+	  <?php echo help_ico($form['main_manager_ref']->renderHelp(),$sf_user);?>
         </th>
         <td>
           <?php echo $form['main_manager_ref']->renderError() ?>
@@ -80,28 +80,28 @@ $(document).ready(function ()
         </td>
       </tr>
       <tr>
-      	<td colspan="2">
-        	<table class="encoding collections_rights" id="user_right">
-		        <thead>
-		          <tr>
-			          <th><label><?php echo __("Users") ; ?></label></th>
-			          <th colspan="4"><label><?php echo __("Rights") ; ?></label></th>
-		          </tr>
-		        </thead>
-		        <tbody>
-		          <?php foreach($form['CollectionsRights'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
-		          <?php endforeach;?>
-		          <?php foreach($form['newVal'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
-		          <?php endforeach;?>
-		        </tbody>
-		      </table>
+        <td colspan="2">
+        <table class="encoding collections_rights" id="user_right">
+          <thead>
+            <tr>
+              <th><label><?php echo __("Users") ; ?></label></th>
+              <th colspan="4"><label><?php echo __("Rights") ; ?></label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($form['CollectionsRights'] as $form_value):?>
+              <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
+            <?php endforeach;?>
+            <?php foreach($form['newVal'] as $form_value):?>
+              <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+            <?php endforeach;?>
+          </tbody>
+        </table>
 
-	        <div class='add_value' id="user_right">
-		        <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		        <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add User');?></a>
-		      </div>
+        <div class='add_value' id="user_right">
+                <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+                <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add User');?></a>
+              </div>
       	</td>
       </tr>          
     </tbody>
