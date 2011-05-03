@@ -152,7 +152,7 @@ class DarwinTable extends Doctrine_Table
     $q = Doctrine_Query::create()
       ->select('distinct(collection_ref) as collection_ref')
       ->from('SpecimenSearch s')
-      ->where("s.$field_name = ?",$unit_id);
+			->where("s.$field_name = ". ( (int)$unit_id) );
     $collections = $q->execute();
     $ids = array();
     foreach($collections as $col)
