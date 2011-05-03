@@ -88,7 +88,6 @@ class lithostratigraphyActions extends DarwinActions
     $this->no_right_col = Doctrine::getTable('Lithostratigraphy')->testNoRightsCollections('litho_ref',$request->getParameter('id'), $this->getUser()->getId());
     $this->form = new LithostratigraphyForm($unit);
     $this->loadWidgets();
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -98,7 +97,6 @@ class lithostratigraphyActions extends DarwinActions
     $this->no_right_col = Doctrine::getTable('Lithostratigraphy')->testNoRightsCollections('litho_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new LithostratigraphyForm($unit);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
     $this->processForm($request,$this->form);
     $this->loadWidgets();
     $this->setTemplate('edit');
@@ -135,7 +133,5 @@ class lithostratigraphyActions extends DarwinActions
     $this->forward404Unless($this->litho,'Lithostratigraphic unit not Found');
     $this->form = new LithostratigraphyForm($this->litho);    
     $this->loadWidgets();
-
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->litho->getId());
   } 
 }

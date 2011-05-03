@@ -86,7 +86,6 @@ class mineralogyActions extends DarwinActions
     $this->no_right_col = Doctrine::getTable('Mineralogy')->testNoRightsCollections('mineral_ref',$request->getParameter('id'), $this->getUser()->getId());
     $this->form = new MineralogyForm($unit);
     $this->loadWidgets();
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -96,7 +95,6 @@ class mineralogyActions extends DarwinActions
     $this->no_right_col = Doctrine::getTable('Mineralogy')->testNoRightsCollections('mineral_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new MineralogyForm($unit);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
     $this->processForm($request,$this->form);
 
     $this->loadWidgets();
@@ -173,7 +171,5 @@ class mineralogyActions extends DarwinActions
     $this->forward404Unless($this->mineral,'Mineralogic unit not Found');
     $this->form = new MineralogyForm($this->mineral);    
     $this->loadWidgets();
-
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->mineral->getId());
   }
 }
