@@ -21,9 +21,12 @@ function button_ref_modal(event)
         }
       },
       position: {
-        my: 'center',
-        at: 'center',
-        target: $(document.body)
+        my: 'top center',
+        at: 'top center',
+        adjust:{
+          y: 250 // option set in case of the qtip become too big
+        },         
+        target: $(document.body),
       },
       
       show: {

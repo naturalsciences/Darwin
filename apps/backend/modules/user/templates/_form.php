@@ -213,8 +213,12 @@ $(document).ready(function () {
         target: $('body')
       },
       position: {
-        my: 'center', at: 'center', // Center it...
-        target: $(window) // ... in the window
+        my: 'top center',
+        at: 'top center',
+        adjust:{
+          y: 250 // option set in case of the qtip become too big
+        },         
+        target: $(document.body),
       },
       events: {
         hide: function(event, api) {

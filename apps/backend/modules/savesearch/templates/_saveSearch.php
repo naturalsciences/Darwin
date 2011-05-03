@@ -35,11 +35,14 @@ $(document).ready(function () {
             type: 'POST'
           }
         },
-        position: {
-          my: 'center', // ...at the center of the viewport
-          at: 'center',
-          target: $(window)
-        },
+      position: {
+        my: 'top center',
+        at: 'top center',
+        adjust:{
+          y: 250 // option set in case of the qtip become too big
+        },         
+        target: $(document.body),
+      },
         
         show: {
           ready: true,

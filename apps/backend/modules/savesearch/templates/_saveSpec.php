@@ -37,45 +37,48 @@ $(document).ready(function () {
 
     $('form.search_form select.double_list_select-selected option').attr('selected', 'selected');
     $("#save_specs").qtip({
-            id: 'modal',
-            content: {
-              text: '<img src="/images/loader.gif" alt="loading"> loading ...',
-              title: { button: true, text: '<?php echo __('Save your specimens')?>' },
-              ajax: {
-                url: '<?php echo url_for('savesearch/saveSearch?type=pin&source='.$source);?>/cols/' + encodeURI(column_str) + '/list_nr/' + $('#save_specs_choice').val(),
-                type: 'POST'
-              }
-            },
-            position: {
-              my: 'center', // ...at the center of the viewport
-              at: 'center',
-              target: $(window)
-            },
+      id: 'modal',
+      content: {
+        text: '<img src="/images/loader.gif" alt="loading"> loading ...',
+        title: { button: true, text: '<?php echo __('Save your specimens')?>' },
+        ajax: {
+          url: '<?php echo url_for('savesearch/saveSearch?type=pin&source='.$source);?>/cols/' + encodeURI(column_str) + '/list_nr/' + $('#save_specs_choice').val(),
+          type: 'POST'
+        }
+      },
+      position: {
+        my: 'top center',
+        at: 'top center',
+        adjust:{
+          y: 250 // option set in case of the qtip become too big
+        },         
+        target: $(document.body),
+      },
             
-            show: {
-              ready: true,
-              delay: 0,
-              event: event.type,
-              solo: true,
-              modal: {
-                on: true,
-                blur: false
-              },
-            },
-            hide: {
-              event: 'close_modal',
-              target: $('body')
-            },
-            events: {
-              hide: function(event, api) {                
-                scroll(0,last_position);
-                api.destroy();
-                if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
-                  window.location.href = '<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved;
-              }
-            },
-            style: 'ui-tooltip-light ui-tooltip-rounded'
-          });
+      show: {
+        ready: true,
+        delay: 0,
+        event: event.type,
+        solo: true,
+        modal: {
+          on: true,
+          blur: false
+        },
+      },
+      hide: {
+        event: 'close_modal',
+        target: $('body')
+      },
+      events: {
+        hide: function(event, api) {                
+          scroll(0,last_position);
+          api.destroy();
+          if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
+            window.location.href = '<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved;
+        }
+      },
+      style: 'ui-tooltip-light ui-tooltip-rounded'
+    });
     return false;
  });
 }); 

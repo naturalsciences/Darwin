@@ -2571,6 +2571,10 @@ ul.board_news li div.news_info
   color:white;
 }
 
+#ui-tooltip-modal .ui-tooltip-tip
+{
+  display:none !important;  /* Hide the tip of qtip on modal screens*/
+}
 .dialog-modal-edit .ui-tooltip-titlebar
 {
   background-color:#C1CF56 !important;

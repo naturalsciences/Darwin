@@ -46,8 +46,12 @@
               target: $('body')
             },
             position: {
-              my: 'center', at: 'center', // Center it...
-              target: $(window) // ... in the window
+              my: 'top center',
+              at: 'top center',
+              adjust:{
+                y: 250 // option set in case of the qtip become too big
+              },         
+              target: $(document.body),
             },
             hide: false,
             style: ' ui-tooltip-rounded ui-tooltip-dialogue',
@@ -121,9 +125,12 @@
               }
             },
             position: {
-              my: 'center', // ...at the center of the viewport
-              at: 'center',
-              target: $(window)
+              my: 'top center',
+              at: 'top center',
+              adjust:{
+                y: 250 // option set in case of the qtip become too big
+              },         
+              target: $(document.body),
             },
             
             show: {

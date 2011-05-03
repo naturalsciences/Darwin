@@ -175,8 +175,8 @@ function attachHelpQtip(element)
       classes: "ui-tooltip-dwgreen ui-tooltip-rounded"
     },
     position: {
-      at: "top right",
-      my: "bottom left"
+      my: "bottom left",
+      at: "top right"
     }
   });
 }
