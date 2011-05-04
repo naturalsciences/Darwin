@@ -22,60 +22,62 @@
 <script  type="text/javascript">
 $(document).ready(function () {
 
-  $("#save_specs").click(function(){
+  $("#save_specs").click(function(event){
+    event.preventDefault();
     if($('#save_specs_choice').val()=="") return;
-    column_str = ' ';
+    var column_str = ' ';
     $('.column_menu ul > li.check').each(function (index)
       {
         if(column_str != '') column_str += '|';
         column_str += $(this).attr('id').substr(3);
       });
 
+    var last_position = $('body').scrollTop() ;              
     scroll(0,0) ;
 
     $('form.search_form select.double_list_select-selected option').attr('selected', 'selected');
-
     $("#save_specs").qtip({
-        content: {
-            title: { text : '<?php echo __('Save your specimens')?>', button: 'X' },
-            url: '<?php echo url_for('savesearch/saveSearch?type=pin&source='.$source);?>'+ '/cols/' + column_str + '/list_nr/' + $('#save_specs_choice').val(),
-            //data: $('.search_form').serialize(),
-            method: 'post'
+      id: 'modal',
+      content: {
+        text: '<img src="/images/loader.gif" alt="loading"> loading ...',
+        title: { button: true, text: '<?php echo __('Save your specimens')?>' },
+        ajax: {
+          url: '<?php echo url_for('savesearch/saveSearch?type=pin&source='.$source);?>/cols/' + encodeURI(column_str) + '/list_nr/' + $('#save_specs_choice').val(),
+          type: 'POST'
+        }
+      },
+      position: {
+        my: 'top center',
+        at: 'top center',
+        adjust:{
+          y: 250 // option set in case of the qtip become too big
+        },         
+        target: $(document.body),
+      },
+            
+      show: {
+        ready: true,
+        delay: 0,
+        event: event.type,
+        solo: true,
+        modal: {
+          on: true,
+          blur: false
         },
-        show: { when: 'click', ready: true },
-        position: {
-            target: $(document.body), // Position it via the document body...
-            corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
-            adjust:{
-              y: 150 // option set in case of the qtip become too big
-            },
-        },
-        hide: false,
-        style: {
-            width: { min: 620, max: 800},
-            title: { background: '#5BABBD', color:'white'}
-        },
-        api: {
-            beforeShow: function()
-            {
-                // Fade in the modal "blanket" using the defined show speed
-               ref_element_id = null;
-               ref_element_name = null;
-               addBlackScreen();
-               $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-            },
-            beforeHide: function()
-            {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-            },
-         onHide: function()
-         {
-            $("#save_specs").qtip("destroy");
-            if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
-              window.location.href = '<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved;
-         }
-         }
+      },
+      hide: {
+        event: 'close_modal',
+        target: $('body')
+      },
+      events: {
+        hide: function(event, api) {                
+          scroll(0,last_position);
+          api.destroy();
+          if(typeof(spec_list_saved) !='undefined' && spec_list_saved !=null)
+            window.location.href = '<?php echo url_for('specimensearch/search');?>/search_id/' + spec_list_saved;
+        }
+      },
+      style: 'ui-tooltip-light ui-tooltip-rounded'
     });
     return false;
  });

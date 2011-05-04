@@ -3,9 +3,7 @@
       <?php echo $form['user_ref']->renderError(); ?>
       <?php echo $form['user_ref'];?>
       <?php echo $form['user_ref']->renderLabel();?>
-          <?php if($sf_user->getHelpIcon()) : ?>          
-            <div class="help_ico" alt="<?php echo $form['user_ref']->renderHelp();?>"></div>
-          <?php endif ; ?>
+      <?php echo help_ico($form['user_ref']->renderHelp(),$sf_user);?>
     </td>
     <td>
       <?php echo $form['db_user_type']->renderError(); ?>

@@ -24,4 +24,9 @@ function word2color($w){
   return $r;
 }
 
+function help_ico($message, $sf_user)
+{
+  if(! $sf_user->getHelpIcon()) return '';
+  return '<div class="help_ico"><span>'.$message.'</span></div>';
+}
 ?>

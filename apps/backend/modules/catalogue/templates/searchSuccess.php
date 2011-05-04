@@ -131,6 +131,19 @@
         $('#searchCatalogue_item_ref').val(rid);
         $('.search_item_name').closest('tr').show();
       });
+
+      $('.search_results_content tbody tr .info').click(function() 
+      {
+        item_row=$(this).closest('tr');
+        if(item_row.find('.tree').is(":hidden"))
+        {
+          $.get('<?php echo url_for('catalogue/tree?table='.$searchForm->getValue('table'));?>/id/'+getIdInClasses(item_row),function (html){
+            item_row.find('.tree').html(html).slideDown();
+          });
+        }
+        $('.tree').slideUp();
+      });
+
     });
     </script>
 <?php else:?>

@@ -4,18 +4,6 @@
 <script type="text/javascript">
 $(document).ready(function () 
 {
-   $('.search_results_content tbody tr .info').live('click',function() 
-   {
-     item_row=$(this).closest('tr');
-     if(item_row.find('.tree').is(":hidden"))
-     {
-       $.get('<?php echo url_for('catalogue/tree?table='.$searchForm['table']->getValue());?>/id/'+getIdInClasses(item_row),function (html){
-         item_row.find('.tree').html(html).slideDown();
-         });
-     }
-     $('.tree').slideUp();
-   });
-
   $('#clear_cat_relation').click(function (event)
   {
     event.preventDefault();
@@ -68,13 +56,12 @@ $(document).ready(function ()
           <td <?php if(isset($searchForm['lower_bound'])) echo 'colspan="3"'; elseif(isset($searchForm['classification'])) echo 'colspan="3"';?>><span class="search_item_name"></span></td>
           <td class="widget_row_delete">
             <?php echo image_tag('remove.png', 'alt=Delete class=clear_relation id=clear_cat_relation'); ?>
-            <?php if($sf_user->getHelpIcon()) : ?>          
-            <div class="help_ico" alt="<?php echo $searchForm['relation']->renderHelp();?>"></div>
-            <?php endif ; ?>
+            <?php echo help_ico($searchForm['relation']->renderHelp(),$sf_user);?>
           </td>   
         </tr>
       </tbody>
     </table>
+
     <div class="search_results">
       <div class="search_results_content">
       </div>
