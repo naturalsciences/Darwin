@@ -73,7 +73,17 @@
         element = $(this);
       widget = element.closest('.widget');
       hideForRefresh(widget.find('.widget_content'));
+      /** Replaced by an async query to avoid bug
       widget.find('.widget_content').load(base.options['reload_url'] + '/widget/' + widget.attr('id') );
+      **/
+      $.ajax({
+        url: base.options['reload_url'] + '/widget/' + widget.attr('id'),
+        async: false, //
+        success: function(data) {
+          widget.find('.widget_content').html(data);
+        }
+      });
+
       return false;
     };
 
