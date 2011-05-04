@@ -2,8 +2,8 @@
 <table>
   <tbody>
     <tr>
-      <th><?php echo ('Category') ; ?></th>
-      <th><?php echo ('Widget') ; ?></th>
+      <th><?php echo __('Category') ; ?></th>
+      <th><?php echo __('Widget') ; ?></th>
     </tr>
     <?php foreach($widget as $category => $list) : ?>
     <tr>

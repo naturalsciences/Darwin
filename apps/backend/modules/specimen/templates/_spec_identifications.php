@@ -89,7 +89,7 @@
         if($(this).find('input[id$=\"_people_ref\"]').val() == people_ref) info = 'bad' ;
       });
       if(info != 'ok') return false;
-      hideForRefresh($('.qtip-content .page')) ; 
+      hideForRefresh($('.ui-tooltip-content .page')) ; 
       $.ajax({
         type: "GET",
         url: $('a#add_identifier_<?php echo $row_num;?>').prev('a.hidden').attr('href')+ (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length)+'/people_ref/'+people_ref + '/iorder_by/' + (0+$('#spec_ident_identifiers_<?php echo $row_num;?> tbody tr').length),
@@ -99,7 +99,7 @@
           $.fn.catalogue_people.reorder($('#spec_ident_identifiers_<?php echo $row_num;?>'));
           $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?> thead').show();
           $('table#identifications #spec_ident_identifiers_<?php echo $row_num;?>').addClass('green_border');
-	  showAfterRefresh($('.qtip-content .page')) ; 
+	  showAfterRefresh($('.ui-tooltip-content .page')) ; 
         }
       });
       return true;

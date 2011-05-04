@@ -102,10 +102,10 @@
           </td>
         </tr>
         <tr class="trusted_user hidden">
-          <th><?php echo $form['people_id']->renderLabel('Reference to a '.isset($form['title'])?'People':'Institution') ?>
-          <?php if($sf_user->getHelpIcon()) : ?>          
-            <div class="help_ico" alt="<?php echo $form['people_id']->renderHelp();?>"></div>
-          <?php endif ; ?></th>
+          <th>
+            <?php echo $form['people_id']->renderLabel('Reference to a '.isset($form['title'])?'People':'Institution') ?>
+            <?php echo help_ico($form['people_id']->renderHelp(),$sf_user);?>
+          </th>
           <td class="trust_level_2">
             <?php echo $form['people_id']->renderError() ?>
             <?php echo $form['people_id'] ?>
@@ -183,46 +183,52 @@ $(document).ready(function () {
     $('.display_value').show();
   });
   
-  $("#summary").click(function(){
+  $("#summary").click(function(event){
+    event.preventDefault();
+    var last_position = $('body').scrollTop() ;    
     scroll(0,0) ;
 
-    $(this).qtip({
-        content: {
-            title: { text : '<?php echo __('List of rights in collections')?>', button: 'X' },        
-            url: $(this).attr('href'),
+    $(this).qtip(
+    {
+      id: 'modal',
+      content: {
+        text: '<img src="/images/loader.gif" alt="loading"> Loading ...',
+        title: { button: true, text:'<?php echo __('List of rights in collections')?>' },
+        ajax: {
+          url: $(this).attr('href'),
+          type: 'GET'
+        }
+      },
+      show: {
+        ready: true,
+        delay: 0,
+        event: event.type,
+        modal: {
+          on: true,
+          blur: false
         },
-        show: { when: 'click', ready: true },
-        position: {
-            target: $(document.body), // Position it via the document body...
-            corner: 'topMiddle', // instead of center, to prevent bad display when the qtip is too big
-            adjust:{
-              y: 250 // option set in case of the qtip become too big
-            },
-        },
-        hide: false,
-        style: {
-            width: { min: 650, max: 800},
-            title: { background: '#5BABBD', color:'white'}
-        },
-        api: {
-            beforeShow: function()
-            {
-                // Fade in the modal "blanket" using the defined show speed
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-            },
-            beforeHide: function()
-            {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-            },
-        onHide: function()
-        {
-           $(this.elements.target).qtip("destroy");
-        }            
-      }
+      },
+      hide: {
+        event: 'close_modal',
+        target: $('body')
+      },
+      position: {
+        my: 'top center',
+        at: 'top center',
+        adjust:{
+          y: 250 // option set in case of the qtip become too big
+        },         
+        target: $(document.body),
+      },
+      events: {
+        hide: function(event, api) {
+            scroll(0,last_position) ;     
+            api.destroy();
+        }
+      },
+      style: 'ui-tooltip-light ui-tooltip-rounded'
     });
     return false;
- });
+  });
 });
 </script>

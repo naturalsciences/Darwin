@@ -43,7 +43,7 @@ function addCollector(people_ref, people_name)
   });
   if(info != 'ok') return false;
 
-  hideForRefresh($('.qtip-content .page')) ; 
+  hideForRefresh($('.ui-tooltip-content .page')) ; 
   $.ajax(
   {
     type: "GET",
@@ -52,7 +52,7 @@ function addCollector(people_ref, people_name)
     {
       $('#spec_ident_collector tbody').append(html);
       $.fn.catalogue_people.reorder($('#spec_ident_collector'));
-      showAfterRefresh($('.qtip-content .page')) ; 
+      showAfterRefresh($('.ui-tooltip-content .page')) ; 
     }
   });
   return true;

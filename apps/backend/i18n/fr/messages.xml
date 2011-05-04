@@ -2815,30 +2815,38 @@
         <target>Via cette widget, vous pouvez effectuer une recherche afin de trouver tous les enregistrements où une personne spécifique (ou un institut) apparait. Vous pouvez aussi choisir un ou plusieurs rôles pour cette personne (tel que collecteur, Identificateur et/ou donnateur/vendeur)</target>
       </trans-unit>
       <trans-unit id="1171">
-        <source>Donator or seller</source> <target>Donnateur ou vendeur</target> </trans-unit>
-      <trans-unit id="1164">
+        <source>Donator or seller</source>
+        <target>Donnateur ou vendeur</target> </trans-unit>
+      <trans-unit id="1172">
+        <source>Search Saved</source>
+        <target>Recherche enregistrée</target> </trans-unit>
+      <trans-unit id="1173">
+        <source>Fields</source>
+        <target>Champs</target>
+      </trans-unit>
+      <trans-unit id="1174">
+      <source>Visible ?</source>
+      <target>Visible ?</target>
+      </trans-unit>
+      <trans-unit id="1175">
+        <source>Complete</source>
+        <target>Complet</target>
+      </trans-unit>
+      <trans-unit id="1176">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1177">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1178">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1179">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1180">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1181">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1182">
         <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
-        <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
-        <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
-        <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
-        <source></source> <target></target> </trans-unit>
-      <trans-unit id="1164">
+      <trans-unit id="1183">
         <source></source> <target></target> </trans-unit>                                
     </body>
   </file>

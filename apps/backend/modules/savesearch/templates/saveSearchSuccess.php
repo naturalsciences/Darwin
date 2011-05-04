@@ -14,8 +14,8 @@
       </td>
       <td>
         <?php echo $form['favorite'] ; ?>
-        <?php echo image_tag('favorite_on.png', array('id'=> 'favorite_on', 'alt' => 'Set a bookmark')) ; ?>
-        <?php echo image_tag('favorite_off.png', array('id'=> 'favorite_off', 'alt' => 'Set a bookmark')) ; ?>
+        <?php echo image_tag('favorite_on.png', array('id'=> 'favorite_on', 'alt' => __('Set a bookmark'))) ; ?>
+        <?php echo image_tag('favorite_off.png', array('id'=> 'favorite_off', 'alt' => __('Set a bookmark'))) ; ?>
       </td>
     </tr>
     <tr>
@@ -54,8 +54,8 @@
   <table class="fields">
     <thead>
       <tr>
-        <th><?php echo ('Fields') ; ?></th>
-        <th><?php echo ('Visible ?') ; ?></th>
+        <th><?php echo __('Fields') ; ?></th>
+        <th><?php echo __('Visible ?') ; ?></th>
       </tr>
     </thead>
     <?php echo $form['visible_fields_in_result'] ; ?>
@@ -104,7 +104,8 @@ $(document).ready(function () {
             {
               id_arr = html.split(',');
               spec_list_saved = id_arr[1];
-              $('.qtip-button').click();
+              $('#save_search').attr('value','<?php echo __('Search Saved');?>') ;
+              $('body').trigger('close_modal');
               return;
             }
             $('form#save_search').parent().before(html).remove();
