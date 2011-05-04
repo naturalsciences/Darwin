@@ -39,7 +39,7 @@ class Users extends BaseUsers
       self::REGISTERED_USER => self::getTypeName(self::REGISTERED_USER),
       self::ENCODER => self::getTypeName(self::ENCODER),
       self::MANAGER => self::getTypeName(self::MANAGER),
-      self::ADMIN => self::getTypeName(self::ADMIN)
+      //self::ADMIN => self::getTypeName(self::ADMIN)
     );
     
     if (isset($options['screen']) && $options['screen'] == 3)
