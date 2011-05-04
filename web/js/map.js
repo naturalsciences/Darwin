@@ -74,7 +74,13 @@ function initMap(mapId)
   map.addLayer(markers);
 
   map.zoomToMaxExtent();
-
+  map.events.on({
+    "changebaselayer": function(e) {
+        if(e.object.baseLayer.name != "OpenStreetMap")
+          $.get('/robots.txt?use_gmap');
+      }
+  
+  }); 
 }
   
 function setZoom(e)
