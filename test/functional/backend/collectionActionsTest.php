@@ -81,7 +81,7 @@ $browser->
   
   get('/collection/index')->
   info('Edit')->
-  click('.treelist:first > ul > li:first > ul > li:nth-child(2) div a', array())->
+  click('.treelist:first > ul > li:nth-child(2) > ul > li:nth-child(2) div a', array())->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
@@ -101,7 +101,7 @@ $browser->
 
   info('Delete')->
 
-  click('.col_name:eq(5) > a:first')->
+  click('.col_name:eq(4) > a:first')->
   with('request')->begin()->
     isParameter('module', 'collection')->
     isParameter('action', 'edit')->
