@@ -100,7 +100,7 @@ table td.centered, table th.centered
   display:inline-block;
 }
 
-.qtip-content .page
+.ui-tooltip-content .page
 {
   padding-top: 10px;
   margin-top: 15px;
@@ -2222,6 +2222,10 @@ a.and_search_code
   display:inline-block;
 }
 
+.help_ico>span
+{
+  display:none !important;
+}
 /**** MASS Action Screen  *****/
 
 #mass_action #item_list
@@ -2552,3 +2556,53 @@ background: transparent ;
 
 
 .olLayerGoogleCopyright{right:3px;bottom:2px;left:auto;}.olLayerGoogleV3.olLayerGoogleCopyright{display:none;bottom:0;right:0!important;}.olLayerGooglePoweredBy{left:2px;bottom:2px;}.olLayerGoogleV3.olLayerGooglePoweredBy{bottom:0!important;}
+
+.ui-tooltip-dwgreen {
+  width: 200px;
+  padding: 5px;
+  background: #95bd4c;
+  color: black;
+  border-width: 7px;
+  border-color: #95bd4c;
+}
+.ui-tooltip-dwgreen .ui-tooltip-content
+{
+  background: #95bd4c;
+  border:none ;
+  color:black;
+}
+
+#qtip-overlay{
+  position: absolute;
+  left: -10000em;
+  top: -10000em;
+  
+  background-color: black;
+  cursor: pointer;
+  
+  /* Set this to any below 15000 (default starting z-index for qTips) */
+  z-index: 14999;
+}
+
+
+#ui-tooltip-modal {
+  min-width: 876px !important;
+  max-width: 1000px !important;
+}
+
+#ui-tooltip-modal .ui-tooltip-titlebar
+{
+  background-color:#5BABBD;
+  color:white;
+}
+
+#ui-tooltip-modal .ui-tooltip-tip
+{
+  display:none !important;  /* Hide the tip of qtip on modal screens*/
+}
+.dialog-modal-edit .ui-tooltip-titlebar
+{
+  background-color:#C1CF56 !important;
+  color:white;
+}
+

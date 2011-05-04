@@ -15,48 +15,48 @@
               $(base.options['duplicate_link']).live('click',base.duplicateItem);
             }
             else
-            {
+            { 
               $(base.options['duplicate_link']).click(base.duplicateItem);
             }
         };
 
         base.duplicateItem = function(event)
-        {        
+        {
           self = this;
           event.preventDefault();
-          scroll(0,0);
           $(this).qtip({
             content: {
-              title: { text : 'duplicate', button: 'X' },
-              url: base.options['duplicate_href']
+              title: $(self).text(),
+              ajax: {
+                url: base.options['duplicate_href'],
+                type: 'GET'
+              },
+              text: ' '
             },
-            show: { when: 'click', ready: true },
+            show: {
+              ready: true,
+              delay: 0,
+              modal: {
+                on: true,
+                blur: false
+              },
+            },
+            hide: {
+              event: 'close_modal',
+              target: $('body')
+            },
             position: {
-              target: $(document.body), // Position it via the document body...
-              adjust: { y: 210 },
-              corner: 'topMiddle' // ...at the topMiddle of the viewport
+              my: 'top center',
+              at: 'top center',
+              adjust:{
+                y: 250 // option set in case of the qtip become too big
+              },         
+              target: $(document.body),
             },
             hide: false,
-            style: {
-              width: { min: 200, max: 500},
-              title: { background: '#C1CF56', color:'white'}
-            },
-            api: {
-              beforeShow: function()
-              {
-                  // Fade in the modal "blanket" using the defined show speed
-                element_name = null;
-                addBlackScreen()
-                $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-              },
-              beforeHide: function()
-              {
-                  // Fade out the modal "blanket" using the defined hide speed
-                  $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-              },
-              onHide: function()
-              {
-                $(this.elements.target).qtip("destroy");
+            style: ' ui-tooltip-rounded ui-tooltip-dialogue',
+            events: {
+              hide: function(event, api) {
                 if (element_name == null)
                 {
                   return false ;
@@ -68,8 +68,9 @@
                 }
               }
             }
-          });
-        }
+            });
+            
+          };
         
         base.init();
     };
@@ -113,43 +114,52 @@
           event.preventDefault();
           var last_position = $('body').scrollTop() ;
           scroll(0,0);
-
           $(this).qtip({
+            id: 'modal',
             content: {
-              title: { text : $(this).attr('title'), button: 'X' },
-              url: $(this).attr('href')
-            },
-            show: { when: 'click', ready: true },
-            position: {
-              target: $(document.body), // Position it via the document body...
-              adjust: { y: 210 },
-              corner: 'topMiddle' // ...at the topMiddle of the viewport
-            },
-            hide: false,
-            style: {
-              width: { min: 876, max: 1000},
-              title: { background: '#C1CF56', color:'white'}
-            },
-            api: {
-              beforeShow: function()
-              {
-                  addBlackScreen()
-                  $('#qtip-blanket').fadeIn(this.options.show.effect.length);
-              },
-              beforeHide: function()
-              {
-                // Fade out the modal "blanket" using the defined hide speed
-                $('#qtip-blanket').fadeOut(this.options.hide.effect.length).remove();
-              },
-              onHide: function(event)
-              {
-                $(this.elements.target).qtip("destroy");
-                scroll(0,last_position);          
-
-                $('body').data('widgets_screen').refreshWidget(event, $(this.elements.target));
+              text: '<img src="/images/loader.gif" alt="loading"> loading ...',
+              title: { button: true, text: $(this).attr('title') },
+              ajax: {
+                url: $(this).attr('href'),
+                      type: 'get'
               }
-            }
-          });
+            },
+            position: {
+              my: 'top center',
+              at: 'top center',
+              adjust:{
+                y: 250 // option set in case of the qtip become too big
+              },         
+              target: $(document.body),
+            },
+            
+            show: {
+              ready: true,
+              delay: 0,
+              event: event.type,
+              solo: true,
+              modal: {
+                on: true,
+                blur: false
+              },
+            },
+            hide: {
+              event: 'close_modal',
+              target: $('body')
+            },
+            events: {
+              show: function () {
+                ref_element_id = null;
+                ref_element_name = null;
+              },
+              hide: function(event, api) {                
+                $('body').data('widgets_screen').refreshWidget(event, api.elements.target);
+                scroll(0,last_position);
+                api.destroy();
+              }
+            },
+            style: 'ui-tooltip-light ui-tooltip-rounded dialog-modal-edit'
+          },event);
         };
 
         
@@ -373,7 +383,7 @@ function removeError(element)
             success: function(html){
               if(html == 'ok')
               {
-                $(base.options['qtip_button']).click();
+                $('body').trigger('close_modal');
               }
               form_el.parent().before(html).remove();
             }
@@ -383,7 +393,7 @@ function removeError(element)
         base.cancelButton = function (event)
         {
             event.preventDefault();
-            $('.qtip-button').click();
+            $('body').trigger('close_modal');
         };
         
         base.deleteRecord = function (event)
@@ -400,7 +410,7 @@ function removeError(element)
               {
                 if(html == "ok" )
                 {
-                  $(base.options['qtip_button']).click();
+                  $('body').trigger('close_modal');
                 }
                 else
                 {
@@ -419,7 +429,6 @@ function removeError(element)
     };
     
     $.modal_screen.defaultOptions = {
-        qtip_button: '.qtip-button',
         delete_button: '.delete_button',
         cancel_button: '.cancel_qtip'
     };

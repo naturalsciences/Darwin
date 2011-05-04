@@ -18,17 +18,17 @@ $(document).ready(function () {
     $(".extd_info").each(function ()
     {
       $(this).qtip({
-        show: { solo: true, when: { event: 'click' } },
-        hide: { when: { event: 'click' } },// May be replaced by smth else
-        style: {  name: "light", title: { padding: '3px'} },
+        show: { solo: true, event:'click' },
+        hide: { event:false },
+        style: 'ui-tooltip-light ui-tooltip-rounded ui-tooltip-dialogue',
         content: {
-          title: {
-            text: '&nbsp;',
-            button: 'X'
-          },
-          url: '<?php echo url_for('collection/extdinfo');?>',
-          data: { id: $(this).attr('data-manid') },
-          method: 'get'
+          text: '<img src="/images/loader.gif" alt="loading"> Loading ...',
+          title: { button: true, text: ' ' },
+          ajax: {
+            url: '<?php echo url_for('collection/extdinfo');?>',
+            type: 'GET',
+            data: { id: $(this).attr('data-manid') }
+          }
         }
       });
     });

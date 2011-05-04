@@ -44,7 +44,7 @@ function addDonator(people_ref, people_name)
   });
   if(info != 'ok') return false;
 
-  hideForRefresh($('.qtip-content .page')) ; 
+  hideForRefresh($('.ui-tooltip-content .page')) ; 
   $.ajax(
   {
     type: "GET",
@@ -53,7 +53,7 @@ function addDonator(people_ref, people_name)
     {
       $('#spec_ident_donator tbody').append(html);
       $.fn.catalogue_people.reorder($('#spec_ident_donator'));
-      showAfterRefresh($('.qtip-content .page')) ; 
+      showAfterRefresh($('.ui-tooltip-content .page')) ; 
     }
   });
   return true;

@@ -92,7 +92,6 @@ class chronostratigraphyActions extends DarwinActions
 
     $this->form = new ChronostratigraphyForm($unit);  
     $this->loadWidgets();
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -102,7 +101,6 @@ class chronostratigraphyActions extends DarwinActions
     $this->no_right_col = Doctrine::getTable('Chronostratigraphy')->testNoRightsCollections('chrono_ref',$request->getParameter('id'), $this->getUser()->getId());    
     $this->form = new ChronostratigraphyForm($unit);
     
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$unit->getId());
     $this->processForm($request,$this->form);
 
     $this->loadWidgets();
@@ -141,7 +139,5 @@ class chronostratigraphyActions extends DarwinActions
     $this->forward404Unless($this->chrono,'Chrono not Found');
     $this->form = new ChronostratigraphyForm($this->chrono);    
     $this->loadWidgets();
-
-    $relations = Doctrine::getTable('CatalogueRelationships')->getRelationsForTable($this->table,$this->chrono->getId());
   }  
 }

@@ -109,24 +109,15 @@ $(document).ready(function()
 	  $('#users_tracking_filters_record_id').val($(this).attr('alt'));
       });
 
-      $('img.more_trk').each(function(){
-	   
-       tip_content = $(this).next().html();
-	$(this).qtip(
-	{
-         content: tip_content,
-         position: {
-            corner: {
-               tooltip: 'bottomMiddle',
-               target: 'topMiddle'
-            }
-         },
-         style: {
-            tip: true, // Give it a speech bubble tip with automatic corner detection
-            name: 'cream'
-         }
+      $('img.more_trk').each(function()
+      {
+        $(this).qtip(
+        {
+         content: $(this).next().html(),
+         delay: 100,
+         show: { solo: true}
+        });
       });
-    });
 });
 </script>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
