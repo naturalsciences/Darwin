@@ -1925,7 +1925,7 @@ create sequence imports_seq;
 
 create table imports
   (
-    id integer not null default nextval('preferences_id_seq'),
+    id integer not null default nextval('imports_seq'),
     user_ref integer not null,
     format varchar not null,
     collection_ref integer not null default 0,
