@@ -78,6 +78,7 @@ CREATE INDEX CONCURRENTLY idx_tags_gtu_ref on tags(gtu_ref);
 CREATE INDEX CONCURRENTLY idx_tags_group_ref on tags(group_ref);
 CREATE INDEX CONCURRENTLY idx_users_tracking_user_ref on users_tracking(user_ref);
 CREATE INDEX idx_users_tracking_action ON users_tracking USING btree (action);
+CREATE INDEX CONCURRENTLY idx_imports_collection_ref ON imports(collection_ref);
 
 /*** BTree Indexes for fields used for searches purposes ***/
 

@@ -1948,3 +1948,29 @@ comment on table flat_dict is 'Flat table compiling all small distinct values fo
 comment on column flat_dict.referenced_relation is 'The table where the value come from';
 comment on column flat_dict.dict_field is 'the field name of where the value come from';
 comment on column flat_dict.dict_value is 'the distinct value';
+
+create sequence imports;
+
+create table imports
+  (
+    id integer not null default nextval('preferences_id_seq'),
+    user_ref integer not null,
+    format varchar not null,
+    collection_ref integer not null default 0,
+    filename varchar not null,
+    state varchar not null default '',
+    created_at timestamp not null default now(),
+    updated_at timestamp,
+    constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade,
+  );
+
+comment on table imports is 'Table used to check the state of the date coming from an uploaded file';
+comment on column imports.user_ref is 'The referenced user id';
+comment on column imports.format is 'The import template to use for the imported file';
+comment on column imports.filename is 'The filename of the file to proceed';
+comment on column imports.collection_ref is 'The collection associated';
+comment on column imports.state is 'the state of the processing the file';
+comment on column imports.created_at is 'Creation of the file';
+comment on column imports.updated_at is 'When the data has been modified lately';
+
+

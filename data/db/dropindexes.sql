@@ -212,6 +212,7 @@
  DROP INDEX IF EXISTS idx_tags_tag_indexed;
  DROP INDEX IF EXISTS idx_tags_group_type;
  DROP INDEX IF EXISTS idx_tags_sub_group_type;
+ DROP INDEX IF EXISTS idx_imports_collection_ref;
 
   /*** Gin indexes ***/
 

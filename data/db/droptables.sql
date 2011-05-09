@@ -72,6 +72,7 @@ DROP TABLE  IF EXISTS specimen_collecting_methods CASCADE;
 DROP TABLE  IF EXISTS specimen_collecting_tools CASCADE;
 DROP TABLE  IF EXISTS preferences CASCADE;
 DROP TABLE  IF EXISTS flat_dict CASCADE;
+DROP TABLE  IF EXISTS imports CASCADE;
 
 DROP SEQUENCE IF EXISTS people_id_seq  CASCADE;
 DROP SEQUENCE IF EXISTS catalogue_relationships_id_seq  CASCADE;
@@ -132,3 +133,4 @@ DROP SEQUENCE IF EXISTS specimen_collecting_methods_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS specimen_collecting_tools_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS preferences_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS flat_dict_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS sequence imports_seq CASCADE;
