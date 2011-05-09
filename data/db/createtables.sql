@@ -2046,6 +2046,7 @@ create table staging
     specimen_status varchar,
     complete boolean,
     surnumerary boolean
+    constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascad    
   );
 
 create sequence staging_tag_groups_id_seq;
