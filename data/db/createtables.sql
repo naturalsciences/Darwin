@@ -2045,7 +2045,7 @@ create table staging
     part_count_max integer,
     specimen_status varchar,
     complete boolean,
-    surnumerary boolean
+    surnumerary boolean,
     constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascad    
   );
 
