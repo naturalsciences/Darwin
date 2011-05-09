@@ -1921,7 +1921,7 @@ comment on column flat_dict.referenced_relation is 'The table where the value co
 comment on column flat_dict.dict_field is 'the field name of where the value come from';
 comment on column flat_dict.dict_value is 'the distinct value';
 
-create sequence imports;
+create sequence imports_seq;
 
 create table imports
   (
