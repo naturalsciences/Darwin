@@ -1933,7 +1933,8 @@ create table imports
     state varchar not null default '',
     created_at timestamp not null default now(),
     updated_at timestamp,
-    constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade
+    constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade,
+    constraint fk_imports_users foreign key (user_ref) references users(id) on delete cascade      
   );
 
 comment on table imports is 'Table used to check the state of the date coming from an uploaded file';
