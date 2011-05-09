@@ -133,4 +133,4 @@ DROP SEQUENCE IF EXISTS specimen_collecting_methods_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS specimen_collecting_tools_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS preferences_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS flat_dict_id_seq CASCADE;
-DROP SEQUENCE IF EXISTS sequence imports_seq CASCADE;
+DROP SEQUENCE IF EXISTS imports_seq CASCADE;
