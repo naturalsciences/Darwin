@@ -1920,6 +1920,9 @@ Staging:
         id: { type: integer, primary: true, autoincrement: true}
         spec_ref: { type: integer}
         import_ref: { type: integer, notnull: true}
+        parent_ref: { type: integer}
+        path: { type: string}
+        level: { type: string}
         category: { type: string}
         expedition_ref: { type: integer default:0}
         expedition_name: { type: string}

@@ -8,6 +8,9 @@
  * @property integer $id
  * @property integer $spec_ref
  * @property integer $import_ref
+ * @property integer $parent_ref
+ * @property string $path
+ * @property string $level
  * @property string $category
  * @property integer default:0 $expedition_ref
  * @property string $expedition_name
@@ -109,6 +112,9 @@
  * @method integer             getId()                       Returns the current record's "id" value
  * @method integer             getSpecRef()                  Returns the current record's "spec_ref" value
  * @method integer             getImportRef()                Returns the current record's "import_ref" value
+ * @method integer             getParentRef()                Returns the current record's "parent_ref" value
+ * @method string              getPath()                     Returns the current record's "path" value
+ * @method string              getLevel()                    Returns the current record's "level" value
  * @method string              getCategory()                 Returns the current record's "category" value
  * @method string              getExpeditionName()           Returns the current record's "expedition_name" value
  * @method boolean             getStationVisible()           Returns the current record's "station_visible" value
@@ -208,6 +214,9 @@
  * @method Staging             setId()                       Sets the current record's "id" value
  * @method Staging             setSpecRef()                  Sets the current record's "spec_ref" value
  * @method Staging             setImportRef()                Sets the current record's "import_ref" value
+ * @method Staging             setParentRef()                Sets the current record's "parent_ref" value
+ * @method Staging             setPath()                     Sets the current record's "path" value
+ * @method Staging             setLevel()                    Sets the current record's "level" value
  * @method Staging             setCategory()                 Sets the current record's "category" value
  * @method Staging             setExpeditionName()           Sets the current record's "expedition_name" value
  * @method Staging             setStationVisible()           Sets the current record's "station_visible" value
@@ -326,6 +335,15 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('import_ref', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
+             ));
+        $this->hasColumn('parent_ref', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('path', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('level', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('category', 'string', null, array(
              'type' => 'string',
