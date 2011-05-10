@@ -1948,3 +1948,123 @@ comment on column imports.created_at is 'Creation of the file';
 comment on column imports.updated_at is 'When the data has been modified lately';
 
 
+create sequence staging_id_seq;
+
+create table staging
+  (
+    id integer not null default nextval('staging_id_seq'),
+    import_ref integer not null,
+    spec_ref integer,
+    category varchar,
+    expedition_ref integer default 0,
+    expedition_name varchar,
+    station_visible boolean,
+    gtu_ref integer default 0,
+    gtu_code varchar,
+    gtu_from_date_mask integer,
+    gtu_from_date timestamp,
+    gtu_to_date_mask integer,
+    gtu_to_date timestamp,
+    taxon_ref integer default 0,
+    taxon_name varchar,
+    taxon_level_ref integer not null default 0,
+    taxon_level_name varchar,
+    taxon_status varchar,
+    taxon_extinct boolean,
+    litho_ref integer default 0,
+    litho_name varchar,
+    litho_level_ref integer not null default 0,
+    litho_level_name varchar,
+    litho_status varchar,
+    litho_local boolean not null default false,
+    litho_color varchar,
+    chrono_ref integer default 0,
+    chrono_name varchar,
+    chrono_level_ref integer not null default 0,
+    chrono_level_name varchar,
+    chrono_status varchar,
+    chrono_local boolean not null default false,
+    chrono_color varchar,
+    chrono_parent_ref integer default 0,
+    lithology_ref integer default 0,
+    lithology_name varchar,
+    lithology_level_ref integer not null default 0,
+    lithology_level_name varchar,
+    lithology_status varchar,
+    lithology_local boolean not null default false,
+    lithology_color varchar,
+    lithology_parent_ref integer default 0,
+    mineral_ref integer default 0,
+    mineral_name varchar,
+    mineral_level_ref integer not null default 0,
+    mineral_level_name varchar,
+    mineral_status varchar,
+    mineral_local boolean not null default false,
+    mineral_color varchar,
+    mineral_path varchar,
+    mineral_parent_ref integer default 0,
+    host_taxon_ref integer default 0,
+    host_relationship varchar,
+    host_taxon_name varchar,
+    host_taxon_level_ref integer not null default 0,
+    host_taxon_level_name varchar,
+    host_taxon_status varchar,
+    host_specimen_ref integer,
+    ig_ref integer,
+    ig_num varchar,
+    ig_date_mask integer,
+    ig_date date,
+    acquisition_category varchar,
+    acquisition_date_mask integer,
+    acquisition_date date,
+
+    individual_ref integer,
+    individual_type varchar not null default 'specimen',
+    individual_sex  varchar not null default 'undefined',
+    individual_state varchar not null default 'not applicable',
+    individual_stage varchar not null default 'undefined',
+    individual_social_status varchar not null default 'not applicable',
+    individual_rock_form varchar not null default 'not applicable',
+    individual_count_min integer,
+    individual_count_max integer,
+
+    part_ref integer,
+    part varchar,
+    part_status varchar,
+    building varchar,
+    floor varchar,
+    room varchar,
+    row varchar,
+    shelf varchar,
+    container_type varchar,
+    container_storage varchar,
+    container varchar,
+    sub_container_type varchar,
+    sub_container_storage varchar,
+    sub_container varchar,
+    part_count_min integer,
+    part_count_max integer,
+    specimen_status varchar,
+    complete boolean,
+    surnumerary boolean,
+    constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascade    
+  );
+
+create sequence staging_tag_groups_id_seq;
+
+create table  staging_tag_groups
+       (
+        id bigint not null default nextval('staging_tag_groups_id_seq'),
+        staging_ref integer not null,
+        group_name varchar not null,
+        sub_group_name varchar not null,
+        tag_value varchar not null,
+        constraint pk_staging_tag_groups primary key (id)
+       );
+
+comment on table staging_tag_groups is 'List of grouped tags for an imported row (copy of tag group)';
+comment on column staging_tag_groups.id is 'Unique identifier of a grouped tag';
+comment on column staging_tag_groups.staging_ref is 'Ref of an imported line';
+comment on column staging_tag_groups.group_name is 'Group name under which the tag is grouped: Administrative area, Topographic structure,...';
+comment on column staging_tag_groups.sub_group_name is 'Sub-Group name under which the tag is grouped: Country, River, Mountain,...';
+comment on column staging_tag_groups.tag_value is 'Ensemble of Tags';

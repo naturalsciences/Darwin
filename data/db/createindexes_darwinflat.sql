@@ -2,8 +2,6 @@
 
 CREATE INDEX CONCURRENTLY idx_darwin_flat_spec_ref on darwin_flat(spec_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_ref on darwin_flat(collection_ref);
-CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_institution_ref on darwin_flat(collection_institution_ref);
-CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_main_manager_ref on darwin_flat(collection_main_manager_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_collection_parent_ref on darwin_flat(collection_parent_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_expedition_ref on darwin_flat(expedition_ref);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_gtu_ref on darwin_flat(gtu_ref);
