@@ -1954,6 +1954,9 @@ create table staging
   (
     id integer not null default nextval('staging_id_seq'),
     import_ref integer not null,
+    parent_ref integer,
+    path varchar null,
+    level varchar not null,
     spec_ref integer,
     category varchar,
     expedition_ref integer default 0,
@@ -2047,7 +2050,8 @@ create table staging
     specimen_status varchar,
     complete boolean,
     surnumerary boolean,
-    constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascade    
+    constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascade,
+    constraint fk_parent_ref foreign key (parent_ref) references staging(id) on delete no action
   );
 
 create sequence staging_tag_groups_id_seq;
