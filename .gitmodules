@@ -6,4 +6,4 @@
 	url = http://github.com/openlayers/openlayers.git
 [submodule "web/qtip2"]
 	path = web/qtip2
-	url = https://github.com/Craga89/qTip2.git
+	url = http://github.com/Craga89/qTip2.git
