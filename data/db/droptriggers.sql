@@ -359,6 +359,9 @@ DROP TRIGGER trg_cpy_path_specimen_parts
 DROP TRIGGER trg_cpy_path_habitats
         ON habitats;
 
+DROP TRIGGER trg_cpy_path_staging
+        ON staging;
+
 DROP TRIGGER trg_cpy_unified_values
         ON properties_values;
 

@@ -1955,7 +1955,7 @@ create table staging
     id integer not null default nextval('staging_id_seq'),
     import_ref integer not null,
     parent_ref integer,
-    path varchar null,
+    path varchar,
     level varchar not null,
     spec_ref integer,
     category varchar,
