@@ -1921,11 +1921,11 @@ comment on column flat_dict.referenced_relation is 'The table where the value co
 comment on column flat_dict.dict_field is 'the field name of where the value come from';
 comment on column flat_dict.dict_value is 'the distinct value';
 
-create sequence imports_seq;
+create sequence imports_id_seq;
 
 create table imports
   (
-    id integer not null default nextval('imports_seq'),
+    id integer not null default nextval('imports_id_seq'),
     user_ref integer not null,
     format varchar not null,
     collection_ref integer not null default 0,
@@ -1933,6 +1933,7 @@ create table imports
     state varchar not null default '',
     created_at timestamp not null default now(),
     updated_at timestamp,
+    constraint pk_import primary key (id) ,   
     constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade,
     constraint fk_imports_users foreign key (user_ref) references users(id) on delete cascade      
   );
