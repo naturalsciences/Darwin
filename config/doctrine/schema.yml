@@ -2076,3 +2076,16 @@ FlatDict:
 #         Habitats:
 #             local: habitat_ref
 #             foreign: id
+
+
+Imports:
+    tableName: imports
+    columns:
+        id: { type: integer, primary: true, autoincrement: true},
+        filename: { type: string, notnull: true},
+        user_ref: {type:integer, notnull: true},
+        format : {type:string,notnull: true},
+        collection_ref: { type: integer, notnull: true, default:0},
+        state: {type:string,notnull:true, default:'imported'},
+        created_at: { type: string, notnull: true},
+        updated_at: { type: string, notnull: true}

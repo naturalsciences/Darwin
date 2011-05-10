@@ -2604,5 +2604,30 @@ background: transparent ;
 {
   background-color:#C1CF56 !important;
   color:white;
+
+/* custom appearence for input type file */
+#divFile
+{
+  position : relative;
+  width : 250px;
+  text-align : left;
+}
+
+input[type='file']
+{
+  opacity : 0; /* for !IE */
+  filter : alpha(opacity=0); /* for IE */
+  position : absolute;
+  right : 0;
+  top : 0;
+}
+#input_text_file
+{
+  border : none;
+  padding : 0px 0px;
+  background : #def;
+  width : 200px;
+  height: 20px;
+  border : 1px solid black ;
 }
 
