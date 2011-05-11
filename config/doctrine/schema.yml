@@ -383,7 +383,7 @@ Collections:
         collection_type: { type: enum, notnull: true, default: mix, values: [mix, observation, physical] }
         code: { type: string, notnull: true}
         name: { type: string, notnull: true}
-        name_indexed: { type: string} 
+        name_indexed: { type: string}
         institution_ref: { type: integer, notnull: true}
         main_manager_ref: { type: integer, notnull: true}
         parent_ref: { type: integer}
@@ -521,7 +521,7 @@ Taxonomy:
             class: CatalogueLevels
             local: level_ref
             foreign: id
-            
+
 
 ClassificationKeywords:
     columns:
@@ -935,7 +935,7 @@ SpecimenSearch:
         gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
-        taxon_name_indexed: { type: string}    
+        taxon_name_indexed: { type: string}
         taxon_name_order_by: { type: string}
         taxon_level_ref: { type: integer, notnull: true }
         taxon_level_name: { type: string}
@@ -943,16 +943,16 @@ SpecimenSearch:
         taxon_path: { type: string}
         taxon_parent_ref: { type: integer, default:0}
         taxon_extinct: { type: boolean}
-        litho_ref: { type: integer, notnull: true, default:0} 
+        litho_ref: { type: integer, notnull: true, default:0}
         litho_name: { type: string}
         litho_name_indexed: { type: string}
         litho_name_order_by: { type: string}
-        litho_level_ref: { type: integer, notnull: true, default:0}    
+        litho_level_ref: { type: integer, notnull: true, default:0}
         litho_level_name: { type: string}
         litho_status: { type: string}
         litho_local: { type: boolean}
         litho_color: { type: string}
-        litho_path: { type: string}                
+        litho_path: { type: string}
         litho_parent_ref: { type: integer, default:0}
         chrono_ref: { type: integer, notnull: true, default:0}
         chrono_name: { type: string}
@@ -965,7 +965,7 @@ SpecimenSearch:
         chrono_color: {type: string}
         chrono_path: { type: string}
         chrono_parent_ref: { type: integer, default:0}
-        lithology_ref: { type: integer, notnull: true, default:0}    
+        lithology_ref: { type: integer, notnull: true, default:0}
         lithology_name: { type: string}
         lithology_name_indexed: { type: string}
         lithology_name_order_by: { type: string}
@@ -987,7 +987,7 @@ SpecimenSearch:
         mineral_color: { type: string}
         mineral_path: { type: string}
         mineral_parent_ref: { type: integer, default:0}
-        host_taxon_ref: { type: integer, notnull: true, default:0}   
+        host_taxon_ref: { type: integer, notnull: true, default:0}
         host_relationship: { type: string}
         host_taxon_name: { type: string}
         host_taxon_name_indexed: { type: string}
@@ -997,16 +997,16 @@ SpecimenSearch:
         host_taxon_status: { type: string}
         host_taxon_path: { type: string}
         host_taxon_parent_ref: { type: integer, default:0}
-        host_taxon_extinct: { type: boolean}      
+        host_taxon_extinct: { type: boolean}
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer}                  
-        ig_num: { type: string}           
+        ig_ref: { type: integer}
+        ig_num: { type: string}
         ig_num_indexed: { type: string}
-        ig_date_mask: { type: integer }                 
-        ig_date: { type: string}                      
-        acquisition_category: { type: string}     
-        acquisition_date_mask: { type: integer }        
-        acquisition_date: { type: string}             
+        ig_date_mask: { type: integer }
+        ig_date: { type: string}
+        acquisition_category: { type: string}
+        acquisition_date_mask: { type: integer }
+        acquisition_date: { type: string}
         with_types: {type: boolean }
         with_individuals: {type: boolean}
         individual_ref: {type: integer}
@@ -1075,7 +1075,7 @@ SpecimenSearch:
         GtuParent:
             local: gtu_parent_ref
             foreign: id
-            class: Gtu 
+            class: Gtu
         Taxonomy:
             local: taxon_ref
             foreign: id
@@ -1131,7 +1131,7 @@ SpecimenSearch:
             local: mineral_parent_ref
             foreign: id
             class: Mineralogy
-        HostTaxon:            
+        HostTaxon:
             local: host_taxon_ref
             foreign: id
             class: Taxonomy
@@ -1143,14 +1143,14 @@ SpecimenSearch:
             local: host_taxon_parent_ref
             foreign: id
             class: Taxonomy
-        HostSpecimen:            
+        HostSpecimen:
             local: host_specimen_ref
             foreign: id
             class: Specimens
         Ig:
             local: ig_ref
             foreign: id
-            class: Igs          
+            class: Igs
 
 IndividualSearch:
     tableName: darwin_flat
@@ -1184,7 +1184,7 @@ IndividualSearch:
         gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
-        taxon_name_indexed: { type: string}    
+        taxon_name_indexed: { type: string}
         taxon_name_order_by: { type: string}
         taxon_level_ref: { type: integer, notnull: true }
         taxon_level_name: { type: string}
@@ -1192,16 +1192,16 @@ IndividualSearch:
         taxon_path: { type: string}
         taxon_parent_ref: { type: integer, default:0}
         taxon_extinct: { type: boolean}
-        litho_ref: { type: integer, notnull: true, default:0} 
+        litho_ref: { type: integer, notnull: true, default:0}
         litho_name: { type: string}
         litho_name_indexed: { type: string}
         litho_name_order_by: { type: string}
-        litho_level_ref: { type: integer, notnull: true, default:0}    
+        litho_level_ref: { type: integer, notnull: true, default:0}
         litho_level_name: { type: string}
         litho_status: { type: string}
         litho_local: { type: boolean}
         litho_color: { type: string}
-        litho_path: { type: string}                
+        litho_path: { type: string}
         litho_parent_ref: { type: integer, default:0}
         chrono_ref: { type: integer, notnull: true, default:0}
         chrono_name: { type: string}
@@ -1214,7 +1214,7 @@ IndividualSearch:
         chrono_color: {type: string}
         chrono_path: { type: string}
         chrono_parent_ref: { type: integer, default:0}
-        lithology_ref: { type: integer, notnull: true, default:0}    
+        lithology_ref: { type: integer, notnull: true, default:0}
         lithology_name: { type: string}
         lithology_name_indexed: { type: string}
         lithology_name_order_by: { type: string}
@@ -1236,7 +1236,7 @@ IndividualSearch:
         mineral_color: { type: string}
         mineral_path: { type: string}
         mineral_parent_ref: { type: integer, default:0}
-        host_taxon_ref: { type: integer, notnull: true, default:0}   
+        host_taxon_ref: { type: integer, notnull: true, default:0}
         host_relationship: { type: string}
         host_taxon_name: { type: string}
         host_taxon_name_indexed: { type: string}
@@ -1246,16 +1246,16 @@ IndividualSearch:
         host_taxon_status: { type: string}
         host_taxon_path: { type: string}
         host_taxon_parent_ref: { type: integer, default:0}
-        host_taxon_extinct: { type: boolean}      
+        host_taxon_extinct: { type: boolean}
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer}                  
-        ig_num: { type: string}           
+        ig_ref: { type: integer}
+        ig_num: { type: string}
         ig_num_indexed: { type: string}
-        ig_date_mask: { type: integer }                 
-        ig_date: { type: string}                      
-        acquisition_category: { type: string}     
-        acquisition_date_mask: { type: integer }        
-        acquisition_date: { type: string}             
+        ig_date_mask: { type: integer }
+        ig_date: { type: string}
+        acquisition_category: { type: string}
+        acquisition_date_mask: { type: integer }
+        acquisition_date: { type: string}
         with_types: {type: boolean }
         with_individuals: {type:boolean}
         individual_ref: {type: integer, primary: true}
@@ -1324,7 +1324,7 @@ IndividualSearch:
         GtuParent:
             local: gtu_parent_ref
             foreign: id
-            class: Gtu 
+            class: Gtu
         Taxonomy:
             local: taxon_ref
             foreign: id
@@ -1380,7 +1380,7 @@ IndividualSearch:
             local: mineral_parent_ref
             foreign: id
             class: Mineralogy
-        HostTaxon:            
+        HostTaxon:
             local: host_taxon_ref
             foreign: id
             class: Taxonomy
@@ -1392,7 +1392,7 @@ IndividualSearch:
             local: host_taxon_parent_ref
             foreign: id
             class: Taxonomy
-        HostSpecimen:            
+        HostSpecimen:
             local: host_specimen_ref
             foreign: id
             class: Specimens
@@ -1434,7 +1434,7 @@ PartSearch:
         gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
-        taxon_name_indexed: { type: string}    
+        taxon_name_indexed: { type: string}
         taxon_name_order_by: { type: string}
         taxon_level_ref: { type: integer, notnull: true }
         taxon_level_name: { type: string}
@@ -1442,16 +1442,16 @@ PartSearch:
         taxon_path: { type: string}
         taxon_parent_ref: { type: integer, default:0}
         taxon_extinct: { type: boolean}
-        litho_ref: { type: integer, notnull: true, default:0} 
+        litho_ref: { type: integer, notnull: true, default:0}
         litho_name: { type: string}
         litho_name_indexed: { type: string}
         litho_name_order_by: { type: string}
-        litho_level_ref: { type: integer, notnull: true, default:0}    
+        litho_level_ref: { type: integer, notnull: true, default:0}
         litho_level_name: { type: string}
         litho_status: { type: string}
         litho_local: { type: boolean}
         litho_color: { type: string}
-        litho_path: { type: string}                
+        litho_path: { type: string}
         litho_parent_ref: { type: integer, default:0}
         chrono_ref: { type: integer, notnull: true, default:0}
         chrono_name: { type: string}
@@ -1464,7 +1464,7 @@ PartSearch:
         chrono_color: {type: string}
         chrono_path: { type: string}
         chrono_parent_ref: { type: integer, default:0}
-        lithology_ref: { type: integer, notnull: true, default:0}    
+        lithology_ref: { type: integer, notnull: true, default:0}
         lithology_name: { type: string}
         lithology_name_indexed: { type: string}
         lithology_name_order_by: { type: string}
@@ -1486,7 +1486,7 @@ PartSearch:
         mineral_color: { type: string}
         mineral_path: { type: string}
         mineral_parent_ref: { type: integer, default:0}
-        host_taxon_ref: { type: integer, notnull: true, default:0}   
+        host_taxon_ref: { type: integer, notnull: true, default:0}
         host_relationship: { type: string}
         host_taxon_name: { type: string}
         host_taxon_name_indexed: { type: string}
@@ -1574,7 +1574,7 @@ PartSearch:
         GtuParent:
             local: gtu_parent_ref
             foreign: id
-            class: Gtu 
+            class: Gtu
         Taxonomy:
             local: taxon_ref
             foreign: id
@@ -1630,7 +1630,7 @@ PartSearch:
             local: mineral_parent_ref
             foreign: id
             class: Mineralogy
-        HostTaxon:            
+        HostTaxon:
             local: host_taxon_ref
             foreign: id
             class: Taxonomy
@@ -1642,7 +1642,7 @@ PartSearch:
             local: host_taxon_parent_ref
             foreign: id
             class: Taxonomy
-        HostSpecimen:            
+        HostSpecimen:
             local: host_specimen_ref
             foreign: id
             class: Specimens
@@ -1684,7 +1684,7 @@ IgsSearch:
         gtu_location: { type: string}
         taxon_ref: { type: integer, notnull: true, default:0}
         taxon_name:  { type: string}
-        taxon_name_indexed: { type: string}    
+        taxon_name_indexed: { type: string}
         taxon_name_order_by: { type: string}
         taxon_level_ref: { type: integer, notnull: true }
         taxon_level_name: { type: string}
@@ -1692,16 +1692,16 @@ IgsSearch:
         taxon_path: { type: string}
         taxon_parent_ref: { type: integer, default:0}
         taxon_extinct: { type: boolean}
-        litho_ref: { type: integer, notnull: true, default:0} 
+        litho_ref: { type: integer, notnull: true, default:0}
         litho_name: { type: string}
         litho_name_indexed: { type: string}
         litho_name_order_by: { type: string}
-        litho_level_ref: { type: integer, notnull: true, default:0}    
+        litho_level_ref: { type: integer, notnull: true, default:0}
         litho_level_name: { type: string}
         litho_status: { type: string}
         litho_local: { type: boolean}
         litho_color: { type: string}
-        litho_path: { type: string}                
+        litho_path: { type: string}
         litho_parent_ref: { type: integer, default:0}
         chrono_ref: { type: integer, notnull: true, default:0}
         chrono_name: { type: string}
@@ -1714,7 +1714,7 @@ IgsSearch:
         chrono_color: {type: string}
         chrono_path: { type: string}
         chrono_parent_ref: { type: integer, default:0}
-        lithology_ref: { type: integer, notnull: true, default:0}    
+        lithology_ref: { type: integer, notnull: true, default:0}
         lithology_name: { type: string}
         lithology_name_indexed: { type: string}
         lithology_name_order_by: { type: string}
@@ -1736,7 +1736,7 @@ IgsSearch:
         mineral_color: { type: string}
         mineral_path: { type: string}
         mineral_parent_ref: { type: integer, default:0}
-        host_taxon_ref: { type: integer, notnull: true, default:0}   
+        host_taxon_ref: { type: integer, notnull: true, default:0}
         host_relationship: { type: string}
         host_taxon_name: { type: string}
         host_taxon_name_indexed: { type: string}
@@ -1746,16 +1746,16 @@ IgsSearch:
         host_taxon_status: { type: string}
         host_taxon_path: { type: string}
         host_taxon_parent_ref: { type: integer, default:0}
-        host_taxon_extinct: { type: boolean}      
+        host_taxon_extinct: { type: boolean}
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer, primary: true}                  
-        ig_num: { type: string}           
+        ig_ref: { type: integer, primary: true}
+        ig_num: { type: string}
         ig_num_indexed: { type: string}
-        ig_date_mask: { type: integer }                 
-        ig_date: { type: string}                      
-        acquisition_category: { type: string}     
-        acquisition_date_mask: { type: integer }        
-        acquisition_date: { type: string}             
+        ig_date_mask: { type: integer }
+        ig_date: { type: string}
+        acquisition_category: { type: string}
+        acquisition_date_mask: { type: integer }
+        acquisition_date: { type: string}
         with_types: {type: boolean }
         with_individuals: {type: boolean}
         individual_ref: {type: integer}
@@ -1820,7 +1820,7 @@ IgsSearch:
         GtuParent:
             local: gtu_parent_ref
             foreign: id
-            class: Gtu 
+            class: Gtu
         Taxonomy:
             local: taxon_ref
             foreign: id
@@ -1876,7 +1876,7 @@ IgsSearch:
             local: mineral_parent_ref
             foreign: id
             class: Mineralogy
-        HostTaxon:            
+        HostTaxon:
             local: host_taxon_ref
             foreign: id
             class: Taxonomy
@@ -1888,14 +1888,14 @@ IgsSearch:
             local: host_taxon_parent_ref
             foreign: id
             class: Taxonomy
-        HostSpecimen:            
+        HostSpecimen:
             local: host_specimen_ref
             foreign: id
             class: Specimens
         Ig:
             local: ig_ref
             foreign: id
-            class: Igs    
+            class: Igs
 FlatDict:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
@@ -1926,22 +1926,31 @@ Staging:
         category: { type: string}
         expedition_ref: { type: integer default:0}
         expedition_name: { type: string}
+        expedition_from_date: {type: string}
+        expedition_from_date_mask: { type: integer}
+        expedition_to_date: {type: string}
+        expedition_to_date_mask: { type: integer}
         station_visible: { type: boolean}
         gtu_ref: { type: integer, notnull: true, default:0}
         gtu_code: { type: string}
         gtu_from_date_mask: { type: integer }
         gtu_from_date: { type: string}
         gtu_to_date_mask: { type: integer }
-        gtu_to_date: { type: string}
+        gtu_to_date: { type: string }
+        gtu_latitude: { type: float }
+        gtu_longitude: { type: float }
+        gtu_lat_long_accuracy: { type: float }
+        gtu_elevation: { type: float }
+        gtu_elevation_accuracy: { type: float }
         taxon_ref: { type: integer}
         taxon_name:  { type: string}
         taxon_level_ref: { type: integer}
         taxon_level_name: { type: string}
         taxon_status: { type: string}
         taxon_extinct: { type: boolean}
-        litho_ref: { type: integer} 
+        litho_ref: { type: integer}
         litho_name: { type: string}
-        litho_level_ref: { type: integer}    
+        litho_level_ref: { type: integer}
         litho_level_name: { type: string}
         litho_status: { type: string}
         litho_local: { type: boolean}
@@ -1953,7 +1962,7 @@ Staging:
         chrono_status: { type: string}
         chrono_local: {type: boolean}
         chrono_color: {type: string}
-        lithology_ref: { type: integer}    
+        lithology_ref: { type: integer}
         lithology_name: { type: string}
         lithology_level_ref: { type: integer}
         lithology_level_name: { type: string}
@@ -1967,19 +1976,19 @@ Staging:
         mineral_status: { type: string}
         mineral_local: { type: boolean}
         mineral_color: { type: string}
-        host_taxon_ref: { type: integer}   
+        host_taxon_ref: { type: integer}
         host_relationship: { type: string}
         host_taxon_name: { type: string}
         host_taxon_level_ref: { type: integer}
         host_taxon_level_name: { type: string}
         host_taxon_status: { type: string}
         host_specimen_ref: { type: integer}
-        ig_ref: { type: integer, primary: true}                  
-        ig_num: { type: string}           
-        ig_date_mask: { type: integer }                 
-        ig_date: { type: string}                      
-        acquisition_category: { type: string}     
-        acquisition_date_mask: { type: integer }        
+        ig_ref: { type: integer, primary: true}
+        ig_num: { type: string}
+        ig_date_mask: { type: integer }
+        ig_date: { type: string}
+        acquisition_category: { type: string}
+        acquisition_date_mask: { type: integer }
         acquisition_date: { type: string}
         individual_ref: {type: integer}
         individual_type: {type: string}
@@ -2014,7 +2023,7 @@ Staging:
             local: import_ref
             foreign: id
             class: Imports
-   
+
 StagingTagGroups:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
