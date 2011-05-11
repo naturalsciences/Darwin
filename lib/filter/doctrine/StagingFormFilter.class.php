@@ -21,6 +21,7 @@ class StagingFormFilter extends BaseStagingFormFilter
       'dna' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dna',
     );
     $this->widgetSchema['slevel']  = new sfWidgetFormChoice(array('expanded'=>true,'choices'=> $levels));
+    $this->widgetSchema['slevel']->setDefault('specimens');
     $this->validatorSchema['slevel'] = new sfValidatorChoice(array('choices' => array_keys($levels), 'required'=>false,'empty_value'=>'specimens'));
     $this->addPagerItems();
   }
