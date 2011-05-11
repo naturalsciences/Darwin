@@ -21,7 +21,6 @@
  * @property string $gtu_from_date
  * @property integer $gtu_to_date_mask
  * @property string $gtu_to_date
- * @property string $gtu_country_tag_value
  * @property integer $taxon_ref
  * @property string $taxon_name
  * @property integer $taxon_level_ref
@@ -44,18 +43,13 @@
  * @property string $chrono_color
  * @property integer $lithology_ref
  * @property string $lithology_name
- * @property string $lithology_name_indexed
- * @property string $lithology_name_order_by
  * @property integer $lithology_level_ref
  * @property string $lithology_level_name
  * @property string $lithology_status
  * @property boolean $lithology_local
  * @property string $lithology_color
- * @property string $lithology_path
  * @property integer $mineral_ref
  * @property string $mineral_name
- * @property string $mineral_name_indexed
- * @property string $mineral_name_order_by
  * @property integer $mineral_level_ref
  * @property string $mineral_level_name
  * @property string $mineral_status
@@ -67,7 +61,6 @@
  * @property integer $host_taxon_level_ref
  * @property string $host_taxon_level_name
  * @property string $host_taxon_status
- * @property boolean $host_taxon_extinct
  * @property integer $host_specimen_ref
  * @property integer $ig_ref
  * @property string $ig_num
@@ -78,8 +71,6 @@
  * @property string $acquisition_date
  * @property integer $individual_ref
  * @property string $individual_type
- * @property string $individual_type_group
- * @property string $individual_type_search
  * @property string $individual_sex
  * @property string $individual_state
  * @property string $individual_stage
@@ -124,7 +115,6 @@
  * @method string              getGtuFromDate()              Returns the current record's "gtu_from_date" value
  * @method integer             getGtuToDateMask()            Returns the current record's "gtu_to_date_mask" value
  * @method string              getGtuToDate()                Returns the current record's "gtu_to_date" value
- * @method string              getGtuCountryTagValue()       Returns the current record's "gtu_country_tag_value" value
  * @method integer             getTaxonRef()                 Returns the current record's "taxon_ref" value
  * @method string              getTaxonName()                Returns the current record's "taxon_name" value
  * @method integer             getTaxonLevelRef()            Returns the current record's "taxon_level_ref" value
@@ -147,18 +137,13 @@
  * @method string              getChronoColor()              Returns the current record's "chrono_color" value
  * @method integer             getLithologyRef()             Returns the current record's "lithology_ref" value
  * @method string              getLithologyName()            Returns the current record's "lithology_name" value
- * @method string              getLithologyNameIndexed()     Returns the current record's "lithology_name_indexed" value
- * @method string              getLithologyNameOrderBy()     Returns the current record's "lithology_name_order_by" value
  * @method integer             getLithologyLevelRef()        Returns the current record's "lithology_level_ref" value
  * @method string              getLithologyLevelName()       Returns the current record's "lithology_level_name" value
  * @method string              getLithologyStatus()          Returns the current record's "lithology_status" value
  * @method boolean             getLithologyLocal()           Returns the current record's "lithology_local" value
  * @method string              getLithologyColor()           Returns the current record's "lithology_color" value
- * @method string              getLithologyPath()            Returns the current record's "lithology_path" value
  * @method integer             getMineralRef()               Returns the current record's "mineral_ref" value
  * @method string              getMineralName()              Returns the current record's "mineral_name" value
- * @method string              getMineralNameIndexed()       Returns the current record's "mineral_name_indexed" value
- * @method string              getMineralNameOrderBy()       Returns the current record's "mineral_name_order_by" value
  * @method integer             getMineralLevelRef()          Returns the current record's "mineral_level_ref" value
  * @method string              getMineralLevelName()         Returns the current record's "mineral_level_name" value
  * @method string              getMineralStatus()            Returns the current record's "mineral_status" value
@@ -170,7 +155,6 @@
  * @method integer             getHostTaxonLevelRef()        Returns the current record's "host_taxon_level_ref" value
  * @method string              getHostTaxonLevelName()       Returns the current record's "host_taxon_level_name" value
  * @method string              getHostTaxonStatus()          Returns the current record's "host_taxon_status" value
- * @method boolean             getHostTaxonExtinct()         Returns the current record's "host_taxon_extinct" value
  * @method integer             getHostSpecimenRef()          Returns the current record's "host_specimen_ref" value
  * @method integer             getIgRef()                    Returns the current record's "ig_ref" value
  * @method string              getIgNum()                    Returns the current record's "ig_num" value
@@ -181,8 +165,6 @@
  * @method string              getAcquisitionDate()          Returns the current record's "acquisition_date" value
  * @method integer             getIndividualRef()            Returns the current record's "individual_ref" value
  * @method string              getIndividualType()           Returns the current record's "individual_type" value
- * @method string              getIndividualTypeGroup()      Returns the current record's "individual_type_group" value
- * @method string              getIndividualTypeSearch()     Returns the current record's "individual_type_search" value
  * @method string              getIndividualSex()            Returns the current record's "individual_sex" value
  * @method string              getIndividualState()          Returns the current record's "individual_state" value
  * @method string              getIndividualStage()          Returns the current record's "individual_stage" value
@@ -226,7 +208,6 @@
  * @method Staging             setGtuFromDate()              Sets the current record's "gtu_from_date" value
  * @method Staging             setGtuToDateMask()            Sets the current record's "gtu_to_date_mask" value
  * @method Staging             setGtuToDate()                Sets the current record's "gtu_to_date" value
- * @method Staging             setGtuCountryTagValue()       Sets the current record's "gtu_country_tag_value" value
  * @method Staging             setTaxonRef()                 Sets the current record's "taxon_ref" value
  * @method Staging             setTaxonName()                Sets the current record's "taxon_name" value
  * @method Staging             setTaxonLevelRef()            Sets the current record's "taxon_level_ref" value
@@ -249,18 +230,13 @@
  * @method Staging             setChronoColor()              Sets the current record's "chrono_color" value
  * @method Staging             setLithologyRef()             Sets the current record's "lithology_ref" value
  * @method Staging             setLithologyName()            Sets the current record's "lithology_name" value
- * @method Staging             setLithologyNameIndexed()     Sets the current record's "lithology_name_indexed" value
- * @method Staging             setLithologyNameOrderBy()     Sets the current record's "lithology_name_order_by" value
  * @method Staging             setLithologyLevelRef()        Sets the current record's "lithology_level_ref" value
  * @method Staging             setLithologyLevelName()       Sets the current record's "lithology_level_name" value
  * @method Staging             setLithologyStatus()          Sets the current record's "lithology_status" value
  * @method Staging             setLithologyLocal()           Sets the current record's "lithology_local" value
  * @method Staging             setLithologyColor()           Sets the current record's "lithology_color" value
- * @method Staging             setLithologyPath()            Sets the current record's "lithology_path" value
  * @method Staging             setMineralRef()               Sets the current record's "mineral_ref" value
  * @method Staging             setMineralName()              Sets the current record's "mineral_name" value
- * @method Staging             setMineralNameIndexed()       Sets the current record's "mineral_name_indexed" value
- * @method Staging             setMineralNameOrderBy()       Sets the current record's "mineral_name_order_by" value
  * @method Staging             setMineralLevelRef()          Sets the current record's "mineral_level_ref" value
  * @method Staging             setMineralLevelName()         Sets the current record's "mineral_level_name" value
  * @method Staging             setMineralStatus()            Sets the current record's "mineral_status" value
@@ -272,7 +248,6 @@
  * @method Staging             setHostTaxonLevelRef()        Sets the current record's "host_taxon_level_ref" value
  * @method Staging             setHostTaxonLevelName()       Sets the current record's "host_taxon_level_name" value
  * @method Staging             setHostTaxonStatus()          Sets the current record's "host_taxon_status" value
- * @method Staging             setHostTaxonExtinct()         Sets the current record's "host_taxon_extinct" value
  * @method Staging             setHostSpecimenRef()          Sets the current record's "host_specimen_ref" value
  * @method Staging             setIgRef()                    Sets the current record's "ig_ref" value
  * @method Staging             setIgNum()                    Sets the current record's "ig_num" value
@@ -283,8 +258,6 @@
  * @method Staging             setAcquisitionDate()          Sets the current record's "acquisition_date" value
  * @method Staging             setIndividualRef()            Sets the current record's "individual_ref" value
  * @method Staging             setIndividualType()           Sets the current record's "individual_type" value
- * @method Staging             setIndividualTypeGroup()      Sets the current record's "individual_type_group" value
- * @method Staging             setIndividualTypeSearch()     Sets the current record's "individual_type_search" value
  * @method Staging             setIndividualSex()            Sets the current record's "individual_sex" value
  * @method Staging             setIndividualState()          Sets the current record's "individual_state" value
  * @method Staging             setIndividualStage()          Sets the current record's "individual_stage" value
@@ -377,9 +350,6 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('gtu_to_date', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('gtu_country_tag_value', 'string', null, array(
-             'type' => 'string',
-             ));
         $this->hasColumn('taxon_ref', 'integer', null, array(
              'type' => 'integer',
              ));
@@ -446,12 +416,6 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('lithology_name', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('lithology_name_indexed', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('lithology_name_order_by', 'string', null, array(
-             'type' => 'string',
-             ));
         $this->hasColumn('lithology_level_ref', 'integer', null, array(
              'type' => 'integer',
              ));
@@ -467,19 +431,10 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('lithology_color', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('lithology_path', 'string', null, array(
-             'type' => 'string',
-             ));
         $this->hasColumn('mineral_ref', 'integer', null, array(
              'type' => 'integer',
              ));
         $this->hasColumn('mineral_name', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('mineral_name_indexed', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('mineral_name_order_by', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('mineral_level_ref', 'integer', null, array(
@@ -515,9 +470,6 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('host_taxon_status', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('host_taxon_extinct', 'boolean', null, array(
-             'type' => 'boolean',
-             ));
         $this->hasColumn('host_specimen_ref', 'integer', null, array(
              'type' => 'integer',
              ));
@@ -547,12 +499,6 @@ abstract class BaseStaging extends sfDoctrineRecord
              'type' => 'integer',
              ));
         $this->hasColumn('individual_type', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('individual_type_group', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('individual_type_search', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('individual_sex', 'string', null, array(

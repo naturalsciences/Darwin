@@ -1933,7 +1933,6 @@ Staging:
         gtu_from_date: { type: string}
         gtu_to_date_mask: { type: integer }
         gtu_to_date: { type: string}
-        gtu_country_tag_value: { type: string}
         taxon_ref: { type: integer}
         taxon_name:  { type: string}
         taxon_level_ref: { type: integer}
@@ -1956,18 +1955,13 @@ Staging:
         chrono_color: {type: string}
         lithology_ref: { type: integer}    
         lithology_name: { type: string}
-        lithology_name_indexed: { type: string}
-        lithology_name_order_by: { type: string}
         lithology_level_ref: { type: integer}
         lithology_level_name: { type: string}
         lithology_status: { type: string}
         lithology_local: { type: boolean}
         lithology_color: { type: string}
-        lithology_path: { type: string}
         mineral_ref: { type: integer}
         mineral_name: { type: string}
-        mineral_name_indexed: { type: string}
-        mineral_name_order_by: { type: string}
         mineral_level_ref: { type: integer}
         mineral_level_name: { type: string}
         mineral_status: { type: string}
@@ -1979,7 +1973,6 @@ Staging:
         host_taxon_level_ref: { type: integer}
         host_taxon_level_name: { type: string}
         host_taxon_status: { type: string}
-        host_taxon_extinct: { type: boolean}      
         host_specimen_ref: { type: integer}
         ig_ref: { type: integer, primary: true}                  
         ig_num: { type: string}           
@@ -1990,8 +1983,6 @@ Staging:
         acquisition_date: { type: string}
         individual_ref: {type: integer}
         individual_type: {type: string}
-        individual_type_group: {type: string}
-        individual_type_search: {type: string}
         individual_sex:  {type: string}
         individual_state: {type: string}
         individual_stage: {type: string}
