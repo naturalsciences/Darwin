@@ -6,8 +6,9 @@ class stagingActions extends DarwinActions
   {
     $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
     $this->form = new StagingFormFilter(null, array('import' =>$this->import));
-
-    $this->form->bind($request->getParameter('staging_filters'));
+    $filters = $request->getParameter('staging_filters');
+    if(!isset($filters['slevel'])) $filters['slevel'] = 'specimens';
+    $this->form->bind($filters);
     if($this->form->isValid())
     {
       $query = $this->form->getQuery();

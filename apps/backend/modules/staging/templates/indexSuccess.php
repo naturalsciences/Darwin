@@ -1,6 +1,6 @@
 <div class="page">
   <form action="" method="post">
-    <?php echo $form;?>
+    <?php echo $form['slevel']->renderRow();?>
     <input type="submit"/>
   </form>
   <hr />
