@@ -1933,9 +1933,9 @@ create table imports
     state varchar not null default '',
     created_at timestamp not null default now(),
     updated_at timestamp,
-    constraint pk_import primary key (id) ,   
+    constraint pk_import primary key (id) ,
     constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade,
-    constraint fk_imports_users foreign key (user_ref) references users(id) on delete cascade      
+    constraint fk_imports_users foreign key (user_ref) references users(id) on delete cascade
   );
 
 comment on table imports is 'Table used to check the state of the date coming from an uploaded file';
@@ -1961,6 +1961,10 @@ create table staging
     category varchar,
     expedition_ref integer default 0,
     expedition_name varchar,
+    expedition_from_date date,
+    expedition_from_date_mask integer,
+    expedition_to_date date,
+    expedition_to_date_mask integer,
     station_visible boolean,
     gtu_ref integer default 0,
     gtu_code varchar,
@@ -1968,6 +1972,11 @@ create table staging
     gtu_from_date timestamp,
     gtu_to_date_mask integer,
     gtu_to_date timestamp,
+    gtu_latitude float,
+    gtu_longitude float,
+    gtu_lat_long_accuracy float,
+    gtu_elevation float,
+    gtu_elevation_accuracy float,
     taxon_ref integer default 0,
     taxon_name varchar,
     taxon_level_ref integer not null default 0,
