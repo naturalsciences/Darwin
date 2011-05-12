@@ -3610,3 +3610,38 @@ BEGIN
   RETURN OLD;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION tableoid(tablename TEXT) RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT oid FROM pg_class WHERE relname = tablename);
+END
+$$
+LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER;
+
+
+CREATE OR REPLACE FUNCTION get_import_rows() RETURNS BIGINT AS $$
+DECLARE
+  busy_job_id integer;
+  job record;
+BEGIN
+  -- Iterating over pending imported file list, ordered by creation date and id.
+  FOR job IN SELECT DISTINCT i.* FROM imports i
+LEFT JOIN pg_locks pgl
+       ON pgl.classid = tableoid('imports')
+      AND pgl.objid = i.id
+      AND pgl.pid <> pg_backend_pid()
+    WHERE pgl.objid IS NULL
+      AND i.state = 'imported'
+ ORDER BY i.created_at asc, i.id LOOP
+    -- Trying to lock the job:
+    IF pg_try_advisory_lock(tableoid('imports'), job.id) THEN
+      -- Need to recheck the unlocked state: race conditions are still possible.
+      -- For example, job could be requested, locked, processed, finished and unlocked
+      -- while this function iterates over "then-unlocked" jobs list.
+      RETURN job.id;
+    END IF;
+  END LOOP;
+  RETURN NULL;
+END
+$$
+LANGUAGE plpgsql SECURITY DEFINER;
