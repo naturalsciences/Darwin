@@ -330,6 +330,10 @@ CREATE TRIGGER trg_cpy_path_habitats BEFORE INSERT OR UPDATE
 	ON habitats FOR EACH ROW
 	EXECUTE PROCEDURE fct_cpy_path();
 
+CREATE TRIGGER trg_cpy_path_staging BEFORE INSERT OR UPDATE
+        ON staging FOR EACH ROW
+        EXECUTE PROCEDURE fct_cpy_path();
+
 CREATE TRIGGER trg_cpy_path_chronostratigraphy BEFORE INSERT OR UPDATE
         ON chronostratigraphy FOR EACH ROW
         EXECUTE PROCEDURE fct_cpy_path_catalogs();

@@ -647,7 +647,8 @@ BEGIN
           TG_TABLE_NAME::text = 'collections' OR
           TG_TABLE_NAME::text = 'gtu' OR
           TG_TABLE_NAME::text = 'habitats' OR
-          TG_TABLE_NAME::text = 'specimen_parts') THEN
+          TG_TABLE_NAME::text = 'specimen_parts' OR
+          TG_TABLE_NAME::text = 'staging') THEN
 
           IF NEW.id = 0 THEN
             NEW.parent_ref = null;
@@ -670,7 +671,8 @@ BEGIN
           TG_TABLE_NAME::text = 'collections' OR
           TG_TABLE_NAME::text = 'gtu' OR
           TG_TABLE_NAME::text = 'habitats' OR
-          TG_TABLE_NAME::text = 'specimen_parts') THEN
+          TG_TABLE_NAME::text = 'specimen_parts' OR
+          TG_TABLE_NAME::text = 'staging') THEN
 
           IF NEW.parent_ref IS DISTINCT FROM OLD.parent_ref THEN
             IF NEW.parent_ref IS NULL THEN
