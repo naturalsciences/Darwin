@@ -13,15 +13,13 @@ class StagingFormFilter extends BaseStagingFormFilter
   public function configure()
   {
     $this->useFields(array());
-    $levels = array(
-      'specimens' => 'specimen',
-      'individuals' => '&nbsp;&nbsp;individuals',
-      'parts' => '&nbsp;&nbsp;&nbsp;&nbsp;parts',
-      'tissue' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tissue',
-      'dna' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dna',
-    );
+    $model = new ImportDnaXml();
+    $levels = $model->getLevels();
     $this->widgetSchema['slevel']  = new sfWidgetFormChoice(array('expanded'=>true,'choices'=> $levels));
     $this->validatorSchema['slevel'] = new sfValidatorChoice(array('choices' => array_keys($levels), 'required'=>false,'empty_value'=>'specimens'));
+    $this->widgetSchema->setLabels(array(
+      'slevel'=>'Levels',
+    ) );
     $this->addPagerItems();
   }
 
