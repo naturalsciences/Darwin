@@ -181,7 +181,7 @@ CREATE INDEX CONCURRENTLY idx_specimen_parts_sub_container_type on specimen_part
 CREATE INDEX CONCURRENTLY idx_specimen_parts_container_storage on specimen_parts(container_storage);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_sub_container_storage on specimen_parts(sub_container_storage);
 CREATE INDEX CONCURRENTLY idx_taxonomy_name_order_by on taxonomy(name_order_by);
-CREATE INDEX CONCURRENTLY idx_taxonomy_path on taxonomy(path);
+CREATE INDEX CONCURRENTLY idx_taxonomy_path on taxonomy(path text_pattern_ops);
 CREATE INDEX CONCURRENTLY idx_tag_groups_group_name_indexed on tag_groups(group_name_indexed);
 CREATE INDEX CONCURRENTLY idx_tag_groups_sub_group_name on tag_groups(sub_group_name);
 CREATE INDEX CONCURRENTLY idx_tags_tag_indexed on tags(tag_indexed);
