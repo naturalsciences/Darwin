@@ -131,7 +131,7 @@ CREATE INDEX CONCURRENTLY idx_identifications_notion_concerned on identification
 CREATE INDEX CONCURRENTLY idx_identifications_order_by on identifications(order_by);
 CREATE INDEX CONCURRENTLY idx_identifications_determination_status on identifications(determination_status) WHERE determination_status <> '';
 CREATE INDEX CONCURRENTLY idx_identifications_referenced_record on identifications(referenced_relation, record_id);
-CREATE INDEX CONCURRENTLY idx_igs_ig_num_indexed on igs (ig_num_indexed);
+CREATE INDEX CONCURRENTLY idx_igs_ig_num_indexed ON igs(ig_num_indexed text_pattern_ops);
 CREATE INDEX CONCURRENTLY idx_collection_name_indexed on collections (name_indexed);
 CREATE INDEX CONCURRENTLY idx_insurances_referenced_record on insurances(referenced_relation, record_id);
 CREATE INDEX CONCURRENTLY idx_insurances_insurance_currency on insurances(insurance_currency);

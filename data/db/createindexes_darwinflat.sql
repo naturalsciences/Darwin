@@ -51,7 +51,8 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_name_order_by on darwin_flat(ch
 CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_name_order_by on darwin_flat(litho_name_order_by);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_name_order_by on darwin_flat(lithology_name_order_by);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_name_order_by on darwin_flat(mineral_name_order_by);
-/*CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_path on darwin_flat(taxon_path);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_path on darwin_flat(taxon_path text_pattern_ops);
+/*
 CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_path on darwin_flat(host_taxon_path);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_chrono_path on darwin_flat(chrono_path);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_litho_path on darwin_flat(litho_path);
@@ -59,7 +60,7 @@ CREATE INDEX CONCURRENTLY idx_darwin_flat_lithology_path on darwin_flat(litholog
 CREATE INDEX CONCURRENTLY idx_darwin_flat_mineral_path on darwin_flat(mineral_path);*/
 CREATE INDEX CONCURRENTLY idx_darwin_flat_taxon_extinct on darwin_flat(taxon_extinct);
 /*CREATE INDEX CONCURRENTLY idx_darwin_flat_host_taxon_extinct on darwin_flat(host_taxon_extinct);*/
-CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_num on darwin_flat(ig_num_indexed);
+CREATE INDEX CONCURRENTLY idx_darwin_flat_ig_num on darwin_flat(ig_num_indexed text_pattern_ops);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_acquisition_category on darwin_flat(acquisition_category);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_count_min on darwin_flat(individual_count_min);
 CREATE INDEX CONCURRENTLY idx_darwin_flat_individual_count_max on darwin_flat(individual_count_max);
