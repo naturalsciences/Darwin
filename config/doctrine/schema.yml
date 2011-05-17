@@ -2085,7 +2085,11 @@ Imports:
         filename: { type: string, notnull: true},
         user_ref: {type:integer, notnull: true},
         format : {type:string,notnull: true},
-        collection_ref: { type: integer, notnull: true, default:0},
+        collection_ref: { type: integer, notnull: true},
         state: {type:string,notnull:true, default:'imported'},
         created_at: { type: string, notnull: true},
         updated_at: { type: string, notnull: true}
+    relations:
+        Collections:
+            local: collection_ref
+            foreign: id

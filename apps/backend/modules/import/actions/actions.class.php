@@ -54,8 +54,50 @@ class importActions extends DarwinActions
     }
   }
   
+ /**
+  * Executes index action
+  *
+  * @param sfRequest $request A request object
+  */
   public function executeIndex(sfWebRequest $request)
-  {        
+  {
+    $this->form = new ImportsFormFilter(null,array('user_ref' =>$this->getUser()->getId()));
+  }  
+  public function executeSearch(sfWebRequest $request)
+  {
+    $this->form = new ImportsFormFilter(null,array('user_ref' =>$this->getUser()->getId()));
+    $this->setCommonValues('import', 'updated_at', $request);
+    if( $request->getParameter('orderby', '') == '' && $request->getParameter('orderdir', '') == '')
+      $this->orderDir = 'desc';
 
-  }    
+    $this->s_url = 'import/search'.'?is_choose='.$this->is_choose;
+    $this->o_url = '&orderby='.$this->orderBy.'&orderdir='.$this->orderDir;
+    if($request->getParameter('imports_filters','') !== '')
+    { 
+      //die(print_r($request->getParameter('imports_filters'))) ;   
+      $this->form->bind($request->getParameter('imports_filters'));
+      if ($this->form->isValid())
+      { 
+        $query = $this->form->getQuery()->andWhereIn('collection_ref',array_keys(Doctrine::getTable('Collections')->getAllAvailableCollectionsFor($this->getUser()->getId())))
+                  ->orderBy($this->orderBy .' '.$this->orderDir);
+        $this->pagerLayout = new PagerLayoutWithArrows(
+          new DarwinPager(
+            $query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          ),
+          new Doctrine_Pager_Range_Sliding(
+            array('chunk' => $this->pagerSlidingSize)
+          ),
+          $this->getController()->genUrl($this->s_url.$this->o_url) . '/page/{%page_number}'
+        );
+
+        $this->setDefaultPaggingLayout($this->pagerLayout);
+
+        if (! $this->pagerLayout->getPager()->getExecuted())
+          $this->imports = $this->pagerLayout->execute();
+      }
+    }
+  }
+     
 }

@@ -13,23 +13,26 @@
  * @property string $state
  * @property string $created_at
  * @property string $updated_at
+ * @property Collections $Collections
  * 
- * @method integer getId()             Returns the current record's "id" value
- * @method string  getFilename()       Returns the current record's "filename" value
- * @method integer getUserRef()        Returns the current record's "user_ref" value
- * @method string  getFormat()         Returns the current record's "format" value
- * @method integer getCollectionRef()  Returns the current record's "collection_ref" value
- * @method string  getState()          Returns the current record's "state" value
- * @method string  getCreatedAt()      Returns the current record's "created_at" value
- * @method string  getUpdatedAt()      Returns the current record's "updated_at" value
- * @method Imports setId()             Sets the current record's "id" value
- * @method Imports setFilename()       Sets the current record's "filename" value
- * @method Imports setUserRef()        Sets the current record's "user_ref" value
- * @method Imports setFormat()         Sets the current record's "format" value
- * @method Imports setCollectionRef()  Sets the current record's "collection_ref" value
- * @method Imports setState()          Sets the current record's "state" value
- * @method Imports setCreatedAt()      Sets the current record's "created_at" value
- * @method Imports setUpdatedAt()      Sets the current record's "updated_at" value
+ * @method integer     getId()             Returns the current record's "id" value
+ * @method string      getFilename()       Returns the current record's "filename" value
+ * @method integer     getUserRef()        Returns the current record's "user_ref" value
+ * @method string      getFormat()         Returns the current record's "format" value
+ * @method integer     getCollectionRef()  Returns the current record's "collection_ref" value
+ * @method string      getState()          Returns the current record's "state" value
+ * @method string      getCreatedAt()      Returns the current record's "created_at" value
+ * @method string      getUpdatedAt()      Returns the current record's "updated_at" value
+ * @method Collections getCollections()    Returns the current record's "Collections" value
+ * @method Imports     setId()             Sets the current record's "id" value
+ * @method Imports     setFilename()       Sets the current record's "filename" value
+ * @method Imports     setUserRef()        Sets the current record's "user_ref" value
+ * @method Imports     setFormat()         Sets the current record's "format" value
+ * @method Imports     setCollectionRef()  Sets the current record's "collection_ref" value
+ * @method Imports     setState()          Sets the current record's "state" value
+ * @method Imports     setCreatedAt()      Sets the current record's "created_at" value
+ * @method Imports     setUpdatedAt()      Sets the current record's "updated_at" value
+ * @method Imports     setCollections()    Sets the current record's "Collections" value
  * 
  * @package    darwin
  * @subpackage model
@@ -61,7 +64,6 @@ abstract class BaseImports extends sfDoctrineRecord
         $this->hasColumn('collection_ref', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('state', 'string', null, array(
              'type' => 'string',
@@ -81,6 +83,8 @@ abstract class BaseImports extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        
+        $this->hasOne('Collections', array(
+             'local' => 'collection_ref',
+             'foreign' => 'id'));
     }
 }

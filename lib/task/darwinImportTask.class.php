@@ -22,18 +22,21 @@ EOF;
      // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
-    $imports = Doctrine::getTable('imports')->findAll(); 
-    foreach($imports as $import) 
+    $conn = Doctrine_Manager::connection();
+    $conn->getDbh()->exec('BEGIN TRANSACTION');
+    do  
     {
-      if($import->getState() == 'imported')
-      {     
-        imports::importDataToTable($import) ;      
+      $id = $conn->fetchOne('SELECT get_import_rows()');
+      if($id != null) 
+      {
         $q = Doctrine_Query::create()
-          ->update('imports p')
-          ->set('p.state','\'processing\'')
-          ->where('p.id=?',$import->getId())
-          ->execute() ;
+          ->from('imports p')
+          ->where('p.id=?',$id)
+          ->fetchOne() ;
+         imports::importDataToTable($q) ; 
       }
     }
+    while($id != null);
+    $conn->getDbh()->exec('COMMIT TRANSACTION');
   }
 }  

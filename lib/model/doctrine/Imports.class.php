@@ -12,9 +12,28 @@
  */
 class Imports extends BaseImports
 {
-
-  public function importDataToTable(Imports $import) 
+  private static $state = array('' => 'All', 'imported' => 'Imported', 'processing' => 'Processing', 'ready' => 'Ready', 'rejected' => 'Rejected', 'computing' => 'Computing') ;  
+  private static $formatArray = array('dna' => 'DNA') ;  
+  
+  public static function getFormats()
   {
-    die('voici ce que je veux '.$import->getFilename()) ;
+    return self::$formatArray ;
   }
+  
+  public static function getStateList()
+  {
+    return self::$state ;
+  }  
+  
+  public function importDataToTable($data) 
+  {
+    // I can find my file with this command
+    echo(sfConfig::get('sf_upload_dir').'/uploaded_'.sha1($data->getFilename().$data->getCreatedAt())) ;
+  }
+  public function getLastModifiedDate()
+  {
+    
+    $dateTime = new FuzzyDateTime($this->_get('updated_at')!=''?$this->_get('updated_at'):$this->_get('created_at'));
+    return $dateTime->getDateMasked('em','d/m/Y H:i');
+  }  
 }

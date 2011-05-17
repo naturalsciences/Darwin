@@ -27,8 +27,8 @@ class ImportsForm extends BaseImportsForm
            )
     );
     
-    $category = array('dna'=>'DNA');
-    $allowed_types = array('text/xml','image/jpeg') ;
+    $category = imports::getFormats();
+    $allowed_types = array('text/xml','application/xml') ;
     $this->widgetSchema['format'] = new sfWidgetFormChoice(
       array(
         'choices' => $category
