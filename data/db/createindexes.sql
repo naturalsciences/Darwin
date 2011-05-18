@@ -131,7 +131,7 @@ CREATE INDEX CONCURRENTLY idx_identifications_notion_concerned on identification
 CREATE INDEX CONCURRENTLY idx_identifications_order_by on identifications(order_by);
 CREATE INDEX CONCURRENTLY idx_identifications_determination_status on identifications(determination_status) WHERE determination_status <> '';
 CREATE INDEX CONCURRENTLY idx_identifications_referenced_record on identifications(referenced_relation, record_id);
-CREATE INDEX CONCURRENTLY idx_igs_ig_num_indexed on igs (ig_num_indexed);
+CREATE INDEX CONCURRENTLY idx_igs_ig_num_indexed ON igs(ig_num_indexed text_pattern_ops);
 CREATE INDEX CONCURRENTLY idx_collection_name_indexed on collections (name_indexed);
 CREATE INDEX CONCURRENTLY idx_insurances_referenced_record on insurances(referenced_relation, record_id);
 CREATE INDEX CONCURRENTLY idx_insurances_insurance_currency on insurances(insurance_currency);
@@ -181,7 +181,7 @@ CREATE INDEX CONCURRENTLY idx_specimen_parts_sub_container_type on specimen_part
 CREATE INDEX CONCURRENTLY idx_specimen_parts_container_storage on specimen_parts(container_storage);
 CREATE INDEX CONCURRENTLY idx_specimen_parts_sub_container_storage on specimen_parts(sub_container_storage);
 CREATE INDEX CONCURRENTLY idx_taxonomy_name_order_by on taxonomy(name_order_by);
-CREATE INDEX CONCURRENTLY idx_taxonomy_path on taxonomy(path);
+CREATE INDEX CONCURRENTLY idx_taxonomy_path on taxonomy(path text_pattern_ops);
 CREATE INDEX CONCURRENTLY idx_tag_groups_group_name_indexed on tag_groups(group_name_indexed);
 CREATE INDEX CONCURRENTLY idx_tag_groups_sub_group_name on tag_groups(sub_group_name);
 CREATE INDEX CONCURRENTLY idx_tags_tag_indexed on tags(tag_indexed);
