@@ -3621,7 +3621,7 @@ $$
 LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER;
 
 
-CREATE OR REPLACE FUNCTION get_import_rows() RETURNS BIGINT AS $$
+CREATE OR REPLACE FUNCTION get_import_rows() RETURNS integer AS $$
 DECLARE
   busy_job_id integer;
   job record;
