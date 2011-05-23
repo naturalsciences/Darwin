@@ -602,14 +602,6 @@
  &lt;br/&gt;U kunt zich gratis registreren en aldus onze aardige tool ontdekken.&lt;br/&gt;
  Laten we een nadere blik werpen op onze wonderlijke functionaliteiten:</target>
       </trans-unit>
-          <trans-unit id="1226">
-        <source>Everything in the DaRWIN interface is build to make &lt;strong&gt;YOUR&lt;/strong&gt; job easier.&lt;br /&gt;
-     You work on a set of specimens? You want to save a search you often use? you want to know who has changed the info?&lt;br /&gt;
-     &lt;strong&gt;DaRWIN can do that!&lt;/strong&gt;</source>
-        <target>Alles binnen de DARWIN interface is zo opgezet om &lt;strong&gt;UW&lt;/strong&gt;job te vergemakkelijken.&lt;br/&gt;
- Werkt u op een reeks stalen? Wenst u vaak voorkomende zoekcriteria op te slaan voor later hergebruik? Weet u graag wie welke info heeft gewijzigd?&lt;br/&gt;
- &lt;strong&gt;DaRWIN kan u daar goed bij helpen!&lt;/strong&gt;</target>
-      </trans-unit>
           <trans-unit id="1305">
         <source>You cannot register without accepting DaRWIN 2  terms of use</source>
         <target>U kunt zich niet registreren zonder dat u de DaRWIN 2 terms of use niet heeft aanvaard</target>
@@ -629,6 +621,14 @@
         <target>Binnen de DaRWIN toepassing kunt u zelf uw interface geheel customiseren. &lt;br/&gt;
  Bent u alleen geïnteresseerd in taxonomie? Geen enkel probleem! Uw scherm zal niet belemmerd worden met onnodige informatie.&lt;br/&gt;
  U kunt zelf de ongewenste informatie verbergen of minimaliseren.</target>
+      </trans-unit>
+          <trans-unit id="1226">
+        <source>Everything in the DaRWIN interface is build to make &lt;strong&gt;YOUR&lt;/strong&gt; job easier.&lt;br /&gt;
+     You work on a set of specimens? You want to save a search you often use? you want to know who has changed the info?&lt;br /&gt;
+     &lt;strong&gt;DaRWIN can do that!&lt;/strong&gt;</source>
+        <target>Alles binnen de DARWIN interface is zo opgezet om &lt;strong&gt;UW&lt;/strong&gt; job te vergemakkelijken.&lt;br/&gt;
+     Werkt u op een reeks stalen? Wenst u vaak voorkomende zoekcriteria op te slaan voor later gebruik? Weet u graag wie welke info heeft gewijzigd?&lt;br/&gt;
+     &lt;strong&gt;DaRWIN kan u daar goed bij helpen!&lt;/strong&gt;</target>
       </trans-unit>
           <trans-unit id="1368">
         <source>DaRWIN 2 registration</source>
