@@ -586,49 +586,57 @@
         <source>Abbreviation</source>
         <target>Afkorting</target>
       </trans-unit>
+          <trans-unit id="1268">
+        <source>Between </source>
+        <target>Tussen </target>
+      </trans-unit>
           <trans-unit id="1301">
         <source>Records per page: </source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1305">
-        <source>You cannot register without accepting DaRWIN 2  terms of use</source>
-        <target></target>
+        <target>Records per pagina: </target>
       </trans-unit>
           <trans-unit id="1223">
         <source>DaRWIN is not just a website for displaying our collections, it&#039;s an entire product of collection management.
     &lt;br /&gt;You can register free of charge and discover this nice tool.&lt;br /&gt;
     Let&#039;s take a look of some of our amazing features :</source>
-        <target></target>
+        <target>Darwin is niet enkel een virtueel uitstalraam voor onze collecties; het is een volwaardig collectiebeheer toepassing.
+ &lt;br/&gt;U kunt zich gratis registreren en aldus onze aardige tool ontdekken.&lt;br/&gt;
+ Laten we een nadere blik werpen op onze wonderlijke functionaliteiten:</target>
       </trans-unit>
           <trans-unit id="1226">
         <source>Everything in the DaRWIN interface is build to make &lt;strong&gt;YOUR&lt;/strong&gt; job easier.&lt;br /&gt;
      You work on a set of specimens? You want to save a search you often use? you want to know who has changed the info?&lt;br /&gt;
      &lt;strong&gt;DaRWIN can do that!&lt;/strong&gt;</source>
-        <target></target>
+        <target>Alles binnen de DARWIN interface is zo opgezet om &lt;strong&gt;UW&lt;/strong&gt;job te vergemakkelijken.&lt;br/&gt;
+ Werkt u op een reeks stalen? Wenst u vaak voorkomende zoekcriteria op te slaan voor later hergebruik? Weet u graag wie welke info heeft gewijzigd?&lt;br/&gt;
+ &lt;strong&gt;DaRWIN kan u daar goed bij helpen!&lt;/strong&gt;</target>
+      </trans-unit>
+          <trans-unit id="1305">
+        <source>You cannot register without accepting DaRWIN 2  terms of use</source>
+        <target>U kunt zich niet registreren zonder dat u de DaRWIN 2 terms of use niet heeft aanvaard</target>
       </trans-unit>
           <trans-unit id="1228">
         <source>You find the public search a little bit too restrictive? &lt;br /&gt;
       Let&#039;s try our DaRWIN search tool. You will be able to search for tons of information.&lt;br /&gt;
       From Map to complex taxonomy and synonymies searches.</source>
-        <target></target>
+        <target>Vindt u de zoekcriteria op onze publieke site net iets te restrictief? &lt;br/&gt;
+ Probeer dan eens onze DaRWIN zoekfunctionaliteit. Daar kunt u wellicht tonnen extra informatie vinden. &lt;br/&gt;
+ Van kaarten tot ingewikkelde taxonomische zoekresultaten of misschien voelt u iets meer voor synoniemen.</target>
       </trans-unit>
           <trans-unit id="1230">
         <source>In the Darwin tool you have the ability to customize freely your interface.&lt;br /&gt;
       You are only interested in taxomy? No problem, no other infos will clutter your tool.&lt;br /&gt;
       Hide or minimize the information you don&#039;t need to focus on.</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1268">
-        <source>Between </source>
-        <target></target>
+        <target>Binnen de DaRWIN toepassing kunt u zelf uw interface geheel customiseren. &lt;br/&gt;
+ Bent u alleen geïnteresseerd in taxonomie? Geen enkel probleem! Uw scherm zal niet belemmerd worden met onnodige informatie.&lt;br/&gt;
+ U kunt zelf de ongewenste informatie verbergen of minimaliseren.</target>
       </trans-unit>
           <trans-unit id="1368">
         <source>DaRWIN 2 registration</source>
-        <target></target>
+        <target>DaRWIN 2 registratie</target>
       </trans-unit>
           <trans-unit id="1369">
         <source>DaRWIN 2 team</source>
-        <target></target>
+        <target>het DaRWIN 2 team</target>
       </trans-unit>
         </body>
   </file>
