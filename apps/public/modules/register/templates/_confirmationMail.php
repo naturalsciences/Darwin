@@ -20,8 +20,7 @@
 <?php echo __('You can now log in and enjoy our enhanced collection services.')."\r";?>
 <?php if(!empty($userParams['username']))
       {
-        echo __('For your reminder, here is your user name:')."\r\r";
-        echo __('User name: %username%',array('%username%' => $userParams['username']))."\r\r";
+        echo __('As a reminder, here is your username: %username%',array('%username%' => $userParams['username']))."\r\r";
       }?>
 <?php echo __('To log you in, you can visit us on %darwinurl%',array('%darwinurl%' => $sf_request->getHost()))."\r\r";?>
 <?php echo __('DaRWIN 2 team');?>
