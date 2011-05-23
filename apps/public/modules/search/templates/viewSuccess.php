@@ -111,7 +111,7 @@
         <?php if($specimen->getChronoRef()) : ?>
           <tr>
             <td class="line">
-              <span class="pager_nav"><?php echo __("Chronostatigraphy") ; ?>: </span><span><?php echo $specimen->getChronoName() ; ?></span>
+              <span class="pager_nav"><?php echo __("Chronostratigraphy") ; ?>: </span><span><?php echo $specimen->getChronoName() ; ?></span>
               <?php echo image_tag('info.png',"title=info class=info id=chrono_info");?>
             </td>
             <td>

@@ -22,6 +22,6 @@
     <p><?php echo __('Thank you for having registered on DaRWIN 2.');?></p>
     <p><?php echo __('You should have received a reminder of your username and password on the e-mail address provided.');?></p>
     <p><?php echo __('You can now log in and enjoy our enhanced collection services.');?></p>
-    <p id="team_signature"><?php echo __('DaRWIN 2  team.');?></p>
+    <p id="team_signature"><?php echo __('DaRWIN 2 team');?></p>
   </div>
 </div>
