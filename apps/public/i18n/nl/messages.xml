@@ -282,10 +282,6 @@
         <source>level</source>
         <target>Niveau</target>
       </trans-unit>
-          <trans-unit id="1264">
-        <source>Chronostatigraphy</source>
-        <target>Chronostratigrafie</target>
-      </trans-unit>
           <trans-unit id="1265">
         <source>Lithostatigraphy</source>
         <target>Lithostratigrafie</target>
@@ -305,10 +301,6 @@
           <trans-unit id="1270">
         <source>Physical</source>
         <target>Tastbaar</target>
-      </trans-unit>
-          <trans-unit id="1271">
-        <source>+</source>
-        <target>+</target>
       </trans-unit>
           <trans-unit id="1272">
         <source>Other</source>
@@ -409,10 +401,6 @@
           <trans-unit id="1298">
         <source>For your reminder, here is your user name:</source>
         <target>Ter herinnering, hier is uw gebruikersnaam:</target>
-      </trans-unit>
-          <trans-unit id="1349">
-        <source>DaRWIN 2 team</source>
-        <target>DaRWIN 2 team</target>
       </trans-unit>
           <trans-unit id="1299">
         <source>Rocks</source>
@@ -597,6 +585,50 @@
           <trans-unit id="1351">
         <source>Abbreviation</source>
         <target>Afkorting</target>
+      </trans-unit>
+          <trans-unit id="1301">
+        <source>Records per page: </source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1305">
+        <source>You cannot register without accepting DaRWIN 2  terms of use</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1223">
+        <source>DaRWIN is not just a website for displaying our collections, it&#039;s an entire product of collection management.
+    &lt;br /&gt;You can register free of charge and discover this nice tool.&lt;br /&gt;
+    Let&#039;s take a look of some of our amazing features :</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1226">
+        <source>Everything in the DaRWIN interface is build to make &lt;strong&gt;YOUR&lt;/strong&gt; job easier.&lt;br /&gt;
+     You work on a set of specimens? You want to save a search you often use? you want to know who has changed the info?&lt;br /&gt;
+     &lt;strong&gt;DaRWIN can do that!&lt;/strong&gt;</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1228">
+        <source>You find the public search a little bit too restrictive? &lt;br /&gt;
+      Let&#039;s try our DaRWIN search tool. You will be able to search for tons of information.&lt;br /&gt;
+      From Map to complex taxonomy and synonymies searches.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1230">
+        <source>In the Darwin tool you have the ability to customize freely your interface.&lt;br /&gt;
+      You are only interested in taxomy? No problem, no other infos will clutter your tool.&lt;br /&gt;
+      Hide or minimize the information you don&#039;t need to focus on.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1268">
+        <source>Between </source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1368">
+        <source>DaRWIN 2 registration</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1369">
+        <source>DaRWIN 2 team</source>
+        <target></target>
       </trans-unit>
         </body>
   </file>

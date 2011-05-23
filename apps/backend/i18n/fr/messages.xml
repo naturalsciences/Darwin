@@ -4052,10 +4052,6 @@
         <source>Please check your mail box.</source>
         <target>Veuillez consultez votre boite aux lettres.</target>
       </trans-unit>
-          <trans-unit id="1056">
-        <source>DaRWIN 2  team.</source>
-        <target>L&#039;équipe DaRWIN 2</target>
-      </trans-unit>
           <trans-unit id="1057">
         <source>Your password has been successfully renewed.</source>
         <target>votre mot de passe a été renouvelé avec succès.</target>
@@ -4595,6 +4591,10 @@
           <trans-unit id="1367">
         <source>Whom are you looking for</source>
         <target>Qui recherchez vous</target>
+      </trans-unit>
+          <trans-unit id="1370">
+        <source>DaRWIN 2 team</source>
+        <target>L&#039;équipe DaRWIN 2</target>
       </trans-unit>
         </body>
   </file>

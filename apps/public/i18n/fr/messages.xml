@@ -383,10 +383,6 @@
         <source>Individual</source>
         <target>Individu</target>
       </trans-unit>
-          <trans-unit id="1290">
-        <source>DaRWIN 2  registration</source>
-        <target>DaRWIN 2 inscription</target>
-      </trans-unit>
           <trans-unit id="1291">
         <source>Your password has been successfully renewed.</source>
         <target>Votre mot de passe à été renouvellé avec succès.</target>
@@ -394,10 +390,6 @@
           <trans-unit id="1292">
         <source>You can now log in and enjoy our enhanced collection services.</source>
         <target>Vous pouvez à présent vous connecter et profiter des services de nos collections.</target>
-      </trans-unit>
-          <trans-unit id="1293">
-        <source>DaRWIN 2  team</source>
-        <target>L&#039;équipe DaRWIN 2</target>
       </trans-unit>
           <trans-unit id="1294">
         <source>Dear</source>
@@ -603,10 +595,6 @@
         <source>To log you in, you can visit us on %darwinurl%</source>
         <target>Vous pouvez à présent vous connecter sur %darwinurl%</target>
       </trans-unit>
-          <trans-unit id="1349">
-        <source>DaRWIN 2 team</source>
-        <target>L&#039;équipe DaRWIN 2</target>
-      </trans-unit>
           <trans-unit id="1350">
         <source>User name: %username%</source>
         <target>Nom d&#039;utilisateur: %username%</target>
@@ -615,41 +603,41 @@
         <source>Abbreviation</source>
         <target>Abréviation</target>
       </trans-unit>
-          <trans-unit id="1204">
-        <source>Type</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1234">
-        <source>http://www.naturalsciences.be</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1236">
-        <source>http://www.belspo.be</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1260">
-        <source>Classification</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1262">
-        <source>Classifications</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1264">
-        <source>Chronostatigraphy</source>
-        <target></target>
-      </trans-unit>
-          <trans-unit id="1271">
-        <source>+</source>
-        <target></target>
-      </trans-unit>
           <trans-unit id="1279">
         <source>Types</source>
-        <target></target>
+        <target>Types</target>
       </trans-unit>
           <trans-unit id="1280">
         <source>Sexes</source>
-        <target></target>
+        <target>Sexes</target>
+      </trans-unit>
+          <trans-unit id="1204">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit>
+          <trans-unit id="1234">
+        <source>http://www.naturalsciences.be</source>
+        <target>http://www.sciencesnaturelles.be</target>
+      </trans-unit>
+          <trans-unit id="1236">
+        <source>http://www.belspo.be</source>
+        <target>http://www.belspo.be</target>
+      </trans-unit>
+          <trans-unit id="1260">
+        <source>Classification</source>
+        <target>Classification</target>
+      </trans-unit>
+          <trans-unit id="1262">
+        <source>Classifications</source>
+        <target>Classifications</target>
+      </trans-unit>
+          <trans-unit id="1369">
+        <source>DaRWIN 2 team</source>
+        <target>L&#039;équipe DARWIN 2</target>
+      </trans-unit>
+          <trans-unit id="1368">
+        <source>DaRWIN 2 registration</source>
+        <target>Inscription DARWIN 2</target>
       </trans-unit>
         </body>
   </file>

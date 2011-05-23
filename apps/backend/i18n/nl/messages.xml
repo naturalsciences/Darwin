@@ -31,9 +31,9 @@
         <source>Mineralogic unit Search</source>
         <target>Lithologische eenheid zoekresultaat</target>
       </trans-unit>
-          <trans-unit id="1056">
-        <source>DaRWIN 2  team.</source>
-        <target>Het DaRWIN2 team.</target>
+          <trans-unit id="1058">
+        <source>You can now log in and enjoy our enhanced collection services.</source>
+        <target>U kunt zich nu inloggen en genieten van onze vernieuwde collectiefunctionaliteiten.</target>
       </trans-unit>
           <trans-unit id="1117">
         <source>Subgenus name, used in zoology or bacteriology</source>
@@ -42,10 +42,6 @@
           <trans-unit id="988">
         <source>This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The supernumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.</source>
         <target>Via deze widget kunt u informatie toevoegen betreffende de bewaaromstandigheden van de stalen in de bewaarplaatsen van het instituut. U kunt zowel een container als subcontainer aanduiden evenals de omstandigheden waarin het bewaard wordt. De boventallig optie laat u toe aan te duiden of de objecten op termijn naar een ruimere container dienen te worden overgezet.</target>
-      </trans-unit>
-          <trans-unit id="1058">
-        <source>You can now log in and enjoy our enhanced collection services.</source>
-        <target>U kunt zich nu inloggen en genieten van onze vernieuwde collectie applicatie.</target>
       </trans-unit>
           <trans-unit id="229">
         <source>What can be found in DaRWIN?</source>
@@ -107,13 +103,17 @@
         <source>This widget is used to specify or change a login and password. if desired, a user can have more than one couple of Login/password.</source>
         <target>Via deze widget kunt u uw login en paswoord specificeren of wijzigen. Indien gewenst, kan een gebruik meer dan één paar logins/paswoorden bezitten.</target>
       </trans-unit>
+          <trans-unit id="1353">
+        <source>Since Darwin is an Open Source application entirely based on open source software, we would be glad if you want to contribute to the project.&lt;br/&gt; Suggestions, Patches, Bug Reports or Code Donations are welcome on our Request tracker : &lt;a href=&quot;http://projects.naturalsciences.be/projects/darwin&quot;&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</source>
+        <target>Aangezien DaRWIN volledig gebaseerd is op open source software, zouden we ons verheugen mocht u wensen bij te dragen tot ons project.&lt;br /&gt; Suggesties, Patches, het doorgeven van Foutmeldingen of code sponsering zijn welkom op onze trac : &lt;a href=&quot;http://projects.naturalsciences.be/projects/darwin&quot;&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;;</target>
+      </trans-unit>
           <trans-unit id="1352">
         <source>This application requires an authentication.</source>
         <target>Deze applicatie vergt een toegangscode.</target>
       </trans-unit>
-          <trans-unit id="1353">
-        <source>Since Darwin is an Open Source application entirely based on open source software, we would be glad if you want to contribute to the project.&lt;br/&gt; Suggestions, Patches, Bug Reports or Code Donations are welcome on our Request tracker : &lt;a href=&quot;http://projects.naturalsciences.be/projects/darwin&quot;&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</source>
-        <target>Aangezien DaRWIN volledig gebaseerd is op open source software, zouden we ons verheugen mocht u wensen bij te dragen tot ons project.&lt;br /&gt; Suggesties, Patches, het doorgeven van Foutmeldingen of code sponsering zijn welkom op onze trac : &lt;a href=&quot;http://projects.naturalsciences.be/projects/darwin&quot;&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;;</target>
+          <trans-unit id="1358">
+        <source>As a reminder, here is your username: %username%</source>
+        <target>Ter herinnering, uw gebruikersnaam: %username%</target>
       </trans-unit>
           <trans-unit id="1354">
         <source>This specimen already exists</source>
@@ -137,15 +137,11 @@
       </trans-unit>
           <trans-unit id="1362">
         <source>This widget allows you to add people that can have different roles. e.g. an author, a reviewer, an expert in a certain domain, etc.</source>
-        <target>Via deze widget kunt u personen toevoegen met elk verschillende rollen, zoals  e.g. een auteur, een reviewer,een expert in een bepaald domein, etc.</target>
+        <target>Via deze widget kunt u personen met verschillende rollen toevoegen, zoals bv. een auteur, een reviewer,een expert in een bepaald domein, etc.</target>
       </trans-unit>
           <trans-unit id="1363">
         <source>This widget can be used to add the equivalent vernacular name of the record in different languages. You can even add more than one vernacular name in the same language</source>
-        <target>Via deze widget kunt u een vernaculaire naam ( of inheemse naam) toevoegen aan het record en dit in verschillende talen. U kunt zelfs meer dan één vernaculaire naam per taal invoeren.</target>
-      </trans-unit>
-          <trans-unit id="1358">
-        <source>As a reminder, here is your username: %username%</source>
-        <target>Ter herinnering, uw gebruikersnaam: %username%</target>
+        <target>Via deze widget kunt u een inheemse naam toevoegen aan het record en dit in verschillende talen. U kunt zelfs meer dan één inheemse naam per taal invoeren.</target>
       </trans-unit>
           <trans-unit id="500">
         <source>Choose a Mineralogic unit</source>
@@ -1427,13 +1423,13 @@
         <source>Longitude</source>
         <target>Longitude</target>
       </trans-unit>
+          <trans-unit id="1366">
+        <source>Specify which function you want to give to this user for your collection. Two buttons are available on edition. The button &#039;on sub collection...&#039; allow you to also give right for this user on sub collections managed by you. With the button &#039;manage widget&#039; (visible only for register_user function), you can allow the visibility (read only) of private widget wicth a registered user normaly won&#039;t have right to see it</source>
+        <target>Specificeer welke functie u voor deze gebruiker met deze collectie wenst te associëren. Twee knoppen verschijnen wanneer u het record wijzigt. De knop &#039;voor de subcollectie&#039; laat u toe deze gebruiker ook rechten te geven op uw subcollecties. Via de knop &#039;widgets beheren&#039; (zichtbaar enkel bij geregistreerde gebruikers) kan u de zichtbaarheid (lees read-only) van enkele private widgets die normaal niet voor deze gebruiker toegankelijk zijn, activeren.</target>
+      </trans-unit>
           <trans-unit id="1365">
         <source>This widget allows you to link one or more codes to a specimen. You can either associate a prefix, a separator, a code, a separator and/or a suffix to each type of code (main, temporary,etc.)</source>
         <target>Via deze widget kunt u één of meerdere codes aan een staal toevoegen. U kunt zowel een prefix, scheidingsteken, een code, een andere scheidingsteken en/of een suffix toevoegen aan elke soort code (hoofdcode, tijdelijke code, etc.)</target>
-      </trans-unit>
-          <trans-unit id="1366">
-        <source>Specify which function you want to give to this user for your collection. Two buttons are available on edition. The button &#039;on sub collection...&#039; allow you to also give right for this user on sub collections managed by you. With the button &#039;manage widget&#039; (visible only for register_user function), you can allow the visibility (read only) of private widget wicth a registered user normaly won&#039;t have right to see it</source>
-        <target>Specificeer welke functie u voor deze collectie met deze gebruiker wenst te associëren. Twee knoppen verschijnen wanneer u het record wijzigt. De knop &#039;voor de sub collectie&#039; laat u toe deze gebruiker ook rechten te geven op uw subcollecties. Via de knop &#039;widgets beheren&#039; (zichtbaar enkel voor de geregistreerde gebruiker) kan u de zichtbaarheid (lees read-only) van enkele private widgets die normaal niet voor deze gebruiker toegankelijk zijn, activeren.</target>
       </trans-unit>
           <trans-unit id="266">
         <source>Sampling location Tags</source>
@@ -1702,6 +1698,10 @@
           <trans-unit id="1367">
         <source>Whom are you looking for</source>
         <target></target>
+      </trans-unit>
+          <trans-unit id="1370">
+        <source>DaRWIN 2 team</source>
+        <target>Het DaRWIN2 team</target>
       </trans-unit>
           <trans-unit id="333">
         <source>Add Chronostratigraphic unit</source>
