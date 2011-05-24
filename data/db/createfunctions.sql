@@ -28,6 +28,7 @@ BEGIN
 		INSERT INTO codes (referenced_relation, record_id, code_category, code_prefix, code_prefix_separator,  code_suffix_separator, code, code_suffix)
 		(
 			SELECT 'specimen_parts',NEW.id, code_category, code_prefix, code_prefix_separator, code_suffix_separator, code, code_suffix
+                               FROM codes
         	               INNER JOIN specimens ON record_id = specimens.id
                 	       INNER JOIN specimen_individuals ON specimen_individuals.specimen_ref=specimens.id
                         	WHERE referenced_relation = 'specimens'
