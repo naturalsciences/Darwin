@@ -17,7 +17,7 @@ class searchActions extends DarwinActions
   
   public function executePurposeTag(sfWebRequest $request)
   {
-    $this->tags = Doctrine::getTable('TagGroups')->getPropositions($request->getParameter('value'), '', 'country');
+    $this->tags = Doctrine::getTable('TagGroups')->getPropositions($request->getParameter('value'), 'administrative area', 'country');
   }
   
   public function executeTree(sfWebRequest $request)
