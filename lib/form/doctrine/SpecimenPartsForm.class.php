@@ -160,6 +160,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
     $this->widgetSchema['insurance'] = new sfWidgetFormInputHidden(array('default'=>1));
     $this->validatorSchema['insurance'] = new sfValidatorPass();
 
+    $this->widgetSchema['surnumerary']->setLabel('supernumerary');
 
     $this->validatorSchema->setPostValidator(new sfValidatorCallback(array('callback' => array($this, 'checkSelfAttached'))));
     $this->mergePostValidator(new sfValidatorSchemaCompare('specimen_part_count_min', '<=', 'specimen_part_count_max',
