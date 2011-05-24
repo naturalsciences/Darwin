@@ -14,6 +14,6 @@
     </br>
     <p><?php echo __('You should have received a link to renew your password on the e-mail address provided.');?></p>
     <p><?php echo __('Please check your mail box.');?></p>
-    <p id="team_signature"><?php echo __('DaRWIN 2  team.');?></p>
+    <p id="team_signature"><?php echo __('DaRWIN 2 team');?></p>
   </div>
 </div>

@@ -22,7 +22,7 @@ class registerActions extends DarwinActions
         if(!empty($userParams['mail']))
         {
           $message->setTo($userParams['mail']);
-          $message->setSubject($this->getI18N()->__('DaRWIN 2  registration'));
+          $message->setSubject($this->getI18N()->__('DaRWIN 2 registration'));
           $message->setBody($this->getPartial('confirmationMail', array('userParams'=>$userParams)),'text/plain');
           $this->getMailer()->send($message);
         }
