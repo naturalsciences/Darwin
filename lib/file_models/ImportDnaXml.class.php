@@ -35,26 +35,63 @@ class ImportDnaXml implements IImportModels
 
   protected function getColumnsForSpecimens()
   {
-    array();
+     return array(
+        'category',
+        'expedition_name',
+        'station_visible',
+        'gtu',
+        'taxon',
+        'chrono',
+        'litho',
+        'lithology',
+        'mineral',
+        'ig',
+        'acquisition',
+      );
   }
 
   protected function getColumnsForIndividuals()
   {
-    array();
+    return array(
+      'individual_type',
+      'individual_sex',
+      'individual_state',
+      'individual_stage',
+      'individual_social_status',
+      'individual_rock_form',
+      'individual_count_min',
+      'individual_count_max',
+    );
   }
 
   protected function getColumnsForParts()
   {
-    array();
+    return array(
+      'part',
+      'part_status',
+      'building',
+      'floor',
+      'room',
+      'row',
+      'shelf',
+      'container_type',
+      'container_storage',
+      'container',
+      'sub_container_type',
+      'sub_container_storage',
+      'sub_container',
+      'part_count_min',
+      'part_count_max',
+    );
   }
 
   protected function getColumnsForTissues()
   {
-    array();
+    return $this->getColumnsForParts();
   }
 
   protected function getColumnsForSamples()
   {
-    array();
+    return $this->getColumnsForParts();
   }
 }
