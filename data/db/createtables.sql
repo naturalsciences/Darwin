@@ -2000,6 +2000,8 @@ create table staging
     chrono_status varchar,
     chrono_local boolean not null default false,
     chrono_color varchar,
+    chrono_lower_bound numeric(10,3),
+    chrono_upper_bound numeric(10,3),
     chrono_parent_ref integer default 0,
     chrono_parents hstore,
     lithology_ref integer default 0,
@@ -2035,7 +2037,6 @@ create table staging
     acquisition_category varchar,
     acquisition_date_mask integer,
     acquisition_date date,
-
     individual_ref integer,
     individual_type varchar not null default 'specimen',
     individual_sex  varchar not null default 'undefined',
@@ -2047,10 +2048,8 @@ create table staging
     individual_count_max integer,
     collectors text[],
     donators text[],
-
     part_ref integer,
     part varchar,
-    part_status varchar,
     building varchar,
     floor varchar,
     room varchar,
