@@ -2604,7 +2604,7 @@ background: transparent ;
 {
   background-color:#C1CF56 !important;
   color:white;
-
+}
 /* custom appearence for input type file */
 #divFile
 {
@@ -2631,3 +2631,28 @@ input[type='file']
   border : 1px solid black ;
 }
 
+
+/** Import ***/
+
+.staging_table th
+{
+  padding: 0.2em;
+}
+.staging_table td
+{
+  border: 1px solid black;
+}
+.staging_table .fld_empty
+{
+  background-color: #E0DFDE;
+}
+
+.staging_table .fld_tocomplete
+{
+  background-color: #E0BF52; 
+}
+
+.staging_table .fld_ok
+{
+  background-color: #83E051;
+}

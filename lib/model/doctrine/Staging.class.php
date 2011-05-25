@@ -34,12 +34,12 @@ class Staging extends BaseStaging
 
   public function getMineral()
   {
-    return $this->_get('litho_name');
+    return $this->_get('mineral_name');
   }
 
   public function getLithology()
   {
-    return $this->_get('litho_name');
+    return $this->_get('lithology_name');
   }
 
   public function getIg()
@@ -50,5 +50,51 @@ class Staging extends BaseStaging
   public function getAcquisition()
   {
     return $this->_get('acquisition_category');
+  }
+  
+  public function getStatusFor($field)
+  {
+    $emtpy = 'fld_empty';
+    $tb_completed = 'fld_tocomplete';
+    $tb_ok = 'fld_ok';
+    if($this[$field] == '')
+    {
+      return $emtpy;
+    }
+    elseif($field == "taxon")
+    {
+      if($this['taxon_ref'] == '')
+        return $tb_completed;
+      else
+        return $tb_ok;
+    }
+    elseif($field == "chrono")
+    {
+      if($this['chrono_ref'] == '')
+        return $tb_completed;
+      else
+        return $tb_ok;
+    }
+    elseif($field == "litho")
+    {
+      if($this['litho_ref'] == '')
+        return $tb_completed;
+      else
+        return $tb_ok;
+    }
+    elseif($field == "lithology")
+    {
+      if($this['lithology_ref'] == '')
+        return $tb_completed;
+      else
+        return $tb_ok;
+    }
+    elseif($field == "mineral")
+    {
+      if($this['mineral_ref'] == '')
+        return $tb_completed;
+      else
+        return $tb_ok;
+    }
   }
 }
