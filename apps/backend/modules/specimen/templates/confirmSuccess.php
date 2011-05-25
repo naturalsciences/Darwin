@@ -7,7 +7,7 @@
           if ($(this).attr('name') == 'yes')
             element_name = '/all_duplicate/1';
           //$('.edition input[type=button]').unbind('click');
-          $('.qtip-button').click();
+          $('body').trigger('close_modal');
       });
     });
   </script>

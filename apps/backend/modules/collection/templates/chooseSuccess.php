@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('.col_name span').click(function () {
 	ref_element_id = getIdInClasses($(this).parent().parent());
 	ref_element_name = $(this).text();
-        $('.qtip-button').click();
+        $('body').trigger('close_modal');
     });
 });
 </script>

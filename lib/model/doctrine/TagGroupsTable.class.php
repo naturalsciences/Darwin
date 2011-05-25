@@ -20,39 +20,32 @@ class TagGroupsTable extends DarwinTable
     $conn = Doctrine_Manager::connection();
     $tags = $conn->quote($value, 'string');
     $q_group = $conn->quote($group, 'string');
-    $grouping_clause = " AND group_type = $q_group";
+    $grouping_clause = " group_type = $q_group";
     $q_sub_group = $conn->quote($sub_group, 'string');
     $sub_grouping_clause = " AND sub_group_type = $q_sub_group";
-    $group_by = " GROUP by tag";
-    $order_by = " ORDER BY tag asc";
-    $limit = " LIMIT 10";
 
-    $sql = "SELECT tag, sum(cnt) as cnt, 1 as precision
-            FROM tags as t RIGHT JOIN 
-              (SELECT x.group_ref,COUNT(*) as cnt 
-               FROM 
-                (SELECT group_ref 
+    $sql = "select dummy_first (tag) as tag, count(*) as cnt FROM (SELECT group_ref 
                  FROM tags 
                  WHERE tag_indexed IN 
                   (SELECT distinct(fulltoIndex(tags)) as u_tag 
                    FROM regexp_split_to_table($tags, ';') as tags 
                    WHERE fulltoIndex(tags) != ''
-                  )
-                ) as x GROUP BY x.group_ref
-               ORDER BY cnt DESC
-              ) AS y ON t.group_ref = y.group_ref
-            WHERE tag_indexed NOT IN 
-              (SELECT distinct(fulltoIndex(tags)) as u_tag 
+                  ) ) as x inner join tags t 
+      on t.group_ref = x.group_ref
+      WHERE tag_indexed NOT IN 
+              (
+              SELECT distinct(fulltoIndex(tags)) as u_tag 
                FROM regexp_split_to_table($tags, ';') as tags 
                WHERE fulltoIndex(tags) != ''
-              )";
+              ) ";
+
 
     if($group !="")
-      $sql .= $grouping_clause;
+      $sql .= ' AND '.$grouping_clause;
     if($sub_group != "")
       $sql .= $sub_grouping_clause;
 
-    $sql .= $group_by . $order_by . $limit;
+    $sql .= " group by tag_indexed order by cnt desc LIMIT 10";
     $result = $conn->fetchAssoc($sql);
 
     $max = 0;
@@ -71,33 +64,46 @@ class TagGroupsTable extends DarwinTable
       $value .= ';'.$item['tag'];
       $result[$i]['size'] = round($item['cnt'] / $step);
     }
+    $tags = $conn->quote($value, 'string');
     /* @TODO: Modifiy this hard coded value to use an application parameter instead*/
     if (count($result) < 4)
     {
-      $tags_excluded = $conn->quote($value, 'string');
-      $group_by = " GROUP BY similarity(tag, u_tags), tag";
-      $order_by = " ORDER BY similarity(tag, u_tags) desc, tag asc";
-      $sql = "select tag, similarity(tag, u_tags) as sims
-              from tags as t inner join 
-                   (select distinct (tagsi) as u_tags
-                    from regexp_split_to_table($tags, ';') as tagsi
-                    where fulltoIndex(tagsi) != ''
-                   ) as taglist on t.tag % u_tags
-              where tag_indexed NOT IN 
-              (SELECT distinct(fulltoIndex(tags)) as u_tag 
-               FROM regexp_split_to_table($tags_excluded, ';') as tags 
-               WHERE fulltoIndex(tags) != ''
-              )";
+      if( $group != "" &&  $sub_group != "")
+      {
+        $sql = "select dummy_first(tag) as tag, dummy_first(similarity(x.tag, tagsi)) as sims from
+          (select distinct(tag) as tag from tags 
+            where ". $grouping_clause.$sub_grouping_clause." ) as x
+          inner join (select trim(tagsi) as tagsi FROM regexp_split_to_table($tags, ';') AS tagsi) as y
+            on x.tag % y.tagsi
+          WHERE
+            fulltoindex(x.tag) NOT IN (SELECT DISTINCT(fulltoIndex(tags)) AS u_tag FROM
+              regexp_split_to_table($tags, ';') AS tags WHERE fulltoIndex(tags) != '' )
+         GROUP BY  fulltoindex(tag)
+         ORDER BY sims desc ".$limit ;
+      }
+      else
+      {
+        $sql = "select tag, similarity(tag, u_tags) as sims
+                from tags as t inner join 
+                    (select distinct (tagsi) as u_tags
+                      from regexp_split_to_table($tags, ';') as tagsi
+                      where fulltoIndex(tagsi) != ''
+                    ) as taglist on t.tag % u_tags
+                where tag_indexed NOT IN 
+                (SELECT distinct(fulltoIndex(tags)) as u_tag 
+                FROM regexp_split_to_table($tags, ';') as tags 
+                WHERE fulltoIndex(tags) != ''
+                )";
 
-      if($group !="")
-        $sql .= $grouping_clause;
-      if($sub_group != "")
-        $sql .= $sub_grouping_clause;
+        if($group !="")
+          $sql .= 'AND '.$grouping_clause;
+        if($sub_group != "")
+          $sql .= $sub_grouping_clause;
+        $sql .= " ORDER BY similarity(tag, u_tags) desc, tag asc";
 
-      $sql .= $order_by;
-
-      $sql = "select distinct tag, 2 as size, 0 as precision,sims
-              from (" .$sql.") as subquery order by sims desc ".$limit;
+        $sql = "select tag, 2 as size, 0 as precision
+                from (" .$sql.") as subquery group by tag order by dummy_first(sims) desc ".$limit;
+      }
       $fuzzyResults = $conn->fetchAssoc($sql);
       $result = array_merge($result, $fuzzyResults);
     }

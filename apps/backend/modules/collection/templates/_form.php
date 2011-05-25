@@ -25,10 +25,10 @@ $(document).ready(function ()
   <table class="collections">
     <tbody>
       <tr>
-        <th><?php echo $form['is_public']->renderLabel(__("Public collection")) ?>
-          <?php if($sf_user->getHelpIcon()) : ?>          
-            <div class="help_ico" alt="<?php echo $form['is_public']->renderHelp();?>"></div>
-          <?php endif ; ?></th>
+        <th>
+	  <?php echo $form['is_public']->renderLabel("Public collection") ?>
+          <?php echo help_ico($form['is_public']->renderHelp(),$sf_user);?>
+        </th>
         <td>
           <?php echo $form['is_public']->renderError() ?>
           <?php echo $form['is_public'] ?>
@@ -63,10 +63,10 @@ $(document).ready(function ()
         </td>
       </tr>
       <tr>
-        <th><?php echo $form['main_manager_ref']->renderLabel() ?>
-          <?php if($sf_user->getHelpIcon()) : ?>          
-            <div class="help_ico" alt="<?php echo $form['main_manager_ref']->renderHelp();?>"></div>
-          <?php endif ; ?></th>
+        <th>
+          <?php echo $form['main_manager_ref']->renderLabel() ?>
+	  <?php echo help_ico($form['main_manager_ref']->renderHelp(),$sf_user);?>
+        </th>
         <td>
           <?php echo $form['main_manager_ref']->renderError() ?>
           <?php echo $form['main_manager_ref'] ?>
@@ -80,28 +80,28 @@ $(document).ready(function ()
         </td>
       </tr>
       <tr>
-      	<td colspan="2">
-        	<table class="encoding collections_rights" id="user_right">
-		        <thead>
-		          <tr>
-			          <th><label><?php echo __("Users") ; ?></label></th>
-			          <th colspan="4"><label><?php echo __("Rights") ; ?></label></th>
-		          </tr>
-		        </thead>
-		        <tbody>
-		          <?php foreach($form['CollectionsRights'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
-		          <?php endforeach;?>
-		          <?php foreach($form['newVal'] as $form_value):?>
-			       <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
-		          <?php endforeach;?>
-		        </tbody>
-		      </table>
+        <td colspan="2">
+        <table class="encoding collections_rights" id="user_right">
+          <thead>
+            <tr>
+              <th><label><?php echo __("Users") ; ?></label></th>
+              <th colspan="4"><label><?php echo __("Rights") ; ?></label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($form['CollectionsRights'] as $form_value):?>
+              <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ($form->getObject()->isNew() ? '':$form->getObject()->getId())));?>
+            <?php endforeach;?>
+            <?php foreach($form['newVal'] as $form_value):?>
+              <?php include_partial('coll_rights', array('form' => $form_value, 'ref_id' => ''));?>
+            <?php endforeach;?>
+          </tbody>
+        </table>
 
-	        <div class='add_value' id="user_right">
-		        <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
-		        <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add User');?></a>
-		      </div>
+        <div class='add_value' id="user_right">
+                <a href="<?php echo url_for('collection/addValue'. ($form->getObject()->isNew() ? '': '?id='.$form->getObject()->getId()) );?>/num/" class="hidden"></a>
+                <a class='coll_right' href="<?php echo url_for('user/choose');?>"><?php echo __('Add User');?></a>
+              </div>
       	</td>
       </tr>          
     </tbody>
@@ -124,5 +124,7 @@ $(document).ready(function ()
 <script  type="text/javascript">
 $(document).ready(function () {
     $('.clear_coll').live('click', detachCollRightValue);
-  });
+    $('a.coll_right').click(collection_add_user);
+    $('a.set_rights').click(collection_add_rights);
+});
 </script>

@@ -17,7 +17,7 @@
       else
       {
         $('.result_choose').die('click');
-        $('.qtip-button').click();
+	$('body').trigger('close_modal');
       }
     });
   });

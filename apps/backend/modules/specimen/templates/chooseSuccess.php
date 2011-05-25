@@ -7,7 +7,7 @@
           ref_element_name = '';
           $(this).children("td:nth-child(2)").find("ul li").each(function(index) {ref_element_name = ref_element_name + '[' + $(this).text().trim() + '] ';});
           $('.results tbody tr').die('click');
-          $('.qtip-button').click();
+	  $('body').trigger('close_modal');
       });
     });
   </script>

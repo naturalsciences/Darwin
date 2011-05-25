@@ -51,6 +51,13 @@ class widgetFormButtonRef extends sfWidgetFormInputHidden
         $input .= link_to($in_text, $this->getOption('link_url'), array('class' => 'but_text' )); 
 
         $input .= '</div>';
+        $input .= '<script  type="text/javascript">
+$(document).ready(function () {
+$("#'.$this->generateId($name).'_button a.but_text").click(button_ref_modal);';
+
+        if($this->getOption('nullable'))
+          $input .= '$("#'.$this->generateId($name).'_clear").click(button_ref_clear);';
+        $input .= '});</script>';
 
         return $input;
     }

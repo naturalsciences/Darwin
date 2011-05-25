@@ -41,29 +41,25 @@ class widgetFormColorPicker extends sfWidgetFormInput
     <script type=\"text/javascript\">
       $(document).ready(function () { 
         $('.round_color').css('backgroundColor','".$value."');      
-        $(\".color_pckr\").qtip({
-          show: { solo: true, when: { event: 'click' } },
-          hide: { when: { event: 'click' } },// May be replaced by smth else
+        $('.color_pckr').qtip({
+          show: { delay: 0, event: 'click'},
+          hide: { event: 'click' },
           style: {  
             name: 'light',
             title: { padding: '3px'},
             width: { min: '215px', max: '215px'}
           },         
           content: {
-            title: {
-              text: '&nbsp;',
-              button: 'X'              
-            },
+            title: { button: true, text: '&nbsp;' },
             text: '<div id=\"colorpicker\"></div>',
-            method: 'get'            
           },
-          api : { 
-            onShow : function() {
+          events: {
+            show: function () {
               $('#colorpicker').farbtastic(function(color){
-              $('#" . $this->generateId($name) . "').val(color);
-              $('.round_color').css('backgroundColor', color);        
+                $('#" . $this->generateId($name) . "').val(color);
+                $('.round_color').css('backgroundColor', color);    
               });
-            },
+            }
           } 
        });       
        $('#" . $this->generateId($name) . "').keyup(function(){

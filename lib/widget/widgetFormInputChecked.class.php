@@ -23,7 +23,7 @@ class widgetFormInputChecked extends sfWidgetFormInputHidden
 
   public function getJavaScripts()
   {
-    return array('/js/jquery.autocomplete.min.js');
+    return array('/js/jquery.autocomplete.js');
   }
 
   public function getStylesheets()

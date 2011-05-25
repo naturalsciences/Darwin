@@ -148,7 +148,7 @@ function result_choose ()
         ref_element_id = getIdInClasses(el);
         ref_element_name = el.find('span.item_name').text();
         $('.result_choose').die('click');
-        $('.qtip-button').click();
+        $('body').trigger('close_modal');
 }
 
 function objectsAreSame(x, y) {
@@ -164,26 +164,21 @@ function objectsAreSame(x, y) {
 
 function attachHelpQtip(element)
 {
-        $(element).find(".help_ico").qtip({
-          style: { 
-              width: 200,
-              padding: 5,
-              background: '#95bd4c',
-              color: 'black',
-              border: {
-                  width: 7,
-                  color: '#95bd4c'
-              },
-              tip: 'bottomLeft',
-              name: 'dark' // Inherit the rest of the attributes from the preset dark style
-          },
-          position: {
-              corner: {
-                  target: 'topRight',
-                  tooltip: 'bottomLeft'
-              }
-          }
-      });
+  $(element).find(".help_ico").qtip({
+    content: {
+      text: function(api) {
+        return $(this).find('span').html();
+      }
+    },
+    style: {
+      tip: "bottomLeft",
+      classes: "ui-tooltip-dwgreen ui-tooltip-rounded"
+    },
+    position: {
+      my: "bottom left",
+      at: "top right"
+    }
+  });
 }
 
 function postToUrl(url, params, newWindow)
