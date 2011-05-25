@@ -92,7 +92,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="specimen_part" type="xs:string"/>
   <xs:element name="collection_object">
     <xs:complexType>
       <xs:sequence>
@@ -108,6 +107,12 @@
           <xs:element ref="comments" minOccurs="0" maxOccurs="1"/>
           <xs:element ref="gtu" minOccurs="0" maxOccurs="1"/>
           <xs:element ref="identifications" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="properties" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="taxon" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="chrono" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="litho" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="lithology" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="mineralogy" minOccurs="0" maxOccurs="1"/>
           <xs:element name="acquisition" type="acquisitioning" minOccurs="0" maxOccurs="1"/>
           <xs:element name="sex" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="state" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -115,8 +120,10 @@
           <xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="social_status" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="rock_form" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="properties" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="specimen_part" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="individual_count_min" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="individual_count_max" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="specimen_part" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="specimen_status" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="institution" type="peoplenaming" minOccurs="0" maxOccurs="1"/>
           <xs:element name="building" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="floor" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -129,7 +136,10 @@
           <xs:element name="sub_container_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="sub_container_storage" type="xs:string" minOccurs="0" maxOccurs="1"/>
           <xs:element name="sub_container" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="taxon" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="part_count_min" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="part_count_max" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="surnumerary" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="complete" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
@@ -155,6 +165,20 @@
       </xs:all>
     </xs:complexType>
   </xs:element>
+  <xs:group name="classification_commons">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="level" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="status" type="taxon_statuses" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="paleo_commons">
+    <xs:sequence>
+      <xs:group ref="classification_commons" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="local_naming" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="color" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:group>
   <xs:group name="personnaming">
     <xs:sequence>
       <xs:element name="family_name" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -370,9 +394,7 @@
   <xs:element name="taxon">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="level" type="xs:string" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="status" type="taxon_statuses" minOccurs="0" maxOccurs="1"/>
+        <xs:group ref="classification_commons" minOccurs="1" maxOccurs="1"/>
         <xs:element name="extinct" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
         <xs:element name="phylum" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
         <xs:element name="class" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
@@ -384,6 +406,64 @@
         <xs:element name="super_species" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
         <xs:element name="species" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
         <xs:element name="sub_species" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="variety" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="chrono">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="paleo_commons" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="lower_bound" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="upper_bound" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="eon" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="era" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_era" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="system" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="serie" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="stage" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_stage" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_level_1" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_level_2" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="litho">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="paleo_commons" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="group" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="formation" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="member" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="layer" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_level_1" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_level_2" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lithology">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="paleo_commons" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="main_group" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="main_class" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="category" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="clan" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="group" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_group" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="rock" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="class" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mineralogy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group ref="paleo_commons" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="class" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="division" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="group" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
         <xs:element name="variety" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
       </xs:sequence>
     </xs:complexType>

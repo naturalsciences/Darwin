@@ -52,6 +52,8 @@
  * @property string $chrono_status
  * @property boolean $chrono_local
  * @property string $chrono_color
+ * @property decimal $chrono_lower_bound
+ * @property decimal $chrono_upper_bound
  * @property string $chrono_parents
  * @property integer $lithology_ref
  * @property string $lithology_name
@@ -96,7 +98,6 @@
  * @property integer $individual_count_max
  * @property integer $part_ref
  * @property string $part
- * @property string $part_status
  * @property string $building
  * @property string $floor
  * @property string $room
@@ -162,6 +163,8 @@
  * @method string              getChronoStatus()              Returns the current record's "chrono_status" value
  * @method boolean             getChronoLocal()               Returns the current record's "chrono_local" value
  * @method string              getChronoColor()               Returns the current record's "chrono_color" value
+ * @method decimal             getChronoLowerBound()          Returns the current record's "chrono_lower_bound" value
+ * @method decimal             getChronoUpperBound()          Returns the current record's "chrono_upper_bound" value
  * @method string              getChronoParents()             Returns the current record's "chrono_parents" value
  * @method integer             getLithologyRef()              Returns the current record's "lithology_ref" value
  * @method string              getLithologyName()             Returns the current record's "lithology_name" value
@@ -206,7 +209,6 @@
  * @method integer             getIndividualCountMax()        Returns the current record's "individual_count_max" value
  * @method integer             getPartRef()                   Returns the current record's "part_ref" value
  * @method string              getPart()                      Returns the current record's "part" value
- * @method string              getPartStatus()                Returns the current record's "part_status" value
  * @method string              getBuilding()                  Returns the current record's "building" value
  * @method string              getFloor()                     Returns the current record's "floor" value
  * @method string              getRoom()                      Returns the current record's "room" value
@@ -271,6 +273,8 @@
  * @method Staging             setChronoStatus()              Sets the current record's "chrono_status" value
  * @method Staging             setChronoLocal()               Sets the current record's "chrono_local" value
  * @method Staging             setChronoColor()               Sets the current record's "chrono_color" value
+ * @method Staging             setChronoLowerBound()          Sets the current record's "chrono_lower_bound" value
+ * @method Staging             setChronoUpperBound()          Sets the current record's "chrono_upper_bound" value
  * @method Staging             setChronoParents()             Sets the current record's "chrono_parents" value
  * @method Staging             setLithologyRef()              Sets the current record's "lithology_ref" value
  * @method Staging             setLithologyName()             Sets the current record's "lithology_name" value
@@ -315,7 +319,6 @@
  * @method Staging             setIndividualCountMax()        Sets the current record's "individual_count_max" value
  * @method Staging             setPartRef()                   Sets the current record's "part_ref" value
  * @method Staging             setPart()                      Sets the current record's "part" value
- * @method Staging             setPartStatus()                Sets the current record's "part_status" value
  * @method Staging             setBuilding()                  Sets the current record's "building" value
  * @method Staging             setFloor()                     Sets the current record's "floor" value
  * @method Staging             setRoom()                      Sets the current record's "room" value
@@ -491,6 +494,16 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('chrono_color', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('chrono_lower_bound', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => 3,
+             ));
+        $this->hasColumn('chrono_upper_bound', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => 3,
+             ));
         $this->hasColumn('chrono_parents', 'string', null, array(
              'type' => 'string',
              ));
@@ -622,9 +635,6 @@ abstract class BaseStaging extends sfDoctrineRecord
              'type' => 'integer',
              ));
         $this->hasColumn('part', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('part_status', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('building', 'string', null, array(

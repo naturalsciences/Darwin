@@ -1968,6 +1968,8 @@ Staging:
         chrono_status: { type: string}
         chrono_local: {type: boolean}
         chrono_color: {type: string}
+        chrono_lower_bound: { type: decimal, length: 10, scale: 3}
+        chrono_upper_bound: { type: decimal, length: 10, scale: 3}
         chrono_parents: { type: string}
         lithology_ref: { type: integer}
         lithology_name: { type: string}
@@ -2012,7 +2014,6 @@ Staging:
         individual_count_max: {type: integer }
         part_ref: {type: integer }
         part: {type: string }
-        part_status: {type: string }
         building: {type: string }
         floor: {type: string }
         room: {type: string }
