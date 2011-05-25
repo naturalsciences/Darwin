@@ -68,7 +68,7 @@ class ImportDnaXml implements IImportModels
   {
     return array(
       'part',
-      'part_status',
+      'specimen_status',
       'building',
       'floor',
       'room',
