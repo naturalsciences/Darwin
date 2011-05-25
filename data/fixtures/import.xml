@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<collection_objects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="./import.xsd">
+<collection_objects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../import/import.xsd">
   <collection_object>
     <category>physical</category>
     <level>specimen</level>
@@ -59,13 +59,13 @@
     </gtu>
     <taxon>
       <name>Oplurus cyclurus</name>
+      <level>species</level>
       <phylum>Chordata</phylum>
       <class>Reptilia</class>
       <order>Squamata</order>
       <family>Iguanidae</family>
       <genus>Oplurus</genus>
       <species>cyclurus</species>
-      <level>species</level>
     </taxon>
     <codes>
       <code>
@@ -211,7 +211,7 @@
                       </property>
                       <property>
                         <property_type>concentration</property_type>
-                        <unit>ng/µl</unit>
+                        <property_unit>ng/µl</property_unit>
                         <property_values>
                           <value>28,01</value>
                           <value>28,02</value>
@@ -402,9 +402,9 @@
                       </property>
                       <property>
                         <property_type>length</property_type>
-                        <sub_type>time</sub_type>
-                        <qualifier>digestion time</qualifier>
-                        <unit>h</unit>
+                        <property_sub_type>time</property_sub_type>
+                        <property_qualifier>digestion time</property_qualifier>
+                        <property_unit>h</property_unit>
                         <property_values>
                           <value>18</value>
                         </property_values>
@@ -506,6 +506,7 @@
     </gtu>
     <taxon>
       <name>Oplurus (Oplurus) cyclurus subsp. duquesnii</name>
+      <level>sub species</level>
       <phylum>Chordata</phylum>
       <class>Reptilia</class>
       <order>Squamata</order>
@@ -514,7 +515,6 @@
       <sub_genus>Oplurus</sub_genus>
       <species>cyclurus</species>
       <sub_species>duquesnii</sub_species>
-      <level>sub species</level>
     </taxon>
     <codes>
       <code>
