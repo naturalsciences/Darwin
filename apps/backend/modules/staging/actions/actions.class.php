@@ -42,7 +42,9 @@ class stagingActions extends DarwinActions
       if (! $this->pagerLayout->getPager()->getExecuted())
         $this->search = $this->pagerLayout->execute();
 
-      $this->fields = $this->getFieldsForLevel($this->form->getValue('slevel'));
+      $this->displayModel = new ImportDnaXml();
+      
+      $this->fields = $this->displayModel->getColumnsForLevel($this->form->getValue('slevel'));
     }
 
   }

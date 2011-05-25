@@ -35,7 +35,19 @@ class ImportDnaXml implements IImportModels
 
   protected function getColumnsForSpecimens()
   {
-    array();
+     return array(
+        'category',
+        'expedition_name',
+        'station_visible',
+        'gtu',
+        'taxon',
+        'chrono',
+        'litho',
+        'lithology',
+        'mineral',
+        'ig',
+        'acquisition',
+      );
   }
 
   protected function getColumnsForIndividuals()

@@ -12,4 +12,43 @@
  */
 class Staging extends BaseStaging
 {
+  public function getGtu()
+  {
+    return $this->_get('gtu_code');
+  }
+  
+  public function getTaxon()
+  {
+    return $this->_get('taxon_name');
+  }
+
+  public function getChrono()
+  {
+    return $this->_get('chrono_name');
+  }
+
+  public function getLitho()
+  {
+    return $this->_get('litho_name');
+  }
+
+  public function getMineral()
+  {
+    return $this->_get('litho_name');
+  }
+
+  public function getLithology()
+  {
+    return $this->_get('litho_name');
+  }
+
+  public function getIg()
+  {
+    return $this->_get('ig_num');
+  }
+
+  public function getAcquisition()
+  {
+    return $this->_get('acquisition_category');
+  }
 }
