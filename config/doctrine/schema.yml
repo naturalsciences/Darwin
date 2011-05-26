@@ -1952,6 +1952,7 @@ Staging:
         taxon_level_name: { type: string}
         taxon_status: { type: string}
         taxon_extinct: { type: boolean}
+        taxon_parents: { type: string}
         litho_ref: { type: integer}
         litho_name: { type: string}
         litho_level_ref: { type: integer}
@@ -1959,6 +1960,7 @@ Staging:
         litho_status: { type: string}
         litho_local: { type: boolean}
         litho_color: { type: string}
+        litho_parents: { type: string}
         chrono_ref: { type: integer}
         chrono_name: { type: string}
         chrono_level_ref: { type: integer}
@@ -1966,6 +1968,9 @@ Staging:
         chrono_status: { type: string}
         chrono_local: {type: boolean}
         chrono_color: {type: string}
+        chrono_lower_bound: { type: decimal, length: 10, scale: 3}
+        chrono_upper_bound: { type: decimal, length: 10, scale: 3}
+        chrono_parents: { type: string}
         lithology_ref: { type: integer}
         lithology_name: { type: string}
         lithology_level_ref: { type: integer}
@@ -1973,6 +1978,7 @@ Staging:
         lithology_status: { type: string}
         lithology_local: { type: boolean}
         lithology_color: { type: string}
+        lithology_parents: { type: string}
         mineral_ref: { type: integer}
         mineral_name: { type: string}
         mineral_level_ref: { type: integer}
@@ -1980,6 +1986,7 @@ Staging:
         mineral_status: { type: string}
         mineral_local: { type: boolean}
         mineral_color: { type: string}
+        mineral_parents: { type: string}
         host_taxon_ref: { type: integer}
         host_relationship: { type: string}
         host_taxon_name: { type: string}
@@ -1987,6 +1994,8 @@ Staging:
         host_taxon_level_name: { type: string}
         host_taxon_status: { type: string}
         host_specimen_ref: { type: integer}
+        collectors: { type: string}
+        donators: { type: string}
         ig_ref: { type: integer, primary: true}
         ig_num: { type: string}
         ig_date_mask: { type: integer }
@@ -2005,7 +2014,6 @@ Staging:
         individual_count_max: {type: integer }
         part_ref: {type: integer }
         part: {type: string }
-        part_status: {type: string }
         building: {type: string }
         floor: {type: string }
         room: {type: string }

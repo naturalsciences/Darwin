@@ -36,6 +36,7 @@
  * @property string $taxon_level_name
  * @property string $taxon_status
  * @property boolean $taxon_extinct
+ * @property string $taxon_parents
  * @property integer $litho_ref
  * @property string $litho_name
  * @property integer $litho_level_ref
@@ -43,6 +44,7 @@
  * @property string $litho_status
  * @property boolean $litho_local
  * @property string $litho_color
+ * @property string $litho_parents
  * @property integer $chrono_ref
  * @property string $chrono_name
  * @property integer $chrono_level_ref
@@ -50,6 +52,9 @@
  * @property string $chrono_status
  * @property boolean $chrono_local
  * @property string $chrono_color
+ * @property decimal $chrono_lower_bound
+ * @property decimal $chrono_upper_bound
+ * @property string $chrono_parents
  * @property integer $lithology_ref
  * @property string $lithology_name
  * @property integer $lithology_level_ref
@@ -57,6 +62,7 @@
  * @property string $lithology_status
  * @property boolean $lithology_local
  * @property string $lithology_color
+ * @property string $lithology_parents
  * @property integer $mineral_ref
  * @property string $mineral_name
  * @property integer $mineral_level_ref
@@ -64,6 +70,7 @@
  * @property string $mineral_status
  * @property boolean $mineral_local
  * @property string $mineral_color
+ * @property string $mineral_parents
  * @property integer $host_taxon_ref
  * @property string $host_relationship
  * @property string $host_taxon_name
@@ -71,6 +78,8 @@
  * @property string $host_taxon_level_name
  * @property string $host_taxon_status
  * @property integer $host_specimen_ref
+ * @property string $collectors
+ * @property string $donators
  * @property integer $ig_ref
  * @property string $ig_num
  * @property integer $ig_date_mask
@@ -89,7 +98,6 @@
  * @property integer $individual_count_max
  * @property integer $part_ref
  * @property string $part
- * @property string $part_status
  * @property string $building
  * @property string $floor
  * @property string $room
@@ -141,6 +149,7 @@
  * @method string              getTaxonLevelName()            Returns the current record's "taxon_level_name" value
  * @method string              getTaxonStatus()               Returns the current record's "taxon_status" value
  * @method boolean             getTaxonExtinct()              Returns the current record's "taxon_extinct" value
+ * @method string              getTaxonParents()              Returns the current record's "taxon_parents" value
  * @method integer             getLithoRef()                  Returns the current record's "litho_ref" value
  * @method string              getLithoName()                 Returns the current record's "litho_name" value
  * @method integer             getLithoLevelRef()             Returns the current record's "litho_level_ref" value
@@ -148,6 +157,7 @@
  * @method string              getLithoStatus()               Returns the current record's "litho_status" value
  * @method boolean             getLithoLocal()                Returns the current record's "litho_local" value
  * @method string              getLithoColor()                Returns the current record's "litho_color" value
+ * @method string              getLithoParents()              Returns the current record's "litho_parents" value
  * @method integer             getChronoRef()                 Returns the current record's "chrono_ref" value
  * @method string              getChronoName()                Returns the current record's "chrono_name" value
  * @method integer             getChronoLevelRef()            Returns the current record's "chrono_level_ref" value
@@ -155,6 +165,9 @@
  * @method string              getChronoStatus()              Returns the current record's "chrono_status" value
  * @method boolean             getChronoLocal()               Returns the current record's "chrono_local" value
  * @method string              getChronoColor()               Returns the current record's "chrono_color" value
+ * @method decimal             getChronoLowerBound()          Returns the current record's "chrono_lower_bound" value
+ * @method decimal             getChronoUpperBound()          Returns the current record's "chrono_upper_bound" value
+ * @method string              getChronoParents()             Returns the current record's "chrono_parents" value
  * @method integer             getLithologyRef()              Returns the current record's "lithology_ref" value
  * @method string              getLithologyName()             Returns the current record's "lithology_name" value
  * @method integer             getLithologyLevelRef()         Returns the current record's "lithology_level_ref" value
@@ -162,6 +175,7 @@
  * @method string              getLithologyStatus()           Returns the current record's "lithology_status" value
  * @method boolean             getLithologyLocal()            Returns the current record's "lithology_local" value
  * @method string              getLithologyColor()            Returns the current record's "lithology_color" value
+ * @method string              getLithologyParents()          Returns the current record's "lithology_parents" value
  * @method integer             getMineralRef()                Returns the current record's "mineral_ref" value
  * @method string              getMineralName()               Returns the current record's "mineral_name" value
  * @method integer             getMineralLevelRef()           Returns the current record's "mineral_level_ref" value
@@ -169,6 +183,7 @@
  * @method string              getMineralStatus()             Returns the current record's "mineral_status" value
  * @method boolean             getMineralLocal()              Returns the current record's "mineral_local" value
  * @method string              getMineralColor()              Returns the current record's "mineral_color" value
+ * @method string              getMineralParents()            Returns the current record's "mineral_parents" value
  * @method integer             getHostTaxonRef()              Returns the current record's "host_taxon_ref" value
  * @method string              getHostRelationship()          Returns the current record's "host_relationship" value
  * @method string              getHostTaxonName()             Returns the current record's "host_taxon_name" value
@@ -176,6 +191,8 @@
  * @method string              getHostTaxonLevelName()        Returns the current record's "host_taxon_level_name" value
  * @method string              getHostTaxonStatus()           Returns the current record's "host_taxon_status" value
  * @method integer             getHostSpecimenRef()           Returns the current record's "host_specimen_ref" value
+ * @method string              getCollectors()                Returns the current record's "collectors" value
+ * @method string              getDonators()                  Returns the current record's "donators" value
  * @method integer             getIgRef()                     Returns the current record's "ig_ref" value
  * @method string              getIgNum()                     Returns the current record's "ig_num" value
  * @method integer             getIgDateMask()                Returns the current record's "ig_date_mask" value
@@ -194,7 +211,6 @@
  * @method integer             getIndividualCountMax()        Returns the current record's "individual_count_max" value
  * @method integer             getPartRef()                   Returns the current record's "part_ref" value
  * @method string              getPart()                      Returns the current record's "part" value
- * @method string              getPartStatus()                Returns the current record's "part_status" value
  * @method string              getBuilding()                  Returns the current record's "building" value
  * @method string              getFloor()                     Returns the current record's "floor" value
  * @method string              getRoom()                      Returns the current record's "room" value
@@ -245,6 +261,7 @@
  * @method Staging             setTaxonLevelName()            Sets the current record's "taxon_level_name" value
  * @method Staging             setTaxonStatus()               Sets the current record's "taxon_status" value
  * @method Staging             setTaxonExtinct()              Sets the current record's "taxon_extinct" value
+ * @method Staging             setTaxonParents()              Sets the current record's "taxon_parents" value
  * @method Staging             setLithoRef()                  Sets the current record's "litho_ref" value
  * @method Staging             setLithoName()                 Sets the current record's "litho_name" value
  * @method Staging             setLithoLevelRef()             Sets the current record's "litho_level_ref" value
@@ -252,6 +269,7 @@
  * @method Staging             setLithoStatus()               Sets the current record's "litho_status" value
  * @method Staging             setLithoLocal()                Sets the current record's "litho_local" value
  * @method Staging             setLithoColor()                Sets the current record's "litho_color" value
+ * @method Staging             setLithoParents()              Sets the current record's "litho_parents" value
  * @method Staging             setChronoRef()                 Sets the current record's "chrono_ref" value
  * @method Staging             setChronoName()                Sets the current record's "chrono_name" value
  * @method Staging             setChronoLevelRef()            Sets the current record's "chrono_level_ref" value
@@ -259,6 +277,9 @@
  * @method Staging             setChronoStatus()              Sets the current record's "chrono_status" value
  * @method Staging             setChronoLocal()               Sets the current record's "chrono_local" value
  * @method Staging             setChronoColor()               Sets the current record's "chrono_color" value
+ * @method Staging             setChronoLowerBound()          Sets the current record's "chrono_lower_bound" value
+ * @method Staging             setChronoUpperBound()          Sets the current record's "chrono_upper_bound" value
+ * @method Staging             setChronoParents()             Sets the current record's "chrono_parents" value
  * @method Staging             setLithologyRef()              Sets the current record's "lithology_ref" value
  * @method Staging             setLithologyName()             Sets the current record's "lithology_name" value
  * @method Staging             setLithologyLevelRef()         Sets the current record's "lithology_level_ref" value
@@ -266,6 +287,7 @@
  * @method Staging             setLithologyStatus()           Sets the current record's "lithology_status" value
  * @method Staging             setLithologyLocal()            Sets the current record's "lithology_local" value
  * @method Staging             setLithologyColor()            Sets the current record's "lithology_color" value
+ * @method Staging             setLithologyParents()          Sets the current record's "lithology_parents" value
  * @method Staging             setMineralRef()                Sets the current record's "mineral_ref" value
  * @method Staging             setMineralName()               Sets the current record's "mineral_name" value
  * @method Staging             setMineralLevelRef()           Sets the current record's "mineral_level_ref" value
@@ -273,6 +295,7 @@
  * @method Staging             setMineralStatus()             Sets the current record's "mineral_status" value
  * @method Staging             setMineralLocal()              Sets the current record's "mineral_local" value
  * @method Staging             setMineralColor()              Sets the current record's "mineral_color" value
+ * @method Staging             setMineralParents()            Sets the current record's "mineral_parents" value
  * @method Staging             setHostTaxonRef()              Sets the current record's "host_taxon_ref" value
  * @method Staging             setHostRelationship()          Sets the current record's "host_relationship" value
  * @method Staging             setHostTaxonName()             Sets the current record's "host_taxon_name" value
@@ -280,6 +303,8 @@
  * @method Staging             setHostTaxonLevelName()        Sets the current record's "host_taxon_level_name" value
  * @method Staging             setHostTaxonStatus()           Sets the current record's "host_taxon_status" value
  * @method Staging             setHostSpecimenRef()           Sets the current record's "host_specimen_ref" value
+ * @method Staging             setCollectors()                Sets the current record's "collectors" value
+ * @method Staging             setDonators()                  Sets the current record's "donators" value
  * @method Staging             setIgRef()                     Sets the current record's "ig_ref" value
  * @method Staging             setIgNum()                     Sets the current record's "ig_num" value
  * @method Staging             setIgDateMask()                Sets the current record's "ig_date_mask" value
@@ -298,7 +323,6 @@
  * @method Staging             setIndividualCountMax()        Sets the current record's "individual_count_max" value
  * @method Staging             setPartRef()                   Sets the current record's "part_ref" value
  * @method Staging             setPart()                      Sets the current record's "part" value
- * @method Staging             setPartStatus()                Sets the current record's "part_status" value
  * @method Staging             setBuilding()                  Sets the current record's "building" value
  * @method Staging             setFloor()                     Sets the current record's "floor" value
  * @method Staging             setRoom()                      Sets the current record's "room" value
@@ -428,6 +452,9 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('taxon_extinct', 'boolean', null, array(
              'type' => 'boolean',
              ));
+        $this->hasColumn('taxon_parents', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('litho_ref', 'integer', null, array(
              'type' => 'integer',
              ));
@@ -447,6 +474,9 @@ abstract class BaseStaging extends sfDoctrineRecord
              'type' => 'boolean',
              ));
         $this->hasColumn('litho_color', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('litho_parents', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('chrono_ref', 'integer', null, array(
@@ -470,6 +500,19 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('chrono_color', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('chrono_lower_bound', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => 3,
+             ));
+        $this->hasColumn('chrono_upper_bound', 'decimal', 10, array(
+             'type' => 'decimal',
+             'length' => 10,
+             'scale' => 3,
+             ));
+        $this->hasColumn('chrono_parents', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('lithology_ref', 'integer', null, array(
              'type' => 'integer',
              ));
@@ -489,6 +532,9 @@ abstract class BaseStaging extends sfDoctrineRecord
              'type' => 'boolean',
              ));
         $this->hasColumn('lithology_color', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('lithology_parents', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('mineral_ref', 'integer', null, array(
@@ -512,6 +558,9 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('mineral_color', 'string', null, array(
              'type' => 'string',
              ));
+        $this->hasColumn('mineral_parents', 'string', null, array(
+             'type' => 'string',
+             ));
         $this->hasColumn('host_taxon_ref', 'integer', null, array(
              'type' => 'integer',
              ));
@@ -532,6 +581,12 @@ abstract class BaseStaging extends sfDoctrineRecord
              ));
         $this->hasColumn('host_specimen_ref', 'integer', null, array(
              'type' => 'integer',
+             ));
+        $this->hasColumn('collectors', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('donators', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('ig_ref', 'integer', null, array(
              'type' => 'integer',
@@ -586,9 +641,6 @@ abstract class BaseStaging extends sfDoctrineRecord
              'type' => 'integer',
              ));
         $this->hasColumn('part', 'string', null, array(
-             'type' => 'string',
-             ));
-        $this->hasColumn('part_status', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('building', 'string', null, array(
