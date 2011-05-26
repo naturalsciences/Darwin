@@ -107,6 +107,8 @@
  * @property boolean $complete
  * @property boolean $surnumerary
  * @property Imports $Import
+ * @property Staging $Parent
+ * @property Doctrine_Collection $Staging
  * @property Doctrine_Collection $StagingTagGroups
  * 
  * @method integer             getId()                        Returns the current record's "id" value
@@ -210,6 +212,8 @@
  * @method boolean             getComplete()                  Returns the current record's "complete" value
  * @method boolean             getSurnumerary()               Returns the current record's "surnumerary" value
  * @method Imports             getImport()                    Returns the current record's "Import" value
+ * @method Staging             getParent()                    Returns the current record's "Parent" value
+ * @method Doctrine_Collection getStaging()                   Returns the current record's "Staging" collection
  * @method Doctrine_Collection getStagingTagGroups()          Returns the current record's "StagingTagGroups" collection
  * @method Staging             setId()                        Sets the current record's "id" value
  * @method Staging             setSpecRef()                   Sets the current record's "spec_ref" value
@@ -312,6 +316,8 @@
  * @method Staging             setComplete()                  Sets the current record's "complete" value
  * @method Staging             setSurnumerary()               Sets the current record's "surnumerary" value
  * @method Staging             setImport()                    Sets the current record's "Import" value
+ * @method Staging             setParent()                    Sets the current record's "Parent" value
+ * @method Staging             setStaging()                   Sets the current record's "Staging" collection
  * @method Staging             setStagingTagGroups()          Sets the current record's "StagingTagGroups" collection
  * 
  * @package    darwin
@@ -641,6 +647,14 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasOne('Imports as Import', array(
              'local' => 'import_ref',
              'foreign' => 'id'));
+
+        $this->hasOne('Staging as Parent', array(
+             'local' => 'parent_ref',
+             'foreign' => 'id'));
+
+        $this->hasMany('Staging', array(
+             'local' => 'id',
+             'foreign' => 'parent_ref'));
 
         $this->hasMany('StagingTagGroups', array(
              'local' => 'id',

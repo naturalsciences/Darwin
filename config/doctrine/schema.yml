@@ -2027,6 +2027,10 @@ Staging:
             local: import_ref
             foreign: id
             class: Imports
+        Parent:
+            class: Staging
+            local: parent_ref
+            foreign: id      
 
 StagingTagGroups:
     columns:
@@ -2039,4 +2043,4 @@ StagingTagGroups:
         Staging:
             local: staging_ref
             foreign: id
-            class: Staging
+            class: Staging            

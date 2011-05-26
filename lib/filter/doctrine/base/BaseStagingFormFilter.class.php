@@ -15,7 +15,7 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'spec_ref'                  => new sfWidgetFormFilterInput(),
       'import_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Import'), 'add_empty' => true)),
-      'parent_ref'                => new sfWidgetFormFilterInput(),
+      'parent_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                      => new sfWidgetFormFilterInput(),
       'level'                     => new sfWidgetFormFilterInput(),
       'category'                  => new sfWidgetFormFilterInput(),
@@ -117,7 +117,7 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'spec_ref'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'import_ref'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Import'), 'column' => 'id')),
-      'parent_ref'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'parent_ref'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Parent'), 'column' => 'id')),
       'path'                      => new sfValidatorPass(array('required' => false)),
       'level'                     => new sfValidatorPass(array('required' => false)),
       'category'                  => new sfValidatorPass(array('required' => false)),
@@ -236,7 +236,7 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'id'                        => 'Number',
       'spec_ref'                  => 'Number',
       'import_ref'                => 'ForeignKey',
-      'parent_ref'                => 'Number',
+      'parent_ref'                => 'ForeignKey',
       'path'                      => 'Text',
       'level'                     => 'Text',
       'category'                  => 'Text',
