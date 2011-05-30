@@ -3623,11 +3623,13 @@ DECLARE
   ref_record RECORD;
 BEGIN
   IF line.taxon_name is not distinct from '' OR line.taxon_ref is not null THEN
-    RETURN false;
+    RETURN true;
   END IF;
 
     
   SELECT * INTO ref_record from taxonomy where name = line.taxon_name LIMIT 2;
+
+  /*** FIRST CHECK Exact name ***/
   GET DIAGNOSTICS result_nbr = ROW_COUNT;
   IF result_nbr >= 2 THEN
     UPDATE staging SET status = (status || ('taxon' => 'too_much')) where id= line.id;
@@ -3636,7 +3638,15 @@ BEGIN
 
   IF result_nbr = 1 THEN
     UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id; --IS it?
+    RETURN true;
   END IF;
+
+  /*** Then CHECK fuzzy name ***/
+
+  /*
+  SELECT * INTO ref_record from taxonomy where name = line.taxon_name LIMIT 2;
+  GET DIAGNOSTICS result_nbr = ROW_COUNT;*/
+
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
