@@ -3613,3 +3613,30 @@ BEGIN
   RETURN OLD;
 END;
 $$ language plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION fct_imp_taxonomy(line staging /*, import boolean default false*/)  RETURNS boolean
+AS $$
+DECLARE
+  result_nbr integer :=0;
+  ref_record RECORD;
+BEGIN
+  IF line.taxon_name is not distinct from '' OR line.taxon_ref is not null THEN
+    RETURN false;
+  END IF;
+
+    
+  SELECT * INTO ref_record from taxonomy where name = line.taxon_name LIMIT 2;
+  GET DIAGNOSTICS result_nbr = ROW_COUNT;
+  IF result_nbr >= 2 THEN
+    UPDATE staging SET status = (status || ('taxon' => 'too_much')) where id= line.id;
+    RETURN true;
+  END IF;
+
+  IF result_nbr = 1 THEN
+    UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id; --IS it?
+  END IF;
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
