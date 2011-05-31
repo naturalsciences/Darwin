@@ -374,6 +374,7 @@ abstract class BaseStaging extends sfDoctrineRecord
              ));
         $this->hasColumn('level', 'string', null, array(
              'type' => 'string',
+             'notnull' => true,
              ));
         $this->hasColumn('category', 'string', null, array(
              'type' => 'string',
@@ -590,7 +591,6 @@ abstract class BaseStaging extends sfDoctrineRecord
              ));
         $this->hasColumn('ig_ref', 'integer', null, array(
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('ig_num', 'string', null, array(
              'type' => 'string',

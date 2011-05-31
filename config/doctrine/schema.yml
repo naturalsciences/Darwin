@@ -1906,13 +1906,13 @@ FlatDict:
 Imports:
     tableName: imports
     columns:
-        id: { type: integer, primary: true, autoincrement: true},
-        filename: { type: string, notnull: true},
-        user_ref: {type:integer, notnull: true},
-        format : {type:string,notnull: true},
-        collection_ref: { type: integer, notnull: true},
-        state: {type:string,notnull:true, default:'imported'},
-        created_at: { type: string, notnull: true},
+        id: { type: integer, primary: true, autoincrement: true}
+        filename: { type: string, notnull: true}
+        user_ref: {type:integer, notnull: true}
+        format : {type:string,notnull: true}
+        collection_ref: { type: integer, notnull: true}
+        state: {type:string,notnull:true, default:'imported'}
+        created_at: { type: string, notnull: true}
         updated_at: { type: string, notnull: true}
     relations:
         Collections:
@@ -1926,7 +1926,7 @@ Staging:
         import_ref: { type: integer, notnull: true}
         parent_ref: { type: integer}
         path: { type: string}
-        level: { type: string}
+        level: { type: string, notnull: true}
         category: { type: string}
         expedition_ref: { type: integer default:0}
         expedition_name: { type: string}
@@ -1996,7 +1996,7 @@ Staging:
         host_specimen_ref: { type: integer}
         collectors: { type: string}
         donators: { type: string}
-        ig_ref: { type: integer, primary: true}
+        ig_ref: { type: integer}
         ig_num: { type: string}
         ig_date_mask: { type: integer }
         ig_date: { type: string}
@@ -2043,7 +2043,7 @@ Staging:
 StagingTagGroups:
     columns:
         id: { type: integer, primary: true, autoincrement: true }
-        staging_ref:{ type: integer, notnull: true}
+        staging_ref: { type: integer, notnull: true}
         group_name: {type: string, notnull: true}
         sub_group_name:  { type: string, notnull: true }
         tag_value: { type: string, notnull: true}

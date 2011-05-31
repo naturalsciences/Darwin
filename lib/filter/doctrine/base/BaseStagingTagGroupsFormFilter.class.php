@@ -13,17 +13,17 @@ abstract class BaseStagingTagGroupsFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'staging_ref:{ type' => new sfWidgetFormFilterInput(),
-      'group_name'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'sub_group_name'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'tag_value'          => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'staging_ref'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Staging'), 'add_empty' => true)),
+      'group_name'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'sub_group_name' => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'tag_value'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'staging_ref:{ type' => new sfValidatorPass(array('required' => false)),
-      'group_name'         => new sfValidatorPass(array('required' => false)),
-      'sub_group_name'     => new sfValidatorPass(array('required' => false)),
-      'tag_value'          => new sfValidatorPass(array('required' => false)),
+      'staging_ref'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Staging'), 'column' => 'id')),
+      'group_name'     => new sfValidatorPass(array('required' => false)),
+      'sub_group_name' => new sfValidatorPass(array('required' => false)),
+      'tag_value'      => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('staging_tag_groups_filters[%s]');
@@ -43,11 +43,11 @@ abstract class BaseStagingTagGroupsFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'                 => 'Number',
-      'staging_ref:{ type' => 'Text',
-      'group_name'         => 'Text',
-      'sub_group_name'     => 'Text',
-      'tag_value'          => 'Text',
+      'id'             => 'Number',
+      'staging_ref'    => 'ForeignKey',
+      'group_name'     => 'Text',
+      'sub_group_name' => 'Text',
+      'tag_value'      => 'Text',
     );
   }
 }

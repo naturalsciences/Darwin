@@ -13,6 +13,7 @@
 class Imports extends BaseImports
 {
   private static $state = array('' => 'All', 'imported' => 'Imported', 'processing' => 'Processing', 'ok' => 'Ready', 'rejected' => 'Rejected', 'computing' => 'Computing') ;  
+  public static $formatArray = array('dna' => 'DNA') ;
     
   public static function getFormats()
   {
