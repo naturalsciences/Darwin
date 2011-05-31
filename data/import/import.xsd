@@ -344,6 +344,7 @@
   </xs:element>
   <xs:element name="notion_concerned" type="xs:string"/>
   <xs:element name="value" type="xs:string"/>
+  <xs:element name="accuracy" type="xs:decimal"/>
   <xs:element name="comments">
     <xs:complexType>
       <xs:sequence>
@@ -387,7 +388,15 @@
   <xs:element name="property_values">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="1" maxOccurs="unbounded" ref="value"/>
+        <xs:element ref="property_value" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="property_value">
+    <xs:complexType>
+      <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="unbounded" ref="value"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="accuracy"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
