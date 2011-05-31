@@ -3616,7 +3616,7 @@ $$ language plpgsql;
 
 
 
-CREATE OR REPLACE FUNCTION fct_imp_taxonomy(line staging /*, import boolean default false*/)  RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_imp_taxonomy(line staging)  RETURNS boolean
 AS $$
 DECLARE
   result_nbr integer :=0;
@@ -3627,7 +3627,10 @@ BEGIN
   END IF;
 
   /*** FIRST CHECK Exact name ***/
-  FOR ref_record IN SELECT * from taxonomy where name = line.taxon_name LIMIT 2
+  FOR ref_record IN SELECT * from taxonomy t 
+    INNER JOIN catalogue_levels c on t.level_ref = c.id 
+    WHERE name = line.taxon_name AND  level_name = CASE WHEN line.taxon_level_name is null THEN level_name ELSE line.taxon_level_name END 
+    LIMIT 2
   LOOP
     result_nbr := result_nbr +1;
   END LOOP;
@@ -3647,7 +3650,11 @@ BEGIN
 
   /*** Then CHECK fuzzy name ***/
   result_nbr := 0;
-  FOR ref_record IN SELECT * from taxonomy where name_order_by like fullToIndex(line.taxon_name) || '%' LIMIT 2
+  FOR ref_record IN SELECT * from taxonomy t
+    INNER JOIN catalogue_levels c on t.level_ref = c.id
+    WHERE name_order_by like fullToIndex(line.taxon_name) || '%' 
+    AND  level_name = CASE WHEN line.taxon_level_name is null THEN level_name ELSE line.taxon_level_name END 
+    LIMIT 2
   LOOP
     result_nbr := result_nbr +1;
   END LOOP;
