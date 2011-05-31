@@ -35,7 +35,6 @@ class ImportDnaXml implements IImportModels
     'sub_type' => 'property_sub_type',
     'qualifier' => 'property_qualifier',
     'unit' => 'property_unit',
-    'category' => 'code_category',
     'code_prefix' => 'code_prefix',
     'code_prefix_separator' => 'code_prefix_separator',
     'code_suffix' => 'code_suffix', 
@@ -77,14 +76,11 @@ class ImportDnaXml implements IImportModels
     foreach($array as $key => $node)
     {
       if($key == 'collection_objects') $this->createAndSaveStaging($node,$id) ;
-//      elseif($key == 'taxon') $this->processWithTaxonNode($array[$key],$id);
       elseif($key == 'codes') $this->processWithCodesNode($array[$key],$id);
       elseif($key == 'identifications') $this->processWithIdentificationsNode($array[$key],$id);
-//      elseif($key == 'donators') $this->processWithDonatorsNode($array[$key],$id);
       elseif($key == 'institution') $this->processWithInstitutionNode($array[$key],$id);
       elseif($key == 'comments') $this->processWithCommentsNode($array[$key],$id);
       elseif($key == 'properties') $this->processWithPropertiesNode($array[$key],$id);
-//      elseif($key == 'collectors') $this->processWithCollectorsNode($array[$key],$id);
       elseif($key == 'tag_groups') $this->processWithTagGroupsNode($array[$key],$id);
       else die('Unknown node '.$key) ;     
     }    
@@ -186,7 +182,7 @@ class ImportDnaXml implements IImportModels
    
    /**
    * This function fill all taxon fields from Staging
-   * $taxon_parent may containt all field referenced in $array_level separated by "/"
+   * $taxon_parent may containt all field referenced in $array_level separated by ","
    */    
   public function processWithTaxonNode($xml_node,$object)
   {
@@ -197,7 +193,7 @@ class ImportDnaXml implements IImportModels
       // text node doesn't interest us
       if($taxon_node->nodeName == "#text") continue;
       // if a node have not more than one child, it's a node without childen
-      if(in_array($taxon_node->nodeName,$array_level)) $taxon_parent .= taxon_node->nodeValue.'/' ;   
+      if(in_array($taxon_node->nodeName,$array_level)) $taxon_parent .= $taxon_node->nodeName.'=>'.$taxon_node->nodeValue.',' ;   
       elseif($taxon_node->nodeName == 'name') $object['taxon_name'] = $taxon_node->nodeValue ;
       elseif($taxon_node->nodeName == 'level') $object['taxon_level_name'] = $taxon_node->nodeValue ;
       elseif($taxon_node->nodeName == 'comments')
@@ -211,8 +207,8 @@ class ImportDnaXml implements IImportModels
         $this->complex_nodes['properties']['notion_concerned'] = 'taxon' ;
       }              
       else die('Unknown node '.$taxon_node->nodeName.' in taxon') ;
-    }    
-    $object['taxon_parents'] = $taxon_parent ;
+    }
+    $object['taxon_parents'] = substr($taxon_parent,0,strlen($taxon_parent)-1) ;
   }
      
   /**
@@ -230,6 +226,7 @@ class ImportDnaXml implements IImportModels
       { 
         if($codes_info->nodeName == "#text") continue; 
         if($codes_info->nodeName == "value") $code['code'] = $codes_info->nodeValue ;
+        if($codes_info->nodeName == "category") $code['code_category'] = $codes_info->nodeValue ;        
         elseif($codes_info->nodeName == 'comments')
         {
           $this->complex_nodes['comments']['node'] = $codes_info ;
