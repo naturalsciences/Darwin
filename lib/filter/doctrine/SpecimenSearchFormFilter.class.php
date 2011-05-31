@@ -334,7 +334,7 @@ $this->validatorSchema['role_ref'] = new sfValidatorPass() ;
                                          'taxon_level_ref' => 'Level',
                                          'what_searched' => 'What would you like to search ?',
                                          'code_ref_relation' => 'Code of',
-                                         'people_ref' => 'You look for whom',
+                                         'people_ref' => 'Whom are you looking for',
                                          'role_ref' => 'Which role'
                                         )
                                   );

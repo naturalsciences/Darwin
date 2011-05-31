@@ -79,9 +79,9 @@
         <li>
             <a href=""><?php echo __('Administration');?></a>
             <ul>
-                <li><?php echo link_to('Mass Actions','massactions/index');?></li>
+                <li><?php echo link_to(__('Mass Actions'),'massactions/index');?></li>
                 <?php if($sf_user->isAtLeast(Users::ADMIN) ): ?>
-                  <li><?php echo link_to('Big Brother','bigbro/index');?></li>
+                  <li><?php echo link_to(__('Big Brother'),'bigbro/index');?></li>
                 <?php endif ; ?>
                 <?php if($sf_user->isAtLeast(Users::MANAGER) ): ?>
                   <li>
@@ -98,10 +98,10 @@
         <li>
             <a href=""><?php echo __('Help');?></a>
             <ul>
-                <li><?php echo link_to('Help','help/index');?></li>                
-                <li><?php echo link_to('Contacts','help/contact');?></li>
-                <li><?php echo link_to('Contribute','help/contrib');?></li>
-                <li><?php echo link_to('About','help/about');?></li>
+                <li><?php echo link_to(__('Help'),'help/index');?></li>                
+                <li><?php echo link_to(__('Contacts'),'help/contact');?></li>
+                <li><?php echo link_to(__('Contribute'),'help/contrib');?></li>
+                <li><?php echo link_to(__('About'),'help/about');?></li>
             </ul>
         </li>
         <li class="exit" ><?php echo link_to(image_tag('exit.png', 'alt=Exit'),'account/logout');?></li>

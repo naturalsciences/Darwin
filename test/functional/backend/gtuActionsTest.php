@@ -123,6 +123,7 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('li.tag_size_5:first','Big White Mountain')->
-    checkElement('li.tag_size_5:last','Ici')->
+    checkElement('li.tag_size_5',3)->
+    checkElement('li.tag_size_5:last','Bruselo')->
   end();
   
