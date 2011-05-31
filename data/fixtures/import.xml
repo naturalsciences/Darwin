@@ -179,7 +179,9 @@
                   <property>
                     <property_type>analysis protocol</property_type>
                     <property_values>
-                      <value>tissue pcr prepared</value>
+                      <property_value>
+                        <value>tissue pcr prepared</value>
+                      </property_value>
                     </property_values>
                   </property>
                 </properties>
@@ -206,16 +208,24 @@
                       <property>
                         <property_type>analysis protocol</property_type>
                         <property_values>
-                          <value>nucleo</value>
+                          <property_value>
+                            <value>nucleo</value>
+                          </property_value>
                         </property_values>
                       </property>
                       <property>
                         <property_type>concentration</property_type>
                         <property_unit>ng/µl</property_unit>
                         <property_values>
-                          <value>28,01</value>
-                          <value>28,02</value>
-                          <value>27,95</value>
+                          <property_value>
+                            <value>28,01</value>
+                          </property_value>
+                          <property_value>
+                            <value>28,02</value>
+                          </property_value>
+                          <property_value>
+                            <value>27,95</value>
+                          </property_value>
                         </property_values>
                       </property>
                     </properties>
@@ -284,7 +294,9 @@
                   <property>
                     <property_type>analysis protocol</property_type>
                     <property_values>
-                      <value>tissue pcr prepared</value>
+                      <property_value>
+                        <value>tissue pcr prepared</value>
+                      </property_value>
                     </property_values>
                   </property>
                 </properties>
@@ -351,7 +363,9 @@
                   <property>
                     <property_type>analysis protocol</property_type>
                     <property_values>
-                      <value>tissue pcr prepared</value>
+                      <property_value>
+                        <value>tissue pcr prepared</value>
+                      </property_value>
                     </property_values>
                   </property>
                 </properties>
@@ -397,7 +411,9 @@
                       <property>
                         <property_type>analysis protocol</property_type>
                         <property_values>
-                          <value>nucleo</value>
+                          <property_value>
+                            <value>nucleo</value>
+                          </property_value>
                         </property_values>
                       </property>
                       <property>
@@ -406,7 +422,9 @@
                         <property_qualifier>digestion time</property_qualifier>
                         <property_unit>h</property_unit>
                         <property_values>
-                          <value>18</value>
+                          <property_value>
+                            <value>18</value>
+                          </property_value>
                         </property_values>
                       </property>
                     </properties>
@@ -454,7 +472,9 @@
                   <property>
                     <property_type>analysis protocol</property_type>
                     <property_values>
-                      <value>tissue pcr prepared</value>
+                      <property_value>
+                        <value>tissue pcr prepared</value>
+                      </property_value>
                     </property_values>
                   </property>
                 </properties>
@@ -671,7 +691,9 @@
                   <property>
                     <property_type>analysis protocol</property_type>
                     <property_values>
-                      <value>tissue pcr prepared</value>
+                      <property_value>
+                        <value>tissue pcr prepared</value>
+                      </property_value>
                     </property_values>
                   </property>
                 </properties>
