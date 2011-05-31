@@ -3637,6 +3637,8 @@ BEGIN
 
   IF result_nbr = 1 THEN -- It's Ok!
     UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id; 
+    line.taxon_ref := ref_record.id;
+    PERFORM fct_imp_check_taxon_parents(line);
     RETURN true;
   END IF;
 
@@ -3664,8 +3666,10 @@ BEGIN
     RETURN true;
   END IF;
 
-  IF result_nbr = 1 THEN
-    UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id; --IS it?
+  IF result_nbr = 1 THEN --IT's OOOK
+    UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id;
+    line.taxon_ref := ref_record.id;
+    PERFORM fct_imp_check_taxon_parents(line);
     RETURN true;
   END IF;
 
@@ -3673,6 +3677,35 @@ BEGIN
     UPDATE staging SET status = (status || ('taxon' => 'not_found')) where id=line.id;
     RETURN true;
   END IF;
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_imp_check_taxon_parents(line staging) RETURNS boolean
+AS $$
+DECLARE
+  result_nbr integer :=0;
+  lvl_name varchar;
+  lvl_value varchar;
+BEGIN
+  IF line.taxon_parents is null OR line.taxon_parents = ''::hstore OR line.taxon_ref is null THEN
+    RETURN true;
+  END IF;
+
+  FOR lvl_name in SELECT s FROM fct_explode_array(akeys(line.taxon_parents)) as s
+  LOOP 
+    lvl_value := line.taxon_parents->lvl_name;
+    PERFORM * from taxonomy t
+      INNER JOIN catalogue_levels c on t.level_ref = c.id
+       WHERE level_name = lvl_name AND 
+        name_order_by like fullToIndex( lvl_value ) || '%';
+    IF NOT FOUND THEN
+      UPDATE staging SET status = (status || ('taxon' => 'bad_hierarchy')), taxon_ref = null where id=line.id;
+      RETURN TRUE;
+    END IF;
+  END LOOP;
 
   RETURN true;
 END;
