@@ -3626,13 +3626,34 @@ BEGIN
     RETURN true;
   END IF;
 
-    
-  SELECT * INTO ref_record from taxonomy where name = line.taxon_name LIMIT 2;
-
   /*** FIRST CHECK Exact name ***/
-  GET DIAGNOSTICS result_nbr = ROW_COUNT;
+  FOR ref_record IN SELECT * from taxonomy where name = line.taxon_name LIMIT 2
+  LOOP
+    result_nbr := result_nbr +1;
+  END LOOP;
+
+  IF result_nbr = 1 THEN -- It's Ok!
+    UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id; 
+    RETURN true;
+  END IF;
+
   IF result_nbr >= 2 THEN
     UPDATE staging SET status = (status || ('taxon' => 'too_much')) where id= line.id;
+    RETURN true;
+  END IF;
+
+
+
+
+  /*** Then CHECK fuzzy name ***/
+  result_nbr := 0;
+  FOR ref_record IN SELECT * from taxonomy where name_order_by like fullToIndex(line.taxon_name) || '%' LIMIT 2
+  LOOP
+    result_nbr := result_nbr +1;
+  END LOOP;
+
+  IF result_nbr >= 2 THEN
+    UPDATE staging SET status = (status || ('taxon' => 'too_much')) where id=line.id;
     RETURN true;
   END IF;
 
@@ -3641,11 +3662,10 @@ BEGIN
     RETURN true;
   END IF;
 
-  /*** Then CHECK fuzzy name ***/
-
-  /*
-  SELECT * INTO ref_record from taxonomy where name = line.taxon_name LIMIT 2;
-  GET DIAGNOSTICS result_nbr = ROW_COUNT;*/
+  IF result_nbr = 0 THEN
+    UPDATE staging SET status = (status || ('taxon' => 'not_found')) where id=line.id;
+    RETURN true;
+  END IF;
 
   RETURN true;
 END;
