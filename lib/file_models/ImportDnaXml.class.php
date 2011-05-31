@@ -41,6 +41,9 @@ class ImportDnaXml implements IImportModels
     'code_suffix_separator' => 'code_suffix_separator',
     'code_date' => 'code_date', 
     'code_date_mask' => 'code_date_mask',
+    'part_count_min' => 'part_count_min',
+    'part_count_max' => 'part_count_max',
+    
   ) ; 
   
   public function importFile($file,$id)
@@ -308,6 +311,12 @@ class ImportDnaXml implements IImportModels
   {
   
   }   
+
+  // function not used for now, because there is no Igs for now
+  public function processWithIgsNode($xml_node,$id)
+  {
+  
+  }  
 
   /**
    * This function create and save all Comments found
