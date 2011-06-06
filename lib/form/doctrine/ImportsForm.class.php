@@ -44,11 +44,11 @@ class ImportsForm extends BaseImportsForm
     $this->validatorSchema['format'] = new sfValidatorChoice(
       array('choices'=> array_keys($category) ));
     $this->validatorSchema['collection_ref'] = new sfValidatorInteger(array('required'=>true));    
-    $this->validatorSchema['uploadfield'] = new sfValidatorFile(
+    $this->validatorSchema['uploadfield'] = new xmlFileValidator(
       array(
           'required' => true,
           'mime_types' => $allowed_types,
           'validated_file_class' => 'myValidatedFile'
-      )); 
+      ));
   }
 }

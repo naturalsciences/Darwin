@@ -2,7 +2,7 @@
 <?php include_javascripts_for_form($form) ?>
 <script type="text/javascript">
 $(document).ready(function () 
-{
+{   
   $('#uploadfield').bind('change', function() {
     $('input#input_text_file').val($(this).val());
   });

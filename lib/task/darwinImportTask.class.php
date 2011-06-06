@@ -23,7 +23,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     $conn = Doctrine_Manager::connection();
- //   $conn->getDbh()->exec('BEGIN TRANSACTION;');
+    $conn->getDbh()->exec('BEGIN TRANSACTION;');
     do  
     {
       // il faudra que j'update ma ligne en mettant state = processing avant de la verouiller
@@ -48,6 +48,6 @@ EOF;
       }
     }
     while($id != null);
-  //  $conn->getDbh()->exec('COMMIT TRANSACTION;');    
+    $conn->getDbh()->exec('COMMIT TRANSACTION;');    
   }
 }  
