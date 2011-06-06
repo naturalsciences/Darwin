@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(20);
+SELECT plan(22);
 
 select diag('Test of staging check without levels');
 
@@ -12,10 +12,11 @@ select is(null , (select taxon_ref from staging s where id = 12));
 
 insert into staging (id,import_ref, "level",taxon_name) VALUES (1,1,'specimens','Falco Peregrinus');
 INSERT INTO taxonomy (id, name, level_ref) VALUES (1, 'Falco Coco lus (Brolus 1972)', 1);
-INSERT INTO taxonomy (id, name, level_ref) VALUES (2, 'Falco Peregrinus', 1);
+INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (2, 'Falco',2,1);
+INSERT INTO taxonomy (id, name, level_ref, parent_ref) VALUES (3, 'Falco Peregrinus', 3,2);
 
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s ));
-select is(2 , (select taxon_ref from staging s where id = 1));
+select is(3 , (select taxon_ref from staging s where id = 1));
 
 insert into staging (id,import_ref, "level",taxon_name) VALUES (2,1,'specimens','Falco Brolus');
 
@@ -27,7 +28,7 @@ insert into staging (id,import_ref, "level",taxon_name) VALUES (3,1,'specimens',
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
 select is(1, (select taxon_ref from staging s where id = 3));
 
-INSERT INTO taxonomy (id, name, level_ref) VALUES (3, 'Falco Coco lus (Brolus 1974)', 1);
+INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (4, 'Falco Coco lus (Brolus 1974)', 4, 3);
 UPDATE staging set taxon_ref = null where id = 3;
 
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
@@ -35,9 +36,9 @@ select is(null, (select taxon_ref from staging s where id = 3));
 
 select diag('Test of staging check with levels');
 
-UPDATE staging set taxon_ref = null , taxon_level_name='kingdom';
+UPDATE staging set taxon_ref = null , taxon_level_name='super phylum';
 
-delete from taxonomy where id = 3;
+delete from taxonomy where id = 4;
 
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
@@ -45,26 +46,34 @@ update taxonomy set level_ref=2 , parent_ref = 1 where id = 3;
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
 
-insert into staging (id,import_ref, "level",taxon_name,taxon_level_name) VALUES (4,1,'specimens','Falco Peregrinus','domain');
+update taxonomy set level_ref=3 , parent_ref = 2 where id = 3;
+
+insert into staging (id,import_ref, "level",taxon_name,taxon_level_name) VALUES (4,1,'specimens','Falco Peregrinus','super phylum' /* 3 */);
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
-select is(2, (select taxon_ref from staging s where id = 4));
+select is(3, (select taxon_ref from staging s where id = 4));
 
 
 select diag('Test of staging check with Parent levels');
 
-INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (3, 'Falco Coco lus (Brolus 1974)', 2, 2);
-update staging SET taxon_ref = null, taxon_name = 'Falco Coco lus (Brolus 1974)', taxon_parents = 'domain=>Brolus' where id = 3;
+INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (4, 'Falco Coco lus (Brolus 1974)', 4, 3);
+update staging SET taxon_ref = null, taxon_name = 'Falco Coco lus (Brolus 1974)', taxon_level_name ='phylum', taxon_parents = 'domain=>"Falco Peregrinus"' where id = 3;
 
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
 
-update staging SET taxon_parents = 'domain=>"Falco Peregrinus"'::hstore where id = 3;
+update staging SET taxon_parents = '"super phylum"=>"Falco Peregrinus"'::hstore where id = 3;
+
+
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
+select is(4, (select taxon_ref from staging s where id = 3));
 
-select is(3, (select taxon_ref from staging s where id = 3));
+INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (5, 'Brolz', 2, 1);
 
---select * from staging;
---select * from taxonomy;
+update staging SET taxon_parents = '"kingdom"=>"Brolz"'::hstore, taxon_ref = null where id = 3;
+
+
+select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
+select is(null, (select taxon_ref from staging s where id = 3));
 
 SELECT * FROM finish();
 ROLLBACK;

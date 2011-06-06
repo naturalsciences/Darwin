@@ -3687,12 +3687,14 @@ CREATE OR REPLACE FUNCTION fct_imp_check_taxon_parents(line staging) RETURNS boo
 AS $$
 DECLARE
   result_nbr integer :=0;
+  tax_record record;
   lvl_name varchar;
   lvl_value varchar;
 BEGIN
   IF line.taxon_parents is null OR line.taxon_parents = ''::hstore OR line.taxon_ref is null THEN
     RETURN true;
   END IF;
+  select * into tax_record from taxonomy where id = line.taxon_ref;
 
   FOR lvl_name in SELECT s FROM fct_explode_array(akeys(line.taxon_parents)) as s
   LOOP 
@@ -3700,13 +3702,13 @@ BEGIN
     PERFORM * from taxonomy t
       INNER JOIN catalogue_levels c on t.level_ref = c.id
        WHERE level_name = lvl_name AND 
-        name_order_by like fullToIndex( lvl_value ) || '%';
+        name_order_by like fullToIndex( lvl_value ) || '%'
+        AND tax_record.path like t.path || t.id || '/' ||  '%';
     IF NOT FOUND THEN
       UPDATE staging SET status = (status || ('taxon' => 'bad_hierarchy')), taxon_ref = null where id=line.id;
       RETURN TRUE;
     END IF;
   END LOOP;
-
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
