@@ -3712,3 +3712,26 @@ BEGIN
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION fct_imp_igs(line staging)  RETURNS boolean
+AS $$
+DECLARE
+  ref_rec integer :=0;
+BEGIN
+  IF line.ig_num is not distinct from '' OR line.ig_ref is not null THEN
+    RETURN true;
+  END IF;
+
+  select id into ref_rec from igs where ig_num = line.ig_num  and ig_date = COALESCE(line.ig_date,line.ig_date,'01/01/0001');
+  IF NOT FOUND THEN
+      UPDATE staging SET status = (status || ('igs' => 'not_found')), ig_ref = null where id=line.id;
+      RETURN TRUE;
+  END IF;
+
+  UPDATE staging SET status = delete(status,'igs'), ig_ref = ref_rec where id=line.id;
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;

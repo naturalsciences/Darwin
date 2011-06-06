@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(22);
+SELECT plan(28);
 
 select diag('Test of staging check without levels');
 
@@ -68,12 +68,29 @@ select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
 select is(4, (select taxon_ref from staging s where id = 3));
 
 INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (5, 'Brolz', 2, 1);
-
 update staging SET taxon_parents = '"kingdom"=>"Brolz"'::hstore, taxon_ref = null where id = 3;
 
 
 select is(1 , (select min(fct_imp_taxonomy(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
+
+
+select diag('Test Igs');
+INSERT INTO igs(id, ig_num) VALUES (1458, '11');
+INSERT INTO igs(id, ig_num, ig_date, ig_date_mask) VALUES (1459, '13', '01/11/2001',48 /* month & year */);
+update staging SET ig_num ='11' where id = 2;
+update staging SET ig_num ='12' where id = 3;
+update staging SET ig_num ='13', ig_date='01/11/2001' where id = 1;
+
+
+select is(1 , (select min(fct_imp_igs(s.*)::int) from staging s));
+select is(1458, (select ig_ref from staging where id = 2));
+select is(null, (select ig_ref from staging where id = 3));
+select is(1459, (select ig_ref from staging where id = 1));
+
+update staging set ig_date = '02/11/2001' , ig_num = '13' where id = 3;
+select is(1 , (select min(fct_imp_igs(s.*)::int) from staging s));
+select is(null, (select ig_ref from staging where id = 3)); /* Null or 1459 ?*/
 
 SELECT * FROM finish();
 ROLLBACK;
