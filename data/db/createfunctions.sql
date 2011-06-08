@@ -3638,7 +3638,7 @@ BEGIN
   IF result_nbr = 1 THEN -- It's Ok!
     UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id; 
     line.taxon_ref := ref_record.id;
-    PERFORM fct_imp_check_taxon_parents(line);
+    PERFORM fct_imp_checker_taxon_parents(line);
     RETURN true;
   END IF;
 
@@ -3669,7 +3669,7 @@ BEGIN
   IF result_nbr = 1 THEN --IT's OOOK
     UPDATE staging SET status = delete(status,'taxon'), taxon_ref = ref_record.id where id=line.id;
     line.taxon_ref := ref_record.id;
-    PERFORM fct_imp_check_taxon_parents(line);
+    PERFORM fct_imp_checker_taxon_parents(line);
     RETURN true;
   END IF;
 
@@ -3764,10 +3764,10 @@ AS $$
 DECLARE
   prev_levels hstore;
   rec_id integer;
-  line staging;
+  line RECORD;
   old_level int;
 BEGIN
-  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = .id where status is not distinct from = ''::hstore ORDER BY path || s.id
+  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id where status is null or status = ''::hstore ORDER BY path || s.id
   LOOP
     
     IF line.level = 'specimen' THEN
@@ -3781,8 +3781,6 @@ BEGIN
       );
       UPDATE template_table_record_ref SET referenced_relation ='specimen' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
       prev_levels := (prev_levels || ('specimen' => rec_id));
-    END IF;
-
     ELSIF line.level = 'individual' THEN
       rec_id := nextval('specimen_individuals_id_seq');
       INSERT INTO specimen_individuals (id, specimen_ref, type, sex, stage, state, social_status, rock_form, specimen_individuals_count_min, specimen_individuals_count_max)
@@ -3793,8 +3791,6 @@ BEGIN
       );
       UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
       prev_levels := (prev_levels || ('individual' => rec_id));
-    END IF;
-
     ELSIF lower(line.level) in ('specimen part','tissue part','dna part') THEN /*** @TODO:CHECK THIS!!**/
       rec_id := nextval('specimen_parts_id_seq');
       IF  lower(line.level) = 'specimen part' THEN
@@ -3809,7 +3805,7 @@ BEGIN
         container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
           specimen_part_count_min, specimen_part_count_max)
       VALUES (
-        rec_id, old_level, prev_levels->individual
+        rec_id, old_level, prev_levels->individual,
         line.specimen_part, line.complete, line.building, line.floor, line.room, line.row, line.shelf,
         line.container, line.sub_container, line.container_type, line.sub_container_type, line.container_storage, line.sub_container_storage,
         line.surnumerary, line.specimen_status,line.part_count_min, line.part_count_max
