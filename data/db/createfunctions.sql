@@ -3794,6 +3794,114 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION fct_imp_checker_people(line staging) RETURNS boolean
+AS $$
+DECLARE
+  ref_record integer :=0;
+  result_nbr integer;
+  cnt integer :=-1;
+  p_name text;
+  merge_status text :='';
+BEGIN
+
+  FOR p_name in select item from unnest(line.collectors) as item
+  LOOP
+    result_nbr := 0;
+    cnt := cnt + 1;
+    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'collectors' AND order_by= cnt)  THEN
+      continue;
+    END IF;
+    
+    FOR ref_record IN SELECT id from people p 
+      WHERE formated_name_indexed = fulltoindex(p_name) LIMIT 2
+    LOOP
+      result_nbr := result_nbr +1;
+      
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+        VALUES ('staging', line.id, 'collectors', cnt, ref_record);
+      continue;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      IF merge_status = '' THEN 
+        merge_status :='too_much';
+      END IF;
+      continue;
+    END IF;
+    IF result_nbr = 0 THEN
+      IF merge_status = '' THEN 
+        merge_status :='not_found';
+      END IF;
+      continue;
+    END IF;
+
+  END LOOP;
+  IF merge_status ='' THEN 
+    UPDATE staging SET status = delete(status,'collectors') where id=line.id;
+  ELSE 
+    UPDATE staging SET status = (status || ('collectors' => merge_status)) where id= line.id;
+  END IF;
+
+/*****
+* DONATORS
+*/
+
+  cnt := -1;
+  FOR p_name in select item from unnest(line.donators) as item
+  LOOP
+    result_nbr := 0;
+    cnt := cnt + 1;
+    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'donators' AND order_by= cnt)  THEN
+      continue;
+    END IF;
+    
+    FOR ref_record IN SELECT id from people p 
+      WHERE formated_name_indexed = fulltoindex(p_name) LIMIT 2
+    LOOP
+      result_nbr := result_nbr +1;
+      
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+        VALUES ('staging', line.id, 'donators', cnt, ref_record);
+      continue;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      IF merge_status = '' THEN 
+        merge_status :='too_much';
+      END IF;
+      continue;
+    END IF;
+    IF result_nbr = 0 THEN
+      IF merge_status = '' THEN 
+        merge_status :='not_found';
+      END IF;
+      continue;
+    END IF;
+
+  END LOOP;
+  IF merge_status ='' THEN 
+    UPDATE staging SET status = delete(status,'donators') where id=line.id;
+  ELSE 
+    UPDATE staging SET status = (status || ('donators' => merge_status)) where id= line.id;
+  END IF;
+
+    /*    identifications
+id integer not null default nextval('identifications_id_seq'),
+        determination_status varchar,
+*/
+
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
 CREATE OR REPLACE FUNCTION fct_importer_dna()  RETURNS boolean
 AS $$
 DECLARE
