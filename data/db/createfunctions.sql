@@ -3814,7 +3814,7 @@ BEGIN
     END IF;
     
     FOR ref_record IN SELECT id from people p 
-      WHERE formated_name_indexed = fulltoindex(p_name) LIMIT 2
+      WHERE formated_name_indexed like fulltoindex(p_name) || '%' LIMIT 2
     LOOP
       result_nbr := result_nbr +1;
       
@@ -3860,7 +3860,7 @@ BEGIN
     END IF;
     
     FOR ref_record IN SELECT id from people p 
-      WHERE formated_name_indexed = fulltoindex(p_name) LIMIT 2
+      WHERE formated_name_indexed like fulltoindex(p_name) || '%' LIMIT 2
     LOOP
       result_nbr := result_nbr +1;
       
@@ -3908,7 +3908,7 @@ IDENTIFIERS
       END IF;
       
       FOR ref_record IN SELECT id from people p 
-        WHERE formated_name_indexed = fulltoindex(p_name) LIMIT 2
+        WHERE formated_name_indexed like fulltoindex(p_name) || '%' LIMIT 2
       LOOP
         result_nbr := result_nbr +1;
         
@@ -3916,7 +3916,7 @@ IDENTIFIERS
 
       IF result_nbr = 1 THEN -- It's Ok!
         INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-          VALUES ('identifications', ident_line.id, '??????????', cnt, ref_record);
+          VALUES ('identifications', ident_line.id, 'identifier', cnt, ref_record);
         continue;
       END IF;
 
