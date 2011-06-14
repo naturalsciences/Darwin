@@ -3946,62 +3946,72 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION fct_importer_dna()  RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_importer_dna(req_import_ref integer)  RETURNS boolean
 AS $$
 DECLARE
   prev_levels hstore;
   rec_id integer;
   line RECORD;
+  s_line RECORD;
   old_level int;
 BEGIN
-  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id where status is null or status = ''::hstore ORDER BY path || s.id
+  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id where import_ref = req_import_ref and status is null or status = ''::hstore  and parent_ref is null
   LOOP
+    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and status is not null or status != ''::hstore) THEN
+      --If line has childer with error, don't try to import it
+      continue;
+    END IF;
     
-    IF line.level = 'specimen' THEN
-      rec_id := nextval('specimens_id_seq');
-      INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
-          host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
-      VALUES (rec_id, line.category, line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
-        COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
-        COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
-        line.host_specimen_ref, line.host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref
-      );
-      UPDATE template_table_record_ref SET referenced_relation ='specimen' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
-      prev_levels := (prev_levels || ('specimen' => rec_id));
-    ELSIF line.level = 'individual' THEN
-      rec_id := nextval('specimen_individuals_id_seq');
-      INSERT INTO specimen_individuals (id, specimen_ref, type, sex, stage, state, social_status, rock_form, specimen_individuals_count_min, specimen_individuals_count_max)
-      VALUES (
-        rec_id,prev_levels->specimen,
-        line.individual_type, line.individual_sex, line.individual_state, line.individual_stage, line.individual_social_status, line.individual_rock_form,
-        line.individual_count_min, line.individual_count_max
-      );
-      UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
-      prev_levels := (prev_levels || ('individual' => rec_id));
-    ELSIF lower(line.level) in ('specimen part','tissue part','dna part') THEN /*** @TODO:CHECK THIS!!**/
-      rec_id := nextval('specimen_parts_id_seq');
-      IF  lower(line.level) = 'specimen part' THEN
-        old_level := null;
-      ELSIF lower(line.level) = 'tissue part' THEN
-        old_level :=  prev_levels->'specimen part';
-      ELSIF lower(line.level) = 'dna part' THEN
-        old_level :=  prev_levels->'tissue part';
+    --Import Specimen
+    rec_id := nextval('specimens_id_seq');
+    INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
+        host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
+    VALUES (rec_id, line.category, line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
+      COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
+      COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
+      line.host_specimen_ref, line.host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref
+    );
+    UPDATE template_table_record_ref SET referenced_relation ='specimen' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
+    prev_levels := (prev_levels || ('specimen' => rec_id));
+
+    --Import lower levels
+    FOR s_line IN  SELECT * from staging s where path like '/' || line.id || '/%' ORDER BY path || s.id
+    LOOP
+      IF s_line.level = 'individual' THEN
+        rec_id := nextval('specimen_individuals_id_seq');
+        INSERT INTO specimen_individuals (id, specimen_ref, type, sex, stage, state, social_status, rock_form, specimen_individuals_count_min, specimen_individuals_count_max)
+        VALUES (
+          rec_id,prev_levels->specimen,
+          s_line.individual_type, s_line.individual_sex, s_line.individual_state, s_line.individual_stage, s_line.individual_social_status, s_line.individual_rock_form,
+          s_line.individual_count_min, s_line.individual_count_max
+        );
+        UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' and record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
+        prev_levels := (prev_levels || ('individual' => rec_id));
+      ELSIF lower(s_line.level) in ('specimen part','tissue part','dna part') THEN /*** @TODO:CHECK THIS!!**/
+        rec_id := nextval('specimen_parts_id_seq');
+        IF  lower(s_line.level) = 'specimen part' THEN
+          old_level := null;
+        ELSIF lower(s_line.level) = 'tissue part' THEN
+          old_level :=  prev_levels->'specimen part';
+        ELSIF lower(s_line.level) = 'dna part' THEN
+          old_level :=  prev_levels->'tissue part';
+        END IF;
+
+        INSERT INTO specimen_parts (id, parent_ref, specimen_individual_ref, specimen_part, complete, building, floor, room, row, shelf,
+          container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
+            specimen_part_count_min, specimen_part_count_max)
+        VALUES (
+          rec_id, old_level, prev_levels->individual,
+          s_line.specimen_part, s_line.complete, s_line.building, s_line.floor, s_line.room, s_line.row, s_line.shelf,
+          s_line.container, s_line.sub_container, s_line.container_type, s_line.sub_container_type, s_line.container_storage, s_line.sub_container_storage,
+          s_line.surnumerary, s_line.specimen_status,s_line.part_count_min, s_line.part_count_max
+        );
+        UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' and record_id = spec_id where referenced_relation ='staging' and record_id = s_line.id;
+        prev_levels := (prev_levels || (s_line.level => rec_id));
+
       END IF;
 
-      INSERT INTO specimen_parts (id, parent_ref, specimen_individual_ref, specimen_part, complete, building, floor, room, row, shelf,
-        container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
-          specimen_part_count_min, specimen_part_count_max)
-      VALUES (
-        rec_id, old_level, prev_levels->individual,
-        line.specimen_part, line.complete, line.building, line.floor, line.room, line.row, line.shelf,
-        line.container, line.sub_container, line.container_type, line.sub_container_type, line.container_storage, line.sub_container_storage,
-        line.surnumerary, line.specimen_status,line.part_count_min, line.part_count_max
-      );
-      UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' and record_id = spec_id where referenced_relation ='staging' and record_id = line.id;
-      prev_levels := (prev_levels || (line.level => rec_id));
-
-    END IF;
-
+    END LOOP;
   END LOOP;
   RETURN true;
 END;
