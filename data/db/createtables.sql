@@ -1957,7 +1957,7 @@ create table staging
     parent_ref integer,
     path varchar,
     level varchar not null,
-    spec_ref integer,
+--     spec_ref integer,
     category varchar,
     expedition_ref integer,
     expedition_name varchar,
@@ -2036,7 +2036,6 @@ create table staging
     acquisition_date_mask integer,
     acquisition_date date,
 
-    individual_ref integer,
     individual_type varchar,
     individual_sex  varchar,
     individual_state varchar,
@@ -2048,7 +2047,6 @@ create table staging
     collectors text[],
     donators text[],
 
-    part_ref integer,
     part varchar,
     part_status varchar,
     building varchar,
