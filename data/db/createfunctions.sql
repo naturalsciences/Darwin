@@ -3802,6 +3802,7 @@ DECLARE
   cnt integer :=-1;
   p_name text;
   merge_status text :='';
+  ident_line RECORD;
 BEGIN
 
   FOR p_name in select item from unnest(line.collectors) as item
@@ -3891,11 +3892,54 @@ BEGIN
     UPDATE staging SET status = (status || ('donators' => merge_status)) where id= line.id;
   END IF;
 
-    /*    identifications
-id integer not null default nextval('identifications_id_seq'),
-        determination_status varchar,
-*/
+/****
+IDENTIFIERS
+******/
 
+  FOR ident_line in select * from identifications where referenced_relation ='staging' AND  record_id = line.id
+  LOOP
+    cnt := -1;
+    FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ';') as item
+    LOOP
+      result_nbr := 0;
+      cnt := cnt + 1;
+      IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='identifications' AND  record_id = ident_line.id AND order_by= cnt)  THEN
+        continue;
+      END IF;
+      
+      FOR ref_record IN SELECT id from people p 
+        WHERE formated_name_indexed = fulltoindex(p_name) LIMIT 2
+      LOOP
+        result_nbr := result_nbr +1;
+        
+      END LOOP;
+
+      IF result_nbr = 1 THEN -- It's Ok!
+        INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+          VALUES ('identifications', ident_line.id, '??????????', cnt, ref_record);
+        continue;
+      END IF;
+
+      IF result_nbr >= 2 THEN
+        IF merge_status = '' THEN 
+          merge_status :='too_much';
+        END IF;
+        continue;
+      END IF;
+      IF result_nbr = 0 THEN
+        IF merge_status = '' THEN 
+          merge_status :='not_found';
+        END IF;
+        continue;
+      END IF;
+
+    END LOOP;
+  END LOOP;
+  IF merge_status ='' THEN 
+    UPDATE staging SET status = delete(status,'identifiers') where id=line.id;
+  ELSE 
+    UPDATE staging SET status = (status || ('identifiers' => merge_status)) where id= line.id;
+  END IF;
 
   RETURN true;
 END;
