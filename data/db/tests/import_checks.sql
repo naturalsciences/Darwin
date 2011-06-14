@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(28);
+SELECT plan(34);
 
 select diag('Test of staging check without levels');
 
@@ -91,6 +91,20 @@ select is(1459, (select ig_ref from staging where id = 1));
 update staging set ig_date = '02/11/2001' , ig_num = '13' where id = 3;
 select is(1 , (select min(fct_imp_checker_igs(s.*)::int) from staging s));
 select is(null, (select ig_ref from staging where id = 3)); /* Null or 1459 ?*/
+
+select diag('Test of Collectors');
+
+update staging set collectors = '{Hello World,Duchesne Paul Andre}'::text[] where id =  3;
+select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));
+select is(1, (select count(*)::int from catalogue_people where record_id = 3 and referenced_relation='staging')); 
+
+delete from catalogue_people where record_id = 3 and referenced_relation='staging';
+
+update staging set collectors = '{ROYAL BELGIAN INSTITUTE OF NATURAL SCIENCES,Duchesne Paul Andre}'::text[] where id =  3;
+select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));
+select is(2, (select count(*)::int from catalogue_people where record_id = 3 and referenced_relation='staging')); 
+select is(1,(select order_by from catalogue_people where record_id = 3 and referenced_relation='staging' and people_ref = 2));
+select is(0,(select order_by from catalogue_people where record_id = 3 and referenced_relation='staging' and people_ref = 1));
 
 SELECT * FROM finish();
 ROLLBACK;
