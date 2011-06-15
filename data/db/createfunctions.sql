@@ -760,14 +760,11 @@ END;$$;
 /**
  Set user id 
 */
-CREATE OR REPLACE FUNCTION fct_set_user(userid integer) RETURNS boolean
-language plpgsql
-AS
+CREATE OR REPLACE FUNCTION fct_set_user(userid integer) RETURNS void
+language SQL AS
 $$
 BEGIN
-    PERFORM set_config('darwin.userid', userid::varchar, false);
-    update users set last_seen = now() where id = userid;
-    RETURN true;
+    update users set last_seen = now() where id = userid and  set_config('darwin.userid', userid::varchar, false) is distinct from 'noop';
 END;
 $$;
 
