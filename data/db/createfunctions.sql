@@ -763,9 +763,7 @@ END;$$;
 CREATE OR REPLACE FUNCTION fct_set_user(userid integer) RETURNS void
 language SQL AS
 $$
-BEGIN
-    update users set last_seen = now() where id = userid and  set_config('darwin.userid', userid::varchar, false) is distinct from 'noop';
-END;
+  update users set last_seen = now() where id = $1 and  set_config('darwin.userid', $1::varchar, false) is distinct from 'noop';
 $$;
 
 CREATE OR REPLACE FUNCTION fct_trk_log_table() RETURNS TRIGGER
