@@ -3745,7 +3745,7 @@ $$ LANGUAGE plpgsql;
 
 
 
-CREATE OR REPLACE FUNCTION fct_imp_checker_igs(line staging)  RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_imp_checker_igs(line staging, import boolean default false)  RETURNS boolean
 AS $$
 DECLARE
   ref_rec integer :=0;
@@ -3756,8 +3756,14 @@ BEGIN
 
   select id into ref_rec from igs where ig_num = line.ig_num  and ig_date = COALESCE(line.ig_date,line.ig_date,'01/01/0001');
   IF NOT FOUND THEN
-      UPDATE staging SET status = (status || ('igs' => 'not_found')), ig_ref = null where id=line.id;
+    IF import THEN
+        INSERT INTO igs (ig_num, ig_date_mask, ig_date)
+        VALUES (line.ig_num,  COALESCE(line.ig_date_mask,line.ig_date_mask,'0'), COALESCE(line.ig_date,line.ig_date,'01/01/0001'))
+        RETURNING id INTO ref_rec;
+    ELSE
+    --UPDATE staging SET status = (status || ('igs' => 'not_found')), ig_ref = null where id=line.id;
       RETURN TRUE;
+    END IF;
   END IF;
 
   UPDATE staging SET status = delete(status,'igs'), ig_ref = ref_rec where id=line.id;
@@ -3767,7 +3773,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION fct_imp_checker_expeditions(line staging)  RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_imp_checker_expeditions(line staging, import boolean default false)  RETURNS boolean
 AS $$
 DECLARE
   ref_rec integer :=0;
@@ -3780,7 +3786,17 @@ BEGIN
     expedition_from_date = COALESCE(line.expedition_from_date,line.expedition_from_date,'01/01/0001') AND
     expedition_to_date = COALESCE(line.expedition_to_date,line.expedition_to_date,'31/12/2038');
   IF NOT FOUND THEN
-      RETURN TRUE;
+      IF import THEN
+        INSERT INTO expeditions (name, expedition_from_date, expedition_to_date, expedition_from_date_mask,expedition_to_date_mask)
+        VALUES (
+          line.expedition_name, COALESCE(line.expedition_from_date,line.expedition_from_date,'01/01/0001'),
+          COALESCE(line.expedition_to_date,line.expedition_to_date,'31/12/2038'), COALESCE(line.expedition_from_date_mask,line.expedition_from_date_mask,0),
+          COALESCE(line.expedition_to_date_mask,line.expedition_to_date_mask,0)
+        )
+        RETURNING id INTO ref_rec;
+      ELSE
+        RETURN TRUE;
+      END IF;
   END IF;
 
   UPDATE staging SET status = delete(status,'expedition'), expedition_ref = ref_rec where id=line.id;
@@ -3788,6 +3804,41 @@ BEGIN
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_gtu(line staging, import boolean default false)  RETURNS boolean
+AS $$
+DECLARE
+  ref_rec integer :=0;
+BEGIN
+  IF line.expedition_name is not distinct from '' OR line.expedition_ref is not null THEN
+    RETURN true;
+  END IF;
+
+  select id into ref_rec from gtu where
+    latitude = line.gtu_latitude AND
+    longitude = line.gtu_latitude AND
+    gtu_from_date = COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001') AND
+    gtu_to_date = COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038');
+  IF NOT FOUND THEN
+      IF import THEN
+        INSERT into gtu
+          (code, gtu_from_date_mask, gtu_from_date,gtu_to_date_mask, gtu_to_date, path, tag_values_indexed, latitude, longitude, lat_long_accuracy, elevation, elevation_accuracy)
+        VALUES
+          (line.gtu_code, line.gtu_from_date_mask, line.gtu_from_date, line.gtu_to_date_mask, line.gtu_to_date, line.gtu_latitude, line.gtu_longitude, line.gtu_lat_long_accuracy, line.gtu_elevation, line.gtu_elevation_accuracy)
+        RETURNING id INTO ref_rec;
+      ELSE
+        RETURN TRUE;
+      END IF;
+  END IF;
+
+  UPDATE staging SET status = delete(status,'gtu'), gtu_ref = ref_rec where id=line.id;
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION fct_imp_checker_people(line staging) RETURNS boolean
 AS $$
