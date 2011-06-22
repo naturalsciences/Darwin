@@ -2001,6 +2001,8 @@ create table staging
     chrono_local boolean,
     chrono_color varchar,
     chrono_parent_ref integer,
+    chrono_upper_bound numeric(10,3),
+    chrono_lower_bound numeric(10,3),
     chrono_parents hstore,
     lithology_ref integer,
     lithology_name varchar,
