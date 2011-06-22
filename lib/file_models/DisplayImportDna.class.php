@@ -9,11 +9,11 @@ class DisplayImportDna implements IDisplayModels
   public function getLevels()
   {
     $this->levels = array(
-      'specimens'   => 'specimen',
-      'individuals' => '  individuals',
-      'parts'       => '    parts',
-      'tissues'      => '      tissues',
-      'samples'     => '         dna samples',
+      'specimen' => 'specimen',
+      'individual' => '  individuals',
+      'specimen part' => '    parts',
+      'tissue part' => '      tissues',
+      'DNA part' => '         dna samples',
     );
     foreach($this->levels as $k=>$l)
       $this->levels[$k] = str_replace(' ', '&nbsp;',$l);
@@ -24,11 +24,11 @@ class DisplayImportDna implements IDisplayModels
   {
     switch($level)
     {
-      case 'specimens':   return $this->getColumnsForSpecimens();
-      case 'individuals': return $this->getColumnsForIndividuals();
-      case 'parts':       return $this->getColumnsForParts();
-      case 'tissues':     return $this->getColumnsForTissues();
-      case 'samples':     return $this->getColumnsForSamples();
+      case 'specimen':   return $this->getColumnsForSpecimens();
+      case 'individual': return $this->getColumnsForIndividuals();
+      case 'specimen part': return $this->getColumnsForParts();
+      case 'tissue part': return $this->getColumnsForTissues();
+      case 'DNA part':     return $this->getColumnsForSamples();
       default: throw new Exception ('Unable to get columns, Unknown Level');
     }
   }
@@ -68,7 +68,7 @@ class DisplayImportDna implements IDisplayModels
   {
     return array(
       'part',
-      'part_status',
+      'specimen_status',
       'building',
       'floor',
       'room',

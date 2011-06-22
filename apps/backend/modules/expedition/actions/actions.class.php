@@ -28,8 +28,9 @@ class expeditionActions extends DarwinActions
     */ 
   public function executeChoose(sfWebRequest $request)
   {
+    $name = $request->hasParameter('name')?$request->getParameter('name'):'' ;  
     // Initialization of the Search expedition form
-    $this->form = new ExpeditionsFormFilter();
+    $this->form = new ExpeditionsFormFilter(array('name' => $name));
     // Remove surrounding layout
     $this->setLayout(false);
   }
@@ -51,6 +52,7 @@ class expeditionActions extends DarwinActions
   public function executeNew(sfWebRequest $request)
   {
     $expedition = new Expeditions() ;
+    if($request->hasParameter('name')) $expedition->setName($request->getParameter('name')) ;    
     $duplic = $request->getParameter('duplicate_id','0') ;
     $expedition = $this->getRecordIfDuplicate($duplic, $expedition);
     // Initialization of a new encoding expedition form

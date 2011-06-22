@@ -16,7 +16,6 @@ abstract class BaseStagingForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                        => new sfWidgetFormInputHidden(),
-      'spec_ref'                  => new sfWidgetFormInputText(),
       'import_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Import'), 'add_empty' => false)),
       'parent_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                      => new sfWidgetFormTextarea(),
@@ -97,7 +96,6 @@ abstract class BaseStagingForm extends BaseFormDoctrine
       'acquisition_category'      => new sfWidgetFormTextarea(),
       'acquisition_date_mask'     => new sfWidgetFormInputText(),
       'acquisition_date'          => new sfWidgetFormTextarea(),
-      'individual_ref'            => new sfWidgetFormInputText(),
       'individual_type'           => new sfWidgetFormTextarea(),
       'individual_sex'            => new sfWidgetFormTextarea(),
       'individual_state'          => new sfWidgetFormTextarea(),
@@ -106,7 +104,6 @@ abstract class BaseStagingForm extends BaseFormDoctrine
       'individual_rock_form'      => new sfWidgetFormTextarea(),
       'individual_count_min'      => new sfWidgetFormInputText(),
       'individual_count_max'      => new sfWidgetFormInputText(),
-      'part_ref'                  => new sfWidgetFormInputText(),
       'part'                      => new sfWidgetFormTextarea(),
       'building'                  => new sfWidgetFormTextarea(),
       'floor'                     => new sfWidgetFormTextarea(),
@@ -122,13 +119,13 @@ abstract class BaseStagingForm extends BaseFormDoctrine
       'part_count_min'            => new sfWidgetFormInputText(),
       'part_count_max'            => new sfWidgetFormInputText(),
       'specimen_status'           => new sfWidgetFormTextarea(),
+      'status'                    => new sfWidgetFormTextarea(),
       'complete'                  => new sfWidgetFormInputCheckbox(),
       'surnumerary'               => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
       'id'                        => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'spec_ref'                  => new sfValidatorInteger(array('required' => false)),
       'import_ref'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Import'))),
       'parent_ref'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'required' => false)),
       'path'                      => new sfValidatorString(array('required' => false)),
@@ -209,7 +206,6 @@ abstract class BaseStagingForm extends BaseFormDoctrine
       'acquisition_category'      => new sfValidatorString(array('required' => false)),
       'acquisition_date_mask'     => new sfValidatorInteger(array('required' => false)),
       'acquisition_date'          => new sfValidatorString(array('required' => false)),
-      'individual_ref'            => new sfValidatorInteger(array('required' => false)),
       'individual_type'           => new sfValidatorString(array('required' => false)),
       'individual_sex'            => new sfValidatorString(array('required' => false)),
       'individual_state'          => new sfValidatorString(array('required' => false)),
@@ -218,7 +214,6 @@ abstract class BaseStagingForm extends BaseFormDoctrine
       'individual_rock_form'      => new sfValidatorString(array('required' => false)),
       'individual_count_min'      => new sfValidatorInteger(array('required' => false)),
       'individual_count_max'      => new sfValidatorInteger(array('required' => false)),
-      'part_ref'                  => new sfValidatorInteger(array('required' => false)),
       'part'                      => new sfValidatorString(array('required' => false)),
       'building'                  => new sfValidatorString(array('required' => false)),
       'floor'                     => new sfValidatorString(array('required' => false)),
@@ -234,6 +229,7 @@ abstract class BaseStagingForm extends BaseFormDoctrine
       'part_count_min'            => new sfValidatorInteger(array('required' => false)),
       'part_count_max'            => new sfValidatorInteger(array('required' => false)),
       'specimen_status'           => new sfValidatorString(array('required' => false)),
+      'status'                    => new sfValidatorString(array('required' => false)),
       'complete'                  => new sfValidatorBoolean(array('required' => false)),
       'surnumerary'               => new sfValidatorBoolean(array('required' => false)),
     ));

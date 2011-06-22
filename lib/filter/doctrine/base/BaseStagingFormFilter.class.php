@@ -13,7 +13,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'spec_ref'                  => new sfWidgetFormFilterInput(),
       'import_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Import'), 'add_empty' => true)),
       'parent_ref'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Parent'), 'add_empty' => true)),
       'path'                      => new sfWidgetFormFilterInput(),
@@ -94,7 +93,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'acquisition_category'      => new sfWidgetFormFilterInput(),
       'acquisition_date_mask'     => new sfWidgetFormFilterInput(),
       'acquisition_date'          => new sfWidgetFormFilterInput(),
-      'individual_ref'            => new sfWidgetFormFilterInput(),
       'individual_type'           => new sfWidgetFormFilterInput(),
       'individual_sex'            => new sfWidgetFormFilterInput(),
       'individual_state'          => new sfWidgetFormFilterInput(),
@@ -103,7 +101,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'individual_rock_form'      => new sfWidgetFormFilterInput(),
       'individual_count_min'      => new sfWidgetFormFilterInput(),
       'individual_count_max'      => new sfWidgetFormFilterInput(),
-      'part_ref'                  => new sfWidgetFormFilterInput(),
       'part'                      => new sfWidgetFormFilterInput(),
       'building'                  => new sfWidgetFormFilterInput(),
       'floor'                     => new sfWidgetFormFilterInput(),
@@ -119,12 +116,12 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'part_count_min'            => new sfWidgetFormFilterInput(),
       'part_count_max'            => new sfWidgetFormFilterInput(),
       'specimen_status'           => new sfWidgetFormFilterInput(),
+      'status'                    => new sfWidgetFormFilterInput(),
       'complete'                  => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'surnumerary'               => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
-      'spec_ref'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'import_ref'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Import'), 'column' => 'id')),
       'parent_ref'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Parent'), 'column' => 'id')),
       'path'                      => new sfValidatorPass(array('required' => false)),
@@ -205,7 +202,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'acquisition_category'      => new sfValidatorPass(array('required' => false)),
       'acquisition_date_mask'     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'acquisition_date'          => new sfValidatorPass(array('required' => false)),
-      'individual_ref'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'individual_type'           => new sfValidatorPass(array('required' => false)),
       'individual_sex'            => new sfValidatorPass(array('required' => false)),
       'individual_state'          => new sfValidatorPass(array('required' => false)),
@@ -214,7 +210,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'individual_rock_form'      => new sfValidatorPass(array('required' => false)),
       'individual_count_min'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'individual_count_max'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'part_ref'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'part'                      => new sfValidatorPass(array('required' => false)),
       'building'                  => new sfValidatorPass(array('required' => false)),
       'floor'                     => new sfValidatorPass(array('required' => false)),
@@ -230,6 +225,7 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'part_count_min'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'part_count_max'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'specimen_status'           => new sfValidatorPass(array('required' => false)),
+      'status'                    => new sfValidatorPass(array('required' => false)),
       'complete'                  => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'surnumerary'               => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
@@ -252,7 +248,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
   {
     return array(
       'id'                        => 'Number',
-      'spec_ref'                  => 'Number',
       'import_ref'                => 'ForeignKey',
       'parent_ref'                => 'ForeignKey',
       'path'                      => 'Text',
@@ -333,7 +328,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'acquisition_category'      => 'Text',
       'acquisition_date_mask'     => 'Number',
       'acquisition_date'          => 'Text',
-      'individual_ref'            => 'Number',
       'individual_type'           => 'Text',
       'individual_sex'            => 'Text',
       'individual_state'          => 'Text',
@@ -342,7 +336,6 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'individual_rock_form'      => 'Text',
       'individual_count_min'      => 'Number',
       'individual_count_max'      => 'Number',
-      'part_ref'                  => 'Number',
       'part'                      => 'Text',
       'building'                  => 'Text',
       'floor'                     => 'Text',
@@ -358,6 +351,7 @@ abstract class BaseStagingFormFilter extends BaseFormFilterDoctrine
       'part_count_min'            => 'Number',
       'part_count_max'            => 'Number',
       'specimen_status'           => 'Text',
+      'status'                    => 'Text',
       'complete'                  => 'Boolean',
       'surnumerary'               => 'Boolean',
     );

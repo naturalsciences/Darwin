@@ -22,7 +22,7 @@
           <td class="<?php echo $row->getStatusFor($name);?>"><?php echo $row[$name];?></td>
         <?php endforeach;?>
         <td><?php echo 'n/a';//$row['status'];?></td>
-        <td><?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id'].'&level='.$form['slevel']->getValue());?></td>
+        <td><?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id']);?></td>
       </tr>
     <?php endforeach;?>
   </table>

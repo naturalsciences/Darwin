@@ -15,6 +15,13 @@ fieldset
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
+fieldset > legend
+{
+  padding: 3px ;
+  border: 1px solid #C1CF56 ;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;  
+}
 
 #qtip-blanket
 {
@@ -1649,6 +1656,14 @@ fieldset.opened
 {
   border: 1px solid #5BAABD ;
   cursor : pointer ;
+}
+
+fieldset.opened > legend
+{
+  padding: 3px ;
+  border: 1px solid #5BAABD ;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;  
 }
 
 /* catalogue_keyword_view */

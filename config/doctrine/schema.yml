@@ -1922,7 +1922,6 @@ Imports:
 Staging:
     columns:
         id: { type: integer, primary: true, autoincrement: true}
-        spec_ref: { type: integer}
         import_ref: { type: integer, notnull: true}
         parent_ref: { type: integer}
         path: { type: string}
@@ -2003,7 +2002,6 @@ Staging:
         acquisition_category: { type: string}
         acquisition_date_mask: { type: integer }
         acquisition_date: { type: string}
-        individual_ref: {type: integer}
         individual_type: {type: string}
         individual_sex:  {type: string}
         individual_state: {type: string}
@@ -2012,7 +2010,6 @@ Staging:
         individual_rock_form: {type: string}
         individual_count_min: {type: integer }
         individual_count_max: {type: integer }
-        part_ref: {type: integer }
         part: {type: string }
         building: {type: string }
         floor: {type: string }
@@ -2028,6 +2025,7 @@ Staging:
         part_count_min: {type: integer }
         part_count_max: {type:integer}
         specimen_status: {type: string}
+        status: {type: string}
         complete: {type: boolean}
         surnumerary: {type: boolean}
     relations:
