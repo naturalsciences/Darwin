@@ -3521,11 +3521,13 @@ BEGIN
       IF ref_field_id is NULL THEN
         RETURN OLD ;
       END IF ;      
-      IF (ref_relation = 'specimens') THEN
+      IF ref_relation = 'specimens' THEN
         field_to_update := 'spec_ident_ids';
-      ELSE
+      ELSIF ref_relation = 'specimen_individuals' THEN
         field_to_update := 'ind_ident_ids';
         ref_field := 'individual_ref' ;
+      ELSE
+        RETURN NEW;
       END IF ;
       EXECUTE 'SELECT true from catalogue_people cp INNER JOIN identifications i ON cp.record_id = i.id 
       AND cp.referenced_relation = ' || quote_literal('identifications') || ' WHERE i.record_id = ' || quote_literal(ref_field_id) || ' AND people_ref = ' ||
@@ -3548,9 +3550,11 @@ BEGIN
       SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=NEW.record_id ;    
       IF (ref_relation = 'specimens') THEN
         field_to_update := 'spec_ident_ids';
+      ELSIF ref_relation = 'specimen_individuals' THEN
+        field_to_update := 'ind_ident_ids';
+        ref_field := 'individual_ref' ;
       ELSE
-        field_to_update := 'ind_ident_ids';   
-        ref_field := 'individual_ref';             
+        RETURN NEW;    
       END IF ;
     ELSE
       RETURN NEW ;      
@@ -4110,7 +4114,8 @@ BEGIN
       END LOOP;
 
       DELETE from staging where path like '/' || line.id || '/%' OR  id = line.id;
-    --EXCEPTION
+    EXCEPTION WHEN RAISE_EXCEPTION THEN
+    
     END;
   END LOOP;
   RETURN true;
