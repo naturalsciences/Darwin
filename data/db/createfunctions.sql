@@ -3894,153 +3894,125 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION fct_imp_checker_people(line staging) RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_look_for_people(fullname text) RETURNS integer
 AS $$
 DECLARE
   ref_record integer :=0;
   result_nbr integer;
+
+BEGIN
+    result_nbr := 0;
+    FOR ref_record IN SELECT id from people p 
+      WHERE fulltoindex(coalesce(family_name,family_name,'') || coalesce(given_name,given_name,'')) like fulltoindex(fullname) || '%'  
+        OR  fulltoindex(coalesce(given_name,given_name,'') || coalesce(family_name,family_name,'')) like fulltoindex(fullname) || '%' LIMIT 2
+    LOOP
+      result_nbr := result_nbr +1;
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      return ref_record;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      return -1 ;-- To Much
+      continue;
+    END IF;
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_people(line staging) RETURNS boolean
+AS $$
+DECLARE
+  ref_record integer :=0;
   cnt integer :=-1;
   p_name text;
-  merge_status text :='';
+  merge_status integer :=1;
   ident_line RECORD;
 BEGIN
 
   FOR p_name in select item from unnest(line.collectors) as item
   LOOP
-    result_nbr := 0;
     cnt := cnt + 1;
     IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'collectors' AND order_by= cnt)  THEN
       continue;
     END IF;
     
-    FOR ref_record IN SELECT id from people p 
-      WHERE formated_name_indexed like fulltoindex(p_name) || '%' LIMIT 2
-    LOOP
-      result_nbr := result_nbr +1;
-      
-    END LOOP;
-
-    IF result_nbr = 1 THEN -- It's Ok!
-      INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-        VALUES ('staging', line.id, 'collectors', cnt, ref_record);
-      continue;
-    END IF;
-
-    IF result_nbr >= 2 THEN
-      IF merge_status = '' THEN 
-        merge_status :='too_much';
-      END IF;
-      continue;
-    END IF;
-    IF result_nbr = 0 THEN
-      IF merge_status = '' THEN 
-        merge_status :='not_found';
-      END IF;
-      continue;
-    END IF;
-
+    SELECT fct_look_for_people(p_name) into ref_record;
+    CASE ref_record
+      WHEN -1,0 THEN merge_status := -1 ;
+      --WHEN 0 THEN merge_status := 0;
+      ELSE
+        INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+          VALUES ('staging', line.id, 'collectors', cnt, ref_record);
+    END CASE;
   END LOOP;
-  IF merge_status ='' THEN 
+  IF merge_status = 1 THEN 
     UPDATE staging SET status = delete(status,'collectors') where id=line.id;
-  ELSE 
-    UPDATE staging SET status = (status || ('collectors' => merge_status)) where id= line.id;
+  ELSE
+    UPDATE staging SET status = (status || ('collectors' => 'not_found')) where id= line.id;  
   END IF;
 
-/*****
-* DONATORS
-*/
+  /*****
+  * DONATORS
+  *****/
 
   cnt := -1;
+  merge_status :=1;
   FOR p_name in select item from unnest(line.donators) as item
   LOOP
-    result_nbr := 0;
     cnt := cnt + 1;
     IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'donators' AND order_by= cnt)  THEN
       continue;
     END IF;
-    
-    FOR ref_record IN SELECT id from people p 
-      WHERE formated_name_indexed like fulltoindex(p_name) || '%' LIMIT 2
-    LOOP
-      result_nbr := result_nbr +1;
-      
-    END LOOP;
 
-    IF result_nbr = 1 THEN -- It's Ok!
-      INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-        VALUES ('staging', line.id, 'donators', cnt, ref_record);
-      continue;
-    END IF;
-
-    IF result_nbr >= 2 THEN
-      IF merge_status = '' THEN 
-        merge_status :='too_much';
-      END IF;
-      continue;
-    END IF;
-    IF result_nbr = 0 THEN
-      IF merge_status = '' THEN 
-        merge_status :='not_found';
-      END IF;
-      continue;
-    END IF;
-
+    SELECT fct_look_for_people(p_name) into ref_record;
+    CASE ref_record
+      WHEN -1 THEN merge_status := -1 ;
+      WHEN 0 THEN merge_status := 0;
+      ELSE
+        INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+          VALUES ('staging', line.id, 'donators', cnt, ref_record);
+    END CASE;
   END LOOP;
-  IF merge_status ='' THEN 
+  IF merge_status = 1 THEN 
     UPDATE staging SET status = delete(status,'donators') where id=line.id;
-  ELSE 
-    UPDATE staging SET status = (status || ('donators' => merge_status)) where id= line.id;
+  ELSE
+    UPDATE staging SET status = (status || ('donators' => 'not_found')) where id= line.id;  
   END IF;
 
 /****
 IDENTIFIERS
 ******/
-
+  merge_status :=1;
   FOR ident_line in select * from identifications where referenced_relation ='staging' AND  record_id = line.id
   LOOP
     cnt := -1;
     FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ',') as item
     LOOP
-      result_nbr := 0;
       cnt := cnt + 1;
-      IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='identifications' AND  record_id = ident_line.id AND order_by= cnt)  THEN
-        continue;
-      END IF;
-      
-      FOR ref_record IN SELECT id from people p 
-        WHERE formated_name_indexed like fulltoindex(p_name) || '%' LIMIT 2
-      LOOP
-        result_nbr := result_nbr +1;
-        
-      END LOOP;
 
-      IF result_nbr = 1 THEN -- It's Ok!
-        INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-          VALUES ('identifications', ident_line.id, 'identifier', cnt, ref_record);
+      IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='identifications' AND  record_id = line.id AND order_by= cnt)  THEN
         continue;
       END IF;
 
-      IF result_nbr >= 2 THEN
-        IF merge_status = '' THEN 
-          merge_status :='too_much';
-        END IF;
-        continue;
-      END IF;
-      IF result_nbr = 0 THEN
-        IF merge_status = '' THEN 
-          merge_status :='not_found';
-        END IF;
-        continue;
-      END IF;
-
+      SELECT fct_look_for_people(p_name) into ref_record;
+      CASE ref_record
+        WHEN -1 THEN merge_status := -1 ;
+        WHEN 0 THEN merge_status := 0;
+        ELSE
+          INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+            VALUES ('identifications', line.id, 'identifier', cnt, ref_record);
+      END CASE;
     END LOOP;
   END LOOP;
-  IF merge_status ='' THEN 
-    UPDATE staging SET status = delete(status,'identifiers') where id=line.id;
-  ELSE 
-    UPDATE staging SET status = (status || ('identifiers' => merge_status)) where id= line.id;
-  END IF;
 
+  IF merge_status = 1 THEN 
+    UPDATE staging SET status = delete(status,'identifiers') where id=line.id;
+  ELSE
+    UPDATE staging SET status = (status || ('identifiers' => 'not_found')) where id= line.id;  
+  END IF;
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
@@ -4057,11 +4029,17 @@ DECLARE
 BEGIN
   FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id where import_ref = req_import_ref and status is null or status = ''::hstore  and parent_ref is null
   LOOP
+    /************
+    *
+    *  DON'T FORGET TO MAKE A CHECK !
+    *
+     ***/
     IF exists(SELECT * from staging where path like '/' || line.id || '/%' and status is not null or status != ''::hstore) THEN
       --If line has childer with error, don't try to import it
       continue;
     END IF;
     BEGIN
+      
       --Import Specimen
       rec_id := nextval('specimens_id_seq');
       INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,

@@ -94,7 +94,7 @@ select is(null, (select ig_ref from staging where id = 3)); /* Null or 1459 ?*/
 
 select diag('Test of Collectors');
 update people set title = 'Mr' where id = 2;
-update staging set collectors = '{Hello World,Duchesne Paul Andre}'::text[] where id =  3;
+update staging set collectors = '{Hello World,Paul Andre Duchesne}'::text[] where id =  3;
 select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));
 select is(1, (select count(*)::int from catalogue_people where record_id = 3 and referenced_relation='staging')); 
 
