@@ -3995,7 +3995,7 @@ IDENTIFIERS
   FOR ident_line in select * from identifications where referenced_relation ='staging' AND  record_id = line.id
   LOOP
     cnt := -1;
-    FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ';') as item
+    FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ',') as item
     LOOP
       result_nbr := 0;
       cnt := cnt + 1;
