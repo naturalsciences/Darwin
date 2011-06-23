@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(35);
+SELECT plan(36);
 
 select diag('Test of staging check without levels');
 
@@ -106,9 +106,15 @@ select is(2, (select count(*)::int from catalogue_people where record_id = 3 and
 select is(1,(select order_by from catalogue_people where record_id = 3 and referenced_relation='staging' and people_ref = 2));
 select is(0,(select order_by from catalogue_people where record_id = 3 and referenced_relation='staging' and people_ref = 1));
 
+select diag('Test of Import');
+
 update staging set to_import = true;
+update staging set level='individual', parent_ref=4 where id =  1;
+-- select id,path,* from staging;
 
 select is(true, (select fct_importer_dna(1)));
+select is(1, (select count(*)::integer from specimen_individuals));
+-- select * from specimen_individuals;
 
 SELECT * FROM finish();
 

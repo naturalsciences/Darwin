@@ -4021,7 +4021,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_importer_dna(req_import_ref integer)  RETURNS boolean
 AS $$
 DECLARE
-  prev_levels hstore;
+  prev_levels hstore default '';
   rec_id integer;
   line RECORD;
   s_line RECORD;
@@ -4035,13 +4035,12 @@ BEGIN
     *  DON'T FORGET TO MAKE A CHECK !
     *
      ***/
-    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and status is not null or status != ''::hstore or to_import = false) THEN
+    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and COALESCE(status,status,''::hstore) != ''::hstore or to_import = false) THEN
       --If line has childer with error, don't try to import it
       continue;
     END IF;
 
     BEGIN
-      
       --Import Specimen
       rec_id := nextval('specimens_id_seq');
       INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
@@ -4052,7 +4051,7 @@ BEGIN
         line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
         COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
       );
-      --UPDATE template_table_record_ref SET referenced_relation ='specimens' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
+      UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
       prev_levels := prev_levels || ('specimen' => rec_id::text);
 
       --Import lower levels
@@ -4062,12 +4061,16 @@ BEGIN
           rec_id := nextval('specimen_individuals_id_seq');
           INSERT INTO specimen_individuals (id, specimen_ref, type, sex, stage, state, social_status, rock_form, specimen_individuals_count_min, specimen_individuals_count_max)
           VALUES (
-            rec_id,prev_levels->specimen,
-            s_line.individual_type, s_line.individual_sex, s_line.individual_state, s_line.individual_stage, s_line.individual_social_status, s_line.individual_rock_form,
-            s_line.individual_count_min, s_line.individual_count_max
+            rec_id,(prev_levels->'specimen')::integer, COALESCE(s_line.individual_type,s_line.individual_type,'specimen'), 
+            COALESCE(s_line.individual_sex,s_line.individual_sex,'undefined'), COALESCE( s_line.individual_state, s_line.individual_state,'not applicable'),
+            COALESCE(s_line.individual_stage,s_line.individual_stage,'undefined'), COALESCE(s_line.individual_social_status,s_line.individual_social_status,'not applicable'),
+            COALESCE(s_line.individual_rock_form,s_line.individual_rock_form,'not applicable'),
+            COALESCE(s_line.individual_count_min,s_line.individual_count_min,'1'), COALESCE(s_line.individual_count_max,s_line.individual_count_max,'1')
           );
-          UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' and record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
-          prev_levels := (prev_levels || ('individual' => rec_id));
+          UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
+          prev_levels := (prev_levels || ('individual' => rec_id::text));
+
+
         ELSIF lower(s_line.level) in ('specimen part','tissue part','dna part') THEN /*** @TODO:CHECK THIS!!**/
           rec_id := nextval('specimen_parts_id_seq');
           IF  lower(s_line.level) = 'specimen part' THEN
@@ -4082,12 +4085,12 @@ BEGIN
             container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
               specimen_part_count_min, specimen_part_count_max)
           VALUES (
-            rec_id, old_level, prev_levels->individual,
+            rec_id, old_level, prev_levels->'individual',
             s_line.specimen_part, s_line.complete, s_line.building, s_line.floor, s_line.room, s_line.row, s_line.shelf,
             s_line.container, s_line.sub_container, s_line.container_type, s_line.sub_container_type, s_line.container_storage, s_line.sub_container_storage,
             s_line.surnumerary, s_line.specimen_status,s_line.part_count_min, s_line.part_count_max
           );
-          UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' and record_id = spec_id where referenced_relation ='staging' and record_id = s_line.id;
+          UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = spec_id where referenced_relation ='staging' and record_id = s_line.id;
           prev_levels := (prev_levels || (s_line.level => rec_id));
 
         END IF;
@@ -4096,7 +4099,8 @@ BEGIN
 
       DELETE from staging where path like '/' || line.id || '/%' OR  id = line.id;
     EXCEPTION WHEN unique_violation THEN
-      UPDATE staging SET status=(status || ('row' => 'duplicate')) , to_import=false WHERE id = prev_levels->specimen;
+      RAISE info 'Error';
+      UPDATE staging SET status=(status || ('row' => 'duplicate')) , to_import=false WHERE id = prev_levels->'specimen';
       UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
     END;
   END LOOP;
