@@ -15,6 +15,7 @@ class Staging extends BaseStaging
   private static $errors = array('not_found' => 'This %field% was not found in our database, please choose an existing one or remove it',
                                  'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
             	                   'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
+            	                   'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one'
                                 );
 	                   
   public function getGtu()
@@ -124,13 +125,32 @@ class Staging extends BaseStaging
     $fieldsToShow = array() ;
     $hstore = $this->_get('status') ;
     eval("\$status = array({$hstore});");     
+    return $status ;
+  }
+  
+  public function setStatus($value)
+  {
+    $status = '' ;
+    foreach($value as $field => $error)
+    {
+      if($error != 'done') $status .= $field."=>".$error.',' ;
+    }
+    $this->_set('status', substr($status,0,strlen($status)-1));
+  }  
+  
+  // if tosave is set so it the save of the stagingForm wicht this function, I only return the list a fields in error
+  public function getFields($tosave = null)
+  {
+    $status = $this->getStatus() ;
     if(!$status) return null ;
-    
     foreach($status as $key => $value)
-      $fieldsToShow[$key] = array(//'field' => $this->fieldName[$key],
+    {
+      if($tosave) $fieldsToShow[$key] = $value ;
+      else  $fieldsToShow[$key] = array(//'field' => $this->fieldName[$key],
                                     'embedded_field' => $this->getFieldsToUseFor($key).'_'.$value, // to TEST 
                                     'display_error' => self::$errors[$value], 
                                     'fields' => $this->getFieldsToUseFor($key));
+    }                                   
     return($fieldsToShow) ;
   }
   

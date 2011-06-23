@@ -6,9 +6,10 @@ class PeopleInErrorForm extends BaseCataloguePeopleForm
   public function configure()
   {
     $name = isset($this->options['default_name'])?$this->options['default_name']:'';  
+    $link = isset($this->options['donator'])?'people/searchBoth':'people/choose?only_role='.$this->options['only_role'].'&name='.$name;  
     $this->widgetSchema['people_ref'] = new widgetFormButtonRef(array(
        'model' => 'People',
-       'link_url' => 'people/choose?only_role='.$this->options['only_role'].'&name='.$name,
+       'link_url' => $link,
        'method' => 'getFormatedName',
        'default_name' => $name,
        'box_title' => $this->getI18N()->__('Choose People'),
@@ -20,7 +21,6 @@ class PeopleInErrorForm extends BaseCataloguePeopleForm
     );
     $this->validatorSchema['people_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
     $this->widgetSchema['people_type'] = new sfWidgetFormInputHidden();
-    $only_role = People::getCorrespondingType($this->getObject()->getPeopleType()); 
     $this->widgetSchema['referenced_relation'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['referenced_relation'] = new sfValidatorString();
     $this->widgetSchema['record_id'] = new sfWidgetFormInputHidden();    

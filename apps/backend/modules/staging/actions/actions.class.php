@@ -174,7 +174,7 @@ class stagingActions extends DarwinActions
   {  
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $staging = Doctrine::getTable('Staging')->findOneById($request->getParameter('id'));
-    $this->fields = $staging->getStatus() ;
+    $this->fields = $staging->getFields() ;
     $form_fields = array() ;   
     if($this->fields)
     {
@@ -188,7 +188,7 @@ class stagingActions extends DarwinActions
   {
     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction(); 
     $staging = Doctrine::getTable('Staging')->findOneById($request->getParameter('id'));
-    $this->fields = $staging->getStatus() ;
+    $this->fields = $staging->getFields() ;
     $form_fields = array() ;   
     if($this->fields)
     {

@@ -213,7 +213,7 @@ class StagingForm extends BaseStagingForm
       {       
         $val = new CataloguePeople();
         $val->fromArray(array('people_type' => 'donator','referenced_relation' => 'staging', 'order_by' => $key, 'record_id' => $this->getObject()->getId()));
-        $form = new PeopleInErrorForm($val, array('default_name'=> $vals, 'only_role' => 0));
+        $form = new PeopleInErrorForm($val, array('default_name'=> $vals, 'only_role' => 0, 'donator'=> true));
         $this->embeddedForms['WrongDonators']->embedForm($key, $form);      
       } 
       $this->embedForm('WrongDonators', $this->embeddedForms['WrongDonators']); 
@@ -263,7 +263,7 @@ class StagingForm extends BaseStagingForm
     {       
       $val = new CataloguePeople();
       $val->fromArray($vals);
-      $form = new PeopleInErrorForm($val,array('only_role' => 0));
+      $form = new PeopleInErrorForm($val,array('only_role' => 0, 'donator'=> true));
       $this->embeddedForms['WrongDonators']->embedForm($key, $form);
     }
     //Re-embedding the container
@@ -296,33 +296,59 @@ class StagingForm extends BaseStagingForm
   
   public function save($con = null, $forms = null) 
   {
-    $value = $this->getValue('WrongCollectors');
-    if($value) 
+    $status = $this->getObject()->getFields(true) ;
+    if($this->getValue('taxon_ref') != 0) $status['taxon'] = 'done' ;
+    else unset($this['taxon_ref']) ;
+    if($this->getValue('chrono_ref') != 0) $status['chrono'] = 'done' ;    
+    else unset($this['chrono_ref']) ;    
+    if($this->getValue('mineral_ref') != 0) $status['mineral'] = 'done' ;    
+    else unset($this['mineral_ref']) ;    
+    if($this->getValue('litho_ref') != 0) $status['litho'] = 'done' ;    
+    else unset($this['litho_ref']) ;    
+    if($this->getValue('lithology_ref') != 0) $status['lithology'] = 'done' ;    
+    else unset($this['lithology_ref']) ;    
+    if($this->getValue('igs_ref') != 0) $status['igs'] = 'done' ;    
+    else unset($this['igs_ref']) ;   
+    if($value = $this->getValue('WrongCollectors')) 
     {
       unset($this['collectors']) ; 
+      $status['collectors'] = 'done' ;
       foreach($this->embeddedForms['WrongCollectors']->getEmbeddedForms() as $name => $form)
       {
-        if (!isset($value[$name]['people_ref'])) unset($this->embeddedForms['WrongCollectors'][$name]);
+        if (!isset($value[$name]['people_ref'])) 
+        {
+          unset($this->embeddedForms['WrongCollectors'][$name]);
+          $status['collectors'] = 'not_found' ;          
+        }
       }
     }
-    $value = $this->getValue('WrongDonators');
-    if($value) 
+    if($value = $this->getValue('WrongDonators')) 
     {
-      unset($this['donators']) ; 
+      unset($this['donators']) ;
+      $status['donators'] = 'done' ;  
       foreach($this->embeddedForms['WrongDonators']->getEmbeddedForms() as $name => $form)
       {
-        if (!isset($value[$name]['people_ref'])) unset($this->embeddedForms['WrongDonators'][$name]);
+        if (!isset($value[$name]['people_ref']))
+        {
+          $status['donators'] = 'not_found' ;
+          unset($this->embeddedForms['WrongDonators'][$name]);
+        }
       }
     }
-    $value = $this->getValue('WrongIdentifiers');
-    if($value) 
+    if($value = $this->getValue('WrongIdentifiers')) 
     {
       unset($this['identifers']) ; 
+      $status['identifers'] = 'done' ;      
       foreach($this->embeddedForms['WrongIdentifiers']->getEmbeddedForms() as $name => $form)
       {
-        if (!isset($value[$name]['people_ref'])) unset($this->embeddedForms['WrongIdentifiers'][$name]);
+        if (!isset($value[$name]['people_ref']))
+        {
+          $status['identifers'] = 'not_found' ;
+          unset($this->embeddedForms['WrongIdentifiers'][$name]);
+        }
       }
-    }        
+    }    
+    $this->getObject()->setStatus($status) ;      
     return parent::save($con, $forms);
   }
 }
