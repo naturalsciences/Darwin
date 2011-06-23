@@ -3951,7 +3951,7 @@ BEGIN
   IF merge_status = 1 THEN 
     UPDATE staging SET status = delete(status,'collectors') where id=line.id;
   ELSE
-    UPDATE staging SET status = (status || ('collectors' => 'not_found')) where id= line.id;  
+    UPDATE staging SET status = (status || ('collectors' => 'people')) where id= line.id;  
   END IF;
 
   /*****
@@ -3979,7 +3979,7 @@ BEGIN
   IF merge_status = 1 THEN 
     UPDATE staging SET status = delete(status,'donators') where id=line.id;
   ELSE
-    UPDATE staging SET status = (status || ('donators' => 'not_found')) where id= line.id;  
+    UPDATE staging SET status = (status || ('donators' => 'people')) where id= line.id;  
   END IF;
 
 /****
@@ -4011,7 +4011,7 @@ IDENTIFIERS
   IF merge_status = 1 THEN 
     UPDATE staging SET status = delete(status,'identifiers') where id=line.id;
   ELSE
-    UPDATE staging SET status = (status || ('identifiers' => 'not_found')) where id= line.id;  
+    UPDATE staging SET status = (status || ('identifiers' => 'people')) where id= line.id;  
   END IF;
   RETURN true;
 END;
