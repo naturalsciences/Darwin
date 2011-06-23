@@ -4085,13 +4085,17 @@ BEGIN
             container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
               specimen_part_count_min, specimen_part_count_max)
           VALUES (
-            rec_id, old_level, prev_levels->'individual',
-            s_line.specimen_part, s_line.complete, s_line.building, s_line.floor, s_line.room, s_line.row, s_line.shelf,
-            s_line.container, s_line.sub_container, s_line.container_type, s_line.sub_container_type, s_line.container_storage, s_line.sub_container_storage,
-            s_line.surnumerary, s_line.specimen_status,s_line.part_count_min, s_line.part_count_max
+            rec_id, old_level, (prev_levels->'individual')::integer,
+            COALESCE(s_line.part,s_line.part,'specimen'), COALESCE(s_line.complete,s_line.complete,true),
+            s_line.building ,s_line.floor, s_line.room, s_line.row, s_line.shelf,
+            s_line.container, s_line.sub_container,
+            COALESCE(s_line.container_type,s_line.container_type,'container'),  COALESCE(s_line.sub_container_type,s_line.sub_container_type, 'container'), 
+            COALESCE(s_line.container_storage,s_line.container_storage,'dry'),  COALESCE(s_line.sub_container_storage,s_line.sub_container_storage,'dry'),
+            COALESCE(s_line.surnumerary,s_line.surnumerary,false),  COALESCE(s_line.specimen_status,s_line.specimen_status,'good state'), 
+            COALESCE(s_line.part_count_min,s_line.part_count_min,1),  COALESCE(s_line.part_count_max,s_line.part_count_max,2)
           );
-          UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = spec_id where referenced_relation ='staging' and record_id = s_line.id;
-          prev_levels := (prev_levels || (s_line.level => rec_id));
+          UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
+          prev_levels := (prev_levels || (s_line.level => rec_id::text));
 
         END IF;
 

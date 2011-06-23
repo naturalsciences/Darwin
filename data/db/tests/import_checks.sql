@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(36);
+SELECT plan(37);
 
 select diag('Test of staging check without levels');
 
@@ -108,13 +108,14 @@ select is(0,(select order_by from catalogue_people where record_id = 3 and refer
 
 select diag('Test of Import');
 
-update staging set to_import = true;
 update staging set level='individual', parent_ref=4 where id =  1;
--- select id,path,* from staging;
+insert into staging (id,import_ref,parent_ref, "level",room) VALUES (6,1,1,'specimen part',12);
+
+update staging set to_import = true;
 
 select is(true, (select fct_importer_dna(1)));
 select is(1, (select count(*)::integer from specimen_individuals));
--- select * from specimen_individuals;
+select is(1, (select count(*)::integer from specimen_parts));
 
 SELECT * FROM finish();
 
