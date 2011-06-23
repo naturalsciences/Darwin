@@ -403,19 +403,21 @@
   <xs:element name="taxon">
     <xs:complexType>
       <xs:sequence>
-        <xs:group ref="classification_commons" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="extinct" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="phylum" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="class" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="order" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="family" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="tribe" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="genus" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="sub_genus" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="super_species" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="species" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="sub_species" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="variety" type="xs:NCName" minOccurs="0" maxOccurs="1"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:group ref="classification_commons" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="extinct" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="phylum" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="class" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="order" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="family" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="tribe" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="genus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="sub_genus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="super_species" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="species" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="sub_species" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="variety" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:choice>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
