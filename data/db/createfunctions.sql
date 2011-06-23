@@ -4027,30 +4027,33 @@ DECLARE
   s_line RECORD;
   old_level int;
 BEGIN
-  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id where import_ref = req_import_ref and status is null or status = ''::hstore  and parent_ref is null
+  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id 
+      WHERE import_ref = req_import_ref AND to_import=true and status is null or status = ''::hstore  and parent_ref is null
   LOOP
     /************
     *
     *  DON'T FORGET TO MAKE A CHECK !
     *
      ***/
-    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and status is not null or status != ''::hstore) THEN
+    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and status is not null or status != ''::hstore or to_import = false) THEN
       --If line has childer with error, don't try to import it
       continue;
     END IF;
+
     BEGIN
       
       --Import Specimen
       rec_id := nextval('specimens_id_seq');
       INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
           host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
-      VALUES (rec_id, line.category, line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
+      VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
         COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
         COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
-        line.host_specimen_ref, line.host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref
+        line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
+        COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
       );
-      UPDATE template_table_record_ref SET referenced_relation ='specimen' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
-      prev_levels := (prev_levels || ('specimen' => rec_id));
+      --UPDATE template_table_record_ref SET referenced_relation ='specimens' and record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
+      prev_levels := prev_levels || ('specimen' => rec_id::text);
 
       --Import lower levels
       FOR s_line IN  SELECT * from staging s where path like '/' || line.id || '/%' ORDER BY path || s.id
@@ -4092,8 +4095,9 @@ BEGIN
       END LOOP;
 
       DELETE from staging where path like '/' || line.id || '/%' OR  id = line.id;
-    EXCEPTION WHEN RAISE_EXCEPTION THEN
-    
+    EXCEPTION WHEN unique_violation THEN
+      UPDATE staging SET status=(status || ('row' => 'duplicate')) , to_import=false WHERE id = prev_levels->specimen;
+      UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
     END;
   END LOOP;
   RETURN true;
