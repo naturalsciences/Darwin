@@ -1957,7 +1957,7 @@ create table staging
     parent_ref integer,
     path varchar,
     level varchar not null,
---     spec_ref integer,
+    spec_ref integer,
     category varchar,
     expedition_ref integer,
     expedition_name varchar,

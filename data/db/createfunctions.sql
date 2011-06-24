@@ -4049,7 +4049,6 @@ BEGIN
 
     BEGIN
       --Import Specimen
-      rec_id := nextval('specimens_id_seq');
 
       -- I know it's dumb but....
       select * into staging_line from staging where id = line.id;
@@ -4057,18 +4056,48 @@ BEGIN
       PERFORM fct_imp_checker_expeditions(staging_line, true);
       PERFORM fct_imp_checker_gtu(staging_line, true);
 
+      BEGIN
+	IF line.spec_ref is NULL THEN
+	  rec_id := nextval('specimens_id_seq');
+	  INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
+	      host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
+	  VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
+	    COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
+	    COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
+	    line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
+	    COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
+	  );
+	  UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
+	ELSE
+	  rec_id = line.spec_ref;
+	END IF;
 
-      INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
-          host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
-      VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
-        COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
-        COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
-        line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
-        COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
-      );
-      UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
-      prev_levels := prev_levels || ('specimen' => rec_id::text);
+	prev_levels := prev_levels || ('specimen' => rec_id::text);
 
+      EXCEPTION WHEN unique_violation THEN
+	SELECT id INTO rec_id FROM specimens WHERE
+	  category = COALESCE(line.category,line.category,'physical')
+	  AND collection_ref=line.collection_ref
+	  AND expedition_ref= COALESCE(line.expedition_ref,line.expedition_ref,0)
+	  AND gtu_ref= COALESCE(line.gtu_ref,line.gtu_ref,0)
+	  AND taxon_ref= COALESCE(line.taxon_ref,line.taxon_ref,0)
+	  AND litho_ref = COALESCE(line.litho_ref,line.litho_ref,0)
+	  AND chrono_ref = COALESCE(line.chrono_ref,line.chrono_ref,0)
+	  AND lithology_ref = COALESCE(line.lithology_ref,line.lithology_ref,0)
+	  AND mineral_ref = COALESCE(line.mineral_ref,line.mineral_ref,0)
+	  AND host_taxon_ref = COALESCE(line.host_taxon_ref,line.host_taxon_ref,0)
+	  AND host_specimen_ref = line.host_specimen_ref
+	  AND host_relationship = line.host_relationship
+	  AND acquisition_category = COALESCE(line.acquisition_category,line.acquisition_category,'')
+	  AND acquisition_date_mask = COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0)
+	  AND acquisition_date = COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001')
+	  AND station_visible = COALESCE(line.station_visible,line.station_visible,true)
+	  AND ig_ref = line.ig_ref;	
+
+	UPDATE staging SET status=(status || ('duplicate' => rec_id::text)) , to_import=false WHERE id = prev_levels->'specimen';
+	UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
+	CONTINUE;
+    END;
       --Import lower levels
       FOR s_line IN  SELECT * from staging s where path like '/' || line.id || '/%' ORDER BY path || s.id
       LOOP
@@ -4118,8 +4147,8 @@ BEGIN
 
       DELETE from staging where path like '/' || line.id || '/%' OR  id = line.id;
     EXCEPTION WHEN unique_violation THEN
-      RAISE info 'Error';
-      UPDATE staging SET status=(status || ('row' => 'duplicate')) , to_import=false WHERE id = prev_levels->'specimen';
+--       RAISE info 'Error';
+      UPDATE staging SET status=(status || ('duplicate' => '0')) , to_import=false WHERE id = prev_levels->'specimen';
       UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
     END;
   END LOOP;
