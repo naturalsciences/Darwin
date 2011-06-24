@@ -3734,7 +3734,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION fct_imp_checker_catalogues(line staging)  RETURNS boolean
+CREATE OR REPLACE FUNCTION fct_imp_checker_manager(line staging)  RETURNS boolean
 AS $$
 BEGIN
   IF line.taxon_name IS NOT NULL AND line.taxon_name is distinct from '' AND line.taxon_ref is null THEN
@@ -3756,6 +3756,12 @@ BEGIN
   IF line.litho_name IS NOT NULL AND line.litho_name is distinct from '' AND line.litho_ref is null THEN
     PERFORM fct_imp_checker_catalogue(line,'lithostratigraphy','litho');
   END IF;
+
+
+
+  PERFORM fct_imp_checker_igs(line);
+  PERFORM fct_imp_checker_expeditions(line);
+  PERFORM fct_imp_checker_gtu(line);
   
   RETURN true;
 END;
@@ -3804,7 +3810,7 @@ AS $$
 DECLARE
   ref_rec integer :=0;
 BEGIN
-  IF line.ig_num is not distinct from '' OR line.ig_ref is not null THEN
+  IF line.ig_num is null OR  line.ig_num = '' OR line.ig_ref is not null THEN
     RETURN true;
   END IF;
 
@@ -3832,7 +3838,7 @@ AS $$
 DECLARE
   ref_rec integer :=0;
 BEGIN
-  IF line.expedition_name is not distinct from '' OR line.expedition_ref is not null THEN
+  IF line.expedition_name is null OR line.expedition_name ='' OR line.expedition_ref is not null THEN
     RETURN true;
   END IF;
 
@@ -3866,7 +3872,7 @@ AS $$
 DECLARE
   ref_rec integer :=0;
 BEGIN
-  IF line.expedition_name is not distinct from '' OR line.expedition_ref is not null THEN
+  IF line.gtu_code is null OR line.gtu_code  ='' OR line.gtu_ref is not null THEN
     RETURN true;
   END IF;
 
@@ -4025,6 +4031,7 @@ DECLARE
   rec_id integer;
   line RECORD;
   s_line RECORD;
+  staging_line staging;
   old_level int;
 BEGIN
   FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id 
@@ -4043,6 +4050,14 @@ BEGIN
     BEGIN
       --Import Specimen
       rec_id := nextval('specimens_id_seq');
+
+      -- I know it's dumb but....
+      select * into staging_line from staging where id = line.id;
+      PERFORM fct_imp_checker_igs(staging_line, true);
+      PERFORM fct_imp_checker_expeditions(staging_line, true);
+      PERFORM fct_imp_checker_gtu(staging_line, true);
+
+
       INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
           host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
       VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
