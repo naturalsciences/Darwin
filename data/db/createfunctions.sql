@@ -760,15 +760,10 @@ END;$$;
 /**
  Set user id 
 */
-CREATE OR REPLACE FUNCTION fct_set_user(userid integer) RETURNS boolean
-language plpgsql
-AS
+CREATE OR REPLACE FUNCTION fct_set_user(userid integer) RETURNS void
+language SQL AS
 $$
-BEGIN
-    PERFORM set_config('darwin.userid', userid::varchar, false);
-    update users set last_seen = now() where id = userid;
-    RETURN true;
-END;
+  update users set last_seen = now() where id = $1 and  set_config('darwin.userid', $1::varchar, false) is distinct from 'noop';
 $$;
 
 CREATE OR REPLACE FUNCTION fct_trk_log_table() RETURNS TRIGGER
@@ -3526,11 +3521,13 @@ BEGIN
       IF ref_field_id is NULL THEN
         RETURN OLD ;
       END IF ;      
-      IF (ref_relation = 'specimens') THEN
+      IF ref_relation = 'specimens' THEN
         field_to_update := 'spec_ident_ids';
-      ELSE
+      ELSIF ref_relation = 'specimen_individuals' THEN
         field_to_update := 'ind_ident_ids';
         ref_field := 'individual_ref' ;
+      ELSE
+        RETURN NEW;
       END IF ;
       EXECUTE 'SELECT true from catalogue_people cp INNER JOIN identifications i ON cp.record_id = i.id 
       AND cp.referenced_relation = ' || quote_literal('identifications') || ' WHERE i.record_id = ' || quote_literal(ref_field_id) || ' AND people_ref = ' ||
@@ -3553,9 +3550,11 @@ BEGIN
       SELECT record_id,referenced_relation INTO ref_field_id, ref_relation FROM identifications where id=NEW.record_id ;    
       IF (ref_relation = 'specimens') THEN
         field_to_update := 'spec_ident_ids';
+      ELSIF ref_relation = 'specimen_individuals' THEN
+        field_to_update := 'ind_ident_ids';
+        ref_field := 'individual_ref' ;
       ELSE
-        field_to_update := 'ind_ident_ids';   
-        ref_field := 'individual_ref';             
+        RETURN NEW;    
       END IF ;
     ELSE
       RETURN NEW ;      
@@ -3613,3 +3612,546 @@ BEGIN
   RETURN OLD;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION tableoid(tablename TEXT) RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT oid FROM pg_class WHERE relname = tablename);
+END
+$$
+LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER;
+
+
+CREATE OR REPLACE FUNCTION get_import_rows() RETURNS integer AS $$
+DECLARE
+  busy_job_id integer;
+  job record;
+BEGIN
+  -- Iterating over pending imported file list, ordered by creation date and id.
+  FOR job IN SELECT DISTINCT i.* FROM imports i
+LEFT JOIN pg_locks pgl
+       ON pgl.classid = tableoid('imports')
+      AND pgl.objid = i.id
+      AND pgl.pid <> pg_backend_pid()
+    WHERE pgl.objid IS NULL
+      AND i.state = 'imported'
+ ORDER BY i.created_at asc, i.id LOOP
+    -- Trying to lock the job:
+    IF pg_try_advisory_lock(tableoid('imports'), job.id) THEN
+      -- Need to recheck the unlocked state: race conditions are still possible.
+      -- For example, job could be requested, locked, processed, finished and unlocked
+      -- while this function iterates over "then-unlocked" jobs list.
+      UPDATE imports set state='processing' where id=job.id;
+      RETURN job.id;
+    END IF;
+  END LOOP;
+  RETURN NULL;
+END
+$$
+LANGUAGE plpgsql SECURITY DEFINER;
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_catalogue(line staging, catalogue_table text, prefix text)  RETURNS boolean
+AS $$
+DECLARE
+  result_nbr integer :=0;
+  ref_record RECORD;
+  rec_id integer := null;
+  line_store hstore;
+  field_name text;
+  field_level_name text;
+  test text;
+  ref refcursor;
+BEGIN
+    line_store := hstore(line);
+    field_name := prefix || '_name';
+    field_name := line_store->field_name;
+    field_level_name := prefix || '_level_name';
+    field_level_name := coalesce(line_store->field_level_name,line_store->field_level_name,'');
+
+    OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
+    INNER JOIN catalogue_levels c on t.level_ref = c.id 
+    WHERE name = ' || quote_literal( field_name) || ' AND  level_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_name ELSE ' || quote_literal(field_level_name) || ' END 
+    LIMIT 2';
+    LOOP
+      FETCH ref INTO ref_record;
+      IF  NOT FOUND THEN
+        EXIT;  -- exit loop
+      END IF;
+
+      rec_id := ref_record.id;
+      result_nbr := result_nbr +1;
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      EXECUTE 'UPDATE staging SET status = delete(status, ' || quote_literal(prefix) ||'), ' || prefix|| '_ref = ' || rec_id || ' where id=' || line.id; 
+      PERFORM fct_imp_checker_catalogues_parents(line,rec_id, catalogue_table, prefix);
+
+      RETURN true;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      UPDATE staging SET status = (status || (prefix => 'too_much')) where id= line.id;
+      RETURN true;
+    END IF;
+
+    CLOSE ref;
+
+  /*** Then CHECK fuzzy name ***/
+
+  result_nbr := 0;
+    OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
+    INNER JOIN catalogue_levels c on t.level_ref = c.id 
+    WHERE name_order_by like fullToIndex(' || quote_literal( field_name) || ') || ''%'' AND  level_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_name ELSE ' || quote_literal(field_level_name) || ' END 
+    LIMIT 2';
+    LOOP
+      FETCH ref INTO ref_record;
+      IF  NOT FOUND THEN
+        EXIT;  -- exit loop
+      END IF;
+
+      rec_id := ref_record.id;
+      result_nbr := result_nbr +1;
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      EXECUTE 'UPDATE staging SET status = delete(status, ' || quote_literal(prefix) ||'), ' || prefix|| '_ref = ' || rec_id || ' where id=' || line.id; 
+      PERFORM fct_imp_checker_catalogues_parents(line,rec_id, catalogue_table, prefix);
+      RETURN true;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      UPDATE staging SET status = (status || (prefix => 'too_much')) where id= line.id;
+      RETURN true;
+    END IF;
+
+    IF result_nbr = 0 THEN
+      UPDATE staging SET status = (status || (prefix => 'not_found')) where id=line.id;
+      RETURN true;
+    END IF;
+
+    CLOSE ref;
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_manager(line staging)  RETURNS boolean
+AS $$
+BEGIN
+  IF line.taxon_name IS NOT NULL AND line.taxon_name is distinct from '' AND line.taxon_ref is null THEN
+    PERFORM fct_imp_checker_catalogue(line,'taxonomy','taxon');
+  END IF;
+  
+  IF line.chrono_name IS NOT NULL AND line.chrono_name is not null AND line.chrono_ref is null THEN
+    PERFORM fct_imp_checker_catalogue(line,'chronostratigraphy','chrono');
+  END IF;
+  
+  IF line.lithology_name IS NOT NULL AND line.lithology_name is distinct from '' AND line.lithology_ref is null THEN
+    PERFORM fct_imp_checker_catalogue(line,'lithology','lithology');
+  END IF;
+
+  IF line.mineral_name IS NOT NULL AND line.mineral_name is distinct from '' AND line.mineral_ref is null THEN
+    PERFORM fct_imp_checker_catalogue(line,'mineralogy','mineral');
+  END IF;
+
+  IF line.litho_name IS NOT NULL AND line.litho_name is distinct from '' AND line.litho_ref is null THEN
+    PERFORM fct_imp_checker_catalogue(line,'lithostratigraphy','litho');
+  END IF;
+
+
+
+  PERFORM fct_imp_checker_igs(line);
+  PERFORM fct_imp_checker_expeditions(line);
+  PERFORM fct_imp_checker_gtu(line);
+  
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_catalogues_parents(line staging, rec_id integer, catalogue_table text, prefix text) RETURNS boolean
+AS $$
+DECLARE
+  result_nbr integer :=0;
+  row_record record;
+  lvl_name varchar;
+  lvl_value varchar;
+  rec_parents hstore;
+  line_store hstore;
+  field_name text;
+BEGIN
+  line_store := hstore(line);
+  field_name := prefix || '_parents';
+  rec_parents := line_store->field_name;
+
+  IF rec_parents is null OR rec_parents = ''::hstore OR rec_id is null THEN
+    RETURN true;
+  END IF;
+  EXECUTE 'select * from '|| quote_ident(catalogue_table) || ' where id = ' || rec_id into row_record ;
+
+  FOR lvl_name in SELECT s FROM fct_explode_array(akeys(rec_parents)) as s
+  LOOP 
+    lvl_value := rec_parents->lvl_name;
+    EXECUTE 'SELECT count(*) from ' || quote_ident(catalogue_table) || ' t
+      INNER JOIN catalogue_levels c on t.level_ref = c.id
+       WHERE level_name = ' || quote_literal(lvl_name) || ' AND 
+        name_order_by like fullToIndex( ' || quote_literal(lvl_value) || '  ) || ''%''
+        AND ' || quote_literal(row_record.path) || 'like t.path || t.id || ''/%'' ' INTO result_nbr;
+    IF result_nbr = 0 THEN
+      EXECUTE 'UPDATE staging SET status = (status || ('|| quote_literal(prefix) || ' => ''bad_hierarchy'')), ' || prefix || '_ref = null where id=' || line.id;
+      RETURN TRUE;
+    END IF;
+  END LOOP;
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_igs(line staging, import boolean default false)  RETURNS boolean
+AS $$
+DECLARE
+  ref_rec integer :=0;
+BEGIN
+  IF line.ig_num is null OR  line.ig_num = '' OR line.ig_ref is not null THEN
+    RETURN true;
+  END IF;
+
+  select id into ref_rec from igs where ig_num = line.ig_num  and ig_date = COALESCE(line.ig_date,line.ig_date,'01/01/0001');
+  IF NOT FOUND THEN
+    IF import THEN
+        INSERT INTO igs (ig_num, ig_date_mask, ig_date)
+        VALUES (line.ig_num,  COALESCE(line.ig_date_mask,line.ig_date_mask,'0'), COALESCE(line.ig_date,line.ig_date,'01/01/0001'))
+        RETURNING id INTO ref_rec;
+    ELSE
+    --UPDATE staging SET status = (status || ('igs' => 'not_found')), ig_ref = null where id=line.id;
+      RETURN TRUE;
+    END IF;
+  END IF;
+
+  UPDATE staging SET status = delete(status,'igs'), ig_ref = ref_rec where id=line.id;
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_expeditions(line staging, import boolean default false)  RETURNS boolean
+AS $$
+DECLARE
+  ref_rec integer :=0;
+BEGIN
+  IF line.expedition_name is null OR line.expedition_name ='' OR line.expedition_ref is not null THEN
+    RETURN true;
+  END IF;
+
+  select id into ref_rec from expeditions where name_indexed = fulltoindex(line.expedition_name) and 
+    expedition_from_date = COALESCE(line.expedition_from_date,line.expedition_from_date,'01/01/0001') AND
+    expedition_to_date = COALESCE(line.expedition_to_date,line.expedition_to_date,'31/12/2038');
+  IF NOT FOUND THEN
+      IF import THEN
+        INSERT INTO expeditions (name, expedition_from_date, expedition_to_date, expedition_from_date_mask,expedition_to_date_mask)
+        VALUES (
+          line.expedition_name, COALESCE(line.expedition_from_date,line.expedition_from_date,'01/01/0001'),
+          COALESCE(line.expedition_to_date,line.expedition_to_date,'31/12/2038'), COALESCE(line.expedition_from_date_mask,line.expedition_from_date_mask,0),
+          COALESCE(line.expedition_to_date_mask,line.expedition_to_date_mask,0)
+        )
+        RETURNING id INTO ref_rec;
+      ELSE
+        RETURN TRUE;
+      END IF;
+  END IF;
+
+  UPDATE staging SET status = delete(status,'expedition'), expedition_ref = ref_rec where id=line.id;
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_gtu(line staging, import boolean default false)  RETURNS boolean
+AS $$
+DECLARE
+  ref_rec integer :=0;
+BEGIN
+  IF line.gtu_code is null OR line.gtu_code  ='' OR line.gtu_ref is not null THEN
+    RETURN true;
+  END IF;
+
+  select id into ref_rec from gtu where
+    latitude = line.gtu_latitude AND
+    longitude = line.gtu_latitude AND
+    gtu_from_date = COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001') AND
+    gtu_to_date = COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038');
+  IF NOT FOUND THEN
+      IF import THEN
+        INSERT into gtu
+          (code, gtu_from_date_mask, gtu_from_date,gtu_to_date_mask, gtu_to_date, path, tag_values_indexed, latitude, longitude, lat_long_accuracy, elevation, elevation_accuracy)
+        VALUES
+          (line.gtu_code, line.gtu_from_date_mask, line.gtu_from_date, line.gtu_to_date_mask, line.gtu_to_date, line.gtu_latitude, line.gtu_longitude, line.gtu_lat_long_accuracy, line.gtu_elevation, line.gtu_elevation_accuracy)
+        RETURNING id INTO ref_rec;
+      ELSE
+        RETURN TRUE;
+      END IF;
+  END IF;
+
+  UPDATE staging SET status = delete(status,'gtu'), gtu_ref = ref_rec where id=line.id;
+
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_look_for_people(fullname text) RETURNS integer
+AS $$
+DECLARE
+  ref_record integer :=0;
+  result_nbr integer;
+
+BEGIN
+    result_nbr := 0;
+    FOR ref_record IN SELECT id from people p 
+      WHERE fulltoindex(coalesce(family_name,family_name,'') || coalesce(given_name,given_name,'')) like fulltoindex(fullname) || '%'  
+        OR  fulltoindex(coalesce(given_name,given_name,'') || coalesce(family_name,family_name,'')) like fulltoindex(fullname) || '%' LIMIT 2
+    LOOP
+      result_nbr := result_nbr +1;
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      return ref_record;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      return -1 ;-- To Much
+      continue;
+    END IF;
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_imp_checker_people(line staging) RETURNS boolean
+AS $$
+DECLARE
+  ref_record integer :=0;
+  cnt integer :=-1;
+  p_name text;
+  merge_status integer :=1;
+  ident_line RECORD;
+BEGIN
+
+  FOR p_name in select item from unnest(line.collectors) as item
+  LOOP
+    cnt := cnt + 1;
+    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'collectors' AND order_by= cnt)  THEN
+      continue;
+    END IF;
+    
+    SELECT fct_look_for_people(p_name) into ref_record;
+    CASE ref_record
+      WHEN -1,0 THEN merge_status := -1 ;
+      --WHEN 0 THEN merge_status := 0;
+      ELSE
+        INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+          VALUES ('staging', line.id, 'collectors', cnt, ref_record);
+    END CASE;
+  END LOOP;
+  IF merge_status = 1 THEN 
+    UPDATE staging SET status = delete(status,'collectors') where id=line.id;
+  ELSE
+    UPDATE staging SET status = (status || ('collectors' => 'people')) where id= line.id;  
+  END IF;
+
+  /*****
+  * DONATORS
+  *****/
+
+  cnt := -1;
+  merge_status :=1;
+  FOR p_name in select item from unnest(line.donators) as item
+  LOOP
+    cnt := cnt + 1;
+    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'donators' AND order_by= cnt)  THEN
+      continue;
+    END IF;
+
+    SELECT fct_look_for_people(p_name) into ref_record;
+    CASE ref_record
+      WHEN -1 THEN merge_status := -1 ;
+      WHEN 0 THEN merge_status := 0;
+      ELSE
+        INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+          VALUES ('staging', line.id, 'donators', cnt, ref_record);
+    END CASE;
+  END LOOP;
+  IF merge_status = 1 THEN 
+    UPDATE staging SET status = delete(status,'donators') where id=line.id;
+  ELSE
+    UPDATE staging SET status = (status || ('donators' => 'people')) where id= line.id;  
+  END IF;
+
+/****
+IDENTIFIERS
+******/
+  merge_status :=1;
+  FOR ident_line in select * from identifications where referenced_relation ='staging' AND  record_id = line.id
+  LOOP
+    cnt := -1;
+    FOR p_name in select item from regexp_split_to_table(ident_line.determination_status, ',') as item
+    LOOP
+      cnt := cnt + 1;
+
+      IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='identifications' AND  record_id = line.id AND order_by= cnt)  THEN
+        continue;
+      END IF;
+
+      SELECT fct_look_for_people(p_name) into ref_record;
+      CASE ref_record
+        WHEN -1 THEN merge_status := -1 ;
+        WHEN 0 THEN merge_status := 0;
+        ELSE
+          INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
+            VALUES ('identifications', line.id, 'identifier', cnt, ref_record);
+      END CASE;
+    END LOOP;
+  END LOOP;
+
+  IF merge_status = 1 THEN 
+    UPDATE staging SET status = delete(status,'identifiers') where id=line.id;
+  ELSE
+    UPDATE staging SET status = (status || ('identifiers' => 'people')) where id= line.id;  
+  END IF;
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION fct_importer_dna(req_import_ref integer)  RETURNS boolean
+AS $$
+DECLARE
+  prev_levels hstore default '';
+  rec_id integer;
+  line RECORD;
+  s_line RECORD;
+  staging_line staging;
+  old_level int;
+BEGIN
+  FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id 
+      WHERE import_ref = req_import_ref AND to_import=true and status is null or status = ''::hstore  and parent_ref is null
+  LOOP
+    /************
+    *
+    *  DON'T FORGET TO MAKE A CHECK !
+    *
+     ***/
+    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and COALESCE(status,status,''::hstore) != ''::hstore or to_import = false) THEN
+      --If line has childer with error, don't try to import it
+      continue;
+    END IF;
+
+    BEGIN
+      --Import Specimen
+
+      -- I know it's dumb but....
+      select * into staging_line from staging where id = line.id;
+      PERFORM fct_imp_checker_igs(staging_line, true);
+      PERFORM fct_imp_checker_expeditions(staging_line, true);
+      PERFORM fct_imp_checker_gtu(staging_line, true);
+
+      BEGIN
+	IF line.spec_ref is NULL THEN
+	  rec_id := nextval('specimens_id_seq');
+	  INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
+	      host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
+	  VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
+	    COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
+	    COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
+	    line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
+	    COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
+	  );
+	  UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
+	ELSE
+	  rec_id = line.spec_ref;
+	END IF;
+
+	prev_levels := prev_levels || ('specimen' => rec_id::text);
+
+      EXCEPTION WHEN unique_violation THEN
+	SELECT id INTO rec_id FROM specimens WHERE
+	  category = COALESCE(line.category,line.category,'physical')
+	  AND collection_ref=line.collection_ref
+	  AND expedition_ref= COALESCE(line.expedition_ref,line.expedition_ref,0)
+	  AND gtu_ref= COALESCE(line.gtu_ref,line.gtu_ref,0)
+	  AND taxon_ref= COALESCE(line.taxon_ref,line.taxon_ref,0)
+	  AND litho_ref = COALESCE(line.litho_ref,line.litho_ref,0)
+	  AND chrono_ref = COALESCE(line.chrono_ref,line.chrono_ref,0)
+	  AND lithology_ref = COALESCE(line.lithology_ref,line.lithology_ref,0)
+	  AND mineral_ref = COALESCE(line.mineral_ref,line.mineral_ref,0)
+	  AND host_taxon_ref = COALESCE(line.host_taxon_ref,line.host_taxon_ref,0)
+	  AND host_specimen_ref = line.host_specimen_ref
+	  AND host_relationship = line.host_relationship
+	  AND acquisition_category = COALESCE(line.acquisition_category,line.acquisition_category,'')
+	  AND acquisition_date_mask = COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0)
+	  AND acquisition_date = COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001')
+	  AND station_visible = COALESCE(line.station_visible,line.station_visible,true)
+	  AND ig_ref = line.ig_ref;	
+
+	UPDATE staging SET status=(status || ('duplicate' => rec_id::text)) , to_import=false WHERE id = prev_levels->'specimen';
+	UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
+	CONTINUE;
+    END;
+      --Import lower levels
+      FOR s_line IN  SELECT * from staging s where path like '/' || line.id || '/%' ORDER BY path || s.id
+      LOOP
+        IF s_line.level = 'individual' THEN
+          rec_id := nextval('specimen_individuals_id_seq');
+          INSERT INTO specimen_individuals (id, specimen_ref, type, sex, stage, state, social_status, rock_form, specimen_individuals_count_min, specimen_individuals_count_max)
+          VALUES (
+            rec_id,(prev_levels->'specimen')::integer, COALESCE(s_line.individual_type,s_line.individual_type,'specimen'), 
+            COALESCE(s_line.individual_sex,s_line.individual_sex,'undefined'), COALESCE( s_line.individual_state, s_line.individual_state,'not applicable'),
+            COALESCE(s_line.individual_stage,s_line.individual_stage,'undefined'), COALESCE(s_line.individual_social_status,s_line.individual_social_status,'not applicable'),
+            COALESCE(s_line.individual_rock_form,s_line.individual_rock_form,'not applicable'),
+            COALESCE(s_line.individual_count_min,s_line.individual_count_min,'1'), COALESCE(s_line.individual_count_max,s_line.individual_count_max,'1')
+          );
+          UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
+          prev_levels := (prev_levels || ('individual' => rec_id::text));
+
+
+        ELSIF lower(s_line.level) in ('specimen part','tissue part','dna part') THEN /*** @TODO:CHECK THIS!!**/
+          rec_id := nextval('specimen_parts_id_seq');
+          IF  lower(s_line.level) = 'specimen part' THEN
+            old_level := null;
+          ELSIF lower(s_line.level) = 'tissue part' THEN
+            old_level :=  prev_levels->'specimen part';
+          ELSIF lower(s_line.level) = 'dna part' THEN
+            old_level :=  prev_levels->'tissue part';
+          END IF;
+
+          INSERT INTO specimen_parts (id, parent_ref, specimen_individual_ref, specimen_part, complete, building, floor, room, row, shelf,
+            container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
+              specimen_part_count_min, specimen_part_count_max)
+          VALUES (
+            rec_id, old_level, (prev_levels->'individual')::integer,
+            COALESCE(s_line.part,s_line.part,'specimen'), COALESCE(s_line.complete,s_line.complete,true),
+            s_line.building ,s_line.floor, s_line.room, s_line.row, s_line.shelf,
+            s_line.container, s_line.sub_container,
+            COALESCE(s_line.container_type,s_line.container_type,'container'),  COALESCE(s_line.sub_container_type,s_line.sub_container_type, 'container'), 
+            COALESCE(s_line.container_storage,s_line.container_storage,'dry'),  COALESCE(s_line.sub_container_storage,s_line.sub_container_storage,'dry'),
+            COALESCE(s_line.surnumerary,s_line.surnumerary,false),  COALESCE(s_line.specimen_status,s_line.specimen_status,'good state'), 
+            COALESCE(s_line.part_count_min,s_line.part_count_min,1),  COALESCE(s_line.part_count_max,s_line.part_count_max,2)
+          );
+          UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
+          prev_levels := (prev_levels || (s_line.level => rec_id::text));
+
+        END IF;
+
+      END LOOP;
+
+      DELETE from staging where path like '/' || line.id || '/%' OR  id = line.id;
+    EXCEPTION WHEN unique_violation THEN
+--       RAISE info 'Error';
+      UPDATE staging SET status=(status || ('duplicate' => '0')) , to_import=false WHERE id = prev_levels->'specimen';
+      UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
+    END;
+  END LOOP;
+  RETURN true;
+END;
+$$ LANGUAGE plpgsql;
