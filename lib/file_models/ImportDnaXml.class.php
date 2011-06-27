@@ -43,6 +43,7 @@ class ImportDnaXml implements IImportModels
     'code_date_mask' => 'code_date_mask',
     'part_count_min' => 'part_count_min',
     'part_count_max' => 'part_count_max',
+    'family_name' => 'institution_name'
     
   ) ; 
   
@@ -102,6 +103,7 @@ class ImportDnaXml implements IImportModels
       if($childNode->childNodes->length == 1) $this->getSimpleField($childNode,$object);
       elseif($childNode->nodeName == 'gtu') $this->processWithGtuNode($childNode,$object); 
       elseif($childNode->nodeName == 'expedition') $this->fillSimpleObject($childNode,$object);  
+      elseif($childNode->nodeName == 'institution') $this->fillSimpleObject($childNode,$object);        
       elseif($childNode->nodeName == 'donators') $this->processWithDonatorsNode($childNode,$object);      
       elseif($childNode->nodeName == 'collectors') $this->processWithCollectorsNode($childNode,$object);      
       elseif($childNode->nodeName == 'taxon') $this->processWithTaxonNode($childNode,$object);         
@@ -307,13 +309,7 @@ class ImportDnaXml implements IImportModels
     // I remove the latest ',' and add the '}' 
     $object['donators'] = substr($donators,0,strlen($donators)-1).'}' ; 
   } 
-    
-    
-  // function not used for now, because I don't know what to do with Institutions  
-  public function processWithInstitutionNode($xml_node,$id)
-  {
-  
-  }   
+     
 
   // function not used for now, because there is no Igs for now
   public function processWithIgsNode($xml_node,$id)

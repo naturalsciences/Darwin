@@ -15,7 +15,8 @@ class Staging extends BaseStaging
   private static $errors = array('not_found' => 'This %field% was not found in our database, please choose an existing one or remove it',
                                  'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
             	                   'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
-            	                   'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one'
+            	                   'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one',
+            	                   'duplicate' => 'This record seems to have already been saved you can see it ',
                                 );
 	                   
   public function getGtu()
@@ -47,7 +48,10 @@ class Staging extends BaseStaging
   {
     return $this->_get('lithology_name');
   }
-
+  public function getInstitution()
+  {
+    return $this->_get('institution_name');
+  }
   public function getIg()
   {
     return $this->_get('ig_num');
@@ -148,8 +152,9 @@ class Staging extends BaseStaging
       if($tosave) $fieldsToShow[$key] = $value ;
       else  $fieldsToShow[$key] = array(//'field' => $this->fieldName[$key],
                                     'embedded_field' => $this->getFieldsToUseFor($key).'_'.$value, // to TEST 
-                                    'display_error' => self::$errors[$value], 
+                                    'display_error' => self::$errors[($key=='duplicate'?$key:$value)], 
                                     'fields' => $this->getFieldsToUseFor($key));
+      if($key == 'duplicate') $fieldsToShow[$key]['duplicate_record'] = $value ;
     }                                   
     return($fieldsToShow) ;
   }
@@ -177,6 +182,8 @@ class Staging extends BaseStaging
     if($field == 'collectors') return('collectors') ; 
     if($field == 'donators') return('donators') ;  
     if($field == 'identifiers') return('identifiers') ;
+    if($field == 'institution') return('institution_ref') ;
+    return($field) ;
   }
   
   public function getPeopleInError($people_type,$people, $record_id = null)

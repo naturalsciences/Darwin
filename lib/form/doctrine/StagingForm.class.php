@@ -14,6 +14,7 @@ class StagingForm extends BaseStagingForm
   {
     $array_of_field = $this->options['fields'] ;
     if (in_array('identifiers',$array_of_field)) unset($array_of_field[array_search('identifiers', $array_of_field)]);
+    if (in_array('duplicate',$array_of_field)) unset($array_of_field[array_search('duplicate', $array_of_field)]);    
     $this->useFields($array_of_field) ;
     /* Taxonomy Reference */
     if(in_array('taxon_ref',$this->options['fields']))

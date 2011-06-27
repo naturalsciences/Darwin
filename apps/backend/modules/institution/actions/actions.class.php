@@ -24,10 +24,11 @@ class institutionActions extends DarwinActions
   }
   public function executeChoose(sfWebRequest $request)
   {
+    $name = $request->hasParameter('name')?$request->getParameter('name'):'' ;  
     $this->form = new InstitutionsFormFilter();
     if( $request->getParameter('only_role','0') !=0)
     {
-      $this->form->setDefault('only_role',$request->getParameter('only_role'));
+      $this->form->setDefault('only_role',$request->getParameter('only_role'), 'family_name' => $name);
     }
   }
 
