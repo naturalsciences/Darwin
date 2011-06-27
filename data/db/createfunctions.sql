@@ -3927,6 +3927,34 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION fct_look_for_institution(fullname text) RETURNS integer
+AS $$
+DECLARE
+  ref_record integer :=0;
+  result_nbr integer;
+
+BEGIN
+    result_nbr := 0;
+    FOR ref_record IN SELECT id from people p 
+      WHERE is_physical = false AND
+	formated_name like fulltoindex(fullname) || '%'  LIMIT 2
+    LOOP
+      result_nbr := result_nbr +1;
+    END LOOP;
+
+    IF result_nbr = 1 THEN -- It's Ok!
+      return ref_record;
+    END IF;
+
+    IF result_nbr >= 2 THEN
+      return -1 ;-- To Much
+      continue;
+    END IF;
+  RETURN 0;
+END;
+$$ LANGUAGE plpgsql;
+
+
 
 CREATE OR REPLACE FUNCTION fct_imp_checker_people(line staging) RETURNS boolean
 AS $$
@@ -4019,6 +4047,23 @@ IDENTIFIERS
   ELSE
     UPDATE staging SET status = (status || ('identifiers' => 'people')) where id= line.id;  
   END IF;
+
+  /**********
+  * Institution
+  **********/
+  IF line.institution_name IS NOT NULL and line.institution_name  != '' AND line.institution_ref is null THEN
+  
+    SELECT fct_look_for_institution(line.institution_name) into ref_record ;
+      CASE ref_record
+	WHEN -1 THEN 
+	  UPDATE staging SET status = (status || ('institution' => 'too_much')) where id= line.id;  
+	WHEN 0 THEN
+	  UPDATE staging SET status = (status || ('institution' => 'not_found')) where id= line.id;  
+	ELSE
+	  UPDATE staging SET status = delete(status,'institution'), institution_ref = ref_record where id=line.id;
+      END CASE;
+  END IF;
+
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
@@ -4125,13 +4170,13 @@ BEGIN
             old_level :=  prev_levels->'tissue part';
           END IF;
 
-          INSERT INTO specimen_parts (id, parent_ref, specimen_individual_ref, specimen_part, complete, building, floor, room, row, shelf,
+          INSERT INTO specimen_parts (id, parent_ref, specimen_individual_ref, specimen_part, complete, institution_ref, building, floor, room, row, shelf,
             container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
               specimen_part_count_min, specimen_part_count_max)
           VALUES (
             rec_id, old_level, (prev_levels->'individual')::integer,
             COALESCE(s_line.part,s_line.part,'specimen'), COALESCE(s_line.complete,s_line.complete,true),
-            s_line.building ,s_line.floor, s_line.room, s_line.row, s_line.shelf,
+            s_line.institution_ref, s_line.building ,s_line.floor, s_line.room, s_line.row, s_line.shelf,
             s_line.container, s_line.sub_container,
             COALESCE(s_line.container_type,s_line.container_type,'container'),  COALESCE(s_line.sub_container_type,s_line.sub_container_type, 'container'), 
             COALESCE(s_line.container_storage,s_line.container_storage,'dry'),  COALESCE(s_line.sub_container_storage,s_line.sub_container_storage,'dry'),
