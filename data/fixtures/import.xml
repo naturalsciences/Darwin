@@ -58,14 +58,14 @@
       </comments>
     </gtu>
     <taxon>
-      <name>Oplurus cyclurus</name>
-      <level>species</level>
       <phylum>Chordata</phylum>
       <class>Reptilia</class>
       <order>Squamata</order>
-      <family>Iguanidae</family>
       <genus>Oplurus</genus>
-      <species>cyclurus</species>
+      <name>Oplurus cyclurus</name>
+      <level>species</level>
+      <family>Iguanidae</family>
+      <species>cf cyclurus</species>
     </taxon>
     <codes>
       <code>

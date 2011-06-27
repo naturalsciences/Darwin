@@ -95,6 +95,8 @@
  * @property integer $individual_count_min
  * @property integer $individual_count_max
  * @property string $part
+ * @property integer $institution_ref
+ * @property string $institution_name
  * @property string $building
  * @property string $floor
  * @property string $room
@@ -206,6 +208,8 @@
  * @method integer             getIndividualCountMin()        Returns the current record's "individual_count_min" value
  * @method integer             getIndividualCountMax()        Returns the current record's "individual_count_max" value
  * @method string              getPart()                      Returns the current record's "part" value
+ * @method integer             getInstitutionRef()            Returns the current record's "institution_ref" value
+ * @method string              getInstitutionName()           Returns the current record's "institution_name" value
  * @method string              getBuilding()                  Returns the current record's "building" value
  * @method string              getFloor()                     Returns the current record's "floor" value
  * @method string              getRoom()                      Returns the current record's "room" value
@@ -316,6 +320,8 @@
  * @method Staging             setIndividualCountMin()        Sets the current record's "individual_count_min" value
  * @method Staging             setIndividualCountMax()        Sets the current record's "individual_count_max" value
  * @method Staging             setPart()                      Sets the current record's "part" value
+ * @method Staging             setInstitutionRef()            Sets the current record's "institution_ref" value
+ * @method Staging             setInstitutionName()           Sets the current record's "institution_name" value
  * @method Staging             setBuilding()                  Sets the current record's "building" value
  * @method Staging             setFloor()                     Sets the current record's "floor" value
  * @method Staging             setRoom()                      Sets the current record's "room" value
@@ -626,6 +632,12 @@ abstract class BaseStaging extends sfDoctrineRecord
              'type' => 'integer',
              ));
         $this->hasColumn('part', 'string', null, array(
+             'type' => 'string',
+             ));
+        $this->hasColumn('institution_ref', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('institution_name', 'string', null, array(
              'type' => 'string',
              ));
         $this->hasColumn('building', 'string', null, array(

@@ -7,5 +7,6 @@ log/*
 config/databases.yml
 web/favicon.ico
 web/uploads/*
+uploads/*
 *~
 *.*~ 

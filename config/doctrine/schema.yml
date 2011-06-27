@@ -783,6 +783,7 @@ SpecimenParts:
         specimen_individual_ref: { type: integer, notnull: true }
         specimen_part: { type: string, notnull: true, default: specimen}
         complete: { type: boolean, notnull: true, default: true}
+        institution_ref: {type: integer}
         building: { type: string}
         floor: { type: string}
         room: { type: string}
@@ -2011,6 +2012,8 @@ Staging:
         individual_count_min: {type: integer }
         individual_count_max: {type: integer }
         part: {type: string }
+        institution_ref: {type: integer}
+        institution_name: {type: string}
         building: {type: string }
         floor: {type: string }
         room: {type: string }
