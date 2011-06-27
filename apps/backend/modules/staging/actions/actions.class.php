@@ -2,16 +2,22 @@
 
 class stagingActions extends DarwinActions
 {
-  public function executeIndex(sfWebRequest $request)
+
+  public function executeSearch(sfWebRequest $request)
   {
+    $this->forward404Unless($request->hasParameter('import'));
+    $this->setCommonValues('staging', 'id', $request);
+
     $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
     $this->form = new StagingFormFilter(null, array('import' =>$this->import));
     $filters = $request->getParameter('staging_filters');
     if(!isset($filters['slevel'])) $filters['slevel'] = 'specimen';
+
     $this->form->bind($filters);
     if($this->form->isValid())
     {
       $query = $this->form->getQuery();
+      $query->andWhere('import_ref = ?',$this->import->getId());
       // Define the pager
       $pager = new DarwinPager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
 
@@ -29,12 +35,21 @@ class stagingActions extends DarwinActions
       $this->setCommonValues('search', 'collection_name', $request);
       $params = $request->isMethod('post') ? $request->getPostParameters() : $request->getGetParameters();
 
-      unset($params['staging_filters']['current_page']);
-      $this->pagerLayout = new PagerLayoutWithArrows($pager,
-                                                    new Doctrine_Pager_Range_Sliding(array('chunk' => $this->pagerSlidingSize)),
-                                                    'search/search?specimen_search_filters[current_page]={%page_number}&'.http_build_query($params)
-                                                    );
-      // Sets the Pager Layout templates
+      $this->s_url = 'staging/search'.'?import='.$request->getParameter('import');
+      $this->o_url = '';//'&orderby='.$this->orderBy.'&orderdir='.$this->orderDir;
+
+      $this->pagerLayout = new PagerLayoutWithArrows(
+          new DarwinPager(
+            $query,
+            $this->currentPage,
+            $this->form->getValue('rec_per_page')
+          ),
+          new Doctrine_Pager_Range_Sliding(
+            array('chunk' => $this->pagerSlidingSize)
+          ),
+          $this->getController()->genUrl($this->s_url.$this->o_url) . '/page/{%page_number}'
+        );
+
       $this->setDefaultPaggingLayout($this->pagerLayout);
       $this->pagerLayout->setTemplate('<li data-page="{%page_number}"><a href="{%url}">{%page}</a></li>');
 
@@ -47,6 +62,15 @@ class stagingActions extends DarwinActions
       $this->fields = $this->displayModel->getColumnsForLevel($this->form->getValue('slevel'));
     }
 
+  }
+  public function executeIndex(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('import'));
+    $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
+    $this->form = new StagingFormFilter(null, array('import' =>$this->import));
+    $filters = $request->getParameter('staging_filters');
+    if(!isset($filters['slevel'])) $filters['slevel'] = 'specimen';
+    $this->form->bind($filters);
   }
   
   protected function getFieldsForLevel($level)

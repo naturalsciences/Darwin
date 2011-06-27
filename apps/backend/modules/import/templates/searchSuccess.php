@@ -50,7 +50,7 @@
               <td><?php echo $import->getLastModifiedDate(ESC_RAW);?></td>
               <td>
                 <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>
-                  <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?id='.$import->getId());?>
+                  <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
                 <?php endif ; ?>                  
               </td>
             </tr>

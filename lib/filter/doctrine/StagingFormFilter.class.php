@@ -13,6 +13,7 @@ class StagingFormFilter extends BaseStagingFormFilter
   public function configure()
   {
     $this->useFields(array());
+    $this->addPagerItems();
     $model = new DisplayImportDna();
     $levels = $model->getLevels();
     $this->widgetSchema['slevel']  = new sfWidgetFormChoice(array('expanded'=>true,'choices'=> $levels));
@@ -20,7 +21,6 @@ class StagingFormFilter extends BaseStagingFormFilter
     $this->widgetSchema->setLabels(array(
       'slevel'=>'Levels',
     ) );
-    $this->addPagerItems();
   }
 
   public function addSlevelColumnQuery(Doctrine_Query $query, $field, $value)
