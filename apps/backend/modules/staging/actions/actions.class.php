@@ -7,7 +7,7 @@ class stagingActions extends DarwinActions
     $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
     $this->form = new StagingFormFilter(null, array('import' =>$this->import));
     $filters = $request->getParameter('staging_filters');
-    if(!isset($filters['slevel'])) $filters['slevel'] = 'specimens';
+    if(!isset($filters['slevel'])) $filters['slevel'] = 'specimen';
     $this->form->bind($filters);
     if($this->form->isValid())
     {
@@ -169,4 +169,56 @@ class stagingActions extends DarwinActions
       if($level == 'dna') $level = 'parts';
       return $fields[$level];
   }
+  
+  public function executeEdit(sfWebRequest $request)
+  {  
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
+    $staging = Doctrine::getTable('Staging')->findOneById($request->getParameter('id'));
+    $this->fields = $staging->getFields() ;
+    $form_fields = array() ;   
+    if($this->fields)
+    {
+      foreach($this->fields as $key => $values)
+        $form_fields[] = $values['fields'] ;
+    }
+    $this->form = new StagingForm($staging, array('fields' => $form_fields));
+  } 
+   
+  public function executeUpdate(sfWebRequest $request)
+  {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction(); 
+    $staging = Doctrine::getTable('Staging')->findOneById($request->getParameter('id'));
+    $this->fields = $staging->getFields() ;
+    $form_fields = array() ;   
+    if($this->fields)
+    {
+      foreach($this->fields as $key => $values)
+        $form_fields[] = $values['fields'] ;
+    }
+    $this->form = new StagingForm($staging, array('fields' => $form_fields));
+    
+    $this->processForm($request,$this->form, $form_fields);
+
+    $this->setTemplate('edit');
+  }  
+  
+  protected function processForm(sfWebRequest $request, sfForm $form, array $fields)
+  {
+    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
+    $form->bind( $request->getParameter($form->getName()) );
+    if ($form->isValid())
+    {
+      try
+      {
+        $form->save();
+        $this->redirect('staging/index?id='.$form->getObject()->getId());
+      }
+      catch(Doctrine_Exception $ne)
+      {
+        $e = new DarwinPgErrorParser($ne);
+        $error = new sfValidatorError(new savedValidator(),$e->getMessage());
+        $form->getErrorSchema()->addError($error); 
+      }
+    }
+  }  
 }

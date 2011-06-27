@@ -29,6 +29,6 @@
       <div class="search_results_content"> 
       </div>
     </div> 
-    <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('people/new') ?>"><?php echo __('New');?></a></div>
+    <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for('people/new?name='.$form['family_name']->getValue()) ; ?>"><?php echo __('New');?></a></div>
   </div>
 </form> 

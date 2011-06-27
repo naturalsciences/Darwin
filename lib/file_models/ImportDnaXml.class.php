@@ -176,7 +176,8 @@ class ImportDnaXml implements IImportModels
     { 
       foreach($collector->childNodes as $collector_infos)
       { 
-        if($collector_infos->nodeName == "formated_name" && $collector_infos->parentNode->nodeName == 'collector') $collectors .= $collector_infos->nodeValue.',' ;
+        if($collector_infos->nodeName == "family_name" && $collector_infos->parentNode->nodeName == 'collector') $collectors .= $collector_infos->nodeValue.' ' ;
+        if($collector_infos->nodeName == "given_name" && $collector_infos->parentNode->nodeName == 'collector') $collectors .= $collector_infos->nodeValue.',' ;
       }
     }
     $object['collectors'] = substr($collectors,0,strlen($collectors)-1).'}' ;      
@@ -268,7 +269,8 @@ class ImportDnaXml implements IImportModels
         elseif($identification_info->nodeName == 'identifiers')
         {
           $ident_tags = $identification_info->getElementsByTagName("identifier");
-          foreach($ident_tags as $ident_tag) $identifiers .= $ident_tag->getElementsByTagName("formated_name")->item(0)->nodeValue.";" ;        
+          foreach($ident_tags as $ident_tag) $identifiers .= $ident_tag->getElementsByTagName("family_name")->item(0)->nodeValue." ".
+                                                             $ident_tag->getElementsByTagName("given_name")->item(0)->nodeValue."," ;        
         }
         elseif($identification_info->nodeName == 'comments')
         {
@@ -281,7 +283,7 @@ class ImportDnaXml implements IImportModels
           $this->complex_nodes['properties']['notion_concerned'] = 'identifications' ;
         }        
       }
-      $identification['determination_status'] = $identifiers ;
+      $identification['determination_status'] = substr($identifiers,0,strlen($identifiers)-1) ;
       $identification->save() ;  
     }  
   } 
@@ -298,7 +300,8 @@ class ImportDnaXml implements IImportModels
     { 
       foreach($donator->childNodes as $donator_infos)
       { 
-        if($donator_infos->nodeName == "formated_name" && $donator_infos->parentNode->nodeName == 'donator') $donators .= $donator_infos->nodeValue.',' ;
+        if($donator_infos->nodeName == "family_name" && $donator_infos->parentNode->nodeName == 'donator') $donators .= $donator_infos->nodeValue.' ' ;
+        if($donator_infos->nodeName == "given_name" && $donator_infos->parentNode->nodeName == 'donator') $donators .= $donator_infos->nodeValue.',' ;
       }
     }
     // I remove the latest ',' and add the '}' 

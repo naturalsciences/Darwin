@@ -67,7 +67,7 @@ $(document).ready(function ()
       </div>
     </div>
     <?php if( (isset($user_allowed) && $user_allowed) || ($sf_user->getDbUserType() >= Users::ENCODER) ): ?>
-    <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for($searchForm['table']->getValue().'/new') ?>"><?php echo __('New Unit');?></a></div>
+    <div class='new_link'><a <?php echo !(isset($is_choose) && $is_choose)?'':'target="_blank"';?> href="<?php echo url_for($searchForm['table']->getValue().'/new?name='.$searchForm['name']->getValue()) ?>"><?php echo __('New Unit');?></a></div>
     <?php endif ; ?>
   </div>
 </form>
