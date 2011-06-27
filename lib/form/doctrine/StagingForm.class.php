@@ -149,7 +149,24 @@ class StagingForm extends BaseStagingForm
       );   
       $this->validatorSchema['gtu_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
     }
-      
+    
+    /* Lithology Reference */
+    if(in_array('institution_ref',$this->options['fields']))    
+    {
+      $this->widgetSchema['institution_ref'] = new widgetFormButtonRef(array(
+         'model' => 'Staging',
+         'link_url' => 'institution/choose?name='.$this->getObject()->getInstitutionName(),
+         'method' => 'getInstitution',
+         'default_name' => $this->getObject()->getInstitutionName(),       
+         'box_title' => $this->getI18N()->__('Choose an Institution'),
+         'nullable' => true,
+         'button_class'=>'',
+       ),
+        array('class'=>'inline',
+             )
+      );
+      $this->validatorSchema['lithology_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+    }      
     /* Host Reference *//*
     if(in_array('host_ref',$this->options['fields']) )  
     {    
