@@ -41,6 +41,7 @@ class SpecimenPartsForm extends BaseSpecimenPartsForm
        'link_url' => 'institution/choose?with_js=1',
        'method' => 'getFamilyName',
        'box_title' => $this->getI18N()->__('Choose Institution'),
+       'nullable' => true,
      ));
     $this->widgetSchema['institution_ref']->setLabel('Institution');
 
