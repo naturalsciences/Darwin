@@ -12,7 +12,7 @@
  */
 class Imports extends BaseImports
 {
-  private static $state = array('' => 'All', 'imported' => 'Imported', 'processing' => 'Processing', 'ok' => 'Ready', 'rejected' => 'Rejected', 'computing' => 'Computing') ;  
+  private static $state = array('' => 'All', 'importing' => 'Importing', 'processing' => 'Processing', 'loaded' => 'Loaded', 'computing' => 'Computing', 'ready' => 'Ready') ;  
   public static $formatArray = array('dna' => 'DNA') ;
     
   public static function getFormats()
@@ -23,7 +23,14 @@ class Imports extends BaseImports
   public static function getStateList()
   {
     return self::$state ;
-  }    
+  } 
+  
+  // function used to determine if we can display edition button or not
+  public function isEditableState()
+  {
+    if(in_array($this->getState(),array('loaded','ready'))) return true ;
+    return false ;
+  }   
 
   public function getLastModifiedDate()
   {

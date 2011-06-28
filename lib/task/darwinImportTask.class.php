@@ -7,7 +7,8 @@ class darwinImportTask extends sfBaseTask
   {
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
-      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine')
+      new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),      
       ));      
     $this->namespace        = 'darwin';
     $this->name             = 'process-import';
@@ -21,6 +22,7 @@ EOF;
   {
      // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
+    $environment = $this->configuration instanceof sfApplicationConfiguration ? $this->configuration->getEnvironment() : $options['env']; 
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     $conn = Doctrine_Manager::connection();
     $conn->getDbh()->exec('BEGIN TRANSACTION;');
@@ -41,7 +43,7 @@ EOF;
           $import->importFile($file,$id) ;
           Doctrine_Query::create()
             ->update('imports p')
-            ->set('p.state',"'ok'")
+            ->set('p.state',"'loaded'")
             ->where('p.id = ?', $id)
             ->execute();
         }              

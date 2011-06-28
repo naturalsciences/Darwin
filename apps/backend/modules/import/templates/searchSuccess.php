@@ -49,7 +49,7 @@
               <td><?php echo $import->getState();?></td>
               <td><?php echo $import->getLastModifiedDate(ESC_RAW);?></td>
               <td>
-                <?php if ($sf_user->isAtLeast(Users::ENCODER)) : ?>
+                <?php if ($sf_user->isAtLeast(Users::ENCODER) && $import->isEditableState()) : ?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
                 <?php endif ; ?>                  
               </td>
