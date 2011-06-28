@@ -75,7 +75,8 @@ class UsersTracking extends BaseUsersTracking
       $hstore = $this->_get('old_value');
     else
       $hstore = $this->_get('new_value');
-    eval("\$diff = array({$hstore});");
+    $diff = new Hstore();
+    $diff->import($hstore);
     foreach($diff as $key=>$value)
     {
       if(preg_match("/_indexed$/", $key) || preg_match("/_name_ts$/", $key) || preg_match("/_order_by$/", $key))
