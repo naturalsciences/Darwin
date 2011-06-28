@@ -3640,7 +3640,7 @@ LEFT JOIN pg_locks pgl
       -- Need to recheck the unlocked state: race conditions are still possible.
       -- For example, job could be requested, locked, processed, finished and unlocked
       -- while this function iterates over "then-unlocked" jobs list.
-      UPDATE imports set state='processing' where id=job.id;
+      UPDATE imports set state='importing' where id=job.id;
       RETURN job.id;
     END IF;
   END LOOP;
