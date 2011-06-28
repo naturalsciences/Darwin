@@ -1343,7 +1343,7 @@ create table codes
         code_date_mask integer not null default 0,
 	code_num integer default 0,
         constraint pk_codes primary key (id),
-        constraint unq_codes unique (referenced_relation, record_id, full_code_order_by)
+        constraint unq_codes unique (referenced_relation, record_id, full_code_order_by,code_category)
        )
 inherits (template_table_record_ref);
 

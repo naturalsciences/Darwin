@@ -3670,7 +3670,7 @@ BEGIN
 
     OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
     INNER JOIN catalogue_levels c on t.level_ref = c.id 
-    WHERE name = ' || quote_literal( field_name) || ' AND  level_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_name ELSE ' || quote_literal(field_level_name) || ' END 
+    WHERE name = ' || quote_literal( field_name) || ' AND  level_sys_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_sys_name ELSE ' || quote_literal(field_level_name) || ' END 
     LIMIT 2';
     LOOP
       FETCH ref INTO ref_record;
@@ -3701,7 +3701,7 @@ BEGIN
   result_nbr := 0;
     OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
     INNER JOIN catalogue_levels c on t.level_ref = c.id 
-    WHERE name_order_by like fullToIndex(' || quote_literal( field_name) || ') || ''%'' AND  level_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_name ELSE ' || quote_literal(field_level_name) || ' END 
+    WHERE name_order_by like fullToIndex(' || quote_literal( field_name) || ') || ''%'' AND  level_sys_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_sys_name ELSE ' || quote_literal(field_level_name) || ' END 
     LIMIT 2';
     LOOP
       FETCH ref INTO ref_record;
@@ -3793,7 +3793,7 @@ BEGIN
     lvl_value := rec_parents->lvl_name;
     EXECUTE 'SELECT count(*) from ' || quote_ident(catalogue_table) || ' t
       INNER JOIN catalogue_levels c on t.level_ref = c.id
-       WHERE level_name = ' || quote_literal(lvl_name) || ' AND 
+       WHERE level_sys_name = ' || quote_literal(lvl_name) || ' AND 
         name_order_by like fullToIndex( ' || quote_literal(lvl_value) || '  ) || ''%''
         AND ' || quote_literal(row_record.path) || 'like t.path || t.id || ''/%'' ' INTO result_nbr;
     IF result_nbr = 0 THEN
