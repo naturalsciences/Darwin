@@ -36,7 +36,7 @@ select is(null, (select taxon_ref from staging s where id = 3));
 
 select diag('Test of staging check with levels');
 
-UPDATE staging set taxon_ref = null , taxon_level_name='super phylum';
+UPDATE staging set taxon_ref = null , taxon_level_name='super_phylum';
 
 delete from taxonomy where id = 4;
 
@@ -48,7 +48,7 @@ select is(null, (select taxon_ref from staging s where id = 3));
 
 update taxonomy set level_ref=3 , parent_ref = 2 where id = 3;
 
-insert into staging (id,import_ref, "level",taxon_name,taxon_level_name) VALUES (4,1,'specimens','Falco Peregrinus','super phylum' /* 3 */);
+insert into staging (id,import_ref, "level",taxon_name,taxon_level_name) VALUES (4,1,'specimens','Falco Peregrinus','super_phylum' /* 3 */);
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(3, (select taxon_ref from staging s where id = 4));
 
@@ -61,7 +61,7 @@ update staging SET taxon_ref = null, taxon_name = 'Falco Coco lus (Brolus 1974)'
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
 
-update staging SET taxon_parents = '"super phylum"=>"Falco Peregrinus"'::hstore where id = 3;
+update staging SET taxon_parents = '"super_phylum"=>"Falco Peregrinus"'::hstore where id = 3;
 
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
