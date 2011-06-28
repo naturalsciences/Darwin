@@ -2071,7 +2071,7 @@ create table staging
     specimen_status varchar,
     complete boolean,
     surnumerary boolean,
-    status hstore default '',
+    status hstore not null default '',
     to_import boolean default false,
     constraint pk_staging primary key (id),
     constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascade,
