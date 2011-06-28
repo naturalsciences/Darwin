@@ -17,6 +17,5 @@ class Hstore extends ArrayObject{
     }
     $str = substr($str,0,strlen($str)-1) ;
     return $str;
-
   }
 }

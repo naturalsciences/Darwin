@@ -1258,7 +1258,8 @@ table.edit_synon td
   text-align:right;
 }
 
-.edition input[type="submit"], .edition button, .edition input[type="reset"], .edition tfoot a, .renamed input[type="submit"], .renamed button, .renamed tfoot a, .bt_close_green a, .form_buttons a
+.edition input[type="submit"], .edition button, .edition input[type="reset"], .edition tfoot a, .renamed input[type="submit"], .renamed button, .renamed tfoot a, .bt_close_green a, .form_buttons a,
+.edition a.but
 {
   border:1px solid #C1CC33;
   background-color:#C1CF56;
@@ -2670,4 +2671,9 @@ input[type='file']
 .staging_table .fld_ok
 {
   background-color: #83E051;
+}
+
+.edition a.but
+{
+  margin-top: 1em;
 }

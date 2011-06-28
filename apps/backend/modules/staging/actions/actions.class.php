@@ -3,6 +3,15 @@
 class stagingActions extends DarwinActions
 {
 
+  public function executeMarkok(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('import'));
+    $this->setCommonValues('staging', 'id', $request);
+
+    $this->import = Doctrine::getTable('Imports')->markOk($request->getParameter('import'));
+    return $this->redirect('import/index');
+  }
+
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('import'));

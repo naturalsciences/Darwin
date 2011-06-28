@@ -1,12 +1,13 @@
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
     <?php include_partial('global/pager_info', array('form' => $form, 'pagerLayout' => $pagerLayout)); ?>  
 
-
-<table class="staging_table results">
+<div class="edition">
+<table class="staging_table results ">
   <thead>
   <?php foreach($fields as $name):?>
     <th><?php echo $name;?></th>
   <?php endforeach;?>
+    <th><?php echo __('Linked Info');?></th>
     <th><?php echo __('Status');?></th>
     <th></th>
   </thead>
@@ -15,8 +16,19 @@
       <?php foreach($fields as $name):?>
         <td class="<?php echo $row->getStatusFor($name);?>"><?php echo $row[$name];?></td>
       <?php endforeach;?>
-      <td><?php echo 'n/a';//$row['status'];?></td>
-      <td><?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id']);?></td>
-    </tr>
+      <td><?php echo 'n/a';//$row['linked_info'];?></td>
+      <td><?php if($row['status'] != '' && $row['status'] != '{}'):?>
+        <?php echo __('Error');?>
+        <?php endif;?>
+      </td>
+      <td>
+        <?php if($row['status'] != '' && $row['status'] != '{}'):?>
+          <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id']);?>
+        <?php endif;?>
+      </td>
+      </tr>
   <?php endforeach;?>
 </table>
+<br/>
+<?php echo link_to(__('Import "Ok" lines'), 'staging/markok?import='.$import->getId() ,'class=but');?>
+</div>
