@@ -43,8 +43,7 @@ class ImportDnaXml implements IImportModels
     'code_date_mask' => 'code_date_mask',
     'part_count_min' => 'part_count_min',
     'part_count_max' => 'part_count_max',
-    'family_name' => 'institution_name'
-    
+    'family_name' => 'institution_name',    
   ) ; 
   
   public function importFile($file,$id)
@@ -82,7 +81,6 @@ class ImportDnaXml implements IImportModels
       if($key == 'collection_objects') $this->createAndSaveStaging($node,$id) ;
       elseif($key == 'codes') $this->processWithCodesNode($array[$key],$id);
       elseif($key == 'identifications') $this->processWithIdentificationsNode($array[$key],$id);
-      elseif($key == 'institution') $this->processWithInstitutionNode($array[$key],$id);
       elseif($key == 'comments') $this->processWithCommentsNode($array[$key],$id);
       elseif($key == 'properties') $this->processWithPropertiesNode($array[$key],$id);
       elseif($key == 'tag_groups') $this->processWithTagGroupsNode($array[$key],$id);
