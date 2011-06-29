@@ -1433,8 +1433,6 @@ create table specimen_parts
         constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
 
-CREATE UNIQUE INDEX  unq_specimen_parts ON specimen_parts (specimen_individual_ref, specimen_part, coalesce("building", ''), coalesce("floor", ''), coalesce("room", ''), coalesce("row", ''), coalesce("shelf", ''), coalesce("container", ''), coalesce("sub_container", ''), specimen_status);
-
 comment on table specimen_parts is 'List of individuals or parts of individuals stored in conservatories';
 comment on column specimen_parts.id is 'Unique identifier of a specimen part/individual';
 comment on column specimen_parts.specimen_individual_ref is 'Reference of corresponding characterized specimen';
