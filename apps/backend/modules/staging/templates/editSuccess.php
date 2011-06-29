@@ -1,3 +1,4 @@
+<?php slot('title',__('Correction of import row'));?>
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 <div class="page">

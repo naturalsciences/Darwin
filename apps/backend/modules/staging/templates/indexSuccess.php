@@ -1,3 +1,4 @@
+<?php slot('title',__('Display of import file'));?>
 <div class="page">
   <?php echo form_tag('staging/search?import='.$import->getId(), array('class'=>'search_form','id'=>'import_filter'));?>
   <?php include_stylesheets_for_form($form) ?>
