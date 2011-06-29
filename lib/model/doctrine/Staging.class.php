@@ -179,6 +179,7 @@ class Staging extends BaseStaging
   {
     $status = $this->getStatus() ;
     if(!$status) return null ;
+    $fieldsToShow = array();
     foreach($status as $key => $value)
     {
       if($tosave) $fieldsToShow[$key] = $value ;

@@ -145,7 +145,7 @@ class stagingActions extends DarwinActions
       try
       {
         $form->save();
-        $this->redirect('staging?import='.$form->getObject()->getId());
+        return $this->redirect('staging/index?import='.$form->getObject()->getImportRef());
       }
       catch(Doctrine_Exception $ne)
       {
