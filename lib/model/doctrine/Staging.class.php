@@ -12,6 +12,7 @@
  */
 class Staging extends BaseStaging
 {
+  public $codes = array();
   private static $errors = array('not_found' => 'This %field% was not found in our database, please choose an existing one or remove it',
                                  'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
             	                   'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
@@ -131,6 +132,15 @@ class Staging extends BaseStaging
     return $hstore ;
   }
   
+  public function getCodes()
+  { 
+    return $this->codes;
+  }
+
+  public function getLinkedInfo()
+  {
+    return "n/a";
+  }
   public function setStatus($value)
   {
     $status = '' ;

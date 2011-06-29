@@ -7,6 +7,7 @@
   <?php foreach($fields as $name):?>
     <th><?php echo $name;?></th>
   <?php endforeach;?>
+    <th><?php echo __('Codes');?></th>
     <th><?php echo __('Linked Info');?></th>
     <th><?php echo __('Status');?></th>
     <th></th>
@@ -16,13 +17,24 @@
       <?php foreach($fields as $name):?>
         <td class="<?php echo $row->getStatusFor($name);?>"><?php echo $row[$name];?></td>
       <?php endforeach;?>
-      <td><?php echo 'n/a';//$row['linked_info'];?></td>
-      <td><?php if($row['status'] != '' && $row['status'] != '{}'):?>
-        <?php echo __('Error');?>
+      <td>
+        <ul class="codes">
+          <?php foreach($row['codes'] as $k=>$v):?>
+            <li>
+              <?php echo $v->code_prefix.$v->code_prefix_separator.
+              $v->code.$v->code_suffix.$v->code_suffix_separator;?>
+            </li>
+          <?php endforeach;?>
+        </ul>
+      </td>
+      <td><?php echo $row['linked_info'];?></td>
+      <td>
+        <?php if(count($row['status']) != 0 ):?>
+          <?php echo __('Error');?>
         <?php endif;?>
       </td>
       <td>
-        <?php if($row['status'] != '' && $row['status'] != '{}'):?>
+        <?php if(count($row['status']) != 0 ):?>
           <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id']);?>
         <?php endif;?>
       </td>

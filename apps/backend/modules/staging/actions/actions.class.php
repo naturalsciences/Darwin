@@ -66,6 +66,27 @@ class stagingActions extends DarwinActions
       if (! $this->pagerLayout->getPager()->getExecuted())
         $this->search = $this->pagerLayout->execute();
 
+      /** Let's Fetch id for codes */
+      $ids = array();
+      foreach($this->search as $k=>$v)
+      {
+        $ids[] = $v->getId();
+      }
+      
+      $codes = Doctrine::getTable('Codes')->getCodesRelatedArray('staging',$ids) ;
+
+      foreach($codes as $code)
+      {
+        foreach($this->search as $k=>$v)
+        {
+          if($code['record_id'] = $v->getId())
+          {
+            $v->codes[] = $code;
+            break;
+          }
+        }
+      }
+
       $this->displayModel = new DisplayImportDna();
       
       $this->fields = $this->displayModel->getColumnsForLevel($this->form->getValue('slevel'));
