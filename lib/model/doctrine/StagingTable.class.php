@@ -24,5 +24,14 @@ class StagingTable extends DarwinTable
   public function getDistinctHostRelationships()
   {
       return $this->createFlatDistinct('specimens', 'host_relationship', 'host_relationship')->execute();
-  }    
+  }
+
+  public function findLinked($record_ids)
+  {
+    $conn = Doctrine_Manager::connection();
+    $sql = "select record_id, count(*) as cnt FROM template_table_record_ref r where referenced_relation='staging' and 
+      record_id in (".implode(',',$record_ids).") GROUP BY record_id";
+    $result = $conn->fetchAssoc($sql);
+    return $result;
+  }
 }

@@ -34,7 +34,7 @@
         <?php endif;?>
       </td>
       <td>
-        <?php if(count($row['status']) != 0 ):?>
+        <?php if(count($row['status']) != 12 ):?>
           <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id']);?>
         <?php endif;?>
       </td>

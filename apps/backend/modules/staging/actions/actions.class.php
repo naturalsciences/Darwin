@@ -74,16 +74,20 @@ class stagingActions extends DarwinActions
       }
       
       $codes = Doctrine::getTable('Codes')->getCodesRelatedArray('staging',$ids) ;
-
-      foreach($codes as $code)
+      $linked = Doctrine::getTable('Staging')->findLinked($ids) ;
+      foreach($this->search as $k=>$v)
       {
-        foreach($this->search as $k=>$v)
+        foreach($codes as $code)
         {
-          if($code['record_id'] = $v->getId())
+          if($code['record_id'] == $v->getId())
           {
             $v->codes[] = $code;
-            break;
           }
+        }
+        foreach($linked as $link)
+        {
+          if($link['record_id'] == $v->getId())
+            $v->setLinkedInfo($link['cnt']);
         }
       }
 

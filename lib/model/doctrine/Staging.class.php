@@ -13,13 +13,15 @@
 class Staging extends BaseStaging
 {
   public $codes = array();
-  private static $errors = array('not_found' => 'This %field% was not found in our database, please choose an existing one or remove it',
-                                 'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
-            	                   'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
-            	                   'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one',
-            	                   'duplicate' => 'This record seems to have already been saved you can see it ',
-                                );
-	                   
+
+  private static $errors = array(
+    'not_found' => 'This %field% was not found in our database, please choose an existing one or remove it',
+    'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
+    'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
+    'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one',
+    'duplicate' => 'This record seems to have already been saved you can see it ',
+  );
+
   public function getGtu()
   {
     return $this->_get('gtu_code');
@@ -137,9 +139,16 @@ class Staging extends BaseStaging
     return $this->codes;
   }
 
+  public function setLinkedInfo($nbr)
+  {
+    $this->linkedInfo = $nbr;
+  }
+
   public function getLinkedInfo()
   {
-    return "n/a";
+    if(isset($this->linkedInfo))
+      return $this->linkedInfo - count($this->codes);
+    return 0;
   }
   public function setStatus($value)
   {
