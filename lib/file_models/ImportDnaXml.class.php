@@ -190,14 +190,14 @@ class ImportDnaXml implements IImportModels
    */    
   public function processWithTaxonNode($xml_node,$object)
   {
-    $taxon_parent = '' ;
+    $taxon_parent = new Hstore();
     $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species") ;
     foreach ($xml_node->childNodes as $taxon_node) 
     {        
       // text node doesn't interest us
       if($taxon_node->nodeName == "#text") continue;
       // if a node have not more than one child, it's a node without childen
-      if(in_array($taxon_node->nodeName,$array_level)) $taxon_parent .= $taxon_node->nodeName.'=>'.$taxon_node->nodeValue.',' ;   
+      if(in_array($taxon_node->nodeName,$array_level)) $taxon_parent[$taxon_node->nodeName] = $taxon_node->nodeValue;   
       elseif($taxon_node->nodeName == 'name') $object['taxon_name'] = $taxon_node->nodeValue ;
       elseif($taxon_node->nodeName == 'level') $object['taxon_level_name'] = $taxon_node->nodeValue ;
       elseif($taxon_node->nodeName == 'comments')
@@ -212,7 +212,7 @@ class ImportDnaXml implements IImportModels
       }              
       else die('Unknown node '.$taxon_node->nodeName.' in taxon') ;
     }
-    $object['taxon_parents'] = substr($taxon_parent,0,strlen($taxon_parent)-1) ;
+    $object['taxon_parents'] = $taxon_parent->export();
   }
      
   /**

@@ -19,6 +19,6 @@
 </div>
 <script language="javascript">
 $(document).ready(function () {
-  //$('#import_filter').submit();
+  $('#import_filter').submit();
 });
 </script>
