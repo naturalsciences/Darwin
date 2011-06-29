@@ -43,4 +43,11 @@ class StagingFormFilter extends BaseStagingFormFilter
        $query->andWhere("level = ? ", $value);
      return $query;
   }
+  public function  getQuery()
+  {
+    $query = parent::getQuery();
+    $query->andWhere('import_ref = ?',$this->options['import']->getId())
+        ->andWhere('to_import = false');
+    return $query;
+  }
 }

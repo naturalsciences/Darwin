@@ -26,7 +26,6 @@ class stagingActions extends DarwinActions
     if($this->form->isValid())
     {
       $query = $this->form->getQuery();
-      $query->andWhere('import_ref = ?',$this->import->getId());
       // Define the pager
       $pager = new DarwinPager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
 
