@@ -126,10 +126,9 @@ class Staging extends BaseStaging
   
   public function getStatus()
   {
-    $fieldsToShow = array() ;
-    $hstore = $this->_get('status') ;
-    eval("\$status = array({$hstore});");     
-    return $status ;
+    $hstore = new Hstore() ;
+    $hstore->import($this->_get('status')) ;
+    return $hstore ;
   }
   
   public function setStatus($value)
@@ -137,7 +136,7 @@ class Staging extends BaseStaging
     $status = '' ;
     foreach($value as $field => $error)
     {
-      if($error != 'done') $status .= $field."=>".$error.',' ;
+      if($error != 'done') $status .= '"'.$field.'"=>"'.$error.'",' ;
     }
     $this->_set('status', substr($status,0,strlen($status)-1));
   }  

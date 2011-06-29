@@ -14,7 +14,7 @@
   <?php if(!$fields) : ?>
     <?php echo __('No errors on this record') ; ?>
     <p class="form_buttons right_aligned error">  
-      <a href="<?php echo url_for('staging?import='.$form->getObject()->getImportRef()) ?>" id="spec_cancel"><?php echo __('Back');?></a>
+      <a href="<?php echo url_for('staging/index?import='.$form->getObject()->getImportRef()) ?>" id="spec_cancel"><?php echo __('Back');?></a>
     </p>
   <?php else : ?> 
     <?php foreach($fields as $key => $array) : ?>
@@ -58,7 +58,7 @@
       <?php echo __('<strong>Warning!</strong><br />If you don\'t correct default values before saving, The associated error will remain.');?>
     </div>  
     <p class="form_buttons right_aligned error">  
-      <a href="<?php echo url_for('staging?import='.$form->getObject()->getImportRef()) ?>" id="spec_cancel"><?php echo __('Back');?></a>
+      <a href="<?php echo url_for('staging/index?import='.$form->getObject()->getImportRef()) ?>" id="spec_cancel"><?php echo __('Back');?></a>
       <input type="submit" value="<?php echo __('Update');?>" id="submit"/>
     </p>
   <?php endif ; ?>

@@ -105,6 +105,10 @@ class ImportDnaXml implements IImportModels
       elseif($childNode->nodeName == 'donators') $this->processWithDonatorsNode($childNode,$object);      
       elseif($childNode->nodeName == 'collectors') $this->processWithCollectorsNode($childNode,$object);      
       elseif($childNode->nodeName == 'taxon') $this->processWithTaxonNode($childNode,$object);         
+      elseif($childNode->nodeName == 'chrono') $this->processWithChronoNode($childNode,$object);  
+      elseif($childNode->nodeName == 'litho') $this->processWithLithoNode($childNode,$object);  
+      elseif($childNode->nodeName == 'lithology') $this->processWithLithologyNode($childNode,$object);  
+      elseif($childNode->nodeName == 'mineralogy') $this->processWithMineralogyNode($childNode,$object);                          
       else $this->complex_nodes[$childNode->nodeName] = $childNode ;
     }
   }  
@@ -214,7 +218,135 @@ class ImportDnaXml implements IImportModels
     }
     $object['taxon_parents'] = $taxon_parent->export();
   }
-     
+  
+   /**
+   * This function fill all chrono fields from Staging
+   * $chrono_parent may containt all field referenced in $array_level separated by ","
+   */    
+  public function processWithChronoNode($xml_node,$object)
+  {
+    $chrono_parent = new Hstore();
+    // this array below is a taxon array ! I must change it as soon as I get the good list
+    $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species") ;
+    foreach ($xml_node->childNodes as $chrono_node) 
+    {        
+      // text node doesn't interest us
+      if($chrono_node->nodeName == "#text") continue;
+      // if a node have not more than one child, it's a node without childen
+      if(in_array($chrono_node->nodeName,$array_level)) $chrono_parent[$chrono_node->nodeName] = $chrono_node->nodeValue;   
+      elseif($chrono_node->nodeName == 'name') $object['chrono_name'] = $chrono_node->nodeValue ;
+      elseif($chrono_node->nodeName == 'level') $object['chrono_level_name'] = $chrono_node->nodeValue ;
+      elseif($chrono_node->nodeName == 'comments')
+      {
+        $this->complex_nodes['comments']['node'] = $chrono_node ;
+        $this->complex_nodes['comments']['notion_concerned'] = 'chrono' ;
+      }  
+      elseif($chrono_node->nodeName == 'properties')
+      {
+        $this->complex_nodes['properties']['node'] = $chrono_node ;
+        $this->complex_nodes['properties']['notion_concerned'] = 'chrono' ;
+      }              
+      else die('Unknown node '.$chrono_node->nodeName.' in chrono') ;
+    }
+    $object['chrono_parents'] = $chrono_parent->export();
+  }
+  
+   /**
+   * This function fill all litho fields from Staging
+   * $chrono_parent may containt all field referenced in $array_level separated by ","
+   */    
+  public function processWithLithoNode($xml_node,$object)
+  {
+    $litho_parent = new Hstore();
+    // this array below is a litho array ! I must change it as soon as I get the good list
+    $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species") ;
+    foreach ($xml_node->childNodes as $litho_node) 
+    {        
+      // text node doesn't interest us
+      if($litho_node->nodeName == "#text") continue;
+      // if a node have not more than one child, it's a node without childen
+      if(in_array($litho_node->nodeName,$array_level)) $litho_parent[$litho_node->nodeName] = $litho_node->nodeValue;   
+      elseif($litho_node->nodeName == 'name') $object['litho_name'] = $litho_node->nodeValue ;
+      elseif($litho_node->nodeName == 'level') $object['litho_level_name'] = $litho_node->nodeValue ;
+      elseif($litho_node->nodeName == 'comments')
+      {
+        $this->complex_nodes['comments']['node'] = $litho_node ;
+        $this->complex_nodes['comments']['notion_concerned'] = 'litho' ;
+      }  
+      elseif($litho_node->nodeName == 'properties')
+      {
+        $this->complex_nodes['properties']['node'] = $litho_node ;
+        $this->complex_nodes['properties']['notion_concerned'] = 'litho' ;
+      }              
+      else die('Unknown node '.$litho_node->nodeName.' in litho') ;
+    }
+    $object['litho_parents'] = $litho_parent->export();
+  }
+  
+   /**
+   * This function fill all lithology fields from Staging
+   * $chrono_parent may containt all field referenced in $array_level separated by ","
+   */    
+  public function processWithLithologyNode($xml_node,$object)
+  {
+    $litho_parent = new Hstore();
+    // this array below is a litho array ! I must change it as soon as I get the good list
+    $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species") ;
+    foreach ($xml_node->childNodes as $litho_node) 
+    {        
+      // text node doesn't interest us
+      if($litho_node->nodeName == "#text") continue;
+      // if a node have not more than one child, it's a node without childen
+      if(in_array($litho_node->nodeName,$array_level)) $litho_parent[$litho_node->nodeName] = $litho_node->nodeValue;   
+      elseif($litho_node->nodeName == 'name') $object['lithology_name'] = $litho_node->nodeValue ;
+      elseif($litho_node->nodeName == 'level') $object['lithology_level_name'] = $litho_node->nodeValue ;
+      elseif($litho_node->nodeName == 'comments')
+      {
+        $this->complex_nodes['comments']['node'] = $litho_node ;
+        $this->complex_nodes['comments']['notion_concerned'] = 'lithology' ;
+      }  
+      elseif($litho_node->nodeName == 'properties')
+      {
+        $this->complex_nodes['properties']['node'] = $litho_node ;
+        $this->complex_nodes['properties']['notion_concerned'] = 'lithology' ;
+      }              
+      else die('Unknown node '.$litho_node->nodeName.' in lithology') ;
+    }
+    $object['lithology_parents'] = $litho_parent->export();
+  } 
+       
+   /**
+   * This function fill all lithology fields from Staging
+   * $chrono_parent may containt all field referenced in $array_level separated by ","
+   */    
+  public function processWithMineralogyNode($xml_node,$object)
+  {
+    $mineral_parent = new Hstore();
+    // this array below is a mineral array ! I must change it as soon as I get the good list
+    $array_level = array("phylum","class","order","family","genus","sub_genus","species","sub_species") ;
+    foreach ($xml_node->childNodes as $mineral_node) 
+    {        
+      // text node doesn't interest us
+      if($mineral_node->nodeName == "#text") continue;
+      // if a node have not more than one child, it's a node without childen
+      if(in_array($mineral_node->nodeName,$array_level)) $mineral_parent[$mineral_node->nodeName] = $mineral_node->nodeValue;   
+      elseif($mineral_node->nodeName == 'name') $object['mineralogy_name'] = $mineral_node->nodeValue ;
+      elseif($mineral_node->nodeName == 'level') $object['mineralogy_level_name'] = $mineral_node->nodeValue ;
+      elseif($mineral_node->nodeName == 'comments')
+      {
+        $this->complex_nodes['comments']['node'] = $mineral_node ;
+        $this->complex_nodes['comments']['notion_concerned'] = 'mineralogy' ;
+      }  
+      elseif($mineral_node->nodeName == 'properties')
+      {
+        $this->complex_nodes['properties']['node'] = $mineral_node ;
+        $this->complex_nodes['properties']['notion_concerned'] = 'mineralogy' ;
+      }              
+      else die('Unknown node '.$mineral_node->nodeName.' in mineralogy') ;
+    }
+    $object['mineralogy_parents'] = $mineral_parent->export();
+  }  
+      
   /**
    * This function create and save all Codes found
    */      
