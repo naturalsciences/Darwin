@@ -102,9 +102,6 @@ class stagingActions extends DarwinActions
     $this->forward404Unless($request->hasParameter('import'));
     $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
     $this->form = new StagingFormFilter(null, array('import' =>$this->import));
-    $filters = $request->getParameter('staging_filters');
-    if(!isset($filters['slevel'])) $filters['slevel'] = 'specimen';
-    $this->form->bind($filters);
   }
   
   public function executeEdit(sfWebRequest $request)

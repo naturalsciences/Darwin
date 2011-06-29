@@ -18,11 +18,25 @@ class StagingFormFilter extends BaseStagingFormFilter
     $levels = $model->getLevels();
     $this->widgetSchema['slevel']  = new sfWidgetFormChoice(array('expanded'=>true,'choices'=> $levels));
     $this->validatorSchema['slevel'] = new sfValidatorChoice(array('choices' => array_keys($levels), 'required'=>false,'empty_value'=>'specimens'));
+    $this->setDefault('slevel', 'specimen');
+
+    $this->widgetSchema['only_errors']  = new sfWidgetFormInputCheckbox();
+    $this->validatorSchema['only_errors'] = new sfValidatorBoolean(array('required' => false));
+    $this->setDefault('only_errors', 1);
+
     $this->widgetSchema->setLabels(array(
       'slevel'=>'Levels',
-    ) );
+      'only_errors'=>'Show only row with errors',
+    ));
   }
 
+  public function addOnlyErrorsColumnQuery(Doctrine_Query $query, $field, $value)
+  {
+    if ($value != "")
+    {
+      $query->andWhere("status != '' ");
+    }
+  }
   public function addSlevelColumnQuery(Doctrine_Query $query, $field, $value)
   {
      if ($value != "")

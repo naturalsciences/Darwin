@@ -28,6 +28,7 @@ class StagingTable extends DarwinTable
 
   public function findLinked($record_ids)
   {
+    if(! count($record_ids)) return array();
     $conn = Doctrine_Manager::connection();
     $sql = "select record_id, count(*) as cnt FROM template_table_record_ref r where referenced_relation='staging' and 
       record_id in (".implode(',',$record_ids).") GROUP BY record_id";

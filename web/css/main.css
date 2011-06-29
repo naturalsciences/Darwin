@@ -2677,3 +2677,18 @@ input[type='file']
 {
   margin-top: 1em;
 }
+
+.no_record_msg
+{
+  margin-top: 2em;
+  min-width: 300px;
+  text-align:center
+}
+.no_record_msg em
+{
+  text-decoration:underline;
+}
+.no_record_msg em:hover
+{
+    cursor:pointer;
+}

@@ -5,8 +5,10 @@
 
   <div class="container">
     <?php echo $form['slevel']->renderRow();?>
-    <input type="submit"/>
+    <?php echo $form['only_errors']->renderRow();?>
     <br />
+    <br />
+    <input type="submit"/>
 
     <div class="search_results">
       <div class="search_results_content">
