@@ -30,5 +30,6 @@
   <?php endforeach;?>
 </table>
 <br/>
+<div class="blue_link"><?php echo link_to(__('Back to Import'), 'import/index');?></div>
 <?php echo link_to(__('Import "Ok" lines'), 'staging/markok?import='.$import->getId() ,'class=but');?>
 </div>

@@ -69,6 +69,7 @@ class DisplayImportDna implements IDisplayModels
     return array(
       'part',
       'specimen_status',
+      'institution',
       'building',
       'floor',
       'room',

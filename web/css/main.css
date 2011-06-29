@@ -734,7 +734,7 @@ p.tree
 
 /** Add New button after results **/
 
-.new_link, #gtu_filter .right_button
+.new_link, #gtu_filter .right_button, .blue_link
 {
   float:right;
   background-color:#5BAABD;
@@ -752,7 +752,7 @@ p.tree
   padding-right: 0.5em;
 }
 
-.new_link a
+.new_link a, .blue_link a
 {
 /*  vertical-align:text-bottom;*/
   padding: 6px;
