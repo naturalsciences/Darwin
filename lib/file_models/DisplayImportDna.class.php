@@ -59,8 +59,7 @@ class DisplayImportDna implements IDisplayModels
       'individual_stage',
       'individual_social_status',
       'individual_rock_form',
-      'individual_count_min',
-      'individual_count_max',
+      'individual_count',
     );
   }
 
@@ -81,8 +80,7 @@ class DisplayImportDna implements IDisplayModels
       'sub_container_type',
       'sub_container_storage',
       'sub_container',
-      'part_count_min',
-      'part_count_max',
+      'part_count',
     );
   }
 

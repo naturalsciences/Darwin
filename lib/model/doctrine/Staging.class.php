@@ -127,6 +127,20 @@ class Staging extends BaseStaging
     return $this->getPeopleInError('identifiers',$identifiers) ;
   }
   
+  public function getIndividualCount()
+  {
+    if($this->_get('individual_count_min') == $this->_get('individual_count_max'))
+      return $this->_get('individual_count_min');
+    return $this->_get('individual_count_min') .'-'.$this->_get('individual_count_max');
+  }
+
+  public function getPartCount()
+  {
+    if($this->_get('part_count_min') == $this->_get('part_count_max'))
+      return $this->_get('part_count_min');
+    return $this->_get('part_count_min') .'-'.$this->_get('part_count_max');
+  }
+
   public function getStatus()
   {
     $hstore = new Hstore() ;
