@@ -66,7 +66,7 @@ class Staging extends BaseStaging
   {
     return $this->_get('acquisition_category');
   }
-  
+
   public function getStatusFor($field)
   {
     $emtpy = 'fld_empty';
