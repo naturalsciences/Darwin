@@ -77,7 +77,7 @@ abstract class BaseImports extends sfDoctrineRecord
         $this->hasColumn('state', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => 'imported',
+             'default' => 'loaded',
              ));
         $this->hasColumn('created_at', 'string', null, array(
              'type' => 'string',
