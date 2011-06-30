@@ -26,7 +26,7 @@ class ImportsTable extends Doctrine_Table
       ->execute();
     $q = Doctrine_Query::create()->update('Imports');
     $q->andwhere('id = ? ',$id)
-      ->set('state', '?','waiting for import')
+      ->set('state', '?','processing')
       ->execute();
   }
   public function getNumberOfLines($record_ids)

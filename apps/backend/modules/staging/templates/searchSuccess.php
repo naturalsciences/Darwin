@@ -54,6 +54,7 @@
           <?php if(count($row['status']) != 0 ):?>
             <?php echo link_to(image_tag('edit.png', array("title" => __("Edit"))), 'staging/edit?id='.$row['id']);?>
           <?php endif;?>
+          <?php echo link_to(image_tag('remove.png', array("title" => __("Delete"))), 'staging/delete?id='.$row['id'],'class=remove_staging');?>
         </td>
         </tr>
     <?php endforeach;?>
@@ -62,4 +63,26 @@
   <div class="blue_link"><?php echo link_to(__('Back to Import'), 'import/index');?></div>
   <?php echo link_to(__('Import "Ok" lines'), 'staging/markok?import='.$import->getId() ,'class=but');?>
   </div>
+
+<script language="javascript">
+$(document).ready(function () {
+  $('.remove_staging').click(function(event)
+  {
+    event.preventDefault();
+    if(confirm('<?php echo addslashes(__('All children will be delete too, Are you sure ? '));?>'))
+    {
+      $.ajax({
+        url: $(this).attr('href'),
+        success: function(html)
+        {
+          if(html == "ok" )
+          {
+            $('#import_filter').submit();
+          }
+        }
+      });
+   }
+  });
+});
+</script>
 <?php endif;?>
