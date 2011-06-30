@@ -3633,14 +3633,14 @@ LEFT JOIN pg_locks pgl
       AND pgl.objid = i.id
       AND pgl.pid <> pg_backend_pid()
     WHERE pgl.objid IS NULL
-      AND i.state = 'imported'
+      AND i.state = 'loaded'
  ORDER BY i.created_at asc, i.id LOOP
     -- Trying to lock the job:
     IF pg_try_advisory_lock(tableoid('imports'), job.id) THEN
       -- Need to recheck the unlocked state: race conditions are still possible.
       -- For example, job could be requested, locked, processed, finished and unlocked
       -- while this function iterates over "then-unlocked" jobs list.
-      UPDATE imports set state='importing' where id=job.id;
+      UPDATE imports set state='loading' where id=job.id;
       RETURN job.id;
     END IF;
   END LOOP;
@@ -4237,8 +4237,8 @@ BEGIN
     WHERE cl.id=l.level_ref AND l.id = NEW.lithology_ref ; 
   END IF;
   IF OLD.mineral_ref IS DISTINCT FROM NEW.mineral_ref THEN
-    SELECT m.name, m.level_ref, cl.level_name, m.status, m.local_naming, m.color
-    INTO NEW.mineral_name, NEW.mineral_level_ref, NEW.mineral_level_name, NEW.mineral_status, NEW.mineral_local, NEW.mineral_color
+    SELECT m.name, m.level_ref, cl.level_name, m.status, m.local_naming, m.color, m.path
+    INTO NEW.mineral_name, NEW.mineral_level_ref, NEW.mineral_level_name, NEW.mineral_status, NEW.mineral_local, NEW.mineral_color, NEW.mineral_path
     FROM mineralogy m, catalogue_levels cl 
     WHERE cl.id=m.level_ref AND m.id = NEW.mineral_ref ; 
   END IF; 
