@@ -11,6 +11,18 @@
  */
 class importActions extends DarwinActions
 {
+  public function executeClear(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    Doctrine::getTable('Imports')->clearImport($request->getParameter('id'));
+    if($request->isXmlHttpRequest())
+    {
+      return $this->renderText('ok');
+    }
+    return $this->redirect('staging/index');
+  }
+
+
   public function executeUpload(sfWebRequest $request)
   {
     if(!$this->getUser()->isAtLeast(Users::ENCODER)) $this->forwardToSecureAction();    

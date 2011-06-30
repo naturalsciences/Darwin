@@ -29,6 +29,7 @@ class ImportsTable extends Doctrine_Table
       ->set('state', '?','processing')
       ->execute();
   }
+
   public function getNumberOfLines($record_ids)
   {
     if(! count($record_ids)) return array();
@@ -36,5 +37,17 @@ class ImportsTable extends Doctrine_Table
     $sql = "select import_ref as id, count(*) as cnt FROM staging r where import_ref in (".implode(',',$record_ids).") GROUP BY import_ref";
     $result = $conn->fetchAssoc($sql);
     return $result;
+  }
+  public function clearImport($id)
+  {
+
+    $q = Doctrine_Query::create()->Delete('staging s')
+      ->andwhere('import_ref = ? ',$id)
+      ->execute();
+    $q = Doctrine_Query::create()->update('Imports')
+      ->andwhere('id = ? ',$id)
+      ->set('state', '?','finished')
+      ->set('is_finished', '?',true)
+      ->execute();
   }
 }

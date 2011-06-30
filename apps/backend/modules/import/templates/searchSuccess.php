@@ -51,9 +51,11 @@
               <td><?php echo $import->getLastModifiedDate(ESC_RAW);?></td>
               <td><?php echo __('%rest% on %initial%',array('%rest%'=>$import->getInitialCount()-$import->getCurrentLineNum(), '%initial%'=>$import->getInitialCount() )) ;?></td>
               <td>
-                <?php if ($sf_user->isAtLeast(Users::ENCODER) && $import->isEditableState()) : ?>
+                <?php if ($import->isEditableState()) : ?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
-                <?php endif ; ?>                  
+                <?php endif ; ?>
+                <?php echo link_to(image_tag('remove_2.png',array('title'=>'Clear Import')),'import/clear?id='.$import->getId(),'class=remove_import');?>
+
               </td>
             </tr>
           <?php endforeach;?>
@@ -61,6 +63,28 @@
       </table>
     </div>
     <?php include_partial('global/pager', array('pagerLayout' => $pagerLayout)); ?>
+
+<script language="javascript">
+$(document).ready(function () {
+  $('.remove_import').click(function(event)
+  {
+    event.preventDefault();
+    if(confirm('<?php echo addslashes(__('All pending lines will be deleted, Are you sure ?'));?>'))
+    {
+      $.ajax({
+        url: $(this).attr('href'),
+        success: function(html)
+        {
+          if(html == "ok" )
+          {
+            $('#import_filter').submit();
+          }
+        }
+      });
+   }
+  });
+});
+</script>
   <?php else:?>
     <?php echo __('No import Matching');?>
   <?php endif;?>
