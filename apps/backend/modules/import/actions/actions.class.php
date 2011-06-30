@@ -78,8 +78,8 @@ class importActions extends DarwinActions
       $this->form->bind($request->getParameter('imports_filters'));
       if ($this->form->isValid())
       { 
-        $query = $this->form->getQuery()->andWhereIn('collection_ref',array_keys(Doctrine::getTable('Collections')->getAllAvailableCollectionsFor($this->getUser()->getId())))
-                  ->orderBy($this->orderBy .' '.$this->orderDir);
+        $query = $this->form->getQuery()
+          ->orderBy($this->orderBy .' '.$this->orderDir);
         $this->pagerLayout = new PagerLayoutWithArrows(
           new DarwinPager(
             $query,
@@ -96,6 +96,25 @@ class importActions extends DarwinActions
 
         if (! $this->pagerLayout->getPager()->getExecuted())
           $this->imports = $this->pagerLayout->execute();
+
+        $ids = array();
+        foreach($this->imports as $k=>$v)
+        {
+          $ids[] = $v->getId();
+        }
+      
+        $imp_lines = Doctrine::getTable('Imports')->getNumberOfLines($ids) ;
+        foreach($imp_lines as $k=>$v)
+        {
+          foreach($this->imports as $import)
+          {
+            if($v['id'] == $import->getId())
+            {
+              $import->setCurrentLineNum($v['cnt']);
+              break 2;
+            }
+          }
+        }
       }
     }
   }

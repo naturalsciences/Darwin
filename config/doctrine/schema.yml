@@ -1915,6 +1915,8 @@ Imports:
         state: {type:string,notnull:true, default:'imported'}
         created_at: { type: string, notnull: true}
         updated_at: { type: string, notnull: true}
+        initial_count: {type:integer, notnull: true}
+        is_finished: {type:boolean, notnull: true,default:false}
     relations:
         Collections:
             local: collection_ref

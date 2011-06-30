@@ -37,6 +37,7 @@
                 <?php if($orderBy=='updated_at') echo $orderSign ?>
               </a>
             </th>                      
+            <th><?php echo __("Progression") ; ?></th>
             <th><?php echo __("Possible actions") ; ?></th>
           </tr>
         </thead>
@@ -48,6 +49,7 @@
               <td><?php echo $import->getFilename();?></td>
               <td><?php echo $import->getState();?></td>
               <td><?php echo $import->getLastModifiedDate(ESC_RAW);?></td>
+              <td><?php echo $import->getCurrentLineNum().'/'.$import->getInitialCount() ;?></td>
               <td>
                 <?php if ($sf_user->isAtLeast(Users::ENCODER) && $import->isEditableState()) : ?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>

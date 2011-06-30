@@ -41,9 +41,11 @@ EOF;
         {
           $import = new importDnaXml() ;
           $import->importFile($file,$id) ;
+        
           Doctrine_Query::create()
             ->update('imports p')
             ->set('p.state','?','loaded')
+            ->set('p.initial_count','(select count(*) from staging where import_ref = ? )',$id)
             ->where('p.id = ?', $id)
             ->execute();
         }              

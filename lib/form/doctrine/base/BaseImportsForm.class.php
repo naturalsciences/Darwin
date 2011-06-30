@@ -23,6 +23,8 @@ abstract class BaseImportsForm extends BaseFormDoctrine
       'state'          => new sfWidgetFormTextarea(),
       'created_at'     => new sfWidgetFormTextarea(),
       'updated_at'     => new sfWidgetFormTextarea(),
+      'initial_count'  => new sfWidgetFormInputText(),
+      'is_finished'    => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -34,6 +36,8 @@ abstract class BaseImportsForm extends BaseFormDoctrine
       'state'          => new sfValidatorString(array('required' => false)),
       'created_at'     => new sfValidatorString(),
       'updated_at'     => new sfValidatorString(),
+      'initial_count'  => new sfValidatorInteger(),
+      'is_finished'    => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('imports[%s]');

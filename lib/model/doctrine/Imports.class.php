@@ -12,7 +12,7 @@
  */
 class Imports extends BaseImports
 {
-
+  protected $line_num = 0;
   private static $state = array(
     '' => 'All', 
     'loaded'=>'Loaded',
@@ -23,7 +23,16 @@ class Imports extends BaseImports
   );  
 
   public static $formatArray = array('dna' => 'DNA') ;
-    
+  
+  public function setCurrentLineNum($nbr)
+  {
+    $this->line_num = $nbr;
+  }
+  public function getCurrentLineNum()
+  {
+    return $this->line_num;
+  }
+
   public static function getFormats()
   {
     return self::$formatArray ;

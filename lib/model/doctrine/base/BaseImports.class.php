@@ -13,6 +13,8 @@
  * @property string $state
  * @property string $created_at
  * @property string $updated_at
+ * @property integer $initial_count
+ * @property boolean $is_finished
  * @property Collections $Collections
  * @property Doctrine_Collection $Staging
  * 
@@ -24,6 +26,8 @@
  * @method string              getState()          Returns the current record's "state" value
  * @method string              getCreatedAt()      Returns the current record's "created_at" value
  * @method string              getUpdatedAt()      Returns the current record's "updated_at" value
+ * @method integer             getInitialCount()   Returns the current record's "initial_count" value
+ * @method boolean             getIsFinished()     Returns the current record's "is_finished" value
  * @method Collections         getCollections()    Returns the current record's "Collections" value
  * @method Doctrine_Collection getStaging()        Returns the current record's "Staging" collection
  * @method Imports             setId()             Sets the current record's "id" value
@@ -34,6 +38,8 @@
  * @method Imports             setState()          Sets the current record's "state" value
  * @method Imports             setCreatedAt()      Sets the current record's "created_at" value
  * @method Imports             setUpdatedAt()      Sets the current record's "updated_at" value
+ * @method Imports             setInitialCount()   Sets the current record's "initial_count" value
+ * @method Imports             setIsFinished()     Sets the current record's "is_finished" value
  * @method Imports             setCollections()    Sets the current record's "Collections" value
  * @method Imports             setStaging()        Sets the current record's "Staging" collection
  * 
@@ -80,6 +86,15 @@ abstract class BaseImports extends sfDoctrineRecord
         $this->hasColumn('updated_at', 'string', null, array(
              'type' => 'string',
              'notnull' => true,
+             ));
+        $this->hasColumn('initial_count', 'integer', null, array(
+             'type' => 'integer',
+             'notnull' => true,
+             ));
+        $this->hasColumn('is_finished', 'boolean', null, array(
+             'type' => 'boolean',
+             'notnull' => true,
+             'default' => false,
              ));
     }
 

@@ -29,4 +29,12 @@ class ImportsTable extends Doctrine_Table
       ->set('state', '?','waiting for import')
       ->execute();
   }
+  public function getNumberOfLines($record_ids)
+  {
+    if(! count($record_ids)) return array();
+    $conn = Doctrine_Manager::connection();
+    $sql = "select import_ref as id, count(*) as cnt FROM staging r where import_ref in (".implode(',',$record_ids).") GROUP BY import_ref";
+    $result = $conn->fetchAssoc($sql);
+    return $result;
+  }
 }

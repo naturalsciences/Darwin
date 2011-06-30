@@ -47,11 +47,15 @@ class ImportsFormFilter extends BaseImportsFormFilter
   {
     $query = DQ::create()
       ->from('Imports i')
-  	  ->innerJoin("i.Collections")    ;  
+      ->innerJoin("i.Collections")    ;  
     if($values['collection_ref'] != 0) $query->addWhere('i.collection_ref = ?', $values['collection_ref']) ;
     if($values['filename']) $query->addWhere('i.filename LIKE \'%'.$values['filename'].'%\'');
     if($values['state']) $query->addWhere('i.state = ?', $values['state']) ;    
     // here, add where clause to look for import file only where the user have right on collection 
+    $query->andWhereIn('collection_ref',array_keys(
+      Doctrine::getTable('Collections')->getAllAvailableCollectionsFor($this->options['user_ref']))
+    );
+
     return $query ;
   }  
 }
