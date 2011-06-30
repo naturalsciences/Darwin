@@ -4080,7 +4080,7 @@ DECLARE
   old_level int;
 BEGIN
   FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id 
-      WHERE import_ref = req_import_ref AND to_import=true and status = ''::hstore  and parent_ref is null
+      WHERE import_ref = req_import_ref AND to_import=true and status = ''::hstore  and parent_ref is null AND i.is_finished =  FALSE
   LOOP
     /************
     *
@@ -4199,6 +4199,12 @@ BEGIN
 
     END;
   END LOOP;
+
+  IF EXISTS( select id FROM  staging WHERE import_ref = req_import_ref) THEN
+    UPDATE imports set state = 'pending' where id = req_import_ref;
+  ELSE
+    UPDATE imports set state = 'finished', is_finished = true where id = req_import_ref;
+  END IF;
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
