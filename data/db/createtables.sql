@@ -2072,7 +2072,7 @@ create table staging
     to_import boolean default false,
     constraint pk_staging primary key (id),
     constraint fk_staging_import foreign key (import_ref) references imports(id) on delete cascade,
-    constraint fk_parent_ref foreign key (parent_ref) references staging(id) on delete no action
+    constraint fk_parent_ref foreign key (parent_ref) references staging(id) on delete cascade
   );
 
 create sequence staging_tag_groups_id_seq;
