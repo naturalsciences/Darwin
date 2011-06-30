@@ -1933,6 +1933,7 @@ create table imports
     created_at timestamp not null default now(),
     updated_at timestamp,
     initial_count integer not null default 0,
+    is_finished boolean  not null default false,
     constraint pk_import primary key (id) ,
     constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade,
     constraint fk_imports_users foreign key (user_ref) references users(id) on delete cascade
@@ -1947,6 +1948,7 @@ comment on column imports.state is 'the state of the processing the file';
 comment on column imports.created_at is 'Creation of the file';
 comment on column imports.updated_at is 'When the data has been modified lately';
 comment on column imports.initial_count is 'Number of rows of staging when the import was created';
+comment on column imports.is_finished is 'Boolean to mark if the import is finished or still need some operations';
 
 create sequence staging_id_seq;
 
