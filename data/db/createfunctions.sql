@@ -3670,7 +3670,7 @@ BEGIN
 
     OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
     INNER JOIN catalogue_levels c on t.level_ref = c.id 
-    WHERE name = ' || quote_literal( field_name) || ' AND  level_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_name ELSE ' || quote_literal(field_level_name) || ' END 
+    WHERE name = ' || quote_literal( field_name) || ' AND  level_sys_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_sys_name ELSE ' || quote_literal(field_level_name) || ' END 
     LIMIT 2';
     LOOP
       FETCH ref INTO ref_record;
@@ -3701,7 +3701,7 @@ BEGIN
   result_nbr := 0;
     OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
     INNER JOIN catalogue_levels c on t.level_ref = c.id 
-    WHERE name_order_by like fullToIndex(' || quote_literal( field_name) || ') || ''%'' AND  level_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_name ELSE ' || quote_literal(field_level_name) || ' END 
+    WHERE name_order_by like fullToIndex(' || quote_literal( field_name) || ') || ''%'' AND  level_sys_name = CASE WHEN ' || quote_literal(field_level_name) || ' = '''' THEN level_sys_name ELSE ' || quote_literal(field_level_name) || ' END 
     LIMIT 2';
     LOOP
       FETCH ref INTO ref_record;
@@ -3793,7 +3793,7 @@ BEGIN
     lvl_value := rec_parents->lvl_name;
     EXECUTE 'SELECT count(*) from ' || quote_ident(catalogue_table) || ' t
       INNER JOIN catalogue_levels c on t.level_ref = c.id
-       WHERE level_name = ' || quote_literal(lvl_name) || ' AND 
+       WHERE level_sys_name = ' || quote_literal(lvl_name) || ' AND 
         name_order_by like fullToIndex( ' || quote_literal(lvl_value) || '  ) || ''%''
         AND ' || quote_literal(row_record.path) || 'like t.path || t.id || ''/%'' ' INTO result_nbr;
     IF result_nbr = 0 THEN
@@ -4080,15 +4080,16 @@ DECLARE
   old_level int;
 BEGIN
   FOR line IN SELECT * from staging s INNER JOIN imports i on  s.import_ref = i.id 
-      WHERE import_ref = req_import_ref AND to_import=true and status is null or status = ''::hstore  and parent_ref is null
+      WHERE import_ref = req_import_ref AND to_import=true and status = ''::hstore  and parent_ref is null AND i.is_finished =  FALSE
   LOOP
     /************
     *
     *  DON'T FORGET TO MAKE A CHECK !
     *
      ***/
-    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and COALESCE(status,status,''::hstore) != ''::hstore or to_import = false) THEN
+    IF exists(SELECT * from staging where path like '/' || line.id || '/%' and (status != ''::hstore or to_import = false) ) THEN
       --If line has childer with error, don't try to import it
+      raise info 'Children with errors';
       continue;
     END IF;
 
@@ -4169,7 +4170,7 @@ BEGIN
           ELSIF lower(s_line.level) = 'dna part' THEN
             old_level :=  prev_levels->'tissue part';
           END IF;
-
+          ALTER TABLE specimen_parts DISABLE TRIGGER trg_cpy_specimensmaincode_specimenpartcode;
           INSERT INTO specimen_parts (id, parent_ref, specimen_individual_ref, specimen_part, complete, institution_ref, building, floor, room, row, shelf,
             container, sub_container, container_type, sub_container_type, container_storage, sub_container_storage, surnumerary, specimen_status,
               specimen_part_count_min, specimen_part_count_max)
@@ -4185,18 +4186,25 @@ BEGIN
           );
           UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
           prev_levels := (prev_levels || (s_line.level => rec_id::text));
-
+          ALTER TABLE specimen_parts ENABLE TRIGGER trg_cpy_specimensmaincode_specimenpartcode;
         END IF;
 
       END LOOP;
 
       DELETE from staging where path like '/' || line.id || '/%' OR  id = line.id;
     EXCEPTION WHEN unique_violation THEN
---       RAISE info 'Error';
-      UPDATE staging SET status=(status || ('duplicate' => '0')) , to_import=false WHERE id = prev_levels->'specimen';
+      RAISE info 'Error uniq_violation: %', SQLERRM;
+      UPDATE staging SET status=(status || ('duplicate' => '0')) , to_import=false WHERE id = (prev_levels->'specimen')::integer;
       UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
+
     END;
   END LOOP;
+
+  IF EXISTS( select id FROM  staging WHERE import_ref = req_import_ref) THEN
+    UPDATE imports set state = 'pending' where id = req_import_ref;
+  ELSE
+    UPDATE imports set state = 'finished', is_finished = true where id = req_import_ref;
+  END IF;
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;

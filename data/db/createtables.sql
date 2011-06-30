@@ -1343,7 +1343,7 @@ create table codes
         code_date_mask integer not null default 0,
 	code_num integer default 0,
         constraint pk_codes primary key (id),
-        constraint unq_codes unique (referenced_relation, record_id, full_code_order_by)
+        constraint unq_codes unique (referenced_relation, record_id, full_code_order_by,code_category)
        )
 inherits (template_table_record_ref);
 
@@ -1432,8 +1432,6 @@ create table specimen_parts
         constraint chk_chk_specimen_parts_minmax check (specimen_part_count_min <= specimen_part_count_max),
         constraint chk_chk_specimen_part_min check (specimen_part_count_min >= 0)
        );
-
-CREATE UNIQUE INDEX  unq_specimen_parts ON specimen_parts (specimen_individual_ref, specimen_part, coalesce("building", ''), coalesce("floor", ''), coalesce("room", ''), coalesce("row", ''), coalesce("shelf", ''), coalesce("container", ''), coalesce("sub_container", ''), specimen_status);
 
 comment on table specimen_parts is 'List of individuals or parts of individuals stored in conservatories';
 comment on column specimen_parts.id is 'Unique identifier of a specimen part/individual';
@@ -1934,6 +1932,8 @@ create table imports
     state varchar not null default '',
     created_at timestamp not null default now(),
     updated_at timestamp,
+    initial_count integer not null default 0,
+    is_finished boolean  not null default false,
     constraint pk_import primary key (id) ,
     constraint fk_imports_collections foreign key (collection_ref) references collections(id) on delete cascade,
     constraint fk_imports_users foreign key (user_ref) references users(id) on delete cascade
@@ -1947,7 +1947,8 @@ comment on column imports.collection_ref is 'The collection associated';
 comment on column imports.state is 'the state of the processing the file';
 comment on column imports.created_at is 'Creation of the file';
 comment on column imports.updated_at is 'When the data has been modified lately';
-
+comment on column imports.initial_count is 'Number of rows of staging when the import was created';
+comment on column imports.is_finished is 'Boolean to mark if the import is finished or still need some operations';
 
 create sequence staging_id_seq;
 
