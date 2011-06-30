@@ -20,6 +20,7 @@ class Imports extends BaseImports
     'checking'=> 'Checking',
     'pending'=> 'Pending',
     'processing'=> 'Processing',
+    'finished' => 'Finished',
   );  
 
   public static $formatArray = array('dna' => 'DNA') ;
