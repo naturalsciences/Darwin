@@ -12,7 +12,16 @@
  */
 class Imports extends BaseImports
 {
-  private static $state = array('' => 'All', 'importing' => 'Importing', 'processing' => 'Processing', 'loaded' => 'Loaded', 'computing' => 'Computing', 'ready' => 'Ready') ;  
+
+  private static $state = array(
+    '' => 'All', 
+    'loaded'=>'Loaded',
+    'loading'=> 'Loading',
+    'checking'=> 'Checking',
+    'pending'=> 'Pending',
+    'processing'=> 'Processing',
+  );  
+
   public static $formatArray = array('dna' => 'DNA') ;
     
   public static function getFormats()
@@ -28,7 +37,7 @@ class Imports extends BaseImports
   // function used to determine if we can display edition button or not
   public function isEditableState()
   {
-    if(in_array($this->getState(),array('loaded','ready'))) return true ;
+    if(in_array($this->getState(),array('pending'))) return true ;
     return false ;
   }   
 

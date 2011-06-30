@@ -43,7 +43,7 @@ EOF;
           $import->importFile($file,$id) ;
           Doctrine_Query::create()
             ->update('imports p')
-            ->set('p.state',"'loaded'")
+            ->set('p.state','?','loaded')
             ->where('p.id = ?', $id)
             ->execute();
         }              
