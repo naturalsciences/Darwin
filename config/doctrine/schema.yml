@@ -1912,7 +1912,7 @@ Imports:
         user_ref: {type:integer, notnull: true}
         format : {type:string,notnull: true}
         collection_ref: { type: integer, notnull: true}
-        state: {type:string,notnull:true, default:'loaded'}
+        state: {type:string,notnull:true, default:'to_be_loaded'}
         created_at: { type: string, notnull: true}
         updated_at: { type: string, notnull: true}
         initial_count: {type:integer, notnull: true}

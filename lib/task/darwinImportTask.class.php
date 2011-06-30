@@ -26,12 +26,8 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     $conn = Doctrine_Manager::connection();
     $conn->getDbh()->exec('BEGIN TRANSACTION;');
-    do  
+    while($id = $conn->fetchOne('SELECT get_import_rows()'))  
     {
-      // il faudra que j'update ma ligne en mettant state = processing avant de la verouiller
-      $id = $conn->fetchOne('SELECT get_import_rows()');      
-      if($id != null) 
-      {
         $q = Doctrine_Query::create()
           ->from('imports p')
           ->where('p.id=?',$id)
@@ -39,9 +35,14 @@ EOF;
         $file = sfConfig::get('sf_upload_dir').'/uploaded_'.sha1($q->getFilename().$q->getCreatedAt()).'.xml' ;    
         if(file_exists($file))
         {
-          $import = new importDnaXml() ;
-          $import->importFile($file,$id) ;
-        
+          try{
+            $import = new importDnaXml() ;
+            $import->importFile($file,$id) ;
+          }
+          catch(Exception $e)
+          {
+            echo $e->getMessage()."\n";break;
+          }
           Doctrine_Query::create()
             ->update('imports p')
             ->set('p.state','?','loaded')
@@ -49,9 +50,8 @@ EOF;
             ->where('p.id = ?', $id)
             ->execute();
         }              
-      }
     }
-    while($id != null);
-    $conn->getDbh()->exec('COMMIT TRANSACTION;');    
+    $conn->getDbh()->exec('COMMIT;');
+
   }
 }  

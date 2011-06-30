@@ -47,9 +47,16 @@
               <td></td>
               <td><?php echo $import->Collections->getName();?></td>
               <td><?php echo $import->getFilename();?></td>
-              <td><?php echo $import->getState();?></td>
+              <td><?php echo __($import->getStateName());?></td>
               <td><?php echo $import->getLastModifiedDate(ESC_RAW);?></td>
-              <td><?php echo __('%rest% on %initial%',array('%rest%'=>$import->getInitialCount()-$import->getCurrentLineNum(), '%initial%'=>$import->getInitialCount() )) ;?></td>
+              <td>
+                <?php if(! in_array($import->getState(),array('loading','loaded','to_be_loaded')) ):?>
+                  <?php echo __('%rest% on %initial%',array('%rest%'=>$import->getInitialCount()-$import->getCurrentLineNum(), '%initial%'=>$import->getInitialCount() )) ;?>
+                <?php else:?>
+                  <?php echo __('n/a');?>
+                <?php endif;?>
+                
+              </td>
               <td>
                 <?php if ($import->isEditableState()) : ?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
