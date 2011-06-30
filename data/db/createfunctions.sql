@@ -3613,41 +3613,19 @@ BEGIN
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION tableoid(tablename TEXT) RETURNS INTEGER AS $$
-BEGIN
-  RETURN (SELECT oid FROM pg_class WHERE relname = tablename);
-END
-$$
-LANGUAGE plpgsql IMMUTABLE SECURITY DEFINER;
 
+CREATE OR REPLACE FUNCTION get_import_row() RETURNS integer AS $$
 
-CREATE OR REPLACE FUNCTION get_import_rows() RETURNS integer AS $$
-DECLARE
-  busy_job_id integer;
-  job record;
-BEGIN
-  -- Iterating over pending imported file list, ordered by creation date and id.
-  FOR job IN SELECT DISTINCT i.* FROM imports i
-LEFT JOIN pg_locks pgl
-       ON pgl.classid = tableoid('imports')
-      AND pgl.objid = i.id
-      AND pgl.pid <> pg_backend_pid()
-    WHERE pgl.objid IS NULL
-      AND i.state = 'loaded'
- ORDER BY i.created_at asc, i.id LOOP
-    -- Trying to lock the job:
-    IF pg_try_advisory_lock(tableoid('imports'), job.id) THEN
-      -- Need to recheck the unlocked state: race conditions are still possible.
-      -- For example, job could be requested, locked, processed, finished and unlocked
-      -- while this function iterates over "then-unlocked" jobs list.
-      UPDATE imports set state='loading' where id=job.id;
-      RETURN job.id;
-    END IF;
-  END LOOP;
-  RETURN NULL;
-END
+UPDATE imports SET state = 'loading' FROM (
+  SELECT * FROM (
+    SELECT  * FROM imports i1 WHERE i1.state = 'to_be_loaded' ORDER BY i1.created_at asc, id asc OFFSET 0 --thats important
+  ) i2
+  WHERE pg_try_advisory_lock('imports'::regclass::integer, i2.id)
+  LIMIT 1
+) i3
+WHERE imports.id = i3.id RETURNING i3.id;
 $$
-LANGUAGE plpgsql SECURITY DEFINER;
+LANGUAGE sql SECURITY DEFINER;
 
 
 CREATE OR REPLACE FUNCTION fct_imp_checker_catalogue(line staging, catalogue_table text, prefix text)  RETURNS boolean
