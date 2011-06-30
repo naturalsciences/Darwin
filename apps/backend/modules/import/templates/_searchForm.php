@@ -9,6 +9,7 @@
           <th><?php echo $form['collection_ref']->renderLabel() ?></th>
           <th><?php echo $form['filename']->renderLabel() ?></th>
           <th><?php echo $form['state']->renderLabel(); ?></th>
+          <th><?php echo $form['show_finished']->renderLabel(); ?></th>
           <th></th>
         </tr>
       </thead>
@@ -16,7 +17,8 @@
         <tr>
           <td><?php echo $form['collection_ref']->render() ?></td>
           <td><?php echo $form['filename']->render() ?></td>
-          <td><?php echo $form['state']->render() ?></td>         
+          <td><?php echo $form['state']->render() ?></td>
+          <th><?php echo $form['show_finished']->render(); ?></th>   
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Filter'); ?>" /></td>
         </tr>
       </tbody>

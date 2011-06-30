@@ -41,13 +41,25 @@ class ImportsFormFilter extends BaseImportsFormFilter
     /* validators */                    
     $this->validatorSchema['collection_ref'] = new sfValidatorChoice(
       array('choices'=> array_keys($collection_list)));
+
+    $this->widgetSchema['show_finished']  = new sfWidgetFormInputCheckbox();
+    $this->validatorSchema['show_finished'] = new sfValidatorBoolean(array('required' => false));
   }
   
+  public function addShowFinishedColumnQuery(Doctrine_Query $query, $field, $value)
+  {
+    if ($value == "")
+    {
+      $query->andWhere("is_finished = false");
+    }
+  }
+
   public function doBuildQuery(array $values)
   {
     $query = DQ::create()
       ->from('Imports i')
       ->innerJoin("i.Collections")    ;  
+    $this->addShowFinishedColumnQuery($query, 'is_finished', $values['show_finished']);
     if($values['collection_ref'] != 0) $query->addWhere('i.collection_ref = ?', $values['collection_ref']) ;
     if($values['filename']) $query->addWhere('i.filename LIKE \'%'.$values['filename'].'%\'');
     if($values['state']) $query->addWhere('i.state = ?', $values['state']) ;    

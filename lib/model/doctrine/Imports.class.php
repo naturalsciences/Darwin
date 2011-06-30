@@ -46,7 +46,7 @@ class Imports extends BaseImports
   // function used to determine if we can display edition button or not
   public function isEditableState()
   {
-    if(in_array($this->getState(),array('pending'))) return true ;
+    if(in_array($this->getState(),array('pending')) && ! $this->getIsFinished()) return true ;
     return false ;
   }   
 
