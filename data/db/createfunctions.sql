@@ -4213,32 +4213,32 @@ CREATE OR REPLACE FUNCTION fct_upd_staging_fields() RETURNS TRIGGER
 AS $$
 BEGIN
   IF OLD.taxon_ref IS DISTINCT FROM NEW.taxon_ref THEN
-    SELECT t.name, t.level_ref, cl.level_name, t.status, t.local_naming, t.color, t.parent_ref
-    INTO NEW.taxon_name, NEW.taxon_level_ref, NEW.taxon_level_name, NEW.taxon_status, NEW.taxon_local, NEW.taxon_color, NEW.taxon_parent_ref
+    SELECT t.name, t.level_ref, cl.level_name, t.status, t.extinct
+    INTO NEW.taxon_name, NEW.taxon_level_ref, NEW.taxon_level_name, NEW.taxon_status, NEW.taxon_extinct
     FROM taxonomy t, catalogue_levels cl 
     WHERE cl.id=t.level_ref AND t.id = NEW.taxon_ref ; 
   END IF;
   IF OLD.chrono_ref IS DISTINCT FROM NEW.chrono_ref THEN
-    SELECT c.name, c.level_ref, cl.level_name, c.status, c.local_naming, c.color, c.parent_ref, c.upper_bound, c.lower_bound
-    INTO NEW.chrono_name, NEW.chrono_level_ref, NEW.chrono_level_name, NEW.chrono_status, NEW.chrono_local, NEW.chrono_color, NEW.chrono_parent_ref, NEW.chrono_upper_bound, NEW.chrono_lower_bound
+    SELECT c.name, c.level_ref, cl.level_name, c.status, c.local_naming, c.color, c.upper_bound, c.lower_bound
+    INTO NEW.chrono_name, NEW.chrono_level_ref, NEW.chrono_level_name, NEW.chrono_status, NEW.chrono_local, NEW.chrono_color, NEW.chrono_upper_bound, NEW.chrono_lower_bound
     FROM chronostratigraphy c, catalogue_levels cl 
     WHERE cl.id=c.level_ref AND c.id = NEW.chrono_ref ; 
   END IF;   
   IF OLD.litho_ref IS DISTINCT FROM NEW.litho_ref THEN
-    SELECT l.name, l.level_ref, cl.level_name, l.status, l.local_naming, l.color, l.parent_ref
-    INTO NEW.litho_name, NEW.litho_level_ref, NEW.litho_level_name, NEW.litho_status, NEW.litho_local, NEW.litho_color, NEW.litho_parent_ref
+    SELECT l.name, l.level_ref, cl.level_name, l.status, l.local_naming, l.color
+    INTO NEW.litho_name, NEW.litho_level_ref, NEW.litho_level_name, NEW.litho_status, NEW.litho_local, NEW.litho_color
     FROM lithostratigraphy l, catalogue_levels cl 
     WHERE cl.id=l.level_ref AND l.id = NEW.litho_ref ; 
   END IF;
   IF OLD.lithology_ref IS DISTINCT FROM NEW.lithology_ref THEN
-    SELECT l.name, l.level_ref, cl.level_name, l.status, l.local_naming, l.color, l.parent_ref
-    INTO NEW.lithology_name, NEW.lithology_level_ref, NEW.lithology_level_name, NEW.lithology_status, NEW.lithology_local, NEW.lithology_color, NEW.lithology_parent_ref
+    SELECT l.name, l.level_ref, cl.level_name, l.status, l.local_naming, l.color
+    INTO NEW.lithology_name, NEW.lithology_level_ref, NEW.lithology_level_name, NEW.lithology_status, NEW.lithology_local, NEW.lithology_color
     FROM lithology l, catalogue_levels cl 
     WHERE cl.id=l.level_ref AND l.id = NEW.lithology_ref ; 
   END IF;
   IF OLD.mineral_ref IS DISTINCT FROM NEW.mineral_ref THEN
-    SELECT m.name, m.level_ref, cl.level_name, m.status, m.local_naming, m.color, m.parent_ref
-    INTO NEW.mineral_name, NEW.mineral_level_ref, NEW.mineral_level_name, NEW.mineral_status, NEW.mineral_local, NEW.mineral_color, NEW.mineral_parent_ref
+    SELECT m.name, m.level_ref, cl.level_name, m.status, m.local_naming, m.color
+    INTO NEW.mineral_name, NEW.mineral_level_ref, NEW.mineral_level_name, NEW.mineral_status, NEW.mineral_local, NEW.mineral_color
     FROM mineralogy m, catalogue_levels cl 
     WHERE cl.id=m.level_ref AND m.id = NEW.mineral_ref ; 
   END IF; 
