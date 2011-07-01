@@ -1,6 +1,6 @@
 <?php
 
-class darwinImportTask extends sfBaseTask
+class darwinLoadImportTask extends sfBaseTask
 {
 
   protected function configure()
@@ -11,8 +11,8 @@ class darwinImportTask extends sfBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),      
       ));      
     $this->namespace        = 'darwin';
-    $this->name             = 'process-import';
-    $this->briefDescription = 'Import uploaded file to potgresql temp table';
+    $this->name             = 'load-import';
+    $this->briefDescription = 'Import uploaded file to potgresql staging table';
     $this->detailedDescription = <<<EOF
 Nothing
 EOF;

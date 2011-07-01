@@ -38,6 +38,7 @@ class ImportsTable extends Doctrine_Table
     $result = $conn->fetchAssoc($sql);
     return $result;
   }
+
   public function clearImport($id)
   {
 
@@ -49,5 +50,15 @@ class ImportsTable extends Doctrine_Table
       ->set('state', '?','finished')
       ->set('is_finished', '?',true)
       ->execute();
+  }
+
+  public function getWithImports()
+  {
+    $q = Doctrine_Query::create()
+      ->From('Imports i')
+      ->andwhere('exists(select 1 from staging where to_import = true)')
+      ->andWhere('state', '?','processing');
+    
+    return $q->execute();
   }
 }
