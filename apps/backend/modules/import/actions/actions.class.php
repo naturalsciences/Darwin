@@ -11,10 +11,23 @@
  */
 class importActions extends DarwinActions
 {
+  public function preExecute()
+  {
+    if(! $this->getUser()->isAtLeast(Users::ENCODER))
+    {
+      $this->forwardToSecureAction();
+    }
+  }
+
   public function executeClear(sfWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('id'));
-    Doctrine::getTable('Imports')->clearImport($request->getParameter('id'));
+    $this->import = Doctrine::getTable('Imports')->find($request->hasParameter('id'));
+
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
+    Doctrine::getTable('Imports')->clearImport($this->import->getId());
     if($request->isXmlHttpRequest())
     {
       return $this->renderText('ok');
@@ -32,15 +45,12 @@ class importActions extends DarwinActions
     {
       $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
       if($this->form->isValid())
-      {
-        if(!$this->getUser()->isA(Users::ADMIN))
-        {
-          if (!Doctrine::getTable('collectionsRights')->findOneByCollectionRefAndUserRef($this->form->getValue('collection_ref'),$this->getUser()->getId()))
-          {  
-            $error = new sfValidatorError(new sfValidatorPass(),'You don\'t have right on this collection');
-            $this->form->getErrorSchema()->addError($error, 'Darwin2 :'); 
-            return ;
-          }
+      {       
+        if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->form->getValue('collection_ref')))
+        {  
+          $error = new sfValidatorError(new sfValidatorPass(),'You don\'t have right on this collection');
+          $this->form->getErrorSchema()->addError($error, 'Darwin2 :'); 
+          return ;
         }
         $file = $this->form->getValue('uploadfield');
         $date = date('Y-m-d H:i:s') ;
@@ -86,7 +96,6 @@ class importActions extends DarwinActions
     $this->o_url = '&orderby='.$this->orderBy.'&orderdir='.$this->orderDir;
     if($request->getParameter('imports_filters','') !== '')
     { 
-      //die(print_r($request->getParameter('imports_filters'))) ;   
       $this->form->bind($request->getParameter('imports_filters'));
       if ($this->form->isValid())
       { 

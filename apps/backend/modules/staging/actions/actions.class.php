@@ -2,12 +2,22 @@
 
 class stagingActions extends DarwinActions
 {
+  public function preExecute()
+  {
+    if(! $this->getUser()->isAtLeast(Users::ENCODER))
+    {
+      $this->forwardToSecureAction();
+    }
+  }
 
   public function executeMarkok(sfWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('import'));
+    $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
 
-    $this->import = Doctrine::getTable('Imports')->markOk($request->getParameter('import'));
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+    $this->import = Doctrine::getTable('Imports')->markOk($this->import->getId());
     return $this->redirect('import/index');
   }
 
@@ -15,6 +25,11 @@ class stagingActions extends DarwinActions
   {
     $this->forward404Unless($request->hasParameter('id'));
     $line = Doctrine::getTable('Staging')->find($request->getParameter('id'));
+    $this->import = Doctrine::getTable('Imports')->find($line->getImportRef());
+
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
     $line->delete();
     if($request->isXmlHttpRequest())
     {
@@ -26,9 +41,12 @@ class stagingActions extends DarwinActions
   public function executeSearch(sfWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('import'));
+    $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
     $this->setCommonValues('staging', 'id', $request);
 
-    $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
     $this->form = new StagingFormFilter(null, array('import' =>$this->import));
     $filters = $request->getParameter('staging_filters');
     if(!isset($filters['slevel'])) $filters['slevel'] = 'specimen';
@@ -39,17 +57,6 @@ class stagingActions extends DarwinActions
       $query = $this->form->getQuery();
       // Define the pager
       $pager = new DarwinPager($query, $this->form->getValue('current_page'), $this->form->getValue('rec_per_page'));
-
-      /*// Replace the count query triggered by the Pager to get the number of records retrieved
-      $count_q = clone $query;
-      // Remove from query the group by and order by clauses
-      $count_q = $count_q->select('count( distinct spec_ref)')->removeDqlQueryPart('groupby')->removeDqlQueryPart('orderby')->limit(0);
-      // Initialize an empty count query
-      $counted = new DoctrineCounted();
-      // Define the correct select count() of the count query
-      $counted->count_query = $count_q;
-      // And replace the one of the pager with this new one
-      $pager->setCountQuery($counted); */  
 
       $this->setCommonValues('search', 'collection_name', $request);
       $params = $request->isMethod('post') ? $request->getPostParameters() : $request->getGetParameters();
@@ -111,13 +118,22 @@ class stagingActions extends DarwinActions
   {
     $this->forward404Unless($request->hasParameter('import'));
     $this->import = Doctrine::getTable('Imports')->find($request->getParameter('import'));
+
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
     $this->form = new StagingFormFilter(null, array('import' =>$this->import));
   }
   
   public function executeEdit(sfWebRequest $request)
   {  
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
+//     if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();   
     $staging = Doctrine::getTable('Staging')->findOneById($request->getParameter('id'));
+    $this->import = Doctrine::getTable('Imports')->find($staging->getImportRef());
+
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
     $this->fields = $staging->getFields() ;
     $form_fields = array() ;   
     if($this->fields)
@@ -130,8 +146,14 @@ class stagingActions extends DarwinActions
    
   public function executeUpdate(sfWebRequest $request)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction(); 
+/*    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction(); */
     $staging = Doctrine::getTable('Staging')->findOneById($request->getParameter('id'));
+
+    $this->import = Doctrine::getTable('Imports')->find($staging->getImportRef());
+
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
     $this->fields = $staging->getFields() ;
     $form_fields = array() ;   
     if($this->fields)
@@ -148,7 +170,6 @@ class stagingActions extends DarwinActions
   
   protected function processForm(sfWebRequest $request, sfForm $form, array $fields)
   {
-    if($this->getUser()->isA(Users::REGISTERED_USER)) $this->forwardToSecureAction();
     $form->bind( $request->getParameter($form->getName()) );
     if ($form->isValid())
     {
