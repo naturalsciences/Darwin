@@ -45,9 +45,11 @@
           <td class="<?php echo $row->getStatusFor($name);?>"><?php echo $row[$name];?></td>
         <?php endforeach;?>
         <td><?php echo $row['linked_info'];?></td>
-        <td <?php if(count($row['status']) != 0 ):?> class="fld_tocomplete"<?php endif;?>>
+        <td  class="<?php if(count($row['status']) != 0 ):?>fld_tocomplete<?php else:?>fld_ok<?php endif;?>">
           <?php if(count($row['status']) != 0 ):?>
             <?php echo __('Error');?>
+          <?php else:?>
+            <?php echo __('No problems detected');?>
           <?php endif;?>
         </td>
         <td>
