@@ -21,19 +21,16 @@
   <div class="edition">
   <table class="staging_table results ">
     <thead>
-    <?php foreach($fields as $name):?>
-      <th><?php echo $name;?></th>
+     <th><?php echo __('Codes');?></th>
+    <?php foreach($fields as $name=>$title):?>
+      <th><?php echo $title;?></th>
     <?php endforeach;?>
-      <th><?php echo __('Codes');?></th>
       <th><?php echo __('Linked Info');?></th>
       <th><?php echo __('Status');?></th>
       <th></th>
     </thead>
     <?php foreach($search as $row):?>
       <tr>
-        <?php foreach($fields as $name):?>
-          <td class="<?php echo $row->getStatusFor($name);?>"><?php echo $row[$name];?></td>
-        <?php endforeach;?>
         <td>
           <ul class="codes">
             <?php foreach($row['codes'] as $k=>$v):?>
@@ -44,6 +41,9 @@
             <?php endforeach;?>
           </ul>
         </td>
+        <?php foreach($fields as $name=>$title):?>
+          <td class="<?php echo $row->getStatusFor($name);?>"><?php echo $row[$name];?></td>
+        <?php endforeach;?>
         <td><?php echo $row['linked_info'];?></td>
         <td <?php if(count($row['status']) != 0 ):?> class="fld_tocomplete"<?php endif;?>>
           <?php if(count($row['status']) != 0 ):?>

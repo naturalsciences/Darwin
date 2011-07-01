@@ -22,6 +22,10 @@ class Staging extends BaseStaging
     'duplicate' => 'This record seems to have already been saved you can see it ',
   );
 
+  public function getCategory()
+  {
+      return $this->_get('category');
+  }
   public function getGtu()
   {
     return $this->_get('gtu_code');
@@ -62,12 +66,17 @@ class Staging extends BaseStaging
   
   public function getExpedition()
   {
-    return $this->_get('expedition_nam');
+    return $this->_get('expedition_name');
   }
   
   public function getAcquisition()
   {
     return $this->_get('acquisition_category');
+  }
+
+  public function getStationVisible()
+  {
+    return $this->_get('station_visible');
   }
 
   public function getStatusFor($field)
