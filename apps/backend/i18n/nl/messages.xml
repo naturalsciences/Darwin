@@ -3,6 +3,42 @@
   <file source-language="en" target-language="nl" datatype="plaintext" original="en">
     <header/>
     <body>
+          <trans-unit id="1371">
+        <source>This record seems to have already been saved you can see it </source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1372">
+        <source>One or more %field% were not found or have too much results. In both case, you must choose an existing one</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1373">
+        <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1374">
+        <source>Too many record match to this %field%\&#039;s value, please choose the good one or leave blanc</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1375">
+        <source>This %field% was not found in our database, please choose an existing one or remove it</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1376">
+        <source>here</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1377">
+        <source>No errors on this record</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1378">
+        <source>Field to be corrected</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1379">
+        <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;If you don\&#039;t correct default values before saving, The associated error will remain.</source>
+        <target></target>
+      </trans-unit>
           <trans-unit id="493">
         <source>Specimen individuals count max</source>
         <target>Maximum aantal individus in het staal</target>
@@ -30,6 +66,26 @@
           <trans-unit id="499">
         <source>Mineralogic unit Search</source>
         <target>Lithologische eenheid zoekresultaat</target>
+      </trans-unit>
+          <trans-unit id="1381">
+        <source>Dear %title% %name%,</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1382">
+        <source>Dear %title%,</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1383">
+        <source>Set rights on widgets for %name%</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1384">
+        <source>Between %min% and %max%</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1385">
+        <source>Profile for %s</source>
+        <target></target>
       </trans-unit>
           <trans-unit id="1058">
         <source>You can now log in and enjoy our enhanced collection services.</source>
@@ -4102,14 +4158,6 @@
           <trans-unit id="39">
         <source>Search</source>
         <target>Zoeken</target>
-      </trans-unit>
-          <trans-unit id="1052">
-        <source>Dear %s %s,</source>
-        <target>Beste %s %s,</target>
-      </trans-unit>
-          <trans-unit id="1053">
-        <source>Dear %s</source>
-        <target>Beste %</target>
       </trans-unit>
           <trans-unit id="1054">
         <source>You should have received a link to renew your password on the e-mail address provided.</source>
