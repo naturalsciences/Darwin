@@ -56,9 +56,9 @@ class ImportsTable extends Doctrine_Table
   {
     $q = Doctrine_Query::create()
       ->From('Imports i')
-      ->andwhere('exists(select 1 from staging where to_import = true)')
-      ->andWhere('state', '?','processing');
-    
+      ->andwhere('exists(select 1 from staging where to_import = true and import_ref = i.id)')
+      ->andWhere("state = 'processing'");
+
     return $q->execute();
   }
 }
