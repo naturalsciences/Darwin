@@ -26,7 +26,7 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
     $conn = Doctrine_Manager::connection();
     $conn->getDbh()->exec('BEGIN TRANSACTION;');
-    while($id = $conn->fetchOne('SELECT get_import_rows()'))  
+    while($id = $conn->fetchOne('SELECT get_import_row()'))  
     {
         $q = Doctrine_Query::create()
           ->from('imports p')
