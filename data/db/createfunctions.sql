@@ -4190,43 +4190,43 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION fct_upd_staging_fields() RETURNS TRIGGER
 AS $$
 BEGIN
-  IF OLD.taxon_ref IS DISTINCT FROM NEW.taxon_ref THEN
+  IF OLD.taxon_ref IS DISTINCT FROM NEW.taxon_ref AND  NEW.taxon_ref is not null THEN
     SELECT t.name, t.level_ref, cl.level_name, t.status, t.extinct
     INTO NEW.taxon_name, NEW.taxon_level_ref, NEW.taxon_level_name, NEW.taxon_status, NEW.taxon_extinct
     FROM taxonomy t, catalogue_levels cl 
     WHERE cl.id=t.level_ref AND t.id = NEW.taxon_ref ; 
   END IF;
-  IF OLD.chrono_ref IS DISTINCT FROM NEW.chrono_ref THEN
+  IF OLD.chrono_ref IS DISTINCT FROM NEW.chrono_ref  AND  NEW.chrono_ref is not null THEN
     SELECT c.name, c.level_ref, cl.level_name, c.status, c.local_naming, c.color, c.upper_bound, c.lower_bound
     INTO NEW.chrono_name, NEW.chrono_level_ref, NEW.chrono_level_name, NEW.chrono_status, NEW.chrono_local, NEW.chrono_color, NEW.chrono_upper_bound, NEW.chrono_lower_bound
     FROM chronostratigraphy c, catalogue_levels cl 
     WHERE cl.id=c.level_ref AND c.id = NEW.chrono_ref ; 
   END IF;   
-  IF OLD.litho_ref IS DISTINCT FROM NEW.litho_ref THEN
+  IF OLD.litho_ref IS DISTINCT FROM NEW.litho_ref  AND  NEW.litho_ref is not null  THEN
     SELECT l.name, l.level_ref, cl.level_name, l.status, l.local_naming, l.color
     INTO NEW.litho_name, NEW.litho_level_ref, NEW.litho_level_name, NEW.litho_status, NEW.litho_local, NEW.litho_color
     FROM lithostratigraphy l, catalogue_levels cl 
     WHERE cl.id=l.level_ref AND l.id = NEW.litho_ref ; 
   END IF;
-  IF OLD.lithology_ref IS DISTINCT FROM NEW.lithology_ref THEN
+  IF OLD.lithology_ref IS DISTINCT FROM NEW.lithology_ref  AND  NEW.lithology_ref is not null THEN
     SELECT l.name, l.level_ref, cl.level_name, l.status, l.local_naming, l.color
     INTO NEW.lithology_name, NEW.lithology_level_ref, NEW.lithology_level_name, NEW.lithology_status, NEW.lithology_local, NEW.lithology_color
     FROM lithology l, catalogue_levels cl 
     WHERE cl.id=l.level_ref AND l.id = NEW.lithology_ref ; 
   END IF;
-  IF OLD.mineral_ref IS DISTINCT FROM NEW.mineral_ref THEN
+  IF OLD.mineral_ref IS DISTINCT FROM NEW.mineral_ref  AND  NEW.mineral_ref is not null THEN
     SELECT m.name, m.level_ref, cl.level_name, m.status, m.local_naming, m.color, m.path
     INTO NEW.mineral_name, NEW.mineral_level_ref, NEW.mineral_level_name, NEW.mineral_status, NEW.mineral_local, NEW.mineral_color, NEW.mineral_path
     FROM mineralogy m, catalogue_levels cl 
     WHERE cl.id=m.level_ref AND m.id = NEW.mineral_ref ; 
   END IF; 
-  IF OLD.expedition_ref IS DISTINCT FROM NEW.expedition_ref THEN
+  IF OLD.expedition_ref IS DISTINCT FROM NEW.expedition_ref  AND  NEW.expedition_ref is not null THEN
     SELECT "name", expedition_from_date, expedition_to_date, expedition_from_date_mask , expedition_to_date_mask
     INTO NEW.expedition_name, NEW.expedition_from_date, NEW.expedition_to_date, NEW.expedition_from_date_mask , NEW.expedition_to_date_mask
     FROM expeditions
     WHERE id = NEW.expedition_ref ; 
   END IF; 
-  IF OLD.institution_ref IS DISTINCT FROM NEW.institution_ref THEN
+  IF OLD.institution_ref IS DISTINCT FROM NEW.institution_ref  AND  NEW.institution_ref is not null THEN
     SELECT formated_name INTO NEW.institution_name FROM people WHERE id = NEW.institution_ref ; 
   END IF;       
   RETURN NEW;        

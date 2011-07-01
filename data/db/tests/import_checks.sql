@@ -30,6 +30,7 @@ select is(1, (select taxon_ref from staging s where id = 3));
 
 INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (4, 'Falco Coco lus (Brolus 1974)', 4, 3);
 UPDATE staging set taxon_ref = null where id = 3;
+UPDATE staging set taxon_name = 'Falco coco',taxon_level_name=null where id = 3;
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
@@ -52,11 +53,11 @@ insert into staging (id,import_ref, "level",taxon_name,taxon_level_name) VALUES 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(3, (select taxon_ref from staging s where id = 4));
 
-
 select diag('Test of staging check with Parent levels');
 
 INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (4, 'Falco Coco lus (Brolus 1974)', 4, 3);
-update staging SET taxon_ref = null, taxon_name = 'Falco Coco lus (Brolus 1974)', taxon_level_name ='phylum', taxon_parents = 'domain=>"Falco Peregrinus"' where id = 3;
+update staging SET taxon_ref = null  where id = 3;
+update staging SET taxon_name = 'Falco Coco lus (Brolus 1974)', taxon_level_name ='phylum', taxon_parents = 'domain=>"Falco Peregrinus"' where id = 3;
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
@@ -64,12 +65,12 @@ select is(null, (select taxon_ref from staging s where id = 3));
 update staging SET taxon_parents = '"super_phylum"=>"Falco Peregrinus"'::hstore where id = 3;
 
 
+
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(4, (select taxon_ref from staging s where id = 3));
 
 INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (5, 'Brolz', 2, 1);
 update staging SET taxon_parents = '"kingdom"=>"Brolz"'::hstore, taxon_ref = null where id = 3;
-
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
