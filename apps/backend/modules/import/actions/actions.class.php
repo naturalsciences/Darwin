@@ -19,6 +19,24 @@ class importActions extends DarwinActions
     }
   }
 
+  public function executeDelete(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->hasParameter('id'));
+    $this->import = Doctrine::getTable('Imports')->find($request->hasParameter('id'));
+
+    if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
+       $this->forwardToSecureAction();
+
+    $this->import->delete();
+
+    if($request->isXmlHttpRequest())
+    {
+      return $this->renderText('ok');
+    }
+    return $this->redirect('import/index');
+  }
+
+
   public function executeClear(sfWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('id'));
@@ -32,7 +50,7 @@ class importActions extends DarwinActions
     {
       return $this->renderText('ok');
     }
-    return $this->redirect('staging/index');
+    return $this->redirect('import/index');
   }
 
 

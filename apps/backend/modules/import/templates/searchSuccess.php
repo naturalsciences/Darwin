@@ -61,8 +61,8 @@
                 <?php if ($import->isEditableState()) : ?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
                 <?php endif ; ?>
-                <?php echo link_to(image_tag('remove_2.png',array('title'=>'Clear Import')),'import/clear?id='.$import->getId(),'class=remove_import');?>
-
+                <?php echo link_to(image_tag('remove_2.png',array('title'=>__('Abort import'))),'import/clear?id='.$import->getId(),'class=remove_import');?>
+                <?php echo link_to(image_tag('remove.png', array("title" => __("Delete"))), 'import/delete?id='.$import->getId(),'class=remove_import');?>
               </td>
             </tr>
           <?php endforeach;?>
