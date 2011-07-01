@@ -38,7 +38,7 @@ class DisplayImportDna implements IDisplayModels
      return array(
         'category'=>'Category',
         'expedition_name' => 'Expedition',
-        'station_visible' => 'Station Visible',
+//         'station_visible' => 'Station Visible',
         'gtu' => 'Sampling Location',
         'taxon' => 'Taxonomy',
         'chrono' => 'Chronostratigraphy',
