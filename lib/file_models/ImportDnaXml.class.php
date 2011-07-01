@@ -70,7 +70,8 @@ class ImportDnaXml implements IImportModels
       $this->fillSimpleObject($msg,$object) ;
       $object->save() ; 
       $this->parseAndAdd($object->getId()) ; 
-    } 
+    }
+
   }   
   
   protected function parseAndAdd($id)
@@ -374,8 +375,14 @@ class ImportDnaXml implements IImportModels
           $this->complex_nodes['properties']['notion_concerned'] = 'codes' ;
         }         
         else $this->getSimpleField($codes_info,$code);
-      }      
-      $code->save() ;
+      }
+      try
+      {
+        $code->save() ;
+      }
+      catch(Doctrine_Exception $e)
+      {}//NOTHING
+
     }  
   }   
   
@@ -401,8 +408,13 @@ class ImportDnaXml implements IImportModels
         elseif($identification_info->nodeName == 'identifiers')
         {
           $ident_tags = $identification_info->getElementsByTagName("identifier");
-          foreach($ident_tags as $ident_tag) $identifiers .= $ident_tag->getElementsByTagName("family_name")->item(0)->nodeValue." ".
-                                                             $ident_tag->getElementsByTagName("given_name")->item(0)->nodeValue."," ;        
+          foreach($ident_tags as $ident_tag)
+          {
+            $identifiers .= $ident_tag->getElementsByTagName("family_name")->item(0)->nodeValue;
+            if($ident_tag->getElementsByTagName("given_name")->length != 0)
+              $identifiers .= " ".$ident_tag->getElementsByTagName("given_name")->item(0)->nodeValue;
+             $identifiers .= "," ;
+          }
         }
         elseif($identification_info->nodeName == 'comments')
         {

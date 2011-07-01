@@ -36,51 +36,51 @@ class DisplayImportDna implements IDisplayModels
   protected function getColumnsForSpecimens()
   {
      return array(
-        'category',
-        'expedition_name',
-        'station_visible',
-        'gtu',
-        'taxon',
-        'chrono',
-        'litho',
-        'lithology',
-        'mineral',
-        'ig',
-        'acquisition',
+        'category'=>'Category',
+        'expedition_name' => 'Expedition',
+        'station_visible' => 'Station Visible',
+        'gtu' => 'Sampling Location',
+        'taxon' => 'Taxonomy',
+        'chrono' => 'Chronostratigraphy',
+        'litho' => 'Lithostratigraphy',
+        'lithology' => 'Lithology',
+        'mineral' => 'Mineralogy',
+        'ig' => 'Inv. Gen.',
+        'acquisition' => 'Acquisition',
       );
   }
 
   protected function getColumnsForIndividuals()
   {
     return array(
-      'individual_type',
-      'individual_sex',
-      'individual_state',
-      'individual_stage',
-      'individual_social_status',
-      'individual_rock_form',
-      'individual_count',
+      'individual_type' => 'Type',
+      'individual_sex' => 'Sex',
+      'individual_state' => 'State',
+      'individual_stage' => 'Stage',
+      'individual_social_status' => 'Social Status',
+      'individual_rock_form' => 'Rock Form',
+      'individual_count' => 'Number',
     );
   }
 
   protected function getColumnsForParts()
   {
     return array(
-      'part',
-      'specimen_status',
-      'institution',
-      'building',
-      'floor',
-      'room',
-      'row',
-      'shelf',
-      'container_type',
-      'container_storage',
-      'container',
-      'sub_container_type',
-      'sub_container_storage',
-      'sub_container',
-      'part_count',
+      'part' => 'Part',
+      'specimen_status' => 'Status',
+      'institution' => 'Institution',
+      'building' => 'Building',
+      'floor' => 'Floor',
+      'room' => 'Room',
+      'row' => 'Row',
+      'shelf' => 'Shelf',
+      'container_type' => 'Container Type',
+      'container_storage' => 'Container storage',
+      'container' => 'Container',
+      'sub_container_type' => 'Sub container type',
+      'sub_container_storage' => 'Sub container storage',
+      'sub_container' => 'Sub container',
+      'part_count' => 'Number',
     );
   }
 

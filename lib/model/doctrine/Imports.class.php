@@ -15,8 +15,9 @@ class Imports extends BaseImports
   protected $line_num = 0;
   private static $state = array(
     '' => 'All', 
-    'loaded'=>'Loaded',
+    'to_be_loaded' => 'To be loaded',
     'loading'=> 'Loading',
+    'loaded'=>'Loaded',
     'checking'=> 'Checking',
     'pending'=> 'Pending',
     'processing'=> 'Processing',
@@ -39,6 +40,10 @@ class Imports extends BaseImports
     return self::$formatArray ;
   }
   
+  public function getStateName()
+  {
+    return self::$state[$this->getState()];
+  }
   public static function getStateList()
   {
     return self::$state ;
