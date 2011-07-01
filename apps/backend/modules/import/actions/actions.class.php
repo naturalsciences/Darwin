@@ -40,7 +40,7 @@ class importActions extends DarwinActions
   public function executeClear(sfWebRequest $request)
   {
     $this->forward404Unless($request->hasParameter('id'));
-    $this->import = Doctrine::getTable('Imports')->find($request->hasParameter('id'));
+    $this->import = Doctrine::getTable('Imports')->find($request->getParameter('id'));
 
     if(! Doctrine::getTable('collectionsRights')->hasEditRightsFor($this->getUser(),$this->import->getCollectionRef()))
        $this->forwardToSecureAction();

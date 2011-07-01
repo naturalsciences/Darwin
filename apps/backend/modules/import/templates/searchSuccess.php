@@ -38,7 +38,7 @@
               </a>
             </th>                      
             <th><?php echo __("Progression") ; ?></th>
-            <th><?php echo __("Actions") ; ?></th>
+            <th colspan="3"><?php echo __("Actions") ; ?></th>
           </tr>
         </thead>
         <tbody>
@@ -61,7 +61,13 @@
                 <?php if ($import->isEditableState()) : ?>
                   <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
                 <?php endif ; ?>
-                <?php echo link_to(image_tag('remove_2.png',array('title'=>__('Abort import'))),'import/clear?id='.$import->getId(),'class=remove_import');?>
+              </td>
+              <td>
+                <?php if (!$import->getIsFinished()) : ?>
+                  <?php echo link_to(image_tag('remove_2.png',array('title'=>__('Abort import'))),'import/clear?id='.$import->getId(),'class=remove_import');?>
+                <?php endif;?>
+              </td>
+              <td>         
                 <?php echo link_to(image_tag('remove.png', array("title" => __("Delete"))), 'import/delete?id='.$import->getId(),'class=remove_import');?>
               </td>
             </tr>

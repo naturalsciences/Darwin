@@ -47,7 +47,7 @@ class ImportsTable extends Doctrine_Table
       ->execute();
     $q = Doctrine_Query::create()->update('Imports')
       ->andwhere('id = ? ',$id)
-      ->set('state', '?','finished')
+      ->set('state', '?','aboarted')
       ->set('is_finished', '?',true)
       ->execute();
   }
