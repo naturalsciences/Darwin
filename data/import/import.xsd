@@ -94,54 +94,52 @@
   </xs:element>
   <xs:element name="collection_object">
     <xs:complexType>
-      <xs:sequence>
+      <xs:all>
         <xs:element name="category" minOccurs="0" maxOccurs="1" type="objectcategory"/>
         <xs:element name="level" type="xs:string" minOccurs="1" maxOccurs="1"/>
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element ref="collection_objects" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="codes" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="collectors" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="donators" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="expedition" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="ig" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="comments" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="gtu" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="identifications" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="properties" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="taxon" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="chrono" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="litho" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="lithology" minOccurs="0" maxOccurs="1"/>
-          <xs:element ref="mineralogy" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="acquisition" type="acquisitioning" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="sex" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="state" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="stage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="social_status" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="rock_form" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="individual_count_min" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="individual_count_max" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="specimen_part" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="specimen_status" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="institution" type="peoplenaming" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="building" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="floor" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="room" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="row" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="shelf" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="container_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="container_storage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="container" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="sub_container_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="sub_container_storage" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="sub_container" type="xs:string" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="part_count_min" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="part_count_max" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="surnumerary" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
-          <xs:element name="complete" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
-        </xs:choice>
-      </xs:sequence>
+        <xs:element ref="collection_objects" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="codes" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="collectors" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="donators" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="expedition" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="ig" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="comments" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="gtu" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="identifications" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="properties" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="taxon" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="chrono" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="litho" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="lithology" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="mineralogy" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="acquisition" type="acquisitioning" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sex" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="state" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="stage" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="social_status" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="rock_form" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="individual_count_min" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="individual_count_max" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="specimen_part" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="specimen_status" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="institution" type="peoplenaming" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="building" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="floor" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="room" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="row" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="shelf" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="container_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="container_storage" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="container" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_container_type" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_container_storage" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="sub_container" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="part_count_min" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="part_count_max" type="xs:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="surnumerary" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="complete" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+      </xs:all>
     </xs:complexType>
   </xs:element>
   <xs:element name="codes">
