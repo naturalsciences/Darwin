@@ -36,29 +36,40 @@ EOF;
     if(!empty($options['id']))
       $sql.= " WHERE import_ref = ".$options['id'];
     $this->logSection('checking', sprintf('Start checking staging'));
-    $conn->getDbh()->exec($sql);
-    
-    if(empty($options['do-import']))
-      return;
 
+    $conn->getDbh()->exec($sql);
+    Doctrine_Query::create()
+            ->update('imports p')
+            ->set('p.state','?','pending')
+            ->andWhere('p.state = ?','loaded')
+            ->execute();
+
+    if(empty($options['do-import']))
+    {
+      $sql = "update imports p set state = 'pending' where state = 'processing' and
+        exists( select 1 from staging where import_ref = p.id and status != ''::hstore)";
+      $conn->getDbh()->exec($sql);
+      return;
+    }
+    
     //Then if option is set, do Import
     $conn->getDbh()->exec('BEGIN TRANSACTION;');
+    $this->logSection('fetch', sprintf('Load Imports file in processing state'));
 
-    if(isset($options['id']))
+    if(!empty($options['id']))
     {
-      $sql = 'select fct_importer_dna('.$options['id'].')';
-      $conn->getDbh()->exec($sql);
+      $imports  = Doctrine::getTable('Imports')->findById($options['id']);
     }
     else
     {
-      $this->logSection('fetch', sprintf('Load Imports file in processing state'));
       $imports  = Doctrine::getTable('Imports')->getWithImports();
-      foreach($imports as $import)
-      {
-        $this->logSection('Processing', sprintf('Start processing import %d',$import->getId()));
-        $sql = 'select fct_importer_dna('.$import->getId().')';
-        $conn->getDbh()->exec($sql);
-      }
+    }
+
+    foreach($imports as $import)
+    {
+      $this->logSection('Processing', sprintf('Start processing import %d',$import->getId()));
+      $sql = 'select fct_importer_dna('.$import->getId().')';
+      $conn->getDbh()->exec($sql);
     }
     $conn->getDbh()->exec('COMMIT;');
   }
