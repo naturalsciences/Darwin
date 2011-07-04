@@ -23,6 +23,8 @@
         base.duplicateItem = function(event)
         {
           self = this;
+          var last_position = $('body').scrollTop() ;
+          scroll(0,0);
           event.preventDefault();
           $(this).qtip({
             content: {
@@ -53,12 +55,12 @@
               },         
               target: $(document.body),
             },
-            hide: false,
             style: ' ui-tooltip-rounded ui-tooltip-dialogue',
             events: {
               hide: function(event, api) {
                 if (element_name == null)
                 {
+                  scroll(0,last_position);
                   return false ;
                 }
                 else
@@ -66,6 +68,7 @@
                   new_link = $(self).attr('href') + element_name ;
                   document.location.href = new_link;
                 }
+                
               }
             }
             });

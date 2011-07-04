@@ -32,7 +32,8 @@ $(document).ready(function () {
           title: { button: true, text: '<?php echo __('Save your search')?>' },
           ajax: {
             url: '<?php echo url_for("savesearch/saveSearch");?>/source/' + source + '/cols/' + encodeURI(column_str),
-            type: 'POST'
+            type: 'POST',
+            data: $('form.specimensearch_form').serialize()
           }
         },
       position: {
