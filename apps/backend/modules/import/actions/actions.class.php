@@ -52,7 +52,11 @@ class importActions extends DarwinActions
     }
     return $this->redirect('import/index');
   }
-
+  
+  public function executeExtdinfo(sfWebRequest $request)
+  {   
+    $this->import = new Imports() ;   
+  }
 
   public function executeUpload(sfWebRequest $request)
   {

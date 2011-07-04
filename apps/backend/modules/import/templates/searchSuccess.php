@@ -47,7 +47,8 @@
               <td></td>
               <td><?php echo $import->Collections->getName();?></td>
               <td><?php echo $import->getFilename();?></td>
-              <td><?php echo __($import->getStateName());?></td>
+              <td><?php echo __($import->getStateName());?>
+              </td>
               <td><?php echo $import->getLastModifiedDate(ESC_RAW);?></td>
               <td>
                 <?php if(! in_array($import->getState(),array('loading','loaded','to_be_loaded')) ):?>

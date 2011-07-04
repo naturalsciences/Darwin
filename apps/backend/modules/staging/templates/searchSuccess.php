@@ -71,7 +71,7 @@ $(document).ready(function () {
   $('.remove_staging').click(function(event)
   {
     event.preventDefault();
-    if(confirm('<?php echo addslashes(__('All children will be delete too, Are you sure ?'));?>'))
+    if(confirm('<?php echo addslashes(__('All children will be deleted too, Are you sure ?'));?>'))
     {
       $.ajax({
         url: $(this).attr('href'),

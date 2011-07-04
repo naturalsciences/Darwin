@@ -24,6 +24,16 @@ class Imports extends BaseImports
     'finished' => 'Finished',
     'aborted' => 'Aborted',
   );  
+  private static $info = array(
+    'to_be_loaded' => 'This file is ready to be loaded, an automatic task will be activated to load lines.',
+    'loading'=> 'The file is actually being loaded in database',
+    'loaded'=>'Your file has been loaded, but still need to be checked',
+    'checking'=> 'Your file has been loaded and is being checked',
+    'pending'=> 'Your file has been loaded and checked, you can edit line in errors or import corrects lines',
+    'processing'=> 'Your \'Ok\' lines is beeing imported in DaRWIN',
+    'finished' => 'This file has completly been imported in Darwin',
+    'aborted' => 'This file have been aborted, not line were imported, the line remains for a limited time here just for information purpose',    
+  );  
 
   public static $formatArray = array('dna' => 'DNA') ;
   
@@ -41,14 +51,20 @@ class Imports extends BaseImports
     return self::$formatArray ;
   }
   
-  public function getStateName()
+  public function getStateName($name = null)
   {
+    if($name) return self::$state[$name];
     return self::$state[$this->getState()];
   }
   public static function getStateList()
   {
     return self::$state ;
   } 
+   
+  public function getStateInfo($state)
+  {
+    return self::$info[$state];
+  }
   
   // function used to determine if we can display edition button or not
   public function isEditableState()

@@ -18,7 +18,8 @@
           <td><?php echo $form['collection_ref']->render() ?></td>
           <td><?php echo $form['filename']->render() ?></td>
           <td><?php echo $form['state']->render() ?></td>
-          <th><?php echo $form['show_finished']->render(); ?></th>   
+          <th><?php echo $form['show_finished']->render(); ?>
+          </th>   
           <td><input class="search_submit" type="submit" name="search" value="<?php echo __('Filter'); ?>" /></td>
         </tr>
       </tbody>
@@ -30,4 +31,5 @@
     <div class="new_link"><a href="<?php echo url_for('import/upload') ?>"><?php echo __('Import a file');?></a>
     </div>
   </div>
-</form>
+</form>  
+
