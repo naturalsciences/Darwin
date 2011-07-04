@@ -50,7 +50,7 @@ class UsersTracking extends BaseUsersTracking
   {
     $hstore = $this->_get('new_value');
     $hvals = new Hstore();
-    $diff->import($hstore);
+    $hvals->import($hstore);
     if(isset($hvals['referenced_relation']) && isset($hvals['record_id']))
       return $this->getLinkforKnownTable($hvals['referenced_relation'],$hvals['record_id']);
 
