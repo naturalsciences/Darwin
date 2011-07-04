@@ -22,7 +22,7 @@ class Imports extends BaseImports
     'pending'=> 'Pending',
     'processing'=> 'Processing',
     'finished' => 'Finished',
-    'aboarted' => 'Aboarted',
+    'aborted' => 'Aborted',
   );  
 
   public static $formatArray = array('dna' => 'DNA') ;
