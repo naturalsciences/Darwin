@@ -3866,6 +3866,12 @@ BEGIN
         VALUES
           (line.gtu_code, line.gtu_from_date_mask, line.gtu_from_date, line.gtu_to_date_mask, line.gtu_to_date, line.gtu_latitude, line.gtu_longitude, line.gtu_lat_long_accuracy, line.gtu_elevation, line.gtu_elevation_accuracy)
         RETURNING id INTO ref_rec;
+        
+        INSERT INTO tag_groups (gtu_ref, group_name, sub_group_name, tag_value)
+          (
+            SELECT ref_rec,group_name, sub_group_name, tag_value
+              FROM staging_tag_groups WHERE staging_ref = line.id
+          );
       ELSE
         RETURN TRUE;
       END IF;
