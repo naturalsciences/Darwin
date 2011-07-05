@@ -46,7 +46,10 @@ class ImportDnaXml implements IImportModels
     'family_name' => 'institution_name',  
     'acquisition_category' => 'acquisition_category',
     'acquisition_date_mask' => 'acquisition_date_mask',
-    'acquisition_date date' => 'acquisition_date date',      
+    'acquisition_date date' => 'acquisition_date date',   
+    'ig_num' => 'ig_num',
+    'ig_date' => 'ig_date',   
+    'ig_date_mask' => 'ig_date_mask',
   ) ;   
   
   public function importFile($file,$id)
@@ -106,6 +109,7 @@ class ImportDnaXml implements IImportModels
       elseif($childNode->nodeName == 'gtu') $this->processWithGtuNode($childNode,$object); 
       elseif($childNode->nodeName == 'expedition') $this->fillSimpleObject($childNode,$object);  
       elseif($childNode->nodeName == 'acquisition') $this->fillSimpleObject($childNode,$object);        
+      elseif($childNode->nodeName == 'ig') $this->fillSimpleObject($childNode,$object);              
       elseif($childNode->nodeName == 'institution') $this->fillSimpleObject($childNode,$object);        
       elseif($childNode->nodeName == 'donators') $this->processWithDonatorsNode($childNode,$object);      
       elseif($childNode->nodeName == 'collectors') $this->processWithCollectorsNode($childNode,$object);      
@@ -455,13 +459,7 @@ class ImportDnaXml implements IImportModels
     // I remove the latest ',' and add the '}' 
     $object['donators'] = substr($donators,0,strlen($donators)-1).'}' ; 
   } 
-     
 
-  // function not used for now, because there is no Igs for now
-  public function processWithIgsNode($xml_node,$id)
-  {
-  
-  }  
 
   /**
    * This function create and save all Comments found
