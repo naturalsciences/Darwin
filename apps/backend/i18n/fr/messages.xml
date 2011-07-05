@@ -4036,14 +4036,6 @@
         <source>Search</source>
         <target>Rechercher</target>
       </trans-unit>
-          <trans-unit id="1052">
-        <source>Dear %s %s,</source>
-        <target>Cher(e) %s %s,</target>
-      </trans-unit>
-          <trans-unit id="1053">
-        <source>Dear %s</source>
-        <target>Cher(e) %</target>
-      </trans-unit>
           <trans-unit id="1054">
         <source>You should have received a link to renew your password on the e-mail address provided.</source>
         <target>Vous devriez recevoir un lien pour renouveler votre mot de passe à l&#039;adresse email que vous nous avez fournit.</target>
@@ -4492,6 +4484,26 @@
         <source>deleted</source>
         <target>supprimé</target>
       </trans-unit>
+          <trans-unit id="1382">
+        <source>Dear %title%,</source>
+        <target>Cher %title%,</target>
+      </trans-unit>
+          <trans-unit id="1383">
+        <source>Set rights on widgets for %name%</source>
+        <target>Définir les droits sur les widgets pour %name%</target>
+      </trans-unit>
+          <trans-unit id="1384">
+        <source>Between %min% and %max%</source>
+        <target>Entre %min% et %max%</target>
+      </trans-unit>
+          <trans-unit id="1385">
+        <source>Profile for %s</source>
+        <target>Profil de %s</target>
+      </trans-unit>
+          <trans-unit id="1381">
+        <source>Dear %title% %name%,</source>
+        <target>Cher %title% %name%,</target>
+      </trans-unit>
           <trans-unit id="806">
         <source>You don\&#039;t have the rights to insert into or update a specimen in this collection</source>
         <target>Vous n\&#039;avez pas la permission d&#039;insérer ou mettre à jour un échantillon dans cet collection</target>
@@ -4595,6 +4607,42 @@
           <trans-unit id="1370">
         <source>DaRWIN 2 team</source>
         <target>L&#039;équipe DaRWIN 2</target>
+      </trans-unit>
+          <trans-unit id="1371">
+        <source>This record seems to have already been saved you can see it </source>
+        <target>Cet enregistrement semble déjà être sauvegardé, vous pouvez le voir </target>
+      </trans-unit>
+          <trans-unit id="1378">
+        <source>Field to be corrected</source>
+        <target>Champs à corriger</target>
+      </trans-unit>
+          <trans-unit id="1379">
+        <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;If you don\&#039;t correct default values before saving, The associated error will remain.</source>
+        <target>&lt;strong&gt;Attention!&lt;/strong&gt;&lt;br /&gt;Si vous ne corrigez pas les valeurs par défaut avant de sauver, les erreurs associées resteront.</target>
+      </trans-unit>
+          <trans-unit id="1377">
+        <source>No errors on this record</source>
+        <target>Aucune erreurs sur cet enregistrement</target>
+      </trans-unit>
+          <trans-unit id="1373">
+        <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc</source>
+        <target>La hiérarchie de %field% est incorrecte, veuillez en choisir une valide ou laisser vide</target>
+      </trans-unit>
+          <trans-unit id="1374">
+        <source>Too many record match to this %field%\&#039;s value, please choose the good one or leave blanc</source>
+        <target>Trop d&#039;enregistrements correspondent à cette valeur de %field%, veuillez en choisir une ou laisser vide</target>
+      </trans-unit>
+          <trans-unit id="1375">
+        <source>This %field% was not found in our database, please choose an existing one or remove it</source>
+        <target>Cette valeur de %field% n&#039;a pas été trouvée dans notre base de donnée, veuillez en choisir un existant.</target>
+      </trans-unit>
+          <trans-unit id="1376">
+        <source>here</source>
+        <target>ici</target>
+      </trans-unit>
+          <trans-unit id="1372">
+        <source>One or more %field% were not found or have too much results. In both case, you must choose an existing one</source>
+        <target>Un ou plusieurs %field% n&#039;ont pas été trouvés ou ont trop de correspondances. Dans les deux cas, vous devez choisir un existant</target>
       </trans-unit>
         </body>
   </file>

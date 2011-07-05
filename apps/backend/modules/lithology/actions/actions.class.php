@@ -25,8 +25,9 @@ class lithologyActions extends DarwinActions
   }
   public function executeChoose(sfWebRequest $request)
   {
+    $name = $request->hasParameter('name')?$request->getParameter('name'):'' ;  
     $this->setLevelAndCaller($request);
-    $this->searchForm = new LithologyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id));
+    $this->searchForm = new LithologyFormFilter(array('table' => $this->table, 'level' => $this->level, 'caller_id' => $this->caller_id, 'name' => $name));
     $this->setLayout(false);
   }
 
@@ -67,6 +68,7 @@ class lithologyActions extends DarwinActions
   public function executeNew(sfWebRequest $request)
   {
     $litho = new Lithology() ;
+    if($request->hasParameter('name')) $litho->setName($request->getParameter('name')) ;
     $duplic = $request->getParameter('duplicate_id','0');
     $litho = $this->getRecordIfDuplicate($duplic, $litho);
     $this->form = new LithologyForm($litho);
