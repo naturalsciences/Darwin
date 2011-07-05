@@ -259,7 +259,7 @@
   <xs:element name="expedition">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="expedition_name" type="xs:NCName" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="expedition_name" type="xs:string" minOccurs="1" maxOccurs="1"/>
         <xs:element name="expedition_from_date" type="dates" minOccurs="0" maxOccurs="1"/>
         <xs:element name="expedition_from_date_mask" type="datemasks" minOccurs="0" maxOccurs="1"/>
         <xs:element name="expedition_to_date" type="dates" minOccurs="0" maxOccurs="1"/>

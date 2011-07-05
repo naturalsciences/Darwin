@@ -8311,6 +8311,11 @@
           <sub_group_name>administrative division</sub_group_name>
           <tag_value>Baie de Sakalava</tag_value>
         </tag_group>
+        <tag_group>
+          <group_name>hydrographic</group_name>
+          <sub_group_name>river</sub_group_name>
+          <tag_value>Sakalava river</tag_value>
+        </tag_group>
       </tag_groups>
     </gtu>
     <taxon>
@@ -8334,11 +8339,89 @@
       <identification>
         <notion_concerned>taxonomy</notion_concerned>
         <value>Paracontias rothschildi</value>
+        <identifiers>
+          <identifier>
+            <family_name>Duchesne</family_name>
+            <given_name>Paul-André</given_name>
+            <formated_name>Paul-André Duchesne</formated_name>
+            <institution>
+              <family_name>Royal belgian Institute for natural Sciences</family_name>
+              <formated_name>Royal belgian Institute for natural Sciences</formated_name>
+            </institution>
+            <people_comms>
+              <people_comm>
+                <comm_type>e-mail</comm_type>
+                <tag>internet,work,pref</tag>
+                <entry>Paul-andre.Duchesne@sciencesnaturelles.be</entry>
+              </people_comm>
+            </people_comms>
+          </identifier>
+        </identifiers>
       </identification>
     </identifications>
+    <acquisition>
+      <acquisition_category>gift</acquisition_category>
+      <acquisition_date>2011-07-05T10:02:01</acquisition_date>
+      <acquisition_date_mask>63</acquisition_date_mask>
+    </acquisition>
+    <expedition>
+      <expedition_name>Sakalava expedition</expedition_name>
+      <expedition_from_date>2010-02-25</expedition_from_date>
+      <expedition_from_date_mask>56</expedition_from_date_mask>
+      <expedition_to_date>2010-02-26</expedition_to_date>
+      <expedition_to_date_mask>56</expedition_to_date_mask>
+    </expedition>
+    <collectors>
+      <collector>
+        <family_name>Kamke</family_name>
+        <given_name>Thobias</given_name>
+        <formated_name>Thobias Kamke</formated_name>
+      </collector>
+    </collectors>
+    <donators>
+      <donator>
+        <family_name>Barbe Rousse</family_name>
+        <formated_name>Barbe Rousse</formated_name>
+      </donator>
+    </donators>
+    <ig>
+      <ig_num>12345</ig_num>
+      <ig_date>2010-12-25</ig_date>
+      <ig_date_mask>56</ig_date_mask>
+    </ig>
+    <comments>
+      <comment>
+        <notion_concerned>general</notion_concerned>
+        <value>male, hemipenes prep.</value>
+      </comment>
+    </comments>
     <collection_objects>
       <collection_object>
         <level>individual</level>
+        <identifications>
+          <identification>
+            <notion_concerned>sex</notion_concerned>
+            <value>undefined</value>
+            <identifiers>
+              <identifier>
+                <family_name>Duchesne</family_name>
+                <given_name>Paul-André</given_name>
+                <formated_name>Paul-André Duchesne</formated_name>
+                <institution>
+                  <family_name>Royal belgian Institute for natural Sciences</family_name>
+                  <formated_name>Royal belgian Institute for natural Sciences</formated_name>
+                </institution>
+                <people_comms>
+                  <people_comm>
+                    <comm_type>e-mail</comm_type>
+                    <tag>internet,work,pref</tag>
+                    <entry>Paul-andre.Duchesne@sciencesnaturelles.be</entry>
+                  </people_comm>
+                </people_comms>
+              </identifier>
+            </identifiers>
+          </identification>
+        </identifications>
         <collection_objects>
           <collection_object>
             <level>specimen part</level>
@@ -8379,6 +8462,18 @@
                     <institution>
                       <family_name>Royal Belgian Institute of natural Sciences</family_name>
                     </institution>
+                    <building>De Vestel</building>
+                    <floor>11</floor>
+                    <room>11a</room>
+                    <shelf>freezer PrePCR lab</shelf>
+                    <container_type>well</container_type>
+                    <container>Super PCR Well</container>
+                    <comments>
+                      <comment>
+                        <notion_concerned>general</notion_concerned>
+                        <value>test comment</value>
+                      </comment>
+                    </comments>
                     <properties>
                       <property>
                         <property_type>sampling protocol</property_type>
