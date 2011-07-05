@@ -43,8 +43,11 @@ class ImportDnaXml implements IImportModels
     'code_date_mask' => 'code_date_mask',
     'part_count_min' => 'part_count_min',
     'part_count_max' => 'part_count_max',
-    'family_name' => 'institution_name',    
-  ) ; 
+    'family_name' => 'institution_name',  
+    'acquisition_category' => 'acquisition_category',
+    'acquisition_date_mask' => 'acquisition_date_mask',
+    'acquisition_date date' => 'acquisition_date date',      
+  ) ;   
   
   public function importFile($file,$id)
   {  
@@ -102,6 +105,7 @@ class ImportDnaXml implements IImportModels
       if($childNode->childNodes->length == 1) $this->getSimpleField($childNode,$object);
       elseif($childNode->nodeName == 'gtu') $this->processWithGtuNode($childNode,$object); 
       elseif($childNode->nodeName == 'expedition') $this->fillSimpleObject($childNode,$object);  
+      elseif($childNode->nodeName == 'acquisition') $this->fillSimpleObject($childNode,$object);        
       elseif($childNode->nodeName == 'institution') $this->fillSimpleObject($childNode,$object);        
       elseif($childNode->nodeName == 'donators') $this->processWithDonatorsNode($childNode,$object);      
       elseif($childNode->nodeName == 'collectors') $this->processWithCollectorsNode($childNode,$object);      
