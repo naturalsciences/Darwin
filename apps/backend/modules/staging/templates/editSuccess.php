@@ -22,10 +22,7 @@
       <?php if($key == 'duplicate') : ?>      
       <fieldset>
         <ul class="error_list">  
-          <li><?php echo __($array['display_error']).link_to('here', $form->getObject()->getLevel().'/view?id='.$array['duplicate_record'],array('target' => 'blanck')) ?></li>       
-        </ul>
-      </fieldset>      
-      <?php continue ; ?>
+          <li><?php echo __($array['display_error'],array('%here%' => link_to('here', $form->getObject()->getLevel().'/view?id='.$array['duplicate_record'],'target=blanck'))) ?></li>       
       <?php else : ?>
       <fieldset><legend><?php echo __('Field to be corrected')." : ".$key ;?></legend>
         <ul class="error_list">          

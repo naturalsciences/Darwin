@@ -1927,6 +1927,7 @@ Staging:
         id: { type: integer, primary: true, autoincrement: true}
         import_ref: { type: integer, notnull: true}
         parent_ref: { type: integer}
+        spec_ref: { type: integer} 
         path: { type: string}
         level: { type: string, notnull: true}
         category: { type: string}
