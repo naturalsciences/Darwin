@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(48);
+SELECT plan(52);
 
 select diag('Test of staging check without levels');
 
@@ -22,6 +22,7 @@ insert into staging (id,import_ref, "level",taxon_name) VALUES (2,1,'specimens',
 
 select is(1 ,(select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select  taxon_ref from staging s where id = 2));
+select is('taxon=>not_found', (select  status from staging s where id = 2));
 
 insert into staging (id,import_ref, "level",taxon_name) VALUES (3,1,'specimens','Falco coco');
 
@@ -34,6 +35,7 @@ UPDATE staging set taxon_name = 'Falco coco',taxon_level_name=null where id = 3;
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
+select is('taxon=>too_much', (select  status from staging s where id = 3));
 
 select diag('Test of staging check with levels');
 
@@ -43,6 +45,7 @@ delete from taxonomy where id = 4;
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
+
 update taxonomy set level_ref=2 , parent_ref = 1 where id = 3;
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
@@ -56,11 +59,15 @@ select is(3, (select taxon_ref from staging s where id = 4));
 select diag('Test of staging check with Parent levels');
 
 INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (4, 'Falco Coco lus (Brolus 1974)', 4, 3);
-update staging SET taxon_ref = null  where id = 3;
-update staging SET taxon_name = 'Falco Coco lus (Brolus 1974)', taxon_level_name ='phylum', taxon_parents = 'domain=>"Falco Peregrinus"' where id = 3;
+update staging SET taxon_ref = null  where id = 3; -- 2 times because of trigger
+update staging SET taxon_name = 'Falco Coco lus (Brolus', taxon_level_name ='phylum', taxon_parents = 'domain=>"Falco Peregrinus"' where id = 3;
+
+select is('Falco Coco lus (Brolus', (select taxon_name from staging where id = 3)); 
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
+select is('taxon=>bad_hierarchy'::hstore, (select status from staging where id = 3)); 
+select is('Falco Coco lus (Brolus', (select taxon_name from staging where id = 3)); 
 
 update staging SET taxon_parents = '"super_phylum"=>"Falco Peregrinus"'::hstore where id = 3;
 
@@ -70,10 +77,11 @@ select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(4, (select taxon_ref from staging s where id = 3));
 
 INSERT INTO taxonomy (id, name, level_ref,parent_ref) VALUES (5, 'Brolz', 2, 1);
-update staging SET taxon_parents = '"kingdom"=>"Brolz"'::hstore, taxon_ref = null where id = 3;
+update staging SET taxon_parents = '"kingdom"=>"Brolz"'::hstore, taxon_ref = null, status = '' where id = 3;
 
 select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
 select is(null, (select taxon_ref from staging s where id = 3));
+
 
 
 select diag('Test Igs');
@@ -94,7 +102,6 @@ select is(1 , (select min(fct_imp_checker_igs(s.*)::int) from staging s));
 select is(null, (select ig_ref from staging where id = 3)); /* Null or 1459 ?*/
 
 select diag('Test of Collectors');
-select is('taxon=>bad_hierarchy'::hstore, (select status from staging where id = 3)); 
 update people set title = 'Mr' where id = 2;
 update staging set collectors = '{Hello World,Paul Andre Duchesne}'::text[], status = delete(status,'taxon') where id =  3;
 select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));

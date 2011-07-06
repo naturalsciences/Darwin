@@ -3662,7 +3662,6 @@ BEGIN
 
     IF result_nbr = 1 THEN -- It's Ok!
       
-      EXECUTE 'UPDATE staging SET status = delete(status, ' || quote_literal(prefix) ||'), ' || prefix|| '_ref = ' || rec_id || ' where id=' || line.id; 
       PERFORM fct_imp_checker_catalogues_parents(line,rec_id, catalogue_table, prefix);
       RETURN true;
     END IF;
@@ -3692,7 +3691,6 @@ BEGIN
     END LOOP;
 
     IF result_nbr = 1 THEN -- It's Ok!
-      EXECUTE 'UPDATE staging SET status = delete(status, ' || quote_literal(prefix) ||'), ' || prefix|| '_ref = ' || rec_id || ' where id=' || line.id; 
       PERFORM fct_imp_checker_catalogues_parents(line,rec_id, catalogue_table, prefix);
       RETURN true;
     END IF;
@@ -3761,24 +3759,25 @@ BEGIN
   field_name := prefix || '_parents';
   rec_parents := line_store->field_name;
 
-  IF rec_parents is null OR rec_parents = ''::hstore OR rec_id is null THEN
-    RETURN true;
-  END IF;
-  EXECUTE 'select * from '|| quote_ident(catalogue_table) || ' where id = ' || rec_id into row_record ;
+  IF rec_parents is not null AND rec_parents != ''::hstore  AND rec_id is not null THEN
+    EXECUTE 'select * from '|| quote_ident(catalogue_table) || ' where id = ' || rec_id into row_record ;
 
-  FOR lvl_name in SELECT s FROM fct_explode_array(akeys(rec_parents)) as s
-  LOOP 
-    lvl_value := rec_parents->lvl_name;
-    EXECUTE 'SELECT count(*) from ' || quote_ident(catalogue_table) || ' t
-      INNER JOIN catalogue_levels c on t.level_ref = c.id
-       WHERE level_sys_name = ' || quote_literal(lvl_name) || ' AND 
-        name_order_by like fullToIndex( ' || quote_literal(lvl_value) || '  ) || ''%''
-        AND ' || quote_literal(row_record.path) || 'like t.path || t.id || ''/%'' ' INTO result_nbr;
-    IF result_nbr = 0 THEN
-      EXECUTE 'UPDATE staging SET status = (status || ('|| quote_literal(prefix) || ' => ''bad_hierarchy'')), ' || prefix || '_ref = null where id=' || line.id;
-      RETURN TRUE;
-    END IF;
-  END LOOP;
+    FOR lvl_name in SELECT s FROM fct_explode_array(akeys(rec_parents)) as s
+    LOOP 
+      lvl_value := rec_parents->lvl_name;
+      EXECUTE 'SELECT count(*) from ' || quote_ident(catalogue_table) || ' t
+        INNER JOIN catalogue_levels c on t.level_ref = c.id
+        WHERE level_sys_name = ' || quote_literal(lvl_name) || ' AND 
+          name_order_by like fullToIndex( ' || quote_literal(lvl_value) || '  ) || ''%''
+          AND ' || quote_literal(row_record.path) || 'like t.path || t.id || ''/%'' ' INTO result_nbr;
+      IF result_nbr = 0 THEN
+        EXECUTE 'UPDATE staging SET status = (status || ('|| quote_literal(prefix) || ' => ''bad_hierarchy'')), ' || prefix || '_ref = null where id=' || line.id;
+        RETURN TRUE;
+      END IF;
+    END LOOP;
+  END IF;
+  EXECUTE 'UPDATE staging SET status = delete(status, ' || quote_literal(prefix) ||'), ' || prefix|| '_ref = ' || rec_id || ' where id=' || line.id; 
+
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
