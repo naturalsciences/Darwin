@@ -1931,14 +1931,14 @@ Staging:
         path: { type: string}
         level: { type: string, notnull: true}
         category: { type: string}
-        expedition_ref: { type: integer default:0}
+        expedition_ref: { type: integer}
         expedition_name: { type: string}
         expedition_from_date: {type: string}
         expedition_from_date_mask: { type: integer}
         expedition_to_date: {type: string}
         expedition_to_date_mask: { type: integer}
         station_visible: { type: boolean}
-        gtu_ref: { type: integer, notnull: true, default:0}
+        gtu_ref: { type: integer, notnull: true}
         gtu_code: { type: string}
         gtu_from_date_mask: { type: integer }
         gtu_from_date: { type: string}

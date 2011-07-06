@@ -4492,6 +4492,30 @@
         <source>Set rights on widgets for %name%</source>
         <target>Définir les droits sur les widgets pour %name%</target>
       </trans-unit>
+          <trans-unit id="1389">
+        <source>Your file has been loaded, but still need to be checked</source>
+        <target>Votre fichier a été chargé, mais doit encore être examiné.</target>
+      </trans-unit>
+          <trans-unit id="1390">
+        <source>The file is actually being loaded in database</source>
+        <target>Le fichier est actuellement en train d&#039;être chargé dans la base de données</target>
+      </trans-unit>
+          <trans-unit id="1391">
+        <source>Your file has been loaded and is being checked</source>
+        <target>Votre fichier a été chargé et éxaminé</target>
+      </trans-unit>
+          <trans-unit id="1392">
+        <source>Your file has been loaded and checked, you can edit line in errors or import corrects lines</source>
+        <target>Votre fichier a été chargé et examiné, vous pouvez éditer les lignes en erreur ou importer les lignes correctes</target>
+      </trans-unit>
+          <trans-unit id="1393">
+        <source>Your \&#039;Ok\&#039; lines is beeing imported in DaRWIN</source>
+        <target>Vos lines \&#039;Ok\&#039; sont en cours d&#039;import dans DaRWIN</target>
+      </trans-unit>
+          <trans-unit id="1394">
+        <source>This file has completly been imported in Darwin</source>
+        <target>Ce fichier a été totalement importé dans DaRWIN</target>
+      </trans-unit>
           <trans-unit id="1384">
         <source>Between %min% and %max%</source>
         <target>Entre %min% et %max%</target>
@@ -4503,6 +4527,46 @@
           <trans-unit id="1381">
         <source>Dear %title% %name%,</source>
         <target>Cher %title% %name%,</target>
+      </trans-unit>
+          <trans-unit id="1396">
+        <source>To be loaded</source>
+        <target>A charger</target>
+      </trans-unit>
+          <trans-unit id="1398">
+        <source>Checking</source>
+        <target>En cours d&#039;examamination</target>
+      </trans-unit>
+          <trans-unit id="1399">
+        <source>Loaded</source>
+        <target>Chargé</target>
+      </trans-unit>
+          <trans-unit id="1400">
+        <source>Pending</source>
+        <target>En attente</target>
+      </trans-unit>
+          <trans-unit id="1401">
+        <source>Processing</source>
+        <target>En cours de traitement</target>
+      </trans-unit>
+          <trans-unit id="1402">
+        <source>Finished</source>
+        <target>Terminé</target>
+      </trans-unit>
+          <trans-unit id="1403">
+        <source>Aborted</source>
+        <target>Annulé</target>
+      </trans-unit>
+          <trans-unit id="1386">
+        <source>This record seems to have already been saved you can see it %here%, you can also choose an existing one with the button below</source>
+        <target>Cet enregistrement semble avoir déjà été sauvegardé %here%, vous pouvez aussi choisir un enregistrement existant via le bouton ci-dessous</target>
+      </trans-unit>
+          <trans-unit id="1387">
+        <source>This file is ready to be loaded, an automatic task will be activated to load lines.</source>
+        <target>Ce fichier est prêt à être chargé, une tâche automatique sera activée pour charger les lignes</target>
+      </trans-unit>
+          <trans-unit id="1404">
+        <source>This file have been aborted, this line remains for a limited time in the summary just for information purpose</source>
+        <target>Ce fichier a été annulé, cette ligne reste pendant un temps limité dans le résumé à titre d&#039;information</target>
       </trans-unit>
           <trans-unit id="806">
         <source>You don\&#039;t have the rights to insert into or update a specimen in this collection</source>
@@ -4607,10 +4671,6 @@
           <trans-unit id="1370">
         <source>DaRWIN 2 team</source>
         <target>L&#039;équipe DaRWIN 2</target>
-      </trans-unit>
-          <trans-unit id="1371">
-        <source>This record seems to have already been saved you can see it </source>
-        <target>Cet enregistrement semble déjà être sauvegardé, vous pouvez le voir </target>
       </trans-unit>
           <trans-unit id="1378">
         <source>Field to be corrected</source>

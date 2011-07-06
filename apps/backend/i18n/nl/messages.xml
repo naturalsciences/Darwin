@@ -3,10 +3,6 @@
   <file source-language="en" target-language="nl" datatype="plaintext" original="en">
     <header/>
     <body>
-          <trans-unit id="1371">
-        <source>This record seems to have already been saved you can see it </source>
-        <target></target>
-      </trans-unit>
           <trans-unit id="1372">
         <source>One or more %field% were not found or have too much results. In both case, you must choose an existing one</source>
         <target></target>
@@ -85,6 +81,38 @@
       </trans-unit>
           <trans-unit id="1385">
         <source>Profile for %s</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1386">
+        <source>This record seems to have already been saved you can see it %here%, you can also choose an existing one with the button below</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1387">
+        <source>This file is ready to be loaded, an automatic task will be activated to load lines.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1389">
+        <source>Your file has been loaded, but still need to be checked</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1390">
+        <source>The file is actually being loaded in database</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1391">
+        <source>Your file has been loaded and is being checked</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1392">
+        <source>Your file has been loaded and checked, you can edit line in errors or import corrects lines</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1393">
+        <source>Your \&#039;Ok\&#039; lines is beeing imported in DaRWIN</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1394">
+        <source>This file has completly been imported in Darwin</source>
         <target></target>
       </trans-unit>
           <trans-unit id="1058">
