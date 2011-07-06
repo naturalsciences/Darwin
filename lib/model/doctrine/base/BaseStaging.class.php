@@ -8,6 +8,7 @@
  * @property integer $id
  * @property integer $import_ref
  * @property integer $parent_ref
+ * @property integer $spec_ref
  * @property string $path
  * @property string $level
  * @property string $category
@@ -122,6 +123,7 @@
  * @method integer             getId()                        Returns the current record's "id" value
  * @method integer             getImportRef()                 Returns the current record's "import_ref" value
  * @method integer             getParentRef()                 Returns the current record's "parent_ref" value
+ * @method integer             getSpecRef()                   Returns the current record's "spec_ref" value
  * @method string              getPath()                      Returns the current record's "path" value
  * @method string              getLevel()                     Returns the current record's "level" value
  * @method string              getCategory()                  Returns the current record's "category" value
@@ -234,6 +236,7 @@
  * @method Staging             setId()                        Sets the current record's "id" value
  * @method Staging             setImportRef()                 Sets the current record's "import_ref" value
  * @method Staging             setParentRef()                 Sets the current record's "parent_ref" value
+ * @method Staging             setSpecRef()                   Sets the current record's "spec_ref" value
  * @method Staging             setPath()                      Sets the current record's "path" value
  * @method Staging             setLevel()                     Sets the current record's "level" value
  * @method Staging             setCategory()                  Sets the current record's "category" value
@@ -364,6 +367,9 @@ abstract class BaseStaging extends sfDoctrineRecord
              'notnull' => true,
              ));
         $this->hasColumn('parent_ref', 'integer', null, array(
+             'type' => 'integer',
+             ));
+        $this->hasColumn('spec_ref', 'integer', null, array(
              'type' => 'integer',
              ));
         $this->hasColumn('path', 'string', null, array(

@@ -14,8 +14,22 @@ class StagingForm extends BaseStagingForm
   {
     $array_of_field = $this->options['fields'] ;
     if (in_array('identifiers',$array_of_field)) unset($array_of_field[array_search('identifiers', $array_of_field)]);
-    if (in_array('duplicate',$array_of_field)) unset($array_of_field[array_search('duplicate', $array_of_field)]);    
     $this->useFields($array_of_field) ;
+    if (in_array('spec_ref',$array_of_field))
+    {
+      $this->widgetSchema['spec_ref'] = new widgetFormButtonRef(array(
+         'model' => 'Staging',
+         'link_url' => 'specimen/choose',
+         'method' => 'getName',
+         'box_title' => $this->getI18N()->__('Choose Specimen'),
+         'nullable' => true,
+         'button_class'=>'',
+       ),
+        array('class'=>'inline',
+             )
+      );    
+      $this->validatorSchema['spec_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+    }      
     /* Taxonomy Reference */
     if(in_array('taxon_ref',$this->options['fields']))
     {  
@@ -325,8 +339,10 @@ class StagingForm extends BaseStagingForm
     else unset($this['litho_ref']) ;    
     if($this->getValue('lithology_ref') != 0) $status['lithology'] = 'done' ;    
     else unset($this['lithology_ref']) ;    
-    if($this->getValue('igs_ref') != 0) $status['igs'] = 'done' ;    
+    if($this->getValue('igs_ref') != 0) $status['igs'] = 'done' ;        
     else unset($this['igs_ref']) ;   
+    if($this->getValue('spec_ref') != 0) $status['duplicate'] = 'done' ;        
+    else unset($this['spec_ref']) ;       
     if($value = $this->getValue('WrongCollectors')) 
     {
       unset($this['collectors']) ; 

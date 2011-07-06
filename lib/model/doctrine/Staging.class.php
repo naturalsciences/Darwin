@@ -19,7 +19,7 @@ class Staging extends BaseStaging
     'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
     'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
     'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one',
-    'duplicate' => 'This record seems to have already been saved you can see it ',
+    'duplicate' => 'This record seems to have already been saved you can see it %here%, you can also choose an existing one with the button below',
   );
 
   public function getCategory()
@@ -225,6 +225,7 @@ class Staging extends BaseStaging
     if($field == 'donators') return('donators') ;  
     if($field == 'identifiers') return('identifiers') ;
     if($field == 'institution') return('institution_ref') ;
+    if($field == 'duplicate') return('spec_ref') ;    
     return($field) ;
   }
   
