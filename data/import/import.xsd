@@ -188,7 +188,7 @@
   <xs:group name="acquisitions">
     <xs:sequence>
       <xs:element name="acquisition_category" type="xs:string" minOccurs="1" maxOccurs="1"/>
-      <xs:element name="acquisition_date" minOccurs="0" maxOccurs="1" type="datestimes"/>
+      <xs:element name="acquisition_date" minOccurs="0" maxOccurs="1" type="dates"/>
       <xs:element name="acquisition_date_mask" minOccurs="0" maxOccurs="1" type="datemasks"/>
     </xs:sequence>
   </xs:group>
