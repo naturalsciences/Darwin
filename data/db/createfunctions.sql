@@ -3855,18 +3855,22 @@ BEGIN
   END IF;
 
   select id into ref_rec from gtu where
-    latitude = line.gtu_latitude AND
-    longitude = line.gtu_latitude AND
+    COALESCE(latitude,latitude,0) = COALESCE(line.gtu_latitude,line.gtu_latitude,0) AND
+    COALESCE(longitude,longitude,0) = COALESCE(line.gtu_longitude,line.gtu_longitude,0) AND
     gtu_from_date = COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001') AND
-    gtu_to_date = COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038');
+    gtu_to_date = COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038')
+    AND id != 0 LIMIT 1;
+  
+
   IF NOT FOUND THEN
       IF import THEN
         INSERT into gtu
-          (code, gtu_from_date_mask, gtu_from_date,gtu_to_date_mask, gtu_to_date, path, tag_values_indexed, latitude, longitude, lat_long_accuracy, elevation, elevation_accuracy)
+          (code, gtu_from_date_mask, gtu_from_date,gtu_to_date_mask, gtu_to_date, latitude, longitude, lat_long_accuracy, elevation, elevation_accuracy)
         VALUES
-          (line.gtu_code, line.gtu_from_date_mask, line.gtu_from_date, line.gtu_to_date_mask, line.gtu_to_date, line.gtu_latitude, line.gtu_longitude, line.gtu_lat_long_accuracy, line.gtu_elevation, line.gtu_elevation_accuracy)
+          (line.gtu_code, COALESCE(line.gtu_from_date_mask,line.gtu_from_date_mask,0), COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001'),
+          COALESCE(line.gtu_to_date_mask,line.gtu_to_date_mask,0), COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038')
+          , line.gtu_latitude, line.gtu_longitude, line.gtu_lat_long_accuracy, line.gtu_elevation, line.gtu_elevation_accuracy)
         RETURNING id INTO ref_rec;
-        
         INSERT INTO tag_groups (gtu_ref, group_name, sub_group_name, tag_value)
           (
             SELECT ref_rec,group_name, sub_group_name, tag_value
@@ -4085,13 +4089,16 @@ BEGIN
       PERFORM fct_imp_checker_igs(staging_line, true);
       PERFORM fct_imp_checker_expeditions(staging_line, true);
       PERFORM fct_imp_checker_gtu(staging_line, true);
+      --RE SELECT WITH UPDATE
+      select * into line from staging s INNER JOIN imports i on  s.import_ref = i.id where s.id=line.id;
 
       BEGIN
 	IF line.spec_ref is NULL THEN
 	  rec_id := nextval('specimens_id_seq');
 	  INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
 	      host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
-	  VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0), COALESCE(line.gtu_ref,line.gtu_ref,0),
+	  VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0),
+          COALESCE(line.gtu_ref,line.gtu_ref,0),
 	    COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
 	    COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
 	    line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
@@ -4123,7 +4130,6 @@ BEGIN
 	  AND acquisition_date = COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001')
 	  AND station_visible = COALESCE(line.station_visible,line.station_visible,true)
 	  AND ig_ref = line.ig_ref;	
-
 	UPDATE staging SET status=(status || ('duplicate' => rec_id::text)) , to_import=false WHERE id = prev_levels->'specimen';
 	UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
 	CONTINUE;
