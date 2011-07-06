@@ -23,6 +23,11 @@ fieldset > legend
   -webkit-border-radius: 5px;  
 }
 
+.search_form fieldset > legend
+{
+  border-color: #5BAABD;
+}
+
 #qtip-blanket
 {
   position: absolute;
