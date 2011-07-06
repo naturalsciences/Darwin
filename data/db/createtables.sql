@@ -455,7 +455,7 @@ create table users
         people_id integer,
         last_seen timestamp,
         created_at timestamp default now(),
-	selected_lang varchar default 'en',
+	selected_lang varchar not null default 'en',
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_unique, birth_date, birth_date_mask),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
