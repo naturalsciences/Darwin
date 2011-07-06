@@ -35,7 +35,6 @@ class registerActions extends DarwinActions
     $this->form = new RegisterForm();
     $this->form->addLoginInfos(0);
     $this->form->addComm(0);
-    $this->form->addLanguages(0);
     
     // If the search has been triggered by clicking on the search button or with pinned specimens
     if(($request->isMethod('post') && $request->getParameter('users','') !== '' ))

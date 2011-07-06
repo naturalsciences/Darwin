@@ -12,7 +12,7 @@
  * @property string $path
  * @property string $level
  * @property string $category
- * @property integer default:0 $expedition_ref
+ * @property integer $expedition_ref
  * @property string $expedition_name
  * @property string $expedition_from_date
  * @property integer $expedition_from_date_mask
@@ -127,6 +127,7 @@
  * @method string              getPath()                      Returns the current record's "path" value
  * @method string              getLevel()                     Returns the current record's "level" value
  * @method string              getCategory()                  Returns the current record's "category" value
+ * @method integer             getExpeditionRef()             Returns the current record's "expedition_ref" value
  * @method string              getExpeditionName()            Returns the current record's "expedition_name" value
  * @method string              getExpeditionFromDate()        Returns the current record's "expedition_from_date" value
  * @method integer             getExpeditionFromDateMask()    Returns the current record's "expedition_from_date_mask" value
@@ -240,6 +241,7 @@
  * @method Staging             setPath()                      Sets the current record's "path" value
  * @method Staging             setLevel()                     Sets the current record's "level" value
  * @method Staging             setCategory()                  Sets the current record's "category" value
+ * @method Staging             setExpeditionRef()             Sets the current record's "expedition_ref" value
  * @method Staging             setExpeditionName()            Sets the current record's "expedition_name" value
  * @method Staging             setExpeditionFromDate()        Sets the current record's "expedition_from_date" value
  * @method Staging             setExpeditionFromDateMask()    Sets the current record's "expedition_from_date_mask" value
@@ -382,8 +384,8 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('category', 'string', null, array(
              'type' => 'string',
              ));
-        $this->hasColumn('expedition_ref', 'integer default:0', null, array(
-             'type' => 'integer default:0',
+        $this->hasColumn('expedition_ref', 'integer', null, array(
+             'type' => 'integer',
              ));
         $this->hasColumn('expedition_name', 'string', null, array(
              'type' => 'string',
@@ -406,7 +408,6 @@ abstract class BaseStaging extends sfDoctrineRecord
         $this->hasColumn('gtu_ref', 'integer', null, array(
              'type' => 'integer',
              'notnull' => true,
-             'default' => 0,
              ));
         $this->hasColumn('gtu_code', 'string', null, array(
              'type' => 'string',
