@@ -3859,6 +3859,8 @@ BEGIN
     COALESCE(longitude,longitude,0) = COALESCE(line.gtu_longitude,line.gtu_longitude,0) AND
     gtu_from_date = COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001') AND
     gtu_to_date = COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038')
+    AND CASE WHEN (line.gtu_longitude is null and line.gtu_from_date is null and line.gtu_to_date is null) THEN line.gtu_code ELSE code END
+      = code
     AND id != 0 LIMIT 1;
   
 

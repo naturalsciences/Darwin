@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(40);
+SELECT plan(45);
 
 select diag('Test of staging check without levels');
 
@@ -122,7 +122,18 @@ select is(true, (select fct_importer_dna(1)));
 select is(1, (select count(*)::integer from specimen_individuals));
 select is(1, (select count(*)::integer from specimen_parts));
 select is(1, (select count(*)::integer from specimens where gtu_ref = 1));
-select is(1, (select count(*)::integer from tag_groups where gtu_ref = 1));
+select is('Hello; world; ', (select tag_value from tag_groups where gtu_ref = 1));
+
+update staging set gtu_code='My Gtuz' , gtu_ref=null, taxon_name=null, taxon_level_name=null ,status=''where id = 2;
+
+select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));
+select is(true, (select fct_importer_dna(1)));
+select is(2, (select gtu_ref from specimens where id=3));
+
+update staging set gtu_code='My Gtu' , gtu_ref=null, taxon_name=null, taxon_level_name=null,status='', ig_num = null where id = 3;
+select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));
+select is(true, (select fct_importer_dna(1)));
+select is(1, (select gtu_ref from specimens where id=4));
 
 SELECT * FROM finish();
 
