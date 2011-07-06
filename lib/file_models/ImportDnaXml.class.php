@@ -32,9 +32,15 @@ class ImportDnaXml implements IImportModels
     'sub_group_name' => 'sub_group_name',
     'tag_value' => 'tag_value',
     'property_type' => 'property_type',
+    'date_from' => 'date_from',
+    'date_from_mask' => 'date_from_mask',
+    'date_to' => 'date_to',
+    'date_to_mask' => 'date_to_mask',        
     'sub_type' => 'property_sub_type',
-    'qualifier' => 'property_qualifier',
-    'unit' => 'property_unit',
+    'property_qualifier' => 'property_qualifier',
+    'property_unit' => 'property_unit',
+    'property_method' => 'property_method',
+    'property_tool' => 'property_tool',        
     'code_prefix' => 'code_prefix',
     'code_prefix_separator' => 'code_prefix_separator',
     'code_suffix' => 'code_suffix', 
@@ -46,7 +52,7 @@ class ImportDnaXml implements IImportModels
     'family_name' => 'institution_name',  
     'acquisition_category' => 'acquisition_category',
     'acquisition_date_mask' => 'acquisition_date_mask',
-    'acquisition_date date' => 'acquisition_date date',   
+    'acquisition_date' => 'acquisition_date',   
     'ig_num' => 'ig_num',
     'ig_date' => 'ig_date',   
     'ig_date_mask' => 'ig_date_mask',
@@ -524,15 +530,15 @@ class ImportDnaXml implements IImportModels
    */
   public function processWithPropertiesValues($properties_values,$id)
   {
-    $properties_value = $properties_values->getElementsByTagName("properties_value") ;
+    $properties_value = $properties_values->getElementsByTagName("property_value") ;
     foreach($properties_value as $properties_value_node)
     {      
       $property = new PropertiesValues();
       $property['property_ref'] = $id ;
-      foreach($properties_value_node as $values)
-      {
+      foreach($properties_value_node->childNodes as $values)
+      { 
         if($values->nodeName == "#text") continue;      
-        if($values->nodeName == 'values') $property['property_value'] = $values->nodeValue;
+        if($values->nodeName == 'value') $property['property_value'] = $values->nodeValue;
         if($values->nodeName == 'accuracy') $property['property_accuracy'] = $values->nodeValue;      
       }
       $property->save();

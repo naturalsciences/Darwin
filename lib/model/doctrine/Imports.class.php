@@ -32,7 +32,7 @@ class Imports extends BaseImports
     'pending'=> 'Your file has been loaded and checked, you can edit line in errors or import corrects lines',
     'processing'=> 'Your \'Ok\' lines is beeing imported in DaRWIN',
     'finished' => 'This file has completly been imported in Darwin',
-    'aborted' => 'This file have been aborted, not line were imported, the line remains for a limited time here just for information purpose',    
+    'aborted' => 'This file have been aborted, this line remains for a limited time in the summary just for information purpose',    
   );  
 
   public static $formatArray = array('dna' => 'DNA') ;
