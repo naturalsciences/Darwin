@@ -4105,12 +4105,11 @@ BEGIN
 	    COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
 	  );
 	  UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
+          UPDATE identifications set determination_status = null where referenced_relation ='specimens' and record_id = rec_id;
 	ELSE
 	  rec_id = line.spec_ref;
 	END IF;
-
 	prev_levels := prev_levels || ('specimen' => rec_id::text);
-
       EXCEPTION WHEN unique_violation THEN
 	SELECT id INTO rec_id FROM specimens WHERE
 	  category = COALESCE(line.category,line.category,'physical')
@@ -4149,7 +4148,7 @@ BEGIN
           );
           UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
           prev_levels := (prev_levels || ('individual' => rec_id::text));
-
+          UPDATE identifications set determination_status = null where referenced_relation ='specimen_individuals' and record_id = rec_id;
 
         ELSIF lower(s_line.level) in ('specimen part','tissue part','dna part') THEN /*** @TODO:CHECK THIS!!**/
           rec_id := nextval('specimen_parts_id_seq');
@@ -4176,6 +4175,7 @@ BEGIN
           );
           UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
           prev_levels := (prev_levels || (s_line.level => rec_id::text));
+          UPDATE identifications set determination_status = null where referenced_relation ='specimen_parts' and record_id = rec_id;
           ALTER TABLE specimen_parts ENABLE TRIGGER trg_cpy_specimensmaincode_specimenpartcode;
         END IF;
 
