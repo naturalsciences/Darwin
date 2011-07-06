@@ -92,6 +92,8 @@ class accountActions extends DarwinActions
           $user = Doctrine::getTable('Users')->getUserByLoginAndEMail($this->form->getValue('user_name'), 
                                                                       $this->form->getValue('user_email')
                                                                     );
+          $this->getUser()->setCulture($user->getSelectedLang());
+
           if(! $user)
           {
             $user = Doctrine::getTable('Users')->getUserByLoginOnly($this->form->getValue('user_name'));

@@ -69,8 +69,8 @@ class RegisterForm extends BaseUsersForm
                                                                         )
                                                                  );
     $this->validatorSchema['captcha'] = new sfValidatorReCaptcha(array('private_key' => sfConfig::get('app_recaptcha_private_key'),
-                                                                       'proxy_host' => '193.190.234.40',
-                                                                       'proxy_port' => 3128
+                                                                       'proxy_host' => sfConfig::get('app_recaptcha_proxy_host'),
+                                                                       'proxy_port' => sfConfig::get('app_recaptcha_proxy_port'),
                                                                       ));
 
     /* Labels */
