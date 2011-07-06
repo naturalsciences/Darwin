@@ -4129,7 +4129,7 @@ BEGIN
 	  AND acquisition_date = COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001')
 	  AND station_visible = COALESCE(line.station_visible,line.station_visible,true)
 	  AND ig_ref = line.ig_ref;	
-	UPDATE staging SET status=(status || ('duplicate' => rec_id::text)) , to_import=false WHERE id = prev_levels->'specimen';
+	UPDATE staging SET status=(status || ('duplicate' => rec_id::text)) , to_import=false WHERE id = (prev_levels->'specimen')::integer;
 	UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
 	CONTINUE;
     END;
