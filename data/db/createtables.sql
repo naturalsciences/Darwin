@@ -455,6 +455,7 @@ create table users
         people_id integer,
         last_seen timestamp,
         created_at timestamp default now(),
+	selected_lang varchar default 'en',
         constraint pk_users primary key (id),
         constraint unq_users unique (is_physical, gender, formated_name_unique, birth_date, birth_date_mask),
         constraint fk_user_people_id foreign key (people_id) references people(id) on delete set NULL
@@ -477,6 +478,7 @@ comment on column users.additional_names is 'Any additional names given to user'
 comment on column users.birth_date_mask is 'Mask Flag to know wich part of the date is effectively known: 32 for year, 16 for month and 8 for day';
 comment on column users.birth_date is 'Birth/Creation date composed';
 comment on column users.gender is 'For physical users give the gender: M or F';
+comment on column users.selected_lang is 'Lang of the interface for the user en,fr,nl ,....';
 comment on column users.last_seen is 'Last time the user has logged in.';
 
 create sequence people_languages_id_seq;
