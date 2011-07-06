@@ -3661,9 +3661,9 @@ BEGIN
     END LOOP;
 
     IF result_nbr = 1 THEN -- It's Ok!
+      
       EXECUTE 'UPDATE staging SET status = delete(status, ' || quote_literal(prefix) ||'), ' || prefix|| '_ref = ' || rec_id || ' where id=' || line.id; 
       PERFORM fct_imp_checker_catalogues_parents(line,rec_id, catalogue_table, prefix);
-
       RETURN true;
     END IF;
 
@@ -3740,7 +3740,7 @@ BEGIN
   PERFORM fct_imp_checker_igs(line);
   PERFORM fct_imp_checker_expeditions(line);
   PERFORM fct_imp_checker_gtu(line);
-  
+  PERFORM fct_imp_checker_people(line);
   RETURN true;
 END;
 $$ LANGUAGE plpgsql;
