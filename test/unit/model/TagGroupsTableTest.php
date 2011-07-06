@@ -16,7 +16,7 @@ $t->info('getPropositions');
 
 $props = Doctrine::getTable('TagGroups')->getPropositions('brussels');
 $t->is(count($props),4, 'We got 4 props');
-$t->is($props[1]['tag'],'Big White Mountain', 'Purpose from all groups is showed');
+$t->is($props[1]['tag'],'Bruselo', 'Purpose from all groups is showed');
 
 $props = Doctrine::getTable('TagGroups')->getPropositions('Bruselo');
 $t->is(count($props),2, 'Got 2 prop');
