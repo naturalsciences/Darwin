@@ -20,10 +20,12 @@ class ImportsTable extends Doctrine_Table
   public function markOk($id)
   {
     $q = Doctrine_Query::create()->update('staging s');
-    $q->andwhere('import_ref = ? ',$id)
-      ->andWhere("status = ?",'')
-      ->set('to_import', '?',true)
-      ->execute();
+    $conn = Doctrine_Manager::connection();      
+    $sql = "update staging s1 
+        set to_import = true 
+        WHERE not exists (select 1 from staging childs where childs.path like s1.path || s1.id || '/%' and status != '')
+        AND not exists (select 1 from staging prts where s1.path like prts.path || prts.id || '/%' and status != '') and status = '' and import_ref=".intval($id);
+    $conn->getDbh()->exec($sql);
     $q = Doctrine_Query::create()->update('Imports');
     $q->andwhere('id = ? ',$id)
       ->set('state', '?','processing')
