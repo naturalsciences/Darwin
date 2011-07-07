@@ -2,8 +2,10 @@
 alter table users add column selected_lang varchar not null default 'en';
 comment on column users.selected_lang is 'Lang of the interface for the user en,fr,nl ,....';
 
+update users u set selected_lang = (select language_country from users_languages where preferred_language = true and users_ref = u.id)
+where exists ( select 1  from users_languages where preferred_language = true and users_ref = u.id);
 -- INSTITUTION in parts
-ALTER table specimen_parts add column institution_ref integer;
+--ALTER table specimen_parts add column institution_ref integer;
 
 -- update specimen_parts set institution_ref = 47859
 
