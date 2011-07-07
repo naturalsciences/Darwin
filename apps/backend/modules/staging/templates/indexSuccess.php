@@ -9,7 +9,7 @@
     <?php echo $form['only_errors']->renderRow();?>
     <br />
     <br />
-    <input type="submit"/>
+    <input type="submit" value="<?php echo __('Search');?>"/>
 
     <div class="search_results">
       <div class="search_results_content">
