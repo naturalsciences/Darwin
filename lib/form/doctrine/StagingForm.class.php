@@ -371,13 +371,13 @@ class StagingForm extends BaseStagingForm
     }
     if($value = $this->getValue('WrongIdentifiers')) 
     {
-      unset($this['identifers']) ; 
-      $status['identifers'] = 'done' ;      
+      unset($this['identifiers']) ; 
+      $status['identifiers'] = 'done' ;      
       foreach($this->embeddedForms['WrongIdentifiers']->getEmbeddedForms() as $name => $form)
       {
         if (!isset($value[$name]['people_ref']))
         {
-          $status['identifers'] = 'not_found' ;
+          $status['identifiers'] = 'not_found' ;
           unset($this->embeddedForms['WrongIdentifiers'][$name]);
         }
       }
