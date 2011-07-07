@@ -4016,7 +4016,7 @@ IDENTIFIERS
     LOOP
       cnt := cnt + 1;
 
-      IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='identifications' AND  record_id = line.id AND order_by= cnt)  THEN
+      IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='identifications' AND  record_id =  ident_line.id AND order_by= cnt)  THEN
         continue;
       END IF;
 
@@ -4026,7 +4026,7 @@ IDENTIFIERS
         WHEN 0 THEN merge_status := 0;
         ELSE
           INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-            VALUES ('identifications', line.id, 'identifier', cnt, ref_record);
+            VALUES ('identifications', ident_line.id, 'identifier', cnt, ref_record);
       END CASE;
     END LOOP;
   END LOOP;
