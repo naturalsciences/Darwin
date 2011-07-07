@@ -53,7 +53,7 @@
     <?php endforeach ; ?>  
     <?php echo $form->renderHiddenFields() ; ?>  
     <div class="warn_message">
-      <?php echo __('<strong>Warning!</strong><br />If you don\'t correct default values before saving, The associated error will remain.');?>
+      <?php echo __('<strong>Warning!</strong><br />If you don\'t correct default values before saving, the associated error will remain.');?>
     </div>  
     <p class="form_buttons right_aligned error">  
       <a href="<?php echo url_for('staging/index?import='.$form->getObject()->getImportRef()) ?>" id="spec_cancel"><?php echo __('Back');?></a>

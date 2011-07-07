@@ -1,7 +1,7 @@
 <?php if(count($search)==0):?>
 
   <div class="warn_message no_record_msg">
-    <?php echo __('There is no corresponding records.');?>
+    <?php echo __('There are no corresponding records.');?>
     <?php if($form->getValue('only_errors')):?>
       <br /><?php echo __('You may want to include <em>rows without errors</em>');?>
       <script language="javascript">

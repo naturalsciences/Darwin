@@ -30,9 +30,9 @@ class Imports extends BaseImports
     'loaded'=>'Your file has been loaded, but still need to be checked',
     'checking'=> 'Your file has been loaded and is being checked',
     'pending'=> 'Your file has been loaded and checked, you can edit line in errors or import corrects lines',
-    'processing'=> 'Your \'Ok\' lines is beeing imported in DaRWIN',
-    'finished' => 'This file has completly been imported in Darwin',
-    'aborted' => 'This file have been aborted, this line remains for a limited time in the summary just for information purpose',    
+    'processing'=> 'Your \'Ok\' lines are beeing imported in DaRWIN',
+    'finished' => 'This file has been completly been imported in DaRWIN',
+    'aborted' => 'This file has been aborted. This line will remain for a limited time in the summary list just for information purposes only.',    
   );  
 
   public static $formatArray = array('dna' => 'DNA') ;

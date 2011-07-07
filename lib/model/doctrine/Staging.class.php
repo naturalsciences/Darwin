@@ -16,10 +16,10 @@ class Staging extends BaseStaging
 
   private static $errors = array(
     'not_found' => 'This %field% was not found in our database, please choose an existing one or remove it',
-    'too_much' => 'Too many record match to this %field%\'s value, please choose the good one or leave blanc',
-    'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc',
-    'people' => 'One or more %field% were not found or have too much results. In both case, you must choose an existing one',
-    'duplicate' => 'This record seems to have already been saved you can see it %here%, you can also choose an existing one with the button below',
+    'too_much' => 'Too many records match this %field%\'s value, please choose the good one or leave empty',
+    'bad_hierarchy'=> 'The hierarchy of this %field% is incorrect, please choose a good one or leave the field empty',
+    'people' => 'One or more %field% were not found or have too much results. In both cases, you must choose an existing one',
+    'duplicate' => 'This record seems to have already been saved. You can see it %here% or you can also choose an existing one with the button below.',
   );
 
   public function getCategory()
