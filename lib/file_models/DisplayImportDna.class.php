@@ -45,7 +45,7 @@ class DisplayImportDna implements IDisplayModels
         'litho' => 'Litho.',
         'lithology' => 'Lithology',
         'mineral' => 'Mineral.',
-        'ig' => 'Inv. Gen.',
+        'ig' => 'I.G.',
         'acquisition' => 'Acquisition',
       );
   }
