@@ -3577,9 +3577,9 @@ BEGIN
   ELSE
     IF OLD.people_ref != NEW.people_ref THEN
       EXECUTE 'UPDATE darwin_flat
-        SET ' || quote_ident(field_to_update) || ' = array_append(fct_remove_array_elem(' || quote_literal(field_to_update) || ',ARRAY[' || OLD.people_ref
-        || '),' || quote_literal(NEW.people_ref::integer) || 
-        ']) WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
+        SET ' || quote_ident(field_to_update) || ' = array_append(fct_remove_array_elem(' || quote_ident(field_to_update) || ',ARRAY[' || OLD.people_ref
+        || ']),' || quote_literal(NEW.people_ref::integer) || 
+        ') WHERE ' || quote_ident(ref_field) || ' = ' || quote_literal(ref_field_id) ;
     END IF;
   END IF;  
   RETURN NEW;
