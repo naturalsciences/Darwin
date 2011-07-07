@@ -1,5 +1,6 @@
 #/bin/sh
-
+dir=$(dirname $(which $0));
 #script launched by incron 
-# $1 parameter is the file with the absolute path to be imported via the task below
-php /var/project/darwin/web/symfony darwin:process-import
+# First step : import the xml file into staging table
+# Second step : check errors 
+php $dir/../symfony darwin:load-import && php $dir/../symfony darwin:check-import
