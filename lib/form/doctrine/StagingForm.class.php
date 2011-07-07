@@ -179,7 +179,7 @@ class StagingForm extends BaseStagingForm
         array('class'=>'inline',
              )
       );
-      $this->validatorSchema['lithology_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
+      $this->validatorSchema['institution_ref'] = new sfValidatorInteger(array('required'=>false, 'empty_value'=>0));
     }      
     /* Host Reference *//*
     if(in_array('host_ref',$this->options['fields']) )  
@@ -342,7 +342,9 @@ class StagingForm extends BaseStagingForm
     if($this->getValue('igs_ref') != 0) $status['igs'] = 'done' ;        
     else unset($this['igs_ref']) ;   
     if($this->getValue('spec_ref') != 0) $status['duplicate'] = 'done' ;        
-    else unset($this['spec_ref']) ;       
+    else unset($this['spec_ref']) ;
+    if($this->getValue('institution_ref') != 0) $status['institution'] = 'done' ;        
+    else unset($this['institution_ref']) ;       
     if($value = $this->getValue('WrongCollectors')) 
     {
       unset($this['collectors']) ; 
