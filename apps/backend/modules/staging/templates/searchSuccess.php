@@ -23,7 +23,7 @@
     <thead>
      <th><?php echo __('Codes');?></th>
     <?php foreach($fields as $name=>$title):?>
-      <th><?php echo $title;?></th>
+      <th><?php echo __($title);?></th>
     <?php endforeach;?>
       <th><?php echo __('Linked Info');?></th>
       <th><?php echo __('Status');?></th>

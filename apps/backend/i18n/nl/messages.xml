@@ -1931,6 +1931,50 @@
         <source>DaRWIN 2 team</source>
         <target>Het DaRWIN2 team</target>
       </trans-unit>
+          <trans-unit id="1445">
+        <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field empty</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1446">
+        <source>Too many records match this %field%\&#039;s value, please choose the good one or leave it empty</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1447">
+        <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;If you don\&#039;t correct default values before saving, the associated error will remain.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1448">
+        <source>This record seems to have already been saved. You can see it %here% or you can also choose an existing one with the button below.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1449">
+        <source>Your \&#039;Ok\&#039; lines are  being imported into DaRWIN</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1450">
+        <source>This file has been completely imported into DaRWIN</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1451">
+        <source>This file has been aborted. This line will remain for a limited time in the summary list for information purposes only.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1452">
+        <source>This button will cancel the importing of the file. Your file will state Aborted. this will allow you to keep a trace of this import, even though the data is not imported.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1453">
+        <source>This button (only visible when your file statesPending) will allow you to edit or remove data</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1454">
+        <source>This will delete this line. Already imported lines will remain in the database. All other lines will be deleted without a trace.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1455">
+        <source>There are no corresponding records.</source>
+        <target></target>
+      </trans-unit>
           <trans-unit id="333">
         <source>Add Chronostratigraphic unit</source>
         <target>Chronostratigrafische eenheid toevoegen</target>

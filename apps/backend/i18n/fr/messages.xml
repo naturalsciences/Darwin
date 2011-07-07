@@ -4794,11 +4794,59 @@
       </trans-unit>
           <trans-unit id="1444">
         <source>One or more %field% were not found or have too much results. In both cases, you must choose an existing one</source>
-        <target></target>
+        <target>Un ou plusieurs %field% n\&#039;ont pas été trouvés ou présentent trop de résultats. Dans les deux cas, vous devez choisir une référence.</target>
+      </trans-unit>
+          <trans-unit id="1445">
+        <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field empty</source>
+        <target>La hiérarchie de ce %field% est incorrecte, nous vous prions d\&#039;en sélectionner une autre ou de laisse le champ vide</target>
+      </trans-unit>
+          <trans-unit id="1446">
+        <source>Too many records match this %field%\&#039;s value, please choose the good one or leave it empty</source>
+        <target>Trop d&#039;enregistrements correspondent à la valeur de %field%, nous vous prions d\&#039;en choisir une ou de laisser le champ vide</target>
+      </trans-unit>
+          <trans-unit id="1447">
+        <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;If you don\&#039;t correct default values before saving, the associated error will remain.</source>
+        <target>&lt;strong&gt;Attention!&lt;/strong&gt;&lt;br/&gt;En l\&#039;abscence de correction de la valeur par défaut au moment de la sauvegarde, l&#039;erreur persistera.</target>
+      </trans-unit>
+          <trans-unit id="1448">
+        <source>This record seems to have already been saved. You can see it %here% or you can also choose an existing one with the button below.</source>
+        <target>Cet enregistrement semble avoir déjà été enregistré. Vous pouvez le visualiser %here% ou choisir un enregistrement existant avec le bouton ci-dessous.</target>
+      </trans-unit>
+          <trans-unit id="1449">
+        <source>Your \&#039;Ok\&#039; lines are  being imported into DaRWIN</source>
+        <target>Vos lignes \&#039;Ok\&#039; sont importées dans DaRWIN</target>
+      </trans-unit>
+          <trans-unit id="1450">
+        <source>This file has been completely imported into DaRWIN</source>
+        <target>Ce fichier a été complètement importé dans DaRWIN</target>
+      </trans-unit>
+          <trans-unit id="1451">
+        <source>This file has been aborted. This line will remain for a limited time in the summary list for information purposes only.</source>
+        <target>L\&#039;import de ce fichier a été interrompu. Cette ligne restera visible pendant un temps limité pour information seulement.</target>
+      </trans-unit>
+          <trans-unit id="1452">
+        <source>This button will cancel the importing of the file. Your file will state Aborted. this will allow you to keep a trace of this import, even though the data is not imported.</source>
+        <target>Ce bouton annulera l\&#039;import du fichier. Votre fichier affichera un état Interrompu. Cela laissera la possibilité de garder un historique de l\&#039;import sans qu&#039;aucune donnée ne soit importée.</target>
+      </trans-unit>
+          <trans-unit id="1453">
+        <source>This button (only visible when your file statesPending) will allow you to edit or remove data</source>
+        <target>Ce bouton (visible seulement lorsque votre fichier est en état Attente) vous permet d\&#039;éditer ou d\&#039;enlever une donnée</target>
+      </trans-unit>
+          <trans-unit id="1454">
+        <source>This will delete this line. Already imported lines will remain in the database. All other lines will be deleted without a trace.</source>
+        <target>Cela effacera la ligne. Les lignes déjà importées resteront dans la base de données. Toutes autres lignes seront effacées sans conservation d&#039;historique.</target>
+      </trans-unit>
+          <trans-unit id="1455">
+        <source>There are no corresponding records.</source>
+        <target>Aucun enregistrement correspondant.</target>
       </trans-unit>
           <trans-unit id="1370">
         <source>DaRWIN 2 team</source>
         <target>L&#039;équipe DaRWIN 2</target>
+      </trans-unit>
+          <trans-unit id="1456">
+        <source>Show only row with errors</source>
+        <target>Afficher seulement les lignes en erreur</target>
       </trans-unit>
           <trans-unit id="1378">
         <source>Field to be corrected</source>
