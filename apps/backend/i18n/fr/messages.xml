@@ -4504,14 +4504,6 @@
         <source>Your file has been loaded and checked, you can edit line in errors or import corrects lines</source>
         <target>Votre fichier a été chargé et examiné, vous pouvez éditer les lignes en erreur ou importer les lignes correctes</target>
       </trans-unit>
-          <trans-unit id="1393">
-        <source>Your \&#039;Ok\&#039; lines is beeing imported in DaRWIN</source>
-        <target>Vos lignes \&#039;Ok\&#039; sont en cours d&#039;import dans DaRWIN</target>
-      </trans-unit>
-          <trans-unit id="1394">
-        <source>This file has completly been imported in Darwin</source>
-        <target>Ce fichier a été totalement importé dans DaRWIN</target>
-      </trans-unit>
           <trans-unit id="1389">
         <source>Your file has been loaded, but still need to be checked</source>
         <target>Votre fichier a été chargé, mais doit encore être examiné.</target>
@@ -4534,7 +4526,7 @@
       </trans-unit>
           <trans-unit id="1398">
         <source>Checking</source>
-        <target>En cours d&#039;examamination</target>
+        <target>En cours de vérification</target>
       </trans-unit>
           <trans-unit id="1399">
         <source>Loaded</source>
@@ -4556,10 +4548,6 @@
         <source>Aborted</source>
         <target>Annulé</target>
       </trans-unit>
-          <trans-unit id="1386">
-        <source>This record seems to have already been saved you can see it %here%, you can also choose an existing one with the button below</source>
-        <target>Cet enregistrement semble avoir déjà été sauvegardé %here%, vous pouvez aussi choisir un enregistrement existant via le bouton ci-dessous</target>
-      </trans-unit>
           <trans-unit id="1387">
         <source>This file is ready to be loaded, an automatic task will be activated to load lines.</source>
         <target>Ce fichier est prêt à être chargé, une tâche automatique sera activée pour charger les lignes</target>
@@ -4578,19 +4566,15 @@
       </trans-unit>
           <trans-unit id="1406">
         <source>Chrono.</source>
-        <target>Chrono </target>
+        <target>Chrono.</target>
       </trans-unit>
           <trans-unit id="1407">
         <source>Litho.</source>
-        <target>Litho </target>
+        <target>Litho.</target>
       </trans-unit>
           <trans-unit id="1408">
         <source>Mineral.</source>
-        <target>Mineral </target>
-      </trans-unit>
-          <trans-unit id="1409">
-        <source>Inv. Gen.</source>
-        <target>Gen Inv </target>
+        <target>Mineral.</target>
       </trans-unit>
           <trans-unit id="1410">
         <source>Acquisition</source>
@@ -4598,7 +4582,7 @@
       </trans-unit>
           <trans-unit id="1411">
         <source>Upload file management page</source>
-        <target>Page de gestion d&#039;upload de fichier</target>
+        <target>Page de gestion de chargement de fichier</target>
       </trans-unit>
           <trans-unit id="1412">
         <source>Import Specimens</source>
@@ -4610,7 +4594,7 @@
       </trans-unit>
           <trans-unit id="1414">
         <source>Submit</source>
-        <target>soumettre</target>
+        <target>Soumettre</target>
       </trans-unit>
           <trans-unit id="1415">
         <source>File</source>
@@ -4630,7 +4614,7 @@
       </trans-unit>
           <trans-unit id="1419">
         <source>Edit import</source>
-        <target>Editer Import</target>
+        <target>Editer l&#039;import</target>
       </trans-unit>
           <trans-unit id="1420">
         <source>Abort import</source>
@@ -4680,10 +4664,6 @@
         <source>This person already has this role</source>
         <target>Cette personne a déjà ce rôle</target>
       </trans-unit>
-          <trans-unit id="1423">
-        <source>This button will cancel the importing of the file, your file will have the Aborted state, it will allow you to keep a trace of this import, even if the data were not imported</source>
-        <target>Ce bouton annulera l&#039;importation du fichier, votre fichier aura l&#039;état Annulé, cela vous permettra de conserver une trace de l&#039;import, même si les données n&#039;ont pas été importées</target>
-      </trans-unit>
           <trans-unit id="1180">
         <source>People role search</source>
         <target>Recherche par rôle d&#039;une personne</target>
@@ -4708,13 +4688,17 @@
         <source>This widget can be used to add the equivalent vernacular name of the record in different languages. You can even add more than one vernacular name in the same language</source>
         <target>Ce widget peut être utilisé pour ajouter le nom vernaculaire équivalent de l&#039;enregistrement dans des langues différentes. Vous pouvez même ajouter plus d&#039;un nom vernaculaire dans la même langue.</target>
       </trans-unit>
+          <trans-unit id="1424">
+        <source>This button (only visible when your file is on Pending state) will allow you to edit or remove data</source>
+        <target>Ce bouton (visible uniquement lorsque avec un état En attente) vous permettra d&#039;éditer ou effacer vos données</target>
+      </trans-unit>
           <trans-unit id="1425">
         <source>Help on available State</source>
         <target>Aide sur les états disponibles</target>
       </trans-unit>
           <trans-unit id="1426">
         <source>Import files summary</source>
-        <target>Résumé des imports de fichiers</target>
+        <target>Résumé des importations de fichiers</target>
       </trans-unit>
           <trans-unit id="1427">
         <source>Imports</source>
@@ -4723,6 +4707,10 @@
           <trans-unit id="1428">
         <source>%rest% on %initial%</source>
         <target>%rest% sur %initial%</target>
+      </trans-unit>
+          <trans-unit id="1429">
+        <source>All pending lines will be deleted, Are you sure ?</source>
+        <target>toutes les lignes En attente seront effacées, êtes vous sûr(e) ?</target>
       </trans-unit>
           <trans-unit id="1430">
         <source>No import Matching</source>
@@ -4750,15 +4738,7 @@
       </trans-unit>
           <trans-unit id="1436">
         <source>All children will be deleted too, Are you sure ?</source>
-        <target>tous les enfants seront également effacés, êtes vous sûr(e) ? </target>
-      </trans-unit>
-          <trans-unit id="1429">
-        <source>All pending lines will be deleted, Are you sure ?</source>
-        <target>toutes les lines En attente seront effacées, êtes vous sûr(e) ?</target>
-      </trans-unit>
-          <trans-unit id="1424">
-        <source>This button (only visible when your file is on Pending state) will allow you to edit or remove data</source>
-        <target>Ce bouton (visible uniquement lorsque avec un état En attente) vous permettra d&#039;éditer ou effacer vos données</target>
+        <target>Tous les enfants seront également effacés, êtes vous sûr(e) ? </target>
       </trans-unit>
           <trans-unit id="1185">
         <source>Via this widget you can perform a search in order to find all records where a specific person (or institution) appears. You can also choose one or more roles for this person (such as collector, identifier and/or donator/seller)</source>
@@ -4792,11 +4772,6 @@
         <source>Application Language</source>
         <target>Langue de travail</target>
       </trans-unit>
-          <trans-unit id="1439">
-        <source>This will delete this line, all allready imported line remains in the database, all the rest will be deleted, no trace remaining
-</source>
-        <target>Ce bouton effacera la ligne associée, toute les données déjà importées resteront dans la base de données, tous le reste sera effacé, aucune trace de suivi.</target>
-      </trans-unit>
           <trans-unit id="1366">
         <source>Specify which function you want to give to this user for your collection. Two buttons are available on edition. The button &#039;on sub collection...&#039; allow you to also give right for this user on sub collections managed by you. With the button &#039;manage widget&#039; (visible only for register_user function), you can allow the visibility (read only) of private widget wicth a registered user normaly won&#039;t have right to see it</source>
         <target>Spécifiez quel rôle attribuer à cet utilisateur pour votre collection. Deux boutons sont disponibles en édition: Le bouton &#039;sous collections...&#039; vous permet d&#039;attribuer des droits à cet utilisateur sur des sous collections dont vous êtes gestionnaire. Avec le bouton &#039;gérer widget&#039; (visible uniquement pour le rôle utilisateur enregistré), vous pouvez octroyer la visibilité (en lecture seule) sur des widgets privées qui lui sont normalement inaccessibles</target>
@@ -4805,37 +4780,25 @@
         <source>Filename</source>
         <target>Nom de fichier</target>
       </trans-unit>
-          <trans-unit id="1441">
-        <source>Show finished</source>
-        <target>Montrer les terminés</target>
-      </trans-unit>
-          <trans-unit id="1442">
-        <source>There is no corresponding records.</source>
-        <target>Il n&#039;y a pas d&#039;enregistrement correspondant</target>
-      </trans-unit>
           <trans-unit id="1443">
         <source>You may want to include &lt;em&gt;rows without errors&lt;/em&gt;</source>
-        <target>You pourriez vouloir inclure &lt;em&gt;lignes sans erreurs&lt;/em&gt;</target>
+        <target>Vous pourriez souhaiter inclure les &lt;em&gt;lignes sans erreurs&lt;/em&gt;</target>
       </trans-unit>
-          <trans-unit id="1373">
-        <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field blanc</source>
-        <target>La hiérarchie de %field% est incorrecte, veuillez en choisir une valide ou laisser vide</target>
-      </trans-unit>
-          <trans-unit id="1374">
-        <source>Too many record match to this %field%\&#039;s value, please choose the good one or leave blanc</source>
-        <target>Trop d&#039;enregistrements correspondent à cette valeur de %field%, veuillez en choisir une ou laisser vide</target>
+          <trans-unit id="1441">
+        <source>Show finished</source>
+        <target>Montrer les enregistrement terminés</target>
       </trans-unit>
           <trans-unit id="1367">
         <source>Whom are you looking for</source>
         <target>Qui recherchez vous</target>
       </trans-unit>
+          <trans-unit id="1444">
+        <source>One or more %field% were not found or have too much results. In both cases, you must choose an existing one</source>
+        <target></target>
+      </trans-unit>
           <trans-unit id="1370">
         <source>DaRWIN 2 team</source>
         <target>L&#039;équipe DaRWIN 2</target>
-      </trans-unit>
-          <trans-unit id="1379">
-        <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;If you don\&#039;t correct default values before saving, The associated error will remain.</source>
-        <target>&lt;strong&gt;Attention!&lt;/strong&gt;&lt;br /&gt;Si vous ne corrigez pas les valeurs par défaut avant de sauver, les erreurs associées resteront.</target>
       </trans-unit>
           <trans-unit id="1378">
         <source>Field to be corrected</source>
@@ -4852,10 +4815,6 @@
           <trans-unit id="1376">
         <source>here</source>
         <target>ici</target>
-      </trans-unit>
-          <trans-unit id="1372">
-        <source>One or more %field% were not found or have too much results. In both case, you must choose an existing one</source>
-        <target>Un ou plusieurs %field% n&#039;ont pas été trouvés ou ont trop de correspondances. Dans les deux cas, vous devez choisir un existant</target>
       </trans-unit>
         </body>
   </file>
