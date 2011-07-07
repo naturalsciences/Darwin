@@ -3958,7 +3958,7 @@ BEGIN
   FOR p_name in select item from unnest(line.collectors) as item
   LOOP
     cnt := cnt + 1;
-    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'collectors' AND order_by= cnt)  THEN
+    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'collector' AND order_by= cnt)  THEN
       continue;
     END IF;
     
@@ -3968,7 +3968,7 @@ BEGIN
       --WHEN 0 THEN merge_status := 0;
       ELSE
         INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-          VALUES ('staging', line.id, 'collectors', cnt, ref_record);
+          VALUES ('staging', line.id, 'collector', cnt, ref_record);
     END CASE;
   END LOOP;
   IF merge_status = 1 THEN 
@@ -3986,7 +3986,7 @@ BEGIN
   FOR p_name in select item from unnest(line.donators) as item
   LOOP
     cnt := cnt + 1;
-    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'donators' AND order_by= cnt)  THEN
+    IF EXISTS( SELECT id FROM catalogue_people WHERE referenced_relation ='staging' AND  record_id = line.id AND people_type = 'donator' AND order_by= cnt)  THEN
       continue;
     END IF;
 
@@ -3996,7 +3996,7 @@ BEGIN
       WHEN 0 THEN merge_status := 0;
       ELSE
         INSERT INTO catalogue_people(referenced_relation,record_id, people_type, order_by, people_ref)
-          VALUES ('staging', line.id, 'donators', cnt, ref_record);
+          VALUES ('staging', line.id, 'donator', cnt, ref_record);
     END CASE;
   END LOOP;
   IF merge_status = 1 THEN 
