@@ -60,7 +60,7 @@
               </td>
               <td>
                 <?php if ($import->isEditableState()) : ?>
-                  <?php echo link_to(image_tag('edit.png',array('title'=>'Edit import')),'staging/index?import='.$import->getId());?>
+                  <?php echo link_to(image_tag('edit.png',array('title'=>__('Edit import'))),'staging/index?import='.$import->getId());?>
                 <?php endif ; ?>
               </td>
               <td>

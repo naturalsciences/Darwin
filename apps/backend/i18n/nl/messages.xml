@@ -115,6 +115,38 @@
         <source>This file has completly been imported in Darwin</source>
         <target></target>
       </trans-unit>
+          <trans-unit id="1396">
+        <source>To be loaded</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1398">
+        <source>Checking</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1399">
+        <source>Loaded</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1400">
+        <source>Pending</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1401">
+        <source>Processing</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1402">
+        <source>Finished</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1403">
+        <source>Aborted</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1404">
+        <source>This file have been aborted, this line remains for a limited time in the summary just for information purpose</source>
+        <target></target>
+      </trans-unit>
           <trans-unit id="1058">
         <source>You can now log in and enjoy our enhanced collection services.</source>
         <target>U kunt zich nu inloggen en genieten van onze vernieuwde collectiefunctionaliteiten.</target>
@@ -123,9 +155,57 @@
         <source>Subgenus name, used in zoology or bacteriology</source>
         <target>Subgenus naam, gebruikt in de zoologie of de bacteriologie</target>
       </trans-unit>
+          <trans-unit id="1405">
+        <source>Taxon.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1406">
+        <source>Chrono.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1407">
+        <source>Litho.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1408">
+        <source>Mineral.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1409">
+        <source>Inv. Gen.</source>
+        <target></target>
+      </trans-unit>
           <trans-unit id="988">
         <source>This widget allows you to add information with regards to the storage conditions in the depositaries of the institute. You can specify a container and/or sub container as well as the condition in which the object is conserved. The supernumerary option allows you to indicate that the objects should potentially be moved to a more spacious container.</source>
         <target>Via deze widget kunt u informatie toevoegen betreffende de bewaaromstandigheden van de stalen in de bewaarplaatsen van het instituut. U kunt zowel een container als subcontainer aanduiden evenals de omstandigheden waarin het bewaard wordt. De boventallig optie laat u toe aan te duiden of de objecten op termijn naar een ruimere container dienen te worden overgezet.</target>
+      </trans-unit>
+          <trans-unit id="1410">
+        <source>Acquisition</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1411">
+        <source>Upload file management page</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1412">
+        <source>Import Specimens</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1413">
+        <source>Number</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1414">
+        <source>Submit</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1415">
+        <source>File</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1416">
+        <source>Filter</source>
+        <target></target>
       </trans-unit>
           <trans-unit id="229">
         <source>What can be found in DaRWIN?</source>
@@ -187,6 +267,10 @@
         <source>This widget is used to specify or change a login and password. if desired, a user can have more than one couple of Login/password.</source>
         <target>Via deze widget kunt u uw login en paswoord specificeren of wijzigen. Indien gewenst, kan een gebruik meer dan één paar logins/paswoorden bezitten.</target>
       </trans-unit>
+          <trans-unit id="1417">
+        <source>Import a file</source>
+        <target></target>
+      </trans-unit>
           <trans-unit id="1353">
         <source>Since Darwin is an Open Source application entirely based on open source software, we would be glad if you want to contribute to the project.&lt;br/&gt; Suggestions, Patches, Bug Reports or Code Donations are welcome on our Request tracker : &lt;a href=&quot;http://projects.naturalsciences.be/projects/darwin&quot;&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;</source>
         <target>Aangezien DaRWIN volledig gebaseerd is op open source software, zouden we ons verheugen mocht u wensen bij te dragen tot ons project.&lt;br /&gt; Suggesties, Patches, het doorgeven van Foutmeldingen of code sponsering zijn welkom op onze trac : &lt;a href=&quot;http://projects.naturalsciences.be/projects/darwin&quot;&gt;http://projects.naturalsciences.be/projects/darwin&lt;/a&gt;;</target>
@@ -194,6 +278,78 @@
           <trans-unit id="1352">
         <source>This application requires an authentication.</source>
         <target>Deze applicatie vergt een toegangscode.</target>
+      </trans-unit>
+          <trans-unit id="1418">
+        <source>Import</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1419">
+        <source>Edit import</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1420">
+        <source>Abort import</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1421">
+        <source>Delete import</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1423">
+        <source>This button will cancel the importing of the file, your file will have the Aborted state, it will allow you to keep a trace of this import, even if the data were not imported</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1424">
+        <source>This button (only visible when your file is on Pending state) will allow you to edit or remove data</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1425">
+        <source>Help on available State</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1426">
+        <source>Import files summary</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1427">
+        <source>Imports</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1428">
+        <source>%rest% on %initial%</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1429">
+        <source>All pending lines will be deleted, Are you sure ?</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1430">
+        <source>No import Matching</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1431">
+        <source>Linked Info</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1432">
+        <source>Error</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1433">
+        <source>No problems detected</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1434">
+        <source>Back to Import</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1435">
+        <source>Import &quot;Ok&quot; lines</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1436">
+        <source>All children will be deleted too, Are you sure ?</source>
+        <target></target>
       </trans-unit>
           <trans-unit id="1358">
         <source>As a reminder, here is your username: %username%</source>
@@ -786,6 +942,10 @@
           <trans-unit id="77">
         <source>View Lithologic unit</source>
         <target>Bekijk lithologische eenheid</target>
+      </trans-unit>
+          <trans-unit id="1437">
+        <source>Help on available button</source>
+        <target></target>
       </trans-unit>
           <trans-unit id="78">
         <source>Colour</source>
@@ -1778,6 +1938,31 @@
           <trans-unit id="286">
         <source>Change !</source>
         <target>Wijzig !</target>
+      </trans-unit>
+          <trans-unit id="1438">
+        <source>Application Language</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1439">
+        <source>This will delete this line, all allready imported line remains in the database, all the rest will be deleted, no trace remaining
+</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1440">
+        <source>Filename</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1441">
+        <source>Show finished</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1442">
+        <source>There is no corresponding records.</source>
+        <target></target>
+      </trans-unit>
+          <trans-unit id="1443">
+        <source>You may want to include &lt;em&gt;rows without errors&lt;/em&gt;</source>
+        <target></target>
       </trans-unit>
           <trans-unit id="1367">
         <source>Whom are you looking for</source>
