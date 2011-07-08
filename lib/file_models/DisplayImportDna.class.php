@@ -9,11 +9,11 @@ class DisplayImportDna implements IDisplayModels
   public function getLevels()
   {
     $this->levels = array(
-      'specimen' => 'specimen',
-      'individual' => '  individuals',
-      'specimen part' => '    parts',
-      'tissue part' => '      tissues',
-      'DNA part' => '         dna samples',
+      'specimen' => 'Specimen',
+      'individual' => '  Individuals',
+      'specimen part' => '    Parts',
+      'tissue part' => '      Tissues',
+      'DNA part' => '         Dna samples',
     );
     foreach($this->levels as $k=>$l)
       $this->levels[$k] = str_replace(' ', '&nbsp;',$l);

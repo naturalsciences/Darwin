@@ -4516,6 +4516,10 @@
         <source>Profile for %s</source>
         <target>Profil de %s</target>
       </trans-unit>
+          <trans-unit id="1458">
+        <source>One or more %field% were not found or have too many results. In both cases, you must choose an existing one or create one.</source>
+        <target>Un ou plusieurs %field% n&#039;ont pas été trouvés ou présentent trop de résultats. Dans les deux cas, vous devez choisir une référence ou en créer une.</target>
+      </trans-unit>
           <trans-unit id="1381">
         <source>Dear %title% %name%,</source>
         <target>Cher %title% %name%,</target>
@@ -4551,10 +4555,6 @@
           <trans-unit id="1387">
         <source>This file is ready to be loaded, an automatic task will be activated to load lines.</source>
         <target>Ce fichier est prêt à être chargé, une tâche automatique sera activée pour charger les lignes</target>
-      </trans-unit>
-          <trans-unit id="1404">
-        <source>This file have been aborted, this line remains for a limited time in the summary just for information purpose</source>
-        <target>Ce fichier a été annulé, cette ligne reste pendant un temps limité dans le résumé à titre d&#039;information</target>
       </trans-unit>
           <trans-unit id="806">
         <source>You don\&#039;t have the rights to insert into or update a specimen in this collection</source>
@@ -4792,10 +4792,6 @@
         <source>Whom are you looking for</source>
         <target>Qui recherchez vous</target>
       </trans-unit>
-          <trans-unit id="1444">
-        <source>One or more %field% were not found or have too much results. In both cases, you must choose an existing one</source>
-        <target>Un ou plusieurs %field% n\&#039;ont pas été trouvés ou présentent trop de résultats. Dans les deux cas, vous devez choisir une référence.</target>
-      </trans-unit>
           <trans-unit id="1445">
         <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field empty</source>
         <target>La hiérarchie de ce %field% est incorrecte, nous vous prions d\&#039;en sélectionner une autre ou de laisse le champ vide</target>
@@ -4863,6 +4859,10 @@
           <trans-unit id="1376">
         <source>here</source>
         <target>ici</target>
+      </trans-unit>
+          <trans-unit id="1457">
+        <source>This file has been aborted. This line will remain for a limited time in the summary list just for information purposes only.</source>
+        <target>Ce fichier a été annulé, cette ligne reste pendant un temps limité dans le résumé à titre d&#039;information.</target>
       </trans-unit>
         </body>
   </file>

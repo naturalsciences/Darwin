@@ -59,6 +59,14 @@
         <source>Profile for %s</source>
         <target>Profiel voor %s</target>
       </trans-unit>
+          <trans-unit id="1457">
+        <source>This file has been aborted. This line will remain for a limited time in the summary list just for information purposes only.</source>
+        <target>Dit bestand werd afgebroken. Deze lijn zal ter informatie tijdelijk in het overzicht zichtbaar blijven.</target>
+      </trans-unit>
+          <trans-unit id="1458">
+        <source>One or more %field% were not found or have too many results. In both cases, you must choose an existing one or create one.</source>
+        <target>Een of meerdere %field% werden niet gevonden of hebben teveel overeenkomstige resultaten. In beide gevallen moet u ofwel een bestaande waarde selecteren of een nieuwe waarde aanmaken.</target>
+      </trans-unit>
           <trans-unit id="1387">
         <source>This file is ready to be loaded, an automatic task will be activated to load lines.</source>
         <target>Dit bestand is klaar om te worden ingeladen. Een automatische taak wordt hiervoor gestart.</target>
@@ -78,10 +86,6 @@
           <trans-unit id="1392">
         <source>Your file has been loaded and checked, you can edit line in errors or import corrects lines</source>
         <target>Uw bestand werd ingeladen en nagekeken en u kunt nu foute lijnen corrigeren of correcte lijnen importeren.</target>
-      </trans-unit>
-          <trans-unit id="1404">
-        <source>This file have been aborted, this line remains for a limited time in the summary just for information purpose</source>
-        <target></target>
       </trans-unit>
           <trans-unit id="1396">
         <source>To be loaded</source>
@@ -239,10 +243,6 @@
         <source>This application requires an authentication.</source>
         <target>Deze applicatie vergt een toegangscode.</target>
       </trans-unit>
-          <trans-unit id="1424">
-        <source>This button (only visible when your file is on Pending state) will allow you to edit or remove data</source>
-        <target></target>
-      </trans-unit>
           <trans-unit id="1418">
         <source>Import</source>
         <target>Import</target>
@@ -306,6 +306,10 @@
           <trans-unit id="1436">
         <source>All children will be deleted too, Are you sure ?</source>
         <target>Alle onderliggende lijnen worden eveneens verwijderd. Bent u zeker?</target>
+      </trans-unit>
+          <trans-unit id="1424">
+        <source>This button (only visible when your file is on Pending state) will allow you to edit or remove data</source>
+        <target>Deze knop (enkel zichtbaar in de Wacht status) laat u toe om data te wijzigen of te verwijderen</target>
       </trans-unit>
           <trans-unit id="1358">
         <source>As a reminder, here is your username: %username%</source>
@@ -639,46 +643,6 @@
         <source>Role in the organization</source>
         <target>Rol binnen de organisatie</target>
       </trans-unit>
-          <trans-unit id="9">
-        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source>
-        <target>[0]Geen resultaat|[1]Uw opzoeking levert 1 record op(1,+Inf]Uw opzoeking levert %1% records op</target>
-      </trans-unit>
-          <trans-unit id="10">
-        <source>My Preferences</source>
-        <target>Mijn voorkeuren</target>
-      </trans-unit>
-          <trans-unit id="11">
-        <source>My Profile</source>
-        <target>Mijn profiel</target>
-      </trans-unit>
-          <trans-unit id="12">
-        <source>My Widgets</source>
-        <target>Mijn Widgets</target>
-      </trans-unit>
-          <trans-unit id="13">
-        <source>Saved Specimens list</source>
-        <target>List met bewaarde specimens</target>
-      </trans-unit>
-          <trans-unit id="14">
-        <source>Saved search</source>
-        <target>Bewaarde zoekcriteria</target>
-      </trans-unit>
-          <trans-unit id="15">
-        <source>Searches</source>
-        <target>Opzoekingen</target>
-      </trans-unit>
-          <trans-unit id="16">
-        <source>Catalogues</source>
-        <target>Catalogi</target>
-      </trans-unit>
-          <trans-unit id="17">
-        <source>Taxonomy</source>
-        <target>Taxonomie</target>
-      </trans-unit>
-          <trans-unit id="18">
-        <source>Chronostratigraphy</source>
-        <target>Chronostratigrafie</target>
-      </trans-unit>
           <trans-unit id="19">
         <source>Lithostratigraphy</source>
         <target>Lithostratigrafie</target>
@@ -903,6 +867,18 @@
         <source>Help on available button</source>
         <target>Hulp nodig met beschikbare knop?</target>
       </trans-unit>
+          <trans-unit id="10">
+        <source>My Preferences</source>
+        <target>Mijn voorkeuren</target>
+      </trans-unit>
+          <trans-unit id="11">
+        <source>My Profile</source>
+        <target>Mijn profiel</target>
+      </trans-unit>
+          <trans-unit id="12">
+        <source>My Widgets</source>
+        <target>Mijn Widgets</target>
+      </trans-unit>
           <trans-unit id="78">
         <source>Colour</source>
         <target>Kleur</target>
@@ -954,6 +930,30 @@
           <trans-unit id="67">
         <source>Record Id</source>
         <target>Record Id</target>
+      </trans-unit>
+          <trans-unit id="13">
+        <source>Saved Specimens list</source>
+        <target>List met bewaarde specimens</target>
+      </trans-unit>
+          <trans-unit id="14">
+        <source>Saved search</source>
+        <target>Bewaarde zoekcriteria</target>
+      </trans-unit>
+          <trans-unit id="15">
+        <source>Searches</source>
+        <target>Opzoekingen</target>
+      </trans-unit>
+          <trans-unit id="16">
+        <source>Catalogues</source>
+        <target>Catalogi</target>
+      </trans-unit>
+          <trans-unit id="17">
+        <source>Taxonomy</source>
+        <target>Taxonomie</target>
+      </trans-unit>
+          <trans-unit id="18">
+        <source>Chronostratigraphy</source>
+        <target>Chronostratigrafie</target>
       </trans-unit>
           <trans-unit id="88">
         <source>Choose a Lithologic unit</source>
@@ -1923,57 +1923,53 @@
         <source>Set rights on widgets for %name%</source>
         <target>Gelieve de widget rechten voor %name% in te stellen</target>
       </trans-unit>
-          <trans-unit id="1444">
-        <source>One or more %field% were not found or have too much results. In both cases, you must choose an existing one</source>
-        <target></target>
-      </trans-unit>
           <trans-unit id="1370">
         <source>DaRWIN 2 team</source>
         <target>Het DaRWIN2 team</target>
       </trans-unit>
           <trans-unit id="1445">
         <source>The hierarchy of this %field% is incorrect, please choose a good one or leave the field empty</source>
-        <target></target>
+        <target>De hierarchie van dit %field% is niet correct, gelieve een correcte hierarchie te kiezen of het veld leeg te laten</target>
       </trans-unit>
           <trans-unit id="1446">
         <source>Too many records match this %field%\&#039;s value, please choose the good one or leave it empty</source>
-        <target></target>
+        <target>Te veel overeenkomstige waardes voor dit %field% werden gevonden, gelieve de juiste waarde te selecteren of het veld leeg te laten</target>
       </trans-unit>
           <trans-unit id="1447">
         <source>&lt;strong&gt;Warning!&lt;/strong&gt;&lt;br /&gt;If you don\&#039;t correct default values before saving, the associated error will remain.</source>
-        <target></target>
+        <target>&lt;strong&gt;Pas op!&lt;/strong&gt;&lt;br/&gt;Indien u de default waardes niet corrigeert alvorens te bewaren, dan zal de foutmelding behouden blijven.</target>
       </trans-unit>
           <trans-unit id="1448">
         <source>This record seems to have already been saved. You can see it %here% or you can also choose an existing one with the button below.</source>
-        <target></target>
+        <target>Dit record werd reeds bewaard. U kunt het %here% nakijken of u kunt een nieuwe waarde kiezen via de knop onderaan.</target>
       </trans-unit>
           <trans-unit id="1449">
         <source>Your \&#039;Ok\&#039; lines are  being imported into DaRWIN</source>
-        <target></target>
+        <target>Uw \&#039;Ok\&#039; lijnen werden geïmporteerd in DaRWIN</target>
       </trans-unit>
           <trans-unit id="1450">
         <source>This file has been completely imported into DaRWIN</source>
-        <target></target>
+        <target>Dit bestand werd volledig geïmporteerd in DaRWIN</target>
       </trans-unit>
           <trans-unit id="1451">
         <source>This file has been aborted. This line will remain for a limited time in the summary list for information purposes only.</source>
-        <target></target>
+        <target>Dit bestand werd afgebroken. Deze lijn blijft ter informatie tijdelijk behouden in het overzicht.</target>
       </trans-unit>
           <trans-unit id="1452">
         <source>This button will cancel the importing of the file. Your file will state Aborted. this will allow you to keep a trace of this import, even though the data is not imported.</source>
-        <target></target>
+        <target>Deze knop zal de import van uw bestand annuleren. Uw bestand zal de status Afgebroken aanduiden. Dit laat u toe om alsnog een referentie naar uw geannuleerde import te behouden, ook al werd de data niet geïmporteerd.</target>
       </trans-unit>
           <trans-unit id="1453">
         <source>This button (only visible when your file statesPending) will allow you to edit or remove data</source>
-        <target></target>
+        <target>Deze knop (enkel zichtbaar wanneer het bestand in de Wacht staat) laat u toe om data te wijzigen of te verwijderen.</target>
       </trans-unit>
           <trans-unit id="1454">
         <source>This will delete this line. Already imported lines will remain in the database. All other lines will be deleted without a trace.</source>
-        <target></target>
+        <target>Dit zal deze lijn verwijderen. Reeds geïmporteerde lijnen blijven in de databank. Andere lijnen zullen verwijderd worden zonder behoud van enige referentie.</target>
       </trans-unit>
           <trans-unit id="1455">
         <source>There are no corresponding records.</source>
-        <target></target>
+        <target>Er zijn geen overeenkomstige records</target>
       </trans-unit>
           <trans-unit id="333">
         <source>Add Chronostratigraphic unit</source>
@@ -3507,6 +3503,10 @@
         <source>Add another building</source>
         <target>Een ander gebouw toevoegen</target>
       </trans-unit>
+          <trans-unit id="1456">
+        <source>Show only row with errors</source>
+        <target>Toon enkel de rijen met fouten</target>
+      </trans-unit>
           <trans-unit id="826">
         <source>must be at least 4 characters.</source>
         <target>moet ten minste 4 karakters bevatten.</target>
@@ -4558,6 +4558,10 @@
           <trans-unit id="1109">
         <source>Display help icons</source>
         <target>Toon de Help iconen </target>
+      </trans-unit>
+          <trans-unit id="9">
+        <source>[0]No Results Retrieved|[1]Your query retrieved 1 record|(1,+Inf]Your query retrieved %1% records</source>
+        <target>[0]Geen resultaat|[1]Uw opzoeking levert 1 record op(1,+Inf]Uw opzoeking levert %1% records op</target>
       </trans-unit>
           <trans-unit id="1114">
         <source>Author name and year, used in mineralogy or bacterology</source>
