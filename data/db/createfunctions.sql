@@ -4331,7 +4331,7 @@ BEGIN
       UPDATE staging set institution_ref = NEW.institution_ref, institution_name=NEW.institution_name,
         status = delete(status,'institution')
         WHERE
-        institution_name IS NOT DISTINCT FROM NEW.institution_name
+        institution_name IS NOT DISTINCT FROM OLD.institution_name
         AND import_ref = NEW.import_ref;
 
         NEW.status = delete(NEW.status,'institution');
