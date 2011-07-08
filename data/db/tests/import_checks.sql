@@ -1,6 +1,6 @@
 \unset ECHO
 \i unit_launch.sql
-SELECT plan(52);
+SELECT plan(61);
 
 select diag('Test of staging check without levels');
 
@@ -146,6 +146,30 @@ update staging set gtu_code='My Gtu' , gtu_ref=null, taxon_name=null, taxon_leve
 select is(1 , (select min(fct_imp_checker_people(s.*)::int) from staging s));
 select is(true, (select fct_importer_dna(1)));
 select is(1, (select gtu_ref from specimens where id=4));
+
+select diag('Test of staging copy');
+
+
+insert into staging (id,import_ref, "level",taxon_name) VALUES (7,1,'specimens','Falco Pérégrinuz');
+insert into staging (id,import_ref, "level",taxon_name) VALUES (8,1,'specimens','Falco Pérégrinuz');
+select is(1 , (select min(fct_imp_checker_manager(s.*)::int) from staging s));
+select is(null , (select taxon_ref from staging s where id = 7));
+select is(null , (select taxon_ref from staging s where id = 8));
+
+UPDATE staging set taxon_ref = 3 where id = 7;
+
+select is(3 , (select taxon_ref from staging s where id = 7));
+select is(3 , (select taxon_ref from staging s where id = 8));
+select is('Falco Peregrinus' , (select taxon_name from staging s where id = 8));
+
+UPDATE staging set expedition_name = 'brool' where id = 7;
+UPDATE staging set expedition_name = 'brool' where id = 8;
+insert into expeditions (id, name) VALUES (2, 'Antar');
+
+update staging set expedition_ref = 2 where id = 8;
+select is(2 , (select expedition_ref from staging s where id = 7));
+select is(2 , (select expedition_ref from staging s where id = 8));
+select is('Antar' , (select expedition_name from staging s where id = 7));
 
 SELECT * FROM finish();
 
