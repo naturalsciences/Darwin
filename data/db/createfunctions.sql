@@ -3644,7 +3644,7 @@ BEGIN
     field_name := prefix || '_name';
     field_name := line_store->field_name;
     field_level_name := prefix || '_level_name';
-    field_level_name := coalesce(line_store->field_level_name,line_store->field_level_name,'');
+    field_level_name := coalesce(line_store->field_level_name,'');
 
     OPEN ref FOR EXECUTE 'SELECT * FROM ' || catalogue_table || ' t 
     INNER JOIN catalogue_levels c on t.level_ref = c.id 
@@ -3791,11 +3791,11 @@ BEGIN
     RETURN true;
   END IF;
 
-  select id into ref_rec from igs where ig_num = line.ig_num  and ig_date = COALESCE(line.ig_date,line.ig_date,'01/01/0001');
+  select id into ref_rec from igs where ig_num = line.ig_num  and ig_date = COALESCE(line.ig_date,'01/01/0001');
   IF NOT FOUND THEN
     IF import THEN
         INSERT INTO igs (ig_num, ig_date_mask, ig_date)
-        VALUES (line.ig_num,  COALESCE(line.ig_date_mask,line.ig_date_mask,'0'), COALESCE(line.ig_date,line.ig_date,'01/01/0001'))
+        VALUES (line.ig_num,  COALESCE(line.ig_date_mask,line.ig_date_mask,'0'), COALESCE(line.ig_date,'01/01/0001'))
         RETURNING id INTO ref_rec;
     ELSE
     --UPDATE staging SET status = (status || ('igs' => 'not_found')), ig_ref = null where id=line.id;
@@ -3820,15 +3820,15 @@ BEGIN
   END IF;
 
   select id into ref_rec from expeditions where name_indexed = fulltoindex(line.expedition_name) and 
-    expedition_from_date = COALESCE(line.expedition_from_date,line.expedition_from_date,'01/01/0001') AND
-    expedition_to_date = COALESCE(line.expedition_to_date,line.expedition_to_date,'31/12/2038');
+    expedition_from_date = COALESCE(line.expedition_from_date,'01/01/0001') AND
+    expedition_to_date = COALESCE(line.expedition_to_date,'31/12/2038');
   IF NOT FOUND THEN
       IF import THEN
         INSERT INTO expeditions (name, expedition_from_date, expedition_to_date, expedition_from_date_mask,expedition_to_date_mask)
         VALUES (
-          line.expedition_name, COALESCE(line.expedition_from_date,line.expedition_from_date,'01/01/0001'),
-          COALESCE(line.expedition_to_date,line.expedition_to_date,'31/12/2038'), COALESCE(line.expedition_from_date_mask,line.expedition_from_date_mask,0),
-          COALESCE(line.expedition_to_date_mask,line.expedition_to_date_mask,0)
+          line.expedition_name, COALESCE(line.expedition_from_date,'01/01/0001'),
+          COALESCE(line.expedition_to_date,'31/12/2038'), COALESCE(line.expedition_from_date_mask,0),
+          COALESCE(line.expedition_to_date_mask,0)
         )
         RETURNING id INTO ref_rec;
       ELSE
@@ -3854,10 +3854,10 @@ BEGIN
   END IF;
 
   select id into ref_rec from gtu where
-    COALESCE(latitude,latitude,0) = COALESCE(line.gtu_latitude,line.gtu_latitude,0) AND
-    COALESCE(longitude,longitude,0) = COALESCE(line.gtu_longitude,line.gtu_longitude,0) AND
-    gtu_from_date = COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001') AND
-    gtu_to_date = COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038')
+    COALESCE(latitude,0) = COALESCE(line.gtu_latitude,0) AND
+    COALESCE(longitude,0) = COALESCE(line.gtu_longitude,0) AND
+    gtu_from_date = COALESCE(line.gtu_from_date, '01/01/0001') AND
+    gtu_to_date = COALESCE(line.gtu_to_date, '31/12/2038')
     AND CASE WHEN (line.gtu_longitude is null and line.gtu_from_date is null and line.gtu_to_date is null) THEN line.gtu_code ELSE code END
       = code
     AND id != 0 LIMIT 1;
@@ -3868,8 +3868,8 @@ BEGIN
         INSERT into gtu
           (code, gtu_from_date_mask, gtu_from_date,gtu_to_date_mask, gtu_to_date, latitude, longitude, lat_long_accuracy, elevation, elevation_accuracy)
         VALUES
-          (line.gtu_code, COALESCE(line.gtu_from_date_mask,line.gtu_from_date_mask,0), COALESCE(line.gtu_from_date, line.gtu_from_date, '01/01/0001'),
-          COALESCE(line.gtu_to_date_mask,line.gtu_to_date_mask,0), COALESCE(line.gtu_to_date, line.gtu_to_date, '31/12/2038')
+          (line.gtu_code, COALESCE(line.gtu_from_date_mask,0), COALESCE(line.gtu_from_date, '01/01/0001'),
+          COALESCE(line.gtu_to_date_mask,0), COALESCE(line.gtu_to_date, '31/12/2038')
           , line.gtu_latitude, line.gtu_longitude, line.gtu_lat_long_accuracy, line.gtu_elevation, line.gtu_elevation_accuracy)
         RETURNING id INTO ref_rec;
         INSERT INTO tag_groups (gtu_ref, group_name, sub_group_name, tag_value)
@@ -3898,8 +3898,8 @@ DECLARE
 BEGIN
     result_nbr := 0;
     FOR ref_record IN SELECT id from people p 
-      WHERE fulltoindex(coalesce(family_name,family_name,'') || coalesce(given_name,given_name,'')) like fulltoindex(fullname) || '%'  
-        OR  fulltoindex(coalesce(given_name,given_name,'') || coalesce(family_name,family_name,'')) like fulltoindex(fullname) || '%' LIMIT 2
+      WHERE fulltoindex(coalesce(family_name,'') || coalesce(given_name,'')) like fulltoindex(fullname) || '%'  
+        OR  fulltoindex(coalesce(given_name,'') || coalesce(family_name,'')) like fulltoindex(fullname) || '%' LIMIT 2
     LOOP
       result_nbr := result_nbr +1;
     END LOOP;
@@ -4098,12 +4098,12 @@ BEGIN
 	  rec_id := nextval('specimens_id_seq');
 	  INSERT INTO specimens (id, category, collection_ref, expedition_ref, gtu_ref, taxon_ref, litho_ref, chrono_ref, lithology_ref, mineral_ref,
 	      host_taxon_ref, host_specimen_ref, host_relationship, acquisition_category, acquisition_date_mask, acquisition_date, station_visible, ig_ref)
-	  VALUES (rec_id, COALESCE(line.category,line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,line.expedition_ref,0),
-          COALESCE(line.gtu_ref,line.gtu_ref,0),
-	    COALESCE(line.taxon_ref,line.taxon_ref,0), COALESCE(line.litho_ref,line.litho_ref,0), COALESCE(line.chrono_ref,line.chrono_ref,0),
-	    COALESCE(line.lithology_ref,line.lithology_ref,0), COALESCE(line.mineral_ref,line.mineral_ref,0), COALESCE(line.host_taxon_ref,line.host_taxon_ref,0),
-	    line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,line.acquisition_category,''), COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0),
-	    COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,line.station_visible,true),  line.ig_ref
+	  VALUES (rec_id, COALESCE(line.category,'physical') , line.collection_ref, COALESCE(line.expedition_ref,0),
+          COALESCE(line.gtu_ref,0),
+	    COALESCE(line.taxon_ref,0), COALESCE(line.litho_ref,0), COALESCE(line.chrono_ref,0),
+	    COALESCE(line.lithology_ref,0), COALESCE(line.mineral_ref,0), COALESCE(line.host_taxon_ref,0),
+	    line.host_specimen_ref, line.host_relationship, COALESCE(line.acquisition_category,''), COALESCE(line.acquisition_date_mask,0),
+	    COALESCE(line.acquisition_date,'01/01/0001'), COALESCE(line.station_visible,true),  line.ig_ref
 	  );
 	  UPDATE template_table_record_ref SET referenced_relation ='specimens', record_id = rec_id where referenced_relation ='staging' and record_id = line.id;
           UPDATE identifications set determination_status = null where referenced_relation ='specimens' and record_id = rec_id;
@@ -4113,22 +4113,22 @@ BEGIN
 	prev_levels := prev_levels || ('specimen' => rec_id::text);
       EXCEPTION WHEN unique_violation THEN
 	SELECT id INTO rec_id FROM specimens WHERE
-	  category = COALESCE(line.category,line.category,'physical')
+	  category = COALESCE(line.category,'physical')
 	  AND collection_ref=line.collection_ref
-	  AND expedition_ref= COALESCE(line.expedition_ref,line.expedition_ref,0)
-	  AND gtu_ref= COALESCE(line.gtu_ref,line.gtu_ref,0)
-	  AND taxon_ref= COALESCE(line.taxon_ref,line.taxon_ref,0)
-	  AND litho_ref = COALESCE(line.litho_ref,line.litho_ref,0)
-	  AND chrono_ref = COALESCE(line.chrono_ref,line.chrono_ref,0)
-	  AND lithology_ref = COALESCE(line.lithology_ref,line.lithology_ref,0)
-	  AND mineral_ref = COALESCE(line.mineral_ref,line.mineral_ref,0)
-	  AND host_taxon_ref = COALESCE(line.host_taxon_ref,line.host_taxon_ref,0)
+	  AND expedition_ref= COALESCE(line.expedition_ref,0)
+	  AND gtu_ref= COALESCE(line.gtu_ref,0)
+	  AND taxon_ref= COALESCE(line.taxon_ref,0)
+	  AND litho_ref = COALESCE(line.litho_ref,0)
+	  AND chrono_ref = COALESCE(line.chrono_ref,0)
+	  AND lithology_ref = COALESCE(line.lithology_ref,0)
+	  AND mineral_ref = COALESCE(line.mineral_ref,0)
+	  AND host_taxon_ref = COALESCE(line.host_taxon_ref,0)
 	  AND host_specimen_ref = line.host_specimen_ref
 	  AND host_relationship = line.host_relationship
-	  AND acquisition_category = COALESCE(line.acquisition_category,line.acquisition_category,'')
-	  AND acquisition_date_mask = COALESCE(line.acquisition_date_mask,line.acquisition_date_mask,0)
-	  AND acquisition_date = COALESCE(line.acquisition_date,line.acquisition_date,'01/01/0001')
-	  AND station_visible = COALESCE(line.station_visible,line.station_visible,true)
+	  AND acquisition_category = COALESCE(line.acquisition_category,'')
+	  AND acquisition_date_mask = COALESCE(line.acquisition_date_mask,0)
+	  AND acquisition_date = COALESCE(line.acquisition_date,'01/01/0001')
+	  AND station_visible = COALESCE(line.station_visible,true)
 	  AND ig_ref = line.ig_ref;	
 	UPDATE staging SET status=(status || ('duplicate' => rec_id::text)) , to_import=false WHERE id = (prev_levels->'specimen')::integer;
 	UPDATE staging SET to_import=false where path like '/' || line.id || '/%';
@@ -4141,11 +4141,11 @@ BEGIN
           rec_id := nextval('specimen_individuals_id_seq');
           INSERT INTO specimen_individuals (id, specimen_ref, type, sex, stage, state, social_status, rock_form, specimen_individuals_count_min, specimen_individuals_count_max)
           VALUES (
-            rec_id,(prev_levels->'specimen')::integer, COALESCE(s_line.individual_type,s_line.individual_type,'specimen'), 
-            COALESCE(s_line.individual_sex,s_line.individual_sex,'undefined'), COALESCE( s_line.individual_state, s_line.individual_state,'not applicable'),
-            COALESCE(s_line.individual_stage,s_line.individual_stage,'undefined'), COALESCE(s_line.individual_social_status,s_line.individual_social_status,'not applicable'),
-            COALESCE(s_line.individual_rock_form,s_line.individual_rock_form,'not applicable'),
-            COALESCE(s_line.individual_count_min,s_line.individual_count_min,'1'), COALESCE(s_line.individual_count_max,s_line.individual_count_max,'1')
+            rec_id,(prev_levels->'specimen')::integer, COALESCE(s_line.individual_type,'specimen'), 
+            COALESCE(s_line.individual_sex,'undefined'), COALESCE( s_line.individual_state,'not applicable'),
+            COALESCE(s_line.individual_stage,'undefined'), COALESCE(s_line.individual_social_status,'not applicable'),
+            COALESCE(s_line.individual_rock_form,'not applicable'),
+            COALESCE(s_line.individual_count_min,'1'), COALESCE(s_line.individual_count_max,'1')
           );
           UPDATE template_table_record_ref SET referenced_relation ='specimen_individuals' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
           prev_levels := (prev_levels || ('individual' => rec_id::text));
@@ -4166,13 +4166,13 @@ BEGIN
               specimen_part_count_min, specimen_part_count_max)
           VALUES (
             rec_id, old_level, (prev_levels->'individual')::integer,
-            COALESCE(s_line.part,s_line.part,'specimen'), COALESCE(s_line.complete,s_line.complete,true),
+            COALESCE(s_line.part,'specimen'), COALESCE(s_line.complete,true),
             s_line.institution_ref, s_line.building ,s_line.floor, s_line.room, s_line.row, s_line.shelf,
             s_line.container, s_line.sub_container,
-            COALESCE(s_line.container_type,s_line.container_type,'container'),  COALESCE(s_line.sub_container_type,s_line.sub_container_type, 'container'), 
-            COALESCE(s_line.container_storage,s_line.container_storage,'dry'),  COALESCE(s_line.sub_container_storage,s_line.sub_container_storage,'dry'),
-            COALESCE(s_line.surnumerary,s_line.surnumerary,false),  COALESCE(s_line.specimen_status,s_line.specimen_status,'good state'), 
-            COALESCE(s_line.part_count_min,s_line.part_count_min,1),  COALESCE(s_line.part_count_max,s_line.part_count_max,2)
+            COALESCE(s_line.container_type,'container'),  COALESCE(s_line.sub_container_type, 'container'), 
+            COALESCE(s_line.container_storage,'dry'),  COALESCE(s_line.sub_container_storage,'dry'),
+            COALESCE(s_line.surnumerary,false),  COALESCE(s_line.specimen_status,'good state'), 
+            COALESCE(s_line.part_count_min,1),  COALESCE(s_line.part_count_max,2)
           );
           UPDATE template_table_record_ref SET referenced_relation ='specimen_parts' , record_id = rec_id where referenced_relation ='staging' and record_id = s_line.id;
           prev_levels := (prev_levels || (s_line.level => rec_id::text));
@@ -4242,6 +4242,6 @@ BEGIN
   IF OLD.institution_ref IS DISTINCT FROM NEW.institution_ref  AND  NEW.institution_ref is not null THEN
     SELECT formated_name INTO NEW.institution_name FROM people WHERE id = NEW.institution_ref ; 
   END IF;       
-  RETURN NEW;        
+  RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
