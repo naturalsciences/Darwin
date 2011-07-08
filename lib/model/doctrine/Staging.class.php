@@ -123,6 +123,13 @@ class Staging extends BaseStaging
       else
         return $tb_ok;
     }
+    elseif($field == "institution")
+    {
+      if($this['institution_ref'] == '')
+        return $tb_completed;
+      else
+        return $tb_ok;
+    }
   }
   
   public function getIdentifier()
